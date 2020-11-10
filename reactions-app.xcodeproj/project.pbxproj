@@ -84,17 +84,17 @@
 		571D6A55255AAC0900F4E635 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				571D6A56255AAC0F00F4E635 /* shapes */,
+				571D6A56255AAC0F00F4E635 /* speech-bubble */,
 			);
 			path = view;
 			sourceTree = "<group>";
 		};
-		571D6A56255AAC0F00F4E635 /* shapes */ = {
+		571D6A56255AAC0F00F4E635 /* speech-bubble */ = {
 			isa = PBXGroup;
 			children = (
 				571D6A69255AADDB00F4E635 /* SpeechBubble.swift */,
 			);
-			path = shapes;
+			path = "speech-bubble";
 			sourceTree = "<group>";
 		};
 		571D6A6C255AB23D00F4E635 /* model */ = {
