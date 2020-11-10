@@ -7,6 +7,8 @@ import SwiftUI
 
 struct SpeechBubble: View {
 
+    let lines: [SpeechBubbleLine]
+
     var body: some View {
         GeometryReader { geometry in
             makeView(with: SpeechBubbleSettings(geometry: geometry))
@@ -23,7 +25,21 @@ struct SpeechBubble: View {
                 .fill(Color.mediumGray)
                 .frame(width: settings.stemWidth, height: settings.stemHeight)
                 .offset(x: settings.bubbleWidth, y: settings.stemYOffset)
+
+            VStack(alignment: .leading) {
+                ForEach(self.lines) { line in
+                    lineView(line).padding()
+                }
+            }
+                .frame(width: settings.bubbleWidth, height: settings.geometry.size.height)
         }
+    }
+
+    private func lineView(_ line: SpeechBubbleLine) -> some View {
+        line.content.reduce(Text(""), {
+            $0 + Text($1.content)
+                    .foregroundColor($1.emphasised ? .orangeAccent : .black)
+        })
     }
 
 }
@@ -77,7 +93,19 @@ private struct SpeechBubbleSettings {
 }
 
 struct SpeechBubble_Previews: PreviewProvider {
+
+    static let lines = [
+        SpeechBubbleLine(content: [
+            .init(content: "Hey there, fellow student!", emphasised: false)
+        ]),
+        SpeechBubbleLine(content: [
+            .init(content: "Choose a reaction ", emphasised: true),
+            .init(content: "to explore it!", emphasised: false)
+        ])
+    ]
+
+
     static var previews: some View {
-        SpeechBubble().frame(width: 200, height: 200)
+        SpeechBubble(lines: lines).frame(width: 220, height: 200)
     }
 }
