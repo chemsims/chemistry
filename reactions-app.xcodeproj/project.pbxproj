@@ -13,6 +13,8 @@
 		571D6A46255A780900F4E635 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A45255A780900F4E635 /* Assets.xcassets */; };
 		571D6A49255A780900F4E635 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A48255A780900F4E635 /* Preview Assets.xcassets */; };
 		571D6A4C255A780900F4E635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A4A255A780900F4E635 /* LaunchScreen.storyboard */; };
+		571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A69255AADDB00F4E635 /* SpeechBubble.swift */; };
+		571D6A6F255AB25400F4E635 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A6E255AB25400F4E635 /* Styling.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		571D6A48255A780900F4E635 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		571D6A4B255A780900F4E635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		571D6A4D255A780900F4E635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		571D6A69255AADDB00F4E635 /* SpeechBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBubble.swift; sourceTree = "<group>"; };
+		571D6A6E255AB25400F4E635 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 		571D6A3E255A780700F4E635 /* reactions-app */ = {
 			isa = PBXGroup;
 			children = (
+				571D6A6C255AB23D00F4E635 /* model */,
+				571D6A55255AAC0900F4E635 /* view */,
 				571D6A3F255A780700F4E635 /* AppDelegate.swift */,
 				571D6A41255A780700F4E635 /* SceneDelegate.swift */,
 				571D6A43255A780700F4E635 /* ContentView.swift */,
@@ -73,6 +79,38 @@
 				571D6A48255A780900F4E635 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		571D6A55255AAC0900F4E635 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				571D6A56255AAC0F00F4E635 /* shapes */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		571D6A56255AAC0F00F4E635 /* shapes */ = {
+			isa = PBXGroup;
+			children = (
+				571D6A69255AADDB00F4E635 /* SpeechBubble.swift */,
+			);
+			path = shapes;
+			sourceTree = "<group>";
+		};
+		571D6A6C255AB23D00F4E635 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				571D6A6D255AB24300F4E635 /* styling */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		571D6A6D255AB24300F4E635 /* styling */ = {
+			isa = PBXGroup;
+			children = (
+				571D6A6E255AB25400F4E635 /* Styling.swift */,
+			);
+			path = styling;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,7 +183,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
+				571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				571D6A44255A780700F4E635 /* ContentView.swift in Sources */,
 			);
