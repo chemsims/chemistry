@@ -27,28 +27,40 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                 Rectangle()
                     .foregroundColor(barColor)
                     .frame(width: barThickness)
-
-                RoundedRectangle(cornerRadius: handleCornerRadius)
-                    .foregroundColor(handleColor)
-                    .frame(height: handleThickness)
-                    .position(x: centerXPosition(geometry), y: yPosition(totalHeight: geometry.size.height))
-                    .gesture(
-                        DragGesture()
-                            .onChanged { gesture in
-                                let height = geometry.size.height
-                                let distanceFromBottom = height - trailingPadding - gesture.location.y
-                                let percentageFromBottom = distanceFromBottom / (maxY(totalHeight: height) - minY)
-                                var newValue = (Value(percentageFromBottom) * (maxValue - minValue)) + minValue
-                                if (newValue > maxValue) {
-                                    newValue = maxValue
-                                } else if (newValue < minValue) {
-                                    newValue = minValue
-                                }
-                                self.value = newValue
-                            }
-                    )
+                handle(
+                    geometry,
+                    calculations: getCalculations(totalHeight: geometry.size.height)
+                )
             }.frame(width: geometry.size.width)
         }
+    }
+
+    private func handle(_ geometry: GeometryProxy, calculations: SliderCalculations<Value>) -> some View {
+        RoundedRectangle(cornerRadius: handleCornerRadius)
+            .foregroundColor(handleColor)
+            .frame(height: handleThickness)
+            .position(x: centerXPosition(geometry), y: yPosition(calculations: calculations))
+            .gesture(
+                DragGesture()
+                    .onChanged { gesture in
+                        var newValue = calculations.getValue(forHandle: Value(gesture.location.y))
+                        if (newValue > maxValue) {
+                            newValue = maxValue
+                        } else if (newValue < minValue) {
+                            newValue = minValue
+                        }
+                        self.value = newValue
+                    }
+            )
+    }
+
+    private func getCalculations(totalHeight height: CGFloat) -> SliderCalculations<Value> {
+        SliderCalculations(
+            minValuePosition: Value(height - trailingPadding),
+            maxValuePosition: Value(leadingPadding),
+            minValue: minValue,
+            maxValue: maxValue
+        )
     }
 
     /// Return the x position of the center of the slider handle
@@ -57,19 +69,8 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     }
 
     /// Return the y position of the center of the slider handle
-    private func yPosition(totalHeight height: CGFloat) -> CGFloat {
-        let deltaValue = ($value.wrappedValue - minValue) / (maxValue - minValue)
-        let yBottom = maxY(totalHeight: height)
-        let distanceFromBottom = CGFloat(deltaValue) * (yBottom - minY)
-        return yBottom - distanceFromBottom
-    }
-
-    private var minY: CGFloat {
-        (handleThickness / 2) + leadingPadding
-    }
-
-    private func maxY(totalHeight height: CGFloat) -> CGFloat {
-        height - trailingPadding - (handleThickness / 2)
+    private func yPosition(calculations: SliderCalculations<Value>) -> CGFloat {
+        CGFloat(calculations.getHandleCenter(at: value))
     }
 }
 

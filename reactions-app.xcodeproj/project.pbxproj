@@ -14,6 +14,8 @@
 		57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */; };
 		57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */; };
 		57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
+		57035EDC255BFDB400DB3A19 /* SliderCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EDB255BFDB400DB3A19 /* SliderCalculations.swift */; };
+		57035EE5255BFE5200DB3A19 /* reactions_appTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EE4255BFE5200DB3A19 /* reactions_appTests.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
 		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
@@ -27,6 +29,16 @@
 		571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A80255AD40900F4E635 /* EmptyBeaker.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		57035EE7255BFE5200DB3A19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 571D6A3B255A780700F4E635;
+			remoteInfo = "reactions-app";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		57035EB9255BBF1200DB3A19 /* BeakerTicks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerTicks.swift; sourceTree = "<group>"; };
 		57035EBE255BCF6D00DB3A19 /* BeakerBottomShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerBottomShape.swift; sourceTree = "<group>"; };
@@ -35,6 +47,10 @@
 		57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeGridSettings.swift; sourceTree = "<group>"; };
 		57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledBeaker.swift; sourceTree = "<group>"; };
 		57035ED7255BF05100DB3A19 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		57035EDB255BFDB400DB3A19 /* SliderCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCalculations.swift; sourceTree = "<group>"; };
+		57035EE2255BFE5200DB3A19 /* reactions-appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "reactions-appTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		57035EE4255BFE5200DB3A19 /* reactions_appTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reactions_appTests.swift; sourceTree = "<group>"; };
+		57035EE6255BFE5200DB3A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +67,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		57035EDF255BFE5200DB3A19 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		571D6A39255A780700F4E635 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,10 +92,20 @@
 			path = slider;
 			sourceTree = "<group>";
 		};
+		57035EE3255BFE5200DB3A19 /* reactions-appTests */ = {
+			isa = PBXGroup;
+			children = (
+				57035EE4255BFE5200DB3A19 /* reactions_appTests.swift */,
+				57035EE6255BFE5200DB3A19 /* Info.plist */,
+			);
+			path = "reactions-appTests";
+			sourceTree = "<group>";
+		};
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
 				571D6A3E255A780700F4E635 /* reactions-app */,
+				57035EE3255BFE5200DB3A19 /* reactions-appTests */,
 				571D6A3D255A780700F4E635 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -81,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				571D6A3C255A780700F4E635 /* reactions-app.app */,
+				57035EE2255BFE5200DB3A19 /* reactions-appTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,6 +167,7 @@
 				571D6A6D255AB24300F4E635 /* styling */,
 				571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */,
 				57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */,
+				57035EDB255BFDB400DB3A19 /* SliderCalculations.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -162,6 +197,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		57035EE1255BFE5200DB3A19 /* reactions-appTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57035EE9255BFE5200DB3A19 /* Build configuration list for PBXNativeTarget "reactions-appTests" */;
+			buildPhases = (
+				57035EDE255BFE5200DB3A19 /* Sources */,
+				57035EDF255BFE5200DB3A19 /* Frameworks */,
+				57035EE0255BFE5200DB3A19 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				57035EE8255BFE5200DB3A19 /* PBXTargetDependency */,
+			);
+			name = "reactions-appTests";
+			productName = "reactions-appTests";
+			productReference = 57035EE2255BFE5200DB3A19 /* reactions-appTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		571D6A3B255A780700F4E635 /* reactions-app */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 571D6A50255A780900F4E635 /* Build configuration list for PBXNativeTarget "reactions-app" */;
@@ -188,6 +241,10 @@
 				LastSwiftUpdateCheck = 1210;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
+					57035EE1255BFE5200DB3A19 = {
+						CreatedOnToolsVersion = 12.1;
+						TestTargetID = 571D6A3B255A780700F4E635;
+					};
 					571D6A3B255A780700F4E635 = {
 						CreatedOnToolsVersion = 12.1;
 					};
@@ -207,11 +264,19 @@
 			projectRoot = "";
 			targets = (
 				571D6A3B255A780700F4E635 /* reactions-app */,
+				57035EE1255BFE5200DB3A19 /* reactions-appTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		57035EE0255BFE5200DB3A19 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		571D6A3A255A780700F4E635 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -225,6 +290,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		57035EDE255BFE5200DB3A19 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57035EE5255BFE5200DB3A19 /* reactions_appTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		571D6A38255A780700F4E635 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -237,6 +310,7 @@
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
 				571D6A7C255AC75C00F4E635 /* BeakerShape.swift in Sources */,
 				571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */,
+				57035EDC255BFDB400DB3A19 /* SliderCalculations.swift in Sources */,
 				57035EBF255BCF6E00DB3A19 /* BeakerBottomShape.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
@@ -248,6 +322,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		57035EE8255BFE5200DB3A19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 571D6A3B255A780700F4E635 /* reactions-app */;
+			targetProxy = 57035EE7255BFE5200DB3A19 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		571D6A4A255A780900F4E635 /* LaunchScreen.storyboard */ = {
@@ -261,6 +343,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		57035EEA255BFE5200DB3A19 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "reactions-appTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "reactionsapp.reactions-appTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/reactions-app.app/reactions-app";
+			};
+			name = Debug;
+		};
+		57035EEB255BFE5200DB3A19 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "reactions-appTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "reactionsapp.reactions-appTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/reactions-app.app/reactions-app";
+			};
+			name = Release;
+		};
 		571D6A4E255A780900F4E635 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -382,8 +502,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"reactions-app/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "reactions-app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -393,6 +514,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "reactionsapp.reactions-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -403,8 +525,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"reactions-app/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "reactions-app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -414,6 +537,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "reactionsapp.reactions-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -422,6 +546,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		57035EE9255BFE5200DB3A19 /* Build configuration list for PBXNativeTarget "reactions-appTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57035EEA255BFE5200DB3A19 /* Debug */,
+				57035EEB255BFE5200DB3A19 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		571D6A37255A780700F4E635 /* Build configuration list for PBXProject "reactions-app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

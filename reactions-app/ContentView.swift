@@ -8,9 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @ObservedObject var value = CustomSliderPreview()
+
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            Text("\(value.value)")
+
+            CustomSlider(
+                value: $value.value,
+                minValue: 1,
+                maxValue: 2,
+                handleThickness: 50,
+                handleColor: Color.orangeAccent,
+                handleCornerRadius: 15,
+                barThickness: 5,
+                barColor: Color.darkGray,
+                leadingPadding: 50,
+                trailingPadding: 50
+            ).frame(width: 100)
+        }
     }
 }
 
