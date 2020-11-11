@@ -19,7 +19,8 @@
 		57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
 		57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */; };
 		57035EFD255C1A7000DB3A19 /* MoleculeContentrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EFC255C1A7000DB3A19 /* MoleculeContentrationViewModel.swift */; };
-		57035F0C255C26D000DB3A19 /* TimeChartAxisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* TimeChartAxisView.swift */; };
+		57035F0C255C26D000DB3A19 /* TimeChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* TimeChartAxisShape.swift */; };
+		57035F12255C29A500DB3A19 /* TimeChartAxisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F11255C29A500DB3A19 /* TimeChartAxisView.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
 		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
@@ -58,7 +59,8 @@
 		57035EF0255C09B500DB3A19 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
 		57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReaction.swift; sourceTree = "<group>"; };
 		57035EFC255C1A7000DB3A19 /* MoleculeContentrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeContentrationViewModel.swift; sourceTree = "<group>"; };
-		57035F0B255C26D000DB3A19 /* TimeChartAxisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartAxisView.swift; sourceTree = "<group>"; };
+		57035F0B255C26D000DB3A19 /* TimeChartAxisShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartAxisShape.swift; sourceTree = "<group>"; };
+		57035F11255C29A500DB3A19 /* TimeChartAxisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartAxisView.swift; sourceTree = "<group>"; };
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,7 +130,8 @@
 		57035F0A255C26B700DB3A19 /* charts */ = {
 			isa = PBXGroup;
 			children = (
-				57035F0B255C26D000DB3A19 /* TimeChartAxisView.swift */,
+				57035F0B255C26D000DB3A19 /* TimeChartAxisShape.swift */,
+				57035F11255C29A500DB3A19 /* TimeChartAxisView.swift */,
 			);
 			path = charts;
 			sourceTree = "<group>";
@@ -348,12 +351,13 @@
 				571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */,
 				57035EDC255BFDB400DB3A19 /* SliderCalculations.swift in Sources */,
 				57035EBF255BCF6E00DB3A19 /* BeakerBottomShape.swift in Sources */,
+				57035F12255C29A500DB3A19 /* TimeChartAxisView.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				571D6A44255A780700F4E635 /* ContentView.swift in Sources */,
 				57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */,
-				57035F0C255C26D000DB3A19 /* TimeChartAxisView.swift in Sources */,
+				57035F0C255C26D000DB3A19 /* TimeChartAxisShape.swift in Sources */,
 				57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */,
 				57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */,
 				57035EFD255C1A7000DB3A19 /* MoleculeContentrationViewModel.swift in Sources */,

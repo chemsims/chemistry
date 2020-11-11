@@ -5,52 +5,86 @@
 
 import SwiftUI
 
+struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
 
-struct TimeChartAxisShape: Shape {
-    let verticalTicks: Int
-    let horizontalTicks: Int
+    @Binding var concentration: Value
+    @Binding var time: Value
 
-    let tickSize: CGFloat
+    var body: some View {
+        HStack {
+            VStack {
+                Text("[A]")
+                Text("\(Double(concentration), specifier: "%.2f") M").foregroundColor(.orangeAccent)
+            }.frame(minWidth: 80)
 
-    let gapToTop: CGFloat
-    let gapToSide: CGFloat
+            HStack(alignment: .top) {
+                slider(isPortrait: true)
+                VStack {
+                    TimeChartAxisShape(verticalTicks: 10, horizontalTicks: 10, tickSize: 10, gapToTop: 60, gapToSide: 60)
+                        .stroke()
+                        .frame(width: 250, height: 250)
+                        .overlay(verticalIndicator, alignment: .leading)
+                        .overlay(horizontalIndicator, alignment: .bottom)
 
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
+                    slider(isPortrait: false)
 
-        path.addRect(rect)
-        let dy = (rect.height - gapToTop) / CGFloat(verticalTicks)
-        for i in 1...verticalTicks {
-            let distanceFromBottom = CGFloat(i) * dy
-            let y = rect.height - distanceFromBottom
-            path.move(to: CGPoint(x: 0, y: y))
-            path.addLine(to: CGPoint(x: tickSize, y: y))
+                    Text("Time ") + Text("\(Double(time), specifier: "%.1f") s").foregroundColor(.orangeAccent)
+                }
+            }
         }
-
-        let dx = (rect.width - gapToSide) / CGFloat(horizontalTicks)
-        for i in 1...horizontalTicks {
-            let x = CGFloat(i) * dx
-            path.move(to: CGPoint(x: x, y: rect.height))
-            path.addLine(to: CGPoint(x: x, y: rect.height - tickSize))
-        }
-        return path
     }
 
+    private var verticalIndicator: some View {
+        indicator(isPortrait: true)
+    }
 
+    private var horizontalIndicator: some View {
+        indicator(isPortrait: false)
+    }
+
+    private func slider(isPortrait: Bool) -> some View {
+        let width: CGFloat = isPortrait ? 40 : 250
+        let height: CGFloat = isPortrait ? 250 : 40
+        return CustomSlider(
+            value: isPortrait ? $concentration : $time,
+            minValue: 0,
+            maxValue: 1,
+            handleThickness: 20,
+            handleColor: Color.orangeAccent,
+            handleCornerRadius: 5,
+            barThickness: 3,
+            barColor: Color.darkGray,
+            leadingPadding: 10,
+            trailingPadding: 10,
+            orientation: isPortrait ? .portrait : .landscape
+        ).frame(width: width, height: height)
+    }
+
+    private func indicator(isPortrait: Bool) -> some View {
+        let width: CGFloat = isPortrait ? 25 : 250
+        let height: CGFloat = isPortrait ? 250 : 25
+        return CustomSlider(
+            value: isPortrait ? $concentration : $time,
+            minValue: 0,
+            maxValue: 1,
+            handleThickness: 2,
+            handleColor: Color.orangeAccent,
+            handleCornerRadius: 0,
+            barThickness: 0,
+            barColor: Color.darkGray,
+            leadingPadding: 10,
+            trailingPadding: 10,
+            orientation: isPortrait ? .portrait : .landscape
+        ).frame(width: width, height: height).disabled(true)
+    }
 
 }
 
-
-struct TimeChartAxisShape_Previews: PreviewProvider {
+struct TimeChartAxisView_Previews: PreviewProvider {
     static var previews: some View {
-        TimeChartAxisShape(
-            verticalTicks: 10,
-            horizontalTicks: 10,
-            tickSize: 10,
-            gapToTop: 100,
-            gapToSide: 100
+        TimeChartAxisView(
+            concentration: .constant(0.5),
+            time: .constant(0.5)
         )
-        .stroke()
-        .frame(width: 350, height: 350)
     }
 }
