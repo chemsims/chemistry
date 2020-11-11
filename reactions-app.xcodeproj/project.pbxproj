@@ -13,6 +13,7 @@
 		57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */; };
 		57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */; };
 		57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */; };
+		57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
 		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
@@ -33,6 +34,7 @@
 		57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCoordinate.swift; sourceTree = "<group>"; };
 		57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeGridSettings.swift; sourceTree = "<group>"; };
 		57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledBeaker.swift; sourceTree = "<group>"; };
+		57035ED7255BF05100DB3A19 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57035ED6255BF03300DB3A19 /* slider */ = {
+			isa = PBXGroup;
+			children = (
+				57035ED7255BF05100DB3A19 /* CustomSlider.swift */,
+			);
+			path = slider;
+			sourceTree = "<group>";
+		};
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +112,7 @@
 		571D6A55255AAC0900F4E635 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57035ED6255BF03300DB3A19 /* slider */,
 				571D6A7A255AC75000F4E635 /* beaker */,
 				571D6A56255AAC0F00F4E635 /* speech-bubble */,
 			);
@@ -219,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
+				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
 				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
 				57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */,
