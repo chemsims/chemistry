@@ -25,9 +25,10 @@ struct ContentView: View {
                 barThickness: 5,
                 barColor: Color.darkGray,
                 leadingPadding: 50,
-                trailingPadding: 50
-            ).frame(width: 100)
-        }
+                trailingPadding: 50,
+                orientation: .landscape
+            )
+        }.frame(height: 90)
     }
 }
 
