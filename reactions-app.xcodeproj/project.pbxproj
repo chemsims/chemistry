@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EB9255BBF1200DB3A19 /* BeakerTicks.swift */; };
+		57035EBF255BCF6E00DB3A19 /* BeakerBottomShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EBE255BCF6D00DB3A19 /* BeakerBottomShape.swift */; };
+		57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EC2255BD33A00DB3A19 /* MoleculeGridShape.swift */; };
+		57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */; };
+		57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */; };
+		57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
 		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
@@ -23,6 +28,11 @@
 
 /* Begin PBXFileReference section */
 		57035EB9255BBF1200DB3A19 /* BeakerTicks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerTicks.swift; sourceTree = "<group>"; };
+		57035EBE255BCF6D00DB3A19 /* BeakerBottomShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerBottomShape.swift; sourceTree = "<group>"; };
+		57035EC2255BD33A00DB3A19 /* MoleculeGridShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeGridShape.swift; sourceTree = "<group>"; };
+		57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCoordinate.swift; sourceTree = "<group>"; };
+		57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeGridSettings.swift; sourceTree = "<group>"; };
+		57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledBeaker.swift; sourceTree = "<group>"; };
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +121,7 @@
 			children = (
 				571D6A6D255AB24300F4E635 /* styling */,
 				571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */,
+				57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -129,6 +140,10 @@
 				571D6A7B255AC75C00F4E635 /* BeakerShape.swift */,
 				571D6A80255AD40900F4E635 /* EmptyBeaker.swift */,
 				57035EB9255BBF1200DB3A19 /* BeakerTicks.swift */,
+				57035EBE255BCF6D00DB3A19 /* BeakerBottomShape.swift */,
+				57035EC2255BD33A00DB3A19 /* MoleculeGridShape.swift */,
+				57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */,
+				57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */,
 			);
 			path = beaker;
 			sourceTree = "<group>";
@@ -206,12 +221,17 @@
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
 				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
+				57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
 				571D6A7C255AC75C00F4E635 /* BeakerShape.swift in Sources */,
 				571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */,
+				57035EBF255BCF6E00DB3A19 /* BeakerBottomShape.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				571D6A44255A780700F4E635 /* ContentView.swift in Sources */,
+				57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */,
+				57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */,
+				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

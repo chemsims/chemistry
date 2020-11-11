@@ -1,0 +1,93 @@
+//
+// Reactions App
+//
+  
+
+import SwiftUI
+
+struct FilledBeaker: View {
+
+    let molecules: [(Color, [GridCoordinate])]
+
+    var body: some View {
+        GeometryReader { geometry in
+            makeView(using: BeakerSettings(geometry: geometry))
+        }
+    }
+
+    private func makeView(using settings: BeakerSettings) -> some View {
+        ZStack(alignment: .bottom) {
+            beakerFill(settings)
+            EmptyBeaker(settings: settings)
+        }
+    }
+
+
+    private func beakerFill(_ settings: BeakerSettings) -> some View {
+        drawFill(
+            MoleculeGridSettings(totalWidth: settings.innerBeakerWidth),
+            beaker: settings
+        )
+        .frame(width: settings.innerBeakerWidth)
+        .mask(
+            BeakerBottomShape(
+                cornerRadius: settings.outerBottomCornerRadius
+            )
+        )
+    }
+
+    private func drawFill(_ settings: MoleculeGridSettings, beaker: BeakerSettings) -> some View {
+        ZStack {
+            Styling.beakerLiquid
+                .frame(height: settings.height)
+
+            moleculeGrid(
+                settings,
+                color: Styling.moleculePlaceholder,
+                coordinates: MoleculeGridSettings.fullGrid
+            )
+
+            ForEach(molecules, id: \.0.hashValue) { data in
+                moleculeGrid(
+                    settings,
+                    color: data.0,
+                    coordinates: data.1
+                )
+            }
+        }
+    }
+
+
+    private func moleculeGrid(
+        _ settings: MoleculeGridSettings,
+        color: Color,
+        coordinates: [GridCoordinate]
+    ) -> some View {
+        MoleculeGrid(
+            settings: settings,
+            coords: coordinates,
+            color: color
+        ).frame(height: settings.height)
+    }
+}
+
+struct FilledBeaker_Previews: PreviewProvider {
+    static var previews: some View {
+        FilledBeaker(
+            molecules: [
+                (Color.red, [
+                    GridCoordinate(col: 0, row: 0),
+                    GridCoordinate(col: 1, row: 1),
+                    GridCoordinate(col: 2, row: 2)
+                ]
+            ),
+            (Color.blue, [
+                    GridCoordinate(col: 2, row: 4),
+                    GridCoordinate(col: 5, row: 3),
+                    GridCoordinate(col: 14, row: 4)
+                ]
+            )
+            ]
+        )
+    }
+}

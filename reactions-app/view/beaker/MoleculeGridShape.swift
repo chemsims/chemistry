@@ -1,0 +1,69 @@
+//
+// Reactions App
+//
+  
+
+import SwiftUI
+
+struct MoleculeGrid: View {
+
+    let settings: MoleculeGridSettings
+    let coords: [GridCoordinate]
+    let color: Color
+
+    var body: some View {
+        MoleculeGridShape(
+            cellSize: settings.cellSize,
+            cellPadding: settings.cellPadding,
+            coords: coords
+        ).fill(color)
+    }
+
+}
+
+
+
+/// A grid of molecules.
+/// The shape does not attempt to force the circles into the entire frame.
+/// Instead, the molecules are simply based based on the provided size properties
+/// The frame itself should be sized correctly to fit all the molecules.
+struct MoleculeGridShape: Shape {
+
+    /// Dimension of a single cell
+    let cellSize: CGFloat
+
+    /// How much padding to place in the cell before drawing the molecule
+    let cellPadding: CGFloat
+
+    /// The coordinates to draw
+    let coords: [GridCoordinate]
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        for coord in coords {
+            let x = cellSize * CGFloat(coord.col)
+            let y = cellSize * CGFloat(coord.row)
+
+            let xPadded = x + cellPadding
+            let yPadded = y + cellPadding
+            let size = cellSize - (2 * cellPadding)
+            let rect = CGRect(x: xPadded, y: yPadded, width: size, height: size)
+            path.addEllipse(in: rect)
+        }
+        return path
+    }
+
+}
+
+
+struct MoleculeGrid_Previews: PreviewProvider {
+    static var previews: some View {
+        GeometryReader { geometry in
+            MoleculeGrid(
+                settings: MoleculeGridSettings(totalWidth: geometry.size.width),
+                coords: MoleculeGridSettings.fullGrid,
+                color: Color.black
+            )
+        }
+    }
+}

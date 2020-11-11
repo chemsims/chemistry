@@ -7,13 +7,9 @@ import SwiftUI
 
 struct EmptyBeaker: View {
 
-    var body: some View {
-        GeometryReader { geometry in
-            makeView(with: BeakerSettings(geometry: geometry))
-        }
-    }
+    let settings: BeakerSettings
 
-    private func makeView(with settings: BeakerSettings) -> some View {
+    var body: some View {
         ZStack(alignment: .topLeading) {
             largeBeaker(settings)
                 .stroke(lineWidth: 2)
@@ -101,6 +97,22 @@ struct EmptyBeaker: View {
     }
 }
 
+struct LargeBeaker: View {
+    let settings: BeakerSettings
+
+    var body: some View {
+        BeakerShape(
+            lipHeight: settings.lipRadius,
+            lipWidthLeft: settings.lipWidthLeft,
+            lipWidthRight: settings.lipWidthLeft,
+            leftCornerRadius: settings.outerBottomCornerRadius,
+            rightCornerRadius: settings.outerBottomCornerRadius,
+            bottomGap: 0,
+            rightGap: 0
+        )
+    }
+}
+
 struct BeakerSettings {
     let geometry: GeometryProxy
 
@@ -171,11 +183,19 @@ struct BeakerSettings {
     var ticksRightGap: CGFloat {
         lipRadius + mediumBeakerRightGap + mediumBeakerRightLipWidth
     }
+
+    var innerBeakerWidth: CGFloat {
+        geometry.size.width - (2 * lipRadius) - (2 * lipWidthLeft)
+    }
 }
 
 
 struct EmptyBeaker_Previews: PreviewProvider {
     static var previews: some View {
-        EmptyBeaker()
+        GeometryReader { geometry in
+                EmptyBeaker(
+                    settings: BeakerSettings(geometry: geometry)
+                )
+        }
     }
 }
