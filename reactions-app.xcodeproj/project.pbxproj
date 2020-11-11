@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EB9255BBF1200DB3A19 /* BeakerTicks.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
 		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
@@ -16,10 +17,12 @@
 		571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A69255AADDB00F4E635 /* SpeechBubble.swift */; };
 		571D6A6F255AB25400F4E635 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A6E255AB25400F4E635 /* Styling.swift */; };
 		571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */; };
-		571D6A7C255AC75C00F4E635 /* Beaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A7B255AC75C00F4E635 /* Beaker.swift */; };
+		571D6A7C255AC75C00F4E635 /* BeakerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A7B255AC75C00F4E635 /* BeakerShape.swift */; };
+		571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A80255AD40900F4E635 /* EmptyBeaker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		57035EB9255BBF1200DB3A19 /* BeakerTicks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerTicks.swift; sourceTree = "<group>"; };
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,7 +34,8 @@
 		571D6A69255AADDB00F4E635 /* SpeechBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBubble.swift; sourceTree = "<group>"; };
 		571D6A6E255AB25400F4E635 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
 		571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBubbleLine.swift; sourceTree = "<group>"; };
-		571D6A7B255AC75C00F4E635 /* Beaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beaker.swift; sourceTree = "<group>"; };
+		571D6A7B255AC75C00F4E635 /* BeakerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerShape.swift; sourceTree = "<group>"; };
+		571D6A80255AD40900F4E635 /* EmptyBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBeaker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +126,9 @@
 		571D6A7A255AC75000F4E635 /* beaker */ = {
 			isa = PBXGroup;
 			children = (
-				571D6A7B255AC75C00F4E635 /* Beaker.swift */,
+				571D6A7B255AC75C00F4E635 /* BeakerShape.swift */,
+				571D6A80255AD40900F4E635 /* EmptyBeaker.swift */,
+				57035EB9255BBF1200DB3A19 /* BeakerTicks.swift */,
 			);
 			path = beaker;
 			sourceTree = "<group>";
@@ -199,9 +205,11 @@
 			files = (
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
 				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
+				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
-				571D6A7C255AC75C00F4E635 /* Beaker.swift in Sources */,
+				571D6A7C255AC75C00F4E635 /* BeakerShape.swift in Sources */,
 				571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */,
+				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				571D6A44255A780700F4E635 /* ContentView.swift in Sources */,
 			);
