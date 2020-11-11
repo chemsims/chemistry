@@ -13,10 +13,12 @@
 		57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */; };
 		57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */; };
 		57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */; };
-		57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
+		57035ED8255BF05100DB3A19 /* GenericSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* GenericSlider.swift */; };
 		57035EDC255BFDB400DB3A19 /* SliderCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EDB255BFDB400DB3A19 /* SliderCalculations.swift */; };
 		57035EE5255BFE5200DB3A19 /* reactions_appTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EE4255BFE5200DB3A19 /* reactions_appTests.swift */; };
 		57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
+		57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */; };
+		57035EFD255C1A7000DB3A19 /* MoleculeContentrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EFC255C1A7000DB3A19 /* MoleculeContentrationViewModel.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
 		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
@@ -47,12 +49,14 @@
 		57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCoordinate.swift; sourceTree = "<group>"; };
 		57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeGridSettings.swift; sourceTree = "<group>"; };
 		57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledBeaker.swift; sourceTree = "<group>"; };
-		57035ED7255BF05100DB3A19 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		57035ED7255BF05100DB3A19 /* GenericSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericSlider.swift; sourceTree = "<group>"; };
 		57035EDB255BFDB400DB3A19 /* SliderCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCalculations.swift; sourceTree = "<group>"; };
 		57035EE2255BFE5200DB3A19 /* reactions-appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "reactions-appTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		57035EE4255BFE5200DB3A19 /* reactions_appTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reactions_appTests.swift; sourceTree = "<group>"; };
 		57035EE6255BFE5200DB3A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57035EF0255C09B500DB3A19 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
+		57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReaction.swift; sourceTree = "<group>"; };
+		57035EFC255C1A7000DB3A19 /* MoleculeContentrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeContentrationViewModel.swift; sourceTree = "<group>"; };
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,7 +93,7 @@
 		57035ED6255BF03300DB3A19 /* slider */ = {
 			isa = PBXGroup;
 			children = (
-				57035ED7255BF05100DB3A19 /* CustomSlider.swift */,
+				57035ED7255BF05100DB3A19 /* GenericSlider.swift */,
 			);
 			path = slider;
 			sourceTree = "<group>";
@@ -101,6 +105,22 @@
 				57035EE6255BFE5200DB3A19 /* Info.plist */,
 			);
 			path = "reactions-appTests";
+			sourceTree = "<group>";
+		};
+		57035EF4255C19EC00DB3A19 /* zero-order-reaction */ = {
+			isa = PBXGroup;
+			children = (
+				57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */,
+			);
+			path = "zero-order-reaction";
+			sourceTree = "<group>";
+		};
+		57035EFB255C1A2700DB3A19 /* viewmodels */ = {
+			isa = PBXGroup;
+			children = (
+				57035EFC255C1A7000DB3A19 /* MoleculeContentrationViewModel.swift */,
+			);
+			path = viewmodels;
 			sourceTree = "<group>";
 		};
 		571D6A33255A780700F4E635 = {
@@ -124,6 +144,7 @@
 		571D6A3E255A780700F4E635 /* reactions-app */ = {
 			isa = PBXGroup;
 			children = (
+				57035EFB255C1A2700DB3A19 /* viewmodels */,
 				571D6A6C255AB23D00F4E635 /* model */,
 				571D6A55255AAC0900F4E635 /* view */,
 				571D6A3F255A780700F4E635 /* AppDelegate.swift */,
@@ -148,6 +169,7 @@
 		571D6A55255AAC0900F4E635 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57035EF4255C19EC00DB3A19 /* zero-order-reaction */,
 				57035ED6255BF03300DB3A19 /* slider */,
 				571D6A7A255AC75000F4E635 /* beaker */,
 				571D6A56255AAC0F00F4E635 /* speech-bubble */,
@@ -306,7 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
-				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
+				57035ED8255BF05100DB3A19 /* GenericSlider.swift in Sources */,
 				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
 				57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */,
@@ -316,11 +338,13 @@
 				57035EDC255BFDB400DB3A19 /* SliderCalculations.swift in Sources */,
 				57035EBF255BCF6E00DB3A19 /* BeakerBottomShape.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
+				57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				571D6A44255A780700F4E635 /* ContentView.swift in Sources */,
 				57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */,
 				57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */,
 				57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */,
+				57035EFD255C1A7000DB3A19 /* MoleculeContentrationViewModel.swift in Sources */,
 				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

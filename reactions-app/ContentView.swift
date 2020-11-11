@@ -9,26 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @ObservedObject var value = CustomSliderPreview()
+    @ObservedObject var model = MoleculeContentrationViewModel()
 
     var body: some View {
-        VStack {
-            Text("\(value.value)")
-
-            CustomSlider(
-                value: $value.value,
-                minValue: 1,
-                maxValue: 2,
-                handleThickness: 50,
-                handleColor: Color.orangeAccent,
-                handleCornerRadius: 15,
-                barThickness: 5,
-                barColor: Color.darkGray,
-                leadingPadding: 50,
-                trailingPadding: 50,
-                orientation: .landscape
-            )
-        }.frame(height: 90)
+        ZeroOrderReaction(moleculeConcentration: model)
     }
 }
 

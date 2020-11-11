@@ -11,6 +11,7 @@ struct Styling {
 
     static let beakerLiquid = Color(red: 218 / 255, green: 238 / 255, blue: 245 / 255)
     static let moleculePlaceholder = Color(red: 206 / 255, green: 227 / 255, blue: 237 / 255)
+    static let moleculeA = Color(red: 81 / 255, green: 155 / 255, blue: 210 / 255)
 }
 
 extension Color {

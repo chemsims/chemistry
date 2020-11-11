@@ -111,7 +111,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     private func handleHeight(_ geometry: GeometryProxy) -> CGFloat {
         if (isPortrait) {
-            return barThickness
+            return handleThickness
         }
         return geometry.size.height
     }

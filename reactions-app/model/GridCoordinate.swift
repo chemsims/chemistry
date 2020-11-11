@@ -13,5 +13,9 @@ struct GridCoordinate {
 
     /// Row index - starts at zero
     let row: Int
+
+    static func random(maxCol: Int, maxRow: Int) -> GridCoordinate {
+        GridCoordinate(col: Int.random(in: 0...maxCol), row: Int.random(in: 0...maxRow))
+    }
 }
 
