@@ -10,6 +10,17 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
     @Binding var concentration: Value
     @Binding var time: Value
 
+
+    private let chartSize: CGFloat = 250
+    private let verticalTicks = 10
+    private let horizontalTicks = 10
+    private let tickSize: CGFloat = 10
+    private let gapFromMaxTickToChart: CGFloat = 60
+    private let sliderHandleWidth: CGFloat = 40
+    private let sliderHandleThickness: CGFloat = 40
+    private let sliderLeadingPadding: CGFloat = 70
+    private let sliderTrailingPadding: CGFloat = 25
+
     var body: some View {
         HStack {
             VStack {
@@ -20,9 +31,15 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             HStack(alignment: .top) {
                 slider(isPortrait: true)
                 VStack {
-                    TimeChartAxisShape(verticalTicks: 10, horizontalTicks: 10, tickSize: 10, gapToTop: 60, gapToSide: 60)
+                    TimeChartAxisShape(
+                        verticalTicks: verticalTicks,
+                        horizontalTicks: horizontalTicks,
+                        tickSize: tickSize,
+                        gapToTop: gapFromMaxTickToChart,
+                        gapToSide: gapFromMaxTickToChart
+                    )
                         .stroke()
-                        .frame(width: 250, height: 250)
+                        .frame(width: chartSize, height: chartSize)
                         .overlay(verticalIndicator, alignment: .leading)
                         .overlay(horizontalIndicator, alignment: .bottom)
 
@@ -43,8 +60,8 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
     }
 
     private func slider(isPortrait: Bool) -> some View {
-        let width: CGFloat = isPortrait ? 40 : 250
-        let height: CGFloat = isPortrait ? 250 : 40
+        let width: CGFloat = isPortrait ? sliderHandleWidth : chartSize
+        let height: CGFloat = isPortrait ? chartSize : sliderHandleWidth
         return CustomSlider(
             value: isPortrait ? $concentration : $time,
             minValue: 0,
@@ -54,15 +71,15 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             handleCornerRadius: 5,
             barThickness: 3,
             barColor: Color.darkGray,
-            leadingPadding: 10,
-            trailingPadding: 10,
+            leadingPadding: sliderLeadingPadding,
+            trailingPadding: sliderTrailingPadding,
             orientation: isPortrait ? .portrait : .landscape
         ).frame(width: width, height: height)
     }
 
     private func indicator(isPortrait: Bool) -> some View {
-        let width: CGFloat = isPortrait ? 25 : 250
-        let height: CGFloat = isPortrait ? 250 : 25
+        let width: CGFloat = isPortrait ? 25 : chartSize
+        let height: CGFloat = isPortrait ? chartSize : 25
         return CustomSlider(
             value: isPortrait ? $concentration : $time,
             minValue: 0,
@@ -72,12 +89,11 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             handleCornerRadius: 0,
             barThickness: 0,
             barColor: Color.darkGray,
-            leadingPadding: 10,
-            trailingPadding: 10,
+            leadingPadding: sliderLeadingPadding,
+            trailingPadding: sliderTrailingPadding,
             orientation: isPortrait ? .portrait : .landscape
         ).frame(width: width, height: height).disabled(true)
     }
-
 }
 
 struct TimeChartAxisView_Previews: PreviewProvider {
