@@ -7,13 +7,17 @@ import SwiftUI
 
 struct ZeroOrderReaction: View {
 
-    @ObservedObject var moleculeConcentration: MoleculeContentrationViewModel
+    @ObservedObject var moleculeConcentration: ReactionViewModel
 
     var body: some View {
         VStack {
             TimeChartAxisView(
                 concentration: $moleculeConcentration.concentration,
-                time: .constant(0.5)
+                time: $moleculeConcentration.initialTime,
+                minConcentration: ReactionSettings.minConcentration,
+                maxConcentration: ReactionSettings.maxConcentration,
+                minTime: ReactionSettings.minTime,
+                maxTime: ReactionSettings.maxTime
             )
 
             FilledBeaker(molecules: [(Styling.moleculeA, moleculeConcentration.molecules)])
@@ -25,7 +29,7 @@ struct ZeroOrderReaction: View {
 struct ZeroOrderReaction_Previews: PreviewProvider {
     static var previews: some View {
         ZeroOrderReaction(
-            moleculeConcentration: MoleculeContentrationViewModel()
+            moleculeConcentration: ReactionViewModel()
         )
     }
 }

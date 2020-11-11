@@ -5,17 +5,19 @@
 
 import SwiftUI
 
-class MoleculeContentrationViewModel: ObservableObject {
+class ReactionViewModel: ObservableObject {
 
     @Published var concentration: Double {
         didSet {
             getMolecules(cols: 19, rows: 10)
         }
     }
+    @Published var initialTime: Double = 10
+
     var molecules: [GridCoordinate] = []
 
     init () {
-        self.concentration = 0.2
+        self.concentration = 0.4
         getMolecules(cols: 19, rows: 10)
     }
 
@@ -52,6 +54,12 @@ class MoleculeContentrationViewModel: ObservableObject {
         }
     }
 
-
 }
 
+struct ReactionSettings {
+    static let minConcentration: Double = 0.2
+    static let maxConcentration: Double = 1
+
+    static let minTime: Double = 1
+    static let maxTime: Double = 30
+}

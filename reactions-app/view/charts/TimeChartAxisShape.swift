@@ -36,8 +36,6 @@ struct TimeChartAxisShape: Shape {
         return path
     }
 
-
-
 }
 
 

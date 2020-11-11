@@ -10,6 +10,12 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
     @Binding var concentration: Value
     @Binding var time: Value
 
+    let minConcentration: Value
+    let maxConcentration: Value
+
+    let minTime: Value
+    let maxTime: Value
+
 
     private let chartSize: CGFloat = 250
     private let verticalTicks = 10
@@ -18,8 +24,8 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
     private let gapFromMaxTickToChart: CGFloat = 60
     private let sliderHandleWidth: CGFloat = 40
     private let sliderHandleThickness: CGFloat = 40
-    private let sliderLeadingPadding: CGFloat = 70
-    private let sliderTrailingPadding: CGFloat = 25
+    private let sliderMinValuePadding: CGFloat = 25
+    private let sliderMaxValuePadding: CGFloat = 70
 
     var body: some View {
         HStack {
@@ -64,15 +70,15 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         let height: CGFloat = isPortrait ? chartSize : sliderHandleWidth
         return CustomSlider(
             value: isPortrait ? $concentration : $time,
-            minValue: 0,
-            maxValue: 1,
+            minValue: isPortrait ? minConcentration : minTime,
+            maxValue: isPortrait ? maxConcentration : maxTime,
             handleThickness: 20,
             handleColor: Color.orangeAccent,
             handleCornerRadius: 5,
             barThickness: 3,
             barColor: Color.darkGray,
-            leadingPadding: sliderLeadingPadding,
-            trailingPadding: sliderTrailingPadding,
+            minValuePadding: sliderMinValuePadding,
+            maxValuePadding: sliderMaxValuePadding,
             orientation: isPortrait ? .portrait : .landscape
         ).frame(width: width, height: height)
     }
@@ -82,15 +88,15 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         let height: CGFloat = isPortrait ? chartSize : 25
         return CustomSlider(
             value: isPortrait ? $concentration : $time,
-            minValue: 0,
-            maxValue: 1,
+            minValue: isPortrait ? minConcentration : minTime,
+            maxValue: isPortrait ? maxConcentration : maxTime,
             handleThickness: 2,
             handleColor: Color.orangeAccent,
             handleCornerRadius: 0,
             barThickness: 0,
             barColor: Color.darkGray,
-            leadingPadding: sliderLeadingPadding,
-            trailingPadding: sliderTrailingPadding,
+            minValuePadding: sliderMinValuePadding,
+            maxValuePadding: sliderMaxValuePadding,
             orientation: isPortrait ? .portrait : .landscape
         ).frame(width: width, height: height).disabled(true)
     }
@@ -100,7 +106,11 @@ struct TimeChartAxisView_Previews: PreviewProvider {
     static var previews: some View {
         TimeChartAxisView(
             concentration: .constant(0.5),
-            time: .constant(0.5)
+            time: .constant(0.5),
+            minConcentration: 0,
+            maxConcentration: 1,
+            minTime: 0,
+            maxTime: 1
         )
     }
 }

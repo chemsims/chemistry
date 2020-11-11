@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @ObservedObject var model = MoleculeContentrationViewModel()
+    @ObservedObject var model = ReactionViewModel()
 
     var body: some View {
         ZeroOrderReaction(moleculeConcentration: model)

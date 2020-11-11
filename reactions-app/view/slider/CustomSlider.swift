@@ -18,8 +18,8 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     let barThickness: CGFloat
     let barColor: Color
 
-    let leadingPadding: CGFloat
-    let trailingPadding: CGFloat
+    let minValuePadding: CGFloat
+    let maxValuePadding: CGFloat
 
     let orientation: Orientation
 
@@ -62,8 +62,8 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     private func getCalculations(geometry: GeometryProxy) -> SliderCalculations<Value> {
         let length = isPortrait ? geometry.size.height : geometry.size.width
-        let minValuePos = isPortrait ? Value(length - trailingPadding) : Value(leadingPadding)
-        let maxValuePos = isPortrait ? Value(leadingPadding) : Value(length - trailingPadding)
+        let minValuePos = isPortrait ? Value(length - minValuePadding) : Value(minValuePadding)
+        let maxValuePos = isPortrait ? Value(maxValuePadding) : Value(length - maxValuePadding)
         return SliderCalculations(
             minValuePosition: minValuePos,
             maxValuePosition: maxValuePos,
@@ -137,8 +137,8 @@ struct CustomSlider_Previews: PreviewProvider {
                 handleCornerRadius: 15,
                 barThickness: 5,
                 barColor: Color.darkGray,
-                leadingPadding: 50,
-                trailingPadding: 50,
+                minValuePadding: 50,
+                maxValuePadding: 50,
                 orientation: .landscape
             ).frame(height: 80)
         }
