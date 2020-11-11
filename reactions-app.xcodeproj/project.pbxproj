@@ -32,6 +32,8 @@
 		571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */; };
 		571D6A7C255AC75C00F4E635 /* BeakerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A7B255AC75C00F4E635 /* BeakerShape.swift */; };
 		571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A80255AD40900F4E635 /* EmptyBeaker.swift */; };
+		572CB93E255C36DD0071C600 /* BarChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* BarChartAxisShape.swift */; };
+		572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB943255C3BCF0071C600 /* ValueRange.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBubbleLine.swift; sourceTree = "<group>"; };
 		571D6A7B255AC75C00F4E635 /* BeakerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerShape.swift; sourceTree = "<group>"; };
 		571D6A80255AD40900F4E635 /* EmptyBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBeaker.swift; sourceTree = "<group>"; };
+		572CB93D255C36DD0071C600 /* BarChartAxisShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartAxisShape.swift; sourceTree = "<group>"; };
+		572CB943255C3BCF0071C600 /* ValueRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRange.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,8 +134,8 @@
 		57035F0A255C26B700DB3A19 /* charts */ = {
 			isa = PBXGroup;
 			children = (
-				57035F0B255C26D000DB3A19 /* TimeChartAxisShape.swift */,
-				57035F11255C29A500DB3A19 /* TimeChartAxisView.swift */,
+				572CB93C255C36BA0071C600 /* barchart */,
+				572CB93B255C36B00071C600 /* timechart */,
 			);
 			path = charts;
 			sourceTree = "<group>";
@@ -207,6 +211,7 @@
 				57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */,
 				57035EDB255BFDB400DB3A19 /* SliderCalculations.swift */,
 				57035EF0255C09B500DB3A19 /* Orientation.swift */,
+				572CB943255C3BCF0071C600 /* ValueRange.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -231,6 +236,23 @@
 				57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */,
 			);
 			path = beaker;
+			sourceTree = "<group>";
+		};
+		572CB93B255C36B00071C600 /* timechart */ = {
+			isa = PBXGroup;
+			children = (
+				57035F0B255C26D000DB3A19 /* TimeChartAxisShape.swift */,
+				57035F11255C29A500DB3A19 /* TimeChartAxisView.swift */,
+			);
+			path = timechart;
+			sourceTree = "<group>";
+		};
+		572CB93C255C36BA0071C600 /* barchart */ = {
+			isa = PBXGroup;
+			children = (
+				572CB93D255C36DD0071C600 /* BarChartAxisShape.swift */,
+			);
+			path = barchart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,7 +375,9 @@
 				57035EBF255BCF6E00DB3A19 /* BeakerBottomShape.swift in Sources */,
 				57035F12255C29A500DB3A19 /* TimeChartAxisView.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
+				572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */,
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */,
+				572CB93E255C36DD0071C600 /* BarChartAxisShape.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				571D6A44255A780700F4E635 /* ContentView.swift in Sources */,
 				57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */,

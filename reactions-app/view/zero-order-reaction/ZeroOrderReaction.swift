@@ -11,14 +11,25 @@ struct ZeroOrderReaction: View {
 
     var body: some View {
         VStack {
-            TimeChartAxisView(
-                concentration: $moleculeConcentration.concentration,
-                time: $moleculeConcentration.initialTime,
-                minConcentration: ReactionSettings.minConcentration,
-                maxConcentration: ReactionSettings.maxConcentration,
-                minTime: ReactionSettings.minTime,
-                maxTime: ReactionSettings.maxTime
-            )
+            HStack {
+                TimeChartAxisView(
+                    concentration: $moleculeConcentration.concentration,
+                    time: $moleculeConcentration.initialTime,
+                    minConcentration: ReactionSettings.minConcentration,
+                    maxConcentration: ReactionSettings.maxConcentration,
+                    minTime: ReactionSettings.minTime,
+                    maxTime: ReactionSettings.maxTime
+                )
+
+                ConcentrationBarChart(
+                    concentrationA: ValueRange(
+                        value: moleculeConcentration.concentration,
+                        minValue: ReactionSettings.minConcentration,
+                        maxValue: ReactionSettings.maxConcentration
+                    )
+                )
+            }
+
 
             FilledBeaker(molecules: [(Styling.moleculeA, moleculeConcentration.molecules)])
                 .frame(width: 350, height: 420)
