@@ -28,6 +28,8 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
 
     let orientation: Orientation
 
+    let boundType: BoundType
+
     var body: some View {
         ZStack {
             makeSlider(
@@ -68,7 +70,7 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
             orientation: orientation,
             previousHandleValue: previousHandleValue,
             previousHandlePadding: 3,
-            previousValueBoundType: .lower
+            previousValueBoundType: boundType
         )
     }
 }
@@ -99,7 +101,8 @@ struct DualValueSlider_Previews: PreviewProvider {
                     barColor: Color.darkGray,
                     minValuePadding: 50,
                     maxValuePadding: 50,
-                    orientation: .landscape
+                    orientation: .landscape,
+                    boundType: .lower
                 ).frame(height: 80)
 
                 Button(action: {

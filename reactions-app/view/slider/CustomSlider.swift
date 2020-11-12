@@ -79,7 +79,9 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             let isUpperBound = previousValueBoundType == .upper
 
             let positionDelta = Value(handleThickness + previousHandlePadding)
-            let positionDirection = isUpperBound ? -1 : 1
+            let boundsDirection = isUpperBound ? -1 : 1
+            let axisDirection = (maxValuePos - minValuePos < 0) ? -1 : 1
+            let positionDirection = boundsDirection * axisDirection
 
             let updatedPosition = position + (positionDelta * Value(positionDirection))
             let updatedValue = calculations.getValue(forHandle: updatedPosition)

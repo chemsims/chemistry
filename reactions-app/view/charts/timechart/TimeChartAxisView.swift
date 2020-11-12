@@ -13,7 +13,7 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
     @Binding var finalConcentration: Value
     @Binding var finalTime: Value
 
-    let enableFinalSelection: Bool
+    let finalConcentrationEnabled: Bool
 
     let minConcentration: Value
     let maxConcentration: Value
@@ -31,13 +31,13 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         HStack {
             VStack {
                 Text("[A]")
-                Text("\(Double(initialConcentration), specifier: "%.2f") M").foregroundColor(.orangeAccent)
+                Text(concentrationLabel).foregroundColor(.orangeAccent)
             }
             .font(.system(size: settings.labelFontSize))
             .frame(width: settings.yLabelWidth)
 
             HStack(alignment: .top) {
-                slider(isPortrait: true, settings: settings)
+                axisSlider(isPortrait: true, settings: settings)
                 VStack {
                     TimeChartAxisShape(
                         verticalTicks: settings.verticalTicks,
@@ -51,19 +51,29 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
                         .overlay(verticalIndicator(settings: settings), alignment: .leading)
                         .overlay(horizontalIndicator(settings: settings), alignment: .bottom)
 
-                    slider(isPortrait: false, settings: settings)
+                    axisSlider(isPortrait: false, settings: settings)
 
                     HStack {
                         Text("Time")
                             .frame(width: chartSize / 2, alignment: .trailing)
 
-                        Text("\(Double(initialTime), specifier: "%.1f") s")
+                        Text(timeLabel)
                             .foregroundColor(.orangeAccent)
                             .frame(width: chartSize / 2, alignment: .leading)
                     }.font(.system(size: settings.labelFontSize))
                 }
             }
         }
+    }
+
+    private var concentrationLabel: String {
+        let value = finalConcentrationEnabled ? finalConcentration : initialConcentration
+        return "\(Double(value).str(decimals: 2)) M"
+    }
+
+    private var timeLabel: String {
+        let value = finalConcentrationEnabled ? finalTime : initialTime
+        return "\(Double(value).str(decimals: 1)) s"
     }
 
     private func verticalIndicator(settings: TimeChartGeometrySettings) -> some View {
@@ -74,46 +84,52 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         indicator(isPortrait: false, settings: settings)
     }
 
-    private func slider(isPortrait: Bool, settings: TimeChartGeometrySettings) -> some View {
+    private func axisSlider(isPortrait: Bool, settings: TimeChartGeometrySettings) -> some View {
         let width: CGFloat = isPortrait ? settings.sliderHandleWidth : chartSize
         let height: CGFloat = isPortrait ? chartSize : settings.sliderHandleWidth
-        return CustomSlider(
-            value: isPortrait ? $initialConcentration : $initialTime,
-            minValue: isPortrait ? minConcentration : minTime,
-            maxValue: isPortrait ? maxConcentration : maxTime,
-            handleThickness: settings.handleThickness,
-            handleColor: Color.orangeAccent,
-            handleCornerRadius: settings.handleCornerRadius,
-            barThickness: 3,
-            barColor: Color.darkGray,
-            minValuePadding: settings.sliderMinValuePadding,
-            maxValuePadding: settings.sliderMaxValuePadding,
-            orientation: isPortrait ? .portrait : .landscape,
-            previousHandleValue: nil,
-            previousHandlePadding: 10,
-            previousValueBoundType: .lower
+        return makeSlider(
+            isPortrait: isPortrait,
+            settings: settings,
+            isIndicator: false
         ).frame(width: width, height: height)
     }
 
-    private func indicator(isPortrait: Bool, settings: TimeChartGeometrySettings) -> some View {
+
+    private func indicator(
+        isPortrait: Bool,
+        settings: TimeChartGeometrySettings
+    ) -> some View {
         let width: CGFloat = isPortrait ? 25 : chartSize
         let height: CGFloat = isPortrait ? chartSize : 25
-        return CustomSlider(
-            value: isPortrait ? $initialConcentration : $initialTime,
+        return makeSlider(
+            isPortrait: isPortrait,
+            settings: settings,
+            isIndicator: true
+        ).frame(width: width, height: height).disabled(true)
+    }
+
+    private func makeSlider(
+        isPortrait: Bool,
+        settings: TimeChartGeometrySettings,
+        isIndicator: Bool
+    ) -> some View {
+        DualValueSlider(
+            value1: isPortrait ? $initialConcentration : $initialTime,
+            value2: isPortrait ? $finalConcentration : $finalTime,
+            value2Enabled: finalConcentrationEnabled,
             minValue: isPortrait ? minConcentration : minTime,
             maxValue: isPortrait ? maxConcentration : maxTime,
-            handleThickness: 2,
+            handleThickness: isIndicator ? 3 : settings.handleThickness,
             handleColor: Color.orangeAccent,
-            handleCornerRadius: 0,
-            barThickness: 0,
-            barColor: Color.darkGray,
+            disabledHandleColor: Color.gray,
+            handleCornerRadius: isIndicator ? 0 : settings.handleCornerRadius,
+            barThickness: isIndicator ? 0 : 3,
+            barColor: Color.gray,
             minValuePadding: settings.sliderMinValuePadding,
             maxValuePadding: settings.sliderMaxValuePadding,
             orientation: isPortrait ? .portrait : .landscape,
-            previousHandleValue: nil,
-            previousHandlePadding: 10,
-            previousValueBoundType: .upper
-        ).frame(width: width, height: height).disabled(true)
+            boundType: isPortrait ? .upper : .lower
+        )
     }
 }
 
@@ -123,24 +139,40 @@ struct TimeChartAxisView_Previews: PreviewProvider {
     }
 
     struct ViewWrapper: View {
-        @State private var c: CGFloat = 0.5
-        @State private var t: CGFloat = 0.5
-        @State private var c1: CGFloat = 0.2
-        @State private var t2: CGFloat = 0.7
+        @State private var c1: CGFloat = 0.7
+        @State private var t1: CGFloat = 2
+        @State private var c2: CGFloat = 0.2
+        @State private var t2: CGFloat = 8
 
         var body: some View {
-            TimeChartAxisView(
-                initialConcentration: $c,
-                initialTime: $t,
-                finalConcentration: $t,
-                finalTime: $c,
-                enableFinalSelection: false,
-                minConcentration: 0,
-                maxConcentration: 1,
-                minTime: 0,
-                maxTime: 10,
-                chartSize: 250
-            )
+            VStack {
+                TimeChartAxisView(
+                    initialConcentration: $c1,
+                    initialTime: $t1,
+                    finalConcentration: $c2,
+                    finalTime: $t2,
+                    finalConcentrationEnabled: false,
+                    minConcentration: 0,
+                    maxConcentration: 1,
+                    minTime: 0,
+                    maxTime: 10,
+                    chartSize: 250
+                )
+
+                TimeChartAxisView(
+                    initialConcentration: $c1,
+                    initialTime: $t1,
+                    finalConcentration: $c2,
+                    finalTime: $t2,
+                    finalConcentrationEnabled: true,
+                    minConcentration: 0,
+                    maxConcentration: 1,
+                    minTime: 0,
+                    maxTime: 10,
+                    chartSize: 250
+                )
+            }
+
         }
     }
 }

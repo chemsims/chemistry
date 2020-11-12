@@ -34,7 +34,7 @@ struct ZeroOrderReaction: View {
                     initialTime: $moleculeConcentration.initialTime,
                     finalConcentration: .constant(0),
                     finalTime: .constant(0),
-                    enableFinalSelection: false,
+                    finalConcentrationEnabled: false,
                     minConcentration: ReactionSettings.minConcentration,
                     maxConcentration: ReactionSettings.maxConcentration,
                     minTime: ReactionSettings.minTime,
