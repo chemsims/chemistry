@@ -6,8 +6,13 @@
 import SwiftUI
 
 struct ZeroOrderEquationFilled: View {
+
+    /// Scales the view
+    let scale: CGFloat
+
     var body: some View {
         GeneralZeroOrderReactionEquationView(
+            scale: scale,
             firstTerm: "k",
             numerator1: "Δc",
             denominator1: "Δt",
@@ -22,11 +27,15 @@ struct ZeroOrderEquationFilled: View {
 
 struct ZeroOrderEquationTerm2Blank: View {
 
+    /// Scales the view
+    let scale: CGFloat
+
     let initialConcentration: Double
     let intialTime: Double
 
     var body: some View {
         GeneralZeroOrderReactionEquationView(
+            scale: scale,
             firstTerm: nil,
             numerator1: nil,
             denominator1: nil,
@@ -42,6 +51,8 @@ struct ZeroOrderEquationTerm2Blank: View {
 
 struct GeneralZeroOrderReactionEquationView: View {
 
+    let scale: CGFloat
+
     let firstTerm: String?
     let numerator1: String?
     let denominator1: String?
@@ -54,12 +65,28 @@ struct GeneralZeroOrderReactionEquationView: View {
 
     let emphasiseFractionTerm2: Bool
 
-    private let boxSize: CGFloat = 35
-    private let boxPadding: CGFloat = 6
-    private let negativeWidth: CGFloat = 10
+    private var boxSize: CGFloat {
+        35 * scale
+    }
+    private var boxPadding: CGFloat {
+        6 * scale
+    }
+    private var negativeWidth: CGFloat {
+        10 * scale
+    }
+    private var parenWidth: CGFloat {
+        7 * scale
+    }
+    private var fontSize: CGFloat {
+        15 * scale
+    }
 
-    private let fraction1DividerWidth: CGFloat = 30
-    private let fraction2DividerWidth: CGFloat = 90
+    private var fraction1DividerWidth: CGFloat {
+        30 * scale
+    }
+    private var fraction2DividerWidth: CGFloat {
+        90 * scale
+    }
 
     var body: some View {
         HStack {
@@ -75,7 +102,7 @@ struct GeneralZeroOrderReactionEquationView: View {
             Text("=")
 
             fraction2
-        }
+        }.font(.system(size: fontSize))
     }
 
     private var fraction1: some View {
@@ -122,17 +149,20 @@ struct GeneralZeroOrderReactionEquationView: View {
                 .frame(width: negativeWidth)
 
             Text("(")
+                .frame(width: parenWidth)
 
             termOrBox(term1)
                 .frame(minWidth: boxSize)
 
             Text("–")
+                .frame(width: negativeWidth)
 
             Text(term2)
                 .frame(minWidth: boxSize)
                 .foregroundColor(emphasiseFractionTerm2 ? .orangeAccent : .black)
 
             Text(")")
+                .frame(width: parenWidth)
 
             Text("")
                 .frame(width: negativeWidth)
@@ -187,6 +217,7 @@ struct Equation_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             GeneralZeroOrderReactionEquationView(
+                scale: 1,
                 firstTerm: "k",
                 numerator1: "Δc",
                 denominator1: "Δt",
@@ -197,6 +228,7 @@ struct Equation_Previews: PreviewProvider {
                 emphasiseFractionTerm2: false
             )
             GeneralZeroOrderReactionEquationView(
+                scale: 2,
                 firstTerm: nil,
                 numerator1: nil,
                 denominator1: nil,

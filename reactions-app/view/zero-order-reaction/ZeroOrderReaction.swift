@@ -16,7 +16,7 @@ struct ZeroOrderReaction: View {
     }
 
     private func makeView(using settings: LayoutSettings) -> some View {
-        HStack {
+        HStack(spacing: 0) {
             VStack {
                 Spacer()
                 FilledBeaker(
@@ -27,8 +27,7 @@ struct ZeroOrderReaction: View {
                 .padding(.bottom, 60)
             }
 
-            VStack {
-                Spacer()
+            VStack(alignment: .trailing) {
 
                 TimeChartAxisView(
                     concentration: $moleculeConcentration.concentration,
@@ -36,9 +35,9 @@ struct ZeroOrderReaction: View {
                     minConcentration: ReactionSettings.minConcentration,
                     maxConcentration: ReactionSettings.maxConcentration,
                     minTime: ReactionSettings.minTime,
-                    maxTime: ReactionSettings.maxTime
+                    maxTime: ReactionSettings.maxTime,
+                    chartSize: settings.chartsWidth
                 )
-
 
                 ConcentrationBarChart(
                     concentrationA: ValueRange(
@@ -47,46 +46,19 @@ struct ZeroOrderReaction: View {
                         maxValue: ReactionSettings.maxConcentration
                     ),
                     chartWidth: settings.chartsWidth
-                )
+                ).frame(width: settings.chartsWidth)
             }
-
-        }
-    }
-
-    var body2: some View {
-        VStack {
-            HStack {
-                TimeChartAxisView(
-                    concentration: $moleculeConcentration.concentration,
-                    time: $moleculeConcentration.initialTime,
-                    minConcentration: ReactionSettings.minConcentration,
-                    maxConcentration: ReactionSettings.maxConcentration,
-                    minTime: ReactionSettings.minTime,
-                    maxTime: ReactionSettings.maxTime
-                )
-
-                ConcentrationBarChart(
-                    concentrationA: ValueRange(
-                        value: moleculeConcentration.concentration,
-                        minValue: ReactionSettings.minConcentration,
-                        maxValue: ReactionSettings.maxConcentration
-                    ),
-                    chartWidth: 300
-                )
-            }
+            .padding(.leading, -20)
+            .padding(.trailing, 30)
 
             VStack(alignment: .leading) {
-                ZeroOrderEquationFilled()
+                ZeroOrderEquationFilled(scale: settings.equationScale)
                 ZeroOrderEquationTerm2Blank(
+                    scale: settings.equationScale,
                     initialConcentration: moleculeConcentration.concentration,
                     intialTime: moleculeConcentration.initialTime
                 )
             }
-
-
-
-            FilledBeaker(molecules: [(Styling.moleculeA, moleculeConcentration.molecules)])
-                .frame(width: 350, height: 420)
         }
     }
 }
@@ -101,7 +73,7 @@ struct LayoutSettings {
     }
 
     var beakerHeight: CGFloat {
-        width * 0.3
+        width * 0.28
     }
     var beakerWidth: CGFloat {
         beakerHeight * 0.9
@@ -120,12 +92,27 @@ struct LayoutSettings {
         let bottomGap = height * 0.1
         return height - bottomGap - (beakerHeight / 2)
     }
+
+    var equationScale: CGFloat {
+        let scaleAt1024: CGFloat = 1.0 // iPad mini landscape
+        let scaleAt1366: CGFloat = 1.6 // iPad 12.9 inch landscape
+        let m = (scaleAt1366 - scaleAt1024) / CGFloat(1366 - 1024)
+        let c = 1 - (m * 1024)
+        return (m * width) + c
+
+    }
 }
 
 struct ZeroOrderReaction_Previews: PreviewProvider {
     static var previews: some View {
+        /// iPad mini 4 landscape
         ZeroOrderReaction(
             moleculeConcentration: ReactionViewModel()
         ).previewLayout(.fixed(width: 1024, height: 768))
+
+        ZeroOrderReaction(
+            moleculeConcentration: ReactionViewModel()
+        ).previewLayout(.fixed(width: 1024, height: 768))
+
     }
 }

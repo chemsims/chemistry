@@ -16,23 +16,50 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
     let minTime: Value
     let maxTime: Value
 
+    let chartSize: CGFloat
 
-    private let chartSize: CGFloat = 250
     private let verticalTicks = 10
     private let horizontalTicks = 10
-    private let tickSize: CGFloat = 10
-    private let gapFromMaxTickToChart: CGFloat = 60
-    private let sliderHandleWidth: CGFloat = 40
-    private let sliderHandleThickness: CGFloat = 40
-    private let sliderMinValuePadding: CGFloat = 25
-    private let sliderMaxValuePadding: CGFloat = 70
+    private var tickSize: CGFloat {
+        0.04 * chartSize
+    }
+    private var gapFromMaxTickToChart: CGFloat {
+        0.24 * chartSize
+    }
+    private var sliderHandleWidth: CGFloat {
+        0.16 * chartSize
+    }
+    private var sliderHandleThickness: CGFloat {
+        0.16 * chartSize
+    }
+    private var sliderMinValuePadding: CGFloat {
+        0.1 * chartSize
+    }
+    private var sliderMaxValuePadding: CGFloat {
+        0.28 * chartSize
+    }
+    private var yLabelWidth: CGFloat {
+        0.32 * chartSize
+    }
+    private var handleThickness: CGFloat {
+        0.08 * chartSize
+    }
+    private var handleCornerRadius: CGFloat {
+        handleThickness * 0.25
+    }
+    private var labelFontSize: CGFloat {
+        0.06 * chartSize
+    }
+
 
     var body: some View {
         HStack {
             VStack {
                 Text("[A]")
                 Text("\(Double(concentration), specifier: "%.2f") M").foregroundColor(.orangeAccent)
-            }.frame(minWidth: 80)
+            }
+            .font(.system(size: labelFontSize))
+            .frame(width: yLabelWidth)
 
             HStack(alignment: .top) {
                 slider(isPortrait: true)
@@ -58,7 +85,7 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
                         Text("\(Double(time), specifier: "%.1f") s")
                             .foregroundColor(.orangeAccent)
                             .frame(width: chartSize / 2, alignment: .leading)
-                    }
+                    }.font(.system(size: labelFontSize))
                 }
             }
         }
@@ -79,9 +106,9 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             value: isPortrait ? $concentration : $time,
             minValue: isPortrait ? minConcentration : minTime,
             maxValue: isPortrait ? maxConcentration : maxTime,
-            handleThickness: 20,
+            handleThickness: handleThickness,
             handleColor: Color.orangeAccent,
-            handleCornerRadius: 5,
+            handleCornerRadius: handleCornerRadius,
             barThickness: 3,
             barColor: Color.darkGray,
             minValuePadding: sliderMinValuePadding,
@@ -131,7 +158,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                 minConcentration: 0,
                 maxConcentration: 1,
                 minTime: 0,
-                maxTime: 10
+                maxTime: 10,
+                chartSize: 250
             )
         }
     }
