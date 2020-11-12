@@ -42,6 +42,7 @@
 		57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
 		57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */; };
+		57FDA145255D835600CB8804 /* BoundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA144255D835600CB8804 /* BoundType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
 		57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartGeometrySettings.swift; sourceTree = "<group>"; };
+		57FDA144255D835600CB8804 /* BoundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +233,7 @@
 				57035EF0255C09B500DB3A19 /* Orientation.swift */,
 				572CB943255C3BCF0071C600 /* ValueRange.swift */,
 				57FDA138255D6C5000CB8804 /* Extensions.swift */,
+				57FDA144255D835600CB8804 /* BoundType.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
 				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
 				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
+				57FDA145255D835600CB8804 /* BoundType.swift in Sources */,
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
 				57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,

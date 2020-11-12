@@ -1,7 +1,7 @@
 //
 // Reactions App
 //
-  
+
 
 import SwiftUI
 
@@ -30,8 +30,11 @@ struct ZeroOrderReaction: View {
             VStack(alignment: .trailing) {
 
                 TimeChartAxisView(
-                    concentration: $moleculeConcentration.initialConcentration,
-                    time: $moleculeConcentration.initialTime,
+                    initialConcentration: $moleculeConcentration.initialConcentration,
+                    initialTime: $moleculeConcentration.initialTime,
+                    finalConcentration: .constant(0),
+                    finalTime: .constant(0),
+                    enableFinalSelection: false,
                     minConcentration: ReactionSettings.minConcentration,
                     maxConcentration: ReactionSettings.maxConcentration,
                     minTime: ReactionSettings.minTime,

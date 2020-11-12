@@ -67,7 +67,8 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
             maxValuePadding: maxValuePadding,
             orientation: orientation,
             previousHandleValue: previousHandleValue,
-            previousHandlePadding: 3
+            previousHandlePadding: 3,
+            previousValueBoundType: .lower
         )
     }
 }

@@ -7,8 +7,13 @@ import SwiftUI
 
 struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
 
-    @Binding var concentration: Value
-    @Binding var time: Value
+    @Binding var initialConcentration: Value
+    @Binding var initialTime: Value
+
+    @Binding var finalConcentration: Value
+    @Binding var finalTime: Value
+
+    let enableFinalSelection: Bool
 
     let minConcentration: Value
     let maxConcentration: Value
@@ -26,7 +31,7 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         HStack {
             VStack {
                 Text("[A]")
-                Text("\(Double(concentration), specifier: "%.2f") M").foregroundColor(.orangeAccent)
+                Text("\(Double(initialConcentration), specifier: "%.2f") M").foregroundColor(.orangeAccent)
             }
             .font(.system(size: settings.labelFontSize))
             .frame(width: settings.yLabelWidth)
@@ -52,7 +57,7 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
                         Text("Time")
                             .frame(width: chartSize / 2, alignment: .trailing)
 
-                        Text("\(Double(time), specifier: "%.1f") s")
+                        Text("\(Double(initialTime), specifier: "%.1f") s")
                             .foregroundColor(.orangeAccent)
                             .frame(width: chartSize / 2, alignment: .leading)
                     }.font(.system(size: settings.labelFontSize))
@@ -73,7 +78,7 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         let width: CGFloat = isPortrait ? settings.sliderHandleWidth : chartSize
         let height: CGFloat = isPortrait ? chartSize : settings.sliderHandleWidth
         return CustomSlider(
-            value: isPortrait ? $concentration : $time,
+            value: isPortrait ? $initialConcentration : $initialTime,
             minValue: isPortrait ? minConcentration : minTime,
             maxValue: isPortrait ? maxConcentration : maxTime,
             handleThickness: settings.handleThickness,
@@ -85,7 +90,8 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             maxValuePadding: settings.sliderMaxValuePadding,
             orientation: isPortrait ? .portrait : .landscape,
             previousHandleValue: nil,
-            previousHandlePadding: 10
+            previousHandlePadding: 10,
+            previousValueBoundType: .lower
         ).frame(width: width, height: height)
     }
 
@@ -93,7 +99,7 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         let width: CGFloat = isPortrait ? 25 : chartSize
         let height: CGFloat = isPortrait ? chartSize : 25
         return CustomSlider(
-            value: isPortrait ? $concentration : $time,
+            value: isPortrait ? $initialConcentration : $initialTime,
             minValue: isPortrait ? minConcentration : minTime,
             maxValue: isPortrait ? maxConcentration : maxTime,
             handleThickness: 2,
@@ -105,7 +111,8 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             maxValuePadding: settings.sliderMaxValuePadding,
             orientation: isPortrait ? .portrait : .landscape,
             previousHandleValue: nil,
-            previousHandlePadding: 10
+            previousHandlePadding: 10,
+            previousValueBoundType: .upper
         ).frame(width: width, height: height).disabled(true)
     }
 }
@@ -118,11 +125,16 @@ struct TimeChartAxisView_Previews: PreviewProvider {
     struct ViewWrapper: View {
         @State private var c: CGFloat = 0.5
         @State private var t: CGFloat = 0.5
+        @State private var c1: CGFloat = 0.2
+        @State private var t2: CGFloat = 0.7
 
         var body: some View {
             TimeChartAxisView(
-                concentration: $c,
-                time: $t,
+                initialConcentration: $c,
+                initialTime: $t,
+                finalConcentration: $t,
+                finalTime: $c,
+                enableFinalSelection: false,
                 minConcentration: 0,
                 maxConcentration: 1,
                 minTime: 0,

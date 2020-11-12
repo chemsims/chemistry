@@ -25,6 +25,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     let previousHandleValue: Value?
     let previousHandlePadding: CGFloat
+    let previousValueBoundType: BoundType
 
     var body: some View {
         GeometryReader { geometry in
@@ -55,8 +56,8 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                         var newValue = calculations.getValue(forHandle: Value(inputValue))
                         if (newValue > calculations.maxValue) {
                             newValue = calculations.maxValue
-                        } else if (newValue < minValue) {
-                            newValue = minValue
+                        } else if (newValue < calculations.minValue) {
+                            newValue = calculations.minValue
                         }
                         self.value = newValue
                     }
@@ -75,13 +76,27 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         )
         if let previousValue = previousHandleValue {
             let position = calculations.getHandleCenter(at: previousValue)
-            let newMaxValuePos = position - Value(handleThickness + previousHandlePadding)
-            let newMaxValue = calculations.getValue(forHandle: newMaxValuePos)
+            let isUpperBound = previousValueBoundType == .upper
+
+            let positionDelta = Value(handleThickness + previousHandlePadding)
+            let positionDirection = isUpperBound ? -1 : 1
+
+            let updatedPosition = position + (positionDelta * Value(positionDirection))
+            let updatedValue = calculations.getValue(forHandle: updatedPosition)
+
+            if (isUpperBound) {
+                return SliderCalculations(
+                    minValuePosition: minValuePos,
+                    maxValuePosition: updatedPosition,
+                    minValue: minValue,
+                    maxValue: updatedValue
+                )
+            }
             return SliderCalculations(
-                minValuePosition: minValuePos,
-                maxValuePosition: newMaxValuePos,
-                minValue: minValue,
-                maxValue: newMaxValue
+                minValuePosition: updatedPosition,
+                maxValuePosition: maxValuePos,
+                minValue: updatedValue,
+                maxValue: maxValue
             )
         }
         return calculations
@@ -161,8 +176,9 @@ struct CustomSlider_Previews: PreviewProvider {
                     minValuePadding: 50,
                     maxValuePadding: 50,
                     orientation: .landscape,
-                    previousHandleValue: nil,
-                    previousHandlePadding: 10
+                    previousHandleValue: 1.5,
+                    previousHandlePadding: 10,
+                    previousValueBoundType: .lower
                 ).frame(height: 80)
             }
         }
