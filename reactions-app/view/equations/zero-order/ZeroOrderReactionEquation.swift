@@ -95,48 +95,44 @@ struct GeneralZeroOrderReactionEquationView: View {
     }
 
     private var fraction1: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 1) {
-                Text("–")
-                    .frame(width: settings.negativeWidth)
-                termOrBox(deltaC, settings: settings)
-                    .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
-                Text("")
-                    .frame(width: settings.negativeWidth)
-            }
-            divider
-                .frame(width: fraction1DividerWidth)
+        HStack(spacing: 0) {
+            Text("–")
+                .frame(width: settings.negativeWidth)
+            VStack(spacing: 0) {
+                HStack(spacing: 1) {
+                    termOrBox(deltaC, settings: settings)
+                        .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
+                }
+                divider
+                    .frame(width: fraction1DividerWidth)
 
-            HStack(spacing: 1) {
-                Text("")
-                    .frame(width: settings.negativeWidth)
-                termOrBox(deltaT, settings: settings)
-                    .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
-                Text("")
-                    .frame(width: settings.negativeWidth)
-            }
+                HStack(spacing: 1) {
+                    termOrBox(deltaT, settings: settings)
+                        .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
+                }
 
-        }.frame(minWidth: fraction1DividerWidth + 30)
+            }
+        }
     }
 
     private var fraction2: some View {
-        VStack(spacing: 1) {
-            fraction2Part(term1: c2, term2: c1, isNegative: true)
-            divider
-                .frame(width: fraction2DividerWidth)
-            fraction2Part(term1: t2, term2: t1, isNegative: false)
+        HStack(spacing: 0) {
+            Text("–")
+                .frame(width: settings.negativeWidth)
+            VStack(spacing: 1) {
+                fraction2Part(term1: c2, term2: c1)
+                divider
+                    .frame(width: fraction2DividerWidth)
+                fraction2Part(term1: t2, term2: t1)
+            }
         }
     }
 
     private func fraction2Part(
         term1: String?,
-        term2: String,
-        isNegative: Bool
+        term2: String
     ) -> some View {
         HStack(spacing: 1) {
-            Text("\(isNegative ? "–" : "")")
-                .frame(width: settings.negativeWidth)
-
             Text("(")
                 .frame(width: settings.parenWidth)
 
@@ -152,12 +148,8 @@ struct GeneralZeroOrderReactionEquationView: View {
 
             Text(")")
                 .frame(width: settings.parenWidth)
-
-            Text("")
-                .frame(width: settings.negativeWidth)
         }
     }
-
 
     private var divider: some View {
         Rectangle().frame(height: 1)
