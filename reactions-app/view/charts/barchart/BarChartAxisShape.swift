@@ -9,15 +9,31 @@ struct ConcentrationBarChart<Value>: View where Value: BinaryFloatingPoint {
 
     let concentrationA: ValueRange<Value>
 
-    let maxValueGapToTop: CGFloat = 80
-    let zeroHeight: CGFloat = 20
+    let chartWidth: CGFloat
+
+    private var maxValueGapToTop: CGFloat {
+        0.2 * chartWidth
+    }
+    private var zeroHeight: CGFloat {
+        0.07 * chartWidth
+    }
 
     private let ticks = 10
-    private let tickSize: CGFloat = 15
-    private let height: CGFloat = 300
-    private let barWidth: CGFloat = 45
-    private let barAGapToAxis: CGFloat = 60
-    private let labelDiameter: CGFloat = 30
+    private var tickSize: CGFloat {
+        0.05 * chartWidth
+    }
+    private var barWidth: CGFloat {
+        0.15 * chartWidth
+    }
+    private var barAGapToAxis: CGFloat {
+        0.2 * chartWidth
+    }
+    private var labelDiameter: CGFloat {
+        0.1 * chartWidth
+    }
+    private var labelFontSize: CGFloat {
+        0.1 * chartWidth
+    }
 
     var body: some View {
         VStack {
@@ -30,7 +46,7 @@ struct ConcentrationBarChart<Value>: View where Value: BinaryFloatingPoint {
                 drawBar(value: concentrationA)
                     .foregroundColor(Styling.moleculeA)
 
-            }.frame(width: 300, height: height)
+            }.frame(width: chartWidth, height: chartWidth)
 
             VStack {
                 Circle()
@@ -38,25 +54,25 @@ struct ConcentrationBarChart<Value>: View where Value: BinaryFloatingPoint {
                     .foregroundColor(Styling.moleculeA)
 
                 Text("A")
-            }
-            .position(x: barAGapToAxis, y: labelDiameter)
+                    .font(.system(size: labelFontSize))
+            }.offset(x: barAGapToAxis - (chartWidth / 2))
         }.frame(width: 300)
     }
 
     private func drawBar(value: ValueRange<Value>) -> some View {
         let barHeight = CGFloat(value.percentage) * maxBarHeight
-        let yPos = height - (barHeight / 2) - tickDy
+        let yPos = chartWidth - (barHeight / 2) - tickDy
         return Rectangle()
             .frame(width: barWidth, height: barHeight)
             .position(x: barAGapToAxis, y: yPos)
     }
 
     private var maxBarHeight: CGFloat {
-        height - tickDy - maxValueGapToTop
+        chartWidth - tickDy - maxValueGapToTop
     }
 
     private var tickDy: CGFloat {
-        height / CGFloat(ticks + 1)
+        chartWidth / CGFloat(ticks + 1)
     }
 }
 
@@ -108,7 +124,8 @@ struct BarChartMinorAxisShape: Shape {
 struct BarChartAxisShape_Previews: PreviewProvider {
     static var previews: some View {
         ConcentrationBarChart(
-            concentrationA: ValueRange(value: 20, minValue: 0, maxValue: 20)
+            concentrationA: ValueRange(value: 20, minValue: 0, maxValue: 20),
+            chartWidth: 300
         )
     }
 }

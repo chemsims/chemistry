@@ -109,6 +109,12 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
     }
 }
 
+struct TimeChartGeometrySettings {
+    let geometry: GeometryProxy
+
+
+}
+
 struct TimeChartAxisView_Previews: PreviewProvider {
     static var previews: some View {
         ViewWrapper()
