@@ -41,6 +41,7 @@
 		57FDA135255D5EE300CB8804 /* SubscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA134255D5EE300CB8804 /* SubscriptView.swift */; };
 		57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
+		57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		57FDA134255D5EE300CB8804 /* SubscriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptView.swift; sourceTree = "<group>"; };
 		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
+		57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartGeometrySettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +262,7 @@
 			children = (
 				57035F0B255C26D000DB3A19 /* TimeChartAxisShape.swift */,
 				57035F11255C29A500DB3A19 /* TimeChartAxisView.swift */,
+				57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */,
 			);
 			path = timechart;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */,
 				57035F12255C29A500DB3A19 /* TimeChartAxisView.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
+				57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */,
 				57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */,
 				572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */,
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */,

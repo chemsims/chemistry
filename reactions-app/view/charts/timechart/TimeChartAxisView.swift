@@ -18,65 +18,35 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
 
     let chartSize: CGFloat
 
-    private let verticalTicks = 10
-    private let horizontalTicks = 10
-    private var tickSize: CGFloat {
-        0.04 * chartSize
-    }
-    private var gapFromMaxTickToChart: CGFloat {
-        0.24 * chartSize
-    }
-    private var sliderHandleWidth: CGFloat {
-        0.16 * chartSize
-    }
-    private var sliderHandleThickness: CGFloat {
-        0.16 * chartSize
-    }
-    private var sliderMinValuePadding: CGFloat {
-        0.1 * chartSize
-    }
-    private var sliderMaxValuePadding: CGFloat {
-        0.28 * chartSize
-    }
-    private var yLabelWidth: CGFloat {
-        0.32 * chartSize
-    }
-    private var handleThickness: CGFloat {
-        0.08 * chartSize
-    }
-    private var handleCornerRadius: CGFloat {
-        handleThickness * 0.25
-    }
-    private var labelFontSize: CGFloat {
-        0.06 * chartSize
-    }
-
-
     var body: some View {
+        makeView(using: TimeChartGeometrySettings(chartSize: chartSize))
+    }
+
+    private func makeView(using settings: TimeChartGeometrySettings) -> some View {
         HStack {
             VStack {
                 Text("[A]")
                 Text("\(Double(concentration), specifier: "%.2f") M").foregroundColor(.orangeAccent)
             }
-            .font(.system(size: labelFontSize))
-            .frame(width: yLabelWidth)
+            .font(.system(size: settings.labelFontSize))
+            .frame(width: settings.yLabelWidth)
 
             HStack(alignment: .top) {
-                slider(isPortrait: true)
+                slider(isPortrait: true, settings: settings)
                 VStack {
                     TimeChartAxisShape(
-                        verticalTicks: verticalTicks,
-                        horizontalTicks: horizontalTicks,
-                        tickSize: tickSize,
-                        gapToTop: gapFromMaxTickToChart,
-                        gapToSide: gapFromMaxTickToChart
+                        verticalTicks: settings.verticalTicks,
+                        horizontalTicks: settings.horizontalTicks,
+                        tickSize: settings.tickSize,
+                        gapToTop: settings.gapFromMaxTickToChart,
+                        gapToSide: settings.gapFromMaxTickToChart
                     )
                         .stroke()
                         .frame(width: chartSize, height: chartSize)
-                        .overlay(verticalIndicator, alignment: .leading)
-                        .overlay(horizontalIndicator, alignment: .bottom)
+                        .overlay(verticalIndicator(settings: settings), alignment: .leading)
+                        .overlay(horizontalIndicator(settings: settings), alignment: .bottom)
 
-                    slider(isPortrait: false)
+                    slider(isPortrait: false, settings: settings)
 
                     HStack {
                         Text("Time")
@@ -85,41 +55,41 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
                         Text("\(Double(time), specifier: "%.1f") s")
                             .foregroundColor(.orangeAccent)
                             .frame(width: chartSize / 2, alignment: .leading)
-                    }.font(.system(size: labelFontSize))
+                    }.font(.system(size: settings.labelFontSize))
                 }
             }
         }
     }
 
-    private var verticalIndicator: some View {
-        indicator(isPortrait: true)
+    private func verticalIndicator(settings: TimeChartGeometrySettings) -> some View {
+        indicator(isPortrait: true, settings: settings)
     }
 
-    private var horizontalIndicator: some View {
-        indicator(isPortrait: false)
+    private func horizontalIndicator(settings: TimeChartGeometrySettings) -> some View {
+        indicator(isPortrait: false, settings: settings)
     }
 
-    private func slider(isPortrait: Bool) -> some View {
-        let width: CGFloat = isPortrait ? sliderHandleWidth : chartSize
-        let height: CGFloat = isPortrait ? chartSize : sliderHandleWidth
+    private func slider(isPortrait: Bool, settings: TimeChartGeometrySettings) -> some View {
+        let width: CGFloat = isPortrait ? settings.sliderHandleWidth : chartSize
+        let height: CGFloat = isPortrait ? chartSize : settings.sliderHandleWidth
         return CustomSlider(
             value: isPortrait ? $concentration : $time,
             minValue: isPortrait ? minConcentration : minTime,
             maxValue: isPortrait ? maxConcentration : maxTime,
-            handleThickness: handleThickness,
+            handleThickness: settings.handleThickness,
             handleColor: Color.orangeAccent,
-            handleCornerRadius: handleCornerRadius,
+            handleCornerRadius: settings.handleCornerRadius,
             barThickness: 3,
             barColor: Color.darkGray,
-            minValuePadding: sliderMinValuePadding,
-            maxValuePadding: sliderMaxValuePadding,
+            minValuePadding: settings.sliderMinValuePadding,
+            maxValuePadding: settings.sliderMaxValuePadding,
             orientation: isPortrait ? .portrait : .landscape,
             previousHandleValue: nil,
             previousHandlePadding: 10
         ).frame(width: width, height: height)
     }
 
-    private func indicator(isPortrait: Bool) -> some View {
+    private func indicator(isPortrait: Bool, settings: TimeChartGeometrySettings) -> some View {
         let width: CGFloat = isPortrait ? 25 : chartSize
         let height: CGFloat = isPortrait ? chartSize : 25
         return CustomSlider(
@@ -131,19 +101,13 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             handleCornerRadius: 0,
             barThickness: 0,
             barColor: Color.darkGray,
-            minValuePadding: sliderMinValuePadding,
-            maxValuePadding: sliderMaxValuePadding,
+            minValuePadding: settings.sliderMinValuePadding,
+            maxValuePadding: settings.sliderMaxValuePadding,
             orientation: isPortrait ? .portrait : .landscape,
             previousHandleValue: nil,
             previousHandlePadding: 10
         ).frame(width: width, height: height).disabled(true)
     }
-}
-
-struct TimeChartGeometrySettings {
-    let geometry: GeometryProxy
-
-
 }
 
 struct TimeChartAxisView_Previews: PreviewProvider {
