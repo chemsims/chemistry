@@ -37,8 +37,15 @@ class ReactionViewModel: ObservableObject {
     }
 
     var rate: Double? {
-        if let deltaC = deltaC, let deltaT = deltaT {
+        if let deltaC = deltaC, deltaC != 0, let deltaT = deltaT {
             return deltaT / deltaC
+        }
+        return nil
+    }
+
+    var halfTime: Double? {
+        if let rate = rate, rate != 0 {
+            return initialConcentration / (2 * rate)
         }
         return nil
     }

@@ -12,7 +12,11 @@ struct ContentView: View {
     @ObservedObject var model = ReactionViewModel()
 
     var body: some View {
-        ZeroOrderReaction(moleculeConcentration: model)
+        ZeroOrderReaction(
+            beakyModel: ZeroOrderBeakyViewModel(
+                reactionViewModel: ReactionViewModel()
+            )
+        )
     }
 }
 

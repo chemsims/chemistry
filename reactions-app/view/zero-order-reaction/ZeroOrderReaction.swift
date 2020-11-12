@@ -7,7 +7,12 @@ import SwiftUI
 
 struct ZeroOrderReaction: View {
 
-    @ObservedObject var moleculeConcentration: ReactionViewModel
+    @ObservedObject var beakyModel: ZeroOrderBeakyViewModel
+    @ObservedObject var reactionModel: ReactionViewModel
+    init(beakyModel: ZeroOrderBeakyViewModel) {
+        self.beakyModel = beakyModel
+        self.reactionModel = beakyModel.reactionViewModel
+    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -20,7 +25,7 @@ struct ZeroOrderReaction: View {
             VStack {
                 Spacer()
                 FilledBeaker(
-                    molecules: [(Styling.moleculeA, moleculeConcentration.molecules)]
+                    molecules: [(Styling.moleculeA, reactionModel.molecules)]
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
                 .padding(.leading, 60)
@@ -30,10 +35,10 @@ struct ZeroOrderReaction: View {
             VStack(alignment: .trailing) {
 
                 TimeChartAxisView(
-                    initialConcentration: $moleculeConcentration.initialConcentration,
-                    initialTime: $moleculeConcentration.initialTime,
-                    finalConcentration: $moleculeConcentration.finalConcentration,
-                    finalTime: $moleculeConcentration.finalTime,
+                    initialConcentration: $reactionModel.initialConcentration,
+                    initialTime: $reactionModel.initialTime,
+                    finalConcentration: $reactionModel.finalConcentration,
+                    finalTime: $reactionModel.finalTime,
                     minConcentration: ReactionSettings.minConcentration,
                     maxConcentration: ReactionSettings.maxConcentration,
                     minTime: ReactionSettings.minTime,
@@ -43,7 +48,7 @@ struct ZeroOrderReaction: View {
 
                 ConcentrationBarChart(
                     concentrationA: ValueRange(
-                        value: moleculeConcentration.initialConcentration,
+                        value: reactionModel.initialConcentration,
                         minValue: ReactionSettings.minConcentration,
                         maxValue: ReactionSettings.maxConcentration
                     ),
@@ -58,22 +63,31 @@ struct ZeroOrderReaction: View {
                     ZeroOrderEquationFilled(scale: settings.equationScale)
                     ZeroOrderEquationTerm2Blank(
                         scale: settings.equationScale,
-                        initialConcentration: moleculeConcentration.initialConcentration,
-                        initialTime: moleculeConcentration.initialTime
+                        initialConcentration: reactionModel.initialConcentration,
+                        initialTime: reactionModel.initialTime
                     )
                 }
                 VStack(alignment: .leading, spacing: 3) {
                     ZeroOrderReactionHalftimeView(scale: settings.equationScale)
                     ZeroOrderReactionHalftimeBlank(
                         scale: settings.equationScale,
-                        initialConcentration: moleculeConcentration.initialConcentration,
-                        rate: nil,
-                        halfTime: nil
+                        initialConcentration: reactionModel.initialConcentration,
+                        rate: reactionModel.rate,
+                        halfTime: reactionModel.halfTime
                     )
                 }
 
-                SpeechBubble(lines: ZeroOrderBeakyStatements.statement1)
-                    .frame(width: 250, height: 300)
+                SpeechBubble(lines: beakyModel.statement)
+                    .frame(width: 220, height: 300)
+
+
+                Button(action: beakyModel.next) {
+                    Text("next")
+                }
+
+                Button(action: beakyModel.back) {
+                    Text("back")
+                }
 
             }
         }
@@ -122,14 +136,15 @@ struct LayoutSettings {
 }
 
 struct ZeroOrderReaction_Previews: PreviewProvider {
+
     static var previews: some View {
         /// iPad mini 4 landscape
         ZeroOrderReaction(
-            moleculeConcentration: ReactionViewModel()
+            beakyModel: ZeroOrderBeakyViewModel(reactionViewModel: ReactionViewModel())
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         ZeroOrderReaction(
-            moleculeConcentration: ReactionViewModel()
+            beakyModel: ZeroOrderBeakyViewModel(reactionViewModel: ReactionViewModel())
         ).previewLayout(.fixed(width: 1024, height: 768))
 
     }
