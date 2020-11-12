@@ -40,6 +40,7 @@
 		57FDA12E255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */; };
 		57FDA135255D5EE300CB8804 /* SubscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA134255D5EE300CB8804 /* SubscriptView.swift */; };
 		57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
+		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionHalftimeView.swift; sourceTree = "<group>"; };
 		57FDA134255D5EE300CB8804 /* SubscriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptView.swift; sourceTree = "<group>"; };
 		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				57035ED7255BF05100DB3A19 /* CustomSlider.swift */,
+				57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */,
 			);
 			path = slider;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 				57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */,
 				57035F12255C29A500DB3A19 /* TimeChartAxisView.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
+				57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */,
 				572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */,
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */,
 				572CB93E255C36DD0071C600 /* BarChartAxisShape.swift in Sources */,

@@ -113,7 +113,9 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             barColor: Color.darkGray,
             minValuePadding: sliderMinValuePadding,
             maxValuePadding: sliderMaxValuePadding,
-            orientation: isPortrait ? .portrait : .landscape
+            orientation: isPortrait ? .portrait : .landscape,
+            previousHandleValue: nil,
+            previousHandlePadding: 10
         ).frame(width: width, height: height)
     }
 
@@ -131,7 +133,9 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             barColor: Color.darkGray,
             minValuePadding: sliderMinValuePadding,
             maxValuePadding: sliderMaxValuePadding,
-            orientation: isPortrait ? .portrait : .landscape
+            orientation: isPortrait ? .portrait : .landscape,
+            previousHandleValue: nil,
+            previousHandlePadding: 10
         ).frame(width: width, height: height).disabled(true)
     }
 }

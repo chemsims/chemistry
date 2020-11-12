@@ -23,6 +23,9 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     let orientation: Orientation
 
+    let previousHandleValue: Value?
+    let previousHandlePadding: CGFloat
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
@@ -33,7 +36,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     geometry,
                     calculations: getCalculations(geometry: geometry)
                 )
-            }.frame(width: geometry.size.width)
+            }
         }
     }
 
@@ -50,8 +53,8 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     .onChanged { gesture in
                         let inputValue = orientation == .portrait ? gesture.location.y : gesture.location.x
                         var newValue = calculations.getValue(forHandle: Value(inputValue))
-                        if (newValue > maxValue) {
-                            newValue = maxValue
+                        if (newValue > calculations.maxValue) {
+                            newValue = calculations.maxValue
                         } else if (newValue < minValue) {
                             newValue = minValue
                         }
@@ -64,12 +67,24 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         let length = isPortrait ? geometry.size.height : geometry.size.width
         let minValuePos = isPortrait ? Value(length - minValuePadding) : Value(minValuePadding)
         let maxValuePos = isPortrait ? Value(maxValuePadding) : Value(length - maxValuePadding)
-        return SliderCalculations(
+        let calculations = SliderCalculations(
             minValuePosition: minValuePos,
             maxValuePosition: maxValuePos,
             minValue: minValue,
             maxValue: maxValue
         )
+        if let previousValue = previousHandleValue {
+            let position = calculations.getHandleCenter(at: previousValue)
+            let newMaxValuePos = position - Value(handleThickness + previousHandlePadding)
+            let newMaxValue = calculations.getValue(forHandle: newMaxValuePos)
+            return SliderCalculations(
+                minValuePosition: minValuePos,
+                maxValuePosition: newMaxValuePos,
+                minValue: minValue,
+                maxValue: newMaxValue
+            )
+        }
+        return calculations
     }
 
     /// Return the x position of the center of the slider handle
@@ -122,30 +137,34 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 }
 
 struct CustomSlider_Previews: PreviewProvider {
-    @ObservedObject static var value = CustomSliderPreview()
 
     static var previews: some View {
-        VStack {
-            Text("\(value.value)")
-
-            CustomSlider(
-                value: $value.value,
-                minValue: 1,
-                maxValue: 2,
-                handleThickness: 40,
-                handleColor: Color.orangeAccent,
-                handleCornerRadius: 15,
-                barThickness: 5,
-                barColor: Color.darkGray,
-                minValuePadding: 50,
-                maxValuePadding: 50,
-                orientation: .landscape
-            ).frame(height: 80)
-        }
-
+        ViewWrapper()
     }
-}
 
-class CustomSliderPreview: ObservableObject {
-    @Published var value: CGFloat = 1
+    struct ViewWrapper: View  {
+        @State var value: CGFloat = 1.5
+
+        var body: some View {
+            VStack {
+                Text("\(value)")
+
+                CustomSlider(
+                    value: $value,
+                    minValue: 1,
+                    maxValue: 2,
+                    handleThickness: 40,
+                    handleColor: Color.orangeAccent,
+                    handleCornerRadius: 15,
+                    barThickness: 5,
+                    barColor: Color.darkGray,
+                    minValuePadding: 50,
+                    maxValuePadding: 50,
+                    orientation: .landscape,
+                    previousHandleValue: nil,
+                    previousHandlePadding: 10
+                ).frame(height: 80)
+            }
+        }
+    }
 }
