@@ -30,7 +30,7 @@ struct ZeroOrderReaction: View {
             VStack(alignment: .trailing) {
 
                 TimeChartAxisView(
-                    concentration: $moleculeConcentration.concentration,
+                    concentration: $moleculeConcentration.initialConcentration,
                     time: $moleculeConcentration.initialTime,
                     minConcentration: ReactionSettings.minConcentration,
                     maxConcentration: ReactionSettings.maxConcentration,
@@ -41,7 +41,7 @@ struct ZeroOrderReaction: View {
 
                 ConcentrationBarChart(
                     concentrationA: ValueRange(
-                        value: moleculeConcentration.concentration,
+                        value: moleculeConcentration.initialConcentration,
                         minValue: ReactionSettings.minConcentration,
                         maxValue: ReactionSettings.maxConcentration
                     ),
@@ -51,16 +51,29 @@ struct ZeroOrderReaction: View {
             .padding(.leading, -20)
             .padding(.trailing, 30)
 
-            VStack(alignment: .leading) {
-                ZeroOrderEquationFilled(scale: settings.equationScale)
-                ZeroOrderEquationTerm2Blank(
-                    scale: settings.equationScale,
-                    initialConcentration: moleculeConcentration.concentration,
-                    intialTime: moleculeConcentration.initialTime
-                )
+            VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 3) {
+                    ZeroOrderEquationFilled(scale: settings.equationScale)
+                    ZeroOrderEquationTerm2Blank(
+                        scale: settings.equationScale,
+                        initialConcentration: moleculeConcentration.initialConcentration,
+                        initialTime: moleculeConcentration.initialTime
+                    )
+                }
+                VStack(alignment: .leading, spacing: 3) {
+                    ZeroOrderReactionHalftimeView(scale: settings.equationScale)
+                    ZeroOrderReactionHalftimeBlank(
+                        scale: settings.equationScale,
+                        initialConcentration: moleculeConcentration.initialConcentration,
+                        rate: nil,
+                        halfTime: nil
+                    )
+                }
+
             }
         }
     }
+
 }
 
 struct LayoutSettings {

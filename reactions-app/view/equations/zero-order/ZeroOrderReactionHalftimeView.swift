@@ -22,17 +22,17 @@ struct ZeroOrderReactionHalftimeView: View {
 struct ZeroOrderReactionHalftimeBlank: View {
     let scale: CGFloat
 
-    let initialConcentration: String?
-    let rate: String?
-    let halfTime: String?
+    let initialConcentration: Double?
+    let rate: Double?
+    let halfTime: Double?
 
     var body: some View {
         GeneralZeroOrderReactionHalftimeView(
             settings: EquationGeometrySettings(scale: scale),
             showFilled: false,
-            initialConcentration: initialConcentration,
-            rate: rate,
-            halfTime: halfTime
+            initialConcentration: initialConcentration?.str(decimals: 2),
+            rate: rate?.str(decimals: 2),
+            halfTime: halfTime?.str(decimals: 2)
         )
     }
 }
@@ -120,15 +120,15 @@ struct ZeroOrderReactionHalftimeView_Previews: PreviewProvider {
             )
             ZeroOrderReactionHalftimeBlank(
                 scale: 2,
-                initialConcentration: "0.2",
+                initialConcentration: 0.2,
                 rate: nil,
                 halfTime: nil
             )
             ZeroOrderReactionHalftimeBlank(
                 scale: 2,
-                initialConcentration: "0.2",
-                rate: "0.03",
-                halfTime: "8.33"
+                initialConcentration: 0.2,
+                rate: 0.03,
+                halfTime: 8.33
             )
 
         }

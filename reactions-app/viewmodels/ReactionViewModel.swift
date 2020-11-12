@@ -1,31 +1,53 @@
 //
 // Reactions App
 //
-  
+
 
 import SwiftUI
 
 class ReactionViewModel: ObservableObject {
 
-    @Published var concentration: Double {
+    init () {
+        setMolecules(cols: 19, rows: 10)
+    }
+
+    @Published var initialConcentration: Double = 0.4 {
         didSet {
-            getMolecules(cols: 19, rows: 10)
+            setMolecules(cols: 19, rows: 10)
         }
     }
     @Published var initialTime: Double = 10
+    @Published var finalConcentration: Double?
+    @Published var finalTime: Double?
 
     var molecules: [GridCoordinate] = []
 
-    init () {
-        self.concentration = 0.4
-        getMolecules(cols: 19, rows: 10)
+    var deltaC: Double? {
+        if let c2 = finalConcentration {
+            return c2 - initialConcentration
+        }
+        return nil
     }
 
-    func getMolecules(
+    var deltaT: Double? {
+        if let t2 = finalTime {
+            return t2 - initialTime
+        }
+        return nil
+    }
+
+    var rate: Double? {
+        if let deltaC = deltaC, let deltaT = deltaT {
+            return deltaT / deltaC
+        }
+        return nil
+    }
+
+    private func setMolecules(
         cols: Int,
         rows: Int
     ) {
-        let desiredMolecues = Int(concentration * Double(cols * rows))
+        let desiredMolecues = Int(initialConcentration * Double(cols * rows))
 
         let surplus = desiredMolecues - molecules.count
         if (surplus < 0) {

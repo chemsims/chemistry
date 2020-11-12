@@ -39,6 +39,7 @@
 		57FDA129255D5DC500CB8804 /* EquationGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */; };
 		57FDA12E255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */; };
 		57FDA135255D5EE300CB8804 /* SubscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA134255D5EE300CB8804 /* SubscriptView.swift */; };
+		57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationGeometrySettings.swift; sourceTree = "<group>"; };
 		57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionHalftimeView.swift; sourceTree = "<group>"; };
 		57FDA134255D5EE300CB8804 /* SubscriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptView.swift; sourceTree = "<group>"; };
+		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +225,7 @@
 				57035EDB255BFDB400DB3A19 /* SliderCalculations.swift */,
 				57035EF0255C09B500DB3A19 /* Orientation.swift */,
 				572CB943255C3BCF0071C600 /* ValueRange.swift */,
+				57FDA138255D6C5000CB8804 /* Extensions.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
 				57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
+				57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */,
 				571D6A7C255AC75C00F4E635 /* BeakerShape.swift in Sources */,
 				571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */,
 				57FDA129255D5DC500CB8804 /* EquationGeometrySettings.swift in Sources */,

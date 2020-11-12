@@ -31,7 +31,7 @@ struct ZeroOrderEquationTerm2Blank: View {
     let scale: CGFloat
 
     let initialConcentration: Double
-    let intialTime: Double
+    let initialTime: Double
 
     var body: some View {
         GeneralZeroOrderReactionEquationView(
@@ -40,9 +40,9 @@ struct ZeroOrderEquationTerm2Blank: View {
             numerator1: nil,
             denominator1: nil,
             numerator2Term1: nil,
-            numerator2Term2: String(format: "%.1f", initialConcentration),
+            numerator2Term2: initialConcentration.str(decimals: 2),
             denominator2Term1: nil,
-            denominator2Term2: String(format: "%.1f", intialTime),
+            denominator2Term2: initialTime.str(decimals: 2),
             emphasiseFractionTerm2: true
         )
     }
