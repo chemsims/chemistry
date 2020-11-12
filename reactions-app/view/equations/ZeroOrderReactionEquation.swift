@@ -12,7 +12,7 @@ struct ZeroOrderEquationFilled: View {
 
     var body: some View {
         GeneralZeroOrderReactionEquationView(
-            scale: scale,
+            settings: EquationGeometrySettings(scale: scale),
             firstTerm: "k",
             numerator1: "Δc",
             denominator1: "Δt",
@@ -35,7 +35,7 @@ struct ZeroOrderEquationTerm2Blank: View {
 
     var body: some View {
         GeneralZeroOrderReactionEquationView(
-            scale: scale,
+            settings: EquationGeometrySettings(scale: scale),
             firstTerm: nil,
             numerator1: nil,
             denominator1: nil,
@@ -48,10 +48,9 @@ struct ZeroOrderEquationTerm2Blank: View {
     }
 }
 
-
 struct GeneralZeroOrderReactionEquationView: View {
 
-    let scale: CGFloat
+    let settings: EquationGeometrySettings
 
     let firstTerm: String?
     let numerator1: String?
@@ -65,27 +64,11 @@ struct GeneralZeroOrderReactionEquationView: View {
 
     let emphasiseFractionTerm2: Bool
 
-    private var boxSize: CGFloat {
-        35 * scale
-    }
-    private var boxPadding: CGFloat {
-        6 * scale
-    }
-    private var negativeWidth: CGFloat {
-        10 * scale
-    }
-    private var parenWidth: CGFloat {
-        7 * scale
-    }
-    private var fontSize: CGFloat {
-        15 * scale
-    }
-
     private var fraction1DividerWidth: CGFloat {
-        30 * scale
+        30 * settings.scale
     }
     private var fraction2DividerWidth: CGFloat {
-        90 * scale
+        90 * settings.scale
     }
 
     var body: some View {
@@ -93,7 +76,7 @@ struct GeneralZeroOrderReactionEquationView: View {
             Text("Rate")
             Text("=")
             termOrBox(firstTerm)
-                .frame(minWidth: boxSize)
+                .frame(minWidth: settings.scale)
 
             Text("=")
 
@@ -102,29 +85,29 @@ struct GeneralZeroOrderReactionEquationView: View {
             Text("=")
 
             fraction2
-        }.font(.system(size: fontSize))
+        }.font(.system(size: settings.fontSize))
     }
 
     private var fraction1: some View {
         VStack(spacing: 0) {
             HStack(spacing: 1) {
                 Text("–")
-                    .frame(width: negativeWidth)
+                    .frame(width: settings.negativeWidth)
                 termOrBox(numerator1)
-                    .frame(minWidth: boxSize)
+                    .frame(minWidth: settings.boxSize)
                 Text("")
-                    .frame(width: negativeWidth)
+                    .frame(width: settings.negativeWidth)
             }
             divider
                 .frame(width: fraction1DividerWidth)
 
             HStack(spacing: 1) {
                 Text("")
-                    .frame(width: negativeWidth)
+                    .frame(width: settings.negativeWidth)
                 termOrBox(denominator1)
-                    .frame(minWidth: boxSize)
+                    .frame(minWidth: settings.boxSize)
                 Text("")
-                    .frame(width: negativeWidth)
+                    .frame(width: settings.negativeWidth)
             }
 
         }.frame(minWidth: fraction1DividerWidth + 30)
@@ -146,26 +129,26 @@ struct GeneralZeroOrderReactionEquationView: View {
     ) -> some View {
         HStack(spacing: 1) {
             Text("\(isNegative ? "–" : "")")
-                .frame(width: negativeWidth)
+                .frame(width: settings.negativeWidth)
 
             Text("(")
-                .frame(width: parenWidth)
+                .frame(width: settings.parenWidth)
 
             termOrBox(term1)
-                .frame(minWidth: boxSize)
+                .frame(minWidth: settings.boxSize)
 
             Text("–")
-                .frame(width: negativeWidth)
+                .frame(width: settings.negativeWidth)
 
             Text(term2)
-                .frame(minWidth: boxSize)
+                .frame(minWidth: settings.boxSize)
                 .foregroundColor(emphasiseFractionTerm2 ? .orangeAccent : .black)
 
             Text(")")
-                .frame(width: parenWidth)
+                .frame(width: settings.parenWidth)
 
             Text("")
-                .frame(width: negativeWidth)
+                .frame(width: settings.negativeWidth)
         }
     }
 
@@ -175,8 +158,8 @@ struct GeneralZeroOrderReactionEquationView: View {
         }
         return AnyView(
             EquationPlaceholderView()
-                .padding(boxPadding)
-                .frame(width: boxSize, height: boxSize)
+                .padding(settings.boxPadding)
+                .frame(width: settings.boxSize, height: settings.boxSize)
         )
     }
 
@@ -185,39 +168,12 @@ struct GeneralZeroOrderReactionEquationView: View {
     }
 }
 
-struct EquationPlaceholderView: View {
-
-    var body: some View {
-        GeometryReader { geometry in
-            Rectangle()
-                .stroke(style: StrokeStyle(
-                            lineWidth: 1,
-                            lineCap: .square,
-                            lineJoin: .round,
-                            miterLimit: 0,
-                            dash: dash(geometry),
-                            dashPhase: dashPhase(geometry)
-                        )
-                )
-        }
-    }
-
-    private func dash(_ geometry: GeometryProxy) -> [CGFloat] {
-        let phase = dashPhase(geometry)
-        return [2 * phase, phase]
-    }
-
-    private func dashPhase(_ geometry: GeometryProxy) -> CGFloat {
-        geometry.size.width / 6
-    }
-}
-
 
 struct Equation_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             GeneralZeroOrderReactionEquationView(
-                scale: 1,
+                settings: EquationGeometrySettings(scale: 1),
                 firstTerm: "k",
                 numerator1: "Δc",
                 denominator1: "Δt",
@@ -228,7 +184,18 @@ struct Equation_Previews: PreviewProvider {
                 emphasiseFractionTerm2: false
             )
             GeneralZeroOrderReactionEquationView(
-                scale: 2,
+                settings: EquationGeometrySettings(scale: 1),
+                firstTerm: nil,
+                numerator1: nil,
+                denominator1: nil,
+                numerator2Term1: nil,
+                numerator2Term2: "0.5",
+                denominator2Term1: nil,
+                denominator2Term2: "10.12",
+                emphasiseFractionTerm2: true
+            )
+            GeneralZeroOrderReactionEquationView(
+                settings: EquationGeometrySettings(scale: 2),
                 firstTerm: nil,
                 numerator1: nil,
                 denominator1: nil,
