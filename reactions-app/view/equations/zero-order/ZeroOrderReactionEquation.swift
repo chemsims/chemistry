@@ -75,7 +75,7 @@ struct GeneralZeroOrderReactionEquationView: View {
         HStack {
             Text("Rate")
             Text("=")
-            termOrBox(firstTerm)
+            termOrBox(firstTerm, settings: settings)
                 .frame(minWidth: settings.scale)
 
             Text("=")
@@ -93,7 +93,7 @@ struct GeneralZeroOrderReactionEquationView: View {
             HStack(spacing: 1) {
                 Text("–")
                     .frame(width: settings.negativeWidth)
-                termOrBox(numerator1)
+                termOrBox(numerator1, settings: settings)
                     .frame(minWidth: settings.boxSize)
                 Text("")
                     .frame(width: settings.negativeWidth)
@@ -104,7 +104,7 @@ struct GeneralZeroOrderReactionEquationView: View {
             HStack(spacing: 1) {
                 Text("")
                     .frame(width: settings.negativeWidth)
-                termOrBox(denominator1)
+                termOrBox(denominator1, settings: settings)
                     .frame(minWidth: settings.boxSize)
                 Text("")
                     .frame(width: settings.negativeWidth)
@@ -134,7 +134,7 @@ struct GeneralZeroOrderReactionEquationView: View {
             Text("(")
                 .frame(width: settings.parenWidth)
 
-            termOrBox(term1)
+            termOrBox(term1, settings: settings)
                 .frame(minWidth: settings.boxSize)
 
             Text("–")
@@ -152,16 +152,6 @@ struct GeneralZeroOrderReactionEquationView: View {
         }
     }
 
-    private func termOrBox(_ term: String?) -> some View {
-        if let term = term {
-            return AnyView(Text(term))
-        }
-        return AnyView(
-            EquationPlaceholderView()
-                .padding(settings.boxPadding)
-                .frame(width: settings.boxSize, height: settings.boxSize)
-        )
-    }
 
     private var divider: some View {
         Rectangle().frame(height: 1)

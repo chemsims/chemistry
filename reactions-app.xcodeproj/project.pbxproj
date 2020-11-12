@@ -37,6 +37,8 @@
 		572CB949255C412A0071C600 /* ZeroOrderReactionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */; };
 		57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */; };
 		57FDA129255D5DC500CB8804 /* EquationGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */; };
+		57FDA12E255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */; };
+		57FDA135255D5EE300CB8804 /* SubscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA134255D5EE300CB8804 /* SubscriptView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,8 @@
 		572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionEquation.swift; sourceTree = "<group>"; };
 		57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationPlaceholderView.swift; sourceTree = "<group>"; };
 		57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationGeometrySettings.swift; sourceTree = "<group>"; };
+		57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionHalftimeView.swift; sourceTree = "<group>"; };
+		57FDA134255D5EE300CB8804 /* SubscriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,11 +269,29 @@
 		572CB947255C411F0071C600 /* equations */ = {
 			isa = PBXGroup;
 			children = (
-				572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */,
-				57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */,
-				57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */,
+				57FDA133255D5ED700CB8804 /* util */,
+				57FDA12C255D5E7500CB8804 /* zero-order */,
 			);
 			path = equations;
+			sourceTree = "<group>";
+		};
+		57FDA12C255D5E7500CB8804 /* zero-order */ = {
+			isa = PBXGroup;
+			children = (
+				572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */,
+				57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */,
+			);
+			path = "zero-order";
+			sourceTree = "<group>";
+		};
+		57FDA133255D5ED700CB8804 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */,
+				57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */,
+				57FDA134255D5EE300CB8804 /* SubscriptView.swift */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -380,6 +402,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57FDA135255D5EE300CB8804 /* SubscriptView.swift in Sources */,
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
 				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
 				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
@@ -404,6 +427,7 @@
 				57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */,
 				57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */,
 				57035EFD255C1A7000DB3A19 /* ReactionViewModel.swift in Sources */,
+				57FDA12E255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift in Sources */,
 				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
 				572CB949255C412A0071C600 /* ZeroOrderReactionEquation.swift in Sources */,
 			);

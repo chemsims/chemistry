@@ -23,4 +23,10 @@ struct EquationGeometrySettings {
     var fontSize: CGFloat {
         15 * scale
     }
+    var subscriptFontSize: CGFloat {
+        fontSize * 0.6
+    }
+    var subscriptBaselineOffset: CGFloat {
+        fontSize * -0.4
+    }
 }

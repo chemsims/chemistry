@@ -5,7 +5,24 @@
 
 import SwiftUI
 
-struct EquationPlaceholderView: View {
+struct DefaultPlaceholder: View {
+    let settings: EquationGeometrySettings
+
+    var body: some View {
+        EquationPlaceholderView()
+            .padding(settings.boxPadding)
+            .frame(width: settings.boxSize, height: settings.boxSize)
+    }
+}
+
+func termOrBox(_ term: String?, settings: EquationGeometrySettings) -> some View {
+    if let term = term {
+        return AnyView(Text(term))
+    }
+    return AnyView(DefaultPlaceholder(settings: settings))
+}
+
+fileprivate struct EquationPlaceholderView: View {
 
     var body: some View {
         GeometryReader { geometry in
@@ -34,6 +51,6 @@ struct EquationPlaceholderView: View {
 
 struct EquationPlaceholderView_Previews: PreviewProvider {
     static var previews: some View {
-        EquationPlaceholderView()
+        DefaultPlaceholder(settings: EquationGeometrySettings(scale: 1))
     }
 }
