@@ -32,9 +32,8 @@ struct ZeroOrderReaction: View {
                 TimeChartAxisView(
                     initialConcentration: $moleculeConcentration.initialConcentration,
                     initialTime: $moleculeConcentration.initialTime,
-                    finalConcentration: .constant(0),
-                    finalTime: .constant(0),
-                    finalConcentrationEnabled: false,
+                    finalConcentration: $moleculeConcentration.finalConcentration,
+                    finalTime: $moleculeConcentration.finalTime,
                     minConcentration: ReactionSettings.minConcentration,
                     maxConcentration: ReactionSettings.maxConcentration,
                     minTime: ReactionSettings.minTime,

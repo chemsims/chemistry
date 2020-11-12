@@ -8,9 +8,7 @@ import SwiftUI
 struct DualValueSlider<Value: BinaryFloatingPoint>: View {
 
     @Binding var value1: Value
-    @Binding var value2: Value
-
-    let value2Enabled: Bool
+    @Binding var value2: Value?
 
     let minValue: Value
     let maxValue: Value
@@ -41,13 +39,21 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
 
             if (value2Enabled) {
                 makeSlider(
-                    value: $value2,
+                    value: value2UnsafeBinding,
                     handleColor: handleColor,
                     barThickness: 0,
                     previousHandleValue: value1
                 )
             }
         }
+    }
+
+    private var value2Enabled: Bool {
+        value2 != nil
+    }
+
+    private var value2UnsafeBinding: Binding<Value> {
+        Binding(get: { value2! }, set: { value2 = $0 })
     }
 
     private func makeSlider(
@@ -82,15 +88,13 @@ struct DualValueSlider_Previews: PreviewProvider {
 
     struct StateWrapper: View {
         @State var value1 = 1.1
-        @State var value2: Double = 0.4
-        @State var value2Enabled: Bool = true
+        @State var value2: Double? = 0.4
 
         var body: some View {
             VStack {
                 DualValueSlider(
                     value1: $value1,
                     value2: $value2,
-                    value2Enabled: value2Enabled,
                     minValue: 0,
                     maxValue: 2,
                     handleThickness: 40,
@@ -106,11 +110,10 @@ struct DualValueSlider_Previews: PreviewProvider {
                 ).frame(height: 80)
 
                 Button(action: {
-                    if (!value2Enabled) {
+                    if (value2 == nil) {
                         value2 = Double.random(in: 0...1)
-                        value2Enabled = true
                     } else {
-                        value2Enabled = false
+                        value2 = nil
                     }
                 }) {
                     Text("Click")

@@ -10,10 +10,8 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
     @Binding var initialConcentration: Value
     @Binding var initialTime: Value
 
-    @Binding var finalConcentration: Value
-    @Binding var finalTime: Value
-
-    let finalConcentrationEnabled: Bool
+    @Binding var finalConcentration: Value?
+    @Binding var finalTime: Value?
 
     let minConcentration: Value
     let maxConcentration: Value
@@ -67,12 +65,12 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
     }
 
     private var concentrationLabel: String {
-        let value = finalConcentrationEnabled ? finalConcentration : initialConcentration
+        let value = finalConcentration ?? initialConcentration
         return "\(Double(value).str(decimals: 2)) M"
     }
 
     private var timeLabel: String {
-        let value = finalConcentrationEnabled ? finalTime : initialTime
+        let value = finalTime ?? initialTime
         return "\(Double(value).str(decimals: 1)) s"
     }
 
@@ -116,7 +114,6 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         DualValueSlider(
             value1: isPortrait ? $initialConcentration : $initialTime,
             value2: isPortrait ? $finalConcentration : $finalTime,
-            value2Enabled: finalConcentrationEnabled,
             minValue: isPortrait ? minConcentration : minTime,
             maxValue: isPortrait ? maxConcentration : maxTime,
             handleThickness: isIndicator ? 3 : settings.handleThickness,
@@ -141,17 +138,16 @@ struct TimeChartAxisView_Previews: PreviewProvider {
     struct ViewWrapper: View {
         @State private var c1: CGFloat = 0.7
         @State private var t1: CGFloat = 2
-        @State private var c2: CGFloat = 0.2
-        @State private var t2: CGFloat = 8
+        @State private var c2: CGFloat? = 0.2
+        @State private var t2: CGFloat? = 8
 
         var body: some View {
             VStack {
                 TimeChartAxisView(
                     initialConcentration: $c1,
                     initialTime: $t1,
-                    finalConcentration: $c2,
-                    finalTime: $t2,
-                    finalConcentrationEnabled: false,
+                    finalConcentration: .constant(nil),
+                    finalTime: .constant(nil),
                     minConcentration: 0,
                     maxConcentration: 1,
                     minTime: 0,
@@ -164,7 +160,6 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     initialTime: $t1,
                     finalConcentration: $c2,
                     finalTime: $t2,
-                    finalConcentrationEnabled: true,
                     minConcentration: 0,
                     maxConcentration: 1,
                     minTime: 0,
