@@ -61,7 +61,7 @@ class SliderCalculationsTests: XCTestCase {
     }
 
     // Tests that getting the value returned for the given position is correct, and vice versa.
-    private func testSlider(handlePosition: Double, value: Double, model: SliderCalculations) {
+    private func testSlider(handlePosition: Double, value: Double, model: SliderCalculations<Double>) {
         XCTAssertEqual(value, model.getValue(forHandle: handlePosition), accuracy: 0.00001)
         XCTAssertEqual(handlePosition, model.getHandleCenter(at: value), accuracy: 0.00001)
     }

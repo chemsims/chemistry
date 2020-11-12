@@ -72,6 +72,9 @@ struct ZeroOrderReaction: View {
                     )
                 }
 
+                SpeechBubble(lines: ZeroOrderBeakyStatements.statement1)
+                    .frame(width: 250, height: 300)
+
             }
         }
     }

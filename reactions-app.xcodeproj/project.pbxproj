@@ -15,7 +15,7 @@
 		57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */; };
 		57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
 		57035EDC255BFDB400DB3A19 /* SliderCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EDB255BFDB400DB3A19 /* SliderCalculations.swift */; };
-		57035EE5255BFE5200DB3A19 /* reactions_appTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EE4255BFE5200DB3A19 /* reactions_appTests.swift */; };
+		57035EE5255BFE5200DB3A19 /* sliderCalculationsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */; };
 		57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
 		57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */; };
 		57035EFD255C1A7000DB3A19 /* ReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EFC255C1A7000DB3A19 /* ReactionViewModel.swift */; };
@@ -43,6 +43,8 @@
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
 		57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */; };
 		57FDA145255D835600CB8804 /* BoundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA144255D835600CB8804 /* BoundType.swift */; };
+		57FDA149255D8E6B00CB8804 /* ZeroOrderBeakyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA148255D8E6B00CB8804 /* ZeroOrderBeakyViewModel.swift */; };
+		57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +67,7 @@
 		57035ED7255BF05100DB3A19 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		57035EDB255BFDB400DB3A19 /* SliderCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCalculations.swift; sourceTree = "<group>"; };
 		57035EE2255BFE5200DB3A19 /* reactions-appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "reactions-appTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		57035EE4255BFE5200DB3A19 /* reactions_appTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reactions_appTests.swift; sourceTree = "<group>"; };
+		57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sliderCalculationsTest.swift; sourceTree = "<group>"; };
 		57035EE6255BFE5200DB3A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57035EF0255C09B500DB3A19 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
 		57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReaction.swift; sourceTree = "<group>"; };
@@ -96,6 +98,8 @@
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
 		57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartGeometrySettings.swift; sourceTree = "<group>"; };
 		57FDA144255D835600CB8804 /* BoundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundType.swift; sourceTree = "<group>"; };
+		57FDA148255D8E6B00CB8804 /* ZeroOrderBeakyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderBeakyViewModel.swift; sourceTree = "<group>"; };
+		57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = speechBubbleLineGeneratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,8 +132,9 @@
 		57035EE3255BFE5200DB3A19 /* reactions-appTests */ = {
 			isa = PBXGroup;
 			children = (
-				57035EE4255BFE5200DB3A19 /* reactions_appTests.swift */,
+				57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */,
 				57035EE6255BFE5200DB3A19 /* Info.plist */,
+				57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */,
 			);
 			path = "reactions-appTests";
 			sourceTree = "<group>";
@@ -146,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				57035EFC255C1A7000DB3A19 /* ReactionViewModel.swift */,
+				57FDA148255D8E6B00CB8804 /* ZeroOrderBeakyViewModel.swift */,
 			);
 			path = viewmodels;
 			sourceTree = "<group>";
@@ -406,7 +412,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57035EE5255BFE5200DB3A19 /* reactions_appTests.swift in Sources */,
+				57035EE5255BFE5200DB3A19 /* sliderCalculationsTest.swift in Sources */,
+				57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +440,7 @@
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
 				57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */,
 				57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */,
+				57FDA149255D8E6B00CB8804 /* ZeroOrderBeakyViewModel.swift in Sources */,
 				572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */,
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */,
 				572CB93E255C36DD0071C600 /* BarChartAxisShape.swift in Sources */,

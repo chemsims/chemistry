@@ -22,7 +22,36 @@ struct SpeechBubbleLine: Identifiable {
 
 /// An individual segment of a line, including whether the content should
 /// appear emphasised.
-struct SpeechBubbleLineSegment {
+struct SpeechBubbleLineSegment: Equatable {
     let content: String
     let emphasised: Bool
+}
+
+struct SpeechBubbleLineGenerator {
+
+    static let emphasis = Character("*")
+
+    static func makeLine(str: String) -> SpeechBubbleLine {
+        var segments = [SpeechBubbleLineSegment]()
+        var builder: String = ""
+        var buildingEmphasis: Bool = false
+
+        func addIfNonEmpty() {
+            if (!builder.isEmpty) {
+                segments.append(SpeechBubbleLineSegment(content: builder, emphasised: buildingEmphasis))
+            }
+        }
+
+        for char in str {
+            if (char == emphasis) {
+                addIfNonEmpty()
+                builder = ""
+                buildingEmphasis.toggle()
+            } else {
+                builder.append(char)
+            }
+        }
+        addIfNonEmpty()
+        return SpeechBubbleLine(content: segments)
+    }
 }
