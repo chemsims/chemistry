@@ -51,7 +51,14 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
 
                     slider(isPortrait: false)
 
-                    Text("Time ") + Text("\(Double(time), specifier: "%.1f") s").foregroundColor(.orangeAccent)
+                    HStack {
+                        Text("Time")
+                            .frame(width: chartSize / 2, alignment: .trailing)
+
+                        Text("\(Double(time), specifier: "%.1f") s")
+                            .foregroundColor(.orangeAccent)
+                            .frame(width: chartSize / 2, alignment: .leading)
+                    }
                 }
             }
         }
@@ -104,13 +111,22 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
 
 struct TimeChartAxisView_Previews: PreviewProvider {
     static var previews: some View {
-        TimeChartAxisView(
-            concentration: .constant(0.5),
-            time: .constant(0.5),
-            minConcentration: 0,
-            maxConcentration: 1,
-            minTime: 0,
-            maxTime: 1
-        )
+        ViewWrapper()
+    }
+
+    struct ViewWrapper: View {
+        @State private var c: CGFloat = 0.5
+        @State private var t: CGFloat = 0.5
+
+        var body: some View {
+            TimeChartAxisView(
+                concentration: $c,
+                time: $t,
+                minConcentration: 0,
+                maxConcentration: 1,
+                minTime: 0,
+                maxTime: 10
+            )
+        }
     }
 }

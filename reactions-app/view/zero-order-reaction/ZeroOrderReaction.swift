@@ -30,6 +30,15 @@ struct ZeroOrderReaction: View {
                 )
             }
 
+            VStack(alignment: .leading) {
+                ZeroOrderEquationFilled()
+                ZeroOrderEquationTerm2Blank(
+                    initialConcentration: moleculeConcentration.concentration,
+                    intialTime: moleculeConcentration.initialTime
+                )
+            }
+
+
 
             FilledBeaker(molecules: [(Styling.moleculeA, moleculeConcentration.molecules)])
                 .frame(width: 350, height: 420)

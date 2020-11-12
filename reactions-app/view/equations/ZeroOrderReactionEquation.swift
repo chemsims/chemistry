@@ -5,6 +5,40 @@
 
 import SwiftUI
 
+struct ZeroOrderEquationFilled: View {
+    var body: some View {
+        GeneralZeroOrderReactionEquationView(
+            firstTerm: "k",
+            numerator1: "Δc",
+            denominator1: "Δt",
+            numerator2Term1: "c2",
+            numerator2Term2: "c1",
+            denominator2Term1: "t2",
+            denominator2Term2: "t1",
+            emphasiseFractionTerm2: false
+        )
+    }
+}
+
+struct ZeroOrderEquationTerm2Blank: View {
+
+    let initialConcentration: Double
+    let intialTime: Double
+
+    var body: some View {
+        GeneralZeroOrderReactionEquationView(
+            firstTerm: nil,
+            numerator1: nil,
+            denominator1: nil,
+            numerator2Term1: nil,
+            numerator2Term2: String(format: "%.1f", initialConcentration),
+            denominator2Term1: nil,
+            denominator2Term2: String(format: "%.1f", intialTime),
+            emphasiseFractionTerm2: true
+        )
+    }
+}
+
 
 struct GeneralZeroOrderReactionEquationView: View {
 
@@ -20,15 +54,19 @@ struct GeneralZeroOrderReactionEquationView: View {
 
     let emphasiseFractionTerm2: Bool
 
-    private let boxSize: CGFloat = 30
+    private let boxSize: CGFloat = 35
+    private let boxPadding: CGFloat = 6
     private let negativeWidth: CGFloat = 10
+
+    private let fraction1DividerWidth: CGFloat = 30
+    private let fraction2DividerWidth: CGFloat = 90
 
     var body: some View {
         HStack {
             Text("Rate")
             Text("=")
             termOrBox(firstTerm)
-                .frame(width: boxSize, height: boxSize)
+                .frame(minWidth: boxSize)
 
             Text("=")
 
@@ -43,33 +81,33 @@ struct GeneralZeroOrderReactionEquationView: View {
     private var fraction1: some View {
         VStack(spacing: 0) {
             HStack(spacing: 1) {
-                Text("-")
+                Text("–")
                     .frame(width: negativeWidth)
                 termOrBox(numerator1)
-                    .frame(width: boxSize)
+                    .frame(minWidth: boxSize)
                 Text("")
                     .frame(width: negativeWidth)
             }
             divider
-                .frame(width: boxSize + 5)
+                .frame(width: fraction1DividerWidth)
 
             HStack(spacing: 1) {
                 Text("")
                     .frame(width: negativeWidth)
                 termOrBox(denominator1)
-                    .frame(width: boxSize)
+                    .frame(minWidth: boxSize)
                 Text("")
                     .frame(width: negativeWidth)
             }
 
-        }.frame(width: 50)
+        }.frame(minWidth: fraction1DividerWidth + 30)
     }
 
     private var fraction2: some View {
         VStack(spacing: 1) {
             fraction2Part(term1: numerator2Term1, term2: numerator2Term2, isNegative: true)
             divider
-                .frame(width: 80)
+                .frame(width: fraction2DividerWidth)
             fraction2Part(term1: denominator2Term1, term2: denominator2Term2, isNegative: false)
         }
     }
@@ -86,12 +124,12 @@ struct GeneralZeroOrderReactionEquationView: View {
             Text("(")
 
             termOrBox(term1)
-                .frame(width: boxSize)
+                .frame(minWidth: boxSize)
 
             Text("–")
 
             Text(term2)
-                .frame(width: boxSize)
+                .frame(minWidth: boxSize)
                 .foregroundColor(emphasiseFractionTerm2 ? .orangeAccent : .black)
 
             Text(")")
@@ -101,12 +139,15 @@ struct GeneralZeroOrderReactionEquationView: View {
         }
     }
 
-
     private func termOrBox(_ term: String?) -> some View {
         if let term = term {
             return AnyView(Text(term))
         }
-        return AnyView(EquationPlaceholderView2().padding(4).frame(height: boxSize))
+        return AnyView(
+            EquationPlaceholderView()
+                .padding(boxPadding)
+                .frame(width: boxSize, height: boxSize)
+        )
     }
 
     private var divider: some View {
@@ -114,7 +155,7 @@ struct GeneralZeroOrderReactionEquationView: View {
     }
 }
 
-struct EquationPlaceholderView2: View {
+struct EquationPlaceholderView: View {
 
     var body: some View {
         GeometryReader { geometry in
@@ -162,7 +203,7 @@ struct Equation_Previews: PreviewProvider {
                 numerator2Term1: nil,
                 numerator2Term2: "0.5",
                 denominator2Term1: nil,
-                denominator2Term2: "6.6",
+                denominator2Term2: "10.12",
                 emphasiseFractionTerm2: true
             )
         }
