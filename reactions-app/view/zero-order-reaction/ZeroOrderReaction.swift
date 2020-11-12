@@ -61,10 +61,15 @@ struct ZeroOrderReaction: View {
             VStack(alignment: .leading, spacing: 10) {
                 VStack(alignment: .leading, spacing: 3) {
                     ZeroOrderEquationFilled(scale: settings.equationScale)
-                    ZeroOrderEquationTerm2Blank(
+                    ZeroOrderEquationBlank(
                         scale: settings.equationScale,
                         initialConcentration: reactionModel.initialConcentration,
-                        initialTime: reactionModel.initialTime
+                        initialTime: reactionModel.initialTime,
+                        rate: reactionModel.rate,
+                        deltaC: reactionModel.deltaC,
+                        deltaT: reactionModel.deltaT,
+                        c2: reactionModel.finalConcentration,
+                        t2: reactionModel.finalTime
                     )
                 }
                 VStack(alignment: .leading, spacing: 3) {

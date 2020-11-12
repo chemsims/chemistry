@@ -56,7 +56,7 @@ struct GeneralZeroOrderReactionHalftimeView: View {
                     subscriptComponent: "1/2"
                 ).frame(width: settings.boxSize)
             } else {
-                DefaultPlaceholder(settings: settings)
+                termOrBox(halfTime, settings: settings)
             }
 
             Text("=")

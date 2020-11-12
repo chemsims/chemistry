@@ -11,14 +11,14 @@ class ReactionViewModel: ObservableObject {
         setMolecules(cols: 19, rows: 10)
     }
 
-    @Published var initialConcentration: Double = 0.4 {
+    @Published var initialConcentration: Double = 0.5 {
         didSet {
             setMolecules(cols: 19, rows: 10)
         }
     }
-    @Published var initialTime: Double = 10
-    @Published var finalConcentration: Double?
-    @Published var finalTime: Double?
+    @Published var initialTime: Double = 6.6
+    @Published var finalConcentration: Double? = 0.2
+    @Published var finalTime: Double? = 17
 
     var molecules: [GridCoordinate] = []
 
@@ -38,7 +38,7 @@ class ReactionViewModel: ObservableObject {
 
     var rate: Double? {
         if let deltaC = deltaC, deltaC != 0, let deltaT = deltaT {
-            return deltaT / deltaC
+            return -deltaC / deltaT
         }
         return nil
     }
