@@ -41,7 +41,7 @@ struct ZeroOrderEquationBlank: View {
     var body: some View {
         GeneralZeroOrderReactionEquationView(
             settings: EquationGeometrySettings(scale: scale),
-            rate: rate?.str(decimals: 2),
+            rate: rate?.str(decimals: 3),
             deltaC: deltaC?.str(decimals: 2),
             deltaT: deltaT?.str(decimals: 2),
             c2: c2?.str(decimals: 2),
@@ -73,7 +73,7 @@ struct GeneralZeroOrderReactionEquationView: View {
         30 * settings.scale
     }
     private var fraction2DividerWidth: CGFloat {
-        90 * settings.scale
+        110 * settings.scale
     }
 
     var body: some View {
@@ -100,7 +100,7 @@ struct GeneralZeroOrderReactionEquationView: View {
                 Text("–")
                     .frame(width: settings.negativeWidth)
                 termOrBox(deltaC, settings: settings)
-                    .frame(minWidth: settings.boxSize)
+                    .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
                 Text("")
                     .frame(width: settings.negativeWidth)
             }
@@ -111,7 +111,7 @@ struct GeneralZeroOrderReactionEquationView: View {
                 Text("")
                     .frame(width: settings.negativeWidth)
                 termOrBox(deltaT, settings: settings)
-                    .frame(minWidth: settings.boxSize)
+                    .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
                 Text("")
                     .frame(width: settings.negativeWidth)
             }
@@ -141,13 +141,13 @@ struct GeneralZeroOrderReactionEquationView: View {
                 .frame(width: settings.parenWidth)
 
             termOrBox(term1, settings: settings)
-                .frame(minWidth: settings.boxSize)
+                .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
 
             Text("–")
                 .frame(width: settings.negativeWidth)
 
             Text(term2)
-                .frame(minWidth: settings.boxSize)
+                .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
                 .foregroundColor(emphasiseFractionTerm2 ? .orangeAccent : .black)
 
             Text(")")

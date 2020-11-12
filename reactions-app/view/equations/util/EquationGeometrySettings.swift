@@ -9,10 +9,10 @@ struct EquationGeometrySettings {
     let scale: CGFloat
 
     var boxSize: CGFloat {
-        35 * scale
+        45 * scale
     }
     var boxPadding: CGFloat {
-        6 * scale
+        10 * scale
     }
     var negativeWidth: CGFloat {
         10 * scale

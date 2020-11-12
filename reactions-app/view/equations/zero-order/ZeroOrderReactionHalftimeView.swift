@@ -54,9 +54,10 @@ struct GeneralZeroOrderReactionHalftimeView: View {
                     settings: settings,
                     main: "t",
                     subscriptComponent: "1/2"
-                ).frame(width: settings.boxSize)
+                ).frame(width: settings.boxSize, height: settings.boxSize)
             } else {
                 termOrBox(halfTime, settings: settings)
+                    .frame(width: settings.boxSize, height: settings.boxSize)
             }
 
             Text("=")
@@ -79,12 +80,12 @@ struct GeneralZeroOrderReactionHalftimeView: View {
                 subscriptComponent: "0"
             )
             Text("]")
-        }.frame(width: settings.boxSize)
+        }.frame(width: settings.boxSize, height: settings.boxSize)
     }
 
     private var initialConcentrationView: some View {
         termOrBox(initialConcentration, settings: settings)
-            .frame(minWidth: settings.boxSize)
+            .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
             .foregroundColor(rate == nil ? .black : .orangeAccent)
     }
 
@@ -100,7 +101,7 @@ struct GeneralZeroOrderReactionHalftimeView: View {
                         .padding(.horizontal, 4)
                 }
                 termOrBox(rate, settings: settings)
-                    .frame(minWidth: settings.boxSize)
+                    .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
                     .foregroundColor(rate == nil ? .black : .orangeAccent)
             }
             Text(")")
