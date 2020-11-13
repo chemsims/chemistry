@@ -80,13 +80,13 @@ struct TimeChartAxisView<Value: BinaryFloatingPoint>: View {
 
             ConcentrationEquationPlotter(
                 equation: concentrationA,
-                yAxis: SliderCalculations(
+                yAxis: AxisPositionCalculations(
                     minValuePosition: CGFloat(chartSize - settings.sliderMinValuePadding),
                     maxValuePosition: CGFloat(settings.sliderMaxValuePadding),
                     minValue: CGFloat(minConcentration),
                     maxValue: CGFloat(maxConcentration)
                 ),
-                xAxis: SliderCalculations(
+                xAxis: AxisPositionCalculations(
                     minValuePosition: CGFloat(settings.sliderMinValuePadding),
                     maxValuePosition: CGFloat(chartSize - settings.sliderMaxValuePadding),
                     minValue: CGFloat(minTime),

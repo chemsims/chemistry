@@ -10,7 +10,7 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
     @Binding var value1: Value
     @Binding var value2: Value?
 
-    let axis: SliderCalculations<Value>
+    let axis: AxisPositionCalculations<Value>
 
     let handleThickness: CGFloat
     let handleColor: Color
@@ -88,7 +88,7 @@ struct DualValueSlider_Previews: PreviewProvider {
                 DualValueSlider(
                     value1: $value1,
                     value2: $value2,
-                    axis: SliderCalculations(
+                    axis: AxisPositionCalculations(
                         minValuePosition: 0,
                         maxValuePosition: 0,
                         minValue: 0,

@@ -47,8 +47,8 @@ struct TimeChartGeometrySettings {
     }
 
     // TODO - the f here is temporary to avoid refactoring types yet
-    func yAxis<Value>(_ f: (CGFloat) -> Value) -> SliderCalculations<Value> {
-        SliderCalculations(
+    func yAxis<Value>(_ f: (CGFloat) -> Value) -> AxisPositionCalculations<Value> {
+        AxisPositionCalculations(
             minValuePosition: f(chartSize - sliderMinValuePadding),
             maxValuePosition: f(sliderMaxValuePadding),
             minValue: f(minConcentration),
@@ -57,8 +57,8 @@ struct TimeChartGeometrySettings {
     }
 
     // TODO - the f here is temporary to avoid refactoring types yet
-    func xAxis<Value>( _ f: (CGFloat) -> Value) -> SliderCalculations<Value> {
-        SliderCalculations(
+    func xAxis<Value>( _ f: (CGFloat) -> Value) -> AxisPositionCalculations<Value> {
+        AxisPositionCalculations(
             minValuePosition: f(sliderMinValuePadding),
             maxValuePosition: f(chartSize - sliderMaxValuePadding),
             minValue: f(minTime),

@@ -8,7 +8,7 @@ import SwiftUI
 struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     @Binding var value: Value
-    let axis: SliderCalculations<Value>
+    let axis: AxisPositionCalculations<Value>
 
     let handleThickness: CGFloat
     let handleColor: Color
@@ -37,7 +37,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         }
     }
 
-    private func handle(_ geometry: GeometryProxy, calculations: SliderCalculations<Value>) -> some View {
+    private func handle(_ geometry: GeometryProxy, calculations: AxisPositionCalculations<Value>) -> some View {
         RoundedRectangle(cornerRadius: handleCornerRadius)
             .foregroundColor(handleColor)
             .frame(width: handleWidth(geometry), height: handleHeight(geometry))
@@ -49,7 +49,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                 DragGesture()
                     .onChanged { gesture in
                         let inputValue = orientation == .portrait ? gesture.location.y : gesture.location.x
-                        var newValue = calculations.getValue(forHandle: Value(inputValue))
+                        var newValue = calculations.getValue(at: Value(inputValue))
                         if (newValue > calculations.maxValue) {
                             newValue = calculations.maxValue
                         } else if (newValue < calculations.minValue) {
@@ -60,12 +60,12 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             )
     }
 
-    private func getCalculations(geometry: GeometryProxy) -> SliderCalculations<Value> {
+    private func getCalculations(geometry: GeometryProxy) -> AxisPositionCalculations<Value> {
         let minValuePos = axis.minValuePosition
         let maxValuePos = axis.maxValuePosition
 
         if let previousValue = previousHandleValue {
-            let position = axis.getHandleCenter(at: previousValue)
+            let position = axis.getPosition(at: previousValue)
             let isUpperBound = previousValueBoundType == .upper
 
             let positionDelta = Value(handleThickness + previousHandlePadding)
@@ -74,17 +74,17 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             let positionDirection = boundsDirection * axisDirection
 
             let updatedPosition = position + (positionDelta * Value(positionDirection))
-            let updatedValue = axis.getValue(forHandle: updatedPosition)
+            let updatedValue = axis.getValue(at: updatedPosition)
 
             if (isUpperBound) {
-                return SliderCalculations(
+                return AxisPositionCalculations(
                     minValuePosition: minValuePos,
                     maxValuePosition: updatedPosition,
                     minValue: axis.minValue,
                     maxValue: updatedValue
                 )
             }
-            return SliderCalculations(
+            return AxisPositionCalculations(
                 minValuePosition: updatedPosition,
                 maxValuePosition: maxValuePos,
                 minValue: updatedValue,
@@ -95,17 +95,17 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     }
 
     /// Return the x position of the center of the slider handle
-    private func handleXPosition(_ geometry: GeometryProxy, calculations: SliderCalculations<Value>) -> CGFloat {
+    private func handleXPosition(_ geometry: GeometryProxy, calculations: AxisPositionCalculations<Value>) -> CGFloat {
         if (isPortrait) {
             return geometry.size.width / 2
         }
-        return CGFloat(calculations.getHandleCenter(at: value))
+        return CGFloat(calculations.getPosition(at: value))
     }
 
     /// Return the y position of the center of the slider handle
-    private func handleYPosition(_ geometry: GeometryProxy, calculations: SliderCalculations<Value>) -> CGFloat {
+    private func handleYPosition(_ geometry: GeometryProxy, calculations: AxisPositionCalculations<Value>) -> CGFloat {
         if (isPortrait) {
-            return CGFloat(calculations.getHandleCenter(at: value))
+            return CGFloat(calculations.getPosition(at: value))
         }
         return geometry.size.height / 2
     }
@@ -158,7 +158,7 @@ struct CustomSlider_Previews: PreviewProvider {
 
                 CustomSlider(
                     value: $value,
-                    axis: SliderCalculations(
+                    axis: AxisPositionCalculations(
                         minValuePosition: 0,
                         maxValuePosition: 80,
                         minValue: 1,

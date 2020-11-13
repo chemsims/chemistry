@@ -9,8 +9,8 @@ struct ConcentrationEquationPlotter: Shape {
 
     let equation: ConcentrationEquation
 
-    let yAxis: SliderCalculations<CGFloat>
-    let xAxis: SliderCalculations<CGFloat>
+    let yAxis: AxisPositionCalculations<CGFloat>
+    let xAxis: AxisPositionCalculations<CGFloat>
 
     let initialTime: CGFloat
     var finalTime: CGFloat
@@ -22,18 +22,18 @@ struct ConcentrationEquationPlotter: Shape {
 
         let initialConcentration = equation.getConcentration(at: Double(initialTime))
 
-        let initialX = xAxis.getHandleCenter(at: initialTime)
-        let initialY = yAxis.getHandleCenter(at: CGFloat(initialConcentration))
+        let initialX = xAxis.getPosition(at: initialTime)
+        let initialY = yAxis.getPosition(at: CGFloat(initialConcentration))
 
         let dx = rect.width / CGFloat(maxWidthSteps)
-        let dt = xAxis.getValue(forHandle: dx) - xAxis.getValue(forHandle: 0)
+        let dt = xAxis.getValue(at: dx) - xAxis.getValue(at: 0)
 
         path.move(to: CGPoint(x: initialX, y: initialY))
 
         for t in stride(from: initialTime, to: finalTime, by: dt) {
             let concentration = equation.getConcentration(at: Double(t))
-            let x = xAxis.getHandleCenter(at: t)
-            let y = yAxis.getHandleCenter(at: CGFloat(concentration))
+            let x = xAxis.getPosition(at: t)
+            let y = yAxis.getPosition(at: CGFloat(concentration))
             path.addLine(to: CGPoint(x: x, y: y))
         }
 
@@ -67,12 +67,12 @@ struct TimeChartPlot_Previews: PreviewProvider {
             VStack {
                 ConcentrationEquationPlotter(
                     equation: DummyEquation(),
-                    yAxis: SliderCalculations(
+                    yAxis: AxisPositionCalculations(
                         minValuePosition: 240,
                         maxValuePosition: 10,
                         minValue: 0,
                         maxValue: 50),
-                    xAxis: SliderCalculations(
+                    xAxis: AxisPositionCalculations(
                         minValuePosition: 10,
                         maxValuePosition: 250 - 10,
                         minValue: 0,
