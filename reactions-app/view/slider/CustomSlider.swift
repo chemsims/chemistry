@@ -8,8 +8,7 @@ import SwiftUI
 struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     @Binding var value: Value
-    let minValue: Value
-    let maxValue: Value
+    let axis: SliderCalculations<Value>
 
     let handleThickness: CGFloat
     let handleColor: Color
@@ -17,9 +16,6 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     let barThickness: CGFloat
     let barColor: Color
-
-    let minValuePadding: CGFloat
-    let maxValuePadding: CGFloat
 
     let orientation: Orientation
 
@@ -65,17 +61,11 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     }
 
     private func getCalculations(geometry: GeometryProxy) -> SliderCalculations<Value> {
-        let length = isPortrait ? geometry.size.height : geometry.size.width
-        let minValuePos = isPortrait ? Value(length - minValuePadding) : Value(minValuePadding)
-        let maxValuePos = isPortrait ? Value(maxValuePadding) : Value(length - maxValuePadding)
-        let calculations = SliderCalculations(
-            minValuePosition: minValuePos,
-            maxValuePosition: maxValuePos,
-            minValue: minValue,
-            maxValue: maxValue
-        )
+        let minValuePos = axis.minValuePosition
+        let maxValuePos = axis.maxValuePosition
+
         if let previousValue = previousHandleValue {
-            let position = calculations.getHandleCenter(at: previousValue)
+            let position = axis.getHandleCenter(at: previousValue)
             let isUpperBound = previousValueBoundType == .upper
 
             let positionDelta = Value(handleThickness + previousHandlePadding)
@@ -84,13 +74,13 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             let positionDirection = boundsDirection * axisDirection
 
             let updatedPosition = position + (positionDelta * Value(positionDirection))
-            let updatedValue = calculations.getValue(forHandle: updatedPosition)
+            let updatedValue = axis.getValue(forHandle: updatedPosition)
 
             if (isUpperBound) {
                 return SliderCalculations(
                     minValuePosition: minValuePos,
                     maxValuePosition: updatedPosition,
-                    minValue: minValue,
+                    minValue: axis.minValue,
                     maxValue: updatedValue
                 )
             }
@@ -98,10 +88,10 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                 minValuePosition: updatedPosition,
                 maxValuePosition: maxValuePos,
                 minValue: updatedValue,
-                maxValue: maxValue
+                maxValue: axis.maxValue
             )
         }
-        return calculations
+        return axis
     }
 
     /// Return the x position of the center of the slider handle
@@ -168,15 +158,17 @@ struct CustomSlider_Previews: PreviewProvider {
 
                 CustomSlider(
                     value: $value,
-                    minValue: 1,
-                    maxValue: 2,
+                    axis: SliderCalculations(
+                        minValuePosition: 0,
+                        maxValuePosition: 80,
+                        minValue: 1,
+                        maxValue: 2
+                    ),
                     handleThickness: 40,
                     handleColor: Color.orangeAccent,
                     handleCornerRadius: 15,
                     barThickness: 5,
                     barColor: Color.darkGray,
-                    minValuePadding: 50,
-                    maxValuePadding: 50,
                     orientation: .landscape,
                     previousHandleValue: 1.5,
                     previousHandlePadding: 10,

@@ -10,8 +10,7 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
     @Binding var value1: Value
     @Binding var value2: Value?
 
-    let minValue: Value
-    let maxValue: Value
+    let axis: SliderCalculations<Value>
 
     let handleThickness: CGFloat
     let handleColor: Color
@@ -20,9 +19,6 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
 
     let barThickness: CGFloat
     let barColor: Color
-
-    let minValuePadding: CGFloat
-    let maxValuePadding: CGFloat
 
     let orientation: Orientation
 
@@ -64,15 +60,12 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
     ) -> some View {
         CustomSlider(
             value: value,
-            minValue: minValue,
-            maxValue: maxValue,
+            axis: axis,
             handleThickness: handleThickness,
             handleColor: handleColor,
             handleCornerRadius: handleCornerRadius,
             barThickness: barThickness,
             barColor: barColor,
-            minValuePadding: minValuePadding,
-            maxValuePadding: maxValuePadding,
             orientation: orientation,
             previousHandleValue: previousHandleValue,
             previousHandlePadding: 3,
@@ -95,16 +88,18 @@ struct DualValueSlider_Previews: PreviewProvider {
                 DualValueSlider(
                     value1: $value1,
                     value2: $value2,
-                    minValue: 0,
-                    maxValue: 2,
+                    axis: SliderCalculations(
+                        minValuePosition: 0,
+                        maxValuePosition: 0,
+                        minValue: 0,
+                        maxValue: 0
+                    ),
                     handleThickness: 40,
                     handleColor: Color.orangeAccent,
                     disabledHandleColor: Color.gray,
                     handleCornerRadius: 15,
                     barThickness: 5,
                     barColor: Color.darkGray,
-                    minValuePadding: 50,
-                    maxValuePadding: 50,
                     orientation: .landscape,
                     boundType: .lower
                 ).frame(height: 80)

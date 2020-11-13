@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
+struct TimeChartAxisView<Value: BinaryFloatingPoint>: View {
 
     @Binding var initialConcentration: Value
     @Binding var initialTime: Value
@@ -21,8 +21,19 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
 
     let chartSize: CGFloat
 
+    let concentrationA: ConcentrationEquation
+    let finalPlotTime: Double?
+
     var body: some View {
-        makeView(using: TimeChartGeometrySettings(chartSize: chartSize))
+        makeView(
+            using: TimeChartGeometrySettings(
+                chartSize: chartSize,
+                minConcentration: CGFloat(minConcentration),
+                maxConcentration: CGFloat(maxConcentration),
+                minTime: CGFloat(minTime),
+                maxTime: CGFloat(maxTime)
+            )
+        )
     }
 
     private func makeView(using settings: TimeChartGeometrySettings) -> some View {
@@ -37,17 +48,7 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
             HStack(alignment: .top) {
                 axisSlider(isPortrait: true, settings: settings)
                 VStack {
-                    TimeChartAxisShape(
-                        verticalTicks: settings.verticalTicks,
-                        horizontalTicks: settings.horizontalTicks,
-                        tickSize: settings.tickSize,
-                        gapToTop: settings.gapFromMaxTickToChart,
-                        gapToSide: settings.gapFromMaxTickToChart
-                    )
-                        .stroke()
-                        .frame(width: chartSize, height: chartSize)
-                        .overlay(verticalIndicator(settings: settings), alignment: .leading)
-                        .overlay(horizontalIndicator(settings: settings), alignment: .bottom)
+                    chartWithData(settings)
 
                     axisSlider(isPortrait: false, settings: settings)
 
@@ -62,6 +63,39 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
                 }
             }
         }
+    }
+
+    private func chartWithData(_ settings: TimeChartGeometrySettings) -> some View {
+        ZStack {
+            TimeChartAxisShape(
+                verticalTicks: settings.verticalTicks,
+                horizontalTicks: settings.horizontalTicks,
+                tickSize: settings.tickSize,
+                gapToTop: settings.gapFromMaxTickToChart,
+                gapToSide: settings.gapFromMaxTickToChart
+            )
+                .stroke()
+                .overlay(verticalIndicator(settings: settings), alignment: .leading)
+                .overlay(horizontalIndicator(settings: settings), alignment: .bottom)
+
+            ConcentrationEquationPlotter(
+                equation: concentrationA,
+                yAxis: SliderCalculations(
+                    minValuePosition: CGFloat(chartSize - settings.sliderMinValuePadding),
+                    maxValuePosition: CGFloat(settings.sliderMaxValuePadding),
+                    minValue: CGFloat(minConcentration),
+                    maxValue: CGFloat(maxConcentration)
+                ),
+                xAxis: SliderCalculations(
+                    minValuePosition: CGFloat(settings.sliderMinValuePadding),
+                    maxValuePosition: CGFloat(chartSize - settings.sliderMaxValuePadding),
+                    minValue: CGFloat(minTime),
+                    maxValue: CGFloat(maxTime)
+                ),
+                initialTime: CGFloat(initialTime),
+                finalTime: CGFloat(finalPlotTime ?? Double(initialTime))
+            ).stroke()
+        }.frame(width: chartSize, height: chartSize)
     }
 
     private var concentrationLabel: String {
@@ -92,7 +126,6 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         ).frame(width: width, height: height)
     }
 
-
     private func indicator(
         isPortrait: Bool,
         settings: TimeChartGeometrySettings
@@ -114,16 +147,13 @@ struct TimeChartAxisView<Value>: View where Value: BinaryFloatingPoint {
         DualValueSlider(
             value1: isPortrait ? $initialConcentration : $initialTime,
             value2: isPortrait ? $finalConcentration : $finalTime,
-            minValue: isPortrait ? minConcentration : minTime,
-            maxValue: isPortrait ? maxConcentration : maxTime,
+            axis: isPortrait ? settings.yAxis(Value.init) : settings.xAxis(Value.init),
             handleThickness: isIndicator ? 3 : settings.handleThickness,
             handleColor: Color.orangeAccent,
             disabledHandleColor: Color.gray,
             handleCornerRadius: isIndicator ? 0 : settings.handleCornerRadius,
             barThickness: isIndicator ? 0 : 3,
             barColor: Color.gray,
-            minValuePadding: settings.sliderMinValuePadding,
-            maxValuePadding: settings.sliderMaxValuePadding,
             orientation: isPortrait ? .portrait : .landscape,
             boundType: isPortrait ? .upper : .lower
         )
@@ -152,7 +182,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     maxConcentration: 1,
                     minTime: 0,
                     maxTime: 10,
-                    chartSize: 250
+                    chartSize: 250,
+                    concentrationA: LinearConcentration(t1: 0, c1: 0, t2: 1, c2: 1),
+                    finalPlotTime: nil
                 )
 
                 TimeChartAxisView(
@@ -164,7 +196,14 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     maxConcentration: 1,
                     minTime: 0,
                     maxTime: 10,
-                    chartSize: 250
+                    chartSize: 250,
+                    concentrationA: LinearConcentration(
+                        t1: Double(t1),
+                        c1: Double(c1),
+                        t2: Double(t2 ?? 0),
+                        c2: Double(c2 ?? 0)
+                    ),
+                    finalPlotTime: Double(t2 ?? 0)
                 )
             }
 

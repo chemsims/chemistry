@@ -20,6 +20,15 @@ class ReactionViewModel: ObservableObject {
     @Published var finalConcentration: Double? = 0.2
     @Published var finalTime: Double? = 17
 
+    var concentrationEquationA: ConcentrationEquation {
+        LinearConcentration(
+            t1: initialTime,
+            c1: initialConcentration,
+            t2: finalTime ?? 0,
+            c2: finalConcentration ?? 0
+        )
+    }
+
     var molecules: [GridCoordinate] = []
 
     var deltaC: Double? {
