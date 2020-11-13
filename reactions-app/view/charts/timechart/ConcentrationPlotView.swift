@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct TimeChartPlotView: View {
+struct ConcentrationPlotView: View {
 
     let settings: TimeChartGeometrySettings
     let concentrationAEquation: ConcentrationEquation
@@ -20,7 +20,7 @@ struct TimeChartPlotView: View {
 
     var body: some View {
         ZStack {
-            TimeChartAxisShape(
+            ChartAxisShape(
                 verticalTicks: settings.verticalTicks,
                 horizontalTicks: settings.horizontalTicks,
                 tickSize: settings.tickSize,
@@ -92,7 +92,7 @@ struct ChartPlotWithHead: View {
         time: CGFloat,
         color: Color
     ) -> some View {
-        ConcentrationEquationPlotter(
+        ConcentrationEquationShape(
             equation: equation,
             yAxis: settings.yAxis(CGFloat.init),
             xAxis: settings.xAxis(CGFloat.init),
@@ -106,7 +106,7 @@ struct ChartPlotWithHead: View {
 
 struct TimeChartPlotView_Previews: PreviewProvider {
     static var previews: some View {
-        TimeChartPlotView(
+        ConcentrationPlotView(
             settings: TimeChartGeometrySettings(
                 chartSize: 300,
                 minConcentration: 0,

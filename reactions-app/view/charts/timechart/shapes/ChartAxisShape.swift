@@ -6,7 +6,7 @@
 import SwiftUI
 
 
-struct TimeChartAxisShape: Shape {
+struct ChartAxisShape: Shape {
     let verticalTicks: Int
     let horizontalTicks: Int
 
@@ -39,9 +39,9 @@ struct TimeChartAxisShape: Shape {
 }
 
 
-struct TimeChartAxisShape_Previews: PreviewProvider {
+struct ChartAxisShape_Previews: PreviewProvider {
     static var previews: some View {
-        TimeChartAxisShape(
+        ChartAxisShape(
             verticalTicks: 10,
             horizontalTicks: 10,
             tickSize: 10,

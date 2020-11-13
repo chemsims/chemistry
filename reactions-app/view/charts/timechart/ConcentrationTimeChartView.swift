@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct TimeChartAxisView: View {
+struct ConcentrationTimeChartView: View {
 
     @Binding var initialConcentration: CGFloat
     @Binding var initialTime: CGFloat
@@ -78,7 +78,7 @@ struct TimeChartAxisView: View {
         currentTime: CGFloat,
         finalTime: CGFloat
     ) -> some View {
-        TimeChartPlotView(
+        ConcentrationPlotView(
             settings: settings,
             concentrationAEquation: concentrationA,
             initialTime: initialTime,
@@ -89,7 +89,7 @@ struct TimeChartAxisView: View {
 
 
     private func chartWithIndicator(settings: TimeChartGeometrySettings) -> some View {
-        TimeChartAxisShape(
+        ChartAxisShape(
             verticalTicks: settings.verticalTicks,
             horizontalTicks: settings.horizontalTicks,
             tickSize: settings.tickSize,
@@ -177,7 +177,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
 
         var body: some View {
             VStack {
-                TimeChartAxisView(
+                ConcentrationTimeChartView(
                     initialConcentration: $c1,
                     initialTime: $t1,
                     finalConcentration: .constant(nil),
@@ -191,7 +191,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     currentTime: nil
                 )
 
-                TimeChartAxisView(
+                ConcentrationTimeChartView(
                     initialConcentration: $c1,
                     initialTime: $t1,
                     finalConcentration: $c2,

@@ -34,7 +34,7 @@ struct ZeroOrderReaction: View {
 
             VStack(alignment: .trailing) {
 
-                TimeChartAxisView(
+                ConcentrationTimeChartView(
                     initialConcentration: $reactionModel.initialConcentration,
                     initialTime: $reactionModel.initialTime,
                     finalConcentration: $reactionModel.finalConcentration,
