@@ -52,23 +52,21 @@ struct TimeChartGeometrySettings {
         3 * chartHeadPrimarySize
     }
 
-    // TODO - the f here is temporary to avoid refactoring types yet
-    func yAxis<Value>(_ f: (CGFloat) -> Value) -> AxisPositionCalculations<Value> {
+    var yAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
-            minValuePosition: f(chartSize - sliderMinValuePadding),
-            maxValuePosition: f(sliderMaxValuePadding),
-            minValue: f(minConcentration),
-            maxValue: f(maxConcentration)
+            minValuePosition: chartSize - sliderMinValuePadding,
+            maxValuePosition: sliderMaxValuePadding,
+            minValue: minConcentration,
+            maxValue: maxConcentration
         )
     }
 
-    // TODO - the f here is temporary to avoid refactoring types yet
-    func xAxis<Value>( _ f: (CGFloat) -> Value) -> AxisPositionCalculations<Value> {
+    var xAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
-            minValuePosition: f(sliderMinValuePadding),
-            maxValuePosition: f(chartSize - sliderMaxValuePadding),
-            minValue: f(minTime),
-            maxValue: f(maxTime)
+            minValuePosition: sliderMinValuePadding,
+            maxValuePosition: chartSize - sliderMaxValuePadding,
+            minValue: minTime,
+            maxValue: maxTime
         )
     }
 }

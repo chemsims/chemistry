@@ -151,7 +151,7 @@ struct ConcentrationTimeChartView: View {
         DualValueSlider(
             value1: isPortrait ? $initialConcentration : $initialTime,
             value2: isPortrait ? $finalConcentration : $finalTime,
-            axis: isPortrait ? settings.yAxis(CGFloat.init) : settings.xAxis(CGFloat.init),
+            axis: isPortrait ? settings.yAxis : settings.xAxis,
             handleThickness: isIndicator ? 3 : settings.handleThickness,
             handleColor: Color.orangeAccent,
             disabledHandleColor: Color.gray,

@@ -80,8 +80,8 @@ struct ChartPlotWithHead: View {
         ConcentrationEquationHead(
             radius: radius,
             equation: equation,
-            yAxis: settings.yAxis(CGFloat.init),
-            xAxis: settings.xAxis(CGFloat.init),
+            yAxis: settings.yAxis,
+            xAxis: settings.xAxis,
             time: currentTime
         )
         .fill()
@@ -94,8 +94,8 @@ struct ChartPlotWithHead: View {
     ) -> some View {
         ConcentrationEquationShape(
             equation: equation,
-            yAxis: settings.yAxis(CGFloat.init),
-            xAxis: settings.xAxis(CGFloat.init),
+            yAxis: settings.yAxis,
+            xAxis: settings.xAxis,
             initialTime: initialTime,
             finalTime: time
         )
