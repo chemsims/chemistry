@@ -20,21 +20,20 @@ struct ConcentrationEquationPlotter: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
 
-        let initialConcentration = equation.getConcentration(at: Double(initialTime))
-
-        let initialX = xAxis.getPosition(at: initialTime)
-        let initialY = yAxis.getPosition(at: CGFloat(initialConcentration))
-
         let dx = rect.width / CGFloat(maxWidthSteps)
         let dt = xAxis.getValue(at: dx) - xAxis.getValue(at: 0)
 
-        path.move(to: CGPoint(x: initialX, y: initialY))
-
+        var didStart = false
         for t in stride(from: initialTime, to: finalTime, by: dt) {
             let concentration = equation.getConcentration(at: Double(t))
             let x = xAxis.getPosition(at: t)
             let y = yAxis.getPosition(at: CGFloat(concentration))
-            path.addLine(to: CGPoint(x: x, y: y))
+            if (didStart) {
+                path.addLine(to: CGPoint(x: x, y: y))
+            } else {
+                path.move(to: CGPoint(x: x, y: y))
+                didStart = true
+            }
         }
 
         return path
@@ -45,8 +44,42 @@ struct ConcentrationEquationPlotter: Shape {
         set { finalTime = newValue }
     }
 
-    
 }
+
+struct ConcentrationEquationHead: Shape {
+
+    let radius: CGFloat
+    let equation: ConcentrationEquation
+
+    let yAxis: AxisPositionCalculations<CGFloat>
+    let xAxis: AxisPositionCalculations<CGFloat>
+
+    var time: CGFloat
+
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let concentration = equation.getConcentration(at: Double(time))
+        let x = xAxis.getPosition(at: time)
+        let y = yAxis.getPosition(at: CGFloat(concentration))
+
+        let containerRect = CGRect(
+            origin: CGPoint(x: x - radius, y: y - radius),
+            size: CGSize(width: radius * 2, height: radius * 2)
+        )
+        path.addEllipse(in: containerRect)
+
+        return path
+    }
+
+    var animatableData: CGFloat {
+        get { time }
+        set { time = newValue }
+    }
+
+
+}
+
 
 struct TimeChartPlot_Previews: PreviewProvider {
 
@@ -65,23 +98,23 @@ struct TimeChartPlot_Previews: PreviewProvider {
 
         var body: some View {
             VStack {
-                ConcentrationEquationPlotter(
-                    equation: DummyEquation(),
-                    yAxis: AxisPositionCalculations(
-                        minValuePosition: 240,
-                        maxValuePosition: 10,
-                        minValue: 0,
-                        maxValue: 50),
-                    xAxis: AxisPositionCalculations(
-                        minValuePosition: 10,
-                        maxValuePosition: 250 - 10,
-                        minValue: 0,
-                        maxValue: 50
-                    ),
-                    initialTime: 0,
-                    finalTime: t2
-                )
-                .stroke(lineWidth: 2)
+                ZStack {
+                    ConcentrationEquationPlotter(
+                        equation: DummyEquation(),
+                        yAxis: yAxis,
+                        xAxis: xAxis,
+                        initialTime: 0,
+                        finalTime: t2
+                    ).stroke(lineWidth: 2)
+
+                    ConcentrationEquationHead(
+                        radius: 10,
+                        equation: DummyEquation(),
+                        yAxis: yAxis,
+                        xAxis: xAxis,
+                        time: t2
+                    )
+                }
                 .frame(width: 250, height: 250)
                 .border(Color.red)
 
@@ -92,12 +125,28 @@ struct TimeChartPlot_Previews: PreviewProvider {
                         } else {
                             self.t2 = 50
                         }
-                        self.t2 = 50
                     }
                 }) {
                     Text("Click me")
                 }
             }
+        }
+
+        private var yAxis: AxisPositionCalculations<CGFloat> {
+            AxisPositionCalculations(
+                minValuePosition: 240,
+                maxValuePosition: 10,
+                minValue: 0,
+                maxValue: 50)
+        }
+
+        private var xAxis: AxisPositionCalculations<CGFloat> {
+            AxisPositionCalculations(
+                minValuePosition: 10,
+                maxValuePosition: 250 - 10,
+                minValue: 0,
+                maxValue: 50
+            )
         }
     }
 }

@@ -45,6 +45,12 @@ struct TimeChartGeometrySettings {
     var labelFontSize: CGFloat {
         0.06 * chartSize
     }
+    var chartHeadPrimarySize: CGFloat {
+        0.02 * chartSize
+    }
+    var chartHeadPrimaryHaloSize: CGFloat {
+        3 * chartHeadPrimarySize
+    }
 
     // TODO - the f here is temporary to avoid refactoring types yet
     func yAxis<Value>(_ f: (CGFloat) -> Value) -> AxisPositionCalculations<Value> {
