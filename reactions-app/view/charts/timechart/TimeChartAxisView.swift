@@ -22,7 +22,7 @@ struct TimeChartAxisView: View {
     let chartSize: CGFloat
 
     let concentrationA: ConcentrationEquation
-    let finalPlotTime: CGFloat?
+    let currentTime: CGFloat?
 
     var body: some View {
         makeView(
@@ -48,7 +48,15 @@ struct TimeChartAxisView: View {
             HStack(alignment: .top) {
                 axisSlider(isPortrait: true, settings: settings)
                 VStack {
-                    chartWithData(settings)
+                    if (currentTime == nil) {
+                        chartWithIndicator(settings: settings)
+                    } else if (finalTime != nil) {
+                        chartWithData(
+                            settings: settings,
+                            currentTime: currentTime!,
+                            finalTime: finalTime!
+                        )
+                    }
 
                     axisSlider(isPortrait: false, settings: settings)
 
@@ -65,37 +73,33 @@ struct TimeChartAxisView: View {
         }
     }
 
-    private func chartWithData(_ settings: TimeChartGeometrySettings) -> some View {
-        ZStack {
-            TimeChartAxisShape(
-                verticalTicks: settings.verticalTicks,
-                horizontalTicks: settings.horizontalTicks,
-                tickSize: settings.tickSize,
-                gapToTop: settings.gapFromMaxTickToChart,
-                gapToSide: settings.gapFromMaxTickToChart
-            )
-                .stroke()
-                .overlay(verticalIndicator(settings: settings), alignment: .leading)
-                .overlay(horizontalIndicator(settings: settings), alignment: .bottom)
+    private func chartWithData(
+        settings: TimeChartGeometrySettings,
+        currentTime: CGFloat,
+        finalTime: CGFloat
+    ) -> some View {
+        TimeChartPlotView(
+            settings: settings,
+            concentrationAEquation: concentrationA,
+            initialTime: initialTime,
+            currentTime: currentTime,
+            finalTime: finalTime
+        ).frame(width: chartSize, height: chartSize)
+    }
 
-            ConcentrationEquationPlotter(
-                equation: concentrationA,
-                yAxis: AxisPositionCalculations(
-                    minValuePosition: chartSize - settings.sliderMinValuePadding,
-                    maxValuePosition: settings.sliderMaxValuePadding,
-                    minValue: minConcentration,
-                    maxValue: maxConcentration
-                ),
-                xAxis: AxisPositionCalculations(
-                    minValuePosition: settings.sliderMinValuePadding,
-                    maxValuePosition: chartSize - settings.sliderMaxValuePadding,
-                    minValue: minTime,
-                    maxValue: maxTime
-                ),
-                initialTime: initialTime,
-                finalTime: finalPlotTime ?? initialTime
-            ).stroke()
-        }.frame(width: chartSize, height: chartSize)
+
+    private func chartWithIndicator(settings: TimeChartGeometrySettings) -> some View {
+        TimeChartAxisShape(
+            verticalTicks: settings.verticalTicks,
+            horizontalTicks: settings.horizontalTicks,
+            tickSize: settings.tickSize,
+            gapToTop: settings.gapFromMaxTickToChart,
+            gapToSide: settings.gapFromMaxTickToChart
+        )
+            .stroke()
+            .overlay(verticalIndicator(settings: settings), alignment: .leading)
+            .overlay(horizontalIndicator(settings: settings), alignment: .bottom)
+            .frame(width: chartSize, height: chartSize)
     }
 
     private var concentrationLabel: String {
@@ -184,7 +188,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     maxTime: 10,
                     chartSize: 250,
                     concentrationA: LinearConcentration(t1: 0, c1: 0, t2: 1, c2: 1),
-                    finalPlotTime: nil
+                    currentTime: nil
                 )
 
                 TimeChartAxisView(
@@ -203,7 +207,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                         t2: t2 ?? 0,
                         c2: c2 ?? 0
                     ),
-                    finalPlotTime: t2!
+                    currentTime: t2!
                 )
             }
 
