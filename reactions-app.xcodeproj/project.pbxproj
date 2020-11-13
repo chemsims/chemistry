@@ -35,6 +35,8 @@
 		572CB93E255C36DD0071C600 /* BarChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* BarChartAxisShape.swift */; };
 		572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB943255C3BCF0071C600 /* ValueRange.swift */; };
 		572CB949255C412A0071C600 /* ZeroOrderReactionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */; };
+		57F10981255E88CF00834783 /* ConcentrationEquationPlotter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ConcentrationEquationPlotter.swift */; };
+		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
 		57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */; };
 		57FDA129255D5DC500CB8804 /* EquationGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */; };
 		57FDA12E255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */; };
@@ -90,6 +92,8 @@
 		572CB93D255C36DD0071C600 /* BarChartAxisShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartAxisShape.swift; sourceTree = "<group>"; };
 		572CB943255C3BCF0071C600 /* ValueRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRange.swift; sourceTree = "<group>"; };
 		572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionEquation.swift; sourceTree = "<group>"; };
+		57F10980255E88CE00834783 /* ConcentrationEquationPlotter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquationPlotter.swift; sourceTree = "<group>"; };
+		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
 		57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationPlaceholderView.swift; sourceTree = "<group>"; };
 		57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationGeometrySettings.swift; sourceTree = "<group>"; };
 		57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionHalftimeView.swift; sourceTree = "<group>"; };
@@ -240,6 +244,7 @@
 				572CB943255C3BCF0071C600 /* ValueRange.swift */,
 				57FDA138255D6C5000CB8804 /* Extensions.swift */,
 				57FDA144255D835600CB8804 /* BoundType.swift */,
+				57F10984255E985700834783 /* ConcentrationEquation.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -272,6 +277,7 @@
 				57035F0B255C26D000DB3A19 /* TimeChartAxisShape.swift */,
 				57035F11255C29A500DB3A19 /* TimeChartAxisView.swift */,
 				57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */,
+				57F10980255E88CE00834783 /* ConcentrationEquationPlotter.swift */,
 			);
 			path = timechart;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				57FDA149255D8E6B00CB8804 /* ZeroOrderBeakyViewModel.swift in Sources */,
 				572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */,
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */,
+				57F10981255E88CF00834783 /* ConcentrationEquationPlotter.swift in Sources */,
 				572CB93E255C36DD0071C600 /* BarChartAxisShape.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				571D6A44255A780700F4E635 /* ContentView.swift in Sources */,
@@ -451,6 +458,7 @@
 				57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */,
 				57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */,
 				57035EFD255C1A7000DB3A19 /* ReactionViewModel.swift in Sources */,
+				57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */,
 				57FDA12E255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift in Sources */,
 				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
 				572CB949255C412A0071C600 /* ZeroOrderReactionEquation.swift in Sources */,
