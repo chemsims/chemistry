@@ -30,13 +30,13 @@ struct ZeroOrderEquationBlank: View {
     /// Scales the view
     let scale: CGFloat
 
-    let initialConcentration: Double
-    let initialTime: Double
-    let rate: Double?
-    let deltaC: Double?
-    let deltaT: Double?
-    let c2: Double?
-    let t2: Double?
+    let initialConcentration: CGFloat
+    let initialTime: CGFloat
+    let rate: CGFloat?
+    let deltaC: CGFloat?
+    let deltaT: CGFloat?
+    let c2: CGFloat?
+    let t2: CGFloat?
 
     var body: some View {
         GeneralZeroOrderReactionEquationView(

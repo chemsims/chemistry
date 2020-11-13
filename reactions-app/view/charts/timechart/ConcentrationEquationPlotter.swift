@@ -25,9 +25,9 @@ struct ConcentrationEquationPlotter: Shape {
 
         var didStart = false
         for t in stride(from: initialTime, to: finalTime, by: dt) {
-            let concentration = equation.getConcentration(at: Double(t))
+            let concentration = equation.getConcentration(at: t)
             let x = xAxis.getPosition(at: t)
-            let y = yAxis.getPosition(at: CGFloat(concentration))
+            let y = yAxis.getPosition(at: concentration)
             if (didStart) {
                 path.addLine(to: CGPoint(x: x, y: y))
             } else {
@@ -59,9 +59,9 @@ struct ConcentrationEquationHead: Shape {
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        let concentration = equation.getConcentration(at: Double(time))
+        let concentration = equation.getConcentration(at: time)
         let x = xAxis.getPosition(at: time)
-        let y = yAxis.getPosition(at: CGFloat(concentration))
+        let y = yAxis.getPosition(at: concentration)
 
         let containerRect = CGRect(
             origin: CGPoint(x: x - radius, y: y - radius),
@@ -88,7 +88,7 @@ struct TimeChartPlot_Previews: PreviewProvider {
     }
 
     struct DummyEquation: ConcentrationEquation {
-        func getConcentration(at time: Double) -> Double {
+        func getConcentration(at time: CGFloat) -> CGFloat {
             return time
         }
     }

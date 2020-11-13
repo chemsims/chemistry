@@ -3,9 +3,9 @@
 //
   
 
-import Foundation
+import CoreGraphics
 
-extension Double {
+extension CGFloat {
     func str(decimals: Int) -> String {
         String(format: "%.\(decimals)f", self)
     }

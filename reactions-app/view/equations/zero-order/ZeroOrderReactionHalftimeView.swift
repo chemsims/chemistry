@@ -22,9 +22,9 @@ struct ZeroOrderReactionHalftimeView: View {
 struct ZeroOrderReactionHalftimeBlank: View {
     let scale: CGFloat
 
-    let initialConcentration: Double?
-    let rate: Double?
-    let halfTime: Double?
+    let initialConcentration: CGFloat?
+    let rate: CGFloat?
+    let halfTime: CGFloat?
 
     var body: some View {
         GeneralZeroOrderReactionHalftimeView(

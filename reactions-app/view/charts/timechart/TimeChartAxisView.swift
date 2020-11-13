@@ -5,33 +5,33 @@
 
 import SwiftUI
 
-struct TimeChartAxisView<Value: BinaryFloatingPoint>: View {
+struct TimeChartAxisView: View {
 
-    @Binding var initialConcentration: Value
-    @Binding var initialTime: Value
+    @Binding var initialConcentration: CGFloat
+    @Binding var initialTime: CGFloat
 
-    @Binding var finalConcentration: Value?
-    @Binding var finalTime: Value?
+    @Binding var finalConcentration: CGFloat?
+    @Binding var finalTime: CGFloat?
 
-    let minConcentration: Value
-    let maxConcentration: Value
+    let minConcentration: CGFloat
+    let maxConcentration: CGFloat
 
-    let minTime: Value
-    let maxTime: Value
+    let minTime: CGFloat
+    let maxTime: CGFloat
 
     let chartSize: CGFloat
 
     let concentrationA: ConcentrationEquation
-    let finalPlotTime: Double?
+    let finalPlotTime: CGFloat?
 
     var body: some View {
         makeView(
             using: TimeChartGeometrySettings(
                 chartSize: chartSize,
-                minConcentration: CGFloat(minConcentration),
-                maxConcentration: CGFloat(maxConcentration),
-                minTime: CGFloat(minTime),
-                maxTime: CGFloat(maxTime)
+                minConcentration: minConcentration,
+                maxConcentration: maxConcentration,
+                minTime: minTime,
+                maxTime: maxTime
             )
         )
     }
@@ -81,31 +81,31 @@ struct TimeChartAxisView<Value: BinaryFloatingPoint>: View {
             ConcentrationEquationPlotter(
                 equation: concentrationA,
                 yAxis: AxisPositionCalculations(
-                    minValuePosition: CGFloat(chartSize - settings.sliderMinValuePadding),
-                    maxValuePosition: CGFloat(settings.sliderMaxValuePadding),
-                    minValue: CGFloat(minConcentration),
-                    maxValue: CGFloat(maxConcentration)
+                    minValuePosition: chartSize - settings.sliderMinValuePadding,
+                    maxValuePosition: settings.sliderMaxValuePadding,
+                    minValue: minConcentration,
+                    maxValue: maxConcentration
                 ),
                 xAxis: AxisPositionCalculations(
-                    minValuePosition: CGFloat(settings.sliderMinValuePadding),
-                    maxValuePosition: CGFloat(chartSize - settings.sliderMaxValuePadding),
-                    minValue: CGFloat(minTime),
-                    maxValue: CGFloat(maxTime)
+                    minValuePosition: settings.sliderMinValuePadding,
+                    maxValuePosition: chartSize - settings.sliderMaxValuePadding,
+                    minValue: minTime,
+                    maxValue: maxTime
                 ),
-                initialTime: CGFloat(initialTime),
-                finalTime: CGFloat(finalPlotTime ?? Double(initialTime))
+                initialTime: initialTime,
+                finalTime: finalPlotTime ?? initialTime
             ).stroke()
         }.frame(width: chartSize, height: chartSize)
     }
 
     private var concentrationLabel: String {
         let value = finalConcentration ?? initialConcentration
-        return "\(Double(value).str(decimals: 2)) M"
+        return "\(value.str(decimals: 2)) M"
     }
 
     private var timeLabel: String {
         let value = finalTime ?? initialTime
-        return "\(Double(value).str(decimals: 1)) s"
+        return "\(value.str(decimals: 1)) s"
     }
 
     private func verticalIndicator(settings: TimeChartGeometrySettings) -> some View {
@@ -147,7 +147,7 @@ struct TimeChartAxisView<Value: BinaryFloatingPoint>: View {
         DualValueSlider(
             value1: isPortrait ? $initialConcentration : $initialTime,
             value2: isPortrait ? $finalConcentration : $finalTime,
-            axis: isPortrait ? settings.yAxis(Value.init) : settings.xAxis(Value.init),
+            axis: isPortrait ? settings.yAxis(CGFloat.init) : settings.xAxis(CGFloat.init),
             handleThickness: isIndicator ? 3 : settings.handleThickness,
             handleColor: Color.orangeAccent,
             disabledHandleColor: Color.gray,
@@ -198,12 +198,12 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     maxTime: 10,
                     chartSize: 250,
                     concentrationA: LinearConcentration(
-                        t1: Double(t1),
-                        c1: Double(c1),
-                        t2: Double(t2 ?? 0),
-                        c2: Double(c2 ?? 0)
+                        t1: t1,
+                        c1: c1,
+                        t2: t2 ?? 0,
+                        c2: c2 ?? 0
                     ),
-                    finalPlotTime: Double(t2 ?? 0)
+                    finalPlotTime: t2!
                 )
             }
 

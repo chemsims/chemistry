@@ -11,14 +11,14 @@ class ReactionViewModel: ObservableObject {
         setMolecules(cols: 19, rows: 10)
     }
 
-    @Published var initialConcentration: Double = 0.5 {
+    @Published var initialConcentration: CGFloat = 0.5 {
         didSet {
             setMolecules(cols: 19, rows: 10)
         }
     }
-    @Published var initialTime: Double = 6.6
-    @Published var finalConcentration: Double? = 0.2
-    @Published var finalTime: Double? = 17
+    @Published var initialTime: CGFloat = 6.6
+    @Published var finalConcentration: CGFloat? = 0.2
+    @Published var finalTime: CGFloat? = 17
 
     var concentrationEquationA: ConcentrationEquation {
         LinearConcentration(
@@ -31,28 +31,28 @@ class ReactionViewModel: ObservableObject {
 
     var molecules: [GridCoordinate] = []
 
-    var deltaC: Double? {
+    var deltaC: CGFloat? {
         if let c2 = finalConcentration {
             return c2 - initialConcentration
         }
         return nil
     }
 
-    var deltaT: Double? {
+    var deltaT: CGFloat? {
         if let t2 = finalTime {
             return t2 - initialTime
         }
         return nil
     }
 
-    var rate: Double? {
+    var rate: CGFloat? {
         if let deltaC = deltaC, deltaC != 0, let deltaT = deltaT {
             return -deltaC / deltaT
         }
         return nil
     }
 
-    var halfTime: Double? {
+    var halfTime: CGFloat? {
         if let rate = rate, rate != 0 {
             return initialConcentration / (2 * rate)
         }
@@ -63,7 +63,7 @@ class ReactionViewModel: ObservableObject {
         cols: Int,
         rows: Int
     ) {
-        let desiredMolecues = Int(initialConcentration * Double(cols * rows))
+        let desiredMolecues = Int(initialConcentration * CGFloat(cols * rows))
 
         let surplus = desiredMolecues - molecules.count
         if (surplus < 0) {
@@ -95,9 +95,9 @@ class ReactionViewModel: ObservableObject {
 }
 
 struct ReactionSettings {
-    static let minConcentration: Double = 0.2
-    static let maxConcentration: Double = 1
+    static let minConcentration: CGFloat = 0.2
+    static let maxConcentration: CGFloat = 1
 
-    static let minTime: Double = 1
-    static let maxTime: Double = 30
+    static let minTime: CGFloat = 1
+    static let maxTime: CGFloat = 30
 }
