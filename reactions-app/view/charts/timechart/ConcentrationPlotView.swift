@@ -10,6 +10,9 @@ struct ConcentrationPlotView: View {
     let settings: TimeChartGeometrySettings
     let concentrationAEquation: ConcentrationEquation
 
+    let initialConcentration: CGFloat
+    let finalConcentration: CGFloat
+
     let initialTime: CGFloat
     let currentTime: CGFloat
     let finalTime: CGFloat
@@ -20,6 +23,12 @@ struct ConcentrationPlotView: View {
 
     var body: some View {
         ZStack {
+
+            verticalIndicator(at: initialTime)
+            verticalIndicator(at: finalTime)
+            horizontalIndicator(at: initialConcentration)
+            horizontalIndicator(at: finalConcentration)
+
             ChartAxisShape(
                 verticalTicks: settings.verticalTicks,
                 horizontalTicks: settings.horizontalTicks,
@@ -42,6 +51,42 @@ struct ConcentrationPlotView: View {
             )
         }.frame(width: settings.chartSize, height: settings.chartSize)
     }
+
+    private func verticalIndicator(at time: CGFloat) -> some View {
+        Path { p in
+            p.move(
+                to: CGPoint(
+                    x: settings.xAxis.getPosition(at: time),
+                    y: 0
+                )
+            )
+            p.addLine(
+                to: CGPoint(
+                    x: settings.xAxis.getPosition(at: time),
+                    y: settings.chartSize
+                )
+            )
+        }
+        .stroke(lineWidth: 0.3)
+    }
+
+    private func horizontalIndicator(at concentration: CGFloat) -> some View {
+        Path { p in
+            p.move(
+                to: CGPoint(
+                    x: 0,
+                    y: settings.yAxis.getPosition(at: concentration)
+                )
+            )
+            p.addLine(
+                to: CGPoint(
+                    x: settings.chartSize,
+                    y: settings.yAxis.getPosition(at: concentration)
+                )
+            )
+        }.stroke(lineWidth: 0.3)
+    }
+
 }
 
 struct ChartPlotWithHead: View {
@@ -115,6 +160,8 @@ struct TimeChartPlotView_Previews: PreviewProvider {
                 maxTime: 1
             ),
             concentrationAEquation: LinearConcentration(t1: 0, c1: 0.8, t2: 1, c2: 0.2),
+            initialConcentration: 0.8,
+            finalConcentration: 0.2,
             initialTime: 0,
             currentTime: 0.5,
             finalTime: 1

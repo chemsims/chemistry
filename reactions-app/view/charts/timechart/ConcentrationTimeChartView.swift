@@ -46,15 +46,19 @@ struct ConcentrationTimeChartView: View {
             .frame(width: settings.yLabelWidth)
 
             HStack(alignment: .top) {
+                
                 axisSlider(isPortrait: true, settings: settings)
+                    .foregroundColor(Color.darkGray)
+
                 VStack {
                     if (currentTime == nil) {
                         chartWithIndicator(settings: settings)
-                    } else if (finalTime != nil) {
+                    } else if (finalTime != nil && finalConcentration != nil) {
                         chartWithData(
                             settings: settings,
                             currentTime: currentTime!,
-                            finalTime: finalTime!
+                            finalTime: finalTime!,
+                            finalConcentration: finalConcentration!
                         )
                     }
 
@@ -76,11 +80,14 @@ struct ConcentrationTimeChartView: View {
     private func chartWithData(
         settings: TimeChartGeometrySettings,
         currentTime: CGFloat,
-        finalTime: CGFloat
+        finalTime: CGFloat,
+        finalConcentration: CGFloat
     ) -> some View {
         ConcentrationPlotView(
             settings: settings,
             concentrationAEquation: concentrationA,
+            initialConcentration: initialConcentration,
+            finalConcentration: finalConcentration,
             initialTime: initialTime,
             currentTime: currentTime,
             finalTime: finalTime
@@ -161,6 +168,10 @@ struct ConcentrationTimeChartView: View {
             orientation: isPortrait ? .portrait : .landscape,
             boundType: isPortrait ? .upper : .lower
         )
+        .disabled(currentTime != nil)
+        .compositingGroup()
+        .colorMultiply(currentTime == nil ? .white : .gray)
+        .opacity(currentTime == nil ? 1 : 0.3)
     }
 }
 
