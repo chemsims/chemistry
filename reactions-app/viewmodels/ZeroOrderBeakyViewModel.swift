@@ -11,55 +11,55 @@ class ZeroOrderBeakyViewModel: ObservableObject {
 
     let reactionViewModel: ReactionViewModel
 
-    private var autoDispatchLock: UUID?
+    private var applyNextStateDispatchId: UUID?
 
     init(reactionViewModel: ReactionViewModel) {
-        self.currentStep = 0
+        self.currentIndex = 0
         self.reactionViewModel = reactionViewModel
         setStatement()
-        if let step = getStep(for: currentStep) {
-            step.apply(on: reactionViewModel)
+        if let state = getState(for: currentIndex) {
+            state.apply(on: reactionViewModel)
         }
     }
 
-    private let steps: [ReactionState] = [
+    private let states: [ReactionState] = [
         InitialStep(),
         SetFinalValuesToNonNil(),
         RunAnimation(),
         EndStatement(),
     ]
 
-    private var currentStep: Int {
+    private var currentIndex: Int {
         didSet {
             setStatement()
         }
     }
 
     func next() {
-        if let step = getStep(for: currentStep + 1) {
-            apply(state: step, step: currentStep + 1)
+        let nextIndex = currentIndex + 1
+        if let state = getState(for: nextIndex) {
+            state.apply(on: reactionViewModel)
+            currentIndex = nextIndex
+            scheduleNextState(for: state)
         }
     }
 
     func back() {
-        if let step = getStep(for: currentStep),
-           let previousStep = getStep(for: currentStep - 1) {
-            step.unapply(on: reactionViewModel)
-            apply(state: previousStep, step: currentStep - 1)
+        let previousIndex = currentIndex - 1
+        if let currentState = getState(for: currentIndex),
+           let previousState = getState(for: previousIndex) {
+            currentState.unapply(on: reactionViewModel)
+            previousState.reapply(on: reactionViewModel)
+            currentIndex = previousIndex
+            scheduleNextState(for: previousState)
         }
     }
 
-    private func apply(state: ReactionState, step: Int) {
-        autoDispatchLock = nil
-        state.apply(on: reactionViewModel)
-        currentStep = step
-        scheduleNextState(with: state)
-    }
-
-    private func scheduleNextState(with state: ReactionState) {
+    private func scheduleNextState(for state: ReactionState) {
+        applyNextStateDispatchId = nil
         if let delay = state.nextStateAutoDispatchDelay(model: reactionViewModel) {
             let lock = UUID()
-            autoDispatchLock = lock
+            applyNextStateDispatchId = lock
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 self.nextWithLock(lock: lock)
             }
@@ -67,18 +67,18 @@ class ZeroOrderBeakyViewModel: ObservableObject {
     }
 
     private func nextWithLock(lock: UUID) {
-        if let currentLock = autoDispatchLock, currentLock == lock {
+        if let currentLock = applyNextStateDispatchId, currentLock == lock {
             next()
         }
     }
 
     private func setStatement() {
-        let step = getStep(for: currentStep)
-        statement = step?.statement ?? []
+        let state = getState(for: currentIndex)
+        statement = state?.statement ?? []
     }
 
-    private func getStep(for n: Int) -> ReactionState? {
-        steps.indices.contains(n) ? steps[n] : nil
+    private func getState(for n: Int) -> ReactionState? {
+        states.indices.contains(n) ? states[n] : nil
     }
 }
 
@@ -149,7 +149,7 @@ fileprivate struct RunAnimation: ReactionState {
     func apply(on model: ReactionViewModel) {
         if let finalTime = model.finalTime, let halfTime = model.halfTime {
             model.currentTime = model.initialTime
-            withAnimation(.linear(duration: Double(2))) {
+            withAnimation(.linear(duration: Double(2 * halfTime))) {
                 model.currentTime = finalTime
             }
         }
@@ -165,8 +165,7 @@ fileprivate struct RunAnimation: ReactionState {
 
     func nextStateAutoDispatchDelay(model: ReactionViewModel) -> DispatchTimeInterval? {
         if let halfTime = model.halfTime {
-            let milliseconds = Int(2 * 1000)
-            return .milliseconds(milliseconds)
+            return .milliseconds( Int(halfTime * 2000))
         }
         return nil
     }
