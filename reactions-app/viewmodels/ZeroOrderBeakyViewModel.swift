@@ -15,11 +15,15 @@ class ZeroOrderBeakyViewModel: ObservableObject {
         self.currentStep = 0
         self.reactionViewModel = reactionViewModel
         setStatement()
+        if let step = getStep(for: currentStep) {
+            step.apply(on: reactionViewModel)
+        }
     }
 
-    private let steps: [ReactionStep] = [
+    private let steps: [ReactionState] = [
+        InitialStep(),
         SetFinalValuesToNonNil(),
-        RunAnimation(),
+        RunAnimationFirstHalf(),
         EndStatement()
     ]
 
@@ -30,16 +34,18 @@ class ZeroOrderBeakyViewModel: ObservableObject {
     }
 
     func next() {
-        if let step = getStep(for: currentStep) {
+        let nextStep = currentStep + 1
+        if let step = getStep(for: nextStep) {
             step.apply(on: reactionViewModel)
-            currentStep += 1
+            currentStep  = nextStep
         }
     }
 
     func back() {
-        if let step = getStep(for: currentStep - 1) {
+        let previousStep = currentStep - 1
+        if let step = getStep(for: currentStep), getStep(for: previousStep) != nil {
             step.unapply(on: reactionViewModel)
-            currentStep -= 1
+            currentStep = previousStep
         }
     }
 
@@ -48,26 +54,35 @@ class ZeroOrderBeakyViewModel: ObservableObject {
         statement = step?.statement ?? []
     }
 
-    private func getStep(for n: Int) -> ReactionStep? {
+    private func getStep(for n: Int) -> ReactionState? {
         steps.indices.contains(n) ? steps[n] : nil
     }
 }
 
-protocol ReactionStep {
+protocol ReactionState {
 
     /// The statement to display to the user
     var statement: [SpeechBubbleLine] { get }
 
-    /// Applies the changes on `model` to take it to the next state
+    /// Applies the reaction state to the model
     func apply(on model: ReactionViewModel) -> Void
 
-    /// Reverses the changes applied in `applyNext`
+    /// Unapplies the reaction state to the model. i.e., reversing the effect of `apply`
     func unapply(on model: ReactionViewModel) -> Void
 }
 
-fileprivate struct SetFinalValuesToNonNil: ReactionStep {
+fileprivate struct InitialStep: ReactionState {
 
     var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statement1
+
+    func apply(on model: ReactionViewModel) { }
+
+    func unapply(on model: ReactionViewModel) { }
+}
+
+fileprivate struct SetFinalValuesToNonNil: ReactionState {
+
+    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statement2
 
     func apply(on model: ReactionViewModel) {
         let initialConcentration = model.initialConcentration
@@ -86,14 +101,16 @@ fileprivate struct SetFinalValuesToNonNil: ReactionStep {
     }
 }
 
-fileprivate struct RunAnimation: ReactionStep {
+fileprivate struct RunAnimationFirstHalf: ReactionState {
 
-    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statement2
+    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statment3
 
     func apply(on model: ReactionViewModel) {
-        model.currentTime = model.initialTime
-        withAnimation(.linear(duration: 1)) {
-            model.currentTime = model.finalTime!
+        if let finalTime = model.finalTime {
+            model.currentTime = model.initialTime
+            withAnimation(.linear(duration: 5)) {
+                model.currentTime = finalTime
+            }
         }
     }
 
@@ -102,7 +119,7 @@ fileprivate struct RunAnimation: ReactionStep {
     }
 }
 
-fileprivate struct EndStatement: ReactionStep {
+fileprivate struct EndStatement: ReactionState {
 
     var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statment3
 
