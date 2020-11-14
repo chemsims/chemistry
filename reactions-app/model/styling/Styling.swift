@@ -13,7 +13,7 @@ struct Styling {
     static let moleculePlaceholder = Color(red: 206 / 255, green: 227 / 255, blue: 237 / 255)
     static let moleculeA = Color(red: 81 / 255, green: 155 / 255, blue: 210 / 255)
 
-    static let moleculeB = Color(red: 96 / 255, green: 203 / 255, blue: 198 / 255)
+    static let moleculeB = Color(red: 89 / 255, green: 188 / 255, blue: 185 / 255)
 
     static let timeAxisCompleteBar = Color.gray
 

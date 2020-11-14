@@ -7,7 +7,9 @@ import SwiftUI
 
 struct FilledBeaker: View {
 
-    let molecules: [(Color, [GridCoordinate])]
+    let moleculesA: [GridCoordinate]
+    let moleculesB: [GridCoordinate]
+    let moleculeBOpacity: Double
 
     var body: some View {
         GeometryReader { geometry in
@@ -47,13 +49,18 @@ struct FilledBeaker: View {
                 coordinates: MoleculeGridSettings.fullGrid
             )
 
-            ForEach(molecules, id: \.0.hashValue) { data in
-                moleculeGrid(
-                    settings,
-                    color: data.0,
-                    coordinates: data.1
-                )
-            }
+
+            moleculeGrid(
+                settings,
+                color: Styling.moleculeA,
+                coordinates: moleculesA
+            )
+
+            moleculeGrid(
+                settings,
+                color: Styling.moleculeB,
+                coordinates: moleculesB
+            ).opacity(moleculeBOpacity)
         }
     }
 
@@ -74,20 +81,17 @@ struct FilledBeaker: View {
 struct FilledBeaker_Previews: PreviewProvider {
     static var previews: some View {
         FilledBeaker(
-            molecules: [
-                (Color.red, [
-                    GridCoordinate(col: 0, row: 0),
-                    GridCoordinate(col: 1, row: 1),
-                    GridCoordinate(col: 2, row: 2)
-                ]
-            ),
-            (Color.blue, [
-                    GridCoordinate(col: 2, row: 4),
-                    GridCoordinate(col: 5, row: 3),
-                    GridCoordinate(col: 14, row: 4)
-                ]
-            )
-            ]
+            moleculesA: [
+                GridCoordinate(col: 0, row: 0),
+                GridCoordinate(col: 1, row: 1),
+                GridCoordinate(col: 2, row: 2)
+            ],
+            moleculesB: [
+                GridCoordinate(col: 2, row: 4),
+                GridCoordinate(col: 5, row: 3),
+                GridCoordinate(col: 14, row: 4)
+            ],
+            moleculeBOpacity: 0
         )
     }
 }

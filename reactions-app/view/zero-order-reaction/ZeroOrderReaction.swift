@@ -25,7 +25,9 @@ struct ZeroOrderReaction: View {
             VStack {
                 Spacer()
                 FilledBeaker(
-                    molecules: [(Styling.moleculeA, reactionModel.molecules)]
+                    moleculesA: reactionModel.moleculesA,
+                    moleculesB: reactionModel.moleculesB,
+                    moleculeBOpacity: reactionModel.moleculeBOpacity
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
                 .padding(.leading, 60)

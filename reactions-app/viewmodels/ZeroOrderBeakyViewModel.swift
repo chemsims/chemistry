@@ -149,8 +149,10 @@ fileprivate struct RunAnimation: ReactionState {
     func apply(on model: ReactionViewModel) {
         if let finalTime = model.finalTime, let halfTime = model.halfTime {
             model.currentTime = model.initialTime
+            model.moleculeBOpacity = 0
             withAnimation(.linear(duration: Double(2 * halfTime))) {
                 model.currentTime = finalTime
+                model.moleculeBOpacity = 1
             }
         }
     }
@@ -162,6 +164,7 @@ fileprivate struct RunAnimation: ReactionState {
     func unapply(on model: ReactionViewModel) {
         withAnimation(.none) {
             model.currentTime = nil
+            model.moleculeBOpacity = 0
         }
     }
 
@@ -183,6 +186,7 @@ fileprivate struct EndStatement: ReactionState {
         withAnimation(.easeOut(duration: 0.5)) {
             if let finalTime = model.finalTime {
                 model.currentTime = finalTime * 1.001
+                model.moleculeBOpacity = 1.001
             }
         }
     }

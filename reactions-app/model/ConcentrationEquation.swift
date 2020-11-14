@@ -32,6 +32,17 @@ struct LinearConcentration: ConcentrationEquation {
 
 }
 
+struct TestEQ: ConcentrationEquation {
+    func getConcentration(at time: CGFloat) -> CGFloat {
+        if (time < 10) {
+            return 0
+        }
+        return 1
+    }
+
+
+}
+
 struct ConstantConcentration: ConcentrationEquation {
     let value: CGFloat
 

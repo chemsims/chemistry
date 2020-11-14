@@ -8,12 +8,12 @@ import SwiftUI
 class ReactionViewModel: ObservableObject {
 
     init () {
-        setMolecules(cols: 19, rows: 10)
+        setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
     }
 
     @Published var initialConcentration: CGFloat = 0.5 {
         didSet {
-            setMolecules(cols: 19, rows: 10)
+            setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
         }
     }
     @Published var initialTime: CGFloat = 6.6
@@ -21,6 +21,7 @@ class ReactionViewModel: ObservableObject {
     @Published var finalTime: CGFloat?
 
     @Published var currentTime: CGFloat?
+    @Published var moleculeBOpacity: Double = 0
 
     var concentrationEquationA: LinearConcentration {
         LinearConcentration(
@@ -43,7 +44,16 @@ class ReactionViewModel: ObservableObject {
         return ConstantConcentration(value: 0)
     }
 
-    var molecules: [GridCoordinate] = []
+    var moleculesA = [GridCoordinate]()
+    var moleculesB: [GridCoordinate] {
+        if let finalTime = finalTime {
+            let finalB = concentrationEquationB.getConcentration(at: finalTime)
+            let desiredMolecues = finalB * CGFloat(MoleculeGridSettings.cols * MoleculeGridSettings.rows)
+            let prefix = moleculesA.prefix(Int(desiredMolecues))
+            return Array(prefix)
+        }
+        return []
+    }
 
     var deltaC: CGFloat? {
         if let c2 = finalConcentration {
@@ -73,37 +83,37 @@ class ReactionViewModel: ObservableObject {
         return nil
     }
 
-    private func setMolecules(
+    private func setMoleculesA(
         cols: Int,
         rows: Int
     ) {
         let desiredMolecues = Int(initialConcentration * CGFloat(cols * rows))
 
-        let surplus = desiredMolecues - molecules.count
+        let surplus = desiredMolecues - moleculesA.count
         if (surplus < 0) {
-            let toRemove = min(molecules.count, -1 * surplus)
-            molecules.removeFirst(toRemove)
+            let toRemove = min(moleculesA.count, -1 * surplus)
+            moleculesA.removeFirst(toRemove)
         } else {
-            addMolecules(surplus, cols: cols, rows: rows)
+            addMoleculesA(surplus, cols: cols, rows: rows)
         }
         return
     }
 
-    private func addMolecules(
+    private func addMoleculesA(
         _ toAdd: Int,
         cols: Int,
         rows: Int
     ) {
-        if (toAdd == 0 || molecules.count == (cols * rows)) {
+        if (toAdd == 0 || moleculesA.count == (cols * rows)) {
             return
         }
         let grid = GridCoordinate.random(maxCol: cols - 1, maxRow: rows - 1)
-        let moleculeExists = molecules.contains { $0.col == grid.col && $0.row == grid.row }
+        let moleculeExists = moleculesA.contains { $0.col == grid.col && $0.row == grid.row }
         if (moleculeExists) {
-            addMolecules(toAdd, cols: cols, rows: rows)
+            addMoleculesA(toAdd, cols: cols, rows: rows)
         } else {
-            molecules.append(grid)
-            addMolecules(toAdd - 1, cols: cols, rows: rows)
+            moleculesA.append(grid)
+            addMoleculesA(toAdd - 1, cols: cols, rows: rows)
         }
     }
 }
