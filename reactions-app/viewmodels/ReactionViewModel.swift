@@ -20,7 +20,11 @@ class ReactionViewModel: ObservableObject {
     @Published var finalConcentration: CGFloat?
     @Published var finalTime: CGFloat?
 
-    @Published var currentTime: CGFloat?
+    @Published var currentTime: CGFloat? {
+        didSet {
+            print("Set time to \(currentTime)")
+        }
+    }
 
     var concentrationEquationA: LinearConcentration {
         LinearConcentration(
