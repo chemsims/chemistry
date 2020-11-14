@@ -31,7 +31,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     .frame(width: barWidth(geometry), height: barHeight(geometry))
                 handle(
                     geometry,
-                    calculations: getCalculations(geometry: geometry)
+                    calculations: getCalculations
                 )
             }
         }
@@ -60,7 +60,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             )
     }
 
-    private func getCalculations(geometry: GeometryProxy) -> AxisPositionCalculations<Value> {
+    private var getCalculations: AxisPositionCalculations<Value> {
         let minValuePos = axis.minValuePosition
         let maxValuePos = axis.maxValuePosition
 

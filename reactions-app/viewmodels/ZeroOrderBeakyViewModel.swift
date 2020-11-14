@@ -178,7 +178,7 @@ fileprivate struct EndStatement: ReactionState {
     var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.endStatement
 
     func apply(on model: ReactionViewModel) {
-        withAnimation(.easeOut(duration: 1)) {
+        withAnimation(.easeOut(duration: 0.5)) {
             if let finalTime = model.finalTime {
                 model.currentTime = finalTime * 1.001
             }

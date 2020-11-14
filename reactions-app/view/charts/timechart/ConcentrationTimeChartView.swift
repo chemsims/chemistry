@@ -19,6 +19,9 @@ struct ConcentrationTimeChartView: View {
     let minTime: CGFloat
     let maxTime: CGFloat
 
+    let minFinalConcentration: CGFloat
+    let minFinalTime: CGFloat
+
     let chartSize: CGFloat
 
     let concentrationA: ConcentrationEquation
@@ -32,7 +35,9 @@ struct ConcentrationTimeChartView: View {
                 minConcentration: minConcentration,
                 maxConcentration: maxConcentration,
                 minTime: minTime,
-                maxTime: maxTime
+                maxTime: maxTime,
+                minFinalConcentration: minFinalConcentration,
+                minFinalTime: minFinalTime
             )
         )
     }
@@ -168,7 +173,8 @@ struct ConcentrationTimeChartView: View {
             barThickness: isIndicator ? 0 : 3,
             barColor: Color.gray,
             orientation: isPortrait ? .portrait : .landscape,
-            boundType: isPortrait ? .upper : .lower
+            primarySliderMin: isPortrait ? settings.minFinalConcentration : settings.minFinalTime,
+            primaryValueBoundType: isPortrait ? .upper : .lower
         )
         .disabled(currentTime != nil)
         .compositingGroup()
@@ -199,6 +205,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     maxConcentration: 1,
                     minTime: 0,
                     maxTime: 10,
+                    minFinalConcentration: 0.1,
+                    minFinalTime: 1,
                     chartSize: 250,
                     concentrationA: equation,
                     concentrationB: equation.inverse,
@@ -214,6 +222,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     maxConcentration: 1,
                     minTime: 0,
                     maxTime: 10,
+                    minFinalConcentration: 0.1,
+                    minFinalTime: 1,
                     chartSize: 250,
                     concentrationA: equation,
                     concentrationB: equation.inverse,

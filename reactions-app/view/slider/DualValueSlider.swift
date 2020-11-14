@@ -22,7 +22,8 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
 
     let orientation: Orientation
 
-    let boundType: BoundType
+    let primarySliderMin: Value
+    let primaryValueBoundType: BoundType
 
     var body: some View {
         ZStack {
@@ -30,7 +31,8 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
                 value: $value1,
                 handleColor: value2Enabled ? disabledHandleColor : handleColor,
                 barThickness: barThickness,
-                previousHandleValue: nil
+                previousHandleValue: primarySliderMin,
+                previousHandleBoundType: .lower
             ).disabled(value2Enabled)
 
             if (value2Enabled) {
@@ -38,7 +40,8 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
                     value: value2UnsafeBinding,
                     handleColor: handleColor,
                     barThickness: 0,
-                    previousHandleValue: value1
+                    previousHandleValue: value1,
+                    previousHandleBoundType: primaryValueBoundType
                 )
             }
         }
@@ -56,7 +59,8 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
         value: Binding<Value>,
         handleColor: Color,
         barThickness: CGFloat,
-        previousHandleValue: Value?
+        previousHandleValue: Value?,
+        previousHandleBoundType: BoundType
     ) -> some View {
         CustomSlider(
             value: value,
@@ -69,7 +73,7 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
             orientation: orientation,
             previousHandleValue: previousHandleValue,
             previousHandlePadding: 3,
-            previousValueBoundType: boundType
+            previousValueBoundType: previousHandleBoundType
         )
     }
 }
@@ -101,7 +105,8 @@ struct DualValueSlider_Previews: PreviewProvider {
                     barThickness: 5,
                     barColor: Color.darkGray,
                     orientation: .landscape,
-                    boundType: .lower
+                    primarySliderMin: 0.1,
+                    primaryValueBoundType: .lower
                 ).frame(height: 80)
 
                 Button(action: {
@@ -115,6 +120,5 @@ struct DualValueSlider_Previews: PreviewProvider {
                 }
             }
         }
-
     }
 }

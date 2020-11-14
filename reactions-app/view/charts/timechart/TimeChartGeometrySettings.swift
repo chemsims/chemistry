@@ -8,10 +8,14 @@ import CoreGraphics
 struct TimeChartGeometrySettings {
     let chartSize: CGFloat
 
+    // Min/max of the axis
     let minConcentration: CGFloat
     let maxConcentration: CGFloat
     let minTime: CGFloat
     let maxTime: CGFloat
+
+    let minFinalConcentration: CGFloat
+    let minFinalTime: CGFloat
 
     let verticalTicks = 10
     let horizontalTicks = 10
@@ -28,7 +32,7 @@ struct TimeChartGeometrySettings {
         0.16 * chartSize
     }
     var sliderMinValuePadding: CGFloat {
-        0.1 * chartSize
+        0
     }
     var sliderMaxValuePadding: CGFloat {
         0.28 * chartSize

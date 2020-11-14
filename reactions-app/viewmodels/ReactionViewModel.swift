@@ -20,11 +20,7 @@ class ReactionViewModel: ObservableObject {
     @Published var finalConcentration: CGFloat?
     @Published var finalTime: CGFloat?
 
-    @Published var currentTime: CGFloat? {
-        didSet {
-            print("Set time to \(currentTime)")
-        }
-    }
+    @Published var currentTime: CGFloat?
 
     var concentrationEquationA: LinearConcentration {
         LinearConcentration(
@@ -36,7 +32,12 @@ class ReactionViewModel: ObservableObject {
     }
 
     var concentrationEquationB: LinearConcentration {
-        concentrationEquationA.inverse
+        LinearConcentration(
+            t1: initialTime,
+            c1: 0,
+            t2: finalTime ?? 0,
+            c2: initialConcentration - (finalConcentration ?? 0)
+        )
     }
 
     var molecules: [GridCoordinate] = []
@@ -77,7 +78,8 @@ class ReactionViewModel: ObservableObject {
 
         let surplus = desiredMolecues - molecules.count
         if (surplus < 0) {
-            molecules.removeFirst(-1 * surplus)
+            let toRemove = min(molecules.count, -1 * surplus)
+            molecules.removeFirst(toRemove)
         } else {
             addMolecules(surplus, cols: cols, rows: rows)
         }
@@ -104,9 +106,13 @@ class ReactionViewModel: ObservableObject {
 }
 
 struct ReactionSettings {
-    static let minConcentration: CGFloat = 0.2
-    static let maxConcentration: CGFloat = 1
 
+    // Axis settings
+    static let minConcentration: CGFloat = 0
+    static let maxConcentration: CGFloat = 1
     static let minTime: CGFloat = 1
-    static let maxTime: CGFloat = 30
+    static let maxTime: CGFloat = 15
+
+    static let minFinalConcentration: CGFloat = 0.1
+    static let minFinalTime: CGFloat = 1
 }
