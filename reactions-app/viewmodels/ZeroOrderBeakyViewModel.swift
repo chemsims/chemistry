@@ -25,8 +25,7 @@ class ZeroOrderBeakyViewModel: ObservableObject {
     private let steps: [ReactionState] = [
         InitialStep(),
         SetFinalValuesToNonNil(),
-        RunAnimationFirstHalf(),
-        RunAnimationSecondHalf(),
+        RunAnimation(),
         EndStatement(),
     ]
 
@@ -37,31 +36,24 @@ class ZeroOrderBeakyViewModel: ObservableObject {
     }
 
     func next() {
-        if let currentStep = getStep(for: currentStep) {
-            if currentStep.userCanApplyNext {
-                doNext()
-            }
-        }
-    }
-
-    private func doNext() {
-        let nextStep = currentStep + 1
-        if let step = getStep(for: nextStep) {
-            print("Set step to \(nextStep)")
-            autoDispatchLock = nil
-            step.apply(on: reactionViewModel)
-            currentStep  = nextStep
-            scheduleNextState(with: step)
+        if let step = getStep(for: currentStep + 1) {
+            apply(state: step, step: currentStep + 1)
         }
     }
 
     func back() {
-        let previousStep = currentStep - 1
-        if let step = getStep(for: currentStep), getStep(for: previousStep) != nil {
-            autoDispatchLock = nil
+        if let step = getStep(for: currentStep),
+           let previousStep = getStep(for: currentStep - 1) {
             step.unapply(on: reactionViewModel)
-            currentStep = previousStep
+            apply(state: previousStep, step: currentStep - 1)
         }
+    }
+
+    private func apply(state: ReactionState, step: Int) {
+        autoDispatchLock = nil
+        state.apply(on: reactionViewModel)
+        currentStep = step
+        scheduleNextState(with: state)
     }
 
     private func scheduleNextState(with state: ReactionState) {
@@ -75,10 +67,8 @@ class ZeroOrderBeakyViewModel: ObservableObject {
     }
 
     private func nextWithLock(lock: UUID) {
-        print("In next with lock")
         if let currentLock = autoDispatchLock, currentLock == lock {
-            print("Running next")
-            doNext()
+            next()
         }
     }
 
@@ -103,20 +93,17 @@ protocol ReactionState {
     /// Unapplies the reaction state to the model. i.e., reversing the effect of `apply`
     func unapply(on model: ReactionViewModel) -> Void
 
+    /// Reapplies the state, when returning from a subsequent state.
+    func reapply(on model: ReactionViewModel) -> Void
+
     /// Interval to wait before automatically progressing to the next state
     func nextStateAutoDispatchDelay(model: ReactionViewModel) -> DispatchTimeInterval?
-
-    /// Whether the user can apply the next state. If not, the `nextStateAutoDispatchDelay` should not be nil.
-    var userCanApplyNext: Bool { get }
 }
 
 extension ReactionState {
     func nextStateAutoDispatchDelay(model: ReactionViewModel) -> DispatchTimeInterval? {
         return nil
     }
-
-
-    var userCanApplyNext: Bool { true }
 }
 
 fileprivate struct InitialStep: ReactionState {
@@ -126,6 +113,8 @@ fileprivate struct InitialStep: ReactionState {
     func apply(on model: ReactionViewModel) { }
 
     func unapply(on model: ReactionViewModel) { }
+
+    func reapply(on model: ReactionViewModel) { }
 }
 
 
@@ -145,24 +134,29 @@ fileprivate struct SetFinalValuesToNonNil: ReactionState {
         model.finalTime = (initialTime + maxTime) / 2
     }
 
+    func reapply(on model: ReactionViewModel) { }
+
     func unapply(on model: ReactionViewModel) {
         model.finalConcentration = nil
         model.finalTime = nil
     }
 }
 
-fileprivate struct RunAnimationFirstHalf: ReactionState {
+fileprivate struct RunAnimation: ReactionState {
 
     var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statment3
 
     func apply(on model: ReactionViewModel) {
         if let finalTime = model.finalTime, let halfTime = model.halfTime {
-            let midTime = (finalTime + model.initialTime) / 2
             model.currentTime = model.initialTime
-            withAnimation(.linear(duration: Double(halfTime))) {
-                model.currentTime = midTime
+            withAnimation(.linear(duration: Double(2))) {
+                model.currentTime = finalTime
             }
         }
+    }
+
+    func reapply(on model: ReactionViewModel) {
+        apply(on: model)
     }
 
     func unapply(on model: ReactionViewModel) {
@@ -171,51 +165,30 @@ fileprivate struct RunAnimationFirstHalf: ReactionState {
 
     func nextStateAutoDispatchDelay(model: ReactionViewModel) -> DispatchTimeInterval? {
         if let halfTime = model.halfTime {
-            let milliseconds = Int(halfTime * 1000)
+            let milliseconds = Int(2 * 1000)
             return .milliseconds(milliseconds)
         }
         return nil
     }
 
-    var userCanApplyNext: Bool { false }
-}
-
-fileprivate struct RunAnimationSecondHalf: ReactionState {
-
-    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statement4
-
-    func apply(on model: ReactionViewModel) {
-        if let finalTime = model.finalTime, let halfTime = model.halfTime {
-            let midTime = (finalTime + model.initialTime) / 2
-            model.currentTime = midTime
-            withAnimation(.linear(duration: Double(halfTime))) {
-                model.currentTime = finalTime
-            }
-        }
-    }
-
-    func unapply(on model: ReactionViewModel) { }
-
-    func nextStateAutoDispatchDelay(model: ReactionViewModel) -> DispatchTimeInterval? {
-        if let halfTime = model.halfTime {
-            let milliseconds = Int(halfTime * 1000)
-            return .milliseconds(milliseconds)
-        }
-        return nil
-    }
-
-    var userCanApplyNext: Bool { false }
-
+    var userCanApplyNext: Bool { true }
 }
 
 fileprivate struct EndStatement: ReactionState {
 
     var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.endStatement
 
-    func apply(on model: ReactionViewModel) { }
+    func apply(on model: ReactionViewModel) {
+        withAnimation(.easeOut(duration: 1)) {
+            if let finalTime = model.finalTime {
+                model.currentTime = finalTime * 1.001
+            }
+        }
+    }
 
     func unapply(on model: ReactionViewModel) { }
 
+    func reapply(on model: ReactionViewModel) { }
 }
 
 struct ZeroOrderBeakyStatements {
