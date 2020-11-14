@@ -22,6 +22,7 @@ struct ConcentrationTimeChartView: View {
     let chartSize: CGFloat
 
     let concentrationA: ConcentrationEquation
+    let concentrationB: ConcentrationEquation
     let currentTime: CGFloat?
 
     var body: some View {
@@ -85,7 +86,8 @@ struct ConcentrationTimeChartView: View {
     ) -> some View {
         ConcentrationPlotView(
             settings: settings,
-            concentrationAEquation: concentrationA,
+            concentrationA: concentrationA,
+            concentrationB: concentrationB,
             initialConcentration: initialConcentration,
             finalConcentration: finalConcentration,
             initialTime: initialTime,
@@ -198,7 +200,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     minTime: 0,
                     maxTime: 10,
                     chartSize: 250,
-                    concentrationA: LinearConcentration(t1: 0, c1: 0, t2: 1, c2: 1),
+                    concentrationA: equation,
+                    concentrationB: equation.inverse,
                     currentTime: nil
                 )
 
@@ -212,16 +215,19 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     minTime: 0,
                     maxTime: 10,
                     chartSize: 250,
-                    concentrationA: LinearConcentration(
-                        t1: t1,
-                        c1: c1,
-                        t2: t2 ?? 0,
-                        c2: c2 ?? 0
-                    ),
+                    concentrationA: equation,
+                    concentrationB: equation.inverse,
                     currentTime: t2!
                 )
             }
-
+        }
+        private var equation: LinearConcentration {
+            LinearConcentration(
+                t1: t1,
+                c1: c1,
+                t2: t2 ?? 0,
+                c2: c2 ?? 0
+            )
         }
     }
 }

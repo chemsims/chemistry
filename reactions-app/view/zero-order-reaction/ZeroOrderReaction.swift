@@ -45,6 +45,7 @@ struct ZeroOrderReaction: View {
                     maxTime: ReactionSettings.maxTime,
                     chartSize: settings.chartsWidth,
                     concentrationA: reactionModel.concentrationEquationA,
+                    concentrationB: reactionModel.concentrationEquationB,
                     currentTime: reactionModel.currentTime
                 )
 

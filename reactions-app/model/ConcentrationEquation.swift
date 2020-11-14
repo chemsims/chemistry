@@ -31,5 +31,8 @@ struct LinearConcentration: ConcentrationEquation {
         c1 - (m * t1)
     }
 
+    var inverse: LinearConcentration {
+        LinearConcentration(t1: t1, c1: c2, t2: t2, c2: c1)
+    }
 
 }

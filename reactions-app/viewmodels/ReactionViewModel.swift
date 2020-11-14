@@ -22,13 +22,17 @@ class ReactionViewModel: ObservableObject {
 
     @Published var currentTime: CGFloat?
 
-    var concentrationEquationA: ConcentrationEquation {
+    var concentrationEquationA: LinearConcentration {
         LinearConcentration(
             t1: initialTime,
             c1: initialConcentration,
             t2: finalTime ?? 0,
             c2: finalConcentration ?? 0
         )
+    }
+
+    var concentrationEquationB: LinearConcentration {
+        concentrationEquationA.inverse
     }
 
     var molecules: [GridCoordinate] = []

@@ -48,6 +48,9 @@ struct TimeChartGeometrySettings {
     var chartHeadPrimarySize: CGFloat {
         0.02 * chartSize
     }
+    var chartHeadSecondarySize: CGFloat {
+        chartHeadPrimarySize * 0.5
+    }
     var chartHeadPrimaryHaloSize: CGFloat {
         3 * chartHeadPrimarySize
     }
