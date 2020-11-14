@@ -222,11 +222,10 @@ struct ZeroOrderBeakyStatements {
         )
     ]
 
-    static var statement4: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(str: "Half way through!")
-    ]
 
     static var endStatement: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(str: "Amazing!")
+        SpeechBubbleLineGenerator.makeLine(str: "Amazing!"),
+        SpeechBubbleLineGenerator.makeLine(str: "Let's take a snapshot! Now, let's try another."),
+        SpeechBubbleLineGenerator.makeLine(str: "*Choose a 2nd Order Reaction*.")
     ]
 }
