@@ -31,13 +31,16 @@ class ReactionViewModel: ObservableObject {
         )
     }
 
-    var concentrationEquationB: LinearConcentration {
-        LinearConcentration(
-            t1: initialTime,
-            c1: 0,
-            t2: finalTime ?? 0,
-            c2: initialConcentration - (finalConcentration ?? 0)
-        )
+    var concentrationEquationB: ConcentrationEquation {
+        if let t2 = finalTime, let c2 = finalConcentration {
+            return LinearConcentration(
+                t1: initialTime,
+                c1: 0,
+                t2: t2,
+                c2: c2
+            )
+        }
+        return ConstantConcentration(value: 0)
     }
 
     var molecules: [GridCoordinate] = []

@@ -178,7 +178,7 @@ struct TimeChartPlotView_Previews: PreviewProvider {
                 minFinalTime: 0.1
             ),
             concentrationA: equation,
-            concentrationB: equation.inverse,
+            concentrationB: equation2,
             initialConcentration: 0.8,
             finalConcentration: 0.2,
             initialTime: 0,
@@ -188,4 +188,5 @@ struct TimeChartPlotView_Previews: PreviewProvider {
     }
 
     static var equation = LinearConcentration(t1: 0, c1: 0.8, t2: 1, c2: 0.2)
+    static var equation2 = LinearConcentration(t1: 0, c1: 0.2, t2: 1, c2: 0.8)
 }

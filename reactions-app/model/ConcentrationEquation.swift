@@ -18,7 +18,6 @@ struct LinearConcentration: ConcentrationEquation {
     let t2: CGFloat
     let c2: CGFloat
 
-
     func getConcentration(at time: CGFloat) -> CGFloat {
         (m * time) + c
     }
@@ -31,8 +30,12 @@ struct LinearConcentration: ConcentrationEquation {
         c1 - (m * t1)
     }
 
-    var inverse: LinearConcentration {
-        LinearConcentration(t1: t1, c1: c2, t2: t2, c2: c1)
-    }
+}
 
+struct ConstantConcentration: ConcentrationEquation {
+    let value: CGFloat
+
+    func getConcentration(at time: CGFloat) -> CGFloat {
+        return value
+    }
 }

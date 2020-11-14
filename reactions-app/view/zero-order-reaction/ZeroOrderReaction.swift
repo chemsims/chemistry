@@ -52,7 +52,11 @@ struct ZeroOrderReaction: View {
                 )
 
                 ConcentrationBarChart(
-                    concentrationA: reactionModel.initialConcentration,
+                    initialA: reactionModel.initialConcentration,
+                    initialTime: reactionModel.initialTime,
+                    concentrationA: reactionModel.concentrationEquationA,
+                    concentrationB: reactionModel.concentrationEquationB,
+                    currentTime: reactionModel.currentTime,
                     settings: BartChartGeometrySettings(
                         chartWidth: settings.chartsWidth,
                         maxConcentration: ReactionSettings.maxConcentration,

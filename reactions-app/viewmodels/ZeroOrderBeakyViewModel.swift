@@ -160,7 +160,9 @@ fileprivate struct RunAnimation: ReactionState {
     }
 
     func unapply(on model: ReactionViewModel) {
-        model.currentTime = nil
+        withAnimation(.none) {
+            model.currentTime = nil
+        }
     }
 
     func nextStateAutoDispatchDelay(model: ReactionViewModel) -> DispatchTimeInterval? {

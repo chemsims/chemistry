@@ -209,7 +209,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     minFinalTime: 1,
                     chartSize: 250,
                     concentrationA: equation,
-                    concentrationB: equation.inverse,
+                    concentrationB: equation2,
                     currentTime: nil
                 )
 
@@ -226,7 +226,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     minFinalTime: 1,
                     chartSize: 250,
                     concentrationA: equation,
-                    concentrationB: equation.inverse,
+                    concentrationB: equation2,
                     currentTime: t2!
                 )
             }
@@ -237,6 +237,15 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                 c1: c1,
                 t2: t2 ?? 0,
                 c2: c2 ?? 0
+            )
+        }
+
+        private var equation2: LinearConcentration {
+            LinearConcentration(
+                t1: t1,
+                c1: c2 ?? 0,
+                t2: t2 ?? 0,
+                c2: c1
             )
         }
     }
