@@ -7,47 +7,109 @@ import SwiftUI
 
 class ZeroOrderBeakyViewModel: ObservableObject {
 
+    @Published var statement: [SpeechBubbleLine] = []
+
     let reactionViewModel: ReactionViewModel
 
     init(reactionViewModel: ReactionViewModel) {
+        self.currentStep = 0
         self.reactionViewModel = reactionViewModel
+        setStatement()
     }
 
-    @Published var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statement1
+    private let steps: [ReactionStep] = [
+        SetFinalValuesToNonNil(),
+        RunAnimation(),
+        EndStatement()
+    ]
 
-    private var currentStep: Int = 1 {
+    private var currentStep: Int {
         didSet {
-            statement = getStatementForCurrentStep()
+            setStatement()
         }
     }
 
     func next() {
-        currentStep = 2
-        let upperConcentration = reactionViewModel.initialConcentration
-        let lowerConcentration = ReactionSettings.minConcentration
-        let midConcenration = (upperConcentration + lowerConcentration) / 2
-
-        let lowerTime = reactionViewModel.initialTime
-        let upperTime = ReactionSettings.maxTime
-        let midTime = (lowerTime + upperTime) / 2
-
-        reactionViewModel.finalConcentration = midConcenration
-        reactionViewModel.finalTime = midTime
+        if let step = getStep(for: currentStep) {
+            step.apply(on: reactionViewModel)
+            currentStep += 1
+        }
     }
 
     func back() {
-        currentStep = 1
-        reactionViewModel.finalConcentration = nil
-        reactionViewModel.finalTime = nil
-    }
-
-    private func getStatementForCurrentStep() -> [SpeechBubbleLine] {
-        switch (currentStep) {
-        case 1: return ZeroOrderBeakyStatements.statement1
-        case 2: return ZeroOrderBeakyStatements.statement2
-        default: return []
+        if let step = getStep(for: currentStep - 1) {
+            step.unapply(on: reactionViewModel)
+            currentStep -= 1
         }
     }
+
+    private func setStatement() {
+        let step = getStep(for: currentStep)
+        statement = step?.statement ?? []
+    }
+
+    private func getStep(for n: Int) -> ReactionStep? {
+        steps.indices.contains(n) ? steps[n] : nil
+    }
+}
+
+protocol ReactionStep {
+
+    /// The statement to display to the user
+    var statement: [SpeechBubbleLine] { get }
+
+    /// Applies the changes on `model` to take it to the next state
+    func apply(on model: ReactionViewModel) -> Void
+
+    /// Reverses the changes applied in `applyNext`
+    func unapply(on model: ReactionViewModel) -> Void
+}
+
+fileprivate struct SetFinalValuesToNonNil: ReactionStep {
+
+    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statement1
+
+    func apply(on model: ReactionViewModel) {
+        let initialConcentration = model.initialConcentration
+        let minConcentration = ReactionSettings.minConcentration
+
+        let initialTime = model.initialTime
+        let maxTime = ReactionSettings.maxTime
+
+        model.finalConcentration = (initialConcentration + minConcentration) / 2
+        model.finalTime = (initialTime + maxTime) / 2
+    }
+
+    func unapply(on model: ReactionViewModel) {
+        model.finalConcentration = nil
+        model.finalTime = nil
+    }
+}
+
+fileprivate struct RunAnimation: ReactionStep {
+
+    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statement2
+
+    func apply(on model: ReactionViewModel) {
+        model.currentTime = model.initialTime
+        withAnimation(.linear(duration: 1)) {
+            model.currentTime = model.finalTime!
+        }
+    }
+
+    func unapply(on model: ReactionViewModel) {
+        model.currentTime = nil
+    }
+}
+
+fileprivate struct EndStatement: ReactionStep {
+
+    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statment3
+
+    func apply(on model: ReactionViewModel) { }
+
+    func unapply(on model: ReactionViewModel) { }
+
 
 }
 
@@ -68,4 +130,12 @@ struct ZeroOrderBeakyStatements {
         )
     ]
 
+    static let statment3: [SpeechBubbleLine] = [
+        SpeechBubbleLineGenerator.makeLine(
+            str: "Let's watch all the molecules changing"
+        ),
+        SpeechBubbleLineGenerator.makeLine(
+            str: "As A disappears, B is being produced."
+        )
+    ]
 }

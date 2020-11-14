@@ -17,8 +17,10 @@ class ReactionViewModel: ObservableObject {
         }
     }
     @Published var initialTime: CGFloat = 6.6
-    @Published var finalConcentration: CGFloat? = 0.2
-    @Published var finalTime: CGFloat? = 17
+    @Published var finalConcentration: CGFloat?
+    @Published var finalTime: CGFloat?
+
+    @Published var currentTime: CGFloat?
 
     var concentrationEquationA: ConcentrationEquation {
         LinearConcentration(
@@ -91,7 +93,6 @@ class ReactionViewModel: ObservableObject {
             addMolecules(toAdd - 1, cols: cols, rows: rows)
         }
     }
-
 }
 
 struct ReactionSettings {
