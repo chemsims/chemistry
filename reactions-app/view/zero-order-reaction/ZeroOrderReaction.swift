@@ -52,12 +52,12 @@ struct ZeroOrderReaction: View {
                 )
 
                 ConcentrationBarChart(
-                    concentrationA: ValueRange(
-                        value: reactionModel.initialConcentration,
-                        minValue: ReactionSettings.minConcentration,
-                        maxValue: ReactionSettings.maxConcentration
-                    ),
-                    chartWidth: settings.chartsWidth
+                    concentrationA: reactionModel.initialConcentration,
+                    settings: BartChartGeometrySettings(
+                        chartWidth: settings.chartsWidth,
+                        maxConcentration: ReactionSettings.maxConcentration,
+                        minConcentration: ReactionSettings.minConcentration
+                    )
                 ).frame(width: settings.chartsWidth)
             }
             .padding(.leading, -20)

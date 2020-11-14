@@ -5,74 +5,83 @@
 
 import SwiftUI
 
-struct ConcentrationBarChart<Value>: View where Value: BinaryFloatingPoint {
-
-    let concentrationA: ValueRange<Value>
+struct BartChartGeometrySettings {
 
     let chartWidth: CGFloat
+    let maxConcentration: CGFloat
+    let minConcentration: CGFloat
 
-    private var maxValueGapToTop: CGFloat {
-        0.2 * chartWidth
+    let ticks = 10
+
+    var maxValueGapToTop: CGFloat {
+        0.25 * chartWidth
     }
-    private var zeroHeight: CGFloat {
+    var zeroHeight: CGFloat {
         0.07 * chartWidth
     }
 
-    private let ticks = 10
-    private var tickSize: CGFloat {
+    var tickSize: CGFloat {
         0.05 * chartWidth
     }
-    private var barWidth: CGFloat {
+    var barWidth: CGFloat {
         0.15 * chartWidth
     }
-    private var barAGapToAxis: CGFloat {
+    var barAGapToAxis: CGFloat {
         0.2 * chartWidth
     }
-    private var labelDiameter: CGFloat {
+    var labelDiameter: CGFloat {
         0.1 * chartWidth
     }
-    private var labelFontSize: CGFloat {
+    var labelFontSize: CGFloat {
         0.1 * chartWidth
     }
+
+}
+
+struct ConcentrationBarChart: View {
+
+    let concentrationA: CGFloat
+    let settings: BartChartGeometrySettings
 
     var body: some View {
         VStack {
             ZStack {
                 BarChartMinorAxisShape(ticks: 10)
                     .stroke(lineWidth: 0.3)
-                BarChartAxisShape(ticks: ticks, tickSize: tickSize)
+                BarChartAxisShape(ticks: settings.ticks, tickSize: settings.tickSize)
                     .stroke(lineWidth: 1.4)
 
-                drawBar(value: concentrationA)
+                drawBar
                     .foregroundColor(Styling.moleculeA)
 
-            }.frame(width: chartWidth, height: chartWidth)
+            }.frame(width: settings.chartWidth, height: settings.chartWidth)
 
             VStack {
                 Circle()
-                    .frame(width: labelDiameter, height: labelDiameter)
+                    .frame(width: settings.labelDiameter, height: settings.labelDiameter)
                     .foregroundColor(Styling.moleculeA)
 
                 Text("A")
-                    .font(.system(size: labelFontSize))
-            }.offset(x: barAGapToAxis - (chartWidth / 2))
-        }.frame(width: 300)
+                    .font(.system(size: settings.labelFontSize))
+            }.offset(x: settings.barAGapToAxis - (settings.chartWidth / 2))
+        }
     }
 
-    private func drawBar(value: ValueRange<Value>) -> some View {
-        let barHeight = CGFloat(value.percentage) * maxBarHeight
-        let yPos = chartWidth - (barHeight / 2) - tickDy
+    private var drawBar: some View {
+        let valuePercentage = concentrationA / (settings.maxConcentration - settings.minConcentration)
+        let barHeight = valuePercentage * maxBarHeight
+        let yPos = settings.chartWidth - (barHeight / 2) - tickDy
         return Rectangle()
-            .frame(width: barWidth, height: barHeight)
-            .position(x: barAGapToAxis, y: yPos)
+            .frame(width: settings.barWidth, height: barHeight)
+            .position(x: settings.barAGapToAxis, y: yPos)
     }
 
     private var maxBarHeight: CGFloat {
-        chartWidth - tickDy - maxValueGapToTop
+        settings.chartWidth - tickDy - settings.maxValueGapToTop
     }
 
     private var tickDy: CGFloat {
-        chartWidth / CGFloat(ticks + 1)
+        settings.chartWidth / CGFloat(settings.ticks + 1)
     }
 }
 
@@ -124,8 +133,12 @@ struct BarChartMinorAxisShape: Shape {
 struct BarChartAxisShape_Previews: PreviewProvider {
     static var previews: some View {
         ConcentrationBarChart(
-            concentrationA: ValueRange(value: 20, minValue: 0, maxValue: 20),
-            chartWidth: 300
+            concentrationA: 20,
+            settings: BartChartGeometrySettings(
+                chartWidth: 300,
+                maxConcentration: 20,
+                minConcentration: 0
+            )
         )
     }
 }
