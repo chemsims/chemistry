@@ -33,7 +33,7 @@
 		571D6A7C255AC75C00F4E635 /* BeakerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A7B255AC75C00F4E635 /* BeakerShape.swift */; };
 		571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A80255AD40900F4E635 /* EmptyBeaker.swift */; };
 		571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */; };
-		571F6E812560483A00A1C45E /* BarChartBarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E802560483A00A1C45E /* BarChartBarShape.swift */; };
+		571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E802560483A00A1C45E /* BarChartBar.swift */; };
 		571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
 		572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB943255C3BCF0071C600 /* ValueRange.swift */; };
@@ -94,7 +94,7 @@
 		571D6A7B255AC75C00F4E635 /* BeakerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerShape.swift; sourceTree = "<group>"; };
 		571D6A80255AD40900F4E635 /* EmptyBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBeaker.swift; sourceTree = "<group>"; };
 		571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGeometrySettings.swift; sourceTree = "<group>"; };
-		571F6E802560483A00A1C45E /* BarChartBarShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartBarShape.swift; sourceTree = "<group>"; };
+		571F6E802560483A00A1C45E /* BarChartBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartBar.swift; sourceTree = "<group>"; };
 		571F6E862560486400A1C45E /* BarChartAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartAxis.swift; sourceTree = "<group>"; };
 		572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationBarChart.swift; sourceTree = "<group>"; };
 		572CB943255C3BCF0071C600 /* ValueRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRange.swift; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 		571F6E7F2560482700A1C45E /* shapes */ = {
 			isa = PBXGroup;
 			children = (
-				571F6E802560483A00A1C45E /* BarChartBarShape.swift */,
+				571F6E802560483A00A1C45E /* BarChartBar.swift */,
 				571F6E862560486400A1C45E /* BarChartAxis.swift */,
 			);
 			path = shapes;
@@ -459,7 +459,7 @@
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
 				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
 				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
-				571F6E812560483A00A1C45E /* BarChartBarShape.swift in Sources */,
+				571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */,
 				57FDA145255D835600CB8804 /* BoundType.swift in Sources */,
 				571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */,
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,

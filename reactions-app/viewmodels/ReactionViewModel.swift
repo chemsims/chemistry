@@ -37,7 +37,7 @@ class ReactionViewModel: ObservableObject {
                 t1: initialTime,
                 c1: 0,
                 t2: t2,
-                c2: c2
+                c2: initialConcentration - c2
             )
         }
         return ConstantConcentration(value: 0)

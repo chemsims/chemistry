@@ -20,7 +20,7 @@ struct BarChartGeometrySettings {
         0.07 * chartWidth
     }
 
-    var tickSize: CGFloat {
+    var yAxisTickSize: CGFloat {
         0.05 * chartWidth
     }
     var barWidth: CGFloat {
@@ -41,6 +41,14 @@ struct BarChartGeometrySettings {
     }
     var barBCenterX: CGFloat {
         barACenterX * 3
+    }
+    
+    var barMinHeight: CGFloat {
+        tickDy / 5
+    }
+
+    var tickDy: CGFloat {
+        chartWidth / CGFloat(ticks + 1)
     }
 
 }

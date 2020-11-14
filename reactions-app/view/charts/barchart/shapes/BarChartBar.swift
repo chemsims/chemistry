@@ -19,18 +19,15 @@ struct BarChartBarShape: Shape {
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
-
-        let tickDy = settings.chartWidth / CGFloat(settings.ticks + 1)
-
-        let maxBarHeight = settings.chartWidth - tickDy - settings.maxValueGapToTop
+        let maxBarHeight = settings.chartWidth - settings.tickDy - settings.maxValueGapToTop
 
         let leftX = barCenterX - (settings.barWidth / 2)
-        let bottomY = settings.chartWidth - settings.tickSize
+        let bottomY = settings.chartWidth - settings.tickDy
 
         let concentration = concentrationEquation.getConcentration(at: currentTime)
         let dc = settings.maxConcentration - settings.minConcentration
         let valuePercentage = concentration / dc
-        let barHeight = valuePercentage * maxBarHeight
+        let barHeight = (valuePercentage * maxBarHeight) + settings.barMinHeight
 
         let topY = bottomY - barHeight
 

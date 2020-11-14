@@ -21,7 +21,7 @@ struct ConcentrationBarChart: View {
             ZStack {
                 BarChartMinorAxisShape(ticks: settings.ticks)
                     .stroke(lineWidth: 0.3)
-                BarChartAxisShape(ticks: settings.ticks, tickSize: settings.tickSize)
+                BarChartAxisShape(ticks: settings.ticks, tickSize: settings.yAxisTickSize)
                     .stroke(lineWidth: 1.4)
 
                 barA
@@ -39,7 +39,7 @@ struct ConcentrationBarChart: View {
         return ZStack {
             drawBar(
                 concentration: ConstantConcentration(value: initialA),
-                currentTime: initialTime,
+                currentTime: 0,
                 barCenterX: settings.barACenterX
             ).foregroundColor(currentTime == nil ? Styling.moleculeA : Color.gray)
 
@@ -55,14 +55,21 @@ struct ConcentrationBarChart: View {
 
     private var barB: some View {
         ZStack {
+            if (currentTime == nil) {
+                drawBar(
+                    concentration: ConstantConcentration(value: 0),
+                    currentTime: 0,
+                    barCenterX: settings.barBCenterX
+                )
+            }
             if (currentTime != nil) {
                 drawBar(
                     concentration: concentrationB,
                     currentTime: currentTime!,
                     barCenterX: settings.barBCenterX
-                ).foregroundColor(Styling.moleculeB)
+                )
             }
-        }
+        }.foregroundColor(Styling.moleculeB)
     }
 
     private func drawBar(
@@ -93,13 +100,6 @@ struct ConcentrationBarChart: View {
         }.offset(x: barX - (settings.chartWidth / 2))
     }
 
-    private var maxBarHeight: CGFloat {
-        settings.chartWidth - tickDy - settings.maxValueGapToTop
-    }
-
-    private var tickDy: CGFloat {
-        settings.chartWidth / CGFloat(settings.ticks + 1)
-    }
 }
 
 
