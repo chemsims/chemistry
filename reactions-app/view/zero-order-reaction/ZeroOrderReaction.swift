@@ -57,7 +57,7 @@ struct ZeroOrderReaction: View {
                     concentrationA: reactionModel.concentrationEquationA,
                     concentrationB: reactionModel.concentrationEquationB,
                     currentTime: reactionModel.currentTime,
-                    settings: BartChartGeometrySettings(
+                    settings: BarChartGeometrySettings(
                         chartWidth: settings.chartsWidth,
                         maxConcentration: ReactionSettings.maxConcentration,
                         minConcentration: ReactionSettings.minConcentration
