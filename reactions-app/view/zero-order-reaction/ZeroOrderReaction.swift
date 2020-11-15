@@ -93,8 +93,12 @@ struct ZeroOrderReaction: View {
                     )
                 }
 
-                SpeechBubble(lines: beakyModel.statement)
-                    .frame(width: settings.bubbleWidth, height: settings.bubbleHeight)
+                HStack(alignment: .bottom, spacing: 3) {
+                    SpeechBubble(lines: beakyModel.statement)
+                        .frame(width: settings.bubbleWidth, height: settings.bubbleHeight)
+                        .font(.system(size: settings.bubbleFontSize))
+                    Beaky()
+                }
 
                 Button(action: beakyModel.next) {
                     Text("next")
@@ -145,6 +149,9 @@ struct LayoutSettings {
     var bubbleHeight: CGFloat {
         bubbleWidth * 1.1
     }
+    var bubbleFontSize: CGFloat {
+        0.016 * width
+    }
 
     var equationScale: CGFloat {
         let scaleAt1024: CGFloat = 1.0 // iPad mini landscape
@@ -164,9 +171,10 @@ struct ZeroOrderReaction_Previews: PreviewProvider {
             beakyModel: ZeroOrderBeakyViewModel(reactionViewModel: ReactionViewModel())
         ).previewLayout(.fixed(width: 1024, height: 768))
 
+        // iPad Pro
         ZeroOrderReaction(
             beakyModel: ZeroOrderBeakyViewModel(reactionViewModel: ReactionViewModel())
-        ).previewLayout(.fixed(width: 1024, height: 768))
+        ).previewLayout(.fixed(width: 1366, height: 1024))
 
     }
 }

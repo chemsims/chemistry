@@ -82,7 +82,7 @@ private struct SpeechBubbleSettings {
     }
 
     var stemYOffset: CGFloat {
-        let bottomOfStemToTopOfBubble: CGFloat = 0.85
+        let bottomOfStemToTopOfBubble: CGFloat = 0.83
         let dy = (geometry.size.height * bottomOfStemToTopOfBubble) - stemHeight
         return max(dy, 0)
     }
