@@ -108,7 +108,7 @@ extension ReactionState {
 
 fileprivate struct InitialStep: ReactionState {
 
-    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statement1
+    var statement: [SpeechBubbleLine] = ZeroOrderStatements.initial
 
     func apply(on model: ReactionViewModel) { }
 
@@ -121,7 +121,7 @@ fileprivate struct InitialStep: ReactionState {
 
 fileprivate struct SetFinalValuesToNonNil: ReactionState {
 
-    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statement2
+    var statement: [SpeechBubbleLine] = ZeroOrderStatements.setFinalValues
 
     func apply(on model: ReactionViewModel) {
         let initialConcentration = model.initialConcentration
@@ -144,7 +144,7 @@ fileprivate struct SetFinalValuesToNonNil: ReactionState {
 
 fileprivate struct RunAnimation: ReactionState {
 
-    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.statment3
+    var statement: [SpeechBubbleLine] = ZeroOrderStatements.reactionInProgress
 
     func apply(on model: ReactionViewModel) {
         if let finalTime = model.finalTime, let halfTime = model.halfTime {
@@ -180,7 +180,7 @@ fileprivate struct RunAnimation: ReactionState {
 
 fileprivate struct EndStatement: ReactionState {
 
-    var statement: [SpeechBubbleLine] = ZeroOrderBeakyStatements.endStatement
+    var statement: [SpeechBubbleLine] = ZeroOrderStatements.endStatement
 
     func apply(on model: ReactionViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
@@ -196,36 +196,3 @@ fileprivate struct EndStatement: ReactionState {
     func reapply(on model: ReactionViewModel) { }
 }
 
-struct ZeroOrderBeakyStatements {
-
-    static let statement1: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(
-            str: "This is a zero Order Reaction."
-        ),
-        SpeechBubbleLineGenerator.makeLine(
-            str: "Why don't you set the *initial time (t1)* and *initial concentration of A (c1)*, the reactant?"
-        )
-    ]
-
-    static let statement2: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(
-            str: "Great! Now you can set the *concentration of A at the end of the reaction (c2)* and the *time the reaction will last (t2)*"
-        )
-    ]
-
-    static let statment3: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(
-            str: "Let's watch all the molecules changing"
-        ),
-        SpeechBubbleLineGenerator.makeLine(
-            str: "As A disappears, B is being produced."
-        )
-    ]
-
-
-    static var endStatement: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(str: "Amazing!"),
-        SpeechBubbleLineGenerator.makeLine(str: "Let's take a snapshot! Now, let's try another."),
-        SpeechBubbleLineGenerator.makeLine(str: "*Choose a 2nd Order Reaction*.")
-    ]
-}

@@ -31,7 +31,7 @@ struct SpeechBubbleLineGenerator {
 
     static let emphasis = Character("*")
 
-    static func makeLine(str: String) -> SpeechBubbleLine {
+    static func makeLine(_ str: String) -> SpeechBubbleLine {
         var segments = [SpeechBubbleLineSegment]()
         var builder: String = ""
         var buildingEmphasis: Bool = false

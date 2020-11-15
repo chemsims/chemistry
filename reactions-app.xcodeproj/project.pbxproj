@@ -43,6 +43,7 @@
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
 		57F477422560FD440041D406 /* Beaky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F477412560FD440041D406 /* Beaky.swift */; };
 		57F477472560FF300041D406 /* NavButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F477462560FF300041D406 /* NavButton.swift */; };
+		57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4774F256105620041D406 /* ZeroOrderStatements.swift */; };
 		57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */; };
 		57FDA129255D5DC500CB8804 /* EquationGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */; };
 		57FDA12E255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */; };
@@ -106,6 +107,7 @@
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
 		57F477412560FD440041D406 /* Beaky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beaky.swift; sourceTree = "<group>"; };
 		57F477462560FF300041D406 /* NavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
+		57F4774F256105620041D406 /* ZeroOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderStatements.swift; sourceTree = "<group>"; };
 		57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationPlaceholderView.swift; sourceTree = "<group>"; };
 		57FDA128255D5DC500CB8804 /* EquationGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationGeometrySettings.swift; sourceTree = "<group>"; };
 		57FDA12D255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionHalftimeView.swift; sourceTree = "<group>"; };
@@ -250,8 +252,8 @@
 		571D6A6C255AB23D00F4E635 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57F4774E256105430041D406 /* statements */,
 				571D6A6D255AB24300F4E635 /* styling */,
-				571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */,
 				57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */,
 				57035EDB255BFDB400DB3A19 /* AxisPositionCalculations.swift */,
 				57035EF0255C09B500DB3A19 /* Orientation.swift */,
@@ -331,6 +333,15 @@
 				57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */,
 			);
 			path = shapes;
+			sourceTree = "<group>";
+		};
+		57F4774E256105430041D406 /* statements */ = {
+			isa = PBXGroup;
+			children = (
+				571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */,
+				57F4774F256105620041D406 /* ZeroOrderStatements.swift */,
+			);
+			path = statements;
 			sourceTree = "<group>";
 		};
 		57FDA12C255D5E7500CB8804 /* zero-order */ = {
@@ -465,6 +476,7 @@
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
 				57F477422560FD440041D406 /* Beaky.swift in Sources */,
 				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
+				57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */,
 				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
 				571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */,
 				57FDA145255D835600CB8804 /* BoundType.swift in Sources */,
