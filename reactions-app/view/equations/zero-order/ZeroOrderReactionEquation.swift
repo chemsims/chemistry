@@ -20,7 +20,7 @@ struct ZeroOrderEquationFilled: View {
             c1: "c1",
             t2: "t2",
             t1: "t1",
-            emphasiseFractionTerm2: false
+            emphasiseFilledTerms: false
         )
     }
 }
@@ -29,6 +29,7 @@ struct ZeroOrderEquationBlank: View {
 
     /// Scales the view
     let scale: CGFloat
+    let emphasiseFilledTerms: Bool
 
     let initialConcentration: CGFloat
     let initialTime: CGFloat
@@ -48,7 +49,7 @@ struct ZeroOrderEquationBlank: View {
             c1: initialConcentration.str(decimals: 2),
             t2: t2?.str(decimals: 2),
             t1: initialTime.str(decimals: 2),
-            emphasiseFractionTerm2: true
+            emphasiseFilledTerms: emphasiseFilledTerms
         )
     }
 }
@@ -67,7 +68,7 @@ struct GeneralZeroOrderReactionEquationView: View {
     let t2: String?
     let t1: String
 
-    let emphasiseFractionTerm2: Bool
+    let emphasiseFilledTerms: Bool
 
     private var fraction1DividerWidth: CGFloat {
         30 * settings.scale
@@ -82,6 +83,7 @@ struct GeneralZeroOrderReactionEquationView: View {
             Text("=")
             termOrBox(rate, settings: settings)
                 .frame(minWidth: settings.boxSize)
+                .foregroundColor(colorForTerm(rate))
 
             Text("=")
 
@@ -102,6 +104,7 @@ struct GeneralZeroOrderReactionEquationView: View {
                 HStack(spacing: 1) {
                     termOrBox(deltaC, settings: settings)
                         .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
+                        .foregroundColor(colorForTerm(deltaC))
                 }
                 divider
                     .frame(width: fraction1DividerWidth)
@@ -109,6 +112,7 @@ struct GeneralZeroOrderReactionEquationView: View {
                 HStack(spacing: 1) {
                     termOrBox(deltaT, settings: settings)
                         .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
+                        .foregroundColor(colorForTerm(deltaC))
                 }
 
             }
@@ -138,13 +142,14 @@ struct GeneralZeroOrderReactionEquationView: View {
 
             termOrBox(term1, settings: settings)
                 .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
+                .foregroundColor(colorForTerm(term1))
 
             Text("–")
                 .frame(width: settings.negativeWidth)
 
             Text(term2)
                 .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
-                .foregroundColor(emphasiseFractionTerm2 ? .orangeAccent : .black)
+                .foregroundColor(emphasisColor)
 
             Text(")")
                 .frame(width: settings.parenWidth)
@@ -154,6 +159,17 @@ struct GeneralZeroOrderReactionEquationView: View {
     private var divider: some View {
         Rectangle().frame(height: 1)
     }
+
+    private func colorForTerm(_ term: String?) -> Color {
+        if term == nil {
+            return .black
+        }
+        return emphasisColor
+    }
+
+    private var emphasisColor: Color {
+        emphasiseFilledTerms ? .orangeAccent : .black
+    }
 }
 
 
@@ -161,6 +177,17 @@ struct Equation_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             ZeroOrderEquationFilled(scale: 1)
+            ZeroOrderEquationBlank(
+                scale: 1,
+                emphasiseFilledTerms: true,
+                initialConcentration: 1,
+                initialTime: 2,
+                rate: 3,
+                deltaC: 1,
+                deltaT: 2,
+                c2: 1,
+                t2: 2
+            )
         }
     }
 }

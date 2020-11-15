@@ -74,6 +74,7 @@ struct ZeroOrderReaction: View {
                     ZeroOrderEquationFilled(scale: settings.equationScale)
                     ZeroOrderEquationBlank(
                         scale: settings.equationScale,
+                        emphasiseFilledTerms: reactionModel.currentTime == nil,
                         initialConcentration: reactionModel.initialConcentration,
                         initialTime: reactionModel.initialTime,
                         rate: reactionModel.rate,
