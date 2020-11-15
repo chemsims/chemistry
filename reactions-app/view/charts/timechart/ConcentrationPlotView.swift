@@ -17,6 +17,7 @@ struct ConcentrationPlotView: View {
     let initialTime: CGFloat
     let currentTime: CGFloat
     let finalTime: CGFloat
+    let headOpacity: Double
 
     private let finalColor: Color = Styling.timeAxisCompleteBar
     private let aProgressColor: Color = .orangeAccent
@@ -48,7 +49,8 @@ struct ConcentrationPlotView: View {
                 filledBarColor: Styling.timeAxisCompleteBar,
                 headColor: Color.blue,
                 headRadius: settings.chartHeadSecondarySize,
-                haloColor: nil
+                haloColor: nil,
+                headOpacity: headOpacity
             )
 
             ChartPlotWithHead(
@@ -60,7 +62,8 @@ struct ConcentrationPlotView: View {
                 filledBarColor: Styling.timeAxisCompleteBar,
                 headColor: Styling.moleculeAChartHead,
                 headRadius: settings.chartHeadPrimarySize,
-                haloColor: Styling.moleculeAChartHeadHalo
+                haloColor: Styling.moleculeAChartHeadHalo,
+                headOpacity: headOpacity
             )
 
         }.frame(width: settings.chartSize, height: settings.chartSize)
@@ -116,23 +119,28 @@ struct ChartPlotWithHead: View {
     let headRadius: CGFloat
     let haloColor: Color?
 
+    let headOpacity: Double
+
 
     var body: some View {
         ZStack {
             line(time: finalTime, color: filledBarColor)
             line(time: currentTime, color: headColor)
-            if (haloColor != nil) {
+            Group {
+                if (haloColor != nil) {
+                    head(
+                        radius: settings.chartHeadPrimaryHaloSize,
+                        color: haloColor!
+                    )
+                }
                 head(
-                    radius: settings.chartHeadPrimaryHaloSize,
-                    color: haloColor!
+                    radius: headRadius,
+                    color: headColor
                 )
-            }
-            head(
-                radius: headRadius,
-                color: headColor
-            )
+            }.opacity(headOpacity)
         }
     }
+
 
     private func head(
         radius: CGFloat,
@@ -183,7 +191,8 @@ struct TimeChartPlotView_Previews: PreviewProvider {
             finalConcentration: 0.2,
             initialTime: 0,
             currentTime: 0.8,
-            finalTime: 1
+            finalTime: 1,
+            headOpacity: 1
         )
     }
 

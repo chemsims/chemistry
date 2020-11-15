@@ -27,6 +27,7 @@ struct ConcentrationTimeChartView: View {
     let concentrationA: ConcentrationEquation
     let concentrationB: ConcentrationEquation
     let currentTime: CGFloat?
+    let headOpacity: Double
 
     var body: some View {
         makeView(
@@ -97,7 +98,8 @@ struct ConcentrationTimeChartView: View {
             finalConcentration: finalConcentration,
             initialTime: initialTime,
             currentTime: currentTime,
-            finalTime: finalTime
+            finalTime: finalTime,
+            headOpacity: headOpacity
         ).frame(width: chartSize, height: chartSize)
     }
 
@@ -210,7 +212,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     chartSize: 250,
                     concentrationA: equation,
                     concentrationB: equation2,
-                    currentTime: nil
+                    currentTime: nil,
+                    headOpacity: 1
                 )
 
                 ConcentrationTimeChartView(
@@ -227,7 +230,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     chartSize: 250,
                     concentrationA: equation,
                     concentrationB: equation2,
-                    currentTime: t2!
+                    currentTime: t2!,
+                    headOpacity: 1
                 )
             }
         }

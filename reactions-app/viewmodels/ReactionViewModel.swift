@@ -23,6 +23,9 @@ class ReactionViewModel: ObservableObject {
     @Published var currentTime: CGFloat?
     @Published var moleculeBOpacity: Double = 0
 
+    @Published var reactionHasEnded: Bool = false
+    @Published var timeChartHeadOpacity: Double = 1
+
     var concentrationEquationA: LinearConcentration {
         LinearConcentration(
             t1: initialTime,
