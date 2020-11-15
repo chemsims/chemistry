@@ -1,0 +1,79 @@
+//
+// Reactions App
+//
+
+
+import SwiftUI
+
+struct NextButton: View {
+
+    let action: () -> Void
+
+    var body: some View {
+        GeneralDirectionButton(
+            action: action,
+            systemImage: "arrowtriangle.right.fill"
+        )
+    }
+}
+
+struct PreviousButton: View {
+    let action: () -> Void
+
+    var body: some View {
+        GeneralDirectionButton(
+            action: action,
+            systemImage: "arrowtriangle.left.fill"
+        )
+    }
+}
+
+fileprivate struct GeneralDirectionButton: View {
+    let action: () -> Void
+    let systemImage: String
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                GeometryReader { geo in
+                    Circle()
+                        .foregroundColor(Styling.speechBubble)
+                        .overlay(
+                            Image(systemName: systemImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.black)
+                                .padding(geo.size.width / 3)
+                        )
+                }
+            }
+        }.buttonStyle(NavButtonButtonStyle())
+    }
+}
+
+struct NavButtonButtonStyle: ButtonStyle {
+
+    func makeBody(configuration: Configuration) -> some View {
+        let delta: CGFloat = 0.1
+        let xScale = configuration.isPressed ? 1 + delta : 1
+        let yScale = configuration.isPressed ? 1 - delta : 1
+        return configuration
+            .label
+            .scaleEffect(x: xScale, y: yScale)
+    }
+
+
+}
+
+struct NextButton_Previews: PreviewProvider {
+    static var previews: some View {
+        HStack {
+            PreviousButton(
+                action: {}
+            )
+            NextButton(
+                action: {}
+            )
+        }
+    }
+}

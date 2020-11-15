@@ -19,10 +19,11 @@ struct Styling {
 
     static let moleculeAChartHead = Color.orangeAccent
     static let moleculeAChartHeadHalo = Color(red: 243 / 255, green: 194 / 255, blue: 185 / 255, opacity: 0.7)
+
+    static let speechBubble = Color(red: 0.91, green: 0.91, blue: 0.91)
 }
 
 extension Color {
-    static let mediumGray = Color(red: 0.91, green: 0.91, blue: 0.91)
     static let darkGray = Color(red: 0.25, green: 0.25, blue: 0.25)
     static let orangeAccent = Color(red: 220 / 255, green: 84 / 255, blue: 59 / 255)
 

@@ -98,15 +98,17 @@ struct ZeroOrderReaction: View {
                         .frame(width: settings.bubbleWidth, height: settings.bubbleHeight)
                         .font(.system(size: settings.bubbleFontSize))
                     Beaky()
+                        .frame(height: settings.beakyHeight)
                 }
 
-                Button(action: beakyModel.next) {
-                    Text("next")
-                }
+                HStack {
+                    PreviousButton(action: beakyModel.back)
+                        .frame(width: settings.navButtonWidth, height: settings.navButtonWidth)
+                    Spacer()
+                    NextButton(action: beakyModel.next)
+                        .frame(width: settings.navButtonWidth, height: settings.navButtonWidth)
+                }.frame(width: settings.bubbleWidth - settings.bubbleStemWidth)
 
-                Button(action: beakyModel.back) {
-                    Text("back")
-                }
 
             }
         }
@@ -133,16 +135,6 @@ struct LayoutSettings {
         beakerWidth * 0.8
     }
 
-    var beakerCenterX: CGFloat {
-        let leftGap = width * 0.1
-        return leftGap + (beakerWidth / 2)
-    }
-
-    var beakerCenterY: CGFloat {
-        let bottomGap = height * 0.1
-        return height - bottomGap - (beakerHeight / 2)
-    }
-
     var bubbleWidth: CGFloat {
         0.24 * width
     }
@@ -151,6 +143,18 @@ struct LayoutSettings {
     }
     var bubbleFontSize: CGFloat {
         0.016 * width
+    }
+
+    // TODO - refactor this out of here
+    var bubbleStemWidth: CGFloat {
+        bubbleWidth * 0.2
+    }
+
+    var beakyHeight: CGFloat {
+        bubbleHeight * 0.55
+    }
+    var navButtonWidth: CGFloat {
+        bubbleWidth * 0.15
     }
 
     var equationScale: CGFloat {

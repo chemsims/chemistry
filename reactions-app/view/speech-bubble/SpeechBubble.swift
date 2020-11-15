@@ -18,11 +18,11 @@ struct SpeechBubble: View {
     private func makeView(with settings: SpeechBubbleSettings) -> some View {
         Group {
             RoundedRectangle(cornerRadius: settings.cornerRadius)
-                .fill(Color.mediumGray)
+                .fill(Styling.speechBubble)
                 .frame(width: settings.bubbleWidth)
 
             SpeechBubbleStem(cornerRadius: settings.stemCornerRadius)
-                .fill(Color.mediumGray)
+                .fill(Styling.speechBubble)
                 .frame(width: settings.stemWidth, height: settings.stemHeight)
                 .offset(x: settings.bubbleWidth, y: settings.stemYOffset)
 
