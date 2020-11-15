@@ -183,7 +183,7 @@ struct TimeChartPlotView_Previews: PreviewProvider {
                 minTime: 0,
                 maxTime: 1,
                 minFinalConcentration: 0.1,
-                minFinalTime: 0.1
+                minFinalTime: 14
             ),
             concentrationA: equation,
             concentrationB: equation2,

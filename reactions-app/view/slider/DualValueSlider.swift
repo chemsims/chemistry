@@ -32,7 +32,7 @@ struct DualValueSlider<Value: BinaryFloatingPoint>: View {
                 handleColor: value2Enabled ? disabledHandleColor : handleColor,
                 barThickness: barThickness,
                 previousHandleValue: primarySliderMin,
-                previousHandleBoundType: .lower
+                previousHandleBoundType: primaryValueBoundType.reverse
             ).disabled(value2Enabled)
 
             if (value2Enabled) {

@@ -126,9 +126,9 @@ struct ReactionSettings {
     // Axis settings
     static let minConcentration: CGFloat = 0
     static let maxConcentration: CGFloat = 1
-    static let minTime: CGFloat = 1
+    static let minTime: CGFloat = 0
     static let maxTime: CGFloat = 15
 
     static let minFinalConcentration: CGFloat = 0.1
-    static let minFinalTime: CGFloat = 1
+    static let minFinalTime: CGFloat = 14
 }
