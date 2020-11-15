@@ -11,7 +11,7 @@ class ZeroOrderBeakyViewModel: ObservableObject {
 
     let reactionViewModel: ReactionViewModel
 
-    private var applyNextStateDispatchId: UUID?
+    private var nextTimer: Timer?
 
     init(reactionViewModel: ReactionViewModel) {
         self.currentIndex = 0
@@ -26,7 +26,7 @@ class ZeroOrderBeakyViewModel: ObservableObject {
         InitialStep(),
         SetFinalValuesToNonNil(),
         RunAnimation(),
-        EndStatement(),
+        EndAnimation(),
     ]
 
     private var currentIndex: Int {
@@ -35,7 +35,7 @@ class ZeroOrderBeakyViewModel: ObservableObject {
         }
     }
 
-    func next() {
+    @objc func next() {
         let nextIndex = currentIndex + 1
         if let state = getState(for: nextIndex) {
             state.apply(on: reactionViewModel)
@@ -56,19 +56,12 @@ class ZeroOrderBeakyViewModel: ObservableObject {
     }
 
     private func scheduleNextState(for state: ReactionState) {
-        applyNextStateDispatchId = nil
-        if let delay = state.nextStateAutoDispatchDelay(model: reactionViewModel) {
-            let lock = UUID()
-            applyNextStateDispatchId = lock
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                self.nextWithLock(lock: lock)
-            }
+        if let timer = nextTimer {
+            timer.invalidate()
+            nextTimer = nil
         }
-    }
-
-    private func nextWithLock(lock: UUID) {
-        if let currentLock = applyNextStateDispatchId, currentLock == lock {
-            next()
+        if let delay = state.nextStateAutoDispatchDelay(model: reactionViewModel) {
+            nextTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(next), userInfo: nil, repeats: false)
         }
     }
 
@@ -97,11 +90,11 @@ protocol ReactionState {
     func reapply(on model: ReactionViewModel) -> Void
 
     /// Interval to wait before automatically progressing to the next state
-    func nextStateAutoDispatchDelay(model: ReactionViewModel) -> DispatchTimeInterval?
+    func nextStateAutoDispatchDelay(model: ReactionViewModel) -> Double?
 }
 
 extension ReactionState {
-    func nextStateAutoDispatchDelay(model: ReactionViewModel) -> DispatchTimeInterval? {
+    func nextStateAutoDispatchDelay(model: ReactionViewModel) -> Double? {
         return nil
     }
 }
@@ -147,9 +140,11 @@ fileprivate struct RunAnimation: ReactionState {
     var statement: [SpeechBubbleLine] = ZeroOrderStatements.reactionInProgress
 
     func apply(on model: ReactionViewModel) {
+        model.reactionHasEnded = false
         if let finalTime = model.finalTime, let halfTime = model.halfTime {
             model.currentTime = model.initialTime
             model.moleculeBOpacity = 0
+            model.timeChartHeadOpacity = 1
             withAnimation(.linear(duration: Double(2 * halfTime))) {
                 model.currentTime = finalTime
                 model.moleculeBOpacity = 1
@@ -168,17 +163,16 @@ fileprivate struct RunAnimation: ReactionState {
         }
     }
 
-    func nextStateAutoDispatchDelay(model: ReactionViewModel) -> DispatchTimeInterval? {
+    func nextStateAutoDispatchDelay(model: ReactionViewModel) -> Double? {
         if let halfTime = model.halfTime {
-            return .milliseconds( Int(halfTime * 2000))
+            return Double(halfTime * 2)
         }
         return nil
     }
 
-    var userCanApplyNext: Bool { true }
 }
 
-fileprivate struct EndStatement: ReactionState {
+fileprivate struct EndAnimation: ReactionState {
 
     var statement: [SpeechBubbleLine] = ZeroOrderStatements.endStatement
 
@@ -188,10 +182,14 @@ fileprivate struct EndStatement: ReactionState {
                 model.currentTime = finalTime * 1.001
                 model.moleculeBOpacity = 1.001
             }
+            model.reactionHasEnded = true
+            model.timeChartHeadOpacity = 0
         }
     }
 
-    func unapply(on model: ReactionViewModel) { }
+    func unapply(on model: ReactionViewModel) {
+        model.timeChartHeadOpacity = 1
+    }
 
     func reapply(on model: ReactionViewModel) { }
 }
