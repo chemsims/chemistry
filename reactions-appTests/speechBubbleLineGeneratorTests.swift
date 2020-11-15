@@ -41,7 +41,7 @@ class SpeechBubbleLineGeneratorTests: XCTestCase {
     }
 
     private func generate(_ str: String) -> [SpeechBubbleLineSegment] {
-        SpeechBubbleLineGenerator.makeLine(str: str).content
+        SpeechBubbleLineGenerator.makeLine(str).content
     }
     
 }
