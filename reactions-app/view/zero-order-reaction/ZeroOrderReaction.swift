@@ -94,8 +94,7 @@ struct ZeroOrderReaction: View {
                 }
 
                 SpeechBubble(lines: beakyModel.statement)
-                    .frame(width: 220, height: 300)
-
+                    .frame(width: settings.bubbleWidth, height: settings.bubbleHeight)
 
                 Button(action: beakyModel.next) {
                     Text("next")
@@ -108,7 +107,6 @@ struct ZeroOrderReaction: View {
             }
         }
     }
-
 }
 
 struct LayoutSettings {
@@ -139,6 +137,13 @@ struct LayoutSettings {
     var beakerCenterY: CGFloat {
         let bottomGap = height * 0.1
         return height - bottomGap - (beakerHeight / 2)
+    }
+
+    var bubbleWidth: CGFloat {
+        0.24 * width
+    }
+    var bubbleHeight: CGFloat {
+        bubbleWidth * 1.1
     }
 
     var equationScale: CGFloat {
