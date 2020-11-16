@@ -17,8 +17,7 @@ struct Styling {
 
     static let timeAxisCompleteBar = Color.gray
 
-    static let moleculeAChartHead = Color.orangeAccent
-    static let moleculeAChartHeadHalo = Color(red: 243 / 255, green: 194 / 255, blue: 185 / 255, opacity: 0.7)
+    static let moleculeAChartHeadHalo = Color(red: 143 / 255, green: 190 / 255, blue: 226 / 255, opacity: 0.7)
 
     static let speechBubble = Color(red: 0.91, green: 0.91, blue: 0.91)
 }

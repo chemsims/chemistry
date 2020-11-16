@@ -47,7 +47,7 @@ struct ConcentrationPlotView: View {
                 currentTime: currentTime,
                 finalTime: finalTime,
                 filledBarColor: Styling.timeAxisCompleteBar,
-                headColor: Color.blue,
+                headColor: Styling.moleculeB,
                 headRadius: settings.chartHeadSecondarySize,
                 haloColor: nil,
                 headOpacity: headOpacity
@@ -60,7 +60,7 @@ struct ConcentrationPlotView: View {
                 currentTime: currentTime,
                 finalTime: finalTime,
                 filledBarColor: Styling.timeAxisCompleteBar,
-                headColor: Styling.moleculeAChartHead,
+                headColor: Styling.moleculeA,
                 headRadius: settings.chartHeadPrimarySize,
                 haloColor: Styling.moleculeAChartHeadHalo,
                 headOpacity: headOpacity
