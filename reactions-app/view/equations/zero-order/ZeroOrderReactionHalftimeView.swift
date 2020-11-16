@@ -112,26 +112,25 @@ struct GeneralZeroOrderReactionHalftimeView: View {
 struct ZeroOrderReactionHalftimeView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            ZeroOrderReactionHalftimeView(scale: 2)
+            ZeroOrderReactionHalftimeView(scale: 1)
             ZeroOrderReactionHalftimeBlank(
-                scale: 2,
+                scale: 1,
                 initialConcentration: nil,
                 rate: nil,
                 halfTime: nil
             )
             ZeroOrderReactionHalftimeBlank(
-                scale: 2,
+                scale: 0.8,
                 initialConcentration: 0.2,
                 rate: nil,
                 halfTime: nil
             )
             ZeroOrderReactionHalftimeBlank(
-                scale: 2,
+                scale: 0.7,
                 initialConcentration: 0.2,
                 rate: 0.03,
                 halfTime: 8.33
             )
-
         }
     }
 }

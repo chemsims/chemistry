@@ -94,6 +94,8 @@ struct GeneralZeroOrderReactionEquationView: View {
             fraction2
         }
         .font(.system(size: settings.fontSize))
+        .minimumScaleFactor(0.2)
+        .lineLimit(1)
     }
 
     private var fraction1: some View {
@@ -187,6 +189,17 @@ struct Equation_Previews: PreviewProvider {
                 deltaT: 2,
                 c2: 1,
                 t2: 2
+            )
+            ZeroOrderEquationBlank(
+                scale: 1,
+                emphasiseFilledTerms: true,
+                initialConcentration: 1,
+                initialTime: 2,
+                rate: nil,
+                deltaC: nil,
+                deltaT: nil,
+                c2: nil,
+                t2: nil
             )
         }
     }
