@@ -177,13 +177,7 @@ struct TimeChartPlotView_Previews: PreviewProvider {
     static var previews: some View {
         ConcentrationPlotView(
             settings: TimeChartGeometrySettings(
-                chartSize: 300,
-                minConcentration: 0,
-                maxConcentration: 1,
-                minTime: 0,
-                maxTime: 1,
-                minFinalConcentration: 0.1,
-                minFinalTime: 14
+                chartSize: 300
             ),
             concentrationA: equation,
             concentrationB: equation2,

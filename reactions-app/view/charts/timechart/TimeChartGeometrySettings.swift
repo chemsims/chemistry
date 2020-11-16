@@ -9,13 +9,19 @@ struct TimeChartGeometrySettings {
     let chartSize: CGFloat
 
     // Min/max of the axis
-    let minConcentration: CGFloat
-    let maxConcentration: CGFloat
-    let minTime: CGFloat
-    let maxTime: CGFloat
+    let minConcentration: CGFloat = ReactionSettings.minConcentration
+    let maxConcentration: CGFloat = ReactionSettings.maxConcentration
+    let minTime: CGFloat = ReactionSettings.minTime
+    let maxTime: CGFloat = ReactionSettings.maxTime
 
-    let minFinalConcentration: CGFloat
-    let minFinalTime: CGFloat
+    let minFinalConcentration: CGFloat = ReactionSettings.minFinalConcentration
+
+    let minFinalTime: CGFloat = ReactionSettings.minFinalTime
+
+    /// minimum spacing between the edge of a slider
+    var sliderMinSpacing: CGFloat {
+        sliderHandleThickness * 0.1
+    }
 
     let verticalTicks = 10
     let horizontalTicks = 10
@@ -30,9 +36,6 @@ struct TimeChartGeometrySettings {
     }
     var sliderHandleThickness: CGFloat {
         0.16 * chartSize
-    }
-    var sliderMinValuePadding: CGFloat {
-        0
     }
     var sliderMaxValuePadding: CGFloat {
         0.28 * chartSize
@@ -64,7 +67,7 @@ struct TimeChartGeometrySettings {
 
     var yAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
-            minValuePosition: chartSize - sliderMinValuePadding,
+            minValuePosition: chartSize,
             maxValuePosition: sliderMaxValuePadding,
             minValue: minConcentration,
             maxValue: maxConcentration
@@ -73,7 +76,7 @@ struct TimeChartGeometrySettings {
 
     var xAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
-            minValuePosition: sliderMinValuePadding,
+            minValuePosition: 0,
             maxValuePosition: chartSize - sliderMaxValuePadding,
             minValue: minTime,
             maxValue: maxTime

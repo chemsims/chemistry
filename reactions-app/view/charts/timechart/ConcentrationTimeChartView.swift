@@ -13,37 +13,13 @@ struct ConcentrationTimeChartView: View {
     @Binding var finalConcentration: CGFloat?
     @Binding var finalTime: CGFloat?
 
-    let minConcentration: CGFloat
-    let maxConcentration: CGFloat
-
-    let minTime: CGFloat
-    let maxTime: CGFloat
-
-    let minFinalConcentration: CGFloat
-    let minFinalTime: CGFloat
-
-    let chartSize: CGFloat
-
+    let settings: TimeChartGeometrySettings
     let concentrationA: ConcentrationEquation
     let concentrationB: ConcentrationEquation
     let currentTime: CGFloat?
     let headOpacity: Double
 
     var body: some View {
-        makeView(
-            using: TimeChartGeometrySettings(
-                chartSize: chartSize,
-                minConcentration: minConcentration,
-                maxConcentration: maxConcentration,
-                minTime: minTime,
-                maxTime: maxTime,
-                minFinalConcentration: minFinalConcentration,
-                minFinalTime: minFinalTime
-            )
-        )
-    }
-
-    private func makeView(using settings: TimeChartGeometrySettings) -> some View {
         HStack {
             VStack {
                 Text("[A]")
@@ -61,15 +37,14 @@ struct ConcentrationTimeChartView: View {
                 )
                 .frame(
                     width: settings.sliderHandleWidth,
-                    height: chartSize
+                    height: settings.chartSize
                 ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
 
                 VStack {
                     if (currentTime == nil) {
-                        chartWithIndicator(settings: settings)
+                        chartWithIndicator
                     } else if (finalTime != nil && finalConcentration != nil) {
                         chartWithData(
-                            settings: settings,
                             currentTime: currentTime!,
                             finalTime: finalTime!,
                             finalConcentration: finalConcentration!
@@ -81,17 +56,17 @@ struct ConcentrationTimeChartView: View {
                         t2: $finalTime,
                         settings: settings
                     ).frame(
-                        width: chartSize,
+                        width: settings.chartSize,
                         height: settings.sliderHandleWidth
                     ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
 
                     HStack {
                         Text("Time")
-                            .frame(width: chartSize / 2, alignment: .trailing)
+                            .frame(width: settings.chartSize / 2, alignment: .trailing)
 
                         Text(timeLabel)
                             .foregroundColor(.orangeAccent)
-                            .frame(width: chartSize / 2, alignment: .leading)
+                            .frame(width: settings.chartSize / 2, alignment: .leading)
                     }.font(.system(size: settings.labelFontSize))
                 }
             }
@@ -99,7 +74,6 @@ struct ConcentrationTimeChartView: View {
     }
 
     private func chartWithData(
-        settings: TimeChartGeometrySettings,
         currentTime: CGFloat,
         finalTime: CGFloat,
         finalConcentration: CGFloat
@@ -114,11 +88,11 @@ struct ConcentrationTimeChartView: View {
             currentTime: currentTime,
             finalTime: finalTime,
             headOpacity: headOpacity
-        ).frame(width: chartSize, height: chartSize)
+        ).frame(width: settings.chartSize, height: settings.chartSize)
     }
 
 
-    private func chartWithIndicator(settings: TimeChartGeometrySettings) -> some View {
+    private var chartWithIndicator: some View {
         ChartAxisShape(
             verticalTicks: settings.verticalTicks,
             horizontalTicks: settings.horizontalTicks,
@@ -127,9 +101,29 @@ struct ConcentrationTimeChartView: View {
             gapToSide: settings.gapFromMaxTickToChart
         )
             .stroke()
-            .overlay(verticalIndicator(settings: settings), alignment: .leading)
-            .overlay(horizontalIndicator(settings: settings), alignment: .bottom)
-            .frame(width: chartSize, height: chartSize)
+            .overlay(verticalIndicator, alignment: .leading)
+            .overlay(horizontalIndicator, alignment: .bottom)
+        .frame(width: settings.chartSize, height: settings.chartSize)
+    }
+
+    private var verticalIndicator: some View {
+        SliderIndicator(
+            value1: initialConcentration,
+            value2: finalConcentration,
+            settings: settings,
+            axis: settings.yAxis,
+            orientation: .portrait
+        ).frame(width: 25, height: settings.chartSize)
+    }
+
+    private var horizontalIndicator: some View {
+        SliderIndicator(
+            value1: initialTime,
+            value2: finalTime,
+            settings: settings,
+            axis: settings.xAxis,
+            orientation: .landscape
+        ).frame(width: settings.chartSize, height: 25)
     }
 
     private var concentrationLabel: String {
@@ -141,27 +135,6 @@ struct ConcentrationTimeChartView: View {
         let value = finalTime ?? initialTime
         return "\(value.str(decimals: 1)) s"
     }
-
-    private func verticalIndicator(settings: TimeChartGeometrySettings) -> some View {
-        SliderIndicator(
-            value1: initialConcentration,
-            value2: finalConcentration,
-            settings: settings,
-            axis: settings.yAxis,
-            orientation: .portrait
-        ).frame(width: 25, height: chartSize)
-    }
-
-    private func horizontalIndicator(settings: TimeChartGeometrySettings) -> some View {
-        SliderIndicator(
-            value1: initialTime,
-            value2: finalTime,
-            settings: settings,
-            axis: settings.xAxis,
-            orientation: .landscape
-        ).frame(width: chartSize, height: 25)
-    }
-
 }
 
 struct DisabledSliderModifier: ViewModifier {
@@ -194,13 +167,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     initialTime: $t1,
                     finalConcentration: .constant(nil),
                     finalTime: .constant(nil),
-                    minConcentration: 0,
-                    maxConcentration: 1,
-                    minTime: 0,
-                    maxTime: 10,
-                    minFinalConcentration: 0.1,
-                    minFinalTime: 1,
-                    chartSize: 250,
+                    settings: TimeChartGeometrySettings(
+                        chartSize: 300
+                    ),
                     concentrationA: equation,
                     concentrationB: equation2,
                     currentTime: nil,
@@ -212,13 +181,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     initialTime: $t1,
                     finalConcentration: $c2,
                     finalTime: $t2,
-                    minConcentration: 0,
-                    maxConcentration: 1,
-                    minTime: 0,
-                    maxTime: 10,
-                    minFinalConcentration: 0.1,
-                    minFinalTime: 1,
-                    chartSize: 250,
+                    settings: TimeChartGeometrySettings(
+                        chartSize: 300
+                    ),
                     concentrationA: equation,
                     concentrationB: equation2,
                     currentTime: t2!,

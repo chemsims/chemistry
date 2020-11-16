@@ -41,13 +41,9 @@ struct ZeroOrderReaction: View {
                     initialTime: $reactionModel.initialTime,
                     finalConcentration: $reactionModel.finalConcentration,
                     finalTime: $reactionModel.finalTime,
-                    minConcentration: ReactionSettings.minConcentration,
-                    maxConcentration: ReactionSettings.maxConcentration,
-                    minTime: ReactionSettings.minTime,
-                    maxTime: ReactionSettings.maxTime,
-                    minFinalConcentration: ReactionSettings.minFinalConcentration,
-                    minFinalTime: ReactionSettings.minFinalTime,
-                    chartSize: settings.chartsWidth,
+                    settings: TimeChartGeometrySettings(
+                        chartSize: settings.chartsWidth
+                    ),
                     concentrationA: reactionModel.concentrationEquationA,
                     concentrationB: reactionModel.concentrationEquationB,
                     currentTime: reactionModel.currentTime,

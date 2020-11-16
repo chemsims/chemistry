@@ -68,7 +68,7 @@ struct DualValueSlider: View {
             absoluteMax: axis.maxValue,
             minPreSpacing: minValue,
             maxPreSpacing: maxValue,
-            spacing: settings.handleThickness + 5
+            spacing: settings.handleThickness + settings.sliderMinSpacing
         ).boundedAxis
     }
 

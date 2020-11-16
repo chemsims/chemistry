@@ -16,7 +16,7 @@ struct ConcentrationValueSlider: View {
         DualValueSlider(
             value1: $initialConcentration,
             value2: $finalConcentration,
-            value1PreviousHandle: 0.1,
+            value1PreviousHandle: settings.minFinalConcentration,
             value1NextHandle: nil,
             value2PreviousHandle: nil,
             value2NextHandle: initialConcentration,
@@ -38,7 +38,7 @@ struct TimeValueSlider: View {
             value1: $t1,
             value2: $t2,
             value1PreviousHandle: nil,
-            value1NextHandle: 20,
+            value1NextHandle: settings.minFinalTime,
             value2PreviousHandle: t1,
             value2NextHandle: nil,
             axis: settings.xAxis,
