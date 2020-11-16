@@ -110,10 +110,8 @@ struct ZeroOrderReaction: View {
                     NextButton(action: beakyModel.next)
                         .frame(width: settings.navButtonWidth, height: settings.navButtonWidth)
                 }.frame(width: settings.bubbleWidth - settings.bubbleStemWidth)
-
-
             }
-        }
+        }.frame(width: settings.width, height: settings.height)
     }
 }
 
