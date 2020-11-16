@@ -19,10 +19,6 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     let orientation: Orientation
 
-    let previousHandleValue: Value?
-    let previousHandlePadding: CGFloat
-    let previousValueBoundType: BoundType
-
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
@@ -30,68 +26,34 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     .foregroundColor(barColor)
                     .frame(width: barWidth(geometry), height: barHeight(geometry))
                 handle(
-                    geometry,
-                    calculations: getCalculations
+                    geometry: geometry,
+                    axis: axis
                 )
             }
         }
     }
 
-    private func handle(_ geometry: GeometryProxy, calculations: AxisPositionCalculations<Value>) -> some View {
+    private func handle(geometry: GeometryProxy, axis: AxisPositionCalculations<Value>) -> some View {
         RoundedRectangle(cornerRadius: handleCornerRadius)
             .foregroundColor(handleColor)
             .frame(width: handleWidth(geometry), height: handleHeight(geometry))
             .position(
-                x: handleXPosition(geometry, calculations: calculations),
-                y: handleYPosition(geometry, calculations: calculations)
+                x: handleXPosition(geometry, calculations: axis),
+                y: handleYPosition(geometry, calculations: axis)
             )
             .gesture(
                 DragGesture()
                     .onChanged { gesture in
                         let inputValue = orientation == .portrait ? gesture.location.y : gesture.location.x
-                        var newValue = calculations.getValue(at: Value(inputValue))
-                        if (newValue > calculations.maxValue) {
-                            newValue = calculations.maxValue
-                        } else if (newValue < calculations.minValue) {
-                            newValue = calculations.minValue
+                        var newValue = axis.getValue(at: Value(inputValue))
+                        if (newValue > axis.maxValue) {
+                            newValue = axis.maxValue
+                        } else if (newValue < axis.minValue) {
+                            newValue = axis.minValue
                         }
                         self.value = newValue
                     }
             )
-    }
-
-    private var getCalculations: AxisPositionCalculations<Value> {
-        let minValuePos = axis.minValuePosition
-        let maxValuePos = axis.maxValuePosition
-
-        if let previousValue = previousHandleValue {
-            let position = axis.getPosition(at: previousValue)
-            let isUpperBound = previousValueBoundType == .upper
-
-            let positionDelta = Value(handleThickness + previousHandlePadding)
-            let boundsDirection = isUpperBound ? -1 : 1
-            let axisDirection = (maxValuePos - minValuePos < 0) ? -1 : 1
-            let positionDirection = boundsDirection * axisDirection
-
-            let updatedPosition = position + (positionDelta * Value(positionDirection))
-            let updatedValue = axis.getValue(at: updatedPosition)
-
-            if (isUpperBound) {
-                return AxisPositionCalculations(
-                    minValuePosition: minValuePos,
-                    maxValuePosition: updatedPosition,
-                    minValue: axis.minValue,
-                    maxValue: updatedValue
-                )
-            }
-            return AxisPositionCalculations(
-                minValuePosition: updatedPosition,
-                maxValuePosition: maxValuePos,
-                minValue: updatedValue,
-                maxValue: axis.maxValue
-            )
-        }
-        return axis
     }
 
     /// Return the x position of the center of the slider handle
@@ -169,10 +131,7 @@ struct CustomSlider_Previews: PreviewProvider {
                     handleCornerRadius: 15,
                     barThickness: 5,
                     barColor: Color.darkGray,
-                    orientation: .landscape,
-                    previousHandleValue: 1.5,
-                    previousHandlePadding: 10,
-                    previousValueBoundType: .lower
+                    orientation: .landscape
                 ).frame(height: 80)
             }
         }

@@ -53,9 +53,16 @@ struct ConcentrationTimeChartView: View {
             .frame(width: settings.yLabelWidth)
 
             HStack(alignment: .top) {
-                
-                axisSlider(isPortrait: true, settings: settings)
-                    .foregroundColor(Color.darkGray)
+
+                ConcentrationValueSlider(
+                    initialConcentration: $initialConcentration,
+                    finalConcentration: $finalConcentration,
+                    settings: settings
+                )
+                .frame(
+                    width: settings.sliderHandleWidth,
+                    height: chartSize
+                ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
 
                 VStack {
                     if (currentTime == nil) {
@@ -69,7 +76,14 @@ struct ConcentrationTimeChartView: View {
                         )
                     }
 
-                    axisSlider(isPortrait: false, settings: settings)
+                    TimeValueSlider(
+                        t1: $initialTime,
+                        t2: $finalTime,
+                        settings: settings
+                    ).frame(
+                        width: chartSize,
+                        height: settings.sliderHandleWidth
+                    ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
 
                     HStack {
                         Text("Time")
@@ -129,59 +143,36 @@ struct ConcentrationTimeChartView: View {
     }
 
     private func verticalIndicator(settings: TimeChartGeometrySettings) -> some View {
-        indicator(isPortrait: true, settings: settings)
+        SliderIndicator(
+            value1: initialConcentration,
+            value2: finalConcentration,
+            settings: settings,
+            axis: settings.yAxis,
+            orientation: .portrait
+        ).frame(width: 25, height: chartSize)
     }
 
     private func horizontalIndicator(settings: TimeChartGeometrySettings) -> some View {
-        indicator(isPortrait: false, settings: settings)
-    }
-
-    private func axisSlider(isPortrait: Bool, settings: TimeChartGeometrySettings) -> some View {
-        let width: CGFloat = isPortrait ? settings.sliderHandleWidth : chartSize
-        let height: CGFloat = isPortrait ? chartSize : settings.sliderHandleWidth
-        return makeSlider(
-            isPortrait: isPortrait,
+        SliderIndicator(
+            value1: initialTime,
+            value2: finalTime,
             settings: settings,
-            isIndicator: false
-        ).frame(width: width, height: height)
+            axis: settings.xAxis,
+            orientation: .landscape
+        ).frame(width: chartSize, height: 25)
     }
 
-    private func indicator(
-        isPortrait: Bool,
-        settings: TimeChartGeometrySettings
-    ) -> some View {
-        let width: CGFloat = isPortrait ? 25 : chartSize
-        let height: CGFloat = isPortrait ? chartSize : 25
-        return makeSlider(
-            isPortrait: isPortrait,
-            settings: settings,
-            isIndicator: true
-        ).frame(width: width, height: height).disabled(true)
-    }
+}
 
-    private func makeSlider(
-        isPortrait: Bool,
-        settings: TimeChartGeometrySettings,
-        isIndicator: Bool
-    ) -> some View {
-        DualValueSlider(
-            value1: isPortrait ? $initialConcentration : $initialTime,
-            value2: isPortrait ? $finalConcentration : $finalTime,
-            axis: isPortrait ? settings.yAxis : settings.xAxis,
-            handleThickness: isIndicator ? 3 : settings.handleThickness,
-            handleColor: Color.orangeAccent,
-            disabledHandleColor: Color.gray,
-            handleCornerRadius: isIndicator ? 0 : settings.handleCornerRadius,
-            barThickness: isIndicator ? 0 : 3,
-            barColor: Color.gray,
-            orientation: isPortrait ? .portrait : .landscape,
-            primarySliderMin: isPortrait ? settings.minFinalConcentration : settings.minFinalTime,
-            primaryValueBoundType: isPortrait ? .upper : .lower
-        )
-        .disabled(currentTime != nil)
-        .compositingGroup()
-        .colorMultiply(currentTime == nil ? .white : .gray)
-        .opacity(currentTime == nil ? 1 : 0.3)
+struct DisabledSliderModifier: ViewModifier {
+    let disabled: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .disabled(disabled)
+            .compositingGroup()
+            .colorMultiply(disabled ? .gray : .white)
+            .opacity(disabled ? 0.3 : 1)
     }
 }
 

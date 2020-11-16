@@ -5,120 +5,74 @@
 
 import SwiftUI
 
-struct DualValueSlider<Value: BinaryFloatingPoint>: View {
+struct DualValueSlider: View {
+    @Binding var value1: CGFloat
+    @Binding var value2: CGFloat?
 
-    @Binding var value1: Value
-    @Binding var value2: Value?
+    let value1PreviousHandle: CGFloat?
+    let value1NextHandle: CGFloat?
+    let value2PreviousHandle: CGFloat?
+    let value2NextHandle: CGFloat?
 
-    let axis: AxisPositionCalculations<Value>
-
-    let handleThickness: CGFloat
-    let handleColor: Color
-    let disabledHandleColor: Color
-    let handleCornerRadius: CGFloat
-
-    let barThickness: CGFloat
-    let barColor: Color
-
+    let axis: AxisPositionCalculations<CGFloat>
     let orientation: Orientation
-
-    let primarySliderMin: Value
-    let primaryValueBoundType: BoundType
+    let settings: TimeChartGeometrySettings
 
     var body: some View {
         ZStack {
-            makeSlider(
-                value: $value1,
-                handleColor: value2Enabled ? disabledHandleColor : handleColor,
-                barThickness: barThickness,
-                previousHandleValue: primarySliderMin,
-                previousHandleBoundType: primaryValueBoundType.reverse
-            ).disabled(value2Enabled)
-
-            if (value2Enabled) {
-                makeSlider(
-                    value: value2UnsafeBinding,
-                    handleColor: handleColor,
-                    barThickness: 0,
-                    previousHandleValue: value1,
-                    previousHandleBoundType: primaryValueBoundType
+            slider(
+                binding: $value1,
+                axis: axis(
+                    minValue: value1PreviousHandle,
+                    maxValue: value1NextHandle
+                ),
+                disabled: value2 != nil,
+                showBar: true
+            )
+            if (value2 != nil) {
+                slider(
+                    binding: value2UnsafeBinding,
+                    axis: axis(
+                        minValue: value2PreviousHandle,
+                        maxValue: value2NextHandle
+                    ),
+                    disabled: false,
+                    showBar: false
                 )
             }
         }
     }
 
-    private var value2Enabled: Bool {
-        value2 != nil
-    }
-
-    private var value2UnsafeBinding: Binding<Value> {
-        Binding(get: { value2! }, set: { value2 = $0 })
-    }
-
-    private func makeSlider(
-        value: Binding<Value>,
-        handleColor: Color,
-        barThickness: CGFloat,
-        previousHandleValue: Value?,
-        previousHandleBoundType: BoundType
+    private func slider(
+        binding: Binding<CGFloat>,
+        axis: AxisPositionCalculations<CGFloat>,
+        disabled: Bool,
+        showBar: Bool
     ) -> some View {
         CustomSlider(
-            value: value,
+            value: binding,
             axis: axis,
-            handleThickness: handleThickness,
-            handleColor: handleColor,
-            handleCornerRadius: handleCornerRadius,
-            barThickness: barThickness,
-            barColor: barColor,
-            orientation: orientation,
-            previousHandleValue: previousHandleValue,
-            previousHandlePadding: 3,
-            previousValueBoundType: previousHandleBoundType
-        )
-    }
-}
-
-struct DualValueSlider_Previews: PreviewProvider {
-    static var previews: some View {
-        StateWrapper()
+            handleThickness: settings.handleThickness,
+            handleColor: disabled ? Color.gray : Color.orangeAccent,
+            handleCornerRadius: settings.handleCornerRadius,
+            barThickness: showBar ? settings.barThickness : 0,
+            barColor: Color.black,
+            orientation: orientation
+        ).disabled(disabled)
     }
 
-    struct StateWrapper: View {
-        @State var value1 = 1.1
-        @State var value2: Double? = 0.4
+    private func axis(minValue: CGFloat? = nil, maxValue: CGFloat? = nil) -> AxisPositionCalculations<CGFloat> {
+        BoundedSliderPositioning(
+            axis: axis,
+            absoluteMin: axis.minValue,
+            absoluteMax: axis.maxValue,
+            minPreSpacing: minValue,
+            maxPreSpacing: maxValue,
+            spacing: settings.handleThickness + 5
+        ).boundedAxis
+    }
 
-        var body: some View {
-            VStack {
-                DualValueSlider(
-                    value1: $value1,
-                    value2: $value2,
-                    axis: AxisPositionCalculations(
-                        minValuePosition: 0,
-                        maxValuePosition: 0,
-                        minValue: 0,
-                        maxValue: 0
-                    ),
-                    handleThickness: 40,
-                    handleColor: Color.orangeAccent,
-                    disabledHandleColor: Color.gray,
-                    handleCornerRadius: 15,
-                    barThickness: 5,
-                    barColor: Color.darkGray,
-                    orientation: .landscape,
-                    primarySliderMin: 0.1,
-                    primaryValueBoundType: .lower
-                ).frame(height: 80)
-
-                Button(action: {
-                    if (value2 == nil) {
-                        value2 = Double.random(in: 0...1)
-                    } else {
-                        value2 = nil
-                    }
-                }) {
-                    Text("Click")
-                }
-            }
-        }
+    private var value2UnsafeBinding: Binding<CGFloat> {
+        Binding(get: { value2! }, set: { value2 = $0 })
     }
 }

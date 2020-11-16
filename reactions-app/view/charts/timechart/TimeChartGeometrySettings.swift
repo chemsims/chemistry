@@ -46,6 +46,9 @@ struct TimeChartGeometrySettings {
     var handleCornerRadius: CGFloat {
         handleThickness * 0.25
     }
+    var barThickness: CGFloat {
+        3
+    }
     var labelFontSize: CGFloat {
         0.06 * chartSize
     }
