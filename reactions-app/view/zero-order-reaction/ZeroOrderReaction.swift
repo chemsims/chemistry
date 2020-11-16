@@ -7,9 +7,9 @@ import SwiftUI
 
 struct ZeroOrderReaction: View {
 
-    @ObservedObject var beakyModel: ZeroOrderBeakyViewModel
+    @ObservedObject var beakyModel: ZeroOrderUserFlowViewModel
     @ObservedObject var reactionModel: ReactionViewModel
-    init(beakyModel: ZeroOrderBeakyViewModel) {
+    init(beakyModel: ZeroOrderUserFlowViewModel) {
         self.beakyModel = beakyModel
         self.reactionModel = beakyModel.reactionViewModel
     }
@@ -168,12 +168,12 @@ struct ZeroOrderReaction_Previews: PreviewProvider {
     static var previews: some View {
         /// iPad mini 4 landscape
         ZeroOrderReaction(
-            beakyModel: ZeroOrderBeakyViewModel(reactionViewModel: ReactionViewModel())
+            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ReactionViewModel())
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro
         ZeroOrderReaction(
-            beakyModel: ZeroOrderBeakyViewModel(reactionViewModel: ReactionViewModel())
+            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ReactionViewModel())
         ).previewLayout(.fixed(width: 1366, height: 1024))
 
     }

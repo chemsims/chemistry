@@ -5,7 +5,21 @@
 
 import SwiftUI
 
-class ZeroOrderBeakyViewModel: ObservableObject {
+class ZeroOrderUserFlowViewModel: ReactionUserFlowViewModel {
+    init(reactionViewModel: ReactionViewModel) {
+        super.init(
+            reactionViewModel: reactionViewModel,
+            states: [
+                InitialStep(),
+                SetFinalValuesToNonNil(),
+                RunAnimation(),
+                EndAnimation(),
+            ]
+        )
+    }
+}
+
+class ReactionUserFlowViewModel: ObservableObject {
 
     @Published var statement: [SpeechBubbleLine] = []
 
@@ -13,7 +27,8 @@ class ZeroOrderBeakyViewModel: ObservableObject {
 
     private var nextTimer: Timer?
 
-    init(reactionViewModel: ReactionViewModel) {
+    init(reactionViewModel: ReactionViewModel, states: [ReactionState]) {
+        self.states = states
         self.currentIndex = 0
         self.reactionViewModel = reactionViewModel
         setStatement()
@@ -22,13 +37,7 @@ class ZeroOrderBeakyViewModel: ObservableObject {
         }
     }
 
-    private let states: [ReactionState] = [
-        InitialStep(),
-        SetFinalValuesToNonNil(),
-        RunAnimation(),
-        EndAnimation(),
-    ]
-
+    private let states: [ReactionState]
     private var currentIndex: Int {
         didSet {
             setStatement()
