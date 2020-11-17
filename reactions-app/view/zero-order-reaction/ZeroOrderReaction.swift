@@ -47,7 +47,8 @@ struct ZeroOrderReaction: View {
                     concentrationA: reactionModel.concentrationEquationA,
                     concentrationB: reactionModel.concentrationEquationB,
                     currentTime: reactionModel.currentTime,
-                    headOpacity: reactionModel.timeChartHeadOpacity
+                    headOpacity: reactionModel.timeChartHeadOpacity,
+                    canSetInitialTime: true
                 )
 
                 ConcentrationBarChart(

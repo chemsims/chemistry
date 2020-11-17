@@ -5,6 +5,38 @@
 
 import SwiftUI
 
+class FirstOderViewModel: ReactionViewModel {
+
+    override var concentrationEquationA: ConcentrationEquation {
+        if let rate = rate {
+            return FirstOrderConcentration(
+                initialConcentration: initialConcentration,
+                rate: rate
+            )
+        }
+        return ConstantConcentration(value: 0.5)
+    }
+
+    var logAEquation: ConcentrationEquation {
+        LogEquation(underlying: concentrationEquationA)
+    }
+
+    override var rate: CGFloat? {
+        if let finalConcentration = finalConcentration, let finalTime = finalTime, initialConcentration != 0, finalTime != 0 {
+            let logC = log(finalConcentration / initialConcentration)
+            return -1 * (logC / finalTime)
+        }
+        return nil
+    }
+
+    override var halfTime: CGFloat? {
+        if let rate = rate {
+            return log(2) / rate
+        }
+        return nil
+    }
+}
+
 class ReactionViewModel: ObservableObject {
 
     init () {
@@ -26,25 +58,23 @@ class ReactionViewModel: ObservableObject {
     @Published var reactionHasEnded: Bool = false
     @Published var timeChartHeadOpacity: Double = 1
 
-    var concentrationEquationA: LinearConcentration {
-        LinearConcentration(
-            t1: initialTime,
-            c1: initialConcentration,
-            t2: finalTime ?? 0,
-            c2: finalConcentration ?? 0
-        )
-    }
-
-    var concentrationEquationB: ConcentrationEquation {
+    var concentrationEquationA: ConcentrationEquation {
         if let t2 = finalTime, let c2 = finalConcentration {
             return LinearConcentration(
                 t1: initialTime,
-                c1: 0,
+                c1: initialConcentration,
                 t2: t2,
-                c2: initialConcentration - c2
+                c2: c2
             )
         }
         return ConstantConcentration(value: 0)
+    }
+
+    var concentrationEquationB: ConcentrationEquation {
+        return ConcentrationBEquation(
+            concentrationA: concentrationEquationA,
+            initialAConcentration: initialConcentration
+        )
     }
 
     var moleculesA = [GridCoordinate]()
@@ -82,6 +112,13 @@ class ReactionViewModel: ObservableObject {
     var halfTime: CGFloat? {
         if let rate = rate, rate != 0 {
             return initialConcentration / (2 * rate)
+        }
+        return nil
+    }
+
+    var reactionDuration: CGFloat? {
+        if let t2 = finalTime {
+            return t2 - initialTime
         }
         return nil
     }
@@ -127,7 +164,7 @@ struct ReactionSettings {
     static let minConcentration: CGFloat = 0
     static let maxConcentration: CGFloat = 1
     static let minTime: CGFloat = 0
-    static let maxTime: CGFloat = 15
+    static let maxTime: CGFloat = 17
 
     /// The minimum value that concentration 2 may be. Concentration 1 is liited to ensure there is sufficient space
     static let minFinalConcentration: CGFloat = 0.15

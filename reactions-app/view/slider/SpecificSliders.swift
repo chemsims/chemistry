@@ -22,7 +22,8 @@ struct ConcentrationValueSlider: View {
             value2NextHandle: initialConcentration,
             axis: settings.yAxis,
             orientation: .portrait,
-            settings: settings
+            settings: settings,
+            canSetInitialValue: true
         )
     }
 }
@@ -32,18 +33,20 @@ struct TimeValueSlider: View {
     @Binding var t2: CGFloat?
 
     let settings: TimeChartGeometrySettings
+    let canSetInitialTime: Bool
 
     var body: some View {
         DualValueSlider(
             value1: $t1,
             value2: $t2,
             value1PreviousHandle: nil,
-            value1NextHandle: settings.minFinalTime,
-            value2PreviousHandle: t1,
+            value1NextHandle: canSetInitialTime ? settings.minFinalTime : nil,
+            value2PreviousHandle: canSetInitialTime ? t1 : nil,
             value2NextHandle: nil,
             axis: settings.xAxis,
             orientation: .landscape,
-            settings: settings
+            settings: settings,
+            canSetInitialValue: canSetInitialTime
         )
     }
 }

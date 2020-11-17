@@ -19,6 +19,20 @@ class ZeroOrderUserFlowViewModel: ReactionUserFlowViewModel {
     }
 }
 
+class FirstOrderUserFlowViewModel: ReactionUserFlowViewModel {
+    init(reactionViewModel: ReactionViewModel) {
+        super.init(
+            reactionViewModel: reactionViewModel,
+            states: [
+                InitialiseFirstOrder(),
+                SetFinalConcentrationToNonNil(),
+                RunAnimation(),
+                EndAnimation()
+            ]
+        )
+    }
+}
+
 class ReactionUserFlowViewModel: ObservableObject {
 
     @Published var statement: [SpeechBubbleLine] = []
@@ -119,6 +133,41 @@ fileprivate struct InitialStep: ReactionState {
     func reapply(on model: ReactionViewModel) { }
 }
 
+fileprivate struct InitialiseFirstOrder: ReactionState {
+
+    var statement: [SpeechBubbleLine] = FirstOrderStatements.intro
+
+
+    func apply(on model: ReactionViewModel) {
+        model.initialTime = 0
+        model.finalTime = 10
+    }
+
+    func unapply(on model: ReactionViewModel) {
+
+    }
+
+    func reapply(on model: ReactionViewModel) {
+
+    }
+}
+
+fileprivate struct SetFinalConcentrationToNonNil: ReactionState {
+
+    var statement: [SpeechBubbleLine] = FirstOrderStatements.setC2
+
+    func apply(on model: ReactionViewModel) {
+        model.finalConcentration = model.initialConcentration / 2
+    }
+
+    func unapply(on model: ReactionViewModel) {
+        model.finalConcentration = nil
+    }
+
+    func reapply(on model: ReactionViewModel) {
+
+    }
+}
 
 
 fileprivate struct SetFinalValuesToNonNil: ReactionState {
@@ -146,15 +195,16 @@ fileprivate struct SetFinalValuesToNonNil: ReactionState {
 
 fileprivate struct RunAnimation: ReactionState {
 
-    var statement: [SpeechBubbleLine] = ZeroOrderStatements.reactionInProgress
+    var statement: [SpeechBubbleLine] = ZeroOrderStatements.inProgress
 
     func apply(on model: ReactionViewModel) {
         model.reactionHasEnded = false
-        if let finalTime = model.finalTime, let halfTime = model.halfTime {
+        if let duration = model.reactionDuration, let finalTime = model.finalTime {
             model.currentTime = model.initialTime
             model.moleculeBOpacity = 0
             model.timeChartHeadOpacity = 1
-            withAnimation(.linear(duration: Double(2 * halfTime))) {
+            print("Running for \(duration)")
+            withAnimation(.linear(duration: Double(duration))) {
                 model.currentTime = finalTime
                 model.moleculeBOpacity = 1
             }
@@ -173,8 +223,8 @@ fileprivate struct RunAnimation: ReactionState {
     }
 
     func nextStateAutoDispatchDelay(model: ReactionViewModel) -> Double? {
-        if let halfTime = model.halfTime {
-            return Double(halfTime * 2)
+        if let duration = model.reactionDuration {
+            return Double(duration)
         }
         return nil
     }

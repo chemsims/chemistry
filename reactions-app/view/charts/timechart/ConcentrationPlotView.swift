@@ -9,7 +9,7 @@ struct ConcentrationPlotView: View {
 
     let settings: TimeChartGeometrySettings
     let concentrationA: ConcentrationEquation
-    let concentrationB: ConcentrationEquation
+    let concentrationB: ConcentrationEquation?
 
     let initialConcentration: CGFloat
     let finalConcentration: CGFloat
@@ -40,18 +40,21 @@ struct ConcentrationPlotView: View {
             )
             .stroke()
 
-            ChartPlotWithHead(
-                settings: settings,
-                equation: concentrationB,
-                initialTime: initialTime,
-                currentTime: currentTime,
-                finalTime: finalTime,
-                filledBarColor: Styling.timeAxisCompleteBar,
-                headColor: Styling.moleculeB,
-                headRadius: settings.chartHeadSecondarySize,
-                haloColor: nil,
-                headOpacity: headOpacity
-            )
+            if (concentrationB != nil) {
+                ChartPlotWithHead(
+                    settings: settings,
+                    equation: concentrationB!,
+                    initialTime: initialTime,
+                    currentTime: currentTime,
+                    finalTime: finalTime,
+                    filledBarColor: Styling.timeAxisCompleteBar,
+                    headColor: Styling.moleculeB,
+                    headRadius: settings.chartHeadSecondarySize,
+                    haloColor: nil,
+                    headOpacity: headOpacity
+                )
+            }
+
 
             ChartPlotWithHead(
                 settings: settings,

@@ -17,18 +17,22 @@ struct DualValueSlider: View {
     let axis: AxisPositionCalculations<CGFloat>
     let orientation: Orientation
     let settings: TimeChartGeometrySettings
+    let canSetInitialValue: Bool
 
     var body: some View {
         ZStack {
-            slider(
-                binding: $value1,
-                axis: axis(
-                    minValue: value1PreviousHandle,
-                    maxValue: value1NextHandle
-                ),
-                disabled: value2 != nil,
-                showBar: true
-            )
+            if (canSetInitialValue) {
+                slider(
+                    binding: $value1,
+                    axis: axis(
+                        minValue: value1PreviousHandle,
+                        maxValue: value1NextHandle
+                    ),
+                    disabled: value2 != nil,
+                    showBar: true
+                )
+            }
+
             if (value2 != nil) {
                 slider(
                     binding: value2UnsafeBinding,

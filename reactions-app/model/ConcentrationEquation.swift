@@ -4,6 +4,7 @@
   
 
 import CoreGraphics
+import Darwin
 
 protocol ConcentrationEquation {
     func getConcentration(at time: CGFloat) -> CGFloat
@@ -37,5 +38,38 @@ struct ConstantConcentration: ConcentrationEquation {
 
     func getConcentration(at time: CGFloat) -> CGFloat {
         return value
+    }
+}
+
+
+struct FirstOrderConcentration: ConcentrationEquation {
+
+    let initialConcentration: CGFloat
+    let rate: CGFloat
+
+
+    func getConcentration(at time: CGFloat) -> CGFloat {
+        initialConcentration * CGFloat(pow(Darwin.M_E, -Double(rate * time)))
+    }
+}
+
+struct ConcentrationBEquation: ConcentrationEquation {
+    let concentrationA: ConcentrationEquation
+    let initialAConcentration: CGFloat
+
+    func getConcentration(at time: CGFloat) -> CGFloat {
+        initialAConcentration - concentrationA.getConcentration(at: time)
+    }
+}
+
+struct LogEquation: ConcentrationEquation {
+    let underlying: ConcentrationEquation
+
+    func getConcentration(at time: CGFloat) -> CGFloat {
+        let value = underlying.getConcentration(at: time)
+        if (value == 0) {
+            return 0
+        }
+        return log(value)
     }
 }

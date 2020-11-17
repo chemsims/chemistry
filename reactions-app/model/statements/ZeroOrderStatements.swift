@@ -5,6 +5,17 @@
 
 import Foundation
 
+struct ReactionStatements {
+    static let inProgress: [SpeechBubbleLine] = [
+        SpeechBubbleLineGenerator.makeLine(
+            "Let's watch all the molecules changing"
+        ),
+        SpeechBubbleLineGenerator.makeLine(
+            "As A disappears, B is being produced."
+        )
+    ]
+}
+
 struct ZeroOrderStatements {
 
     static let initial: [SpeechBubbleLine] = [
@@ -22,15 +33,7 @@ struct ZeroOrderStatements {
         )
     ]
 
-    static let reactionInProgress: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(
-            "Let's watch all the molecules changing"
-        ),
-        SpeechBubbleLineGenerator.makeLine(
-            "As A disappears, B is being produced."
-        )
-    ]
-
+    static let inProgress = ReactionStatements.inProgress
 
     static var endStatement: [SpeechBubbleLine] = [
         SpeechBubbleLineGenerator.makeLine("Amazing!"),
