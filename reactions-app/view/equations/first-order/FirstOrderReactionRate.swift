@@ -11,13 +11,14 @@ struct FirstOrderReactionEquation: View {
     let c2: CGFloat?
     let t: CGFloat?
     let rate: CGFloat?
+    let halfTime: CGFloat?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             FirstOrderReactionRateFilled()
             FirstOrderReactionRateBlank(c1: c1, c2: c2, t: t, rate: rate)
-            FirstOrderReactionRateFilled()
-            FirstOrderReactionRateFilled()
+            FirstOrderHalftimeEquationFilled()
+            FirstOrderHalftimeEquationBlank(halfTime: halfTime, rate: rate)
         }
     }
 }
@@ -68,7 +69,7 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
 
     private func makeView(settings: FirstOrderEquationSettings) -> some View {
         HStack(spacing: settings.hStackSpacing) {
-            term(rateTerm)
+            settings.termOrBox(rateTerm)
                 .frame(
                     width: settings.rateSize,
                     height: settings.rateSize
@@ -85,70 +86,18 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
     private func fraction(settings: FirstOrderEquationSettings) -> some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                term(c1)
+                settings.termOrBox(c1)
                     .frame(width: settings.term1Width, height: settings.term1Height)
                 Text("-")
                     .frame(width: settings.negativeWidth)
-                term(c2)
+                settings.termOrBox(c2)
                     .frame(width: settings.term1Width, height: settings.term1Height)
             }
             Rectangle()
                 .frame(width: settings.rateDividerWidth, height: 1)
-            term(t)
+            settings.termOrBox(t)
                 .frame(width: settings.term1Width, height: settings.term1Height)
         }
-    }
-
-    func term(_ t: String?) -> some View {
-        if (t != nil) {
-            return AnyView(
-                Text(t!)
-            )
-        }
-        return AnyView(
-            EquationPlaceholderView()
-                .padding(3)
-        )
-    }
-}
-
-struct FirstOrderEquationSettings {
-    let geometry: GeometryProxy
-
-    var width: CGFloat {
-        min(2.4 * geometry.size.height, geometry.size.width)
-    }
-
-    var rateSize: CGFloat {
-        0.2 * width
-    }
-
-    var equalsWidth: CGFloat {
-        0.07 * width
-    }
-
-    var negativeWidth: CGFloat {
-        0.07 * width
-    }
-
-    var fontSize: CGFloat {
-        0.11 * width
-    }
-
-    var hStackSpacing: CGFloat {
-        0.02 * width
-    }
-
-    var term1Width: CGFloat {
-        0.25 * width
-    }
-
-    var term1Height: CGFloat {
-        0.2 * width
-    }
-
-    var rateDividerWidth:CGFloat {
-        0.6 * width
     }
 }
 

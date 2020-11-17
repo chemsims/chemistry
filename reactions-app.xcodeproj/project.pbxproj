@@ -24,6 +24,7 @@
 		571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */; };
 		571B3C362563C95C0075358B /* FirstOrderReactionRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C352563C95C0075358B /* FirstOrderReactionRate.swift */; };
 		571B3C3A2563F7430075358B /* FirstOrderHalftimeEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C392563F7430075358B /* FirstOrderHalftimeEquation.swift */; };
+		571B3C3E2563F9490075358B /* FirstOrderReactionEquationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C3D2563F9490075358B /* FirstOrderReactionEquationSettings.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
 		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
@@ -94,6 +95,7 @@
 		571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderStatements.swift; sourceTree = "<group>"; };
 		571B3C352563C95C0075358B /* FirstOrderReactionRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionRate.swift; sourceTree = "<group>"; };
 		571B3C392563F7430075358B /* FirstOrderHalftimeEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderHalftimeEquation.swift; sourceTree = "<group>"; };
+		571B3C3D2563F9490075358B /* FirstOrderReactionEquationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionEquationSettings.swift; sourceTree = "<group>"; };
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 			children = (
 				571B3C352563C95C0075358B /* FirstOrderReactionRate.swift */,
 				571B3C392563F7430075358B /* FirstOrderHalftimeEquation.swift */,
+				571B3C3D2563F9490075358B /* FirstOrderReactionEquationSettings.swift */,
 			);
 			path = "first-order";
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				57035EBF255BCF6E00DB3A19 /* BeakerBottomShape.swift in Sources */,
 				57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */,
 				57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */,
+				571B3C3E2563F9490075358B /* FirstOrderReactionEquationSettings.swift in Sources */,
 				57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
 				57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */,

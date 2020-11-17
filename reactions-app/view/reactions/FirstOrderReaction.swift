@@ -150,7 +150,8 @@ struct FirstOrderReaction: View {
                 c1: reaction.initialConcentration,
                 c2: reaction.finalConcentration,
                 t: reaction.finalTime,
-                rate: reaction.rate
+                rate: reaction.rate,
+                halfTime: reaction.halfTime
             )
             Spacer()
                 .frame(height: settings.bubbleHeight + settings.navButtonSize)
