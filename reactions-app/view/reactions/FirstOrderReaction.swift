@@ -15,13 +15,38 @@ struct FirstOrderReaction: View {
 
     var body: some View {
         GeometryReader { geometry in
-            newView(
+            makeZView(
                 settings: NewLayout(
                     geometry: geometry,
                     horizontalSize: horizontalSizeClass,
                     verticalSize: verticalSizeClass
                 )
             )
+        }
+    }
+
+    private func makeZView(settings: NewLayout) -> some View {
+        ZStack(alignment: .leading) {
+            beaky(settings: settings)
+                .padding(.trailing, settings.beakyRightPadding)
+                .padding(.bottom, settings.beakyBottomPadding)
+            makeHView(using: settings)
+        }
+    }
+
+    private func makeHView(using settings: NewLayout) -> some View {
+        HStack(spacing: 0) {
+            beaker(settings: settings)
+            Spacer()
+            Group {
+                middleCharts(settings: settings)
+                logChart(settings: settings)
+            }.padding(.top, settings.chartsTopPadding)
+
+            equationView(settings: settings)
+                .frame(maxWidth: settings.equationWidth)
+                .padding(.leading, settings.equationLeadingPadding)
+                .padding(.top, settings.equationLeadingPadding)
         }
     }
 
@@ -49,13 +74,6 @@ struct FirstOrderReaction: View {
         }
     }
 
-    private func newView(settings: NewLayout) -> some View {
-        ZStack {
-            beaky(settings: settings)
-            makeView(using: settings)
-        }
-    }
-
     private func beaker(settings: NewLayout) -> some View {
         VStack {
             Spacer()
@@ -65,8 +83,8 @@ struct FirstOrderReaction: View {
                 moleculeBOpacity: reaction.moleculeBOpacity
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
-            .padding(.leading, 20)
-            .padding(.bottom, 20)
+            .padding(.leading, settings.beakerLeadingPadding)
+            .padding(.bottom, settings.beakerLeadingPadding)
         }
     }
 
@@ -102,7 +120,7 @@ struct FirstOrderReaction: View {
             ).frame(width: settings.chartSize)
             Spacer()
         }
-        .frame(width: settings.chartSize + settings.barChartPaddingToBeaker, alignment: .trailing)
+        .frame(width: settings.chartSize + settings.midChartsLeftPadding, alignment: .trailing)
     }
 
     private func logChart(settings: NewLayout) -> some View {
@@ -126,18 +144,8 @@ struct FirstOrderReaction: View {
         }
     }
 
-    private func makeView(using settings: NewLayout) -> some View {
-        HStack(spacing: 0) {
-            beaker(settings: settings)
-            middleCharts(settings: settings)
-            logChart(settings: settings)
-            equationView(settings: settings)
-            Spacer()
-        }
-    }
-
     private func equationView(settings: NewLayout) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(spacing: 10) {
             FirstOrderReactionEquation(
                 c1: reaction.initialConcentration,
                 c2: reaction.finalConcentration,
@@ -162,18 +170,17 @@ struct NewLayout {
         geometry.size.height
     }
 
-    private var isIpad: Bool {
-        if let h = horizontalSize, let v = verticalSize {
-            return h == .regular && v == .regular
-        }
-        return false
-    }
-
     var bubbleWidth: CGFloat {
-        0.2 * width
+        if (vIsRegular && hIsRegular) {
+            return 0.25 * width
+        }
+        return 0.22 * width
     }
     var bubbleHeight: CGFloat {
-        0.7 * bubbleWidth
+        if (vIsRegular && hIsRegular) {
+            return 1.1 * bubbleWidth
+        }
+        return 0.8 * bubbleWidth
     }
     var chartSize: CGFloat {
         let maxHeight = 0.32 * height
@@ -182,26 +189,65 @@ struct NewLayout {
         return min(maxHeight, min(maxWidth, idealWidth))
     }
     var bubbleFontSize: CGFloat {
-        8
+        bubbleWidth * 0.08
     }
     var beakyHeight: CGFloat {
         0.7 * bubbleHeight
     }
     var navButtonSize: CGFloat {
-        30
+        bubbleHeight * 0.2
     }
     var bubbleStemWidth: CGFloat {
-        10
+        SpeechBubbleSettings.getStemWidth(width: bubbleWidth)
     }
     var beakerWidth: CGFloat {
-        0.17 * width
+        if let h = horizontalSize, h == .regular {
+            return 0.25 * width
+        }
+        return 0.23 * width
     }
     var beakerHeight: CGFloat {
         beakerWidth * 1.1
     }
-    var barChartPaddingToBeaker: CGFloat {
-        chartSize * 0.1
+    var midChartsLeftPadding: CGFloat {
+        chartSize * 0.2
     }
+    var chartsTopPadding: CGFloat {
+        chartSize * 0.2
+    }
+    var beakyRightPadding: CGFloat {
+        bubbleWidth * 0.3
+    }
+    var beakyBottomPadding: CGFloat {
+        beakyRightPadding * 0.1
+    }
+    var beakerLeadingPadding: CGFloat {
+        20
+    }
+    var equationWidth: CGFloat {
+        if let h = horizontalSize, h == .regular {
+            return 0.2 * width
+        }
+        return 0.23 * width
+    }
+    var equationLeadingPadding: CGFloat {
+        return 5
+    }
+
+    private var hIsRegular: Bool {
+        if let h = horizontalSize {
+            return h == .regular
+        }
+        return false
+    }
+
+    private var vIsRegular: Bool {
+        if let v = verticalSize {
+            return v == .regular
+        }
+        return false
+    }
+
 }
 
 struct FirstOrderReaction_Previews: PreviewProvider {

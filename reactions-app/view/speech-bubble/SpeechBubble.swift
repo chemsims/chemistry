@@ -26,16 +26,22 @@ struct SpeechBubble: View {
                 .frame(width: settings.stemWidth, height: settings.stemHeight)
                 .offset(x: settings.bubbleWidth, y: settings.stemYOffset)
 
-            VStack(alignment: .leading) {
-                ForEach(self.lines) { line in
-                    lineView(line).padding()
-                }
-            }
+            linesView
+                .padding(settings.bubbleTextPadding)
                 .frame(width: settings.bubbleWidth, height: settings.geometry.size.height)
-        }
+        }.minimumScaleFactor(0.6)
     }
 
-    private func lineView(_ line: SpeechBubbleLine) -> some View {
+    private var linesView: Text {
+        if let firstLine = lines.first {
+            return lines.dropFirst().reduce(lineView(firstLine)) { acc, next in
+                acc + Text("\n\n") + lineView(next)
+            }
+        }
+        return Text("")
+    }
+
+    private func lineView(_ line: SpeechBubbleLine) -> Text {
         line.content.reduce(Text(""), {
             $0 + Text($1.content)
                     .foregroundColor($1.emphasised ? .orangeAccent : .black)
@@ -62,11 +68,15 @@ struct SpeechBubbleStem: Shape {
     }
 }
 
-private struct SpeechBubbleSettings {
+struct SpeechBubbleSettings {
     let geometry: GeometryProxy
 
+    static func getStemWidth(width: CGFloat) -> CGFloat {
+        width * 0.2
+    }
+
     var stemWidth: CGFloat {
-        geometry.size.width * 0.2
+        SpeechBubbleSettings.getStemWidth(width: geometry.size.width)
     }
 
     var stemHeight: CGFloat {
@@ -89,6 +99,11 @@ private struct SpeechBubbleSettings {
 
     var stemCornerRadius: CGFloat {
         stemWidth * 0.3
+    }
+
+    var bubbleTextPadding: CGFloat {
+        let minDimension: CGFloat = min(geometry.size.width, geometry.size.height)
+        return minDimension * 0.06
     }
 }
 

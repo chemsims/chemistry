@@ -89,7 +89,7 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
     }
 
     private func maxFontSize(width: CGFloat) -> CGFloat {
-        0.15 * width
+        0.11 * width
     }
 
     private func fraction(width: CGFloat) -> some View {
@@ -117,7 +117,7 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
         }
         return AnyView(
             EquationPlaceholderView()
-                .padding(4)
+                .padding(3)
         )
     }
 }
