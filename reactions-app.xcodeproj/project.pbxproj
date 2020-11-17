@@ -172,13 +172,13 @@
 			path = "reactions-appTests";
 			sourceTree = "<group>";
 		};
-		57035EF4255C19EC00DB3A19 /* zero-order-reaction */ = {
+		57035EF4255C19EC00DB3A19 /* reactions */ = {
 			isa = PBXGroup;
 			children = (
 				57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */,
 				57C3A8262563248F00EE753E /* FirstOrderReaction.swift */,
 			);
-			path = "zero-order-reaction";
+			path = reactions;
 			sourceTree = "<group>";
 		};
 		57035EFB255C1A2700DB3A19 /* viewmodels */ = {
@@ -197,6 +197,13 @@
 				572CB93B255C36B00071C600 /* timechart */,
 			);
 			path = charts;
+			sourceTree = "<group>";
+		};
+		571B3C322563BBA30075358B /* first-order */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "first-order";
 			sourceTree = "<group>";
 		};
 		571D6A33255A780700F4E635 = {
@@ -247,7 +254,7 @@
 			children = (
 				572CB947255C411F0071C600 /* equations */,
 				57035F0A255C26B700DB3A19 /* charts */,
-				57035EF4255C19EC00DB3A19 /* zero-order-reaction */,
+				57035EF4255C19EC00DB3A19 /* reactions */,
 				57035ED6255BF03300DB3A19 /* slider */,
 				571D6A7A255AC75000F4E635 /* beaker */,
 				571D6A56255AAC0F00F4E635 /* speech-bubble */,
@@ -337,6 +344,7 @@
 		572CB947255C411F0071C600 /* equations */ = {
 			isa = PBXGroup;
 			children = (
+				571B3C322563BBA30075358B /* first-order */,
 				57FDA133255D5ED700CB8804 /* util */,
 				57FDA12C255D5E7500CB8804 /* zero-order */,
 			);

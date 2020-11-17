@@ -28,8 +28,8 @@ struct ConcentrationPlotView: View {
 
             verticalIndicator(at: initialTime)
             verticalIndicator(at: finalTime)
-            horizontalIndicator(at: initialConcentration)
-            horizontalIndicator(at: finalConcentration)
+            horizontalIndicator(at: concentrationA.getConcentration(at: initialTime))
+            horizontalIndicator(at: concentrationA.getConcentration(at: finalTime))
 
             ChartAxisShape(
                 verticalTicks: settings.verticalTicks,

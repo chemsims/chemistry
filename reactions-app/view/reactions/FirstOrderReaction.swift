@@ -69,9 +69,11 @@ struct FirstOrderReaction: View {
                 finalConcentration: reaction.finalConcentration,
                 finalTime: reaction.finalTime,
                 settings: TimeChartGeometrySettings(
-                    chartSize: settings.chartsWidth
+                    chartSize: settings.chartsWidth,
+                    minConcentration: ReactionSettings.minLogConcentration,
+                    maxConcentration: ReactionSettings.maxLogConcentration
                 ),
-                concentrationA: reaction.concentrationEquationA,
+                concentrationA: reaction.logAEquation,
                 currentTime: reaction.currentTime,
                 headOpacity: reaction.timeChartHeadOpacity,
                 yLabel: "ln(A)"

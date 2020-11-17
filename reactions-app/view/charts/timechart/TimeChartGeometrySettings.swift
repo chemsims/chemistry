@@ -8,9 +8,19 @@ import CoreGraphics
 struct TimeChartGeometrySettings {
     let chartSize: CGFloat
 
+    init(
+        chartSize: CGFloat,
+        minConcentration: CGFloat = ReactionSettings.minConcentration,
+        maxConcentration: CGFloat = ReactionSettings.maxConcentration
+    ) {
+        self.chartSize = chartSize
+        self.minConcentration = minConcentration
+        self.maxConcentration = maxConcentration
+    }
+
     // Min/max of the axis
-    let minConcentration: CGFloat = ReactionSettings.minConcentration
-    let maxConcentration: CGFloat = ReactionSettings.maxConcentration
+    let minConcentration: CGFloat
+    let maxConcentration: CGFloat
     let minTime: CGFloat = ReactionSettings.minTime
     let maxTime: CGFloat = ReactionSettings.maxTime
 
