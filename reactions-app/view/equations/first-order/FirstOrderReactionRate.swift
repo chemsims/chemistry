@@ -60,52 +60,42 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
 
     var body: some View {
         GeometryReader { geometry in
-            makeView(width: width(geometry: geometry))
+            makeView(
+                settings: FirstOrderEquationSettings(geometry: geometry)
+            )
         }
     }
 
-    private func width(geometry: GeometryProxy) -> CGFloat {
-        min(2.4 * geometry.size.height, geometry.size.width)
-    }
-
-    private func makeView(width: CGFloat) -> some View {
-        HStack(spacing: width * 0.02) {
+    private func makeView(settings: FirstOrderEquationSettings) -> some View {
+        HStack(spacing: settings.hStackSpacing) {
             term(rateTerm)
                 .frame(
-                    width: rateSize(width: width),
-                    height: rateSize(width: width)
+                    width: settings.rateSize,
+                    height: settings.rateSize
                 )
             Text("=")
-                .frame(width: width * 0.07)
-            fraction(width: width)
+                .frame(width: settings.equalsWidth)
+            fraction(settings: settings)
         }
         .lineLimit(1)
-        .font(.system(size: maxFontSize(width: width)))
+        .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.01)
     }
 
-    private func rateSize(width: CGFloat) -> CGFloat {
-        return width * 0.2
-    }
-
-    private func maxFontSize(width: CGFloat) -> CGFloat {
-        0.11 * width
-    }
-
-    private func fraction(width: CGFloat) -> some View {
+    private func fraction(settings: FirstOrderEquationSettings) -> some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 term(c1)
-                    .frame(width: width * 0.25, height: width * 0.2)
+                    .frame(width: settings.term1Width, height: settings.term1Height)
                 Text("-")
-                    .frame(width: width * 0.07)
+                    .frame(width: settings.negativeWidth)
                 term(c2)
-                    .frame(width: width * 0.25, height: width * 0.2)
+                    .frame(width: settings.term1Width, height: settings.term1Height)
             }
             Rectangle()
-                .frame(width: width * 0.6, height: 1)
+                .frame(width: settings.rateDividerWidth, height: 1)
             term(t)
-                .frame(width: width * 0.25, height: width * 0.2)
+                .frame(width: settings.term1Width, height: settings.term1Height)
         }
     }
 
@@ -119,6 +109,46 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
             EquationPlaceholderView()
                 .padding(3)
         )
+    }
+}
+
+struct FirstOrderEquationSettings {
+    let geometry: GeometryProxy
+
+    var width: CGFloat {
+        min(2.4 * geometry.size.height, geometry.size.width)
+    }
+
+    var rateSize: CGFloat {
+        0.2 * width
+    }
+
+    var equalsWidth: CGFloat {
+        0.07 * width
+    }
+
+    var negativeWidth: CGFloat {
+        0.07 * width
+    }
+
+    var fontSize: CGFloat {
+        0.11 * width
+    }
+
+    var hStackSpacing: CGFloat {
+        0.02 * width
+    }
+
+    var term1Width: CGFloat {
+        0.25 * width
+    }
+
+    var term1Height: CGFloat {
+        0.2 * width
+    }
+
+    var rateDividerWidth:CGFloat {
+        0.6 * width
     }
 }
 
