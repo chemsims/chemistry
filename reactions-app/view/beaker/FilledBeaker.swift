@@ -34,7 +34,6 @@ struct FilledBeaker: View {
         }
     }
 
-
     private func beakerFill(_ settings: BeakerSettings) -> some View {
         drawFill(
             MoleculeGridSettings(totalWidth: settings.innerBeakerWidth),
