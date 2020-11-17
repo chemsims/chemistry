@@ -13,9 +13,11 @@ struct FirstOrderReactionEquation: View {
     let rate: CGFloat?
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             FirstOrderReactionRateFilled()
             FirstOrderReactionRateBlank(c1: c1, c2: c2, t: t, rate: rate)
+            FirstOrderReactionRateFilled()
+            FirstOrderReactionRateFilled()
         }
     }
 }
@@ -58,26 +60,36 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
 
     var body: some View {
         GeometryReader { geometry in
-            makeView(width: geometry.size.width)
-                .frame(height: (geometry.size.height * 0.6) + 1)
+            makeView(width: width(geometry: geometry))
         }
+    }
+
+    private func width(geometry: GeometryProxy) -> CGFloat {
+        min(2.4 * geometry.size.height, geometry.size.width)
     }
 
     private func makeView(width: CGFloat) -> some View {
         HStack(spacing: width * 0.02) {
             term(rateTerm)
-                .frame(width: width * 0.2, height: width * 0.2)
+                .frame(
+                    width: rateSize(width: width),
+                    height: rateSize(width: width)
+                )
             Text("=")
                 .frame(width: width * 0.07)
             fraction(width: width)
         }
         .lineLimit(1)
         .font(.system(size: maxFontSize(width: width)))
-        .minimumScaleFactor(0.1)
+        .minimumScaleFactor(0.01)
+    }
+
+    private func rateSize(width: CGFloat) -> CGFloat {
+        return width * 0.2
     }
 
     private func maxFontSize(width: CGFloat) -> CGFloat {
-        0.25 * width
+        0.15 * width
     }
 
     private func fraction(width: CGFloat) -> some View {
@@ -116,6 +128,7 @@ struct FirstOrderReactionRate_Previews: PreviewProvider {
             FirstOrderReactionRateBlank(c1: 0.69, c2: nil, t: nil, rate: nil)
                 .border(Color.red)
                 .frame(width: 130, height: 100)
+                .scaleEffect(x: 0.5, y: 0.5)
 
             FirstOrderReactionRateBlank(c1: -0.69, c2: nil, t: nil, rate: nil)
                 .border(Color.red)

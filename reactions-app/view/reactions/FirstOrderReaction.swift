@@ -10,13 +10,22 @@ struct FirstOrderReaction: View {
     @ObservedObject var reaction: FirstOderViewModel
     @ObservedObject var flow: FirstOrderUserFlowViewModel
 
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+
     var body: some View {
         GeometryReader { geometry in
-            newView(settings: LayoutSettings(geometry: geometry))
+            newView(
+                settings: NewLayout(
+                    geometry: geometry,
+                    horizontalSize: horizontalSizeClass,
+                    verticalSize: verticalSizeClass
+                )
+            )
         }
     }
 
-    private func beaky(settings: LayoutSettings) -> some View {
+    private func beaky(settings: NewLayout) -> some View {
         HStack {
             Spacer()
             VStack(alignment: .leading) {
@@ -31,23 +40,23 @@ struct FirstOrderReaction: View {
 
                 HStack {
                     PreviousButton(action: flow.back)
-                        .frame(width: settings.navButtonWidth, height: settings.navButtonWidth)
+                        .frame(width: settings.navButtonSize, height: settings.navButtonSize)
                     Spacer()
                     NextButton(action: flow.next)
-                        .frame(width: settings.navButtonWidth, height: settings.navButtonWidth)
+                        .frame(width: settings.navButtonSize, height: settings.navButtonSize)
                 }.frame(width: settings.bubbleWidth - settings.bubbleStemWidth)
             }
         }
     }
 
-    private func newView(settings: LayoutSettings) -> some View {
+    private func newView(settings: NewLayout) -> some View {
         ZStack {
             beaky(settings: settings)
             makeView(using: settings)
         }
     }
 
-    private func beaker(settings: LayoutSettings) -> some View {
+    private func beaker(settings: NewLayout) -> some View {
         VStack {
             Spacer()
             FilledBeaker(
@@ -61,8 +70,8 @@ struct FirstOrderReaction: View {
         }
     }
 
-    private func middleCharts(settings: LayoutSettings) -> some View {
-        VStack(alignment: .trailing) {
+    private func middleCharts(settings: NewLayout) -> some View {
+        VStack(alignment: .trailing, spacing: 0) {
 
             ConcentrationTimeChartView(
                 initialConcentration: $reaction.initialConcentration,
@@ -70,7 +79,7 @@ struct FirstOrderReaction: View {
                 finalConcentration: $reaction.finalConcentration,
                 finalTime: $reaction.finalTime,
                 settings: TimeChartGeometrySettings(
-                    chartSize: settings.chartsWidth
+                    chartSize: settings.chartSize
                 ),
                 concentrationA: reaction.concentrationEquationA,
                 concentrationB: reaction.concentrationEquationB,
@@ -86,18 +95,17 @@ struct FirstOrderReaction: View {
                 concentrationB: reaction.concentrationEquationB,
                 currentTime: reaction.currentTime,
                 settings: BarChartGeometrySettings(
-                    chartWidth: settings.chartsWidth,
+                    chartWidth: settings.chartSize,
                     maxConcentration: ReactionSettings.maxConcentration,
                     minConcentration: ReactionSettings.minConcentration
                 )
-            ).frame(width: settings.chartsWidth)
+            ).frame(width: settings.chartSize)
             Spacer()
         }
-        .padding(.leading, -70)
-        .padding(.top)
+        .frame(width: settings.chartSize + settings.barChartPaddingToBeaker, alignment: .trailing)
     }
 
-    private func logChart(settings: LayoutSettings) -> some View {
+    private func logChart(settings: NewLayout) -> some View {
         VStack {
             SingleConcentrationPlot(
                 initialConcentration: reaction.initialConcentration,
@@ -105,7 +113,7 @@ struct FirstOrderReaction: View {
                 finalConcentration: reaction.finalConcentration,
                 finalTime: reaction.finalTime,
                 settings: TimeChartGeometrySettings(
-                    chartSize: settings.chartsWidth,
+                    chartSize: settings.chartSize,
                     minConcentration: ReactionSettings.minLogConcentration,
                     maxConcentration: ReactionSettings.maxLogConcentration
                 ),
@@ -115,36 +123,98 @@ struct FirstOrderReaction: View {
                 yLabel: "ln(A)"
             )
             Spacer()
-        }.padding(.top)
+        }
     }
 
-    private func makeView(using settings: LayoutSettings) -> some View {
+    private func makeView(using settings: NewLayout) -> some View {
         HStack(spacing: 0) {
             beaker(settings: settings)
             middleCharts(settings: settings)
             logChart(settings: settings)
             equationView(settings: settings)
-        }.frame(width: settings.width, height: settings.height)
+            Spacer()
+        }
     }
 
-    private func equationView(settings: LayoutSettings) -> some View {
+    private func equationView(settings: NewLayout) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             FirstOrderReactionEquation(
                 c1: reaction.initialConcentration,
                 c2: reaction.finalConcentration,
                 t: reaction.finalTime,
                 rate: reaction.rate
-            ).frame(height: settings.height - settings.bubbleHeight - settings.navButtonWidth)
+            )
             Spacer()
+                .frame(height: settings.bubbleHeight + settings.navButtonSize)
         }
+    }
+}
+
+struct NewLayout {
+    let geometry: GeometryProxy
+    let horizontalSize: UserInterfaceSizeClass?
+    let verticalSize: UserInterfaceSizeClass?
+
+    var width: CGFloat {
+        geometry.size.width
+    }
+    var height: CGFloat {
+        geometry.size.height
+    }
+
+    private var isIpad: Bool {
+        if let h = horizontalSize, let v = verticalSize {
+            return h == .regular && v == .regular
+        }
+        return false
+    }
+
+    var bubbleWidth: CGFloat {
+        0.2 * width
+    }
+    var bubbleHeight: CGFloat {
+        0.7 * bubbleWidth
+    }
+    var chartSize: CGFloat {
+        let maxHeight = 0.32 * height
+        let maxWidth = 0.25 * width
+        let idealWidth = 0.2 * width
+        return min(maxHeight, min(maxWidth, idealWidth))
+    }
+    var bubbleFontSize: CGFloat {
+        8
+    }
+    var beakyHeight: CGFloat {
+        0.7 * bubbleHeight
+    }
+    var navButtonSize: CGFloat {
+        30
+    }
+    var bubbleStemWidth: CGFloat {
+        10
+    }
+    var beakerWidth: CGFloat {
+        0.17 * width
+    }
+    var beakerHeight: CGFloat {
+        beakerWidth * 1.1
+    }
+    var barChartPaddingToBeaker: CGFloat {
+        chartSize * 0.1
     }
 }
 
 struct FirstOrderReaction_Previews: PreviewProvider {
     
     static var previews: some View {
+
+        // iPhone SE landscape
         StateWrapper()
-            .previewLayout(.fixed(width: 896, height: 312))
+            .previewLayout(.fixed(width: 568, height: 320))
+
+        // iPhone 11 landscape
+        StateWrapper()
+            .previewLayout(.fixed(width: 812, height: 375))
         StateWrapper()
             .previewLayout(.fixed(width: 1024, height: 768))
     }
