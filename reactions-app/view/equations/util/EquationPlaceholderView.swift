@@ -22,7 +22,7 @@ func termOrBox(_ term: String?, settings: EquationGeometrySettings) -> some View
     return AnyView(DefaultPlaceholder(settings: settings))
 }
 
-fileprivate struct EquationPlaceholderView: View {
+struct EquationPlaceholderView: View {
 
     var body: some View {
         GeometryReader { geometry in

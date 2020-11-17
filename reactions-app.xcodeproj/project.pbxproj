@@ -22,6 +22,7 @@
 		57035F0C255C26D000DB3A19 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
 		57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */; };
 		571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */; };
+		571B3C362563C95C0075358B /* FirstOrderReactionRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C352563C95C0075358B /* FirstOrderReactionRate.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
 		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
@@ -90,6 +91,7 @@
 		57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAxisShape.swift; sourceTree = "<group>"; };
 		57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTimeChartView.swift; sourceTree = "<group>"; };
 		571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderStatements.swift; sourceTree = "<group>"; };
+		571B3C352563C95C0075358B /* FirstOrderReactionRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionRate.swift; sourceTree = "<group>"; };
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 		571B3C322563BBA30075358B /* first-order */ = {
 			isa = PBXGroup;
 			children = (
+				571B3C352563C95C0075358B /* FirstOrderReactionRate.swift */,
 			);
 			path = "first-order";
 			sourceTree = "<group>";
@@ -543,6 +546,7 @@
 				57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */,
 				57035EFD255C1A7000DB3A19 /* FirtOrderReactionModel.swift in Sources */,
 				57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */,
+				571B3C362563C95C0075358B /* FirstOrderReactionRate.swift in Sources */,
 				57FDA12E255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift in Sources */,
 				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
 				572CB949255C412A0071C600 /* ZeroOrderReactionEquation.swift in Sources */,

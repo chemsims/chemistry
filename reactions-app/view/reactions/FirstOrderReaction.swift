@@ -80,29 +80,13 @@ struct FirstOrderReaction: View {
             )
 
             VStack(alignment: .leading, spacing: 10) {
-//                VStack(alignment: .leading, spacing: 3) {
-//                    ZeroOrderEquationFilled(scale: settings.equationScale)
-//                    ZeroOrderEquationBlank(
-//                        scale: settings.equationScale,
-//                        emphasiseFilledTerms: reaction.currentTime == nil,
-//                        initialConcentration: reaction.initialConcentration,
-//                        initialTime: reaction.initialTime,
-//                        rate: reaction.rate,
-//                        deltaC: reaction.deltaC,
-//                        deltaT: reaction.deltaT,
-//                        c2: reaction.finalConcentration,
-//                        t2: reaction.finalTime
-//                    )
-//                }
-//                VStack(alignment: .leading, spacing: 3) {
-//                    ZeroOrderReactionHalftimeView(scale: settings.equationScale)
-//                    ZeroOrderReactionHalftimeBlank(
-//                        scale: settings.equationScale,
-//                        initialConcentration: reaction.initialConcentration,
-//                        rate: reaction.rate,
-//                        halfTime: reaction.halfTime
-//                    )
-//                }
+
+                FirstOrderReactionEquation(
+                    c1: reaction.initialConcentration,
+                    c2: reaction.finalConcentration,
+                    t: reaction.finalTime,
+                    rate: reaction.rate
+                ).frame(height: 200)
 
                 HStack(alignment: .bottom, spacing: 3) {
                     SpeechBubble(lines: flow.statement)
@@ -128,6 +112,9 @@ struct FirstOrderReaction_Previews: PreviewProvider {
     
     static var previews: some View {
         StateWrapper()
+            .previewLayout(.fixed(width: 896, height: 312))
+        StateWrapper()
+            .previewLayout(.fixed(width: 1024, height: 768))
     }
 
     struct StateWrapper: View {
