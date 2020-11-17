@@ -18,10 +18,6 @@ struct EmptyBeaker: View {
             outerTone(settings)
 
             innerTone(settings)
-
-            beakerTicks(settings)
-                .stroke(lineWidth: 2)
-                .fill(Color.darkGray)
         }
     }
 
@@ -85,16 +81,6 @@ struct EmptyBeaker: View {
         )
     }
 
-    private func beakerTicks(_ settings: BeakerSettings) -> some Shape {
-        BeakerTicks(
-            numTicks: settings.numTicks,
-            rightGap: settings.ticksRightGap,
-            bottomGap: settings.ticksBottomGap,
-            topGap: settings.ticksTopGap,
-            minorWidth: settings.ticksMinorWidth,
-            majorWidth: settings.ticksMajorWidth
-        )
-    }
 }
 
 struct LargeBeaker: View {
@@ -169,7 +155,7 @@ struct BeakerSettings {
     }
 
     var ticksMinorWidth: CGFloat {
-        geometry.size.width * 0.1
+        geometry.size.width * 0.075
     }
 
     var ticksMajorWidth: CGFloat {

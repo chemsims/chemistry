@@ -19,6 +19,16 @@ struct FilledBeaker: View {
 
     private func makeView(using settings: BeakerSettings) -> some View {
         ZStack(alignment: .bottom) {
+            BeakerTicks(
+                numTicks: settings.numTicks,
+                rightGap: settings.ticksRightGap,
+                bottomGap: settings.ticksBottomGap,
+                topGap: settings.ticksTopGap,
+                minorWidth: settings.ticksMinorWidth,
+                majorWidth: settings.ticksMajorWidth
+            )
+            .stroke(lineWidth: 1)
+            .fill(Color.darkGray.opacity(0.5))
             beakerFill(settings)
             EmptyBeaker(settings: settings)
         }

@@ -8,13 +8,16 @@ import SwiftUI
 struct SliderIndicator: View {
     let value1: CGFloat
     let value2: CGFloat?
+    let showInitialValue: Bool
     let settings: TimeChartGeometrySettings
     let axis: AxisPositionCalculations<CGFloat>
     let orientation: Orientation
 
     var body: some View {
         ZStack {
-            makeIndicator(value: value1, disabled: value2 != nil)
+            if (showInitialValue) {
+                makeIndicator(value: value1, disabled: value2 != nil)
+            }
             if (value2 != nil) {
                 makeIndicator(value: value2!, disabled: false)
             }
@@ -28,7 +31,7 @@ struct SliderIndicator: View {
         CustomSlider(
             value: .constant(value),
             axis: axis,
-            handleThickness: 3,
+            handleThickness: settings.indicatorThickness,
             handleColor: disabled ? Color.gray : Color.orangeAccent,
             handleCornerRadius: 0,
             barThickness: 0,

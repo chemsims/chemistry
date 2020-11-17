@@ -7,10 +7,13 @@ import SwiftUI
 
 struct MoleculeGridSettings {
     let totalWidth: CGFloat
-    let cellPadding: CGFloat = 2
-    
+
     static let rows = 10
     static let cols = 19
+
+    var cellPadding: CGFloat {
+        cellSize * 0.05
+    }
 
     var cellSize: CGFloat {
         totalWidth / CGFloat(MoleculeGridSettings.cols)

@@ -60,7 +60,7 @@ struct TimeChartGeometrySettings {
         handleThickness * 0.25
     }
     var barThickness: CGFloat {
-        3
+        0.015 * chartSize
     }
     var labelFontSize: CGFloat {
         0.06 * chartSize
@@ -73,6 +73,12 @@ struct TimeChartGeometrySettings {
     }
     var chartHeadPrimaryHaloSize: CGFloat {
         3 * chartHeadPrimarySize
+    }
+    var indicatorThickness: CGFloat {
+        max(1, 0.015 * chartSize)
+    }
+    var indicatorWidth: CGFloat {
+        sliderHandleWidth * 0.75
     }
 
     var yAxis: AxisPositionCalculations<CGFloat> {

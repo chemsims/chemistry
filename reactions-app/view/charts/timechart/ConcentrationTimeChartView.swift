@@ -96,7 +96,7 @@ struct GeneralTimeChartView: View {
                 }
             }
             .font(.system(size: settings.labelFontSize))
-            .frame(width: settings.yLabelWidth)
+            .frame(width: settings.yLabelWidth) // TODO shouldn't be set when there is no slider
 
             HStack(alignment: .top) {
 
@@ -194,20 +194,22 @@ struct GeneralTimeChartView: View {
         SliderIndicator(
             value1: initialConcentration,
             value2: finalConcentration,
+            showInitialValue: true,
             settings: settings,
             axis: settings.yAxis,
             orientation: .portrait
-        ).frame(width: 25, height: settings.chartSize)
+        ).frame(width: settings.indicatorWidth, height: settings.chartSize)
     }
 
     private var horizontalIndicator: some View {
         SliderIndicator(
             value1: initialTime,
             value2: finalTime,
+            showInitialValue: canSetInitialTime,
             settings: settings,
             axis: settings.xAxis,
             orientation: .landscape
-        ).frame(width: settings.chartSize, height: 25)
+        ).frame(width: settings.chartSize, height: settings.indicatorWidth)
     }
 
     private var concentrationLabel: String {
