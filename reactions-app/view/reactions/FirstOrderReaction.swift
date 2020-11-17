@@ -12,82 +12,15 @@ struct FirstOrderReaction: View {
 
     var body: some View {
         GeometryReader { geometry in
-            makeView(using: LayoutSettings(geometry: geometry))
+            newView(settings: LayoutSettings(geometry: geometry))
         }
     }
 
-    private func makeView(using settings: LayoutSettings) -> some View {
-        HStack(spacing: 0) {
-            VStack {
+    private func beaky(settings: LayoutSettings) -> some View {
+        HStack {
+            Spacer()
+            VStack(alignment: .leading) {
                 Spacer()
-                FilledBeaker(
-                    moleculesA: reaction.moleculesA,
-                    moleculesB: reaction.moleculesB,
-                    moleculeBOpacity: reaction.moleculeBOpacity
-                )
-                .frame(width: settings.beakerWidth, height: settings.beakerHeight)
-                .padding(.leading, 60)
-                .padding(.bottom, 60)
-            }
-
-            VStack(alignment: .trailing) {
-
-                ConcentrationTimeChartView(
-                    initialConcentration: $reaction.initialConcentration,
-                    initialTime: $reaction.initialTime,
-                    finalConcentration: $reaction.finalConcentration,
-                    finalTime: $reaction.finalTime,
-                    settings: TimeChartGeometrySettings(
-                        chartSize: settings.chartsWidth
-                    ),
-                    concentrationA: reaction.concentrationEquationA,
-                    concentrationB: reaction.concentrationEquationB,
-                    currentTime: reaction.currentTime,
-                    headOpacity: reaction.timeChartHeadOpacity,
-                    canSetInitialTime: false
-                )
-
-                ConcentrationBarChart(
-                    initialA: reaction.initialConcentration,
-                    initialTime: reaction.initialTime,
-                    concentrationA: reaction.concentrationEquationA,
-                    concentrationB: reaction.concentrationEquationB,
-                    currentTime: reaction.currentTime,
-                    settings: BarChartGeometrySettings(
-                        chartWidth: settings.chartsWidth,
-                        maxConcentration: ReactionSettings.maxConcentration,
-                        minConcentration: ReactionSettings.minConcentration
-                    )
-                ).frame(width: settings.chartsWidth)
-            }
-            .padding(.leading, -20)
-            .padding(.trailing, 30)
-
-            SingleConcentrationPlot(
-                initialConcentration: reaction.initialConcentration,
-                initialTime: reaction.initialTime,
-                finalConcentration: reaction.finalConcentration,
-                finalTime: reaction.finalTime,
-                settings: TimeChartGeometrySettings(
-                    chartSize: settings.chartsWidth,
-                    minConcentration: ReactionSettings.minLogConcentration,
-                    maxConcentration: ReactionSettings.maxLogConcentration
-                ),
-                concentrationA: reaction.logAEquation,
-                currentTime: reaction.currentTime,
-                headOpacity: reaction.timeChartHeadOpacity,
-                yLabel: "ln(A)"
-            )
-
-            VStack(alignment: .leading, spacing: 10) {
-
-                FirstOrderReactionEquation(
-                    c1: reaction.initialConcentration,
-                    c2: reaction.finalConcentration,
-                    t: reaction.finalTime,
-                    rate: reaction.rate
-                ).frame(height: 200)
-
                 HStack(alignment: .bottom, spacing: 3) {
                     SpeechBubble(lines: flow.statement)
                         .frame(width: settings.bubbleWidth, height: settings.bubbleHeight)
@@ -104,7 +37,106 @@ struct FirstOrderReaction: View {
                         .frame(width: settings.navButtonWidth, height: settings.navButtonWidth)
                 }.frame(width: settings.bubbleWidth - settings.bubbleStemWidth)
             }
+        }
+    }
+
+    private func newView(settings: LayoutSettings) -> some View {
+        ZStack {
+            beaky(settings: settings)
+            makeView(using: settings)
+        }
+    }
+
+    private func beaker(settings: LayoutSettings) -> some View {
+        VStack {
+            Spacer()
+            FilledBeaker(
+                moleculesA: reaction.moleculesA,
+                moleculesB: reaction.moleculesB,
+                moleculeBOpacity: reaction.moleculeBOpacity
+            )
+            .frame(width: settings.beakerWidth, height: settings.beakerHeight)
+            .padding(.leading, 20)
+            .padding(.bottom, 20)
+        }
+    }
+
+    private func middleCharts(settings: LayoutSettings) -> some View {
+        VStack(alignment: .trailing) {
+
+            ConcentrationTimeChartView(
+                initialConcentration: $reaction.initialConcentration,
+                initialTime: $reaction.initialTime,
+                finalConcentration: $reaction.finalConcentration,
+                finalTime: $reaction.finalTime,
+                settings: TimeChartGeometrySettings(
+                    chartSize: settings.chartsWidth
+                ),
+                concentrationA: reaction.concentrationEquationA,
+                concentrationB: reaction.concentrationEquationB,
+                currentTime: reaction.currentTime,
+                headOpacity: reaction.timeChartHeadOpacity,
+                canSetInitialTime: false
+            )
+
+            ConcentrationBarChart(
+                initialA: reaction.initialConcentration,
+                initialTime: reaction.initialTime,
+                concentrationA: reaction.concentrationEquationA,
+                concentrationB: reaction.concentrationEquationB,
+                currentTime: reaction.currentTime,
+                settings: BarChartGeometrySettings(
+                    chartWidth: settings.chartsWidth,
+                    maxConcentration: ReactionSettings.maxConcentration,
+                    minConcentration: ReactionSettings.minConcentration
+                )
+            ).frame(width: settings.chartsWidth)
+            Spacer()
+        }
+        .padding(.leading, -70)
+        .padding(.top)
+    }
+
+    private func logChart(settings: LayoutSettings) -> some View {
+        VStack {
+            SingleConcentrationPlot(
+                initialConcentration: reaction.initialConcentration,
+                initialTime: reaction.initialTime,
+                finalConcentration: reaction.finalConcentration,
+                finalTime: reaction.finalTime,
+                settings: TimeChartGeometrySettings(
+                    chartSize: settings.chartsWidth,
+                    minConcentration: ReactionSettings.minLogConcentration,
+                    maxConcentration: ReactionSettings.maxLogConcentration
+                ),
+                concentrationA: reaction.logAEquation,
+                currentTime: reaction.currentTime,
+                headOpacity: reaction.timeChartHeadOpacity,
+                yLabel: "ln(A)"
+            )
+            Spacer()
+        }.padding(.top)
+    }
+
+    private func makeView(using settings: LayoutSettings) -> some View {
+        HStack(spacing: 0) {
+            beaker(settings: settings)
+            middleCharts(settings: settings)
+            logChart(settings: settings)
+            equationView(settings: settings)
         }.frame(width: settings.width, height: settings.height)
+    }
+
+    private func equationView(settings: LayoutSettings) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            FirstOrderReactionEquation(
+                c1: reaction.initialConcentration,
+                c2: reaction.finalConcentration,
+                t: reaction.finalTime,
+                rate: reaction.rate
+            ).frame(height: settings.height - settings.bubbleHeight - settings.navButtonWidth)
+            Spacer()
+        }
     }
 }
 
