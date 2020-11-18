@@ -11,7 +11,7 @@ struct DefaultPlaceholder: View {
     var body: some View {
         EquationPlaceholderView()
             .padding(settings.boxPadding)
-            .frame(width: settings.boxSize, height: settings.boxSize)
+            .frame(width: settings.boxWidth, height: settings.boxWidth)
     }
 }
 

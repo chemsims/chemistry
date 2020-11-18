@@ -115,7 +115,6 @@ struct EquationGeometrySettings {
 
     var width: CGFloat {
         return maxWidth
-//        min(7 * maxHeight, maxWidth)
     }
 
     var rateWidth: CGFloat {
@@ -127,21 +126,20 @@ struct EquationGeometrySettings {
 
     var fractionBoxHeight: CGFloat {
         let maxBoxHeight = (maxHeight - 1) / 2
-        return min(boxSize * 0.75, maxBoxHeight)
+        return min(boxWidth * 0.75, maxBoxHeight)
     }
 
-
-    var boxSize: CGFloat {
+    var boxWidth: CGFloat {
         width * 0.12
     }
     var boxHeight: CGFloat {
-        boxSize * 0.75
+        boxWidth * 0.75
     }
     var negativeWidth: CGFloat {
         equalsWidth
     }
     var boxPadding: CGFloat {
-        boxSize * 0.3
+        boxWidth * 0.3
     }
     var fraction1DividerWidth: CGFloat {
         width * 0.06
@@ -163,11 +161,11 @@ struct EquationGeometrySettings {
     }
 
     var halfTimeHeight: CGFloat {
-        min(boxSize * 0.8, maxHeight)
+        min(boxWidth * 0.8, maxHeight)
     }
 
     var halfTimeWidth: CGFloat {
-        boxSize
+        boxWidth
     }
 }
 
@@ -207,7 +205,7 @@ fileprivate struct GeneralZeroOrderReactionEquationView: View {
             Text("=")
                 .frame(width: settings.equalsWidth)
             termOrBox(rate, settings: settings)
-                .frame(minWidth: settings.boxSize)
+                .frame(minWidth: settings.boxWidth)
                 .foregroundColor(colorForTerm(rate))
 
             Text("=")
@@ -232,7 +230,7 @@ fileprivate struct GeneralZeroOrderReactionEquationView: View {
             VStack(spacing: 0) {
                 termOrBox(deltaC, settings: settings)
                     .equationBox(
-                        width: settings.boxSize,
+                        width: settings.boxWidth,
                         height: hasPlaceholders ? settings.fractionBoxHeight : nil
                     )
                     .foregroundColor(colorForTerm(deltaC))
@@ -242,7 +240,7 @@ fileprivate struct GeneralZeroOrderReactionEquationView: View {
 
                 termOrBox(deltaT, settings: settings)
                     .equationBox(
-                        width: settings.boxSize,
+                        width: settings.boxWidth,
                         height: hasPlaceholders ? settings.fractionBoxHeight : nil
                     )
                     .foregroundColor(colorForTerm(deltaC))
@@ -272,7 +270,7 @@ fileprivate struct GeneralZeroOrderReactionEquationView: View {
 
             termOrBox(term1, settings: settings)
                 .equationBox(
-                    width: settings.boxSize,
+                    width: settings.boxWidth,
                     height: hasPlaceholders ? settings.fractionBoxHeight : nil
                 )
                 .foregroundColor(colorForTerm(term1))
@@ -283,7 +281,7 @@ fileprivate struct GeneralZeroOrderReactionEquationView: View {
 
             Text(term2)
                 .equationBox(
-                    width: settings.boxSize,
+                    width: settings.boxWidth,
                     height: hasPlaceholders ? settings.fractionBoxHeight : nil
                 ).foregroundColor(emphasisColor)
 
