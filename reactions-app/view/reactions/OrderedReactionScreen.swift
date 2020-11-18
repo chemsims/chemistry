@@ -37,11 +37,11 @@ struct OrderedReactionScreen<Content: View>: View {
     }
 
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
-        HStack {
+        HStack(spacing: 0) {
             Spacer()
             VStack(alignment: .leading, spacing: settings.beakyVSpacing) {
                 Spacer()
-                HStack(alignment: .bottom, spacing: 3) {
+                HStack(alignment: .bottom, spacing: 0) {
                     SpeechBubble(lines: flow.statement)
                         .frame(width: settings.bubbleWidth, height: settings.bubbleHeight)
                         .font(.system(size: settings.bubbleFontSize))

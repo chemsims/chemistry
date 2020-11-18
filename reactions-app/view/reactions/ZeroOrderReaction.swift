@@ -20,23 +20,22 @@ struct ZeroOrderReaction: View {
 
     var body: some View {
         GeometryReader { geometry in
-            body2(
-                settings:
-                    OrderedReactionLayoutSettings(geometry: geometry,
-                              horizontalSize: horizontalSizeClass,
-                              verticalSize: verticalSizeClass
-                    )
+            makeView(
+                settings: OrderedReactionLayoutSettings(
+                    geometry: geometry,
+                    horizontalSize: horizontalSizeClass,
+                    verticalSize: verticalSizeClass
+                )
             )
         }
     }
 
-    func body2(settings: OrderedReactionLayoutSettings) -> some View {
+    func makeView(settings: OrderedReactionLayoutSettings) -> some View {
         OrderedReactionScreen(
             reaction: reactionModel,
             flow: beakyModel,
             settings: settings,
-            canSetInitialTime: true
-        ) {
+            canSetInitialTime: true) {
             equationView(settings: settings)
         }
     }
@@ -53,12 +52,11 @@ struct ZeroOrderReaction: View {
                 c2: reactionModel.deltaC,
                 t2: reactionModel.finalTime,
                 halfTime: reactionModel.halfTime,
-                maxWidth: settings.width - settings.beakerWidth - settings.chartSize,
+                maxWidth: settings.width - settings.beakyBoxTotalWidth,
                 maxHeight: settings.height - settings.beakyBoxTotalHeight
             )
             .padding(.leading, 3)
             .padding(.top, 3)
-            .border(Color.black)
 
             Spacer()
         }
