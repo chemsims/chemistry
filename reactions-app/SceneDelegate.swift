@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         let model = FirstOderViewModel()
         let model2 = FirstOrderUserFlowViewModel(reactionViewModel: model)
-        let contentView = ContentView()// FirstOrderReaction(reaction: model, flow: model2)
+        let contentView = FirstOrderReaction(reaction: model, flow: model2)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

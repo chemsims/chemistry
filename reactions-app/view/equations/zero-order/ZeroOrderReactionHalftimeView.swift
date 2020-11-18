@@ -68,9 +68,11 @@ struct GeneralZeroOrderReactionHalftimeView: View {
         HStack {
             if (showFilled) {
                 SubscriptView(
-                    settings: settings,
                     main: "t",
-                    subscriptComponent: "1/2"
+                    subscriptComponent: "1/2",
+                    mainFontSize: settings.subscriptFontSize,
+                    subscriptFontSize: settings.subscriptFontSize,
+                    subscriptBaselineOffset: settings.subscriptBaselineOffset
                 ).equationBox(
                     width: settings.halfTimeWidth,
                     height: settings.halfTimeHeight
@@ -98,9 +100,11 @@ struct GeneralZeroOrderReactionHalftimeView: View {
         HStack(spacing: 1) {
             Text("[")
             SubscriptView(
-                settings: settings,
                 main: "A",
-                subscriptComponent: "0"
+                subscriptComponent: "0",
+                mainFontSize: settings.subscriptFontSize,
+                subscriptFontSize: settings.subscriptFontSize,
+                subscriptBaselineOffset: settings.subscriptBaselineOffset
             )
             Text("]")
         }.equationBox(
@@ -127,7 +131,7 @@ struct GeneralZeroOrderReactionHalftimeView: View {
             } else {
                 if (rate != nil) {
                     Text("x")
-                        .padding(.horizontal, 4)
+                        .frame(width: settings.equalsWidth)
                 }
                 termOrBox(rate, settings: settings)
                     .foregroundColor(rate == nil ? .black : .orangeAccent)

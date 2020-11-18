@@ -6,11 +6,18 @@
 import SwiftUI
 
 struct FirstOrderHalftimeEquationFilled: View {
+
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
     var body: some View {
         GeneralFirstOrderHalftimeEquation(
+            showHalfTimeFilled: true,
             halfTime: "t1/2",
             ln2: "ln(2)",
-            rate: "k"
+            rate: "k",
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
         )
     }
 }
@@ -19,11 +26,17 @@ struct FirstOrderHalftimeEquationBlank: View {
     let halfTime: CGFloat?
     let rate: CGFloat?
 
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
     var body: some View {
         GeneralFirstOrderHalftimeEquation(
+            showHalfTimeFilled: false,
             halfTime: halfTime?.str(decimals: 2),
             ln2: "0.69",
-            rate: rate?.str(decimals: 2)
+            rate: rate?.str(decimals: 2),
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
         )
     }
 }
@@ -31,21 +44,39 @@ struct FirstOrderHalftimeEquationBlank: View {
 
 struct GeneralFirstOrderHalftimeEquation: View {
 
+    let showHalfTimeFilled: Bool
     let halfTime: String?
     let ln2: String
     let rate: String?
 
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
     var body: some View {
-        GeometryReader { geometry in
-            makeView(settings: FirstOrderEquationSettings(geometry: geometry))
-        }
+        makeView(
+            settings: FirstOrderEquationSettings(
+                maxWidth: maxWidth,
+                maxHeight: maxHeight
+            )
+        )
     }
 
     private func makeView(settings: FirstOrderEquationSettings) -> some View {
         HStack(spacing: 0) {
-            settings
-                .termOrBox(halfTime)
-                .frame(width: settings.rateSize, height: settings.rateSize)
+            if (showHalfTimeFilled) {
+                SubscriptView(
+                    main: "t",
+                    subscriptComponent: "1/2",
+                    mainFontSize: settings.fontSize,
+                    subscriptFontSize: settings.subscriptFontSize,
+                    subscriptBaselineOffset: settings.subscriptBaselineOffset
+                )
+            } else {
+                settings
+                    .termOrBox(halfTime)
+                    .frame(width: settings.rateSize, height: settings.rateSize)
+            }
+
             Text("=")
                 .frame(width: settings.equalsWidth)
             Text(ln2)
@@ -58,11 +89,5 @@ struct GeneralFirstOrderHalftimeEquation: View {
         .lineLimit(1)
         .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.01)
-    }
-}
-
-struct FirstOrderHalftimeEquation_Previews: PreviewProvider {
-    static var previews: some View {
-        FirstOrderHalftimeEquationFilled()
     }
 }

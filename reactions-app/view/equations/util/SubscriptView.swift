@@ -7,18 +7,20 @@ import SwiftUI
 
 struct SubscriptView: View {
 
-    let settings: ZeroOrderEquationGeometry
     let main: String
     let subscriptComponent: String
+    let mainFontSize: CGFloat
+    let subscriptFontSize: CGFloat
+    let subscriptBaselineOffset: CGFloat
 
     var body: some View {
         HStack(spacing: 0) {
             Text(main)
-                .font(.system(size: settings.fontSize))
+                .font(.system(size: mainFontSize))
 
             Text(subscriptComponent)
-                .font(.system(size: settings.subscriptFontSize))
-                .offset(y: -settings.subscriptBaselineOffset)
+                .font(.system(size: subscriptFontSize))
+                .offset(y: -subscriptBaselineOffset)
         }
     }
 }

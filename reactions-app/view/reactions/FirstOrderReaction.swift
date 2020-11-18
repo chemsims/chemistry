@@ -36,7 +36,6 @@ struct FirstOrderReaction: View {
                     .padding(.top, settings.chartsTopPadding)
 
                 equationView(settings: settings)
-                    .frame(maxWidth: equationWidth(settings: settings))
                     .padding(.leading, equationLeadingPadding)
                     .padding(.top, equationLeadingPadding)
             }
@@ -71,10 +70,11 @@ struct FirstOrderReaction: View {
                 c2: reaction.finalConcentration,
                 t: reaction.finalTime,
                 rate: reaction.rate,
-                halfTime: reaction.halfTime
-            )
+                halfTime: reaction.halfTime,
+                maxWidth: equationWidth(settings: settings),
+                maxHeight: settings.height - settings.beakyBoxTotalHeight
+            )//.frame(width: equationWidth(settings: settings)).border(Color.red)
             Spacer()
-                .frame(height: settings.beakyBoxTotalHeight)
         }
     }
 
@@ -82,7 +82,7 @@ struct FirstOrderReaction: View {
         if let h = settings.horizontalSize, h == .regular {
             return 0.2 * settings.width
         }
-        return 0.23 * settings.width
+        return 0.26 * settings.width
     }
 
     var equationLeadingPadding: CGFloat {

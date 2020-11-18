@@ -6,10 +6,11 @@
 import SwiftUI
 
 struct FirstOrderEquationSettings {
-    let geometry: GeometryProxy
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
 
     var width: CGFloat {
-        min(2.4 * geometry.size.height, geometry.size.width)
+        maxWidth
     }
 
     var rateSize: CGFloat {
@@ -25,7 +26,15 @@ struct FirstOrderEquationSettings {
     }
 
     var fontSize: CGFloat {
-        0.11 * width
+        0.09 * width
+    }
+
+    var subscriptFontSize: CGFloat {
+        fontSize * 0.7
+    }
+
+    var subscriptBaselineOffset: CGFloat {
+        fontSize * -0.4
     }
 
     var hStackSpacing: CGFloat {
@@ -43,6 +52,9 @@ struct FirstOrderEquationSettings {
     var rateDividerWidth:CGFloat {
         0.6 * width
     }
+    var boxSize: CGFloat {
+        0.15 * width
+    }
 
     func termOrBox(_ t: String?) -> some View {
         if (t != nil) {
@@ -52,7 +64,8 @@ struct FirstOrderEquationSettings {
         }
         return AnyView(
             EquationPlaceholderView()
-                .padding(0.1 * term1Width)
+                .padding(0.1 * boxSize)
+                .frame(width: boxSize, height: boxSize)
         )
     }
 }

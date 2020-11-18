@@ -13,24 +13,50 @@ struct FirstOrderReactionEquation: View {
     let rate: CGFloat?
     let halfTime: CGFloat?
 
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            FirstOrderReactionRateFilled()
-            FirstOrderReactionRateBlank(c1: c1, c2: c2, t: t, rate: rate)
-            FirstOrderHalftimeEquationFilled()
-            FirstOrderHalftimeEquationBlank(halfTime: halfTime, rate: rate)
+            FirstOrderReactionRateFilled(
+                maxWidth: maxWidth,
+                maxHeight: maxHeight
+            )
+            FirstOrderReactionRateBlank(
+                c1: c1,
+                c2: c2,
+                t: t,
+                rate: rate,
+                maxWidth: maxWidth,
+                maxHeight: maxHeight
+            )
+            FirstOrderHalftimeEquationFilled(
+                maxWidth: maxWidth,
+                maxHeight: maxHeight
+            )
+            FirstOrderHalftimeEquationBlank(
+                halfTime: halfTime,
+                rate: rate,
+                maxWidth: maxWidth,
+                maxHeight: maxHeight
+            )
         }
     }
 }
 
 fileprivate struct FirstOrderReactionRateFilled: View {
 
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
     var body: some View {
         GeneralFirstOrderReactionRate(
             rateTerm: "k",
-            c1: "ln[A0]",
-            c2: "ln[At]",
-            t: "t"
+            c1: "ln[c1]",
+            c2: "ln[c2]",
+            t: "t",
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
         )
     }
 }
@@ -42,13 +68,29 @@ fileprivate struct FirstOrderReactionRateBlank: View {
     let t: CGFloat?
     let rate: CGFloat?
 
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
     var body: some View {
         GeneralFirstOrderReactionRate(
             rateTerm: rate?.str(decimals: 2),
-            c1: "(\(c1.str(decimals: 2)))",
-            c2: c2.map { s in "(\(s.str(decimals: 2)))"},
-            t: t?.str(decimals: 2)
+            c1: lnC1,
+            c2: lnC2,
+            t: t?.str(decimals: 2),
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
         )
+    }
+
+    private var lnC1: String {
+        "(\(log(c1).str(decimals: 2)))"
+    }
+
+    private var lnC2: String? {
+        if let c2 = c2 {
+            return "(\(log(c2).str(decimals: 2)))"
+        }
+        return nil
     }
 }
 
@@ -59,12 +101,16 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
     let c2: String?
     let t: String?
 
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
     var body: some View {
-        GeometryReader { geometry in
-            makeView(
-                settings: FirstOrderEquationSettings(geometry: geometry)
+        makeView(
+            settings: FirstOrderEquationSettings(
+                maxWidth: maxWidth,
+                maxHeight: maxHeight
             )
-        }
+        )
     }
 
     private func makeView(settings: FirstOrderEquationSettings) -> some View {
@@ -80,7 +126,7 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
         }
         .lineLimit(1)
         .font(.system(size: settings.fontSize))
-        .minimumScaleFactor(0.01)
+        .minimumScaleFactor(0.2)
     }
 
     private func fraction(settings: FirstOrderEquationSettings) -> some View {
@@ -97,37 +143,6 @@ fileprivate struct GeneralFirstOrderReactionRate: View {
                 .frame(width: settings.rateDividerWidth, height: 1)
             settings.termOrBox(t)
                 .frame(width: settings.term1Width, height: settings.term1Height)
-        }
-    }
-}
-
-struct FirstOrderReactionRate_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            FirstOrderReactionRateBlank(c1: 0.69, c2: nil, t: nil, rate: nil)
-                .border(Color.red)
-                .frame(width: 130, height: 100)
-                .scaleEffect(x: 0.5, y: 0.5)
-
-            FirstOrderReactionRateBlank(c1: -0.69, c2: nil, t: nil, rate: nil)
-                .border(Color.red)
-                .frame(width: 130, height: 100)
-
-            FirstOrderReactionRateBlank(c1: -0.69, c2: -1.69, t: 17, rate: 0.06)
-                .border(Color.red)
-                .frame(width: 130, height: 100)
-
-            FirstOrderReactionRateFilled()
-                .border(Color.blue)
-                .frame(width: 130, height: 100)
-
-            FirstOrderReactionRateFilled()
-                .border(Color.blue)
-                .frame(width: 200, height: 150)
-
-            FirstOrderReactionRateFilled()
-                .border(Color.blue)
-                .frame(width: 300)
         }
     }
 }
