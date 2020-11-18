@@ -9,6 +9,14 @@ class ReactionNavigationViewModel: ObservableObject {
 
     @Published var statement: [SpeechBubbleLine] = []
 
+    // todo - use weak/unowned?
+    var nextScreen: (() -> Void)?
+    var prevScreen: (() -> Void)?
+
+    deinit {
+        print("Ran de-init")
+    }
+
     let reactionViewModel: ZeroOrderReactionViewModel
 
     private var nextTimer: Timer?
@@ -36,6 +44,8 @@ class ReactionNavigationViewModel: ObservableObject {
             state.apply(on: reactionViewModel)
             currentIndex = nextIndex
             scheduleNextState(for: state)
+        } else if let nextScreen = nextScreen {
+            nextScreen()
         }
     }
 
@@ -47,6 +57,8 @@ class ReactionNavigationViewModel: ObservableObject {
             previousState.reapply(on: reactionViewModel)
             currentIndex = previousIndex
             scheduleNextState(for: previousState)
+        } else if let prevScreen = prevScreen {
+            prevScreen()
         }
     }
 
