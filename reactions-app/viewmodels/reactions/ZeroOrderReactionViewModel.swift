@@ -50,7 +50,6 @@ class ZeroOrderReactionViewModel: ObservableObject {
         if let finalTime = finalTime, finalConcentration != nil {
             let finalB = concentrationEquationB.getConcentration(at: finalTime)
             let desiredMolecues = finalB * CGFloat(MoleculeGridSettings.cols * MoleculeGridSettings.rows)
-            print("B is \(desiredMolecues)")
             if (desiredMolecues > 0) {
                 let prefix = moleculesA.prefix(Int(desiredMolecues))
                 return Array(prefix)

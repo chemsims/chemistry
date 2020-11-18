@@ -39,6 +39,8 @@
 		571B3C7C256560E40075358B /* ReactionStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C7B256560E40075358B /* ReactionStatements.swift */; };
 		571B3C80256560F90075358B /* SecondOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C7F256560F90075358B /* SecondOrderStatements.swift */; };
 		571B3C842565638F0075358B /* OrderedReactionLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C832565638F0075358B /* OrderedReactionLayoutSettings.swift */; };
+		571B3C89256566910075358B /* SecondOrderEquationRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C88256566910075358B /* SecondOrderEquationRate.swift */; };
+		571B3C8D25656C1C0075358B /* SecondOrderHalfTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C8C25656C1C0075358B /* SecondOrderHalfTimeView.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
 		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
@@ -122,6 +124,8 @@
 		571B3C7B256560E40075358B /* ReactionStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionStatements.swift; sourceTree = "<group>"; };
 		571B3C7F256560F90075358B /* SecondOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderStatements.swift; sourceTree = "<group>"; };
 		571B3C832565638F0075358B /* OrderedReactionLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedReactionLayoutSettings.swift; sourceTree = "<group>"; };
+		571B3C88256566910075358B /* SecondOrderEquationRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderEquationRate.swift; sourceTree = "<group>"; };
+		571B3C8C25656C1C0075358B /* SecondOrderHalfTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderHalfTimeView.swift; sourceTree = "<group>"; };
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -265,6 +269,15 @@
 			path = flow;
 			sourceTree = "<group>";
 		};
+		571B3C87256566750075358B /* second-order */ = {
+			isa = PBXGroup;
+			children = (
+				571B3C88256566910075358B /* SecondOrderEquationRate.swift */,
+				571B3C8C25656C1C0075358B /* SecondOrderHalfTimeView.swift */,
+			);
+			path = "second-order";
+			sourceTree = "<group>";
+		};
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +416,7 @@
 		572CB947255C411F0071C600 /* equations */ = {
 			isa = PBXGroup;
 			children = (
+				571B3C87256566750075358B /* second-order */,
 				571B3C322563BBA30075358B /* first-order */,
 				57FDA133255D5ED700CB8804 /* util */,
 				57FDA12C255D5E7500CB8804 /* zero-order */,
@@ -576,6 +590,7 @@
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
 				57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
+				571B3C89256566910075358B /* SecondOrderEquationRate.swift in Sources */,
 				571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */,
 				57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */,
 				571D6A7C255AC75C00F4E635 /* BeakerShape.swift in Sources */,
@@ -601,6 +616,7 @@
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,
 				57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */,
+				571B3C8D25656C1C0075358B /* SecondOrderHalfTimeView.swift in Sources */,
 				57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */,
 				572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,

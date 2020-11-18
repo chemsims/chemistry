@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct FirstOrderReaction: View {
+struct FirstOrderReactionView: View {
 
     @ObservedObject var reaction: FirstOrderReactionViewModel
     @ObservedObject var flow: FirstOrderReactionNavigationViewModel
@@ -64,7 +64,7 @@ struct FirstOrderReaction: View {
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 0) {
             FirstOrderReactionEquation(
                 c1: reaction.initialConcentration,
                 c2: reaction.finalConcentration,
@@ -73,7 +73,7 @@ struct FirstOrderReaction: View {
                 halfTime: reaction.halfTime,
                 maxWidth: equationWidth(settings: settings),
                 maxHeight: settings.height - settings.beakyBoxTotalHeight
-            )//.frame(width: equationWidth(settings: settings)).border(Color.red)
+            )
             Spacer()
         }
     }
@@ -112,7 +112,7 @@ struct FirstOrderReaction_Previews: PreviewProvider {
         @ObservedObject var foo = FirstOrderReactionNavigationViewModel(reactionViewModel: FirstOrderReactionViewModel())
 
         var body: some View {
-            FirstOrderReaction(
+            FirstOrderReactionView(
                 reaction: foo.reactionViewModel as! FirstOrderReactionViewModel,
                 flow: foo
             )

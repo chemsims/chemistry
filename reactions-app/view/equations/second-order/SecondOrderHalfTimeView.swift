@@ -5,50 +5,50 @@
 
 import SwiftUI
 
-struct FirstOrderHalftimeEquationFilled: View {
+struct SecondOrderHalfTimeFilled: View {
 
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
     var body: some View {
-        GeneralFirstOrderHalftimeEquation(
-            showHalfTimeFilled: true,
-            halfTime: "t1/2",
-            ln2: "ln(2)",
-            rate: "k",
+        GeneralSecondOrderHalfTimeView(
+            showFilled: true,
+            halfTime: nil,
+            rate: nil,
+            c1: "a0",
             maxWidth: maxWidth,
             maxHeight: maxHeight
         )
     }
 }
 
-struct FirstOrderHalftimeEquationBlank: View {
+struct SecondOrderHalfTimeBlank: View {
+
     let halfTime: CGFloat?
     let rate: CGFloat?
-
+    let c1: CGFloat
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
     var body: some View {
-        GeneralFirstOrderHalftimeEquation(
-            showHalfTimeFilled: false,
+        GeneralSecondOrderHalfTimeView(
+            showFilled: false,
             halfTime: halfTime?.str(decimals: 2),
-            ln2: "0.69",
             rate: rate?.str(decimals: 2),
+            c1: c1.str(decimals: 2),
             maxWidth: maxWidth,
             maxHeight: maxHeight
         )
     }
+
 }
 
+struct GeneralSecondOrderHalfTimeView: View {
 
-struct GeneralFirstOrderHalftimeEquation: View {
-
-    let showHalfTimeFilled: Bool
+    let showFilled: Bool
     let halfTime: String?
-    let ln2: String
     let rate: String?
-
+    let c1: String
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
@@ -63,26 +63,41 @@ struct GeneralFirstOrderHalftimeEquation: View {
 
     private func makeView(settings: FirstOrderEquationSettings) -> some View {
         HStack(spacing: 0) {
-            if (showHalfTimeFilled) {
+            if (showFilled) {
                 Text("t1/2")
                     .frame(width: settings.rateSize)
             } else {
-                settings
-                    .termOrBox(halfTime)
+                settings.termOrBox(rate)
                     .frame(width: settings.rateSize, height: settings.rateSize)
             }
 
             Text("=")
                 .frame(width: settings.equalsWidth)
-            Text(ln2)
-                .frame(width: settings.term1Width)
-            Text("/")
+
+            Text("1")
                 .frame(width: settings.equalsWidth)
-            settings.termOrBox(rate)
-                .frame(width: settings.rateSize, height: settings.rateSize)
+
+            Text("/")
+                .frame(width: settings.negativeWidth)
+
+            if (showFilled) {
+                    Text("(k[A0])")
+                        .frame(width: 1.2 * settings.boxSize)
+            } else {
+                settings
+                    .termOrBox(rate)
+                    .frame(width: settings.boxSize)
+
+                Text("(")
+                settings
+                    .termOrBox(c1)
+                    .frame(width: settings.boxSize)
+                Text(")")
+            }
         }
-        .lineLimit(1)
         .font(.system(size: settings.fontSize))
-        .minimumScaleFactor(0.01)
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
     }
 }
+

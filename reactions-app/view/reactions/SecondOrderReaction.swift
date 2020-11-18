@@ -33,6 +33,9 @@ struct SecondOrderReactionView: View {
         ) {
             HStack(spacing: 0) {
                 invChart(settings: settings)
+                equationView(settings: settings)
+                    .padding(.leading, 5)
+                    .padding(.top, 5)
             }
         }
     }
@@ -57,6 +60,28 @@ struct SecondOrderReactionView: View {
             .padding(.top, settings.chartsTopPadding)
             Spacer()
         }
+    }
+
+    private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
+        VStack(spacing: 0) {
+            SecondOrderEquationView(
+                c1: reaction.initialConcentration,
+                c2: reaction.finalConcentration,
+                rate: reaction.rate,
+                t: reaction.finalTime,
+                halfTime: reaction.halfTime,
+                maxWidth: equationWidth(settings: settings),
+                maxHeight: settings.height - settings.beakyBoxTotalHeight
+            )
+            Spacer()
+        }
+    }
+
+    private func equationWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        if let h = settings.horizontalSize, h == .regular {
+            return 0.2 * settings.width
+        }
+        return 0.26 * settings.width
     }
 
 }
