@@ -6,40 +6,45 @@
 import SwiftUI
 
 struct ZeroOrderReactionHalftimeView: View {
-    let scale: CGFloat
+
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
 
     var body: some View {
         GeneralZeroOrderReactionHalftimeView(
-            settings: EquationGeometrySettings(scale: scale),
             showFilled: true,
             initialConcentration: nil,
             rate: nil,
-            halfTime: nil
+            halfTime: nil,
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
         )
     }
 }
 
 struct ZeroOrderReactionHalftimeBlank: View {
-    let scale: CGFloat
+    let scale: CGFloat = 1
 
     let initialConcentration: CGFloat?
     let rate: CGFloat?
     let halfTime: CGFloat?
 
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
     var body: some View {
         GeneralZeroOrderReactionHalftimeView(
-            settings: EquationGeometrySettings(scale: scale),
             showFilled: false,
             initialConcentration: initialConcentration?.str(decimals: 2),
             rate: rate?.str(decimals: 2),
-            halfTime: halfTime?.str(decimals: 2)
+            halfTime: halfTime?.str(decimals: 2),
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
         )
     }
 }
 
 struct GeneralZeroOrderReactionHalftimeView: View {
-
-    let settings: EquationGeometrySettings
 
     let showFilled: Bool
 
@@ -47,31 +52,49 @@ struct GeneralZeroOrderReactionHalftimeView: View {
     let rate: String?
     let halfTime: String?
 
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
     var body: some View {
+        makeView(
+            settings: EquationGeometrySettings(
+                maxWidth: maxWidth,
+                maxHeight: maxHeight
+            )
+        )
+    }
+
+    private func makeView(settings: EquationGeometrySettings) -> some View {
         HStack {
             if (showFilled) {
                 SubscriptView(
                     settings: settings,
                     main: "t",
                     subscriptComponent: "1/2"
-                ).frame(width: settings.boxSize, height: settings.boxSize)
+                ).equationBox(
+                    width: settings.halfTimeWidth,
+                    height: settings.halfTimeHeight
+                )
             } else {
                 termOrBox(halfTime, settings: settings)
-                    .frame(width: settings.boxSize, height: settings.boxSize)
+                    .equationBox(
+                        width: settings.halfTimeWidth,
+                        height: settings.halfTimeHeight
+                    )
             }
 
             Text("=")
             if (showFilled) {
-                filledInitialConcentrationView
+                filledInitialConcentrationView(settings: settings)
             } else {
-                initialConcentrationView
+                initialConcentrationView(settings: settings)
             }
             Text("/")
-            rateView
+            rateView(settings: settings)
         }.font(.system(size: settings.fontSize))
     }
 
-    private var filledInitialConcentrationView: some View {
+    private func filledInitialConcentrationView(settings: EquationGeometrySettings) -> some View {
         HStack(spacing: 1) {
             Text("[")
             SubscriptView(
@@ -80,16 +103,22 @@ struct GeneralZeroOrderReactionHalftimeView: View {
                 subscriptComponent: "0"
             )
             Text("]")
-        }.frame(width: settings.boxSize, height: settings.boxSize)
+        }.equationBox(
+            width: settings.halfTimeWidth,
+            height: settings.halfTimeHeight
+        )
     }
 
-    private var initialConcentrationView: some View {
+    private func initialConcentrationView(settings: EquationGeometrySettings)-> some View {
         termOrBox(initialConcentration, settings: settings)
-            .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
             .foregroundColor(rate == nil ? .black : .orangeAccent)
+            .equationBox(
+                width: settings.halfTimeWidth,
+                height: settings.halfTimeHeight
+            )
     }
 
-    private var rateView: some View {
+    private func rateView(settings: EquationGeometrySettings) -> some View {
         HStack(spacing: 2) {
             Text("(")
             Text("2")
@@ -101,37 +130,15 @@ struct GeneralZeroOrderReactionHalftimeView: View {
                         .padding(.horizontal, 4)
                 }
                 termOrBox(rate, settings: settings)
-                    .frame(minWidth: settings.boxSize, minHeight: settings.boxSize)
                     .foregroundColor(rate == nil ? .black : .orangeAccent)
+                    .equationBox(
+                        width: settings.halfTimeWidth,
+                        height: settings.halfTimeHeight
+                    )
             }
             Text(")")
         }
     }
 }
 
-struct ZeroOrderReactionHalftimeView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            ZeroOrderReactionHalftimeView(scale: 1)
-            ZeroOrderReactionHalftimeBlank(
-                scale: 1,
-                initialConcentration: nil,
-                rate: nil,
-                halfTime: nil
-            )
-            ZeroOrderReactionHalftimeBlank(
-                scale: 0.8,
-                initialConcentration: 0.2,
-                rate: nil,
-                halfTime: nil
-            )
-            ZeroOrderReactionHalftimeBlank(
-                scale: 0.7,
-                initialConcentration: 0.2,
-                rate: 0.03,
-                halfTime: 8.33
-            )
-        }
-    }
-}
 

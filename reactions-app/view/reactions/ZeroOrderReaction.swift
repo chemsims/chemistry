@@ -34,40 +34,33 @@ struct ZeroOrderReaction: View {
         OrderedReactionScreen(
             reaction: reactionModel,
             flow: beakyModel,
-            settings: settings
+            settings: settings,
+            canSetInitialTime: true
         ) {
-            Text("foo")
-//            equationView(settings: settings)
+            equationView(settings: settings)
         }
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
-        VStack(alignment: .leading) {
-            VStack(alignment: .leading, spacing: 3) {
-                ZeroOrderEquationFilled(scale: 1.5)
-                ZeroOrderEquationBlank(
-                    scale: 1.5,
-                    emphasiseFilledTerms: reactionModel.currentTime == nil,
-                    initialConcentration: reactionModel.initialConcentration,
-                    initialTime: reactionModel.initialTime,
-                    rate: reactionModel.rate,
-                    deltaC: reactionModel.deltaC,
-                    deltaT: reactionModel.deltaT,
-                    c2: reactionModel.finalConcentration,
-                    t2: reactionModel.finalTime
-                )
-            }
-            VStack(alignment: .leading, spacing: 1.5) {
-                ZeroOrderReactionHalftimeView(scale: 1.5)
-                ZeroOrderReactionHalftimeBlank(
-                    scale: 2,
-                    initialConcentration: reactionModel.initialConcentration,
-                    rate: reactionModel.rate,
-                    halfTime: reactionModel.halfTime
-                )
-            }
+        VStack(alignment: .leading, spacing: 0) {
+            ZeroOrderReactionEquation(
+                emphasiseFilledTerms: reactionModel.currentTime == nil,
+                initialConcentration: reactionModel.initialConcentration,
+                initialTime: reactionModel.initialTime,
+                rate: reactionModel.initialTime,
+                deltaC: reactionModel.deltaC,
+                deltaT: reactionModel.deltaT,
+                c2: reactionModel.deltaC,
+                t2: reactionModel.finalTime,
+                halfTime: reactionModel.halfTime,
+                maxWidth: settings.width - settings.beakerWidth - settings.chartSize,
+                maxHeight: settings.height - settings.beakyBoxTotalHeight
+            )
+            .padding(.leading, 3)
+            .padding(.top, 3)
+            .border(Color.black)
+
             Spacer()
-                .frame(height: settings.bubbleHeight + settings.navButtonSize)
         }
     }
 }
@@ -80,6 +73,11 @@ struct ZeroOrderReaction_Previews: PreviewProvider {
         ZeroOrderReaction(
             beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ReactionViewModel())
         ).previewLayout(.fixed(width: 568, height: 320))
+
+        // iPhone 11 landscape
+        ZeroOrderReaction(
+            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ReactionViewModel())
+        ).previewLayout(.fixed(width: 812, height: 375))
 
 
         /// iPad mini 4 landscape

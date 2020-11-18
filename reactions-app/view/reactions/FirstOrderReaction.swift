@@ -28,16 +28,17 @@ struct FirstOrderReaction: View {
         OrderedReactionScreen(
             reaction: reaction,
             flow: flow,
-            settings: settings
+            settings: settings,
+            canSetInitialTime: false
         ) {
             HStack(spacing: 0) {
                 logChart(settings: settings)
                     .padding(.top, settings.chartsTopPadding)
 
                 equationView(settings: settings)
-                    .frame(maxWidth: settings.equationWidth)
-                    .padding(.leading, settings.equationLeadingPadding)
-                    .padding(.top, settings.equationLeadingPadding)
+                    .frame(maxWidth: equationWidth(settings: settings))
+                    .padding(.leading, equationLeadingPadding)
+                    .padding(.top, equationLeadingPadding)
             }
         }
     }
@@ -73,8 +74,19 @@ struct FirstOrderReaction: View {
                 halfTime: reaction.halfTime
             )
             Spacer()
-                .frame(height: settings.bubbleHeight + settings.navButtonSize)
+                .frame(height: settings.beakyBoxTotalHeight)
         }
+    }
+
+    private func equationWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        if let h = settings.horizontalSize, h == .regular {
+            return 0.2 * settings.width
+        }
+        return 0.23 * settings.width
+    }
+
+    var equationLeadingPadding: CGFloat {
+        return 5
     }
 
 }
@@ -145,14 +157,11 @@ struct OrderedReactionLayoutSettings {
     var beakerLeadingPadding: CGFloat {
         20
     }
-    var equationWidth: CGFloat {
-        if let h = horizontalSize, h == .regular {
-            return 0.2 * width
-        }
-        return 0.23 * width
+    var beakyBoxTotalHeight: CGFloat {
+        bubbleHeight + navButtonSize + beakyVSpacing
     }
-    var equationLeadingPadding: CGFloat {
-        return 5
+    var beakyVSpacing: CGFloat {
+        return 2
     }
 
     private var hIsRegular: Bool {

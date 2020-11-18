@@ -49,8 +49,4 @@ struct EquationPlaceholderView: View {
     }
 }
 
-struct EquationPlaceholderView_Previews: PreviewProvider {
-    static var previews: some View {
-        DefaultPlaceholder(settings: EquationGeometrySettings(scale: 1))
-    }
-}
+

@@ -23,12 +23,3 @@ struct SubscriptView: View {
     }
 }
 
-struct SubscriptView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubscriptView(
-            settings: EquationGeometrySettings(scale: 1),
-            main: "A",
-            subscriptComponent: "0"
-        )
-    }
-}

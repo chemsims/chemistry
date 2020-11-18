@@ -10,6 +10,7 @@ struct OrderedReactionScreen<Content: View>: View {
     @ObservedObject var reaction: ReactionViewModel
     @ObservedObject var flow: ReactionUserFlowViewModel
     let settings: OrderedReactionLayoutSettings
+    let canSetInitialTime: Bool
     let rhsView: () -> Content
 
 
@@ -38,7 +39,7 @@ struct OrderedReactionScreen<Content: View>: View {
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
         HStack {
             Spacer()
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: settings.beakyVSpacing) {
                 Spacer()
                 HStack(alignment: .bottom, spacing: 3) {
                     SpeechBubble(lines: flow.statement)
@@ -88,7 +89,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 concentrationB: reaction.concentrationEquationB,
                 currentTime: reaction.currentTime,
                 headOpacity: reaction.timeChartHeadOpacity,
-                canSetInitialTime: false
+                canSetInitialTime: canSetInitialTime
             )
 
             ConcentrationBarChart(
