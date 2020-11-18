@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct DefaultPlaceholder: View {
-    let settings: EquationGeometrySettings
+    let settings: ZeroOrderEquationGeometry
 
     var body: some View {
         EquationPlaceholderView()
@@ -15,7 +15,7 @@ struct DefaultPlaceholder: View {
     }
 }
 
-func termOrBox(_ term: String?, settings: EquationGeometrySettings) -> some View {
+func termOrBox(_ term: String?, settings: ZeroOrderEquationGeometry) -> some View {
     if let term = term {
         return AnyView(Text(term))
     }

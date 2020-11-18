@@ -109,65 +109,6 @@ struct ZeroOrderEquationBlank: View {
 }
 
 
-struct EquationGeometrySettings {
-    let maxWidth: CGFloat
-    let maxHeight: CGFloat
-
-    var width: CGFloat {
-        return maxWidth
-    }
-
-    var rateWidth: CGFloat {
-        width * 0.1
-    }
-    var equalsWidth: CGFloat {
-        width * 0.03
-    }
-
-    var fractionBoxHeight: CGFloat {
-        let maxBoxHeight = (maxHeight - 1) / 2
-        return min(boxWidth * 0.75, maxBoxHeight)
-    }
-
-    var boxWidth: CGFloat {
-        width * 0.12
-    }
-    var boxHeight: CGFloat {
-        boxWidth * 0.75
-    }
-    var negativeWidth: CGFloat {
-        equalsWidth
-    }
-    var boxPadding: CGFloat {
-        boxWidth * 0.3
-    }
-    var fraction1DividerWidth: CGFloat {
-        width * 0.06
-    }
-    var fontSize: CGFloat {
-        width * 0.04
-    }
-    var fraction2DividerWidth: CGFloat {
-        width * 0.25
-    }
-    var parenWidth: CGFloat {
-        equalsWidth
-    }
-    var subscriptFontSize: CGFloat {
-        fontSize * 0.6
-    }
-    var subscriptBaselineOffset: CGFloat {
-        fontSize * -0.4
-    }
-
-    var halfTimeHeight: CGFloat {
-        min(boxWidth * 0.8, maxHeight)
-    }
-
-    var halfTimeWidth: CGFloat {
-        boxWidth
-    }
-}
 
 
 fileprivate struct GeneralZeroOrderReactionEquationView: View {
@@ -191,14 +132,14 @@ fileprivate struct GeneralZeroOrderReactionEquationView: View {
 
     var body: some View {
         makeView(
-            settings: EquationGeometrySettings(
+            settings: ZeroOrderEquationGeometry(
                 maxWidth: maxWidth,
                 maxHeight: maxHeight
             )
         )
     }
 
-    private func makeView(settings: EquationGeometrySettings) -> some View {
+    private func makeView(settings: ZeroOrderEquationGeometry) -> some View {
         HStack(spacing: 0) {
             Text("Rate")
                 .frame(width: settings.rateWidth)
@@ -223,7 +164,7 @@ fileprivate struct GeneralZeroOrderReactionEquationView: View {
         .lineLimit(1)
     }
 
-    private func fraction1(settings: EquationGeometrySettings) -> some View {
+    private func fraction1(settings: ZeroOrderEquationGeometry) -> some View {
         HStack(spacing: 0) {
             Text("–")
                 .frame(width: settings.negativeWidth)
@@ -248,7 +189,7 @@ fileprivate struct GeneralZeroOrderReactionEquationView: View {
         }
     }
 
-    private func fraction2(settings: EquationGeometrySettings) -> some View {
+    private func fraction2(settings: ZeroOrderEquationGeometry) -> some View {
         HStack(spacing: 0) {
             Text("–")
                 .frame(width: settings.negativeWidth)
@@ -264,7 +205,7 @@ fileprivate struct GeneralZeroOrderReactionEquationView: View {
     private func fraction2Part(
         term1: String?,
         term2: String,
-        settings: EquationGeometrySettings
+        settings: ZeroOrderEquationGeometry
     ) -> some View {
         HStack(spacing: 1) {
 

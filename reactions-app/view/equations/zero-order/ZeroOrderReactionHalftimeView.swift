@@ -57,14 +57,14 @@ struct GeneralZeroOrderReactionHalftimeView: View {
 
     var body: some View {
         makeView(
-            settings: EquationGeometrySettings(
+            settings: ZeroOrderEquationGeometry(
                 maxWidth: maxWidth,
                 maxHeight: maxHeight
             )
         )
     }
 
-    private func makeView(settings: EquationGeometrySettings) -> some View {
+    private func makeView(settings: ZeroOrderEquationGeometry) -> some View {
         HStack {
             if (showFilled) {
                 SubscriptView(
@@ -80,7 +80,7 @@ struct GeneralZeroOrderReactionHalftimeView: View {
                     .equationBox(
                         width: settings.halfTimeWidth,
                         height: settings.halfTimeHeight
-                    )
+                    ).frame(width: settings.halfTimeWidth)
             }
 
             Text("=")
@@ -94,7 +94,7 @@ struct GeneralZeroOrderReactionHalftimeView: View {
         }.font(.system(size: settings.fontSize))
     }
 
-    private func filledInitialConcentrationView(settings: EquationGeometrySettings) -> some View {
+    private func filledInitialConcentrationView(settings: ZeroOrderEquationGeometry) -> some View {
         HStack(spacing: 1) {
             Text("[")
             SubscriptView(
@@ -109,7 +109,7 @@ struct GeneralZeroOrderReactionHalftimeView: View {
         )
     }
 
-    private func initialConcentrationView(settings: EquationGeometrySettings)-> some View {
+    private func initialConcentrationView(settings: ZeroOrderEquationGeometry)-> some View {
         termOrBox(initialConcentration, settings: settings)
             .foregroundColor(rate == nil ? .black : .orangeAccent)
             .equationBox(
@@ -118,7 +118,7 @@ struct GeneralZeroOrderReactionHalftimeView: View {
             )
     }
 
-    private func rateView(settings: EquationGeometrySettings) -> some View {
+    private func rateView(settings: ZeroOrderEquationGeometry) -> some View {
         HStack(spacing: 2) {
             Text("(")
             Text("2")

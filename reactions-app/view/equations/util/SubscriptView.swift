@@ -7,7 +7,7 @@ import SwiftUI
 
 struct SubscriptView: View {
 
-    let settings: EquationGeometrySettings
+    let settings: ZeroOrderEquationGeometry
     let main: String
     let subscriptComponent: String
 
