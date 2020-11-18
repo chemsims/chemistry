@@ -7,9 +7,9 @@ import SwiftUI
 
 struct OrderedReactionScreen<Content: View>: View {
 
-    @ObservedObject var reaction: FirstOderViewModel
-    @ObservedObject var flow: FirstOrderUserFlowViewModel
-    let settings: NewLayout
+    @ObservedObject var reaction: ReactionViewModel
+    @ObservedObject var flow: ReactionUserFlowViewModel
+    let settings: OrderedReactionLayoutSettings
     let rhsView: () -> Content
 
 
@@ -25,7 +25,7 @@ struct OrderedReactionScreen<Content: View>: View {
         }
     }
 
-    private func makeHView(using settings: NewLayout) -> some View {
+    private func makeHView(using settings: OrderedReactionLayoutSettings) -> some View {
         HStack(spacing: 0) {
             beaker(settings: settings)
             Spacer()
@@ -35,7 +35,7 @@ struct OrderedReactionScreen<Content: View>: View {
         }
     }
 
-    private func beaky(settings: NewLayout) -> some View {
+    private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
         HStack {
             Spacer()
             VStack(alignment: .leading) {
@@ -59,7 +59,7 @@ struct OrderedReactionScreen<Content: View>: View {
         }
     }
 
-    private func beaker(settings: NewLayout) -> some View {
+    private func beaker(settings: OrderedReactionLayoutSettings) -> some View {
         VStack {
             Spacer()
             FilledBeaker(
@@ -73,7 +73,7 @@ struct OrderedReactionScreen<Content: View>: View {
         }
     }
 
-    private func middleCharts(settings: NewLayout) -> some View {
+    private func middleCharts(settings: OrderedReactionLayoutSettings) -> some View {
         VStack(alignment: .trailing, spacing: 0) {
 
             ConcentrationTimeChartView(
@@ -106,40 +106,5 @@ struct OrderedReactionScreen<Content: View>: View {
             Spacer()
         }
         .frame(width: settings.chartSize + settings.midChartsLeftPadding, alignment: .trailing)
-    }
-
-    private func logChart(settings: NewLayout) -> some View {
-        VStack {
-            SingleConcentrationPlot(
-                initialConcentration: reaction.initialConcentration,
-                initialTime: reaction.initialTime,
-                finalConcentration: reaction.finalConcentration,
-                finalTime: reaction.finalTime,
-                settings: TimeChartGeometrySettings(
-                    chartSize: settings.chartSize,
-                    minConcentration: ReactionSettings.minLogConcentration,
-                    maxConcentration: ReactionSettings.maxLogConcentration
-                ),
-                concentrationA: reaction.logAEquation,
-                currentTime: reaction.currentTime,
-                headOpacity: reaction.timeChartHeadOpacity,
-                yLabel: "ln(A)"
-            )
-            Spacer()
-        }
-    }
-
-    private func equationView(settings: NewLayout) -> some View {
-        VStack(spacing: 10) {
-            FirstOrderReactionEquation(
-                c1: reaction.initialConcentration,
-                c2: reaction.finalConcentration,
-                t: reaction.finalTime,
-                rate: reaction.rate,
-                halfTime: reaction.halfTime
-            )
-            Spacer()
-                .frame(height: settings.bubbleHeight + settings.navButtonSize)
-        }
     }
 }

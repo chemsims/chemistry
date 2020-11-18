@@ -15,7 +15,7 @@ struct FirstOrderReaction: View {
     var body: some View {
         GeometryReader { geometry in
             makeBody(
-                settings: NewLayout(
+                settings: OrderedReactionLayoutSettings(
                     geometry: geometry,
                     horizontalSize: horizontalSizeClass,
                     verticalSize: verticalSizeClass
@@ -24,7 +24,7 @@ struct FirstOrderReaction: View {
         }
     }
 
-    private func makeBody(settings: NewLayout) -> some View {
+    private func makeBody(settings: OrderedReactionLayoutSettings) -> some View {
         OrderedReactionScreen(
             reaction: reaction,
             flow: flow,
@@ -42,7 +42,7 @@ struct FirstOrderReaction: View {
         }
     }
 
-    private func logChart(settings: NewLayout) -> some View {
+    private func logChart(settings: OrderedReactionLayoutSettings) -> some View {
         VStack {
             SingleConcentrationPlot(
                 initialConcentration: reaction.initialConcentration,
@@ -63,7 +63,7 @@ struct FirstOrderReaction: View {
         }
     }
 
-    private func equationView(settings: NewLayout) -> some View {
+    private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
         VStack(spacing: 10) {
             FirstOrderReactionEquation(
                 c1: reaction.initialConcentration,
@@ -79,7 +79,7 @@ struct FirstOrderReaction: View {
 
 }
 
-struct NewLayout {
+struct OrderedReactionLayoutSettings {
     let geometry: GeometryProxy
     let horizontalSize: UserInterfaceSizeClass?
     let verticalSize: UserInterfaceSizeClass?
