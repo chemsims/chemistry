@@ -171,7 +171,7 @@ struct ChartPlotWithHead: View {
             initialTime: initialTime,
             finalTime: time
         )
-        .stroke(lineWidth: 2)
+        .stroke(lineWidth: settings.timePlotLineWidth)
         .foregroundColor(color)
     }
 }

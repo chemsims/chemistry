@@ -80,6 +80,9 @@ struct TimeChartGeometrySettings {
     var indicatorWidth: CGFloat {
         sliderHandleWidth * 0.75
     }
+    var timePlotLineWidth: CGFloat {
+        chartSize / 180
+    }
 
     var yAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
