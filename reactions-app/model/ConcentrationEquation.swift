@@ -73,3 +73,26 @@ struct LogEquation: ConcentrationEquation {
         return log(value)
     }
 }
+
+struct SecondOrderReactionEquation: ConcentrationEquation {
+
+    let initialConcentration: CGFloat
+    let rate: CGFloat
+
+    func getConcentration(at time: CGFloat) -> CGFloat {
+        assert(initialConcentration != 0)
+        let invA1 = 1 / initialConcentration
+        let kt = rate * time
+        return 1 / (invA1 + kt)
+    }
+}
+
+struct InverseEquation: ConcentrationEquation {
+    let underlying: ConcentrationEquation
+
+    func getConcentration(at time: CGFloat) -> CGFloat {
+        let value = underlying.getConcentration(at: time)
+        assert(value != 0)
+        return 1 / value
+    }
+}

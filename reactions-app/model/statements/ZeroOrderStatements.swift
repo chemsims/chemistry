@@ -5,34 +5,10 @@
 
 import Foundation
 
-struct ReactionStatements {
-    static let inProgress: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(
-            "Let's watch all the molecules changing"
-        ),
-        SpeechBubbleLineGenerator.makeLine(
-            "As A disappears, B is being produced."
-        )
-    ]
-}
-
 struct ZeroOrderStatements {
 
-    static let initial: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(
-            "This is a zero Order Reaction."
-        ),
-        SpeechBubbleLineGenerator.makeLine(
-            "Why don't you set the *initial time (t1)* and *initial concentration of A (c1)*, the reactant?"
-        )
-    ]
-
-    static let setFinalValues: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine(
-            "Great! Now you can set the *concentration of A at the end of the reaction (c2)* and the *time the reaction will last (t2)*"
-        )
-    ]
-
+    static let initial = ReactionStatements.orderIntro(order: "first")
+    static let setFinalValues = ReactionStatements.orderSetFinalState
     static let inProgress = ReactionStatements.inProgress
 
     static var endStatement: [SpeechBubbleLine] = [

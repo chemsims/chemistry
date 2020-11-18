@@ -1,0 +1,98 @@
+//
+// Reactions App
+//
+  
+
+import SwiftUI
+
+struct OrderedReactionLayoutSettings {
+    let geometry: GeometryProxy
+    let horizontalSize: UserInterfaceSizeClass?
+    let verticalSize: UserInterfaceSizeClass?
+
+    var width: CGFloat {
+        geometry.size.width
+    }
+    var height: CGFloat {
+        geometry.size.height
+    }
+
+    var bubbleWidth: CGFloat {
+        if (vIsRegular && hIsRegular) {
+            return 0.25 * width
+        }
+        return 0.22 * width
+    }
+    var bubbleHeight: CGFloat {
+        if (vIsRegular && hIsRegular) {
+            return 1.1 * bubbleWidth
+        }
+        return 0.8 * bubbleWidth
+    }
+    var chartSize: CGFloat {
+        let maxHeight = 0.32 * height
+        let maxWidth = 0.25 * width
+        let idealWidth = 0.2 * width
+        return min(maxHeight, min(maxWidth, idealWidth))
+    }
+    var bubbleFontSize: CGFloat {
+        bubbleWidth * 0.08
+    }
+    var beakyHeight: CGFloat {
+        0.7 * bubbleHeight
+    }
+    var navButtonSize: CGFloat {
+        bubbleHeight * 0.2
+    }
+    var bubbleStemWidth: CGFloat {
+        SpeechBubbleSettings.getStemWidth(width: bubbleWidth)
+    }
+    var beakerWidth: CGFloat {
+        if let h = horizontalSize, h == .regular {
+            return 0.25 * width
+        }
+        return 0.23 * width
+    }
+    var beakerHeight: CGFloat {
+        beakerWidth * 1.1
+    }
+    var midChartsLeftPadding: CGFloat {
+        chartSize * 0.2
+    }
+    var chartsTopPadding: CGFloat {
+        chartSize * 0.2
+    }
+    var beakyRightPadding: CGFloat {
+        bubbleWidth * 0.3
+    }
+    var beakyBottomPadding: CGFloat {
+        beakyRightPadding * 0.1
+    }
+    var beakerLeadingPadding: CGFloat {
+        20
+    }
+    var beakyBoxTotalHeight: CGFloat {
+        bubbleHeight + navButtonSize + beakyVSpacing
+    }
+    var beakyBoxTotalWidth: CGFloat {
+        bubbleWidth + (beakyHeight * 0.54) + beakyRightPadding
+    }
+    var beakyVSpacing: CGFloat {
+        return 2
+    }
+
+    private var hIsRegular: Bool {
+        if let h = horizontalSize {
+            return h == .regular
+        }
+        return false
+    }
+
+    private var vIsRegular: Bool {
+        if let v = verticalSize {
+            return v == .regular
+        }
+        return false
+    }
+
+}

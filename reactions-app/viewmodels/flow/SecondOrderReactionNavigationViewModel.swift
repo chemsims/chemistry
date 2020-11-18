@@ -3,14 +3,14 @@
 //
   
 
-import SwiftUI
+import Foundation
 
-class FirstOrderReactionNavigationViewModel: ReactionNavigationViewModel {
-    init(reactionViewModel: ZeroOrderReactionViewModel) {
+class SecondOrderReactionNavigationViewModel: ReactionNavigationViewModel {
+    init(reactionViewModel: SecondOrderReactionViewModel) {
         super.init(
             reactionViewModel: reactionViewModel,
             states: [
-                InitialOrderedStep(order: "first"),
+                InitialOrderedStep(order: "second"),
                 SetFinalConcentrationToNonNil(),
                 RunAnimation(),
                 EndAnimation()
