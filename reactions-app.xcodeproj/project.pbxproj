@@ -234,7 +234,7 @@
 		57035EFB255C1A2700DB3A19 /* viewmodels */ = {
 			isa = PBXGroup;
 			children = (
-				571B3C58256555940075358B /* flow */,
+				571B3C58256555940075358B /* navigation */,
 				571B3C4D2565552C0075358B /* reactions */,
 				57035EFC255C1A7000DB3A19 /* ReactionSettings.swift */,
 			);
@@ -270,7 +270,7 @@
 			path = reactions;
 			sourceTree = "<group>";
 		};
-		571B3C58256555940075358B /* flow */ = {
+		571B3C58256555940075358B /* navigation */ = {
 			isa = PBXGroup;
 			children = (
 				571B3C59256555C40075358B /* ReactionNavigationViewModel.swift */,
@@ -280,7 +280,7 @@
 				571B3C772565605C0075358B /* SecondOrderReactionNavigationViewModel.swift */,
 				571B3C9C256578D80075358B /* ReactionComparisonNavigationViewModel.swift */,
 			);
-			path = flow;
+			path = navigation;
 			sourceTree = "<group>";
 		};
 		571B3C87256566750075358B /* second-order */ = {
