@@ -8,7 +8,7 @@ import SwiftUI
 struct ZeroOrderReaction: View {
 
     @ObservedObject var beakyModel: ZeroOrderUserFlowViewModel
-    @ObservedObject var reactionModel: ReactionViewModel
+    @ObservedObject var reactionModel: ZeroOrderReactionViewModel
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -69,23 +69,23 @@ struct ZeroOrderReaction_Previews: PreviewProvider {
 
         // iPhone SE landscape
         ZeroOrderReaction(
-            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ReactionViewModel())
+            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ZeroOrderReactionViewModel())
         ).previewLayout(.fixed(width: 568, height: 320))
 
         // iPhone 11 landscape
         ZeroOrderReaction(
-            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ReactionViewModel())
+            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ZeroOrderReactionViewModel())
         ).previewLayout(.fixed(width: 812, height: 375))
 
 
         /// iPad mini 4 landscape
         ZeroOrderReaction(
-            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ReactionViewModel())
+            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ZeroOrderReactionViewModel())
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro
         ZeroOrderReaction(
-            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ReactionViewModel())
+            beakyModel: ZeroOrderUserFlowViewModel(reactionViewModel: ZeroOrderReactionViewModel())
         ).previewLayout(.fixed(width: 1366, height: 1024))
 
     }

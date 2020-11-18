@@ -7,8 +7,8 @@ import SwiftUI
 
 struct FirstOrderReaction: View {
 
-    @ObservedObject var reaction: FirstOderViewModel
-    @ObservedObject var flow: FirstOrderUserFlowViewModel
+    @ObservedObject var reaction: FirstOrderReactionViewModel
+    @ObservedObject var flow: FirstOrderReactionNavigationViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
@@ -200,11 +200,11 @@ struct FirstOrderReaction_Previews: PreviewProvider {
 
     struct StateWrapper: View {
 
-        @ObservedObject var foo = FirstOrderUserFlowViewModel(reactionViewModel: FirstOderViewModel())
+        @ObservedObject var foo = FirstOrderReactionNavigationViewModel(reactionViewModel: FirstOrderReactionViewModel())
 
         var body: some View {
             FirstOrderReaction(
-                reaction: foo.reactionViewModel as! FirstOderViewModel,
+                reaction: foo.reactionViewModel as! FirstOrderReactionViewModel,
                 flow: foo
             )
         }

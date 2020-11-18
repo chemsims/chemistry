@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @ObservedObject var model = ReactionViewModel()
+    @ObservedObject var model = ZeroOrderReactionViewModel()
 
     var body: some View {
         ZeroOrderReaction(
             beakyModel: ZeroOrderUserFlowViewModel(
-                reactionViewModel: ReactionViewModel()
+                reactionViewModel: ZeroOrderReactionViewModel()
             )
         )
     }

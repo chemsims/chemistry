@@ -1,43 +1,11 @@
 //
 // Reactions App
 //
-
+  
 
 import SwiftUI
 
-class FirstOderViewModel: ReactionViewModel {
-
-    override var concentrationEquationA: ConcentrationEquation {
-        if let rate = rate {
-            return FirstOrderConcentration(
-                initialConcentration: initialConcentration,
-                rate: rate
-            )
-        }
-        return ConstantConcentration(value: 0.5)
-    }
-
-    var logAEquation: ConcentrationEquation {
-        LogEquation(underlying: concentrationEquationA)
-    }
-
-    override var rate: CGFloat? {
-        if let finalConcentration = finalConcentration, let finalTime = finalTime, initialConcentration != 0, finalTime != 0 {
-            let logC = log(finalConcentration / initialConcentration)
-            return -1 * (logC / finalTime)
-        }
-        return nil
-    }
-
-    override var halfTime: CGFloat? {
-        if let rate = rate {
-            return log(2) / rate
-        }
-        return nil
-    }
-}
-
-class ReactionViewModel: ObservableObject {
+class ZeroOrderReactionViewModel: ObservableObject {
 
     init () {
         setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
@@ -156,22 +124,4 @@ class ReactionViewModel: ObservableObject {
             addMoleculesA(toAdd - 1, cols: cols, rows: rows)
         }
     }
-}
-
-struct ReactionSettings {
-
-    // Axis settings
-    static let minConcentration: CGFloat = 0
-    static let maxConcentration: CGFloat = 1
-    static let minTime: CGFloat = 0
-    static let maxTime: CGFloat = 17
-
-    static let minLogConcentration: CGFloat = -4
-    static let maxLogConcentration: CGFloat = 0
-
-    /// The minimum value that concentration 2 may be. Concentration 1 is liited to ensure there is sufficient space
-    static let minFinalConcentration: CGFloat = 0.15
-
-    /// The minimum value that time 2 may be. Time 1 is liited to ensure there is sufficient space
-    static let minFinalTime: CGFloat = 13
 }
