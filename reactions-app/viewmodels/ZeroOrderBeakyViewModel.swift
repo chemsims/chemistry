@@ -203,7 +203,6 @@ fileprivate struct RunAnimation: ReactionState {
             model.currentTime = model.initialTime
             model.moleculeBOpacity = 0
             model.timeChartHeadOpacity = 1
-            print("Running for \(duration)")
             withAnimation(.linear(duration: Double(duration))) {
                 model.currentTime = finalTime
                 model.moleculeBOpacity = 1

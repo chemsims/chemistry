@@ -108,9 +108,6 @@ struct ZeroOrderEquationBlank: View {
     }
 }
 
-
-
-
 fileprivate struct GeneralZeroOrderReactionEquationView: View {
 
     let rate: String?
@@ -252,12 +249,11 @@ struct BoxFramingModifier: ViewModifier {
     func body(content: Content) -> some View {
         if let height = height {
             return content.frame(
-                minWidth: width,
-                minHeight: height,
-                maxHeight: height
+                width: width,
+                height: height
             )
         }
-        return content.frame(minWidth: width)
+        return content.frame(width: width)
     }
 }
 
