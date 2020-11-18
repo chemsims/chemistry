@@ -12,8 +12,8 @@ class FirstOrderReactionNavigationViewModel: ReactionNavigationViewModel {
             states: [
                 InitialOrderedStep(order: "first"),
                 SetFinalConcentrationToNonNil(),
-                RunAnimation(),
-                EndAnimation()
+                RunAnimation(statement: ReactionStatements.inProgress),
+                EndAnimation(statement: ReactionStatements.end)
             ]
         )
     }

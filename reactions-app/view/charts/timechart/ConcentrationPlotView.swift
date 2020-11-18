@@ -19,10 +19,6 @@ struct ConcentrationPlotView: View {
     let finalTime: CGFloat
     let headOpacity: Double
 
-    private let finalColor: Color = Styling.timeAxisCompleteBar
-    private let aProgressColor: Color = .orangeAccent
-    private let aProgressHalo: Color = Color.orangeAccent.opacity(0.7)
-
     var body: some View {
         ZStack {
 

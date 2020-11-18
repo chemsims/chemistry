@@ -19,13 +19,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let model = SecondOrderReactionViewModel()
-        let model2 = SecondOrderReactionNavigationViewModel(reactionViewModel: model)
-        let contentView = SecondOrderReactionView(reaction: model, navigation: model2)
+//        let model = SecondOrderReactionViewModel()
+//        let model2 = SecondOrderReactionNavigationViewModel(reactionViewModel: model)
+//        let contentView = SecondOrderReactionView(reaction: model, navigation: model2)
 
-//        let model = FirstOrderReactionViewModel()
-//        let model2 = FirstOrderReactionNavigationViewModel(reactionViewModel: model)
-//        let contentView = FirstOrderReactionView(reaction: model, flow: model2)
+        let model = ZeroOrderReactionViewModel()
+        let model2 = ReactionComparisonNavigationViewModel(reactionViewModel: model)
+        let contentView = ReactionComparison(reaction: model, navigation: model2)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

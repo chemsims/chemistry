@@ -39,23 +39,20 @@ struct OrderedReactionScreen<Content: View>: View {
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
         HStack(spacing: 0) {
             Spacer()
-            VStack(alignment: .leading, spacing: settings.beakyVSpacing) {
+            VStack(alignment: .leading, spacing: 0) {
                 Spacer()
-                HStack(alignment: .bottom, spacing: 0) {
-                    SpeechBubble(lines: flow.statement)
-                        .frame(width: settings.bubbleWidth, height: settings.bubbleHeight)
-                        .font(.system(size: settings.bubbleFontSize))
-                    Beaky()
-                        .frame(height: settings.beakyHeight)
-                }
-
-                HStack {
-                    PreviousButton(action: flow.back)
-                        .frame(width: settings.navButtonSize, height: settings.navButtonSize)
-                    Spacer()
-                    NextButton(action: flow.next)
-                        .frame(width: settings.navButtonSize, height: settings.navButtonSize)
-                }.frame(width: settings.bubbleWidth - settings.bubbleStemWidth)
+                BeakyBox(
+                    statement: flow.statement,
+                    next: flow.next,
+                    back: flow.back,
+                    verticalSpacing: settings.beakyVSpacing,
+                    bubbleWidth: settings.bubbleWidth,
+                    bubbleHeight: settings.bubbleHeight,
+                    beakyHeight: settings.beakyHeight,
+                    fontSize: settings.bubbleFontSize,
+                    navButtonSize: settings.navButtonSize,
+                    bubbleStemWidth: settings.bubbleStemWidth
+                )
             }
         }
     }

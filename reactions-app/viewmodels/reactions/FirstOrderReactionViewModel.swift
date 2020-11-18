@@ -23,8 +23,11 @@ class FirstOrderReactionViewModel: ZeroOrderReactionViewModel {
 
     override var rate: CGFloat? {
         if let finalConcentration = finalConcentration, let finalTime = finalTime, initialConcentration != 0, finalTime != 0 {
-            let logC = log(finalConcentration / initialConcentration)
-            return -1 * (logC / finalTime)
+            return FirstOrderConcentration.getRate(
+                c1: initialConcentration,
+                c2: finalConcentration,
+                time: finalTime
+            )
         }
         return nil
     }

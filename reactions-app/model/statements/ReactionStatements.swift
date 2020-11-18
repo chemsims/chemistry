@@ -32,4 +32,10 @@ struct ReactionStatements {
             "As A disappears, B is being produced."
         )
     ]
+
+    static let end: [SpeechBubbleLine] = [
+        SpeechBubbleLineGenerator.makeLine("Amazing!"),
+        SpeechBubbleLineGenerator.makeLine("Let's take a snapshot! Now, let's try another."),
+        SpeechBubbleLineGenerator.makeLine("*Choose a 2nd Order Reaction*.")
+    ]
 }

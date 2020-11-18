@@ -26,9 +26,7 @@ class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
 
     override var rate: CGFloat? {
         if let c2 = finalConcentration, let t2 = finalTime, initialConcentration != 0, c2 != 0 {
-            let invC1 = 1 / initialConcentration
-            let invC2 = 1 / c2
-            return (invC2 - invC1) / t2
+            return SecondOrderReactionEquation.getRate(c1: initialConcentration, c2: c2, time: t2)
         }
         return nil
     }

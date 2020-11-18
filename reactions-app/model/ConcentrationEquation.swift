@@ -47,11 +47,31 @@ struct FirstOrderConcentration: ConcentrationEquation {
     let initialConcentration: CGFloat
     let rate: CGFloat
 
+    init(initialConcentration: CGFloat, rate: CGFloat) {
+        self.initialConcentration = initialConcentration
+        self.rate = rate
+    }
+
+    init(c1: CGFloat, c2: CGFloat, time: CGFloat) {
+        self.init(
+            initialConcentration: c1,
+            rate: FirstOrderConcentration.getRate(c1: c1, c2: c2, time: time)
+        )
+    }
 
     func getConcentration(at time: CGFloat) -> CGFloat {
         initialConcentration * CGFloat(pow(Darwin.M_E, -Double(rate * time)))
     }
+
+    static func getRate(c1: CGFloat, c2: CGFloat, time: CGFloat) -> CGFloat {
+        assert(c1 != 0)
+        assert(time != 0)
+        let logC = log(c2 / c1)
+        return -1 * (logC / time)
+    }
 }
+
+
 
 struct ConcentrationBEquation: ConcentrationEquation {
     let concentrationA: ConcentrationEquation
@@ -79,11 +99,31 @@ struct SecondOrderReactionEquation: ConcentrationEquation {
     let initialConcentration: CGFloat
     let rate: CGFloat
 
+    init(initialConcentration: CGFloat, rate: CGFloat) {
+        self.initialConcentration = initialConcentration
+        self.rate = rate
+    }
+
+    init(c1: CGFloat, c2: CGFloat, time: CGFloat) {
+        self.init(
+            initialConcentration: c1,
+            rate: SecondOrderReactionEquation.getRate(c1: c1, c2: c2, time: time)
+        )
+    }
+
     func getConcentration(at time: CGFloat) -> CGFloat {
         assert(initialConcentration != 0)
         let invA1 = 1 / initialConcentration
         let kt = rate * time
         return 1 / (invA1 + kt)
+    }
+
+    static func getRate(c1: CGFloat, c2: CGFloat, time: CGFloat) -> CGFloat {
+        assert(c1 != 0)
+        assert(c2 != 0)
+        let invC1 = 1 / c1
+        let invC2 = 1 / c2
+        return (invC2 - invC1) / time
     }
 }
 

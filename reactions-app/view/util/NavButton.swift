@@ -33,21 +33,13 @@ fileprivate struct GeneralDirectionButton: View {
     let systemImage: String
 
     var body: some View {
-        Button(action: action) {
-            ZStack {
-                GeometryReader { geo in
-                    Circle()
-                        .foregroundColor(Styling.speechBubble)
-                        .overlay(
-                            Image(systemName: systemImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(.black)
-                                .padding(geo.size.width / 3)
-                        )
-                }
-            }
-        }.buttonStyle(NavButtonButtonStyle())
+        CircleIconButton(
+            action: action,
+            systemImage: systemImage,
+            background: Styling.speechBubble,
+            border: Styling.speechBubble,
+            foreground: Color.black
+        )
     }
 }
 
@@ -61,8 +53,7 @@ struct NavButtonButtonStyle: ButtonStyle {
             .label
             .scaleEffect(x: xScale, y: yScale)
     }
-
-
+    
 }
 
 struct NextButton_Previews: PreviewProvider {

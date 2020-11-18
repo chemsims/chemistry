@@ -34,7 +34,7 @@ extension ReactionState {
 
 struct RunAnimation: ReactionState {
 
-    var statement: [SpeechBubbleLine] = ZeroOrderStatements.inProgress
+    let statement: [SpeechBubbleLine]
 
     func apply(on model: ZeroOrderReactionViewModel) {
         model.reactionHasEnded = false
@@ -71,7 +71,7 @@ struct RunAnimation: ReactionState {
 
 struct EndAnimation: ReactionState {
 
-    var statement: [SpeechBubbleLine] = ZeroOrderStatements.endStatement
+    let statement: [SpeechBubbleLine]
 
     func apply(on model: ZeroOrderReactionViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {

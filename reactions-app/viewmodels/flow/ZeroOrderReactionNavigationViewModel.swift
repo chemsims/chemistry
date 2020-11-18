@@ -12,8 +12,8 @@ class ZeroOrderUserFlowViewModel: ReactionNavigationViewModel {
             states: [
                 InitialStep(),
                 SetFinalValuesToNonNil(),
-                RunAnimation(),
-                EndAnimation(),
+                RunAnimation(statement: ReactionStatements.inProgress),
+                EndAnimation(statement: ReactionStatements.end),
             ]
         )
     }
