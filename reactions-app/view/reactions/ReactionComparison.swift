@@ -35,6 +35,10 @@ struct ReactionComparison: View {
             chartsView(
                 settings: TimeChartGeometrySettings(chartSize: chartSize(settings: settings))
             ).padding(.top, settings.chartsTopPadding)
+
+            equationView(settings: settings)
+                .padding(.horizontal, equationPadding(settings: settings))
+                .padding(.top, equationPadding(settings: settings))
         }
     }
 
@@ -124,7 +128,6 @@ struct ReactionComparison: View {
         }
     }
 
-
     private func chartLine(
         equation: ConcentrationEquation,
         settings: TimeChartGeometrySettings
@@ -142,6 +145,29 @@ struct ReactionComparison: View {
             headOpacity: reaction.timeChartHeadOpacity
         ).frame(width: settings.chartSize, height: settings.chartSize)
     }
+
+    private func equationView(
+        settings: OrderedReactionLayoutSettings
+    ) -> some View {
+
+        let availableWidth = (settings.width - chartSize(settings: settings)) / 2
+        let widthLessPadding = availableWidth - (2 * equationPadding(settings: settings))
+
+        let availableHeight = settings.height - settings.beakyBoxTotalHeight
+        let heightLessPadding = availableHeight - equationPadding(settings: settings)
+
+        return VStack {
+            HStack {
+                Spacer()
+                RateEquationComparisonView(
+                    maxWidth: widthLessPadding,
+                    maxHeight: heightLessPadding
+                )
+            }
+            Spacer()
+        }
+    }
+
 
     private var zeroOrder: ConcentrationEquation  {
         LinearConcentration(
@@ -178,9 +204,17 @@ struct ReactionComparison: View {
         return availableWidth * 0.7
     }
 
+    private func equationPadding(
+        settings: OrderedReactionLayoutSettings
+    ) -> CGFloat {
+        settings.chartsTopPadding * 0.5
+    }
+
+
     private var c1: CGFloat { ReactionComparisonNavigationViewModel.c1 }
     private var c2: CGFloat { ReactionComparisonNavigationViewModel.c2 }
-    private var time: CGFloat { ReactionComparisonNavigationViewModel.time}
+    private var time: CGFloat { 15 }
+//    private var time: CGFloat { ReactionComparisonNavigationViewModel.time}
 
 }
 

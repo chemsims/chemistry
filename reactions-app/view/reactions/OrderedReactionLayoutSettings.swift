@@ -72,7 +72,7 @@ struct OrderedReactionLayoutSettings {
         20
     }
     var beakyBoxTotalHeight: CGFloat {
-        bubbleHeight + navButtonSize + beakyVSpacing
+        bubbleHeight + navButtonSize + beakyVSpacing + beakyBottomPadding
     }
     var beakyBoxTotalWidth: CGFloat {
         bubbleWidth + (beakyHeight * 0.54) + beakyRightPadding

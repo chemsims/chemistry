@@ -11,7 +11,7 @@ class RootNavigationViewModel: ObservableObject {
 
     init() {
         self.view = AnyView(EmptyView())
-        goToZeroOrder()
+        goToComparison()
     }
 
     private func goToZeroOrder() {

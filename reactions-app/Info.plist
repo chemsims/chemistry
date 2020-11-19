@@ -59,5 +59,9 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>RobotoSlab-VariableFont_wght.ttf</string>
+	</array>
 </dict>
 </plist>
