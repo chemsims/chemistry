@@ -19,6 +19,9 @@ struct DualValueSlider: View {
     let settings: TimeChartGeometrySettings
     let canSetInitialValue: Bool
 
+    let absoluteMin: CGFloat
+    let absoluteMax: CGFloat
+
     var body: some View {
         ZStack {
             if (canSetInitialValue) {
@@ -68,8 +71,8 @@ struct DualValueSlider: View {
     private func axis(minValue: CGFloat? = nil, maxValue: CGFloat? = nil) -> AxisPositionCalculations<CGFloat> {
         BoundedSliderPositioning(
             axis: axis,
-            absoluteMin: axis.minValue,
-            absoluteMax: axis.maxValue,
+            absoluteMin: absoluteMin,
+            absoluteMax: absoluteMax,
             minPreSpacing: minValue,
             maxPreSpacing: maxValue,
             spacing: settings.handleThickness + settings.sliderMinSpacing

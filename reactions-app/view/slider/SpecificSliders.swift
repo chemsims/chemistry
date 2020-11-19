@@ -23,7 +23,9 @@ struct ConcentrationValueSlider: View {
             axis: settings.yAxis,
             orientation: .portrait,
             settings: settings,
-            canSetInitialValue: true
+            canSetInitialValue: true,
+            absoluteMin: 0.1,
+            absoluteMax: 1
         )
     }
 }
@@ -46,7 +48,9 @@ struct TimeValueSlider: View {
             axis: settings.xAxis,
             orientation: .landscape,
             settings: settings,
-            canSetInitialValue: canSetInitialTime
+            canSetInitialValue: canSetInitialTime,
+            absoluteMin: 1,
+            absoluteMax: ReactionSettings.maxTime
         )
     }
 }
