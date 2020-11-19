@@ -5,7 +5,6 @@
 
 import SwiftUI
 
-// 534 552
 struct FirstOrderEquationView2: View {
 
     let c1: CGFloat
@@ -16,8 +15,8 @@ struct FirstOrderEquationView2: View {
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
-    private let naturalWidth: CGFloat = 267
-    private let naturalHeight: CGFloat = 276
+    private let naturalWidth: CGFloat = 296
+    private let naturalHeight: CGFloat = 310
 
     var body: some View {
         ScaledView(
@@ -26,7 +25,7 @@ struct FirstOrderEquationView2: View {
             maxWidth: maxWidth,
             maxHeight: maxHeight
         ) {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 14) {
                 FirstOrderRateFilled()
                 FirstOrderRateBlank(
                     rate: rate?.str(decimals: 2),
@@ -50,12 +49,12 @@ struct FirstOrderEquationView2: View {
 fileprivate struct FirstOrderRateFilled: View {
 
     var body: some View {
-        HStack(spacing: 1) {
+        HStack(spacing: 12) {
             Text("k")
                 .frame(width: Settings.boxWidth)
             Equals()
-            VStack(spacing: 1) {
-                HStack(spacing: 1) {
+            VStack(spacing: 3) {
+                HStack(spacing: 5) {
                     lnA {
                         A_0()
                     }
@@ -65,7 +64,7 @@ fileprivate struct FirstOrderRateFilled: View {
                     }
                 }
                 Rectangle()
-                    .frame(width: 170, height: 2)
+                    .frame(width: 180, height: 2)
                 Text("t")
                     .frame(width: 20)
 
@@ -90,7 +89,7 @@ fileprivate struct FirstOrderRateBlank: View {
     let t: String?
 
     var body: some View {
-        HStack(spacing: 1) {
+        HStack(spacing: 12) {
             Placeholder(value: rate)
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
             Equals()
@@ -103,7 +102,7 @@ fileprivate struct FirstOrderRateBlank: View {
                         .frame(width: Settings.boxWidth, height: Settings.boxHeight)
                 }
                 Rectangle()
-                    .frame(width: 140, height: 2)
+                    .frame(width: 150, height: 2)
                 Placeholder(value: t)
                     .frame(width: Settings.boxWidth, height: Settings.boxHeight)
             }
@@ -143,4 +142,23 @@ fileprivate struct FirstOrderHalftimeBlank: View {
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
         }
     }
+}
+
+struct FirstOrderEquationView2_Preview: PreviewProvider {
+
+    static let w: CGFloat = 250
+    static let h: CGFloat = 100
+
+    static var previews: some View {
+        FirstOrderEquationView2(
+            c1: 1,
+            c2: 2,
+            t: 1,
+            rate: 1,
+            halfTime: 1,
+            maxWidth: 250,
+            maxHeight: 100
+        )
+    }
+
 }
