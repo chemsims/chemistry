@@ -4,8 +4,6 @@
 
 import SwiftUI
 
-// 827, 549
-// 414, 275
 struct RateEquationComparisonView: View {
 
     let maxWidth: CGFloat
@@ -167,7 +165,7 @@ fileprivate struct A_t: View {
     }
 }
 
-fileprivate struct A_0: View {
+struct A_0: View {
     var body: some View {
         HStack(spacing: 1) {
             BracketA()
