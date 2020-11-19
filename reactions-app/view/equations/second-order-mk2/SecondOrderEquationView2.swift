@@ -17,8 +17,8 @@ struct SecondOrderEquationView2: View {
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
-    private let naturalWidth: CGFloat = 325
-    private let naturalHeight: CGFloat = 274
+    private let naturalWidth: CGFloat = 342
+    private let naturalHeight: CGFloat = 310
     
 
     var body: some View {
@@ -28,7 +28,7 @@ struct SecondOrderEquationView2: View {
             maxWidth: maxWidth,
             maxHeight: maxHeight
         ) {
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: 15) {
                 SecondOrderRateFilled()
                 SecondOrderRateBlank(
                     rate: rate?.str(decimals: 2),
@@ -52,13 +52,13 @@ struct SecondOrderEquationView2: View {
 
 fileprivate struct SecondOrderRateFilled: View {
     var body: some View {
-        HStack(spacing: 1) {
+        HStack(spacing: 5) {
             Text("k")
                 .frame(width: Settings.boxWidth)
             Equals()
 
             VStack(spacing: 1) {
-                HStack(spacing: 1) {
+                HStack(spacing: 5) {
                     inverse {
                         A_0()
                     }
@@ -68,7 +68,7 @@ fileprivate struct SecondOrderRateFilled: View {
                     }
                 }
                 Rectangle()
-                    .frame(width: 220, height: 2)
+                    .frame(width: 225, height: 2)
                 Text("t")
                     .frame(width: 10)
             }
@@ -95,7 +95,7 @@ fileprivate struct SecondOrderRateBlank: View {
     let time: String?
 
     var body: some View {
-        HStack(spacing: 1) {
+        HStack(spacing: 5) {
             Placeholder(value: rate)
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
 
@@ -124,7 +124,7 @@ fileprivate struct SecondOrderRateBlank: View {
 
 fileprivate struct SecondOrderHalftimeFilled: View {
     var body: some View {
-        HStack(spacing: 1) {
+        HStack(spacing: 5) {
             HalfTime()
                 .frame(width: Settings.boxWidth)
             Equals()
@@ -147,7 +147,7 @@ fileprivate struct SecondOrderHalftimeBlank: View {
     let a0: String?
 
     var body: some View {
-        HStack(spacing: 1) {
+        HStack(spacing: 5) {
             Placeholder(value: halfTime)
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
 
@@ -176,3 +176,17 @@ fileprivate struct SecondOrderHalftimeBlank: View {
     }
 }
 
+
+struct SecondOrderEquationView2_Previews: PreviewProvider {
+    static var previews: some View {
+        SecondOrderEquationView2(
+            c1: 1,
+            c2: 1,
+            rate: 1,
+            t: 1,
+            halfTime: 1,
+            maxWidth: 1,
+            maxHeight: 1
+        ).previewLayout(.fixed(width: 600, height: 400))
+    }
+}
