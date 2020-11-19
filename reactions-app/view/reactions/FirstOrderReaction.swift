@@ -65,7 +65,7 @@ struct FirstOrderReactionView: View {
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
         VStack(spacing: 0) {
-            FirstOrderReactionEquation(
+            FirstOrderEquationView2(
                 c1: reaction.initialConcentration,
                 c2: reaction.finalConcentration,
                 t: reaction.finalTime,

@@ -211,7 +211,7 @@ fileprivate struct BlankHalftime: View {
     }
 }
 
-fileprivate struct Divide: View {
+struct Divide: View {
     var body: some View {
         Text("/")
             .frame(width: 12)
@@ -228,7 +228,7 @@ fileprivate struct Rate: View {
     }
 }
 
-fileprivate struct HalfTime: View {
+struct HalfTime: View {
     var body: some View {
         HStack(spacing: 0) {
             Text("t")
@@ -237,26 +237,26 @@ fileprivate struct HalfTime: View {
             Text("1/2")
                 .font(.system(size: RateEquationSizes.subscriptFontSize))
                 .offset(y: 10)
-                .frame(width: 30)
+                .frame(width: 34)
         }
     }
 }
 
-fileprivate struct Minus: View {
+struct Minus: View {
     var body: some View {
         Text("-")
             .frame(width: 17)
     }
 }
 
-fileprivate struct Equals: View {
+struct Equals: View {
     var body: some View {
         Text("=")
             .frame(width: 20)
     }
 }
 
-fileprivate struct Placeholder: View {
+struct Placeholder: View {
     let value: String?
 
     var body: some View {
@@ -278,7 +278,7 @@ fileprivate struct Box: View {
     }
 }
 
-fileprivate struct Settings {
+struct Settings {
     static let hSpacing: CGFloat = 2
     static let boxHeight: CGFloat = 50
     static let boxWidth: CGFloat = 70

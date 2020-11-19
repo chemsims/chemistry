@@ -152,7 +152,7 @@ fileprivate struct Rate: View {
     }
 }
 
-fileprivate struct A_t: View {
+struct A_t: View {
     var body: some View {
         HStack(spacing: 1) {
             BracketA()
@@ -189,13 +189,6 @@ fileprivate struct EndBracket: View {
     var body: some View {
         Text("]")
             .frame(width: 8)
-    }
-}
-
-fileprivate struct Minus: View {
-    var body: some View {
-        Text("-")
-            .frame(width: 12)
     }
 }
 
