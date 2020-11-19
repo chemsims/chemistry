@@ -31,57 +31,66 @@ struct SecondOrderReactionView: View {
             settings: settings,
             canSetInitialTime: false
         ) {
-            HStack(spacing: 0) {
-                invChart(settings: settings)
-                equationView(settings: settings)
-                    .padding(.leading, 5)
-                    .padding(.top, 5)
+            VStack {
+                Spacer()
+                HStack(spacing: 0) {
+                    invChart(settings: settings)
+                    equationView(settings: settings)
+                        .padding(.leading, 5)
+                        .padding(.top, 5)
+                }
             }
         }
     }
 
     private func invChart(settings: OrderedReactionLayoutSettings) -> some View {
-        VStack {
-            SingleConcentrationPlot(
-                initialConcentration: reaction.initialConcentration,
-                initialTime: reaction.initialTime,
-                finalConcentration: reaction.finalConcentration,
-                finalTime: reaction.finalTime,
-                settings: TimeChartGeometrySettings(
-                    chartSize: settings.chartSize,
-                    minConcentration: ReactionSettings.minInverseConcentration,
-                    maxConcentration: ReactionSettings.maxInverseConcentration
-                ),
-                concentrationA: reaction.inverseAEquation,
-                currentTime: reaction.currentTime,
-                headOpacity: reaction.timeChartHeadOpacity,
-                yLabel: "1/[A]"
-            )
-            .padding(.top, settings.chartsTopPadding)
-            Spacer()
-        }
+        SingleConcentrationPlot(
+            initialConcentration: reaction.initialConcentration,
+            initialTime: reaction.initialTime,
+            finalConcentration: reaction.finalConcentration,
+            finalTime: reaction.finalTime,
+            settings: TimeChartGeometrySettings(
+                chartSize: settings.chartSize,
+                minConcentration: ReactionSettings.minInverseConcentration,
+                maxConcentration: ReactionSettings.maxInverseConcentration
+            ),
+            concentrationA: reaction.inverseAEquation,
+            currentTime: reaction.currentTime,
+            headOpacity: reaction.timeChartHeadOpacity,
+            yLabel: "1/[A]"
+        )
+        .padding(.top, settings.chartsTopPadding)
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
-        VStack(spacing: 0) {
-            SecondOrderEquationView2(
-                c1: reaction.initialConcentration,
-                c2: reaction.finalConcentration,
-                rate: reaction.rate,
-                t: reaction.finalTime,
-                halfTime: reaction.halfTime,
-                maxWidth: equationWidth(settings: settings),
-                maxHeight: settings.height - settings.beakyBoxTotalHeight
-            )
-            Spacer()
-        }
+        SecondOrderEquationView2(
+            c1: reaction.initialConcentration,
+            c2: reaction.finalConcentration,
+            rate: reaction.rate,
+            t: reaction.finalTime,
+            halfTime: reaction.halfTime,
+            maxWidth: equationWidth(settings: settings),
+            maxHeight: availableHeight(settings: settings)
+        )
     }
 
     private func equationWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        if let h = settings.horizontalSize, h == .regular {
-            return 0.2 * settings.width
-        }
-        return 0.26 * settings.width
+        let freeWidth = availableWidth(settings: settings) / 2
+        return freeWidth
+    }
+
+    private func barChartSize(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        let maxHeight = availableHeight(settings: settings) - (settings.chartsTopPadding)
+        let maxWidth = availableWidth(settings: settings) / 3
+        return min(maxHeight, maxWidth)
+    }
+
+    private func availableWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        settings.width - settings.beakyBoxTotalWidth
+    }
+
+    private func availableHeight(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        settings.height - settings.beakerHeight - settings.beakerLeadingPadding
     }
 
 }

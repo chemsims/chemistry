@@ -20,20 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
 
-//        let contentView = RootNavigationView(model: RootNavigationViewModel())
-        let contentView = ZeroOrderEquationView2(
-            emphasiseFilledTerms: false,
-            initialConcentration: 0.1,
-            initialTime: 1,
-            rate: nil,
-            deltaC: nil,
-            deltaT: nil,
-            c2: nil,
-            t2: nil,
-            halfTime: nil,
-            maxWidth: 100,
-            maxHeight: 100
-        )
+        let contentView = RootNavigationView(model: RootNavigationViewModel())
+
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

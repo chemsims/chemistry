@@ -9,13 +9,8 @@ class ReactionNavigationViewModel: ObservableObject {
 
     @Published var statement: [SpeechBubbleLine] = []
 
-    // todo - use weak/unowned?
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
-
-    deinit {
-        print("Ran de-init")
-    }
 
     let reactionViewModel: ZeroOrderReactionViewModel
 
