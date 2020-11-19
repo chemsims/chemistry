@@ -32,11 +32,28 @@ struct EquationPlaceholderView: View {
                             lineCap: .square,
                             lineJoin: .round,
                             miterLimit: 0,
-                            dash: dash(geometry),
-                            dashPhase: dashPhase(geometry)
+                            dash: dash2(geometry),
+                            dashPhase: geometry.size.height / 6
                         )
                 )
         }
+    }
+
+    // The dash array reads, [stroke-width, gap-width, stroke-width, ... ]
+    // When the end of the array is met, it loops back to the start
+    private func dash2(_ geometry: GeometryProxy) -> [CGFloat] {
+        let d1 = geometry.size.width / 6
+        let v1 = geometry.size.height / 6
+        return [
+            d1 + v1,    // Top left corner
+            d1,         // Top, left gap
+            2 * d1,     // Top edge
+            d1,         // Top, right gap
+            d1 + v1,    // Top right corner
+            v1,         // Right, top gap
+            2 * v1,     // Right edge
+            v1          // Right, bottom gap
+        ]
     }
 
     private func dash(_ geometry: GeometryProxy) -> [CGFloat] {
@@ -47,6 +64,22 @@ struct EquationPlaceholderView: View {
     private func dashPhase(_ geometry: GeometryProxy) -> CGFloat {
         geometry.size.width / 6
     }
+
+    private func smallHorizontal(_ geometry: GeometryProxy) -> CGFloat {
+        geometry.size.width / 6
+    }
 }
 
 
+struct EquationPlaceholderView_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack {
+            EquationPlaceholderView()
+                .frame(width: 100, height: 100)
+
+            EquationPlaceholderView()
+                .frame(width: 100, height: 70)
+        }
+    }
+
+}
