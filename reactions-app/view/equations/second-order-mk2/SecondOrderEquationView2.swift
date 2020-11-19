@@ -1,23 +1,25 @@
 //
 // Reactions App
 //
-  
+
 
 import SwiftUI
 
-// 534 552
-struct FirstOrderEquationView2: View {
+// 649 548
+// 325 274
+struct SecondOrderEquationView2: View {
 
     let c1: CGFloat
     let c2: CGFloat?
-    let t: CGFloat?
     let rate: CGFloat?
+    let t: CGFloat?
     let halfTime: CGFloat?
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
-    private let naturalWidth: CGFloat = 267
-    private let naturalHeight: CGFloat = 276
+    private let naturalWidth: CGFloat = 325
+    private let naturalHeight: CGFloat = 274
+    
 
     var body: some View {
         ScaledView(
@@ -26,18 +28,19 @@ struct FirstOrderEquationView2: View {
             maxWidth: maxWidth,
             maxHeight: maxHeight
         ) {
-            VStack(alignment: .leading, spacing: 4) {
-                FirstOrderRateFilled()
-                FirstOrderRateBlank(
+            VStack(alignment: .leading, spacing: 3) {
+                SecondOrderRateFilled()
+                SecondOrderRateBlank(
                     rate: rate?.str(decimals: 2),
                     a0: c1.str(decimals: 2),
                     at: c2?.str(decimals: 2),
-                    t: t?.str(decimals: 2)
+                    time: t?.str(decimals: 2)
                 )
-                FirstOrderHalftimeFilled()
-                FirstOrderHalftimeBlank(
-                    halftime: halfTime?.str(decimals: 2),
-                    rate: rate?.str(decimals: 2)
+                SecondOrderHalftimeFilled()
+                SecondOrderHalftimeBlank(
+                    halfTime: halfTime?.str(decimals: 2),
+                    rate: rate?.str(decimals: 2),
+                    a0: c1.str(decimals: 2)
                 )
             }
             .font(.system(size: RateEquationSizes.fontSize))
@@ -47,100 +50,129 @@ struct FirstOrderEquationView2: View {
     }
 }
 
-fileprivate struct FirstOrderRateFilled: View {
-
+fileprivate struct SecondOrderRateFilled: View {
     var body: some View {
         HStack(spacing: 1) {
             Text("k")
                 .frame(width: Settings.boxWidth)
             Equals()
+
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
-                    lnA {
+                    inverse {
                         A_0()
                     }
                     Minus()
-                    lnA {
+                    inverse {
                         A_t()
                     }
                 }
                 Rectangle()
-                    .frame(width: 170, height: 2)
+                    .frame(width: 220, height: 2)
                 Text("t")
-                    .frame(width: 20)
-
+                    .frame(width: 10)
             }
         }
     }
 
-    private func lnA<Content: View>(aTerm: () -> Content) -> some View {
+
+    private func inverse<Content: View>(aTerm: () -> Content) -> some View {
         HStack(spacing: 0) {
-            Text("ln")
-                .frame(width: 24)
+            Text("(1/")
+                .frame(width: 36)
             aTerm()
+            Text(")")
+                .frame(width: 17)
         }
     }
 }
 
-fileprivate struct FirstOrderRateBlank: View {
+fileprivate struct SecondOrderRateBlank: View {
 
     let rate: String?
     let a0: String?
     let at: String?
-    let t: String?
+    let time: String?
 
     var body: some View {
         HStack(spacing: 1) {
             Placeholder(value: rate)
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+
             Equals()
+
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     Placeholder(value: a0)
                         .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+
                     Minus()
+
                     Placeholder(value: at)
                         .frame(width: Settings.boxWidth, height: Settings.boxHeight)
                 }
+
                 Rectangle()
-                    .frame(width: 140, height: 2)
-                Placeholder(value: t)
+                    .frame(width: 180, height: 2)
+
+                Placeholder(value: time)
                     .frame(width: Settings.boxWidth, height: Settings.boxHeight)
             }
         }
     }
 }
 
-fileprivate struct FirstOrderHalftimeFilled: View {
+fileprivate struct SecondOrderHalftimeFilled: View {
     var body: some View {
         HStack(spacing: 1) {
             HalfTime()
                 .frame(width: Settings.boxWidth)
             Equals()
-            Text("ln(2)")
-                .frame(width: 80)
+            Text("1")
+                .frame(width: 20)
             Divide()
-            Text("k")
-                .frame(width: Settings.boxWidth)
+            Text("(k")
+                .frame(width: 32)
+            A_0()
+            Text(")")
+                .frame(width: 18)
         }
     }
 }
 
-fileprivate struct FirstOrderHalftimeBlank: View {
+fileprivate struct SecondOrderHalftimeBlank: View {
 
-    let halftime: String?
+    let halfTime: String?
     let rate: String?
+    let a0: String?
 
     var body: some View {
         HStack(spacing: 1) {
-            Placeholder(value: halftime)
+            Placeholder(value: halfTime)
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+
             Equals()
-            Text("0.69")
-                .frame(width: 80)
+
+            Text("1")
+                .frame(width: 20)
             Divide()
+
             Placeholder(value: rate)
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+
+            if (a0 != nil) {
+                Text("(")
+                    .frame(width: 12)
+
+                Text(a0!)
+                    .frame(width: 64)
+                Text(")")
+                    .frame(width: 13)
+            } else {
+                Box()
+                    .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+            }
         }
     }
 }
+

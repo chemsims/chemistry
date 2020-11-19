@@ -161,7 +161,7 @@ struct A_t: View {
                 .offset(y: 9)
                 .frame(width: 10)
             EndBracket()
-        }
+        }.minimumScaleFactor(1)
     }
 }
 
@@ -174,7 +174,7 @@ struct A_0: View {
                 .offset(y: 9)
                 .frame(width: 15)
             EndBracket()
-        }
+        }.minimumScaleFactor(1)
     }
 }
 
@@ -188,6 +188,7 @@ fileprivate struct BracketA: View {
 fileprivate struct EndBracket: View {
     var body: some View {
         Text("]")
+            .font(.system(size: RateEquationSizes.fontSize))
             .frame(width: 8)
     }
 }

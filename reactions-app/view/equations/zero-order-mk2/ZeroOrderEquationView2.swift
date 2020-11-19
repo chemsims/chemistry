@@ -269,7 +269,7 @@ struct Placeholder: View {
 
 }
 
-fileprivate struct Box: View {
+struct Box: View {
     let size: CGFloat = 35
 
     var body: some View {

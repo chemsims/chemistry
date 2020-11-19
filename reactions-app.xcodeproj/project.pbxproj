@@ -69,6 +69,7 @@
 		576D5A7825665E170062F722 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
 		576D5A8D256674FD0062F722 /* ZeroOrderEquationView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A8C256674FD0062F722 /* ZeroOrderEquationView2.swift */; };
 		576D5AA52566BAB50062F722 /* FirstOrderEquationView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AA42566BAB50062F722 /* FirstOrderEquationView2.swift */; };
+		576D5AAC2566CA900062F722 /* SecondOrderEquationView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AAB2566CA900062F722 /* SecondOrderEquationView2.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
@@ -170,6 +171,7 @@
 		576D5A7725665E170062F722 /* ScaledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledView.swift; sourceTree = "<group>"; };
 		576D5A8C256674FD0062F722 /* ZeroOrderEquationView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderEquationView2.swift; sourceTree = "<group>"; };
 		576D5AA42566BAB50062F722 /* FirstOrderEquationView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderEquationView2.swift; sourceTree = "<group>"; };
+		576D5AAB2566CA900062F722 /* SecondOrderEquationView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderEquationView2.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		57AA05E62562F3750080C538 /* SliderIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderIndicator.swift; sourceTree = "<group>"; };
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
@@ -468,6 +470,7 @@
 		572CB947255C411F0071C600 /* equations */ = {
 			isa = PBXGroup;
 			children = (
+				576D5AAA2566CA800062F722 /* second-order-mk2 */,
 				576D5AA32566BA800062F722 /* first-order-mk2 */,
 				576D5A89256674D50062F722 /* zero-order-mk2 */,
 				572D39AB256656270039D37D /* rate-comparison */,
@@ -502,6 +505,14 @@
 				576D5AA42566BAB50062F722 /* FirstOrderEquationView2.swift */,
 			);
 			path = "first-order-mk2";
+			sourceTree = "<group>";
+		};
+		576D5AAA2566CA800062F722 /* second-order-mk2 */ = {
+			isa = PBXGroup;
+			children = (
+				576D5AAB2566CA900062F722 /* SecondOrderEquationView2.swift */,
+			);
+			path = "second-order-mk2";
 			sourceTree = "<group>";
 		};
 		57976928255EBFE300CD7FD3 /* shapes */ = {
@@ -717,6 +728,7 @@
 				57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */,
 				571B3C8D25656C1C0075358B /* SecondOrderHalfTimeView.swift in Sources */,
 				57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */,
+				576D5AAC2566CA900062F722 /* SecondOrderEquationView2.swift in Sources */,
 				571B3CBB25658D300075358B /* RootNavigationViewModel.swift in Sources */,
 				571B3C9D256578D80075358B /* ReactionComparisonNavigationViewModel.swift in Sources */,
 				572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */,
