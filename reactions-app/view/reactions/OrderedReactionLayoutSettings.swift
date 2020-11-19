@@ -66,7 +66,7 @@ struct OrderedReactionLayoutSettings {
         chartSize * 0.2
     }
     var beakyRightPadding: CGFloat {
-        bubbleWidth * 0.3
+        bubbleWidth * 0.25
     }
     var beakyBottomPadding: CGFloat {
         beakyRightPadding * 0.1
