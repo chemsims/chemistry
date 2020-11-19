@@ -23,5 +23,5 @@ struct ReactionSettings {
     static let minFinalConcentration: CGFloat = 0.15
 
     /// The minimum value that time 2 may be. Time 1 is liited to ensure there is sufficient space
-    static let minFinalTime: CGFloat = 13
+    static let minFinalTime: CGFloat = 15
 }

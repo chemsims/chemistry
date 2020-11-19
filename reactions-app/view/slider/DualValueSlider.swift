@@ -41,7 +41,7 @@ struct DualValueSlider: View {
                         maxValue: value2NextHandle
                     ),
                     disabled: false,
-                    showBar: false
+                    showBar: canSetInitialValue ? false : true
                 )
             }
         }
