@@ -89,14 +89,27 @@ struct GeneralTimeChartView: View {
 
     var body: some View {
         HStack {
-            VStack {
-                Text(yLabel)
-                if (includeValuesInLabel) {
-                    Text(concentrationLabel).foregroundColor(.orangeAccent)
+            if (includeSliders) {
+                VStack {
+                    Text(yLabel)
+                    if (includeValuesInLabel) {
+                        Text(concentrationLabel)
+                            .foregroundColor(.orangeAccent)
+                    }
                 }
+                .font(.system(size: settings.labelFontSize))
+                .frame(width: settings.yLabelWidth)
+            } else {
+                VStack {
+                    Text(yLabel)
+                        .minimumScaleFactor(1)
+                    if (includeValuesInLabel) {
+                        Text(concentrationLabel)
+                            .foregroundColor(.orangeAccent)
+                    }
+                }
+                .font(.system(size: settings.labelFontSize))
             }
-            .font(.system(size: settings.labelFontSize))
-            .frame(width: settings.yLabelWidth) // TODO shouldn't be set when there is no slider
 
             HStack(alignment: .top) {
 
@@ -136,8 +149,16 @@ struct GeneralTimeChartView: View {
                     }
 
                     HStack {
-                        Text("Time")
-                            .frame(width: settings.chartSize / 2, alignment: .trailing)
+                        if (includeSliders) {
+                            Text("Time")
+                                .frame(
+                                    width: settings.chartSize / 2,
+                                    alignment: .trailing
+                                )
+                        } else {
+                            Text("Time")
+                                .minimumScaleFactor(1)
+                        }
 
                         if (includeValuesInLabel) {
                             Text(timeLabel)
@@ -147,7 +168,8 @@ struct GeneralTimeChartView: View {
                     }.font(.system(size: settings.labelFontSize))
                 }
             }
-        }
+        }.lineLimit(1)
+        .minimumScaleFactor(0.5)
     }
 
     private func chartWithData(
@@ -237,7 +259,35 @@ struct DisabledSliderModifier: ViewModifier {
 
 struct TimeChartAxisView_Previews: PreviewProvider {
     static var previews: some View {
-        ViewWrapper()
+        ConcentrationTimeChartView(
+            initialConcentration: .constant(1),
+            initialTime: .constant(1),
+            finalConcentration: .constant(nil),
+            finalTime: .constant(nil),
+            settings: TimeChartGeometrySettings(
+                chartSize: 300
+            ),
+            concentrationA: ConstantConcentration(value: 1),
+            concentrationB: ConstantConcentration(value: 1),
+            currentTime: nil,
+            headOpacity: 1,
+            canSetInitialTime: true
+        )
+                .previewLayout(.fixed(width: 500, height: 300))
+
+            SingleConcentrationPlot(
+                initialConcentration: 1,
+                initialTime: 1,
+                finalConcentration: 1,
+                finalTime: 1,
+                settings: TimeChartGeometrySettings(
+                    chartSize: 300
+                ),
+                concentrationA: ConstantConcentration(value: 1),
+                currentTime: nil,
+                headOpacity: 1,
+                yLabel: "foo"
+            ).previewLayout(.fixed(width: 500, height: 300))
     }
 
     struct ViewWrapper: View {

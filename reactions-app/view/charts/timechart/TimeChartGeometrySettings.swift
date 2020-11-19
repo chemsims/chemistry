@@ -63,7 +63,7 @@ struct TimeChartGeometrySettings {
         0.015 * chartSize
     }
     var labelFontSize: CGFloat {
-        0.06 * chartSize
+        0.1 * chartSize
     }
     var chartHeadPrimarySize: CGFloat {
         0.02 * chartSize

@@ -60,6 +60,8 @@ struct SecondOrderReactionView: View {
             yLabel: "1/[A]"
         )
         .padding(.top, settings.chartsTopPadding)
+        .padding(.leading, settings.chartsTopPadding / 2)
+
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {

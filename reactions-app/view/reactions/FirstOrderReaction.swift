@@ -36,6 +36,7 @@ struct FirstOrderReactionView: View {
                 HStack(spacing: 0) {
                     logChart(settings: settings)
                         .padding(.top, settings.chartsTopPadding)
+                        .padding(.leading, settings.chartsTopPadding)
 
                     equationView(settings: settings)
                         .padding(.leading, equationLeadingPadding)
@@ -53,7 +54,7 @@ struct FirstOrderReactionView: View {
             finalConcentration: reaction.finalConcentration,
             finalTime: reaction.finalTime,
             settings: TimeChartGeometrySettings(
-                chartSize: barChartSize(settings: settings),
+                chartSize: settings.chartSize,
                 minConcentration: ReactionSettings.minLogConcentration,
                 maxConcentration: ReactionSettings.maxLogConcentration
             ),
