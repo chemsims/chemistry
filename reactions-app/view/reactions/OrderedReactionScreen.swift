@@ -19,10 +19,12 @@ struct OrderedReactionScreen<Content: View>: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
+            beaker(settings: settings)
             beaky(settings: settings)
                 .padding(.trailing, settings.beakyRightPadding)
                 .padding(.bottom, settings.beakyBottomPadding)
-            makeHView(using: settings)
+            rhsView()
+//            makeHView(using: settings)
         }
     }
 
@@ -30,9 +32,7 @@ struct OrderedReactionScreen<Content: View>: View {
         HStack(spacing: 0) {
             beaker(settings: settings)
             Spacer()
-            middleCharts(settings: settings)
-                .padding(.top, settings.chartsTopPadding)
-            rhsView()
+//            rhsView()
         }
     }
 
@@ -59,21 +59,26 @@ struct OrderedReactionScreen<Content: View>: View {
 
     private func beaker(settings: OrderedReactionLayoutSettings) -> some View {
         VStack {
+            HStack {
+                FilledBeaker(
+                    moleculesA: reaction.moleculesA,
+                    moleculesB: reaction.moleculesB,
+                    moleculeBOpacity: reaction.moleculeBOpacity
+                )
+                .frame(width: settings.beakerWidth, height: settings.beakerHeight)
+                .padding(.leading, settings.beakerLeadingPadding)
+                .padding(.top, settings.beakerLeadingPadding)
+
+                middleCharts(settings: settings)
+            }
+
             Spacer()
-            FilledBeaker(
-                moleculesA: reaction.moleculesA,
-                moleculesB: reaction.moleculesB,
-                moleculeBOpacity: reaction.moleculeBOpacity
-            )
-            .frame(width: settings.beakerWidth, height: settings.beakerHeight)
-            .padding(.leading, settings.beakerLeadingPadding)
-            .padding(.bottom, settings.beakerLeadingPadding)
+
         }
     }
 
     private func middleCharts(settings: OrderedReactionLayoutSettings) -> some View {
-        VStack(alignment: .trailing, spacing: 0) {
-
+        HStack(spacing: 20) {
             ConcentrationTimeChartView(
                 initialConcentration: $reaction.initialConcentration,
                 initialTime: $reaction.initialTime,
@@ -103,6 +108,5 @@ struct OrderedReactionScreen<Content: View>: View {
             ).frame(width: settings.chartSize)
             Spacer()
         }
-        .frame(width: settings.chartSize + settings.midChartsLeftPadding, alignment: .trailing)
     }
 }

@@ -21,8 +21,8 @@ struct ZeroOrderEquationView2: View {
     let maxHeight: CGFloat
     
 
-    private let naturalWidth: CGFloat = 373
-    private let naturalHeight: CGFloat = 277
+    private let naturalWidth: CGFloat = 567
+    private let naturalHeight: CGFloat = 237
 
     var body: some View {
         ScaledView(
@@ -41,12 +41,14 @@ struct ZeroOrderEquationView2: View {
                     t1: initialTime.str(decimals: 2),
                     t2: t2?.str(decimals: 2)
                 )
-                FilledHalftime()
-                BlankHalftime(
-                    c1: initialConcentration.str(decimals: 2),
-                    halftime: halfTime?.str(decimals: 2),
-                    rate: rate?.str(decimals: 2)
-                )
+                HStack(spacing: 22) {
+                    FilledHalftime()
+                    BlankHalftime(
+                        c1: initialConcentration.str(decimals: 2),
+                        halftime: halfTime?.str(decimals: 2),
+                        rate: rate?.str(decimals: 2)
+                    )
+                }
             }
             .font(.system(size: RateEquationSizes.fontSize))
             .lineLimit(1)
@@ -170,10 +172,8 @@ fileprivate struct FilledHalftime: View {
     var body: some View {
         HStack(spacing: 4) {
             HalfTime()
-                .frame(width: Settings.boxWidth)
             Equals()
             A_0()
-                .frame(width: Settings.boxWidth)
             Text("/")
                 .frame(width: 12)
             Text("(2 k)")
@@ -282,4 +282,24 @@ struct Settings {
     static let hSpacing: CGFloat = 2
     static let boxHeight: CGFloat = 50
     static let boxWidth: CGFloat = 70
+}
+
+
+struct ZeroOrderEquationView2_Previews: PreviewProvider {
+    static var previews: some View {
+        ZeroOrderEquationView2(
+            emphasiseFilledTerms: false,
+            initialConcentration: 0.1,
+            initialTime: 1,
+            rate: nil,
+            deltaC: nil,
+            deltaT: nil,
+            c2: nil,
+            t2: nil,
+            halfTime: nil,
+            maxWidth: 100,
+            maxHeight: 100
+        ).scaleEffect(x: 0.5, y: 0.5)
+        .previewLayout(.fixed(width: 812, height: 375))
+    }
 }

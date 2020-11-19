@@ -48,8 +48,11 @@ struct OrderedReactionLayoutSettings {
         SpeechBubbleSettings.getStemWidth(width: bubbleWidth)
     }
     var beakerWidth: CGFloat {
-        if let h = horizontalSize, h == .regular {
+        if let h = horizontalSize, h == .regular, let v = verticalSize, v == .regular {
             return 0.25 * width
+        }
+        if let h = horizontalSize, h == .regular, let v = verticalSize, v == .compact {
+            return 0.2 * width
         }
         return 0.23 * width
     }

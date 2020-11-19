@@ -41,10 +41,14 @@ struct ZeroOrderReaction: View {
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
-        let availableWidth = settings.width - settings.beakerWidth - settings.chartSize - settings.midChartsLeftPadding
-        let availableHeight = settings.height - settings.beakyBoxTotalHeight
+        let availableWidth = settings.width - settings.beakyBoxTotalWidth - (2 * equationHorizontalPadding)
+        let availableHeight = settings.height - settings.beakerHeight - settings.beakerLeadingPadding - (2 * equationVerticalPadding)
+
+        let height = min(availableHeight, settings.height / 2.5)
 
         return VStack(alignment: .leading, spacing: 0) {
+            Spacer()
+                .frame(height: settings.beakerHeight + settings.beakerLeadingPadding)
             ZeroOrderEquationView2(
                 emphasiseFilledTerms: reactionModel.currentTime == nil,
                 initialConcentration: reactionModel.initialConcentration,
@@ -56,10 +60,19 @@ struct ZeroOrderReaction: View {
                 t2: reactionModel.finalTime,
                 halfTime: reactionModel.halfTime,
                 maxWidth: availableWidth,
-                maxHeight: availableHeight
+                maxHeight: height
             )
+            .padding(.vertical, equationVerticalPadding)
+            .padding(.horizontal, equationHorizontalPadding)
             Spacer()
         }
+    }
+
+    private var equationVerticalPadding: CGFloat {
+        10
+    }
+    private var equationHorizontalPadding: CGFloat {
+        5
     }
 }
 
