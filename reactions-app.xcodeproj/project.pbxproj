@@ -72,6 +72,8 @@
 		577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077B42568E318003E750E /* EnergyProfileScreen.swift */; };
 		577077BC2568E3E1003E750E /* BeakyOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077BB2568E3E1003E750E /* BeakyOverlay.swift */; };
 		577077CA2568FDAA003E750E /* EnergyBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyBeaker.swift */; };
+		577077CF25698CE0003E750E /* MoleculeEnergyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* MoleculeEnergyScene.swift */; };
+		577077D325698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077D225698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
@@ -176,6 +178,8 @@
 		577077B42568E318003E750E /* EnergyProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreen.swift; sourceTree = "<group>"; };
 		577077BB2568E3E1003E750E /* BeakyOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyOverlay.swift; sourceTree = "<group>"; };
 		577077C92568FDAA003E750E /* EnergyBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBeaker.swift; sourceTree = "<group>"; };
+		577077CE25698CE0003E750E /* MoleculeEnergyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeEnergyScene.swift; sourceTree = "<group>"; };
+		577077D225698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeEnergyUIViewRepresentable.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		57AA05E62562F3750080C538 /* SliderIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderIndicator.swift; sourceTree = "<group>"; };
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
@@ -515,6 +519,8 @@
 			children = (
 				577077B42568E318003E750E /* EnergyProfileScreen.swift */,
 				577077C92568FDAA003E750E /* EnergyBeaker.swift */,
+				577077CE25698CE0003E750E /* MoleculeEnergyScene.swift */,
+				577077D225698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift */,
 			);
 			path = "energy-profile";
 			sourceTree = "<group>";
@@ -735,6 +741,7 @@
 				57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */,
 				57C3A8272563248F00EE753E /* FirstOrderReaction.swift in Sources */,
 				572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */,
+				577077D325698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift in Sources */,
 				576D5A7825665E170062F722 /* ScaledView.swift in Sources */,
 				571B3C80256560F90075358B /* SecondOrderStatements.swift in Sources */,
 				57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */,
@@ -745,6 +752,7 @@
 				57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */,
 				571B3C8D25656C1C0075358B /* SecondOrderHalfTimeView.swift in Sources */,
 				57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */,
+				577077CF25698CE0003E750E /* MoleculeEnergyScene.swift in Sources */,
 				576D5AAC2566CA900062F722 /* SecondOrderEquationView2.swift in Sources */,
 				571B3CBB25658D300075358B /* RootNavigationViewModel.swift in Sources */,
 				571B3C9D256578D80075358B /* ReactionComparisonNavigationViewModel.swift in Sources */,

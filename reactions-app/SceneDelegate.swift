@@ -20,7 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
 
-        let contentView = RootNavigationView(model: RootNavigationViewModel())
+//        let contentView = RootNavigationView(model: RootNavigationViewModel())
+        let contentView = MoleculeEneregyUIViewRepresentable(width: 300, height: 300)
+            .frame(width: 300, height: 300)
+            .border(Color.black)
 
 
         // Use a UIHostingController as window root view controller.

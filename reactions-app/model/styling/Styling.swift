@@ -11,15 +11,23 @@ struct Styling {
 
     static let beakerLiquid = Color(red: 218 / 255, green: 238 / 255, blue: 245 / 255)
     static let moleculePlaceholder = Color(red: 206 / 255, green: 227 / 255, blue: 237 / 255)
-    static let moleculeA = Color(red: 81 / 255, green: 155 / 255, blue: 210 / 255)
 
-    static let moleculeB = Color(red: 175 / 255, green: 11 / 255, blue: 8 / 255)
+    static let moleculeA = UIColor.moleculeA.color
+    static let moleculeB = UIColor.moleculeB.color
 
     static let timeAxisCompleteBar = Color.gray
 
     static let moleculeAChartHeadHalo = Color(red: 143 / 255, green: 190 / 255, blue: 226 / 255, opacity: 0.7)
 
     static let speechBubble = Color(red: 0.91, green: 0.91, blue: 0.91)
+}
+
+extension UIColor {
+
+    static let moleculeA = UIColor(red: 81 / 255, green: 155 / 255, blue: 210 / 255, alpha: 1)
+    static let moleculeB = UIColor(red: 175 / 255, green: 11 / 255, blue: 8 / 255, alpha: 1)
+
+    var color: Color { Color(self) }
 }
 
 extension Color {
