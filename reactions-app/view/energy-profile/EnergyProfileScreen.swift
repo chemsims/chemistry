@@ -23,8 +23,77 @@ struct EnergyProfileScreen: View {
     }
 
     private func makeView(settings: OrderedReactionLayoutSettings) -> some View {
-        Text("foo")
+        ZStack {
+            chartsView(settings: settings)
+            beakyView(settings: settings)
+            equationView(settings: settings)
+            beakerView(settings: settings)
+        }
     }
+
+    private func beakyView(settings: OrderedReactionLayoutSettings) -> some View {
+        BeakyOverlay(
+            statement: [],
+            next: {},
+            back: {},
+            settings: settings
+        )
+        .padding(.trailing, settings.beakyRightPadding)
+        .padding(.bottom, settings.beakyBottomPadding)
+    }
+
+
+    private func chartsView(settings: OrderedReactionLayoutSettings) -> some View {
+        VStack {
+            HStack(spacing: 20) {
+                Spacer()
+                Rectangle()
+                    .stroke()
+                    .frame(width: settings.chartSize * 1, height: settings.chartSize * 1)
+                    .border(Color.black)
+                    .frame(width: settings.chartSize * 1.15, height: settings.chartSize * 1.15, alignment: .topTrailing)
+                    .border(Color.black.opacity(0.7))
+
+                Rectangle()
+                    .stroke()
+                    .frame(width: settings.chartSize * 1, height: settings.chartSize * 1)
+                    .border(Color.black)
+                    .frame(width: settings.chartSize * 1.15, height: settings.chartSize * 1.15, alignment: .topTrailing)
+                    .border(Color.black.opacity(0.7))
+            }
+            .padding(.top, settings.chartsTopPadding)
+            .padding(.trailing, settings.chartsTopPadding * 0.5)
+            Spacer()
+        }
+    }
+
+    private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                    .frame(width: totalBeakerWidth(settings: settings))
+                Rectangle()
+                    .stroke()
+                    .frame(width: settings.width / 5, height: settings.height / 2.3)
+                    .padding(.leading, 0.05 * totalBeakerWidth(settings: settings))
+                Spacer()
+            }
+        }
+    }
+
+    private func totalBeakerWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        settings.width / 2.4
+    }
+
+    private func beakerView(settings: OrderedReactionLayoutSettings) -> some View {
+        HStack(spacing: 0) {
+            Rectangle()
+                .frame(width: totalBeakerWidth(settings: settings))
+            Spacer()
+        }
+    }
+
 }
 
 struct EnergyProfileScreen_Previews: PreviewProvider {
