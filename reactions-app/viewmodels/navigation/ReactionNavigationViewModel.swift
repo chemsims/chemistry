@@ -5,28 +5,28 @@
 
 import SwiftUI
 
-class ReactionNavigationViewModel: ObservableObject {
+class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
 
     @Published var statement: [SpeechBubbleLine] = []
 
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
 
-    let reactionViewModel: ZeroOrderReactionViewModel
+    let model: State.Model
+    private let states: [State]
 
     private var nextTimer: Timer?
 
-    init(reactionViewModel: ZeroOrderReactionViewModel, states: [ReactionState]) {
+    init(reactionViewModel: State.Model, states: [State]) {
         self.states = states
         self.currentIndex = 0
-        self.reactionViewModel = reactionViewModel
+        self.model = reactionViewModel
         setStatement()
         if let state = getState(for: currentIndex) {
             state.apply(on: reactionViewModel)
         }
     }
 
-    private let states: [ReactionState]
     private var currentIndex: Int {
         didSet {
             setStatement()
@@ -36,7 +36,7 @@ class ReactionNavigationViewModel: ObservableObject {
     @objc func next() {
         let nextIndex = currentIndex + 1
         if let state = getState(for: nextIndex) {
-            state.apply(on: reactionViewModel)
+            state.apply(on: model)
             currentIndex = nextIndex
             scheduleNextState(for: state)
         } else if let nextScreen = nextScreen {
@@ -48,8 +48,8 @@ class ReactionNavigationViewModel: ObservableObject {
         let previousIndex = currentIndex - 1
         if let currentState = getState(for: currentIndex),
            let previousState = getState(for: previousIndex) {
-            currentState.unapply(on: reactionViewModel)
-            previousState.reapply(on: reactionViewModel)
+            currentState.unapply(on: model)
+            previousState.reapply(on: model)
             currentIndex = previousIndex
             scheduleNextState(for: previousState)
         } else if let prevScreen = prevScreen {
@@ -57,12 +57,12 @@ class ReactionNavigationViewModel: ObservableObject {
         }
     }
 
-    private func scheduleNextState(for state: ReactionState) {
+    private func scheduleNextState(for state: State) {
         if let timer = nextTimer {
             timer.invalidate()
             nextTimer = nil
         }
-        if let delay = state.nextStateAutoDispatchDelay(model: reactionViewModel) {
+        if let delay = state.nextStateAutoDispatchDelay(model: model) {
             nextTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(next), userInfo: nil, repeats: false)
         }
     }
@@ -72,7 +72,7 @@ class ReactionNavigationViewModel: ObservableObject {
         statement = state?.statement ?? []
     }
 
-    private func getState(for n: Int) -> ReactionState? {
+    private func getState(for n: Int) -> State? {
         states.indices.contains(n) ? states[n] : nil
     }
 }

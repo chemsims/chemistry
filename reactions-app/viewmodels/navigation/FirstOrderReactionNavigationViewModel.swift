@@ -5,16 +5,20 @@
 
 import SwiftUI
 
-class FirstOrderReactionNavigationViewModel: ReactionNavigationViewModel {
-    init(reactionViewModel: ZeroOrderReactionViewModel) {
-        super.init(
-            reactionViewModel: reactionViewModel,
-            states: [
-                InitialOrderedStep(order: "first"),
-                SetFinalConcentrationToNonNil(),
-                RunAnimation(statement: ReactionStatements.inProgress),
-                EndAnimation(statement: ReactionStatements.end)
-            ]
+struct FirstOrderReactionNavigation {
+    static var states: [ReactionState] {
+        [
+            InitialOrderedStep(order: "first"),
+            SetFinalConcentrationToNonNil(),
+            RunAnimation(statement: ReactionStatements.inProgress),
+            EndAnimation(statement: ReactionStatements.end)
+        ]
+    }
+
+    static func model(reaction: FirstOrderReactionViewModel) -> ReactionNavigationViewModel<ReactionState> {
+        ReactionNavigationViewModel(
+            reactionViewModel: reaction,
+            states: states
         )
     }
 }

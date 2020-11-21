@@ -16,14 +16,14 @@ class RootNavigationViewModel: ObservableObject {
 
     private func goToZeroOrder() {
         let reaction = ZeroOrderReactionViewModel()
-        let navigation = ZeroOrderReactionNavigationViewModel(reactionViewModel: reaction)
-        self.view = AnyView(ZeroOrderReaction(beakyModel: navigation))
+        let navigation = ZeroOrderReactionNavigation.model(reaction: reaction)
+        self.view = AnyView(ZeroOrderReaction(reaction: reaction, navigation: navigation))
         navigation.nextScreen = goToFirstOrder
     }
 
     private func goToFirstOrder() {
         let reaction = FirstOrderReactionViewModel()
-        let navigation = FirstOrderReactionNavigationViewModel(reactionViewModel: reaction)
+        let navigation = FirstOrderReactionNavigation.model(reaction: reaction)
         navigation.prevScreen = goToZeroOrder
         navigation.nextScreen = goToSecondOrder
         self.view = AnyView(FirstOrderReactionView(reaction: reaction, navigation: navigation))
@@ -31,7 +31,7 @@ class RootNavigationViewModel: ObservableObject {
 
     private func goToSecondOrder() {
         let reaction = SecondOrderReactionViewModel()
-        let navigation = SecondOrderReactionNavigationViewModel(reactionViewModel: reaction)
+        let navigation = SecondOrderReactionNavigation.model(reaction: reaction)
         navigation.prevScreen = goToFirstOrder
         navigation.nextScreen = goToComparison
         self.view = AnyView(SecondOrderReactionView(reaction: reaction, navigation: navigation))
@@ -39,7 +39,7 @@ class RootNavigationViewModel: ObservableObject {
 
     private func goToComparison() {
         let reaction = ZeroOrderReactionViewModel()
-        let navigation = ReactionComparisonNavigationViewModel(reactionViewModel: reaction)
+        let navigation = ReactionComparisonNavigation.model(reaction: reaction)
         navigation.prevScreen = goToSecondOrder
         self.view = AnyView(ReactionComparison(reaction: reaction, navigation: navigation))
     }

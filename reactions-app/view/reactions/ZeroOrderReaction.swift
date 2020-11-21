@@ -7,16 +7,11 @@ import SwiftUI
 
 struct ZeroOrderReaction: View {
 
-    @ObservedObject var navigation: ZeroOrderReactionNavigationViewModel
     @ObservedObject var reaction: ZeroOrderReactionViewModel
+    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
-
-    init(beakyModel: ZeroOrderReactionNavigationViewModel) {
-        self.navigation = beakyModel
-        self.reaction = beakyModel.reactionViewModel
-    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -78,27 +73,31 @@ struct ZeroOrderReaction: View {
 
 struct ZeroOrderReaction_Previews: PreviewProvider {
 
+    static var navigation: ReactionNavigationViewModel<ReactionState> {
+        ZeroOrderReactionNavigation.model(reaction: ZeroOrderReactionViewModel())
+    }
+
     static var previews: some View {
 
         // iPhone SE landscape
         ZeroOrderReaction(
-            beakyModel: ZeroOrderReactionNavigationViewModel(reactionViewModel: ZeroOrderReactionViewModel())
+            reaction: navigation.model, navigation: navigation
         ).previewLayout(.fixed(width: 568, height: 320))
 
         // iPhone 11 landscape
         ZeroOrderReaction(
-            beakyModel: ZeroOrderReactionNavigationViewModel(reactionViewModel: ZeroOrderReactionViewModel())
+            reaction: navigation.model, navigation: navigation
         ).previewLayout(.fixed(width: 812, height: 375))
 
 
         /// iPad mini 4 landscape
         ZeroOrderReaction(
-            beakyModel: ZeroOrderReactionNavigationViewModel(reactionViewModel: ZeroOrderReactionViewModel())
+            reaction: navigation.model, navigation: navigation
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro
         ZeroOrderReaction(
-            beakyModel: ZeroOrderReactionNavigationViewModel(reactionViewModel: ZeroOrderReactionViewModel())
+            reaction: navigation.model, navigation: navigation
         ).previewLayout(.fixed(width: 1366, height: 1024))
 
     }

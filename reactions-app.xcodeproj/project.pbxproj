@@ -50,7 +50,6 @@
 		571B3CBB25658D300075358B /* RootNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3CBA25658D300075358B /* RootNavigationViewModel.swift */; };
 		571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A3F255A780700F4E635 /* AppDelegate.swift */; };
 		571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A41255A780700F4E635 /* SceneDelegate.swift */; };
-		571D6A44255A780700F4E635 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A43255A780700F4E635 /* ContentView.swift */; };
 		571D6A46255A780900F4E635 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A45255A780900F4E635 /* Assets.xcassets */; };
 		571D6A49255A780900F4E635 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A48255A780900F4E635 /* Preview Assets.xcassets */; };
 		571D6A4C255A780900F4E635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A4A255A780900F4E635 /* LaunchScreen.storyboard */; };
@@ -153,7 +152,6 @@
 		571D6A3C255A780700F4E635 /* reactions-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		571D6A3F255A780700F4E635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		571D6A41255A780700F4E635 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		571D6A43255A780700F4E635 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		571D6A45255A780900F4E635 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		571D6A48255A780900F4E635 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		571D6A4B255A780900F4E635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -351,7 +349,6 @@
 				571D6A55255AAC0900F4E635 /* view */,
 				571D6A3F255A780700F4E635 /* AppDelegate.swift */,
 				571D6A41255A780700F4E635 /* SceneDelegate.swift */,
-				571D6A43255A780700F4E635 /* ContentView.swift */,
 				571D6A45255A780900F4E635 /* Assets.xcassets */,
 				571D6A4A255A780900F4E635 /* LaunchScreen.storyboard */,
 				571D6A4D255A780900F4E635 /* Info.plist */,
@@ -751,7 +748,6 @@
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */,
 				571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */,
-				571D6A44255A780700F4E635 /* ContentView.swift in Sources */,
 				57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */,
 				57035F0C255C26D000DB3A19 /* ChartAxisShape.swift in Sources */,
 				57F477472560FF300041D406 /* NavButton.swift in Sources */,

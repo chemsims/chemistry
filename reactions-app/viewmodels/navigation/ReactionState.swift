@@ -5,38 +5,50 @@
 
 import SwiftUI
 
-protocol ReactionState {
+protocol ScreenState {
+    associatedtype Model
 
     /// The statement to display to the user
     var statement: [SpeechBubbleLine] { get }
 
     /// Applies the reaction state to the model
-    func apply(on model: ZeroOrderReactionViewModel) -> Void
+    func apply(on model: Model) -> Void
 
     /// Unapplies the reaction state to the model. i.e., reversing the effect of `apply`
-    func unapply(on model: ZeroOrderReactionViewModel) -> Void
+    func unapply(on model: Model) -> Void
 
     /// Reapplies the state, when returning from a subsequent state.
-    func reapply(on model: ZeroOrderReactionViewModel) -> Void
+    func reapply(on model: Model) -> Void
 
     /// Interval to wait before automatically progressing to the next state
-    func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double?
+    func nextStateAutoDispatchDelay(model: Model) -> Double?
 }
 
-extension ReactionState {
-    func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? {
-        return nil
+class ReactionState: ScreenState {
+
+    typealias Model = ZeroOrderReactionViewModel
+
+    let statement: [SpeechBubbleLine]
+    init(statement: [SpeechBubbleLine]) {
+        self.statement = statement
     }
+
+    func apply(on model: ZeroOrderReactionViewModel) { }
+
+    func unapply(on model: ZeroOrderReactionViewModel) { }
+
+    func reapply(on model: ZeroOrderReactionViewModel) { }
+
+    func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? { nil }
+
 }
 
 
 // MARK: Common reaction states
 
-struct RunAnimation: ReactionState {
+class RunAnimation: ReactionState {
 
-    let statement: [SpeechBubbleLine]
-
-    func apply(on model: ZeroOrderReactionViewModel) {
+    override func apply(on model: ZeroOrderReactionViewModel) {
         model.reactionHasEnded = false
         if let duration = model.reactionDuration, let finalTime = model.finalTime {
             model.currentTime = model.initialTime
@@ -49,18 +61,18 @@ struct RunAnimation: ReactionState {
         }
     }
 
-    func reapply(on model: ZeroOrderReactionViewModel) {
+    override func reapply(on model: ZeroOrderReactionViewModel) {
         apply(on: model)
     }
 
-    func unapply(on model: ZeroOrderReactionViewModel) {
+    override func unapply(on model: ZeroOrderReactionViewModel) {
         withAnimation(.none) {
             model.currentTime = nil
             model.moleculeBOpacity = 0
         }
     }
 
-    func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? {
+    override func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? {
         if let duration = model.reactionDuration {
             return Double(duration)
         }
@@ -69,11 +81,9 @@ struct RunAnimation: ReactionState {
 
 }
 
-struct EndAnimation: ReactionState {
+class EndAnimation: ReactionState {
 
-    let statement: [SpeechBubbleLine]
-
-    func apply(on model: ZeroOrderReactionViewModel) {
+    override func apply(on model: ZeroOrderReactionViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
             if let finalTime = model.finalTime {
                 model.currentTime = finalTime * 1.001
@@ -84,52 +94,53 @@ struct EndAnimation: ReactionState {
         }
     }
 
-    func unapply(on model: ZeroOrderReactionViewModel) {
+    override func unapply(on model: ZeroOrderReactionViewModel) {
         model.timeChartHeadOpacity = 1
     }
 
-    func reapply(on model: ZeroOrderReactionViewModel) { }
+    override func reapply(on model: ZeroOrderReactionViewModel) { }
 }
 
 
 // MARK: Common states for first/second order reactions
 
-struct InitialOrderedStep: ReactionState {
+class InitialOrderedStep: ReactionState {
 
     let order: String
-
-    var statement: [SpeechBubbleLine] {
-        ReactionStatements.orderIntro(order: order)
+    init(order: String) {
+        self.order = order
+        super.init(statement: ReactionStatements.orderIntro(order: order))
     }
 
-
-    func apply(on model: ZeroOrderReactionViewModel) {
+    override func apply(on model: ZeroOrderReactionViewModel) {
         model.initialTime = 0
         model.finalTime = 10
     }
 
-    func unapply(on model: ZeroOrderReactionViewModel) {
+    override func unapply(on model: ZeroOrderReactionViewModel) {
 
     }
 
-    func reapply(on model: ZeroOrderReactionViewModel) {
+    override func reapply(on model: ZeroOrderReactionViewModel) {
 
     }
 }
 
-struct SetFinalConcentrationToNonNil: ReactionState {
+class SetFinalConcentrationToNonNil: ReactionState {
 
-    var statement: [SpeechBubbleLine] = FirstOrderStatements.setC2
+    init() {
+        super.init(statement: FirstOrderStatements.setC2)
+    }
 
-    func apply(on model: ZeroOrderReactionViewModel) {
+    override func apply(on model: ZeroOrderReactionViewModel) {
         model.finalConcentration = model.initialConcentration / 2
     }
 
-    func unapply(on model: ZeroOrderReactionViewModel) {
+    override func unapply(on model: ZeroOrderReactionViewModel) {
         model.finalConcentration = nil
     }
 
-    func reapply(on model: ZeroOrderReactionViewModel) {
+    override func reapply(on model: ZeroOrderReactionViewModel) {
 
     }
 }

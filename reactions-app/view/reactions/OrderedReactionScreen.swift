@@ -8,11 +8,10 @@ import SwiftUI
 struct OrderedReactionScreen<Content: View>: View {
 
     @ObservedObject var reaction: ZeroOrderReactionViewModel
-    @ObservedObject var navigation: ReactionNavigationViewModel
+    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
     let settings: OrderedReactionLayoutSettings
     let canSetInitialTime: Bool
     let rhsView: () -> Content
-
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass

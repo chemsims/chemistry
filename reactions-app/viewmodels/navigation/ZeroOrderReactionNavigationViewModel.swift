@@ -5,36 +5,39 @@
 
 import Foundation
 
-class ZeroOrderReactionNavigationViewModel: ReactionNavigationViewModel {
-    init(reactionViewModel: ZeroOrderReactionViewModel) {
-        super.init(
-            reactionViewModel: reactionViewModel,
-            states: [
-                InitialStep(),
-                SetFinalValuesToNonNil(),
-                RunAnimation(statement: ReactionStatements.inProgress),
-                EndAnimation(statement: ReactionStatements.end),
-            ]
+struct ZeroOrderReactionNavigation {
+
+    static var states: [ReactionState] {
+        [
+            InitialStep(),
+            SetFinalValuesToNonNil(),
+            RunAnimation(statement: ReactionStatements.inProgress),
+            EndAnimation(statement: ReactionStatements.end),
+        ]
+    }
+
+    static func model(reaction: ZeroOrderReactionViewModel) -> ReactionNavigationViewModel<ReactionState> {
+        ReactionNavigationViewModel(
+            reactionViewModel: reaction,
+            states: states
         )
+    }
+
+}
+
+fileprivate class InitialStep: ReactionState {
+    init() {
+        super.init(statement: ZeroOrderStatements.initial)
     }
 }
 
-fileprivate struct InitialStep: ReactionState {
+fileprivate class SetFinalValuesToNonNil: ReactionState {
 
-    var statement: [SpeechBubbleLine] = ZeroOrderStatements.initial
+    init() {
+        super.init(statement: ZeroOrderStatements.setFinalValues)
+    }
 
-    func apply(on model: ZeroOrderReactionViewModel) { }
-
-    func unapply(on model: ZeroOrderReactionViewModel) { }
-
-    func reapply(on model: ZeroOrderReactionViewModel) { }
-}
-
-fileprivate struct SetFinalValuesToNonNil: ReactionState {
-
-    var statement: [SpeechBubbleLine] = ZeroOrderStatements.setFinalValues
-
-    func apply(on model: ZeroOrderReactionViewModel) {
+    override func apply(on model: ZeroOrderReactionViewModel) {
         let initialConcentration = model.initialConcentration
         let minConcentration = ReactionSettings.minConcentration
 
@@ -45,9 +48,7 @@ fileprivate struct SetFinalValuesToNonNil: ReactionState {
         model.finalTime = (initialTime + maxTime) / 2
     }
 
-    func reapply(on model: ZeroOrderReactionViewModel) { }
-
-    func unapply(on model: ZeroOrderReactionViewModel) {
+    override func unapply(on model: ZeroOrderReactionViewModel) {
         model.finalConcentration = nil
         model.finalTime = nil
     }

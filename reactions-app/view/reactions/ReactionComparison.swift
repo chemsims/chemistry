@@ -8,7 +8,7 @@ import SwiftUI
 struct ReactionComparison: View {
 
     @ObservedObject var reaction: ZeroOrderReactionViewModel
-    @ObservedObject var navigation: ReactionComparisonNavigationViewModel
+    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -211,10 +211,9 @@ struct ReactionComparison: View {
     }
 
 
-    private var c1: CGFloat { ReactionComparisonNavigationViewModel.c1 }
-    private var c2: CGFloat { ReactionComparisonNavigationViewModel.c2 }
-    private var time: CGFloat { 15 }
-//    private var time: CGFloat { ReactionComparisonNavigationViewModel.time}
+    private var c1: CGFloat { ReactionComparisonNavigation.c1 }
+    private var c2: CGFloat { ReactionComparisonNavigation.c2 }
+    private var time: CGFloat { ReactionComparisonNavigation.time }
 
 }
 
@@ -232,7 +231,7 @@ struct ReactionComparison_Previews: PreviewProvider {
     }
 
     static let reaction = ZeroOrderReactionViewModel()
-    static let navigation = ReactionComparisonNavigationViewModel(reactionViewModel: reaction)
+    static let navigation = ReactionComparisonNavigation.model(reaction: reaction)
 
     struct StateWrapper: View {
         var body: some View {
