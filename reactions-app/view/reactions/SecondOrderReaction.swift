@@ -27,7 +27,7 @@ struct SecondOrderReactionView: View {
     private func makeView(settings: OrderedReactionLayoutSettings) -> some View {
         OrderedReactionScreen(
             reaction: reaction,
-            flow: navigation,
+            navigation: navigation,
             settings: settings,
             canSetInitialTime: false
         ) {

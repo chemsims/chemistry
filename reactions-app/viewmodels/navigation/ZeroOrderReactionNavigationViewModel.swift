@@ -5,7 +5,7 @@
 
 import Foundation
 
-class ZeroOrderUserFlowViewModel: ReactionNavigationViewModel {
+class ZeroOrderReactionNavigationViewModel: ReactionNavigationViewModel {
     init(reactionViewModel: ZeroOrderReactionViewModel) {
         super.init(
             reactionViewModel: reactionViewModel,

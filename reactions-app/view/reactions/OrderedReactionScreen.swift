@@ -8,7 +8,7 @@ import SwiftUI
 struct OrderedReactionScreen<Content: View>: View {
 
     @ObservedObject var reaction: ZeroOrderReactionViewModel
-    @ObservedObject var flow: ReactionNavigationViewModel
+    @ObservedObject var navigation: ReactionNavigationViewModel
     let settings: OrderedReactionLayoutSettings
     let canSetInitialTime: Bool
     let rhsView: () -> Content
@@ -24,7 +24,6 @@ struct OrderedReactionScreen<Content: View>: View {
                 .padding(.trailing, settings.beakyRightPadding)
                 .padding(.bottom, settings.beakyBottomPadding)
             rhsView()
-//            makeHView(using: settings)
         }
     }
 
@@ -32,29 +31,16 @@ struct OrderedReactionScreen<Content: View>: View {
         HStack(spacing: 0) {
             beaker(settings: settings)
             Spacer()
-//            rhsView()
         }
     }
 
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
-        HStack(spacing: 0) {
-            Spacer()
-            VStack(alignment: .leading, spacing: 0) {
-                Spacer()
-                BeakyBox(
-                    statement: flow.statement,
-                    next: flow.next,
-                    back: flow.back,
-                    verticalSpacing: settings.beakyVSpacing,
-                    bubbleWidth: settings.bubbleWidth,
-                    bubbleHeight: settings.bubbleHeight,
-                    beakyHeight: settings.beakyHeight,
-                    fontSize: settings.bubbleFontSize,
-                    navButtonSize: settings.navButtonSize,
-                    bubbleStemWidth: settings.bubbleStemWidth
-                )
-            }
-        }
+        BeakyOverlay(
+            statement: navigation.statement,
+            next: navigation.next,
+            back: navigation.back,
+            settings: settings
+        )
     }
 
     private func beaker(settings: OrderedReactionLayoutSettings) -> some View {

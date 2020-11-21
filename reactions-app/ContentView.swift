@@ -13,7 +13,7 @@ struct ContentView: View {
 
     var body: some View {
         ZeroOrderReaction(
-            beakyModel: ZeroOrderUserFlowViewModel(
+            beakyModel: ZeroOrderReactionNavigationViewModel(
                 reactionViewModel: ZeroOrderReactionViewModel()
             )
         )

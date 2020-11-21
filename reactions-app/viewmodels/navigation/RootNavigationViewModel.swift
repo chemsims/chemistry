@@ -16,7 +16,7 @@ class RootNavigationViewModel: ObservableObject {
 
     private func goToZeroOrder() {
         let reaction = ZeroOrderReactionViewModel()
-        let navigation = ZeroOrderUserFlowViewModel(reactionViewModel: reaction)
+        let navigation = ZeroOrderReactionNavigationViewModel(reactionViewModel: reaction)
         self.view = AnyView(ZeroOrderReaction(beakyModel: navigation))
         navigation.nextScreen = goToFirstOrder
     }
@@ -26,7 +26,7 @@ class RootNavigationViewModel: ObservableObject {
         let navigation = FirstOrderReactionNavigationViewModel(reactionViewModel: reaction)
         navigation.prevScreen = goToZeroOrder
         navigation.nextScreen = goToSecondOrder
-        self.view = AnyView(FirstOrderReactionView(reaction: reaction, flow: navigation))
+        self.view = AnyView(FirstOrderReactionView(reaction: reaction, navigation: navigation))
     }
 
     private func goToSecondOrder() {
