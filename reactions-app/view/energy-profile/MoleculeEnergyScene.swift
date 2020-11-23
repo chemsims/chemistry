@@ -25,7 +25,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         self.physicsBody = borderBody
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 
-        self.backgroundColor = SKColor.white
+        self.backgroundColor = Styling.beakerLiquidSK
 
         for _ in 0..<MoleculeEnergySettings.aMolecules {
             addMolecule(color: UIColor.moleculeA, category: moleculeACategory)
@@ -98,7 +98,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
     /// The wedges are added to prevent molecules becoming 'stuck' in the corners, or along edges.
     private func addWedges() {
-        let width = size.width * 0.05
+        let width = size.width * 0.01
         let height = width * 2
 
         func addWedge(

@@ -8,32 +8,48 @@ import SwiftUI
 struct EnergyBeaker: View {
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                FilledBeaker(
-                    moleculesA: [],
-                    moleculesB: [],
-                    moleculeBOpacity: 0
-                ).frame(height: geometry.size.height / 1.5)
-                beakerStand(geometry: geometry)
-                slider(geometry: geometry)
-            }
+            makeView(
+                settings: BeakerSettings(geometry: geometry)
+            )
         }
     }
 
-    private func beakerStand(geometry: GeometryProxy) -> some View {
-        Rectangle()
-            .frame(height: 0.2 * geometry.size.height)
+    private func makeView(settings: BeakerSettings) -> some View {
+        ZStack(alignment: .bottom) {
+            BeakerTicks(
+                numTicks: settings.numTicks,
+                rightGap: settings.ticksRightGap,
+                bottomGap: settings.ticksBottomGap,
+                topGap: settings.ticksTopGap,
+                minorWidth: settings.ticksMinorWidth,
+                majorWidth: settings.ticksMajorWidth
+            )
+            .stroke(lineWidth: 1)
+            .fill(Color.darkGray.opacity(0.5))
+            makeMolecules(settings: settings)
+                .mask(
+                    BeakerBottomShape(
+                        cornerRadius: settings.outerBottomCornerRadius
+                    )
+                )
+            EmptyBeaker(settings: settings)
+        }
     }
 
-    private func slider(geometry: GeometryProxy) -> some View {
-        Rectangle()
-            .frame(height: 0.05 * geometry.size.height)
-
+    private func makeMolecules(settings: BeakerSettings) -> some View {
+        MoleculeEneregyUIViewRepresentable(
+            width: settings.innerBeakerWidth,
+            height: settings.geometry.size.height * 0.4
+        ).frame(
+            width: settings.innerBeakerWidth,
+            height: settings.geometry.size.height * 0.4
+        )
     }
 }
 
 struct EnergyBeaker_Previews: PreviewProvider {
     static var previews: some View {
         EnergyBeaker()
+            .frame(height: 400)
     }
 }
