@@ -36,7 +36,8 @@ struct SliderIndicator: View {
             handleCornerRadius: 0,
             barThickness: 0,
             barColor: .black,
-            orientation: orientation
+            orientation: orientation,
+            includeFill: false
         ).disabled(true)
     }
 }

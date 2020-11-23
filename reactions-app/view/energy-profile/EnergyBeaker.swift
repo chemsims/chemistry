@@ -6,6 +6,9 @@
 import SwiftUI
 
 struct EnergyBeaker: View {
+
+    let extraSpeed: CGFloat
+
     var body: some View {
         GeometryReader { geometry in
             makeView(
@@ -39,7 +42,8 @@ struct EnergyBeaker: View {
     private func makeMolecules(settings: BeakerSettings) -> some View {
         MoleculeEneregyUIViewRepresentable(
             width: settings.innerBeakerWidth,
-            height: settings.geometry.size.height * 0.4
+            height: settings.geometry.size.height * 0.4,
+            speed: extraSpeed
         ).frame(
             width: settings.innerBeakerWidth,
             height: settings.geometry.size.height * 0.4
@@ -49,7 +53,7 @@ struct EnergyBeaker: View {
 
 struct EnergyBeaker_Previews: PreviewProvider {
     static var previews: some View {
-        EnergyBeaker()
+        EnergyBeaker(extraSpeed: 0)
             .frame(height: 400)
     }
 }

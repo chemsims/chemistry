@@ -64,7 +64,8 @@ struct DualValueSlider: View {
             handleCornerRadius: settings.handleCornerRadius,
             barThickness: showBar ? settings.barThickness : 0,
             barColor: Color.black,
-            orientation: orientation
+            orientation: orientation,
+            includeFill: false
         ).disabled(disabled)
     }
 

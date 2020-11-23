@@ -11,6 +11,16 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         self.size.width * MoleculeEnergySettings.radiusToWidth
     }
 
+    var extraSpeed: CGFloat = 0 {
+        didSet {
+            let f = initialSpeed + (extraSpeed * maxSpeed)
+            self.physicsWorld.speed = f
+            print("Set speed to \(f)")
+        }
+    }
+
+    private let maxSpeed: CGFloat = 2
+
     private let moleculeACategory: UInt32 = 0x1 << 0
     private let moleculeBCategory: UInt32 = 0x1 << 1
     private let moleculeCCategory: UInt32 = 0x1 << 2

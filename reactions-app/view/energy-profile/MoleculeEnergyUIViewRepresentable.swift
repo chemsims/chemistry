@@ -13,16 +13,27 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
 
     let width: CGFloat
     let height: CGFloat
-    let scene = MoleculeEnergyScene()
+    let speed: CGFloat
+    init(width: CGFloat, height: CGFloat, speed: CGFloat) {
+        self.width = width
+        self.height = height
+        self.speed = speed
+    }
 
     func makeUIView(context: Context) -> SKView {
-        SKView()
+        print("made the view")
+        let view = SKView()
+        let scene = MoleculeEnergyScene()
+        scene.size = CGSize(width: width, height: height)
+        scene.scaleMode = .aspectFit
+        view.presentScene(scene)
+        return view
     }
 
     func updateUIView(_ uiView: SKView, context: Context) {
-        scene.size = CGSize(width: width, height: height)
-        scene.scaleMode = .aspectFit
-        uiView.presentScene(scene)
+        if let scene = uiView.scene as? MoleculeEnergyScene {
+            scene.extraSpeed = speed
+        }
     }
 }
 
@@ -30,7 +41,7 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
 
 struct MoleculeEnergyUIViewRepresentable_Previews: PreviewProvider {
     static var previews: some View {
-        MoleculeEneregyUIViewRepresentable(width: 300, height: 300)
+        MoleculeEneregyUIViewRepresentable(width: 300, height: 300, speed: 0)
             .frame(width: 300, height: 200)
             .border(Color.black)
     }

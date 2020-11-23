@@ -6,14 +6,16 @@
 import SwiftUI
 
 struct EnergyBeakerWithStand: View {
+
+    @State private var temp: CGFloat = 400
+
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                FilledBeaker(
-                    moleculesA: [],
-                    moleculesB: [],
-                    moleculeBOpacity: 0
-                ).frame(height: geometry.size.height / 1.5)
+            VStack(spacing: 0) {
+                EnergyBeaker(
+                    extraSpeed: ((temp - 400) / 200)
+                )
+                    .frame(height: geometry.size.height / 1.5)
                 beakerStand(geometry: geometry)
                 slider(geometry: geometry)
             }
@@ -21,13 +23,28 @@ struct EnergyBeakerWithStand: View {
     }
 
     private func beakerStand(geometry: GeometryProxy) -> some View {
-        Rectangle()
-            .frame(height: 0.2 * geometry.size.height)
+        Image("stand")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
     }
 
     private func slider(geometry: GeometryProxy) -> some View {
-        Rectangle()
-            .frame(height: 0.05 * geometry.size.height)
+        CustomSlider(
+            value: $temp,
+            axis: AxisPositionCalculations(
+                minValuePosition: 20,
+                maxValuePosition: geometry.size.width - 20,
+                minValue: 400,
+                maxValue: 600
+            ),
+            handleThickness: 20,
+            handleColor: .orangeAccent,
+            handleCornerRadius: 10,
+            barThickness: 5,
+            barColor: Styling.timeAxisCompleteBar,
+            orientation: .landscape,
+            includeFill: true
+        ).frame(height: 40)
 
     }
 }

@@ -19,12 +19,25 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     let orientation: Orientation
 
+    let includeFill: Bool
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
                 Rectangle()
                     .foregroundColor(barColor)
                     .frame(width: barWidth(geometry), height: barHeight(geometry))
+
+                if (includeFill) {
+                    Rectangle()
+                        .foregroundColor(handleColor)
+                        .frame(
+                            width: handleXPosition(geometry, calculations: axis),
+                            height: barHeight(geometry),
+                            alignment: .leading
+                        ).position(x: handleXPosition(geometry, calculations: axis) / 2, y: geometry.size.height / 2)
+                }
+
                 handle(
                     geometry: geometry,
                     axis: axis
@@ -122,7 +135,7 @@ struct CustomSlider_Previews: PreviewProvider {
                     value: $value,
                     axis: AxisPositionCalculations(
                         minValuePosition: 0,
-                        maxValuePosition: 80,
+                        maxValuePosition: 250,
                         minValue: 1,
                         maxValue: 2
                     ),
@@ -131,7 +144,8 @@ struct CustomSlider_Previews: PreviewProvider {
                     handleCornerRadius: 15,
                     barThickness: 5,
                     barColor: Color.darkGray,
-                    orientation: .landscape
+                    orientation: .landscape,
+                    includeFill: true
                 ).frame(height: 80)
             }
         }
