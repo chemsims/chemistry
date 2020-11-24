@@ -21,7 +21,6 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> SKView {
-        print("made the view")
         let view = SKView()
         let scene = MoleculeEnergyScene()
         scene.size = CGSize(width: width, height: height)

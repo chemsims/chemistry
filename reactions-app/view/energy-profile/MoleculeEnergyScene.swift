@@ -22,13 +22,20 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
     private let moleculeACategory: UInt32 = 0x1 << 0
     private let moleculeBCategory: UInt32 = 0x1 << 1
     private let moleculeCCategory: UInt32 = 0x1 << 2
-    private let impulseAmplitude: CGFloat = 0.5
-    private let initialSpeed: CGFloat = 0.2
+    private let wallCategory: UInt32 = 0x1 << 3
+    private var impulseAmplitude: CGFloat {
+        1
+    }
+    private let initialSpeed: CGFloat = 1
     private let collisionBitMask: UInt32 = 0x1 << 0
+
+    private var collisionsSinceLastCMolecule = 0
 
     override func didMove(to view: SKView) {
         let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         borderBody.friction = 0
+        borderBody.categoryBitMask = wallCategory
+        borderBody.contactTestBitMask = 1
         self.physicsBody = borderBody
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 
@@ -48,12 +55,14 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
+        collisionsSinceLastCMolecule += 1
         let catA = contact.bodyA.categoryBitMask
         let catB = contact.bodyB.categoryBitMask
         if (catA == moleculeACategory && catB == moleculeBCategory) {
             if let nodeA = contact.bodyA.node as? SKShapeNode,
                let nodeB = contact.bodyB.node as? SKShapeNode,
                shouldCollide() {
+                collisionsSinceLastCMolecule = 0
                 contact.bodyA.categoryBitMask = moleculeCCategory
                 contact.bodyB.categoryBitMask = moleculeCCategory
                 contact.bodyA.allowsRotation = true
@@ -71,7 +80,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func shouldCollide() -> Bool {
-        Int.random(in: 0...20) == 20
+        collisionsSinceLastCMolecule >= MoleculeEnergySettings.collisionsForC
     }
 
     private func addMolecule(
@@ -93,6 +102,8 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         moleculePhysics.allowsRotation = false
         moleculePhysics.categoryBitMask = category
         moleculePhysics.contactTestBitMask = 1
+        moleculePhysics.mass = 0.01
+        moleculePhysics.usesPreciseCollisionDetection = true
         molecule.physicsBody = moleculePhysics
         addChild(molecule)
 
@@ -145,6 +156,7 @@ struct MoleculeEnergySettings {
 
     static let aMolecules = 20
     static let bMolecules = 20
-    static let radiusToWidth: CGFloat = 0.02
+    static let radiusToWidth: CGFloat = 0.015
+    static let collisionsForC = 50
 
 }
