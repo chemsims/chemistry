@@ -7,6 +7,7 @@ import SpriteKit
 
 class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
+
     var radius: CGFloat {
         self.size.width * MoleculeEnergySettings.radiusToWidth
     }
@@ -19,6 +20,8 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
             updateSpeeds()
         }
     }
+
+    var updateConcentrationC: ((CGFloat) -> Void)?
 
     @objc
     private func updateSpeeds() {
@@ -42,6 +45,8 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
     private var collisionsSinceLastCMolecule = 0
 
     private var molecules = [SKPhysicsBody]()
+
+    private var cMolecules: Int = 0
 
     override func didMove(to view: SKView) {
         let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -88,6 +93,11 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
                 self.physicsWorld.add(joint)
                 nodeA.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
                 nodeB.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
+                cMolecules += 2
+                if let updateC = updateConcentrationC {
+                    let concentration = CGFloat(cMolecules) / CGFloat(MoleculeEnergySettings.aMolecules + MoleculeEnergySettings.bMolecules)
+                    updateC(concentration)
+                }
             }
         }
     }

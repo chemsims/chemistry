@@ -10,6 +10,7 @@ struct EnergyBeakerWithStand: View {
     let selectedCatalyst: Catalyst?
     let selectCatalyst: (Catalyst) -> Void
     @Binding var temp: CGFloat?
+    let updateConcentrationC: (CGFloat) -> Void
 
     var body: some View {
         GeometryReader { geometry in
@@ -33,7 +34,8 @@ struct EnergyBeakerWithStand: View {
             }
             Spacer()
             EnergyBeaker(
-                extraSpeed: extraSpeed(settings: settings)
+                extraSpeed: extraSpeed(settings: settings),
+                updateConcentrationC: updateConcentrationC
             )
             .frame(height: settings.beakerHeight)
             beakerStand(settings: settings)
@@ -158,7 +160,8 @@ struct EnergyBeakerWithStand_Previews: PreviewProvider {
         EnergyBeakerWithStand(
             selectedCatalyst: nil,
             selectCatalyst: {_ in },
-            temp: .constant(500)
+            temp: .constant(500),
+            updateConcentrationC: {_ in }
         )
     }
 }

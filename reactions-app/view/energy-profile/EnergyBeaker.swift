@@ -8,6 +8,7 @@ import SwiftUI
 struct EnergyBeaker: View {
 
     let extraSpeed: CGFloat
+    let updateConcentrationC: (CGFloat) -> Void
 
     var body: some View {
         GeometryReader { geometry in
@@ -43,7 +44,8 @@ struct EnergyBeaker: View {
         MoleculeEneregyUIViewRepresentable(
             width: settings.innerBeakerWidth,
             height: settings.geometry.size.height * 0.4,
-            speed: extraSpeed
+            speed: extraSpeed,
+            updateConcentrationC: updateConcentrationC
         ).frame(
             width: settings.innerBeakerWidth,
             height: settings.geometry.size.height * 0.4
@@ -53,7 +55,7 @@ struct EnergyBeaker: View {
 
 struct EnergyBeaker_Previews: PreviewProvider {
     static var previews: some View {
-        EnergyBeaker(extraSpeed: 0)
+        EnergyBeaker(extraSpeed: 0, updateConcentrationC: {_ in })
             .frame(height: 400)
     }
 }

@@ -57,7 +57,8 @@ struct EnergyProfileScreen: View {
                     .border(Color.black.opacity(0.7))
 
                 EnergyProfileChart(
-                    peakHeightFactor: model.peakHeightFactor
+                    peakHeightFactor: model.peakHeightFactor,
+                    concentrationC: model.concentrationC
                 )
                     .frame(
                         width: chartSize(settings: settings),
@@ -101,7 +102,8 @@ struct EnergyProfileScreen: View {
             EnergyBeakerWithStand(
                 selectedCatalyst: model.selectedCatalyst,
                 selectCatalyst: model.selectCatalyst,
-                temp: $model.temp2
+                temp: $model.temp2,
+                updateConcentrationC: model.setConcentrationC
             )
                 .frame(width: totalBeakerWidth(settings: settings))
                 .frame(height: settings.geometry.size.height * 0.8)

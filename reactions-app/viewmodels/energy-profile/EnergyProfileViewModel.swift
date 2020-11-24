@@ -11,6 +11,7 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var activationEnergy: CGFloat = EnergyProfileSettings.initialEa
     @Published var temp2: CGFloat?
     @Published var peakHeightFactor: CGFloat = 1
+    @Published var concentrationC: CGFloat = 0
 
     let preExponentFactor: CGFloat = EnergyProfileSettings.preExponentFactor
     let temp1: CGFloat = EnergyProfileSettings.initialTemp
@@ -31,6 +32,12 @@ class EnergyProfileViewModel: ObservableObject {
         temp2 = temp1
         withAnimation(.easeOut(duration: 0.8)) {
             peakHeightFactor = energyFactor
+        }
+    }
+
+    func setConcentrationC(concentration: CGFloat) {
+        withAnimation(.easeInOut(duration: 0.5)) {
+            self.concentrationC = concentration
         }
     }
 
