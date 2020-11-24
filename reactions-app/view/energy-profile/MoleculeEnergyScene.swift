@@ -84,8 +84,8 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
                     anchor: contact.contactPoint
                 )
                 self.physicsWorld.add(joint)
-                nodeA.fillColor = .green
-                nodeB.fillColor = .green
+                nodeA.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
+                nodeB.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
             }
         }
     }

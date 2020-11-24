@@ -29,6 +29,7 @@ extension UIColor {
 
     static let moleculeA = UIColor(red: 81 / 255, green: 155 / 255, blue: 210 / 255, alpha: 1)
     static let moleculeB = UIColor(red: 175 / 255, green: 11 / 255, blue: 8 / 255, alpha: 1)
+    static let moleculeC = UIColor(red: 253 / 255, green: 231 / 255, blue: 76 / 255, alpha: 1)
 
     var color: Color { Color(self) }
 }
@@ -38,5 +39,4 @@ extension Color {
     static let orangeAccent = Color(red: 220 / 255, green: 84 / 255, blue: 59 / 255)
 
 }
-
 
