@@ -100,6 +100,9 @@ struct LargeBeaker: View {
 }
 
 struct BeakerSettings {
+
+    static let heightToWidth: CGFloat = 1.1
+
     let geometry: GeometryProxy
 
     var lipRadius: CGFloat {

@@ -57,7 +57,7 @@ struct OrderedReactionLayoutSettings {
         return 0.23 * width
     }
     var beakerHeight: CGFloat {
-        beakerWidth * 1.1
+        beakerWidth * BeakerSettings.heightToWidth
     }
     var midChartsLeftPadding: CGFloat {
         chartSize * 0.2

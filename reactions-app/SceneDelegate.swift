@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
 
 //        let contentView = RootNavigationView(model: RootNavigationViewModel())
-        let contentView = EnergyBeakerWithStand()
+        let contentView = EnergyProfileScreen()
 
 
         // Use a UIHostingController as window root view controller.

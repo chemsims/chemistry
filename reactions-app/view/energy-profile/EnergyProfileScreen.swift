@@ -73,26 +73,41 @@ struct EnergyProfileScreen: View {
             HStack {
                 Spacer()
                     .frame(width: totalBeakerWidth(settings: settings))
-                Rectangle()
-                    .stroke()
-                    .frame(width: settings.width / 5, height: settings.height / 2.3)
-                    .padding(.leading, 0.05 * totalBeakerWidth(settings: settings))
+                EnergyProfileRate(
+                    k1: nil,
+                    k2: nil,
+                    ea: nil,
+                    t1: nil,
+                    t2: nil,
+                    maxWidth: equationWidth(settings: settings),
+                    maxHeight: equationHeight(settings: settings)
+                )
+                    .padding(.leading, 0.1 * equationWidth(settings: settings))
                 Spacer()
             }
         }
     }
 
     private func totalBeakerWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.width / 2.4
+        settings.width / 3.4
     }
 
     private func beakerView(settings: OrderedReactionLayoutSettings) -> some View {
         HStack {
             EnergyBeakerWithStand()
-                .frame(width: settings.beakerWidth)
+                .frame(width: totalBeakerWidth(settings: settings))
                 .frame(height: settings.geometry.size.height * 0.8)
+                .padding(.leading, settings.geometry.size.width * 0.01)
             Spacer()
         }
+    }
+
+    private func equationWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        settings.width / 3.5
+    }
+
+    private func equationHeight(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        settings.height / 2.3
     }
 }
 

@@ -13,18 +13,16 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
     var extraSpeed: CGFloat = 0 {
         didSet {
-            let f = initialSpeed + (extraSpeed * maxSpeed)
-            self.physicsWorld.speed = f
-            print("Set speed to \(f)")
+            self.physicsWorld.speed = initialSpeed + (extraSpeed * maxSpeed)
         }
     }
 
-    private let maxSpeed: CGFloat = 5
+    private let maxSpeed: CGFloat = 3
 
     private let moleculeACategory: UInt32 = 0x1 << 0
     private let moleculeBCategory: UInt32 = 0x1 << 1
     private let moleculeCCategory: UInt32 = 0x1 << 2
-    private let impulseAmplitude: CGFloat = 1
+    private let impulseAmplitude: CGFloat = 0.5
     private let initialSpeed: CGFloat = 0.2
     private let collisionBitMask: UInt32 = 0x1 << 0
 
@@ -108,7 +106,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
     /// The wedges are added to prevent molecules becoming 'stuck' in the corners, or along edges.
     private func addWedges() {
-        let width = size.width * 0.01
+        let width = size.width * MoleculeEnergySettings.radiusToWidth
         let height = width * 2
 
         func addWedge(
