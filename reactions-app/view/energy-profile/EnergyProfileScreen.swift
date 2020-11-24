@@ -56,7 +56,9 @@ struct EnergyProfileScreen: View {
                     .frame(width: settings.chartSize * 1.15, height: settings.chartSize * 1.15, alignment: .topTrailing)
                     .border(Color.black.opacity(0.7))
 
-                EnergyProfileChart()
+                EnergyProfileChart(
+                    peakHeightFactor: model.peakHeightFactor
+                )
                     .frame(
                         width: chartSize(settings: settings),
                         height: chartSize(settings: settings)

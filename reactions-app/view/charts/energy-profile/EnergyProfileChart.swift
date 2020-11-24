@@ -6,14 +6,27 @@
 import SwiftUI
 
 struct EnergyProfileChart: View {
+
+    let peakHeightFactor: CGFloat
+
     var body: some View {
+        ZStack {
             EnergyProfileChartShape(
                 leftAsymptote: 0.5,
-                peak: 0.75,
+                peak: 1,
                 rightAsymptote: 0.2
             )
             .stroke()
-            .border(Color.black)
+            .foregroundColor(Styling.timeAxisCompleteBar)
+
+            EnergyProfileChartShape(
+                leftAsymptote: 0.5,
+                peak: peakHeightFactor,
+                rightAsymptote: 0.2
+            )
+            .stroke()
+            .foregroundColor(.orangeAccent)
+        }.border(Color.black)
     }
 }
 
@@ -24,6 +37,8 @@ struct EnergyProfileChartShape: Shape {
     let rightAsymptote: CGFloat
 
     private let points: CGFloat = 100
+    private let minPeak: CGFloat = 0.7
+    private let maxPeak: CGFloat = 0.9
 
     var animatableData: CGFloat {
         get { peak }
@@ -55,8 +70,9 @@ struct EnergyProfileChartShape: Shape {
     }
 
     private func getRelativeY(at relativeX: CGFloat, asymptote: CGFloat) -> CGFloat {
-        let height = peak - asymptote
-        let exponent = -1 * pow((relativeX - 0.5), 2) * 20
+        let adjustedPeak = minPeak + (peak * (maxPeak - minPeak))
+        let height = adjustedPeak - asymptote
+        let exponent = -1 * pow((relativeX - 0.5), 2) * 30
         return (height * pow(CGFloat(Darwin.M_E), exponent)) + asymptote
     }
 
@@ -65,6 +81,8 @@ struct EnergyProfileChartShape: Shape {
 
 struct EnergyProfileChart_Previews: PreviewProvider {
     static var previews: some View {
-        EnergyProfileChart()
+        EnergyProfileChart(
+            peakHeightFactor: 0
+        )
     }
 }
