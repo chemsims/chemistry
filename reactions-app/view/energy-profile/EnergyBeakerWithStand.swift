@@ -7,29 +7,61 @@ import SwiftUI
 
 struct EnergyBeakerWithStand: View {
 
+    let selectedCatalyst: Catalyst?
+    let selectCatalyst: (Catalyst) -> Void
+
     @State private var temp: CGFloat = 400
 
     var body: some View {
         GeometryReader { geometry in
-            makeView(settings: EnergyBeakerSettings(geometry: geometry))
+            ZStack {
+                makeView(settings: EnergyBeakerSettings(geometry: geometry))
+            }
+
         }
     }
 
     private func makeView(settings: EnergyBeakerSettings) -> some View {
         VStack(spacing: 0) {
+            HStack {
+                Spacer()
+                catImage(catalyst: .A, settings: settings)
+                Spacer()
+                catImage(catalyst: .B, settings: settings)
+                Spacer()
+                catImage(catalyst: .C, settings: settings)
+                Spacer()
+            }
+            Spacer()
             EnergyBeaker(
                 extraSpeed: ((temp - settings.axis.minValue) / (settings.axis.maxValue - settings.axis.minValue))
             ).frame(height: settings.beakerHeight)
-            beakerStand
+            beakerStand(settings: settings)
             slider(settings: settings)
                 .padding(.top, settings.sliderTopPadding)
         }
     }
 
-    private var beakerStand: some View {
+    private func catImage(
+        catalyst: Catalyst,
+        settings: EnergyBeakerSettings
+    ) -> some View {
+        Image(selectedCatalyst == nil ? catalyst.imageName : "catdeact")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: settings.catHeight)
+            .onTapGesture {
+                if selectedCatalyst == nil {
+                    selectCatalyst(catalyst)
+                }
+            }
+    }
+
+    private func beakerStand(settings: EnergyBeakerSettings) -> some View {
         Image("stand")
             .resizable()
             .aspectRatio(contentMode: .fit)
+            .frame(width: settings.geometry.size.width)
     }
 
     private func slider(settings: EnergyBeakerSettings) -> some View {
@@ -83,10 +115,28 @@ fileprivate struct EnergyBeakerSettings {
         0.2 * handleHeight
     }
 
+    var catHeight: CGFloat {
+        0.13 * geometry.size.height
+    }
+
+}
+
+
+extension Catalyst {
+    var imageName: String {
+        switch(self) {
+        case .A: return "catone"
+        case .B: return "cattwo"
+        case .C: return "catthree"
+        }
+    }
 }
 
 struct EnergyBeakerWithStand_Previews: PreviewProvider {
     static var previews: some View {
-        EnergyBeakerWithStand()
+        EnergyBeakerWithStand(
+            selectedCatalyst: nil,
+            selectCatalyst: {_ in }
+        )
     }
 }

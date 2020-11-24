@@ -22,6 +22,8 @@
 		57035F0C255C26D000DB3A19 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
 		57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */; };
 		570E4F01256D10CD001EADCB /* EnergyProfileChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */; };
+		570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */; };
+		570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F0B256D288C001EADCB /* Catalyst.swift */; };
 		571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */; };
 		571B3C362563C95C0075358B /* FirstOrderReactionRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C352563C95C0075358B /* FirstOrderReactionRate.swift */; };
 		571B3C3A2563F7430075358B /* FirstOrderHalftimeEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C392563F7430075358B /* FirstOrderHalftimeEquation.swift */; };
@@ -129,6 +131,8 @@
 		57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAxisShape.swift; sourceTree = "<group>"; };
 		57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTimeChartView.swift; sourceTree = "<group>"; };
 		570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChart.swift; sourceTree = "<group>"; };
+		570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileViewModel.swift; sourceTree = "<group>"; };
+		570E4F0B256D288C001EADCB /* Catalyst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalyst.swift; sourceTree = "<group>"; };
 		571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderStatements.swift; sourceTree = "<group>"; };
 		571B3C352563C95C0075358B /* FirstOrderReactionRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionRate.swift; sourceTree = "<group>"; };
 		571B3C392563F7430075358B /* FirstOrderHalftimeEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderHalftimeEquation.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 		57035EFB255C1A2700DB3A19 /* viewmodels */ = {
 			isa = PBXGroup;
 			children = (
+				570E4F04256D1E64001EADCB /* energy-profile */,
 				571B3C58256555940075358B /* navigation */,
 				571B3C4D2565552C0075358B /* reactions */,
 				57035EFC255C1A7000DB3A19 /* ReactionSettings.swift */,
@@ -287,6 +292,14 @@
 			isa = PBXGroup;
 			children = (
 				570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */,
+			);
+			path = "energy-profile";
+			sourceTree = "<group>";
+		};
+		570E4F04256D1E64001EADCB /* energy-profile */ = {
+			isa = PBXGroup;
+			children = (
+				570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */,
 			);
 			path = "energy-profile";
 			sourceTree = "<group>";
@@ -425,6 +438,7 @@
 				57F10984255E985700834783 /* ConcentrationEquation.swift */,
 				57F4775925616F400041D406 /* BoundedSliderPositioning.swift */,
 				571B3CB425658BA70075358B /* Icons.swift */,
+				570E4F0B256D288C001EADCB /* Catalyst.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -726,6 +740,7 @@
 				5786D88A256AA71300C6C043 /* EnergyBeaker.swift in Sources */,
 				57FDA135255D5EE300CB8804 /* SubscriptView.swift in Sources */,
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
+				570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */,
 				57655D45256C0919006FB93C /* EnergyProfileRate.swift in Sources */,
 				57F477422560FD440041D406 /* Beaky.swift in Sources */,
 				571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */,
@@ -801,6 +816,7 @@
 				571B3C362563C95C0075358B /* FirstOrderReactionRate.swift in Sources */,
 				579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */,
 				57FDA12E255D5E8800CB8804 /* ZeroOrderReactionHalftimeView.swift in Sources */,
+				570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */,
 				576D5AA52566BAB50062F722 /* FirstOrderEquationView2.swift in Sources */,
 				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
 				571B3C48256538830075358B /* ZeroOrderEquationGeometry.swift in Sources */,

@@ -7,6 +7,8 @@ import SwiftUI
 
 struct EnergyProfileScreen: View {
 
+    @ObservedObject var model: EnergyProfileViewModel
+
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
@@ -54,12 +56,12 @@ struct EnergyProfileScreen: View {
                     .frame(width: settings.chartSize * 1.15, height: settings.chartSize * 1.15, alignment: .topTrailing)
                     .border(Color.black.opacity(0.7))
 
-                Rectangle()
-                    .stroke()
-                    .frame(width: settings.chartSize * 1, height: settings.chartSize * 1)
-                    .border(Color.black)
-                    .frame(width: settings.chartSize * 1.15, height: settings.chartSize * 1.15, alignment: .topTrailing)
-                    .border(Color.black.opacity(0.7))
+                EnergyProfileChart()
+                    .frame(
+                        width: chartSize(settings: settings),
+                        height: chartSize(settings: settings)
+                    )
+                    .foregroundColor(.orangeAccent)
             }
             .padding(.top, settings.chartsTopPadding)
             .padding(.trailing, settings.chartsTopPadding * 0.5)
@@ -74,10 +76,10 @@ struct EnergyProfileScreen: View {
                 Spacer()
                     .frame(width: totalBeakerWidth(settings: settings))
                 EnergyProfileRate(
-                    k1: nil,
+                    k1: model.k1,
                     k2: nil,
-                    ea: nil,
-                    t1: nil,
+                    ea: model.activationEnergy,
+                    t1: model.temp1,
                     t2: nil,
                     maxWidth: equationWidth(settings: settings),
                     maxHeight: equationHeight(settings: settings)
@@ -94,7 +96,10 @@ struct EnergyProfileScreen: View {
 
     private func beakerView(settings: OrderedReactionLayoutSettings) -> some View {
         HStack {
-            EnergyBeakerWithStand()
+            EnergyBeakerWithStand(
+                selectedCatalyst: model.selectedCatalyst,
+                selectCatalyst: model.selectCatalyst
+            )
                 .frame(width: totalBeakerWidth(settings: settings))
                 .frame(height: settings.geometry.size.height * 0.8)
                 .padding(.leading, settings.geometry.size.width * 0.01)
@@ -109,11 +114,15 @@ struct EnergyProfileScreen: View {
     private func equationHeight(settings: OrderedReactionLayoutSettings) -> CGFloat {
         settings.height / 2.3
     }
+
+    private func chartSize(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        settings.chartSize * 1.2
+    }
 }
 
 struct EnergyProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
-        EnergyProfileScreen()
+        EnergyProfileScreen(model: EnergyProfileViewModel())
             .previewLayout(.fixed(width: 500, height: 300))
     }
 }

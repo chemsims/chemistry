@@ -32,12 +32,22 @@ struct EnergyProfileRate: View {
                 BlankRates(
                     k1: k1?.str(decimals: 1),
                     k2: k2?.str(decimals: 1),
-                    ea: nil,
+                    ea: eaString,
                     t1: t1?.str(decimals: 0),
                     t2: t2?.str(decimals: 0)
                 )
             }
-        }.frame(width: maxWidth, height: maxHeight)
+        }
+        .frame(width: maxWidth, height: maxHeight)
+        .minimumScaleFactor(0.5)
+    }
+
+    private var eaString: String? {
+        if let ea = ea {
+            let mag = ea / 1000
+            return "\(mag.str(decimals: 0))e3"
+        }
+        return nil
     }
 }
 
@@ -58,11 +68,12 @@ fileprivate struct EnergyProfileRateK1: View {
                 }
                 .font(.system(size: RateEquationSizes.subscriptFontSize))
                 .offset(x: -3, y: -12)
-                .frame(width: 70)
+                .frame(width: 70, height: 40)
             }
         }
         .font(.system(size: RateEquationSizes.fontSize))
         .lineLimit(1)
+        .minimumScaleFactor(1)
     }
 }
 
@@ -88,7 +99,9 @@ fileprivate struct EnergyProfileRateLn: View {
                 Text("RT")
                     .frame(width: 40)
             }
-        }.font(.system(size: RateEquationSizes.fontSize))
+        }
+        .font(.system(size: RateEquationSizes.fontSize))
+        .minimumScaleFactor(1)
     }
 
     private func ln<Content: View>(_ value: () -> Content) -> some View {
@@ -115,7 +128,7 @@ fileprivate struct RateK1K2: View {
                     .frame(width: 12)
                 VStack(spacing: 0) {
                     Text("k1")
-                        .frame(width: 30)
+                        .frame(width: 30, height: 35)
                     Rectangle()
                         .frame(width: 30, height: 2)
                     Text("k2")
@@ -150,7 +163,9 @@ fileprivate struct RateK1K2: View {
                     .scaleEffect(y: 2.5)
                     .frame(width: 12)
             }
-        }.font(.system(size: RateEquationSizes.fontSize))
+        }
+        .font(.system(size: RateEquationSizes.fontSize))
+        .minimumScaleFactor(1)
     }
 }
 

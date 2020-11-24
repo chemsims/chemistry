@@ -7,14 +7,13 @@ import SwiftUI
 
 struct EnergyProfileChart: View {
     var body: some View {
-        VStack {
             EnergyProfileChartShape(
                 leftAsymptote: 0.5,
                 peak: 0.75,
                 rightAsymptote: 0.2
             )
             .stroke()
-        }
+            .border(Color.black)
     }
 }
 
