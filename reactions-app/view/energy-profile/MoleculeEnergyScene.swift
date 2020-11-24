@@ -13,29 +13,41 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
     var extraSpeed: CGFloat = 0 {
         didSet {
-            self.physicsWorld.speed = initialSpeed + (extraSpeed * maxSpeed)
+            let minV = MoleculeEnergySettings.minVelocity
+            let maxV = MoleculeEnergySettings.maxVelocity
+            self.velocity = minV + (extraSpeed * (maxV - minV))
+            updateSpeeds()
         }
     }
 
-    private let maxSpeed: CGFloat = 3
+    private func updateSpeeds() {
+        molecules.forEach { m in
+            let magnitude = m.velocity.magnitude
+            let factor = velocity / magnitude
+            m.velocity = m.velocity.scale(by: factor)
+        }
+    }
+
 
     private let moleculeACategory: UInt32 = 0x1 << 0
     private let moleculeBCategory: UInt32 = 0x1 << 1
     private let moleculeCCategory: UInt32 = 0x1 << 2
     private let wallCategory: UInt32 = 0x1 << 3
-    private var impulseAmplitude: CGFloat {
-        1
-    }
-    private let initialSpeed: CGFloat = 1
     private let collisionBitMask: UInt32 = 0x1 << 0
 
+
+    private var velocity: CGFloat = MoleculeEnergySettings.minVelocity
+
     private var collisionsSinceLastCMolecule = 0
+
+    private var molecules = [SKPhysicsBody]()
 
     override func didMove(to view: SKView) {
         let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         borderBody.friction = 0
         borderBody.categoryBitMask = wallCategory
         borderBody.contactTestBitMask = 1
+        borderBody.restitution = 1.01
         self.physicsBody = borderBody
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 
@@ -51,7 +63,6 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
         addWedges()
         self.physicsWorld.contactDelegate = self
-        self.physicsWorld.speed = initialSpeed
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
@@ -102,17 +113,17 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         moleculePhysics.allowsRotation = false
         moleculePhysics.categoryBitMask = category
         moleculePhysics.contactTestBitMask = 1
-        moleculePhysics.mass = 0.01
+        moleculePhysics.mass = 1
         moleculePhysics.usesPreciseCollisionDetection = true
         molecule.physicsBody = moleculePhysics
         addChild(molecule)
-
+        molecules.append(moleculePhysics)
 
         let angle = CGFloat.random(in: 0.2...0.8) * CGFloat.pi
         let direction: CGFloat = Bool.random() ? 1 : -1
-        let dx = impulseAmplitude * sin(angle) * direction
-        let dy = impulseAmplitude * cos(angle) * direction
-        moleculePhysics.applyImpulse(CGVector(dx: dx, dy: dy))
+        let dx = velocity * sin(angle) * direction
+        let dy = velocity * cos(angle) * direction
+        moleculePhysics.velocity = CGVector(dx: dx, dy: dy)
     }
 
     /// The wedges are added to prevent molecules becoming 'stuck' in the corners, or along edges.
@@ -158,5 +169,20 @@ struct MoleculeEnergySettings {
     static let bMolecules = 20
     static let radiusToWidth: CGFloat = 0.015
     static let collisionsForC = 50
+    static let minVelocity: CGFloat = 20
+    static let maxVelocity: CGFloat = 100
 
+}
+
+extension CGVector {
+    var magnitude: CGFloat {
+        sqrt(pow(dx, 2) + pow(dy, 2))
+    }
+
+    func scale(by factor: CGFloat) -> CGVector {
+        CGVector(
+            dx: dx * factor,
+            dy: dy * factor
+        )
+    }
 }
