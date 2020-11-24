@@ -20,6 +20,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    @objc
     private func updateSpeeds() {
         molecules.forEach { m in
             let magnitude = m.velocity.magnitude
@@ -63,6 +64,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
         addWedges()
         self.physicsWorld.contactDelegate = self
+        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeeds), userInfo: nil, repeats: true)
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
@@ -165,9 +167,9 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
 struct MoleculeEnergySettings {
 
-    static let aMolecules = 20
-    static let bMolecules = 20
-    static let radiusToWidth: CGFloat = 0.015
+    static let aMolecules = 30
+    static let bMolecules = 30
+    static let radiusToWidth: CGFloat = 0.013
     static let collisionsForC = 50
     static let minVelocity: CGFloat = 20
     static let maxVelocity: CGFloat = 100
