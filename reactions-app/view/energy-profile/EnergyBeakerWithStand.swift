@@ -9,8 +9,7 @@ struct EnergyBeakerWithStand: View {
 
     let selectedCatalyst: Catalyst?
     let selectCatalyst: (Catalyst) -> Void
-
-    @State private var temp: CGFloat = 400
+    @Binding var temp: CGFloat?
 
     var body: some View {
         GeometryReader { geometry in
@@ -34,10 +33,11 @@ struct EnergyBeakerWithStand: View {
             }
             Spacer()
             EnergyBeaker(
-                extraSpeed: ((temp - settings.axis.minValue) / (settings.axis.maxValue - settings.axis.minValue))
-            ).frame(height: settings.beakerHeight)
+                extraSpeed: extraSpeed(settings: settings)
+            )
+            .frame(height: settings.beakerHeight)
             beakerStand(settings: settings)
-            slider(settings: settings)
+            slider(settings: settings, temp: tempBinding)
                 .padding(.top, settings.sliderTopPadding)
         }
     }
@@ -64,18 +64,39 @@ struct EnergyBeakerWithStand: View {
             .frame(width: settings.geometry.size.width)
     }
 
-    private func slider(settings: EnergyBeakerSettings) -> some View {
+    private func slider(
+        settings: EnergyBeakerSettings,
+        temp: Binding<CGFloat>?
+    ) -> some View {
         CustomSlider(
-            value: $temp,
+            value: temp ?? .constant(settings.axis.minValue),
             axis: settings.axis,
             handleThickness: settings.handleThickness,
-            handleColor: .orangeAccent,
+            handleColor:tempBinding == nil ? .darkGray : .orangeAccent,
             handleCornerRadius: settings.handleCornerRadius,
             barThickness: settings.barThickness,
             barColor: Styling.timeAxisCompleteBar,
             orientation: .landscape,
             includeFill: true
-        ).frame(height: settings.handleHeight)
+        )
+        .frame(height: settings.handleHeight)
+        .disabled(tempBinding == nil)
+    }
+
+    private var tempBinding: Binding<CGFloat>? {
+        if temp != nil {
+            return Binding(get: { temp! }, set: { temp = $0 })
+        }
+        return nil
+    }
+
+    private func extraSpeed(settings: EnergyBeakerSettings) -> CGFloat {
+        if let temp = temp {
+            let numerator = temp - settings.axis.minValue
+            let delta = settings.axis.maxValue - settings.axis.minValue
+            return numerator / delta
+        }
+        return 0
     }
 }
 
@@ -136,7 +157,8 @@ struct EnergyBeakerWithStand_Previews: PreviewProvider {
     static var previews: some View {
         EnergyBeakerWithStand(
             selectedCatalyst: nil,
-            selectCatalyst: {_ in }
+            selectCatalyst: {_ in },
+            temp: .constant(500)
         )
     }
 }

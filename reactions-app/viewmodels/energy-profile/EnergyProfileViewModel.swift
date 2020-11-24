@@ -8,13 +8,19 @@ import SwiftUI
 class EnergyProfileViewModel: ObservableObject {
 
     @Published var selectedCatalyst: Catalyst?
+    @Published var activationEnergy: CGFloat = EnergyProfileSettings.initialEa
+    @Published var temp2: CGFloat?
+    @Published var peakHeightFactor: CGFloat = 1
 
     let preExponentFactor: CGFloat = EnergyProfileSettings.preExponentFactor
-    @Published var activationEnergy: CGFloat = EnergyProfileSettings.initialEa
     let temp1: CGFloat = EnergyProfileSettings.initialTemp
 
     var k1: CGFloat {
         getK(temp: temp1)
+    }
+
+    var k2: CGFloat? {
+        temp2.map { getK(temp: $0) }
     }
 
     func selectCatalyst(catalyst: Catalyst) -> Void {
@@ -22,17 +28,10 @@ class EnergyProfileViewModel: ObservableObject {
         activationEnergy -= catalyst.energyReduction
         let minEnergy = EnergyProfileSettings.initialEa - Catalyst.C.energyReduction
         let energyFactor = (activationEnergy - minEnergy) / (EnergyProfileSettings.initialEa - minEnergy)
+        temp2 = temp1
         withAnimation(.easeOut(duration: 0.8)) {
             peakHeightFactor = energyFactor
         }
-    }
-
-    @Published var temp2: CGFloat?
-
-    @Published var peakHeightFactor: CGFloat = 1
-
-    var k2: CGFloat? {
-        temp2.map { getK(temp: $0) }
     }
 
     private func getK(temp: CGFloat) -> CGFloat {

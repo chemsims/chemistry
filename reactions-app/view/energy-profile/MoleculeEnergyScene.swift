@@ -171,7 +171,7 @@ struct MoleculeEnergySettings {
     static let bMolecules = 30
     static let radiusToWidth: CGFloat = 0.013
     static let collisionsForC = 50
-    static let minVelocity: CGFloat = 20
+    static let minVelocity: CGFloat = 3
     static let maxVelocity: CGFloat = 100
 
 }

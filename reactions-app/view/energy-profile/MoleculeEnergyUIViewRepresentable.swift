@@ -14,11 +14,6 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
     let width: CGFloat
     let height: CGFloat
     let speed: CGFloat
-    init(width: CGFloat, height: CGFloat, speed: CGFloat) {
-        self.width = width
-        self.height = height
-        self.speed = speed
-    }
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
@@ -40,8 +35,12 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
 
 struct MoleculeEnergyUIViewRepresentable_Previews: PreviewProvider {
     static var previews: some View {
-        MoleculeEneregyUIViewRepresentable(width: 300, height: 300, speed: 0)
-            .frame(width: 300, height: 200)
-            .border(Color.black)
+        MoleculeEneregyUIViewRepresentable(
+            width: 300,
+            height: 300,
+            speed: 0
+        )
+        .frame(width: 300, height: 200)
+        .border(Color.black)
     }
 }

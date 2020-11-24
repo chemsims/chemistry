@@ -79,10 +79,10 @@ struct EnergyProfileScreen: View {
                     .frame(width: totalBeakerWidth(settings: settings))
                 EnergyProfileRate(
                     k1: model.k1,
-                    k2: nil,
+                    k2: model.k2,
                     ea: model.activationEnergy,
                     t1: model.temp1,
-                    t2: nil,
+                    t2: model.temp2,
                     maxWidth: equationWidth(settings: settings),
                     maxHeight: equationHeight(settings: settings)
                 )
@@ -100,7 +100,8 @@ struct EnergyProfileScreen: View {
         HStack {
             EnergyBeakerWithStand(
                 selectedCatalyst: model.selectedCatalyst,
-                selectCatalyst: model.selectCatalyst
+                selectCatalyst: model.selectCatalyst,
+                temp: $model.temp2
             )
                 .frame(width: totalBeakerWidth(settings: settings))
                 .frame(height: settings.geometry.size.height * 0.8)
