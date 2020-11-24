@@ -19,19 +19,18 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    private let maxSpeed: CGFloat = 2
+    private let maxSpeed: CGFloat = 5
 
     private let moleculeACategory: UInt32 = 0x1 << 0
     private let moleculeBCategory: UInt32 = 0x1 << 1
     private let moleculeCCategory: UInt32 = 0x1 << 2
-    private let impulseAmplitude: CGFloat = 0.6
-    private let initialSpeed: CGFloat = 0.25
+    private let impulseAmplitude: CGFloat = 1
+    private let initialSpeed: CGFloat = 0.2
     private let collisionBitMask: UInt32 = 0x1 << 0
 
     override func didMove(to view: SKView) {
         let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         borderBody.friction = 0
-        borderBody.restitution = 1
         self.physicsBody = borderBody
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 
@@ -59,8 +58,8 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
                shouldCollide() {
                 contact.bodyA.categoryBitMask = moleculeCCategory
                 contact.bodyB.categoryBitMask = moleculeCCategory
-                contact.bodyA.angularDamping = 0.9
-                contact.bodyB.angularDamping = 0.9
+                contact.bodyA.allowsRotation = true
+                contact.bodyB.allowsRotation = true
                 let joint = SKPhysicsJointFixed.joint(
                     withBodyA: contact.bodyA,
                     bodyB: contact.bodyB,
@@ -93,6 +92,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         moleculePhysics.friction = 0
         moleculePhysics.linearDamping = 0
         moleculePhysics.angularDamping = 0
+        moleculePhysics.allowsRotation = false
         moleculePhysics.categoryBitMask = category
         moleculePhysics.contactTestBitMask = 1
         molecule.physicsBody = moleculePhysics

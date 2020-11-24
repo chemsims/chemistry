@@ -87,13 +87,13 @@ struct EnergyProfileScreen: View {
     }
 
     private func beakerView(settings: OrderedReactionLayoutSettings) -> some View {
-        HStack(spacing: 0) {
-            Rectangle()
-                .frame(width: totalBeakerWidth(settings: settings))
+        HStack {
+            EnergyBeakerWithStand()
+                .frame(width: settings.beakerWidth)
+                .frame(height: settings.geometry.size.height * 0.8)
             Spacer()
         }
     }
-
 }
 
 struct EnergyProfileScreen_Previews: PreviewProvider {

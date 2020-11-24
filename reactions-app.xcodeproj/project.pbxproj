@@ -64,6 +64,7 @@
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
 		572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB943255C3BCF0071C600 /* ValueRange.swift */; };
 		572CB949255C412A0071C600 /* ZeroOrderReactionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */; };
+		57655D45256C0919006FB93C /* EnergyProfileRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRate.swift */; };
 		576D5A7425665B9C0062F722 /* RateEquationComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7325665B9C0062F722 /* RateEquationComparisonView.swift */; };
 		576D5A7825665E170062F722 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
 		576D5A8D256674FD0062F722 /* ZeroOrderEquationView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A8C256674FD0062F722 /* ZeroOrderEquationView2.swift */; };
@@ -171,6 +172,7 @@
 		572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationBarChart.swift; sourceTree = "<group>"; };
 		572CB943255C3BCF0071C600 /* ValueRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRange.swift; sourceTree = "<group>"; };
 		572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionEquation.swift; sourceTree = "<group>"; };
+		57655D44256C0919006FB93C /* EnergyProfileRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRate.swift; sourceTree = "<group>"; };
 		576D5A7325665B9C0062F722 /* RateEquationComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateEquationComparisonView.swift; sourceTree = "<group>"; };
 		576D5A7725665E170062F722 /* ScaledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledView.swift; sourceTree = "<group>"; };
 		576D5A8C256674FD0062F722 /* ZeroOrderEquationView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderEquationView2.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 		572CB947255C411F0071C600 /* equations */ = {
 			isa = PBXGroup;
 			children = (
+				57655D43256C0906006FB93C /* energy-profile */,
 				576D5AAA2566CA800062F722 /* second-order-mk2 */,
 				576D5AA32566BA800062F722 /* first-order-mk2 */,
 				576D5A89256674D50062F722 /* zero-order-mk2 */,
@@ -490,6 +493,14 @@
 				576D5A7325665B9C0062F722 /* RateEquationComparisonView.swift */,
 			);
 			path = "rate-comparison";
+			sourceTree = "<group>";
+		};
+		57655D43256C0906006FB93C /* energy-profile */ = {
+			isa = PBXGroup;
+			children = (
+				57655D44256C0919006FB93C /* EnergyProfileRate.swift */,
+			);
+			path = "energy-profile";
 			sourceTree = "<group>";
 		};
 		576D5A89256674D50062F722 /* zero-order-mk2 */ = {
@@ -704,6 +715,7 @@
 				5786D88A256AA71300C6C043 /* EnergyBeaker.swift in Sources */,
 				57FDA135255D5EE300CB8804 /* SubscriptView.swift in Sources */,
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
+				57655D45256C0919006FB93C /* EnergyProfileRate.swift in Sources */,
 				57F477422560FD440041D406 /* Beaky.swift in Sources */,
 				571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */,
 				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
