@@ -7,7 +7,13 @@ import SpriteKit
 
 class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
-    var allowReactionsToC: Bool = false
+    var allowReactionsToC: Bool = false {
+        willSet {
+            if (allowReactionsToC && !newValue && cMolecules > 0) {
+                resetCollisions()
+            }
+        }
+    }
 
     var radius: CGFloat {
         self.size.width * MoleculeEnergySettings.radiusToWidth
@@ -30,6 +36,25 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
             let magnitude = m.velocity.magnitude
             let factor = velocity / magnitude
             m.velocity = m.velocity.scale(by: factor)
+        }
+    }
+
+    private func resetCollisions() {
+        self.physicsWorld.removeAllJoints()
+        var aMoleculesToAdd = cMolecules / 2
+        cMolecules = 0
+        collisionsSinceLastCMolecule = 0
+        molecules.forEach { molecule in
+            if molecule.categoryBitMask == moleculeCCategory,
+               let node = molecule.node as? SKShapeNode {
+                let addA = aMoleculesToAdd > 0
+                let color: UIColor = addA ? .moleculeA : .moleculeB
+                let category = addA ? moleculeACategory : moleculeBCategory
+                aMoleculesToAdd -= 1
+                node.fillColor = color
+                molecule.categoryBitMask = category
+            }
+
         }
     }
 
@@ -126,7 +151,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         moleculePhysics.friction = 0
         moleculePhysics.linearDamping = 0
         moleculePhysics.angularDamping = 0
-        moleculePhysics.allowsRotation = false
+        moleculePhysics.allowsRotation = true
         moleculePhysics.categoryBitMask = category
         moleculePhysics.contactTestBitMask = 1
         moleculePhysics.mass = 1

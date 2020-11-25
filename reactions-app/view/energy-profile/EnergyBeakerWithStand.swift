@@ -143,7 +143,6 @@ fileprivate struct EnergyBeakerSettings {
     var catHeight: CGFloat {
         0.13 * geometry.size.height
     }
-
 }
 
 
