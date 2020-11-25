@@ -93,6 +93,9 @@ struct EnergyProfileScreen: View {
             EnergyBeakerWithStand(
                 selectedCatalyst: model.selectedCatalyst,
                 selectCatalyst: model.selectCatalyst,
+                catalystInProgress: model.catalystInProgress,
+                setCatalystInProgress: model.setCatalystInProgress,
+                emitCatalyst: model.emitCatalyst,
                 temp: $model.temp2,
                 updateConcentrationC: model.setConcentrationC,
                 allowReactionsToC: model.allowReactionsToC
@@ -102,7 +105,6 @@ struct EnergyProfileScreen: View {
             Spacer()
         }
     }
-
 }
 
 fileprivate struct EnergyProfileLayoutSettings {

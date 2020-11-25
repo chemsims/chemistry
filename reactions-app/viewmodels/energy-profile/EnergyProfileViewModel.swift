@@ -8,20 +8,28 @@ import SwiftUI
 class EnergyProfileViewModel: ObservableObject {
 
     @Published var statement: [SpeechBubbleLine] = EnergyProfileStatements.intro
-    @Published var selectedCatalyst: Catalyst?
     @Published var activationEnergy: CGFloat = EnergyProfileSettings.initialEa
     @Published var temp2: CGFloat?
     @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
     @Published var allowReactionsToC = false
 
+    @Published var selectedCatalyst: Catalyst?
+    @Published var catalystInProgress: Catalyst?
+    @Published var emitCatalyst = false
+
+    private var dispatchId = UUID()
 
     func next() {
 
     }
 
+    // TODO - just make this reset the state
     func back() {
+        dispatchId = UUID()
+        catalystInProgress = nil
         if (selectedCatalyst != nil) {
+            emitCatalyst = false
             selectedCatalyst = nil
             activationEnergy = EnergyProfileSettings.initialEa
             allowReactionsToC = false
@@ -52,16 +60,29 @@ class EnergyProfileViewModel: ObservableObject {
         return nil
     }
 
+    func setCatalystInProgress(catalyst: Catalyst) -> Void {
+        catalystInProgress = catalyst
+    }
+
     func selectCatalyst(catalyst: Catalyst) -> Void {
-        selectedCatalyst = catalyst
-        activationEnergy -= catalyst.energyReduction
-        let minEnergy = EnergyProfileSettings.initialEa - Catalyst.C.energyReduction
-        let energyFactor = (activationEnergy - minEnergy) / (EnergyProfileSettings.initialEa - minEnergy)
-        temp2 = temp1
-        allowReactionsToC = true
-        statement = EnergyProfileStatements.setT2
-        animateStateChange {
-            peakHeightFactor = energyFactor
+        emitCatalyst = true
+        let id = UUID()
+        dispatchId = id
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            guard self.dispatchId == id else {
+                return
+            }
+            self.emitCatalyst = false
+            self.activationEnergy -= catalyst.energyReduction
+            let minEnergy = EnergyProfileSettings.initialEa - Catalyst.C.energyReduction
+            let energyFactor = (self.activationEnergy - minEnergy) / (EnergyProfileSettings.initialEa - minEnergy)
+            self.temp2 = self.temp1
+            self.allowReactionsToC = true
+            self.statement = EnergyProfileStatements.setT2
+            self.animateStateChange {
+                self.selectedCatalyst = catalyst
+                self.peakHeightFactor = energyFactor
+            }
         }
     }
 

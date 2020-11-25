@@ -9,14 +9,18 @@ struct EnergyBeakerWithStand: View {
 
     let selectedCatalyst: Catalyst?
     let selectCatalyst: (Catalyst) -> Void
+
+    let catalystInProgress: Catalyst?
+    let setCatalystInProgress: (Catalyst) -> Void
+
+    let emitCatalyst: Bool
+
     @Binding var temp: CGFloat?
     let updateConcentrationC: (CGFloat) -> Void
     let allowReactionsToC: Bool
 
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
-
-    @State private var catalystInProgress: Catalyst? = nil
 
     var body: some View {
         GeometryReader { geometry in
@@ -54,17 +58,16 @@ struct EnergyBeakerWithStand: View {
 
     private func makeView(settings: EnergyBeakerSettings) -> some View {
         ZStack(alignment: .top) {
-            if (catalystInProgress != nil) {
-                CatalystEmitterView(
-                    width: settings.width,
-                    height: emitterHeight(settings: settings),
-                    emitterPosition: emitterPosition(settings: settings)
-                )
-                .frame(
-                    width: settings.width,
-                    height: emitterHeight(settings: settings)
-                )
-            }
+            CatalystEmitterView(
+                width: settings.width,
+                height: emitterHeight(settings: settings),
+                emitterPosition: emitterPosition(settings: settings),
+                emitting: emitCatalyst
+            )
+            .frame(
+                width: settings.width,
+                height: emitterHeight(settings: settings)
+            )
 
             stackView(settings: settings)
         }
@@ -127,8 +130,8 @@ struct EnergyBeakerWithStand: View {
             .opacity(isSelected ? 0 : 1)
             .onTapGesture {
                 if (catalystInProgress == nil) {
-                    catalystInProgress = catalyst
-                } else if selectedCatalyst == nil {
+                    setCatalystInProgress(catalyst)
+                } else if (!emitCatalyst && selectedCatalyst == nil) {
                     selectCatalyst(catalyst)
                 }
             }
@@ -319,6 +322,9 @@ struct EnergyBeakerWithStand_Previews: PreviewProvider {
         EnergyBeakerWithStand(
             selectedCatalyst: nil,
             selectCatalyst: {_ in },
+            catalystInProgress: nil,
+            setCatalystInProgress: {_ in },
+            emitCatalyst: false,
             temp: .constant(500),
             updateConcentrationC: {_ in },
             allowReactionsToC: true
