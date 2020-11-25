@@ -61,10 +61,6 @@ class CatalystEmitterScene: SKScene {
         if let emitter = SKEmitterNode(fileNamed: "CatalystParticles"),
            let position = emitterPosition {
             self.emitter = emitter
-
-            print("Frame bounds: \(self.frame)")
-            print("Point: \(position)")
-
             emitter.position = position
             emitter.particleBirthRate = emitting ? birthRate : 0
             emitter.particleColorSequence = nil

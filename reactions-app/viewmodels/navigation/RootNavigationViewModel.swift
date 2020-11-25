@@ -41,7 +41,15 @@ class RootNavigationViewModel: ObservableObject {
         let reaction = ZeroOrderReactionViewModel()
         let navigation = ReactionComparisonNavigation.model(reaction: reaction)
         navigation.prevScreen = goToSecondOrder
+        navigation.nextScreen = goToEnergyProfile
         self.view = AnyView(ReactionComparison(reaction: reaction, navigation: navigation))
+    }
+
+    private func goToEnergyProfile() {
+        let model = EnergyProfileViewModel()
+        model.goToPreviousScreen = goToComparison
+        let view = EnergyProfileScreen(model: model)
+        self.view = AnyView(view)
     }
 
 

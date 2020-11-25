@@ -20,23 +20,31 @@ class EnergyProfileViewModel: ObservableObject {
 
     private var dispatchId = UUID()
 
+    var goToPreviousScreen: (() -> Void)?
+
     func next() {
 
     }
 
     // TODO - just make this reset the state
     func back() {
-        dispatchId = UUID()
-        catalystInProgress = nil
-        emitCatalyst = false
-        selectedCatalyst = nil
-        activationEnergy = EnergyProfileSettings.initialEa
-        allowReactionsToC = false
-        statement = EnergyProfileStatements.intro
-        withAnimation(.easeOut(duration: 0.6)) {
-            peakHeightFactor = 1
-            temp2 = nil
-            concentrationC = 0
+        if (catalystInProgress == nil) {
+            if let goToPrevious = goToPreviousScreen {
+                goToPrevious()
+            }
+        } else {
+            dispatchId = UUID()
+            catalystInProgress = nil
+            emitCatalyst = false
+            selectedCatalyst = nil
+            activationEnergy = EnergyProfileSettings.initialEa
+            allowReactionsToC = false
+            statement = EnergyProfileStatements.intro
+            withAnimation(.easeOut(duration: 0.6)) {
+                peakHeightFactor = 1
+                temp2 = nil
+                concentrationC = 0
+            }
         }
     }
 
