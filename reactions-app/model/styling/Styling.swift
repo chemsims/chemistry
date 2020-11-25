@@ -33,6 +33,10 @@ extension UIColor {
     static let moleculeB = UIColor(red: 175 / 255, green: 11 / 255, blue: 8 / 255, alpha: 1)
     static let moleculeC = UIColor(red: 253 / 255, green: 231 / 255, blue: 76 / 255, alpha: 1)
 
+    static let catalystA = UIColor(red: 98 / 255, green: 95  / 255, blue: 97 / 255, alpha: 1)
+    static let catalystB = UIColor(red: 227 / 255, green: 215  / 255, blue: 89 / 255, alpha: 1)
+    static let catalystC = UIColor(red: 221 / 255, green: 154  / 255, blue: 91 / 255, alpha: 1)
+
     var color: Color { Color(self) }
 }
 

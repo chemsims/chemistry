@@ -62,7 +62,8 @@ struct EnergyBeakerWithStand: View {
                 width: settings.width,
                 height: emitterHeight(settings: settings),
                 emitterPosition: emitterPosition(settings: settings),
-                emitting: emitCatalyst
+                emitting: emitCatalyst,
+                color: catalystInProgress?.color ?? .black
             )
             .frame(
                 width: settings.width,
@@ -313,6 +314,14 @@ extension Catalyst {
         case .A: return "catone"
         case .B: return "cattwo"
         case .C: return "catthree"
+        }
+    }
+
+    var color: UIColor {
+        switch(self) {
+        case .A: return .catalystA
+        case .B: return .catalystB
+        case .C: return .catalystC
         }
     }
 }

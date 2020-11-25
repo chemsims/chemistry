@@ -28,17 +28,15 @@ class EnergyProfileViewModel: ObservableObject {
     func back() {
         dispatchId = UUID()
         catalystInProgress = nil
-        if (selectedCatalyst != nil) {
-            emitCatalyst = false
-            selectedCatalyst = nil
-            activationEnergy = EnergyProfileSettings.initialEa
-            allowReactionsToC = false
-            statement = EnergyProfileStatements.intro
-            withAnimation(.easeOut(duration: 0.6)) {
-                peakHeightFactor = 1
-                temp2 = nil
-                concentrationC = 0
-            }
+        emitCatalyst = false
+        selectedCatalyst = nil
+        activationEnergy = EnergyProfileSettings.initialEa
+        allowReactionsToC = false
+        statement = EnergyProfileStatements.intro
+        withAnimation(.easeOut(duration: 0.6)) {
+            peakHeightFactor = 1
+            temp2 = nil
+            concentrationC = 0
         }
     }
 

@@ -12,13 +12,13 @@ struct CatalystEmitterView: UIViewRepresentable {
     let height: CGFloat
     let emitterPosition: CGPoint
     let emitting: Bool
+    let color: UIColor
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
         let scene = CatalystEmitterScene()
         scene.emitterPosition = emitterPosition
         scene.size = CGSize(width: width, height: height)
-        scene.emitting = emitting
         view.presentScene(scene)
         view.allowsTransparency = true
         return view
@@ -27,6 +27,7 @@ struct CatalystEmitterView: UIViewRepresentable {
     func updateUIView(_ uiView: SKView, context: Context) {
         if let scene = uiView.scene as? CatalystEmitterScene {
             scene.emitting = emitting
+            scene.particleColor = color
         }
     }
 }
@@ -41,6 +42,13 @@ class CatalystEmitterScene: SKScene {
         didSet {
             if let emitter = emitter {
                 emitter.particleBirthRate = emitting ? birthRate : 0
+            }
+        }
+    }
+    var particleColor: UIColor? {
+        didSet {
+            if let emitter = emitter {
+                emitter.particleColor = particleColor ?? .black
             }
         }
     }
@@ -59,6 +67,8 @@ class CatalystEmitterScene: SKScene {
 
             emitter.position = position
             emitter.particleBirthRate = emitting ? birthRate : 0
+            emitter.particleColorSequence = nil
+            emitter.particleColor = particleColor ?? .red
             addChild(emitter)
         }
     }
