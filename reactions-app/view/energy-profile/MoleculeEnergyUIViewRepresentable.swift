@@ -15,6 +15,7 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
     let height: CGFloat
     let speed: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
+    let allowReactionsToC: Bool
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
@@ -29,6 +30,7 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: SKView, context: Context) {
         if let scene = uiView.scene as? MoleculeEnergyScene {
             scene.extraSpeed = speed
+            scene.allowReactionsToC = allowReactionsToC
         }
     }
 }
@@ -41,7 +43,8 @@ struct MoleculeEnergyUIViewRepresentable_Previews: PreviewProvider {
             width: 300,
             height: 300,
             speed: 0,
-            updateConcentrationC: {_ in }
+            updateConcentrationC: {_ in },
+            allowReactionsToC: true
         )
         .frame(width: 300, height: 200)
         .border(Color.black)

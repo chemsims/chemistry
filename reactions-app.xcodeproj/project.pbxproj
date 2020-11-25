@@ -86,6 +86,7 @@
 		57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
 		57C3A8272563248F00EE753E /* FirstOrderReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C3A8262563248F00EE753E /* FirstOrderReaction.swift */; };
+		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
 		57F477422560FD440041D406 /* Beaky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F477412560FD440041D406 /* Beaky.swift */; };
@@ -197,6 +198,7 @@
 		57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
 		57C3A8262563248F00EE753E /* FirstOrderReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReaction.swift; sourceTree = "<group>"; };
+		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
 		57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquationShape.swift; sourceTree = "<group>"; };
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
 		57F477412560FD440041D406 /* Beaky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beaky.swift; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */,
+				57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */,
 			);
 			path = "energy-profile";
 			sourceTree = "<group>";
@@ -791,6 +794,7 @@
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
 				57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */,
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,
+				57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */,
 				57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */,
 				571B3C8D25656C1C0075358B /* SecondOrderHalfTimeView.swift in Sources */,
 				57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */,

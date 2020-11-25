@@ -7,6 +7,7 @@ import SpriteKit
 
 class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
+    var allowReactionsToC: Bool = false
 
     var radius: CGFloat {
         self.size.width * MoleculeEnergySettings.radiusToWidth
@@ -73,6 +74,9 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
+        guard allowReactionsToC else {
+            return
+        }
         collisionsSinceLastCMolecule += 1
         let catA = contact.bodyA.categoryBitMask
         let catB = contact.bodyB.categoryBitMask

@@ -49,22 +49,23 @@ struct EnergyProfileScreen: View {
         VStack {
             HStack(spacing: 20) {
                 Spacer()
-                Rectangle()
-                    .stroke()
-                    .frame(width: settings.chartSize * 1, height: settings.chartSize * 1)
-                    .border(Color.black)
-                    .frame(width: settings.chartSize * 1.15, height: settings.chartSize * 1.15, alignment: .topTrailing)
-                    .border(Color.black.opacity(0.7))
+                EnergyProfileRateChart(
+                    settings: EnergyRateChartSettings(chartSize: chartSize(settings: settings)),
+                    equation: model.rateEquation,
+                    currentTempInverse: model.temp2.map { 1 / $0 }
+                )
+                .frame(
+                    width: chartSize(settings: settings),
+                    height: chartSize(settings: settings)
+                )
 
                 EnergyProfileChart(
                     peakHeightFactor: model.peakHeightFactor,
                     concentrationC: model.concentrationC
+                ).frame(
+                    width: chartSize(settings: settings),
+                    height: chartSize(settings: settings)
                 )
-                    .frame(
-                        width: chartSize(settings: settings),
-                        height: chartSize(settings: settings)
-                    )
-                    .foregroundColor(.orangeAccent)
             }
             .padding(.top, settings.chartsTopPadding)
             .padding(.trailing, settings.chartsTopPadding * 0.5)
@@ -103,7 +104,8 @@ struct EnergyProfileScreen: View {
                 selectedCatalyst: model.selectedCatalyst,
                 selectCatalyst: model.selectCatalyst,
                 temp: $model.temp2,
-                updateConcentrationC: model.setConcentrationC
+                updateConcentrationC: model.setConcentrationC,
+                allowReactionsToC: model.allowReactionsToC
             )
                 .frame(width: totalBeakerWidth(settings: settings))
                 .frame(height: settings.geometry.size.height * 0.8)

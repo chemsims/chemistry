@@ -14,21 +14,21 @@ protocol ConcentrationEquation {
 /// Linear concentration which is c1 at t1, and c2 at t2.
 struct LinearConcentration: ConcentrationEquation {
 
-    let t1: CGFloat
-    let c1: CGFloat
-    let t2: CGFloat
-    let c2: CGFloat
+    init(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) {
+        let m = (c2 - c1) / (t2 - t1)
+        self.init(m: m, t1: t1, c1: c1)
+    }
+
+    init(m: CGFloat, t1: CGFloat, c1: CGFloat) {
+        self.m = m
+        self.c = c1 - (m * t1)
+    }
+
+    private let m: CGFloat
+    private let c: CGFloat
 
     func getConcentration(at time: CGFloat) -> CGFloat {
         (m * time) + c
-    }
-
-    private var m: CGFloat {
-        (c2 - c1) / (t2 - t1)
-    }
-
-    private var c: CGFloat {
-        c1 - (m * t1)
     }
 
 }

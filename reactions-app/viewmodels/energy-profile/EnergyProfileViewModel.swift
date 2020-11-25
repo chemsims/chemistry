@@ -7,13 +7,14 @@ import SwiftUI
 
 class EnergyProfileViewModel: ObservableObject {
 
+    
     @Published var selectedCatalyst: Catalyst?
     @Published var activationEnergy: CGFloat = EnergyProfileSettings.initialEa
     @Published var temp2: CGFloat?
     @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
+    @Published var allowReactionsToC = false
 
-    let preExponentFactor: CGFloat = EnergyProfileSettings.preExponentFactor
     let temp1: CGFloat = EnergyProfileSettings.initialTemp
 
     var k1: CGFloat {
@@ -24,12 +25,21 @@ class EnergyProfileViewModel: ObservableObject {
         temp2.map { getK(temp: $0) }
     }
 
+    var rateEquation: ConcentrationEquation? {
+        if selectedCatalyst != nil {
+            let slope = -activationEnergy / .gasConstant
+            return LinearConcentration(m: slope, t1: 1 / temp1, c1: log(k1))
+        }
+        return nil
+    }
+
     func selectCatalyst(catalyst: Catalyst) -> Void {
         selectedCatalyst = catalyst
         activationEnergy -= catalyst.energyReduction
         let minEnergy = EnergyProfileSettings.initialEa - Catalyst.C.energyReduction
         let energyFactor = (activationEnergy - minEnergy) / (EnergyProfileSettings.initialEa - minEnergy)
         temp2 = temp1
+        allowReactionsToC = true
         withAnimation(.easeOut(duration: 0.8)) {
             peakHeightFactor = energyFactor
         }
@@ -42,7 +52,7 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     private func getK(temp: CGFloat) -> CGFloat {
-        preExponentFactor * pow(CGFloat(Darwin.M_E), (-1 * activationEnergy) / (temp * .gasConstant))
+        EnergyProfileSettings.preExponentFactor * pow(CGFloat(Darwin.M_E), (-1 * activationEnergy) / (temp * .gasConstant))
     }
 }
 

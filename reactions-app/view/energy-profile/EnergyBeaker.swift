@@ -9,6 +9,7 @@ struct EnergyBeaker: View {
 
     let extraSpeed: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
+    let allowReactionsToC: Bool
 
     var body: some View {
         GeometryReader { geometry in
@@ -45,7 +46,8 @@ struct EnergyBeaker: View {
             width: settings.innerBeakerWidth,
             height: settings.geometry.size.height * 0.4,
             speed: extraSpeed,
-            updateConcentrationC: updateConcentrationC
+            updateConcentrationC: updateConcentrationC,
+            allowReactionsToC: allowReactionsToC
         ).frame(
             width: settings.innerBeakerWidth,
             height: settings.geometry.size.height * 0.4
@@ -55,7 +57,11 @@ struct EnergyBeaker: View {
 
 struct EnergyBeaker_Previews: PreviewProvider {
     static var previews: some View {
-        EnergyBeaker(extraSpeed: 0, updateConcentrationC: {_ in })
-            .frame(height: 400)
+        EnergyBeaker(
+            extraSpeed: 0,
+            updateConcentrationC: {_ in },
+            allowReactionsToC: true
+        )
+        .frame(height: 400)
     }
 }
