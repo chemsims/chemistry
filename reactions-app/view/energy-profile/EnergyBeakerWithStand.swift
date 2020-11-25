@@ -71,6 +71,25 @@ struct EnergyBeakerWithStand: View {
             )
 
             stackView(settings: settings)
+
+            shakeText(settings: settings)
+                .opacity(catalystInProgress != nil && selectedCatalyst == nil ? 1 : 0)
+                .animation(.easeOut(duration: 0.75))
+        }
+    }
+
+    private func shakeText(settings: EnergyBeakerSettings) -> some View {
+        HStack {
+            Spacer()
+            VStack(spacing: 0) {
+                Spacer()
+                    .frame(height: settings.catHeight)
+                Image(systemName: "arrowtriangle.up.fill")
+                Text("shake")
+                Image(systemName: "arrowtriangle.down.fill")
+            }
+            .font(.system(size: 8))
+            .foregroundColor(.darkGray)
         }
     }
 
