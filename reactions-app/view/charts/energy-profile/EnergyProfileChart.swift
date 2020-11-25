@@ -12,6 +12,21 @@ struct EnergyProfileChart: View {
     let concentrationC: CGFloat
 
     var body: some View {
+        HStack(spacing: 0) {
+            Text("Energy")
+                .rotationEffect(.degrees(90))
+            VStack {
+                chart
+                HStack {
+                    Text("Reactants")
+                    Spacer()
+                    Text("Products")
+                }.frame(width: settings.chartSize)
+            }
+        }.font(.system(size: settings.fontSize))
+    }
+
+    private var chart: some View {
         ZStack {
             EnergyProfileChartShape(
                 peak: 1
@@ -41,7 +56,6 @@ struct EnergyProfileChart: View {
                     peak: peakHeightFactor
                 ).foregroundColor(.orangeAccent)
             }.frame(width: settings.chartSize, height: settings.chartSize)
-
         }
     }
 }

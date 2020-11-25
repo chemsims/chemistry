@@ -12,6 +12,16 @@ struct EnergyProfileRateChart: View {
     let currentTempInverse: CGFloat?
 
     var body: some View {
+        HStack {
+            Text("ln(k)")
+            VStack {
+                chart
+                Text("1/T")
+            }
+        }.font(.system(size: settings.fontSize))
+    }
+
+    private var chart: some View  {
         ZStack {
             if (equation != nil) {
                 ConcentrationEquationShape(
@@ -102,6 +112,10 @@ struct EnergyRateChartSettings {
             minValue: 1 / 600,
             maxValue: 1 / 400
         )
+    }
+
+    var fontSize: CGFloat {
+        timeChartSettings.labelFontSize
     }
 
 }

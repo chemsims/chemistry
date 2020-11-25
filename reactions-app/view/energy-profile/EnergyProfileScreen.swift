@@ -47,7 +47,7 @@ struct EnergyProfileScreen: View {
 
     private func chartsView(settings: EnergyProfileLayoutSettings) -> some View {
         VStack {
-            HStack(spacing: 20) {
+            HStack(alignment: .top, spacing: 20) {
                 Spacer()
                 EnergyProfileRateChart(
                     settings: EnergyRateChartSettings(chartSize: settings.chartsSize),
@@ -151,7 +151,15 @@ fileprivate struct EnergyProfileLayoutSettings {
 
 struct EnergyProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
+
+        // iPhone SE
+        EnergyProfileScreen(model: EnergyProfileViewModel())
+            .previewLayout(.fixed(width: 568, height: 320))
+
+
+        // iPad Mini
         EnergyProfileScreen(model: EnergyProfileViewModel())
             .previewLayout(.fixed(width: 1024, height: 768))
+
     }
 }
