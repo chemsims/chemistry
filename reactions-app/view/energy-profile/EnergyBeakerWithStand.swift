@@ -1,7 +1,7 @@
 //
 // Reactions App
 //
-  
+
 
 import SwiftUI
 
@@ -13,12 +13,23 @@ struct EnergyBeakerWithStand: View {
     let updateConcentrationC: (CGFloat) -> Void
     let allowReactionsToC: Bool
 
+    @State private var flameScale: CGFloat = 0
+    private let tripleFlameThreshold: CGFloat = 500
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 makeView(settings: EnergyBeakerSettings(geometry: geometry))
             }
+        }.onAppear(perform: runFlameFlickerAnimation)
+    }
 
+    private func runFlameFlickerAnimation() {
+        let animation = Animation.spring(
+            response: 1
+        ).repeatForever(autoreverses: true)
+        withAnimation(animation) {
+            self.flameScale = 0.1
         }
     }
 
@@ -39,7 +50,7 @@ struct EnergyBeakerWithStand: View {
                 updateConcentrationC: updateConcentrationC,
                 allowReactionsToC: allowReactionsToC
             )
-            .frame(height: settings.beakerHeight)
+            .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             beakerStand(settings: settings)
             slider(settings: settings, temp: tempBinding)
                 .padding(.top, settings.sliderTopPadding)
@@ -62,10 +73,66 @@ struct EnergyBeakerWithStand: View {
     }
 
     private func beakerStand(settings: EnergyBeakerSettings) -> some View {
-        Image("stand")
+        ZStack(alignment: .bottom) {
+            Image("stand")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: settings.standWidth)
+
+            flame(settings: settings)
+        }
+    }
+
+    private func flame(settings: EnergyBeakerSettings) -> some View {
+        VStack(spacing: 0) {
+            ZStack(alignment: .bottom) {
+                Group {
+                    smallFlame(settings: settings)
+                        .offset(x: settings.flameWidth)
+
+                    smallFlame(settings: settings)
+                        .offset(x: -settings.flameWidth)
+                }
+
+                flameImage
+                    .frame(width: largeFrameWidth(settings: settings))
+                    .scaleEffect(
+                        x: 1 + flameScale,
+                        y: 1 - flameScale,
+                        anchor: .bottom
+                    )
+            }
+
+            Image("burner")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: settings.burnerWidth)
+        }
+    }
+
+    private var flameImage: some View {
+        Image("flame")
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(width: settings.geometry.size.width)
+    }
+
+    private func smallFlame(settings: EnergyBeakerSettings) -> some View {
+        flameImage
+            .opacity((temp ?? 0) > tripleFlameThreshold ? 1 : 0)
+            .animation(.easeIn(duration: 0.25))
+            .frame(width: largeFrameWidth(settings: settings) * 0.6)
+            .scaleEffect(
+                x: 1 + flameScale,
+                y: 1 - flameScale,
+                anchor: .bottom
+            )
+    }
+
+    private func largeFrameWidth(settings: EnergyBeakerSettings) -> CGFloat {
+        let speed = extraSpeed(settings: settings)
+        let maxExtraScale: CGFloat = 0.5
+        let scale = 1 + (speed * maxExtraScale)
+        return settings.flameWidth * scale
     }
 
     private func slider(
@@ -116,8 +183,26 @@ fileprivate struct EnergyBeakerSettings {
         )
     }
 
+    var beakerWidth: CGFloat {
+        let maxHeight = 0.5 * geometry.size.height
+        let maxWidth = maxHeight / BeakerSettings.heightToWidth
+        return min(maxWidth, geometry.size.width)
+    }
+
     var beakerHeight: CGFloat {
-        BeakerSettings.heightToWidth * geometry.size.width
+        BeakerSettings.heightToWidth * beakerWidth
+    }
+
+    var standWidth: CGFloat {
+        beakerWidth
+    }
+
+    var burnerWidth: CGFloat {
+        standWidth * 0.4
+    }
+
+    var flameWidth: CGFloat {
+        burnerWidth * 0.18
     }
 
     var handleThickness: CGFloat {
@@ -143,6 +228,7 @@ fileprivate struct EnergyBeakerSettings {
     var catHeight: CGFloat {
         0.13 * geometry.size.height
     }
+
 }
 
 

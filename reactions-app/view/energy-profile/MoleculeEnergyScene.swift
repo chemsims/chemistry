@@ -79,7 +79,6 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         borderBody.friction = 0
         borderBody.categoryBitMask = wallCategory
         borderBody.contactTestBitMask = 1
-        borderBody.restitution = 1.01
         self.physicsBody = borderBody
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 

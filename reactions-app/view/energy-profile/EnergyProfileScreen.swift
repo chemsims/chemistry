@@ -15,7 +15,7 @@ struct EnergyProfileScreen: View {
     var body: some View {
         GeometryReader { geometry in
             makeView(
-                settings: OrderedReactionLayoutSettings(
+                settings: EnergyProfileLayoutSettings(
                     geometry: geometry,
                     horizontalSize: horizontalSizeClass,
                     verticalSize: verticalSizeClass
@@ -24,7 +24,7 @@ struct EnergyProfileScreen: View {
         }
     }
 
-    private func makeView(settings: OrderedReactionLayoutSettings) -> some View {
+    private func makeView(settings: EnergyProfileLayoutSettings) -> some View {
         ZStack {
             chartsView(settings: settings)
             beakyView(settings: settings)
@@ -33,30 +33,30 @@ struct EnergyProfileScreen: View {
         }
     }
 
-    private func beakyView(settings: OrderedReactionLayoutSettings) -> some View {
+    private func beakyView(settings: EnergyProfileLayoutSettings) -> some View {
         BeakyOverlay(
             statement: model.statement,
             next: model.next,
             back: model.back,
-            settings: settings
+            settings: settings.orderLayoutSettings
         )
-        .padding(.trailing, settings.beakyRightPadding)
-        .padding(.bottom, settings.beakyBottomPadding)
+        .padding(.trailing, settings.orderLayoutSettings.beakyRightPadding)
+        .padding(.bottom, settings.orderLayoutSettings.beakyBottomPadding)
     }
 
 
-    private func chartsView(settings: OrderedReactionLayoutSettings) -> some View {
+    private func chartsView(settings: EnergyProfileLayoutSettings) -> some View {
         VStack {
             HStack(spacing: 20) {
                 Spacer()
                 EnergyProfileRateChart(
-                    settings: EnergyRateChartSettings(chartSize: chartSize(settings: settings)),
+                    settings: EnergyRateChartSettings(chartSize: settings.chartsSize),
                     equation: model.rateEquation,
                     currentTempInverse: model.temp2.map { 1 / $0 }
                 )
 
                 EnergyProfileChart(
-                    settings: EnergyRateChartSettings(chartSize: chartSize(settings: settings)),
+                    settings: EnergyRateChartSettings(chartSize: settings.chartsSize),
                     peakHeightFactor: model.peakHeightFactor,
                     concentrationC: model.concentrationC
                 )
@@ -67,32 +67,28 @@ struct EnergyProfileScreen: View {
         }
     }
 
-    private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
+    private func equationView(settings: EnergyProfileLayoutSettings) -> some View {
         VStack {
             Spacer()
             HStack {
                 Spacer()
-                    .frame(width: totalBeakerWidth(settings: settings))
+                    .frame(width: settings.beakerWidth)
                 EnergyProfileRate(
                     k1: model.k1,
                     k2: model.k2,
                     ea: model.activationEnergy,
                     t1: model.temp1,
                     t2: model.temp2,
-                    maxWidth: equationWidth(settings: settings),
-                    maxHeight: equationHeight(settings: settings)
+                    maxWidth: settings.equationWidth,
+                    maxHeight: settings.equationHeight
                 )
-                    .padding(.leading, 0.1 * equationWidth(settings: settings))
+                .padding(.leading, 0.1 * settings.equationWidth)
                 Spacer()
             }
         }
     }
 
-    private func totalBeakerWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.width / 3.4
-    }
-
-    private func beakerView(settings: OrderedReactionLayoutSettings) -> some View {
+    private func beakerView(settings: EnergyProfileLayoutSettings) -> some View {
         HStack {
             EnergyBeakerWithStand(
                 selectedCatalyst: model.selectedCatalyst,
@@ -101,29 +97,51 @@ struct EnergyProfileScreen: View {
                 updateConcentrationC: model.setConcentrationC,
                 allowReactionsToC: model.allowReactionsToC
             )
-                .frame(width: totalBeakerWidth(settings: settings))
-                .frame(height: settings.geometry.size.height * 0.8)
-                .padding(.leading, settings.geometry.size.width * 0.01)
+            .frame(width: settings.beakerWidth, height: settings.beakerHeight)
+            .padding(.leading, settings.geometry.size.width * 0.01)
             Spacer()
         }
     }
 
-    private func equationWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.width / 3.5
+}
+
+fileprivate struct EnergyProfileLayoutSettings {
+    let geometry: GeometryProxy
+    let horizontalSize: UserInterfaceSizeClass?
+    let verticalSize: UserInterfaceSizeClass?
+
+    var orderLayoutSettings: OrderedReactionLayoutSettings {
+        OrderedReactionLayoutSettings(
+            geometry: geometry,
+            horizontalSize: horizontalSize,
+            verticalSize: verticalSize
+        )
     }
 
-    private func equationHeight(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.height / 2.3
+    var chartsSize: CGFloat {
+        1.2 * orderLayoutSettings.chartSize
+    }
+    var chartsTopPadding: CGFloat {
+        orderLayoutSettings.chartsTopPadding
+    }
+    var equationWidth: CGFloat {
+        geometry.size.width / 3.5
+    }
+    var equationHeight: CGFloat {
+        geometry.size.height / 2.3
+    }
+    var beakerWidth: CGFloat {
+        geometry.size.width / 3.4
+    }
+    var beakerHeight: CGFloat {
+        0.95 * geometry.size.height
     }
 
-    private func chartSize(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.chartSize * 1.2
-    }
 }
 
 struct EnergyProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
         EnergyProfileScreen(model: EnergyProfileViewModel())
-            .previewLayout(.fixed(width: 500, height: 300))
+            .previewLayout(.fixed(width: 568, height: 320))
     }
 }
