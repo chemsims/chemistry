@@ -68,6 +68,7 @@
 		572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB943255C3BCF0071C600 /* ValueRange.swift */; };
 		572CB949255C412A0071C600 /* ZeroOrderReactionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */; };
 		57655D45256C0919006FB93C /* EnergyProfileRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRate.swift */; };
+		5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766B71E256EC20200569CB9 /* ShakeExtension.swift */; };
 		576D5A7425665B9C0062F722 /* RateEquationComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7325665B9C0062F722 /* RateEquationComparisonView.swift */; };
 		576D5A7825665E170062F722 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
 		576D5A8D256674FD0062F722 /* ZeroOrderEquationView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A8C256674FD0062F722 /* ZeroOrderEquationView2.swift */; };
@@ -183,6 +184,7 @@
 		572CB943255C3BCF0071C600 /* ValueRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRange.swift; sourceTree = "<group>"; };
 		572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionEquation.swift; sourceTree = "<group>"; };
 		57655D44256C0919006FB93C /* EnergyProfileRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRate.swift; sourceTree = "<group>"; };
+		5766B71E256EC20200569CB9 /* ShakeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeExtension.swift; sourceTree = "<group>"; };
 		576D5A7325665B9C0062F722 /* RateEquationComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateEquationComparisonView.swift; sourceTree = "<group>"; };
 		576D5A7725665E170062F722 /* ScaledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledView.swift; sourceTree = "<group>"; };
 		576D5A8C256674FD0062F722 /* ZeroOrderEquationView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderEquationView2.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				571D6A4D255A780900F4E635 /* Info.plist */,
 				571D6A47255A780900F4E635 /* Preview Content */,
 				57D7982B256E7FE1005BE551 /* CatalystParticles.sks */,
+				5766B71E256EC20200569CB9 /* ShakeExtension.swift */,
 			);
 			path = "reactions-app";
 			sourceTree = "<group>";
@@ -788,6 +791,7 @@
 				57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */,
 				57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */,
 				571B3C3E2563F9490075358B /* FirstOrderReactionEquationSettings.swift in Sources */,
+				5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */,
 				571B3C5A256555C40075358B /* ReactionNavigationViewModel.swift in Sources */,
 				571B3CA12565796A0075358B /* ReactionComparisonStatements.swift in Sources */,
 				57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */,

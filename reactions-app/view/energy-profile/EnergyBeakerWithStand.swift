@@ -132,10 +132,22 @@ struct EnergyBeakerWithStand: View {
             .onTapGesture {
                 if (catalystInProgress == nil) {
                     setCatalystInProgress(catalyst)
-                } else if (!emitCatalyst && selectedCatalyst == nil) {
-                    selectCatalyst(catalyst)
                 }
+                doSelectCatalyst(catalyst: catalyst)
+            }.onReceive(
+                NotificationCenter.default.publisher(
+                    for: .deviceDidShakeNotification)
+            ) { _ in
+                doSelectCatalyst(catalyst: catalyst)
             }
+    }
+
+    private func doSelectCatalyst(catalyst: Catalyst) {
+        let inProgress = catalystInProgress == catalyst
+        let notSelected = selectedCatalyst == nil
+        if (inProgress && notSelected && !emitCatalyst) {
+            selectCatalyst(catalyst)
+        }
     }
 
     private func beakerStand(settings: EnergyBeakerSettings) -> some View {
