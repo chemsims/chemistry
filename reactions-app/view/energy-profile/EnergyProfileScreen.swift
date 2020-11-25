@@ -35,9 +35,9 @@ struct EnergyProfileScreen: View {
 
     private func beakyView(settings: OrderedReactionLayoutSettings) -> some View {
         BeakyOverlay(
-            statement: [],
-            next: {},
-            back: {},
+            statement: model.statement,
+            next: model.next,
+            back: model.back,
             settings: settings
         )
         .padding(.trailing, settings.beakyRightPadding)

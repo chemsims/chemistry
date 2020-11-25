@@ -29,26 +29,57 @@ struct EnergyProfileChart: View {
             .frame(width: settings.chartSize, height: settings.chartSize)
 
             ZStack {
-                Circle()
-                    .frame(width: settings.chartHeadHaloSize)
-                    .foregroundColor(Styling.primaryColorHalo)
-                Circle()
-                    .frame(width: settings.chartHeadSize)
-                    .foregroundColor(.orangeAccent)
-            }
-            .position(
-                x: concentrationC * settings.chartSize,
-                y: BellCurve(
-                    peak: peakHeightFactor,
-                    frameWidth: settings.chartSize,
-                    frameHeight: settings.chartSize
-                ).absoluteY(absoluteX: concentrationC * settings.chartSize)
-            ).frame(width: settings.chartSize, height: settings.chartSize)
+                EnergyProfileHead(
+                    radius: settings.chartHeadHaloSize,
+                    concentrationC: concentrationC,
+                    peak: peakHeightFactor
+                ).foregroundColor(Styling.primaryColorHalo)
+
+                EnergyProfileHead(
+                    radius: settings.chartHeadSize,
+                    concentrationC: concentrationC,
+                    peak: peakHeightFactor
+                ).foregroundColor(.orangeAccent)
+            }.frame(width: settings.chartSize, height: settings.chartSize)
+
         }
     }
 }
 
-struct EnergyProfileChartShape: Shape {
+fileprivate struct EnergyProfileHead: Shape {
+
+    let radius: CGFloat
+    var concentrationC: CGFloat
+    var peak: CGFloat
+
+    var animatableData: AnimatablePair<CGFloat, CGFloat> {
+        get { AnimatablePair(concentrationC, peak) }
+        set {
+            concentrationC = newValue.first
+            peak = newValue.second
+        }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        let curve = BellCurve(peak: peak, frameWidth: rect.width, frameHeight: rect.height)
+        let absoluteX: CGFloat = concentrationC * rect.width
+        let absoluteY = curve.absoluteY(absoluteX: absoluteX)
+
+        let originX = absoluteX - radius
+        let originY = absoluteY - radius
+
+        let headRect = CGRect(x: originX, y: originY, width: radius * 2, height: radius * 2)
+        path.addEllipse(in: headRect)
+
+        return path
+    }
+
+}
+
+
+fileprivate struct EnergyProfileChartShape: Shape {
 
     var peak: CGFloat
 

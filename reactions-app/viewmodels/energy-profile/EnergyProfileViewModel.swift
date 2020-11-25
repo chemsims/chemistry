@@ -7,13 +7,32 @@ import SwiftUI
 
 class EnergyProfileViewModel: ObservableObject {
 
-    
+    @Published var statement: [SpeechBubbleLine] = EnergyProfileStatements.intro
     @Published var selectedCatalyst: Catalyst?
     @Published var activationEnergy: CGFloat = EnergyProfileSettings.initialEa
     @Published var temp2: CGFloat?
     @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
     @Published var allowReactionsToC = false
+
+
+    func next() {
+
+    }
+
+    func back() {
+        if (selectedCatalyst != nil) {
+            selectedCatalyst = nil
+            activationEnergy = EnergyProfileSettings.initialEa
+            allowReactionsToC = false
+            statement = EnergyProfileStatements.intro
+            withAnimation(.easeOut(duration: 0.6)) {
+                peakHeightFactor = 1
+                temp2 = nil
+                concentrationC = 0
+            }
+        }
+    }
 
     let temp1: CGFloat = EnergyProfileSettings.initialTemp
 
@@ -40,7 +59,8 @@ class EnergyProfileViewModel: ObservableObject {
         let energyFactor = (activationEnergy - minEnergy) / (EnergyProfileSettings.initialEa - minEnergy)
         temp2 = temp1
         allowReactionsToC = true
-        withAnimation(.easeOut(duration: 0.8)) {
+        statement = EnergyProfileStatements.setT2
+        animateStateChange {
             peakHeightFactor = energyFactor
         }
     }
@@ -48,6 +68,18 @@ class EnergyProfileViewModel: ObservableObject {
     func setConcentrationC(concentration: CGFloat) {
         withAnimation(.easeInOut(duration: 0.5)) {
             self.concentrationC = concentration
+        }
+        if (concentration > 0.4) {
+            statement = EnergyProfileStatements.middle
+        }
+        if (concentration == 1) {
+            statement = EnergyProfileStatements.finished
+        }
+    }
+
+    private func animateStateChange(stateChange: () -> Void) {
+        withAnimation(.easeOut(duration: 0.8)) {
+            stateChange()
         }
     }
 
