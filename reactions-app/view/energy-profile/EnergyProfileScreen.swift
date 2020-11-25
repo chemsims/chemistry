@@ -54,17 +54,11 @@ struct EnergyProfileScreen: View {
                     equation: model.rateEquation,
                     currentTempInverse: model.temp2.map { 1 / $0 }
                 )
-                .frame(
-                    width: chartSize(settings: settings),
-                    height: chartSize(settings: settings)
-                )
 
                 EnergyProfileChart(
+                    settings: EnergyRateChartSettings(chartSize: chartSize(settings: settings)),
                     peakHeightFactor: model.peakHeightFactor,
                     concentrationC: model.concentrationC
-                ).frame(
-                    width: chartSize(settings: settings),
-                    height: chartSize(settings: settings)
                 )
             }
             .padding(.top, settings.chartsTopPadding)

@@ -7,42 +7,43 @@ import SwiftUI
 
 struct EnergyProfileChart: View {
 
+    let settings: EnergyRateChartSettings
     let peakHeightFactor: CGFloat
     let concentrationC: CGFloat
 
     var body: some View {
-        GeometryReader { geometry in
+        ZStack {
+            EnergyProfileChartShape(
+                peak: 1
+            )
+            .stroke()
+            .foregroundColor(Styling.timeAxisCompleteBar)
+            .frame(width: settings.chartSize, height: settings.chartSize)
+
+            EnergyProfileChartShape(
+                peak: peakHeightFactor
+            )
+            .stroke()
+            .foregroundColor(.orangeAccent)
+            .border(Color.black)
+            .frame(width: settings.chartSize, height: settings.chartSize)
+
             ZStack {
-                EnergyProfileChartShape(
-                    peak: 1
-                )
-                .stroke()
-                .foregroundColor(Styling.timeAxisCompleteBar)
-
-                EnergyProfileChartShape(
-                    peak: peakHeightFactor
-                )
-                .stroke()
-                .foregroundColor(.orangeAccent)
-                .border(Color.black)
-
-                ZStack {
-                    Circle()
-                        .frame(width: geometry.size.width * 0.1)
-                        .foregroundColor(Color.orangeAccent.opacity(0.5))
-                    Circle()
-                        .frame(width: geometry.size.width * 0.045)
-                        .foregroundColor(.orangeAccent)
-                }
-                .position(
-                    x: concentrationC * geometry.size.width,
-                    y: BellCurve(
-                        peak: peakHeightFactor,
-                        frameWidth: geometry.size.width,
-                        frameHeight: geometry.size.height
-                    ).absoluteY(absoluteX: concentrationC * geometry.size.width)
-                )
+                Circle()
+                    .frame(width: settings.chartHeadHaloSize)
+                    .foregroundColor(Styling.primaryColorHalo)
+                Circle()
+                    .frame(width: settings.chartHeadSize)
+                    .foregroundColor(.orangeAccent)
             }
+            .position(
+                x: concentrationC * settings.chartSize,
+                y: BellCurve(
+                    peak: peakHeightFactor,
+                    frameWidth: settings.chartSize,
+                    frameHeight: settings.chartSize
+                ).absoluteY(absoluteX: concentrationC * settings.chartSize)
+            ).frame(width: settings.chartSize, height: settings.chartSize)
         }
     }
 }
@@ -115,6 +116,7 @@ fileprivate struct BellCurve {
 struct EnergyProfileChart_Previews: PreviewProvider {
     static var previews: some View {
         EnergyProfileChart(
+            settings: EnergyRateChartSettings(chartSize: 250),
             peakHeightFactor: 0,
             concentrationC: 0.5
         )
