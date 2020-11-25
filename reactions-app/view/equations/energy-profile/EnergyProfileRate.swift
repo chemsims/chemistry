@@ -182,6 +182,7 @@ fileprivate struct BlankRates: View {
             HStack(spacing: 0) {
                 Text("ln")
                     .frame(width: 27)
+                    .minimumScaleFactor(1)
                 LargeOpenParen()
                 VStack(spacing: 1) {
                     Placeholder(value: k1)
@@ -238,6 +239,7 @@ fileprivate struct LargeOpenParen: View {
         Text("(")
             .scaleEffect(y: 2.5)
             .frame(width: 12)
+            .minimumScaleFactor(1)
     }
 }
 
@@ -246,6 +248,7 @@ fileprivate struct LargeCloseParen: View {
         Text(")")
             .scaleEffect(y: 2.5)
             .frame(width: 12)
+            .minimumScaleFactor(1)
     }
 }
 

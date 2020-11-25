@@ -70,7 +70,7 @@ struct EnergyProfileScreen: View {
     private func equationView(settings: EnergyProfileLayoutSettings) -> some View {
         VStack {
             Spacer()
-            HStack {
+            HStack(spacing: 0) {
                 Spacer()
                     .frame(width: settings.beakerWidth)
                 EnergyProfileRate(
@@ -82,7 +82,7 @@ struct EnergyProfileScreen: View {
                     maxWidth: settings.equationWidth,
                     maxHeight: settings.equationHeight
                 )
-                .padding(.leading, 0.1 * settings.equationWidth)
+                .padding(.leading, settings.equationLeadingPadding)
                 Spacer()
             }
         }
@@ -101,7 +101,7 @@ struct EnergyProfileScreen: View {
                 allowReactionsToC: model.allowReactionsToC
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
-            .padding(.leading, settings.geometry.size.width * 0.01)
+            .padding(.leading, settings.beakerLeadingPadding)
             Spacer()
         }
     }
@@ -127,7 +127,7 @@ fileprivate struct EnergyProfileLayoutSettings {
         orderLayoutSettings.chartsTopPadding
     }
     var equationWidth: CGFloat {
-        geometry.size.width / 3.5
+        0.9 * (geometry.size.width - beakerTotalWidth - orderLayoutSettings.beakyBoxTotalWidth)
     }
     var equationHeight: CGFloat {
         geometry.size.height / 2.3
@@ -138,12 +138,20 @@ fileprivate struct EnergyProfileLayoutSettings {
     var beakerHeight: CGFloat {
         0.95 * geometry.size.height
     }
-
+    var beakerTotalWidth: CGFloat {
+        beakerWidth + beakerLeadingPadding
+    }
+    var beakerLeadingPadding: CGFloat {
+        0.01 * geometry.size.width
+    }
+    var equationLeadingPadding: CGFloat {
+        0.1 * equationWidth
+    }
 }
 
 struct EnergyProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
         EnergyProfileScreen(model: EnergyProfileViewModel())
-            .previewLayout(.fixed(width: 568, height: 320))
+            .previewLayout(.fixed(width: 1024, height: 768))
     }
 }

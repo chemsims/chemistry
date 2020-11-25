@@ -88,7 +88,7 @@ struct EnergyBeakerWithStand: View {
                 Text("shake")
                 Image(systemName: "arrowtriangle.down.fill")
             }
-            .font(.system(size: 8))
+            .font(.system(size: settings.shakeFontSize))
             .foregroundColor(.darkGray)
         }
     }
@@ -334,6 +334,9 @@ fileprivate struct EnergyBeakerSettings {
 
     var catHeight: CGFloat {
         0.13 * geometry.size.height
+    }
+    var shakeFontSize: CGFloat {
+        0.23 * catHeight
     }
 
 }

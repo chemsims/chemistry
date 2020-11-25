@@ -65,8 +65,8 @@ class CatalystEmitterScene: SKScene {
             emitter.particleBirthRate = emitting ? birthRate : 0
             emitter.particleColorSequence = nil
             emitter.particleColor = particleColor ?? .red
+            emitter.particleSize = CGSize(width: size.width * 0.04, height: size.width * 0.04)
             addChild(emitter)
         }
     }
-
 }
