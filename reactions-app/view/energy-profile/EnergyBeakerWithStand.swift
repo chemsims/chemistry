@@ -20,9 +20,7 @@ struct EnergyBeakerWithStand: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                makeView(settings: EnergyBeakerSettings(geometry: geometry))
-            }
+            makeView(settings: EnergyBeakerSettings(geometry: geometry))
         }.onAppear(perform: runFlameFlickerAnimation)
     }
 
@@ -35,17 +33,46 @@ struct EnergyBeakerWithStand: View {
         }
     }
 
+    private func emitterPosition(settings: EnergyBeakerSettings) -> CGPoint {
+        var y = emitterHeight(settings: settings) - settings.catHeight
+        var x = settings.width / 2
+
+        let dh = 0.26 * settings.catHeight // Distance from center to opening of catalyst container
+        let dx = dh * CGFloat(cos(Angle.degrees(45).radians))
+        let dy = dh * CGFloat(sin(Angle.degrees(45).radians))
+
+        y -= dy
+        x += dx
+        return CGPoint(x: x, y: y)
+    }
+
+    private func emitterHeight(settings: EnergyBeakerSettings) -> CGFloat {
+        settings.height -
+            settings.handleHeight -
+            (settings.standWidth * settings.standHeightToWidth)
+    }
+
     private func makeView(settings: EnergyBeakerSettings) -> some View {
-        VStack(spacing: 0) {
-            HStack {
-                Spacer()
-                catImage(catalyst: .A, settings: settings)
-                Spacer()
-                catImage(catalyst: .B, settings: settings)
-                Spacer()
-                catImage(catalyst: .C, settings: settings)
-                Spacer()
+        ZStack(alignment: .top) {
+            if (catalystInProgress != nil) {
+                CatalystEmitterView(
+                    width: settings.width,
+                    height: emitterHeight(settings: settings),
+                    emitterPosition: emitterPosition(settings: settings)
+                )
+                .frame(
+                    width: settings.width,
+                    height: emitterHeight(settings: settings)
+                )
             }
+
+            stackView(settings: settings)
+        }
+    }
+
+    private func stackView(settings: EnergyBeakerSettings) -> some View {
+        VStack(spacing: 0) {
+            catalystView(settings: settings)
             Spacer()
             EnergyBeaker(
                 extraSpeed: extraSpeed(settings: settings),
@@ -59,20 +86,43 @@ struct EnergyBeakerWithStand: View {
         }
     }
 
+    private func catalystView(
+        settings: EnergyBeakerSettings
+    ) -> some View {
+        ZStack {
+            catImage(index: 0, catalyst: .A, settings: settings)
+            catImage(index: 1, catalyst: .B, settings: settings)
+            catImage(index: 2, catalyst: .C, settings: settings)
+        }
+    }
+
     private func catImage(
+        index: Int,
         catalyst: Catalyst,
         settings: EnergyBeakerSettings
     ) -> some View {
         let isSelected = selectedCatalyst == catalyst
         let isInProgress = catalystInProgress == catalyst
-        let scale: CGFloat = isInProgress ? 1.5 : 1
+        let stationaryX = (settings.width / 4) + ((settings.width / 4) * CGFloat(index))
+        let x = isInProgress ? settings.width / 2 : stationaryX
+        let y = isInProgress ? settings.catHeight : settings.catHeight / 2
+        let zIndex: Double = isInProgress ? 1 : 0
         let rotation: Angle = isInProgress ? .degrees(135) : .zero
+        let scale: CGFloat = isInProgress ? 1.2 : 1
+        let shadow = isInProgress ? settings.catHeight * 0.05 : 0
+
         return Image(catalystInProgress == nil || isInProgress ? catalyst.imageName : "catdeact")
             .resizable()
             .aspectRatio(contentMode: .fit)
+            .rotationEffect(rotation, anchor: .center)
+            .position(
+                x: x,
+                y: y
+            )
             .frame(height: settings.catHeight)
+            .zIndex(zIndex)
+            .shadow(radius: shadow)
             .scaleEffect(x: scale, y: scale, anchor: .top)
-            .rotationEffect(rotation, anchor: .bottomLeading)
             .animation(.easeOut(duration: 0.75))
             .opacity(isSelected ? 0 : 1)
             .onTapGesture {
@@ -186,6 +236,16 @@ struct EnergyBeakerWithStand: View {
 fileprivate struct EnergyBeakerSettings {
     let geometry: GeometryProxy
 
+    var width: CGFloat {
+        geometry.size.width
+    }
+
+    var height: CGFloat {
+        geometry.size.height
+    }
+
+    let standHeightToWidth: CGFloat = 0.257
+
     var axis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
             minValuePosition: geometry.size.width * 0.1,
@@ -262,6 +322,6 @@ struct EnergyBeakerWithStand_Previews: PreviewProvider {
             temp: .constant(500),
             updateConcentrationC: {_ in },
             allowReactionsToC: true
-        )
+        ).previewLayout(.fixed(width: 200, height: 320))
     }
 }
