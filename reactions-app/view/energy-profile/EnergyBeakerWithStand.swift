@@ -16,6 +16,8 @@ struct EnergyBeakerWithStand: View {
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
 
+    @State private var catalystInProgress: Catalyst? = nil
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -61,12 +63,22 @@ struct EnergyBeakerWithStand: View {
         catalyst: Catalyst,
         settings: EnergyBeakerSettings
     ) -> some View {
-        Image(selectedCatalyst == nil ? catalyst.imageName : "catdeact")
+        let isSelected = selectedCatalyst == catalyst
+        let isInProgress = catalystInProgress == catalyst
+        let scale: CGFloat = isInProgress ? 1.5 : 1
+        let rotation: Angle = isInProgress ? .degrees(135) : .zero
+        return Image(catalystInProgress == nil || isInProgress ? catalyst.imageName : "catdeact")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: settings.catHeight)
+            .scaleEffect(x: scale, y: scale, anchor: .top)
+            .rotationEffect(rotation, anchor: .bottomLeading)
+            .animation(.easeOut(duration: 0.75))
+            .opacity(isSelected ? 0 : 1)
             .onTapGesture {
-                if selectedCatalyst == nil {
+                if (catalystInProgress == nil) {
+                    catalystInProgress = catalyst
+                } else if selectedCatalyst == nil {
                     selectCatalyst(catalyst)
                 }
             }
