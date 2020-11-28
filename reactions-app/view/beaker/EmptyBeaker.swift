@@ -103,14 +103,14 @@ struct BeakerSettings {
 
     static let heightToWidth: CGFloat = 1.1
 
-    let geometry: GeometryProxy
+    let width: CGFloat
 
     var lipRadius: CGFloat {
-        geometry.size.width * 0.03
+        width * 0.03
     }
 
     var lipWidthLeft: CGFloat {
-        geometry.size.width * 0.01
+        width * 0.01
     }
 
     var mediumBeakerRightLipWidth: CGFloat {
@@ -122,7 +122,7 @@ struct BeakerSettings {
     }
 
     var outerBottomCornerRadius: CGFloat {
-        geometry.size.width * 0.1
+        width * 0.1
     }
 
     var mediumBeakerRightGap: CGFloat {
@@ -146,7 +146,7 @@ struct BeakerSettings {
     }
 
     var innerBeakersBottomGap: CGFloat {
-        geometry.size.height * 0.05
+        width * 0.055
     }
 
     var numTicks: Int {
@@ -158,7 +158,7 @@ struct BeakerSettings {
     }
 
     var ticksMinorWidth: CGFloat {
-        geometry.size.width * 0.075
+        width * 0.075
     }
 
     var ticksMajorWidth: CGFloat {
@@ -174,7 +174,7 @@ struct BeakerSettings {
     }
 
     var innerBeakerWidth: CGFloat {
-        geometry.size.width - (2 * lipRadius) - (2 * lipWidthLeft)
+        width - (2 * lipRadius) - (2 * lipWidthLeft)
     }
 }
 
@@ -182,9 +182,9 @@ struct BeakerSettings {
 struct EmptyBeaker_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
-                EmptyBeaker(
-                    settings: BeakerSettings(geometry: geometry)
-                )
+            EmptyBeaker(
+                settings: BeakerSettings(width: geometry.size.width)
+            )
         }
     }
 }

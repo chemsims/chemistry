@@ -14,7 +14,7 @@ struct FilledBeaker: View {
     var body: some View {
         GeometryReader { geometry in
             makeView(
-                using: BeakerSettings(geometry: geometry)
+                using: BeakerSettings(width: geometry.size.width)
             )
         }
     }

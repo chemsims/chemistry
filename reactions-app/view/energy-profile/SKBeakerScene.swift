@@ -9,14 +9,20 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 
     let waterHeight: CGFloat
     let updateConcentrationC: ((CGFloat) -> Void)
+    let emitterPosition: CGPoint
+    let emitting: Bool
 
     init(
         size: CGSize,
         waterHeight: CGFloat,
-        updateConcentrationC: @escaping (CGFloat) -> Void
+        updateConcentrationC: @escaping (CGFloat) -> Void,
+        emitterPosition: CGPoint,
+        emitting: Bool
     ) {
         self.waterHeight = waterHeight
         self.updateConcentrationC = updateConcentrationC
+        self.emitterPosition = emitterPosition
+        self.emitting = emitting
         super.init(size: size)
     }
 

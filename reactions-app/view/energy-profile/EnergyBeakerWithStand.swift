@@ -37,19 +37,6 @@ struct EnergyBeakerWithStand: View {
         }
     }
 
-    private func emitterPosition(settings: EnergyBeakerSettings) -> CGPoint {
-        var y = emitterHeight(settings: settings) - settings.catHeight
-        var x = settings.width / 2
-
-        let dh = 0.26 * settings.catHeight // Distance from center to opening of catalyst container
-        let dx = dh * CGFloat(cos(Angle.degrees(45).radians))
-        let dy = dh * CGFloat(sin(Angle.degrees(45).radians))
-
-        y -= dy
-        x += dx
-        return CGPoint(x: x, y: y)
-    }
-
     private func emitterHeight(settings: EnergyBeakerSettings) -> CGFloat {
         settings.height -
             settings.handleHeight -
@@ -58,18 +45,6 @@ struct EnergyBeakerWithStand: View {
 
     private func makeView(settings: EnergyBeakerSettings) -> some View {
         ZStack(alignment: .top) {
-            CatalystEmitterView(
-                width: settings.width,
-                height: emitterHeight(settings: settings),
-                emitterPosition: emitterPosition(settings: settings),
-                emitting: emitCatalyst,
-                color: catalystInProgress?.color ?? .black
-            )
-            .frame(
-                width: settings.width,
-                height: emitterHeight(settings: settings)
-            )
-
             stackView(settings: settings)
 
             shakeText(settings: settings)
@@ -95,10 +70,8 @@ struct EnergyBeakerWithStand: View {
 
     private func stackView(settings: EnergyBeakerSettings) -> some View {
         VStack(spacing: 0) {
-            catalystView(settings: settings)
-            Spacer()
             beakerView(settings: settings)
-                .frame(width: settings.beakerWidth, height: settings.beakerHeight)
+                .frame(width: settings.beakerWidth, height: settings.skSceneHeight)
             beakerStand(settings: settings)
             slider(settings: settings, temp: tempBinding)
                 .padding(.top, settings.sliderTopPadding)
@@ -107,7 +80,7 @@ struct EnergyBeakerWithStand: View {
 
     private func beakerView(settings: EnergyBeakerSettings) -> some View {
         GeometryReader { geometry in
-            makeBeakerView(settings: settings, beaker: BeakerSettings(geometry: geometry))
+            makeBeakerView(settings: settings, beaker: BeakerSettings(width: settings.beakerWidth))
         }
     }
 
@@ -123,6 +96,8 @@ struct EnergyBeakerWithStand: View {
             )
             .stroke(lineWidth: 1)
             .fill(Color.darkGray.opacity(0.5))
+            .frame(width: settings.beakerWidth, height: settings.beakerHeight)
+
             Group {
                 Rectangle()
                     .frame(width: beaker.innerBeakerWidth, height: settings.waterHeight)
@@ -131,19 +106,25 @@ struct EnergyBeakerWithStand: View {
             }.mask(
                 BeakerBottomShape(cornerRadius: beaker.outerBottomCornerRadius)
             )
+            
             EmptyBeaker(settings: beaker)
+                .frame(width: settings.beakerWidth, height: settings.beakerHeight)
         }
     }
 
     private func skSceneView(settings: EnergyBeakerSettings, beaker: BeakerSettings) -> some View {
         MoleculeEneregyUIViewRepresentable(
             width: beaker.innerBeakerWidth,
-            height: settings.beakerHeight,
+            height: settings.skSceneHeight,
             waterHeight: settings.waterHeight,
             speed: extraSpeed(settings: settings),
             updateConcentrationC: updateConcentrationC,
-            allowReactionsToC: allowReactionsToC
-        ).frame(width: beaker.innerBeakerWidth, height: settings.beakerHeight)
+            allowReactionsToC: allowReactionsToC,
+            emitterPosition: settings.emitterPosition,
+            emitting: emitCatalyst
+        )
+        .frame(width: beaker.innerBeakerWidth, height: settings.skSceneHeight)
+        .border(Color.red)
     }
 
     private func catalystView(
@@ -345,6 +326,10 @@ fileprivate struct EnergyBeakerSettings {
         beakerWidth
     }
 
+    var standHeight: CGFloat {
+        standWidth * standHeightToWidth
+    }
+
     var burnerWidth: CGFloat {
         standWidth * 0.4
     }
@@ -378,6 +363,23 @@ fileprivate struct EnergyBeakerSettings {
     }
     var shakeFontSize: CGFloat {
         0.23 * catHeight
+    }
+
+    var skSceneHeight: CGFloat {
+        height - handleThickness - standHeight - sliderTopPadding
+    }
+
+    var emitterPosition: CGPoint {
+        var y = skSceneHeight - catHeight
+        var x = width / 2
+
+        let dh = 0.26 * catHeight // Distance from center to opening of catalyst container
+        let dx = dh * CGFloat(cos(Angle.degrees(45).radians))
+        let dy = dh * CGFloat(sin(Angle.degrees(45).radians))
+
+        y -= dy
+        x += dx
+        return CGPoint(x: x, y: y)
     }
 
 }

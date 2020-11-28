@@ -17,13 +17,17 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
     let speed: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
     let allowReactionsToC: Bool
+    let emitterPosition: CGPoint
+    let emitting: Bool
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
         let scene = SKBeakerScene(
             size: CGSize(width: width, height: height),
             waterHeight: waterHeight,
-            updateConcentrationC: updateConcentrationC
+            updateConcentrationC: updateConcentrationC,
+            emitterPosition: emitterPosition,
+            emitting: true
         )
         scene.scaleMode = .aspectFit
         view.allowsTransparency = true

@@ -14,7 +14,7 @@ struct EnergyBeaker: View {
     var body: some View {
         GeometryReader { geometry in
             makeView(
-                settings: BeakerSettings(geometry: geometry)
+                settings: BeakerSettings(width: geometry.size.width)
             )
         }
     }
