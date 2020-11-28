@@ -7,6 +7,23 @@ import SpriteKit
 
 class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 
+    let waterHeight: CGFloat
+    let updateConcentrationC: ((CGFloat) -> Void)
+
+    init(
+        size: CGSize,
+        waterHeight: CGFloat,
+        updateConcentrationC: @escaping (CGFloat) -> Void
+    ) {
+        self.waterHeight = waterHeight
+        self.updateConcentrationC = updateConcentrationC
+        super.init(size: size)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var allowReactionsToC: Bool = false {
         willSet {
             if (allowReactionsToC && !newValue && cMolecules > 0) {
@@ -24,7 +41,6 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    var updateConcentrationC: ((CGFloat) -> Void)?
 
     @objc
     private func updateSpeeds() {
@@ -54,7 +70,6 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-
     private let moleculeACategory: UInt32 = 0x1 << 0
     private let moleculeBCategory: UInt32 = 0x1 << 1
     private let moleculeCCategory: UInt32 = 0x1 << 2
@@ -71,14 +86,16 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     private var cMolecules: Int = 0
 
     override func didMove(to view: SKView) {
-        let borderBody = SKPhysicsBody(edgeLoopFrom: self.frame)
+
+        let water = CGRect(x: 0, y: 0, width: size.width, height: waterHeight)
+        let borderBody = SKPhysicsBody(edgeLoopFrom: water)
         borderBody.friction = 0
         borderBody.categoryBitMask = wallCategory
         borderBody.contactTestBitMask = 1
         self.physicsBody = borderBody
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 
-        self.backgroundColor = Styling.beakerLiquidSK
+        self.backgroundColor = .clear
 
         for _ in 0..<MoleculeEnergySettings.aMolecules {
             addMolecule(color: UIColor.moleculeA, category: moleculeACategory)
@@ -118,10 +135,8 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
                 nodeA.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
                 nodeB.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
                 cMolecules += 2
-                if let updateC = updateConcentrationC {
-                    let concentration = CGFloat(cMolecules) / CGFloat(MoleculeEnergySettings.aMolecules + MoleculeEnergySettings.bMolecules)
-                    updateC(concentration)
-                }
+                let concentrationC = CGFloat(cMolecules) / CGFloat(MoleculeEnergySettings.aMolecules + MoleculeEnergySettings.bMolecules)
+                updateConcentrationC(concentrationC)
             }
         }
     }
@@ -137,7 +152,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         let radius = MoleculeEnergySettings.moleculeRadius(width: size.width)
         let molecule = SKShapeNode(circleOfRadius: radius)
         let x = CGFloat.random(in: 0...size.width)
-        let y = CGFloat.random(in: 0...size.height)
+        let y = CGFloat.random(in: 0...waterHeight)
 
         molecule.position = CGPoint(x: x, y: y)
         molecule.fillColor = color
@@ -173,7 +188,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             bottomYEdge: Bool
         ) {
             let x1 = leftXEdge ? 0 : size.width
-            let y1 = bottomYEdge ? 0 : size.height
+            let y1 = bottomYEdge ? 0 : waterHeight
             let xDir: CGFloat = leftXEdge ? 1 : -1
             let yDir: CGFloat = bottomYEdge ? 1 : -1
 

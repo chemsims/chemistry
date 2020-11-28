@@ -97,16 +97,53 @@ struct EnergyBeakerWithStand: View {
         VStack(spacing: 0) {
             catalystView(settings: settings)
             Spacer()
-            EnergyBeaker(
-                extraSpeed: extraSpeed(settings: settings),
-                updateConcentrationC: updateConcentrationC,
-                allowReactionsToC: allowReactionsToC
-            )
-            .frame(width: settings.beakerWidth, height: settings.beakerHeight)
+            beakerView(settings: settings)
+                .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             beakerStand(settings: settings)
             slider(settings: settings, temp: tempBinding)
                 .padding(.top, settings.sliderTopPadding)
         }
+    }
+
+    private func beakerView(settings: EnergyBeakerSettings) -> some View {
+        GeometryReader { geometry in
+            makeBeakerView(settings: settings, beaker: BeakerSettings(geometry: geometry))
+        }
+    }
+
+    private func makeBeakerView(settings: EnergyBeakerSettings, beaker: BeakerSettings) -> some View {
+        ZStack(alignment: .bottom) {
+            BeakerTicks(
+                numTicks: beaker.numTicks,
+                rightGap: beaker.ticksRightGap,
+                bottomGap: beaker.ticksBottomGap,
+                topGap: beaker.ticksTopGap,
+                minorWidth: beaker.ticksMinorWidth,
+                majorWidth: beaker.ticksMajorWidth
+            )
+            .stroke(lineWidth: 1)
+            .fill(Color.darkGray.opacity(0.5))
+            Group {
+                Rectangle()
+                    .frame(width: beaker.innerBeakerWidth, height: settings.waterHeight)
+                    .foregroundColor(Styling.beakerLiquid)
+                skSceneView(settings: settings, beaker: beaker)
+            }.mask(
+                BeakerBottomShape(cornerRadius: beaker.outerBottomCornerRadius)
+            )
+            EmptyBeaker(settings: beaker)
+        }
+    }
+
+    private func skSceneView(settings: EnergyBeakerSettings, beaker: BeakerSettings) -> some View {
+        MoleculeEneregyUIViewRepresentable(
+            width: beaker.innerBeakerWidth,
+            height: settings.beakerHeight,
+            waterHeight: settings.waterHeight,
+            speed: extraSpeed(settings: settings),
+            updateConcentrationC: updateConcentrationC,
+            allowReactionsToC: allowReactionsToC
+        ).frame(width: beaker.innerBeakerWidth, height: settings.beakerHeight)
     }
 
     private func catalystView(
@@ -298,6 +335,10 @@ fileprivate struct EnergyBeakerSettings {
 
     var beakerHeight: CGFloat {
         BeakerSettings.heightToWidth * beakerWidth
+    }
+
+    var waterHeight: CGFloat {
+        0.4 * beakerHeight
     }
 
     var standWidth: CGFloat {

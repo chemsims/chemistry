@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct EnergyBeaker: View {
-
+    
     let extraSpeed: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
     let allowReactionsToC: Bool
@@ -31,28 +31,28 @@ struct EnergyBeaker: View {
             )
             .stroke(lineWidth: 1)
             .fill(Color.darkGray.opacity(0.5))
-            makeMolecules(settings: settings)
-                .mask(
-                    BeakerBottomShape(
-                        cornerRadius: settings.outerBottomCornerRadius
-                    )
-                )
+//            makeMolecules(settings: settings)
+//                .mask(
+//                    BeakerBottomShape(
+//                        cornerRadius: settings.outerBottomCornerRadius
+//                    )
+//                )
             EmptyBeaker(settings: settings)
         }
     }
 
-    private func makeMolecules(settings: BeakerSettings) -> some View {
-        MoleculeEneregyUIViewRepresentable(
-            width: settings.innerBeakerWidth,
-            height: settings.geometry.size.height * 0.4,
-            speed: extraSpeed,
-            updateConcentrationC: updateConcentrationC,
-            allowReactionsToC: allowReactionsToC
-        ).frame(
-            width: settings.innerBeakerWidth,
-            height: settings.geometry.size.height * 0.4
-        )
-    }
+//    private func makeMolecules(settings: BeakerSettings) -> some View {
+//        MoleculeEneregyUIViewRepresentable(
+//            width: settings.innerBeakerWidth,
+//            height: settings.geometry.size.height * 0.4,
+//            speed: extraSpeed,
+//            updateConcentrationC: updateConcentrationC,
+//            allowReactionsToC: allowReactionsToC
+//        ).frame(
+//            width: settings.innerBeakerWidth,
+//            height: settings.geometry.size.height * 0.4
+//        )
+//    }
 }
 
 struct EnergyBeaker_Previews: PreviewProvider {
