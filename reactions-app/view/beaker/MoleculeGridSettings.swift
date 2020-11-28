@@ -23,6 +23,11 @@ struct MoleculeGridSettings {
         CGFloat(MoleculeGridSettings.rows) * cellSize
     }
 
+    static func moleculeRadius(width: CGFloat) -> CGFloat {
+        let settings = MoleculeGridSettings(totalWidth: width)
+        return (settings.cellSize - settings.cellPadding) / 2
+    }
+
     static var fullGrid: [GridCoordinate] {
         (0..<cols).flatMap { c in
             (0..<rows).map { r in

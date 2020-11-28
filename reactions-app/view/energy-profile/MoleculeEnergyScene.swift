@@ -15,10 +15,6 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    var radius: CGFloat {
-        self.size.width * MoleculeEnergySettings.radiusToWidth
-    }
-
     var extraSpeed: CGFloat = 0 {
         didSet {
             let minV = MoleculeEnergySettings.minVelocity
@@ -138,6 +134,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
         color: UIColor,
         category: UInt32
     ) {
+        let radius = MoleculeEnergySettings.moleculeRadius(width: size.width)
         let molecule = SKShapeNode(circleOfRadius: radius)
         let x = CGFloat.random(in: 0...size.width)
         let y = CGFloat.random(in: 0...size.height)
@@ -168,7 +165,7 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
     /// The wedges are added to prevent molecules becoming 'stuck' in the corners, or along edges.
     private func addWedges() {
-        let width = size.width * MoleculeEnergySettings.radiusToWidth
+        let width = MoleculeEnergySettings.moleculeRadius(width: size.width)
         let height = width * 2
 
         func addWedge(
@@ -205,12 +202,15 @@ class MoleculeEnergyScene: SKScene, SKPhysicsContactDelegate {
 
 struct MoleculeEnergySettings {
 
-    static let aMolecules = 30
-    static let bMolecules = 30
-    static let radiusToWidth: CGFloat = 0.013
+    static let aMolecules = 15
+    static let bMolecules = 15
     static let collisionsForC = 50
     static let minVelocity: CGFloat = 3
     static let maxVelocity: CGFloat = 100
+
+    static func moleculeRadius(width: CGFloat) -> CGFloat {
+        MoleculeGridSettings.moleculeRadius(width: width)
+    }
 
 }
 
