@@ -269,6 +269,10 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
                 cMolecules += 2
                 let concentrationC = CGFloat(cMolecules) / CGFloat(settings.aMolecules + settings.bMolecules)
                 updateConcentrationC(concentrationC)
+
+                let i = UIImpactFeedbackGenerator(style: .light)
+                i.impactOccurred()
+
             }
         }
     }
