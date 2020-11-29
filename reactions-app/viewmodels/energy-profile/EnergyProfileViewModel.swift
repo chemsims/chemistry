@@ -8,16 +8,20 @@ import SwiftUI
 class EnergyProfileViewModel: ObservableObject {
 
     @Published var statement: [SpeechBubbleLine] = EnergyProfileStatements.intro
-    @Published var activationEnergy: CGFloat = EnergyProfileSettings.initialEa
     @Published var temp2: CGFloat?
-    @Published var peakHeightFactor: CGFloat = 1
-    @Published var concentrationC: CGFloat = 0
-    @Published var allowReactionsToC = false
+    @Published private(set) var peakHeightFactor: CGFloat = 1
+    @Published private(set) var concentrationC: CGFloat = 0
+    @Published private(set) var allowReactionsToC = false
     @Published var selectedReaction = ReactionOrder.Zero
 
     @Published var selectedCatalyst: Catalyst?
     @Published var catalystInProgress: Catalyst?
     @Published var emitCatalyst = false
+
+    var activationEnergy: CGFloat {
+        let reduction = selectedCatalyst?.energyReduction ?? 0
+        return selectedReaction.activationEnergy - reduction
+    }
 
     private var dispatchId = UUID()
 
@@ -38,7 +42,6 @@ class EnergyProfileViewModel: ObservableObject {
             catalystInProgress = nil
             emitCatalyst = false
             selectedCatalyst = nil
-            activationEnergy = EnergyProfileSettings.initialEa
             allowReactionsToC = false
             statement = EnergyProfileStatements.intro
             withAnimation(.easeOut(duration: 0.6)) {
@@ -75,13 +78,14 @@ class EnergyProfileViewModel: ObservableObject {
         emitCatalyst = true
         let id = UUID()
         dispatchId = id
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [self] in
             guard self.dispatchId == id else {
                 return
             }
-            self.activationEnergy -= catalyst.energyReduction
-            let minEnergy = EnergyProfileSettings.initialEa - Catalyst.C.energyReduction
-            let energyFactor = (self.activationEnergy - minEnergy) / (EnergyProfileSettings.initialEa - minEnergy)
+            let maxEnergy = selectedReaction.activationEnergy
+            let minEnergy = selectedReaction.activationEnergy - Catalyst.C.energyReduction
+            let resultingEnergy = selectedReaction.activationEnergy - catalyst.energyReduction
+            let energyFactor = (resultingEnergy - minEnergy) / (maxEnergy - minEnergy)
             self.temp2 = self.temp1
             self.allowReactionsToC = true
             self.statement = EnergyProfileStatements.setT2
@@ -111,13 +115,11 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     private func getK(temp: CGFloat) -> CGFloat {
-        EnergyProfileSettings.preExponentFactor * pow(CGFloat(Darwin.M_E), (-1 * activationEnergy) / (temp * .gasConstant))
+        selectedReaction.preExponentFactor * pow(CGFloat(Darwin.M_E), (-1 * activationEnergy) / (temp * .gasConstant))
     }
 }
 
 struct EnergyProfileSettings {
-    static let initialEa: CGFloat = 10000
-    static let preExponentFactor: CGFloat = 20
     static let initialTemp: CGFloat = 400
 }
 
@@ -127,6 +129,24 @@ extension Catalyst {
         case .A: return 3000
         case .B: return 4000
         case .C: return 6000
+        }
+    }
+}
+
+extension ReactionOrder {
+    var preExponentFactor: CGFloat {
+        switch (self) {
+        case .Zero: return 20
+        case .First: return 10
+        case .Second: return 5
+        }
+    }
+
+    var activationEnergy: CGFloat {
+        switch (self) {
+        case .Zero: return 12000
+        case .First: return 10000
+        case .Second: return 8000
         }
     }
 }

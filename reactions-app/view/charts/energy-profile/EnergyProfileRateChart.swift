@@ -100,8 +100,8 @@ struct EnergyRateChartSettings {
         AxisPositionCalculations(
             minValuePosition: chartSize,
             maxValuePosition: 0,
-            minValue: log(2),
-            maxValue: log(10)
+            minValue: log(0.6),
+            maxValue: log(8)
         )
     }
 
