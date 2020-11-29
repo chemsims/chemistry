@@ -79,15 +79,21 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             let minV = settings.minVelocity
             let maxV = settings.maxVelocity
             self.velocity = minV + (extraSpeed * (maxV - minV))
-            updateSpeeds(includeCatalyst: true)
+            updateSpeeds(includeCatalyst: true, allowSlowdown: true)
         }
     }
 
     @objc
-    private func updateSpeeds(includeCatalyst: Bool) {
+    private func updateSpeeds(
+        includeCatalyst: Bool,
+        allowSlowdown: Bool
+    ) {
         func updateSpeed(_ body: SKPhysicsBody) {
             let magnitude = body.velocity.magnitude
             let factor = velocity / magnitude
+            if (factor < 1 && !allowSlowdown) {
+                return
+            }
             body.velocity = body.velocity.scale(by: factor)
         }
         molecules.forEach(updateSpeed)
@@ -156,7 +162,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             addCatalysts()
         }
         self.physicsWorld.contactDelegate = self
-        let updateSpeedAction = SKAction.run { self.updateSpeeds(includeCatalyst: false) }
+        let updateSpeedAction = SKAction.run { self.updateSpeeds(includeCatalyst: false, allowSlowdown: false) }
         let wait = SKAction.wait(forDuration: updateSpeedDelay)
         let sequence = SKAction.sequence([wait, updateSpeedAction])
         self.run(SKAction.repeatForever(sequence))
