@@ -46,7 +46,8 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     private let moleculeCCategory: UInt32 = 0b100
     private let beakerCategory: UInt32 = 0b1000
     private let catalystCategory: UInt32 = 0b10000
-    private let allCollisions: UInt32 = 0b11111
+    private let edgeOfBeakerCategory: UInt32 = 0b100000
+    private let allCollisions: UInt32 = 0b111111
 
     private var velocity: CGFloat = MoleculeEnergySettings.minVelocity
     private var collisionsSinceLastCMolecule = 0
@@ -127,6 +128,15 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         self.physicsBody = borderBody
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 
+        let edgeOfBeaker = SKPhysicsBody(edgeLoopFrom: frame)
+        edgeOfBeaker.friction = 0
+        edgeOfBeaker.isDynamic = false
+        edgeOfBeaker.categoryBitMask = edgeOfBeakerCategory
+        let edgeOfBeakerNode = SKShapeNode(rect: frame)
+        edgeOfBeakerNode.physicsBody = edgeOfBeaker
+        edgeOfBeakerNode.lineWidth = 0
+        self.addChild(edgeOfBeakerNode)
+
         self.backgroundColor = .clear
 
         for _ in 0..<MoleculeEnergySettings.aMolecules {
@@ -190,7 +200,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         catalystPhysics.usesPreciseCollisionDetection = true
 
         catalystPhysics.categoryBitMask = catalystCategory
-        catalystPhysics.collisionBitMask = 0
+        catalystPhysics.collisionBitMask = edgeOfBeakerCategory
 
         let maxDx = self.size.width * 0.01
         let centerX = emitterPosition.x - radius
@@ -352,8 +362,8 @@ struct MoleculeEnergySettings {
     static let catalystParticles = 7
 
     static let catalystVerticalMagnitude: CGFloat = 90
-    static let catalystMinAngle: CGFloat = 0
-    static let catalystMaxAngle: CGFloat = 15
+    static let catalystMinAngle: CGFloat = 5
+    static let catalystMaxAngle: CGFloat = 30
 
     static func moleculeRadius(width: CGFloat) -> CGFloat {
         MoleculeGridSettings.moleculeRadius(width: width)
