@@ -67,6 +67,8 @@
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
 		572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB943255C3BCF0071C600 /* ValueRange.swift */; };
 		572CB949255C412A0071C600 /* ZeroOrderReactionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */; };
+		57517F2F25739E3A00EB79C7 /* ReactionOrderSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */; };
+		57517F3325739E5200EB79C7 /* ReactionOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57517F3225739E5200EB79C7 /* ReactionOrder.swift */; };
 		57655D45256C0919006FB93C /* EnergyProfileRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRate.swift */; };
 		5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766B71E256EC20200569CB9 /* ShakeExtension.swift */; };
 		576D5A7425665B9C0062F722 /* RateEquationComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7325665B9C0062F722 /* RateEquationComparisonView.swift */; };
@@ -180,6 +182,8 @@
 		572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationBarChart.swift; sourceTree = "<group>"; };
 		572CB943255C3BCF0071C600 /* ValueRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRange.swift; sourceTree = "<group>"; };
 		572CB948255C412A0071C600 /* ZeroOrderReactionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionEquation.swift; sourceTree = "<group>"; };
+		57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrderSelection.swift; sourceTree = "<group>"; };
+		57517F3225739E5200EB79C7 /* ReactionOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrder.swift; sourceTree = "<group>"; };
 		57655D44256C0919006FB93C /* EnergyProfileRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRate.swift; sourceTree = "<group>"; };
 		5766B71E256EC20200569CB9 /* ShakeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeExtension.swift; sourceTree = "<group>"; };
 		576D5A7325665B9C0062F722 /* RateEquationComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateEquationComparisonView.swift; sourceTree = "<group>"; };
@@ -357,6 +361,7 @@
 			children = (
 				57F477462560FF300041D406 /* NavButton.swift */,
 				571B3CAE25658ACC0075358B /* CircleIconButton.swift */,
+				57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -445,6 +450,7 @@
 				57F4775925616F400041D406 /* BoundedSliderPositioning.swift */,
 				571B3CB425658BA70075358B /* Icons.swift */,
 				570E4F0B256D288C001EADCB /* Catalyst.swift */,
+				57517F3225739E5200EB79C7 /* ReactionOrder.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -751,6 +757,7 @@
 				57F477422560FD440041D406 /* Beaky.swift in Sources */,
 				571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */,
 				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
+				57517F3325739E5200EB79C7 /* ReactionOrder.swift in Sources */,
 				57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */,
 				571D6A6F255AB25400F4E635 /* Styling.swift in Sources */,
 				571B3C68256556740075358B /* ReactionState.swift in Sources */,
@@ -829,6 +836,7 @@
 				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
 				571B3C48256538830075358B /* ZeroOrderEquationGeometry.swift in Sources */,
 				571B3C3A2563F7430075358B /* FirstOrderHalftimeEquation.swift in Sources */,
+				57517F2F25739E3A00EB79C7 /* ReactionOrderSelection.swift in Sources */,
 				572CB949255C412A0071C600 /* ZeroOrderReactionEquation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

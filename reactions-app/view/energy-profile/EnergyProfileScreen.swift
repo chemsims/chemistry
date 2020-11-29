@@ -9,6 +9,9 @@ struct EnergyProfileScreen: View {
 
     @ObservedObject var model: EnergyProfileViewModel
 
+    @State private var orderIsToggled = false
+    @State private var reactionOrder = ReactionOrder.First
+
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
@@ -59,6 +62,12 @@ struct EnergyProfileScreen: View {
                     settings: EnergyRateChartSettings(chartSize: settings.chartsSize),
                     peakHeightFactor: model.peakHeightFactor,
                     concentrationC: model.concentrationC
+                )
+
+                ReactionOrderSelection(
+                    isToggled: $orderIsToggled,
+                    selection: $reactionOrder,
+                    height: settings.selectOrderHeight
                 )
             }
             .padding(.top, settings.chartsTopPadding)
@@ -147,10 +156,17 @@ fileprivate struct EnergyProfileLayoutSettings {
     var equationLeadingPadding: CGFloat {
         0.1 * equationWidth
     }
+    var selectOrderHeight: CGFloat {
+        0.15 * chartsSize
+    }
 }
 
 struct EnergyProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
+
+        // iPhone 11
+        EnergyProfileScreen(model: EnergyProfileViewModel())
+            .previewLayout(.fixed(width: 896, height: 414))
 
         // iPhone SE
         EnergyProfileScreen(model: EnergyProfileViewModel())
