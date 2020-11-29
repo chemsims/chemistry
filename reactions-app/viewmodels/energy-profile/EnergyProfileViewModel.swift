@@ -78,7 +78,7 @@ class EnergyProfileViewModel: ObservableObject {
             guard self.dispatchId == id else {
                 return
             }
-            self.emitCatalyst = false
+//            self.emitCatalyst = false
             self.activationEnergy -= catalyst.energyReduction
             let minEnergy = EnergyProfileSettings.initialEa - Catalyst.C.energyReduction
             let energyFactor = (self.activationEnergy - minEnergy) / (EnergyProfileSettings.initialEa - minEnergy)

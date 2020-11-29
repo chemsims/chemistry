@@ -19,6 +19,7 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
     let allowReactionsToC: Bool
     let emitterPosition: CGPoint
     let emitting: Bool
+    let catalystColor: UIColor
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
@@ -27,7 +28,8 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
             waterHeight: waterHeight,
             updateConcentrationC: updateConcentrationC,
             emitterPosition: emitterPosition,
-            emitting: true
+            emitting: emitting,
+            catalystColor: catalystColor
         )
         scene.scaleMode = .aspectFit
         view.allowsTransparency = true
@@ -39,6 +41,8 @@ struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
         if let scene = uiView.scene as? SKBeakerScene {
             scene.extraSpeed = speed
             scene.allowReactionsToC = allowReactionsToC
+            scene.emitting = emitting
+            scene.catalystColor = catalystColor
         }
     }
 }

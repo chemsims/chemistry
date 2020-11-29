@@ -10,25 +10,56 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     let waterHeight: CGFloat
     let updateConcentrationC: ((CGFloat) -> Void)
     let emitterPosition: CGPoint
-    let emitting: Bool
+    var catalystColor: UIColor
+    var emitting: Bool {
+        willSet {
+            if (!emitting && newValue) {
+                addCatalysts()
+            } else if (emitting && !newValue) {
+                resetCatalysts()
+            }
+        }
+    }
 
     init(
         size: CGSize,
         waterHeight: CGFloat,
         updateConcentrationC: @escaping (CGFloat) -> Void,
         emitterPosition: CGPoint,
-        emitting: Bool
+        emitting: Bool,
+        catalystColor: UIColor
     ) {
         self.waterHeight = waterHeight
         self.updateConcentrationC = updateConcentrationC
         self.emitterPosition = emitterPosition
         self.emitting = emitting
+        self.catalystColor = catalystColor
         super.init(size: size)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    private let moleculeACategory: UInt32 = 0b1
+    private let moleculeBCategory: UInt32 = 0b10
+    private let moleculeCCategory: UInt32 = 0b100
+    private let beakerCategory: UInt32 = 0b1000
+    private let catalystCategory: UInt32 = 0b10000
+    private let allCollisions: UInt32 = 0b11111
+
+    private var velocity: CGFloat = MoleculeEnergySettings.minVelocity
+    private var collisionsSinceLastCMolecule = 0
+
+    private var molecules = [SKPhysicsBody]()
+    private var fallingCatalysts = [SKShapeNode]()
+    private var catalystsInLiquid = [SKShapeNode]()
+    private var cMolecules: Int = 0
+
+    private let updateSpeedDelay = 0.5
+    private let catalystFallDelay = 0.2
+
+    private let runCatalystKey = "AddCatalysts"
 
     var allowReactionsToC: Bool = false {
         willSet {
@@ -43,17 +74,24 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             let minV = MoleculeEnergySettings.minVelocity
             let maxV = MoleculeEnergySettings.maxVelocity
             self.velocity = minV + (extraSpeed * (maxV - minV))
-            updateSpeeds()
+            updateSpeeds(includeCatalyst: true)
         }
     }
 
-
     @objc
-    private func updateSpeeds() {
-        molecules.forEach { m in
-            let magnitude = m.velocity.magnitude
+    private func updateSpeeds(includeCatalyst: Bool) {
+        func updateSpeed(_ body: SKPhysicsBody) {
+            let magnitude = body.velocity.magnitude
             let factor = velocity / magnitude
-            m.velocity = m.velocity.scale(by: factor)
+            body.velocity = body.velocity.scale(by: factor)
+        }
+        molecules.forEach(updateSpeed)
+        if (includeCatalyst) {
+            catalystsInLiquid.forEach { c in
+                if let body = c.physicsBody {
+                    updateSpeed(body)
+                }
+            }
         }
     }
 
@@ -72,32 +110,20 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
                 node.fillColor = color
                 molecule.categoryBitMask = category
             }
-
         }
     }
 
-    private let moleculeACategory: UInt32 = 0x1 << 0
-    private let moleculeBCategory: UInt32 = 0x1 << 1
-    private let moleculeCCategory: UInt32 = 0x1 << 2
-    private let wallCategory: UInt32 = 0x1 << 3
-    private let collisionBitMask: UInt32 = 0x1 << 0
-
-
-    private var velocity: CGFloat = MoleculeEnergySettings.minVelocity
-
-    private var collisionsSinceLastCMolecule = 0
-
-    private var molecules = [SKPhysicsBody]()
-
-    private var cMolecules: Int = 0
+    private func resetCatalysts() {
+        removeAction(forKey: runCatalystKey)
+        removeChildren(in: fallingCatalysts)
+        removeChildren(in: catalystsInLiquid)
+    }
 
     override func didMove(to view: SKView) {
-
         let water = CGRect(x: 0, y: 0, width: size.width, height: waterHeight)
         let borderBody = SKPhysicsBody(edgeLoopFrom: water)
         borderBody.friction = 0
-        borderBody.categoryBitMask = wallCategory
-        borderBody.contactTestBitMask = 1
+        borderBody.categoryBitMask = beakerCategory
         self.physicsBody = borderBody
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
 
@@ -112,8 +138,88 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
 
         addWedges()
+        if (emitting) {
+            addCatalysts()
+        }
         self.physicsWorld.contactDelegate = self
-        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateSpeeds), userInfo: nil, repeats: true)
+        let updateSpeedAction = SKAction.run { self.updateSpeeds(includeCatalyst: false) }
+        let wait = SKAction.wait(forDuration: updateSpeedDelay)
+        let sequence = SKAction.sequence([wait, updateSpeedAction])
+        self.run(SKAction.repeatForever(sequence))
+    }
+
+    private func addCatalysts() {
+        let wait = SKAction.wait(forDuration: catalystFallDelay)
+        let run = SKAction.run {
+            self.addCatalyst()
+        }
+        let sequence = SKAction.sequence([run, wait])
+        let repeatAction = SKAction.repeat(sequence, count: MoleculeEnergySettings.catalystParticles)
+        self.run(repeatAction, withKey: runCatalystKey)
+    }
+
+    private func addCatalyst() {
+        let radius = MoleculeEnergySettings.moleculeRadius(width: size.width)
+        let path = CGMutablePath()
+
+        let radians18 = 18 * (CGFloat.pi / 180)
+        let radians54 = -54 * (CGFloat.pi / 180)
+        let topRightX = radius * cos(radians18)
+        let topRightY = radius * sin(radians18)
+        let bottomRightX = radius * cos(radians54)
+        let bottomRightY = radius * sin(radians54)
+
+        path.addLines(between: [
+            CGPoint(x: 0, y: radius),                   // Top
+            CGPoint(x: topRightX, y: topRightY),        // Top right
+            CGPoint(x: bottomRightX, y: bottomRightY),  // Bottom right
+            CGPoint(x: -bottomRightX, y: bottomRightY), // Bottom left
+            CGPoint(x: -topRightX, y: topRightY),       // Top left
+            CGPoint(x: 0, y: radius)                    // Top
+        ])
+
+        let catalyst = SKShapeNode(path: path)
+        catalyst.lineWidth = 0
+
+        let catalystPhysics = SKPhysicsBody(polygonFrom: path)
+        catalystPhysics.affectedByGravity = false
+        catalystPhysics.linearDamping = 0
+        catalystPhysics.angularDamping = 0.5
+        catalystPhysics.restitution = 1
+        catalystPhysics.mass = 1
+        catalystPhysics.usesPreciseCollisionDetection = true
+
+        catalystPhysics.categoryBitMask = catalystCategory
+        catalystPhysics.collisionBitMask = 0
+
+        let maxDx = self.size.width * 0.01
+        let centerX = emitterPosition.x - radius
+        let centerY = emitterPosition.y - radius
+        let minX = centerX - maxDx
+        let maxX = centerX + maxDx
+        let randomX = CGFloat.random(in: minX...maxX)
+
+        catalyst.position = CGPoint(x: randomX, y: centerY)
+
+        let verticalMagnitude: CGFloat = MoleculeEnergySettings.catalystVerticalMagnitude
+        let angle = CGFloat.random(in: MoleculeEnergySettings.catalystMinAngle...MoleculeEnergySettings.catalystMaxAngle)
+        let radians = angle * (CGFloat.pi / 180)
+
+        // y component is always `verticalMagnitude`, so x component is tan of the angle.
+        let xVelocity = verticalMagnitude * tan(radians)
+
+        catalystPhysics.velocity = CGVector(dx: xVelocity, dy: -verticalMagnitude)
+
+        catalyst.physicsBody = catalystPhysics
+        catalyst.fillColor = catalystColor
+        catalyst.lineWidth = 0.01 * radius
+        catalyst.strokeColor = .white
+        addChild(catalyst)
+        fallingCatalysts.append(catalyst)
+    }
+
+    private var catalystFallVelocity: CGFloat {
+        -100
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
@@ -147,6 +253,18 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    override func didFinishUpdate() {
+        for (i, catalyst) in fallingCatalysts.enumerated().reversed() {
+            if let body = catalyst.physicsBody, catalyst.position.y < waterHeight {
+                body.collisionBitMask = allCollisions
+                let impulse = SKAction.applyForce(CGVector(dx: 0, dy: -0.2 * catalystFallVelocity), duration: 0.5)
+                catalyst.run(impulse)
+                fallingCatalysts.remove(at: i)
+                catalystsInLiquid.append(catalyst)
+            }
+        }
+    }
+
     private func shouldCollide() -> Bool {
         collisionsSinceLastCMolecule >= MoleculeEnergySettings.collisionsForC
     }
@@ -162,6 +280,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 
         molecule.position = CGPoint(x: x, y: y)
         molecule.fillColor = color
+        molecule.lineWidth = 0
 
         let moleculePhysics = SKPhysicsBody(circleOfRadius: radius)
         moleculePhysics.restitution = 1
@@ -173,6 +292,8 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         moleculePhysics.contactTestBitMask = 1
         moleculePhysics.mass = 1
         moleculePhysics.usesPreciseCollisionDetection = true
+        moleculePhysics.affectedByGravity = false
+        moleculePhysics.collisionBitMask = allCollisions
         molecule.physicsBody = moleculePhysics
         addChild(molecule)
         molecules.append(moleculePhysics)
@@ -228,6 +349,11 @@ struct MoleculeEnergySettings {
     static let collisionsForC = 50
     static let minVelocity: CGFloat = 3
     static let maxVelocity: CGFloat = 100
+    static let catalystParticles = 7
+
+    static let catalystVerticalMagnitude: CGFloat = 90
+    static let catalystMinAngle: CGFloat = 0
+    static let catalystMaxAngle: CGFloat = 15
 
     static func moleculeRadius(width: CGFloat) -> CGFloat {
         MoleculeGridSettings.moleculeRadius(width: width)
