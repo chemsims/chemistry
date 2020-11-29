@@ -76,7 +76,7 @@
 		576D5AAC2566CA900062F722 /* SecondOrderEquationView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AAB2566CA900062F722 /* SecondOrderEquationView2.swift */; };
 		577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077B42568E318003E750E /* EnergyProfileScreen.swift */; };
 		577077BC2568E3E1003E750E /* BeakyOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077BB2568E3E1003E750E /* BeakyOverlay.swift */; };
-		577077CA2568FDAA003E750E /* EnergyBeakerWithStand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyBeakerWithStand.swift */; };
+		577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */; };
 		577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* SKBeakerScene.swift */; };
 		577077D325698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077D225698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
@@ -189,7 +189,7 @@
 		576D5AAB2566CA900062F722 /* SecondOrderEquationView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderEquationView2.swift; sourceTree = "<group>"; };
 		577077B42568E318003E750E /* EnergyProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreen.swift; sourceTree = "<group>"; };
 		577077BB2568E3E1003E750E /* BeakyOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyOverlay.swift; sourceTree = "<group>"; };
-		577077C92568FDAA003E750E /* EnergyBeakerWithStand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBeakerWithStand.swift; sourceTree = "<group>"; };
+		577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileBeaker.swift; sourceTree = "<group>"; };
 		577077CE25698CE0003E750E /* SKBeakerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKBeakerScene.swift; sourceTree = "<group>"; };
 		577077D225698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeEnergyUIViewRepresentable.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
@@ -562,7 +562,7 @@
 			isa = PBXGroup;
 			children = (
 				577077B42568E318003E750E /* EnergyProfileScreen.swift */,
-				577077C92568FDAA003E750E /* EnergyBeakerWithStand.swift */,
+				577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */,
 				577077CE25698CE0003E750E /* SKBeakerScene.swift */,
 				577077D225698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift */,
 			);
@@ -761,7 +761,7 @@
 				571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */,
 				577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */,
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
-				577077CA2568FDAA003E750E /* EnergyBeakerWithStand.swift in Sources */,
+				577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */,
 				57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
 				571B3C89256566910075358B /* SecondOrderEquationRate.swift in Sources */,

@@ -90,7 +90,7 @@ struct EnergyProfileScreen: View {
 
     private func beakerView(settings: EnergyProfileLayoutSettings) -> some View {
         HStack {
-            EnergyBeakerWithStand(
+            EnergyProfileBeaker(
                 selectedCatalyst: model.selectedCatalyst,
                 selectCatalyst: model.selectCatalyst,
                 catalystInProgress: model.catalystInProgress,
