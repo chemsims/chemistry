@@ -79,7 +79,6 @@
 		577077CA2568FDAA003E750E /* EnergyBeakerWithStand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyBeakerWithStand.swift */; };
 		577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* SKBeakerScene.swift */; };
 		577077D325698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077D225698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift */; };
-		5786D88A256AA71300C6C043 /* EnergyBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786D889256AA71300C6C043 /* EnergyBeaker.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
@@ -89,8 +88,6 @@
 		57C3A8272563248F00EE753E /* FirstOrderReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C3A8262563248F00EE753E /* FirstOrderReaction.swift */; };
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
-		57D7982C256E7FE1005BE551 /* CatalystParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = 57D7982B256E7FE1005BE551 /* CatalystParticles.sks */; };
-		57D79830256E82AE005BE551 /* CatalystEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D7982F256E82AE005BE551 /* CatalystEmitter.swift */; };
 		57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
 		57F477422560FD440041D406 /* Beaky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F477412560FD440041D406 /* Beaky.swift */; };
@@ -195,7 +192,6 @@
 		577077C92568FDAA003E750E /* EnergyBeakerWithStand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBeakerWithStand.swift; sourceTree = "<group>"; };
 		577077CE25698CE0003E750E /* SKBeakerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKBeakerScene.swift; sourceTree = "<group>"; };
 		577077D225698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeEnergyUIViewRepresentable.swift; sourceTree = "<group>"; };
-		5786D889256AA71300C6C043 /* EnergyBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBeaker.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		57AA05E62562F3750080C538 /* SliderIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderIndicator.swift; sourceTree = "<group>"; };
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
@@ -205,8 +201,6 @@
 		57C3A8262563248F00EE753E /* FirstOrderReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReaction.swift; sourceTree = "<group>"; };
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
-		57D7982B256E7FE1005BE551 /* CatalystParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CatalystParticles.sks; sourceTree = "<group>"; };
-		57D7982F256E82AE005BE551 /* CatalystEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystEmitter.swift; sourceTree = "<group>"; };
 		57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquationShape.swift; sourceTree = "<group>"; };
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
 		57F477412560FD440041D406 /* Beaky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beaky.swift; sourceTree = "<group>"; };
@@ -398,7 +392,6 @@
 				571D6A4A255A780900F4E635 /* LaunchScreen.storyboard */,
 				571D6A4D255A780900F4E635 /* Info.plist */,
 				571D6A47255A780900F4E635 /* Preview Content */,
-				57D7982B256E7FE1005BE551 /* CatalystParticles.sks */,
 				5766B71E256EC20200569CB9 /* ShakeExtension.swift */,
 			);
 			path = "reactions-app";
@@ -572,8 +565,6 @@
 				577077C92568FDAA003E750E /* EnergyBeakerWithStand.swift */,
 				577077CE25698CE0003E750E /* SKBeakerScene.swift */,
 				577077D225698DF2003E750E /* MoleculeEnergyUIViewRepresentable.swift */,
-				5786D889256AA71300C6C043 /* EnergyBeaker.swift */,
-				57D7982F256E82AE005BE551 /* CatalystEmitter.swift */,
 			);
 			path = "energy-profile";
 			sourceTree = "<group>";
@@ -726,7 +717,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57D7982C256E7FE1005BE551 /* CatalystParticles.sks in Resources */,
 				57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */,
 				571D6A4C255A780900F4E635 /* LaunchScreen.storyboard in Resources */,
 				571D6A49255A780900F4E635 /* Preview Assets.xcassets in Resources */,
@@ -754,7 +744,6 @@
 				571B3C93256573D60075358B /* ReactionComparison.swift in Sources */,
 				57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */,
 				571B3C7C256560E40075358B /* ReactionStatements.swift in Sources */,
-				5786D88A256AA71300C6C043 /* EnergyBeaker.swift in Sources */,
 				57FDA135255D5EE300CB8804 /* SubscriptView.swift in Sources */,
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
 				570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */,
@@ -797,7 +786,6 @@
 				57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
 				57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */,
-				57D79830256E82AE005BE551 /* CatalystEmitter.swift in Sources */,
 				576D5A7425665B9C0062F722 /* RateEquationComparisonView.swift in Sources */,
 				57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */,
 				57C3A8272563248F00EE753E /* FirstOrderReaction.swift in Sources */,

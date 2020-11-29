@@ -6,8 +6,7 @@
 import SwiftUI
 import SpriteKit
 
-
-struct MoleculeEneregyUIViewRepresentable: UIViewRepresentable {
+struct SkBeakerSceneRepresentable: UIViewRepresentable {
 
     typealias UIViewType = SKView
 

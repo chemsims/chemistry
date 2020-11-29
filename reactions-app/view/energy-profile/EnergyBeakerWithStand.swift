@@ -37,12 +37,6 @@ struct EnergyBeakerWithStand: View {
         }
     }
 
-    private func emitterHeight(settings: EnergyBeakerSettings) -> CGFloat {
-        settings.height -
-            settings.handleHeight -
-            (settings.standWidth * settings.standHeightToWidth)
-    }
-
     private func makeView(settings: EnergyBeakerSettings) -> some View {
         ZStack(alignment: .top) {
             stackView(settings: settings)
@@ -120,7 +114,7 @@ struct EnergyBeakerWithStand: View {
     }
 
     private func skSceneView(settings: EnergyBeakerSettings) -> some View {
-        MoleculeEneregyUIViewRepresentable(
+        SkBeakerSceneRepresentable(
             width: settings.beaker.innerBeakerWidth,
             height: settings.skSceneHeight,
             waterHeight: settings.waterHeight,
@@ -220,7 +214,7 @@ struct EnergyBeakerWithStand: View {
                 }
 
                 flameImage
-                    .frame(width: largeFrameWidth(settings: settings))
+                    .frame(width: largeFlameWidth(settings: settings))
                     .scaleEffect(
                         x: 1 + flameScale,
                         y: 1 - flameScale,
@@ -245,7 +239,7 @@ struct EnergyBeakerWithStand: View {
         flameImage
             .opacity((temp ?? 0) > tripleFlameThreshold ? 1 : 0)
             .animation(.easeIn(duration: 0.25))
-            .frame(width: largeFrameWidth(settings: settings) * 0.6)
+            .frame(width: largeFlameWidth(settings: settings) * 0.6)
             .scaleEffect(
                 x: 1 + flameScale,
                 y: 1 - flameScale,
@@ -253,7 +247,7 @@ struct EnergyBeakerWithStand: View {
             )
     }
 
-    private func largeFrameWidth(settings: EnergyBeakerSettings) -> CGFloat {
+    private func largeFlameWidth(settings: EnergyBeakerSettings) -> CGFloat {
         let speed = extraSpeed(settings: settings)
         let maxExtraScale: CGFloat = 0.5
         let scale = 1 + (speed * maxExtraScale)
