@@ -13,6 +13,7 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
     @Published var allowReactionsToC = false
+    @Published var selectedReaction = ReactionOrder.Zero
 
     @Published var selectedCatalyst: Catalyst?
     @Published var catalystInProgress: Catalyst?
@@ -78,7 +79,6 @@ class EnergyProfileViewModel: ObservableObject {
             guard self.dispatchId == id else {
                 return
             }
-//            self.emitCatalyst = false
             self.activationEnergy -= catalyst.energyReduction
             let minEnergy = EnergyProfileSettings.initialEa - Catalyst.C.energyReduction
             let energyFactor = (self.activationEnergy - minEnergy) / (EnergyProfileSettings.initialEa - minEnergy)

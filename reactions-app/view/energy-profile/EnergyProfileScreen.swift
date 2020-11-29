@@ -9,8 +9,7 @@ struct EnergyProfileScreen: View {
 
     @ObservedObject var model: EnergyProfileViewModel
 
-    @State private var orderIsToggled = false
-    @State private var reactionOrder = ReactionOrder.First
+    @State private var selectReactionIsToggled = false
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -65,8 +64,8 @@ struct EnergyProfileScreen: View {
                 )
 
                 ReactionOrderSelection(
-                    isToggled: $orderIsToggled,
-                    selection: $reactionOrder,
+                    isToggled: $selectReactionIsToggled,
+                    selection: $model.selectedReaction,
                     height: settings.selectOrderHeight
                 )
             }
