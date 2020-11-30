@@ -11,7 +11,6 @@ struct Styling {
     static let beakerInnerTone = Color.black.opacity(0.075)
 
     static let beakerLiquid = Color(red: 218 / 255, green: 238 / 255, blue: 245 / 255)
-    static let beakerLiquidSK = SKColor(red: 218 / 255, green: 238 / 255, blue: 245 / 255, alpha: 1)
 
     static let moleculePlaceholder = Color(red: 206 / 255, green: 227 / 255, blue: 237 / 255)
 
@@ -29,9 +28,9 @@ struct Styling {
 
 extension UIColor {
 
-    static let moleculeA = UIColor(red: 81 / 255, green: 155 / 255, blue: 210 / 255, alpha: 1)
-    static let moleculeB = UIColor(red: 175 / 255, green: 11 / 255, blue: 8 / 255, alpha: 1)
-    static let moleculeC = UIColor(red: 253 / 255, green: 231 / 255, blue: 76 / 255, alpha: 1)
+    static let moleculeA = UIColor(red: 8 / 255, green: 168 / 255, blue: 232  / 255, alpha: 1)
+    static let moleculeB = UIColor(red: 147 / 255, green: 31 / 255, blue: 29 / 255, alpha: 1)
+    static let moleculeC = UIColor(red: 226 / 255, green: 132 / 255, blue: 19 / 255, alpha: 1)
 
     static let catalystA = UIColor(red: 98 / 255, green: 95  / 255, blue: 97 / 255, alpha: 1)
     static let catalystB = UIColor(red: 227 / 255, green: 215  / 255, blue: 89 / 255, alpha: 1)
