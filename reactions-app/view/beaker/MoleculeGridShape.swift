@@ -5,6 +5,24 @@
 
 import SwiftUI
 
+struct AnimatingMoleculeGrid: View {
+    let settings: MoleculeGridSettings
+    let coords: [GridCoordinate]
+    let color: Color
+    let fractionOfCoordsToDraw: ConcentrationEquation
+    let currentTime: CGFloat
+
+    var body: some View {
+        AnimatingMoleculeGridShape(
+            cellSize: settings.cellSize,
+            cellPadding: settings.cellPadding,
+            coords: coords,
+            fractionOfCoordsToDraw: fractionOfCoordsToDraw,
+            currentTime: currentTime
+        ).fill(color)
+    }
+}
+
 struct MoleculeGrid: View {
 
     let settings: MoleculeGridSettings
@@ -21,7 +39,39 @@ struct MoleculeGrid: View {
 
 }
 
+struct AnimatingMoleculeGridShape: Shape {
+    /// Dimension of a single cell
+    let cellSize: CGFloat
 
+    /// How much padding to place in the cell before drawing the molecule
+    let cellPadding: CGFloat
+
+    /// The coordinates to draw
+    let coords: [GridCoordinate]
+
+    let fractionOfCoordsToDraw: ConcentrationEquation
+
+    var currentTime: CGFloat
+
+    var animatableData: CGFloat {
+        get { currentTime }
+        set { currentTime = newValue }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        let fraction = fractionOfCoordsToDraw.getConcentration(at: currentTime)
+        var coordsToDraw = Int(fraction * CGFloat(coords.count))
+        if (coordsToDraw < 0) {
+            coordsToDraw = 0
+        }
+
+        return MoleculeGridShape(
+            cellSize: cellSize,
+            cellPadding: cellPadding,
+            coords: Array(coords.prefix(coordsToDraw))
+        ).path(in: rect)
+    }
+}
 
 /// A grid of molecules.
 /// The shape does not attempt to force the circles into the entire frame.

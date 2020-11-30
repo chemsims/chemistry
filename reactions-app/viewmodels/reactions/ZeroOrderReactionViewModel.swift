@@ -21,7 +21,6 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var finalTime: CGFloat?
 
     @Published var currentTime: CGFloat?
-    @Published var moleculeBOpacity: Double = 0
 
     @Published var reactionHasEnded: Bool = false
     @Published var timeChartHeadOpacity: Double = 1
@@ -46,18 +45,6 @@ class ZeroOrderReactionViewModel: ObservableObject {
     }
 
     var moleculesA = [GridCoordinate]()
-    var moleculesB: [GridCoordinate] {
-        if let finalTime = finalTime, finalConcentration != nil {
-            let finalB = concentrationEquationB.getConcentration(at: finalTime)
-            let desiredMolecues = finalB * CGFloat(MoleculeGridSettings.cols * MoleculeGridSettings.rows)
-            if (desiredMolecues > 0) {
-                let prefix = moleculesA.prefix(Int(desiredMolecues))
-                return Array(prefix)
-            }
-            return Array()
-        }
-        return []
-    }
 
     var deltaC: CGFloat? {
         if let c2 = finalConcentration {

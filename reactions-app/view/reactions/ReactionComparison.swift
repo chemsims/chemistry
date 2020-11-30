@@ -117,8 +117,8 @@ struct ReactionComparison: View {
                 Spacer()
                 FilledBeaker(
                     moleculesA: reaction.moleculesA,
-                    moleculesB: reaction.moleculesB,
-                    moleculeBOpacity: reaction.moleculeBOpacity
+                    concentrationB: reaction.concentrationEquationB,
+                    currentTime: reaction.currentTime
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
                 .padding(.leading, settings.beakerLeadingPadding)

@@ -8,8 +8,8 @@ import SwiftUI
 struct FilledBeaker: View {
 
     let moleculesA: [GridCoordinate]
-    let moleculesB: [GridCoordinate]
-    let moleculeBOpacity: Double
+    let concentrationB: ConcentrationEquation
+    let currentTime: CGFloat?
 
     var body: some View {
         GeometryReader { geometry in
@@ -67,14 +67,19 @@ struct FilledBeaker: View {
                 coordinates: moleculesA
             )
 
-            moleculeGrid(
-                settings,
-                color: Styling.moleculeB,
-                coordinates: moleculesB
-            ).opacity(moleculeBOpacity)
+            if (currentTime != nil) {
+                AnimatingMoleculeGrid(
+                    settings: settings,
+                    coords: moleculesA,
+                    color: Styling.moleculeB,
+                    fractionOfCoordsToDraw: concentrationB,
+                    currentTime: currentTime!
+                )
+                .frame(height: settings.height)
+            }
+
         }
     }
-
 
     private func moleculeGrid(
         _ settings: MoleculeGridSettings,
@@ -97,12 +102,8 @@ struct FilledBeaker_Previews: PreviewProvider {
                 GridCoordinate(col: 1, row: 1),
                 GridCoordinate(col: 2, row: 2)
             ],
-            moleculesB: [
-                GridCoordinate(col: 2, row: 4),
-                GridCoordinate(col: 5, row: 3),
-                GridCoordinate(col: 14, row: 4)
-            ],
-            moleculeBOpacity: 0
+            concentrationB: ConstantConcentration(value: 0),
+            currentTime: 0
         )
     }
 }
