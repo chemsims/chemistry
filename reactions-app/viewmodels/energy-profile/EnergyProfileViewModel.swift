@@ -17,6 +17,7 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var selectedCatalyst: Catalyst?
     @Published var catalystInProgress: Catalyst?
     @Published var emitCatalyst = false
+    @Published var catalystIsShaking = false
 
     var activationEnergy: CGFloat {
         let reduction = selectedCatalyst?.energyReduction ?? 0
@@ -53,6 +54,7 @@ class EnergyProfileViewModel: ObservableObject {
                 goToPrevious()
             }
         } else {
+            catalystIsShaking = false
             dispatchId = UUID()
             catalystInProgress = nil
             emitCatalyst = false
@@ -93,6 +95,7 @@ class EnergyProfileViewModel: ObservableObject {
         emitCatalyst = true
         let id = UUID()
         dispatchId = id
+        runCatalystShakingAnimation()
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [self] in
             guard self.dispatchId == id else {
                 return
@@ -131,6 +134,16 @@ class EnergyProfileViewModel: ObservableObject {
 
     private func getK(temp: CGFloat) -> CGFloat {
         selectedReaction.preExponentFactor * pow(CGFloat(Darwin.M_E), (-1 * activationEnergy) / (temp * .gasConstant))
+    }
+
+    private func runCatalystShakingAnimation() {
+        let animation = Animation.interpolatingSpring(
+            stiffness: 100,
+            damping: 1.8
+        )
+        withAnimation(animation) {
+            catalystIsShaking = true
+        }
     }
 }
 

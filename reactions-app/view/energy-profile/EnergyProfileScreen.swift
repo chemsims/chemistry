@@ -110,7 +110,8 @@ struct EnergyProfileScreen: View {
                 temp: $model.temp2,
                 extraEnergyFactor: model.extraEnergyFactor,
                 updateConcentrationC: model.setConcentrationC,
-                allowReactionsToC: model.allowReactionsToC
+                allowReactionsToC: model.allowReactionsToC,
+                catalystIsShaking: model.catalystIsShaking
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .padding(.leading, settings.beakerLeadingPadding)

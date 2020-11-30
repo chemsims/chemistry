@@ -19,6 +19,7 @@ struct EnergyProfileBeaker: View {
     let extraEnergyFactor: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
     let allowReactionsToC: Bool
+    let catalystIsShaking: Bool
 
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
@@ -156,6 +157,7 @@ struct EnergyProfileBeaker: View {
         let rotation: Angle = isInProgress ? .degrees(135) : .zero
         let scale: CGFloat = isInProgress ? 1.2 : 1
         let shadow = isInProgress ? settings.catHeight * 0.05 : 0
+        let yOffset = (isInProgress && catalystIsShaking)  ? settings.catHeight * 0.1 : 0
 
         return Image(catalystInProgress == nil || isInProgress ? catalyst.imageName : "catdeact")
             .resizable()
@@ -171,6 +173,7 @@ struct EnergyProfileBeaker: View {
             .scaleEffect(x: scale, y: scale, anchor: .top)
             .animation(.easeOut(duration: 0.75))
             .opacity(isSelected ? 0 : 1)
+            .offset(y: yOffset)
             .onTapGesture {
                 if (catalystInProgress == nil) {
                     setCatalystInProgress(catalyst)
@@ -184,7 +187,9 @@ struct EnergyProfileBeaker: View {
             }
     }
 
-    private func doSelectCatalyst(catalyst: Catalyst) {
+    private func doSelectCatalyst(
+        catalyst: Catalyst
+    ) {
         let inProgress = catalystInProgress == catalyst
         let notSelected = selectedCatalyst == nil
         if (inProgress && notSelected && !emitCatalyst) {
@@ -428,7 +433,8 @@ struct EnergyBeakerWithStand_Previews: PreviewProvider {
             temp: .constant(500),
             extraEnergyFactor: 0,
             updateConcentrationC: {_ in },
-            allowReactionsToC: true
+            allowReactionsToC: true,
+            catalystIsShaking: false
         ).previewLayout(.fixed(width: 200, height: 320))
     }
 }
