@@ -62,6 +62,7 @@ struct EnergyProfileScreen: View {
                         chartSize: settings.chartsSize
                     ),
                     peakHeightFactor: model.peakHeightFactor,
+                    initialHeightFactor: model.initialHeightFactor,
                     concentrationC: model.concentrationC
                 )
 

@@ -9,6 +9,7 @@ struct EnergyProfileChart: View {
 
     let settings: EnergyRateChartSettings
     let peakHeightFactor: CGFloat
+    let initialHeightFactor: CGFloat
     let concentrationC: CGFloat
 
     var body: some View {
@@ -29,14 +30,14 @@ struct EnergyProfileChart: View {
     private var chart: some View {
         ZStack {
             EnergyProfileChartShape(
-                peak: 1
+                peak: initialHeightFactor
             )
             .stroke()
             .foregroundColor(Styling.timeAxisCompleteBar)
             .frame(width: settings.chartSize, height: settings.chartSize)
 
             EnergyProfileChartShape(
-                peak: peakHeightFactor
+                peak: x
             )
             .stroke()
             .foregroundColor(.orangeAccent)
@@ -47,16 +48,20 @@ struct EnergyProfileChart: View {
                 EnergyProfileHead(
                     radius: settings.chartHeadHaloSize,
                     concentrationC: concentrationC,
-                    peak: peakHeightFactor
+                    peak: x
                 ).foregroundColor(Styling.primaryColorHalo)
 
                 EnergyProfileHead(
                     radius: settings.chartHeadSize,
                     concentrationC: concentrationC,
-                    peak: peakHeightFactor
+                    peak: x
                 ).foregroundColor(.orangeAccent)
             }.frame(width: settings.chartSize, height: settings.chartSize)
         }
+    }
+
+    var x: CGFloat {
+        peakHeightFactor * initialHeightFactor
     }
 }
 
@@ -163,6 +168,7 @@ struct EnergyProfileChart_Previews: PreviewProvider {
         EnergyProfileChart(
             settings: EnergyRateChartSettings(chartSize: 250),
             peakHeightFactor: 0,
+            initialHeightFactor: 1,
             concentrationC: 0.5
         )
     }

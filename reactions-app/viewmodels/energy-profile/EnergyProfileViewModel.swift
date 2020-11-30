@@ -34,6 +34,10 @@ class EnergyProfileViewModel: ObservableObject {
         return minEnergy + (tempFactor * (maxEnergy - minEnergy))
     }
 
+    var initialHeightFactor: CGFloat {
+        selectedReaction.eaHeightFactor
+    }
+
     private var dispatchId = UUID()
 
     var goToPreviousScreen: (() -> Void)?
@@ -94,7 +98,7 @@ class EnergyProfileViewModel: ObservableObject {
                 return
             }
             let maxEnergy = selectedReaction.activationEnergy
-            let minEnergy = selectedReaction.activationEnergy - Catalyst.C.energyReduction
+            let minEnergy = 0.9 * (selectedReaction.activationEnergy - Catalyst.C.energyReduction)
             let resultingEnergy = selectedReaction.activationEnergy - catalyst.energyReduction
             let energyFactor = (resultingEnergy - minEnergy) / (maxEnergy - minEnergy)
             self.temp2 = self.temp1
@@ -170,6 +174,14 @@ extension ReactionOrder {
         case .Zero: return 0.4
         case .First: return 0.7
         case .Second: return 1
+        }
+    }
+
+    var eaHeightFactor: CGFloat {
+        switch (self) {
+        case .Zero: return 1
+        case .First: return 0.9
+        case .Second: return 0.8
         }
     }
 }

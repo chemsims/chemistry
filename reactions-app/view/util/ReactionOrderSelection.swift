@@ -70,7 +70,7 @@ struct ReactionOrderSelection: View {
             } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(75)) {
                     isToggled = false
-                }
+                }   
 
                 selection = reaction
             }
