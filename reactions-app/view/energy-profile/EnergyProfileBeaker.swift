@@ -16,6 +16,7 @@ struct EnergyProfileBeaker: View {
     let emitCatalyst: Bool
 
     @Binding var temp: CGFloat?
+    let extraEnergyFactor: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
     let allowReactionsToC: Bool
 
@@ -118,7 +119,7 @@ struct EnergyProfileBeaker: View {
             width: settings.beaker.innerBeakerWidth,
             height: settings.skSceneHeight,
             waterHeight: settings.waterHeight,
-            speed: extraSpeed(settings: settings),
+            speed: extraEnergyFactor,
             updateConcentrationC: updateConcentrationC,
             allowReactionsToC: allowReactionsToC,
             emitterPosition: settings.emitterPosition,
@@ -248,7 +249,7 @@ struct EnergyProfileBeaker: View {
     }
 
     private func largeFlameWidth(settings: EnergyBeakerSettings) -> CGFloat {
-        let speed = extraSpeed(settings: settings)
+        let speed = tempFactor(settings: settings)
         let maxExtraScale: CGFloat = 0.5
         let scale = 1 + (speed * maxExtraScale)
         return settings.flameWidth * scale
@@ -280,7 +281,9 @@ struct EnergyProfileBeaker: View {
         return nil
     }
 
-    private func extraSpeed(settings: EnergyBeakerSettings) -> CGFloat {
+    private func tempFactor(
+        settings: EnergyBeakerSettings
+    ) -> CGFloat {
         if let temp = temp {
             let numerator = temp - settings.axis.minValue
             let delta = settings.axis.maxValue - settings.axis.minValue
@@ -290,8 +293,11 @@ struct EnergyProfileBeaker: View {
     }
 }
 
-fileprivate struct EnergyBeakerSettings {
+struct EnergyBeakerSettings {
     let geometry: GeometryProxy
+
+    static let minTemp: CGFloat = 400
+    static let maxTemp: CGFloat = 600
 
     var beaker: BeakerSettings {
         BeakerSettings(width: beakerWidth)
@@ -311,8 +317,8 @@ fileprivate struct EnergyBeakerSettings {
         AxisPositionCalculations(
             minValuePosition: geometry.size.width * 0.1,
             maxValuePosition: geometry.size.width * 0.9,
-            minValue: 400,
-            maxValue: 600
+            minValue: EnergyBeakerSettings.minTemp,
+            maxValue: EnergyBeakerSettings.maxTemp
         )
     }
 
@@ -420,6 +426,7 @@ struct EnergyBeakerWithStand_Previews: PreviewProvider {
             setCatalystInProgress: {_ in },
             emitCatalyst: false,
             temp: .constant(500),
+            extraEnergyFactor: 0,
             updateConcentrationC: {_ in },
             allowReactionsToC: true
         ).previewLayout(.fixed(width: 200, height: 320))

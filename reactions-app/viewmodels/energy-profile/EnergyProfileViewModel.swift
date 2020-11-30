@@ -23,6 +23,17 @@ class EnergyProfileViewModel: ObservableObject {
         return selectedReaction.activationEnergy - reduction
     }
 
+    var extraEnergyFactor: CGFloat {
+        let temp2 = self.temp2 ?? temp1
+        let minEnergy = selectedReaction.minEnergyFactor
+        let maxEnergy = selectedReaction.maxEnergyFactor
+        let minTemp = EnergyBeakerSettings.minTemp
+        let maxTemp = EnergyBeakerSettings.maxTemp
+
+        let tempFactor = (temp2 - minTemp)/(maxTemp - minTemp)
+        return minEnergy + (tempFactor * (maxEnergy - minEnergy))
+    }
+
     private var dispatchId = UUID()
 
     var goToPreviousScreen: (() -> Void)?
@@ -52,7 +63,7 @@ class EnergyProfileViewModel: ObservableObject {
         }
     }
 
-    let temp1: CGFloat = EnergyProfileSettings.initialTemp
+    let temp1: CGFloat = EnergyBeakerSettings.minTemp
 
     var k1: CGFloat {
         getK(temp: temp1)
@@ -119,10 +130,6 @@ class EnergyProfileViewModel: ObservableObject {
     }
 }
 
-struct EnergyProfileSettings {
-    static let initialTemp: CGFloat = 400
-}
-
 extension Catalyst {
     var energyReduction: CGFloat {
         switch (self) {
@@ -149,8 +156,23 @@ extension ReactionOrder {
         case .Second: return 8000
         }
     }
-}
 
+    var minEnergyFactor: CGFloat {
+        switch (self) {
+        case .Zero: return 0
+        case .First: return 0.1
+        case .Second: return 0.2
+        }
+    }
+
+    var maxEnergyFactor: CGFloat {
+        switch(self) {
+        case .Zero: return 0.4
+        case .First: return 0.7
+        case .Second: return 1
+        }
+    }
+}
 
 extension CGFloat {
     static let gasConstant: CGFloat = 8.314
