@@ -33,7 +33,7 @@ struct ReactionComparisonScreen: View {
                 .padding(.bottom, settings.beakyBottomPadding)
                 .padding(.trailing, settings.beakyRightPadding)
 
-            chartsView(
+            chartsView2(
                 settings: TimeChartGeometrySettings(chartSize: chartSize(settings: settings))
             ).padding(.top, settings.chartsTopPadding)
 
@@ -86,8 +86,46 @@ struct ReactionComparisonScreen: View {
 
             }.frame(width: settings.chartSize, height: settings.chartSize)
 
-            Spacer()
         }
+    }
+
+    private func chartsView2(settings: TimeChartGeometrySettings) -> some View {
+        HStack(spacing: 1) {
+            VStack(spacing: 1) {
+                animatingValue(equation: zeroOrder, defaultValue: c1)
+                    .frame(height: settings.chartSize * 0.2)
+                    .border(Color.red)
+                animatingValue(equation: firstOrder, defaultValue: c1)
+                    .frame(height: settings.chartSize * 0.2)
+                animatingValue(equation: secondOrder, defaultValue: c1)
+                    .frame(height: settings.chartSize * 0.2)
+            }
+            .foregroundColor(.orangeAccent)
+            .frame(width: settings.chartSize * 0.3)
+            .border(Color.black)
+            VStack {
+                chartsView(settings: settings)
+                Text("bar")
+            }
+        }
+        .font(.system(size: settings.labelFontSize * 0.8))
+        .lineLimit(1)
+    }
+
+    private func animatingValue(
+        equation: ConcentrationEquation,
+        defaultValue: CGFloat
+    ) -> some View {
+        if (reaction.currentTime == nil) {
+            return AnyView(Text(defaultValue.str(decimals: 2)))
+        }
+        let value = equation.getConcentration(at: reaction.currentTime!)
+        return AnyView(
+            AnimatingNumberView(
+                number: value,
+                formatter: { $0.str(decimals: 2)}
+            )
+        )
     }
 
     private var unsafeCurrentTimeBinding: Binding<CGFloat> {
