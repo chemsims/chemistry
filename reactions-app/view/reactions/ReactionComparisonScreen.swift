@@ -119,10 +119,10 @@ struct ReactionComparisonScreen: View {
         if (reaction.currentTime == nil) {
             return AnyView(Text(defaultValue.str(decimals: 2)))
         }
-        let value = equation.getConcentration(at: reaction.currentTime!)
         return AnyView(
             AnimatingNumberView(
-                number: value,
+                x: reaction.currentTime!,
+                equation: equation,
                 formatter: { $0.str(decimals: 2)}
             )
         )

@@ -8,30 +8,32 @@ import CoreText
 
 struct AnimatingNumberView: View {
 
-    let number: CGFloat
+    let x: CGFloat
+    let equation: Equation
     let formatter: (CGFloat) -> String
 
     var body: some View {
         Rectangle()
             .foregroundColor(.clear)
-            .modifier(AnimatingNumberModifier(number: number, formatter: formatter))
+            .modifier(AnimatingNumberModifier(x: x, equation: equation, formatter: formatter))
     }
 }
 
 
 struct AnimatingNumberModifier: AnimatableModifier {
 
-    var number: CGFloat
+    var x: CGFloat
+    let equation: Equation
     let formatter: (CGFloat) -> String
 
     var animatableData: CGFloat {
-        get { number }
-        set { number = newValue }
+        get { x }
+        set { x = newValue }
     }
 
     func body(content: Content) -> some View {
         content
-            .overlay(Text(formatter(number)))
+            .overlay(Text(formatter(equation.getY(at: x))))
     }
 
 }

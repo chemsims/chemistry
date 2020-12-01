@@ -175,32 +175,31 @@ struct GeneralTimeChartView: View {
 
     private var animatingTime: some View {
         animatingValue(
-            value: currentTime,
+            equation: IdentityEquation(),
             defaultValue: finalTime ?? initialTime
         )
     }
 
     private var animatingConcentration: some View {
-        let concentration = currentTime.map { t in
-            concentrationA.getConcentration(at: t)
-        }
-        return animatingValue(
-            value: concentration,
+        animatingValue(
+            equation: concentrationA,
             defaultValue: finalConcentration ?? initialConcentration
         )
 
     }
 
     private func animatingValue(
-        value: CGFloat?,
+        equation: Equation,
         defaultValue: CGFloat
     ) -> some View {
-        if (value == nil) {
+        if (currentTime == nil) {
             return AnyView(Text(defaultValue.str(decimals: 2)))
         }
+
         return AnyView(
             AnimatingNumberView(
-                number: value!,
+                x: currentTime!,
+                equation: equation,
                 formatter: { $0.str(decimals: 2)}
             )
         )

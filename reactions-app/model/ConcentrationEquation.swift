@@ -6,9 +6,26 @@
 import CoreGraphics
 import Darwin
 
-protocol ConcentrationEquation {
+protocol Equation {
+    func getY(at x: CGFloat) -> CGFloat
+}
+
+struct IdentityEquation: Equation {
+    func getY(at x: CGFloat) -> CGFloat {
+        x
+    }
+}
+
+protocol ConcentrationEquation: Equation {
     func getConcentration(at time: CGFloat) -> CGFloat
 }
+
+extension ConcentrationEquation {
+    func getY(at x: CGFloat) -> CGFloat {
+        getConcentration(at: x)
+    }
+}
+
 
 
 /// Linear concentration which is c1 at t1, and c2 at t2.
