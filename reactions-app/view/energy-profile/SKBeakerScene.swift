@@ -204,9 +204,9 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         let catalystPhysics = SKPhysicsBody(polygonFrom: path)
         catalystPhysics.affectedByGravity = false
         catalystPhysics.linearDamping = 0
-        catalystPhysics.angularDamping = 0.5
+        catalystPhysics.angularDamping = 0
         catalystPhysics.restitution = 1
-        catalystPhysics.mass = 1
+        catalystPhysics.mass = 0.3
         catalystPhysics.usesPreciseCollisionDetection = true
 
         catalystPhysics.categoryBitMask = catalystCategory
@@ -270,8 +270,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
                 let concentrationC = CGFloat(cMolecules) / CGFloat(settings.aMolecules + settings.bMolecules)
                 updateConcentrationC(concentrationC)
 
-                let i = UIImpactFeedbackGenerator(style: .light)
-                i.impactOccurred()
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
 
             }
         }
@@ -311,7 +310,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         moleculePhysics.friction = 0
         moleculePhysics.linearDamping = 0
         moleculePhysics.angularDamping = 0
-        moleculePhysics.allowsRotation = true
+        moleculePhysics.allowsRotation = false
         moleculePhysics.categoryBitMask = category
         moleculePhysics.contactTestBitMask = 1
         moleculePhysics.mass = 1
@@ -374,7 +373,7 @@ fileprivate struct SKBeakerSceneSettings {
 
     let aMolecules = 15
     let bMolecules = 15
-    let collisionsForC = 50
+    let collisionsForC = 25
     let minVelocity: CGFloat = 3
     let maxVelocity: CGFloat = 100
     let catalystParticles = 7
