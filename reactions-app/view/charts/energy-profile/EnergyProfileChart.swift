@@ -76,11 +76,38 @@ struct EnergyProfileChart: View {
         ZStack {
             reactantsAnnotations
             productAnnotation
+            eaHeightAnnotation
         }
         .frame(width: settings.chartSize, height: settings.chartSize)
         .font(.system(size: settings.fontSize * 0.8))
         .lineLimit(1)
         .minimumScaleFactor(0.5)
+    }
+
+    private var eaHeightAnnotation: some View {
+        let curve = BellCurve(
+            peak: scaledPeak,
+            frameWidth: settings.chartSize,
+            frameHeight: settings.chartSize
+        )
+
+        let startY = curve.absoluteY(absoluteX: 0)
+        let midY = curve.absoluteY(absoluteX: settings.chartSize / 2)
+        let height = startY - midY
+        let padding = settings.chartSize * 0.06
+
+        return VStack(spacing: 0) {
+            Spacer()
+                .frame(height: midY + padding)
+            DoubleHeadedArrow(arrowHeight: settings.chartSize * 0.035)
+                .stroke(lineWidth: 1)
+                .frame(
+                    width: settings.chartSize * 0.05,
+                    height: height - padding
+                )
+            Text("Ea")
+            Spacer()
+        }.foregroundColor(.gray)
     }
 
     private var productAnnotation: some View {
