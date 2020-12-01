@@ -29,12 +29,12 @@ struct Styling {
 extension UIColor {
 
     static let moleculeA = UIColor(red: 8 / 255, green: 168 / 255, blue: 232  / 255, alpha: 1)
-    static let moleculeB = UIColor(red: 147 / 255, green: 31 / 255, blue: 29 / 255, alpha: 1)
+    static let moleculeB = UIColor(red: 255 / 255, green: 19 / 255, blue: 19 / 255, alpha: 1)
     static let moleculeC = UIColor(red: 226 / 255, green: 132 / 255, blue: 19 / 255, alpha: 1)
 
-    static let catalystA = UIColor(red: 98 / 255, green: 95  / 255, blue: 97 / 255, alpha: 1)
+    static let catalystA = UIColor(red: 246 / 255, green: 83  / 255, blue: 166 / 255, alpha: 1)
     static let catalystB = UIColor(red: 227 / 255, green: 215  / 255, blue: 89 / 255, alpha: 1)
-    static let catalystC = UIColor(red: 221 / 255, green: 154  / 255, blue: 91 / 255, alpha: 1)
+    static let catalystC = UIColor(red: 152 / 255, green: 251  / 255, blue: 251 / 255, alpha: 1)
 
     var color: Color { Color(self) }
 }
