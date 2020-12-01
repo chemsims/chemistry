@@ -13,9 +13,11 @@ struct EnergyProfileChart: View {
     let concentrationC: CGFloat
 
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(alignment: .top, spacing: 0) {
             Text("Energy")
                 .rotationEffect(.degrees(90))
+                .frame(height: settings.chartSize)
+
             VStack {
                 chart
                 HStack {
@@ -24,7 +26,10 @@ struct EnergyProfileChart: View {
                     Text("Products")
                 }.frame(width: settings.chartSize)
             }
-        }.font(.system(size: settings.fontSize))
+        }
+        .font(.system(size: settings.fontSize * 0.8))
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
     }
 
     private var chart: some View {

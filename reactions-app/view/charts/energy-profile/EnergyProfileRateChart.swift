@@ -18,7 +18,10 @@ struct EnergyProfileRateChart: View {
                 chart
                 Text("1/T")
             }
-        }.font(.system(size: settings.fontSize))
+        }
+        .font(.system(size: settings.fontSize * 0.9))
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
     }
 
     private var chart: some View  {
