@@ -42,7 +42,7 @@ struct EnergyProfileChart: View {
             .frame(width: settings.chartSize, height: settings.chartSize)
 
             EnergyProfileChartShape(
-                peak: x
+                peak: scaledPeak
             )
             .stroke()
             .foregroundColor(.orangeAccent)
@@ -53,19 +53,19 @@ struct EnergyProfileChart: View {
                 EnergyProfileHead(
                     radius: settings.chartHeadHaloSize,
                     concentrationC: concentrationC,
-                    peak: x
+                    peak: scaledPeak
                 ).foregroundColor(Styling.primaryColorHalo)
 
                 EnergyProfileHead(
                     radius: settings.chartHeadSize,
                     concentrationC: concentrationC,
-                    peak: x
+                    peak: scaledPeak
                 ).foregroundColor(.orangeAccent)
             }.frame(width: settings.chartSize, height: settings.chartSize)
         }
     }
 
-    var x: CGFloat {
+    private var scaledPeak: CGFloat {
         peakHeightFactor * initialHeightFactor
     }
 }
