@@ -27,14 +27,14 @@ struct ReactionComparisonScreen: View {
 
     private func makeView(settings: OrderedReactionLayoutSettings) -> some View {
         ZStack {
-//            beaker(settings: settings)
             beakers(settings: settings)
             beaky(settings: settings)
                 .padding(.bottom, settings.beakyBottomPadding)
                 .padding(.trailing, settings.beakyRightPadding)
 
             chartsView2(
-                settings: TimeChartGeometrySettings(chartSize: chartSize(settings: settings))
+                settings: TimeChartGeometrySettings(chartSize: chartSize(settings: settings)),
+                settings2: settings
             ).padding(.top, settings.chartsTopPadding)
 
             equationView(settings: settings)
@@ -89,12 +89,14 @@ struct ReactionComparisonScreen: View {
         }
     }
 
-    private func chartsView2(settings: TimeChartGeometrySettings) -> some View {
+    private func chartsView2(settings: TimeChartGeometrySettings, settings2: OrderedReactionLayoutSettings) -> some View {
         HStack(spacing: 1) {
+            Spacer()
             VStack(spacing: 1) {
+                Text("[A]")
+                    .foregroundColor(.black)
                 animatingValue(equation: zeroOrder, defaultValue: c1)
                     .frame(height: settings.chartSize * 0.2)
-                    .border(Color.red)
                 animatingValue(equation: firstOrder, defaultValue: c1)
                     .frame(height: settings.chartSize * 0.2)
                 animatingValue(equation: secondOrder, defaultValue: c1)
@@ -102,22 +104,26 @@ struct ReactionComparisonScreen: View {
             }
             .foregroundColor(.orangeAccent)
             .frame(width: settings.chartSize * 0.3)
-            .border(Color.black)
-            VStack {
+            VStack(spacing: 1) {
                 chartsView(settings: settings)
-                Text("bar")
+                Text("Time (s)")
+                animatingValue(equation: IdentityEquation(), defaultValue: 0)
+                    .frame(width: settings.chartSize, height: settings.chartSize * 0.2)
+                    .foregroundColor(.orangeAccent)
             }
+            Spacer()
+                .frame(width: equationWidth(settings: settings2) + (2 * equationPadding(settings: settings2)))
         }
         .font(.system(size: settings.labelFontSize * 0.8))
         .lineLimit(1)
     }
 
     private func animatingValue(
-        equation: ConcentrationEquation,
-        defaultValue: CGFloat
+        equation: Equation,
+        defaultValue: CGFloat?
     ) -> some View {
         if (reaction.currentTime == nil) {
-            return AnyView(Text(defaultValue.str(decimals: 2)))
+            return AnyView(Text(defaultValue?.str(decimals: 2) ?? ""))
         }
         return AnyView(
             AnimatingNumberView(
@@ -153,23 +159,6 @@ struct ReactionComparisonScreen: View {
                     bubbleStemWidth: settings.bubbleStemWidth
                 )
             }
-        }
-    }
-
-    private func beaker(settings: OrderedReactionLayoutSettings) -> some View {
-        HStack {
-            VStack {
-                Spacer()
-                FilledBeaker(
-                    moleculesA: reaction.moleculesA,
-                    concentrationB: reaction.concentrationEquationB,
-                    currentTime: reaction.currentTime
-                )
-                .frame(width: settings.beakerWidth, height: settings.beakerHeight)
-                .padding(.leading, settings.beakerLeadingPadding)
-                .padding(.bottom, settings.beakerLeadingPadding)
-            }
-            Spacer()
         }
     }
 
@@ -220,25 +209,27 @@ struct ReactionComparisonScreen: View {
     private func equationView(
         settings: OrderedReactionLayoutSettings
     ) -> some View {
-
-        let availableWidth = (settings.width - chartSize(settings: settings)) / 2
-        let widthLessPadding = availableWidth - (2 * equationPadding(settings: settings))
-
-        let availableHeight = settings.height - settings.beakyBoxTotalHeight
-        let heightLessPadding = availableHeight - equationPadding(settings: settings)
-
-        return VStack {
+        VStack {
             HStack {
                 Spacer()
                 RateEquationComparisonView(
-                    maxWidth: widthLessPadding,
-                    maxHeight: heightLessPadding
+                    maxWidth: equationWidth(settings: settings),
+                    maxHeight: equationHeight(settings: settings)
                 )
             }
             Spacer()
         }
     }
 
+    private func equationWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        let availableWidth = (settings.width - chartSize(settings: settings)) / 2
+        return availableWidth - (2 * equationPadding(settings: settings))
+    }
+
+    private func equationHeight(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        let availableHeight = settings.height - settings.beakyBoxTotalHeight
+        return availableHeight - equationPadding(settings: settings)
+    }
 
     private var zeroOrder: ConcentrationEquation  {
         LinearConcentration(
