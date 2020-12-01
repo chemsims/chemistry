@@ -53,6 +53,10 @@ struct EnergyProfileRateChart: View {
                 )
             }
 
+            if (equation != nil) {
+                annotation
+            }
+
             ChartAxisShape(
                 verticalTicks: settings.verticalTicks,
                 horizontalTicks: settings.horizontalTicks,
@@ -62,6 +66,21 @@ struct EnergyProfileRateChart: View {
             )
             .stroke()
         }.frame(width: settings.chartSize, height: settings.chartSize)
+    }
+
+    private var annotation: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Text("Slope=-Ea/R")
+                Spacer()
+            }
+        }
+        .padding(.bottom, settings.chartSize * 0.1)
+        .padding(.leading, settings.chartSize * 0.1)
+        .font(.system(size: settings.fontSize * 0.8))
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
     }
 }
 
