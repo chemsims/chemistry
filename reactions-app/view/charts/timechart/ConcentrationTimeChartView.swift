@@ -19,9 +19,6 @@ struct ConcentrationTimeChartView: View {
     let canSetInitialTime: Bool
     let canSetCurrentTime: Bool
 
-    let yValue: CGFloat?
-    let xValue: CGFloat?
-
     var body: some View {
         GeneralTimeChartView(
             initialConcentration: $initialConcentration,
@@ -36,9 +33,7 @@ struct ConcentrationTimeChartView: View {
             includeSliders: true,
             yLabel: "[A]",
             includeValuesInLabel: true,
-            canSetCurrentTime: canSetCurrentTime,
-            yValue: yValue,
-            xValue: xValue
+            canSetCurrentTime: canSetCurrentTime
         )
     }
 }
@@ -68,9 +63,7 @@ struct SingleConcentrationPlot: View {
             includeSliders: false,
             yLabel: yLabel,
             includeValuesInLabel: false,
-            canSetCurrentTime: canSetCurrentTime,
-            yValue: nil,
-            xValue: nil
+            canSetCurrentTime: canSetCurrentTime
         )
     }
 }
@@ -93,58 +86,13 @@ struct GeneralTimeChartView: View {
     let includeValuesInLabel: Bool
     let canSetCurrentTime: Bool
 
-    let yValue: CGFloat?
-    let xValue: CGFloat?
-
-    private var verticalSliders: some View {
-        VStack(spacing: 1) {
-            Text(yLabel)
-            HStack(spacing: 1) {
-                animatingConcentration
-                    .frame(height: settings.chartSize * 0.18)
-                Text("M")
-            }
-            .frame(width: settings.yLabelWidth, height: settings.chartSize * 0.18, alignment: .trailing)
-            .foregroundColor(.orangeAccent)
-        }
-        .font(.system(size: settings.labelFontSize))
-        .frame(width: settings.yLabelWidth)
-    }
-
-
-    // TODO - hmmm??
-    private var verticalSlidersHmmm: some View {
-        VStack {
-            Text(yLabel)
-                .minimumScaleFactor(1)
-            if (includeValuesInLabel) {
-                Text(concentrationLabel)
-                    .foregroundColor(.orangeAccent)
-            }
-        }
-        .font(.system(size: settings.labelFontSize))
-    }
-
     var body: some View {
         HStack {
-            if (includeSliders) {
-                verticalSliders
-            } else {
-                verticalSlidersHmmm
-            }
+            concentrationLabel
 
             HStack(alignment: .top) {
-
                 if (includeSliders) {
-                    ConcentrationValueSlider(
-                        initialConcentration: $initialConcentration,
-                        finalConcentration: $finalConcentration,
-                        settings: settings
-                    )
-                    .frame(
-                        width: settings.sliderHandleWidth,
-                        height: settings.chartSize
-                    ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
+                    concentrationSlider
                 }
 
                 VStack {
@@ -157,42 +105,72 @@ struct GeneralTimeChartView: View {
                             finalConcentration: finalConcentration!
                         )
                     }
-
                     if (includeSliders) {
-                        TimeValueSlider(
-                            t1: $initialTime,
-                            t2: $finalTime,
-                            settings: settings,
-                            canSetInitialTime: canSetInitialTime
-                        ).frame(
-                            width: settings.chartSize,
-                            height: settings.sliderHandleWidth
-                        ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
+                        timeSlider
                     }
-
-                    HStack(spacing: 1) {
-                        if (includeSliders) {
-                            Text("Time")
-                        } else {
-                            Text("Time")
-                                .minimumScaleFactor(1)
-                        }
-
-                        if (xValue != nil) {
-                            HStack(spacing: 1) {
-                                animatingTime
-                                    .frame(width: settings.chartSize * 0.35, alignment: .trailing)
-                                Text("s")
-                                    .fixedSize()
-                            }
-                            .foregroundColor(.orangeAccent)
-                            .frame(height: settings.chartSize * 0.1)
-                        }
-                    }.font(.system(size: settings.labelFontSize))
+                    timeLabel
                 }
             }
         }.lineLimit(1)
         .minimumScaleFactor(0.5)
+    }
+
+    private var concentrationLabel: some View {
+        VStack(spacing: 1) {
+            Text(yLabel)
+            if (includeValuesInLabel) {
+                HStack(spacing: 1) {
+                    animatingConcentration
+                        .frame(height: settings.chartSize * 0.18)
+                    Text("M")
+                }
+                .frame(width: settings.yLabelWidth, height: settings.chartSize * 0.18, alignment: .trailing)
+                .foregroundColor(.orangeAccent)
+            }
+        }
+        .font(.system(size: settings.labelFontSize))
+        .frame(width: settings.yLabelWidth)
+    }
+
+    private var timeLabel: some View {
+        HStack(spacing: 1) {
+            Text("Time")
+            if (includeValuesInLabel) {
+                HStack(spacing: 1) {
+                    animatingTime
+                        .frame(width: settings.chartSize * 0.35, alignment: .trailing)
+                    Text("s")
+                        .fixedSize()
+                }
+                .foregroundColor(.orangeAccent)
+                .frame(height: settings.chartSize * 0.1)
+            }
+        }.font(.system(size: settings.labelFontSize))
+    }
+
+
+    private var concentrationSlider: some View {
+        ConcentrationValueSlider(
+            initialConcentration: $initialConcentration,
+            finalConcentration: $finalConcentration,
+            settings: settings
+        )
+        .frame(
+            width: settings.sliderHandleWidth,
+            height: settings.chartSize
+        ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
+    }
+
+    private var timeSlider: some View {
+        TimeValueSlider(
+            t1: $initialTime,
+            t2: $finalTime,
+            settings: settings,
+            canSetInitialTime: canSetInitialTime
+        ).frame(
+            width: settings.chartSize,
+            height: settings.sliderHandleWidth
+        ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
     }
 
     private var animatingTime: some View {
@@ -297,15 +275,6 @@ struct GeneralTimeChartView: View {
         ).frame(width: settings.chartSize, height: settings.indicatorWidth)
     }
 
-    private var concentrationLabel: String {
-        let value = finalConcentration ?? initialConcentration
-        return "\(value.str(decimals: 2)) M"
-    }
-
-    private var timeLabel: String {
-        let value = finalTime ?? initialTime
-        return "\(value.str(decimals: 1)) s"
-    }
 }
 
 struct DisabledSliderModifier: ViewModifier {
@@ -334,9 +303,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             concentrationB: ConstantConcentration(value: 1),
             currentTime: .constant(nil),
             canSetInitialTime: true,
-            canSetCurrentTime: true,
-            yValue: nil,
-            xValue: nil
+            canSetCurrentTime: true
         )
         .previewLayout(.fixed(width: 500, height: 300))
 
@@ -375,9 +342,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     concentrationB: equation2,
                     currentTime: .constant(nil),
                     canSetInitialTime: true,
-                    canSetCurrentTime: true,
-                    yValue: nil,
-                    xValue: nil
+                    canSetCurrentTime: true
                 )
 
                 ConcentrationTimeChartView(
@@ -392,9 +357,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     concentrationB: equation2,
                     currentTime: .constant(t2!),
                     canSetInitialTime: true,
-                    canSetCurrentTime: true,
-                    yValue: nil,
-                    xValue: nil
+                    canSetCurrentTime: true
                 )
             }
         }
