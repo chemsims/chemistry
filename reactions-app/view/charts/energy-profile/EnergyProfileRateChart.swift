@@ -98,6 +98,9 @@ struct EnergyRateChartSettings {
         timeChartSettings.chartHeadPrimaryHaloSize
     }
 
+    var annotationMoleculeSize: CGFloat {
+        chartSize * 0.05
+    }
 
     var yAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(

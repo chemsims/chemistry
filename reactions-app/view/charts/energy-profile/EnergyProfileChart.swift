@@ -15,11 +15,11 @@ struct EnergyProfileChart: View {
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             Text("Energy")
-                .rotationEffect(.degrees(90))
+                .rotationEffect(.degrees(-90))
                 .frame(height: settings.chartSize)
 
             VStack {
-                chart
+                annotatedChart
                 HStack {
                     Text("Reactants")
                     Spacer()
@@ -30,6 +30,13 @@ struct EnergyProfileChart: View {
         .font(.system(size: settings.fontSize * 0.8))
         .lineLimit(1)
         .minimumScaleFactor(0.5)
+    }
+
+    private var annotatedChart: some View {
+        ZStack {
+            chart
+            annotations
+        }
     }
 
     private var chart: some View {
@@ -63,6 +70,62 @@ struct EnergyProfileChart: View {
                 ).foregroundColor(.orangeAccent)
             }.frame(width: settings.chartSize, height: settings.chartSize)
         }
+    }
+
+    private var annotations: some View {
+        ZStack {
+            reactantsAnnotations
+            productAnnotation
+        }
+        .frame(width: settings.chartSize, height: settings.chartSize)
+        .font(.system(size: settings.fontSize * 0.8))
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
+    }
+
+    private var productAnnotation: some View {
+        VStack(spacing: 0) {
+            Spacer()
+                .frame(height: settings.chartSize * 0.82)
+            HStack(spacing: 0) {
+                Spacer()
+                VStack(spacing: 1) {
+                    HStack(spacing: 0) {
+                        annotationMolecule(color: UIColor.moleculeC.color)
+                        annotationMolecule(color: UIColor.moleculeC.color)
+                    }
+                    Text("C")
+                }
+            }.padding(.trailing, settings.chartSize * 0.02)
+            Spacer()
+        }
+    }
+
+    private var reactantsAnnotations: some View {
+        VStack(spacing: 0) {
+            Spacer()
+                .frame(height: settings.chartSize * 0.58)
+            HStack(alignment: .bottom, spacing: 1) {
+                reactantAnnotation(color: Styling.moleculeA, value: "A")
+                Text("+")
+                reactantAnnotation(color: Styling.moleculeB, value: "B")
+                Spacer()
+            }.padding(.leading, settings.chartSize * 0.02)
+            Spacer()
+        }
+    }
+
+    private func reactantAnnotation(color: Color, value: String) -> some View {
+        VStack(spacing: 1) {
+            annotationMolecule(color: color)
+            Text(value)
+        }
+    }
+
+    private func annotationMolecule(color: Color) -> some View {
+        Circle()
+            .foregroundColor(color)
+            .frame(width: settings.annotationMoleculeSize, height: settings.annotationMoleculeSize)
     }
 
     private var scaledPeak: CGFloat {
