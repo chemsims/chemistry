@@ -55,9 +55,9 @@ struct SecondOrderReactionView: View {
                 maxConcentration: ReactionSettings.maxInverseConcentration
             ),
             concentrationA: reaction.inverseAEquation,
-            currentTime: reaction.currentTime,
-            headOpacity: reaction.timeChartHeadOpacity,
-            yLabel: "1/[A]"
+            currentTime: $reaction.currentTime,
+            yLabel: "1/[A]",
+            canSetCurrentTime: reaction.reactionHasEnded
         )
         .padding(.top, settings.chartsTopPadding)
         .padding(.leading, settings.chartsTopPadding / 2)

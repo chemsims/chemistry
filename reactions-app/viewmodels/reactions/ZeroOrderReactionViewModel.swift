@@ -23,7 +23,6 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var currentTime: CGFloat?
 
     @Published var reactionHasEnded: Bool = false
-    @Published var timeChartHeadOpacity: Double = 1
 
     var concentrationEquationA: ConcentrationEquation {
         if let t2 = finalTime, let c2 = finalConcentration {

@@ -75,9 +75,9 @@ struct ReactionComparison: View {
                         initialConcentration: c1,
                         finalConcentration: c2,
                         initialTime: 0,
-                        currentTime: reaction.currentTime ?? 0,
+                        currentTime: unsafeCurrentTimeBinding,
                         finalTime: time,
-                        headOpacity: reaction.timeChartHeadOpacity
+                        canSetCurrentTime: reaction.reactionHasEnded
                     )
                     chartLine(equation: firstOrder, settings: settings)
                     chartLine(equation: secondOrder, settings: settings)
@@ -87,7 +87,13 @@ struct ReactionComparison: View {
 
             Spacer()
         }
+    }
 
+    private var unsafeCurrentTimeBinding: Binding<CGFloat> {
+        Binding(
+            get: { reaction.currentTime! },
+            set: { reaction.currentTime = $0 }
+        )
     }
 
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
@@ -136,13 +142,13 @@ struct ReactionComparison: View {
             settings: settings,
             equation: equation,
             initialTime: 0,
-            currentTime: reaction.currentTime ?? 0,
+            currentTime: unsafeCurrentTimeBinding,
             finalTime: time,
             filledBarColor: Styling.timeAxisCompleteBar,
             headColor: Styling.moleculeA,
             headRadius: settings.chartHeadPrimarySize,
             haloColor: Styling.moleculeAChartHeadHalo,
-            headOpacity: reaction.timeChartHeadOpacity
+            canSetCurrentTime: reaction.reactionHasEnded
         ).frame(width: settings.chartSize, height: settings.chartSize)
     }
 

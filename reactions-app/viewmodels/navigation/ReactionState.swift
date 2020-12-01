@@ -52,7 +52,6 @@ class RunAnimation: ReactionState {
         model.reactionHasEnded = false
         if let duration = model.reactionDuration, let finalTime = model.finalTime {
             model.currentTime = model.initialTime
-            model.timeChartHeadOpacity = 1
             withAnimation(.linear(duration: Double(duration))) {
                 model.currentTime = finalTime
             }
@@ -86,12 +85,10 @@ class EndAnimation: ReactionState {
                 model.currentTime = finalTime * 1.001
             }
             model.reactionHasEnded = true
-            model.timeChartHeadOpacity = 0
         }
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.timeChartHeadOpacity = 1
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) { }

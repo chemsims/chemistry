@@ -15,9 +15,9 @@ struct ConcentrationTimeChartView: View {
     let settings: TimeChartGeometrySettings
     let concentrationA: ConcentrationEquation
     let concentrationB: ConcentrationEquation
-    let currentTime: CGFloat?
-    let headOpacity: Double
+    @Binding var currentTime: CGFloat?
     let canSetInitialTime: Bool
+    let canSetCurrentTime: Bool
 
     var body: some View {
         GeneralTimeChartView(
@@ -28,12 +28,12 @@ struct ConcentrationTimeChartView: View {
             settings: settings,
             concentrationA: concentrationA,
             concentrationB: concentrationB,
-            currentTime: currentTime,
-            headOpacity: headOpacity,
+            currentTime: $currentTime,
             canSetInitialTime: canSetInitialTime,
             includeSliders: true,
             yLabel: "[A]",
-            includeValuesInLabel: true
+            includeValuesInLabel: true,
+            canSetCurrentTime: canSetCurrentTime
         )
     }
 }
@@ -45,9 +45,9 @@ struct SingleConcentrationPlot: View {
     let finalTime: CGFloat?
     let settings: TimeChartGeometrySettings
     let concentrationA: ConcentrationEquation
-    let currentTime: CGFloat?
-    let headOpacity: Double
+    @Binding var currentTime: CGFloat?
     let yLabel: String
+    let canSetCurrentTime: Bool
 
     var body: some View {
         GeneralTimeChartView(
@@ -58,12 +58,12 @@ struct SingleConcentrationPlot: View {
             settings: settings,
             concentrationA: concentrationA,
             concentrationB: nil,
-            currentTime: currentTime,
-            headOpacity: headOpacity,
+            currentTime: $currentTime,
             canSetInitialTime: false,
             includeSliders: false,
             yLabel: yLabel,
-            includeValuesInLabel: false
+            includeValuesInLabel: false,
+            canSetCurrentTime: canSetCurrentTime
         )
     }
 
@@ -80,12 +80,12 @@ struct GeneralTimeChartView: View {
     let settings: TimeChartGeometrySettings
     let concentrationA: ConcentrationEquation
     let concentrationB: ConcentrationEquation?
-    let currentTime: CGFloat?
-    let headOpacity: Double
+    @Binding var currentTime: CGFloat?
     let canSetInitialTime: Bool
     let includeSliders: Bool
     let yLabel: String
     let includeValuesInLabel: Bool
+    let canSetCurrentTime: Bool
 
     var body: some View {
         HStack {
@@ -130,7 +130,7 @@ struct GeneralTimeChartView: View {
                         chartWithIndicator
                     } else if (finalTime != nil && finalConcentration != nil) {
                         chartWithData(
-                            currentTime: currentTime!,
+                            currentTime: unsafeCurrentTimeBinding,
                             finalTime: finalTime!,
                             finalConcentration: finalConcentration!
                         )
@@ -173,7 +173,7 @@ struct GeneralTimeChartView: View {
     }
 
     private func chartWithData(
-        currentTime: CGFloat,
+        currentTime: Binding<CGFloat>,
         finalTime: CGFloat,
         finalConcentration: CGFloat
     ) -> some View {
@@ -186,8 +186,15 @@ struct GeneralTimeChartView: View {
             initialTime: initialTime,
             currentTime: currentTime,
             finalTime: finalTime,
-            headOpacity: headOpacity
+            canSetCurrentTime: canSetCurrentTime
         ).frame(width: settings.chartSize, height: settings.chartSize)
+    }
+
+    private var unsafeCurrentTimeBinding: Binding<CGFloat> {
+        Binding(
+            get: { currentTime! },
+            set: { currentTime = $0 }
+        )
     }
 
 
@@ -269,9 +276,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             ),
             concentrationA: ConstantConcentration(value: 1),
             concentrationB: ConstantConcentration(value: 1),
-            currentTime: nil,
-            headOpacity: 1,
-            canSetInitialTime: true
+            currentTime: .constant(nil),
+            canSetInitialTime: true,
+            canSetCurrentTime: true
         )
                 .previewLayout(.fixed(width: 500, height: 300))
 
@@ -284,9 +291,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     chartSize: 300
                 ),
                 concentrationA: ConstantConcentration(value: 1),
-                currentTime: nil,
-                headOpacity: 1,
-                yLabel: "foo"
+                currentTime: .constant(nil),
+                yLabel: "foo",
+                canSetCurrentTime: true
             ).previewLayout(.fixed(width: 500, height: 300))
     }
 
@@ -308,9 +315,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     ),
                     concentrationA: equation,
                     concentrationB: equation2,
-                    currentTime: nil,
-                    headOpacity: 1,
-                    canSetInitialTime: true
+                    currentTime: .constant(nil),
+                    canSetInitialTime: true,
+                    canSetCurrentTime: true
                 )
 
                 ConcentrationTimeChartView(
@@ -323,9 +330,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     ),
                     concentrationA: equation,
                     concentrationB: equation2,
-                    currentTime: t2!,
-                    headOpacity: 1,
-                    canSetInitialTime: true
+                    currentTime: .constant(t2!),
+                    canSetInitialTime: true,
+                    canSetCurrentTime: true
                 )
             }
         }

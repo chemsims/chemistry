@@ -59,9 +59,9 @@ struct FirstOrderReactionView: View {
                 maxConcentration: ReactionSettings.maxLogConcentration
             ),
             concentrationA: reaction.logAEquation,
-            currentTime: reaction.currentTime,
-            headOpacity: reaction.timeChartHeadOpacity,
-            yLabel: "ln(A)"
+            currentTime: $reaction.currentTime,
+            yLabel: "ln(A)",
+            canSetCurrentTime: reaction.reactionHasEnded
         )
     }
 

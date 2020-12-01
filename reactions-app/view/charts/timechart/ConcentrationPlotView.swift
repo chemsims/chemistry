@@ -15,9 +15,10 @@ struct ConcentrationPlotView: View {
     let finalConcentration: CGFloat
 
     let initialTime: CGFloat
-    let currentTime: CGFloat
+    @Binding var currentTime: CGFloat
     let finalTime: CGFloat
-    let headOpacity: Double
+    let canSetCurrentTime: Bool
+
 
     var body: some View {
         ZStack {
@@ -41,13 +42,13 @@ struct ConcentrationPlotView: View {
                     settings: settings,
                     equation: concentrationB!,
                     initialTime: initialTime,
-                    currentTime: currentTime,
+                    currentTime: .constant(currentTime),
                     finalTime: finalTime,
                     filledBarColor: Styling.timeAxisCompleteBar,
                     headColor: Styling.moleculeB,
                     headRadius: settings.chartHeadSecondarySize,
                     haloColor: nil,
-                    headOpacity: headOpacity
+                    canSetCurrentTime: canSetCurrentTime
                 )
             }
 
@@ -56,13 +57,13 @@ struct ConcentrationPlotView: View {
                 settings: settings,
                 equation: concentrationA,
                 initialTime: initialTime,
-                currentTime: currentTime,
+                currentTime: $currentTime,
                 finalTime: finalTime,
                 filledBarColor: Styling.timeAxisCompleteBar,
                 headColor: Styling.moleculeA,
                 headRadius: settings.chartHeadPrimarySize,
                 haloColor: Styling.moleculeAChartHeadHalo,
-                headOpacity: headOpacity
+                canSetCurrentTime: canSetCurrentTime
             )
 
         }.frame(width: settings.chartSize, height: settings.chartSize)
@@ -110,16 +111,14 @@ struct ChartPlotWithHead: View {
     let settings: TimeChartGeometrySettings
     let equation: ConcentrationEquation
     let initialTime: CGFloat
-    let currentTime: CGFloat
+    @Binding var currentTime: CGFloat
     let finalTime: CGFloat
 
     let filledBarColor: Color
     let headColor: Color
     let headRadius: CGFloat
     let haloColor: Color?
-
-    let headOpacity: Double
-
+    let canSetCurrentTime: Bool
 
     var body: some View {
         ZStack {
@@ -130,16 +129,22 @@ struct ChartPlotWithHead: View {
                     head(
                         radius: settings.chartHeadPrimaryHaloSize,
                         color: haloColor!
-                    )
+                    ).gesture(DragGesture().onChanged { gesture in
+                        guard canSetCurrentTime else {
+                            return
+                        }
+                        let xLocation = gesture.location.x
+                        let newTime = settings.xAxis.getValue(at: xLocation)
+                        currentTime = max(initialTime, min(finalTime, newTime))
+                    })
                 }
                 head(
                     radius: headRadius,
                     color: headColor
                 )
-            }.opacity(headOpacity)
+            }
         }
     }
-
 
     private func head(
         radius: CGFloat,
@@ -183,9 +188,9 @@ struct TimeChartPlotView_Previews: PreviewProvider {
             initialConcentration: 0.8,
             finalConcentration: 0.2,
             initialTime: 0,
-            currentTime: 0.8,
+            currentTime: .constant(0.8),
             finalTime: 1,
-            headOpacity: 1
+            canSetCurrentTime: true
         )
     }
 
