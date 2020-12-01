@@ -116,22 +116,25 @@ struct EnergyProfileBeaker: View {
     }
 
     private func skSceneView(settings: EnergyBeakerSettings) -> some View {
-        SkBeakerSceneRepresentable(
-            width: settings.beaker.innerBeakerWidth,
-            height: settings.skSceneHeight,
-            waterHeight: settings.waterHeight,
-            speed: extraEnergyFactor,
-            updateConcentrationC: updateConcentrationC,
-            allowReactionsToC: allowReactionsToC,
-            emitterPosition: settings.emitterPosition,
-            emitting: emitCatalyst,
-            catalystColor: catalystInProgress?.color ?? .black
-        )
+        GeometryReader { geometry in
+            SkBeakerSceneRepresentable(
+                width: geometry.size.width,
+                height: geometry.size.height,
+                waterHeight: settings.waterHeight,
+                speed: extraEnergyFactor,
+                updateConcentrationC: updateConcentrationC,
+                allowReactionsToC: allowReactionsToC,
+                emitterPosition: settings.emitterPosition,
+                emitting: emitCatalyst,
+                catalystColor: catalystInProgress?.color ?? .black
+            )
+        }
         .frame(
             width: settings.beaker.innerBeakerWidth,
             height: settings.skSceneHeight
         )
     }
+
 
     private func catalystView(
         settings: EnergyBeakerSettings
