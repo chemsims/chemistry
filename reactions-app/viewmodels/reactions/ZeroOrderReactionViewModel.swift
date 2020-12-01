@@ -33,7 +33,26 @@ class ZeroOrderReactionViewModel: ObservableObject {
                 c2: c2
             )
         }
-        return ConstantConcentration(value: 0)
+        return ConstantConcentration(value: initialConcentration)
+    }
+
+    var yValue: CGFloat {
+        if let currentTime = currentTime {
+            return concentrationEquationA.getConcentration(at: currentTime)
+        }
+        return finalConcentration ?? initialConcentration
+    }
+
+    var xValue: CGFloat {
+        if let currentTime = currentTime {
+            // This multiplication is a work-around for a SwiftUI bug (I presume).
+            // When `currentTime` is returned as is, the animation of xValue does not stop
+            // when the animation is cancelled. i.e., when animating currentTime to nil.
+            // To see this in action, start a reaction, and then press the back arrow
+            // while the reaction is in progress.
+            return currentTime
+        }
+        return finalTime ?? initialTime
     }
 
     var concentrationEquationB: ConcentrationEquation {

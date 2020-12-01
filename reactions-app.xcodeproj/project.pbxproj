@@ -91,6 +91,7 @@
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
+		57E9DBFE257686A200E3F5A6 /* TextExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBFD257686A200E3F5A6 /* TextExperiment.swift */; };
 		57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
 		57F477422560FD440041D406 /* Beaky.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F477412560FD440041D406 /* Beaky.swift */; };
@@ -207,6 +208,7 @@
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
 		57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleHeadedArrow.swift; sourceTree = "<group>"; };
+		57E9DBFD257686A200E3F5A6 /* TextExperiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextExperiment.swift; sourceTree = "<group>"; };
 		57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquationShape.swift; sourceTree = "<group>"; };
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
 		57F477412560FD440041D406 /* Beaky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beaky.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 		571D6A3E255A780700F4E635 /* reactions-app */ = {
 			isa = PBXGroup;
 			children = (
+				57E9DBFD257686A200E3F5A6 /* TextExperiment.swift */,
 				57B0FBC82565D44500BB6ACC /* fonts */,
 				57035EFB255C1A2700DB3A19 /* viewmodels */,
 				571D6A6C255AB23D00F4E635 /* model */,
@@ -752,6 +755,7 @@
 			files = (
 				571B3C93256573D60075358B /* ReactionComparison.swift in Sources */,
 				57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */,
+				57E9DBFE257686A200E3F5A6 /* TextExperiment.swift in Sources */,
 				571B3C7C256560E40075358B /* ReactionStatements.swift in Sources */,
 				57FDA135255D5EE300CB8804 /* SubscriptView.swift in Sources */,
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,

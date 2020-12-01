@@ -51,7 +51,7 @@ struct TimeChartGeometrySettings {
         0.28 * chartSize
     }
     var yLabelWidth: CGFloat {
-        0.32 * chartSize
+        0.35 * chartSize
     }
     var handleThickness: CGFloat {
         0.08 * chartSize

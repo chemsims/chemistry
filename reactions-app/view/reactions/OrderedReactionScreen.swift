@@ -76,7 +76,9 @@ struct OrderedReactionScreen<Content: View>: View {
                 concentrationB: reaction.concentrationEquationB,
                 currentTime: $reaction.currentTime,
                 canSetInitialTime: canSetInitialTime,
-                canSetCurrentTime: reaction.reactionHasEnded
+                canSetCurrentTime: reaction.reactionHasEnded,
+                yValue: reaction.yValue,
+                xValue: reaction.xValue
             )
 
             ConcentrationBarChart(

@@ -63,7 +63,7 @@ class RunAnimation: ReactionState {
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        withAnimation(.none) {
+        withAnimation(.easeOut(duration: 0.25)) {
             model.currentTime = nil
         }
     }
@@ -80,9 +80,11 @@ class RunAnimation: ReactionState {
 class EndAnimation: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        // For the current time to 'sprint' to the end, it must animate to a value
+        // which is not equal to the current value
         withAnimation(.easeOut(duration: 0.5)) {
             if let finalTime = model.finalTime {
-                model.currentTime = finalTime * 1.001
+                model.currentTime = finalTime * 1.00001
             }
             model.reactionHasEnded = true
         }

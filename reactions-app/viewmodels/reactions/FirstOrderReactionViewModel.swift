@@ -14,7 +14,7 @@ class FirstOrderReactionViewModel: ZeroOrderReactionViewModel {
                 rate: rate
             )
         }
-        return ConstantConcentration(value: 0.5)
+        return ConstantConcentration(value: initialConcentration)
     }
 
     var logAEquation: ConcentrationEquation {
