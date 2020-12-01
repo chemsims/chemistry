@@ -136,7 +136,7 @@ struct ReactionComparisonScreen: View {
 
     private var unsafeCurrentTimeBinding: Binding<CGFloat> {
         Binding(
-            get: { reaction.currentTime! },
+            get: { reaction.currentTime ?? reaction.initialTime },
             set: { reaction.currentTime = $0 }
         )
     }
