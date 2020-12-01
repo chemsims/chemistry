@@ -27,7 +27,8 @@ struct ReactionComparisonScreen: View {
 
     private func makeView(settings: OrderedReactionLayoutSettings) -> some View {
         ZStack {
-            beaker(settings: settings)
+//            beaker(settings: settings)
+            beakers(settings: settings)
             beaky(settings: settings)
                 .padding(.bottom, settings.beakyBottomPadding)
                 .padding(.trailing, settings.beakyRightPadding)
@@ -134,6 +135,32 @@ struct ReactionComparisonScreen: View {
         }
     }
 
+    private func beakers(settings: OrderedReactionLayoutSettings) -> some View {
+        HStack {
+            VStack {
+                FilledBeaker(
+                    moleculesA: reaction.moleculesA,
+                    concentrationB: bConcentration(aConcentration: zeroOrder),
+                    currentTime: reaction.currentTime
+                )
+                .frame(width: settings.beakerWidth * 0.85)
+                FilledBeaker(
+                    moleculesA: reaction.moleculesA,
+                    concentrationB: bConcentration(aConcentration: firstOrder),
+                    currentTime: reaction.currentTime
+                )
+                .frame(width: settings.beakerWidth * 0.85)
+                FilledBeaker(
+                    moleculesA: reaction.moleculesA,
+                    concentrationB: bConcentration(aConcentration: secondOrder),
+                    currentTime: reaction.currentTime
+                )
+                .frame(width: settings.beakerWidth * 0.85)
+            }.padding()
+            Spacer()
+        }
+    }
+
     private func chartLine(
         equation: ConcentrationEquation,
         settings: TimeChartGeometrySettings
@@ -199,6 +226,12 @@ struct ReactionComparisonScreen: View {
             time: time
         )
     }
+
+
+    private func bConcentration(aConcentration: ConcentrationEquation) -> ConcentrationEquation {
+        ConcentrationBEquation(concentrationA: aConcentration, initialAConcentration: c1)
+    }
+
 
     private func chartSize(settings: OrderedReactionLayoutSettings) -> CGFloat {
         let availableWidth = settings.width - settings.beakerWidth - settings.beakerLeadingPadding - settings.beakyBoxTotalWidth

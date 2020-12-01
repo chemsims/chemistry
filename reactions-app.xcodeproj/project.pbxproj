@@ -44,7 +44,7 @@
 		571B3C842565638F0075358B /* OrderedReactionLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C832565638F0075358B /* OrderedReactionLayoutSettings.swift */; };
 		571B3C89256566910075358B /* SecondOrderEquationRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C88256566910075358B /* SecondOrderEquationRate.swift */; };
 		571B3C8D25656C1C0075358B /* SecondOrderHalfTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C8C25656C1C0075358B /* SecondOrderHalfTimeView.swift */; };
-		571B3C93256573D60075358B /* ReactionComparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C92256573D60075358B /* ReactionComparison.swift */; };
+		571B3C93256573D60075358B /* ReactionComparisonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C92256573D60075358B /* ReactionComparisonScreen.swift */; };
 		571B3C9D256578D80075358B /* ReactionComparisonNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C9C256578D80075358B /* ReactionComparisonNavigationViewModel.swift */; };
 		571B3CA12565796A0075358B /* ReactionComparisonStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3CA02565796A0075358B /* ReactionComparisonStatements.swift */; };
 		571B3CAA256581100075358B /* BeakyBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3CA9256581100075358B /* BeakyBox.swift */; };
@@ -159,7 +159,7 @@
 		571B3C832565638F0075358B /* OrderedReactionLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedReactionLayoutSettings.swift; sourceTree = "<group>"; };
 		571B3C88256566910075358B /* SecondOrderEquationRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderEquationRate.swift; sourceTree = "<group>"; };
 		571B3C8C25656C1C0075358B /* SecondOrderHalfTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderHalfTimeView.swift; sourceTree = "<group>"; };
-		571B3C92256573D60075358B /* ReactionComparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparison.swift; sourceTree = "<group>"; };
+		571B3C92256573D60075358B /* ReactionComparisonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreen.swift; sourceTree = "<group>"; };
 		571B3C9C256578D80075358B /* ReactionComparisonNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonNavigationViewModel.swift; sourceTree = "<group>"; };
 		571B3CA02565796A0075358B /* ReactionComparisonStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonStatements.swift; sourceTree = "<group>"; };
 		571B3CA9256581100075358B /* BeakyBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyBox.swift; sourceTree = "<group>"; };
@@ -274,7 +274,7 @@
 				571B3C41256405490075358B /* OrderedReactionScreen.swift */,
 				571B3C7325655AA60075358B /* SecondOrderReaction.swift */,
 				571B3C832565638F0075358B /* OrderedReactionLayoutSettings.swift */,
-				571B3C92256573D60075358B /* ReactionComparison.swift */,
+				571B3C92256573D60075358B /* ReactionComparisonScreen.swift */,
 			);
 			path = reactions;
 			sourceTree = "<group>";
@@ -753,7 +753,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				571B3C93256573D60075358B /* ReactionComparison.swift in Sources */,
+				571B3C93256573D60075358B /* ReactionComparisonScreen.swift in Sources */,
 				57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */,
 				57E9DBFE257686A200E3F5A6 /* TextExperiment.swift in Sources */,
 				571B3C7C256560E40075358B /* ReactionStatements.swift in Sources */,
