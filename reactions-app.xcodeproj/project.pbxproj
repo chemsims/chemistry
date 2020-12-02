@@ -87,6 +87,7 @@
 		57DAE4D42577C2FD006D945B /* FixedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D32577C2FD006D945B /* FixedText.swift */; };
 		57DAE4D82577C4F1006D945B /* HalfTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D72577C4F1006D945B /* HalfTime.swift */; };
 		57DAE4E42577C53B006D945B /* EquationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4E32577C53B006D945B /* EquationSettings.swift */; };
+		57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4ED2577C942006D945B /* SubscriptViews.swift */; };
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57E9DBFE257686A200E3F5A6 /* TextExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBFD257686A200E3F5A6 /* TextExperiment.swift */; };
 		57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */; };
@@ -199,6 +200,7 @@
 		57DAE4D32577C2FD006D945B /* FixedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedText.swift; sourceTree = "<group>"; };
 		57DAE4D72577C4F1006D945B /* HalfTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfTime.swift; sourceTree = "<group>"; };
 		57DAE4E32577C53B006D945B /* EquationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationSettings.swift; sourceTree = "<group>"; };
+		57DAE4ED2577C942006D945B /* SubscriptViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptViews.swift; sourceTree = "<group>"; };
 		57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleHeadedArrow.swift; sourceTree = "<group>"; };
 		57E9DBFD257686A200E3F5A6 /* TextExperiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextExperiment.swift; sourceTree = "<group>"; };
 		57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquationShape.swift; sourceTree = "<group>"; };
@@ -599,6 +601,7 @@
 				57DAE4D32577C2FD006D945B /* FixedText.swift */,
 				57DAE4D72577C4F1006D945B /* HalfTime.swift */,
 				57DAE4E32577C53B006D945B /* EquationSettings.swift */,
+				57DAE4ED2577C942006D945B /* SubscriptViews.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -759,6 +762,7 @@
 				571B3CA12565796A0075358B /* ReactionComparisonStatements.swift in Sources */,
 				57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */,
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
+				57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */,
 				57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */,
 				576D5A7425665B9C0062F722 /* RateEquationComparisonView.swift in Sources */,
 				57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */,

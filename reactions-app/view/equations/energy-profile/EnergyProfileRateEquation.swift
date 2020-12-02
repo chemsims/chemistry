@@ -16,7 +16,7 @@ struct EnergyProfileRateEquation: View {
     let maxHeight: CGFloat
 
     private let naturalWidth: CGFloat = 400
-    private let naturalHeight: CGFloat = 355
+    private let naturalHeight: CGFloat = 369
 
     var body: some View {
         ScaledView(
@@ -145,13 +145,20 @@ fileprivate struct RateK1K2: View {
                     .frame(width: 35, height: 2)
                 FixedText("R")
             }
-            HStack(spacing: 0) {
+            HStack(spacing: 2) {
                 LargeOpenParen()
-                VStack(spacing: 1) {
-                    FixedText("T1 - T2")
+                VStack(spacing: 5) {
+                    HStack(spacing: 5) {
+                        T_1(uppercase: true)
+                        FixedText("-")
+                        T_2(uppercase: true)
+                    }
                     Rectangle()
                         .frame(width: 80, height: 2)
-                    FixedText("T1T2")
+                    HStack(spacing: 5) {
+                        T_1(uppercase: true)
+                        T_2(uppercase: true)
+                    }
                 }
                 LargeCloseParen()
             }
@@ -257,6 +264,6 @@ struct EnergyProfileRate_Previews: PreviewProvider {
             t2: 600
         )
         .border(Color.red)
-        .previewLayout(.fixed(width: 400, height: 355))
+        .previewLayout(.fixed(width: 400, height: 369))
     }
 }
