@@ -75,7 +75,10 @@ struct ZeroOrderReaction: View {
 struct ZeroOrderReaction_Previews: PreviewProvider {
 
     static var navigation: ReactionNavigationViewModel<ReactionState> {
-        ZeroOrderReactionNavigation.model(reaction: ZeroOrderReactionViewModel())
+        ZeroOrderReactionNavigation.model(
+            reaction: ZeroOrderReactionViewModel(),
+            persistence: InMemoryReactionInputPersistence()
+        )
     }
 
     static var previews: some View {

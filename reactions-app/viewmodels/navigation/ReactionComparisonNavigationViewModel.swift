@@ -10,14 +10,16 @@ struct ReactionComparisonNavigation {
     static var states: [ReactionState] {
         [
             InitialState(),
-            RunAnimation(statement: ReactionComparisonStatements.inProgress),
+            RunAnimation(
+                statement: ReactionComparisonStatements.inProgress,
+                order: nil,
+                persistence: nil
+            ),
             EndAnimation(statement: ReactionComparisonStatements.end)
         ]
     }
 
-    static let c1: CGFloat = 1
-    static let c2: CGFloat = 0.1
-    static let time: CGFloat = 15
+
 
     static func model(reaction: ZeroOrderReactionViewModel) -> ReactionNavigationViewModel<ReactionState> {
         ReactionNavigationViewModel(
@@ -35,10 +37,10 @@ fileprivate class InitialState: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
-        model.initialConcentration = ReactionComparisonNavigation.c1
-        model.finalConcentration = ReactionComparisonNavigation.c2
-        model.initialTime = 0
-        model.finalTime = ReactionComparisonNavigation.time
+//        model.initialConcentration = ReactionComparisonNavigation.c1
+//        model.finalConcentration = ReactionComparisonNavigation.c2
+//        model.initialTime = 0
+//        model.finalTime = ReactionComparisonNavigation.time
         model.currentTime = nil
     }
 

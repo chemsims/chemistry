@@ -7,18 +7,30 @@ import CoreGraphics
 
 class ReactionComparisonViewModel: ZeroOrderReactionViewModel {
 
-    override init() {
+    let zeroOrderInput: ReactionInput
+    let firstOrderInput: ReactionInput
+    let secondOrderInput: ReactionInput
+
+    init(
+        persistence: ReactionInputPersistence
+    ) {
+        let defaultInput = ReactionInput(
+            c1: ReactionComparisonDefaults.c1,
+            c2: ReactionComparisonDefaults.c2,
+            t1: 0,
+            t2: ReactionComparisonDefaults.time
+        )
+        self.zeroOrderInput = persistence.get(order: .Zero) ?? defaultInput
+        self.firstOrderInput = persistence.get(order: .First) ?? defaultInput
+        self.secondOrderInput = persistence.get(order: .Second) ?? defaultInput
+
+        let maxTime = [zeroOrderInput.t2, firstOrderInput.t2, secondOrderInput.t2].max()
+
         super.init()
         self.initialTime = 0
-        self.finalTime = 17
+        self.finalTime = maxTime
     }
 
-    var zeroOrderInput: ReactionInput = ReactionInput(
-        c1: 1,
-        c2: 0.1,
-        t1: 5,
-        t2: 11
-    )
     var zeroOrder: ConcentrationEquation {
         let equation = LinearConcentration(
             t1: zeroOrderInput.t1,
@@ -29,28 +41,22 @@ class ReactionComparisonViewModel: ZeroOrderReactionViewModel {
         return LimitedEquation(underlying: equation, input: zeroOrderInput)
     }
 
-    var firstOrderInput = ReactionInput(
-        c1: 0.8,
-        c2: 0.2,
-        t1: 0,
-        t2: 8
-    )
     var firstOrder: ConcentrationEquation {
-        let equation = SecondOrderReactionEquation(c1: firstOrderInput.c1, c2: firstOrderInput.c2, time: firstOrderInput.t2)
+        let equation = FirstOrderConcentration(c1: firstOrderInput.c1, c2: firstOrderInput.c2, time: firstOrderInput.t2)
         return LimitedEquation(underlying: equation, input: firstOrderInput)
     }
 
-    var secondOrderInput = ReactionInput(
-        c1: 0.5,
-        c2: 0.2,
-        t1: 0,
-        t2: 17
-    )
     var secondOrder: ConcentrationEquation {
         let equation = SecondOrderReactionEquation(c1: secondOrderInput.c1, c2: secondOrderInput.c2, time: secondOrderInput.t2)
         return LimitedEquation(underlying: equation, input: secondOrderInput)
     }
 
+}
+
+struct ReactionComparisonDefaults {
+    static let c1: CGFloat = 1
+    static let c2: CGFloat = 0.1
+    static let time: CGFloat = 15
 }
 
 fileprivate struct LimitedEquation: ConcentrationEquation {
@@ -67,9 +73,4 @@ fileprivate struct LimitedEquation: ConcentrationEquation {
 
 }
 
-struct ReactionInput {
-    let c1: CGFloat
-    let c2: CGFloat
-    let t1: CGFloat
-    let t2: CGFloat
-}
+

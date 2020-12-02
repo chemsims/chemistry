@@ -341,7 +341,7 @@ struct ReactionComparison2_Previews: PreviewProvider {
             .previewLayout(.fixed(width: 1024, height: 768))
     }
 
-    static let reaction = ReactionComparisonViewModel()
+    static let reaction = ReactionComparisonViewModel(persistence: InMemoryReactionInputPersistence())
     static let navigation = ReactionComparisonNavigation.model(reaction: reaction)
 
     struct StateWrapper: View {

@@ -16,6 +16,6 @@ struct RootNavigationView: View {
 
 struct RootNavigationView_Previews: PreviewProvider {
     static var previews: some View {
-        RootNavigationView(model: RootNavigationViewModel())
+        RootNavigationView(model: RootNavigationViewModel(persistence: InMemoryReactionInputPersistence()))
     }
 }

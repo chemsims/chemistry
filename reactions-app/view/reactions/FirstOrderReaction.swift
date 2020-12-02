@@ -122,7 +122,7 @@ struct FirstOrderReaction_Previews: PreviewProvider {
 
     struct StateWrapper: View {
 
-        @ObservedObject var foo = FirstOrderReactionNavigation.model(reaction: FirstOrderReactionViewModel())
+        @ObservedObject var foo = FirstOrderReactionNavigation.model(reaction: FirstOrderReactionViewModel(), persistence: InMemoryReactionInputPersistence())
 
         var body: some View {
             FirstOrderReactionView(

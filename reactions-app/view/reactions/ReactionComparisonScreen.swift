@@ -292,9 +292,9 @@ struct ReactionComparisonScreen: View {
     }
 
 
-    private var c1: CGFloat { ReactionComparisonNavigation.c1 }
-    private var c2: CGFloat { ReactionComparisonNavigation.c2 }
-    private var time: CGFloat { ReactionComparisonNavigation.time }
+    private var c1: CGFloat { ReactionComparisonDefaults.c1 }
+    private var c2: CGFloat { ReactionComparisonDefaults.c2 }
+    private var time: CGFloat { ReactionComparisonDefaults.time }
 
 }
 

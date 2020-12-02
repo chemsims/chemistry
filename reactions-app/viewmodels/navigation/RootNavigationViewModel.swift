@@ -9,21 +9,26 @@ class RootNavigationViewModel: ObservableObject {
 
     @Published var view: AnyView
 
-    init() {
+    private let persistence: ReactionInputPersistence
+
+    init(
+        persistence: ReactionInputPersistence
+    ) {
         self.view = AnyView(EmptyView())
-        goToComparison()
+        self.persistence = persistence
+        goToZeroOrder()
     }
 
     private func goToZeroOrder() {
         let reaction = ZeroOrderReactionViewModel()
-        let navigation = ZeroOrderReactionNavigation.model(reaction: reaction)
+        let navigation = ZeroOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
         self.view = AnyView(ZeroOrderReaction(reaction: reaction, navigation: navigation))
         navigation.nextScreen = goToFirstOrder
     }
 
     private func goToFirstOrder() {
         let reaction = FirstOrderReactionViewModel()
-        let navigation = FirstOrderReactionNavigation.model(reaction: reaction)
+        let navigation = FirstOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
         navigation.prevScreen = goToZeroOrder
         navigation.nextScreen = goToSecondOrder
         self.view = AnyView(FirstOrderReactionView(reaction: reaction, navigation: navigation))
@@ -31,14 +36,14 @@ class RootNavigationViewModel: ObservableObject {
 
     private func goToSecondOrder() {
         let reaction = SecondOrderReactionViewModel()
-        let navigation = SecondOrderReactionNavigation.model(reaction: reaction)
+        let navigation = SecondOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
         navigation.prevScreen = goToFirstOrder
         navigation.nextScreen = goToComparison
         self.view = AnyView(SecondOrderReactionView(reaction: reaction, navigation: navigation))
     }
 
     private func goToComparison() {
-        let reaction = ReactionComparisonViewModel()
+        let reaction = ReactionComparisonViewModel(persistence: persistence)
         let navigation = ReactionComparisonNavigation.model(reaction: reaction)
         navigation.prevScreen = goToSecondOrder
         navigation.nextScreen = goToEnergyProfile

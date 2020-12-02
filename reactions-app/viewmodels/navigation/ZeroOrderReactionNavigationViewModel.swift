@@ -7,19 +7,26 @@ import Foundation
 
 struct ZeroOrderReactionNavigation {
 
-    static var states: [ReactionState] {
+    static func states(persistence: ReactionInputPersistence) -> [ReactionState] {
         [
             InitialStep(),
             SetFinalValuesToNonNil(),
-            RunAnimation(statement: ReactionStatements.inProgress),
+            RunAnimation(
+                statement: ReactionStatements.inProgress,
+                order: .Zero,
+                persistence: persistence
+            ),
             EndAnimation(statement: ReactionStatements.end),
         ]
     }
 
-    static func model(reaction: ZeroOrderReactionViewModel) -> ReactionNavigationViewModel<ReactionState> {
+    static func model(
+        reaction: ZeroOrderReactionViewModel,
+        persistence: ReactionInputPersistence
+    ) -> ReactionNavigationViewModel<ReactionState> {
         ReactionNavigationViewModel(
             reactionViewModel: reaction,
-            states: states
+            states: states(persistence: persistence)
         )
     }
 

@@ -113,7 +113,10 @@ struct SecondOrderReaction_Previews: PreviewProvider {
     }
 
     static let reaction = SecondOrderReactionViewModel()
-    static let navigation = SecondOrderReactionNavigation.model(reaction: reaction)
+    static let navigation = SecondOrderReactionNavigation.model(
+        reaction: reaction,
+        persistence: InMemoryReactionInputPersistence()
+    )
 
     struct StateWrapper: View {
         var body: some View {

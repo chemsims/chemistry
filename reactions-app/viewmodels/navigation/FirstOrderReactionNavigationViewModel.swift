@@ -6,19 +6,26 @@
 import SwiftUI
 
 struct FirstOrderReactionNavigation {
-    static var states: [ReactionState] {
+    static func states(persistence: ReactionInputPersistence) -> [ReactionState] {
         [
             InitialOrderedStep(order: "first"),
             SetFinalConcentrationToNonNil(),
-            RunAnimation(statement: ReactionStatements.inProgress),
+            RunAnimation(
+                statement: ReactionStatements.inProgress,
+                order: .First,
+                persistence: persistence
+            ),
             EndAnimation(statement: ReactionStatements.end)
         ]
     }
 
-    static func model(reaction: FirstOrderReactionViewModel) -> ReactionNavigationViewModel<ReactionState> {
+    static func model(
+        reaction: FirstOrderReactionViewModel,
+        persistence: ReactionInputPersistence
+    ) -> ReactionNavigationViewModel<ReactionState> {
         ReactionNavigationViewModel(
             reactionViewModel: reaction,
-            states: states
+            states: states(persistence: persistence)
         )
     }
 }

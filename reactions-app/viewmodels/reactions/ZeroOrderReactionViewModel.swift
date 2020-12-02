@@ -87,6 +87,18 @@ class ZeroOrderReactionViewModel: ObservableObject {
         return nil
     }
 
+    var input: ReactionInput? {
+        if let c2 = finalConcentration, let t2 = finalTime {
+            return ReactionInput(
+                c1: initialConcentration,
+                c2: c2,
+                t1: initialTime,
+                t2: t2
+            )
+        }
+        return nil
+    }
+
     private func setMoleculesA(
         cols: Int,
         rows: Int

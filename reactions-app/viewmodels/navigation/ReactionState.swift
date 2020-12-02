@@ -48,6 +48,19 @@ class ReactionState: ScreenState {
 
 class RunAnimation: ReactionState {
 
+    let order: ReactionOrder?
+    let persistence: ReactionInputPersistence?
+
+    init(
+        statement: [SpeechBubbleLine],
+        order: ReactionOrder?,
+        persistence: ReactionInputPersistence?
+    ) {
+        self.order = order
+        self.persistence = persistence
+        super.init(statement: statement)
+    }
+
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.reactionHasEnded = false
         if let duration = model.reactionDuration, let finalTime = model.finalTime {
@@ -56,6 +69,11 @@ class RunAnimation: ReactionState {
                 model.currentTime = finalTime
             }
         }
+
+        if let input = model.input, let order = order, let persistence = persistence {
+            persistence.save(input: input, order: order)
+        }
+
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
