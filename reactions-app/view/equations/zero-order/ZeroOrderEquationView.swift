@@ -48,6 +48,7 @@ struct ZeroOrderEquationView: View {
 
 fileprivate struct UnscaledZeroOrderEquationView: View {
 
+    // TODO rename this field
     let emphasiseFilledTerms: Bool
     let initialConcentration: CGFloat
     let initialTime: CGFloat
@@ -69,7 +70,8 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                     c2: c2?.str(decimals: 2),
                     t1: initialTime.str(decimals: 2),
                     t2: t2?.str(decimals: 2),
-                    rate: rate?.str(decimals: 2)
+                    rate: rate?.str(decimals: 2),
+                    canEmphasise: emphasiseFilledTerms
                 )
             }
 
@@ -78,7 +80,8 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                 BlankHalftime(
                     c1: initialConcentration.str(decimals: 2),
                     halftime: halfTime?.str(decimals: 2),
-                    rate: rate?.str(decimals: 2)
+                    rate: rate?.str(decimals: 2),
+                    canEmphasise: emphasiseFilledTerms
                 )
             }
         }
@@ -152,11 +155,15 @@ fileprivate struct EmptyRateView: View {
     let t1: String?
     let t2: String?
     let rate: String?
+    let canEmphasise: Bool
 
     var body: some View {
         HStack(spacing: EquationSettings.hSpacing) {
             Rate()
-            Placeholder(value: rate)
+            Placeholder(
+                value: rate,
+                emphasise: canEmphasise
+            )
             Text("=")
                 .fixedSize()
             fraction1
@@ -171,10 +178,11 @@ fileprivate struct EmptyRateView: View {
         HStack(spacing: 0) {
             FixedText("-")
             VStack(spacing: 1) {
-                Placeholder(value: deltaC)
+                Placeholder(value: deltaC, emphasise: canEmphasise)
+
                 Rectangle()
                     .frame(width: 60, height: 2)
-                Placeholder(value: deltaT)
+                Placeholder(value: deltaT, emphasise: canEmphasise)
             }
         }
     }
@@ -184,16 +192,16 @@ fileprivate struct EmptyRateView: View {
             FixedText("-")
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
-                    Placeholder(value: c2)
+                    Placeholder(value: c2, emphasise: canEmphasise)
                     FixedText("-")
-                    Placeholder(value: c1)
+                    Placeholder(value: c1, emphasise: c2 == nil)
                 }
                 Rectangle()
                     .frame(width: 140, height: 2)
                 HStack(spacing: 1) {
-                    Placeholder(value: t2)
+                    Placeholder(value: t2, emphasise: canEmphasise)
                     FixedText("-")
-                    Placeholder(value: t1)
+                    Placeholder(value: t1, emphasise: t2 == nil)
                 }
             }
         }
@@ -218,18 +226,20 @@ fileprivate struct BlankHalftime: View {
     let c1: String
     let halftime: String?
     let rate: String?
+    let canEmphasise: Bool
 
     var body: some View {
         HStack(spacing: 4) {
-            Placeholder(value: halftime)
+            Placeholder(value: halftime, emphasise: canEmphasise)
             FixedText("=")
             Text(c1)
                 .frame(width: EquationSettings.boxWidth)
                 .minimumScaleFactor(0.5)
+                .foregroundColor(rate == nil ? .orangeAccent : .black)
             FixedText("/")
             FixedText("(2")
             FixedText("x")
-            Placeholder(value: rate)
+            Placeholder(value: rate, emphasise: canEmphasise)
             FixedText(")")
         }
         .font(.system(size: EquationSettings.fontSize))

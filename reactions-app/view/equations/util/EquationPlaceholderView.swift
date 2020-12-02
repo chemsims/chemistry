@@ -19,7 +19,7 @@ struct Placeholder: View {
         if (value != nil) {
             Text(value!)
                 .modifier(PlaceholderFraming())
-                .foregroundColor(emphasise ? .orange : .black)
+                .foregroundColor(emphasise ? .orangeAccent : .black)
         } else {
             Box()
                 .modifier(PlaceholderFraming())
