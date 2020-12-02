@@ -157,8 +157,6 @@ fileprivate struct EmptyRateView: View {
         HStack(spacing: EquationSettings.hSpacing) {
             Rate()
             Placeholder(value: rate)
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
             Text("=")
                 .fixedSize()
             fraction1
@@ -174,13 +172,9 @@ fileprivate struct EmptyRateView: View {
             FixedText("-")
             VStack(spacing: 1) {
                 Placeholder(value: deltaC)
-                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                    .minimumScaleFactor(0.5)
                 Rectangle()
                     .frame(width: 60, height: 2)
                 Placeholder(value: deltaT)
-                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                    .minimumScaleFactor(0.5)
             }
         }
     }
@@ -191,23 +185,15 @@ fileprivate struct EmptyRateView: View {
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     Placeholder(value: c2)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
                     FixedText("-")
                     Placeholder(value: c1)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
                 }
                 Rectangle()
                     .frame(width: 140, height: 2)
                 HStack(spacing: 1) {
                     Placeholder(value: t2)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
                     FixedText("-")
                     Placeholder(value: t1)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
                 }
             }
         }
@@ -236,8 +222,6 @@ fileprivate struct BlankHalftime: View {
     var body: some View {
         HStack(spacing: 4) {
             Placeholder(value: halftime)
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
             FixedText("=")
             Text(c1)
                 .frame(width: EquationSettings.boxWidth)
@@ -246,8 +230,6 @@ fileprivate struct BlankHalftime: View {
             FixedText("(2")
             FixedText("x")
             Placeholder(value: rate)
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
             FixedText(")")
         }
         .font(.system(size: EquationSettings.fontSize))

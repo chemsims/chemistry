@@ -115,30 +115,22 @@ fileprivate struct SecondOrderRateBlank: View {
     var body: some View {
         HStack(spacing: 5) {
             Placeholder(value: rate)
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
 
             FixedText("=")
 
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     Placeholder(value: invAt)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
 
                     FixedText("-")
 
                     Placeholder(value: invA0)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
                 }
 
                 Rectangle()
                     .frame(width: 180, height: 2)
 
                 Placeholder(value: time)
-                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                    .minimumScaleFactor(0.5)
             }
         }
     }
@@ -168,8 +160,6 @@ fileprivate struct SecondOrderHalftimeBlank: View {
     var body: some View {
         HStack(spacing: 5) {
             Placeholder(value: halfTime)
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
 
             FixedText("=")
 
@@ -177,8 +167,6 @@ fileprivate struct SecondOrderHalftimeBlank: View {
             FixedText("/")
 
             Placeholder(value: rate)
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
 
             if (a0 != nil) {
                 FixedText("(")

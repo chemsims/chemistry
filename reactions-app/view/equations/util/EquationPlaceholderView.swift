@@ -11,8 +11,12 @@ struct Placeholder: View {
     var body: some View {
         if (value != nil) {
             Text(value!)
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
+                .minimumScaleFactor(0.5)
         } else {
             Box()
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
+                .minimumScaleFactor(0.5)
         }
     }
 

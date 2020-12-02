@@ -184,21 +184,15 @@ fileprivate struct BlankRates: View {
                 LargeOpenParen()
                 VStack(spacing: 1) {
                     Placeholder(value: k1)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
                     Rectangle()
                         .frame(width: 55, height: 2)
                     Placeholder(value: k2)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
                 }
                 LargeCloseParen()
             }
             FixedText("=")
             VStack(spacing: 1) {
                 Placeholder(value: ea)
-                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                    .minimumScaleFactor(0.5)
                 Rectangle()
                     .frame(width: 55, height: 2)
                 FixedText("8.31")
@@ -209,23 +203,15 @@ fileprivate struct BlankRates: View {
                 VStack(spacing: 1) {
                     HStack(spacing: 2) {
                         Placeholder(value: t1)
-                            .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                            .minimumScaleFactor(0.5)
                         FixedText("-")
                         Placeholder(value: t2)
-                            .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                            .minimumScaleFactor(0.5)
                     }
                     Rectangle()
                         .frame(width: 140, height: 2)
                     HStack(spacing: 2) {
                         Placeholder(value: t1)
-                            .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                            .minimumScaleFactor(0.5)
                         FixedText("x")
                         Placeholder(value: t2)
-                            .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                            .minimumScaleFactor(0.5)
                     }
                 }
                 LargeCloseParen()

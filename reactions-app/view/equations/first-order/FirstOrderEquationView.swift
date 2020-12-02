@@ -118,28 +118,20 @@ fileprivate struct FirstOrderRateBlank: View {
     var body: some View {
         HStack(spacing: 12) {
             Placeholder(value: rate)
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
             FixedText("=")
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     FixedText("(")
                     Placeholder(value: lnA0)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
                     FixedText(")")
                     FixedText("-")
                     FixedText("(")
                     Placeholder(value: lnAt)
-                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                        .minimumScaleFactor(0.5)
                     FixedText(")")
                 }
                 Rectangle()
                     .frame(width: 200, height: 2)
                 Placeholder(value: t)
-                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                    .minimumScaleFactor(0.5)
             }
         }
     }
@@ -169,16 +161,12 @@ fileprivate struct FirstOrderHalftimeBlank: View {
     var body: some View {
         HStack(spacing: 12) {
             Placeholder(value: halftime)
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
             FixedText("=")
             HStack(spacing: 12) {
                 Text("0.69")
                     .fixedSize()
                 FixedText("/")
                 Placeholder(value: rate)
-                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                    .minimumScaleFactor(0.5)
             }
         }
     }
