@@ -95,20 +95,17 @@ struct ReactionComparisonScreen: View {
             VStack(spacing: 1) {
                 Text("[A]")
                     .foregroundColor(.black)
-                animatingValue(equation: zeroOrder, defaultValue: c1)
-                    .frame(height: settings.chartSize * 0.2)
-                animatingValue(equation: firstOrder, defaultValue: c1)
-                    .frame(height: settings.chartSize * 0.2)
-                animatingValue(equation: secondOrder, defaultValue: c1)
-                    .frame(height: settings.chartSize * 0.2)
+                concentrationLabel(equation: zeroOrder, settings: settings)
+                concentrationLabel(equation: firstOrder, settings: settings)
+                concentrationLabel(equation: secondOrder, settings: settings)
             }
             .foregroundColor(.orangeAccent)
-            .frame(width: settings.chartSize * 0.3)
             VStack(spacing: 1) {
                 chartsView(settings: settings)
                 Text("Time (s)")
-                animatingValue(equation: IdentityEquation(), defaultValue: 0)
-                    .frame(width: settings.chartSize, height: settings.chartSize * 0.2)
+                animatingValue(equation: IdentityEquation(), defaultValue: 0, decimals: 1)
+                    .frame(width: settings.chartSize * 0.2, height: settings.chartSize * 0.18, alignment: .leading)
+                    .padding(.leading, settings.chartSize * 0.05)
                     .foregroundColor(.orangeAccent)
             }
             Spacer()
@@ -118,18 +115,30 @@ struct ReactionComparisonScreen: View {
         .lineLimit(1)
     }
 
+    private func concentrationLabel(equation: Equation, settings: TimeChartGeometrySettings) -> some View {
+        animatingValue(
+            equation: equation,
+            defaultValue: c1,
+            decimals: 2
+        )
+        .frame(width: settings.chartSize * 0.22, height: settings.chartSize * 0.2, alignment: .leading)
+        .padding(.leading, settings.chartSize * 0.05)
+    }
+
     private func animatingValue(
         equation: Equation,
-        defaultValue: CGFloat?
+        defaultValue: CGFloat?,
+        decimals: Int
     ) -> some View {
         if (reaction.currentTime == nil) {
-            return AnyView(Text(defaultValue?.str(decimals: 2) ?? ""))
+            return AnyView(Text(defaultValue?.str(decimals: decimals) ?? ""))
         }
         return AnyView(
             AnimatingNumberView(
                 x: reaction.currentTime!,
                 equation: equation,
-                formatter: { $0.str(decimals: 2)}
+                formatter: { $0.str(decimals: decimals)},
+                alignment: .leading
             )
         )
     }

@@ -121,10 +121,10 @@ struct GeneralTimeChartView: View {
             if (includeValuesInLabel) {
                 HStack(spacing: 1) {
                     animatingConcentration
-                        .frame(height: settings.chartSize * 0.18)
+                        .frame(width: settings.yLabelWidth * 0.7, height: settings.chartSize * 0.18, alignment: .leading)
                     Text("M")
+                        .fixedSize()
                 }
-                .frame(width: settings.yLabelWidth, height: settings.chartSize * 0.18, alignment: .trailing)
                 .foregroundColor(.orangeAccent)
             }
         }
@@ -138,7 +138,8 @@ struct GeneralTimeChartView: View {
             if (includeValuesInLabel) {
                 HStack(spacing: 1) {
                     animatingTime
-                        .frame(width: settings.chartSize * 0.35, alignment: .trailing)
+                        .frame(width: settings.chartSize * 0.25, alignment: .leading)
+                        .padding(.leading, settings.chartSize * 0.05)
                     Text("s")
                         .fixedSize()
                 }
@@ -176,31 +177,35 @@ struct GeneralTimeChartView: View {
     private var animatingTime: some View {
         animatingValue(
             equation: IdentityEquation(),
-            defaultValue: finalTime ?? initialTime
+            defaultValue: finalTime ?? initialTime,
+            decimals: 1
         )
     }
 
     private var animatingConcentration: some View {
         animatingValue(
             equation: concentrationA,
-            defaultValue: finalConcentration ?? initialConcentration
+            defaultValue: finalConcentration ?? initialConcentration,
+            decimals: 2
         )
 
     }
 
     private func animatingValue(
         equation: Equation,
-        defaultValue: CGFloat
+        defaultValue: CGFloat,
+        decimals: Int
     ) -> some View {
         if (currentTime == nil) {
-            return AnyView(Text(defaultValue.str(decimals: 2)))
+            return AnyView(Text(defaultValue.str(decimals: decimals)))
         }
 
         return AnyView(
             AnimatingNumberView(
                 x: currentTime!,
                 equation: equation,
-                formatter: { $0.str(decimals: 2)}
+                formatter: { $0.str(decimals: decimals)},
+                alignment: .leading
             )
         )
     }
