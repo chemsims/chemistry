@@ -54,6 +54,7 @@ struct ZeroOrderReaction: View {
                 c2: reaction.finalConcentration,
                 t2: reaction.finalTime,
                 halfTime: reaction.halfTime,
+                a0: reaction.a0,
                 maxWidth: availableWidth,
                 maxHeight: height
             )

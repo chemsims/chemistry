@@ -16,6 +16,7 @@ struct ZeroOrderEquationView: View {
     let c2: CGFloat?
     let t2: CGFloat?
     let halfTime: CGFloat?
+    let a0: CGFloat?
 
     let maxWidth: CGFloat
     let maxHeight: CGFloat
@@ -39,7 +40,8 @@ struct ZeroOrderEquationView: View {
                 deltaT: deltaT,
                 c2: c2,
                 t2: t2,
-                halfTime: halfTime
+                halfTime: halfTime,
+                a0: a0
             )
             .frame(width: maxWidth, height: maxHeight)
         }
@@ -58,6 +60,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
     let c2: CGFloat?
     let t2: CGFloat?
     let halfTime: CGFloat?
+    let a0: CGFloat?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -78,7 +81,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
             HStack(spacing: 22) {
                 FilledHalftime()
                 BlankHalftime(
-                    c1: initialConcentration.str(decimals: 2),
+                    a0: a0?.str(decimals: 2),
                     halftime: halfTime?.str(decimals: 2),
                     rate: rate?.str(decimals: 2),
                     canEmphasise: emphasiseFilledTerms
@@ -223,7 +226,7 @@ fileprivate struct FilledHalftime: View {
 
 fileprivate struct BlankHalftime: View {
 
-    let c1: String
+    let a0: String?
     let halftime: String?
     let rate: String?
     let canEmphasise: Bool
@@ -232,10 +235,7 @@ fileprivate struct BlankHalftime: View {
         HStack(spacing: 4) {
             Placeholder(value: halftime, emphasise: canEmphasise)
             FixedText("=")
-            Text(c1)
-                .frame(width: EquationSettings.boxWidth)
-                .minimumScaleFactor(0.5)
-                .foregroundColor(rate == nil ? .orangeAccent : .black)
+            Placeholder(value: a0, emphasise: canEmphasise)
             FixedText("/")
             FixedText("(2")
             FixedText("x")
@@ -270,7 +270,8 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             deltaT: nil,
             c2: nil,
             t2: nil,
-            halfTime: nil
+            halfTime: nil,
+            a0: 0.9
         )
         .border(Color.red)
         .previewLayout(.fixed(width: 540, height: 265))

@@ -66,9 +66,16 @@ class ZeroOrderReactionViewModel: ObservableObject {
         return nil
     }
 
+    var a0: CGFloat? {
+        if rate != nil {
+            return concentrationEquationA.getConcentration(at: 0)
+        }
+        return nil
+    }
+
     var halfTime: CGFloat? {
-        if let rate = rate, rate != 0 {
-            return initialConcentration.rounded(decimals: 2) / (2 * rate)
+        if let a0 = a0, let rate = rate, rate != 0 {
+            return a0 / (2 * rate)
         }
         return nil
     }
