@@ -15,8 +15,8 @@ struct FirstOrderEquationView: View {
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
-    private let naturalWidth: CGFloat = 294
-    private let naturalHeight: CGFloat = 313
+    private let naturalWidth: CGFloat = 314
+    private let naturalHeight: CGFloat = 314
 
     var body: some View {
         ScaledView(
@@ -49,8 +49,8 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
             FirstOrderRateFilled()
             FirstOrderRateBlank(
                 rate: rate?.str(decimals: 2),
-                a0: c1.str(decimals: 2),
-                at: c2?.str(decimals: 2),
+                lnA0: lnStr(c1),
+                lnAt: c2.map(lnStr),
                 t: t?.str(decimals: 2)
             )
             FirstOrderHalftimeFilled()
@@ -61,6 +61,10 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
         }
         .font(.system(size: RateEquationSizes.fontSize))
         .lineLimit(1)
+    }
+
+    private func lnStr(_ c: CGFloat) -> String {
+        log(c.rounded(decimals: 2)).str(decimals: 2)
     }
 }
 
@@ -102,8 +106,8 @@ fileprivate struct FirstOrderRateFilled: View {
 fileprivate struct FirstOrderRateBlank: View {
 
     let rate: String?
-    let a0: String?
-    let at: String?
+    let lnA0: String?
+    let lnAt: String?
     let t: String?
 
     var body: some View {
@@ -114,16 +118,24 @@ fileprivate struct FirstOrderRateBlank: View {
             Equals()
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
-                    Placeholder(value: a0)
+                    Text("(")
+                        .fixedSize()
+                    Placeholder(value: lnA0)
                         .frame(width: Settings.boxWidth, height: Settings.boxHeight)
                         .minimumScaleFactor(0.5)
+                    Text(")")
+                        .fixedSize()
                     Minus()
-                    Placeholder(value: at)
+                    Text("(")
+                        .fixedSize()
+                    Placeholder(value: lnAt)
                         .frame(width: Settings.boxWidth, height: Settings.boxHeight)
                         .minimumScaleFactor(0.5)
+                    Text(")")
+                        .fixedSize()
                 }
                 Rectangle()
-                    .frame(width: 150, height: 2)
+                    .frame(width: 200, height: 2)
                 Placeholder(value: t)
                     .frame(width: Settings.boxWidth, height: Settings.boxHeight)
                     .minimumScaleFactor(0.5)
@@ -185,6 +197,7 @@ struct FirstOrderEquationView2_Preview: PreviewProvider {
             rate: 1,
             halfTime: 1
         )
+        .border(Color.red)
         .previewLayout(.fixed(width: 600, height: 600))
     }
 }
