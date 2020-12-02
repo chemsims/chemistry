@@ -67,6 +67,7 @@ struct FirstOrderReactionView: View {
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
         FirstOrderEquationView(
+            emphasiseFilledTerms: reaction.currentTime == nil,
             c1: reaction.initialConcentration,
             c2: reaction.finalConcentration,
             t: reaction.finalTime,

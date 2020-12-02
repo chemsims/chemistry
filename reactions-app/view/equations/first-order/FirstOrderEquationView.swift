@@ -7,6 +7,7 @@ import SwiftUI
 
 struct FirstOrderEquationView: View {
 
+    let emphasiseFilledTerms: Bool
     let c1: CGFloat
     let c2: CGFloat?
     let t: CGFloat?
@@ -26,6 +27,7 @@ struct FirstOrderEquationView: View {
             maxHeight: maxHeight
         ) {
             UnscaledFirstOrderReactionEquationView(
+                emphasise: emphasiseFilledTerms,
                 c1: c1,
                 c2: c2,
                 t: t,
@@ -38,6 +40,7 @@ struct FirstOrderEquationView: View {
 
 fileprivate struct UnscaledFirstOrderReactionEquationView: View {
 
+    let emphasise: Bool
     let c1: CGFloat
     let c2: CGFloat?
     let t: CGFloat?
@@ -49,6 +52,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
             VStack(alignment: .leading, spacing: 0) {
                 FirstOrderRateFilled()
                 FirstOrderRateBlank(
+                    emphasise: emphasise,
                     rate: rate?.str(decimals: 2),
                     lnA0: lnStr(c1),
                     lnAt: c2.map(lnStr),
@@ -59,6 +63,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
             VStack(alignment: .leading, spacing: 0) {
                 FirstOrderHalftimeFilled()
                 FirstOrderHalftimeBlank(
+                    emphasise: emphasise,
                     halftime: halfTime?.str(decimals: 2),
                     rate: rate?.str(decimals: 2)
                 )
@@ -110,6 +115,7 @@ fileprivate struct FirstOrderRateFilled: View {
 
 fileprivate struct FirstOrderRateBlank: View {
 
+    let emphasise: Bool
     let rate: String?
     let lnA0: String?
     let lnAt: String?
@@ -117,21 +123,21 @@ fileprivate struct FirstOrderRateBlank: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Placeholder(value: rate)
+            Placeholder(value: rate, emphasise: emphasise)
             FixedText("=")
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     FixedText("(")
-                    Placeholder(value: lnA0)
+                    Placeholder(value: lnA0, emphasise: lnAt == nil)
                     FixedText(")")
                     FixedText("-")
                     FixedText("(")
-                    Placeholder(value: lnAt)
+                    Placeholder(value: lnAt, emphasise: emphasise)
                     FixedText(")")
                 }
                 Rectangle()
                     .frame(width: 200, height: 2)
-                Placeholder(value: t)
+                Placeholder(value: t, emphasise: emphasise)
             }
         }
     }
@@ -155,18 +161,19 @@ fileprivate struct FirstOrderHalftimeFilled: View {
 
 fileprivate struct FirstOrderHalftimeBlank: View {
 
+    let emphasise: Bool
     let halftime: String?
     let rate: String?
 
     var body: some View {
         HStack(spacing: 12) {
-            Placeholder(value: halftime)
+            Placeholder(value: halftime, emphasise: emphasise)
             FixedText("=")
             HStack(spacing: 12) {
                 Text("0.69")
                     .fixedSize()
                 FixedText("/")
-                Placeholder(value: rate)
+                Placeholder(value: rate, emphasise: emphasise)
             }
         }
     }
@@ -179,6 +186,7 @@ struct FirstOrderEquationView2_Preview: PreviewProvider {
 
     static var previews: some View {
         UnscaledFirstOrderReactionEquationView(
+            emphasise: true,
             c1: 1,
             c2: 2,
             t: 1,
