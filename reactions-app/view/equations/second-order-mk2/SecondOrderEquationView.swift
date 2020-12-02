@@ -64,7 +64,6 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
         .lineLimit(1)
     }
 
-    // TODO - pass in inv from model, not here
     private func invStr(_ c: CGFloat) -> String {
         (1 / c.rounded(decimals: 2)).str(decimals: 2)
     }

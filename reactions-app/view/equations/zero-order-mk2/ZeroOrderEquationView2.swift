@@ -214,7 +214,7 @@ fileprivate struct BlankHalftime: View {
 struct Divide: View {
     var body: some View {
         Text("/")
-            .frame(width: 12)
+            .fixedSize()
     }
 }
 
