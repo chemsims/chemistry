@@ -88,6 +88,8 @@
 		57DAE4D82577C4F1006D945B /* HalfTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D72577C4F1006D945B /* HalfTime.swift */; };
 		57DAE4E42577C53B006D945B /* EquationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4E32577C53B006D945B /* EquationSettings.swift */; };
 		57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4ED2577C942006D945B /* SubscriptViews.swift */; };
+		57DAE4F22577E015006D945B /* ReactionComparisonScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4F12577E015006D945B /* ReactionComparisonScreen2.swift */; };
+		57DAE4F62577E153006D945B /* ReactionComparisonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4F52577E153006D945B /* ReactionComparisonViewModel.swift */; };
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57E9DBFE257686A200E3F5A6 /* TextExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBFD257686A200E3F5A6 /* TextExperiment.swift */; };
 		57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */; };
@@ -201,6 +203,8 @@
 		57DAE4D72577C4F1006D945B /* HalfTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfTime.swift; sourceTree = "<group>"; };
 		57DAE4E32577C53B006D945B /* EquationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationSettings.swift; sourceTree = "<group>"; };
 		57DAE4ED2577C942006D945B /* SubscriptViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptViews.swift; sourceTree = "<group>"; };
+		57DAE4F12577E015006D945B /* ReactionComparisonScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreen2.swift; sourceTree = "<group>"; };
+		57DAE4F52577E153006D945B /* ReactionComparisonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViewModel.swift; sourceTree = "<group>"; };
 		57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleHeadedArrow.swift; sourceTree = "<group>"; };
 		57E9DBFD257686A200E3F5A6 /* TextExperiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextExperiment.swift; sourceTree = "<group>"; };
 		57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquationShape.swift; sourceTree = "<group>"; };
@@ -268,6 +272,7 @@
 				571B3C7325655AA60075358B /* SecondOrderReaction.swift */,
 				571B3C832565638F0075358B /* OrderedReactionLayoutSettings.swift */,
 				571B3C92256573D60075358B /* ReactionComparisonScreen.swift */,
+				57DAE4F12577E015006D945B /* ReactionComparisonScreen2.swift */,
 			);
 			path = reactions;
 			sourceTree = "<group>";
@@ -316,6 +321,7 @@
 				571B3C4E256555460075358B /* ZeroOrderReactionViewModel.swift */,
 				571B3C54256555600075358B /* FirstOrderReactionViewModel.swift */,
 				571B3C6F2565571B0075358B /* SecondOrderReactionViewModel.swift */,
+				57DAE4F52577E153006D945B /* ReactionComparisonViewModel.swift */,
 			);
 			path = reactions;
 			sourceTree = "<group>";
@@ -740,6 +746,7 @@
 				571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */,
 				577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */,
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
+				57DAE4F62577E153006D945B /* ReactionComparisonViewModel.swift in Sources */,
 				577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */,
 				57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
@@ -778,6 +785,7 @@
 				57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */,
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,
 				57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */,
+				57DAE4F22577E015006D945B /* ReactionComparisonScreen2.swift in Sources */,
 				57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */,
 				57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */,
 				577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */,

@@ -32,7 +32,9 @@ struct EnergyProfileRateChart: View {
                     yAxis: settings.yAxis,
                     xAxis: settings.xAxis,
                     initialTime: 1 / 600,
-                    finalTime: 1 / 400
+                    finalTime: 1 / 400,
+                    minTime: nil,
+                    maxTime: nil
                 )
                 .stroke()
                 .foregroundColor(.orangeAccent)

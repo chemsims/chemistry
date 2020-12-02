@@ -224,7 +224,9 @@ struct GeneralTimeChartView: View {
             initialTime: initialTime,
             currentTime: currentTime,
             finalTime: finalTime,
-            canSetCurrentTime: canSetCurrentTime
+            canSetCurrentTime: canSetCurrentTime,
+            minTime: nil,
+            maxTime: nil
         ).frame(width: settings.chartSize, height: settings.chartSize)
     }
 

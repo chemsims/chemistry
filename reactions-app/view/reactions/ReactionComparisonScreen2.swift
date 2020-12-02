@@ -1,13 +1,13 @@
 //
 // Reactions App
 //
-  
+
 
 import SwiftUI
 
-struct ReactionComparisonScreen: View {
+struct ReactionComparisonScreen2: View {
 
-    @ObservedObject var reaction: ZeroOrderReactionViewModel
+    @ObservedObject var reaction: ReactionComparisonViewModel
     @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -73,17 +73,25 @@ struct ReactionComparisonScreen: View {
                         settings: settings,
                         concentrationA: zeroOrder,
                         concentrationB: nil,
-                        initialConcentration: c1,
-                        finalConcentration: c2,
+                        initialConcentration: 1,
+                        finalConcentration: 0.1,
                         initialTime: 0,
                         currentTime: unsafeCurrentTimeBinding,
-                        finalTime: time,
+                        finalTime: 1,
                         canSetCurrentTime: reaction.reactionHasEnded,
-                        minTime: nil,
-                        maxTime: nil
+                        minTime: reaction.zeroOrderInput.t1,
+                        maxTime: reaction.zeroOrderInput.t2
                     )
-                    chartLine(equation: firstOrder, settings: settings)
-                    chartLine(equation: secondOrder, settings: settings)
+                    chartLine(
+                        equation: firstOrder,
+                        input: reaction.firstOrderInput,
+                        settings: settings
+                    )
+                    chartLine(
+                        equation: secondOrder,
+                        input: reaction.secondOrderInput,
+                        settings: settings
+                    )
                 }
 
             }.frame(width: settings.chartSize, height: settings.chartSize)
@@ -117,13 +125,20 @@ struct ReactionComparisonScreen: View {
         .lineLimit(1)
     }
 
-    private func concentrationLabel(equation: Equation, settings: TimeChartGeometrySettings) -> some View {
+    private func concentrationLabel(
+        equation: Equation,
+        settings: TimeChartGeometrySettings
+    ) -> some View {
         animatingValue(
             equation: equation,
-            defaultValue: c1,
+            defaultValue: equation.getY(at: 0),
             decimals: 2
         )
-        .frame(width: settings.chartSize * 0.22, height: settings.chartSize * 0.2, alignment: .leading)
+        .frame(
+            width: settings.chartSize * 0.22,
+            height: settings.chartSize * 0.2,
+            alignment: .leading
+        )
         .padding(.leading, settings.chartSize * 0.05)
     }
 
@@ -149,6 +164,21 @@ struct ReactionComparisonScreen: View {
         Binding(
             get: { reaction.currentTime ?? reaction.initialTime },
             set: { reaction.currentTime = $0 }
+        )
+    }
+
+    private func currentTimeBindingWithLimits(
+        minValue: CGFloat,
+        maxValue: CGFloat
+    ) -> Binding<CGFloat> {
+        Binding(
+            get: {
+                let value = reaction.currentTime ?? reaction.initialTime
+                return min(maxValue, max(value, minValue))
+            },
+            set: {
+                reaction.currentTime = $0
+            }
         )
     }
 
@@ -178,19 +208,31 @@ struct ReactionComparisonScreen: View {
             VStack {
                 FilledBeaker(
                     moleculesA: reaction.moleculesA,
-                    concentrationB: bConcentration(aConcentration: zeroOrder),
+                    concentrationB:
+                        bConcentration(
+                            aConcentration: zeroOrder,
+                            input: reaction.zeroOrderInput
+                        ),
                     currentTime: reaction.currentTime
                 )
                 .frame(width: settings.beakerWidth * 0.85)
                 FilledBeaker(
                     moleculesA: reaction.moleculesA,
-                    concentrationB: bConcentration(aConcentration: firstOrder),
+                    concentrationB:
+                        bConcentration(
+                            aConcentration: firstOrder,
+                            input: reaction.firstOrderInput
+                        ),
                     currentTime: reaction.currentTime
                 )
                 .frame(width: settings.beakerWidth * 0.85)
                 FilledBeaker(
                     moleculesA: reaction.moleculesA,
-                    concentrationB: bConcentration(aConcentration: secondOrder),
+                    concentrationB:
+                        bConcentration(
+                            aConcentration: secondOrder,
+                            input: reaction.secondOrderInput
+                        ),
                     currentTime: reaction.currentTime
                 )
                 .frame(width: settings.beakerWidth * 0.85)
@@ -201,6 +243,7 @@ struct ReactionComparisonScreen: View {
 
     private func chartLine(
         equation: ConcentrationEquation,
+        input: ReactionInput,
         settings: TimeChartGeometrySettings
     ) -> some View {
         ChartPlotWithHead(
@@ -208,14 +251,14 @@ struct ReactionComparisonScreen: View {
             equation: equation,
             initialTime: 0,
             currentTime: unsafeCurrentTimeBinding,
-            finalTime: time,
+            finalTime: 1,
             filledBarColor: Styling.timeAxisCompleteBar,
             headColor: Styling.moleculeA,
             headRadius: settings.chartHeadPrimarySize,
             haloColor: Styling.moleculeAChartHeadHalo,
             canSetCurrentTime: reaction.reactionHasEnded,
-            minTime: nil,
-            maxTime: nil
+            minTime: input.t1,
+            maxTime: input.t2
         ).frame(width: settings.chartSize, height: settings.chartSize)
     }
 
@@ -245,33 +288,25 @@ struct ReactionComparisonScreen: View {
     }
 
     private var zeroOrder: ConcentrationEquation  {
-        LinearConcentration(
-            t1: 0,
-            c1: c1,
-            t2: time,
-            c2: c2
-        )
+        reaction.zeroOrder
     }
 
     private var firstOrder: ConcentrationEquation {
-        FirstOrderConcentration(
-            c1: c1,
-            c2: c2,
-            time: time
-        )
+        reaction.firstOrder
     }
 
     private var secondOrder: ConcentrationEquation {
-        SecondOrderReactionEquation(
-            c1: c1,
-            c2: c2,
-            time: time
-        )
+        reaction.secondOrder
     }
 
-
-    private func bConcentration(aConcentration: ConcentrationEquation) -> ConcentrationEquation {
-        ConcentrationBEquation(concentrationA: aConcentration, initialAConcentration: c1)
+    private func bConcentration(
+        aConcentration: ConcentrationEquation,
+        input: ReactionInput
+    ) -> ConcentrationEquation {
+        ConcentrationBEquation(
+            concentrationA: aConcentration,
+            initialAConcentration: input.c1
+        )
     }
 
 
@@ -291,14 +326,9 @@ struct ReactionComparisonScreen: View {
         settings.chartsTopPadding * 0.5
     }
 
-
-    private var c1: CGFloat { ReactionComparisonNavigation.c1 }
-    private var c2: CGFloat { ReactionComparisonNavigation.c2 }
-    private var time: CGFloat { ReactionComparisonNavigation.time }
-
 }
 
-struct ReactionComparison_Previews: PreviewProvider {
+struct ReactionComparison2_Previews: PreviewProvider {
     static var previews: some View {
         StateWrapper()
             .previewLayout(.fixed(width: 568, height: 320))
@@ -311,12 +341,12 @@ struct ReactionComparison_Previews: PreviewProvider {
             .previewLayout(.fixed(width: 1024, height: 768))
     }
 
-    static let reaction = ZeroOrderReactionViewModel()
+    static let reaction = ReactionComparisonViewModel()
     static let navigation = ReactionComparisonNavigation.model(reaction: reaction)
 
     struct StateWrapper: View {
         var body: some View {
-            ReactionComparisonScreen(
+            ReactionComparisonScreen2(
                 reaction: reaction,
                 navigation: navigation
             )
