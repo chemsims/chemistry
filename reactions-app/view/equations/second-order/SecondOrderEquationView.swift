@@ -60,7 +60,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
                 a0: c1.str(decimals: 2)
             )
         }
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
     }
 
@@ -73,15 +73,15 @@ fileprivate struct SecondOrderRateFilled: View {
     var body: some View {
         HStack(spacing: 5) {
             Text("k")
-                .frame(width: Settings.boxWidth)
-            Equals()
+                .frame(width: EquationSettings.boxWidth)
+            FixedText("=")
 
             VStack(spacing: 1) {
                 HStack(spacing: 5) {
                     inverse {
                         A_t()
                     }
-                    Minus()
+                    FixedText("-")
                     inverse {
                         A_0()
                     }
@@ -115,21 +115,21 @@ fileprivate struct SecondOrderRateBlank: View {
     var body: some View {
         HStack(spacing: 5) {
             Placeholder(value: rate)
-                .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 .minimumScaleFactor(0.5)
 
-            Equals()
+            FixedText("=")
 
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     Placeholder(value: invAt)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                         .minimumScaleFactor(0.5)
 
-                    Minus()
+                    FixedText("-")
 
                     Placeholder(value: invA0)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                         .minimumScaleFactor(0.5)
                 }
 
@@ -137,7 +137,7 @@ fileprivate struct SecondOrderRateBlank: View {
                     .frame(width: 180, height: 2)
 
                 Placeholder(value: time)
-                    .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                     .minimumScaleFactor(0.5)
             }
         }
@@ -148,16 +148,13 @@ fileprivate struct SecondOrderHalftimeFilled: View {
     var body: some View {
         HStack(spacing: 5) {
             HalfTime()
-                .frame(width: Settings.boxWidth)
-            Equals()
-            Text("1")
-                .fixedSize()
-            Divide()
-            Text("(k")
-                .fixedSize()
+                .frame(width: EquationSettings.boxWidth)
+            FixedText("=")
+            FixedText("1")
+            FixedText("/")
+            FixedText("(k")
             A_0()
-            Text(")")
-                .fixedSize()
+            FixedText(")")
         }
     }
 }
@@ -171,31 +168,28 @@ fileprivate struct SecondOrderHalftimeBlank: View {
     var body: some View {
         HStack(spacing: 5) {
             Placeholder(value: halfTime)
-                .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 .minimumScaleFactor(0.5)
 
-            Equals()
+            FixedText("=")
 
-            Text("1")
-                .fixedSize()
-            Divide()
+            FixedText("1")
+            FixedText("/")
 
             Placeholder(value: rate)
-                .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 .minimumScaleFactor(0.5)
 
             if (a0 != nil) {
-                Text("(")
-                    .fixedSize()
+                FixedText("(")
 
                 Text(a0!)
-                    .frame(width: Settings.boxWidth * 0.8)
+                    .frame(width: EquationSettings.boxWidth * 0.8)
                     .minimumScaleFactor(0.5)
-                Text(")")
-                    .fixedSize()
+                FixedText(")")
             } else {
                 Box()
-                    .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
             }
         }
     }

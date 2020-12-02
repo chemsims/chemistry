@@ -83,7 +83,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                 )
             }
         }
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
         .minimumScaleFactor(0.8)
     }
@@ -91,53 +91,53 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
 
 fileprivate struct FilledRateView: View {
     var body: some View {
-        HStack(spacing: Settings.hSpacing) {
+        HStack(spacing: EquationSettings.hSpacing) {
             Rate()
             Text("k")
-                .frame(width: Settings.boxWidth)
+                .frame(width: EquationSettings.boxWidth)
             Text("=")
                 .fixedSize()
             fraction1
-            Equals()
+            FixedText("=")
             fraction2
         }
     }
 
     private var fraction1: some View {
         HStack(spacing: 0) {
-            Minus()
+            FixedText("-")
             VStack(spacing: 1) {
                 HStack(spacing: 0) {
                     Text("Δc")
-                        .frame(width: Settings.boxWidth)
+                        .frame(width: EquationSettings.boxWidth)
                 }
                 Rectangle()
                     .frame(width: 50, height: 2)
                 Text("Δt")
-                    .frame(width: Settings.boxWidth)
+                    .frame(width: EquationSettings.boxWidth)
             }
         }
     }
 
     private var fraction2: some View {
         HStack(spacing: 0) {
-            Minus()
+            FixedText("-")
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     Text("c2")
-                        .frame(width: Settings.boxWidth)
-                    Minus()
+                        .frame(width: EquationSettings.boxWidth)
+                    FixedText("-")
                     Text("c1")
-                        .frame(width:  Settings.boxWidth)
+                        .frame(width:  EquationSettings.boxWidth)
                 }
                 Rectangle()
                     .frame(width: 155, height: 2)
                 HStack(spacing: 1) {
                     Text("t2")
-                        .frame(width:  Settings.boxWidth)
-                    Minus()
+                        .frame(width:  EquationSettings.boxWidth)
+                    FixedText("-")
                     Text("t1")
-                        .frame(width:  Settings.boxWidth)
+                        .frame(width:  EquationSettings.boxWidth)
                 }
             }
         }
@@ -155,32 +155,32 @@ fileprivate struct EmptyRateView: View {
     let rate: String?
 
     var body: some View {
-        HStack(spacing: Settings.hSpacing) {
+        HStack(spacing: EquationSettings.hSpacing) {
             Rate()
             Placeholder(value: rate)
-                .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 .minimumScaleFactor(0.5)
             Text("=")
                 .fixedSize()
             fraction1
-            Equals()
+            FixedText("=")
             fraction2
         }
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
     }
 
     private var fraction1: some View {
         HStack(spacing: 0) {
-            Minus()
+            FixedText("-")
             VStack(spacing: 1) {
                 Placeholder(value: deltaC)
-                    .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                     .minimumScaleFactor(0.5)
                 Rectangle()
                     .frame(width: 60, height: 2)
                 Placeholder(value: deltaT)
-                    .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                     .minimumScaleFactor(0.5)
             }
         }
@@ -188,26 +188,26 @@ fileprivate struct EmptyRateView: View {
 
     private var fraction2: some View {
         HStack(spacing: 0) {
-            Minus()
+            FixedText("-")
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     Placeholder(value: c2)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                         .minimumScaleFactor(0.5)
-                    Minus()
+                    FixedText("-")
                     Placeholder(value: c1)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                         .minimumScaleFactor(0.5)
                 }
                 Rectangle()
                     .frame(width: 140, height: 2)
                 HStack(spacing: 1) {
                     Placeholder(value: t2)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                         .minimumScaleFactor(0.5)
-                    Minus()
+                    FixedText("-")
                     Placeholder(value: t1)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                         .minimumScaleFactor(0.5)
                 }
             }
@@ -219,14 +219,12 @@ fileprivate struct FilledHalftime: View {
     var body: some View {
         HStack(spacing: 4) {
             HalfTime()
-            Equals()
+            FixedText("=")
             A_0()
-            Text("/")
-                .fixedSize()
-            Text("(2 k)")
-                .fixedSize()
+            FixedText("/")
+            FixedText("(2 k)")
 
-        }.font(.system(size: RateEquationSizes.fontSize))
+        }.font(.system(size: EquationSettings.fontSize))
     }
 }
 
@@ -239,99 +237,34 @@ fileprivate struct BlankHalftime: View {
     var body: some View {
         HStack(spacing: 4) {
             Placeholder(value: halftime)
-                .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 .minimumScaleFactor(0.5)
-            Equals()
+            FixedText("=")
             Text(c1)
-                .frame(width: Settings.boxWidth)
+                .frame(width: EquationSettings.boxWidth)
                 .minimumScaleFactor(0.5)
-            Divide()
-            Text("(2")
-                .fixedSize()
-            Text("x")
-                .fixedSize()
+            FixedText("/")
+            FixedText("(2")
+            FixedText("x")
             Placeholder(value: rate)
-                .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 .minimumScaleFactor(0.5)
-            Text(")")
-                .fixedSize()
+            FixedText(")")
         }
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
 
     }
 }
 
-struct Divide: View {
-    var body: some View {
-        Text("/")
-            .fixedSize()
-    }
-}
 
 fileprivate struct Rate: View {
     var body: some View {
         HStack(spacing: 3) {
             Text("Rate")
                 .fixedSize()
-            Equals()
+            FixedText("=")
         }
     }
-}
-
-struct HalfTime: View {
-    var body: some View {
-        HStack(spacing: 0) {
-            Text("t")
-                .font(.system(size: RateEquationSizes.fontSize))
-                .fixedSize()
-            Text("1/2")
-                .font(.system(size: RateEquationSizes.subscriptFontSize))
-                .offset(y: 10)
-                .fixedSize()
-        }
-    }
-}
-
-struct Minus: View {
-    var body: some View {
-        Text("-")
-            .fixedSize()
-    }
-}
-
-struct Equals: View {
-    var body: some View {
-        Text("=")
-            .fixedSize()
-    }
-}
-
-struct Placeholder: View {
-    let value: String?
-
-    var body: some View {
-        if (value != nil) {
-            Text(value!)
-        } else {
-            Box()
-        }
-    }
-
-}
-
-struct Box: View {
-    let size: CGFloat = 35
-
-    var body: some View {
-        EquationPlaceholderView()
-            .padding(10)
-    }
-}
-
-struct Settings {
-    static let hSpacing: CGFloat = 2
-    static let boxHeight: CGFloat = 50
-    static let boxWidth: CGFloat = 70
 }
 
 

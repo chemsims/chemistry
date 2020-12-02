@@ -55,7 +55,7 @@ struct GeneralRateEquationView<Content: View>: View {
             content()
         }
         .lineLimit(1)
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
         .minimumScaleFactor(1)
     }
 }
@@ -68,7 +68,7 @@ fileprivate struct ZeroOrderRateComparisonView: View {
         ) {
             HStack(spacing: 4) {
                 A_t()
-                Minus()
+                FixedText("-")
                 A_0()
             }
         }
@@ -84,7 +84,7 @@ fileprivate struct SecondOrderRateComparisonView: View {
                 inverse {
                     A_t()
                 }
-                Minus()
+                FixedText("-")
                 inverse {
                     A_0()
                 }
@@ -113,7 +113,7 @@ fileprivate struct FirstOrderRateComparisonView: View {
                 log {
                     A_t()
                 }
-                Minus()
+                FixedText("-")
                 log {
                     A_0()
                 }
@@ -145,7 +145,7 @@ fileprivate struct GeneralRateComparisonEquation<Content: View>: View {
                 Time()
             }
         }
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
     }
 }
@@ -166,7 +166,7 @@ struct A_t: View {
         HStack(spacing: 1) {
             BracketA()
             Text("t")
-                .font(.system(size: RateEquationSizes.subscriptFontSize))
+                .font(.system(size: EquationSettings.subscriptFontSize))
                 .offset(y: 9)
                 .fixedSize()
             EndBracket()
@@ -179,7 +179,7 @@ struct A_0: View {
         HStack(spacing: 1) {
             BracketA()
             Text("0")
-                .font(.system(size: RateEquationSizes.subscriptFontSize))
+                .font(.system(size: EquationSettings.subscriptFontSize))
                 .offset(y: 9)
                 .fixedSize()
             EndBracket()
@@ -206,32 +206,6 @@ fileprivate struct Time: View {
         Text("t")
             .fixedSize()
     }
-}
-
-struct RateEquationSizes {
-
-    static let fontSize: CGFloat = 30
-    static let subscriptFontSize: CGFloat = 22
-
-    private static let orderStringSpacing: CGFloat = 10
-    private static let orderStringWidth: CGFloat = 112
-    private static let orderStringHeight: CGFloat = 35
-
-    private static let zeroOrderWidth: CGFloat = 224
-    private static let zeroOrderHeight: CGFloat = 81
-
-    static let zeroOrderTotalWidth = totalWidth(equationWidth: zeroOrderWidth)
-    static let zeroOrderTotalHeight = totalHeight(equationHeight: zeroOrderHeight)
-
-
-    static func totalWidth(equationWidth: CGFloat) -> CGFloat {
-        orderStringWidth + orderStringSpacing + equationWidth
-    }
-
-    static func totalHeight(equationHeight: CGFloat) -> CGFloat {
-        max(equationHeight, orderStringHeight)
-    }
-
 }
 
 struct RateEquationComparisonView_Previews: PreviewProvider {

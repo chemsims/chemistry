@@ -5,6 +5,28 @@
 
 import SwiftUI
 
+struct Placeholder: View {
+    let value: String?
+
+    var body: some View {
+        if (value != nil) {
+            Text(value!)
+        } else {
+            Box()
+        }
+    }
+
+}
+
+struct Box: View {
+    let size: CGFloat = 35
+
+    var body: some View {
+        EquationPlaceholderView()
+            .padding(10)
+    }
+}
+
 struct EquationPlaceholderView: View {
 
     var body: some View {

@@ -64,7 +64,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
                 )
             }
         }
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
     }
 
@@ -78,14 +78,14 @@ fileprivate struct FirstOrderRateFilled: View {
     var body: some View {
         HStack(spacing: 12) {
             Text("k")
-                .frame(width: Settings.boxWidth)
-            Equals()
+                .frame(width: EquationSettings.boxWidth)
+            FixedText("=")
             VStack(spacing: 3) {
                 HStack(spacing: 5) {
                     lnA {
                         A_0()
                     }
-                    Minus()
+                    FixedText("-")
                     lnA {
                         A_t()
                     }
@@ -118,31 +118,27 @@ fileprivate struct FirstOrderRateBlank: View {
     var body: some View {
         HStack(spacing: 12) {
             Placeholder(value: rate)
-                .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 .minimumScaleFactor(0.5)
-            Equals()
+            FixedText("=")
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
-                    Text("(")
-                        .fixedSize()
+                    FixedText("(")
                     Placeholder(value: lnA0)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                         .minimumScaleFactor(0.5)
-                    Text(")")
-                        .fixedSize()
-                    Minus()
-                    Text("(")
-                        .fixedSize()
+                    FixedText(")")
+                    FixedText("-")
+                    FixedText("(")
                     Placeholder(value: lnAt)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                         .minimumScaleFactor(0.5)
-                    Text(")")
-                        .fixedSize()
+                    FixedText(")")
                 }
                 Rectangle()
                     .frame(width: 200, height: 2)
                 Placeholder(value: t)
-                    .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                     .minimumScaleFactor(0.5)
             }
         }
@@ -153,14 +149,13 @@ fileprivate struct FirstOrderHalftimeFilled: View {
     var body: some View {
         HStack(spacing: 12) {
             HalfTime()
-                .frame(width: Settings.boxWidth)
-            Equals()
+                .frame(width: EquationSettings.boxWidth)
+            FixedText("=")
             HStack(spacing: 12) {
-                Text("ln(2)")
-                    .fixedSize()
-                Divide()
+                FixedText("ln(2)")
+                FixedText("/")
                 Text("k")
-                    .frame(width: Settings.boxWidth)
+                    .frame(width: EquationSettings.boxWidth)
             }
         }
     }
@@ -174,15 +169,15 @@ fileprivate struct FirstOrderHalftimeBlank: View {
     var body: some View {
         HStack(spacing: 12) {
             Placeholder(value: halftime)
-                .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 .minimumScaleFactor(0.5)
-            Equals()
+            FixedText("=")
             HStack(spacing: 12) {
                 Text("0.69")
                     .fixedSize()
-                Divide()
+                FixedText("/")
                 Placeholder(value: rate)
-                    .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                     .minimumScaleFactor(0.5)
             }
         }

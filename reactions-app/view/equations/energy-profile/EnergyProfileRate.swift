@@ -56,7 +56,7 @@ fileprivate struct EnergyProfileRateK1: View {
         HStack(spacing: 5) {
             Text("k")
                 .frame(width: 18)
-            Equals()
+            FixedText("=")
             Text("A")
                 .frame(width: 21)
             HStack(spacing: 1) {
@@ -66,12 +66,12 @@ fileprivate struct EnergyProfileRateK1: View {
                     Text("-E") +
                         Text("a").baselineOffset(-3) + Text("/RT")
                 }
-                .font(.system(size: RateEquationSizes.subscriptFontSize))
+                .font(.system(size: EquationSettings.subscriptFontSize))
                 .offset(x: -3, y: -12)
                 .frame(width: 70, height: 40)
             }
         }
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
         .minimumScaleFactor(1)
     }
@@ -84,7 +84,7 @@ fileprivate struct EnergyProfileRateLn: View {
                 Text("k")
                     .frame(width: 18)
             }
-            Equals()
+            FixedText("=")
             ln {
                 Text("A")
                     .frame(width: 21)
@@ -100,7 +100,7 @@ fileprivate struct EnergyProfileRateLn: View {
                     .frame(width: 40)
             }
         }
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
         .minimumScaleFactor(1)
     }
 
@@ -138,7 +138,7 @@ fileprivate struct RateK1K2: View {
                     .scaleEffect(y: 2.5)
                     .frame(width: 12)
             }
-            Equals()
+            FixedText("=")
             VStack(spacing: 1) {
                 Text("Ea")
                     .frame(width: 36)
@@ -164,7 +164,7 @@ fileprivate struct RateK1K2: View {
                     .frame(width: 12)
             }
         }
-        .font(.system(size: RateEquationSizes.fontSize))
+        .font(.system(size: EquationSettings.fontSize))
         .minimumScaleFactor(1)
     }
 }
@@ -186,47 +186,47 @@ fileprivate struct BlankRates: View {
                 LargeOpenParen()
                 VStack(spacing: 1) {
                     Placeholder(value: k1)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                     Rectangle()
                         .frame(width: 55, height: 2)
                     Placeholder(value: k2)
-                        .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 }
                 LargeCloseParen()
             }
-            Equals()
+            FixedText("=")
             VStack(spacing: 1) {
                 Placeholder(value: ea)
-                    .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                 Rectangle()
                     .frame(width: 55, height: 2)
                 Text("8.31")
-                    .frame(width: 60, height: Settings.boxHeight)
+                    .frame(width: 60, height: EquationSettings.boxHeight)
             }
             HStack(spacing: 0) {
                 LargeOpenParen()
                 VStack(spacing: 1) {
                     HStack(spacing: 2) {
                         Placeholder(value: t1)
-                            .frame(width: Settings.boxWidth, height: Settings.boxHeight)
-                        Minus()
+                            .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
+                        FixedText("-")
                         Placeholder(value: t2)
-                            .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                            .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                     }
                     Rectangle()
                         .frame(width: 140, height: 2)
                     HStack(spacing: 2) {
                         Placeholder(value: t1)
-                            .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                            .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                         Text("x")
                             .frame(width: 20)
                         Placeholder(value: t2)
-                            .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                            .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
                     }
                 }
                 LargeCloseParen()
             }
-        }.font(.system(size: RateEquationSizes.fontSize))
+        }.font(.system(size: EquationSettings.fontSize))
     }
 }
 

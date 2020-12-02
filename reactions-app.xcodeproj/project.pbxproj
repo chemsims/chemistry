@@ -84,6 +84,9 @@
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
 		57DAE4C62577A299006D945B /* CGFloatRoundingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */; };
+		57DAE4D42577C2FD006D945B /* FixedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D32577C2FD006D945B /* FixedText.swift */; };
+		57DAE4D82577C4F1006D945B /* HalfTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D72577C4F1006D945B /* HalfTime.swift */; };
+		57DAE4E42577C53B006D945B /* EquationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4E32577C53B006D945B /* EquationSettings.swift */; };
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57E9DBFE257686A200E3F5A6 /* TextExperiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBFD257686A200E3F5A6 /* TextExperiment.swift */; };
 		57F10981255E88CF00834783 /* ConcentrationEquationShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */; };
@@ -193,6 +196,9 @@
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
 		57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatRoundingTests.swift; sourceTree = "<group>"; };
+		57DAE4D32577C2FD006D945B /* FixedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedText.swift; sourceTree = "<group>"; };
+		57DAE4D72577C4F1006D945B /* HalfTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfTime.swift; sourceTree = "<group>"; };
+		57DAE4E32577C53B006D945B /* EquationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationSettings.swift; sourceTree = "<group>"; };
 		57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleHeadedArrow.swift; sourceTree = "<group>"; };
 		57E9DBFD257686A200E3F5A6 /* TextExperiment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextExperiment.swift; sourceTree = "<group>"; };
 		57F10980255E88CE00834783 /* ConcentrationEquationShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquationShape.swift; sourceTree = "<group>"; };
@@ -483,9 +489,9 @@
 			isa = PBXGroup;
 			children = (
 				57655D43256C0906006FB93C /* energy-profile */,
-				576D5AAA2566CA800062F722 /* second-order-mk2 */,
-				576D5AA32566BA800062F722 /* first-order-mk2 */,
-				576D5A89256674D50062F722 /* zero-order-mk2 */,
+				576D5AAA2566CA800062F722 /* second-order */,
+				576D5AA32566BA800062F722 /* first-order */,
+				576D5A89256674D50062F722 /* zero-order */,
 				572D39AB256656270039D37D /* rate-comparison */,
 				57FDA133255D5ED700CB8804 /* util */,
 				576D5A7725665E170062F722 /* ScaledView.swift */,
@@ -509,28 +515,28 @@
 			path = "energy-profile";
 			sourceTree = "<group>";
 		};
-		576D5A89256674D50062F722 /* zero-order-mk2 */ = {
+		576D5A89256674D50062F722 /* zero-order */ = {
 			isa = PBXGroup;
 			children = (
 				576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */,
 			);
-			path = "zero-order-mk2";
+			path = "zero-order";
 			sourceTree = "<group>";
 		};
-		576D5AA32566BA800062F722 /* first-order-mk2 */ = {
+		576D5AA32566BA800062F722 /* first-order */ = {
 			isa = PBXGroup;
 			children = (
 				576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */,
 			);
-			path = "first-order-mk2";
+			path = "first-order";
 			sourceTree = "<group>";
 		};
-		576D5AAA2566CA800062F722 /* second-order-mk2 */ = {
+		576D5AAA2566CA800062F722 /* second-order */ = {
 			isa = PBXGroup;
 			children = (
 				576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */,
 			);
-			path = "second-order-mk2";
+			path = "second-order";
 			sourceTree = "<group>";
 		};
 		577077B32568E2F6003E750E /* energy-profile */ = {
@@ -590,6 +596,9 @@
 			isa = PBXGroup;
 			children = (
 				57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */,
+				57DAE4D32577C2FD006D945B /* FixedText.swift */,
+				57DAE4D72577C4F1006D945B /* HalfTime.swift */,
+				57DAE4E32577C53B006D945B /* EquationSettings.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -706,6 +715,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57DAE4E42577C53B006D945B /* EquationSettings.swift in Sources */,
 				571B3C93256573D60075358B /* ReactionComparisonScreen.swift in Sources */,
 				57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */,
 				57E9DBFE257686A200E3F5A6 /* TextExperiment.swift in Sources */,
@@ -770,6 +780,7 @@
 				576D5AAC2566CA900062F722 /* SecondOrderEquationView.swift in Sources */,
 				570E4F01256D10CD001EADCB /* EnergyProfileChart.swift in Sources */,
 				571B3CBB25658D300075358B /* RootNavigationViewModel.swift in Sources */,
+				57DAE4D42577C2FD006D945B /* FixedText.swift in Sources */,
 				571B3C9D256578D80075358B /* ReactionComparisonNavigationViewModel.swift in Sources */,
 				572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
@@ -786,6 +797,7 @@
 				571B3C4F256555460075358B /* ZeroOrderReactionViewModel.swift in Sources */,
 				57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */,
 				579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */,
+				57DAE4D82577C4F1006D945B /* HalfTime.swift in Sources */,
 				570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */,
 				576D5AA52566BAB50062F722 /* FirstOrderEquationView.swift in Sources */,
 				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
