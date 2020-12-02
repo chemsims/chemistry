@@ -21,8 +21,8 @@ struct ZeroOrderEquationView: View {
     let maxHeight: CGFloat
     
 
-    private let naturalWidth: CGFloat = 567
-    private let naturalHeight: CGFloat = 237
+    private let naturalWidth: CGFloat = 540
+    private let naturalHeight: CGFloat = 255
 
     var body: some View {
         ScaledView(
@@ -31,6 +31,36 @@ struct ZeroOrderEquationView: View {
             maxWidth: maxWidth,
             maxHeight: maxHeight
         ) {
+            UnscaledZeroOrderEquationView(
+                emphasiseFilledTerms: emphasiseFilledTerms,
+                initialConcentration: initialConcentration,
+                initialTime: initialTime,
+                rate: rate,
+                deltaC: deltaC,
+                deltaT: deltaT,
+                c2: c2,
+                t2: t2,
+                halfTime: halfTime
+            )
+            .frame(width: maxWidth, height: maxHeight)
+        }
+    }
+}
+
+fileprivate struct UnscaledZeroOrderEquationView: View {
+
+    let emphasiseFilledTerms: Bool
+    let initialConcentration: CGFloat
+    let initialTime: CGFloat
+    let rate: CGFloat?
+    let deltaC: CGFloat?
+    let deltaT: CGFloat?
+    let c2: CGFloat?
+    let t2: CGFloat?
+    let halfTime: CGFloat?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 4) {
                 FilledRateView()
                 EmptyRateView(
@@ -39,21 +69,23 @@ struct ZeroOrderEquationView: View {
                     c1: initialConcentration.str(decimals: 2),
                     c2: c2?.str(decimals: 2),
                     t1: initialTime.str(decimals: 2),
-                    t2: t2?.str(decimals: 2)
+                    t2: t2?.str(decimals: 2),
+                    rate: rate?.str(decimals: 2)
                 )
-                HStack(spacing: 22) {
-                    FilledHalftime()
-                    BlankHalftime(
-                        c1: initialConcentration.str(decimals: 2),
-                        halftime: halfTime?.str(decimals: 2),
-                        rate: rate?.str(decimals: 2)
-                    )
-                }
             }
-            .font(.system(size: RateEquationSizes.fontSize))
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
-        }.frame(width: maxWidth, height: maxHeight)
+
+            HStack(spacing: 22) {
+                FilledHalftime()
+                BlankHalftime(
+                    c1: initialConcentration.str(decimals: 2),
+                    halftime: halfTime?.str(decimals: 2),
+                    rate: rate?.str(decimals: 2)
+                )
+            }
+        }
+        .font(.system(size: RateEquationSizes.fontSize))
+        .lineLimit(1)
+        .minimumScaleFactor(0.8)
     }
 }
 
@@ -61,6 +93,10 @@ fileprivate struct FilledRateView: View {
     var body: some View {
         HStack(spacing: Settings.hSpacing) {
             Rate()
+            Text("k")
+                .frame(width: Settings.boxWidth)
+            Text("=")
+                .fixedSize()
             fraction1
             Equals()
             fraction2
@@ -116,17 +152,22 @@ fileprivate struct EmptyRateView: View {
     let c2: String?
     let t1: String?
     let t2: String?
+    let rate: String?
 
     var body: some View {
         HStack(spacing: Settings.hSpacing) {
             Rate()
+            Placeholder(value: rate)
+                .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .minimumScaleFactor(0.5)
+            Text("=")
+                .fixedSize()
             fraction1
             Equals()
             fraction2
         }
         .font(.system(size: RateEquationSizes.fontSize))
         .lineLimit(1)
-        .minimumScaleFactor(0.5)
     }
 
     private var fraction1: some View {
@@ -135,10 +176,12 @@ fileprivate struct EmptyRateView: View {
             VStack(spacing: 1) {
                 Placeholder(value: deltaC)
                     .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                    .minimumScaleFactor(0.5)
                 Rectangle()
                     .frame(width: 60, height: 2)
                 Placeholder(value: deltaT)
                     .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                    .minimumScaleFactor(0.5)
             }
         }
     }
@@ -150,18 +193,22 @@ fileprivate struct EmptyRateView: View {
                 HStack(spacing: 1) {
                     Placeholder(value: c2)
                         .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .minimumScaleFactor(0.5)
                     Minus()
                     Placeholder(value: c1)
                         .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .minimumScaleFactor(0.5)
                 }
                 Rectangle()
                     .frame(width: 140, height: 2)
                 HStack(spacing: 1) {
                     Placeholder(value: t2)
                         .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .minimumScaleFactor(0.5)
                     Minus()
                     Placeholder(value: t1)
                         .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                        .minimumScaleFactor(0.5)
                 }
             }
         }
@@ -175,9 +222,9 @@ fileprivate struct FilledHalftime: View {
             Equals()
             A_0()
             Text("/")
-                .frame(width: 12)
+                .fixedSize()
             Text("(2 k)")
-                .frame(width: 60)
+                .fixedSize()
 
         }.font(.system(size: RateEquationSizes.fontSize))
     }
@@ -193,18 +240,21 @@ fileprivate struct BlankHalftime: View {
         HStack(spacing: 4) {
             Placeholder(value: halftime)
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .minimumScaleFactor(0.5)
             Equals()
             Text(c1)
                 .frame(width: Settings.boxWidth)
+                .minimumScaleFactor(0.5)
             Divide()
             Text("(2")
-                .frame(width: 30)
+                .fixedSize()
             Text("x")
-                .frame(width: 18)
+                .fixedSize()
             Placeholder(value: rate)
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
+                .minimumScaleFactor(0.5)
             Text(")")
-                .frame(width: 8)
+                .fixedSize()
         }
         .font(.system(size: RateEquationSizes.fontSize))
 
@@ -220,9 +270,9 @@ struct Divide: View {
 
 fileprivate struct Rate: View {
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 3) {
             Text("Rate")
-                .frame(width:65)
+                .fixedSize()
             Equals()
         }
     }
@@ -233,11 +283,11 @@ struct HalfTime: View {
         HStack(spacing: 0) {
             Text("t")
                 .font(.system(size: RateEquationSizes.fontSize))
-                .frame(width: 20, alignment: .trailing)
+                .fixedSize()
             Text("1/2")
                 .font(.system(size: RateEquationSizes.subscriptFontSize))
                 .offset(y: 10)
-                .frame(width: 34)
+                .fixedSize()
         }
     }
 }
@@ -253,7 +303,6 @@ struct Equals: View {
     var body: some View {
         Text("=")
             .fixedSize()
-            .minimumScaleFactor(1)
     }
 }
 
@@ -288,7 +337,7 @@ struct Settings {
 
 struct ZeroOrderEquationView2_Previews: PreviewProvider {
     static var previews: some View {
-        ZeroOrderEquationView(
+        UnscaledZeroOrderEquationView(
             emphasiseFilledTerms: false,
             initialConcentration: 0.1,
             initialTime: 1,
@@ -297,10 +346,10 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             deltaT: nil,
             c2: nil,
             t2: nil,
-            halfTime: nil,
-            maxWidth: 100,
-            maxHeight: 100
-        ).scaleEffect(x: 0.5, y: 0.5)
-        .previewLayout(.fixed(width: 812, height: 375))
+            halfTime: nil
+        )
+        .border(Color.red)
+        .previewLayout(.fixed(width: 540, height: 255))
     }
 }
+

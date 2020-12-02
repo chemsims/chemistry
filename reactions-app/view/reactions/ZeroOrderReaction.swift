@@ -44,7 +44,7 @@ struct ZeroOrderReaction: View {
         return VStack(alignment: .leading, spacing: 0) {
             Spacer()
                 .frame(height: settings.beakerHeight + settings.beakerLeadingPadding)
-            ZeroOrderEquationView2(
+            ZeroOrderEquationView(
                 emphasiseFilledTerms: reaction.currentTime == nil,
                 initialConcentration: reaction.initialConcentration,
                 initialTime: reaction.initialTime,
