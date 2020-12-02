@@ -7,6 +7,7 @@ import SwiftUI
 
 struct SecondOrderEquationView: View {
 
+    let emphasiseFilledTerms: Bool
     let c1: CGFloat
     let c2: CGFloat?
     let rate: CGFloat?
@@ -26,6 +27,7 @@ struct SecondOrderEquationView: View {
             maxHeight: maxHeight
         ) {
             UnscaledSecondOrderEquationView(
+                emphasise: emphasiseFilledTerms,
                 c1: c1,
                 c2: c2,
                 rate: rate,
@@ -38,6 +40,7 @@ struct SecondOrderEquationView: View {
 
 fileprivate struct UnscaledSecondOrderEquationView: View {
 
+    let emphasise: Bool
     let c1: CGFloat
     let c2: CGFloat?
     let rate: CGFloat?
@@ -48,6 +51,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
         VStack(alignment: .leading, spacing: 15) {
             SecondOrderRateFilled()
             SecondOrderRateBlank(
+                emphasise: emphasise,
                 rate: rate?.str(decimals: 2),
                 invA0: invStr(c1),
                 invAt: c2.map(invStr),
@@ -55,6 +59,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
             )
             SecondOrderHalftimeFilled()
             SecondOrderHalftimeBlank(
+                emphasise: emphasise,
                 halfTime: halfTime?.str(decimals: 2),
                 rate: rate?.str(decimals: 2),
                 a0: c1.str(decimals: 2)
@@ -107,6 +112,7 @@ fileprivate struct SecondOrderRateFilled: View {
 
 fileprivate struct SecondOrderRateBlank: View {
 
+    let emphasise: Bool
     let rate: String?
     let invA0: String?
     let invAt: String?
@@ -114,23 +120,23 @@ fileprivate struct SecondOrderRateBlank: View {
 
     var body: some View {
         HStack(spacing: 5) {
-            Placeholder(value: rate)
+            Placeholder(value: rate, emphasise: emphasise)
 
             FixedText("=")
 
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
-                    Placeholder(value: invAt)
+                    Placeholder(value: invAt, emphasise: emphasise)
 
                     FixedText("-")
 
-                    Placeholder(value: invA0)
+                    Placeholder(value: invA0, emphasise: invAt == nil)
                 }
 
                 Rectangle()
                     .frame(width: 180, height: 2)
 
-                Placeholder(value: time)
+                Placeholder(value: time, emphasise: emphasise)
             }
         }
     }
@@ -153,32 +159,29 @@ fileprivate struct SecondOrderHalftimeFilled: View {
 
 fileprivate struct SecondOrderHalftimeBlank: View {
 
+    let emphasise: Bool
     let halfTime: String?
     let rate: String?
-    let a0: String?
+    let a0: String
 
     var body: some View {
         HStack(spacing: 5) {
-            Placeholder(value: halfTime)
+            Placeholder(value: halfTime, emphasise: emphasise)
 
             FixedText("=")
 
             FixedText("1")
             FixedText("/")
 
-            Placeholder(value: rate)
+            Placeholder(value: rate, emphasise: emphasise)
 
-            if (a0 != nil) {
-                FixedText("(")
+            FixedText("(")
+            Text(a0)
+                .frame(width: EquationSettings.boxWidth * 0.8)
+                .minimumScaleFactor(0.5)
+                .foregroundColor(rate == nil ? .orangeAccent : .black)
+            FixedText(")")
 
-                Text(a0!)
-                    .frame(width: EquationSettings.boxWidth * 0.8)
-                    .minimumScaleFactor(0.5)
-                FixedText(")")
-            } else {
-                Box()
-                    .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-            }
         }
     }
 }
@@ -187,6 +190,7 @@ fileprivate struct SecondOrderHalftimeBlank: View {
 struct SecondOrderEquationView2_Previews: PreviewProvider {
     static var previews: some View {
         UnscaledSecondOrderEquationView(
+            emphasise: true,
             c1: 1.23,
             c2: 0.34,
             rate: 1.45,
