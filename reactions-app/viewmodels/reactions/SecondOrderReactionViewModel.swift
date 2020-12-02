@@ -26,7 +26,18 @@ class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
 
     override var rate: CGFloat? {
         if let c2 = finalConcentration, let t2 = finalTime, initialConcentration != 0, c2 != 0 {
-            return SecondOrderReactionEquation.getRate(c1: initialConcentration, c2: c2, time: t2)
+            let roundedC2 = c2.rounded(decimals: 2)
+            let roundedC1 = initialConcentration.rounded(decimals: 2)
+            let roundedT = t2.rounded(decimals: 2)
+            return SecondOrderReactionEquation.getRate(c1: roundedC1, c2: roundedC2, time: roundedT)
+        }
+        return nil
+    }
+
+    override var halfTime: CGFloat? {
+        if let rate = rate {
+            let roundedRate = rate.rounded(decimals: 2)
+            return 1 / (roundedRate * initialConcentration.rounded(decimals: 2))
         }
         return nil
     }
