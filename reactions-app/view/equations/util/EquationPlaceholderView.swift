@@ -6,20 +6,36 @@
 import SwiftUI
 
 struct Placeholder: View {
+
     let value: String?
+    let emphasise: Bool
+
+    init(value: String?, emphasise: Bool = false) {
+        self.value = value
+        self.emphasise = emphasise
+    }
 
     var body: some View {
         if (value != nil) {
             Text(value!)
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
+                .modifier(PlaceholderFraming())
+                .foregroundColor(emphasise ? .orange : .black)
         } else {
             Box()
-                .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
-                .minimumScaleFactor(0.5)
+                .modifier(PlaceholderFraming())
         }
     }
+}
 
+fileprivate struct PlaceholderFraming: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(
+                width: EquationSettings.boxWidth,
+                height: EquationSettings.boxHeight
+            )
+            .minimumScaleFactor(0.5)
+    }
 }
 
 struct Box: View {
