@@ -48,7 +48,7 @@ struct ZeroOrderReaction: View {
                 emphasiseFilledTerms: reaction.currentTime == nil,
                 initialConcentration: reaction.initialConcentration,
                 initialTime: reaction.initialTime,
-                rate: reaction.initialTime,
+                rate: reaction.rate,
                 deltaC: reaction.deltaC,
                 deltaT: reaction.deltaT,
                 c2: reaction.finalConcentration,

@@ -37,8 +37,7 @@ class FirstOrderReactionViewModel: ZeroOrderReactionViewModel {
 
     override var halfTime: CGFloat? {
         if let rate = rate {
-            let roundedRate = rate.rounded(decimals: 2)
-            return log(2) / roundedRate
+            return log(2) / rate
         }
         return nil
     }

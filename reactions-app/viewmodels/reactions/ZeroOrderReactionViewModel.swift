@@ -47,14 +47,14 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     var deltaC: CGFloat? {
         if let c2 = finalConcentration {
-            return c2 - initialConcentration
+            return c2.rounded(decimals: 2) - initialConcentration.rounded(decimals: 2)
         }
         return nil
     }
 
     var deltaT: CGFloat? {
         if let t2 = finalTime {
-            return t2 - initialTime
+            return t2.rounded(decimals: 2) - initialTime.rounded(decimals: 2)
         }
         return nil
     }
@@ -68,7 +68,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     var halfTime: CGFloat? {
         if let rate = rate, rate != 0 {
-            return initialConcentration / (2 * rate)
+            return initialConcentration.rounded(decimals: 2) / (2 * rate)
         }
         return nil
     }

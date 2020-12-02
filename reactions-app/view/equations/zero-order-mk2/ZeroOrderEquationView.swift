@@ -341,7 +341,7 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             emphasiseFilledTerms: false,
             initialConcentration: 0.1,
             initialTime: 1,
-            rate: nil,
+            rate: 1.2,
             deltaC: nil,
             deltaT: nil,
             c2: nil,
