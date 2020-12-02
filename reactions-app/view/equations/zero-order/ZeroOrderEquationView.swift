@@ -20,9 +20,8 @@ struct ZeroOrderEquationView: View {
     let maxWidth: CGFloat
     let maxHeight: CGFloat
     
-
     private let naturalWidth: CGFloat = 540
-    private let naturalHeight: CGFloat = 255
+    private let naturalHeight: CGFloat = 265
 
     var body: some View {
         ScaledView(
@@ -122,21 +121,21 @@ fileprivate struct FilledRateView: View {
     private var fraction2: some View {
         HStack(spacing: 0) {
             FixedText("-")
-            VStack(spacing: 1) {
+            VStack(spacing: 5) {
                 HStack(spacing: 1) {
-                    Text("c2")
+                    C_2()
                         .frame(width: EquationSettings.boxWidth)
                     FixedText("-")
-                    Text("c1")
+                    C_1()
                         .frame(width:  EquationSettings.boxWidth)
                 }
                 Rectangle()
                     .frame(width: 155, height: 2)
                 HStack(spacing: 1) {
-                    Text("t2")
+                    T_2()
                         .frame(width:  EquationSettings.boxWidth)
                     FixedText("-")
-                    Text("t1")
+                    T_1()
                         .frame(width:  EquationSettings.boxWidth)
                 }
             }
@@ -282,7 +281,7 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             halfTime: nil
         )
         .border(Color.red)
-        .previewLayout(.fixed(width: 540, height: 255))
+        .previewLayout(.fixed(width: 540, height: 265))
     }
 }
 

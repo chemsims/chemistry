@@ -5,6 +5,26 @@
 
 import SwiftUI
 
+struct C_1: View {
+
+    var body: some View {
+        SubscriptView(
+            mainValue: "c",
+            subscriptValue: "1"
+        )
+    }
+}
+
+struct C_2: View {
+
+    var body: some View {
+        SubscriptView(
+            mainValue: "c",
+            subscriptValue: "2"
+        )
+    }
+}
+
 struct T_1: View {
 
     let uppercase: Bool
@@ -13,8 +33,8 @@ struct T_1: View {
     }
 
     var body: some View {
-        TSubscript(
-            uppercase: uppercase,
+        SubscriptView(
+            mainValue: uppercase ? "T" : "t",
             subscriptValue: "1"
         )
     }
@@ -28,20 +48,20 @@ struct T_2: View {
     }
 
     var body: some View {
-        TSubscript(
-            uppercase: uppercase,
+        SubscriptView(
+            mainValue: uppercase ? "T" : "t",
             subscriptValue: "2"
         )
     }
 }
 
-fileprivate struct TSubscript: View {
-    let uppercase: Bool
+fileprivate struct SubscriptView: View {
+    let mainValue: String
     let subscriptValue: String
 
     var body: some View {
         HStack(spacing: 0) {
-            Text(uppercase ? "T" : "t")
+            Text(mainValue)
                 .fixedSize()
                 .font(.system(size: EquationSettings.fontSize))
             Text(subscriptValue)
@@ -58,6 +78,8 @@ struct SubscriptViews_Previews: PreviewProvider {
         VStack {
             T_1()
             T_2()
+            C_1()
+            C_2()
         }
     }
 }
