@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct EnergyProfileRateEquationView: View {
+struct EnergyProfileRateEquation: View {
 
     let k1: CGFloat?
     let k2: CGFloat?
@@ -25,7 +25,7 @@ struct EnergyProfileRateEquationView: View {
             maxWidth: maxWidth,
             maxHeight: maxHeight
         ) {
-            UnscaledEnergyProfileRateEquationView(
+            UnscaledEnergyProfileRateEquation(
                 k1: k1,
                 k2: k2,
                 ea: ea,
@@ -37,7 +37,7 @@ struct EnergyProfileRateEquationView: View {
     }
 }
 
-fileprivate struct UnscaledEnergyProfileRateEquationView: View {
+fileprivate struct UnscaledEnergyProfileRateEquation: View {
 
     let k1: CGFloat?
     let k2: CGFloat?
@@ -249,7 +249,7 @@ fileprivate struct LargeCloseParen: View {
 
 struct EnergyProfileRate_Previews: PreviewProvider {
     static var previews: some View {
-        UnscaledEnergyProfileRateEquationView(
+        UnscaledEnergyProfileRateEquation(
             k1: 10.2,
             k2: 11.5,
             ea: 17000,

@@ -62,7 +62,7 @@
 		572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB943255C3BCF0071C600 /* ValueRange.swift */; };
 		57517F2F25739E3A00EB79C7 /* ReactionOrderSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */; };
 		57517F3325739E5200EB79C7 /* ReactionOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57517F3225739E5200EB79C7 /* ReactionOrder.swift */; };
-		57655D45256C0919006FB93C /* EnergyProfileRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRate.swift */; };
+		57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */; };
 		5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766B71E256EC20200569CB9 /* ShakeExtension.swift */; };
 		576D5A7425665B9C0062F722 /* RateEquationComparisonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7325665B9C0062F722 /* RateEquationComparisonView.swift */; };
 		576D5A7825665E170062F722 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
@@ -174,7 +174,7 @@
 		572CB943255C3BCF0071C600 /* ValueRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRange.swift; sourceTree = "<group>"; };
 		57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrderSelection.swift; sourceTree = "<group>"; };
 		57517F3225739E5200EB79C7 /* ReactionOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrder.swift; sourceTree = "<group>"; };
-		57655D44256C0919006FB93C /* EnergyProfileRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRate.swift; sourceTree = "<group>"; };
+		57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateEquation.swift; sourceTree = "<group>"; };
 		5766B71E256EC20200569CB9 /* ShakeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeExtension.swift; sourceTree = "<group>"; };
 		576D5A7325665B9C0062F722 /* RateEquationComparisonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateEquationComparisonView.swift; sourceTree = "<group>"; };
 		576D5A7725665E170062F722 /* ScaledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledView.swift; sourceTree = "<group>"; };
@@ -510,7 +510,7 @@
 		57655D43256C0906006FB93C /* energy-profile */ = {
 			isa = PBXGroup;
 			children = (
-				57655D44256C0919006FB93C /* EnergyProfileRate.swift */,
+				57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */,
 			);
 			path = "energy-profile";
 			sourceTree = "<group>";
@@ -722,7 +722,7 @@
 				571B3C7C256560E40075358B /* ReactionStatements.swift in Sources */,
 				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
 				570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */,
-				57655D45256C0919006FB93C /* EnergyProfileRate.swift in Sources */,
+				57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */,
 				57F477422560FD440041D406 /* Beaky.swift in Sources */,
 				571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */,
 				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,

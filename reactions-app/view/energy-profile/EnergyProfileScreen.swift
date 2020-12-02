@@ -84,7 +84,7 @@ struct EnergyProfileScreen: View {
             HStack(spacing: 0) {
                 Spacer()
                     .frame(width: settings.beakerWidth)
-                EnergyProfileRate(
+                EnergyProfileRateEquation(
                     k1: model.k1,
                     k2: model.k2,
                     ea: model.activationEnergy,
