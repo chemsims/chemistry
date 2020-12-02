@@ -16,7 +16,7 @@ struct FirstOrderEquationView: View {
     let maxHeight: CGFloat
 
     private let naturalWidth: CGFloat = 314
-    private let naturalHeight: CGFloat = 314
+    private let naturalHeight: CGFloat = 283
 
     var body: some View {
         ScaledView(
@@ -46,18 +46,23 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            FirstOrderRateFilled()
-            FirstOrderRateBlank(
-                rate: rate?.str(decimals: 2),
-                lnA0: lnStr(c1),
-                lnAt: c2.map(lnStr),
-                t: t?.str(decimals: 2)
-            )
-            FirstOrderHalftimeFilled()
-            FirstOrderHalftimeBlank(
-                halftime: halfTime?.str(decimals: 2),
-                rate: rate?.str(decimals: 2)
-            )
+            VStack(alignment: .leading, spacing: 0) {
+                FirstOrderRateFilled()
+                FirstOrderRateBlank(
+                    rate: rate?.str(decimals: 2),
+                    lnA0: lnStr(c1),
+                    lnAt: c2.map(lnStr),
+                    t: t?.str(decimals: 2)
+                )
+            }
+
+            VStack(alignment: .leading, spacing: 0) {
+                FirstOrderHalftimeFilled()
+                FirstOrderHalftimeBlank(
+                    halftime: halfTime?.str(decimals: 2),
+                    rate: rate?.str(decimals: 2)
+                )
+            }
         }
         .font(.system(size: RateEquationSizes.fontSize))
         .lineLimit(1)
