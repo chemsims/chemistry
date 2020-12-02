@@ -252,7 +252,7 @@ struct Minus: View {
 struct Equals: View {
     var body: some View {
         Text("=")
-            .frame(width: 20)
+            .fixedSize()
             .minimumScaleFactor(1)
     }
 }
