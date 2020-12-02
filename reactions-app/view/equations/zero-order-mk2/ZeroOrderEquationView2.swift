@@ -245,8 +245,7 @@ struct HalfTime: View {
 struct Minus: View {
     var body: some View {
         Text("-")
-            .frame(width: 17)
-            .minimumScaleFactor(1)
+            .fixedSize()
     }
 }
 

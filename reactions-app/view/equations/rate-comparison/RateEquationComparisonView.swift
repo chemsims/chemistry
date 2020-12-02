@@ -9,8 +9,8 @@ struct RateEquationComparisonView: View {
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
-    private let naturalWidth: CGFloat = 414
-    private let naturalHeight: CGFloat = 275
+    private let naturalWidth: CGFloat = 381
+    private let naturalHeight: CGFloat = 277
 
     var body: some View {
         ScaledView(
@@ -19,19 +19,27 @@ struct RateEquationComparisonView: View {
             maxWidth: maxWidth,
             maxHeight: maxHeight
         ) {
-            VStack(alignment: .leading, spacing: 15) {
-                GeneralRateEquationView(order: 0) {
-                    ZeroOrderRateComparisonView()
-                }
-                GeneralRateEquationView(order: 1) {
-                    FirstOrderRateComparisonView()
-                }
-                GeneralRateEquationView(order: 2) {
-                    SecondOrderRateComparisonView()
-                }
-            }
+            UnscaledRateEquationComparisonView()
         }.frame(width: maxWidth, height: maxHeight)
     }
+}
+
+fileprivate struct UnscaledRateEquationComparisonView: View {
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            GeneralRateEquationView(order: 0) {
+                ZeroOrderRateComparisonView()
+            }
+            GeneralRateEquationView(order: 1) {
+                FirstOrderRateComparisonView()
+            }
+            GeneralRateEquationView(order: 2) {
+                SecondOrderRateComparisonView()
+            }
+        }
+    }
+
 }
 
 struct GeneralRateEquationView<Content: View>: View {
@@ -42,11 +50,12 @@ struct GeneralRateEquationView<Content: View>: View {
     var body: some View {
         HStack(spacing: 25) {
             Text("Order: \(order)")
-                .lineLimit(1)
-                .font(.system(size: RateEquationSizes.fontSize))
-                .frame(width: 112, alignment: .leading)
+                .fixedSize()
             content()
         }
+        .lineLimit(1)
+        .font(.system(size: RateEquationSizes.fontSize))
+        .minimumScaleFactor(1)
     }
 }
 
@@ -85,10 +94,10 @@ fileprivate struct FirstOrderRateComparisonView: View {
     private func inverse<Content: View>(aTerm: () -> Content) -> some View {
         HStack(spacing: 0) {
             Text("(1/")
-                .frame(width: 36)
+                .fixedSize()
             aTerm()
             Text(")")
-                .frame(width: 17)
+                .fixedSize()
         }
     }
 }
@@ -114,7 +123,7 @@ fileprivate struct SecondOrderRateComparisonView: View {
     private func log<Content: View>(aTerm: () -> Content) -> some View {
         HStack(spacing: 0) {
             Text("ln")
-                .frame(width: 25)
+                .fixedSize()
             aTerm()
         }
     }
@@ -144,10 +153,9 @@ fileprivate struct Rate: View {
     var body: some View {
         HStack(spacing: 0) {
             Text("k")
-                .frame(width: 21)
-
+                .fixedSize()
             Text("=")
-                .frame(width: 19)
+                .fixedSize()
         }
     }
 }
@@ -159,9 +167,9 @@ struct A_t: View {
             Text("t")
                 .font(.system(size: RateEquationSizes.subscriptFontSize))
                 .offset(y: 9)
-                .frame(width: 10)
+                .fixedSize()
             EndBracket()
-        }.minimumScaleFactor(1)
+        }
     }
 }
 
@@ -172,7 +180,7 @@ struct A_0: View {
             Text("0")
                 .font(.system(size: RateEquationSizes.subscriptFontSize))
                 .offset(y: 9)
-                .frame(width: 15)
+                .fixedSize()
             EndBracket()
         }.minimumScaleFactor(1)
     }
@@ -181,22 +189,21 @@ struct A_0: View {
 fileprivate struct BracketA: View {
     var body: some View {
         Text("[A")
-            .frame(width: 32)
+            .fixedSize()
     }
 
 }
 fileprivate struct EndBracket: View {
     var body: some View {
         Text("]")
-            .font(.system(size: RateEquationSizes.fontSize))
-            .frame(width: 8)
+            .fixedSize()
     }
 }
 
 fileprivate struct Time: View {
     var body: some View {
         Text("t")
-            .frame(width: 14)
+            .fixedSize()
     }
 }
 
@@ -228,9 +235,14 @@ struct RateEquationSizes {
 
 struct RateEquationComparisonView_Previews: PreviewProvider {
     static var previews: some View {
+
+        UnscaledRateEquationComparisonView()
+            .border(Color.red)
+            .previewLayout(.fixed(width: 600, height: 600))
+
         RateEquationComparisonView(
-            maxWidth: 200,
-            maxHeight: 200
+            maxWidth: 300,
+            maxHeight: 300
         ).previewLayout(.fixed(width: 512, height: 315))
     }
 }
