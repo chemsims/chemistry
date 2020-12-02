@@ -5,23 +5,6 @@
 
 import SwiftUI
 
-struct DefaultPlaceholder: View {
-    let settings: ZeroOrderEquationGeometry
-
-    var body: some View {
-        EquationPlaceholderView()
-            .padding(settings.boxPadding)
-            .frame(width: settings.boxWidth, height: settings.boxWidth)
-    }
-}
-
-func termOrBox(_ term: String?, settings: ZeroOrderEquationGeometry) -> some View {
-    if let term = term {
-        return AnyView(Text(term))
-    }
-    return AnyView(DefaultPlaceholder(settings: settings))
-}
-
 struct EquationPlaceholderView: View {
 
     var body: some View {
