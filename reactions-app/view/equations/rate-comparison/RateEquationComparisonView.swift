@@ -33,6 +33,7 @@ fileprivate struct UnscaledRateEquationComparisonView: View {
             }
             GeneralRateEquationView(order: 1) {
                 FirstOrderRateComparisonView()
+
             }
             GeneralRateEquationView(order: 2) {
                 SecondOrderRateComparisonView()
@@ -74,7 +75,7 @@ fileprivate struct ZeroOrderRateComparisonView: View {
     }
 }
 
-fileprivate struct FirstOrderRateComparisonView: View {
+fileprivate struct SecondOrderRateComparisonView: View {
     var body: some View {
         GeneralRateComparisonEquation(
             dividerWidth: 217
@@ -102,7 +103,7 @@ fileprivate struct FirstOrderRateComparisonView: View {
     }
 }
 
-fileprivate struct SecondOrderRateComparisonView: View {
+fileprivate struct FirstOrderRateComparisonView: View {
 
     var body: some View {
         GeneralRateComparisonEquation(
