@@ -60,7 +60,7 @@ class RootNavigationViewModel: ObservableObject {
 
     private func goToEnergyProfile() {
         let model = EnergyProfileViewModel()
-        model.goToPreviousScreen = goToComparison
+        model.goToPreviousScreen = goToComparison2
         let view = EnergyProfileScreen(model: model)
         self.view = AnyView(view)
     }
