@@ -52,7 +52,9 @@ struct EnergyProfileScreen: View {
             HStack(alignment: .top, spacing: 20) {
                 Spacer()
                 EnergyProfileRateChart(
-                    settings: EnergyRateChartSettings(chartSize: settings.chartsSize),
+                    settings: EnergyRateChartSettings(
+                        chartSize: settings.chartsSize
+                    ),
                     equation: model.rateEquation,
                     currentTempInverse: model.temp2.map { 1 / $0 }
                 )

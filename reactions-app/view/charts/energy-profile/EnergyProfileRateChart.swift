@@ -45,10 +45,16 @@ struct EnergyProfileRateChart: View {
             if (equation != nil && currentTempInverse != nil) {
                 ZStack {
                     Circle()
-                        .frame(width: settings.chartHeadHaloSize, height: settings.chartHeadHaloSize)
+                        .frame(
+                            width: settings.chartHeadHaloSize * 2,
+                            height: settings.chartHeadHaloSize * 2
+                        )
                         .foregroundColor(Styling.primaryColorHalo)
                     Circle()
-                        .frame(width: settings.chartHeadSize, height: settings.chartHeadHaloSize)
+                        .frame(
+                            width: settings.chartHeadSize * 2,
+                            height: settings.chartHeadSize * 2
+                        )
                         .foregroundColor(.orangeAccent)
                 }
                 .position(
