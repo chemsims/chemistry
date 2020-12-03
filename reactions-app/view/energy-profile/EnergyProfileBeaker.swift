@@ -206,6 +206,10 @@ struct EnergyProfileBeaker: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: settings.standWidth)
 
+            Image("burner")
+                .resizable()
+                .frame(width: settings.burnerWidth, height: settings.burnerHeight)
+
             flame(settings: settings)
         }
     }
@@ -213,13 +217,11 @@ struct EnergyProfileBeaker: View {
     private func flame(settings: EnergyBeakerSettings) -> some View {
         VStack(spacing: 0) {
             ZStack(alignment: .bottom) {
-                Group {
-                    smallFlame(settings: settings)
-                        .offset(x: settings.flameWidth)
+                smallFlame(settings: settings)
+                    .offset(x: settings.flameWidth)
 
-                    smallFlame(settings: settings)
-                        .offset(x: -settings.flameWidth)
-                }
+                smallFlame(settings: settings)
+                    .offset(x: -settings.flameWidth)
 
                 flameImage
                     .frame(width: largeFlameWidth(settings: settings))
@@ -230,10 +232,8 @@ struct EnergyProfileBeaker: View {
                     )
             }
 
-            Image("burner")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: settings.burnerWidth)
+            Spacer()
+                .frame(width: settings.burnerWidth, height: settings.burnerHeight)
         }
     }
 
@@ -319,6 +319,7 @@ struct EnergyBeakerSettings {
     }
 
     let standHeightToWidth: CGFloat = 0.257
+    let burnerHeightToWidth: CGFloat = 0.1064
 
     var axis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
@@ -353,6 +354,9 @@ struct EnergyBeakerSettings {
 
     var burnerWidth: CGFloat {
         standWidth * 0.4
+    }
+    var burnerHeight: CGFloat {
+        burnerHeightToWidth * burnerWidth
     }
 
     var flameWidth: CGFloat {
