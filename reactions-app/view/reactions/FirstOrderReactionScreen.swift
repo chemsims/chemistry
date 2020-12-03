@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct FirstOrderReactionView: View {
+struct FirstOrderReactionScreen: View {
 
     @ObservedObject var reaction: FirstOrderReactionViewModel
     @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
@@ -43,7 +43,6 @@ struct FirstOrderReactionView: View {
                         .padding(.top, equationLeadingPadding)
                 }
             }
-
         }
     }
 
@@ -79,8 +78,9 @@ struct FirstOrderReactionView: View {
     }
 
     private func equationWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        let freeWidth = availableWidth(settings: settings) / 2
-        return freeWidth
+        let freeWidth = availableWidth(settings: settings)
+        let barChartWidth = barChartSize(settings: settings) * 1.7
+        return freeWidth - barChartWidth
     }
 
 
@@ -99,7 +99,7 @@ struct FirstOrderReactionView: View {
     }
 
     var equationLeadingPadding: CGFloat {
-        return 5
+        return 0
     }
 
 }
@@ -116,6 +116,7 @@ struct FirstOrderReaction_Previews: PreviewProvider {
         // iPhone 11 landscape
         StateWrapper()
             .previewLayout(.fixed(width: 812, height: 375))
+
         StateWrapper()
             .previewLayout(.fixed(width: 1024, height: 768))
     }
@@ -125,7 +126,7 @@ struct FirstOrderReaction_Previews: PreviewProvider {
         @ObservedObject var foo = FirstOrderReactionNavigation.model(reaction: FirstOrderReactionViewModel(), persistence: InMemoryReactionInputPersistence())
 
         var body: some View {
-            FirstOrderReactionView(
+            FirstOrderReactionScreen(
                 reaction: foo.model as! FirstOrderReactionViewModel,
                 navigation: foo
             )

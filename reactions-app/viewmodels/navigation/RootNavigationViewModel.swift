@@ -16,7 +16,7 @@ class RootNavigationViewModel: ObservableObject {
     ) {
         self.view = AnyView(EmptyView())
         self.persistence = persistence
-        goToEnergyProfile()
+        goToFirstOrder()
     }
 
     private func goToZeroOrder() {
@@ -31,7 +31,7 @@ class RootNavigationViewModel: ObservableObject {
         let navigation = FirstOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
         navigation.prevScreen = goToZeroOrder
         navigation.nextScreen = goToSecondOrder
-        self.view = AnyView(FirstOrderReactionView(reaction: reaction, navigation: navigation))
+        self.view = AnyView(FirstOrderReactionScreen(reaction: reaction, navigation: navigation))
     }
 
     private func goToSecondOrder() {
