@@ -79,29 +79,28 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             let minV = settings.minVelocity
             let maxV = settings.maxVelocity
             self.velocity = minV + (extraSpeed * (maxV - minV))
-            updateSpeeds(includeCatalyst: true, allowSlowdown: true)
+            updateSpeeds(allowRapidChange: true)
         }
     }
 
     @objc
     private func updateSpeeds(
-        includeCatalyst: Bool,
-        allowSlowdown: Bool
+        allowRapidChange: Bool
     ) {
         func updateSpeed(_ body: SKPhysicsBody) {
             let magnitude = body.velocity.magnitude
             let factor = velocity / magnitude
-            if (factor < 1 && !allowSlowdown) {
-                return
-            }
-            body.velocity = body.velocity.scale(by: factor)
+
+            let maxFactor = allowRapidChange ? factor :  1.25
+            let minFactor = allowRapidChange ? factor : 0.75
+
+            let adjustedFactor = min(maxFactor, max(minFactor, factor))
+            body.velocity = body.velocity.scale(by: adjustedFactor)
         }
         molecules.forEach(updateSpeed)
-        if (includeCatalyst) {
-            catalystsInLiquid.forEach { c in
-                if let body = c.physicsBody {
-                    updateSpeed(body)
-                }
+        catalystsInLiquid.forEach { c in
+            if let body = c.physicsBody {
+                updateSpeed(body)
             }
         }
     }
@@ -162,7 +161,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             addCatalysts()
         }
         self.physicsWorld.contactDelegate = self
-        let updateSpeedAction = SKAction.run { self.updateSpeeds(includeCatalyst: false, allowSlowdown: false) }
+        let updateSpeedAction = SKAction.run { self.updateSpeeds(allowRapidChange: false) }
         let wait = SKAction.wait(forDuration: updateSpeedDelay)
         let sequence = SKAction.sequence([wait, updateSpeedAction])
         self.run(SKAction.repeatForever(sequence))
