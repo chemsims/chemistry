@@ -16,7 +16,7 @@ struct ZeroOrderReactionNavigation {
                 order: .Zero,
                 persistence: persistence
             ),
-            EndAnimation(statement: ReactionStatements.end),
+            EndAnimation(statement: ZeroOrderStatements.end),
         ]
     }
 

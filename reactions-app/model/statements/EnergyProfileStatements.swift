@@ -8,7 +8,7 @@ import Foundation
 struct EnergyProfileStatements {
 
     static let intro: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine("Here's an endothermic reaction! Why don't you add a catalyst to make it faster? *Choose one.*")
+        SpeechBubbleLineGenerator.makeLine("Here's an endothermic reaction! Why don't you add a catalyst to make it faster? *Choose one.*"),
     ]
 
     static let setT2: [SpeechBubbleLine] = [

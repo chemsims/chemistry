@@ -8,14 +8,14 @@ import SwiftUI
 struct FirstOrderReactionNavigation {
     static func states(persistence: ReactionInputPersistence) -> [ReactionState] {
         [
-            InitialOrderedStep(order: "first"),
+            InitialOrderedStep(statement: FirstOrderStatements.intro),
             SetFinalConcentrationToNonNil(),
             RunAnimation(
                 statement: ReactionStatements.inProgress,
                 order: .First,
                 persistence: persistence
             ),
-            EndAnimation(statement: ReactionStatements.end)
+            EndAnimation(statement: FirstOrderStatements.end)
         ]
     }
 

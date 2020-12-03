@@ -117,12 +117,6 @@ class EndAnimation: ReactionState {
 
 class InitialOrderedStep: ReactionState {
 
-    let order: String
-    init(order: String) {
-        self.order = order
-        super.init(statement: ReactionStatements.orderIntro(order: order))
-    }
-
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.initialTime = 0
         model.finalTime = 10

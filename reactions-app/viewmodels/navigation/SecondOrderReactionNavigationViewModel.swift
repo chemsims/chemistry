@@ -9,14 +9,14 @@ struct SecondOrderReactionNavigation {
 
     static func states(persistence: ReactionInputPersistence) -> [ReactionState] {
         [
-            InitialOrderedStep(order: "second"),
+            InitialOrderedStep(statement: SecondOrderStatements.intro),
             SetFinalConcentrationToNonNil(),
             RunAnimation(
                 statement: ReactionStatements.inProgress,
                 order: .Second,
                 persistence: persistence
             ),
-            EndAnimation(statement: ReactionStatements.end)
+            EndAnimation(statement: SecondOrderStatements.end)
         ]
     }
 
