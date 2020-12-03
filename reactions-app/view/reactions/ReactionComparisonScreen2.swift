@@ -76,8 +76,8 @@ struct ReactionComparisonScreen2: View {
                         initialConcentration: 1,
                         finalConcentration: 0.1,
                         initialTime: 0,
-                        currentTime: unsafeCurrentTimeBinding,
-                        finalTime: 1,
+                        currentTime: currentTimeBinding,
+                        finalTime: finalTime,
                         canSetCurrentTime: reaction.reactionHasEnded,
                         minTime: reaction.zeroOrderInput.t1,
                         maxTime: reaction.zeroOrderInput.t2
@@ -160,25 +160,10 @@ struct ReactionComparisonScreen2: View {
         )
     }
 
-    private var unsafeCurrentTimeBinding: Binding<CGFloat> {
+    private var currentTimeBinding: Binding<CGFloat> {
         Binding(
             get: { reaction.currentTime ?? reaction.initialTime },
             set: { reaction.currentTime = $0 }
-        )
-    }
-
-    private func currentTimeBindingWithLimits(
-        minValue: CGFloat,
-        maxValue: CGFloat
-    ) -> Binding<CGFloat> {
-        Binding(
-            get: {
-                let value = reaction.currentTime ?? reaction.initialTime
-                return min(maxValue, max(value, minValue))
-            },
-            set: {
-                reaction.currentTime = $0
-            }
         )
     }
 
@@ -250,8 +235,8 @@ struct ReactionComparisonScreen2: View {
             settings: settings,
             equation: equation,
             initialTime: 0,
-            currentTime: unsafeCurrentTimeBinding,
-            finalTime: 1,
+            currentTime: currentTimeBinding,
+            finalTime: finalTime,
             filledBarColor: Styling.timeAxisCompleteBar,
             headColor: Styling.moleculeA,
             headRadius: settings.chartHeadPrimarySize,
@@ -326,6 +311,9 @@ struct ReactionComparisonScreen2: View {
         settings.chartsTopPadding * 0.5
     }
 
+    private var finalTime: CGFloat {
+        reaction.finalTime ?? 1
+    }
 }
 
 struct ReactionComparison2_Previews: PreviewProvider {
