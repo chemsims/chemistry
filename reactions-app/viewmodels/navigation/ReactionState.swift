@@ -81,9 +81,7 @@ class RunAnimation: ReactionState {
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        withAnimation(.easeOut(duration: 0.25)) {
-            model.currentTime = nil
-        }
+        model.currentTime = nil
     }
 
     override func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? {
