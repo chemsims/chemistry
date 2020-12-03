@@ -54,9 +54,12 @@ class EnergyProfileViewModel: ObservableObject {
                 goToPrevious()
             }
         } else {
-            catalystIsShaking = false
+            withAnimation(.easeOut(duration: 0.75)) {
+                catalystIsShaking = false
+                catalystInProgress = nil
+            }
+
             dispatchId = UUID()
-            catalystInProgress = nil
             emitCatalyst = false
             selectedCatalyst = nil
             allowReactionsToC = false
@@ -88,7 +91,9 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func setCatalystInProgress(catalyst: Catalyst) -> Void {
-        catalystInProgress = catalyst
+        withAnimation(.easeOut(duration: 0.75)) {
+            catalystInProgress = catalyst
+        }
     }
 
     func selectCatalyst(catalyst: Catalyst) -> Void {

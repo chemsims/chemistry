@@ -174,7 +174,6 @@ struct EnergyProfileBeaker: View {
             .zIndex(zIndex)
             .shadow(radius: shadow)
             .scaleEffect(x: scale, y: scale, anchor: .top)
-            .animation(.easeOut(duration: 0.75))
             .opacity(isSelected ? 0 : 1)
             .offset(y: yOffset)
             .onTapGesture {
