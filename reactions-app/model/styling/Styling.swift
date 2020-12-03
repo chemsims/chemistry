@@ -27,6 +27,10 @@ struct Styling {
     static let energyProfileCompleteBar = UIColor.gray.color
     static let timeAxisCompleteBar = UIColor.systemGray3.color
     static let barChartEmpty = UIColor.systemGray4.color
+
+    static let tooltipBackground = Color(red: 66 / 255, green: 66 / 255, blue: 66 / 255, opacity: 1)
+    static let tooltipText = Color.white
+    static let tooltipBorder = Color(red: 161 / 255, green: 161 / 255, blue: 161 / 255, opacity: 1)
 }
 
 extension UIColor {

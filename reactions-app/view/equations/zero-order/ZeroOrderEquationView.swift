@@ -20,7 +20,7 @@ struct ZeroOrderEquationView: View {
 
     let maxWidth: CGFloat
     let maxHeight: CGFloat
-    
+
     private let naturalWidth: CGFloat = 540
     private let naturalHeight: CGFloat = 265
 
@@ -215,11 +215,36 @@ fileprivate struct FilledHalftime: View {
         HStack(spacing: 4) {
             HalfTime()
             FixedText("=")
-            A_0()
+            WithTooltip(
+                offset: -56
+            )
             FixedText("/")
             FixedText("(2 k)")
 
         }.font(.system(size: EquationSettings.fontSize))
+    }
+}
+
+struct WithTooltip: View {
+
+    @State private var showing = false
+    let offset: CGFloat
+
+    var body: some View {
+            A_0()
+                .onTapGesture {
+                    showing.toggle()
+                }
+                .overlay(overlay.offset(y: offset).fixedSize())
+    }
+
+    private var overlay: some View {
+        if (showing) {
+            return AnyView(
+                Tooltip(text: "Concentration of A at t=0")
+            )
+        }
+        return AnyView(EmptyView())
     }
 }
 
