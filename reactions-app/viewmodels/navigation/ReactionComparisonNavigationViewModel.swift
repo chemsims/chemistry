@@ -37,10 +37,10 @@ fileprivate class InitialState: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
-//        model.initialConcentration = ReactionComparisonNavigation.c1
-//        model.finalConcentration = ReactionComparisonNavigation.c2
-//        model.initialTime = 0
-//        model.finalTime = ReactionComparisonNavigation.time
+        model.initialConcentration = ReactionComparisonDefaults.c1
+        model.finalConcentration = ReactionComparisonDefaults.c2
+        model.initialTime = 0
+        model.finalTime = ReactionComparisonDefaults.time
         model.currentTime = nil
     }
 
