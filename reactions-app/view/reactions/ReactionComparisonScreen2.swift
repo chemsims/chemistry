@@ -151,7 +151,7 @@ struct ReactionComparisonScreen2: View {
             return AnyView(Text(defaultValue?.str(decimals: decimals) ?? ""))
         }
         return AnyView(
-            AnimatingNumberView(
+            AnimatingNumber(
                 x: reaction.currentTime!,
                 equation: equation,
                 formatter: { $0.str(decimals: decimals)},

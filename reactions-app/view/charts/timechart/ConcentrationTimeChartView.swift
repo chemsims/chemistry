@@ -201,7 +201,7 @@ struct GeneralTimeChartView: View {
         }
 
         return AnyView(
-            AnimatingNumberView(
+            AnimatingNumber(
                 x: currentTime!,
                 equation: equation,
                 formatter: { $0.str(decimals: decimals)},

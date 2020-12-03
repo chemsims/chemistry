@@ -1,12 +1,11 @@
 //
 // Reactions App
 //
-  
+
 
 import SwiftUI
-import CoreText
 
-struct AnimatingNumberView: View {
+struct AnimatingNumber: View {
 
     let x: CGFloat
     let equation: Equation
