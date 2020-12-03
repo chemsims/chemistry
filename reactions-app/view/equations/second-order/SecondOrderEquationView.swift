@@ -34,7 +34,8 @@ struct SecondOrderEquationView: View {
                 t: t,
                 halfTime: halfTime
             )
-        }.frame(width: maxWidth, height: maxHeight)
+        }
+        .frame(width: maxWidth, height: maxHeight)
     }
 }
 
@@ -67,6 +68,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
         }
         .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
+        .minimumScaleFactor(1)
     }
 
     private func invStr(_ c: CGFloat) -> String {

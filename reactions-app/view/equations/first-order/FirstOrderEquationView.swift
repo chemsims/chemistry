@@ -70,6 +70,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
             }
         }
         .font(.system(size: EquationSettings.fontSize))
+        .minimumScaleFactor(1)
         .lineLimit(1)
     }
 

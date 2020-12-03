@@ -95,7 +95,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
         }
         .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
-        .minimumScaleFactor(0.8)
+        .minimumScaleFactor(1)
     }
 }
 

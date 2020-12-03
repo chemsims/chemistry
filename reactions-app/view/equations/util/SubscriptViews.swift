@@ -68,7 +68,7 @@ fileprivate struct SubscriptView: View {
                 .offset(y: 12)
                 .font(.system(size: EquationSettings.subscriptFontSize))
                 .fixedSize()
-        }
+        }.minimumScaleFactor(1)
     }
 
 }
