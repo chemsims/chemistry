@@ -24,10 +24,11 @@ class ReactionComparisonViewModel: ZeroOrderReactionViewModel {
         self.firstOrderInput = persistence.get(order: .First) ?? defaultInput
         self.secondOrderInput = persistence.get(order: .Second) ?? defaultInput
 
-        let maxTime = [zeroOrderInput.t2, firstOrderInput.t2, secondOrderInput.t2].max()
+        let maxTime = [zeroOrderInput.t2, firstOrderInput.t2, secondOrderInput.t2].max()!
 
         super.init()
         self.initialTime = 0
+        self.initialConcentration = 1
         self.finalTime = maxTime
     }
 
@@ -49,6 +50,11 @@ class ReactionComparisonViewModel: ZeroOrderReactionViewModel {
     var secondOrder: ConcentrationEquation {
         let equation = SecondOrderReactionEquation(c1: secondOrderInput.c1, c2: secondOrderInput.c2, time: secondOrderInput.t2)
         return LimitedEquation(underlying: equation, input: secondOrderInput)
+    }
+
+    func aMolecules(concentration: CGFloat) -> [GridCoordinate] {
+        let numToTake = Int(CGFloat(moleculesA.count) * concentration)
+        return Array(moleculesA.prefix(numToTake))
     }
 
 }

@@ -207,7 +207,7 @@ struct ReactionComparisonScreen2: View {
         HStack {
             VStack {
                 FilledBeaker(
-                    moleculesA: reaction.moleculesA,
+                    moleculesA: reaction.aMolecules(concentration: reaction.zeroOrderInput.c1),
                     concentrationB:
                         bConcentration(
                             aConcentration: zeroOrder,
@@ -217,7 +217,7 @@ struct ReactionComparisonScreen2: View {
                 )
                 .frame(width: settings.beakerWidth * 0.85)
                 FilledBeaker(
-                    moleculesA: reaction.moleculesA,
+                    moleculesA: reaction.aMolecules(concentration: reaction.firstOrderInput.c1),
                     concentrationB:
                         bConcentration(
                             aConcentration: firstOrder,
@@ -227,7 +227,7 @@ struct ReactionComparisonScreen2: View {
                 )
                 .frame(width: settings.beakerWidth * 0.85)
                 FilledBeaker(
-                    moleculesA: reaction.moleculesA,
+                    moleculesA: reaction.aMolecules(concentration: reaction.secondOrderInput.c1),
                     concentrationB:
                         bConcentration(
                             aConcentration: secondOrder,
