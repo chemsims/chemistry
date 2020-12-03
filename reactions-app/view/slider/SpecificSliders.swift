@@ -49,7 +49,7 @@ struct TimeValueSlider: View {
             orientation: .landscape,
             settings: settings,
             canSetInitialValue: canSetInitialTime,
-            absoluteMin: 1,
+            absoluteMin: canSetInitialTime ? 0 : 3,
             absoluteMax: ReactionSettings.maxTime
         )
     }
