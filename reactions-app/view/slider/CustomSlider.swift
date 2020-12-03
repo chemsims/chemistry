@@ -20,6 +20,35 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     let orientation: Orientation
 
     let includeFill: Bool
+    let useHaptics: Bool
+
+
+    init(
+        value: Binding<Value>,
+        axis: AxisPositionCalculations<Value>,
+        handleThickness: CGFloat,
+        handleColor: Color,
+        handleCornerRadius: CGFloat,
+        barThickness: CGFloat,
+        barColor: Color,
+        orientation: Orientation,
+        includeFill: Bool,
+        useHaptics: Bool = true
+    ) {
+        self._value = value
+        self.axis = axis
+        self.handleThickness = handleThickness
+        self.handleColor = handleColor
+        self.handleCornerRadius = handleCornerRadius
+        self.barThickness = barThickness
+        self.barColor = barColor
+        self.orientation = orientation
+        self.includeFill = includeFill
+        self.useHaptics = useHaptics
+    }
+
+    @State private var impactGenerator = UIImpactFeedbackGenerator(style: .light)
+    @State private var didPrepareImpact = false
 
     var body: some View {
         GeometryReader { geometry in
@@ -64,9 +93,34 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                         } else if (newValue < axis.minValue) {
                             newValue = axis.minValue
                         }
+                        if (useHaptics) {
+                            handleHaptics(newValue: newValue, oldValue: self.value)
+                        }
+
                         self.value = newValue
                     }
             )
+    }
+
+    private func handleHaptics(
+        newValue: Value,
+        oldValue: Value
+    ) {
+
+        if (newValue > oldValue) {
+            if (newValue >= axis.maxValue) {
+                impactGenerator.impactOccurred()
+            }
+            else if (newValue >= 0.75 * axis.maxValue) {
+                impactGenerator.prepare()
+            }
+        } else if (newValue < oldValue) {
+            if (newValue <= axis.minValue) {
+                impactGenerator.impactOccurred()
+            } else if (newValue <= 1.25 * axis.minValue) {
+                impactGenerator.prepare()
+            }
+        }
     }
 
     /// Return the x position of the center of the slider handle

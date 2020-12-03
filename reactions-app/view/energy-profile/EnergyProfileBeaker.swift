@@ -275,7 +275,8 @@ struct EnergyProfileBeaker: View {
             barThickness: settings.barThickness,
             barColor: Styling.timeAxisCompleteBar,
             orientation: .landscape,
-            includeFill: true
+            includeFill: true,
+            useHaptics: false
         )
         .frame(height: settings.handleHeight)
         .disabled(tempBinding == nil)
