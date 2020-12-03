@@ -40,7 +40,7 @@ class RootNavigationViewModel: ObservableObject {
         let navigation = zeroOrderNavigation ?? ZeroOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
         self.zeroOrderViewModel = reaction
         self.zeroOrderNavigation = navigation
-        self.view = AnyView(ZeroOrderReaction(reaction: reaction, navigation: navigation))
+        self.view = AnyView(ZeroOrderReactionScreen(reaction: reaction, navigation: navigation))
         navigation.nextScreen = goToFirstOrder
     }
 

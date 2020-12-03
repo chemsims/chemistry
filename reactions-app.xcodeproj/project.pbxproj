@@ -17,7 +17,7 @@
 		57035EDC255BFDB400DB3A19 /* AxisPositionCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EDB255BFDB400DB3A19 /* AxisPositionCalculations.swift */; };
 		57035EE5255BFE5200DB3A19 /* sliderCalculationsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */; };
 		57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
-		57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */; };
+		57035EF6255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF5255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift */; };
 		57035EFD255C1A7000DB3A19 /* ReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EFC255C1A7000DB3A19 /* ReactionSettings.swift */; };
 		57035F0C255C26D000DB3A19 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
 		57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */; };
@@ -133,7 +133,7 @@
 		57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sliderCalculationsTest.swift; sourceTree = "<group>"; };
 		57035EE6255BFE5200DB3A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57035EF0255C09B500DB3A19 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
-		57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReaction.swift; sourceTree = "<group>"; };
+		57035EF5255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionScreen.swift; sourceTree = "<group>"; };
 		57035EFC255C1A7000DB3A19 /* ReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionSettings.swift; sourceTree = "<group>"; };
 		57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAxisShape.swift; sourceTree = "<group>"; };
 		57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTimeChartView.swift; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 		57035EF4255C19EC00DB3A19 /* reactions */ = {
 			isa = PBXGroup;
 			children = (
-				57035EF5255C1A0A00DB3A19 /* ZeroOrderReaction.swift */,
+				57035EF5255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift */,
 				57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */,
 				571B3C41256405490075358B /* OrderedReactionScreen.swift */,
 				571B3C7325655AA60075358B /* SecondOrderReactionScreen.swift */,
@@ -792,7 +792,7 @@
 				576D5A7825665E170062F722 /* ScaledView.swift in Sources */,
 				571B3C80256560F90075358B /* SecondOrderStatements.swift in Sources */,
 				57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */,
-				57035EF6255C1A0A00DB3A19 /* ZeroOrderReaction.swift in Sources */,
+				57035EF6255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift in Sources */,
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
 				57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */,
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,

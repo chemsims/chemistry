@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct ZeroOrderReaction: View {
+struct ZeroOrderReactionScreen: View {
 
     @ObservedObject var reaction: ZeroOrderReactionViewModel
     @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
@@ -42,7 +42,7 @@ struct ZeroOrderReaction: View {
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
-        let availableWidth = settings.width - settings.beakyBoxTotalWidth - (2 * equationHorizontalPadding)
+        let availableWidth = settings.width - settings.beakyBoxTotalWidth - (2 * equationHorizontalPadding(settings: settings))
         let availableHeight = settings.height - settings.beakerHeight - settings.beakerLeadingPadding - (2 * equationVerticalPadding)
 
         let height = min(availableHeight, settings.height / 2.5)
@@ -66,7 +66,7 @@ struct ZeroOrderReaction: View {
                 isShowingTooltip: $isShowingTooltip
             )
             .padding(.vertical, equationVerticalPadding)
-            .padding(.horizontal, equationHorizontalPadding)
+            .padding(.horizontal, equationHorizontalPadding(settings: settings))
             Spacer()
         }
     }
@@ -74,8 +74,8 @@ struct ZeroOrderReaction: View {
     private var equationVerticalPadding: CGFloat {
         10
     }
-    private var equationHorizontalPadding: CGFloat {
-        5
+    private func equationHorizontalPadding(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        settings.chartSize * 0.1
     }
 }
 
@@ -91,23 +91,23 @@ struct ZeroOrderReaction_Previews: PreviewProvider {
     static var previews: some View {
 
         // iPhone SE landscape
-        ZeroOrderReaction(
+        ZeroOrderReactionScreen(
             reaction: navigation.model, navigation: navigation
         ).previewLayout(.fixed(width: 568, height: 320))
 
         // iPhone 11 landscape
-        ZeroOrderReaction(
+        ZeroOrderReactionScreen(
             reaction: navigation.model, navigation: navigation
         ).previewLayout(.fixed(width: 812, height: 375))
 
 
         /// iPad mini 4 landscape
-        ZeroOrderReaction(
+        ZeroOrderReactionScreen(
             reaction: navigation.model, navigation: navigation
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro
-        ZeroOrderReaction(
+        ZeroOrderReactionScreen(
             reaction: navigation.model, navigation: navigation
         ).previewLayout(.fixed(width: 1366, height: 1024))
 
