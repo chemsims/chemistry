@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct SecondOrderReactionView: View {
+struct SecondOrderReactionScreen: View {
 
     @ObservedObject var reaction: SecondOrderReactionViewModel
     @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
@@ -78,8 +78,9 @@ struct SecondOrderReactionView: View {
     }
 
     private func equationWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        let freeWidth = availableWidth(settings: settings) / 2
-        return freeWidth
+        let freeWidth = availableWidth(settings: settings)
+        let barChartWidth = barChartSize(settings: settings) * 1.7
+        return freeWidth - barChartWidth
     }
 
     private func barChartSize(settings: OrderedReactionLayoutSettings) -> CGFloat {
@@ -120,7 +121,7 @@ struct SecondOrderReaction_Previews: PreviewProvider {
 
     struct StateWrapper: View {
         var body: some View {
-            SecondOrderReactionView(
+            SecondOrderReactionScreen(
                 reaction: reaction,
                 navigation: navigation
             )

@@ -16,7 +16,7 @@ class RootNavigationViewModel: ObservableObject {
     ) {
         self.view = AnyView(EmptyView())
         self.persistence = persistence
-        goToFirstOrder()
+        goToSecondOrder()
     }
 
     private func goToZeroOrder() {
@@ -39,7 +39,7 @@ class RootNavigationViewModel: ObservableObject {
         let navigation = SecondOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
         navigation.prevScreen = goToFirstOrder
         navigation.nextScreen = goToComparison
-        self.view = AnyView(SecondOrderReactionView(reaction: reaction, navigation: navigation))
+        self.view = AnyView(SecondOrderReactionScreen(reaction: reaction, navigation: navigation))
     }
 
     private func goToComparison() {
