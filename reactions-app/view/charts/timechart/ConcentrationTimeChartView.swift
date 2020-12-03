@@ -118,6 +118,7 @@ struct GeneralTimeChartView: View {
     private var concentrationLabel: some View {
         VStack(spacing: 1) {
             Text(yLabel)
+                .fixedSize()
             if (includeValuesInLabel) {
                 HStack(spacing: 1) {
                     animatingConcentration
@@ -130,11 +131,13 @@ struct GeneralTimeChartView: View {
         }
         .font(.system(size: settings.labelFontSize))
         .frame(width: settings.yLabelWidth)
+        .minimumScaleFactor(1)
     }
 
     private var timeLabel: some View {
         HStack(spacing: 1) {
             Text("Time")
+                .fixedSize()
             if (includeValuesInLabel) {
                 HStack(spacing: 1) {
                     animatingTime
@@ -146,7 +149,9 @@ struct GeneralTimeChartView: View {
                 .foregroundColor(.orangeAccent)
                 .frame(height: settings.chartSize * 0.1)
             }
-        }.font(.system(size: settings.labelFontSize))
+        }
+        .font(.system(size: settings.labelFontSize))
+        .minimumScaleFactor(1)
     }
 
 
@@ -197,7 +202,9 @@ struct GeneralTimeChartView: View {
         decimals: Int
     ) -> some View {
         if (currentTime == nil) {
-            return AnyView(Text(defaultValue.str(decimals: decimals)))
+            return AnyView(
+                Text(defaultValue.str(decimals: decimals)).minimumScaleFactor(0.5)
+            )
         }
 
         return AnyView(
@@ -206,7 +213,7 @@ struct GeneralTimeChartView: View {
                 equation: equation,
                 formatter: { $0.str(decimals: decimals)},
                 alignment: .leading
-            )
+            ).minimumScaleFactor(0.5)
         )
     }
 

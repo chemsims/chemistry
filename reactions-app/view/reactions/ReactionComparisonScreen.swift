@@ -97,6 +97,7 @@ struct ReactionComparisonScreen: View {
             VStack(spacing: 1) {
                 Text("[A]")
                     .foregroundColor(.black)
+                    .minimumScaleFactor(1)
                 concentrationLabel(equation: zeroOrder, settings: settings)
                 concentrationLabel(equation: firstOrder, settings: settings)
                 concentrationLabel(equation: secondOrder, settings: settings)
@@ -105,7 +106,9 @@ struct ReactionComparisonScreen: View {
             VStack(spacing: 1) {
                 chartsView(settings: settings)
                 Text("Time (s)")
+                    .minimumScaleFactor(1)
                 animatingValue(equation: IdentityEquation(), defaultValue: 0, decimals: 1)
+                    .minimumScaleFactor(0.5)
                     .frame(width: settings.chartSize * 0.2, height: settings.chartSize * 0.18, alignment: .leading)
                     .padding(.leading, settings.chartSize * 0.05)
                     .foregroundColor(.orangeAccent)
@@ -125,6 +128,7 @@ struct ReactionComparisonScreen: View {
         )
         .frame(width: settings.chartSize * 0.22, height: settings.chartSize * 0.2, alignment: .leading)
         .padding(.leading, settings.chartSize * 0.05)
+        .minimumScaleFactor(0.5)
     }
 
     private func animatingValue(

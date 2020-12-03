@@ -14,14 +14,16 @@ struct EnergyProfileRateChart: View {
     var body: some View {
         HStack {
             Text("ln(k)")
+                .fixedSize()
             VStack {
                 chart
                 Text("1/T")
+                    .fixedSize()
             }
         }
         .font(.system(size: settings.fontSize * 0.9))
         .lineLimit(1)
-        .minimumScaleFactor(0.5)
+        .minimumScaleFactor(1)
     }
 
     private var chart: some View  {
@@ -82,7 +84,6 @@ struct EnergyProfileRateChart: View {
         .padding(.leading, settings.chartSize * 0.1)
         .font(.system(size: settings.fontSize * 0.8))
         .lineLimit(1)
-        .minimumScaleFactor(0.5)
     }
 }
 

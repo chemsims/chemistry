@@ -17,19 +17,22 @@ struct EnergyProfileChart: View {
             Text("Energy")
                 .rotationEffect(.degrees(-90))
                 .frame(height: settings.chartSize)
+                .fixedSize()
 
             VStack {
                 annotatedChart
                 HStack {
                     Text("Reactants")
+                        .fixedSize()
                     Spacer()
                     Text("Products")
+                        .fixedSize()
                 }.frame(width: settings.chartSize)
             }
         }
         .font(.system(size: settings.fontSize * 0.8))
         .lineLimit(1)
-        .minimumScaleFactor(0.5)
+        .minimumScaleFactor(1)
     }
 
     private var annotatedChart: some View {
@@ -81,7 +84,6 @@ struct EnergyProfileChart: View {
         .frame(width: settings.chartSize, height: settings.chartSize)
         .font(.system(size: settings.fontSize * 0.8))
         .lineLimit(1)
-        .minimumScaleFactor(0.5)
     }
 
     private var eaHeightAnnotation: some View {
