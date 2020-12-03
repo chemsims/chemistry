@@ -32,10 +32,14 @@ struct ReactionComparisonScreen: View {
                 .padding(.bottom, settings.beakyBottomPadding)
                 .padding(.trailing, settings.beakyRightPadding)
 
-            chartsView2(
-                settings: TimeChartGeometrySettings(chartSize: chartSize(settings: settings)),
-                settings2: settings
-            ).padding(.top, settings.chartsTopPadding)
+            VStack {
+                chartsView2(
+                    settings: TimeChartGeometrySettings(chartSize: chartSize(settings: settings)),
+                    settings2: settings
+                ).padding(.top, settings.chartsTopPadding)
+                Spacer()
+            }
+
 
             equationView(settings: settings)
                 .padding(.horizontal, equationPadding(settings: settings))
