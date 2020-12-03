@@ -16,7 +16,7 @@ class RootNavigationViewModel: ObservableObject {
     ) {
         self.view = AnyView(EmptyView())
         self.persistence = persistence
-        goToEnergyProfile()
+        goToZeroOrder()
     }
 
     private func goToZeroOrder() {
