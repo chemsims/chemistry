@@ -41,7 +41,7 @@ struct ConcentrationBarChart: View {
                 concentration: ConstantConcentration(value: initialA),
                 currentTime: 0,
                 barCenterX: settings.barACenterX
-            ).foregroundColor(currentTime == nil ? Styling.moleculeA : Color.gray)
+            ).foregroundColor(currentTime == nil ? Styling.moleculeA : Styling.barChartEmpty)
 
             if (currentTime != nil) {
                 drawBar(

@@ -17,13 +17,15 @@ struct Styling {
     static let moleculeA = UIColor.moleculeA.color
     static let moleculeB = UIColor.moleculeB.color
 
-    static let timeAxisCompleteBar = Color.gray
 
     static let moleculeAChartHeadHalo = Color(red: 143 / 255, green: 190 / 255, blue: 226 / 255, opacity: 0.7)
 
     static let speechBubble = Color(red: 0.91, green: 0.91, blue: 0.91)
 
     static let primaryColorHalo = Color.orangeAccent.opacity(0.5)
+
+    static let timeAxisCompleteBar = UIColor.systemGray3.color
+    static let barChartEmpty = UIColor.systemGray4.color
 }
 
 extension UIColor {
