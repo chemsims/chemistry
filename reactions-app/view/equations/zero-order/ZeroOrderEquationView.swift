@@ -226,7 +226,7 @@ fileprivate struct FilledHalftime: View {
             FixedText("=")
             A0WithTooltip(
                 isShowingTooltip: $isShowingToolip,
-                offset: -56
+                offset: -60
             )
             FixedText("/")
             FixedText("(2 k)")
@@ -252,6 +252,11 @@ fileprivate struct A0WithTooltip: View {
         if (isShowingTooltip) {
             return AnyView(
                 Tooltip(text: "Concentration of A at t=0")
+                    .font(.system(size: EquationSettings.fontSize * 0.73))
+                    .frame(width: 170)
+                    .lineLimit(3)
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(1)
             )
         }
         return AnyView(EmptyView())
@@ -306,7 +311,7 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             t2: nil,
             halfTime: nil,
             a0: 0.9,
-            isShowingTooltip: .constant(false)
+            isShowingTooltip: .constant(true)
         )
         .border(Color.red)
         .previewLayout(.fixed(width: 540, height: 265))
