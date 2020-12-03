@@ -13,6 +13,8 @@ struct ZeroOrderReaction: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
+    @State private var isShowingTooltip = false
+
     var body: some View {
         GeometryReader { geometry in
             makeView(
@@ -21,7 +23,11 @@ struct ZeroOrderReaction: View {
                     horizontalSize: horizontalSizeClass,
                     verticalSize: verticalSizeClass
                 )
-            )
+            ).onTapGesture {
+                if (isShowingTooltip) {
+                    isShowingTooltip = false
+                }
+            }
         }
     }
 
@@ -56,7 +62,8 @@ struct ZeroOrderReaction: View {
                 halfTime: reaction.halfTime,
                 a0: reaction.a0,
                 maxWidth: availableWidth,
-                maxHeight: height
+                maxHeight: height,
+                isShowingTooltip: $isShowingTooltip
             )
             .padding(.vertical, equationVerticalPadding)
             .padding(.horizontal, equationHorizontalPadding)

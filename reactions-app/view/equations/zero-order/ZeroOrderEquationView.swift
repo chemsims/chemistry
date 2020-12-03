@@ -21,6 +21,8 @@ struct ZeroOrderEquationView: View {
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
+    @Binding var isShowingTooltip: Bool
+
     private let naturalWidth: CGFloat = 540
     private let naturalHeight: CGFloat = 265
 
@@ -41,7 +43,8 @@ struct ZeroOrderEquationView: View {
                 c2: c2,
                 t2: t2,
                 halfTime: halfTime,
-                a0: a0
+                a0: a0,
+                isShowingTooltip: $isShowingTooltip
             )
             .frame(width: maxWidth, height: maxHeight)
         }
@@ -60,6 +63,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
     let t2: CGFloat?
     let halfTime: CGFloat?
     let a0: CGFloat?
+    @Binding var isShowingTooltip: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -78,7 +82,9 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
             }
 
             HStack(spacing: 22) {
-                FilledHalftime()
+                FilledHalftime(
+                    isShowingToolip: $isShowingTooltip
+                )
                 BlankHalftime(
                     a0: a0?.str(decimals: 2),
                     halftime: halfTime?.str(decimals: 2),
@@ -211,11 +217,15 @@ fileprivate struct EmptyRateView: View {
 }
 
 fileprivate struct FilledHalftime: View {
+
+    @Binding var isShowingToolip: Bool
+
     var body: some View {
         HStack(spacing: 4) {
             HalfTime()
             FixedText("=")
-            WithTooltip(
+            A0WithTooltip(
+                isShowingTooltip: $isShowingToolip,
                 offset: -56
             )
             FixedText("/")
@@ -225,21 +235,21 @@ fileprivate struct FilledHalftime: View {
     }
 }
 
-struct WithTooltip: View {
+fileprivate struct A0WithTooltip: View {
 
-    @State private var showing = false
+    @Binding var isShowingTooltip: Bool
     let offset: CGFloat
 
     var body: some View {
             A_0()
                 .onTapGesture {
-                    showing.toggle()
+                    isShowingTooltip.toggle()
                 }
                 .overlay(overlay.offset(y: offset).fixedSize())
     }
 
     private var overlay: some View {
-        if (showing) {
+        if (isShowingTooltip) {
             return AnyView(
                 Tooltip(text: "Concentration of A at t=0")
             )
@@ -295,7 +305,8 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             c2: nil,
             t2: nil,
             halfTime: nil,
-            a0: 0.9
+            a0: 0.9,
+            isShowingTooltip: .constant(false)
         )
         .border(Color.red)
         .previewLayout(.fixed(width: 540, height: 265))
