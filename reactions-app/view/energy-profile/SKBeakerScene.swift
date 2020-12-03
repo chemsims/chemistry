@@ -34,7 +34,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         self.emitterPosition = emitterPosition
         self.emitting = emitting
         self.catalystColor = catalystColor
-        self.settings = SKBeakerSceneSettings(width: size.width)
+        self.settings = SKBeakerSceneSettings(width: size.width, height: size.height)
         self.velocity = settings.minVelocity
         super.init(size: size)
     }
@@ -370,6 +370,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 fileprivate struct SKBeakerSceneSettings {
 
     let width: CGFloat
+    let height: CGFloat
 
     let aMolecules = 15
     let bMolecules = 15
@@ -378,7 +379,9 @@ fileprivate struct SKBeakerSceneSettings {
     let maxVelocity: CGFloat = 100
     let catalystParticles = 7
 
-    let catalystVerticalMagnitude: CGFloat = 90
+    var catalystVerticalMagnitude: CGFloat {
+        0.3 * height
+    }
     let catalystMinAngle: CGFloat = 5
     let catalystMaxAngle: CGFloat = 30
 
