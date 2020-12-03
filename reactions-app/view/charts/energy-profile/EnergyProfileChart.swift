@@ -45,7 +45,7 @@ struct EnergyProfileChart: View {
                 peak: initialHeightFactor
             )
             .stroke()
-            .foregroundColor(Styling.timeAxisCompleteBar)
+            .foregroundColor(Styling.energyProfileCompleteBar)
             .frame(width: settings.chartSize, height: settings.chartSize)
 
             EnergyProfileChartShape(
@@ -107,7 +107,7 @@ struct EnergyProfileChart: View {
                 )
             Text("Ea")
             Spacer()
-        }.foregroundColor(.gray)
+        }.foregroundColor(.black)
     }
 
     private var productAnnotation: some View {

@@ -24,6 +24,7 @@ struct Styling {
 
     static let primaryColorHalo = Color.orangeAccent.opacity(0.5)
 
+    static let energyProfileCompleteBar = UIColor.gray.color
     static let timeAxisCompleteBar = UIColor.systemGray3.color
     static let barChartEmpty = UIColor.systemGray4.color
 }
