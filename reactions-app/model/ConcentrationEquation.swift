@@ -10,6 +10,20 @@ protocol Equation {
     func getY(at x: CGFloat) -> CGFloat
 }
 
+struct LinearEquation: Equation {
+    let m: CGFloat
+    let c: CGFloat
+
+    init(m: CGFloat, x1: CGFloat, y1: CGFloat) {
+        self.m = m
+        self.c = y1 - (m * x1)
+    }
+
+    func getY(at x: CGFloat) -> CGFloat {
+        (m * x) + c
+    }
+}
+
 struct IdentityEquation: Equation {
     func getY(at x: CGFloat) -> CGFloat {
         x
@@ -27,25 +41,39 @@ extension ConcentrationEquation {
 }
 
 
+struct ConcentrationEquationWrapper: ConcentrationEquation {
+
+    let underlying: Equation
+
+    func getConcentration(at time: CGFloat) -> CGFloat {
+        underlying.getY(at: time)
+    }
+
+}
 
 /// Linear concentration which is c1 at t1, and c2 at t2.
 struct LinearConcentration: ConcentrationEquation {
 
+    let a0: CGFloat
+    let rate: CGFloat
+
+    init(a0: CGFloat, rate: CGFloat) {
+        self.a0 = a0
+        self.rate = rate
+    }
+
     init(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) {
-        let m = (c2 - c1) / (t2 - t1)
-        self.init(m: m, t1: t1, c1: c1)
-    }
+        assert(t1 != t2)
+        let deltaT = t2 - t1
+        let deltaC = c2 - c1
+        self.rate = -deltaC/deltaT
 
-    init(m: CGFloat, t1: CGFloat, c1: CGFloat) {
-        self.m = m
-        self.c = c1 - (m * t1)
+        let a0Numerator = (t1 * c2) - (t2 * c1)
+        self.a0 = a0Numerator / (t1 - t2)
     }
-
-    private let m: CGFloat
-    private let c: CGFloat
 
     func getConcentration(at time: CGFloat) -> CGFloat {
-        (m * time) + c
+        a0 - (rate * time)
     }
 
 }

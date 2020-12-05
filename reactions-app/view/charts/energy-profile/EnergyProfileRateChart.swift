@@ -158,7 +158,7 @@ struct EnergyProfileRateChart_Previews: PreviewProvider {
     static var previews: some View {
         EnergyProfileRateChart(
             settings: EnergyRateChartSettings(chartSize: 250),
-            equation: LinearConcentration(m: -350, t1: 1/400, c1: log(6)),
+            equation: LinearConcentration(a0: 1, rate: 0.1),
             currentTempInverse: 1 / 500
         )
     }

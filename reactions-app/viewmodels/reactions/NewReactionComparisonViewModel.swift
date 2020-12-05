@@ -15,15 +15,24 @@ class NewReactionComparisonViewModel: ObservableObject {
     let moleculesA = MoleculeGridSettings.fullGrid.shuffled()
 
     var zeroOrder: ConcentrationEquation {
-        LinearConcentration(t1: initialTime, c1: 1, t2: finalTime, c2: 0.1)
+        LinearConcentration(
+            a0: 1,
+            rate: 0.05
+        )
     }
 
     var firstOrder: ConcentrationEquation {
-        FirstOrderConcentration(c1: 1, c2: 0.1, time: finalTime)
+        FirstOrderConcentration(
+            initialConcentration: 1,
+            rate: 0.2
+        )
     }
 
     var secondOrder: ConcentrationEquation {
-        SecondOrderConcentration(c1: 1, c2: 0.1, time: finalTime)
+        SecondOrderConcentration(
+            initialConcentration: 1,
+            rate: 0.2
+        )
     }
 
     var zeroOrderB: ConcentrationEquation {
