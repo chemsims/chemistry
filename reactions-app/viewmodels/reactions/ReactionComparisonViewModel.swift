@@ -48,7 +48,7 @@ class ReactionComparisonViewModel: ZeroOrderReactionViewModel {
     }
 
     var secondOrder: ConcentrationEquation {
-        let equation = SecondOrderReactionEquation(c1: secondOrderInput.c1, c2: secondOrderInput.c2, time: secondOrderInput.t2)
+        let equation = SecondOrderConcentration(c1: secondOrderInput.c1, c2: secondOrderInput.c2, time: secondOrderInput.t2)
         return LimitedEquation(underlying: equation, input: secondOrderInput)
     }
 

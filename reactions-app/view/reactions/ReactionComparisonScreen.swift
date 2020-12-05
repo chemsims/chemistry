@@ -270,13 +270,12 @@ struct ReactionComparisonScreen: View {
     }
 
     private var secondOrder: ConcentrationEquation {
-        SecondOrderReactionEquation(
+        SecondOrderConcentration(
             c1: c1,
             c2: c2,
             time: time
         )
     }
-
 
     private func bConcentration(aConcentration: ConcentrationEquation) -> ConcentrationEquation {
         ConcentrationBEquation(concentrationA: aConcentration, initialAConcentration: c1)

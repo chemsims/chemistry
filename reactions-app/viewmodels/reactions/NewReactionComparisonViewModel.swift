@@ -12,30 +12,36 @@ class NewReactionComparisonViewModel: ObservableObject {
     let initialTime: CGFloat = 0
     let finalTime: CGFloat = 15
 
-    let moleculesA = MoleculeGridSettings.fullGrid
+    let moleculesA = MoleculeGridSettings.fullGrid.shuffled()
 
     var zeroOrder: ConcentrationEquation {
-        ConstantConcentration(value: 0.5)
+        LinearConcentration(t1: initialTime, c1: 1, t2: finalTime, c2: 0.1)
     }
 
     var firstOrder: ConcentrationEquation {
-        ConstantConcentration(value: 0.5)
+        FirstOrderConcentration(c1: 1, c2: 0.1, time: finalTime)
     }
 
     var secondOrder: ConcentrationEquation {
-        ConstantConcentration(value: 0.5)
+        SecondOrderConcentration(c1: 1, c2: 0.1, time: finalTime)
     }
 
     var zeroOrderB: ConcentrationEquation {
-        ConstantConcentration(value: 0.25)
+        concentrationB(concentrationA: zeroOrder)
     }
 
     var firstOrderB: ConcentrationEquation {
-        ConstantConcentration(value: 0.25)
+        concentrationB(concentrationA: firstOrder)
     }
 
     var secondOrderB: ConcentrationEquation {
-        ConstantConcentration(value: 0.25)
+        concentrationB(concentrationA: secondOrder)
+    }
+
+    private func concentrationB(
+        concentrationA: ConcentrationEquation
+    ) -> ConcentrationEquation {
+        ConcentrationBEquation(concentrationA: concentrationA, initialAConcentration: 1)
     }
 
 }

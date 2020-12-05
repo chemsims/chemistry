@@ -95,7 +95,9 @@ struct ConcentrationBEquation: ConcentrationEquation {
     let initialAConcentration: CGFloat
 
     func getConcentration(at time: CGFloat) -> CGFloat {
-        initialAConcentration - concentrationA.getConcentration(at: time)
+        let x = initialAConcentration - concentrationA.getConcentration(at: time)
+        print("Concentration B is \(x)")
+        return x
     }
 }
 
@@ -111,7 +113,7 @@ struct LogEquation: ConcentrationEquation {
     }
 }
 
-struct SecondOrderReactionEquation: ConcentrationEquation {
+struct SecondOrderConcentration: ConcentrationEquation {
 
     let initialConcentration: CGFloat
     let rate: CGFloat
@@ -124,7 +126,7 @@ struct SecondOrderReactionEquation: ConcentrationEquation {
     init(c1: CGFloat, c2: CGFloat, time: CGFloat) {
         self.init(
             initialConcentration: c1,
-            rate: SecondOrderReactionEquation.getRate(c1: c1, c2: c2, time: time)
+            rate: SecondOrderConcentration.getRate(c1: c1, c2: c2, time: time)
         )
     }
 

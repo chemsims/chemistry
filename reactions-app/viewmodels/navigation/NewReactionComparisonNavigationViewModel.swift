@@ -84,6 +84,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
     }
 
     override func apply(on model: NewReactionComparisonViewModel) {
+        model.currentTime = model.initialTime
         withAnimation(.linear(duration: Double(model.finalTime - model.initialTime))) {
             model.currentTime = model.finalTime
         }

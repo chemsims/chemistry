@@ -9,7 +9,7 @@ class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
 
     override var concentrationEquationA: ConcentrationEquation {
         if let rate = rate {
-            return SecondOrderReactionEquation(
+            return SecondOrderConcentration(
                 initialConcentration: initialConcentration,
                 rate: rate
             )
@@ -29,7 +29,7 @@ class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
             let roundedC2 = c2.rounded(decimals: 2)
             let roundedC1 = initialConcentration.rounded(decimals: 2)
             let roundedT = t2.rounded(decimals: 2)
-            return SecondOrderReactionEquation.getRate(c1: roundedC1, c2: roundedC2, time: roundedT)
+            return SecondOrderConcentration.getRate(c1: roundedC1, c2: roundedC2, time: roundedT)
         }
         return nil
     }
