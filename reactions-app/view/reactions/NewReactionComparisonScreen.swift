@@ -38,6 +38,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         beaky
         beakers
         charts
+        equations
     }
 
     private var beakers: some View {
@@ -77,6 +78,57 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             Spacer()
         }
     }
+
+    private var equations: some View {
+        HStack {
+            Spacer()
+            VStack {
+                GeometryReader { geometry in
+                    ReactionComparisonZeroOrderEquation(
+                        rate: "1.0",
+                        k: "0.2",
+                        concentration: "1.0",
+                        time: "1",
+                        a0: "1.0",
+                        maxWidth: geometry.size.width,
+                        maxHeight: geometry.size.height
+                    )
+                }
+
+                GeometryReader { geometry in
+                    ReactionComparisonFirstOrderEquation(
+                        rate: "1.0",
+                        k: "0.2",
+                        concentration: "1.0",
+                        time: "1",
+                        a0: "1.0",
+                        maxWidth: geometry.size.width,
+                        maxHeight: geometry.size.height
+                    )
+                }
+
+                GeometryReader { geometry in
+                    ReactionComparisonSecondOrderEquation(
+                        rate: "1.0",
+                        k: "0.2",
+                        concentration: "1.0",
+                        time: "1",
+                        a0: "1.0",
+                        maxWidth: geometry.size.width,
+                        maxHeight: geometry.size.height
+                    )
+                }
+                Spacer()
+                    .frame(height: settings.ordered.beakyBoxTotalHeight)
+            }
+            .frame(width: settings.equationsWidth)
+            .padding(.top, settings.equationTopPadding)
+            .padding(.trailing, settings.equationTrailingPadding)
+        }
+    }
+
+
+    
 
     private func beaker(
         concentrationB: ConcentrationEquation
@@ -155,6 +207,27 @@ struct ReactionComparisonLayoutSettings {
     var chartSize: CGFloat {
         0.8 * ordered.chartSize
     }
+
+    var equationsWidth: CGFloat {
+        0.37 * geometry.size.width
+    }
+
+    var equationTrailingPadding: CGFloat {
+        5
+    }
+
+    var equationTopPadding: CGFloat {
+        5
+    }
+
+    var equationCornerRadius: CGFloat {
+        equationsWidth * 0.05
+    }
+
+    var equationBorderWidth: CGFloat {
+        0.2 * equationCornerRadius
+    }
+
 
     var ordered: OrderedReactionLayoutSettings {
         OrderedReactionLayoutSettings(

@@ -5,7 +5,91 @@
 
 import SwiftUI
 
-struct RateComparisonOrder0Equation: View {
+struct ReactionComparisonZeroOrderEquation: View {
+    let rate: String
+    let k: String
+    let concentration: String
+    let time: String
+    let a0: String
+
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
+    var body: some View {
+        ScaledView(
+            naturalWidth: EquationSizes.width,
+            naturalHeight: EquationSizes.height,
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
+        ) {
+            UnscaledZeroOrderEquation(
+                rate: rate,
+                k: k,
+                concentration: concentration,
+                time: time,
+                a0: a0
+            ).frame(width: maxWidth, height: maxHeight)
+        }
+    }
+}
+
+struct ReactionComparisonFirstOrderEquation: View {
+    let rate: String
+    let k: String
+    let concentration: String
+    let time: String
+    let a0: String
+
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
+    var body: some View {
+        ScaledView(
+            naturalWidth: EquationSizes.width,
+            naturalHeight: EquationSizes.height,
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
+        ) {
+            UnscaledFirstOrderEquation(
+                rate: rate,
+                k: k,
+                concentration: concentration,
+                time: time,
+                a0: a0
+            ).frame(width: maxWidth, height: maxHeight)
+        }
+    }
+}
+struct ReactionComparisonSecondOrderEquation: View {
+    let rate: String
+    let k: String
+    let concentration: String
+    let time: String
+    let a0: String
+
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
+    var body: some View {
+        ScaledView(
+            naturalWidth: EquationSizes.width,
+            naturalHeight: EquationSizes.height,
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
+        ) {
+            UnscaledSecondOrderEquation(
+                rate: rate,
+                k: k,
+                concentration: concentration,
+                time: time,
+                a0: a0
+            ).frame(width: maxWidth, height: maxHeight)
+        }
+    }
+}
+
+
+fileprivate struct UnscaledZeroOrderEquation: View {
 
     let rate: String
     let k: String
@@ -14,11 +98,12 @@ struct RateComparisonOrder0Equation: View {
     let a0: String
 
     var body: some View {
-        GeneralRateComparisonOrderEquation(
+        GeneralEquation(
             order: 0,
             rate: rate,
             k: k,
-            concentration: concentration
+            concentration: concentration,
+            spacerWidth: 113
         ) {
             HStack(spacing: 4) {
                 VStack(alignment: .leading, spacing: 5) {
@@ -52,7 +137,7 @@ struct RateComparisonOrder0Equation: View {
     }
 }
 
-struct RateComparisonOrder1Equation: View {
+fileprivate struct UnscaledFirstOrderEquation: View {
 
     let rate: String
     let k: String
@@ -61,11 +146,12 @@ struct RateComparisonOrder1Equation: View {
     let a0: String
 
     var body: some View {
-        GeneralRateComparisonOrderEquation(
+        GeneralEquation(
             order: 1,
             rate: rate,
             k: k,
-            concentration: concentration
+            concentration: concentration,
+            spacerWidth: 145
         ) {
             VStack(alignment: .leading, spacing: 5) {
                 aEquation
@@ -104,7 +190,7 @@ struct RateComparisonOrder1Equation: View {
     }
 }
 
-struct RateComparisonOrder2Equation: View {
+fileprivate struct UnscaledSecondOrderEquation: View {
 
     let rate: String
     let k: String
@@ -113,11 +199,12 @@ struct RateComparisonOrder2Equation: View {
     let a0: String
 
     var body: some View {
-        GeneralRateComparisonOrderEquation(
+        GeneralEquation(
             order: 2,
             rate: rate,
             k: k,
-            concentration: concentration
+            concentration: concentration,
+            spacerWidth: 23
         ) {
             VStack(alignment: .leading, spacing: 5) {
                 aEquation
@@ -163,12 +250,13 @@ struct RateComparisonOrder2Equation: View {
     }
 }
 
-fileprivate struct GeneralRateComparisonOrderEquation<Content: View>: View {
+fileprivate struct GeneralEquation<Content: View>: View {
 
     let order: Int
     let rate: String
     let k: String
     let concentration: String
+    let spacerWidth: CGFloat
     let lhs: () -> Content
 
     var body: some View {
@@ -178,12 +266,13 @@ fileprivate struct GeneralRateComparisonOrderEquation<Content: View>: View {
             HStack {
                 lhs()
                 Spacer()
+                    .frame(width: spacerWidth)
                 VStack(alignment: .leading, spacing: 5) {
                     filledRate
                     blankRate
                 }
             }
-        }        .font(.system(size: EquationSettings.fontSize))
+        }.font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
         .minimumScaleFactor(1)
     }
@@ -249,15 +338,20 @@ fileprivate struct VaryingText: View {
     }
 }
 
+fileprivate struct EquationSizes {
+    static let width: CGFloat = 700
+    static let height: CGFloat = 120
+}
+
 
 struct NewRateComparisonEquationView_Previews: PreviewProvider {
 
-    static let width: CGFloat = 700
-    static let height: CGFloat = 140
+    static let width: CGFloat = EquationSizes.width
+    static let height: CGFloat = EquationSizes.height
 
     static var previews: some View {
         VStack(spacing: 50) {
-            RateComparisonOrder0Equation(
+            UnscaledZeroOrderEquation(
                 rate: "0.02",
                 k: "0.06",
                 concentration: "0.87",
@@ -267,7 +361,7 @@ struct NewRateComparisonEquationView_Previews: PreviewProvider {
             .frame(width: width, height: height)
             .border(Color.red)
 
-            RateComparisonOrder1Equation(
+            UnscaledFirstOrderEquation(
                 rate: "0.02",
                 k: "0.06",
                 concentration: "0.87",
@@ -277,7 +371,7 @@ struct NewRateComparisonEquationView_Previews: PreviewProvider {
             .frame(width: width, height: height)
             .border(Color.red)
 
-            RateComparisonOrder2Equation(
+            UnscaledSecondOrderEquation(
                 rate: "0.02",
                 k: "0.06",
                 concentration: "0.87",
