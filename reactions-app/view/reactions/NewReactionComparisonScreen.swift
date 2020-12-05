@@ -7,8 +7,7 @@ import SwiftUI
 
 struct NewReactionComparisonScreen: View {
 
-    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
-    @ObservedObject var reaction: NewReactionComparisonViewModel
+    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionComparisonState>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -17,7 +16,7 @@ struct NewReactionComparisonScreen: View {
         GeometryReader { geometry in
             NewReactionComparisonViewWithSettings(
                 navigation: navigation,
-                reaction: reaction,
+                reaction: navigation.model,
                 settings: ReactionComparisonLayoutSettings(
                     geometry: geometry,
                     horizontalSizeClass: horizontalSizeClass,
@@ -30,7 +29,7 @@ struct NewReactionComparisonScreen: View {
 
 fileprivate struct NewReactionComparisonViewWithSettings: View {
 
-    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
+    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionComparisonState>
     @ObservedObject var reaction: NewReactionComparisonViewModel
 
     let settings: ReactionComparisonLayoutSettings
@@ -170,11 +169,9 @@ struct ReactionComparisonLayoutSettings {
 struct NewReactionComparisonScreen_Previews: PreviewProvider {
     static var previews: some View {
         NewReactionComparisonScreen(
-            navigation: ZeroOrderReactionNavigation.model(
-                reaction: ZeroOrderReactionViewModel(),
-                persistence: InMemoryReactionInputPersistence()
-            ),
-            reaction: NewReactionComparisonViewModel()
+            navigation: NewReactionComparisonNavigationViewModel.model(
+                reaction: NewReactionComparisonViewModel()
+            )
         ).previewLayout(.fixed(width: 500, height: 300))
     }
 }

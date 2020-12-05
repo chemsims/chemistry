@@ -85,6 +85,8 @@
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
 		57D8BA17257B6ABF006B3C8B /* NewReactionComparisonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA16257B6ABF006B3C8B /* NewReactionComparisonScreen.swift */; };
 		57D8BA1B257B6AD5006B3C8B /* NewReactionComparisonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA1A257B6AD5006B3C8B /* NewReactionComparisonViewModel.swift */; };
+		57D8BA1F257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA1E257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift */; };
+		57D8BA23257B7379006B3C8B /* NewReactionComparisonStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA22257B7379006B3C8B /* NewReactionComparisonStatements.swift */; };
 		57DAE4C62577A299006D945B /* CGFloatRoundingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */; };
 		57DAE4D42577C2FD006D945B /* FixedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D32577C2FD006D945B /* FixedText.swift */; };
 		57DAE4D82577C4F1006D945B /* HalfTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D72577C4F1006D945B /* HalfTime.swift */; };
@@ -205,6 +207,8 @@
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
 		57D8BA16257B6ABF006B3C8B /* NewReactionComparisonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReactionComparisonScreen.swift; sourceTree = "<group>"; };
 		57D8BA1A257B6AD5006B3C8B /* NewReactionComparisonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReactionComparisonViewModel.swift; sourceTree = "<group>"; };
+		57D8BA1E257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReactionComparisonNavigationViewModel.swift; sourceTree = "<group>"; };
+		57D8BA22257B7379006B3C8B /* NewReactionComparisonStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReactionComparisonStatements.swift; sourceTree = "<group>"; };
 		57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatRoundingTests.swift; sourceTree = "<group>"; };
 		57DAE4D32577C2FD006D945B /* FixedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedText.swift; sourceTree = "<group>"; };
 		57DAE4D72577C4F1006D945B /* HalfTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfTime.swift; sourceTree = "<group>"; };
@@ -348,6 +352,7 @@
 				571B3C772565605C0075358B /* SecondOrderReactionNavigationViewModel.swift */,
 				571B3C9C256578D80075358B /* ReactionComparisonNavigationViewModel.swift */,
 				571B3CBA25658D300075358B /* RootNavigationViewModel.swift */,
+				57D8BA1E257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -611,6 +616,7 @@
 				571B3C7F256560F90075358B /* SecondOrderStatements.swift */,
 				571B3CA02565796A0075358B /* ReactionComparisonStatements.swift */,
 				57D79827256E5430005BE551 /* EnergyProfileStatements.swift */,
+				57D8BA22257B7379006B3C8B /* NewReactionComparisonStatements.swift */,
 			);
 			path = statements;
 			sourceTree = "<group>";
@@ -758,6 +764,7 @@
 				57FDA145255D835600CB8804 /* BoundType.swift in Sources */,
 				571B3C842565638F0075358B /* OrderedReactionLayoutSettings.swift in Sources */,
 				57DAE4FE2577ED76006D945B /* ReactionInput.swift in Sources */,
+				57D8BA23257B7379006B3C8B /* NewReactionComparisonStatements.swift in Sources */,
 				571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */,
 				577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */,
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
@@ -802,6 +809,7 @@
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift in Sources */,
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
 				57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */,
+				57D8BA1F257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift in Sources */,
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,
 				57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */,
 				57D8BA17257B6ABF006B3C8B /* NewReactionComparisonScreen.swift in Sources */,
