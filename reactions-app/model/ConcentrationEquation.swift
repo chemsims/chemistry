@@ -123,9 +123,7 @@ struct ConcentrationBEquation: ConcentrationEquation {
     let initialAConcentration: CGFloat
 
     func getConcentration(at time: CGFloat) -> CGFloat {
-        let x = initialAConcentration - concentrationA.getConcentration(at: time)
-        print("Concentration B is \(x)")
-        return x
+        initialAConcentration - concentrationA.getConcentration(at: time)
     }
 }
 
