@@ -100,9 +100,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             concentrationB: concentrationB,
             initialConcentration: 1,
             finalConcentration: 0,
-            initialTime: 0,
+            initialTime: reaction.initialTime,
             currentTime: currentTimeBinding,
-            finalTime: 20,
+            finalTime: reaction.finalTime,
             canSetCurrentTime: false,
             minTime: nil,
             maxTime: nil

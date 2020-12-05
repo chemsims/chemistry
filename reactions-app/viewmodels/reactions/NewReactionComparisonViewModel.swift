@@ -7,8 +7,10 @@ import SwiftUI
 
 class NewReactionComparisonViewModel: ObservableObject {
 
-
     @Published var currentTime: CGFloat?
+
+    let initialTime: CGFloat = 0
+    let finalTime: CGFloat = 15
 
     let moleculesA = MoleculeGridSettings.fullGrid
 

@@ -3,7 +3,7 @@
 //
   
 
-import Foundation
+import SwiftUI
 
 struct NewReactionComparisonNavigationViewModel {
 
@@ -13,7 +13,8 @@ struct NewReactionComparisonNavigationViewModel {
             ExplainEquationState(),
             ChartExplainerState(),
             DragAndDropExplainerState(),
-            PreAnimationState()
+            PreAnimationState(),
+            RunComparisonAnimation()
 
         ]
     }
@@ -74,5 +75,25 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
 fileprivate class PreAnimationState: ReactionComparisonState {
     init() {
         super.init(statement: NewReactionComparisonStatements.preReaction)
+    }
+}
+
+fileprivate class RunComparisonAnimation: ReactionComparisonState {
+    init() {
+        super.init(statement: NewReactionComparisonStatements.reactionRunning)
+    }
+
+    override func apply(on model: NewReactionComparisonViewModel) {
+        withAnimation(.linear(duration: Double(model.finalTime - model.initialTime))) {
+            model.currentTime = model.finalTime
+        }
+    }
+
+    override func reapply(on model: NewReactionComparisonViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: NewReactionComparisonViewModel) {
+        model.currentTime = nil
     }
 }
