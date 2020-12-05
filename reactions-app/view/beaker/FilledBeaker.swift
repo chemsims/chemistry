@@ -33,7 +33,19 @@ struct FilledBeaker: View {
             .fill(Color.darkGray.opacity(0.5))
             beakerFill(settings)
             EmptyBeaker(settings: settings)
-        }
+        }.background(
+            Color.white.mask(
+                BeakerShape(
+                    lipHeight: settings.lipRadius,
+                    lipWidthLeft: settings.lipWidthLeft,
+                    lipWidthRight: settings.lipWidthLeft,
+                    leftCornerRadius: settings.outerBottomCornerRadius,
+                    rightCornerRadius: settings.outerBottomCornerRadius,
+                    bottomGap: 0,
+                    rightGap: 0
+                )
+            )
+        )
     }
 
     private func beakerFill(_ settings: BeakerSettings) -> some View {

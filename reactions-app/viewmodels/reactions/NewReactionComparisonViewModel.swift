@@ -8,6 +8,7 @@ import SwiftUI
 class NewReactionComparisonViewModel: ObservableObject {
 
     @Published var currentTime: CGFloat?
+    @Published var highlightedElements = [ReactionComparisonScreenElement]()
 
     let initialTime: CGFloat = 0
     let finalTime: CGFloat = 15

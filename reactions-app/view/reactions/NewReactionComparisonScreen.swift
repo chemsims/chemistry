@@ -35,10 +35,19 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     let settings: ReactionComparisonLayoutSettings
 
     var body: some View {
-        beaky
-        beakers
-        charts
-        equations
+        ZStack {
+            Rectangle()
+                .foregroundColor(.white)
+                .colorMultiply(overlayFor(element: .background))
+            beaky
+                .colorMultiply(.white)
+            beakers
+                .colorMultiply(overlayFor(element: .beakers))
+            charts
+                .colorMultiply(overlayFor(element: .charts))
+            equations
+                .colorMultiply(overlayFor(element: .equations))
+        }
     }
 
     private var beakers: some View {
@@ -185,10 +194,12 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             canSetCurrentTime: false,
             minTime: nil,
             maxTime: nil
-        ).frame(
+        )
+        .frame(
             width: chartSettings.chartSize,
             height: chartSettings.chartSize
         )
+        .background(Color.white)
     }
 
     private var beaky: some View {
@@ -217,6 +228,16 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             get: { reaction.currentTime ?? 0 },
             set: { reaction.currentTime = $0 }
         )
+    }
+
+    private func overlayFor(element: ReactionComparisonScreenElement) -> Color {
+        let highlights = reaction.highlightedElements
+        if (highlights.isEmpty || highlights.contains(element)) {
+            return .white
+        }
+
+        let x: Double = 173
+        return  RGB(r: x, g: x, b: x).color.opacity(0.5)
     }
 }
 

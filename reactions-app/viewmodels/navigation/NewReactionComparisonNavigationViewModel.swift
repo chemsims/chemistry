@@ -58,11 +58,40 @@ fileprivate class ExplainEquationState: ReactionComparisonState {
     init() {
         super.init(statement: NewReactionComparisonStatements.equationExplainer)
     }
+
+    override func apply(on model: NewReactionComparisonViewModel) {
+        model.highlightedElements = [
+            .equations
+        ]
+    }
+
+    override func reapply(on model: NewReactionComparisonViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: NewReactionComparisonViewModel) {
+        model.highlightedElements = []
+    }
 }
 
 fileprivate class ChartExplainerState: ReactionComparisonState {
     init() {
         super.init(statement: NewReactionComparisonStatements.chartExplainer)
+    }
+
+    override func apply(on model: NewReactionComparisonViewModel) {
+        model.highlightedElements = [
+            .charts,
+            .beakers
+        ]
+    }
+
+    override func reapply(on model: NewReactionComparisonViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: NewReactionComparisonViewModel) {
+        model.highlightedElements = []
     }
 }
 
@@ -70,11 +99,41 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
     init() {
         super.init(statement: NewReactionComparisonStatements.dragAndDropExplainer)
     }
+
+    override func apply(on model: NewReactionComparisonViewModel) {
+        model.highlightedElements = [
+            .charts,
+            .equations
+        ]
+    }
+
+    override func reapply(on model: NewReactionComparisonViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: NewReactionComparisonViewModel) {
+        model.highlightedElements = []
+    }
 }
 
 fileprivate class PreAnimationState: ReactionComparisonState {
+
     init() {
         super.init(statement: NewReactionComparisonStatements.preReaction)
+    }
+
+    override func apply(on model: NewReactionComparisonViewModel) {
+        model.highlightedElements = [
+            .charts
+        ]
+    }
+
+    override func reapply(on model: NewReactionComparisonViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: NewReactionComparisonViewModel) {
+        model.highlightedElements = []
     }
 }
 
@@ -85,6 +144,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
 
     override func apply(on model: NewReactionComparisonViewModel) {
         model.currentTime = model.initialTime
+        model.highlightedElements = []
         withAnimation(.linear(duration: Double(model.finalTime - model.initialTime))) {
             model.currentTime = model.finalTime
         }
