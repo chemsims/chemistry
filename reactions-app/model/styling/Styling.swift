@@ -6,6 +6,16 @@
 import SwiftUI
 import SpriteKit
 
+struct RGB {
+    let r: Double
+    let g: Double
+    let b: Double
+
+    var color: Color {
+        Color(red: r / 255, green: g / 255, blue: b / 255)
+    }
+}
+
 struct Styling {
     static let beakerOuterTone = Color.black.opacity(0.15)
     static let beakerInnerTone = Color.black.opacity(0.075)
@@ -31,7 +41,16 @@ struct Styling {
     static let tooltipBackground = Color(red: 66 / 255, green: 66 / 255, blue: 66 / 255, opacity: 1)
     static let tooltipText = Color.white
     static let tooltipBorder = Color(red: 161 / 255, green: 161 / 255, blue: 161 / 255, opacity: 1)
+
+    static let comparisonOrder0Background = RGB(r: 242, g: 252, b: 255).color
+    static let comparisonOrder0Border = RGB(r: 86, g: 188, b: 239).color
+    static let comparisonOrder1Background = RGB(r: 251, g: 234, b: 233).color
+    static let comparisonOrder1Border = RGB(r: 222, g: 52, b: 39).color
+    static let comparisonOrder2Background = RGB(r: 254, g: 251, b: 237).color
+    static let comparisonOrder2Border = RGB(r: 248, g: 209, b: 74).color
+
 }
+
 
 extension UIColor {
 

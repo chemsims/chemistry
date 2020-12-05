@@ -92,6 +92,11 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         a0: "1.0",
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
+                    ).background(
+                        equationBackground(
+                            color: Styling.comparisonOrder0Background,
+                            border: Styling.comparisonOrder0Border
+                        )
                     )
                 }
 
@@ -104,6 +109,11 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         a0: "1.0",
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
+                    ).background(
+                        equationBackground(
+                            color: Styling.comparisonOrder1Background,
+                            border: Styling.comparisonOrder1Border
+                        )
                     )
                 }
 
@@ -116,6 +126,11 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         a0: "1.0",
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
+                    ).background(
+                        equationBackground(
+                            color: Styling.comparisonOrder2Background,
+                            border: Styling.comparisonOrder2Border
+                        )
                     )
                 }
                 Spacer()
@@ -127,7 +142,19 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         }
     }
 
+    private func equationBackground(
+        color: Color,
+        border: Color
+    ) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: settings.equationCornerRadius)
+                .fill(color)
 
+            RoundedRectangle(cornerRadius: settings.equationCornerRadius)
+                .stroke(border, lineWidth: settings.equationBorderWidth)
+                .foregroundColor(color)
+        }
+    }
     
 
     private func beaker(

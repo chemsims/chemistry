@@ -262,7 +262,7 @@ fileprivate struct GeneralEquation<Content: View>: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             FixedText("Order: \(order)")
-                .font(.system(size: EquationSettings.fontSize, weight: .medium))
+                .font(.system(size: EquationSettings.fontSize, weight: .bold))
             HStack {
                 lhs()
                 Spacer()
