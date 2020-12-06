@@ -85,7 +85,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     private func goToNewComparison() {
-        let reaction = NewReactionComparisonViewModel()
+        let reaction = NewReactionComparisonViewModel(persistence: persistence)
         let navigation = NewReactionComparisonNavigationViewModel.model(reaction: reaction)
         navigation.prevScreen = goToComparison2
         navigation.nextScreen = goToEnergyProfile

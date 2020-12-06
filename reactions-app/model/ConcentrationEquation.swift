@@ -71,11 +71,7 @@ struct LinearConcentration: ConcentrationEquation {
     }
 
     init(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) {
-        assert(t1 != t2)
-        let deltaT = t2 - t1
-        let deltaC = c2 - c1
-        self.rate = -deltaC/deltaT
-
+        self.rate = LinearConcentration.getRate(t1: t1, c1: c1, t2: t2, c2: c2)
         let a0Numerator = (t1 * c2) - (t2 * c1)
         self.a0 = a0Numerator / (t1 - t2)
     }
@@ -86,6 +82,13 @@ struct LinearConcentration: ConcentrationEquation {
 
     func time(for concentration: CGFloat) -> CGFloat? {
         (a0 - concentration) / rate
+    }
+
+    static func getRate(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) -> CGFloat {
+        assert(t1 != t2)
+        let deltaT = t2 - t1
+        let deltaC = c2 - c1
+        return -deltaC/deltaT
     }
 
 }

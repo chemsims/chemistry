@@ -549,7 +549,9 @@ struct NewReactionComparisonScreen_Previews: PreviewProvider {
     static var previews: some View {
         NewReactionComparisonScreen(
             navigation: NewReactionComparisonNavigationViewModel.model(
-                reaction: NewReactionComparisonViewModel()
+                reaction: NewReactionComparisonViewModel(
+                    persistence: InMemoryReactionInputPersistence()
+                )
             )
         ).previewLayout(.fixed(width: 500, height: 300))
     }
