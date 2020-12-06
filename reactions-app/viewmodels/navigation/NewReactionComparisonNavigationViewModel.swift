@@ -30,13 +30,9 @@ struct NewReactionComparisonNavigationViewModel {
 class ReactionComparisonState: ScreenState {
 
     typealias Model = NewReactionComparisonViewModel
-
+    typealias NestedState = ReactionComparisonSubstate
 
     let statement: [SpeechBubbleLine]
-
-    var canSelectState: Bool {
-        true
-    }
 
     init(statement: [SpeechBubbleLine]) {
         self.statement = statement
@@ -49,6 +45,20 @@ class ReactionComparisonState: ScreenState {
     func reapply(on model: NewReactionComparisonViewModel) { }
 
     func nextStateAutoDispatchDelay(model: NewReactionComparisonViewModel) -> Double? { nil }
+
+    var delayedStates: [DelayedState<ReactionComparisonSubstate>] {
+        []
+    }
+
+}
+
+class ReactionComparisonSubstate: SubState {
+
+    typealias Model = NewReactionComparisonViewModel
+
+    func apply(on model: NewReactionComparisonViewModel) {
+
+    }
 
 }
 
@@ -122,35 +132,26 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
     override func unapply(on model: NewReactionComparisonViewModel) {
         model.highlightedElements = []
         model.showDragTutorial = false
+        model.dragTutorialHandIsMoving = false
+        model.dragTutorialHandIsComplete = false
     }
 
-    override func nextStateAutoDispatchDelay(model: NewReactionComparisonViewModel) -> Double? {
-        0.2
+    override var delayedStates: [DelayedState<ReactionComparisonSubstate>] {
+        [
+            DelayedState(state: DragAndDropExplainerSubstate(), delay: 0.5)
+        ]
     }
 }
 
-fileprivate class DragAndDropExplainerState1: ReactionComparisonState {
-
-    init() {
-        super.init(statement: NewReactionComparisonStatements.dragAndDropExplainer)
-    }
-
-    override var canSelectState: Bool {
-        false
-    }
+fileprivate class DragAndDropExplainerSubstate: ReactionComparisonSubstate {
 
     override func apply(on model: NewReactionComparisonViewModel) {
         withAnimation(.linear(duration: 0.25)) {
             model.dragTutorialHandIsMoving = true
         }
-        withAnimation(.linear(duration: 2)) {
+        withAnimation(.easeInOut(duration: 1.5)) {
             model.dragTutorialHandIsComplete = true
         }
-    }
-
-    override func unapply(on model: NewReactionComparisonViewModel) {
-        model.dragTutorialHandIsMoving = false
-        model.dragTutorialHandIsComplete = false
     }
 
 }
@@ -166,6 +167,9 @@ fileprivate class PreAnimationState: ReactionComparisonState {
             .charts
         ]
         model.canStartAnimation = true
+        model.showDragTutorial = false
+        model.dragTutorialHandIsMoving = false
+        model.dragTutorialHandIsComplete = false
     }
 
     override func reapply(on model: NewReactionComparisonViewModel) {

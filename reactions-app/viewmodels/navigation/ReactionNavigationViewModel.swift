@@ -38,6 +38,7 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
         if let state = getState(for: nextIndex) {
             state.apply(on: model)
             currentIndex = nextIndex
+            scheduleSubState(indexToRun: 0)
             scheduleNextState(for: state)
         } else if let nextScreen = nextScreen {
             nextScreen()
@@ -51,18 +52,42 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
             currentState.unapply(on: model)
             previousState.reapply(on: model)
             currentIndex = previousIndex
+            scheduleSubState(indexToRun: 0)
             scheduleNextState(for: previousState)
         } else if let prevScreen = prevScreen {
             prevScreen()
         }
     }
 
-    private func scheduleNextState(for state: State) {
+    private func scheduleSubState(indexToRun: Int) {
+        guard let state = getState(for: currentIndex),
+              state.delayedStates.count > indexToRun else {
+            return
+        }
         if let timer = nextTimer {
             timer.invalidate()
             nextTimer = nil
         }
+
+        let next = state.delayedStates[indexToRun]
+        nextTimer = Timer.scheduledTimer(timeInterval: next.delay, target: self, selector: #selector(runForIndex), userInfo: indexToRun, repeats: false)
+    }
+
+    @objc private func runForIndex(timer: Timer) {
+        guard let state = getState(for: currentIndex), let index = timer.userInfo as? Int else {
+            return
+        }
+        state.delayedStates[index].state.apply(on: model)
+        scheduleSubState(indexToRun: index + 1)
+    }
+
+
+    private func scheduleNextState(for state: State) {
         if let delay = state.nextStateAutoDispatchDelay(model: model) {
+            if let timer = nextTimer {
+                timer.invalidate()
+                nextTimer = nil
+            }
             nextTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(next), userInfo: nil, repeats: false)
         }
     }

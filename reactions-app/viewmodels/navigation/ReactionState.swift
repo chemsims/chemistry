@@ -7,11 +7,13 @@ import SwiftUI
 
 protocol ScreenState {
     associatedtype Model
+    associatedtype NestedState: SubState where NestedState.Model == Model
 
     /// The statement to display to the user
     var statement: [SpeechBubbleLine] { get }
 
-    var canSelectState: Bool { get }
+    /// Optionally provide delayed states which will be automatically applied
+    var delayedStates: [DelayedState<NestedState>] { get }
 
     /// Applies the reaction state to the model
     func apply(on model: Model) -> Void
@@ -26,9 +28,20 @@ protocol ScreenState {
     func nextStateAutoDispatchDelay(model: Model) -> Double?
 }
 
-class ReactionState: ScreenState {
+protocol SubState {
+    associatedtype Model
+    func apply(on model: Model)
+}
+
+struct DelayedState<State: SubState> {
+    let state: State
+    let delay: Double
+}
+
+class ReactionState: ScreenState, SubState {
 
     typealias Model = ZeroOrderReactionViewModel
+    typealias NestedState = ReactionState
 
     let statement: [SpeechBubbleLine]
     init(statement: [SpeechBubbleLine]) {
@@ -44,6 +57,9 @@ class ReactionState: ScreenState {
     func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? { nil }
 
     let canSelectState: Bool = true
+
+    let delayedStates = [DelayedState<ReactionState>]()
+
 
 }
 
