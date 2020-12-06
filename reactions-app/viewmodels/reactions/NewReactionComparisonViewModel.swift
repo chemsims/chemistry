@@ -35,6 +35,18 @@ class NewReactionComparisonViewModel: ObservableObject {
         )
     }
 
+    var zeroOrderRate: Equation {
+        RateEquation(k: zeroOrder.rate, concentration: zeroOrder)
+    }
+
+    var firstOrderRate: Equation {
+        RateEquation(k: firstOrder.rate, concentration: firstOrder)
+    }
+
+    var secondOrderRate: Equation {
+        RateEquation(k: secondOrder.rate, concentration: secondOrder)
+    }
+
     var firstOrder: FirstOrderConcentration {
         FirstOrderConcentration(
             initialConcentration: 1,
@@ -65,6 +77,16 @@ class NewReactionComparisonViewModel: ObservableObject {
         concentrationA: ConcentrationEquation
     ) -> ConcentrationEquation {
         ConcentrationBEquation(concentrationA: concentrationA, initialAConcentration: 1)
+    }
+
+}
+
+struct RateEquation: Equation {
+    let k: CGFloat
+    let concentration: ConcentrationEquation
+
+    func getY(at x: CGFloat) -> CGFloat {
+        k * concentration.getConcentration(at: x)
     }
 
 }

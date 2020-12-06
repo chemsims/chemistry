@@ -8,9 +8,10 @@ import SwiftUI
 struct ReactionComparisonZeroOrderEquation: View {
 
     let time: CGFloat
-    let rate: String
+    let concentration: Equation
+    let rate: Equation
     let k: String
-    let concentration: String
+
     let a0: String
 
     let maxWidth: CGFloat
@@ -24,10 +25,10 @@ struct ReactionComparisonZeroOrderEquation: View {
             maxHeight: maxHeight
         ) {
             UnscaledZeroOrderEquation(
+                time: time,
+                concentration: concentration,
                 rate: rate,
                 k: k,
-                concentration: concentration,
-                time: time,
                 a0: a0
             ).frame(width: maxWidth, height: maxHeight)
         }
@@ -36,9 +37,9 @@ struct ReactionComparisonZeroOrderEquation: View {
 
 struct ReactionComparisonFirstOrderEquation: View {
     let time: CGFloat
-    let rate: String
+    let concentration: Equation
+    let rate: Equation
     let k: String
-    let concentration: String
     let a0: String
 
     let maxWidth: CGFloat
@@ -52,20 +53,21 @@ struct ReactionComparisonFirstOrderEquation: View {
             maxHeight: maxHeight
         ) {
             UnscaledFirstOrderEquation(
+                time: time,
+                concentration: concentration,
                 rate: rate,
                 k: k,
-                concentration: concentration,
-                time: time,
                 a0: a0
             ).frame(width: maxWidth, height: maxHeight)
         }
     }
 }
 struct ReactionComparisonSecondOrderEquation: View {
+
     let time: CGFloat
-    let rate: String
+    let concentration: Equation
+    let rate: Equation
     let k: String
-    let concentration: String
     let a0: String
 
     let maxWidth: CGFloat
@@ -79,10 +81,10 @@ struct ReactionComparisonSecondOrderEquation: View {
             maxHeight: maxHeight
         ) {
             UnscaledSecondOrderEquation(
+                time: time,
+                concentration: concentration,
                 rate: rate,
                 k: k,
-                concentration: concentration,
-                time: time,
                 a0: a0
             ).frame(width: maxWidth, height: maxHeight)
         }
@@ -92,18 +94,19 @@ struct ReactionComparisonSecondOrderEquation: View {
 
 fileprivate struct UnscaledZeroOrderEquation: View {
 
-    let rate: String
-    let k: String
-    let concentration: String
     let time: CGFloat
+    let concentration: Equation
+    let rate: Equation
+    let k: String
     let a0: String
 
     var body: some View {
         GeneralEquation(
             order: 0,
+            time: time,
+            concentration: concentration,
             rate: rate,
             k: k,
-            concentration: concentration,
             spacerWidth: 113
         ) {
             HStack(spacing: 4) {
@@ -128,7 +131,7 @@ fileprivate struct UnscaledZeroOrderEquation: View {
 
     private var aFilled: some View {
         HStack(spacing: 4) {
-//            VaryingText(concentration)
+            VaryingText(time: time, equation: concentration)
             FixedText("=")
             FixedText(a0)
             FixedText("-")
@@ -137,7 +140,8 @@ fileprivate struct UnscaledZeroOrderEquation: View {
                 time: time,
                 equation: IdentityEquation(),
                 withParens: true,
-                widthFactor: 0.8
+                widthFactor: 0.8,
+                decimals: 1
             )
         }
     }
@@ -145,18 +149,19 @@ fileprivate struct UnscaledZeroOrderEquation: View {
 
 fileprivate struct UnscaledFirstOrderEquation: View {
 
-    let rate: String
-    let k: String
-    let concentration: String
     let time: CGFloat
+    let concentration: Equation
+    let rate: Equation
+    let k: String
     let a0: String
 
     var body: some View {
         GeneralEquation(
             order: 1,
+            time: time,
+            concentration: concentration,
             rate: rate,
             k: k,
-            concentration: concentration,
             spacerWidth: 145
         ) {
             VStack(alignment: .leading, spacing: 5) {
@@ -181,7 +186,7 @@ fileprivate struct UnscaledFirstOrderEquation: View {
 
     private var aFilled: some View {
         HStack(spacing: 4) {
-//            VaryingText(concentration)
+            VaryingText(time: time, equation: concentration)
             FixedText("=")
             FixedText(a0)
             FixedText("/")
@@ -192,7 +197,8 @@ fileprivate struct UnscaledFirstOrderEquation: View {
                     time: time,
                     equation: IdentityEquation(),
                     withParens: true,
-                    widthFactor: 0.55
+                    widthFactor: 0.55,
+                    decimals: 1
                 )
             }
             .font(.system(size: EquationSettings.subscriptFontSize))
@@ -203,18 +209,19 @@ fileprivate struct UnscaledFirstOrderEquation: View {
 
 fileprivate struct UnscaledSecondOrderEquation: View {
 
-    let rate: String
-    let k: String
-    let concentration: String
     let time: CGFloat
+    let concentration: Equation
+    let rate: Equation
+    let k: String
     let a0: String
 
     var body: some View {
         GeneralEquation(
             order: 2,
+            time: time,
+            concentration: concentration,
             rate: rate,
             k: k,
-            concentration: concentration,
             spacerWidth: 20
         ) {
             VStack(alignment: .leading, spacing: 5) {
@@ -247,7 +254,7 @@ fileprivate struct UnscaledSecondOrderEquation: View {
     private var aFilled: some View {
         HStack(spacing: 10) {
             HStack(spacing: 2) {
-//                VaryingText(concentration)
+                VaryingText(time: time, equation: concentration)
                 FixedText("=")
                 FixedText(a0)
                 FixedText("/")
@@ -259,7 +266,8 @@ fileprivate struct UnscaledSecondOrderEquation: View {
                         time: time,
                         equation: IdentityEquation(),
                         withParens: true,
-                        widthFactor: 0.65
+                        widthFactor: 0.65,
+                        decimals: 1
                     )
                     FixedText("+")
                     FixedText("1")
@@ -274,9 +282,10 @@ fileprivate struct UnscaledSecondOrderEquation: View {
 fileprivate struct GeneralEquation<Content: View>: View {
 
     let order: Int
-    let rate: String
+    let time: CGFloat
+    let concentration: Equation
+    let rate: Equation
     let k: String
-    let concentration: String
     let spacerWidth: CGFloat
     let lhs: () -> Content
 
@@ -313,10 +322,10 @@ fileprivate struct GeneralEquation<Content: View>: View {
 
     private var blankRate: some View {
         HStack(spacing: 4) {
-//            VaryingText(rate, widthFactor: 1.2)
+            VaryingText(time: time, equation: rate, widthFactor: 1.2)
             FixedText("=")
             FixedText(k)
-//            VaryingText(concentration, withParens: true)
+            VaryingText(time: time, equation: concentration, withParens: true)
             FixedText("\(order)")
                 .font(.system(size: EquationSettings.subscriptFontSize))
                 .offset(y: -10)
@@ -331,19 +340,22 @@ fileprivate struct VaryingText: View {
     let alignment: Alignment
     let withParens: Bool
     let widthFactor: CGFloat
+    let decimals: Int
 
     init(
         time: CGFloat,
         equation: Equation,
         alignment: Alignment = .center,
         withParens: Bool = false,
-        widthFactor: CGFloat = 1
+        widthFactor: CGFloat = 1,
+        decimals: Int = 2
     ) {
         self.time = time
         self.equation = equation
         self.alignment = alignment
         self.withParens = withParens
         self.widthFactor = widthFactor
+        self.decimals = decimals
     }
 
     var body: some View {
@@ -354,7 +366,7 @@ fileprivate struct VaryingText: View {
             AnimatingNumber(
                 x: time,
                 equation: equation,
-                formatter: { d in d.str(decimals: 1) }
+                formatter: { d in d.str(decimals: decimals) }
             )
                 .frame(width: EquationSettings.boxWidth * widthFactor, alignment: alignment)
                 .foregroundColor(.orangeAccent)
@@ -381,30 +393,30 @@ struct NewRateComparisonEquationView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 50) {
             UnscaledZeroOrderEquation(
-                rate: "0.02",
-                k: "0.06",
-                concentration: "0.87",
                 time: 1.2,
+                concentration: ConstantEquation(value: 0.87),
+                rate: ConstantEquation(value: 0.02),
+                k: "0.06",
                 a0: "1.0"
             )
             .frame(width: width, height: height)
             .border(Color.red)
 
             UnscaledFirstOrderEquation(
-                rate: "0.02",
-                k: "0.06",
-                concentration: "0.87",
                 time: 1.2,
+                concentration: ConstantEquation(value: 0.87),
+                rate: ConstantEquation(value: 0.02),
+                k: "0.06",
                 a0: "1.0"
             )
             .frame(width: width, height: height)
             .border(Color.red)
 
             UnscaledSecondOrderEquation(
-                rate: "0.02",
-                k: "0.06",
-                concentration: "0.87",
                 time: 1.2,
+                concentration: ConstantEquation(value: 0.87),
+                rate: ConstantEquation(value: 0.02),
+                k: "0.06",
                 a0: "1.0"
             )
             .frame(width: width, height: height)

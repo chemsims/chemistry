@@ -129,9 +129,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                 ) { geometry in
                     ReactionComparisonZeroOrderEquation(
                         time: reaction.currentTime ?? 0,
-                        rate: "1.0",
-                        k: "0.2",
-                        concentration: "1.0",
+                        concentration: reaction.zeroOrder,
+                        rate: reaction.zeroOrderRate,
+                        k: reaction.zeroOrder.rate.str(decimals: 2),
                         a0: a0,
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
@@ -143,9 +143,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                 ) { geometry in
                     ReactionComparisonFirstOrderEquation(
                         time: reaction.currentTime ?? 0,
-                        rate: "1.0",
-                        k: "0.2",
-                        concentration: "1.0",
+                        concentration: reaction.firstOrder,
+                        rate: reaction.firstOrderRate,
+                        k: reaction.firstOrder.rate.str(decimals: 2),
                         a0: a0,
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
@@ -157,9 +157,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                 ) { geometry in
                     ReactionComparisonSecondOrderEquation(
                         time: reaction.currentTime ?? 0,
-                        rate: "1.0",
-                        k: "0.2",
-                        concentration: "1.0",
+                        concentration: reaction.secondOrder,
+                        rate: reaction.secondOrderRate,
+                        k: reaction.secondOrder.rate.str(decimals: 2),
                         a0: a0,
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height

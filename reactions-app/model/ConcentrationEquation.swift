@@ -30,6 +30,14 @@ struct IdentityEquation: Equation {
     }
 }
 
+struct ConstantEquation: Equation {
+    let value: CGFloat
+
+    func getY(at x: CGFloat) -> CGFloat {
+        value
+    }
+}
+
 protocol ConcentrationEquation: Equation {
     func getConcentration(at time: CGFloat) -> CGFloat
 }
