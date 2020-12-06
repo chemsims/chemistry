@@ -193,39 +193,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     ) -> some View {
         GeometryReader { geometry in
             content(geometry)
-                .gesture(
-                    DragGesture().onChanged { gesture in
-                        guard reaction.canDragOrders else {
-                            return
-                        }
-                        self.draggingOrder = order
-                        let globalFrame = geometry.frame(in: .global)
-                        let localFrame = geometry.frame(in: .local)
-                        let updatedPosition = gesture.location.frame(current: localFrame, target: globalFrame)
-                        self.dragLocation = updatedPosition
-                        self.dragOverOrder = settings.overlappingOrder(point: updatedPosition)
-                    }.onEnded { gesture in
-                        guard reaction.canDragOrders else {
-                            // Always set these to nil in case canDragOrders changes
-                            // while drag is in progress
-                            self.draggingOrder = nil
-                            self.dragOverOrder = nil
-                            return
-                        }
-                        if let dragOverOrder = dragOverOrder {
-                            if (dragOverOrder == order) {
-                                reaction.addToCorrectSelection(order: order)
-                                if (reaction.correctOrderSelections.count == 3) {
-                                    navigation.next()
-                                }
-                            } else if (!reaction.correctOrderSelections.contains(dragOverOrder)) {
-                                runShakeAnimation(order: order)
-                            }
-                        }
-                        self.draggingOrder = nil
-                        self.dragOverOrder = nil
-                    }
-                )
+                .gesture(dragEquationGesture(geometry: geometry, order: order))
         }
         .padding(.horizontal, settings.equationInnerPadding)
         .background(
@@ -418,6 +386,43 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
 
     private var a0: String {
         "1.0"
+    }
+
+    private func dragEquationGesture(
+        geometry: GeometryProxy,
+        order: ReactionOrder
+    ) -> some Gesture {
+        DragGesture().onChanged { gesture in
+            guard reaction.canDragOrders else {
+                return
+            }
+            self.draggingOrder = order
+            let globalFrame = geometry.frame(in: .global)
+            let localFrame = geometry.frame(in: .local)
+            let updatedPosition = gesture.location.frame(current: localFrame, target: globalFrame)
+            self.dragLocation = updatedPosition
+            self.dragOverOrder = settings.overlappingOrder(point: updatedPosition)
+        }.onEnded { gesture in
+            guard reaction.canDragOrders else {
+                // Always set these to nil in case canDragOrders changes
+                // while drag is in progress
+                self.draggingOrder = nil
+                self.dragOverOrder = nil
+                return
+            }
+            if let dragOverOrder = dragOverOrder {
+                if (dragOverOrder == order) {
+                    reaction.addToCorrectSelection(order: order)
+                    if (reaction.correctOrderSelections.count == 3) {
+                        navigation.next()
+                    }
+                } else if (!reaction.correctOrderSelections.contains(dragOverOrder)) {
+                    runShakeAnimation(order: order)
+                }
+            }
+            self.draggingOrder = nil
+            self.dragOverOrder = nil
+        }
     }
 
 }
