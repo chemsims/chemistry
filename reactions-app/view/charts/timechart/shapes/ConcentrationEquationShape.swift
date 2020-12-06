@@ -15,9 +15,6 @@ struct ConcentrationEquationShape: Shape {
     let initialTime: CGFloat
     var finalTime: CGFloat
 
-    let minTime: CGFloat?
-    let maxTime: CGFloat?
-
     private let maxWidthSteps = 100
 
     func path(in rect: CGRect) -> Path {
@@ -26,12 +23,9 @@ struct ConcentrationEquationShape: Shape {
         let dx = rect.width / CGFloat(maxWidthSteps)
         let dt = xAxis.getValue(at: dx) - xAxis.getValue(at: 0)
 
-        let adjustedMin = max(initialTime, minTime ?? initialTime)
-        let adjustedMax = min(finalTime, maxTime ?? finalTime)
-
         var didStart = false
-        for t in stride(from: adjustedMin, to: adjustedMax, by: dt) {
-            let concentration = equation.getConcentration(at: t)
+        for t in stride(from: initialTime, to: finalTime, by: dt) {
+            let concentration = max(min(equation.getConcentration(at: t), 1), 0)
             let x = xAxis.getPosition(at: t)
             let y = yAxis.getPosition(at: concentration)
             if (didStart) {
@@ -62,15 +56,11 @@ struct ConcentrationEquationHead: Shape {
 
     var time: CGFloat
 
-    let minTime: CGFloat?
-    let maxTime: CGFloat?
-
-
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        let concentration = equation.getConcentration(at: adjustedTime)
+        let concentration = max(min(equation.getConcentration(at: time), 1), 0)
 
-        let x = xAxis.getPosition(at: adjustedTime)
+        let x = xAxis.getPosition(at: time)
         let y = yAxis.getPosition(at: concentration)
 
         let containerRect = CGRect(
@@ -80,13 +70,6 @@ struct ConcentrationEquationHead: Shape {
         path.addEllipse(in: containerRect)
 
         return path
-    }
-
-    private var adjustedTime: CGFloat {
-        if let minTime = minTime, let maxTime = maxTime {
-            return max(minTime, min(time, maxTime))
-        }
-        return time
     }
 
     var animatableData: CGFloat {
@@ -121,9 +104,7 @@ struct TimeChartPlot_Previews: PreviewProvider {
                         yAxis: yAxis,
                         xAxis: xAxis,
                         initialTime: 0,
-                        finalTime: t2,
-                        minTime: nil,
-                        maxTime: nil
+                        finalTime: t2
                     ).stroke(lineWidth: 2)
 
                     ConcentrationEquationHead(
@@ -131,9 +112,7 @@ struct TimeChartPlot_Previews: PreviewProvider {
                         equation: DummyEquation(),
                         yAxis: yAxis,
                         xAxis: xAxis,
-                        time: t2,
-                        minTime: nil,
-                        maxTime: nil
+                        time: t2
                     )
                 }
                 .frame(width: 250, height: 250)

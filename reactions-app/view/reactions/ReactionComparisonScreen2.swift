@@ -81,9 +81,7 @@ struct ReactionComparisonScreen2: View {
                         initialTime: 0,
                         currentTime: currentTimeBinding,
                         finalTime: finalTime,
-                        canSetCurrentTime: reaction.reactionHasEnded,
-                        minTime: reaction.zeroOrderInput.t1,
-                        maxTime: reaction.zeroOrderInput.t2
+                        canSetCurrentTime: reaction.reactionHasEnded
                     )
                     chartLine(
                         equation: firstOrder,
@@ -244,9 +242,7 @@ struct ReactionComparisonScreen2: View {
             headColor: Styling.moleculeA,
             headRadius: settings.chartHeadPrimarySize,
             haloColor: Styling.moleculeAChartHeadHalo,
-            canSetCurrentTime: reaction.reactionHasEnded,
-            minTime: input.t1,
-            maxTime: input.t2
+            canSetCurrentTime: reaction.reactionHasEnded
         ).frame(width: settings.chartSize, height: settings.chartSize)
     }
 

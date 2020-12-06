@@ -265,8 +265,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             currentTime: currentTimeBinding,
             finalTime: reaction.finalTime,
             canSetCurrentTime: false,
-            minTime: nil,
-            maxTime: nil,
             includeAxis: false
         )
         .frame(

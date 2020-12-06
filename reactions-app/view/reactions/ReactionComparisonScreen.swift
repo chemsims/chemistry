@@ -82,9 +82,7 @@ struct ReactionComparisonScreen: View {
                         initialTime: 0,
                         currentTime: unsafeCurrentTimeBinding,
                         finalTime: time,
-                        canSetCurrentTime: reaction.reactionHasEnded,
-                        minTime: nil,
-                        maxTime: nil
+                        canSetCurrentTime: reaction.reactionHasEnded
                     )
                     chartLine(equation: firstOrder, settings: settings)
                     chartLine(equation: secondOrder, settings: settings)
@@ -221,9 +219,7 @@ struct ReactionComparisonScreen: View {
             headColor: Styling.moleculeA,
             headRadius: settings.chartHeadPrimarySize,
             haloColor: Styling.moleculeAChartHeadHalo,
-            canSetCurrentTime: reaction.reactionHasEnded,
-            minTime: nil,
-            maxTime: nil
+            canSetCurrentTime: reaction.reactionHasEnded
         ).frame(width: settings.chartSize, height: settings.chartSize)
     }
 

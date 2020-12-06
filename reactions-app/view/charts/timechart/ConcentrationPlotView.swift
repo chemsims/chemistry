@@ -19,8 +19,6 @@ struct ConcentrationPlotView: View {
     let finalTime: CGFloat
     let canSetCurrentTime: Bool
 
-    let minTime: CGFloat?
-    let maxTime: CGFloat?
     let includeAxis: Bool
 
     init(
@@ -33,8 +31,6 @@ struct ConcentrationPlotView: View {
         currentTime: Binding<CGFloat>,
         finalTime: CGFloat,
         canSetCurrentTime: Bool,
-        minTime: CGFloat?,
-        maxTime: CGFloat?,
         includeAxis: Bool = true
     ) {
         self.settings = settings
@@ -46,15 +42,13 @@ struct ConcentrationPlotView: View {
         self._currentTime = currentTime
         self.finalTime = finalTime
         self.canSetCurrentTime = canSetCurrentTime
-        self.minTime = minTime
-        self.maxTime = maxTime
         self.includeAxis = includeAxis
     }
 
     var body: some View {
         ZStack {
 
-            if (includeAxis && minTime == nil && maxTime == nil) {
+            if (includeAxis) {
                 verticalIndicator(at: initialTime)
                 verticalIndicator(at: finalTime)
                 horizontalIndicator(at: concentrationA.getConcentration(at: initialTime))
@@ -83,9 +77,7 @@ struct ConcentrationPlotView: View {
                     headColor: Styling.moleculeB,
                     headRadius: settings.chartHeadSecondarySize,
                     haloColor: nil,
-                    canSetCurrentTime: canSetCurrentTime,
-                    minTime: minTime,
-                    maxTime: maxTime
+                    canSetCurrentTime: canSetCurrentTime
                 )
             }
 
@@ -99,9 +91,7 @@ struct ConcentrationPlotView: View {
                 headColor: Styling.moleculeA,
                 headRadius: settings.chartHeadPrimarySize,
                 haloColor: Styling.moleculeAChartHeadHalo,
-                canSetCurrentTime: canSetCurrentTime,
-                minTime: minTime,
-                maxTime: maxTime
+                canSetCurrentTime: canSetCurrentTime
             )
 
         }.frame(width: settings.chartSize, height: settings.chartSize)
@@ -157,8 +147,6 @@ struct ChartPlotWithHead: View {
     let headRadius: CGFloat
     let haloColor: Color?
     let canSetCurrentTime: Bool
-    let minTime: CGFloat?
-    let maxTime: CGFloat?
 
     var body: some View {
         ZStack {
@@ -195,9 +183,7 @@ struct ChartPlotWithHead: View {
             equation: equation,
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
-            time: currentTime,
-            minTime: minTime,
-            maxTime: maxTime
+            time: currentTime
         )
         .fill()
         .foregroundColor(color)
@@ -212,9 +198,7 @@ struct ChartPlotWithHead: View {
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
             initialTime: initialTime,
-            finalTime: time,
-            minTime: minTime,
-            maxTime: maxTime
+            finalTime: time
         )
         .stroke(lineWidth: settings.timePlotLineWidth)
         .foregroundColor(color)
@@ -234,9 +218,7 @@ struct TimeChartPlotView_Previews: PreviewProvider {
             initialTime: 0,
             currentTime: .constant(0.8),
             finalTime: 1,
-            canSetCurrentTime: true,
-            minTime: nil,
-            maxTime: nil
+            canSetCurrentTime: true
         )
     }
 
