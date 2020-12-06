@@ -34,10 +34,12 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
 
     @State private var isDragging = false
     @State private var dragLocation = CGPoint.zero
+    @State private var draggingOrder: ReactionOrder?
     @State private var dragBorder = Color.black
     @State private var dragColor = Color.black
     @State private var hoveringTopChart = false
-    @State private var dragOverOrder: ReactionOrder? = nil
+    @State private var dragOverOrder: ReactionOrder?
+    @State private var shakingOrder: ReactionOrder?
 
     let settings: ReactionComparisonLayoutSettings
 
@@ -128,7 +130,8 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             VStack {
                 equation(
                     color: Styling.comparisonOrder0Background,
-                    border: Styling.comparisonOrder0Border
+                    border: Styling.comparisonOrder0Border,
+                    order: .Zero
                 ) { geometry in
                     ReactionComparisonZeroOrderEquation(
                         rate: "1.0",
@@ -143,7 +146,8 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
 
                 equation(
                     color: Styling.comparisonOrder1Background,
-                    border: Styling.comparisonOrder1Border
+                    border: Styling.comparisonOrder1Border,
+                    order: .First
                 ) { geometry in
                     ReactionComparisonFirstOrderEquation(
                         rate: "1.0",
@@ -158,7 +162,8 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
 
                 equation(
                     color: Styling.comparisonOrder2Background,
-                    border: Styling.comparisonOrder2Border
+                    border: Styling.comparisonOrder2Border,
+                    order: .Second
                 ) { geometry in
                     ReactionComparisonSecondOrderEquation(
                         rate: "1.0",
@@ -183,6 +188,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     private func equation<Content: View>(
         color: Color,
         border: Color,
+        order: ReactionOrder,
         content: @escaping (GeometryProxy) -> Content
     ) -> some View {
         GeometryReader { geometry in
@@ -193,12 +199,14 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         border: border
                     )
                 )
+                .rotationEffect(shakingOrder == order ? .degrees(3) : .zero)
                 .gesture(
                     DragGesture().onChanged { gesture in
                         guard reaction.canDragOrders else {
                             return
                         }
                         self.isDragging = true
+                        self.draggingOrder = order
                         let globalFrame = geometry.frame(in: .global)
                         let localFrame = geometry.frame(in: .local)
                         let updatedPosition = gesture.location.frame(current: localFrame, target: globalFrame)
@@ -207,10 +215,30 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         self.dragBorder = border
                         self.dragColor = color
                     }.onEnded { gesture in
+                        if (reaction.canDragOrders && dragOverOrder != nil && dragOverOrder != order) {
+                            runShakeAnimation(order: order)
+                        }
                         self.isDragging = false
+                        self.draggingOrder = nil
                         self.dragOverOrder = nil
+
                     }
                 )
+        }
+    }
+
+    private func runShakeAnimation(order: ReactionOrder) {
+        let animation = Animation.spring(
+            response: 0.125,
+            dampingFraction: 0.125
+        )
+        withAnimation(animation) {
+            shakingOrder = order
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            withAnimation(animation) {
+                shakingOrder = nil
+            }
         }
     }
 
