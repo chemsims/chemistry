@@ -128,11 +128,11 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     order: .Zero
                 ) { geometry in
                     ReactionComparisonZeroOrderEquation(
+                        time: reaction.currentTime ?? 0,
                         rate: "1.0",
                         k: "0.2",
                         concentration: "1.0",
-                        time: "1",
-                        a0: "1.0",
+                        a0: a0,
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
                     )
@@ -142,11 +142,11 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     order: .First
                 ) { geometry in
                     ReactionComparisonFirstOrderEquation(
+                        time: reaction.currentTime ?? 0,
                         rate: "1.0",
                         k: "0.2",
                         concentration: "1.0",
-                        time: "1",
-                        a0: "1.0",
+                        a0: a0,
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
                     )
@@ -156,11 +156,11 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     order: .Second
                 ) { geometry in
                     ReactionComparisonSecondOrderEquation(
+                        time: reaction.currentTime ?? 0,
                         rate: "1.0",
                         k: "0.2",
                         concentration: "1.0",
-                        time: "1",
-                        a0: "1.0",
+                        a0: a0,
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
                     )
@@ -366,6 +366,14 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
 
     private var dragColor: Color {
         draggingOrder?.color ?? .black
+    }
+
+    private var a0: String {
+        "1.0"
+    }
+
+    private var time: String {
+        (reaction.currentTime ?? 0).str(decimals: 1)
     }
 }
 
