@@ -18,6 +18,9 @@ struct CircleIconButton: View {
             ZStack {
                 GeometryReader { geo in
                     Circle()
+                        .fill(background)
+                    
+                    Circle()
                         .stroke(border)
                         .foregroundColor(foreground)
                         .overlay(

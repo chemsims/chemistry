@@ -9,6 +9,7 @@ class NewReactionComparisonViewModel: ObservableObject {
 
     @Published var currentTime: CGFloat?
     @Published var highlightedElements = [ReactionComparisonScreenElement]()
+    @Published var canDragOrders = false
 
     let initialTime: CGFloat = 0
     let finalTime: CGFloat = 15

@@ -105,6 +105,7 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
             .charts,
             .equations
         ]
+        model.canDragOrders = true
     }
 
     override func reapply(on model: NewReactionComparisonViewModel) {
@@ -113,6 +114,7 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
 
     override func unapply(on model: NewReactionComparisonViewModel) {
         model.highlightedElements = []
+        model.canDragOrders = false
     }
 }
 

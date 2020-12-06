@@ -188,6 +188,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                 )
                 .gesture(
                     DragGesture().onChanged { gesture in
+                        guard reaction.canDragOrders else {
+                            return
+                        }
                         self.isDragging = true
                         let globalFrame = geometry.frame(in: .global)
                         let localFrame = geometry.frame(in: .local)
@@ -310,7 +313,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     }
 }
 
-extension CGPoint {
+fileprivate extension CGPoint {
 
     func frame(current: CGRect, target: CGRect) -> CGPoint {
         let newX = (target.origin.x + current.origin.x) + self.x
