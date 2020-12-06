@@ -10,10 +10,15 @@ class NewReactionComparisonViewModel: ObservableObject {
     @Published var currentTime: CGFloat?
     @Published var highlightedElements = [ReactionComparisonScreenElement]()
     @Published var canDragOrders = false
+    @Published var correctOrderSelections = [ReactionOrder]()
 
     let initialTime: CGFloat = 0
 
     let moleculesA = MoleculeGridSettings.fullGrid.shuffled()
+
+    func addToCorrectSelection(order: ReactionOrder) {
+        correctOrderSelections.append(order)
+    }
 
     var finalTime: CGFloat {
         let minConcentration: CGFloat = 0.05

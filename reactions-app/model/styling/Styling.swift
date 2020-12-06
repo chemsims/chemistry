@@ -49,6 +49,9 @@ struct Styling {
     static let comparisonOrder2Background = RGB(r: 254, g: 251, b: 237).color
     static let comparisonOrder2Border = RGB(r: 248, g: 209, b: 74).color
 
+    static let comparisonEquationDisabled = RGB(r: 239, g: 239, b: 239).color
+    static let comparisonEquationDisabledBorder = RGB(r: 140, g: 140, b: 140).color
+
 }
 
 

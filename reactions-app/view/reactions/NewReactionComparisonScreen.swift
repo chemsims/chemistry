@@ -32,12 +32,8 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     @ObservedObject var navigation: ReactionNavigationViewModel<ReactionComparisonState>
     @ObservedObject var reaction: NewReactionComparisonViewModel
 
-    @State private var isDragging = false
     @State private var dragLocation = CGPoint.zero
     @State private var draggingOrder: ReactionOrder?
-    @State private var dragBorder = Color.black
-    @State private var dragColor = Color.black
-    @State private var hoveringTopChart = false
     @State private var dragOverOrder: ReactionOrder?
     @State private var shakingOrder: ReactionOrder?
 
@@ -57,7 +53,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             equations
                 .colorMultiply(overlayFor(element: .equations))
 
-            if (isDragging) {
+            if (draggingOrder != nil) {
                 dragView
             }
         }
@@ -129,8 +125,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             Spacer()
             VStack {
                 equation(
-                    color: Styling.comparisonOrder0Background,
-                    border: Styling.comparisonOrder0Border,
                     order: .Zero
                 ) { geometry in
                     ReactionComparisonZeroOrderEquation(
@@ -145,8 +139,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                 }
 
                 equation(
-                    color: Styling.comparisonOrder1Background,
-                    border: Styling.comparisonOrder1Border,
                     order: .First
                 ) { geometry in
                     ReactionComparisonFirstOrderEquation(
@@ -161,8 +153,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                 }
 
                 equation(
-                    color: Styling.comparisonOrder2Background,
-                    border: Styling.comparisonOrder2Border,
                     order: .Second
                 ) { geometry in
                     ReactionComparisonSecondOrderEquation(
@@ -186,8 +176,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     }
 
     private func equation<Content: View>(
-        color: Color,
-        border: Color,
         order: ReactionOrder,
         content: @escaping (GeometryProxy) -> Content
     ) -> some View {
@@ -195,8 +183,8 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             content(geometry)
                 .background(
                     equationBackground(
-                        color: color,
-                        border: border
+                        color: equationColor(order: order),
+                        border: equationBorderColor(order: order)
                     )
                 )
                 .rotationEffect(shakingOrder == order ? .degrees(3) : .zero)
@@ -205,26 +193,46 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         guard reaction.canDragOrders else {
                             return
                         }
-                        self.isDragging = true
                         self.draggingOrder = order
                         let globalFrame = geometry.frame(in: .global)
                         let localFrame = geometry.frame(in: .local)
                         let updatedPosition = gesture.location.frame(current: localFrame, target: globalFrame)
                         self.dragLocation = updatedPosition
                         self.dragOverOrder = settings.overlappingOrder(point: updatedPosition)
-                        self.dragBorder = border
-                        self.dragColor = color
                     }.onEnded { gesture in
-                        if (reaction.canDragOrders && dragOverOrder != nil && dragOverOrder != order) {
-                            runShakeAnimation(order: order)
+                        guard reaction.canDragOrders else {
+                            // Always set these to nil in case canDragOrders changes
+                            // while drag is in progress
+                            self.draggingOrder = nil
+                            self.dragOverOrder = nil
+                            return
                         }
-                        self.isDragging = false
+                        if let dragOverOrder = dragOverOrder {
+                            if (dragOverOrder == order) {
+                                reaction.addToCorrectSelection(order: order)
+                            } else if (!reaction.correctOrderSelections.contains(dragOverOrder)) {
+                                runShakeAnimation(order: order)
+                            }
+                        }
                         self.draggingOrder = nil
                         self.dragOverOrder = nil
-
                     }
                 )
         }
+    }
+
+    private func equationBorderColor(order: ReactionOrder) -> Color {
+        if (reaction.correctOrderSelections.contains(order)) {
+            return Styling.comparisonEquationDisabledBorder
+        }
+        return order.border
+    }
+
+    private func equationColor(order: ReactionOrder) -> Color {
+        if (reaction.correctOrderSelections.contains(order)) {
+            return Styling.comparisonEquationDisabled
+        }
+        return order.color
     }
 
     private func runShakeAnimation(order: ReactionOrder) {
@@ -239,15 +247,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             withAnimation(animation) {
                 shakingOrder = nil
             }
-        }
-    }
-
-    private func dragGesture() -> some Gesture {
-        DragGesture().onChanged { gesture in
-            self.isDragging = true
-            self.dragLocation = gesture.location
-        }.onEnded { gesture in
-            self.isDragging = false
         }
     }
 
@@ -302,9 +301,25 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         .background(Color.white.border(Color.black, width: 0.5 * settings.chartBorderWidth))
         .padding(settings.chartBorderWidth)
         .border(
-            dragOverOrder == order ? dragBorder : Color.black,
-            width: dragOverOrder == order ? settings.chartBorderWidth : 0
+            chartBorderColor(order: order),
+            width: chartBorderWidth(order: order)
         )
+    }
+
+    private func chartBorderColor(order: ReactionOrder) -> Color {
+        if (reaction.correctOrderSelections.contains(order)) {
+            return order.border
+        } else if (dragOverOrder == order) {
+            return dragBorder
+        }
+        return Color.black
+    }
+
+    private func chartBorderWidth(order: ReactionOrder) -> CGFloat{
+        if (reaction.correctOrderSelections.contains(order) || dragOverOrder == order) {
+            return settings.chartBorderWidth
+        }
+        return 0
     }
 
     private var beaky: some View {
@@ -343,6 +358,32 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
 
         let x: Double = 173
         return  RGB(r: x, g: x, b: x).color.opacity(0.5)
+    }
+
+    private var dragBorder: Color {
+        draggingOrder?.border ?? .black
+    }
+
+    private var dragColor: Color {
+        draggingOrder?.color ?? .black
+    }
+}
+
+fileprivate extension ReactionOrder {
+    var border: Color {
+        switch (self) {
+        case .Zero: return Styling.comparisonOrder0Border
+        case .First: return Styling.comparisonOrder1Border
+        case .Second: return Styling.comparisonOrder2Border
+        }
+    }
+
+    var color: Color {
+        switch (self) {
+        case .Zero: return Styling.comparisonOrder0Background
+        case .First: return Styling.comparisonOrder1Background
+        case .Second: return Styling.comparisonOrder2Background
+        }
     }
 }
 

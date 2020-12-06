@@ -84,6 +84,7 @@ fileprivate class ChartExplainerState: ReactionComparisonState {
             .charts,
             .beakers
         ]
+        model.correctOrderSelections = []
     }
 
     override func reapply(on model: NewReactionComparisonViewModel) {
