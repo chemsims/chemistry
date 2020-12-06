@@ -32,6 +32,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     @ObservedObject var navigation: ReactionNavigationViewModel<ReactionComparisonState>
     @ObservedObject var reaction: NewReactionComparisonViewModel
 
+    @State private var isDragging = false
+    @State private var dragLocation = CGPoint.zero
+
     let settings: ReactionComparisonLayoutSettings
 
     var body: some View {
@@ -47,6 +50,10 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                 .colorMultiply(overlayFor(element: .charts))
             equations
                 .colorMultiply(overlayFor(element: .equations))
+
+            if (isDragging) {
+                dragView
+            }
         }
     }
 
@@ -59,6 +66,12 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             }.padding()
             Spacer()
         }
+    }
+
+    private var dragView: some View {
+        RoundedRectangle(cornerRadius: 10)
+            .frame(width: 60, height: 30)
+            .position(dragLocation)
     }
 
     private var charts: some View {
@@ -92,7 +105,10 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         HStack {
             Spacer()
             VStack {
-                GeometryReader { geometry in
+                equation(
+                    color: Styling.comparisonOrder0Background,
+                    border: Styling.comparisonOrder0Border
+                ) { geometry in
                     ReactionComparisonZeroOrderEquation(
                         rate: "1.0",
                         k: "0.2",
@@ -101,15 +117,13 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         a0: "1.0",
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
-                    ).background(
-                        equationBackground(
-                            color: Styling.comparisonOrder0Background,
-                            border: Styling.comparisonOrder0Border
-                        )
                     )
                 }
 
-                GeometryReader { geometry in
+                equation(
+                    color: Styling.comparisonOrder1Background,
+                    border: Styling.comparisonOrder1Border
+                ) { geometry in
                     ReactionComparisonFirstOrderEquation(
                         rate: "1.0",
                         k: "0.2",
@@ -118,15 +132,13 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         a0: "1.0",
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
-                    ).background(
-                        equationBackground(
-                            color: Styling.comparisonOrder1Background,
-                            border: Styling.comparisonOrder1Border
-                        )
                     )
                 }
 
-                GeometryReader { geometry in
+                equation(
+                    color: Styling.comparisonOrder2Background,
+                    border: Styling.comparisonOrder2Border
+                ) { geometry in
                     ReactionComparisonSecondOrderEquation(
                         rate: "1.0",
                         k: "0.2",
@@ -135,19 +147,52 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         a0: "1.0",
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
-                    ).background(
-                        equationBackground(
-                            color: Styling.comparisonOrder2Background,
-                            border: Styling.comparisonOrder2Border
-                        )
                     )
                 }
+
                 Spacer()
                     .frame(height: settings.ordered.beakyBoxTotalHeight)
             }
             .frame(width: settings.equationsWidth)
             .padding(.top, settings.equationTopPadding)
             .padding(.trailing, settings.equationTrailingPadding)
+        }
+    }
+
+    private func equation<Content: View>(
+        color: Color,
+        border: Color,
+        content: @escaping (GeometryProxy) -> Content
+    ) -> some View {
+        GeometryReader { geometry in
+            content(geometry)
+                .background(
+                    equationBackground(
+                        color: Styling.comparisonOrder0Background,
+                        border: Styling.comparisonOrder0Border
+                    )
+                )
+                .gesture(
+                    DragGesture().onChanged { gesture in
+                        self.isDragging = true
+                        let globalFrame = geometry.frame(in: .global)
+                        let localFrame = geometry.frame(in: .local)
+                        let updatedPosition = gesture.location.frame(current: localFrame, target: globalFrame)
+                        print(updatedPosition)
+                        self.dragLocation = updatedPosition
+                    }.onEnded { gesture in
+                        self.isDragging = false
+                    }
+                )
+        }
+    }
+
+    private func dragGesture() -> some Gesture {
+        DragGesture().onChanged { gesture in
+            self.isDragging = true
+            self.dragLocation = gesture.location
+        }.onEnded { gesture in
+            self.isDragging = false
         }
     }
 
@@ -239,6 +284,16 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         let x: Double = 173
         return  RGB(r: x, g: x, b: x).color.opacity(0.5)
     }
+}
+
+extension CGPoint {
+
+    func frame(current: CGRect, target: CGRect) -> CGPoint {
+        let newX = (target.origin.x + current.origin.x) + self.x
+        let newY = (target.origin.y + current.origin.y) + self.y
+        return CGPoint(x: newX, y: newY)
+    }
+
 }
 
 struct ReactionComparisonLayoutSettings {
