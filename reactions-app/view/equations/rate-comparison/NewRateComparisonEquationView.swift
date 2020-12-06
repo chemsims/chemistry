@@ -7,7 +7,7 @@ import SwiftUI
 
 struct ReactionComparisonZeroOrderEquation: View {
 
-    let time: CGFloat
+    let time: CGFloat?
     let concentration: Equation
     let rate: Equation
     let k: String
@@ -36,7 +36,7 @@ struct ReactionComparisonZeroOrderEquation: View {
 }
 
 struct ReactionComparisonFirstOrderEquation: View {
-    let time: CGFloat
+    let time: CGFloat?
     let concentration: Equation
     let rate: Equation
     let k: String
@@ -64,7 +64,7 @@ struct ReactionComparisonFirstOrderEquation: View {
 }
 struct ReactionComparisonSecondOrderEquation: View {
 
-    let time: CGFloat
+    let time: CGFloat?
     let concentration: Equation
     let rate: Equation
     let k: String
@@ -94,7 +94,7 @@ struct ReactionComparisonSecondOrderEquation: View {
 
 fileprivate struct UnscaledZeroOrderEquation: View {
 
-    let time: CGFloat
+    let time: CGFloat?
     let concentration: Equation
     let rate: Equation
     let k: String
@@ -149,7 +149,7 @@ fileprivate struct UnscaledZeroOrderEquation: View {
 
 fileprivate struct UnscaledFirstOrderEquation: View {
 
-    let time: CGFloat
+    let time: CGFloat?
     let concentration: Equation
     let rate: Equation
     let k: String
@@ -209,7 +209,7 @@ fileprivate struct UnscaledFirstOrderEquation: View {
 
 fileprivate struct UnscaledSecondOrderEquation: View {
 
-    let time: CGFloat
+    let time: CGFloat?
     let concentration: Equation
     let rate: Equation
     let k: String
@@ -282,7 +282,7 @@ fileprivate struct UnscaledSecondOrderEquation: View {
 fileprivate struct GeneralEquation<Content: View>: View {
 
     let order: Int
-    let time: CGFloat
+    let time: CGFloat?
     let concentration: Equation
     let rate: Equation
     let k: String
@@ -335,7 +335,7 @@ fileprivate struct GeneralEquation<Content: View>: View {
 
 fileprivate struct VaryingText: View {
 
-    let time: CGFloat
+    let time: CGFloat?
     let equation: Equation
     let alignment: Alignment
     let withParens: Bool
@@ -343,7 +343,7 @@ fileprivate struct VaryingText: View {
     let decimals: Int
 
     init(
-        time: CGFloat,
+        time: CGFloat?,
         equation: Equation,
         alignment: Alignment = .center,
         withParens: Bool = false,
@@ -363,14 +363,22 @@ fileprivate struct VaryingText: View {
             if (withParens) {
                 FixedText("(")
             }
-            AnimatingNumber(
-                x: time,
-                equation: equation,
-                formatter: { d in d.str(decimals: decimals) }
-            )
-                .frame(width: EquationSettings.boxWidth * widthFactor, alignment: alignment)
-                .foregroundColor(.orangeAccent)
-                .minimumScaleFactor(0.5)
+            Group {
+                if (time == nil) {
+                    FixedText(equation.getY(at: 0).str(decimals: decimals))
+                }
+                if (time != nil) {
+                    AnimatingNumber(
+                        x: time!,
+                        equation: equation,
+                        formatter: { d in d.str(decimals: decimals) }
+                    )
+                }
+
+            }
+            .frame(width: EquationSettings.boxWidth * widthFactor, alignment: alignment)
+            .foregroundColor(.orangeAccent)
+            .minimumScaleFactor(0.5)
             if (withParens) {
                 FixedText(")")
             }

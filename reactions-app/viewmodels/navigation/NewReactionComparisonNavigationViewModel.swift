@@ -106,7 +106,6 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
             .charts,
             .equations
         ]
-        model.canDragOrders = true
     }
 
     override func reapply(on model: NewReactionComparisonViewModel) {
@@ -115,7 +114,6 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
 
     override func unapply(on model: NewReactionComparisonViewModel) {
         model.highlightedElements = []
-        model.canDragOrders = false
     }
 }
 
@@ -129,6 +127,7 @@ fileprivate class PreAnimationState: ReactionComparisonState {
         model.highlightedElements = [
             .charts
         ]
+        model.canStartAnimation = true
     }
 
     override func reapply(on model: NewReactionComparisonViewModel) {
@@ -137,6 +136,7 @@ fileprivate class PreAnimationState: ReactionComparisonState {
 
     override func unapply(on model: NewReactionComparisonViewModel) {
         model.highlightedElements = []
+        model.canStartAnimation = false
     }
 }
 
@@ -149,6 +149,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
         model.currentTime0 = model.initialTime
         model.currentTime1 = model.initialTime
         model.currentTime2 = model.initialTime
+        model.canDragOrders = true
         model.highlightedElements = []
 
         withAnimation(.linear(duration: Double(model.finalTime0))) {
@@ -170,6 +171,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
         model.currentTime0 = nil
         model.currentTime1 = nil
         model.currentTime2 = nil
+        model.canDragOrders = false
     }
 }
 
@@ -179,11 +181,16 @@ fileprivate class EndComparisonAnimation: ReactionComparisonState {
     }
 
     override func apply(on model: NewReactionComparisonViewModel) {
-        withAnimation(.easeOut(duration: 0.75)) {
-            model.currentTime0 = 1.001 * model.finalTime0
-            model.currentTime1 = 1.001 * model.finalTime1
-            model.currentTime2 = 1.001 * model.finalTime2
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime0 = 1.00001 * model.finalTime0
+            model.currentTime1 = 1.00001 * model.finalTime1
+            model.currentTime2 = 1.00001 * model.finalTime2
+            model.reactionHasEnded = true
         }
+    }
+
+    override func unapply(on model: NewReactionComparisonViewModel) {
+        model.reactionHasEnded = false
     }
 
 }

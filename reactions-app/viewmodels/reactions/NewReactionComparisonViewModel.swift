@@ -25,6 +25,8 @@ class NewReactionComparisonViewModel: ObservableObject {
     @Published var highlightedElements = [ReactionComparisonScreenElement]()
     @Published var canDragOrders = false
     @Published var correctOrderSelections = [ReactionOrder]()
+    @Published var reactionHasEnded = false
+    @Published var canStartAnimation = false
 
     let initialTime: CGFloat = 0
 

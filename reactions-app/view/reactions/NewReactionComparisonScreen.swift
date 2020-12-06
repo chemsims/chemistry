@@ -140,7 +140,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     order: .Zero
                 ) { geometry in
                     ReactionComparisonZeroOrderEquation(
-                        time: reaction.currentTime0 ?? 0,
+                        time: reaction.currentTime0,
                         concentration: reaction.zeroOrder,
                         rate: reaction.zeroOrderRate,
                         k: reaction.zeroOrder.rate.str(decimals: 2),
@@ -154,7 +154,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     order: .First
                 ) { geometry in
                     ReactionComparisonFirstOrderEquation(
-                        time: reaction.currentTime1 ?? 0,
+                        time: reaction.currentTime1,
                         concentration: reaction.firstOrder,
                         rate: reaction.firstOrderRate,
                         k: reaction.firstOrder.rate.str(decimals: 2),
@@ -168,7 +168,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     order: .Second
                 ) { geometry in
                     ReactionComparisonSecondOrderEquation(
-                        time: reaction.currentTime2 ?? 0,
+                        time: reaction.currentTime2,
                         concentration: reaction.secondOrder,
                         rate: reaction.secondOrderRate,
                         k: reaction.secondOrder.rate.str(decimals: 2),
@@ -193,8 +193,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     ) -> some View {
         GeometryReader { geometry in
             content(geometry)
-
-                .rotationEffect(shakingOrder == order ? .degrees(3) : .zero)
                 .gesture(
                     DragGesture().onChanged { gesture in
                         guard reaction.canDragOrders else {
@@ -217,6 +215,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         if let dragOverOrder = dragOverOrder {
                             if (dragOverOrder == order) {
                                 reaction.addToCorrectSelection(order: order)
+                                if (reaction.correctOrderSelections.count == 3) {
+                                    navigation.next()
+                                }
                             } else if (!reaction.correctOrderSelections.contains(dragOverOrder)) {
                                 runShakeAnimation(order: order)
                             }
@@ -233,6 +234,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                 border: equationBorderColor(order: order)
             )
         )
+        .rotationEffect(shakingOrder == order ? .degrees(3) : .zero)
     }
 
     private func equationBorderColor(order: ReactionOrder) -> Color {
@@ -299,18 +301,33 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         finalTime: CGFloat,
         currentTime: Binding<CGFloat>
     ) -> some View {
-        ConcentrationPlotView(
-            settings: chartSettings,
-            concentrationA: concentrationA,
-            concentrationB: concentrationB,
-            initialConcentration: 1,
-            finalConcentration: 0,
-            initialTime: reaction.initialTime,
-            currentTime: currentTime,
-            finalTime: finalTime,
-            canSetCurrentTime: false,
-            includeAxis: false
-        )
+        ZStack {
+            if (reaction.currentTime0 == nil) {
+                CircleIconButton(
+                    action: navigation.next,
+                    systemImage: Icons.rightArrow,
+                    background: .clear,
+                    border: .black,
+                    foreground: reaction.canStartAnimation ? .orangeAccent : .gray
+                )
+                .disabled(!reaction.canStartAnimation)
+                .frame(width: settings.chartSize * 0.5)
+            }
+            if (reaction.currentTime0 != nil) {
+                ConcentrationPlotView(
+                    settings: chartSettings,
+                    concentrationA: concentrationA,
+                    concentrationB: concentrationB,
+                    initialConcentration: 1,
+                    finalConcentration: 0,
+                    initialTime: reaction.initialTime,
+                    currentTime: currentTime,
+                    finalTime: finalTime,
+                    canSetCurrentTime: false,
+                    includeAxis: false
+                )
+            }
+        }
         .frame(
             width: chartSettings.chartSize,
             height: chartSettings.chartSize
