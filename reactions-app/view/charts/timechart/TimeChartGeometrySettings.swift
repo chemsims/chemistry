@@ -11,18 +11,26 @@ struct TimeChartGeometrySettings {
     init(
         chartSize: CGFloat,
         minConcentration: CGFloat = ReactionSettings.minConcentration,
-        maxConcentration: CGFloat = ReactionSettings.maxConcentration
+        maxConcentration: CGFloat = ReactionSettings.maxConcentration,
+        minTime: CGFloat = ReactionSettings.minTime,
+        maxTime: CGFloat = ReactionSettings.maxTime,
+        includeAxisPadding: Bool = true
     ) {
         self.chartSize = chartSize
         self.minConcentration = minConcentration
         self.maxConcentration = maxConcentration
+        self.minTime = minTime
+        self.maxTime = maxTime
+        self.includeAxisPadding = includeAxisPadding
     }
 
     // Min/max of the axis
     let minConcentration: CGFloat
     let maxConcentration: CGFloat
-    let minTime: CGFloat = ReactionSettings.minTime
-    let maxTime: CGFloat = ReactionSettings.maxTime
+    let minTime: CGFloat
+    let maxTime: CGFloat
+
+    private let includeAxisPadding: Bool
 
     let minFinalConcentration: CGFloat = ReactionSettings.minFinalConcentration
 
@@ -87,7 +95,7 @@ struct TimeChartGeometrySettings {
     var yAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
             minValuePosition: chartSize,
-            maxValuePosition: sliderMaxValuePadding,
+            maxValuePosition: includeAxisPadding ? sliderMaxValuePadding : 0,
             minValue: minConcentration,
             maxValue: maxConcentration
         )
@@ -96,7 +104,7 @@ struct TimeChartGeometrySettings {
     var xAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
             minValuePosition: 0,
-            maxValuePosition: chartSize - sliderMaxValuePadding,
+            maxValuePosition: includeAxisPadding ? chartSize - sliderMaxValuePadding : chartSize,
             minValue: minTime,
             maxValue: maxTime
         )

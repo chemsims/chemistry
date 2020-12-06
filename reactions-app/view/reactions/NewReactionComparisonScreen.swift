@@ -87,7 +87,14 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     }
 
     private var charts: some View {
-        let chartSettings = TimeChartGeometrySettings(chartSize: settings.chartSize)
+        let chartSettings = TimeChartGeometrySettings(
+            chartSize: settings.chartSize,
+            minConcentration: 0,
+            maxConcentration: 1,
+            minTime: 0,
+            maxTime: reaction.finalTime,
+            includeAxisPadding: false
+        )
         return ZStack {
             chart(
                 chartSettings: chartSettings,

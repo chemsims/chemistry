@@ -76,6 +76,10 @@ struct LinearConcentration: ConcentrationEquation {
         a0 - (rate * time)
     }
 
+    func time(for concentration: CGFloat) -> CGFloat? {
+        (a0 - concentration) / rate
+    }
+
 }
 
 struct ConstantConcentration: ConcentrationEquation {
@@ -106,6 +110,13 @@ struct FirstOrderConcentration: ConcentrationEquation {
 
     func getConcentration(at time: CGFloat) -> CGFloat {
         initialConcentration * CGFloat(pow(Darwin.M_E, -Double(rate * time)))
+    }
+
+    func time(for concentration: CGFloat) -> CGFloat? {
+        guard concentration > 0 else {
+            return nil
+        }
+        return -(1 / rate) * log(concentration / initialConcentration)
     }
 
     static func getRate(c1: CGFloat, c2: CGFloat, time: CGFloat) -> CGFloat {
@@ -162,6 +173,14 @@ struct SecondOrderConcentration: ConcentrationEquation {
         let kt = rate * time
         return 1 / (invA1 + kt)
     }
+
+    func time(for concentration: CGFloat) -> CGFloat? {
+        guard concentration > 0 else {
+            return nil
+        }
+        return (1 / (concentration  * rate)) - (1 / (initialConcentration * rate))
+    }
+
 
     static func getRate(c1: CGFloat, c2: CGFloat, time: CGFloat) -> CGFloat {
         assert(c1 != 0)

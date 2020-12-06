@@ -12,28 +12,35 @@ class NewReactionComparisonViewModel: ObservableObject {
     @Published var canDragOrders = false
 
     let initialTime: CGFloat = 0
-    let finalTime: CGFloat = 15
 
     let moleculesA = MoleculeGridSettings.fullGrid.shuffled()
 
-    var zeroOrder: ConcentrationEquation {
+    var finalTime: CGFloat {
+        let minConcentration: CGFloat = 0.05
+        let zeroOrderTime = zeroOrder.time(for: minConcentration)!
+        let firstOrderTime = firstOrder.time(for: minConcentration)!
+        let secondOrderTime = secondOrder.time(for: minConcentration)!
+        return [zeroOrderTime, firstOrderTime, secondOrderTime].max()!
+    }
+
+    var zeroOrder: LinearConcentration {
         LinearConcentration(
             a0: 1,
             rate: 0.05
         )
     }
 
-    var firstOrder: ConcentrationEquation {
+    var firstOrder: FirstOrderConcentration {
         FirstOrderConcentration(
             initialConcentration: 1,
             rate: 0.2
         )
     }
 
-    var secondOrder: ConcentrationEquation {
+    var secondOrder: SecondOrderConcentration {
         SecondOrderConcentration(
             initialConcentration: 1,
-            rate: 0.2
+            rate: 0.7
         )
     }
 
