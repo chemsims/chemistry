@@ -14,8 +14,8 @@ struct NewReactionComparisonNavigationViewModel {
             ChartExplainerState(),
             DragAndDropExplainerState(),
             PreAnimationState(),
-            RunComparisonAnimation()
-
+            RunComparisonAnimation(),
+            EndComparisonAnimation()
         ]
     }
 
@@ -146,10 +146,19 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
     }
 
     override func apply(on model: NewReactionComparisonViewModel) {
-        model.currentTime = model.initialTime
+        model.currentTime0 = model.initialTime
+        model.currentTime1 = model.initialTime
+        model.currentTime2 = model.initialTime
         model.highlightedElements = []
-        withAnimation(.linear(duration: Double(model.finalTime - model.initialTime))) {
-            model.currentTime = model.finalTime
+
+        withAnimation(.linear(duration: Double(model.finalTime0))) {
+            model.currentTime0 = model.finalTime0
+        }
+        withAnimation(.linear(duration: Double(model.finalTime1))) {
+            model.currentTime1 = model.finalTime1
+        }
+        withAnimation(.linear(duration: Double(model.finalTime2))) {
+            model.currentTime2 = model.finalTime2
         }
     }
 
@@ -158,6 +167,23 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
     }
 
     override func unapply(on model: NewReactionComparisonViewModel) {
-        model.currentTime = nil
+        model.currentTime0 = nil
+        model.currentTime1 = nil
+        model.currentTime2 = nil
     }
+}
+
+fileprivate class EndComparisonAnimation: ReactionComparisonState {
+    init() {
+        super.init(statement: [])
+    }
+
+    override func apply(on model: NewReactionComparisonViewModel) {
+        withAnimation(.easeOut(duration: 0.75)) {
+            model.currentTime0 = 1.001 * model.finalTime0
+            model.currentTime1 = 1.001 * model.finalTime1
+            model.currentTime2 = 1.001 * model.finalTime2
+        }
+    }
+
 }

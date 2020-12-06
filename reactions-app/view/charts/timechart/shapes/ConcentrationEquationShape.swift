@@ -25,7 +25,7 @@ struct ConcentrationEquationShape: Shape {
 
         var didStart = false
         for t in stride(from: initialTime, to: finalTime, by: dt) {
-            let concentration = max(min(equation.getConcentration(at: t), 1), 0)
+            let concentration = equation.getConcentration(at: t)
             let x = xAxis.getPosition(at: t)
             let y = yAxis.getPosition(at: concentration)
             if (didStart) {
@@ -58,7 +58,7 @@ struct ConcentrationEquationHead: Shape {
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        let concentration = max(min(equation.getConcentration(at: time), 1), 0)
+        let concentration = equation.getConcentration(at: time)
 
         let x = xAxis.getPosition(at: time)
         let y = yAxis.getPosition(at: concentration)

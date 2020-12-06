@@ -62,9 +62,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     private var beakers: some View {
         HStack {
             VStack {
-                beaker(concentrationB: reaction.zeroOrderB)
-                beaker(concentrationB: reaction.firstOrderB)
-                beaker(concentrationB: reaction.secondOrderB)
+                beaker(concentrationB: reaction.zeroOrderB, time: reaction.currentTime0 ?? 0)
+                beaker(concentrationB: reaction.firstOrderB, time: reaction.currentTime1 ?? 0)
+                beaker(concentrationB: reaction.secondOrderB, time: reaction.currentTime2 ?? 0)
             }.padding()
             Spacer()
         }
@@ -85,36 +85,48 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     }
 
     private var charts: some View {
-        let chartSettings = TimeChartGeometrySettings(
-            chartSize: settings.chartSize,
-            minConcentration: 0,
-            maxConcentration: 1,
-            minTime: 0,
-            maxTime: reaction.finalTime,
-            includeAxisPadding: false
-        )
+
+        func chartSettings(
+            time: CGFloat
+        ) -> TimeChartGeometrySettings {
+            TimeChartGeometrySettings(
+                chartSize: settings.chartSize,
+                minConcentration: 0,
+                maxConcentration: 1,
+                minTime: 0,
+                maxTime: time,
+                includeAxisPadding: false
+            )
+        }
+
         return ZStack {
             chart(
-                chartSettings: chartSettings,
+                chartSettings: chartSettings(time: reaction.finalTime0),
                 concentrationA: reaction.zeroOrder,
                 concentrationB: reaction.zeroOrderB,
-                order: .Zero
+                order: .Zero,
+                finalTime: reaction.finalTime0,
+                currentTime: currentTimeBinding0
             )
             .position(x: settings.chartX(order: .Zero), y: settings.chartY(order: .Zero))
 
             chart(
-                chartSettings: chartSettings,
+                chartSettings: chartSettings(time: reaction.finalTime1),
                 concentrationA: reaction.firstOrder,
                 concentrationB: reaction.firstOrderB,
-                order: .First
+                order: .First,
+                finalTime: reaction.finalTime1,
+                currentTime: currentTimeBinding1
             )
             .position(x: settings.chartX(order: .First), y: settings.chartY(order: .First))
 
             chart(
-                chartSettings: chartSettings,
+                chartSettings: chartSettings(time: reaction.finalTime2),
                 concentrationA: reaction.secondOrder,
                 concentrationB: reaction.secondOrderB,
-                order: .Second
+                order: .Second,
+                finalTime: reaction.finalTime2,
+                currentTime: currentTimeBinding2
             )
             .position(x: settings.chartX(order: .Second), y: settings.chartY(order: .Second))
         }
@@ -128,7 +140,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     order: .Zero
                 ) { geometry in
                     ReactionComparisonZeroOrderEquation(
-                        time: reaction.currentTime ?? 0,
+                        time: reaction.currentTime0 ?? 0,
                         concentration: reaction.zeroOrder,
                         rate: reaction.zeroOrderRate,
                         k: reaction.zeroOrder.rate.str(decimals: 2),
@@ -142,7 +154,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     order: .First
                 ) { geometry in
                     ReactionComparisonFirstOrderEquation(
-                        time: reaction.currentTime ?? 0,
+                        time: reaction.currentTime1 ?? 0,
                         concentration: reaction.firstOrder,
                         rate: reaction.firstOrderRate,
                         k: reaction.firstOrder.rate.str(decimals: 2),
@@ -156,7 +168,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     order: .Second
                 ) { geometry in
                     ReactionComparisonSecondOrderEquation(
-                        time: reaction.currentTime ?? 0,
+                        time: reaction.currentTime2 ?? 0,
                         concentration: reaction.secondOrder,
                         rate: reaction.secondOrderRate,
                         k: reaction.secondOrder.rate.str(decimals: 2),
@@ -266,12 +278,13 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     
 
     private func beaker(
-        concentrationB: ConcentrationEquation
+        concentrationB: ConcentrationEquation,
+        time: CGFloat
     ) -> some View {
         FilledBeaker(
             moleculesA: reaction.moleculesA,
             concentrationB: concentrationB,
-            currentTime: reaction.currentTime
+            currentTime: time
         )
         .frame(width: settings.beakerWidth)
     }
@@ -280,7 +293,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         chartSettings: TimeChartGeometrySettings,
         concentrationA: ConcentrationEquation,
         concentrationB: ConcentrationEquation,
-        order: ReactionOrder
+        order: ReactionOrder,
+        finalTime: CGFloat,
+        currentTime: Binding<CGFloat>
     ) -> some View {
         ConcentrationPlotView(
             settings: chartSettings,
@@ -289,8 +304,8 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             initialConcentration: 1,
             finalConcentration: 0,
             initialTime: reaction.initialTime,
-            currentTime: currentTimeBinding,
-            finalTime: reaction.finalTime,
+            currentTime: currentTime,
+            finalTime: finalTime,
             canSetCurrentTime: false,
             includeAxis: false
         )
@@ -343,10 +358,24 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         }
     }
 
-    private var currentTimeBinding: Binding<CGFloat> {
+    private var currentTimeBinding0: Binding<CGFloat> {
         Binding(
-            get: { reaction.currentTime ?? 0 },
-            set: { reaction.currentTime = $0 }
+            get: { reaction.currentTime0 ?? 0 },
+            set: { reaction.currentTime0 = $0 }
+        )
+    }
+
+    private var currentTimeBinding1: Binding<CGFloat> {
+        Binding(
+            get: { reaction.currentTime1 ?? 0 },
+            set: { reaction.currentTime1 = $0 }
+        )
+    }
+
+    private var currentTimeBinding2: Binding<CGFloat> {
+        Binding(
+            get: { reaction.currentTime2 ?? 0 },
+            set: { reaction.currentTime2 = $0 }
         )
     }
 
@@ -372,9 +401,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         "1.0"
     }
 
-    private var time: String {
-        (reaction.currentTime ?? 0).str(decimals: 1)
-    }
 }
 
 fileprivate extension ReactionOrder {

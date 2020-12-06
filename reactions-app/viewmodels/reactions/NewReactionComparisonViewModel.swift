@@ -19,7 +19,9 @@ class NewReactionComparisonViewModel: ObservableObject {
     private let firstOrderInput: ReactionInput
     private let secondOrderInput: ReactionInput
 
-    @Published var currentTime: CGFloat?
+    @Published var currentTime0: CGFloat?
+    @Published var currentTime1: CGFloat?
+    @Published var currentTime2: CGFloat?
     @Published var highlightedElements = [ReactionComparisonScreenElement]()
     @Published var canDragOrders = false
     @Published var correctOrderSelections = [ReactionOrder]()
@@ -32,12 +34,16 @@ class NewReactionComparisonViewModel: ObservableObject {
         correctOrderSelections.append(order)
     }
 
-    var finalTime: CGFloat {
-        let minConcentration: CGFloat = 0.05
-        let zeroOrderTime = zeroOrder.time(for: minConcentration)!
-        let firstOrderTime = firstOrder.time(for: minConcentration)!
-        let secondOrderTime = secondOrder.time(for: minConcentration)!
-        return [zeroOrderTime, firstOrderTime, secondOrderTime].max()!
+    var finalTime0: CGFloat {
+        zeroOrder.time(for: 0.1)!
+    }
+
+    var finalTime1: CGFloat {
+        firstOrder.time(for: 0.1)!
+    }
+
+    var finalTime2: CGFloat {
+        secondOrder.time(for: 0.1)!
     }
 
     var zeroOrder: LinearConcentration {
