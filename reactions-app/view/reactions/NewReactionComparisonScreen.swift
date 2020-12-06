@@ -256,14 +256,19 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             finalTime: reaction.finalTime,
             canSetCurrentTime: false,
             minTime: nil,
-            maxTime: nil
+            maxTime: nil,
+            includeAxis: false
         )
         .frame(
             width: chartSettings.chartSize,
             height: chartSettings.chartSize
         )
-        .background(Color.white)
-        .border(dragOverOrder == order ? dragBorder : Color.black)
+        .background(Color.white.border(Color.black, width: 0.5 * settings.chartBorderWidth))
+        .padding(settings.chartBorderWidth)
+        .border(
+            dragOverOrder == order ? dragBorder : Color.black,
+            width: dragOverOrder == order ? settings.chartBorderWidth : 0
+        )
     }
 
     private var beaky: some View {
@@ -387,6 +392,10 @@ struct ReactionComparisonLayoutSettings {
             width: -orderDragWidth * 0.4,
             height: -orderDragHeight * 0.4
         )
+    }
+
+    var chartBorderWidth: CGFloat {
+        1.25
     }
 
     func chartX(order: ReactionOrder) -> CGFloat {

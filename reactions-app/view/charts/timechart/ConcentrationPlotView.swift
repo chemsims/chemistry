@@ -21,26 +21,56 @@ struct ConcentrationPlotView: View {
 
     let minTime: CGFloat?
     let maxTime: CGFloat?
+    let includeAxis: Bool
+
+    init(
+        settings: TimeChartGeometrySettings,
+        concentrationA: ConcentrationEquation,
+        concentrationB: ConcentrationEquation?,
+        initialConcentration: CGFloat,
+        finalConcentration: CGFloat,
+        initialTime: CGFloat,
+        currentTime: Binding<CGFloat>,
+        finalTime: CGFloat,
+        canSetCurrentTime: Bool,
+        minTime: CGFloat?,
+        maxTime: CGFloat?,
+        includeAxis: Bool = true
+    ) {
+        self.settings = settings
+        self.concentrationA = concentrationA
+        self.concentrationB = concentrationB
+        self.initialConcentration = initialConcentration
+        self.finalConcentration = finalConcentration
+        self.initialTime = initialTime
+        self._currentTime = currentTime
+        self.finalTime = finalTime
+        self.canSetCurrentTime = canSetCurrentTime
+        self.minTime = minTime
+        self.maxTime = maxTime
+        self.includeAxis = includeAxis
+    }
 
     var body: some View {
         ZStack {
 
-            if (minTime == nil && maxTime == nil) {
+            if (includeAxis && minTime == nil && maxTime == nil) {
                 verticalIndicator(at: initialTime)
                 verticalIndicator(at: finalTime)
                 horizontalIndicator(at: concentrationA.getConcentration(at: initialTime))
                 horizontalIndicator(at: concentrationA.getConcentration(at: finalTime))
             }
 
-
-            ChartAxisShape(
-                verticalTicks: settings.verticalTicks,
-                horizontalTicks: settings.horizontalTicks,
-                tickSize: settings.tickSize,
-                gapToTop: settings.gapFromMaxTickToChart,
-                gapToSide: settings.gapFromMaxTickToChart
-            )
-            .stroke()
+            if (includeAxis) {
+                ChartAxisShape(
+                    verticalTicks: settings.verticalTicks,
+                    horizontalTicks: settings.horizontalTicks,
+                    tickSize: settings.tickSize,
+                    gapToTop: settings.gapFromMaxTickToChart,
+                    gapToSide: settings.gapFromMaxTickToChart
+                )
+                .stroke()
+            }
 
             if (concentrationB != nil) {
                 ChartPlotWithHead(
