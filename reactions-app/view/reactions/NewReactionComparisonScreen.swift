@@ -37,6 +37,9 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     @State private var dragOverOrder: ReactionOrder?
     @State private var shakingOrder: ReactionOrder?
 
+    @State private var handPosition: CGPoint = .zero
+    @State private var handIsClosed: Bool = false
+
     let settings: ReactionComparisonLayoutSettings
 
     var body: some View {
@@ -53,8 +56,26 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             equations
                 .colorMultiply(overlayFor(element: .equations))
 
+            if (reaction.showDragTutorial) {
+                dragViewWithHand
+            }
+
             if (draggingOrder != nil) {
-                dragView
+                dragView(position: dragLocation)
+            }
+        }.onAppear {
+            handPosition = settings.topEquationMidPoint
+            let animation = Animation.easeInOut(duration: 1.5).delay(1)
+            let animation2 = Animation.linear(duration: 0.1).delay(1)
+            withAnimation(animation2) {
+                handIsClosed = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+                withAnimation(animation) {
+                    let x = settings.chartX(order: .Zero) + (settings.orderDragWidth / 2)
+                    let y = settings.chartY(order: .Zero) + (settings.orderDragHeight / 2)
+                    handPosition = CGPoint(x: x, y: y)
+                }
             }
         }
     }
@@ -70,7 +91,29 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         }
     }
 
-    private var dragView: some View {
+    private var dragViewWithHand: some View {
+        let x = settings.chartX(order: .Zero) + (settings.orderDragWidth / 2)
+        let y = settings.chartY(order: .Zero) + (settings.orderDragHeight / 2)
+        let finalPosition = CGPoint(x: x, y: y)
+
+        let position = reaction.dragTutorialHandIsComplete ? finalPosition : settings.topEquationMidPoint
+        return ZStack {
+            if (reaction.dragTutorialHandIsMoving) {
+                dragView(position: position)
+            }
+            handImage
+                .position(position)
+        }
+    }
+
+    private var handImage: some View {
+        Image(reaction.dragTutorialHandIsMoving ? "closedhand" : "openhand")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: settings.orderDragWidth * 0.3)
+    }
+
+    private func dragView(position: CGPoint) ->  some View {
         ZStack {
             RoundedRectangle(cornerRadius: settings.dragCornerRadius)
                 .fill(dragColor)
@@ -80,7 +123,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                 .fill(dragBorder)
         }
         .frame(width: settings.orderDragWidth, height: settings.orderDragHeight)
-        .position(dragLocation)
+        .position(position)
         .offset(settings.dragOffset)
     }
 
@@ -377,11 +420,11 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     }
 
     private var dragBorder: Color {
-        draggingOrder?.border ?? .black
+        (draggingOrder ?? .Zero).border
     }
 
     private var dragColor: Color {
-        draggingOrder?.color ?? .black
+        (draggingOrder ?? .Zero).color
     }
 
     private var a0: String {
@@ -496,6 +539,12 @@ struct ReactionComparisonLayoutSettings {
 
     var equationCornerRadius: CGFloat {
         equationsWidth * 0.05
+    }
+
+    var topEquationMidPoint: CGPoint {
+        let x = width - equationTrailingPadding - (equationsWidth / 2)
+        let equationHeight = (height - ordered.beakyBoxTotalHeight) / 3
+        return CGPoint(x: x, y: equationHeight)
     }
 
     var equationBorderWidth: CGFloat {

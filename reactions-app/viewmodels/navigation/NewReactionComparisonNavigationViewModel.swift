@@ -33,6 +33,11 @@ class ReactionComparisonState: ScreenState {
 
 
     let statement: [SpeechBubbleLine]
+
+    var canSelectState: Bool {
+        true
+    }
+
     init(statement: [SpeechBubbleLine]) {
         self.statement = statement
     }
@@ -106,6 +111,8 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
             .charts,
             .equations
         ]
+
+        model.showDragTutorial = true
     }
 
     override func reapply(on model: NewReactionComparisonViewModel) {
@@ -114,7 +121,38 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
 
     override func unapply(on model: NewReactionComparisonViewModel) {
         model.highlightedElements = []
+        model.showDragTutorial = false
     }
+
+    override func nextStateAutoDispatchDelay(model: NewReactionComparisonViewModel) -> Double? {
+        0.2
+    }
+}
+
+fileprivate class DragAndDropExplainerState1: ReactionComparisonState {
+
+    init() {
+        super.init(statement: NewReactionComparisonStatements.dragAndDropExplainer)
+    }
+
+    override var canSelectState: Bool {
+        false
+    }
+
+    override func apply(on model: NewReactionComparisonViewModel) {
+        withAnimation(.linear(duration: 0.25)) {
+            model.dragTutorialHandIsMoving = true
+        }
+        withAnimation(.linear(duration: 2)) {
+            model.dragTutorialHandIsComplete = true
+        }
+    }
+
+    override func unapply(on model: NewReactionComparisonViewModel) {
+        model.dragTutorialHandIsMoving = false
+        model.dragTutorialHandIsComplete = false
+    }
+
 }
 
 fileprivate class PreAnimationState: ReactionComparisonState {

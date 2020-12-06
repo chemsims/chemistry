@@ -11,6 +11,8 @@ protocol ScreenState {
     /// The statement to display to the user
     var statement: [SpeechBubbleLine] { get }
 
+    var canSelectState: Bool { get }
+
     /// Applies the reaction state to the model
     func apply(on model: Model) -> Void
 
@@ -40,6 +42,8 @@ class ReactionState: ScreenState {
     func reapply(on model: ZeroOrderReactionViewModel) { }
 
     func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? { nil }
+
+    let canSelectState: Bool = true
 
 }
 

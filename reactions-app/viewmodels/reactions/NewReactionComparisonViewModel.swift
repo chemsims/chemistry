@@ -28,6 +28,10 @@ class NewReactionComparisonViewModel: ObservableObject {
     @Published var reactionHasEnded = false
     @Published var canStartAnimation = false
 
+    @Published var showDragTutorial = false
+    @Published var dragTutorialHandIsMoving = false
+    @Published var dragTutorialHandIsComplete = false
+
     let initialTime: CGFloat = 0
 
     let moleculesA = MoleculeGridSettings.fullGrid.shuffled()
