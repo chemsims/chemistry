@@ -34,6 +34,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
 
     @State private var isDragging = false
     @State private var dragLocation = CGPoint.zero
+    @State private var hoveringTopChart = false
 
     let settings: ReactionComparisonLayoutSettings
 
@@ -70,21 +71,24 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
 
     private var dragView: some View {
         RoundedRectangle(cornerRadius: 10)
-            .frame(width: 60, height: 30)
+            .frame(width: settings.orderDragWidth, height: settings.orderDragHeight)
             .position(dragLocation)
     }
 
     private var charts: some View {
         let chartSettings = TimeChartGeometrySettings(chartSize: settings.chartSize)
-        return HStack {
+        return HStack(spacing: 0) {
             Spacer()
-            VStack {
+                .frame(width: settings.chartHorizontalSpacerWidth)
+            VStack(spacing: settings.chartVerticalSpacing) {
                 Spacer()
+                    .frame(height: settings.chartVerticalSpacerHeight)
                 chart(
                     chartSettings: chartSettings,
                     concentrationA: reaction.zeroOrder,
                     concentrationB: reaction.zeroOrderB
-                )
+                ).border(hoveringTopChart ? Color.red : Color.black)
+
                 chart(
                     chartSettings: chartSettings,
                     concentrationA: reaction.firstOrder,
@@ -96,8 +100,10 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     concentrationB: reaction.secondOrderB
                 )
                 Spacer()
+                    .frame(height: settings.chartVerticalSpacerHeight)
             }
             Spacer()
+                .frame(width: settings.chartHorizontalSpacerWidth)
         }
     }
 
@@ -178,8 +184,8 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                         let globalFrame = geometry.frame(in: .global)
                         let localFrame = geometry.frame(in: .local)
                         let updatedPosition = gesture.location.frame(current: localFrame, target: globalFrame)
-                        print(updatedPosition)
                         self.dragLocation = updatedPosition
+                        self.hoveringTopChart = settings.overlapsTopChart(point: updatedPosition)
                     }.onEnded { gesture in
                         self.isDragging = false
                     }
@@ -302,6 +308,14 @@ struct ReactionComparisonLayoutSettings {
     let horizontalSizeClass: UserInterfaceSizeClass?
     let verticalSizeClass: UserInterfaceSizeClass?
 
+    var height: CGFloat {
+        geometry.size.height
+    }
+
+    var width: CGFloat {
+        geometry.size.width
+    }
+
     var beakerWidth: CGFloat {
         0.85 * ordered.beakerWidth
     }
@@ -331,6 +345,40 @@ struct ReactionComparisonLayoutSettings {
         0.2 * equationCornerRadius
     }
 
+    var chartVerticalSpacing: CGFloat {
+        0.2 * chartSize
+    }
+
+    var chartVerticalSpacerHeight: CGFloat {
+        0.5 * (height - (3 * chartSize) - (4 * chartVerticalSpacing))
+    }
+
+    var chartHorizontalSpacerWidth: CGFloat {
+        0.5 * (width - chartSize)
+    }
+
+    var orderDragWidth: CGFloat {
+        0.9 * chartSize
+    }
+
+    var orderDragHeight: CGFloat {
+        0.4 * orderDragWidth
+    }
+
+    func overlapsTopChart(point: CGPoint) -> Bool {
+        let chartMinX = (width / 2) - (chartSize / 2)
+        let chartMinY = chartVerticalSpacerHeight + chartVerticalSpacing
+        let rect = CGRect(x: chartMinX, y: chartMinY, width: chartSize, height: chartSize)
+
+        let dragRect = CGRect(
+            x: point.x - orderDragWidth / 2,
+            y: point.y - orderDragHeight / 2,
+            width: orderDragWidth,
+            height: orderDragHeight
+        )
+
+        return rect.intersects(dragRect)
+    }
 
     var ordered: OrderedReactionLayoutSettings {
         OrderedReactionLayoutSettings(
