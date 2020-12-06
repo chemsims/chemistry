@@ -38,5 +38,10 @@ struct NewReactionComparisonStatements {
         SpeechBubbleLineGenerator.makeLine("Let's see how long it takes you to guess!"),
         SpeechBubbleLineGenerator.makeLine("*Drag and drop the equations to the graph of the corresponding order*.")
     ]
+
+    static let end = [
+        SpeechBubbleLineGenerator.makeLine("Awesome! Took you a while didn't it?"),
+        SpeechBubbleLineGenerator.makeLine("Let's see how to make things faster."),
+    ]
 }
 

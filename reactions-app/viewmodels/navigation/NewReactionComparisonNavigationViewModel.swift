@@ -176,8 +176,9 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
 }
 
 fileprivate class EndComparisonAnimation: ReactionComparisonState {
+
     init() {
-        super.init(statement: [])
+        super.init(statement: NewReactionComparisonStatements.end)
     }
 
     override func apply(on model: NewReactionComparisonViewModel) {
