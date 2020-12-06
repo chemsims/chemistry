@@ -204,7 +204,7 @@ fileprivate struct UnscaledSecondOrderEquation: View {
             rate: rate,
             k: k,
             concentration: concentration,
-            spacerWidth: 23
+            spacerWidth: 20
         ) {
             VStack(alignment: .leading, spacing: 5) {
                 aEquation
@@ -222,30 +222,35 @@ fileprivate struct UnscaledSecondOrderEquation: View {
                 A_0()
                 FixedText("/")
                 HStack(spacing: 1) {
+                    FixedText("(")
                     A_0()
                     FixedText("kt")
+                    FixedText("+")
+                    FixedText("1")
+                    FixedText(")")
                 }
             }
-            FixedText("+")
-            FixedText("1")
         }
     }
 
     private var aFilled: some View {
         HStack(spacing: 10) {
-            HStack(spacing: 3) {
+            HStack(spacing: 2) {
                 VaryingText(concentration)
                 FixedText("=")
                 FixedText(a0)
                 FixedText("/")
                 HStack(spacing: 1) {
+                    FixedText("(")
                     FixedText(a0)
                     FixedText("(\(k))")
                     VaryingText(time, withParens: true, widthFactor: 0.65)
+                    FixedText("+")
+                    FixedText("1")
+                    FixedText(")")
                 }
             }
-            FixedText("+")
-            FixedText("1")
+
         }
     }
 }
