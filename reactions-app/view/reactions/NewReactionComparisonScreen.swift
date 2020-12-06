@@ -193,12 +193,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     ) -> some View {
         GeometryReader { geometry in
             content(geometry)
-                .background(
-                    equationBackground(
-                        color: equationColor(order: order),
-                        border: equationBorderColor(order: order)
-                    )
-                )
+
                 .rotationEffect(shakingOrder == order ? .degrees(3) : .zero)
                 .gesture(
                     DragGesture().onChanged { gesture in
@@ -231,6 +226,13 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     }
                 )
         }
+        .padding(.horizontal, settings.equationInnerPadding)
+        .background(
+            equationBackground(
+                color: equationColor(order: order),
+                border: equationBorderColor(order: order)
+            )
+        )
     }
 
     private func equationBorderColor(order: ReactionOrder) -> Color {
@@ -353,7 +355,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     fontSize: settings.ordered.bubbleFontSize,
                     navButtonSize: settings.ordered.navButtonSize,
                     bubbleStemWidth: settings.ordered.bubbleStemWidth
-                )
+                ).padding(.trailing, settings.ordered.beakyRightPadding)
             }
         }
     }
@@ -464,6 +466,10 @@ struct ReactionComparisonLayoutSettings {
 
     var equationTopPadding: CGFloat {
         5
+    }
+
+    var equationInnerPadding: CGFloat {
+        0.02 * equationsWidth
     }
 
     var equationCornerRadius: CGFloat {
