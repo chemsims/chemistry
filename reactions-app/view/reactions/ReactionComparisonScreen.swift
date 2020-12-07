@@ -71,9 +71,9 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     private var beakers: some View {
         HStack {
             VStack {
-                beaker(concentrationB: reaction.zeroOrderB, time: reaction.currentTime0 ?? 0)
-                beaker(concentrationB: reaction.firstOrderB, time: reaction.currentTime1 ?? 0)
-                beaker(concentrationB: reaction.secondOrderB, time: reaction.currentTime2 ?? 0)
+                beaker(order: settings.ordering[0])
+                beaker(order: settings.ordering[1])
+                beaker(order: settings.ordering[2])
             }.padding(settings.beakerPadding)
             Spacer()
         }
@@ -285,15 +285,30 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     
 
     private func beaker(
-        concentrationB: ConcentrationEquation,
-        time: CGFloat
+        order: ReactionOrder
     ) -> some View {
-        FilledBeaker(
+        return FilledBeaker(
             moleculesA: reaction.moleculesA,
-            concentrationB: concentrationB,
-            currentTime: time
+            concentrationB: concentration(order: order),
+            currentTime: time(order: order) ?? 0
         )
         .frame(width: settings.beakerWidth)
+    }
+
+    private func concentration(order: ReactionOrder) -> ConcentrationEquation {
+        switch (order) {
+        case .Zero: return reaction.zeroOrderB
+        case .First: return reaction.firstOrderB
+        case .Second: return reaction.secondOrderB
+        }
+    }
+
+    private func time(order: ReactionOrder) -> CGFloat? {
+        switch (order) {
+        case .Zero: return reaction.currentTime0
+        case .First: return reaction.currentTime1
+        case .Second: return reaction.currentTime2
+        }
     }
 
     private func labelledChart(
