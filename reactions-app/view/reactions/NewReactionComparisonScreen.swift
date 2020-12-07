@@ -37,7 +37,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
     @State private var dragOverOrder: ReactionOrder?
     @State private var shakingOrder: ReactionOrder?
 
-    @State private var handPosition: CGPoint = .zero
     @State private var handIsClosed: Bool = false
 
     let settings: ReactionComparisonLayoutSettings
@@ -62,20 +61,6 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
 
             if (draggingOrder != nil) {
                 dragView(position: dragLocation)
-            }
-        }.onAppear {
-            handPosition = settings.topEquationMidPoint
-            let animation = Animation.easeInOut(duration: 1.5).delay(1)
-            let animation2 = Animation.linear(duration: 0.1).delay(1)
-            withAnimation(animation2) {
-                handIsClosed = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
-                withAnimation(animation) {
-                    let x = settings.chartX(order: .Zero) + (settings.orderDragWidth / 2)
-                    let y = settings.chartY(order: .Zero) + (settings.orderDragHeight / 2)
-                    handPosition = CGPoint(x: x, y: y)
-                }
             }
         }
     }
@@ -121,6 +106,10 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             RoundedRectangle(cornerRadius: settings.dragCornerRadius)
                 .stroke()
                 .fill(dragBorder)
+
+            Text(dragString)
+                .minimumScaleFactor(0.6)
+                .font(.system(size: settings.dragFontSize, weight: .bold))
         }
         .frame(width: settings.orderDragWidth, height: settings.orderDragHeight)
         .position(position)
@@ -334,7 +323,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
                     initialTime: reaction.initialTime,
                     currentTime: currentTime,
                     finalTime: finalTime,
-                    canSetCurrentTime: false,
+                    canSetCurrentTime: reaction.reactionHasEnded,
                     includeAxis: false
                 )
             }
@@ -427,6 +416,11 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         (draggingOrder ?? .Zero).color
     }
 
+    private var dragString: String {
+        (draggingOrder ?? .Zero).string
+    }
+    
+
     private var a0: String {
         "1.0"
     }
@@ -485,6 +479,16 @@ fileprivate extension ReactionOrder {
         case .First: return Styling.comparisonOrder1Background
         case .Second: return Styling.comparisonOrder2Background
         }
+    }
+
+    var string: String {
+        var num: String
+        switch (self) {
+        case .Zero: num = "0"
+        case .First: num = "1"
+        case .Second: num = "2"
+        }
+        return "Order: \(num)"
     }
 }
 
@@ -580,6 +584,10 @@ struct ReactionComparisonLayoutSettings {
             width: -orderDragWidth * 0.4,
             height: -orderDragHeight * 0.4
         )
+    }
+
+    var dragFontSize: CGFloat {
+        0.45 * orderDragHeight
     }
 
     var chartBorderWidth: CGFloat {

@@ -193,6 +193,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
         model.currentTime2 = model.initialTime
         model.canDragOrders = true
         model.highlightedElements = []
+        model.correctOrderSelections = []
 
         withAnimation(.linear(duration: Double(model.finalTime0))) {
             model.currentTime0 = model.finalTime0
