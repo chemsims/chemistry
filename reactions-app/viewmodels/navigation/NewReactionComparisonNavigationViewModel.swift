@@ -19,7 +19,7 @@ struct NewReactionComparisonNavigationViewModel {
         ]
     }
 
-    static func model(reaction: NewReactionComparisonViewModel) -> ReactionNavigationViewModel<ReactionComparisonState> {
+    static func model(reaction: ReactionComparisonViewModel) -> ReactionNavigationViewModel<ReactionComparisonState> {
         ReactionNavigationViewModel(
             reactionViewModel: reaction,
             states: states
@@ -29,7 +29,7 @@ struct NewReactionComparisonNavigationViewModel {
 
 class ReactionComparisonState: ScreenState {
 
-    typealias Model = NewReactionComparisonViewModel
+    typealias Model = ReactionComparisonViewModel
     typealias NestedState = ReactionComparisonSubstate
 
     let statement: [SpeechBubbleLine]
@@ -38,13 +38,13 @@ class ReactionComparisonState: ScreenState {
         self.statement = statement
     }
 
-    func apply(on model: NewReactionComparisonViewModel) { }
+    func apply(on model: ReactionComparisonViewModel) { }
 
-    func unapply(on model: NewReactionComparisonViewModel) { }
+    func unapply(on model: ReactionComparisonViewModel) { }
 
-    func reapply(on model: NewReactionComparisonViewModel) { }
+    func reapply(on model: ReactionComparisonViewModel) { }
 
-    func nextStateAutoDispatchDelay(model: NewReactionComparisonViewModel) -> Double? { nil }
+    func nextStateAutoDispatchDelay(model: ReactionComparisonViewModel) -> Double? { nil }
 
     var delayedStates: [DelayedState<ReactionComparisonSubstate>] {
         []
@@ -54,9 +54,9 @@ class ReactionComparisonState: ScreenState {
 
 class ReactionComparisonSubstate: SubState {
 
-    typealias Model = NewReactionComparisonViewModel
+    typealias Model = ReactionComparisonViewModel
 
-    func apply(on model: NewReactionComparisonViewModel) {
+    func apply(on model: ReactionComparisonViewModel) {
 
     }
 
@@ -74,17 +74,17 @@ fileprivate class ExplainEquationState: ReactionComparisonState {
         super.init(statement: NewReactionComparisonStatements.equationExplainer)
     }
 
-    override func apply(on model: NewReactionComparisonViewModel) {
+    override func apply(on model: ReactionComparisonViewModel) {
         model.highlightedElements = [
             .equations
         ]
     }
 
-    override func reapply(on model: NewReactionComparisonViewModel) {
+    override func reapply(on model: ReactionComparisonViewModel) {
         apply(on: model)
     }
 
-    override func unapply(on model: NewReactionComparisonViewModel) {
+    override func unapply(on model: ReactionComparisonViewModel) {
         model.highlightedElements = []
     }
 }
@@ -94,7 +94,7 @@ fileprivate class ChartExplainerState: ReactionComparisonState {
         super.init(statement: NewReactionComparisonStatements.chartExplainer)
     }
 
-    override func apply(on model: NewReactionComparisonViewModel) {
+    override func apply(on model: ReactionComparisonViewModel) {
         model.highlightedElements = [
             .charts,
             .beakers
@@ -102,11 +102,11 @@ fileprivate class ChartExplainerState: ReactionComparisonState {
         model.correctOrderSelections = []
     }
 
-    override func reapply(on model: NewReactionComparisonViewModel) {
+    override func reapply(on model: ReactionComparisonViewModel) {
         apply(on: model)
     }
 
-    override func unapply(on model: NewReactionComparisonViewModel) {
+    override func unapply(on model: ReactionComparisonViewModel) {
         model.highlightedElements = []
     }
 }
@@ -116,7 +116,7 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
         super.init(statement: NewReactionComparisonStatements.dragAndDropExplainer)
     }
 
-    override func apply(on model: NewReactionComparisonViewModel) {
+    override func apply(on model: ReactionComparisonViewModel) {
         model.highlightedElements = [
             .charts,
             .equations
@@ -125,11 +125,11 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
         model.showDragTutorial = true
     }
 
-    override func reapply(on model: NewReactionComparisonViewModel) {
+    override func reapply(on model: ReactionComparisonViewModel) {
         apply(on: model)
     }
 
-    override func unapply(on model: NewReactionComparisonViewModel) {
+    override func unapply(on model: ReactionComparisonViewModel) {
         model.highlightedElements = []
         model.showDragTutorial = false
         model.dragTutorialHandIsMoving = false
@@ -145,7 +145,7 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
 
 fileprivate class DragAndDropExplainerSubstate: ReactionComparisonSubstate {
 
-    override func apply(on model: NewReactionComparisonViewModel) {
+    override func apply(on model: ReactionComparisonViewModel) {
         withAnimation(.linear(duration: 0.25)) {
             model.dragTutorialHandIsMoving = true
         }
@@ -162,7 +162,7 @@ fileprivate class PreAnimationState: ReactionComparisonState {
         super.init(statement: NewReactionComparisonStatements.preReaction)
     }
 
-    override func apply(on model: NewReactionComparisonViewModel) {
+    override func apply(on model: ReactionComparisonViewModel) {
         model.highlightedElements = [
             .charts
         ]
@@ -172,11 +172,11 @@ fileprivate class PreAnimationState: ReactionComparisonState {
         model.dragTutorialHandIsComplete = false
     }
 
-    override func reapply(on model: NewReactionComparisonViewModel) {
+    override func reapply(on model: ReactionComparisonViewModel) {
         apply(on: model)
     }
 
-    override func unapply(on model: NewReactionComparisonViewModel) {
+    override func unapply(on model: ReactionComparisonViewModel) {
         model.highlightedElements = []
         model.canStartAnimation = false
     }
@@ -187,7 +187,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
         super.init(statement: NewReactionComparisonStatements.reactionRunning)
     }
 
-    override func apply(on model: NewReactionComparisonViewModel) {
+    override func apply(on model: ReactionComparisonViewModel) {
         model.currentTime0 = model.initialTime
         model.currentTime1 = model.initialTime
         model.currentTime2 = model.initialTime
@@ -206,11 +206,11 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
         }
     }
 
-    override func reapply(on model: NewReactionComparisonViewModel) {
+    override func reapply(on model: ReactionComparisonViewModel) {
         apply(on: model)
     }
 
-    override func unapply(on model: NewReactionComparisonViewModel) {
+    override func unapply(on model: ReactionComparisonViewModel) {
         model.currentTime0 = nil
         model.currentTime1 = nil
         model.currentTime2 = nil
@@ -224,7 +224,7 @@ fileprivate class EndComparisonAnimation: ReactionComparisonState {
         super.init(statement: NewReactionComparisonStatements.end)
     }
 
-    override func apply(on model: NewReactionComparisonViewModel) {
+    override func apply(on model: ReactionComparisonViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime0 = 1.00001 * model.finalTime0
             model.currentTime1 = 1.00001 * model.finalTime1
@@ -233,7 +233,7 @@ fileprivate class EndComparisonAnimation: ReactionComparisonState {
         }
     }
 
-    override func unapply(on model: NewReactionComparisonViewModel) {
+    override func unapply(on model: ReactionComparisonViewModel) {
         model.reactionHasEnded = false
     }
 

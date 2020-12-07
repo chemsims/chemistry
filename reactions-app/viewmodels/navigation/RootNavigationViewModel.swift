@@ -20,7 +20,7 @@ class RootNavigationViewModel: ObservableObject {
     private var secondOrderViewModel: SecondOrderReactionViewModel?
     private var secondOrderNavigation: ReactionNavigationViewModel<ReactionState>?
 
-    private var comparisonViewModel: NewReactionComparisonViewModel?
+    private var comparisonViewModel: ReactionComparisonViewModel?
     private var comparisonNavigation: ReactionNavigationViewModel<ReactionComparisonState>?
 
     init(
@@ -61,13 +61,13 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     private func goToComparison() {
-        let reaction = comparisonViewModel ?? NewReactionComparisonViewModel(persistence: persistence)
+        let reaction = comparisonViewModel ?? ReactionComparisonViewModel(persistence: persistence)
         let navigation = comparisonNavigation ?? NewReactionComparisonNavigationViewModel.model(reaction: reaction)
         self.comparisonViewModel = reaction
         self.comparisonNavigation = navigation
         navigation.prevScreen = goToSecondOrder
         navigation.nextScreen = goToEnergyProfile
-        self.view = AnyView(NewReactionComparisonScreen(navigation: navigation))
+        self.view = AnyView(ReactionComparisonScreen(navigation: navigation))
     }
 
     private func goToEnergyProfile() {

@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct NewReactionComparisonScreen: View {
+struct ReactionComparisonScreen: View {
 
     @ObservedObject var navigation: ReactionNavigationViewModel<ReactionComparisonState>
 
@@ -30,7 +30,7 @@ struct NewReactionComparisonScreen: View {
 fileprivate struct NewReactionComparisonViewWithSettings: View {
 
     @ObservedObject var navigation: ReactionNavigationViewModel<ReactionComparisonState>
-    @ObservedObject var reaction: NewReactionComparisonViewModel
+    @ObservedObject var reaction: ReactionComparisonViewModel
 
     @State private var dragLocation = CGPoint.zero
     @State private var draggingOrder: ReactionOrder?
@@ -658,9 +658,9 @@ struct ReactionComparisonLayoutSettings {
 
 struct NewReactionComparisonScreen_Previews: PreviewProvider {
     static var previews: some View {
-        NewReactionComparisonScreen(
+        ReactionComparisonScreen(
             navigation: NewReactionComparisonNavigationViewModel.model(
-                reaction: NewReactionComparisonViewModel(
+                reaction: ReactionComparisonViewModel(
                     persistence: InMemoryReactionInputPersistence()
                 )
             )

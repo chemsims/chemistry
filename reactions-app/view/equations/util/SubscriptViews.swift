@@ -5,6 +5,44 @@
 
 import SwiftUI
 
+struct A_0: View {
+    var body: some View {
+        HStack(spacing: 1) {
+            BracketA()
+            Text("0")
+                .font(.system(size: EquationSettings.subscriptFontSize))
+                .offset(y: 9)
+                .fixedSize()
+            EndBracket()
+        }.minimumScaleFactor(1)
+    }
+}
+
+struct A_t: View {
+    var body: some View {
+        HStack(spacing: 1) {
+            BracketA()
+            Text("t")
+                .font(.system(size: EquationSettings.subscriptFontSize))
+                .offset(y: 9)
+                .fixedSize()
+            EndBracket()
+        }
+    }
+}
+
+fileprivate struct BracketA: View {
+    var body: some View {
+        FixedText("[A")
+    }
+
+}
+fileprivate struct EndBracket: View {
+    var body: some View {
+        FixedText("]")
+    }
+}
+
 struct C_1: View {
 
     var body: some View {
