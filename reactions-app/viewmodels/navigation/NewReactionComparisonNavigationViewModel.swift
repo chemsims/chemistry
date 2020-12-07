@@ -38,6 +38,10 @@ class ReactionComparisonState: ScreenState {
         self.statement = statement
     }
 
+    func statement(model: ReactionComparisonViewModel) -> [SpeechBubbleLine] {
+        statement
+    }
+
     func apply(on model: ReactionComparisonViewModel) { }
 
     func unapply(on model: ReactionComparisonViewModel) { }

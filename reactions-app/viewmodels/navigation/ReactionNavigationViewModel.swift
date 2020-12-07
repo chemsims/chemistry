@@ -79,7 +79,7 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
               state.delayedStates.count > index
         else {
             return
-        } 
+        }
         state.delayedStates[index].state.apply(on: model)
         scheduleSubState(indexToRun: index + 1)
     }
@@ -97,7 +97,7 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
 
     private func setStatement() {
         let state = getState(for: currentIndex)
-        statement = state?.statement ?? []
+        statement = state?.statement(model: model) ?? []
     }
 
     private func getState(for n: Int) -> State? {

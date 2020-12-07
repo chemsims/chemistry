@@ -10,7 +10,7 @@ protocol ScreenState {
     associatedtype NestedState: SubState where NestedState.Model == Model
 
     /// The statement to display to the user
-    var statement: [SpeechBubbleLine] { get }
+    func statement(model: Model) -> [SpeechBubbleLine]
 
     /// Optionally provide delayed states which will be automatically applied
     var delayedStates: [DelayedState<NestedState>] { get }
@@ -43,9 +43,13 @@ class ReactionState: ScreenState, SubState {
     typealias Model = ZeroOrderReactionViewModel
     typealias NestedState = ReactionState
 
-    let statement: [SpeechBubbleLine]
-    init(statement: [SpeechBubbleLine]) {
-        self.statement = statement
+    let constantStatement: [SpeechBubbleLine]
+    init(statement: [SpeechBubbleLine] = []) {
+        self.constantStatement = statement
+    }
+
+    func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
+        constantStatement
     }
 
     func apply(on model: ZeroOrderReactionViewModel) { }
