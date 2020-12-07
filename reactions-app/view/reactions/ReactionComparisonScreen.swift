@@ -73,7 +73,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                 beaker(concentrationB: reaction.zeroOrderB, time: reaction.currentTime0 ?? 0)
                 beaker(concentrationB: reaction.firstOrderB, time: reaction.currentTime1 ?? 0)
                 beaker(concentrationB: reaction.secondOrderB, time: reaction.currentTime2 ?? 0)
-            }.padding()
+            }.padding(settings.beakerPadding)
             Spacer()
         }
     }
@@ -553,9 +553,18 @@ struct ReactionComparisonLayoutSettings {
         0.85 * ordered.beakerWidth
     }
 
-    // TODO
+    var beakerPadding: CGFloat {
+        0.1 * beakerWidth
+    }
+
+    var beakerTotalWidth: CGFloat {
+        beakerWidth + (2 * beakerPadding)
+    }
+
     var chartSize: CGFloat {
-        0.8 * ordered.chartSize
+        let maxW = (0.9 * availableChartWidth) / (1 + chartYLabelWidthFactor)
+        let maxH = (0.9 * height) / (3 * (1 + chartXLabelHeightFactor))
+        return min(maxW, maxH)
     }
 
     var equationsWidth: CGFloat {
@@ -620,7 +629,7 @@ struct ReactionComparisonLayoutSettings {
     }
 
     var chartBorderWidth: CGFloat {
-        1.25
+        max(0.02 * chartSize, 1.5)
     }
 
     var chartVerticalLabelSpacing: CGFloat {
@@ -631,8 +640,11 @@ struct ReactionComparisonLayoutSettings {
         0.1 * chartSize
     }
 
-    var chartXLabelHeight: CGFloat {
-        10
+    private var availableChartWidth: CGFloat {
+        let beakyBoxWidth = ordered.beakyBoxTotalWidth
+        let equationTotalWidth = equationTrailingPadding + equationsWidth
+        let maxRhsWidth = max(beakyBoxWidth, equationTotalWidth)
+        return width - beakerTotalWidth - maxRhsWidth
     }
 
     var chartTotalHeight: CGFloat {
@@ -644,11 +656,25 @@ struct ReactionComparisonLayoutSettings {
     }
 
     var chartYLabelWidth: CGFloat {
-        0.2 * chartSize
+        chartYLabelWidthFactor * chartSize
+    }
+
+    var chartXLabelHeight: CGFloat {
+        chartXLabelHeightFactor * chartSize
+    }
+
+    private var chartYLabelWidthFactor: CGFloat {
+        0.2
+    }
+
+    private var chartXLabelHeightFactor: CGFloat {
+        0.15
     }
 
     func chartX(order: ReactionOrder) -> CGFloat {
-        (width - chartYLabelWidth) / 2
+        let minX = beakerTotalWidth
+        let maxX = minX + availableChartWidth
+        return (maxX + minX) / 2
     }
 
     func chartY(order: ReactionOrder) -> CGFloat {
@@ -681,14 +707,12 @@ struct ReactionComparisonLayoutSettings {
         let midY = chartY(order: order)
         let originX = midX - (chartTotalWidth / 2)
         let originY = midY - (chartTotalHeight / 2)
-        let foo = CGRect(
+        return CGRect(
             x: originX + chartYLabelWidth,
             y: originY,
             width: chartSize,
             height: chartSize
         )
-        print("Order \(order) \(foo)")
-        return foo
     }
 
     var ordered: OrderedReactionLayoutSettings {
