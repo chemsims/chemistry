@@ -90,7 +90,6 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         return ZStack {
             if (reaction.dragTutorialHandIsMoving) {
                 dragView(position: position)
-                    .offset(x: -settings.dragOffset.width / 2)
             }
             handImage
                 .position(position)
@@ -482,16 +481,13 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         geometry: GeometryProxy,
         order: ReactionOrder
     ) -> some Gesture {
-        DragGesture(minimumDistance: 0).onChanged { gesture in
+        DragGesture(minimumDistance: 0, coordinateSpace: .global).onChanged { gesture in
             guard reaction.canDragOrders && !reaction.correctOrderSelections.contains(order) else {
                 return
             }
             self.draggingOrder = order
-            let globalFrame = geometry.frame(in: .global)
-            let localFrame = geometry.frame(in: .local)
-            let updatedPosition = gesture.location.frame(current: localFrame, target: globalFrame)
-            self.dragLocation = updatedPosition
-            self.dragOverOrder = settings.overlappingOrder(point: updatedPosition)
+            self.dragLocation = gesture.location
+            self.dragOverOrder = settings.overlappingOrder(point: gesture.location)
         }.onEnded { gesture in
             guard reaction.canDragOrders else {
                 // Always set these to nil in case canDragOrders changes
@@ -545,15 +541,6 @@ fileprivate extension ReactionOrder {
     }
 }
 
-fileprivate extension CGPoint {
-
-    func frame(current: CGRect, target: CGRect) -> CGPoint {
-        let newX = (target.origin.x + current.origin.x) + self.x
-        let newY = (target.origin.y + current.origin.y) + self.y
-        return CGPoint(x: newX, y: newY)
-    }
-
-}
 
 struct ReactionComparisonLayoutSettings {
 
@@ -640,7 +627,7 @@ struct ReactionComparisonLayoutSettings {
 
     var dragOffset: CGSize {
         CGSize(
-            width: -orderDragWidth,
+            width: -orderDragWidth * 0.4,
             height: -orderDragHeight * 0.4
         )
     }
