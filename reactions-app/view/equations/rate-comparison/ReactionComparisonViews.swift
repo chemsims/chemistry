@@ -162,7 +162,7 @@ fileprivate struct UnscaledFirstOrderEquation: View {
             concentration: concentration,
             rate: rate,
             k: k,
-            spacerWidth: 145
+            spacerWidth: 144
         ) {
             VStack(alignment: .leading, spacing: 5) {
                 aEquation
@@ -177,9 +177,8 @@ fileprivate struct UnscaledFirstOrderEquation: View {
                 .frame(width: EquationSettings.boxWidth)
             FixedText("=")
             A_0()
-            FixedText("/")
             FixedText("e")
-            FixedText("kt")
+            FixedText("-kt")
                 .font(.system(size: EquationSettings.subscriptFontSize))
                 .offset(y: -12)
         }
@@ -190,9 +189,9 @@ fileprivate struct UnscaledFirstOrderEquation: View {
             VaryingText(time: time, equation: concentration)
             FixedText("=")
             FixedText(a0)
-            FixedText("/")
             FixedText("e")
             HStack(spacing: 0) {
+                FixedText("-")
                 FixedText(k)
                 VaryingText(
                     time: time,
