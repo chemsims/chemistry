@@ -3,18 +3,34 @@
 //
   
 
-import Foundation
+import CoreGraphics
 
 struct ZeroOrderStatements {
 
     static let initial = [
         SpeechBubbleLineGenerator.makeLine(
-            "This is a zero Order Reaction."
+            "This is a Zero Order Reaction in which a reactant A turns into the produt B. But what does it mean? Let's find out!"
         ),
         SpeechBubbleLineGenerator.makeLine(
-            "Why don't you set the *initial time (t1)* and *initial concentration of A (c1)*, the reactant?"
+            "*Set the initial concentration of A (c1) and the initial time at which it'll start (t1)*."
         )
     ]
+
+    static func rateExplainer(k: CGFloat) -> [SpeechBubbleLine] {
+        [
+            SpeechBubbleLineGenerator.makeLine(
+                "The Order of a reaction has to do with the Rate of it. *Rate* is the rate of change in the concentration per unit time. The Rate Constant *k* is a value on which the Rate depends. For this reaction: *k=\(k.str(decimals: 3))M/s*"
+            )
+        ]
+    }
+
+    static func halfLifeExplainer(halfLife: CGFloat) -> [SpeechBubbleLine] {
+        [
+            SpeechBubbleLineGenerator.makeLine(
+                "*Half Life (t1/2)* is an expression to easily calculate the point in time at which the concentration of the reactant, in this case *A*, is half of what the initial concentration was. For this reaction: *t1/2=\(halfLife.str(decimals: 2))s*"
+            )
+        ]
+    }
     
     static let setFinalValues = [
         SpeechBubbleLineGenerator.makeLine(
@@ -22,9 +38,20 @@ struct ZeroOrderStatements {
         )
     ]
 
-    static let end = [
-        SpeechBubbleLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
-        SpeechBubbleLineGenerator.makeLine("Now, let's see how Integrated Rate Law works. *Choose a 1st Order Reaction*.")
+    static let reactionInProgress = [
+        SpeechBubbleLineGenerator.makeLine(
+            "Let's watch how all the molecules are changing! As A disappears, B is being produced."
+        ),
+        SpeechBubbleLineGenerator.makeLine(
+            "This happens at a constant *Rate (in units of M/s),* which is dependant on *k*."
+        )
     ]
+
+    static let endAnimation = [
+        SpeechBubbleLineGenerator.makeLine("For this Zero Order Reaction, *Rate* is constant and it's equatl to *k*, that's why a graph plotting *([A] vs t)* is a straight line:"),
+        SpeechBubbleLineGenerator.makeLine("[A]*(y)*=-kt*(mx)+[A0]*(b)**"),
+        SpeechBubbleLineGenerator.makeLine("*Where -k is the slope*.")
+    ]
+
 
 }

@@ -11,12 +11,14 @@ struct ZeroOrderReactionNavigation {
         [
             InitialStep(),
             SetFinalValuesToNonNil(),
+            ExplainRateState(),
+            ExplainHalflifeState(),
             RunAnimation(
-                statement: ReactionStatements.inProgress,
+                statement: ZeroOrderStatements.reactionInProgress,
                 order: .Zero,
                 persistence: persistence
             ),
-            EndAnimation(statement: ZeroOrderStatements.end),
+            EndAnimation(statement: ZeroOrderStatements.endAnimation),
         ]
     }
 
@@ -58,5 +60,19 @@ fileprivate class SetFinalValuesToNonNil: ReactionState {
     override func unapply(on model: ZeroOrderReactionViewModel) {
         model.finalConcentration = nil
         model.finalTime = nil
+    }
+}
+
+fileprivate class ExplainRateState: ReactionState {
+
+    override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
+        ZeroOrderStatements.rateExplainer(k: model.rateConstant)
+    }
+
+}
+
+fileprivate class ExplainHalflifeState: ReactionState {
+    override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
+        ZeroOrderStatements.halfLifeExplainer(halfLife: model.halfTime ?? 0)
     }
 }
