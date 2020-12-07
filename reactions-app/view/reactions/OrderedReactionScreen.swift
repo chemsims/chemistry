@@ -21,6 +21,8 @@ struct OrderedReactionScreen<Content: View>: View {
             Rectangle()
                 .foregroundColor(Color.white)
                 .colorMultiply(colorMultiply(for: nil))
+                .edgesIgnoringSafeArea(.all)
+            
             beaker(settings: settings)
 
             beaky(settings: settings)

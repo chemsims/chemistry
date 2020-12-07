@@ -46,6 +46,8 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             Rectangle()
                 .foregroundColor(.white)
                 .colorMultiply(overlayFor(element: .background))
+                .edgesIgnoringSafeArea(.all)
+
             beaky
                 .colorMultiply(.white)
             beakers
