@@ -81,15 +81,15 @@ class ReactionComparisonViewModel: ObservableObject {
     }
 
     var zeroOrderRate: Equation {
-        RateEquation(k: zeroOrder.rate, concentration: zeroOrder)
+        RateEquation(k: zeroOrder.rate, concentration: zeroOrder, power: 0)
     }
 
     var firstOrderRate: Equation {
-        RateEquation(k: firstOrder.rate, concentration: firstOrder)
+        RateEquation(k: firstOrder.rate, concentration: firstOrder, power: 1)
     }
 
     var secondOrderRate: Equation {
-        RateEquation(k: secondOrder.rate, concentration: secondOrder)
+        RateEquation(k: secondOrder.rate, concentration: secondOrder, power: 2)
     }
 
     var zeroOrderB: ConcentrationEquation {
@@ -115,9 +115,10 @@ class ReactionComparisonViewModel: ObservableObject {
 fileprivate struct RateEquation: Equation {
     let k: CGFloat
     let concentration: ConcentrationEquation
+    let power: Int
 
     func getY(at x: CGFloat) -> CGFloat {
-        k * concentration.getConcentration(at: x)
+        k * pow(concentration.getConcentration(at: x), CGFloat(power))
     }
 
 }

@@ -322,7 +322,7 @@ fileprivate struct GeneralEquation<Content: View>: View {
 
     private var blankRate: some View {
         HStack(spacing: 4) {
-            VaryingText(time: time, equation: rate, widthFactor: 1.2)
+            VaryingText(time: time, equation: rate, widthFactor: 1.2, decimals: 3)
             FixedText("=")
             FixedText(k)
             VaryingText(time: time, equation: concentration, withParens: true)
@@ -371,7 +371,8 @@ fileprivate struct VaryingText: View {
                     AnimatingNumber(
                         x: time!,
                         equation: equation,
-                        formatter: { d in d.str(decimals: decimals) }
+                        formatter: { d in d.str(decimals: decimals) },
+                        alignment: .leading
                     )
                 }
 
