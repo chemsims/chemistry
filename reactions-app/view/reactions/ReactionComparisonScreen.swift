@@ -332,8 +332,8 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             width: chartSettings.chartSize,
             height: chartSettings.chartSize
         )
-        .background(Color.white.border(Color.black, width: 0.5 * settings.chartBorderWidth))
         .padding(settings.chartBorderWidth)
+        .background(Color.white)
         .border(
             chartBorderColor(order: order),
             width: chartBorderWidth(order: order)
@@ -353,7 +353,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         if (reaction.correctOrderSelections.contains(order) || dragOverOrder == order) {
             return settings.chartBorderWidth
         }
-        return 0
+        return settings.chartBorderWidth * 0.25
     }
 
     private var beaky: some View {
