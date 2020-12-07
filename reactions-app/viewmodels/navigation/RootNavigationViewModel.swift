@@ -57,6 +57,11 @@ class RootNavigationViewModel: ObservableObject {
         self.secondOrderNavigation = navigation
         navigation.prevScreen = goToFirstOrder
         navigation.nextScreen = goToComparison
+
+        // Reset these models in case returning to second order
+        self.comparisonViewModel = nil
+        self.comparisonNavigation = nil
+
         self.view = AnyView(SecondOrderReactionScreen(reaction: reaction, navigation: navigation))
     }
 
