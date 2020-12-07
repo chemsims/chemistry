@@ -14,7 +14,8 @@ struct SecondOrderReactionNavigation {
             RunAnimation(
                 statement: ReactionStatements.inProgress,
                 order: .Second,
-                persistence: persistence
+                persistence: persistence,
+                initialiseCurrentTime: true
             ),
             EndAnimation(statement: SecondOrderStatements.end)
         ]

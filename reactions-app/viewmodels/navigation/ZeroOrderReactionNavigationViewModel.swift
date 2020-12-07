@@ -3,7 +3,7 @@
 //
   
 
-import Foundation
+import SwiftUI
 
 struct ZeroOrderReactionNavigation {
 
@@ -16,7 +16,8 @@ struct ZeroOrderReactionNavigation {
             RunAnimation(
                 statement: ZeroOrderStatements.reactionInProgress,
                 order: .Zero,
-                persistence: persistence
+                persistence: persistence,
+                initialiseCurrentTime: false
             ),
             EndAnimation(statement: ZeroOrderStatements.endAnimation),
         ]
@@ -69,10 +70,35 @@ fileprivate class ExplainRateState: ReactionState {
         ZeroOrderStatements.rateExplainer(k: model.rateConstant)
     }
 
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.currentTime = model.initialTime
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.currentTime = nil
+    }
+
 }
 
 fileprivate class ExplainHalflifeState: ReactionState {
     override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
         ZeroOrderStatements.halfLifeExplainer(halfLife: model.halfTime ?? 0)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.currentTime = model.initialTime
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            apply(on: model)
+        }
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
     }
 }

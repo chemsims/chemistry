@@ -74,14 +74,17 @@ class RunAnimation: ReactionState {
 
     let order: ReactionOrder?
     let persistence: ReactionInputPersistence?
+    let initialiseCurrentTime: Bool
 
     init(
         statement: [SpeechBubbleLine],
         order: ReactionOrder?,
-        persistence: ReactionInputPersistence?
+        persistence: ReactionInputPersistence?,
+        initialiseCurrentTime: Bool
     ) {
         self.order = order
         self.persistence = persistence
+        self.initialiseCurrentTime = initialiseCurrentTime
         super.init(statement: statement)
     }
 
@@ -105,7 +108,9 @@ class RunAnimation: ReactionState {
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.currentTime = nil
+        if (initialiseCurrentTime) {
+            model.currentTime = nil
+        }
     }
 
     override func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? {

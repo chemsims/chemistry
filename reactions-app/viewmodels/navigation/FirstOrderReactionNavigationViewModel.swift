@@ -13,7 +13,8 @@ struct FirstOrderReactionNavigation {
             RunAnimation(
                 statement: ReactionStatements.inProgress,
                 order: .First,
-                persistence: persistence
+                persistence: persistence,
+                initialiseCurrentTime: true
             ),
             EndAnimation(statement: FirstOrderStatements.end)
         ]

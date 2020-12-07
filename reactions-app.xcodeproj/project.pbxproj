@@ -38,7 +38,6 @@
 		571B3C7C256560E40075358B /* ReactionStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C7B256560E40075358B /* ReactionStatements.swift */; };
 		571B3C80256560F90075358B /* SecondOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C7F256560F90075358B /* SecondOrderStatements.swift */; };
 		571B3C842565638F0075358B /* OrderedReactionLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C832565638F0075358B /* OrderedReactionLayoutSettings.swift */; };
-		571B3C9D256578D80075358B /* ReactionComparisonNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C9C256578D80075358B /* ReactionComparisonNavigationViewModel.swift */; };
 		571B3CA12565796A0075358B /* ReactionComparisonStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3CA02565796A0075358B /* ReactionComparisonStatements.swift */; };
 		571B3CAA256581100075358B /* BeakyBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3CA9256581100075358B /* BeakyBox.swift */; };
 		571B3CAF25658ACC0075358B /* CircleIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3CAE25658ACC0075358B /* CircleIconButton.swift */; };
@@ -83,7 +82,7 @@
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
 		57D8BA17257B6ABF006B3C8B /* ReactionComparisonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */; };
 		57D8BA1B257B6AD5006B3C8B /* ReactionComparisonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA1A257B6AD5006B3C8B /* ReactionComparisonViewModel.swift */; };
-		57D8BA1F257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA1E257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift */; };
+		57D8BA1F257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA1E257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift */; };
 		57D8BA23257B7379006B3C8B /* NewReactionComparisonStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA22257B7379006B3C8B /* NewReactionComparisonStatements.swift */; };
 		57D8BA27257BBCE9006B3C8B /* ReactionComparisonViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA26257BBCE9006B3C8B /* ReactionComparisonViews.swift */; };
 		57D8BA2C257BF17E006B3C8B /* ReactionComparisonScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA2B257BF17E006B3C8B /* ReactionComparisonScreenElement.swift */; };
@@ -156,7 +155,6 @@
 		571B3C7B256560E40075358B /* ReactionStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionStatements.swift; sourceTree = "<group>"; };
 		571B3C7F256560F90075358B /* SecondOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderStatements.swift; sourceTree = "<group>"; };
 		571B3C832565638F0075358B /* OrderedReactionLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedReactionLayoutSettings.swift; sourceTree = "<group>"; };
-		571B3C9C256578D80075358B /* ReactionComparisonNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonNavigationViewModel.swift; sourceTree = "<group>"; };
 		571B3CA02565796A0075358B /* ReactionComparisonStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonStatements.swift; sourceTree = "<group>"; };
 		571B3CA9256581100075358B /* BeakyBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyBox.swift; sourceTree = "<group>"; };
 		571B3CAE25658ACC0075358B /* CircleIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleIconButton.swift; sourceTree = "<group>"; };
@@ -203,7 +201,7 @@
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
 		57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreen.swift; sourceTree = "<group>"; };
 		57D8BA1A257B6AD5006B3C8B /* ReactionComparisonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViewModel.swift; sourceTree = "<group>"; };
-		57D8BA1E257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReactionComparisonNavigationViewModel.swift; sourceTree = "<group>"; };
+		57D8BA1E257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonNavigationViewModel.swift; sourceTree = "<group>"; };
 		57D8BA22257B7379006B3C8B /* NewReactionComparisonStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReactionComparisonStatements.swift; sourceTree = "<group>"; };
 		57D8BA26257BBCE9006B3C8B /* ReactionComparisonViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViews.swift; sourceTree = "<group>"; };
 		57D8BA2B257BF17E006B3C8B /* ReactionComparisonScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreenElement.swift; sourceTree = "<group>"; };
@@ -343,9 +341,8 @@
 				571B3C63256556560075358B /* ZeroOrderReactionNavigationViewModel.swift */,
 				571B3C67256556740075358B /* ReactionState.swift */,
 				571B3C772565605C0075358B /* SecondOrderReactionNavigationViewModel.swift */,
-				571B3C9C256578D80075358B /* ReactionComparisonNavigationViewModel.swift */,
 				571B3CBA25658D300075358B /* RootNavigationViewModel.swift */,
-				57D8BA1E257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift */,
+				57D8BA1E257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -810,7 +807,7 @@
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift in Sources */,
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
 				57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */,
-				57D8BA1F257B72EC006B3C8B /* NewReactionComparisonNavigationViewModel.swift in Sources */,
+				57D8BA1F257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift in Sources */,
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,
 				57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */,
 				57D8BA17257B6ABF006B3C8B /* ReactionComparisonScreen.swift in Sources */,
@@ -821,7 +818,6 @@
 				570E4F01256D10CD001EADCB /* EnergyProfileChart.swift in Sources */,
 				571B3CBB25658D300075358B /* RootNavigationViewModel.swift in Sources */,
 				57DAE4D42577C2FD006D945B /* FixedText.swift in Sources */,
-				571B3C9D256578D80075358B /* ReactionComparisonNavigationViewModel.swift in Sources */,
 				572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */,
