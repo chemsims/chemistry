@@ -80,14 +80,17 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     }
 
     private var dragViewWithHand: some View {
-        let x = settings.chartX(order: .Zero) + (settings.orderDragWidth / 2)
-        let y = settings.chartY(order: .Zero) + (settings.orderDragHeight / 2)
+        let order = settings.ordering[0]
+        let x = settings.chartX(order: order) + (settings.orderDragWidth / 2)
+        let y = settings.chartY(order: order) + (settings.orderDragHeight / 2)
         let finalPosition = CGPoint(x: x, y: y)
 
         let position = reaction.dragTutorialHandIsComplete ? finalPosition : settings.topEquationMidPoint
+
         return ZStack {
             if (reaction.dragTutorialHandIsMoving) {
                 dragView(position: position)
+                    .offset(x: -settings.dragOffset.width / 2)
             }
             handImage
                 .position(position)
@@ -637,7 +640,7 @@ struct ReactionComparisonLayoutSettings {
 
     var dragOffset: CGSize {
         CGSize(
-            width: -orderDragWidth * 0.4,
+            width: -orderDragWidth,
             height: -orderDragHeight * 0.4
         )
     }

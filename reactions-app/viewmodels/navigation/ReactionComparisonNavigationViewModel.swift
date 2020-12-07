@@ -224,6 +224,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
         model.currentTime1 = nil
         model.currentTime2 = nil
         model.canDragOrders = false
+        model.correctOrderSelections = []
     }
 }
 
