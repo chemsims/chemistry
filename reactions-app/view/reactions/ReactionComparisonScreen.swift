@@ -463,8 +463,8 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         geometry: GeometryProxy,
         order: ReactionOrder
     ) -> some Gesture {
-        DragGesture().onChanged { gesture in
-            guard reaction.canDragOrders else {
+        DragGesture(minimumDistance: 0).onChanged { gesture in
+            guard reaction.canDragOrders && !reaction.correctOrderSelections.contains(order) else {
                 return
             }
             self.draggingOrder = order
