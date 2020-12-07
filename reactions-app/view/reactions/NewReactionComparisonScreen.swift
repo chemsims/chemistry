@@ -450,7 +450,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
             if let dragOverOrder = dragOverOrder {
                 if (dragOverOrder == order) {
                     reaction.addToCorrectSelection(order: order)
-                    if (reaction.correctOrderSelections.count == 3) {
+                    if (reaction.correctOrderSelections.count == 3 && !reaction.reactionHasEnded) {
                         navigation.next()
                     }
                 } else if (!reaction.correctOrderSelections.contains(dragOverOrder)) {
