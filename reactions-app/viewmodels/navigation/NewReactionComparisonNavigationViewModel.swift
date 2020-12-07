@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct NewReactionComparisonNavigationViewModel {
+struct ReactionComparisonNavigationViewModel {
 
     static var states: [ReactionComparisonState] {
         [

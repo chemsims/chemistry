@@ -659,7 +659,7 @@ struct ReactionComparisonLayoutSettings {
 struct NewReactionComparisonScreen_Previews: PreviewProvider {
     static var previews: some View {
         ReactionComparisonScreen(
-            navigation: NewReactionComparisonNavigationViewModel.model(
+            navigation: ReactionComparisonNavigationViewModel.model(
                 reaction: ReactionComparisonViewModel(
                     persistence: InMemoryReactionInputPersistence()
                 )

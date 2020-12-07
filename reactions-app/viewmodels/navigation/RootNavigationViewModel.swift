@@ -62,7 +62,7 @@ class RootNavigationViewModel: ObservableObject {
 
     private func goToComparison() {
         let reaction = comparisonViewModel ?? ReactionComparisonViewModel(persistence: persistence)
-        let navigation = comparisonNavigation ?? NewReactionComparisonNavigationViewModel.model(reaction: reaction)
+        let navigation = comparisonNavigation ?? ReactionComparisonNavigationViewModel.model(reaction: reaction)
         self.comparisonViewModel = reaction
         self.comparisonNavigation = navigation
         navigation.prevScreen = goToSecondOrder
