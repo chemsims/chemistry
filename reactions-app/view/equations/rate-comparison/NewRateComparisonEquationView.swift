@@ -177,6 +177,7 @@ fileprivate struct UnscaledFirstOrderEquation: View {
                 .frame(width: EquationSettings.boxWidth)
             FixedText("=")
             A_0()
+            FixedText("/")
             FixedText("e")
             FixedText("kt")
                 .font(.system(size: EquationSettings.subscriptFontSize))

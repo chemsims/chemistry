@@ -52,21 +52,21 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
             currentState.unapply(on: model)
             previousState.reapply(on: model)
             currentIndex = previousIndex
-            scheduleSubState(indexToRun: 0)
             scheduleNextState(for: previousState)
+            scheduleSubState(indexToRun: 0)
         } else if let prevScreen = prevScreen {
             prevScreen()
         }
     }
 
     private func scheduleSubState(indexToRun: Int) {
-        guard let state = getState(for: currentIndex),
-              state.delayedStates.count > indexToRun else {
-            return
-        }
         if let timer = nextTimer {
             timer.invalidate()
             nextTimer = nil
+        }
+        guard let state = getState(for: currentIndex),
+              state.delayedStates.count > indexToRun else {
+            return
         }
 
         let next = state.delayedStates[indexToRun]
@@ -74,9 +74,12 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
     }
 
     @objc private func runForIndex(timer: Timer) {
-        guard let state = getState(for: currentIndex), let index = timer.userInfo as? Int else {
+        guard let state = getState(for: currentIndex),
+              let index = timer.userInfo as? Int,
+              state.delayedStates.count > index
+        else {
             return
-        }
+        } 
         state.delayedStates[index].state.apply(on: model)
         scheduleSubState(indexToRun: index + 1)
     }
