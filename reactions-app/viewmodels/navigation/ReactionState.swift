@@ -149,7 +149,9 @@ class EndAnimation: ReactionState {
             if let finalTime = model.finalTime {
                 model.currentTime = finalTime * 1.00001
             }
-            model.reactionHasEnded = true
+            if (!highlightChart) {
+                model.reactionHasEnded = true
+            }
         }
     }
 
@@ -159,7 +161,11 @@ class EndAnimation: ReactionState {
         }
     }
 
-    override func reapply(on model: ZeroOrderReactionViewModel) { }
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        if (highlightChart) {
+            model.highlightedElements = [.concentrationChart]
+        }
+    }
 }
 
 

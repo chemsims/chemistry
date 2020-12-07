@@ -23,6 +23,7 @@ struct ZeroOrderReactionNavigation {
                 statement: ZeroOrderStatements.endAnimation,
                 highlightChart: true
             ),
+            FinalState()
         ]
     }
 
@@ -111,3 +112,13 @@ fileprivate class ExplainHalflifeState: ReactionState {
     }
 }
 
+fileprivate class FinalState: ReactionState {
+    init() {
+        super.init(statement: ZeroOrderStatements.end)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = []
+        model.reactionHasEnded = true
+    }
+}

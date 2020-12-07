@@ -53,5 +53,10 @@ struct ZeroOrderStatements {
         SpeechBubbleLineGenerator.makeLine("*Where -k is the slope*.")
     ]
 
+    static let end = [
+        SpeechBubbleLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
+        SpeechBubbleLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time."),
+        SpeechBubbleLineGenerator.makeLine("Then, let's see how Integrated Rate Law works.")
+    ]
 
 }
