@@ -20,19 +20,15 @@ class RootNavigationViewModel: ObservableObject {
     private var secondOrderViewModel: SecondOrderReactionViewModel?
     private var secondOrderNavigation: ReactionNavigationViewModel<ReactionState>?
 
-    private var comparison1ViewModel: ZeroOrderReactionViewModel?
-    private var comparison1Navigation: ReactionNavigationViewModel<ReactionState>?
-
-    private var comparison2ViewModel: ReactionComparisonViewModel?
-    private var comparison2Navigation: ReactionNavigationViewModel<ReactionState>?
-
+    private var comparisonViewModel: NewReactionComparisonViewModel?
+    private var comparisonNavigation: ReactionNavigationViewModel<ReactionComparisonState>?
 
     init(
         persistence: ReactionInputPersistence
     ) {
         self.view = AnyView(EmptyView())
         self.persistence = persistence
-        goToNewComparison()
+        goToComparison()
     }
 
     private func goToZeroOrder() {
@@ -65,37 +61,18 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     private func goToComparison() {
-        let reaction = comparison1ViewModel ?? ZeroOrderReactionViewModel()
-        let navigation = comparison1Navigation ?? ReactionComparisonNavigation.model(reaction: reaction)
-        self.comparison1ViewModel = reaction
-        self.comparison1Navigation = navigation
+        let reaction = comparisonViewModel ?? NewReactionComparisonViewModel(persistence: persistence)
+        let navigation = comparisonNavigation ?? NewReactionComparisonNavigationViewModel.model(reaction: reaction)
+        self.comparisonViewModel = reaction
+        self.comparisonNavigation = navigation
         navigation.prevScreen = goToSecondOrder
-        navigation.nextScreen = goToComparison2
-        self.view = AnyView(ReactionComparisonScreen(reaction: reaction, navigation: navigation))
-    }
-
-    private func goToComparison2() {
-        let reaction = comparison2ViewModel ?? ReactionComparisonViewModel(persistence: persistence)
-        let navigation = comparison2Navigation ?? ReactionComparisonNavigation2.model(reaction: reaction)
-        self.comparison2ViewModel = reaction
-        self.comparison2Navigation = navigation
-        navigation.prevScreen = goToComparison
-        navigation.nextScreen = goToNewComparison
-        self.view = AnyView(ReactionComparisonScreen2(reaction: reaction, navigation: navigation))
-    }
-
-    private func goToNewComparison() {
-        let reaction = NewReactionComparisonViewModel(persistence: persistence)
-        let navigation = NewReactionComparisonNavigationViewModel.model(reaction: reaction)
-        navigation.prevScreen = goToComparison2
         navigation.nextScreen = goToEnergyProfile
         self.view = AnyView(NewReactionComparisonScreen(navigation: navigation))
-
     }
 
     private func goToEnergyProfile() {
         let model = EnergyProfileViewModel()
-        model.goToPreviousScreen = goToComparison2
+        model.goToPreviousScreen = goToComparison
         let view = EnergyProfileScreen(model: model)
         self.view = AnyView(view)
     }

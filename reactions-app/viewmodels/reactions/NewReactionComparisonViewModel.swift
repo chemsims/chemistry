@@ -112,7 +112,7 @@ class NewReactionComparisonViewModel: ObservableObject {
 
 }
 
-struct RateEquation: Equation {
+fileprivate struct RateEquation: Equation {
     let k: CGFloat
     let concentration: ConcentrationEquation
 
@@ -120,4 +120,19 @@ struct RateEquation: Equation {
         k * concentration.getConcentration(at: x)
     }
 
+}
+
+struct ReactionComparisonDefaults {
+    static let c1: CGFloat = 1
+    static let c2: CGFloat = 0.1
+    static let time: CGFloat = 15
+
+    static var input: ReactionInput {
+        ReactionInput(
+            c1: c1,
+            c2: c2,
+            t1: 0,
+            t2: time
+        )
+    }
 }
