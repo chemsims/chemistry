@@ -10,6 +10,18 @@ struct FilledBeaker: View {
     let moleculesA: [GridCoordinate]
     let concentrationB: ConcentrationEquation
     let currentTime: CGFloat?
+    let outlineColor: Color
+    init(
+        moleculesA: [GridCoordinate],
+        concentrationB: ConcentrationEquation,
+        currentTime: CGFloat?,
+        outlineColor: Color = Styling.beakerOutline
+    ) {
+        self.moleculesA = moleculesA
+        self.concentrationB = concentrationB
+        self.currentTime = currentTime
+        self.outlineColor = outlineColor
+    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -32,7 +44,7 @@ struct FilledBeaker: View {
             .stroke(lineWidth: 1)
             .fill(Color.darkGray.opacity(0.5))
             beakerFill(settings)
-            EmptyBeaker(settings: settings)
+            EmptyBeaker(settings: settings, color: outlineColor)
         }.background(
             Color.white.mask(
                 BeakerShape(

@@ -8,12 +8,21 @@ import SwiftUI
 struct EmptyBeaker: View {
 
     let settings: BeakerSettings
+    let color: Color
+
+    init(
+        settings: BeakerSettings,
+        color: Color = Styling.beakerOutline
+    ) {
+        self.settings = settings
+        self.color = color
+    }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             largeBeaker(settings)
                 .stroke(lineWidth: 2)
-                .fill(Color.darkGray)
+                .fill(color)
 
             outerTone(settings)
 

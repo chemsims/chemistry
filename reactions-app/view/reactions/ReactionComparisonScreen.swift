@@ -290,7 +290,8 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         return FilledBeaker(
             moleculesA: reaction.moleculesA,
             concentrationB: concentration(order: order),
-            currentTime: time(order: order) ?? 0
+            currentTime: time(order: order) ?? 0,
+            outlineColor: chartBorderColor(order: order)
         )
         .frame(width: settings.beakerWidth)
     }
@@ -397,14 +398,14 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         } else if (dragOverOrder == order) {
             return dragBorder
         }
-        return Color.black
+        return Styling.beakerOutline
     }
 
     private func chartBorderWidth(order: ReactionOrder) -> CGFloat{
         if (reaction.correctOrderSelections.contains(order) || dragOverOrder == order) {
             return settings.chartBorderWidth
         }
-        return settings.chartBorderWidth * 0.25
+        return settings.chartBorderWidth * 0.5
     }
 
     private var beaky: some View {
