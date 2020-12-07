@@ -20,7 +20,8 @@ struct ReactionComparisonScreen: View {
                 settings: ReactionComparisonLayoutSettings(
                     geometry: geometry,
                     horizontalSizeClass: horizontalSizeClass,
-                    verticalSizeClass: verticalSizeClass
+                    verticalSizeClass: verticalSizeClass,
+                    ordering: navigation.model.reactionOrdering
                 )
             )
         }
@@ -540,6 +541,7 @@ struct ReactionComparisonLayoutSettings {
     let geometry: GeometryProxy
     let horizontalSizeClass: UserInterfaceSizeClass?
     let verticalSizeClass: UserInterfaceSizeClass?
+    let ordering: [ReactionOrder]
 
     var height: CGFloat {
         geometry.size.height
@@ -680,11 +682,13 @@ struct ReactionComparisonLayoutSettings {
     func chartY(order: ReactionOrder) -> CGFloat {
         let heightForTop = (height - chartTotalHeight) / 2
         let topPosition = heightForTop / 2
-        switch (order) {
-        case .Zero: return topPosition
-        case .First: return height / 2
-        case .Second: return height - topPosition
+
+        if (ordering[0] == order) {
+            return topPosition
+        } else if (ordering[1] == order) {
+            return height / 2
         }
+        return height - topPosition
     }
 
 

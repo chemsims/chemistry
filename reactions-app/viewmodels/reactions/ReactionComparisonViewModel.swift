@@ -32,6 +32,8 @@ class ReactionComparisonViewModel: ObservableObject {
     @Published var dragTutorialHandIsMoving = false
     @Published var dragTutorialHandIsComplete = false
 
+    let reactionOrdering: [ReactionOrder] = [.Zero, .First, .Second].shuffled()
+
     let initialTime: CGFloat = 0
 
     let moleculesA = MoleculeGridSettings.fullGrid.shuffled()
