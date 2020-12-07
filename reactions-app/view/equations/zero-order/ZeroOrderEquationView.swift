@@ -25,8 +25,12 @@ struct ZeroOrderEquationView: View {
 
     @Binding var isShowingTooltip: Bool
 
-    private let naturalWidth: CGFloat = 540
-    private let naturalHeight: CGFloat = 265
+    let currentTime: CGFloat?
+    let concentration: Equation
+    let rateConstant: CGFloat?
+
+    private let naturalWidth: CGFloat = EquationSizes.width
+    private let naturalHeight: CGFloat = EquationSizes.height
 
     var body: some View {
         ScaledView(
@@ -48,7 +52,10 @@ struct ZeroOrderEquationView: View {
                 a0: a0,
                 isShowingTooltip: $isShowingTooltip,
                 rateColorMultipy: rateColorMultipy,
-                halfLifeColorMultiply: halfLifeColorMultiply
+                halfLifeColorMultiply: halfLifeColorMultiply,
+                currentTime: currentTime,
+                concentration: concentration,
+                rateConstant: rateConstant
             )
             .frame(width: maxWidth, height: maxHeight)
         }
@@ -70,6 +77,10 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
     @Binding var isShowingTooltip: Bool
     let rateColorMultipy: Color
     let halfLifeColorMultiply: Color
+
+    let currentTime: CGFloat?
+    let concentration: Equation
+    let rateConstant: CGFloat?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -102,7 +113,20 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
             }
             .background(Color.white)
             .colorMultiply(halfLifeColorMultiply)
+
+            HStack(spacing: 52) {
+                BlankSecondRate()
+                FilledSecondRate(
+                    currentTime: currentTime,
+                    concentration: concentration,
+                    rateConstant: rateConstant?.str(decimals: 2),
+                    rate: rate?.str(decimals: 2),
+                    emphasise: emphasise
+                )
+            }
+
         }
+        .padding(.horizontal, 5)
         .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
         .minimumScaleFactor(1)
@@ -296,6 +320,62 @@ fileprivate struct BlankHalftime: View {
     }
 }
 
+fileprivate struct BlankSecondRate: View {
+
+    var body: some View {
+        HStack(spacing: 4) {
+            FixedText("Rate")
+            FixedText("=")
+            FixedText("k")
+            HStack(spacing: 0) {
+                FixedText("[A]")
+                FixedText("0")
+                    .font(.system(size: EquationSettings.subscriptFontSize))
+                    .offset(y: -10)
+            }
+        }
+    }
+
+}
+
+fileprivate struct FilledSecondRate: View {
+
+    let currentTime: CGFloat?
+    let concentration: Equation
+    let rateConstant: String?
+    let rate: String?
+    let emphasise: Bool
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Placeholder(value: rate, emphasise: emphasise)
+            FixedText("=")
+            Placeholder(value: rateConstant, emphasise: emphasise)
+            HStack(spacing: 0) {
+                FixedText("(")
+                num
+                FixedText(")")
+                FixedText("0")
+                    .font(.system(size: EquationSettings.subscriptFontSize))
+                    .offset(y: -10)
+            }
+        }
+    }
+
+    private var num: some View {
+        if (currentTime == nil) {
+            return AnyView(Placeholder(value: nil))
+        }
+        return AnyView(
+            AnimatingNumber(x: currentTime!, equation: concentration, formatter: { d in
+                d.str(decimals: 2)
+            }, alignment: .leading)
+            .frame(width: EquationSettings.boxWidth)
+            .minimumScaleFactor(0.5)
+        )
+    }
+}
+
 
 fileprivate struct Rate: View {
     var body: some View {
@@ -307,6 +387,11 @@ fileprivate struct Rate: View {
     }
 }
 
+
+fileprivate struct EquationSizes {
+    static let width: CGFloat = 550
+    static let height: CGFloat = 335
+}
 
 struct ZeroOrderEquationView2_Previews: PreviewProvider {
     static var previews: some View {
@@ -323,10 +408,13 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             a0: 0.9,
             isShowingTooltip: .constant(true),
             rateColorMultipy: .white,
-            halfLifeColorMultiply: .white
+            halfLifeColorMultiply: .white,
+            currentTime: nil,
+            concentration: LinearConcentration(a0: 1, rate: 0.1),
+            rateConstant: 0.1
         )
         .border(Color.red)
-        .previewLayout(.fixed(width: 540, height: 265))
+        .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))
     }
 }
 

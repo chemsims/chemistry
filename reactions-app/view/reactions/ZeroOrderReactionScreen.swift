@@ -66,7 +66,10 @@ struct ZeroOrderReactionScreen: View {
                 halfLifeColorMultiply: colorMultiply(for: .halfLifeEquation),
                 maxWidth: availableWidth,
                 maxHeight: height,
-                isShowingTooltip: $isShowingTooltip
+                isShowingTooltip: $isShowingTooltip,
+                currentTime: reaction.currentTime,
+                concentration: reaction.concentrationEquationA,
+                rateConstant: reaction.rateConstant
             )
             .padding(.vertical, equationVerticalPadding)
             .padding(.horizontal, equationHorizontalPadding(settings: settings))

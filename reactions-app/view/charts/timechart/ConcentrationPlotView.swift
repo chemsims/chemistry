@@ -49,7 +49,7 @@ struct ConcentrationPlotView: View {
         ZStack {
             Rectangle()
                 .fill(Color.white)
-            
+
             if (includeAxis) {
                 verticalIndicator(at: initialTime)
                 verticalIndicator(at: finalTime)
@@ -219,11 +219,11 @@ struct TimeChartPlotView_Previews: PreviewProvider {
             finalConcentration: 0.2,
             initialTime: 0,
             currentTime: .constant(0.8),
-            finalTime: 1,
+            finalTime: 10,
             canSetCurrentTime: true
         )
     }
 
-    static var equation = LinearConcentration(t1: 0, c1: 0.8, t2: 1, c2: 0.2)
-    static var equation2 = LinearConcentration(t1: 0, c1: 0.2, t2: 1, c2: 0.8)
+    static var equation = LinearConcentration(t1: 0, c1: 0.8, t2: 10, c2: 0.2)
+    static var equation2 = LinearConcentration(t1: 0, c1: 0.2, t2: 10, c2: 0.8)
 }
