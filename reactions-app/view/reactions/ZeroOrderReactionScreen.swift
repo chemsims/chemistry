@@ -53,6 +53,7 @@ struct ZeroOrderReactionScreen: View {
                 .frame(height: settings.beakerHeight + settings.beakerLeadingPadding)
             ZeroOrderEquationView(
                 emphasiseFilledTerms: reaction.currentTime == nil,
+                reactionHasStarted: reaction.reactionHasStarted,
                 initialConcentration: reaction.initialConcentration,
                 initialTime: reaction.initialTime,
                 rate: reaction.rate,

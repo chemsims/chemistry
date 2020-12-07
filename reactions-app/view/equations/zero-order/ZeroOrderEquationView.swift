@@ -8,6 +8,7 @@ import SwiftUI
 struct ZeroOrderEquationView: View {
 
     let emphasiseFilledTerms: Bool
+    let reactionHasStarted: Bool
     let initialConcentration: CGFloat
     let initialTime: CGFloat
     let rate: CGFloat?
@@ -41,6 +42,7 @@ struct ZeroOrderEquationView: View {
         ) {
             UnscaledZeroOrderEquationView(
                 emphasise: emphasiseFilledTerms,
+                reactionHasStarted: reactionHasStarted,
                 initialConcentration: initialConcentration,
                 initialTime: initialTime,
                 rate: rate,
@@ -65,6 +67,7 @@ struct ZeroOrderEquationView: View {
 fileprivate struct UnscaledZeroOrderEquationView: View {
 
     let emphasise: Bool
+    let reactionHasStarted: Bool
     let initialConcentration: CGFloat
     let initialTime: CGFloat
     let rate: CGFloat?
@@ -117,6 +120,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
             HStack(spacing: 52) {
                 BlankSecondRate()
                 FilledSecondRate(
+                    reactionHasStarted: reactionHasStarted,
                     currentTime: currentTime,
                     concentration: concentration,
                     rateConstant: rateConstant?.str(decimals: 2),
@@ -340,6 +344,7 @@ fileprivate struct BlankSecondRate: View {
 
 fileprivate struct FilledSecondRate: View {
 
+    let reactionHasStarted: Bool
     let currentTime: CGFloat?
     let concentration: Equation
     let rateConstant: String?
@@ -348,12 +353,13 @@ fileprivate struct FilledSecondRate: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            Placeholder(value: rate, emphasise: emphasise)
+            Placeholder(value: rate, emphasise: emphasise || reactionHasStarted)
             FixedText("=")
             Placeholder(value: rateConstant, emphasise: emphasise)
             HStack(spacing: 0) {
                 FixedText("(")
                 num
+                    .foregroundColor(reactionHasStarted ? .orangeAccent : .black)
                 FixedText(")")
                 FixedText("0")
                     .font(.system(size: EquationSettings.subscriptFontSize))
@@ -397,6 +403,7 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
     static var previews: some View {
         UnscaledZeroOrderEquationView(
             emphasise: false,
+            reactionHasStarted: false,
             initialConcentration: 0.1,
             initialTime: 1,
             rate: 1.2,

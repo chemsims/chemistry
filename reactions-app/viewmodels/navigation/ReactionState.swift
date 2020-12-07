@@ -98,6 +98,7 @@ class RunAnimation: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.reactionHasEnded = false
+        model.reactionHasStarted = true
         model.highlightedElements = []
         if let duration = model.reactionDuration, let finalTime = model.finalTime {
             model.currentTime = model.initialTime
@@ -120,6 +121,7 @@ class RunAnimation: ReactionState {
         if (initialiseCurrentTime) {
             model.currentTime = nil
         }
+        model.reactionHasStarted = false
     }
 
     override func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? {

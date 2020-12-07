@@ -23,6 +23,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var currentTime: CGFloat?
 
     @Published var reactionHasEnded: Bool = false
+    @Published var reactionHasStarted: Bool = false
 
     @Published var highlightedElements = [OrderedReactionScreenHighlightingElements]()
 
