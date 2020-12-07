@@ -12,7 +12,15 @@ protocol ScreenState {
     /// The statement to display to the user
     func statement(model: Model) -> [SpeechBubbleLine]
 
-    /// Optionally provide delayed states which will be automatically applied
+    /// Optionally provide delayed states which will be automatically applied. Each delay is relative to the previous state,
+    /// as opposed to an absolute delay.
+    ///
+    /// The difference between a delayed state and `nextStateAutoDispatchDelay` is that the
+    /// latter is a state which can be navigated to/from by the user, whereas a substate will only be applied
+    /// while the parent state is still selected.
+    ///
+    /// Note that if `nextStateAutoDispatchDelays` is set, it's value is respected and any
+    /// delayed states which have yet to be run will be ignored.
     var delayedStates: [DelayedState<NestedState>] { get }
 
     /// Applies the reaction state to the model

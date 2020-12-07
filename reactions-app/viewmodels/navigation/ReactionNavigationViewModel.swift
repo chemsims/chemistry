@@ -16,6 +16,7 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
     private let states: [State]
 
     private var nextTimer: Timer?
+    private var subTimer: Timer?
 
     init(reactionViewModel: State.Model, states: [State]) {
         self.states = states
@@ -52,15 +53,15 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
             currentState.unapply(on: model)
             previousState.reapply(on: model)
             currentIndex = previousIndex
-            scheduleNextState(for: previousState)
             scheduleSubState(indexToRun: 0)
+            scheduleNextState(for: previousState)
         } else if let prevScreen = prevScreen {
             prevScreen()
         }
     }
 
     private func scheduleSubState(indexToRun: Int) {
-        if let timer = nextTimer {
+        if let timer = subTimer {
             timer.invalidate()
             nextTimer = nil
         }
@@ -70,7 +71,7 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
         }
 
         let next = state.delayedStates[indexToRun]
-        nextTimer = Timer.scheduledTimer(timeInterval: next.delay, target: self, selector: #selector(runForIndex), userInfo: indexToRun, repeats: false)
+        subTimer = Timer.scheduledTimer(timeInterval: next.delay, target: self, selector: #selector(runForIndex), userInfo: indexToRun, repeats: false)
     }
 
     @objc private func runForIndex(timer: Timer) {
@@ -86,11 +87,11 @@ class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
 
 
     private func scheduleNextState(for state: State) {
+        if let timer = nextTimer {
+            timer.invalidate()
+            nextTimer = nil
+        }
         if let delay = state.nextStateAutoDispatchDelay(model: model) {
-            if let timer = nextTimer {
-                timer.invalidate()
-                nextTimer = nil
-            }
             nextTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(next), userInfo: nil, repeats: false)
         }
     }
