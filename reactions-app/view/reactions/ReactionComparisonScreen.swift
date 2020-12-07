@@ -14,7 +14,7 @@ struct ReactionComparisonScreen: View {
 
     var body: some View {
         GeometryReader { geometry in
-            NewReactionComparisonViewWithSettings(
+            ReactionComparisonViewWithSettings(
                 navigation: navigation,
                 reaction: navigation.model,
                 settings: ReactionComparisonLayoutSettings(
@@ -27,7 +27,7 @@ struct ReactionComparisonScreen: View {
     }
 }
 
-fileprivate struct NewReactionComparisonViewWithSettings: View {
+fileprivate struct ReactionComparisonViewWithSettings: View {
 
     @ObservedObject var navigation: ReactionNavigationViewModel<ReactionComparisonState>
     @ObservedObject var reaction: ReactionComparisonViewModel

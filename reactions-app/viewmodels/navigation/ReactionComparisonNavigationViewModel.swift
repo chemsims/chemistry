@@ -215,6 +215,11 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
     }
 
     override func unapply(on model: ReactionComparisonViewModel) {
+        withAnimation(.easeOut(duration: 0.25)) {
+            model.currentTime0 = model.initialTime
+            model.currentTime1 = model.initialTime
+            model.currentTime2 = model.initialTime
+        }
         model.currentTime0 = nil
         model.currentTime1 = nil
         model.currentTime2 = nil

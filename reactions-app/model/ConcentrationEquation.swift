@@ -138,8 +138,6 @@ struct FirstOrderConcentration: ConcentrationEquation {
     }
 }
 
-
-
 struct ConcentrationBEquation: ConcentrationEquation {
     let concentrationA: ConcentrationEquation
     let initialAConcentration: CGFloat
