@@ -10,7 +10,8 @@ struct EnergyProfileChart: View {
     let settings: EnergyRateChartSettings
     let peakHeightFactor: CGFloat
     let initialHeightFactor: CGFloat
-    let concentrationC: CGFloat
+    let tempHeightFactor: CGFloat
+    let showTemperature: Bool
 
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
@@ -44,35 +45,42 @@ struct EnergyProfileChart: View {
 
     private var chart: some View {
         ZStack {
-            EnergyProfileChartShape(
-                peak: initialHeightFactor
-            )
-            .stroke()
-            .foregroundColor(Styling.energyProfileCompleteBar)
-            .frame(width: settings.chartSize, height: settings.chartSize)
-
-            EnergyProfileChartShape(
-                peak: scaledPeak
-            )
-            .stroke()
-            .foregroundColor(.orangeAccent)
-            .border(Color.black)
-            .frame(width: settings.chartSize, height: settings.chartSize)
-
             ZStack {
-                EnergyProfileHead(
-                    radius: settings.chartHeadHaloSize,
-                    concentrationC: concentrationC,
-                    peak: scaledPeak
-                ).foregroundColor(Styling.primaryColorHalo)
+                if (showTemperature) {
+                    tempLine
+                }
 
-                EnergyProfileHead(
-                    radius: settings.chartHeadSize,
-                    concentrationC: concentrationC,
+                EnergyProfileChartShape(
+                    peak: initialHeightFactor
+                )
+                .stroke()
+                .foregroundColor(Styling.energyProfileCompleteBar)
+                .frame(width: settings.chartSize, height: settings.chartSize)
+
+                EnergyProfileChartShape(
                     peak: scaledPeak
-                ).foregroundColor(.orangeAccent)
+                )
+                .stroke()
+                .foregroundColor(.orangeAccent)
+                .border(Color.black)
+                .frame(width: settings.chartSize, height: settings.chartSize)
             }.frame(width: settings.chartSize, height: settings.chartSize)
         }
+    }
+
+    private var tempLine: some View {
+        let curve = BellCurve(
+            peak: tempHeightFactor,
+            frameWidth: settings.chartSize,
+            frameHeight: settings.chartSize
+        )
+        return Rectangle()
+            .frame(height: 1)
+            .foregroundColor(Color.black.opacity(0.6))
+            .position(
+                x: settings.chartSize / 2,
+                y: curve.absoluteY(absoluteX: settings.chartSize / 2)
+            )
     }
 
     private var annotations: some View {
@@ -115,7 +123,7 @@ struct EnergyProfileChart: View {
     private var productAnnotation: some View {
         VStack(spacing: 0) {
             Spacer()
-                .frame(height: settings.chartSize * 0.82)
+                .frame(height: settings.chartSize * 0.84)
             HStack(spacing: 0) {
                 Spacer()
                 VStack(spacing: 1) {
@@ -266,7 +274,8 @@ struct EnergyProfileChart_Previews: PreviewProvider {
             settings: EnergyRateChartSettings(chartSize: 250),
             peakHeightFactor: 0,
             initialHeightFactor: 1,
-            concentrationC: 0.5
+            tempHeightFactor: 1,
+            showTemperature: true
         )
     }
 }

@@ -91,6 +91,20 @@ class EnergyProfileViewModel: ObservableObject {
         return nil
     }
 
+    var tempHeightFactor: CGFloat {
+        let min: CGFloat = -0.5
+        let max: CGFloat = 1.1
+        let minT: CGFloat = 400
+        let maxT: CGFloat = 600
+        let temp = temp2 ?? temp1
+        let tFactor = (temp - minT) / (maxT - minT)
+        return min + ((max - min) * tFactor)
+    }
+    
+    var canReactToC: Bool {
+        tempHeightFactor >= (peakHeightFactor * initialHeightFactor)
+    }
+
     func setCatalystInProgress(catalyst: Catalyst) -> Void {
         withAnimation(.easeOut(duration: 0.75)) {
             catalystInProgress = catalyst

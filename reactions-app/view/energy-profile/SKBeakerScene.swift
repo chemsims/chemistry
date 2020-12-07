@@ -20,6 +20,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    var canReactToC: Bool = false
 
     init(
         size: CGSize,
@@ -66,9 +67,9 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 
     private let runCatalystKey = "AddCatalysts"
 
-    var allowReactionsToC: Bool = false {
+    var reactionHasStarted: Bool = false {
         willSet {
-            if (allowReactionsToC && !newValue && cMolecules > 0) {
+            if (reactionHasStarted && !newValue && cMolecules > 0) {
                 resetCollisions()
             }
         }
@@ -242,7 +243,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
-        guard allowReactionsToC else {
+        guard reactionHasStarted else {
             return
         }
         collisionsSinceLastCMolecule += 1
@@ -288,7 +289,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func shouldCollide() -> Bool {
-        collisionsSinceLastCMolecule >= settings.collisionsForC
+        canReactToC && collisionsSinceLastCMolecule >= settings.collisionsForC
     }
 
     private func addMolecule(
@@ -373,7 +374,7 @@ fileprivate struct SKBeakerSceneSettings {
 
     let aMolecules = 15
     let bMolecules = 15
-    let collisionsForC = 25
+    let collisionsForC = 15
     let minVelocity: CGFloat = 3
     let maxVelocity: CGFloat = 100
     let catalystParticles = 7

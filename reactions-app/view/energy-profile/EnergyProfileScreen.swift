@@ -65,7 +65,8 @@ struct EnergyProfileScreen: View {
                     ),
                     peakHeightFactor: model.peakHeightFactor,
                     initialHeightFactor: model.initialHeightFactor,
-                    concentrationC: model.concentrationC
+                    tempHeightFactor: model.tempHeightFactor,
+                    showTemperature: model.temp2 != nil
                 )
 
                 ReactionOrderSelection(
@@ -113,7 +114,8 @@ struct EnergyProfileScreen: View {
                 extraEnergyFactor: model.extraEnergyFactor,
                 updateConcentrationC: model.setConcentrationC,
                 allowReactionsToC: model.allowReactionsToC,
-                catalystIsShaking: model.catalystIsShaking
+                catalystIsShaking: model.catalystIsShaking,
+                canReactToC: model.canReactToC
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .padding(.leading, settings.beakerLeadingPadding)

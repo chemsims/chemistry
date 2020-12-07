@@ -19,6 +19,7 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
     let emitterPosition: CGPoint
     let emitting: Bool
     let catalystColor: UIColor
+    let canReactToC: Bool
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
@@ -39,9 +40,10 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: SKView, context: Context) {
         if let scene = uiView.scene as? SKBeakerScene {
             scene.extraSpeed = speed
-            scene.allowReactionsToC = allowReactionsToC
+            scene.reactionHasStarted = allowReactionsToC
             scene.emitting = emitting
             scene.catalystColor = catalystColor
+            scene.canReactToC = canReactToC
         }
     }
 }
