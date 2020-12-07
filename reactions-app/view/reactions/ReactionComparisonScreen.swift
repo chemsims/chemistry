@@ -132,7 +132,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         }
 
         return ZStack {
-            chart(
+            labelledChart(
                 chartSettings: chartSettings(time: reaction.finalTime0),
                 concentrationA: reaction.zeroOrder,
                 concentrationB: reaction.zeroOrderB,
@@ -142,7 +142,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             )
             .position(x: settings.chartX(order: .Zero), y: settings.chartY(order: .Zero))
 
-            chart(
+            labelledChart(
                 chartSettings: chartSettings(time: reaction.finalTime1),
                 concentrationA: reaction.firstOrder,
                 concentrationB: reaction.firstOrderB,
@@ -152,7 +152,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             )
             .position(x: settings.chartX(order: .First), y: settings.chartY(order: .First))
 
-            chart(
+            labelledChart(
                 chartSettings: chartSettings(time: reaction.finalTime2),
                 concentrationA: reaction.secondOrder,
                 concentrationB: reaction.secondOrderB,
@@ -291,6 +291,39 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             currentTime: time
         )
         .frame(width: settings.beakerWidth)
+    }
+
+    private func labelledChart(
+        chartSettings: TimeChartGeometrySettings,
+        concentrationA: ConcentrationEquation,
+        concentrationB: ConcentrationEquation,
+        order: ReactionOrder,
+        finalTime: CGFloat,
+        currentTime: Binding<CGFloat>
+    ) -> some View {
+        HStack(alignment: .top, spacing: settings.chartHorizontalLabelSpacing) {
+            Text("[A]")
+                .font(.system(size: settings.chartFontSize))
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .frame(width: settings.chartYLabelWidth, height: settings.chartSize)
+            VStack(spacing: settings.chartVerticalLabelSpacing) {
+                chart(
+                    chartSettings: chartSettings,
+                    concentrationA: concentrationA,
+                    concentrationB: concentrationB,
+                    order: order,
+                    finalTime: finalTime,
+                    currentTime: currentTime
+                )
+                Text("Time")
+                    .font(.system(size: settings.chartFontSize))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .frame(width: settings.chartSize, height: settings.chartXLabelHeight)
+            }
+        }
+        .frame(width: settings.chartTotalWidth, height: settings.chartTotalHeight)
     }
 
     private func chart(
@@ -553,16 +586,12 @@ struct ReactionComparisonLayoutSettings {
         0.2 * equationCornerRadius
     }
 
-    var chartVerticalSpacing: CGFloat {
-        0.2 * chartSize
-    }
-
-    var chartVerticalSpacerHeight: CGFloat {
-        0.5 * (height - (3 * chartSize) - (4 * chartVerticalSpacing))
-    }
-
     var chartHorizontalSpacerWidth: CGFloat {
         0.5 * (width - chartSize)
+    }
+
+    var chartHorizontalLabelSpacing: CGFloat {
+        0
     }
 
     var orderDragWidth: CGFloat {
@@ -592,33 +621,44 @@ struct ReactionComparisonLayoutSettings {
         1.25
     }
 
+    var chartVerticalLabelSpacing: CGFloat {
+        0
+    }
+
+    var chartFontSize: CGFloat {
+        0.1 * chartSize
+    }
+
+    var chartXLabelHeight: CGFloat {
+        10
+    }
+
+    var chartTotalHeight: CGFloat {
+        chartSize + chartVerticalLabelSpacing + chartXLabelHeight
+    }
+
+    var chartTotalWidth: CGFloat {
+        chartSize + chartYLabelWidth + chartHorizontalLabelSpacing
+    }
+
+    var chartYLabelWidth: CGFloat {
+        0.2 * chartSize
+    }
+
     func chartX(order: ReactionOrder) -> CGFloat {
-        width / 2
+        (width - chartYLabelWidth) / 2
     }
 
     func chartY(order: ReactionOrder) -> CGFloat {
-        let topChartPosition = chartVerticalSpacing + chartVerticalSpacerHeight + (chartSize / 2)
+        let heightForTop = (height - chartTotalHeight) / 2
+        let topPosition = heightForTop / 2
         switch (order) {
-        case .Zero: return topChartPosition
-        case .First: return topChartPosition + chartVerticalSpacing + chartSize
-        case .Second: return height - topChartPosition
+        case .Zero: return topPosition
+        case .First: return height / 2
+        case .Second: return height - topPosition
         }
     }
 
-    func overlapsTopChart(point: CGPoint) -> Bool {
-        let chartMinX = (width / 2) - (chartSize / 2)
-        let chartMinY = chartVerticalSpacerHeight + chartVerticalSpacing
-        let rect = CGRect(x: chartMinX, y: chartMinY, width: chartSize, height: chartSize)
-
-        let dragRect = CGRect(
-            x: point.x - orderDragWidth / 2,
-            y: point.y - orderDragHeight / 2,
-            width: orderDragWidth,
-            height: orderDragHeight
-        )
-
-        return rect.intersects(dragRect)
-    }
 
     func overlappingOrder(point: CGPoint) -> ReactionOrder? {
         let dragRect = CGRect(
@@ -637,12 +677,16 @@ struct ReactionComparisonLayoutSettings {
     private func chartRect(order: ReactionOrder) -> CGRect {
         let midX = chartX(order: order)
         let midY = chartY(order: order)
-        return CGRect(
-            x: midX - (chartSize / 2),
-            y: midY - (chartSize / 2),
+        let originX = midX - (chartTotalWidth / 2)
+        let originY = midY - (chartTotalHeight / 2)
+        let foo = CGRect(
+            x: originX + chartYLabelWidth,
+            y: originY,
             width: chartSize,
             height: chartSize
         )
+        print("Order \(order) \(foo)")
+        return foo
     }
 
     var ordered: OrderedReactionLayoutSettings {
