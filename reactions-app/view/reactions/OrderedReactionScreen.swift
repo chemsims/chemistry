@@ -18,7 +18,11 @@ struct OrderedReactionScreen<Content: View>: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
+            Rectangle()
+                .foregroundColor(Color.white)
+                .colorMultiply(colorMultiply(for: nil))
             beaker(settings: settings)
+
             beaky(settings: settings)
                 .padding(.trailing, settings.beakyRightPadding)
                 .padding(.bottom, settings.beakyBottomPadding)
@@ -53,6 +57,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
                 .padding(.leading, settings.beakerLeadingPadding)
                 .padding(.top, settings.beakerLeadingPadding)
+                .colorMultiply(colorMultiply(for: nil))
 
                 middleCharts(settings: settings)
             }
@@ -78,6 +83,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 canSetInitialTime: canSetInitialTime,
                 canSetCurrentTime: reaction.reactionHasEnded
             )
+            .colorMultiply(colorMultiply(for: .concentrationChart))
 
             ConcentrationBarChart(
                 initialA: reaction.initialConcentration,
@@ -93,5 +99,15 @@ struct OrderedReactionScreen<Content: View>: View {
             ).frame(width: settings.chartSize)
             Spacer()
         }
+    }
+
+    private func colorMultiply(for element: OrderedReactionScreenHighlightingElements?) -> Color {
+        if (reaction.highlightedElements.isEmpty) {
+            return .white
+        }
+        if let element = element, reaction.highlightedElements.contains(element) {
+            return .white
+        }
+        return Styling.inactiveScreenElement
     }
 }

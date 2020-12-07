@@ -17,7 +17,10 @@ struct SecondOrderReactionNavigation {
                 persistence: persistence,
                 initialiseCurrentTime: true
             ),
-            EndAnimation(statement: SecondOrderStatements.end)
+            EndAnimation(
+                statement: SecondOrderStatements.end,
+                highlightChart: false
+            )
         ]
     }
 

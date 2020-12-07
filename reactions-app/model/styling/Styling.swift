@@ -52,6 +52,9 @@ struct Styling {
     static let comparisonEquationDisabled = RGB(r: 239, g: 239, b: 239).color
     static let comparisonEquationDisabledBorder = RGB(r: 140, g: 140, b: 140).color
 
+    static let inactiveScreenElement = RGB(r: 200, g: 200, b: 200).color
+
+    static let inactive2 = RGB(r: 200, g: 200, b: 200).color
 }
 
 

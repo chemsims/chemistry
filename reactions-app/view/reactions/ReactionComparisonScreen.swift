@@ -403,9 +403,7 @@ fileprivate struct NewReactionComparisonViewWithSettings: View {
         if (highlights.isEmpty || highlights.contains(element)) {
             return .white
         }
-
-        let x: Double = 173
-        return  RGB(r: x, g: x, b: x).color.opacity(0.5)
+        return Styling.inactiveScreenElement
     }
 
     private var dragBorder: Color {
@@ -656,7 +654,7 @@ struct ReactionComparisonLayoutSettings {
     }
 }
 
-struct NewReactionComparisonScreen_Previews: PreviewProvider {
+struct ReactionComparisonScreen_Previews: PreviewProvider {
     static var previews: some View {
         ReactionComparisonScreen(
             navigation: ReactionComparisonNavigationViewModel.model(

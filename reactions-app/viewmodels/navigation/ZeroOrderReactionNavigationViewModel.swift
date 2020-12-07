@@ -19,7 +19,10 @@ struct ZeroOrderReactionNavigation {
                 persistence: persistence,
                 initialiseCurrentTime: false
             ),
-            EndAnimation(statement: ZeroOrderStatements.endAnimation),
+            EndAnimation(
+                statement: ZeroOrderStatements.endAnimation,
+                highlightChart: true
+            ),
         ]
     }
 
@@ -72,6 +75,7 @@ fileprivate class ExplainRateState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.currentTime = model.initialTime
+        model.highlightedElements = [.rateEquation]
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
@@ -80,6 +84,7 @@ fileprivate class ExplainRateState: ReactionState {
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
         model.currentTime = nil
+        model.highlightedElements = []
     }
 
 }
@@ -91,14 +96,18 @@ fileprivate class ExplainHalflifeState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.currentTime = model.initialTime
+        model.highlightedElements = [.halfLifeEquation]
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = [.halfLifeEquation]
         withAnimation(.easeOut(duration: 0.5)) {
-            apply(on: model)
+            model.currentTime = model.initialTime
         }
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = []
     }
 }
+

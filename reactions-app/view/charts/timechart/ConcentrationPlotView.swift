@@ -47,7 +47,9 @@ struct ConcentrationPlotView: View {
 
     var body: some View {
         ZStack {
-
+            Rectangle()
+                .fill(Color.white)
+            
             if (includeAxis) {
                 verticalIndicator(at: initialTime)
                 verticalIndicator(at: finalTime)

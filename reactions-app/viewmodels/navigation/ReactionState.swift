@@ -90,6 +90,7 @@ class RunAnimation: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.reactionHasEnded = false
+        model.highlightedElements = []
         if let duration = model.reactionDuration, let finalTime = model.finalTime {
             model.currentTime = model.initialTime
             withAnimation(.linear(duration: Double(duration))) {
@@ -124,9 +125,18 @@ class RunAnimation: ReactionState {
 
 class EndAnimation: ReactionState {
 
+    let highlightChart: Bool
+    init(statement: [SpeechBubbleLine], highlightChart: Bool) {
+        self.highlightChart = highlightChart
+        super.init(statement: statement)
+    }
+
     override func apply(on model: ZeroOrderReactionViewModel) {
         // For the current time to 'sprint' to the end, it must animate to a value
         // which is not equal to the current value
+        if (highlightChart) {
+            model.highlightedElements = [.concentrationChart]
+        }
         withAnimation(.easeOut(duration: 0.5)) {
             if let finalTime = model.finalTime {
                 model.currentTime = finalTime * 1.00001
@@ -136,6 +146,9 @@ class EndAnimation: ReactionState {
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
+        if (highlightChart) {
+            model.highlightedElements = []
+        }
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) { }

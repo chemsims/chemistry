@@ -16,7 +16,10 @@ struct FirstOrderReactionNavigation {
                 persistence: persistence,
                 initialiseCurrentTime: true
             ),
-            EndAnimation(statement: FirstOrderStatements.end)
+            EndAnimation(
+                statement: FirstOrderStatements.end,
+                highlightChart: false
+            )
         ]
     }
 

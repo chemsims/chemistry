@@ -36,7 +36,8 @@ struct ZeroOrderReactionScreen: View {
             reaction: reaction,
             navigation: navigation,
             settings: settings,
-            canSetInitialTime: true) {
+            canSetInitialTime: true
+        ) {
             equationView(settings: settings)
         }
     }
@@ -61,6 +62,8 @@ struct ZeroOrderReactionScreen: View {
                 t2: reaction.finalTime,
                 halfTime: reaction.halfTime,
                 a0: reaction.a0,
+                rateColorMultipy: colorMultiply(for: .rateEquation),
+                halfLifeColorMultiply: colorMultiply(for: .halfLifeEquation),
                 maxWidth: availableWidth,
                 maxHeight: height,
                 isShowingTooltip: $isShowingTooltip
@@ -74,8 +77,19 @@ struct ZeroOrderReactionScreen: View {
     private var equationVerticalPadding: CGFloat {
         10
     }
+
     private func equationHorizontalPadding(settings: OrderedReactionLayoutSettings) -> CGFloat {
         settings.chartSize * 0.1
+    }
+
+    private func colorMultiply(for element: OrderedReactionScreenHighlightingElements?) -> Color {
+        if (reaction.highlightedElements.isEmpty) {
+            return .white
+        }
+        if let element = element, reaction.highlightedElements.contains(element) {
+            return .white
+        }
+        return Styling.inactiveScreenElement
     }
 }
 

@@ -49,7 +49,7 @@ struct ZeroOrderStatements {
 
     static let endAnimation = [
         SpeechBubbleLineGenerator.makeLine("For this Zero Order Reaction, *Rate* is constant and it's equatl to *k*, that's why a graph plotting *([A] vs t)* is a straight line:"),
-        SpeechBubbleLineGenerator.makeLine("[A]*(y)*=-kt*(mx)+[A0]*(b)**"),
+        SpeechBubbleLineGenerator.makeLine("[A]*(y)*=-kt*(mx)*+[A0]*(b)*"),
         SpeechBubbleLineGenerator.makeLine("*Where -k is the slope*.")
     ]
 

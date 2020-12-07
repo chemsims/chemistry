@@ -24,6 +24,8 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     @Published var reactionHasEnded: Bool = false
 
+    @Published var highlightedElements = [OrderedReactionScreenHighlightingElements]()
+
     var concentrationEquationA: ConcentrationEquation {
         if let t2 = finalTime, let c2 = finalConcentration {
             return LinearConcentration(

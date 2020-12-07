@@ -17,6 +17,8 @@ struct ZeroOrderEquationView: View {
     let t2: CGFloat?
     let halfTime: CGFloat?
     let a0: CGFloat?
+    let rateColorMultipy: Color
+    let halfLifeColorMultiply: Color
 
     let maxWidth: CGFloat
     let maxHeight: CGFloat
@@ -44,7 +46,9 @@ struct ZeroOrderEquationView: View {
                 t2: t2,
                 halfTime: halfTime,
                 a0: a0,
-                isShowingTooltip: $isShowingTooltip
+                isShowingTooltip: $isShowingTooltip,
+                rateColorMultipy: rateColorMultipy,
+                halfLifeColorMultiply: halfLifeColorMultiply
             )
             .frame(width: maxWidth, height: maxHeight)
         }
@@ -64,6 +68,8 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
     let halfTime: CGFloat?
     let a0: CGFloat?
     @Binding var isShowingTooltip: Bool
+    let rateColorMultipy: Color
+    let halfLifeColorMultiply: Color
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -80,6 +86,8 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                     emphasise: emphasise
                 )
             }
+            .background(Color.white)
+            .colorMultiply(rateColorMultipy)
 
             HStack(spacing: 22) {
                 FilledHalftime(
@@ -92,6 +100,8 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                     emphasise: emphasise
                 )
             }
+            .background(Color.white)
+            .colorMultiply(halfLifeColorMultiply)
         }
         .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
@@ -311,7 +321,9 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             t2: nil,
             halfTime: nil,
             a0: 0.9,
-            isShowingTooltip: .constant(true)
+            isShowingTooltip: .constant(true),
+            rateColorMultipy: .white,
+            halfLifeColorMultiply: .white
         )
         .border(Color.red)
         .previewLayout(.fixed(width: 540, height: 265))

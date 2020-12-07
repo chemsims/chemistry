@@ -244,15 +244,17 @@ struct GeneralTimeChartView: View {
 
 
     private var chartWithIndicator: some View {
-        let axis = ChartAxisShape(
-            verticalTicks: settings.verticalTicks,
-            horizontalTicks: settings.horizontalTicks,
-            tickSize: settings.tickSize,
-            gapToTop: settings.gapFromMaxTickToChart,
-            gapToSide: settings.gapFromMaxTickToChart
-        )
-            .stroke()
-            .frame(width: settings.chartSize, height: settings.chartSize)
+        let axis = ZStack {
+            Rectangle()
+                .fill(Color.white)
+            ChartAxisShape(
+                verticalTicks: settings.verticalTicks,
+                horizontalTicks: settings.horizontalTicks,
+                tickSize: settings.tickSize,
+                gapToTop: settings.gapFromMaxTickToChart,
+                gapToSide: settings.gapFromMaxTickToChart
+            ).stroke()
+        }.frame(width: settings.chartSize, height: settings.chartSize)
 
         if (!includeSliders) {
             return AnyView(axis)
