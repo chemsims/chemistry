@@ -50,6 +50,9 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     @State private var impactGenerator = UIImpactFeedbackGenerator(style: .light)
     @State private var didPrepareImpact = false
 
+    @State private var scaleFactor: CGFloat = 0
+    @State private var scaleAnchor: UnitPoint = .center
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
@@ -64,7 +67,10 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                             width: handleXPosition(geometry, calculations: axis),
                             height: barHeight(geometry),
                             alignment: .leading
-                        ).position(x: handleXPosition(geometry, calculations: axis) / 2, y: geometry.size.height / 2)
+                        ).position(
+                            x: handleXPosition(geometry, calculations: axis) / 2,
+                            y: geometry.size.height / 2
+                        )
                 }
 
                 handle(
@@ -79,6 +85,11 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         RoundedRectangle(cornerRadius: handleCornerRadius)
             .foregroundColor(handleColor)
             .frame(width: handleWidth(geometry), height: handleHeight(geometry))
+            .scaleEffect(
+                x: isPortrait ? 1 + scaleFactor : 1 - scaleFactor,
+                y: isPortrait ? 1 - scaleFactor : 1 + scaleFactor,
+                anchor: scaleAnchor
+            )
             .position(
                 x: handleXPosition(geometry, calculations: axis),
                 y: handleYPosition(geometry, calculations: axis)
@@ -89,6 +100,11 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     .onChanged { gesture in
                         let inputValue = orientation == .portrait ? gesture.location.y : gesture.location.x
                         var newValue = axis.getValue(at: Value(inputValue))
+                        setHandleScale(
+                            geometry: geometry,
+                            value: newValue,
+                            location: inputValue
+                        )
                         if (newValue > axis.maxValue) {
                             newValue = axis.maxValue
                         } else if (newValue < axis.minValue) {
@@ -99,15 +115,54 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                         }
 
                         self.value = newValue
+                    }.onEnded { _ in
+                        let animation = Animation.spring(
+                            response: 0.1,
+                            dampingFraction: 0.9
+                        )
+                        withAnimation(animation) {
+                            scaleFactor = 0
+                        }
                     }
             )
+    }
+
+
+    /// Sets the handle scale when `value` exceeds the axis limits.
+    /// The scale is calculated using the formula a(1 - e^(bx)), where
+    /// a is the maximum allowed scale. The coefficient of b is calculated
+    /// based on the value of x which produces 0.8.
+    private func setHandleScale(
+        geometry: GeometryProxy,
+        value: Value,
+        location: CGFloat
+    ) {
+        if (value > axis.maxValue || value < axis.minValue) {
+            let axisLength = isPortrait ? geometry.size.height : geometry.size.width
+            let bounds = value > axis.maxValue ? axis.maxValuePosition : axis.minValuePosition
+            let delta = abs(location - CGFloat(bounds))
+
+            // The distance to 0.8 of the maxScale
+            let deltaTo80: CGFloat = axisLength
+            let maxScale: CGFloat = 0.08
+            let deltaFactor = 1.6 / deltaTo80
+            let scale = maxScale - (maxScale * pow(CGFloat(Darwin.M_E), -deltaFactor * delta))
+
+            self.scaleFactor = scale
+            if (value > axis.maxValue) {
+                self.scaleAnchor = isPortrait ? .top : .trailing
+            } else {
+                self.scaleAnchor = isPortrait ? .bottom : .leading
+            }
+        } else {
+            self.scaleFactor = 0
+        }
     }
 
     private func handleHaptics(
         newValue: Value,
         oldValue: Value
     ) {
-
         if (newValue > oldValue) {
             if (newValue >= axis.maxValue) {
                 impactGenerator.impactOccurred()

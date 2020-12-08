@@ -220,10 +220,6 @@ fileprivate struct BlankRates: View {
     }
 }
 
-fileprivate struct EqSettings {
-    static let largeBoxWidth: CGFloat = 100
-}
-
 fileprivate struct LargeOpenParen: View {
     var body: some View {
         FixedText("(")
