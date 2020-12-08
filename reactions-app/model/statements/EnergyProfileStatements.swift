@@ -13,7 +13,7 @@ struct EnergyProfileStatements {
 
     static let setT2: [SpeechBubbleLine] = [
         SpeechBubbleLineGenerator.makeLine("Awesome!"),
-        SpeechBubbleLineGenerator.makeLine("Play with temperature to set T2. *Use the flame slider.*")
+        SpeechBubbleLineGenerator.makeLine("Play with temperature to set T_2_. *Use the flame slider.*")
     ]
 
     static let middle: [SpeechBubbleLine] = [

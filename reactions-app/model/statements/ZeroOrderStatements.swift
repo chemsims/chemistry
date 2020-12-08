@@ -12,7 +12,7 @@ struct ZeroOrderStatements {
             "This is a Zero Order Reaction in which a reactant A turns into the produt B. But what does it mean? Let's find out!"
         ),
         SpeechBubbleLineGenerator.makeLine(
-            "*Set the initial concentration of A (c1) and the initial time at which it'll start (t1)*."
+            "*Set the initial concentration of A (c_1_) and the initial time at which it'll start (t_1_)*."
         )
     ]
 
@@ -27,14 +27,14 @@ struct ZeroOrderStatements {
     static func halfLifeExplainer(halfLife: CGFloat) -> [SpeechBubbleLine] {
         [
             SpeechBubbleLineGenerator.makeLine(
-                "*Half Life (t1/2)* is an expression to easily calculate the point in time at which the concentration of the reactant, in this case *A*, is half of what the initial concentration was. For this reaction: *t1/2=\(halfLife.str(decimals: 2))s*"
+                "*Half Life (t_1/2_)* is an expression to easily calculate the point in time at which the concentration of the reactant, in this case *A*, is half of what the initial concentration was. For this reaction: *t_1/2_=\(halfLife.str(decimals: 2))s*"
             )
         ]
     }
     
     static let setFinalValues = [
         SpeechBubbleLineGenerator.makeLine(
-            "Great! Now you can set the *concentration of A at the end of the reaction (c2)* and the *time the reaction will last (t2)*."
+            "Great! Now you can set the *concentration of A at the end of the reaction (c_2_)* and the *time the reaction will last (t_2_)*."
         )
     ]
 

@@ -131,7 +131,7 @@ struct SpeechBubbleSettings {
     }
 
     var superscriptOffset: CGFloat {
-        0.6 * subscriptFontSize
+        0.4 * subscriptFontSize
     }
 
     var stemYOffset: CGFloat {
