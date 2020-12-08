@@ -16,13 +16,10 @@ struct SecondOrderEquationView: View {
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
-    private let naturalWidth: CGFloat = 327
-    private let naturalHeight: CGFloat = 312
-
     var body: some View {
         ScaledView(
-            naturalWidth: naturalWidth,
-            naturalHeight: naturalHeight,
+            naturalWidth: EquationSize.width,
+            naturalHeight: EquationSize.height,
             maxWidth: maxWidth,
             maxHeight: maxHeight
         ) {
@@ -87,11 +84,11 @@ fileprivate struct SecondOrderRateFilled: View {
                 HStack(spacing: 5) {
                     inverse {
                         A_t()
-                    }
+                    }.frame(width: 100)
                     FixedText("-")
                     inverse {
                         A_0()
-                    }
+                    }.frame(width: 100)
                 }
                 Rectangle()
                     .frame(width: 225, height: 2)
@@ -129,14 +126,16 @@ fileprivate struct SecondOrderRateBlank: View {
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     Placeholder(value: invAt, emphasise: emphasise)
+                        .frame(width: 100)
 
                     FixedText("-")
 
                     Placeholder(value: invA0, emphasise: invAt == nil)
+                        .frame(width: 100)
                 }
 
                 Rectangle()
-                    .frame(width: 180, height: 2)
+                    .frame(width: 225, height: 2)
 
                 Placeholder(value: time, emphasise: emphasise)
             }
@@ -173,19 +172,24 @@ fileprivate struct SecondOrderHalftimeBlank: View {
             FixedText("=")
 
             FixedText("1")
-            FixedText("/")
 
-            Placeholder(value: rate, emphasise: emphasise)
-
-            FixedText("(")
-            Text(a0)
-                .frame(width: EquationSettings.boxWidth * 0.8)
-                .minimumScaleFactor(0.5)
-                .foregroundColor(rate == nil ? .orangeAccent : .black)
-            FixedText(")")
-
+            HStack(spacing: 1) {
+                FixedText("/")
+                Placeholder(value: rate, emphasise: emphasise)
+                FixedText("(")
+                Text(a0)
+                    .frame(width: EquationSettings.boxWidth * 0.8)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(rate == nil ? .orangeAccent : .black)
+                FixedText(")")
+            }
         }
     }
+}
+
+fileprivate struct EquationSize {
+    static let width: CGFloat = 327
+    static let height: CGFloat = 312
 }
 
 
@@ -199,6 +203,7 @@ struct SecondOrderEquationView2_Previews: PreviewProvider {
             t: 1.4,
             halfTime: 2.34
         )
-        .previewLayout(.fixed(width: 600, height: 600))
+        .border(Color.red)
+        .previewLayout(.fixed(width: EquationSize.width, height: EquationSize.height))
     }
 }
