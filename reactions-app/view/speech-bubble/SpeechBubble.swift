@@ -11,11 +11,20 @@ struct SpeechBubble: View {
 
     var body: some View {
         GeometryReader { geometry in
-            makeView(with: SpeechBubbleSettings(geometry: geometry))
+            SpeechBubbleWithSettings(
+                lines: lines,
+                settings: SpeechBubbleSettings(geometry: geometry)
+            )
         }
     }
+}
 
-    private func makeView(with settings: SpeechBubbleSettings) -> some View {
+fileprivate struct SpeechBubbleWithSettings: View {
+
+    let lines: [SpeechBubbleLine]
+    let settings: SpeechBubbleSettings
+
+    var body: some View {
         Group {
             RoundedRectangle(cornerRadius: settings.cornerRadius)
                 .fill(Styling.speechBubble)
@@ -43,9 +52,27 @@ struct SpeechBubble: View {
 
     private func lineView(_ line: SpeechBubbleLine) -> Text {
         line.content.reduce(Text(""), {
-            $0 + Text($1.content)
-                    .foregroundColor($1.emphasised ? .orangeAccent : .black)
+            $0 + text($1)
         })
+    }
+
+    private func text(_ segment: SpeechBubbleLineSegment) -> Text {
+        Text(segment.content)
+            .foregroundColor(segment.emphasised ? .orangeAccent : .black)
+            .font(.system(size: fontSize(line: segment)))
+            .baselineOffset(fontOffset(line: segment))
+    }
+
+    private func fontSize(line: SpeechBubbleLineSegment) -> CGFloat {
+        line.scriptType == nil ? settings.fontSize : settings.subscriptFontSize
+    }
+
+    private func fontOffset(line: SpeechBubbleLineSegment) -> CGFloat {
+        switch (line.scriptType) {
+        case .some(.superScript): return settings.superscriptOffset
+        case .some(.subScript): return settings.subscriptOffset
+        case .none: return 0
+        }
     }
 
 }
@@ -91,6 +118,22 @@ struct SpeechBubbleSettings {
         geometry.size.width - stemWidth
     }
 
+    var fontSize: CGFloat {
+        0.09 * geometry.size.height
+    }
+
+    var subscriptFontSize: CGFloat {
+        0.65 * fontSize
+    }
+
+    var subscriptOffset: CGFloat {
+        -1 * superscriptOffset
+    }
+
+    var superscriptOffset: CGFloat {
+        0.6 * subscriptFontSize
+    }
+
     var stemYOffset: CGFloat {
         let bottomOfStemToTopOfBubble: CGFloat = 0.83
         let dy = (geometry.size.height * bottomOfStemToTopOfBubble) - stemHeight
@@ -115,7 +158,10 @@ struct SpeechBubble_Previews: PreviewProvider {
         ]),
         SpeechBubbleLine(content: [
             .init(content: "Choose a reaction ", emphasised: true),
-            .init(content: "to explore it!", emphasised: false)
+            .init(content: "too elor it!A", emphasised: false),
+            .init(content: "0", emphasised: false, scriptType: .superScript),
+            .init(content: " != A", emphasised: false),
+            .init(content: "123", emphasised: false, scriptType: .subScript),
         ])
     ]
 

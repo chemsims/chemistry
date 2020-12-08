@@ -25,33 +25,65 @@ struct SpeechBubbleLine: Identifiable {
 struct SpeechBubbleLineSegment: Equatable {
     let content: String
     let emphasised: Bool
+    let scriptType: ScriptType?
+
+    init(
+        content: String,
+        emphasised: Bool,
+        scriptType: ScriptType? = nil
+    ) {
+        self.content = content
+        self.emphasised = emphasised
+        self.scriptType = scriptType
+    }
+}
+
+enum ScriptType {
+    case superScript, subScript
 }
 
 struct SpeechBubbleLineGenerator {
 
-    static let emphasis = Character("*")
+    private static let emphasis = Character("*")
+    private static let sub = Character("_")
+    private static let superScript = Character("^")
 
     static func makeLine(_ str: String) -> SpeechBubbleLine {
         var segments = [SpeechBubbleLineSegment]()
         var builder: String = ""
         var buildingEmphasis: Bool = false
+        var scriptType: ScriptType? = nil
 
         func addIfNonEmpty() {
             if (!builder.isEmpty) {
-                segments.append(SpeechBubbleLineSegment(content: builder, emphasised: buildingEmphasis))
+                segments.append(SpeechBubbleLineSegment(content: builder, emphasised: buildingEmphasis, scriptType: scriptType))
             }
         }
 
         for char in str {
+            let charScript = charToScript(char)
             if (char == emphasis) {
                 addIfNonEmpty()
                 builder = ""
                 buildingEmphasis.toggle()
+            } else if (charScript != nil) {
+                addIfNonEmpty()
+                builder = ""
+                scriptType = scriptType == nil ? charScript : nil
             } else {
                 builder.append(char)
             }
         }
         addIfNonEmpty()
         return SpeechBubbleLine(content: segments)
+    }
+
+    private static func charToScript(_ c: Character) -> ScriptType? {
+        if (c == sub) {
+            return .subScript
+        } else if (c == superScript) {
+            return .superScript
+        }
+        return nil
     }
 }
