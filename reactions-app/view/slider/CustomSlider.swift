@@ -83,8 +83,9 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                 x: handleXPosition(geometry, calculations: axis),
                 y: handleYPosition(geometry, calculations: axis)
             )
+            .contentShape(Rectangle())
             .gesture(
-                DragGesture()
+                DragGesture(minimumDistance: 0)
                     .onChanged { gesture in
                         let inputValue = orientation == .portrait ? gesture.location.y : gesture.location.x
                         var newValue = axis.getValue(at: Value(inputValue))
