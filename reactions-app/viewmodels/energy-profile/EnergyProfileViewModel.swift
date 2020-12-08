@@ -18,6 +18,7 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var catalystInProgress: Catalyst?
     @Published var emitCatalyst = false
     @Published var catalystIsShaking = false
+    @Published var canSelectCatalyst = false
 
     var activationEnergy: CGFloat {
         let reduction = selectedCatalyst?.energyReduction ?? 0
@@ -47,7 +48,6 @@ class EnergyProfileViewModel: ObservableObject {
 
     }
 
-    // TODO - just make this reset the state
     func back() {
         if (catalystInProgress == nil) {
             if let goToPrevious = goToPreviousScreen {
@@ -58,7 +58,7 @@ class EnergyProfileViewModel: ObservableObject {
                 catalystIsShaking = false
                 catalystInProgress = nil
             }
-
+            canSelectCatalyst = false
             dispatchId = UUID()
             emitCatalyst = false
             selectedCatalyst = nil
@@ -106,8 +106,21 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func setCatalystInProgress(catalyst: Catalyst) -> Void {
-        withAnimation(.easeOut(duration: 0.75)) {
+        let duration = 0.75
+        withAnimation(.easeOut(duration: duration)) {
             catalystInProgress = catalyst
+        }
+
+        let id = UUID()
+        dispatchId = id
+        // Allow selecting catalyst a little before the animation ends
+        let dispatchDelay = Int(duration * 750)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(dispatchDelay)) {
+            guard self.dispatchId == id else {
+                return
+            }
+            self.canSelectCatalyst = true
         }
     }
 

@@ -115,7 +115,8 @@ struct EnergyProfileScreen: View {
                 updateConcentrationC: model.setConcentrationC,
                 allowReactionsToC: model.allowReactionsToC,
                 catalystIsShaking: model.catalystIsShaking,
-                canReactToC: model.canReactToC
+                canReactToC: model.canReactToC,
+                canSelectCatalyst: model.canSelectCatalyst
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .padding(.leading, settings.beakerLeadingPadding)
