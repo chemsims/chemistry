@@ -90,14 +90,14 @@ fileprivate struct FirstOrderRateFilled: View {
                 HStack(spacing: 5) {
                     lnA {
                         A_0()
-                    }
+                    }.frame(width: 89)
                     FixedText("-")
                     lnA {
                         A_t()
-                    }
+                    }.frame(width: 89)
                 }
                 Rectangle()
-                    .frame(width: 180, height: 2)
+                    .frame(width: 200, height: 2)
                 Text("t")
                     .fixedSize()
 
@@ -152,6 +152,7 @@ fileprivate struct FirstOrderHalftimeFilled: View {
             FixedText("=")
             HStack(spacing: 12) {
                 FixedText("ln(2)")
+                    .frame(width: 63)
                 FixedText("/")
                 Text("k")
                     .frame(width: EquationSettings.boxWidth)
@@ -171,8 +172,7 @@ fileprivate struct FirstOrderHalftimeBlank: View {
             Placeholder(value: halftime, emphasise: emphasise)
             FixedText("=")
             HStack(spacing: 12) {
-                Text("0.69")
-                    .fixedSize()
+                FixedText("0.69")
                 FixedText("/")
                 Placeholder(value: rate, emphasise: emphasise)
             }
