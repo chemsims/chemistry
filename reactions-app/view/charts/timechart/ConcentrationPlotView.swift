@@ -154,25 +154,25 @@ struct ChartPlotWithHead: View {
         ZStack {
             line(time: finalTime, color: filledBarColor)
             line(time: currentTime, color: headColor)
-            Group {
-                if (haloColor != nil) {
-                    head(
-                        radius: settings.chartHeadPrimaryHaloSize,
-                        color: haloColor!
-                    ).gesture(DragGesture().onChanged { gesture in
-                        guard canSetCurrentTime else {
-                            return
-                        }
-                        let xLocation = gesture.location.x
-                        let newTime = settings.xAxis.getValue(at: xLocation)
-                        currentTime = max(initialTime, min(finalTime, newTime))
-                    })
-                }
+            if (haloColor != nil) {
                 head(
-                    radius: headRadius,
-                    color: headColor
+                    radius: settings.chartHeadPrimaryHaloSize,
+                    color: haloColor!
                 )
+                .contentShape(Rectangle())
+                .gesture(DragGesture(minimumDistance: 0).onChanged { gesture in
+                    guard canSetCurrentTime else {
+                        return
+                    }
+                    let xLocation = gesture.location.x
+                    let newTime = settings.xAxis.getValue(at: xLocation)
+                    currentTime = max(initialTime, min(finalTime, newTime))
+                })
             }
+            head(
+                radius: headRadius,
+                color: headColor
+            )
         }
     }
 
