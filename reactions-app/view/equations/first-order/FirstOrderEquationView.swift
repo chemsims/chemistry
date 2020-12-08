@@ -16,13 +16,10 @@ struct FirstOrderEquationView: View {
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
-    private let naturalWidth: CGFloat = 314
-    private let naturalHeight: CGFloat = 283
-
     var body: some View {
         ScaledView(
-            naturalWidth: naturalWidth,
-            naturalHeight: naturalHeight,
+            naturalWidth: EquationSizes.width,
+            naturalHeight: EquationSizes.height,
             maxWidth: maxWidth,
             maxHeight: maxHeight
         ) {
@@ -180,10 +177,12 @@ fileprivate struct FirstOrderHalftimeBlank: View {
     }
 }
 
-struct FirstOrderEquationView2_Preview: PreviewProvider {
+fileprivate struct EquationSizes {
+    static let width: CGFloat = 314
+    static let height: CGFloat = 283
+}
 
-    static let w: CGFloat = 250
-    static let h: CGFloat = 100
+struct FirstOrderEquationView2_Preview: PreviewProvider {
 
     static var previews: some View {
         UnscaledFirstOrderReactionEquationView(
@@ -195,6 +194,6 @@ struct FirstOrderEquationView2_Preview: PreviewProvider {
             halfTime: 1
         )
         .border(Color.red)
-        .previewLayout(.fixed(width: 600, height: 600))
+        .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))
     }
 }
