@@ -28,7 +28,7 @@ class RootNavigationViewModel: ObservableObject {
     ) {
         self.view = AnyView(EmptyView())
         self.persistence = persistence
-        goToFirstOrder()
+        goToSecondOrder()
     }
 
     private func goToZeroOrder() {
