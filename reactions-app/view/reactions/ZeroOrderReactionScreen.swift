@@ -56,21 +56,17 @@ struct ZeroOrderReactionScreen: View {
                 reactionHasStarted: reaction.reactionHasStarted,
                 initialConcentration: reaction.initialConcentration,
                 initialTime: reaction.initialTime,
-                rate: reaction.concentrationEquationA?.rateConstant,
                 deltaC: reaction.deltaC,
                 deltaT: reaction.deltaT,
                 c2: reaction.finalConcentration,
                 t2: reaction.finalTime,
-                halfLife: reaction.concentrationEquationA?.halfLife,
-                a0: reaction.concentrationEquationA?.a0,
                 rateColorMultipy: colorMultiply(for: .rateEquation),
                 halfLifeColorMultiply: colorMultiply(for: .halfLifeEquation),
                 maxWidth: availableWidth,
                 maxHeight: height,
                 isShowingTooltip: $isShowingTooltip,
                 currentTime: reaction.currentTime,
-                concentration: reaction.concentrationEquationA,
-                rateConstant: reaction.concentrationEquationA?.rateConstant
+                concentration: reaction.concentrationEquationA
             )
             .padding(.vertical, equationVerticalPadding)
             .padding(.horizontal, equationHorizontalPadding(settings: settings))

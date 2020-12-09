@@ -11,13 +11,10 @@ struct ZeroOrderEquationView: View {
     let reactionHasStarted: Bool
     let initialConcentration: CGFloat
     let initialTime: CGFloat
-    let rate: CGFloat?
     let deltaC: CGFloat?
     let deltaT: CGFloat?
     let c2: CGFloat?
     let t2: CGFloat?
-    let halfLife: CGFloat?
-    let a0: CGFloat?
     let rateColorMultipy: Color
     let halfLifeColorMultiply: Color
 
@@ -27,8 +24,7 @@ struct ZeroOrderEquationView: View {
     @Binding var isShowingTooltip: Bool
 
     let currentTime: CGFloat?
-    let concentration: Equation?
-    let rateConstant: CGFloat?
+    let concentration: ConcentrationEquation?
 
     private let naturalWidth: CGFloat = EquationSizes.width
     private let naturalHeight: CGFloat = EquationSizes.height
@@ -45,19 +41,15 @@ struct ZeroOrderEquationView: View {
                 reactionHasStarted: reactionHasStarted,
                 initialConcentration: initialConcentration,
                 initialTime: initialTime,
-                rate: rate,
                 deltaC: deltaC,
                 deltaT: deltaT,
                 c2: c2,
                 t2: t2,
-                halfLife: halfLife,
-                a0: a0,
                 isShowingTooltip: $isShowingTooltip,
                 rateColorMultipy: rateColorMultipy,
                 halfLifeColorMultiply: halfLifeColorMultiply,
                 currentTime: currentTime,
-                concentration: concentration,
-                rateConstant: rateConstant
+                concentration: concentration
             )
             .frame(width: maxWidth, height: maxHeight)
         }
@@ -70,33 +62,29 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
     let reactionHasStarted: Bool
     let initialConcentration: CGFloat
     let initialTime: CGFloat
-    let rate: CGFloat?
     let deltaC: CGFloat?
     let deltaT: CGFloat?
     let c2: CGFloat?
     let t2: CGFloat?
-    let halfLife: CGFloat?
-    let a0: CGFloat?
     @Binding var isShowingTooltip: Bool
     let rateColorMultipy: Color
     let halfLifeColorMultiply: Color
 
     let currentTime: CGFloat?
-    let concentration: Equation?
-    let rateConstant: CGFloat?
+    let concentration: ConcentrationEquation?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 4) {
-                FilledRateView()
-                EmptyRateView(
+                FilledRateConstant()
+                EmptyRateConstant(
                     deltaC: deltaC?.str(decimals: 2),
                     deltaT: deltaT?.str(decimals: 2),
                     c1: initialConcentration.str(decimals: 2),
                     c2: c2?.str(decimals: 2),
                     t1: initialTime.str(decimals: 2),
                     t2: t2?.str(decimals: 2),
-                    rate: rate?.str(decimals: 2),
+                    rate: concentration?.rateConstant.str(decimals: 2),
                     emphasise: emphasise
                 )
             }
@@ -108,9 +96,9 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                     isShowingToolip: $isShowingTooltip
                 )
                 BlankHalfLife(
-                    a0: a0?.str(decimals: 2),
-                    halfLife: halfLife?.str(decimals: 2),
-                    rate: rate?.str(decimals: 2),
+                    a0: concentration?.a0.str(decimals: 2),
+                    halfLife: concentration?.halfLife.str(decimals: 2),
+                    rate: concentration?.rateConstant.str(decimals: 2),
                     emphasise: emphasise
                 )
             }
@@ -118,13 +106,13 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
             .colorMultiply(halfLifeColorMultiply)
 
             HStack(spacing: 52) {
-                BlankSecondRate()
-                FilledSecondRate(
+                BlankRate()
+                FilledRate(
                     reactionHasStarted: reactionHasStarted,
                     currentTime: currentTime,
                     concentration: concentration,
-                    rateConstant: rateConstant?.str(decimals: 2),
-                    rate: rate?.str(decimals: 2),
+                    rateConstant: concentration?.rateConstant.str(decimals: 2),
+                    rate: concentration?.rateConstant.str(decimals: 2),
                     emphasise: emphasise
                 )
             }
@@ -137,7 +125,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
     }
 }
 
-fileprivate struct FilledRateView: View {
+fileprivate struct FilledRateConstant: View {
     var body: some View {
         HStack(spacing: EquationSettings.hSpacing) {
             Rate()
@@ -192,7 +180,7 @@ fileprivate struct FilledRateView: View {
     }
 }
 
-fileprivate struct EmptyRateView: View {
+fileprivate struct EmptyRateConstant: View {
 
     let deltaC: String?
     let deltaT: String?
@@ -324,7 +312,7 @@ fileprivate struct BlankHalfLife: View {
     }
 }
 
-fileprivate struct BlankSecondRate: View {
+fileprivate struct BlankRate: View {
 
     var body: some View {
         HStack(spacing: 4) {
@@ -342,7 +330,7 @@ fileprivate struct BlankSecondRate: View {
 
 }
 
-fileprivate struct FilledSecondRate: View {
+fileprivate struct FilledRate: View {
 
     let reactionHasStarted: Bool
     let currentTime: CGFloat?
@@ -406,19 +394,15 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             reactionHasStarted: false,
             initialConcentration: 0.1,
             initialTime: 1,
-            rate: 1.2,
             deltaC: nil,
             deltaT: nil,
             c2: nil,
             t2: nil,
-            halfLife: nil,
-            a0: 0.9,
             isShowingTooltip: .constant(true),
             rateColorMultipy: .white,
             halfLifeColorMultiply: .white,
             currentTime: nil,
-            concentration: ZeroOrderReaction(a0: 1, rateConstant: 0.1),
-            rateConstant: 0.1
+            concentration: ZeroOrderReaction(a0: 1, rateConstant: 0.1)
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))
