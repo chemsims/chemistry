@@ -10,6 +10,8 @@ struct EquationSettings {
     static let boxHeight: CGFloat = 50
     static let boxWidth: CGFloat = 70
 
+    static let boxPadding: CGFloat = 10
+
 
     static let fontSize: CGFloat = 30
     static let subscriptFontSize: CGFloat = 22

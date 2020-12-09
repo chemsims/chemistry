@@ -40,11 +40,9 @@ fileprivate struct PlaceholderFraming: ViewModifier {
 }
 
 struct Box: View {
-    let size: CGFloat = 35
-
     var body: some View {
         EquationPlaceholderView()
-            .padding(10)
+            .padding(EquationSettings.boxPadding)
     }
 }
 

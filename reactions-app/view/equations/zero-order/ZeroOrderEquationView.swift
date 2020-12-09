@@ -111,8 +111,6 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                     reactionHasStarted: reactionHasStarted,
                     currentTime: currentTime,
                     concentration: concentration,
-                    rateConstant: concentration?.rateConstant.str(decimals: 2),
-                    rate: concentration?.rateConstant.str(decimals: 2),
                     emphasise: emphasise
                 )
             }

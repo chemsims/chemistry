@@ -11,8 +11,9 @@ struct FirstOrderEquationView: View {
     let c1: CGFloat
     let c2: CGFloat?
     let t: CGFloat?
-    let rate: CGFloat?
-    let halfLife: CGFloat?
+    let currentTime: CGFloat?
+    let concentration: ConcentrationEquation?
+    let reactionHasStarted: Bool
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
@@ -28,8 +29,9 @@ struct FirstOrderEquationView: View {
                 c1: c1,
                 c2: c2,
                 t: t,
-                rate: rate,
-                halfLife: halfLife
+                currentTime: currentTime,
+                concentration: concentration,
+                reactionHasStarted: reactionHasStarted
             ).frame(width: maxWidth, height: maxHeight)
         }
     }
@@ -41,16 +43,17 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
     let c1: CGFloat
     let c2: CGFloat?
     let t: CGFloat?
-    let rate: CGFloat?
-    let halfLife: CGFloat?
+    let currentTime: CGFloat?
+    let concentration: ConcentrationEquation?
+    let reactionHasStarted: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 30) {
             VStack(alignment: .leading, spacing: 0) {
                 FirstOrderRateFilled()
                 FirstOrderRateBlank(
                     emphasise: emphasise,
-                    rate: rate?.str(decimals: 2),
+                    rate: concentration?.rateConstant.str(decimals: 2),
                     lnA0: lnStr(c1),
                     lnAt: c2.map(lnStr),
                     t: t?.str(decimals: 2)
@@ -61,8 +64,18 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
                 FirstOrderHalfLimeFilled()
                 FirstOrderHalfLifeBlank(
                     emphasise: emphasise,
-                    halfLife: halfLife?.str(decimals: 2),
-                    rate: rate?.str(decimals: 2)
+                    halfLife: concentration?.halfLife.str(decimals: 2),
+                    rate: concentration?.rateConstant.str(decimals: 2)
+                )
+            }
+
+            VStack(alignment: .leading, spacing: 0) {
+                BlankRate(order: 1)
+                FilledRate(
+                    reactionHasStarted: reactionHasStarted,
+                    currentTime: currentTime,
+                    concentration: concentration,
+                    emphasise: emphasise
                 )
             }
         }
@@ -178,8 +191,8 @@ fileprivate struct FirstOrderHalfLifeBlank: View {
 }
 
 fileprivate struct EquationSizes {
-    static let width: CGFloat = 314
-    static let height: CGFloat = 283
+    static let width: CGFloat = 320
+    static let height: CGFloat = 420
 }
 
 struct FirstOrderEquationView2_Preview: PreviewProvider {
@@ -190,8 +203,9 @@ struct FirstOrderEquationView2_Preview: PreviewProvider {
             c1: 1,
             c2: 2,
             t: 1,
-            rate: 1,
-            halfLife: 1
+            currentTime: nil,
+            concentration: FirstOrderConcentration(c1: 1, c2: 0.1, time: 10),
+            reactionHasStarted: false 
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))
