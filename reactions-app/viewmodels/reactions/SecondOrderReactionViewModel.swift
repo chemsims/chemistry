@@ -10,8 +10,8 @@ class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
     override var concentrationEquationA: ConcentrationEquation {
         if let rate = rate {
             return SecondOrderConcentration(
-                initialConcentration: initialConcentration,
-                rate: rate
+                a0: initialConcentration,
+                rateConstant: rate
             )
         }
         return ConstantConcentration(value: initialConcentration)
@@ -41,7 +41,7 @@ class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
         return nil
     }
 
-    var inverseAEquation: ConcentrationEquation {
+    var inverseAEquation: Equation {
         InverseEquation(underlying: concentrationEquationA)
     }
 

@@ -10,8 +10,8 @@ class FirstOrderReactionViewModel: ZeroOrderReactionViewModel {
     override var concentrationEquationA: ConcentrationEquation {
         if let rate = rate {
             return FirstOrderConcentration(
-                initialConcentration: initialConcentration,
-                rate: rate
+                a0: initialConcentration,
+                rateConstant: rate
             )
         }
         return ConstantConcentration(value: initialConcentration)

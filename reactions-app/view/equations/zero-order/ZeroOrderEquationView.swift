@@ -417,7 +417,7 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             rateColorMultipy: .white,
             halfLifeColorMultiply: .white,
             currentTime: nil,
-            concentration: ZeroOrderReaction(a0: 1, rate: 0.1),
+            concentration: ZeroOrderReaction(a0: 1, rateConstant: 0.1),
             rateConstant: 0.1
         )
         .border(Color.red)

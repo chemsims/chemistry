@@ -180,7 +180,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                         time: reaction.currentTime0,
                         concentration: reaction.zeroOrder,
                         rate: reaction.zeroOrderRate,
-                        k: reaction.zeroOrder.rate.str(decimals: 2),
+                        k: reaction.zeroOrder.rateConstant.str(decimals: 2),
                         a0: a0,
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
@@ -194,7 +194,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                         time: reaction.currentTime1,
                         concentration: reaction.firstOrder,
                         rate: reaction.firstOrderRate,
-                        k: reaction.firstOrder.rate.str(decimals: 2),
+                        k: reaction.firstOrder.rateConstant.str(decimals: 2),
                         a0: a0,
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height
@@ -208,7 +208,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                         time: reaction.currentTime2,
                         concentration: reaction.secondOrder,
                         rate: reaction.secondOrderRate,
-                        k: reaction.secondOrder.rate.str(decimals: 2),
+                        k: reaction.secondOrder.rateConstant.str(decimals: 2),
                         a0: a0,
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height

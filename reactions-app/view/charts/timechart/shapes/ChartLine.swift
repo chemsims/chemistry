@@ -87,11 +87,6 @@ struct TimeChartPlot_Previews: PreviewProvider {
         ViewStateWrapper()
     }
 
-    struct DummyEquation: ConcentrationEquation {
-        func getConcentration(at time: CGFloat) -> CGFloat {
-            return time
-        }
-    }
 
     struct ViewStateWrapper: View {
         @State var t2: CGFloat = 0
@@ -100,7 +95,7 @@ struct TimeChartPlot_Previews: PreviewProvider {
             VStack {
                 ZStack {
                     ChartLine(
-                        equation: DummyEquation(),
+                        equation: IdentityEquation(),
                         yAxis: yAxis,
                         xAxis: xAxis,
                         startX: 0,
@@ -109,7 +104,7 @@ struct TimeChartPlot_Previews: PreviewProvider {
 
                     ChartIndicatorHead(
                         radius: 10,
-                        equation: DummyEquation(),
+                        equation: IdentityEquation(),
                         yAxis: yAxis,
                         xAxis: xAxis,
                         x: t2

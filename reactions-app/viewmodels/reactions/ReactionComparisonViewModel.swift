@@ -61,7 +61,7 @@ class ReactionComparisonViewModel: ObservableObject {
             t2: zeroOrderInput.t2,
             c2: zeroOrderInput.c2
         )
-        return ZeroOrderReaction(a0: 1, rate: rate)
+        return ZeroOrderReaction(a0: 1, rateConstant: rate)
     }
 
     var firstOrder: FirstOrderConcentration {
@@ -70,7 +70,7 @@ class ReactionComparisonViewModel: ObservableObject {
             c2: firstOrderInput.c2,
             time: firstOrderInput.t2 - firstOrderInput.t1
         )
-        return FirstOrderConcentration(initialConcentration: 1, rate: rate)
+        return FirstOrderConcentration(a0: 1, rateConstant: rate)
     }
 
     var secondOrder: SecondOrderConcentration {
@@ -79,19 +79,19 @@ class ReactionComparisonViewModel: ObservableObject {
             c2: secondOrderInput.c2,
             time: secondOrderInput.t2 - secondOrderInput.t1
         )
-        return SecondOrderConcentration(initialConcentration: 1, rate: rate)
+        return SecondOrderConcentration(a0: 1, rateConstant: rate)
     }
 
     var zeroOrderRate: Equation {
-        RateEquation(k: zeroOrder.rate, concentration: zeroOrder, power: 0)
+        RateEquation(k: zeroOrder.rateConstant, concentration: zeroOrder, power: 0)
     }
 
     var firstOrderRate: Equation {
-        RateEquation(k: firstOrder.rate, concentration: firstOrder, power: 1)
+        RateEquation(k: firstOrder.rateConstant, concentration: firstOrder, power: 1)
     }
 
     var secondOrderRate: Equation {
-        RateEquation(k: secondOrder.rate, concentration: secondOrder, power: 2)
+        RateEquation(k: secondOrder.rateConstant, concentration: secondOrder, power: 2)
     }
 
     var zeroOrderB: Equation {
