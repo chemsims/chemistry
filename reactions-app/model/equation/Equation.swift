@@ -48,3 +48,14 @@ struct LogEquation: Equation {
         return log(value)
     }
 }
+
+struct RateEquation: Equation {
+    let concentration: ConcentrationEquation
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let k = concentration.rateConstant
+        let order = CGFloat(concentration.order)
+        let value = concentration.getConcentration(at: x)
+        return k * pow(value, order)
+    }
+}

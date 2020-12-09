@@ -28,6 +28,10 @@ extension ConcentrationEquation {
     func getRate(at time: CGFloat) -> CGFloat {
         rateConstant * pow(a0, CGFloat(order))
     }
+
+    var rateEquation: Equation {
+        RateEquation(concentration: self)
+    }
 }
 
 /// Linear concentration which is c1 at t1, and c2 at t2.

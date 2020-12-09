@@ -179,7 +179,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     ReactionComparisonZeroOrderEquation(
                         time: reaction.currentTime0,
                         concentration: reaction.zeroOrder,
-                        rate: reaction.zeroOrderRate,
+                        rate: reaction.zeroOrder.rateEquation,
                         k: reaction.zeroOrder.rateConstant.str(decimals: 2),
                         a0: a0,
                         maxWidth: geometry.size.width,
@@ -193,7 +193,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     ReactionComparisonFirstOrderEquation(
                         time: reaction.currentTime1,
                         concentration: reaction.firstOrder,
-                        rate: reaction.firstOrderRate,
+                        rate: reaction.firstOrder.rateEquation,
                         k: reaction.firstOrder.rateConstant.str(decimals: 2),
                         a0: a0,
                         maxWidth: geometry.size.width,
@@ -207,7 +207,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     ReactionComparisonSecondOrderEquation(
                         time: reaction.currentTime2,
                         concentration: reaction.secondOrder,
-                        rate: reaction.secondOrderRate,
+                        rate: reaction.secondOrder.rateEquation,
                         k: reaction.secondOrder.rateConstant.str(decimals: 2),
                         a0: a0,
                         maxWidth: geometry.size.width,
