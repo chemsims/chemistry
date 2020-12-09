@@ -10,9 +10,9 @@ struct SecondOrderEquationView: View {
     let emphasiseFilledTerms: Bool
     let c1: CGFloat
     let c2: CGFloat?
-    let rate: CGFloat?
+    let k: CGFloat?
     let t: CGFloat?
-    let halfTime: CGFloat?
+    let halfLife: CGFloat?
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
@@ -27,9 +27,9 @@ struct SecondOrderEquationView: View {
                 emphasise: emphasiseFilledTerms,
                 c1: c1,
                 c2: c2,
-                rate: rate,
+                k: k,
                 t: t,
-                halfTime: halfTime
+                halfLife: halfLife
             )
         }
         .frame(width: maxWidth, height: maxHeight)
@@ -41,25 +41,25 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
     let emphasise: Bool
     let c1: CGFloat
     let c2: CGFloat?
-    let rate: CGFloat?
+    let k: CGFloat?
     let t: CGFloat?
-    let halfTime: CGFloat?
+    let halfLife: CGFloat?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             SecondOrderRateFilled()
             SecondOrderRateBlank(
                 emphasise: emphasise,
-                rate: rate?.str(decimals: 2),
+                rate: k?.str(decimals: 2),
                 invA0: invStr(c1),
                 invAt: c2.map(invStr),
                 time: t?.str(decimals: 2)
             )
-            SecondOrderHalftimeFilled()
-            SecondOrderHalftimeBlank(
+            SecondOrderHalfLifeFilled()
+            SecondOrderHalfLifeBlank(
                 emphasise: emphasise,
-                halfTime: halfTime?.str(decimals: 2),
-                rate: rate?.str(decimals: 2),
+                halfLife: halfLife?.str(decimals: 2),
+                rate: k?.str(decimals: 2),
                 a0: c1.str(decimals: 2)
             )
         }
@@ -143,10 +143,10 @@ fileprivate struct SecondOrderRateBlank: View {
     }
 }
 
-fileprivate struct SecondOrderHalftimeFilled: View {
+fileprivate struct SecondOrderHalfLifeFilled: View {
     var body: some View {
         HStack(spacing: 5) {
-            HalfTime()
+            HalfLife()
                 .frame(width: EquationSettings.boxWidth)
             FixedText("=")
             FixedText("1")
@@ -158,16 +158,16 @@ fileprivate struct SecondOrderHalftimeFilled: View {
     }
 }
 
-fileprivate struct SecondOrderHalftimeBlank: View {
+fileprivate struct SecondOrderHalfLifeBlank: View {
 
     let emphasise: Bool
-    let halfTime: String?
+    let halfLife: String?
     let rate: String?
     let a0: String
 
     var body: some View {
         HStack(spacing: 5) {
-            Placeholder(value: halfTime, emphasise: emphasise)
+            Placeholder(value: halfLife, emphasise: emphasise)
 
             FixedText("=")
 
@@ -199,9 +199,9 @@ struct SecondOrderEquationView2_Previews: PreviewProvider {
             emphasise: true,
             c1: 1.23,
             c2: 0.34,
-            rate: 1.45,
+            k: 1.45,
             t: 1.4,
-            halfTime: 2.34
+            halfLife: 2.34
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSize.width, height: EquationSize.height))

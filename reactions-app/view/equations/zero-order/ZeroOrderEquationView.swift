@@ -16,7 +16,7 @@ struct ZeroOrderEquationView: View {
     let deltaT: CGFloat?
     let c2: CGFloat?
     let t2: CGFloat?
-    let halfTime: CGFloat?
+    let halfLife: CGFloat?
     let a0: CGFloat?
     let rateColorMultipy: Color
     let halfLifeColorMultiply: Color
@@ -50,7 +50,7 @@ struct ZeroOrderEquationView: View {
                 deltaT: deltaT,
                 c2: c2,
                 t2: t2,
-                halfTime: halfTime,
+                halfLife: halfLife,
                 a0: a0,
                 isShowingTooltip: $isShowingTooltip,
                 rateColorMultipy: rateColorMultipy,
@@ -75,7 +75,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
     let deltaT: CGFloat?
     let c2: CGFloat?
     let t2: CGFloat?
-    let halfTime: CGFloat?
+    let halfLife: CGFloat?
     let a0: CGFloat?
     @Binding var isShowingTooltip: Bool
     let rateColorMultipy: Color
@@ -104,12 +104,12 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
             .colorMultiply(rateColorMultipy)
 
             HStack(spacing: 22) {
-                FilledHalftime(
+                FilledHalfLife(
                     isShowingToolip: $isShowingTooltip
                 )
-                BlankHalftime(
+                BlankHalfLife(
                     a0: a0?.str(decimals: 2),
-                    halftime: halfTime?.str(decimals: 2),
+                    halfLife: halfLife?.str(decimals: 2),
                     rate: rate?.str(decimals: 2),
                     emphasise: emphasise
                 )
@@ -254,13 +254,13 @@ fileprivate struct EmptyRateView: View {
     }
 }
 
-fileprivate struct FilledHalftime: View {
+fileprivate struct FilledHalfLife: View {
 
     @Binding var isShowingToolip: Bool
 
     var body: some View {
         HStack(spacing: 4) {
-            HalfTime()
+            HalfLife()
             FixedText("=")
             A0WithTooltip(
                 isShowingTooltip: $isShowingToolip,
@@ -301,16 +301,16 @@ fileprivate struct A0WithTooltip: View {
     }
 }
 
-fileprivate struct BlankHalftime: View {
+fileprivate struct BlankHalfLife: View {
 
     let a0: String?
-    let halftime: String?
+    let halfLife: String?
     let rate: String?
     let emphasise: Bool
 
     var body: some View {
         HStack(spacing: 4) {
-            Placeholder(value: halftime, emphasise: emphasise)
+            Placeholder(value: halfLife, emphasise: emphasise)
             FixedText("=")
             Placeholder(value: a0, emphasise: emphasise)
             FixedText("/")
@@ -411,7 +411,7 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             deltaT: nil,
             c2: nil,
             t2: nil,
-            halfTime: nil,
+            halfLife: nil,
             a0: 0.9,
             isShowingTooltip: .constant(true),
             rateColorMultipy: .white,

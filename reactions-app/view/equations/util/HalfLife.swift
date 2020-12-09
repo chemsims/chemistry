@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct HalfTime: View {
+struct HalfLife: View {
     var body: some View {
         HStack(spacing: 0) {
             Text("t")
@@ -19,8 +19,8 @@ struct HalfTime: View {
     }
 }
 
-struct Halftime_Previews: PreviewProvider {
+struct HalfLife_Previews: PreviewProvider {
     static var previews: some View {
-        HalfTime()
+        HalfLife()
     }
 }

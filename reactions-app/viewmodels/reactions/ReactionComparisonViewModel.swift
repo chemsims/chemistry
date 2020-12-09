@@ -55,31 +55,31 @@ class ReactionComparisonViewModel: ObservableObject {
     }
 
     var zeroOrder: ZeroOrderReaction {
-        let rate = ZeroOrderReaction.getRate(
+        let k = ZeroOrderReaction.getRate(
             t1: zeroOrderInput.t1,
             c1: zeroOrderInput.c1,
             t2: zeroOrderInput.t2,
             c2: zeroOrderInput.c2
         )
-        return ZeroOrderReaction(a0: 1, rateConstant: rate)
+        return ZeroOrderReaction(a0: 1, rateConstant: k)
     }
 
     var firstOrder: FirstOrderConcentration {
-        let rate = FirstOrderConcentration.getRate(
+        let k = FirstOrderConcentration.getRate(
             c1: firstOrderInput.c1,
             c2: firstOrderInput.c2,
             time: firstOrderInput.t2 - firstOrderInput.t1
         )
-        return FirstOrderConcentration(a0: 1, rateConstant: rate)
+        return FirstOrderConcentration(a0: 1, rateConstant: k)
     }
 
     var secondOrder: SecondOrderConcentration {
-        let rate = SecondOrderConcentration.getRate(
+        let k = SecondOrderConcentration.getRate(
             c1: secondOrderInput.c1,
             c2: secondOrderInput.c2,
             time: secondOrderInput.t2 - secondOrderInput.t1
         )
-        return SecondOrderConcentration(a0: 1, rateConstant: rate)
+        return SecondOrderConcentration(a0: 1, rateConstant: k)
     }
 
     var zeroOrderRate: Equation {

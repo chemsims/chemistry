@@ -71,7 +71,7 @@ struct FirstOrderReactionScreen: View {
             c2: reaction.finalConcentration,
             t: reaction.finalTime,
             rate: reaction.concentrationEquationA?.rateConstant,
-            halfTime: reaction.concentrationEquationA?.halfLife,
+            halfLife: reaction.concentrationEquationA?.halfLife,
             maxWidth: equationWidth(settings: settings),
             maxHeight: availableHeight(settings: settings)
         )

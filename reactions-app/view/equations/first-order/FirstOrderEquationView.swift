@@ -12,7 +12,7 @@ struct FirstOrderEquationView: View {
     let c2: CGFloat?
     let t: CGFloat?
     let rate: CGFloat?
-    let halfTime: CGFloat?
+    let halfLife: CGFloat?
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
@@ -29,7 +29,7 @@ struct FirstOrderEquationView: View {
                 c2: c2,
                 t: t,
                 rate: rate,
-                halfTime: halfTime
+                halfLife: halfLife
             ).frame(width: maxWidth, height: maxHeight)
         }
     }
@@ -42,7 +42,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
     let c2: CGFloat?
     let t: CGFloat?
     let rate: CGFloat?
-    let halfTime: CGFloat?
+    let halfLife: CGFloat?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -58,10 +58,10 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
             }
 
             VStack(alignment: .leading, spacing: 0) {
-                FirstOrderHalftimeFilled()
-                FirstOrderHalftimeBlank(
+                FirstOrderHalfLimeFilled()
+                FirstOrderHalfLifeBlank(
                     emphasise: emphasise,
-                    halftime: halfTime?.str(decimals: 2),
+                    halfLife: halfLife?.str(decimals: 2),
                     rate: rate?.str(decimals: 2)
                 )
             }
@@ -141,10 +141,10 @@ fileprivate struct FirstOrderRateBlank: View {
     }
 }
 
-fileprivate struct FirstOrderHalftimeFilled: View {
+fileprivate struct FirstOrderHalfLimeFilled: View {
     var body: some View {
         HStack(spacing: 12) {
-            HalfTime()
+            HalfLife()
                 .frame(width: EquationSettings.boxWidth)
             FixedText("=")
             HStack(spacing: 12) {
@@ -158,15 +158,15 @@ fileprivate struct FirstOrderHalftimeFilled: View {
     }
 }
 
-fileprivate struct FirstOrderHalftimeBlank: View {
+fileprivate struct FirstOrderHalfLifeBlank: View {
 
     let emphasise: Bool
-    let halftime: String?
+    let halfLife: String?
     let rate: String?
 
     var body: some View {
         HStack(spacing: 12) {
-            Placeholder(value: halftime, emphasise: emphasise)
+            Placeholder(value: halfLife, emphasise: emphasise)
             FixedText("=")
             HStack(spacing: 12) {
                 FixedText("0.69")
@@ -191,7 +191,7 @@ struct FirstOrderEquationView2_Preview: PreviewProvider {
             c2: 2,
             t: 1,
             rate: 1,
-            halfTime: 1
+            halfLife: 1
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))
