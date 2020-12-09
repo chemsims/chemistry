@@ -8,12 +8,12 @@ import SwiftUI
 struct FilledBeaker: View {
 
     let moleculesA: [GridCoordinate]
-    let concentrationB: Equation
+    let concentrationB: Equation?
     let currentTime: CGFloat?
     let outlineColor: Color
     init(
         moleculesA: [GridCoordinate],
-        concentrationB: Equation,
+        concentrationB: Equation?,
         currentTime: CGFloat?,
         outlineColor: Color = Styling.beakerOutline
     ) {
@@ -91,12 +91,12 @@ struct FilledBeaker: View {
                 coordinates: moleculesA
             )
 
-            if (currentTime != nil) {
+            if (currentTime != nil && concentrationB != nil) {
                 AnimatingMoleculeGrid(
                     settings: settings,
                     coords: moleculesA,
                     color: Styling.moleculeB,
-                    fractionOfCoordsToDraw: concentrationB,
+                    fractionOfCoordsToDraw: concentrationB!,
                     currentTime: currentTime!
                 )
                 .frame(height: settings.height)

@@ -58,7 +58,9 @@ fileprivate class ExplainRateConstant1: ReactionState {
 
 fileprivate class ExplainRateConstant2: ReactionState {
     override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        FirstOrderStatements.explainRateConstant2(rate: model.rateConstant ?? 0)
+        FirstOrderStatements.explainRateConstant2(
+            rate: model.concentrationEquationA?.rateConstant ?? 0
+        )
     }
 }
 

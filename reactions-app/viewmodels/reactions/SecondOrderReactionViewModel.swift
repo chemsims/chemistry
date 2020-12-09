@@ -7,21 +7,22 @@ import CoreGraphics
 
 class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
 
-    override var concentrationEquationA: ConcentrationEquation {
-        if let rate = rate {
-            return SecondOrderConcentration(
+    override var concentrationEquationA: ConcentrationEquation? {
+        rate.map {
+            SecondOrderConcentration(
                 a0: initialConcentration,
-                rateConstant: rate
+                rateConstant: $0
             )
         }
-        return ConstantConcentration(value: initialConcentration)
     }
 
-    override var concentrationEquationB: Equation {
-        ConcentrationBEquation(
-            concentrationA: concentrationEquationA,
-            initialAConcentration: initialConcentration
-        )
+    override var concentrationEquationB: Equation? {
+        concentrationEquationA.map {
+            ConcentrationBEquation(
+                concentrationA: $0,
+                initialAConcentration: initialConcentration
+            )
+        }
     }
 
     override var rate: CGFloat? {
@@ -41,8 +42,7 @@ class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
         return nil
     }
 
-    var inverseAEquation: Equation {
-        InverseEquation(underlying: concentrationEquationA)
+    var inverseAEquation: Equation? {
+        concentrationEquationA.map { InverseEquation(underlying: $0) }
     }
-
 }

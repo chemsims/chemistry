@@ -13,8 +13,8 @@ struct ConcentrationTimeChartView: View {
     @Binding var finalTime: CGFloat?
 
     let settings: TimeChartGeometrySettings
-    let concentrationA: Equation
-    let concentrationB: Equation
+    let concentrationA: Equation?
+    let concentrationB: Equation?
     @Binding var currentTime: CGFloat?
     let canSetInitialTime: Bool
     let canSetCurrentTime: Bool
@@ -44,7 +44,7 @@ struct SingleConcentrationPlot: View {
     let finalConcentration: CGFloat?
     let finalTime: CGFloat?
     let settings: TimeChartGeometrySettings
-    let concentrationA: Equation
+    let concentrationA: Equation?
     @Binding var currentTime: CGFloat?
     let yLabel: String
     let canSetCurrentTime: Bool
@@ -77,7 +77,7 @@ struct GeneralTimeChartView: View {
     @Binding var finalTime: CGFloat?
 
     let settings: TimeChartGeometrySettings
-    let concentrationA: Equation
+    let concentrationA: Equation?
     let concentrationB: Equation?
     @Binding var currentTime: CGFloat?
     let canSetInitialTime: Bool
@@ -98,8 +98,13 @@ struct GeneralTimeChartView: View {
                 VStack {
                     if (currentTime == nil) {
                         chartWithIndicator
-                    } else if (finalTime != nil && finalConcentration != nil) {
+                    } else if (
+                        finalTime != nil &&
+                            finalConcentration != nil &&
+                            concentrationA != nil
+                    ) {
                         chartWithData(
+                            concentrationA: concentrationA!,
                             currentTime: unsafeCurrentTimeBinding,
                             finalTime: finalTime!,
                             finalConcentration: finalConcentration!
@@ -197,11 +202,11 @@ struct GeneralTimeChartView: View {
     }
 
     private func animatingValue(
-        equation: Equation,
+        equation: Equation?,
         defaultValue: CGFloat,
         decimals: Int
     ) -> some View {
-        if (currentTime == nil) {
+        if (currentTime == nil || equation == nil) {
             return AnyView(
                 Text(defaultValue.str(decimals: decimals)).minimumScaleFactor(0.5)
             )
@@ -210,7 +215,7 @@ struct GeneralTimeChartView: View {
         return AnyView(
             AnimatingNumber(
                 x: currentTime!,
-                equation: equation,
+                equation: equation!,
                 formatter: { $0.str(decimals: decimals)},
                 alignment: .leading
             ).minimumScaleFactor(0.5)
@@ -218,6 +223,7 @@ struct GeneralTimeChartView: View {
     }
 
     private func chartWithData(
+        concentrationA: Equation,
         currentTime: Binding<CGFloat>,
         finalTime: CGFloat,
         finalConcentration: CGFloat

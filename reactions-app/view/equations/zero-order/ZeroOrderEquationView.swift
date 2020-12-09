@@ -27,7 +27,7 @@ struct ZeroOrderEquationView: View {
     @Binding var isShowingTooltip: Bool
 
     let currentTime: CGFloat?
-    let concentration: Equation
+    let concentration: Equation?
     let rateConstant: CGFloat?
 
     private let naturalWidth: CGFloat = EquationSizes.width
@@ -82,7 +82,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
     let halfLifeColorMultiply: Color
 
     let currentTime: CGFloat?
-    let concentration: Equation
+    let concentration: Equation?
     let rateConstant: CGFloat?
 
     var body: some View {
@@ -346,7 +346,7 @@ fileprivate struct FilledSecondRate: View {
 
     let reactionHasStarted: Bool
     let currentTime: CGFloat?
-    let concentration: Equation
+    let concentration: Equation?
     let rateConstant: String?
     let rate: String?
     let emphasise: Bool
@@ -369,11 +369,11 @@ fileprivate struct FilledSecondRate: View {
     }
 
     private var num: some View {
-        if (currentTime == nil) {
+        if (currentTime == nil || concentration == nil) {
             return AnyView(Placeholder(value: nil))
         }
         return AnyView(
-            AnimatingNumber(x: currentTime!, equation: concentration, formatter: { d in
+            AnimatingNumber(x: currentTime!, equation: concentration!, formatter: { d in
                 d.str(decimals: 2)
             }, alignment: .leading)
             .frame(width: EquationSettings.boxWidth)

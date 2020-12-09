@@ -71,7 +71,9 @@ fileprivate class SetFinalValuesToNonNil: ReactionState {
 fileprivate class ExplainRateState: ReactionState {
 
     override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        ZeroOrderStatements.rateExplainer(k: model.rateConstant ?? 0)
+        ZeroOrderStatements.rateExplainer(
+            k: model.concentrationEquationA?.rateConstant ?? 0
+        )
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {

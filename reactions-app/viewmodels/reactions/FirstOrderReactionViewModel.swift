@@ -7,18 +7,17 @@ import SwiftUI
 
 class FirstOrderReactionViewModel: ZeroOrderReactionViewModel {
 
-    override var concentrationEquationA: ConcentrationEquation {
-        if let rate = rate {
-            return FirstOrderConcentration(
-                a0: initialConcentration,
-                rateConstant: rate
-            )
+    override var concentrationEquationA: ConcentrationEquation? {
+        rate.map {
+            FirstOrderConcentration(
+               a0: initialConcentration,
+               rateConstant: $0
+           )
         }
-        return ConstantConcentration(value: initialConcentration)
     }
 
-    var logAEquation: Equation {
-        LogEquation(underlying: concentrationEquationA)
+    var logAEquation: Equation? {
+        concentrationEquationA.map { LogEquation(underlying: $0) }
     }
 
     override var rate: CGFloat? {
@@ -36,9 +35,6 @@ class FirstOrderReactionViewModel: ZeroOrderReactionViewModel {
     }
 
     override var halfTime: CGFloat? {
-        if let rate = rate {
-            return log(2) / rate
-        }
-        return nil
+        rate.map { log(2) / $0 }
     }
 }

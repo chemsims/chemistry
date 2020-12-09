@@ -9,8 +9,8 @@ struct ConcentrationBarChart: View {
 
     let initialA: CGFloat
     let initialTime: CGFloat
-    let concentrationA: Equation
-    let concentrationB: Equation
+    let concentrationA: Equation?
+    let concentrationB: Equation?
 
     let currentTime: CGFloat?
 
@@ -43,9 +43,9 @@ struct ConcentrationBarChart: View {
                 barCenterX: settings.barACenterX
             ).foregroundColor(currentTime == nil ? Styling.moleculeA : Styling.barChartEmpty)
 
-            if (currentTime != nil) {
+            if (currentTime != nil && concentrationA != nil) {
                 drawBar(
-                    concentration: concentrationA,
+                    concentration: concentrationA!,
                     currentTime: currentTime!,
                     barCenterX: settings.barACenterX
                 ).foregroundColor(Styling.moleculeA)
@@ -62,9 +62,9 @@ struct ConcentrationBarChart: View {
                     barCenterX: settings.barBCenterX
                 )
             }
-            if (currentTime != nil) {
+            if (currentTime != nil && concentrationB != nil) {
                 drawBar(
-                    concentration: concentrationB,
+                    concentration: concentrationB!,
                     currentTime: currentTime!,
                     barCenterX: settings.barBCenterX
                 )

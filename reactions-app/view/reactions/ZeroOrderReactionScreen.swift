@@ -70,7 +70,7 @@ struct ZeroOrderReactionScreen: View {
                 isShowingTooltip: $isShowingTooltip,
                 currentTime: reaction.currentTime,
                 concentration: reaction.concentrationEquationA,
-                rateConstant: reaction.rateConstant
+                rateConstant: reaction.concentrationEquationA?.rateConstant
             )
             .padding(.vertical, equationVerticalPadding)
             .padding(.horizontal, equationHorizontalPadding(settings: settings))

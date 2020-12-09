@@ -27,7 +27,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     @Published var highlightedElements = [OrderedReactionScreenHighlightingElements]()
 
-    var concentrationEquationA: ConcentrationEquation {
+    var concentrationEquationA: ConcentrationEquation? {
         if let t2 = finalTime, let c2 = finalConcentration {
             return ZeroOrderReaction(
                 t1: initialTime,
@@ -36,21 +36,16 @@ class ZeroOrderReactionViewModel: ObservableObject {
                 c2: c2
             )
         }
-        return ConstantConcentration(value: initialConcentration)
-    }
-
-    var rateConstant: CGFloat? {
-        if finalTime != nil, finalConcentration != nil {
-            return concentrationEquationA.rateConstant
-        }
         return nil
     }
 
-    var concentrationEquationB: Equation {
-        return ConcentrationBEquation(
-            concentrationA: concentrationEquationA,
-            initialAConcentration: initialConcentration
-        )
+    var concentrationEquationB: Equation? {
+        concentrationEquationA.map {
+            ConcentrationBEquation(
+                concentrationA: $0,
+                initialAConcentration: initialConcentration
+            )
+        }
     }
 
     var moleculesA = [GridCoordinate]()
@@ -77,10 +72,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
     }
 
     var a0: CGFloat? {
-        if rate != nil {
-            return concentrationEquationA.getConcentration(at: 0)
-        }
-        return nil
+        concentrationEquationA?.getConcentration(at: 0)
     }
 
     var halfTime: CGFloat? {
