@@ -12,26 +12,26 @@ struct ChartLine: Shape {
     let yAxis: AxisPositionCalculations<CGFloat>
     let xAxis: AxisPositionCalculations<CGFloat>
 
-    let initialTime: CGFloat
-    var finalTime: CGFloat
+    let startX: CGFloat
+    var endX: CGFloat
 
     private let maxWidthSteps = 100
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
 
-        let dx = rect.width / CGFloat(maxWidthSteps)
-        let dt = xAxis.getValue(at: dx) - xAxis.getValue(at: 0)
+        let dxPos = rect.width / CGFloat(maxWidthSteps)
+        let dx = xAxis.getValue(at: dxPos) - xAxis.getValue(at: 0)
 
         var didStart = false
-        for t in stride(from: initialTime, to: finalTime, by: dt) {
-            let concentration = equation.getY(at: t)
-            let x = xAxis.getPosition(at: t)
-            let y = yAxis.getPosition(at: concentration)
+        for x in stride(from: startX, to: endX, by: dx) {
+            let y = equation.getY(at: x)
+            let xPosition = xAxis.getPosition(at: x)
+            let yPosition = yAxis.getPosition(at: y)
             if (didStart) {
-                path.addLine(to: CGPoint(x: x, y: y))
+                path.addLine(to: CGPoint(x: xPosition, y: yPosition))
             } else {
-                path.move(to: CGPoint(x: x, y: y))
+                path.move(to: CGPoint(x: xPosition, y: yPosition))
                 didStart = true
             }
         }
@@ -40,8 +40,8 @@ struct ChartLine: Shape {
     }
 
     var animatableData: CGFloat {
-        get { finalTime }
-        set { finalTime = newValue }
+        get { endX }
+        set { endX = newValue }
     }
 
 }
@@ -103,8 +103,8 @@ struct TimeChartPlot_Previews: PreviewProvider {
                         equation: DummyEquation(),
                         yAxis: yAxis,
                         xAxis: xAxis,
-                        initialTime: 0,
-                        finalTime: t2
+                        startX: 0,
+                        endX: t2
                     ).stroke(lineWidth: 2)
 
                     ChartIndicatorHead(

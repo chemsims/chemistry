@@ -8,8 +8,8 @@ import SwiftUI
 struct ConcentrationPlotView: View {
 
     let settings: TimeChartGeometrySettings
-    let concentrationA: ConcentrationEquation
-    let concentrationB: ConcentrationEquation?
+    let concentrationA: Equation
+    let concentrationB: Equation?
 
     let initialConcentration: CGFloat
     let finalConcentration: CGFloat
@@ -23,8 +23,8 @@ struct ConcentrationPlotView: View {
 
     init(
         settings: TimeChartGeometrySettings,
-        concentrationA: ConcentrationEquation,
-        concentrationB: ConcentrationEquation?,
+        concentrationA: Equation,
+        concentrationB: Equation?,
         initialConcentration: CGFloat,
         finalConcentration: CGFloat,
         initialTime: CGFloat,
@@ -53,8 +53,8 @@ struct ConcentrationPlotView: View {
             if (includeAxis) {
                 verticalIndicator(at: initialTime)
                 verticalIndicator(at: finalTime)
-                horizontalIndicator(at: concentrationA.getConcentration(at: initialTime))
-                horizontalIndicator(at: concentrationA.getConcentration(at: finalTime))
+                horizontalIndicator(at: concentrationA.getY(at: initialTime))
+                horizontalIndicator(at: concentrationA.getY(at: finalTime))
             }
 
             if (includeAxis) {
@@ -139,7 +139,7 @@ struct ConcentrationPlotView: View {
 struct ChartPlotWithHead: View {
 
     let settings: TimeChartGeometrySettings
-    let equation: ConcentrationEquation
+    let equation: Equation
     let initialTime: CGFloat
     @Binding var currentTime: CGFloat
     let finalTime: CGFloat
@@ -180,12 +180,12 @@ struct ChartPlotWithHead: View {
         radius: CGFloat,
         color: Color
     ) -> some View {
-        ConcentrationEquationHead(
+        ChartIndicatorHead(
             radius: radius,
             equation: equation,
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
-            time: currentTime
+            x: currentTime
         )
         .fill()
         .foregroundColor(color)
@@ -195,12 +195,12 @@ struct ChartPlotWithHead: View {
         time: CGFloat,
         color: Color
     ) -> some View {
-        ConcentrationEquationShape(
+        ChartLine(
             equation: equation,
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
-            initialTime: initialTime,
-            finalTime: time
+            startX: initialTime,
+            endX: time
         )
         .stroke(lineWidth: settings.timePlotLineWidth)
         .foregroundColor(color)

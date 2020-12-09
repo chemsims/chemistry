@@ -29,12 +29,12 @@ struct EnergyProfileRateChart: View {
     private var chart: some View  {
         ZStack {
             if (equation != nil) {
-                ConcentrationEquationShape(
+                ChartLine(
                     equation: equation!,
                     yAxis: settings.yAxis,
                     xAxis: settings.xAxis,
-                    initialTime: 1 / 600,
-                    finalTime: 1 / 400
+                    startX: 1 / 600,
+                    endX: 1 / 400
                 )
                 .stroke()
                 .foregroundColor(.orangeAccent)

@@ -13,8 +13,8 @@ struct ConcentrationTimeChartView: View {
     @Binding var finalTime: CGFloat?
 
     let settings: TimeChartGeometrySettings
-    let concentrationA: ConcentrationEquation
-    let concentrationB: ConcentrationEquation
+    let concentrationA: Equation
+    let concentrationB: Equation
     @Binding var currentTime: CGFloat?
     let canSetInitialTime: Bool
     let canSetCurrentTime: Bool
@@ -44,7 +44,7 @@ struct SingleConcentrationPlot: View {
     let finalConcentration: CGFloat?
     let finalTime: CGFloat?
     let settings: TimeChartGeometrySettings
-    let concentrationA: ConcentrationEquation
+    let concentrationA: Equation
     @Binding var currentTime: CGFloat?
     let yLabel: String
     let canSetCurrentTime: Bool
@@ -77,8 +77,8 @@ struct GeneralTimeChartView: View {
     @Binding var finalTime: CGFloat?
 
     let settings: TimeChartGeometrySettings
-    let concentrationA: ConcentrationEquation
-    let concentrationB: ConcentrationEquation?
+    let concentrationA: Equation
+    let concentrationB: Equation?
     @Binding var currentTime: CGFloat?
     let canSetInitialTime: Bool
     let includeSliders: Bool
