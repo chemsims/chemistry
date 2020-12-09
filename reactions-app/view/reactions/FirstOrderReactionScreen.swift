@@ -62,6 +62,7 @@ struct FirstOrderReactionScreen: View {
             yLabel: "ln(A)",
             canSetCurrentTime: reaction.reactionHasEnded
         )
+        .colorMultiply(reaction.color(for: .secondaryChart))
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
@@ -73,6 +74,8 @@ struct FirstOrderReactionScreen: View {
             currentTime: reaction.currentTime,
             concentration: reaction.concentrationEquationA,
             reactionHasStarted: reaction.reactionHasStarted,
+            rateConstantColor: reaction.color(for: .rateEquation),
+            halfLifeColor: reaction.color(for: .halfLifeEquation),
             maxWidth: equationWidth(settings: settings),
             maxHeight: availableHeight(settings: settings)
         )

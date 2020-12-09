@@ -60,8 +60,8 @@ struct ZeroOrderReactionScreen: View {
                 deltaT: reaction.deltaT,
                 c2: reaction.finalConcentration,
                 t2: reaction.finalTime,
-                rateColorMultipy: colorMultiply(for: .rateEquation),
-                halfLifeColorMultiply: colorMultiply(for: .halfLifeEquation),
+                rateColorMultipy: reaction.color(for: .rateEquation),
+                halfLifeColorMultiply: reaction.color(for: .halfLifeEquation),
                 maxWidth: availableWidth,
                 maxHeight: height,
                 isShowingTooltip: $isShowingTooltip,
@@ -82,15 +82,6 @@ struct ZeroOrderReactionScreen: View {
         settings.chartSize * 0.1
     }
 
-    private func colorMultiply(for element: OrderedReactionScreenHighlightingElements?) -> Color {
-        if (reaction.highlightedElements.isEmpty) {
-            return .white
-        }
-        if let element = element, reaction.highlightedElements.contains(element) {
-            return .white
-        }
-        return Styling.inactiveScreenElement
-    }
 }
 
 struct ZeroOrderReaction_Previews: PreviewProvider {

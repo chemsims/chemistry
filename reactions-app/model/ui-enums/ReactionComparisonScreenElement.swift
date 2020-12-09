@@ -10,5 +10,5 @@ enum ReactionComparisonScreenElement {
 }
 
 enum OrderedReactionScreenHighlightingElements {
-    case rateEquation, halfLifeEquation, concentrationChart
+    case rateEquation, halfLifeEquation, concentrationChart, secondaryChart
 }

@@ -14,8 +14,11 @@ struct FirstOrderEquationView: View {
     let currentTime: CGFloat?
     let concentration: ConcentrationEquation?
     let reactionHasStarted: Bool
+    let rateConstantColor: Color
+    let halfLifeColor: Color
     let maxWidth: CGFloat
     let maxHeight: CGFloat
+
 
     var body: some View {
         ScaledView(
@@ -31,7 +34,9 @@ struct FirstOrderEquationView: View {
                 t: t,
                 currentTime: currentTime,
                 concentration: concentration,
-                reactionHasStarted: reactionHasStarted
+                reactionHasStarted: reactionHasStarted,
+                rateConstantColor: rateConstantColor,
+                halfLifeColor: halfLifeColor
             ).frame(width: maxWidth, height: maxHeight)
         }
     }
@@ -46,6 +51,8 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
     let currentTime: CGFloat?
     let concentration: ConcentrationEquation?
     let reactionHasStarted: Bool
+    let rateConstantColor: Color
+    let halfLifeColor: Color
 
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
@@ -59,6 +66,8 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
                     t: t?.str(decimals: 2)
                 )
             }
+            .background(Color.white)
+            .colorMultiply(rateConstantColor)
 
             VStack(alignment: .leading, spacing: 0) {
                 FirstOrderHalfLimeFilled()
@@ -68,6 +77,8 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
                     rate: concentration?.rateConstant.str(decimals: 2)
                 )
             }
+            .background(Color.white)
+            .colorMultiply(halfLifeColor)
 
             VStack(alignment: .leading, spacing: 0) {
                 BlankRate(order: 1)
@@ -205,7 +216,9 @@ struct FirstOrderEquationView2_Preview: PreviewProvider {
             t: 1,
             currentTime: nil,
             concentration: FirstOrderConcentration(c1: 1, c2: 0.1, time: 10),
-            reactionHasStarted: false 
+            reactionHasStarted: false,
+            rateConstantColor: .white,
+            halfLifeColor: .white
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))

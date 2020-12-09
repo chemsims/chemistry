@@ -18,16 +18,17 @@ struct FirstOrderReactionNavigation {
                 statement: ReactionStatements.inProgress,
                 order: .First,
                 persistence: persistence,
-                initialiseCurrentTime: true
+                initialiseCurrentTime: false
             ),
             EndAnimation(
                 statement: FirstOrderStatements.explainRatePostReaction1,
-                highlightChart: false
+                highlightChart: true
             ),
             ExplainRatePostReaction2(),
             ExplainRatePostReaction3(),
             ExplainIntegratedRateLaw1(),
-            ExplainIntegratedRateLaw2()
+            ExplainIntegratedRateLaw2(),
+            FinalState()
         ]
     }
 
@@ -49,10 +50,16 @@ fileprivate class ExplainRateConstant1: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.currentTime = model.initialTime
+        model.highlightedElements = [.rateEquation]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
         model.currentTime = nil
+        model.highlightedElements = []
     }
 }
 
@@ -75,6 +82,18 @@ fileprivate class ExplainHalflife: ReactionState {
         FirstOrderStatements.explainHalflife(
             halfLife: model.concentrationEquationA?.halfLife ?? 0
         )
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = [.halfLifeEquation]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = []
     }
 }
 
@@ -99,4 +118,16 @@ fileprivate class ExplainIntegratedRateLaw2: ReactionState {
     init() {
         super.init(statement: FirstOrderStatements.explainIntegratedRateLaw2)
     }
+}
+
+fileprivate class FinalState: ReactionState {
+
+    init() {
+        super.init(statement: FirstOrderStatements.end)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = []
+    }
+    
 }

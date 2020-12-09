@@ -41,6 +41,16 @@ class ZeroOrderReactionViewModel: ObservableObject {
         )
     }
 
+    func color(for element: OrderedReactionScreenHighlightingElements?) -> Color {
+        if (highlightedElements.isEmpty) {
+            return .white
+        }
+        if let element = element, highlightedElements.contains(element) {
+            return .white
+        }
+        return Styling.inactiveScreenElement
+    }
+
     var concentrationEquationA: ConcentrationEquation? {
         if let t2 = finalTime, let c2 = finalConcentration {
             return generateEquation(

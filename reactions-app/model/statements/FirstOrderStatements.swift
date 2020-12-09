@@ -104,9 +104,9 @@ struct FirstOrderStatements {
     ]
 
     static let end = [
-        SpeechBubbleLineGenerator.makeLine("Amazing!"),
-        SpeechBubbleLineGenerator.makeLine("Let's take a snapshot! Now, let's try another."),
-        SpeechBubbleLineGenerator.makeLine("*Choose a 2nd Order Reaction*."),
+        SpeechBubbleLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
+        SpeechBubbleLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time."),
+        SpeechBubbleLineGenerator.makeLine("Then, let's see take a look at another integrated rate law.")
     ]
 
     static let inProgress = ReactionStatements.inProgress

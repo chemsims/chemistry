@@ -142,11 +142,11 @@ class EndAnimation: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        if (highlightChart) {
+            model.highlightedElements = [.concentrationChart, .secondaryChart]
+        }
         // For the current time to 'sprint' to the end, it must animate to a value
         // which is not equal to the current value
-        if (highlightChart) {
-            model.highlightedElements = [.concentrationChart]
-        }
         withAnimation(.easeOut(duration: 0.5)) {
             if let finalTime = model.finalTime {
                 model.currentTime = finalTime * 1.00001
@@ -165,7 +165,7 @@ class EndAnimation: ReactionState {
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
         if (highlightChart) {
-            model.highlightedElements = [.concentrationChart]
+            model.highlightedElements = [.concentrationChart, .secondaryChart]
         }
     }
 }
