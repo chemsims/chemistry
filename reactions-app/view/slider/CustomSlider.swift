@@ -48,8 +48,6 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     }
 
     @State private var impactGenerator = UIImpactFeedbackGenerator(style: .light)
-    @State private var didPrepareImpact = false
-
     @State private var scaleFactor: CGFloat = 0
     @State private var scaleAnchor: UnitPoint = .center
 
