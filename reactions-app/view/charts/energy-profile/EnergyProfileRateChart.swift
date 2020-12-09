@@ -8,7 +8,7 @@ import SwiftUI
 struct EnergyProfileRateChart: View {
 
     let settings: EnergyRateChartSettings
-    let equation: ConcentrationEquation?
+    let equation: Equation?
     let currentTempInverse: CGFloat?
 
     var body: some View {
@@ -57,7 +57,7 @@ struct EnergyProfileRateChart: View {
                 }
                 .position(
                     x: settings.xAxis.getPosition(at: currentTempInverse!),
-                    y: settings.yAxis.getPosition(at: equation!.getConcentration(at: currentTempInverse!))
+                    y: settings.yAxis.getPosition(at: equation!.getY(at: currentTempInverse!))
                 )
             }
 

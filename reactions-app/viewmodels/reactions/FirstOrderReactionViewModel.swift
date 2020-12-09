@@ -17,7 +17,7 @@ class FirstOrderReactionViewModel: ZeroOrderReactionViewModel {
         return ConstantConcentration(value: initialConcentration)
     }
 
-    var logAEquation: ConcentrationEquation {
+    var logAEquation: Equation {
         LogEquation(underlying: concentrationEquationA)
     }
 

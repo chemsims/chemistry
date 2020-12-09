@@ -51,7 +51,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
         return nil
     }
 
-    var concentrationEquationB: ConcentrationEquation {
+    var concentrationEquationB: Equation {
         return ConcentrationBEquation(
             concentrationA: concentrationEquationA,
             initialAConcentration: initialConcentration

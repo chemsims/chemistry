@@ -94,21 +94,21 @@ class ReactionComparisonViewModel: ObservableObject {
         RateEquation(k: secondOrder.rate, concentration: secondOrder, power: 2)
     }
 
-    var zeroOrderB: ConcentrationEquation {
+    var zeroOrderB: Equation {
         concentrationB(concentrationA: zeroOrder)
     }
 
-    var firstOrderB: ConcentrationEquation {
+    var firstOrderB: Equation {
         concentrationB(concentrationA: firstOrder)
     }
 
-    var secondOrderB: ConcentrationEquation {
+    var secondOrderB: Equation {
         concentrationB(concentrationA: secondOrder)
     }
 
     private func concentrationB(
         concentrationA: ConcentrationEquation
-    ) -> ConcentrationEquation {
+    ) -> Equation {
         ConcentrationBEquation(concentrationA: concentrationA, initialAConcentration: 1)
     }
 

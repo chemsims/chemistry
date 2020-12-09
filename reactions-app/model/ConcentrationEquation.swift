@@ -38,6 +38,18 @@ struct ConstantEquation: Equation {
     }
 }
 
+struct LogEquation: Equation {
+    let underlying: ConcentrationEquation
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let value = underlying.getConcentration(at: x)
+        if (value == 0) {
+            return 0
+        }
+        return log(value)
+    }
+}
+
 protocol ConcentrationEquation: Equation {
     func getConcentration(at time: CGFloat) -> CGFloat
 }
@@ -46,17 +58,6 @@ extension ConcentrationEquation {
     func getY(at x: CGFloat) -> CGFloat {
         getConcentration(at: x)
     }
-}
-
-
-struct ConcentrationEquationWrapper: ConcentrationEquation {
-
-    let underlying: Equation
-
-    func getConcentration(at time: CGFloat) -> CGFloat {
-        underlying.getY(at: time)
-    }
-
 }
 
 /// Linear concentration which is c1 at t1, and c2 at t2.
@@ -138,26 +139,17 @@ struct FirstOrderConcentration: ConcentrationEquation {
     }
 }
 
-struct ConcentrationBEquation: ConcentrationEquation {
+struct ConcentrationBEquation: Equation {
     let concentrationA: ConcentrationEquation
     let initialAConcentration: CGFloat
 
-    func getConcentration(at time: CGFloat) -> CGFloat {
-        initialAConcentration - concentrationA.getConcentration(at: time)
+    func getY(at x: CGFloat) -> CGFloat {
+        initialAConcentration - concentrationA.getConcentration(at: x)
     }
+
 }
 
-struct LogEquation: ConcentrationEquation {
-    let underlying: ConcentrationEquation
 
-    func getConcentration(at time: CGFloat) -> CGFloat {
-        let value = underlying.getConcentration(at: time)
-        if (value == 0) {
-            return 0
-        }
-        return log(value)
-    }
-}
 
 struct SecondOrderConcentration: ConcentrationEquation {
 

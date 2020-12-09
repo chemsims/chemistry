@@ -8,7 +8,7 @@ import SwiftUI
 struct BarChartBarShape: Shape {
 
     let settings: BarChartGeometrySettings
-    let concentrationEquation: ConcentrationEquation
+    let concentrationEquation: Equation
     let barCenterX: CGFloat
     var currentTime: CGFloat
 
@@ -24,7 +24,7 @@ struct BarChartBarShape: Shape {
         let leftX = barCenterX - (settings.barWidth / 2)
         let bottomY = settings.chartWidth - settings.tickDy
 
-        let concentration = concentrationEquation.getConcentration(at: currentTime)
+        let concentration = concentrationEquation.getY(at: currentTime)
         let dc = settings.maxConcentration - settings.minConcentration
         let valuePercentage = concentration / dc
         let barHeight = (valuePercentage * maxBarHeight) + settings.barMinHeight

@@ -9,7 +9,7 @@ struct AnimatingMoleculeGrid: View {
     let settings: MoleculeGridSettings
     let coords: [GridCoordinate]
     let color: Color
-    let fractionOfCoordsToDraw: ConcentrationEquation
+    let fractionOfCoordsToDraw: Equation
     let currentTime: CGFloat
 
     var body: some View {
@@ -49,7 +49,7 @@ struct AnimatingMoleculeGridShape: Shape {
     /// The coordinates to draw
     let coords: [GridCoordinate]
 
-    let fractionOfCoordsToDraw: ConcentrationEquation
+    let fractionOfCoordsToDraw: Equation
 
     var currentTime: CGFloat
 
@@ -59,7 +59,7 @@ struct AnimatingMoleculeGridShape: Shape {
     }
 
     func path(in rect: CGRect) -> Path {
-        let fraction = fractionOfCoordsToDraw.getConcentration(at: currentTime)
+        let fraction = fractionOfCoordsToDraw.getY(at: currentTime)
         var coordsToDraw = Int(fraction * CGFloat(coords.count))
         if (coordsToDraw < 0) {
             coordsToDraw = 0

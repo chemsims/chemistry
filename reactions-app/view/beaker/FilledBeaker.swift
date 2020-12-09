@@ -8,12 +8,12 @@ import SwiftUI
 struct FilledBeaker: View {
 
     let moleculesA: [GridCoordinate]
-    let concentrationB: ConcentrationEquation
+    let concentrationB: Equation
     let currentTime: CGFloat?
     let outlineColor: Color
     init(
         moleculesA: [GridCoordinate],
-        concentrationB: ConcentrationEquation,
+        concentrationB: Equation,
         currentTime: CGFloat?,
         outlineColor: Color = Styling.beakerOutline
     ) {

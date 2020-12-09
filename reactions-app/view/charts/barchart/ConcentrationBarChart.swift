@@ -9,8 +9,8 @@ struct ConcentrationBarChart: View {
 
     let initialA: CGFloat
     let initialTime: CGFloat
-    let concentrationA: ConcentrationEquation
-    let concentrationB: ConcentrationEquation
+    let concentrationA: Equation
+    let concentrationB: Equation
 
     let currentTime: CGFloat?
 
@@ -73,7 +73,7 @@ struct ConcentrationBarChart: View {
     }
 
     private func drawBar(
-        concentration: ConcentrationEquation,
+        concentration: Equation,
         currentTime: CGFloat,
         barCenterX: CGFloat
     ) -> some View {

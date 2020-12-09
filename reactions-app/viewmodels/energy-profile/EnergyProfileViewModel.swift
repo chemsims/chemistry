@@ -82,11 +82,10 @@ class EnergyProfileViewModel: ObservableObject {
         temp2.map { getK(temp: $0) }
     }
 
-    var rateEquation: ConcentrationEquation? {
+    var rateEquation: Equation? {
         if selectedCatalyst != nil {
             let slope = -activationEnergy / .gasConstant
-            let equation = LinearEquation(m: slope, x1: 1 / temp1, y1: log(k1))
-            return ConcentrationEquationWrapper(underlying: equation)
+            return LinearEquation(m: slope, x1: 1 / temp1, y1: log(k1))
         }
         return nil
     }

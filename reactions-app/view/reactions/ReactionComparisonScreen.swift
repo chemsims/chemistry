@@ -298,7 +298,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         .frame(width: settings.beakerWidth)
     }
 
-    private func concentration(order: ReactionOrder) -> ConcentrationEquation {
+    private func concentration(order: ReactionOrder) -> Equation {
         switch (order) {
         case .Zero: return reaction.zeroOrderB
         case .First: return reaction.firstOrderB
@@ -316,8 +316,8 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
 
     private func labelledChart(
         chartSettings: TimeChartGeometrySettings,
-        concentrationA: ConcentrationEquation,
-        concentrationB: ConcentrationEquation,
+        concentrationA: Equation,
+        concentrationB: Equation,
         order: ReactionOrder,
         finalTime: CGFloat,
         currentTime: Binding<CGFloat>
@@ -349,8 +349,8 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
 
     private func chart(
         chartSettings: TimeChartGeometrySettings,
-        concentrationA: ConcentrationEquation,
-        concentrationB: ConcentrationEquation,
+        concentrationA: Equation,
+        concentrationB: Equation,
         order: ReactionOrder,
         finalTime: CGFloat,
         currentTime: Binding<CGFloat>

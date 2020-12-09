@@ -17,7 +17,7 @@ class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
         return ConstantConcentration(value: initialConcentration)
     }
 
-    override var concentrationEquationB: ConcentrationEquation {
+    override var concentrationEquationB: Equation {
         ConcentrationBEquation(
             concentrationA: concentrationEquationA,
             initialAConcentration: initialConcentration
