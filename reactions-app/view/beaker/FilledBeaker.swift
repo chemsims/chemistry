@@ -126,7 +126,7 @@ struct FilledBeaker_Previews: PreviewProvider {
                 GridCoordinate(col: 1, row: 1),
                 GridCoordinate(col: 2, row: 2)
             ],
-            concentrationB: ConstantConcentration(value: 0),
+            concentrationB: ConstantEquation(value: 0),
             currentTime: 0
         )
     }

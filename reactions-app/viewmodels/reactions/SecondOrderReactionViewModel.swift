@@ -7,39 +7,17 @@ import CoreGraphics
 
 class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
 
-    override var concentrationEquationA: ConcentrationEquation? {
-        rate.map {
-            SecondOrderConcentration(
-                a0: initialConcentration,
-                rateConstant: $0
-            )
-        }
-    }
-
-    override var concentrationEquationB: Equation? {
-        concentrationEquationA.map {
-            ConcentrationBEquation(
-                concentrationA: $0,
-                initialAConcentration: initialConcentration
-            )
-        }
-    }
-
-    override var rate: CGFloat? {
-        if let c2 = finalConcentration, let t2 = finalTime, initialConcentration != 0, c2 != 0 {
-            let roundedC2 = c2.rounded(decimals: 2)
-            let roundedC1 = initialConcentration.rounded(decimals: 2)
-            let roundedT = t2.rounded(decimals: 2)
-            return SecondOrderConcentration.getRate(c1: roundedC1, c2: roundedC2, time: roundedT)
-        }
-        return nil
-    }
-
-    override var halfTime: CGFloat? {
-        if let rate = rate {
-            return 1 / (rate * initialConcentration.rounded(decimals: 2))
-        }
-        return nil
+    override func generateEquation(
+        c1: CGFloat,
+        c2: CGFloat,
+        t1: CGFloat,
+        t2: CGFloat
+    ) -> ConcentrationEquation {
+        return SecondOrderConcentration(
+            c1: c1,
+            c2: c2,
+            time: t2
+        )
     }
 
     var inverseAEquation: Equation? {

@@ -94,7 +94,9 @@ fileprivate class ExplainRateState: ReactionState {
 
 fileprivate class ExplainHalflifeState: ReactionState {
     override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        ZeroOrderStatements.halfLifeExplainer(halfLife: model.halfTime ?? 0)
+        ZeroOrderStatements.halfLifeExplainer(
+            halfLife: model.concentrationEquationA?.halfLife ?? 0
+        )
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {

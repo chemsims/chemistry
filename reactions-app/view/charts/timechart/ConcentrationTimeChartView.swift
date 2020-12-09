@@ -318,8 +318,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             settings: TimeChartGeometrySettings(
                 chartSize: 300
             ),
-            concentrationA: ConstantConcentration(value: 1),
-            concentrationB: ConstantConcentration(value: 1),
+            concentrationA: ConstantEquation(value: 1),
+            concentrationB: ConstantEquation(value: 1),
             currentTime: .constant(nil),
             canSetInitialTime: true,
             canSetCurrentTime: true
@@ -334,7 +334,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                 settings: TimeChartGeometrySettings(
                     chartSize: 300
                 ),
-                concentrationA: ConstantConcentration(value: 1),
+                concentrationA: ConstantEquation(value: 1),
                 currentTime: .constant(nil),
                 yLabel: "foo",
                 canSetCurrentTime: true

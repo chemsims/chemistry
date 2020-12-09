@@ -69,9 +69,9 @@ struct SecondOrderReactionScreen: View {
             emphasiseFilledTerms: reaction.currentTime == nil,
             c1: reaction.initialConcentration,
             c2: reaction.finalConcentration,
-            rate: reaction.rate,
+            rate: reaction.concentrationEquationA?.rateConstant,
             t: reaction.finalTime,
-            halfTime: reaction.halfTime,
+            halfTime: reaction.concentrationEquationA?.halfLife,
             maxWidth: equationWidth(settings: settings),
             maxHeight: availableHeight(settings: settings)
         )

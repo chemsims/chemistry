@@ -38,7 +38,7 @@ struct ConcentrationBarChart: View {
     private var barA: some View {
         return ZStack {
             drawBar(
-                concentration: ConstantConcentration(value: initialA),
+                concentration: ConstantEquation(value: initialA),
                 currentTime: 0,
                 barCenterX: settings.barACenterX
             ).foregroundColor(currentTime == nil ? Styling.moleculeA : Styling.barChartEmpty)
@@ -57,7 +57,7 @@ struct ConcentrationBarChart: View {
         ZStack {
             if (currentTime == nil) {
                 drawBar(
-                    concentration: ConstantConcentration(value: 0),
+                    concentration: ConstantEquation(value: 0),
                     currentTime: 0,
                     barCenterX: settings.barBCenterX
                 )

@@ -27,13 +27,27 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     @Published var highlightedElements = [OrderedReactionScreenHighlightingElements]()
 
+    func generateEquation(
+        c1: CGFloat,
+        c2: CGFloat,
+        t1: CGFloat,
+        t2: CGFloat
+    ) -> ConcentrationEquation {
+        ZeroOrderReaction(
+            t1: initialTime,
+            c1: initialConcentration,
+            t2: t2,
+            c2: c2
+        )
+    }
+
     var concentrationEquationA: ConcentrationEquation? {
         if let t2 = finalTime, let c2 = finalConcentration {
-            return ZeroOrderReaction(
-                t1: initialTime,
-                c1: initialConcentration,
-                t2: t2,
-                c2: c2
+            return generateEquation(
+                c1: initialConcentration.rounded(decimals: 2),
+                c2: c2.rounded(decimals: 2),
+                t1: initialTime.rounded(decimals: 2),
+                t2: t2.rounded(decimals: 2)
             )
         }
         return nil
@@ -60,24 +74,6 @@ class ZeroOrderReactionViewModel: ObservableObject {
     var deltaT: CGFloat? {
         if let t2 = finalTime {
             return t2.rounded(decimals: 2) - initialTime.rounded(decimals: 2)
-        }
-        return nil
-    }
-
-    var rate: CGFloat? {
-        if let deltaC = deltaC, deltaC != 0, let deltaT = deltaT {
-            return -deltaC / deltaT
-        }
-        return nil
-    }
-
-    var a0: CGFloat? {
-        concentrationEquationA?.getConcentration(at: 0)
-    }
-
-    var halfTime: CGFloat? {
-        if let a0 = a0, let rate = rate, rate != 0 {
-            return a0 / (2 * rate)
         }
         return nil
     }
