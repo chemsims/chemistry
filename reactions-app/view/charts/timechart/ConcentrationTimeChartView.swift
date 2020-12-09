@@ -374,8 +374,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                 )
             }
         }
-        private var equation: LinearConcentration {
-            LinearConcentration(
+        private var equation: ConcentrationEquation {
+            ZeroOrderReaction(
                 t1: t1,
                 c1: c1,
                 t2: t2 ?? 0,
@@ -383,8 +383,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             )
         }
 
-        private var equation2: LinearConcentration {
-            LinearConcentration(
+        private var equation2: ConcentrationEquation {
+            ZeroOrderReaction(
                 t1: t1,
                 c1: c2 ?? 0,
                 t2: t2 ?? 0,

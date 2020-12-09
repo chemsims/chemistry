@@ -137,14 +137,14 @@ struct BarChartAxisShape_Previews: PreviewProvider {
         }
     }
 
-    private static var equation = LinearConcentration(
+    private static var equation = ZeroOrderReaction(
         t1: 1,
         c1: 1,
         t2: 2,
         c2: 0.2
     )
 
-    private static var equation2 = LinearConcentration(
+    private static var equation2 = ZeroOrderReaction(
         t1: 1,
         c1: 0.2,
         t2: 2,

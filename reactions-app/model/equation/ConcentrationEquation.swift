@@ -6,65 +6,29 @@
 import CoreGraphics
 import Darwin
 
-protocol Equation {
-    func getY(at x: CGFloat) -> CGFloat
-}
-
-struct LinearEquation: Equation {
-    let m: CGFloat
-    let c: CGFloat
-
-    init(m: CGFloat, x1: CGFloat, y1: CGFloat) {
-        self.m = m
-        self.c = y1 - (m * x1)
-    }
-
-    func getY(at x: CGFloat) -> CGFloat {
-        (m * x) + c
-    }
-}
-
-struct IdentityEquation: Equation {
-    func getY(at x: CGFloat) -> CGFloat {
-        x
-    }
-}
-
-struct ConstantEquation: Equation {
-    let value: CGFloat
-
-    func getY(at x: CGFloat) -> CGFloat {
-        value
-    }
-}
-
-struct LogEquation: Equation {
-    let underlying: ConcentrationEquation
-
-    func getY(at x: CGFloat) -> CGFloat {
-        let value = underlying.getConcentration(at: x)
-        if (value == 0) {
-            return 0
-        }
-        return log(value)
-    }
-}
-
 protocol ConcentrationEquation: Equation {
     func getConcentration(at time: CGFloat) -> CGFloat
+
+    var rateConstant: CGFloat { get }
 }
 
 extension ConcentrationEquation {
     func getY(at x: CGFloat) -> CGFloat {
         getConcentration(at: x)
     }
+
+    var rateConstant: CGFloat {
+        0
+    }
 }
 
 /// Linear concentration which is c1 at t1, and c2 at t2.
-struct LinearConcentration: ConcentrationEquation {
+struct ZeroOrderReaction: ConcentrationEquation {
 
     let a0: CGFloat
     let rate: CGFloat
+
+    let rateConstant: CGFloat = 0
 
     init(a0: CGFloat, rate: CGFloat) {
         self.a0 = a0
@@ -72,7 +36,7 @@ struct LinearConcentration: ConcentrationEquation {
     }
 
     init(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) {
-        self.rate = LinearConcentration.getRate(t1: t1, c1: c1, t2: t2, c2: c2)
+        self.rate = ZeroOrderReaction.getRate(t1: t1, c1: c1, t2: t2, c2: c2)
         let a0Numerator = (t1 * c2) - (t2 * c1)
         self.a0 = a0Numerator / (t1 - t2)
     }

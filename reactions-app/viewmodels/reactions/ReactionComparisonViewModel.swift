@@ -54,14 +54,14 @@ class ReactionComparisonViewModel: ObservableObject {
         secondOrder.time(for: 0.1)!
     }
 
-    var zeroOrder: LinearConcentration {
-        let eq = LinearConcentration(
+    var zeroOrder: ZeroOrderReaction {
+        let rate = ZeroOrderReaction.getRate(
             t1: zeroOrderInput.t1,
             c1: zeroOrderInput.c1,
             t2: zeroOrderInput.t2,
             c2: zeroOrderInput.c2
         )
-        return LinearConcentration(a0: 1, rate: eq.rate)
+        return ZeroOrderReaction(a0: 1, rate: rate)
     }
 
     var firstOrder: FirstOrderConcentration {

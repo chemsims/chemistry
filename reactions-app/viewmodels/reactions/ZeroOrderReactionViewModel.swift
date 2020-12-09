@@ -29,7 +29,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     var concentrationEquationA: ConcentrationEquation {
         if let t2 = finalTime, let c2 = finalConcentration {
-            return LinearConcentration(
+            return ZeroOrderReaction(
                 t1: initialTime,
                 c1: initialConcentration,
                 t2: t2,
@@ -40,13 +40,8 @@ class ZeroOrderReactionViewModel: ObservableObject {
     }
 
     var rateConstant: CGFloat? {
-        if let t2 = finalTime, let c2 = finalConcentration {
-            return LinearConcentration(
-                t1: initialTime,
-                c1: initialConcentration,
-                t2: t2,
-                c2: c2
-            ).rate
+        if finalTime != nil, finalConcentration != nil {
+            return concentrationEquationA.rateConstant
         }
         return nil
     }

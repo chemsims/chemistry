@@ -224,6 +224,6 @@ struct TimeChartPlotView_Previews: PreviewProvider {
         )
     }
 
-    static var equation = LinearConcentration(t1: 0, c1: 0.8, t2: 10, c2: 0.2)
-    static var equation2 = LinearConcentration(t1: 0, c1: 0.2, t2: 10, c2: 0.8)
+    static var equation = ZeroOrderReaction(t1: 0, c1: 0.8, t2: 10, c2: 0.2)
+    static var equation2 = ZeroOrderReaction(t1: 0, c1: 0.2, t2: 10, c2: 0.8)
 }
