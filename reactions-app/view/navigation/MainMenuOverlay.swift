@@ -50,11 +50,11 @@ struct MainMenuOverlay: View {
         HStack(alignment: .top) {
             VStack {
                 Spacer()
-                navIcon(image: "zeroordericon", action: {})
-                navIcon(image: "zeroordericon", action: {})
-                navIcon(image: "zeroordericon", action: {})
-                navIcon(image: "zeroordericon", action: {})
-                navIcon(image: "zeroordericon", action: {})
+                navIcon(image: "zeroordericon", action: navigation.goToZeroOrder)
+                navIcon(image: "firstordericon", action: navigation.goToFirstOrder)
+                navIcon(image: "secondordericon", action: navigation.goToSecondOrder)
+                navIcon(image: "comparisonicon", action: navigation.goToComparison)
+                navIcon(image: "kineticsicon", action: navigation.goToEnergyProfile)
             }
             .frame(width: 2 * size)
 
@@ -67,11 +67,13 @@ struct MainMenuOverlay: View {
         .background(RGB(r: 230, g: 230, b: 230).color)
     }
 
-    private func navIcon(image: String, action: () -> Void) -> some View {
-        Image(image)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .padding(0.2 * size)
+    private func navIcon(image: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(0.2 * size)
+        }
     }
 
     private func toggleMenu() {

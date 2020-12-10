@@ -31,7 +31,7 @@ class RootNavigationViewModel: ObservableObject {
         goToSecondOrder()
     }
 
-    private func goToZeroOrder() {
+    func goToZeroOrder() {
         let reaction = zeroOrderViewModel ?? ZeroOrderReactionViewModel()
         let navigation = zeroOrderNavigation ?? ZeroOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
         self.zeroOrderViewModel = reaction
@@ -40,7 +40,7 @@ class RootNavigationViewModel: ObservableObject {
         navigation.nextScreen = goToFirstOrder
     }
 
-    private func goToFirstOrder() {
+    func goToFirstOrder() {
         let reaction = firstOrderViewModel ?? FirstOrderReactionViewModel()
         let navigation = firstOrderNavigation ?? FirstOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
         self.firstOrderViewModel = reaction
@@ -50,7 +50,7 @@ class RootNavigationViewModel: ObservableObject {
         self.view = AnyView(FirstOrderReactionScreen(reaction: reaction, navigation: navigation))
     }
 
-    private func goToSecondOrder() {
+    func goToSecondOrder() {
         let reaction = secondOrderViewModel ?? SecondOrderReactionViewModel()
         let navigation = secondOrderNavigation ?? SecondOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
         self.secondOrderViewModel = reaction
@@ -65,7 +65,7 @@ class RootNavigationViewModel: ObservableObject {
         self.view = AnyView(SecondOrderReactionScreen(reaction: reaction, navigation: navigation))
     }
 
-    private func goToComparison() {
+    func goToComparison() {
         let reaction = comparisonViewModel ?? ReactionComparisonViewModel(persistence: persistence)
         let navigation = comparisonNavigation ?? ReactionComparisonNavigationViewModel.model(reaction: reaction)
         self.comparisonViewModel = reaction
@@ -75,7 +75,7 @@ class RootNavigationViewModel: ObservableObject {
         self.view = AnyView(ReactionComparisonScreen(navigation: navigation))
     }
 
-    private func goToEnergyProfile() {
+    func goToEnergyProfile() {
         let model = EnergyProfileViewModel()
         model.goToPreviousScreen = goToComparison
         let view = EnergyProfileScreen(model: model)
