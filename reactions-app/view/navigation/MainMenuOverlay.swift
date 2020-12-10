@@ -15,21 +15,15 @@ struct MainMenuOverlay: View {
     @State private var showPanel: Bool = false
 
     var body: some View {
-        ZStack(alignment: .leading) {
-            icon
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                icon
 
-            if (showPanel) {
-                panel
-                    .transition(
-                        .asymmetric(
-                            insertion: .move(edge: .leading),
-                            removal: .move(edge: .leading)
-                        )
-                    )
-                    .animation(.easeOut)
+                panel(height: geo.size.height)
+                    .offset(x: showPanel ? 0 : -totalMenuWidth)
             }
+            .edgesIgnoringSafeArea(.all)
         }
-        .edgesIgnoringSafeArea(.all)
     }
 
     private var icon: some View {
@@ -46,29 +40,69 @@ struct MainMenuOverlay: View {
         }
     }
 
-    private var panel: some View {
-        HStack(alignment: .top) {
-            VStack {
-                Spacer()
-                navIcon(image: "zeroordericon", action: navigation.goToZeroOrder)
-                navIcon(image: "firstordericon", action: navigation.goToFirstOrder)
-                navIcon(image: "secondordericon", action: navigation.goToSecondOrder)
-                navIcon(image: "comparisonicon", action: navigation.goToComparison)
-                navIcon(image: "kineticsicon", action: navigation.goToEnergyProfile)
-            }
-            .frame(width: 2 * size)
-
-            MenuButton(action: toggleMenu)
-                .frame(width: size, height: size)
-                .padding(.horizontal, leadingPadding)
+    private func panel(height: CGFloat) -> some View {
+        HStack(alignment: .top, spacing: 0) {
+            panel2(height: height)
+            grabHandle
         }
-        .padding(.top, topPadding)
-        .padding(.leading, leadingPadding)
-        .background(RGB(r: 230, g: 230, b: 230).color)
+        .background(panelBackground(height: height))
+        .compositingGroup()
+        .shadow(radius: 3)
+    }
+
+    private var grabHandle: some View {
+        Button(action: toggleMenu) {
+            VStack(spacing: 3) {
+                grabLine
+                grabLine
+                grabLine
+            }
+            .frame(width: size, height: size)
+            .padding(leadingPadding)
+            .foregroundColor(.black)
+        }
+    }
+
+    private var grabLine: some View {
+        Rectangle()
+            .frame(width: 0.6 * size, height: max(0.015 * size, 1))
+    }
+
+
+    private func panel2(height: CGFloat) -> some View {
+        VStack {
+            Spacer()
+                .frame(height: tabHeight / 2)
+            navIcon(image: "zeroordericon", action: navigation.goToZeroOrder)
+            navIcon(image: "firstordericon", action: navigation.goToFirstOrder)
+            navIcon(image: "secondordericon", action: navigation.goToSecondOrder)
+            navIcon(image: "comparisonicon", action: navigation.goToComparison)
+            navIcon(image: "kineticsicon", action: navigation.goToEnergyProfile)
+        }
+        .frame(width: panelWidth)
+    }
+
+    private func panelBackground(height: CGFloat) -> some View {
+        ZStack {
+            panelShape(height: height)
+                .fill()
+                .foregroundColor(Styling.menuPanel)
+
+            panelShape(height: height)
+                .stroke(lineWidth: 0.75)
+        }
+    }
+
+    private func panelShape(height: CGFloat) -> some Shape {
+        MainMenuPanel(
+            panelWidthFraction: panelWidth / totalMenuWidth,
+            panelHeightFraction: 1 - (tabHeight / height),
+            cornerRadius: 0.5 * size
+        )
     }
 
     private func navIcon(image: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
+        Button(action: goToScreen(action: action)) {
             Image(image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -76,10 +110,33 @@ struct MainMenuOverlay: View {
         }
     }
 
+    private func goToScreen(action: @escaping () -> Void) -> () -> Void {
+        {
+            action()
+            toggleMenu()
+        }
+    }
+
     private func toggleMenu() {
         withAnimation(.easeOut(duration: 0.25)) {
             showPanel.toggle()
         }
+    }
+
+    private var panelWidth: CGFloat {
+        2.2 * size
+    }
+
+    private var tabWidth: CGFloat {
+        size
+    }
+
+    private var totalMenuWidth: CGFloat {
+        panelWidth + tabWidth + (2 * leadingPadding)
+    }
+
+    private var tabHeight: CGFloat {
+        1.1 * (size + (2 * topPadding))
     }
 }
 

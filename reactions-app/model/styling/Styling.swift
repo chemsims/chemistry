@@ -55,6 +55,8 @@ struct Styling {
 
     static let inactiveScreenElement = RGB(r: 200, g: 200, b: 200).color
 
+    static let menuPanel = RGB(r: 242, g: 242, b: 242).color
+
 }
 
 
