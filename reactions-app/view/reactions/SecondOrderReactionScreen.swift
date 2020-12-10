@@ -59,9 +59,9 @@ struct SecondOrderReactionScreen: View {
             yLabel: "1/[A]",
             canSetCurrentTime: reaction.reactionHasEnded
         )
+        .colorMultiply(reaction.color(for: .secondaryChart))
         .padding(.top, settings.chartsTopPadding)
         .padding(.leading, settings.chartsTopPadding / 2)
-
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
@@ -69,11 +69,14 @@ struct SecondOrderReactionScreen: View {
             emphasiseFilledTerms: reaction.currentTime == nil,
             c1: reaction.initialConcentration,
             c2: reaction.finalConcentration,
-            k: reaction.concentrationEquationA?.rateConstant,
             t: reaction.finalTime,
-            halfLife: reaction.concentrationEquationA?.halfLife,
+            currentTime: reaction.currentTime,
+            concentration: reaction.concentrationEquationA,
+            reactionHasStarted: reaction.reactionHasStarted,
             maxWidth: equationWidth(settings: settings),
-            maxHeight: availableHeight(settings: settings)
+            maxHeight: availableHeight(settings: settings),
+            rateConstantColor: reaction.color(for: .rateEquation),
+            halfLifeColor: reaction.color(for: .halfLifeEquation)
         )
     }
 

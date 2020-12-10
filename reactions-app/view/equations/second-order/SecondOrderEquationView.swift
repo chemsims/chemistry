@@ -10,11 +10,14 @@ struct SecondOrderEquationView: View {
     let emphasiseFilledTerms: Bool
     let c1: CGFloat
     let c2: CGFloat?
-    let k: CGFloat?
     let t: CGFloat?
-    let halfLife: CGFloat?
+    let currentTime: CGFloat?
+    let concentration: ConcentrationEquation?
+    let reactionHasStarted: Bool
     let maxWidth: CGFloat
     let maxHeight: CGFloat
+    let rateConstantColor: Color
+    let halfLifeColor: Color
 
     var body: some View {
         ScaledView(
@@ -27,9 +30,12 @@ struct SecondOrderEquationView: View {
                 emphasise: emphasiseFilledTerms,
                 c1: c1,
                 c2: c2,
-                k: k,
                 t: t,
-                halfLife: halfLife
+                currentTime: currentTime,
+                concentration: concentration,
+                reactionHasStarted: reactionHasStarted,
+                rateConstantColor: rateConstantColor,
+                halfLifeColor: halfLifeColor
             )
         }
         .frame(width: maxWidth, height: maxHeight)
@@ -41,27 +47,49 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
     let emphasise: Bool
     let c1: CGFloat
     let c2: CGFloat?
-    let k: CGFloat?
     let t: CGFloat?
-    let halfLife: CGFloat?
+    let currentTime: CGFloat?
+    let concentration: ConcentrationEquation?
+    let reactionHasStarted: Bool
+    let rateConstantColor: Color
+    let halfLifeColor: Color
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            SecondOrderRateFilled()
-            SecondOrderRateBlank(
-                emphasise: emphasise,
-                rate: k?.str(decimals: 2),
-                invA0: invStr(c1),
-                invAt: c2.map(invStr),
-                time: t?.str(decimals: 2)
-            )
-            SecondOrderHalfLifeFilled()
-            SecondOrderHalfLifeBlank(
-                emphasise: emphasise,
-                halfLife: halfLife?.str(decimals: 2),
-                rate: k?.str(decimals: 2),
-                a0: c1.str(decimals: 2)
-            )
+        VStack(alignment: .leading, spacing: 30) {
+            VStack(spacing: 0) {
+                SecondOrderRateFilled()
+                SecondOrderRateBlank(
+                    emphasise: emphasise,
+                    rateConstant: concentration?.rateConstant.str(decimals: 2),
+                    invA0: invStr(c1),
+                    invAt: c2.map(invStr),
+                    time: t?.str(decimals: 2)
+                )
+            }
+            .background(Color.white)
+            .colorMultiply(rateConstantColor)
+
+            VStack(alignment: .leading, spacing: 0) {
+                SecondOrderHalfLifeFilled()
+                SecondOrderHalfLifeBlank(
+                    emphasise: emphasise,
+                    halfLife: concentration?.halfLife.str(decimals: 2),
+                    rateConstant: concentration?.rateConstant.str(decimals: 2),
+                    a0: c1.str(decimals: 2)
+                )
+            }
+            .background(Color.white)
+            .colorMultiply(halfLifeColor)
+
+            VStack(alignment: .leading, spacing: 0) {
+                BlankRate(order: 2)
+                FilledRate(
+                    reactionHasStarted: reactionHasStarted,
+                    currentTime: currentTime,
+                    concentration: concentration,
+                    emphasise: emphasise
+                )
+            }
         }
         .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
@@ -112,14 +140,14 @@ fileprivate struct SecondOrderRateFilled: View {
 fileprivate struct SecondOrderRateBlank: View {
 
     let emphasise: Bool
-    let rate: String?
+    let rateConstant: String?
     let invA0: String?
     let invAt: String?
     let time: String?
 
     var body: some View {
         HStack(spacing: 5) {
-            Placeholder(value: rate, emphasise: emphasise)
+            Placeholder(value: rateConstant, emphasise: emphasise)
 
             FixedText("=")
 
@@ -162,7 +190,7 @@ fileprivate struct SecondOrderHalfLifeBlank: View {
 
     let emphasise: Bool
     let halfLife: String?
-    let rate: String?
+    let rateConstant: String?
     let a0: String
 
     var body: some View {
@@ -175,12 +203,12 @@ fileprivate struct SecondOrderHalfLifeBlank: View {
 
             HStack(spacing: 1) {
                 FixedText("/")
-                Placeholder(value: rate, emphasise: emphasise)
+                Placeholder(value: rateConstant, emphasise: emphasise)
                 FixedText("(")
                 Text(a0)
                     .frame(width: EquationSettings.boxWidth * 0.8)
                     .minimumScaleFactor(0.5)
-                    .foregroundColor(rate == nil ? .orangeAccent : .black)
+                    .foregroundColor(rateConstant == nil ? .orangeAccent : .black)
                 FixedText(")")
             }
         }
@@ -189,9 +217,8 @@ fileprivate struct SecondOrderHalfLifeBlank: View {
 
 fileprivate struct EquationSize {
     static let width: CGFloat = 327
-    static let height: CGFloat = 312
+    static let height: CGFloat = 416
 }
-
 
 struct SecondOrderEquationView2_Previews: PreviewProvider {
     static var previews: some View {
@@ -199,9 +226,12 @@ struct SecondOrderEquationView2_Previews: PreviewProvider {
             emphasise: true,
             c1: 1.23,
             c2: 0.34,
-            k: 1.45,
             t: 1.4,
-            halfLife: 2.34
+            currentTime: nil,
+            concentration: nil,
+            reactionHasStarted: false,
+            rateConstantColor: .white,
+            halfLifeColor: .white
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSize.width, height: EquationSize.height))
