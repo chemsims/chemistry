@@ -376,7 +376,6 @@
 				57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */,
 				57F337F82578CE7E00EF90A1 /* Tooltip.swift */,
 				57E7FF6D2582831000A30582 /* ConcentrationTable.swift */,
-				57E7FF71258289B200A30582 /* MenuButton.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -429,6 +428,7 @@
 		571D6A55255AAC0900F4E635 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57E7FF7525828BED00A30582 /* navigation */,
 				577077BA2568E3CF003E750E /* beaky */,
 				577077B32568E2F6003E750E /* energy-profile */,
 				571B3CAD25658ABC0075358B /* util */,
@@ -624,6 +624,14 @@
 				57D8BA2B257BF17E006B3C8B /* ReactionComparisonScreenElement.swift */,
 			);
 			path = "ui-enums";
+			sourceTree = "<group>";
+		};
+		57E7FF7525828BED00A30582 /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				57E7FF71258289B200A30582 /* MenuButton.swift */,
+			);
+			path = navigation;
 			sourceTree = "<group>";
 		};
 		57F4774E256105430041D406 /* statements */ = {

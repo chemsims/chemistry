@@ -81,7 +81,7 @@ struct OrderedReactionLayoutSettings {
         beakyRightPadding * 0.1
     }
     var beakerLeadingPadding: CGFloat {
-        20
+        1.1 * (menuLeadingPadding + menuSize)
     }
     var beakyBoxTotalHeight: CGFloat {
         bubbleHeight + navButtonSize + beakyVSpacing + beakyBottomPadding
@@ -115,6 +115,18 @@ struct OrderedReactionLayoutSettings {
 
     var tableFontSize: CGFloat {
         bubbleFontSize
+    }
+
+    var menuSize: CGFloat {
+        0.2 * beakerWidth
+    }
+
+    var menuLeadingPadding: CGFloat {
+        0.5 * menuSize
+    }
+
+    var menuTopPadding: CGFloat {
+        0.5 * menuSize
     }
 
     private var hIsRegular: Bool {

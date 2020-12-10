@@ -29,6 +29,21 @@ struct OrderedReactionScreen<Content: View>: View {
                 .padding(.trailing, settings.beakyRightPadding)
                 .padding(.bottom, settings.beakyBottomPadding)
             rhsView()
+
+            menuButton
+        }
+    }
+
+    private var menuButton: some View {
+        VStack {
+            MenuButton(
+                action: {}
+            )
+            .frame(width: settings.menuSize, height: settings.menuSize)
+            .padding(.top, settings.menuTopPadding)
+            .padding(.leading, settings.menuLeadingPadding)
+
+            Spacer()
         }
     }
 
@@ -51,7 +66,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
                 .padding(.leading, settings.beakerLeadingPadding)
-                .padding(.top, settings.beakerLeadingPadding)
+                .padding(.top, settings.chartsTopPadding)
                 .colorMultiply(reaction.color(for: nil))
 
                 middleCharts(settings: settings)
