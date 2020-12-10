@@ -10,13 +10,9 @@ struct MainMenuOverlay: View {
     let size: CGFloat
     let topPadding: CGFloat
     let leadingPadding: CGFloat
+    let navigation: RootNavigationViewModel
 
     @State private var showPanel: Bool = false
-
-    let navigation =
-        RootNavigationViewModel(
-            persistence: InMemoryReactionInputPersistence()
-        )
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -90,7 +86,10 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         MainMenuOverlay(
             size: 50,
             topPadding: 10,
-            leadingPadding: 10
+            leadingPadding: 10,
+            navigation: RootNavigationViewModel(
+                persistence: InMemoryReactionInputPersistence()
+            )
         )
     }
 }

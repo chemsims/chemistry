@@ -61,21 +61,11 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             if (reaction.showDragTutorial) {
                 dragViewWithHand
             }
-
-            menu
-
+            
             if (draggingOrder != nil) {
                 dragView(position: dragLocation)
             }
         }
-    }
-
-    private var menu: some View {
-        MainMenuOverlay(
-            size: settings.ordered.menuSize,
-            topPadding: settings.ordered.menuTopPadding,
-            leadingPadding: settings.ordered.menuLeadingPadding
-        )
     }
 
     private var beakers: some View {

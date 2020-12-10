@@ -29,17 +29,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 .padding(.trailing, settings.beakyRightPadding)
                 .padding(.bottom, settings.beakyBottomPadding)
             rhsView()
-
-            menuButton
         }
-    }
-
-    private var menuButton: some View {
-        MainMenuOverlay(
-            size: settings.menuSize,
-            topPadding: settings.menuTopPadding,
-            leadingPadding: settings.menuLeadingPadding
-        )
     }
 
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
