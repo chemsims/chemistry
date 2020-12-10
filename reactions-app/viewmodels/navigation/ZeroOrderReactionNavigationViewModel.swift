@@ -92,27 +92,16 @@ fileprivate class ExplainRateState: ReactionState {
 
 }
 
-fileprivate class ExplainHalflifeState: ReactionState {
+fileprivate class ExplainHalflifeState: PreReactionAnimation {
+
+    init() {
+        super.init(highlightedElements: [.halfLifeEquation])
+    }
+
     override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
         ZeroOrderStatements.halfLifeExplainer(
             halfLife: model.concentrationEquationA?.halfLife ?? 0
         )
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        model.currentTime = model.initialTime
-        model.highlightedElements = [.halfLifeEquation]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        model.highlightedElements = [.halfLifeEquation]
-        withAnimation(.easeOut(duration: 0.5)) {
-            model.currentTime = model.initialTime
-        }
-    }
-
-    override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.highlightedElements = []
     }
 }
 

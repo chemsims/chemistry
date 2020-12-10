@@ -72,12 +72,34 @@ class ReactionState: ScreenState, SubState {
 
     let delayedStates = [DelayedState<ReactionState>]()
 
-
 }
 
 
 // MARK: Common reaction states
 
+class PreReactionAnimation: ReactionState {
+
+    let highlightedElements: [OrderedReactionScreenHighlightingElements]
+    init(highlightedElements: [OrderedReactionScreenHighlightingElements]) {
+        self.highlightedElements = highlightedElements
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.currentTime = model.initialTime
+        model.highlightedElements = highlightedElements
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = highlightedElements
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = model.initialTime
+        }
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = []
+    }
+}
 class RunAnimation: ReactionState {
 
     let order: ReactionOrder?
