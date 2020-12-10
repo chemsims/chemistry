@@ -62,14 +62,26 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                 dragViewWithHand
             }
 
+            menu
+
             if (draggingOrder != nil) {
                 dragView(position: dragLocation)
             }
         }
     }
 
+    private var menu: some View {
+        MainMenuOverlay(
+            size: settings.ordered.menuSize,
+            topPadding: settings.ordered.menuTopPadding,
+            leadingPadding: settings.ordered.menuLeadingPadding
+        )
+    }
+
     private var beakers: some View {
-        HStack {
+        HStack(spacing: 0) {
+            Spacer()
+                .frame(width: settings.ordered.menuSize + settings.ordered.menuLeadingPadding)
             VStack {
                 beaker(order: settings.ordering[0])
                 beaker(order: settings.ordering[1])

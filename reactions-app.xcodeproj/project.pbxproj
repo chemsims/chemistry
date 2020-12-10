@@ -98,6 +98,7 @@
 		57E7FF6A2582307A00A30582 /* StatementUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF692582307A00A30582 /* StatementUtil.swift */; };
 		57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF6D2582831000A30582 /* ConcentrationTable.swift */; };
 		57E7FF72258289B200A30582 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF71258289B200A30582 /* MenuButton.swift */; };
+		57E7FF7F25828E0500A30582 /* MainMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF7E25828E0500A30582 /* MainMenuOverlay.swift */; };
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57F10981255E88CF00834783 /* ChartLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ChartLine.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
@@ -222,6 +223,7 @@
 		57E7FF692582307A00A30582 /* StatementUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementUtil.swift; sourceTree = "<group>"; };
 		57E7FF6D2582831000A30582 /* ConcentrationTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTable.swift; sourceTree = "<group>"; };
 		57E7FF71258289B200A30582 /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
+		57E7FF7E25828E0500A30582 /* MainMenuOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOverlay.swift; sourceTree = "<group>"; };
 		57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleHeadedArrow.swift; sourceTree = "<group>"; };
 		57F10980255E88CE00834783 /* ChartLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartLine.swift; sourceTree = "<group>"; };
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
@@ -630,6 +632,7 @@
 			isa = PBXGroup;
 			children = (
 				57E7FF71258289B200A30582 /* MenuButton.swift */,
+				57E7FF7E25828E0500A30582 /* MainMenuOverlay.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */,
 				57F477422560FD440041D406 /* Beaky.swift in Sources */,
 				571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */,
+				57E7FF7F25828E0500A30582 /* MainMenuOverlay.swift in Sources */,
 				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
 				57517F3325739E5200EB79C7 /* ReactionOrder.swift in Sources */,
 				57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */,

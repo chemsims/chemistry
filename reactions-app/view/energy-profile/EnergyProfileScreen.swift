@@ -32,7 +32,16 @@ struct EnergyProfileScreen: View {
             beakyView(settings: settings)
             equationView(settings: settings)
             beakerView(settings: settings)
+            menu(settings: settings)
         }
+    }
+
+    private func menu(settings: EnergyProfileLayoutSettings) -> some View {
+        MainMenuOverlay(
+            size: settings.orderLayoutSettings.menuSize,
+            topPadding: settings.orderLayoutSettings.menuTopPadding,
+            leadingPadding: settings.orderLayoutSettings.menuLeadingPadding
+        )
     }
 
     private func beakyView(settings: EnergyProfileLayoutSettings) -> some View {
@@ -103,7 +112,9 @@ struct EnergyProfileScreen: View {
     }
 
     private func beakerView(settings: EnergyProfileLayoutSettings) -> some View {
-        HStack {
+        HStack(spacing: 0) {
+            Spacer()
+                .frame(width: settings.orderLayoutSettings.menuSize)
             EnergyProfileBeaker(
                 selectedCatalyst: model.selectedCatalyst,
                 selectCatalyst: model.selectCatalyst,

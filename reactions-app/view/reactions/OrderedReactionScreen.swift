@@ -35,16 +35,11 @@ struct OrderedReactionScreen<Content: View>: View {
     }
 
     private var menuButton: some View {
-        VStack {
-            MenuButton(
-                action: {}
-            )
-            .frame(width: settings.menuSize, height: settings.menuSize)
-            .padding(.top, settings.menuTopPadding)
-            .padding(.leading, settings.menuLeadingPadding)
-
-            Spacer()
-        }
+        MainMenuOverlay(
+            size: settings.menuSize,
+            topPadding: settings.menuTopPadding,
+            leadingPadding: settings.menuLeadingPadding
+        )
     }
 
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
