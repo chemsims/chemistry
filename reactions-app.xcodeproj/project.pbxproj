@@ -95,6 +95,7 @@
 		57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4ED2577C942006D945B /* SubscriptViews.swift */; };
 		57DAE4FA2577ECD9006D945B /* ReactionInputPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4F92577ECD9006D945B /* ReactionInputPersistence.swift */; };
 		57DAE4FE2577ED76006D945B /* ReactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4FD2577ED76006D945B /* ReactionInput.swift */; };
+		57E7FF6A2582307A00A30582 /* StatementUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF692582307A00A30582 /* StatementUtil.swift */; };
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57F10981255E88CF00834783 /* ChartLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ChartLine.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
@@ -216,6 +217,7 @@
 		57DAE4ED2577C942006D945B /* SubscriptViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptViews.swift; sourceTree = "<group>"; };
 		57DAE4F92577ECD9006D945B /* ReactionInputPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputPersistence.swift; sourceTree = "<group>"; };
 		57DAE4FD2577ED76006D945B /* ReactionInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInput.swift; sourceTree = "<group>"; };
+		57E7FF692582307A00A30582 /* StatementUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementUtil.swift; sourceTree = "<group>"; };
 		57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleHeadedArrow.swift; sourceTree = "<group>"; };
 		57F10980255E88CE00834783 /* ChartLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartLine.swift; sourceTree = "<group>"; };
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
@@ -629,6 +631,7 @@
 				571B3CA02565796A0075358B /* ReactionComparisonStatements.swift */,
 				57D79827256E5430005BE551 /* EnergyProfileStatements.swift */,
 				57D8BA22257B7379006B3C8B /* NewReactionComparisonStatements.swift */,
+				57E7FF692582307A00A30582 /* StatementUtil.swift */,
 			);
 			path = statements;
 			sourceTree = "<group>";
@@ -843,6 +846,7 @@
 				57F477472560FF300041D406 /* NavButton.swift in Sources */,
 				571B3C782565605C0075358B /* SecondOrderReactionNavigationViewModel.swift in Sources */,
 				57035ECC255BDD7C00DB3A19 /* MoleculeGridSettings.swift in Sources */,
+				57E7FF6A2582307A00A30582 /* StatementUtil.swift in Sources */,
 				571B3CAF25658ACC0075358B /* CircleIconButton.swift in Sources */,
 				57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */,
 				57035EFD255C1A7000DB3A19 /* ReactionSettings.swift in Sources */,

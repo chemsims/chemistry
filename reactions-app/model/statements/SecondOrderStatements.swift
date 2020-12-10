@@ -76,7 +76,7 @@ struct SecondOrderStatements {
             "k=(1/[A]-1/[A_0_]t"
         ),
         SpeechBubbleLineGenerator.makeLine(
-            "That's why a graph plotting (1/[A] vs t) is a straight line:"
+            "That's why a graph plotting \(Strings.withNoBreaks(str: "(1/[A] vs t)")) is a straight line:"
         ),
         SpeechBubbleLineGenerator.makeLine(
             "1/[A]*(y)*=kt*(mx)*+1/[A_0_]*(b)*"
