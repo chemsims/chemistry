@@ -96,6 +96,7 @@
 		57DAE4FA2577ECD9006D945B /* ReactionInputPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4F92577ECD9006D945B /* ReactionInputPersistence.swift */; };
 		57DAE4FE2577ED76006D945B /* ReactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4FD2577ED76006D945B /* ReactionInput.swift */; };
 		57E7FF6A2582307A00A30582 /* StatementUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF692582307A00A30582 /* StatementUtil.swift */; };
+		57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF6D2582831000A30582 /* ConcentrationTable.swift */; };
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57F10981255E88CF00834783 /* ChartLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ChartLine.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
@@ -218,6 +219,7 @@
 		57DAE4F92577ECD9006D945B /* ReactionInputPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputPersistence.swift; sourceTree = "<group>"; };
 		57DAE4FD2577ED76006D945B /* ReactionInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInput.swift; sourceTree = "<group>"; };
 		57E7FF692582307A00A30582 /* StatementUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementUtil.swift; sourceTree = "<group>"; };
+		57E7FF6D2582831000A30582 /* ConcentrationTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTable.swift; sourceTree = "<group>"; };
 		57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleHeadedArrow.swift; sourceTree = "<group>"; };
 		57F10980255E88CE00834783 /* ChartLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartLine.swift; sourceTree = "<group>"; };
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */,
 				57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */,
 				57F337F82578CE7E00EF90A1 /* Tooltip.swift */,
+				57E7FF6D2582831000A30582 /* ConcentrationTable.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -825,6 +828,7 @@
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift in Sources */,
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
 				57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */,
+				57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */,
 				57D8BA1F257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift in Sources */,
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,
 				57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */,

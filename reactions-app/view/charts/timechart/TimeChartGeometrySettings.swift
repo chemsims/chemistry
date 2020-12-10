@@ -92,6 +92,14 @@ struct TimeChartGeometrySettings {
         chartSize / 180
     }
 
+    var chartHStackSpacing: CGFloat {
+        0.1 * chartSize
+    }
+
+    var largeTotalChartWidth: CGFloat {
+        chartSize + (2 * chartHStackSpacing) + sliderHandleWidth + yLabelWidth
+    }
+
     var yAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
             minValuePosition: chartSize,

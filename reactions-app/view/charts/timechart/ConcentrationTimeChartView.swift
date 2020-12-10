@@ -87,10 +87,10 @@ struct GeneralTimeChartView: View {
     let canSetCurrentTime: Bool
 
     var body: some View {
-        HStack {
+        HStack(spacing: settings.chartHStackSpacing) {
             concentrationLabel
 
-            HStack(alignment: .top) {
+            HStack(alignment: .top, spacing: settings.chartHStackSpacing) {
                 if (includeSliders) {
                     concentrationSlider
                 }
@@ -127,7 +127,10 @@ struct GeneralTimeChartView: View {
             if (includeValuesInLabel) {
                 HStack(spacing: 1) {
                     animatingConcentration
-                        .frame(width: settings.yLabelWidth * 0.7, height: settings.chartSize * 0.18, alignment: .leading)
+                        .frame(
+                            width: settings.yLabelWidth * 0.7,
+                            height: settings.chartSize * 0.18, alignment: .leading
+                        )
                     Text("M")
                         .fixedSize()
                 }

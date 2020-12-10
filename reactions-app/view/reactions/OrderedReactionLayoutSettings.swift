@@ -35,6 +35,15 @@ struct OrderedReactionLayoutSettings {
         let idealWidth = 0.2 * width
         return min(maxHeight, min(maxWidth, idealWidth))
     }
+
+    var chartSettings: TimeChartGeometrySettings {
+        TimeChartGeometrySettings(chartSize: chartSize)
+    }
+
+    var topStackHSpacing: CGFloat {
+        0.1 * chartSize
+    }
+
     var bubbleFontSize: CGFloat {
         bubbleWidth * 0.08
     }
@@ -82,6 +91,30 @@ struct OrderedReactionLayoutSettings {
     }
     var beakyVSpacing: CGFloat {
         return 2
+    }
+
+    var availableWidthForTable: CGFloat {
+        let totalChartsWidth = chartSettings.largeTotalChartWidth + chartSettings.chartSize
+        let chartsWithSpacing = totalChartsWidth + (2 * topStackHSpacing)
+        return width - beakerWidth - beakerLeadingPadding - chartsWithSpacing - beakerLeadingPadding
+    }
+
+    var tableCellWidth: CGFloat {
+        availableWidthForTable / 3
+    }
+
+    var tableCellHeight: CGFloat {
+        chartSize / 3
+    }
+
+    var tableButtonSize: CGFloat {
+        let w = 0.5 * tableCellWidth
+        let h = 0.5 * tableCellHeight
+        return min(w, h)
+    }
+
+    var tableFontSize: CGFloat {
+        bubbleFontSize
     }
 
     private var hIsRegular: Bool {

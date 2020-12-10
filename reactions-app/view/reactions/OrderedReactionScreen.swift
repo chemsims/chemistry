@@ -23,19 +23,12 @@ struct OrderedReactionScreen<Content: View>: View {
                 .colorMultiply(reaction.color(for: nil))
                 .edgesIgnoringSafeArea(.all)
             
-            beaker(settings: settings)
+            topStack(settings: settings)
 
             beaky(settings: settings)
                 .padding(.trailing, settings.beakyRightPadding)
                 .padding(.bottom, settings.beakyBottomPadding)
             rhsView()
-        }
-    }
-
-    private func makeHView(using settings: OrderedReactionLayoutSettings) -> some View {
-        HStack(spacing: 0) {
-            beaker(settings: settings)
-            Spacer()
         }
     }
 
@@ -48,9 +41,9 @@ struct OrderedReactionScreen<Content: View>: View {
         )
     }
 
-    private func beaker(settings: OrderedReactionLayoutSettings) -> some View {
+    private func topStack(settings: OrderedReactionLayoutSettings) -> some View {
         VStack {
-            HStack {
+            HStack(alignment: .top, spacing: 0) {
                 FilledBeaker(
                     moleculesA: reaction.moleculesA,
                     concentrationB: reaction.concentrationEquationB,
@@ -63,28 +56,25 @@ struct OrderedReactionScreen<Content: View>: View {
 
                 middleCharts(settings: settings)
             }
-
             Spacer()
-
         }
     }
 
     private func middleCharts(settings: OrderedReactionLayoutSettings) -> some View {
-        HStack(spacing: 20) {
+        HStack(alignment: .top, spacing: settings.topStackHSpacing) {
             ConcentrationTimeChartView(
                 initialConcentration: $reaction.initialConcentration,
                 initialTime: $reaction.initialTime,
                 finalConcentration: $reaction.finalConcentration,
                 finalTime: $reaction.finalTime,
-                settings: TimeChartGeometrySettings(
-                    chartSize: settings.chartSize
-                ),
+                settings: settings.chartSettings,
                 concentrationA: reaction.concentrationEquationA,
                 concentrationB: reaction.concentrationEquationB,
                 currentTime: $reaction.currentTime,
                 canSetInitialTime: canSetInitialTime,
                 canSetCurrentTime: reaction.reactionHasEnded
             )
+            .frame(width: settings.chartSettings.largeTotalChartWidth)
             .colorMultiply(reaction.color(for: .concentrationChart))
 
             ConcentrationBarChart(
@@ -98,9 +88,32 @@ struct OrderedReactionScreen<Content: View>: View {
                     maxConcentration: ReactionSettings.maxConcentration,
                     minConcentration: ReactionSettings.minConcentration
                 )
-            ).frame(width: settings.chartSize)
-            Spacer()
-        }
+            )
+
+            concentrationTable
+                .padding(.trailing, settings.beakerLeadingPadding)
+        }.padding(.top, settings.chartsTopPadding)
+    }
+
+    private var concentrationTable: some View {
+        ConcentrationTable(
+            c1: reaction.initialConcentration.str(decimals: 2),
+            c2: reaction.finalConcentration?.str(decimals: 2),
+            t1: reaction.initialTime.str(decimals: 1),
+            t2: reaction.finalTime?.str(decimals: 1),
+            cellWidth: settings.tableCellWidth,
+            cellHeight: settings.tableCellHeight,
+            buttonSize: settings.tableButtonSize
+        )
+        .font(.system(size: settings.tableFontSize))
+    }
+
+    private func cell(value: String) -> some View {
+        ZStack {
+            Rectangle()
+                .stroke()
+            Text(value)
+        }.frame(width: settings.tableCellWidth, height: settings.tableCellHeight)
     }
 
 }
