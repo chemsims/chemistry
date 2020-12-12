@@ -19,6 +19,7 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var emitCatalyst = false
     @Published var catalystIsShaking = false
     @Published var canSelectCatalyst = false
+    @Published var reactionHasEnded = false
 
     var activationEnergy: CGFloat {
         let reduction = selectedCatalyst?.energyReduction ?? 0
@@ -46,7 +47,8 @@ class EnergyProfileViewModel: ObservableObject {
     var nextScreen: (() -> Void)?
 
     func next() {
-        nextScreen?()
+        reactionHasEnded = true
+//        nextScreen?()
     }
 
     func back() {
@@ -59,6 +61,7 @@ class EnergyProfileViewModel: ObservableObject {
                 catalystIsShaking = false
                 catalystInProgress = nil
             }
+            reactionHasEnded = false
             canSelectCatalyst = false
             dispatchId = UUID()
             emitCatalyst = false
@@ -140,7 +143,7 @@ class EnergyProfileViewModel: ObservableObject {
             self.temp2 = self.temp1
             self.allowReactionsToC = true
             self.statement = EnergyProfileStatements.setT2
-            self.animateStateChange {
+            withAnimation(.easeOut(duration: 0.8)) {
                 self.selectedCatalyst = catalyst
                 self.peakHeightFactor = energyFactor
             }
@@ -148,20 +151,12 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func setConcentrationC(concentration: CGFloat) {
-        withAnimation(.easeInOut(duration: 0.5)) {
-            self.concentrationC = concentration
-        }
+        self.concentrationC = concentration
         if (concentration > 0.4) {
             statement = EnergyProfileStatements.middle
         }
         if (concentration == 1) {
             statement = EnergyProfileStatements.finished
-        }
-    }
-
-    private func animateStateChange(stateChange: () -> Void) {
-        withAnimation(.easeOut(duration: 0.8)) {
-            stateChange()
         }
     }
 

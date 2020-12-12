@@ -23,6 +23,7 @@ struct EnergyProfileBeaker: View {
 
     let canReactToC: Bool
     let canSelectCatalyst: Bool
+    let reactionHasEnded: Bool
 
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
@@ -130,7 +131,8 @@ struct EnergyProfileBeaker: View {
                 emitterPosition: settings.emitterPosition,
                 emitting: emitCatalyst,
                 catalystColor: catalystInProgress?.color ?? .black,
-                canReactToC: canReactToC
+                canReactToC: canReactToC,
+                reactionHasEnded: reactionHasEnded
             )
         }
         .frame(
@@ -447,7 +449,8 @@ struct EnergyBeakerWithStand_Previews: PreviewProvider {
             allowReactionsToC: true,
             catalystIsShaking: false,
             canReactToC: true,
-            canSelectCatalyst: true 
+            canSelectCatalyst: true,
+            reactionHasEnded: false
         ).previewLayout(.fixed(width: 200, height: 320))
     }
 }

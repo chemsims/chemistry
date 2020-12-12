@@ -21,6 +21,17 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     var canReactToC: Bool = false
+    var reactionHasEnded: Bool = false {
+        willSet {
+            if (newValue != reactionHasEnded) {
+                if (newValue) {
+                    endReaction()
+                } else {
+                    removeAllActions()
+                }
+            }
+        }
+    }
 
     init(
         size: CGSize,
@@ -102,6 +113,42 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         catalystsInLiquid.forEach { c in
             if let body = c.physicsBody {
                 updateSpeed(body)
+            }
+        }
+    }
+
+    private func endReaction() {
+        let aMolecules = molecules.withCategory(moleculeACategory).compactMap { $0.node as? SKShapeNode }
+        let bMolecules = molecules.withCategory(moleculeBCategory).compactMap { $0.node as? SKShapeNode }
+
+        let maxCount = max(aMolecules.count, bMolecules.count)
+
+        for i in 0..<maxCount {
+            let aMolecule = aMolecules[i]
+            let bMolecule = bMolecules[i]
+
+            let aPos = aMolecule.position
+            let bPos = bMolecule.position
+
+            let midPos = CGPoint(x: (aPos.x + bPos.x) / 2, y: (aPos.y + bPos.y) / 2)
+            let aFinalPos = CGPoint(x: midPos.x - settings.moleculeRadius, y: midPos.y)
+            let bFinalPos = CGPoint(x: midPos.x + settings.moleculeRadius, y: midPos.y)
+
+            if let bodyA = aMolecule.physicsBody, let bodyB = bMolecule.physicsBody {
+                let duration: TimeInterval = 0.5
+                bodyA.collisionBitMask = 0
+                bodyB.collisionBitMask = 0
+
+                aMolecule.run(SKAction.move(to: aFinalPos, duration: duration))
+                bMolecule.run(SKAction.move(to: bFinalPos, duration: duration))
+
+                let join = SKAction.run { [self] in
+                    joinMolecules(bodyA: bodyA, nodeA: aMolecule, bodyB: bodyB, nodeB: bMolecule, anchor: midPos)
+                    bodyA.collisionBitMask = allCollisions
+                    bodyB.collisionBitMask = allCollisions
+                }
+                let delay = SKAction.wait(forDuration: duration)
+                self.run(SKAction.sequence([delay, join]))
             }
         }
     }
@@ -276,6 +323,28 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
+    private func joinMolecules(
+        bodyA: SKPhysicsBody,
+        nodeA: SKShapeNode,
+        bodyB: SKPhysicsBody,
+        nodeB: SKShapeNode,
+        anchor: CGPoint
+    ) {
+        bodyA.categoryBitMask = moleculeCCategory
+        bodyB.categoryBitMask = moleculeCCategory
+        bodyA.allowsRotation = true
+        bodyB.allowsRotation = true
+        let joint = SKPhysicsJointFixed.joint(
+            withBodyA: bodyA,
+            bodyB: bodyB,
+            anchor: anchor
+        )
+        self.physicsWorld.add(joint)
+        nodeA.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
+        nodeB.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
+        cMolecules += 2
+    }
+
     override func didFinishUpdate() {
         for (i, catalyst) in fallingCatalysts.enumerated().reversed() {
             if let body = catalyst.physicsBody, catalyst.position.y < waterHeight {
@@ -391,7 +460,13 @@ fileprivate struct SKBeakerSceneSettings {
 
 }
 
-extension CGVector {
+fileprivate extension Array where Array.Element == SKPhysicsBody {
+    func withCategory(_ category: UInt32) -> [Element] {
+        filter { $0.categoryBitMask == category }
+    }
+}
+
+fileprivate extension CGVector {
     var magnitude: CGFloat {
         sqrt(pow(dx, 2) + pow(dy, 2))
     }

@@ -20,6 +20,7 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
     let emitting: Bool
     let catalystColor: UIColor
     let canReactToC: Bool
+    let reactionHasEnded: Bool
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
@@ -44,6 +45,7 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
             scene.emitting = emitting
             scene.catalystColor = catalystColor
             scene.canReactToC = canReactToC
+            scene.reactionHasEnded = reactionHasEnded
         }
     }
 }
