@@ -24,8 +24,8 @@ struct ConcentrationValueSlider: View {
             orientation: .portrait,
             settings: settings,
             canSetInitialValue: true,
-            absoluteMin: 0.1,
-            absoluteMax: 1
+            absoluteMin: ReactionSettings.minCInput,
+            absoluteMax: ReactionSettings.maxCInput
         )
     }
 }
@@ -49,8 +49,8 @@ struct TimeValueSlider: View {
             orientation: .landscape,
             settings: settings,
             canSetInitialValue: canSetInitialTime,
-            absoluteMin: canSetInitialTime ? 0 : 3,
-            absoluteMax: ReactionSettings.maxTime
+            absoluteMin: canSetInitialTime ? ReactionSettings.minT1Input : ReactionSettings.minT2Input,
+            absoluteMax: ReactionSettings.maxTInput
         )
     }
 }

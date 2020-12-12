@@ -11,12 +11,12 @@ class ZeroOrderReactionViewModel: ObservableObject {
         setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
     }
 
-    @Published var initialConcentration: CGFloat = 0.5 {
+    @Published var initialConcentration: CGFloat = ReactionSettings.initialC {
         didSet {
             setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
         }
     }
-    @Published var initialTime: CGFloat = 6.6
+    @Published var initialTime: CGFloat = ReactionSettings.initialT
     @Published var finalConcentration: CGFloat?
     @Published var finalTime: CGFloat?
 

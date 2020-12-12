@@ -62,6 +62,8 @@ class EnergyProfileViewModel: ObservableObject {
             doSelectCatalyst(catalyst: catalystInProgress ?? .C, withDelay: false)
         }
         reactionHasEnded = true
+        concentrationC = 1
+        statement = EnergyProfileStatements.finished
     }
 
     func back() {

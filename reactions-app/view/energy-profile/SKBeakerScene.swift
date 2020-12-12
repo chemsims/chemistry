@@ -24,7 +24,6 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     var reactionHasStarted: Bool = false {
         willSet {
             if (reactionHasStarted != newValue) {
-                print("Set reaction has started to \(newValue). It is currently \(reactionHasStarted)")
                 if (!newValue) {
                     resetCollisions()
                 }
@@ -162,7 +161,6 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         cMolecules = 0
         molecules.forEach { molecule in
             molecule.collisionBitMask = allCollisions
-            print("Set molecule collision bit mask")
             if molecule.categoryBitMask == moleculeCCategory,
                let node = molecule.node as? SKShapeNode {
                 let addA = aMoleculesToAdd > 0

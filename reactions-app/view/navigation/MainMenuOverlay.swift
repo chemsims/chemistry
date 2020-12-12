@@ -24,10 +24,7 @@ struct MainMenuOverlay: View {
                     .gesture(
                         DragGesture(minimumDistance: 0, coordinateSpace: .global)
                             .onChanged { gesture in
-                                let translation = gesture.translation
-                                let foo = gesture.startLocation.x - gesture.location.x
-                                print("\(translation.width). \(foo). \(gesture.startLocation.x). \(gesture.location.x)")
-                                extraOffset = min(0, translation.width)
+                                extraOffset = min(0, gesture.translation.width)
                             }.onEnded { _ in
                                 toggleMenu()
                                 extraOffset = 0

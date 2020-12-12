@@ -33,7 +33,11 @@ struct BoundedSliderPositioning {
             let direction = axis.minValuePosition < axis.maxValuePosition ? 1 : -1
             let minPositionPreSpacing = axis.getPosition(at: minWithSpacing)
             let newMinPosition = minPositionPreSpacing + (spacing * CGFloat(direction))
-            return axis.updateMin(position: newMinPosition)
+            let updated = axis.updateMin(position: newMinPosition)
+            if (updated.minValue < absoluteMin) {
+                return axis
+            }
+            return updated
         }
         return axis
     }
@@ -43,7 +47,11 @@ struct BoundedSliderPositioning {
             let direction = axis.minValuePosition < axis.maxValuePosition ? 1 : -1
             let maxPositionPreSpacing = axis.getPosition(at: maxWithSpacing)
             let newMaxPosition = maxPositionPreSpacing - (spacing * CGFloat(direction))
-            return axis.updateMax(position: newMaxPosition)
+            let updated = axis.updateMax(position: newMaxPosition)
+            if (updated.maxValue > absoluteMax) {
+                return axis
+            }
+            return updated
         }
         return axis
     }

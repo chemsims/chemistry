@@ -58,8 +58,8 @@ fileprivate class SetFinalValuesToNonNil: ReactionState {
         let initialTime = model.initialTime
         let maxTime = ReactionSettings.maxTime
 
-        model.finalConcentration = (initialConcentration + minConcentration) / 2
-        model.finalTime = (initialTime + maxTime) / 2
+        model.finalConcentration = max((initialConcentration + minConcentration) / 2, ReactionSettings.minCInput)
+        model.finalTime = max((initialTime + maxTime) / 2, ReactionSettings.minT2Input)
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {

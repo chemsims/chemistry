@@ -199,15 +199,7 @@ class InitialOrderedStep: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.initialTime = 0
-        model.finalTime = 10
-    }
-
-    override func unapply(on model: ZeroOrderReactionViewModel) {
-
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-
+        model.finalTime = ReactionSettings.initialT
     }
 }
 
@@ -218,14 +210,11 @@ class SetFinalConcentrationToNonNil: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
-        model.finalConcentration = model.initialConcentration / 2
+        model.finalConcentration = max(model.initialConcentration / 2, ReactionSettings.minCInput)
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
         model.finalConcentration = nil
     }
 
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-
-    }
 }

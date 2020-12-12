@@ -136,5 +136,19 @@ class BoundedSliderPositioningTest: XCTestCase {
         XCTAssertEqual(updatedAxis.maxValuePosition, -70)
     }
 
+    func testSpacingWithAbosluteBounds() {
+        let axis = AxisPositionCalculations<CGFloat>(minValuePosition: 0, maxValuePosition: 10, minValue: 0, maxValue: 10)
+        let model = BoundedSliderPositioning(
+            axis: axis,
+            absoluteMin: 5,
+            absoluteMax: 7,
+            minPreSpacing: 2,
+            maxPreSpacing: 10,
+            spacing: 1
+        )
 
+        let updatedAxis = model.boundedAxis
+        XCTAssertEqual(updatedAxis.minValue, 5)
+        XCTAssertEqual(updatedAxis.maxValue, 7)
+    }
 }
