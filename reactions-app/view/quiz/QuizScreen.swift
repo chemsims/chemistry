@@ -34,8 +34,11 @@ fileprivate struct QuizScreenWithSettings: View {
                     height: settings.progressHeight
                 ).padding()
             Text(model.question)
+                .lineLimit(1)
             answers
-        }.font(.system(size: 20))
+        }
+        .font(.system(size: settings.fontSize))
+        .minimumScaleFactor(0.8)
     }
 
     private var progressBar: some View {
@@ -194,6 +197,10 @@ struct QuizLayoutSettings {
 
     var navSize: CGFloat {
         0.05 * geometry.size.width
+    }
+
+    var fontSize: CGFloat {
+        0.04 * geometry.size.width
     }
 }
 
