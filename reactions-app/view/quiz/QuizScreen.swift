@@ -24,6 +24,7 @@ fileprivate struct QuizScreenWithSettings: View {
     let settings: QuizLayoutSettings
 
     @State private var shakingOption: QuizOption?
+    @State private var badgeScale: CGFloat = 1
 
     var body: some View {
         VStack {
@@ -73,10 +74,12 @@ fileprivate struct QuizScreenWithSettings: View {
             Group {
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .foregroundColor(answerBackground(option: option))
+                
 
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .stroke(lineWidth: answerLineWidth(option: option))
                     .foregroundColor(answerBorder(option: option))
+                    .overlay(overlay(option: option), alignment: .topTrailing)
 
                 Text(model.optionText(option))
                     .foregroundColor(.black)
@@ -84,6 +87,39 @@ fileprivate struct QuizScreenWithSettings: View {
             .onTapGesture(perform: { handleAnswer(option: option) })
             .rotationEffect(shakingOption == option ? .degrees(4) : .zero)
         }.padding()
+    }
+
+    private func overlay(option: QuizOption) -> some View {
+        ZStack {
+            if (model.hasSelectedAnswer && model.correctOption == option) {
+                Group {
+                    Circle()
+                        .foregroundColor(.white)
+
+                    Image(systemName: "checkmark.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(Styling.quizAnswerCorrectBorder)
+                        .scaleEffect(badgeScale)
+                }
+                .scaleEffect(badgeScale)
+                .onAppear(perform: runBadgeAnimation)
+            }
+        }
+        .frame(width: settings.navSize, height: settings.navSize)
+        .offset(x: settings.navSize / 3, y: -settings.navSize / 3)
+    }
+
+    private func runBadgeAnimation() {
+        badgeScale = 1
+        withAnimation(.easeOut(duration: 0.35)) {
+            badgeScale = 1.2
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(350)) {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                badgeScale = 1
+            }
+        }
     }
 
     private func handleAnswer(option: QuizOption) {
@@ -127,6 +163,17 @@ fileprivate struct QuizScreenWithSettings: View {
     private func answerLineWidth(option: QuizOption) -> CGFloat {
         let active = model.hasSelectedAnswer && model.correctOption == option
         return active ? 3 : 1
+    }
+}
+
+fileprivate struct RotatedModifier: ViewModifier {
+
+    let active: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .scaleEffect(active ? 0 : 1)
+            .rotationEffect(active ? .zero : .degrees(360))
     }
 }
 

@@ -56,7 +56,7 @@ class QuizViewModel: ObservableObject {
         questionIndex = newIndex
 
         withAnimation(.easeOut(duration: 0.4)) {
-            progress = CGFloat(newIndex) / CGFloat(questions.count)
+            progress = CGFloat(newIndex + 1) / CGFloat(questions.count)
         }
     }
 }
