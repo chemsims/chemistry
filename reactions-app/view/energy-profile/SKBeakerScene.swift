@@ -21,6 +21,17 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     var canReactToC: Bool = false
+    var reactionHasStarted: Bool = false {
+        willSet {
+            if (reactionHasStarted != newValue) {
+                print("Set reaction has started to \(newValue). It is currently \(reactionHasStarted)")
+                if (!newValue) {
+                    resetCollisions()
+                }
+            }
+        }
+    }
+    
     var reactionHasEnded: Bool = false {
         willSet {
             if (newValue != reactionHasEnded) {
@@ -78,14 +89,6 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 
     private let runCatalystKey = "AddCatalysts"
 
-    var reactionHasStarted: Bool = false {
-        willSet {
-            if (reactionHasStarted && !newValue && cMolecules > 0) {
-                resetCollisions()
-            }
-        }
-    }
-
     var extraSpeed: CGFloat = 0 {
         didSet {
             let minV = settings.minVelocity
@@ -121,9 +124,9 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         let aMolecules = molecules.withCategory(moleculeACategory).compactMap { $0.node as? SKShapeNode }
         let bMolecules = molecules.withCategory(moleculeBCategory).compactMap { $0.node as? SKShapeNode }
 
-        let maxCount = max(aMolecules.count, bMolecules.count)
+        let minCount = min(aMolecules.count, bMolecules.count)
 
-        for i in 0..<maxCount {
+        for i in 0..<minCount {
             let aMolecule = aMolecules[i]
             let bMolecule = bMolecules[i]
 
@@ -157,8 +160,9 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.removeAllJoints()
         var aMoleculesToAdd = cMolecules / 2
         cMolecules = 0
-        collisionsSinceLastCMolecule = 0
         molecules.forEach { molecule in
+            molecule.collisionBitMask = allCollisions
+            print("Set molecule collision bit mask")
             if molecule.categoryBitMask == moleculeCCategory,
                let node = molecule.node as? SKShapeNode {
                 let addA = aMoleculesToAdd > 0
@@ -358,7 +362,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func shouldCollide() -> Bool {
-        canReactToC && collisionsSinceLastCMolecule >= settings.collisionsForC
+        canReactToC && !reactionHasEnded && collisionsSinceLastCMolecule >= settings.collisionsForC
     }
 
     private func addMolecule(

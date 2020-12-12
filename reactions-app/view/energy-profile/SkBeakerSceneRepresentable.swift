@@ -15,7 +15,7 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
     let waterHeight: CGFloat
     let speed: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
-    let allowReactionsToC: Bool
+    let reactionHasStarted: Bool
     let emitterPosition: CGPoint
     let emitting: Bool
     let catalystColor: UIColor
@@ -41,11 +41,11 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: SKView, context: Context) {
         if let scene = uiView.scene as? SKBeakerScene {
             scene.extraSpeed = speed
-            scene.reactionHasStarted = allowReactionsToC
+            scene.reactionHasStarted = reactionHasStarted
+            scene.reactionHasEnded = reactionHasEnded
             scene.emitting = emitting
             scene.catalystColor = catalystColor
             scene.canReactToC = canReactToC
-            scene.reactionHasEnded = reactionHasEnded
         }
     }
 }

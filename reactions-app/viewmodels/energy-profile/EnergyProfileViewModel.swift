@@ -11,7 +11,7 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var temp2: CGFloat?
     @Published private(set) var peakHeightFactor: CGFloat = 1
     @Published private(set) var concentrationC: CGFloat = 0
-    @Published private(set) var allowReactionsToC = false
+    @Published private(set) var reactionHasStarted = false
     @Published var selectedReaction = ReactionOrder.Zero
 
     @Published var selectedCatalyst: Catalyst?
@@ -47,8 +47,21 @@ class EnergyProfileViewModel: ObservableObject {
     var nextScreen: (() -> Void)?
 
     func next() {
+        if (reactionHasEnded) {
+            nextScreen?()
+        } else {
+            goToEndState()
+        }
+    }
+
+    private func goToEndState() {
+        if (catalystInProgress == nil) {
+            catalystInProgress = .C
+        }
+        if (selectedCatalyst == nil) {
+            doSelectCatalyst(catalyst: catalystInProgress ?? .C, withDelay: false)
+        }
         reactionHasEnded = true
-//        nextScreen?()
     }
 
     func back() {
@@ -66,7 +79,7 @@ class EnergyProfileViewModel: ObservableObject {
             dispatchId = UUID()
             emitCatalyst = false
             selectedCatalyst = nil
-            allowReactionsToC = false
+            reactionHasStarted = false
             statement = EnergyProfileStatements.intro
             withAnimation(.easeOut(duration: 0.6)) {
                 peakHeightFactor = 1
@@ -128,25 +141,41 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func selectCatalyst(catalyst: Catalyst) -> Void {
+        doSelectCatalyst(catalyst: catalyst, withDelay: true)
+    }
+    
+
+    private func doSelectCatalyst(
+        catalyst: Catalyst,
+        withDelay: Bool
+    ) {
         emitCatalyst = true
         let id = UUID()
         dispatchId = id
         runCatalystShakingAnimation()
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [self] in
-            guard self.dispatchId == id else {
-                return
+        if (withDelay) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [self] in
+                guard self.dispatchId == id else {
+                    return
+                }
+                setSelectedCatalystState(catalyst: catalyst)
             }
-            let maxEnergy = selectedReaction.activationEnergy
-            let minEnergy = 0.9 * (selectedReaction.activationEnergy - Catalyst.C.energyReduction)
-            let resultingEnergy = selectedReaction.activationEnergy - catalyst.energyReduction
-            let energyFactor = (resultingEnergy - minEnergy) / (maxEnergy - minEnergy)
-            self.temp2 = self.temp1
-            self.allowReactionsToC = true
-            self.statement = EnergyProfileStatements.setT2
-            withAnimation(.easeOut(duration: 0.8)) {
-                self.selectedCatalyst = catalyst
-                self.peakHeightFactor = energyFactor
-            }
+        } else {
+            setSelectedCatalystState(catalyst: catalyst)
+        }
+    }
+
+    private func setSelectedCatalystState(catalyst: Catalyst) {
+        let maxEnergy = selectedReaction.activationEnergy
+        let minEnergy = 0.9 * (selectedReaction.activationEnergy - Catalyst.C.energyReduction)
+        let resultingEnergy = selectedReaction.activationEnergy - catalyst.energyReduction
+        let energyFactor = (resultingEnergy - minEnergy) / (maxEnergy - minEnergy)
+        self.temp2 = self.temp1
+        self.reactionHasStarted = true
+        self.statement = EnergyProfileStatements.setT2
+        withAnimation(.easeOut(duration: 0.8)) {
+            self.selectedCatalyst = catalyst
+            self.peakHeightFactor = energyFactor
         }
     }
 
@@ -157,6 +186,7 @@ class EnergyProfileViewModel: ObservableObject {
         }
         if (concentration == 1) {
             statement = EnergyProfileStatements.finished
+            reactionHasEnded = true
         }
     }
 

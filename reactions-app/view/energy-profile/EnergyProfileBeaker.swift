@@ -18,7 +18,7 @@ struct EnergyProfileBeaker: View {
     @Binding var temp: CGFloat?
     let extraEnergyFactor: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
-    let allowReactionsToC: Bool
+    let reactionHasStarted: Bool
     let catalystIsShaking: Bool
 
     let canReactToC: Bool
@@ -127,7 +127,7 @@ struct EnergyProfileBeaker: View {
                 waterHeight: settings.waterHeight,
                 speed: extraEnergyFactor,
                 updateConcentrationC: updateConcentrationC,
-                allowReactionsToC: allowReactionsToC,
+                reactionHasStarted: reactionHasStarted,
                 emitterPosition: settings.emitterPosition,
                 emitting: emitCatalyst,
                 catalystColor: catalystInProgress?.color ?? .black,
@@ -446,7 +446,7 @@ struct EnergyBeakerWithStand_Previews: PreviewProvider {
             temp: .constant(500),
             extraEnergyFactor: 0,
             updateConcentrationC: {_ in },
-            allowReactionsToC: true,
+            reactionHasStarted: true,
             catalystIsShaking: false,
             canReactToC: true,
             canSelectCatalyst: true,

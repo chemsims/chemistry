@@ -115,7 +115,7 @@ struct EnergyProfileScreen: View {
                 temp: $model.temp2,
                 extraEnergyFactor: model.extraEnergyFactor,
                 updateConcentrationC: model.setConcentrationC,
-                allowReactionsToC: model.allowReactionsToC,
+                reactionHasStarted: model.reactionHasStarted,
                 catalystIsShaking: model.catalystIsShaking,
                 canReactToC: model.canReactToC,
                 canSelectCatalyst: model.canSelectCatalyst,
