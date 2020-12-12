@@ -1,0 +1,159 @@
+//
+// Reactions App
+//
+  
+
+import SwiftUI
+
+struct QuizScreen: View {
+
+    @ObservedObject var model: QuizViewModel
+
+    var body: some View {
+        GeometryReader { geometry in
+            QuizScreenWithSettings(
+                model: model,
+                settings: QuizLayoutSettings(geometry: geometry)
+            )
+        }
+    }
+}
+
+fileprivate struct QuizScreenWithSettings: View {
+    @ObservedObject var model: QuizViewModel
+    let settings: QuizLayoutSettings
+
+    @State private var shakingOption: QuizOption?
+
+    var body: some View {
+        VStack {
+            progressBar
+                .frame(
+                    width: settings.progressWidth,
+                    height: settings.progressHeight
+                ).padding()
+            Text(model.question)
+            answers
+        }.font(.system(size: 20))
+    }
+
+    private var progressBar: some View {
+        ProgressBar(
+            progress: model.progress,
+            progressColor: .orangeAccent,
+            backgroundColor: Styling.quizProgressBackground,
+            backgroundBorder: Styling.quizProgressBorder,
+            cornerRadius: settings.progressCornerRadius
+        )
+    }
+
+    private var answers: some View {
+        HStack(alignment: .bottom) {
+            PreviousButton(action: model.back)
+                .frame(width: settings.navSize, height: settings.navSize)
+            VStack {
+                HStack {
+                    answer(option: .A)
+                    answer(option: .B)
+                }
+                HStack {
+                    answer(option: .C)
+                    answer(option: .D)
+                }
+            }
+            NextButton(action: model.next)
+                .frame(width: settings.navSize, height: settings.navSize)
+                .disabled(!model.hasSelectedAnswer)
+                .opacity(model.hasSelectedAnswer ? 1 : 0.5)
+        }.padding()
+    }
+
+    private func answer(option: QuizOption) -> some View {
+        ZStack {
+            Group {
+                RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                    .foregroundColor(answerBackground(option: option))
+
+                RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                    .stroke(lineWidth: answerLineWidth(option: option))
+                    .foregroundColor(answerBorder(option: option))
+
+                Text(model.optionText(option))
+                    .foregroundColor(.black)
+            }
+            .onTapGesture(perform: { handleAnswer(option: option) })
+            .rotationEffect(shakingOption == option ? .degrees(4) : .zero)
+        }.padding()
+    }
+
+    private func handleAnswer(option: QuizOption) {
+        guard !model.hasSelectedAnswer else {
+            return
+        }
+        if (model.correctOption == option) {
+            withAnimation(.easeOut(duration: 0.125)) {
+                model.hasSelectedAnswer = true
+            }
+        } else {
+            runShake(option: option)
+        }
+    }
+
+    private func runShake(option: QuizOption) {
+        let animation = Animation.spring(
+            response: 0.1,
+            dampingFraction: 0.125
+        )
+        withAnimation(animation) {
+            shakingOption = option
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            withAnimation(animation) {
+                shakingOption = nil
+            }
+        }
+    }
+
+    private func answerBackground(option: QuizOption) -> Color {
+        let active = !model.hasSelectedAnswer || model.correctOption == option
+        return active ? Styling.quizAnswer : Styling.quizAnswerInactive
+    }
+
+    private func answerBorder(option: QuizOption) -> Color {
+        let active = model.hasSelectedAnswer && model.correctOption == option
+        return active ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerBorder
+    }
+
+    private func answerLineWidth(option: QuizOption) -> CGFloat {
+        let active = model.hasSelectedAnswer && model.correctOption == option
+        return active ? 3 : 1
+    }
+}
+
+struct QuizLayoutSettings {
+    let geometry: GeometryProxy
+
+    var progressWidth: CGFloat {
+        0.8 * geometry.size.width
+    }
+
+    var progressHeight: CGFloat {
+        0.06 * geometry.size.height
+    }
+
+    var progressCornerRadius: CGFloat {
+        0.01 * geometry.size.height
+    }
+
+    var navSize: CGFloat {
+        0.05 * geometry.size.width
+    }
+}
+
+struct QuizScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        QuizScreen(
+            model: QuizViewModel()
+        ).previewLayout(.fixed(width: 568, height: 320))
+    }
+}

@@ -31,7 +31,7 @@ struct Styling {
 
     static let moleculeAChartHeadHalo = Color(red: 143 / 255, green: 190 / 255, blue: 226 / 255, opacity: 0.7)
 
-    static let speechBubble = Color(red: 0.91, green: 0.91, blue: 0.91)
+    static let speechBubble = RGB(r: 232, g: 232, b: 232).color
 
     static let primaryColorHalo = Color.orangeAccent.opacity(0.5)
 
@@ -57,6 +57,12 @@ struct Styling {
 
     static let menuPanel = RGB(r: 242, g: 242, b: 242).color
 
+    static let quizProgressBackground = RGB(r: 245, g: 203, b: 196).color
+    static let quizProgressBorder = RGB(r: 240, g: 179, b: 168).color
+    static let quizAnswer = RGB(r: 143, g: 184, b: 222).color
+    static let quizAnswerBorder = RGB(r: 114, g: 165, b: 213).color
+    static let quizAnswerInactive = RGB(r: 191, g: 207, b: 222).color
+    static let quizAnswerCorrectBorder = RGB(r: 38, g: 83, b: 43).color
 }
 
 
