@@ -13,6 +13,7 @@ struct MainMenuOverlay: View {
     let navigation: RootNavigationViewModel
 
     @State private var showPanel: Bool = false
+    @State private var extraOffset: CGFloat = 0
 
     var body: some View {
         GeometryReader { geo in
@@ -20,7 +21,19 @@ struct MainMenuOverlay: View {
                 icon
 
                 panel(height: geo.size.height)
-                    .offset(x: showPanel ? 0 : -totalMenuWidth)
+                    .gesture(
+                        DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                            .onChanged { gesture in
+                                let translation = gesture.translation
+                                let foo = gesture.startLocation.x - gesture.location.x
+                                print("\(translation.width). \(foo). \(gesture.startLocation.x). \(gesture.location.x)")
+                                extraOffset = min(0, translation.width)
+                            }.onEnded { _ in
+                                toggleMenu()
+                                extraOffset = 0
+                            }
+                    )
+                    .offset(x: showPanel ? 0 + extraOffset : -totalMenuWidth)
             }
             .edgesIgnoringSafeArea(.all)
         }
@@ -51,16 +64,14 @@ struct MainMenuOverlay: View {
     }
 
     private var grabHandle: some View {
-        Button(action: toggleMenu) {
-            VStack(spacing: 3) {
-                grabLine
-                grabLine
-                grabLine
-            }
-            .frame(width: size, height: size)
-            .padding(leadingPadding)
-            .foregroundColor(.black)
+        VStack(spacing: 3) {
+            grabLine
+            grabLine
+            grabLine
         }
+        .frame(width: size, height: size)
+        .padding(leadingPadding)
+        .foregroundColor(.black)
     }
 
     private var grabLine: some View {
