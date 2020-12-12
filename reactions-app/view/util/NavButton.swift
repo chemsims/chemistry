@@ -28,6 +28,29 @@ struct PreviousButton: View {
     }
 }
 
+fileprivate extension View {
+
+    @ViewBuilder
+    func rightKeyShortcut() -> some View {
+        if #available(iOS 14, *) {
+            self
+                .keyboardShortcut(.rightArrow)
+        } else {
+            self
+        }
+    }
+
+    @ViewBuilder
+    func leftKeyShortcut() -> some View {
+        if #available(iOS 14, *) {
+            self
+                .keyboardShortcut(.leftArrow)
+        } else {
+            self
+        }
+    }
+}
+
 fileprivate struct GeneralDirectionButton: View {
     let action: () -> Void
     let systemImage: String
