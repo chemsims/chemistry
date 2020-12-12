@@ -42,15 +42,16 @@ class EnergyProfileViewModel: ObservableObject {
 
     private var dispatchId = UUID()
 
-    var goToPreviousScreen: (() -> Void)?
+    var prevScreen: (() -> Void)?
+    var nextScreen: (() -> Void)?
 
     func next() {
-
+        nextScreen?()
     }
 
     func back() {
         if (catalystInProgress == nil) {
-            if let goToPrevious = goToPreviousScreen {
+            if let goToPrevious = prevScreen {
                 goToPrevious()
             }
         } else {

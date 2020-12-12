@@ -20,10 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
 
-//        let contentView = RootNavigationView(
-//            model: RootNavigationViewModel(persistence: InMemoryReactionInputPersistence())
-//        )
-        let contentView = QuizScreen(model: QuizViewModel())
+        let contentView = RootNavigationView(
+            model: RootNavigationViewModel(persistence: InMemoryReactionInputPersistence())
+        )
 
 
         // Use a UIHostingController as window root view controller.

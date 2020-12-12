@@ -14,6 +14,9 @@ class QuizViewModel: ObservableObject {
         setQuestion(newIndex: 0)
     }
 
+    var nextScreen: (() -> Void)?
+    var prevScreen: (() -> Void)?
+
     @Published var progress: CGFloat = 0
     @Published var question: String = ""
     @Published var hasSelectedAnswer: Bool = false
@@ -25,7 +28,9 @@ class QuizViewModel: ObservableObject {
     private var options = [QuizOption:String]()
 
     func next() {
-        if (questionIndex == questions.count - 1) {
+        if (questionIndex == questions.count) {
+            nextScreen?()
+        } else if (questionIndex == questions.count - 1) {
             quizHasFinished = true
             questionIndex += 1
             setProgress()
@@ -36,8 +41,12 @@ class QuizViewModel: ObservableObject {
     }
 
     func back() {
-        quizHasFinished = false
-        setQuestion(newIndex: questionIndex - 1)
+        if (questionIndex == 0) {
+            prevScreen?()
+        } else {
+            quizHasFinished = false
+            setQuestion(newIndex: questionIndex - 1)
+        }
     }
 
     func optionText(_ option: QuizOption) -> String {
