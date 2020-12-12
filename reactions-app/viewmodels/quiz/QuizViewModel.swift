@@ -18,19 +18,25 @@ class QuizViewModel: ObservableObject {
     @Published var question: String = ""
     @Published var hasSelectedAnswer: Bool = false
     @Published var correctOption: QuizOption = .A
+    @Published var quizHasFinished: Bool = false
 
     private var questionIndex: Int = 0
     private var maxIndex: Int = -1
     private var options = [QuizOption:String]()
 
     func next() {
-        setQuestion(newIndex: questionIndex + 1)
-        if (questionIndex > maxIndex) {
-            maxIndex = questionIndex
+        if (questionIndex == questions.count - 1) {
+            quizHasFinished = true
+            questionIndex += 1
+            setProgress()
+        } else {
+            setQuestion(newIndex: questionIndex + 1)
+            maxIndex = max(questionIndex, maxIndex)
         }
     }
 
     func back() {
+        quizHasFinished = false
         setQuestion(newIndex: questionIndex - 1)
     }
 
@@ -55,8 +61,12 @@ class QuizViewModel: ObservableObject {
 
         questionIndex = newIndex
 
+        setProgress()
+    }
+
+    private func setProgress() {
         withAnimation(.easeOut(duration: 0.4)) {
-            progress = CGFloat(newIndex + 1) / CGFloat(questions.count)
+            progress = CGFloat(questionIndex) / CGFloat(questions.count)
         }
     }
 }

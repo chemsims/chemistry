@@ -29,7 +29,8 @@ struct QuizQuestion {
     }
 }
 
-struct QuizQuestionOptions {
+struct QuizQuestionOptions: Identifiable {
+    let id = UUID()
     let question: String
     let options: [QuizOption:String]
     let correctOption: QuizOption

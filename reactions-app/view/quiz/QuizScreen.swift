@@ -27,18 +27,76 @@ fileprivate struct QuizScreenWithSettings: View {
     @State private var badgeScale: CGFloat = 1
 
     var body: some View {
+        ZStack {
+            VStack {
+                progressBar
+                    .frame(
+                        width: settings.progressWidth,
+                        height: settings.progressHeight
+                    ).padding(settings.navPadding)
+
+                HStack(spacing: 0) {
+                    Spacer()
+                        .frame(width: settings.navTotalWidth)
+                    if (!model.quizHasFinished) {
+                        questionBody
+                    } else {
+                        reviewList
+                    }
+                    Spacer()
+                        .frame(width: settings.navTotalWidth)
+                }
+
+                Spacer()
+            }
+            navButtons
+        }
+        .font(.system(size: settings.fontSize))
+        .minimumScaleFactor(0.8)
+    }
+
+    private var reviewList: some View {
         VStack {
-            progressBar
-                .frame(
-                    width: settings.progressWidth,
-                    height: settings.progressHeight
-                ).padding()
+            Text("Let's review the questions!")
+            VStack {
+                ForEach(model.questions) { question in
+                    reviewCard(question: question)
+                }
+            }.edgesIgnoringSafeArea(.bottom)
+        }
+    }
+
+    private func reviewCard(question: QuizQuestionOptions) -> some View {
+        HStack {
+            Text(question.question)
+            Text(question.options[question.correctOption] ?? "")
+                .foregroundColor(.orangeAccent)
+        }.padding()
+    }
+
+    private var questionBody: some View {
+        VStack {
             Text(model.question)
                 .lineLimit(1)
             answers
         }
-        .font(.system(size: settings.fontSize))
-        .minimumScaleFactor(0.8)
+    }
+
+    private var navButtons: some View {
+        VStack(spacing: 0) {
+            Spacer()
+            HStack(spacing: 0) {
+                PreviousButton(action: model.back)
+                    .frame(width: settings.navSize, height: settings.navSize)
+
+                Spacer()
+
+                NextButton(action: model.next)
+                    .frame(width: settings.navSize, height: settings.navSize)
+                    .disabled(!model.hasSelectedAnswer)
+                    .opacity(model.hasSelectedAnswer ? 1 : 0.5)
+            }
+        }.padding(settings.navPadding)
     }
 
     private var progressBar: some View {
@@ -52,24 +110,16 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private var answers: some View {
-        HStack(alignment: .bottom) {
-            PreviousButton(action: model.back)
-                .frame(width: settings.navSize, height: settings.navSize)
-            VStack {
-                HStack {
-                    answer(option: .A)
-                    answer(option: .B)
-                }
-                HStack {
-                    answer(option: .C)
-                    answer(option: .D)
-                }
+        VStack {
+            HStack {
+                answer(option: .A)
+                answer(option: .B)
             }
-            NextButton(action: model.next)
-                .frame(width: settings.navSize, height: settings.navSize)
-                .disabled(!model.hasSelectedAnswer)
-                .opacity(model.hasSelectedAnswer ? 1 : 0.5)
-        }.padding()
+            HStack {
+                answer(option: .C)
+                answer(option: .D)
+            }
+        }
     }
 
     private func answer(option: QuizOption) -> some View {
@@ -201,6 +251,14 @@ struct QuizLayoutSettings {
 
     var fontSize: CGFloat {
         0.04 * geometry.size.width
+    }
+
+    var navPadding: CGFloat {
+        0.5 * navSize
+    }
+
+    var navTotalWidth: CGFloat {
+        navSize + (2 * navPadding)
     }
 }
 
