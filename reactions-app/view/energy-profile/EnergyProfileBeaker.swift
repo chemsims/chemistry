@@ -435,7 +435,7 @@ extension Catalyst {
     }
 }
 
-struct EnergyBeakerWithStand_Previews: PreviewProvider {
+struct EnergyProfileBeaker_Previews: PreviewProvider {
     static var previews: some View {
         EnergyProfileBeaker(
             selectedCatalyst: nil,

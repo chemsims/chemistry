@@ -19,7 +19,7 @@ struct ReactionSettings {
     static let minT1Input: CGFloat = 0
     static let minT2Input: CGFloat = 3
     static let maxTInput: CGFloat = 20
-    static let initialC: CGFloat = 0.9
+    static let initialC: CGFloat = 0.7
     static let initialT: CGFloat = 10
     
     static let minLogConcentration: CGFloat = -4
