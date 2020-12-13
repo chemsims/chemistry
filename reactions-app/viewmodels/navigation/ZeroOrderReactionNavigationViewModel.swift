@@ -114,4 +114,8 @@ fileprivate class FinalState: ReactionState {
         model.highlightedElements = []
         model.reactionHasEnded = true
     }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.reactionHasEnded = false
+    }
 }

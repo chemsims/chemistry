@@ -15,7 +15,7 @@ struct ReactionStatements {
             "As A disappears, B is being produced."
         ),
         SpeechBubbleLineGenerator.makeLine(
-            "This happens at a variable Rate (in units of M/s), which is dependant on *k* and *[A]*."
+            "This happens at a variable *Rate (in units of M/s)*, which is dependant on *k* and *[A]*."
         )
     ]
     

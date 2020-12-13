@@ -84,7 +84,7 @@ fileprivate class ExplainHalflife: PreReactionAnimation {
     }
 
     override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        FirstOrderStatements.explainHalflife(
+        FirstOrderStatements.explainHalfLife(
             halfLife: model.concentrationEquationA?.halfLife ?? 0
         )
     }
@@ -121,6 +121,12 @@ fileprivate class FinalState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.highlightedElements = []
+        model.reactionHasEnded = true
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.reactionHasEnded = false
+        model.highlightedElements = [.concentrationChart, .secondaryChart]
     }
     
 }

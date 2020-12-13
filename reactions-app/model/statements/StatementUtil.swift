@@ -14,4 +14,6 @@ struct Strings {
         }
         return String(elements)
     }
+
+    static let aVsT: String = withNoBreaks(str: "**([A] vs t)**")
 }

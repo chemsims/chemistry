@@ -20,10 +20,9 @@ struct SecondOrderReactionNavigation {
                 initialiseCurrentTime: false
             ),
             EndAnimation(
-                statement: SecondOrderStatements.end,
+                statement: SecondOrderStatements.postReactionExplain1,
                 highlightChart: true
             ),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain1),
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain2),
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain3),
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain4),
