@@ -15,7 +15,7 @@ struct ConcentrationTable: View {
     let cellHeight: CGFloat
     let buttonSize: CGFloat
 
-    @State private var showTable = true
+    @State private var showTable = false
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
@@ -31,7 +31,8 @@ struct ConcentrationTable: View {
                     cell(value: t1)
                     cell(value: t2)
                 }
-            }.opacity(showTable ? 1 : 0)
+            }
+            .scaleEffect(y: showTable ? 1 : 0, anchor: .top)
         }
         .lineLimit(1)
         .minimumScaleFactor(0.5)
@@ -46,6 +47,7 @@ struct ConcentrationTable: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .padding(0.2 * buttonSize)
+                    .rotationEffect(showTable ? .degrees(135) : .zero)
             }
         }
         .foregroundColor(.black)
