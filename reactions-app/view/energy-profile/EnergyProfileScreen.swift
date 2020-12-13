@@ -145,7 +145,7 @@ fileprivate struct EnergyProfileLayoutSettings {
         1.2 * orderLayoutSettings.chartSize
     }
     var chartsTopPadding: CGFloat {
-        orderLayoutSettings.chartsTopPadding
+        orderLayoutSettings.topPadding
     }
     var equationWidth: CGFloat {
         0.9 * (geometry.size.width - beakerTotalWidth - orderLayoutSettings.beakyBoxTotalWidth)

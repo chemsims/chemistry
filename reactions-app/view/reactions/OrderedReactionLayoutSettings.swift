@@ -10,12 +10,34 @@ struct OrderedReactionLayoutSettings {
     let horizontalSize: UserInterfaceSizeClass?
     let verticalSize: UserInterfaceSizeClass?
 
+    // MARK: Screen Size
     var width: CGFloat {
         geometry.size.width
     }
-
     var height: CGFloat {
         geometry.size.height
+    }
+    var topPadding: CGFloat {
+        0.05 * height
+    }
+
+    // MARK: Beaker Size
+    var beakerWidth: CGFloat {
+        return topStackUtil.beakerWidth
+    }
+    var beakerHeight: CGFloat {
+        beakerWidth * BeakerSettings.heightToWidth
+    }
+
+    // MARK: Chart size
+    var chartSize: CGFloat {
+        return topStackUtil.chartSize
+    }
+    var chartHPadding: CGFloat {
+        OrderedReactionLayoutSettings.chartHPaddingFactor * chartSize
+    }
+    var chartSettings: TimeChartGeometrySettings {
+        TimeChartGeometrySettings(chartSize: chartSize)
     }
 
     var bubbleWidth: CGFloat {
@@ -24,27 +46,12 @@ struct OrderedReactionLayoutSettings {
         }
         return 0.22 * width
     }
+
     var bubbleHeight: CGFloat {
         if (vIsRegular && hIsRegular) {
             return 1.1 * bubbleWidth
         }
         return 0.8 * bubbleWidth
-    }
-
-    var chartSize: CGFloat {
-        return topStackUtil.chartSize
-    }
-
-    var chartHPadding: CGFloat {
-        OrderedReactionLayoutSettings.chartHPaddingFactor * chartSize
-    }
-
-    var beakerWidth: CGFloat {
-        return topStackUtil.beakerWidth
-    }
-
-    var chartSettings: TimeChartGeometrySettings {
-        TimeChartGeometrySettings(chartSize: chartSize)
     }
 
     var topStackHSpacing: CGFloat {
@@ -63,25 +70,15 @@ struct OrderedReactionLayoutSettings {
     var bubbleStemWidth: CGFloat {
         SpeechBubbleSettings.getStemWidth(width: bubbleWidth)
     }
-    var beakerHeight: CGFloat {
-        beakerWidth * BeakerSettings.heightToWidth
-    }
 
-    var midChartsLeftPadding: CGFloat {
-        chartSize * 0.2
-    }
-    var chartsTopPadding: CGFloat {
-        0.05 * height
-    }
+
     var beakyRightPadding: CGFloat {
         bubbleWidth * 0.2
     }
     var beakyBottomPadding: CGFloat {
         beakyRightPadding * 0.1
     }
-    var beakerLeadingPadding: CGFloat {
-        0.5 * menuSize
-    }
+
     var beakyBoxTotalHeight: CGFloat {
         bubbleHeight + navButtonSize + beakyVSpacing + beakyBottomPadding
     }
@@ -127,7 +124,7 @@ struct OrderedReactionLayoutSettings {
         0.03 * width
     }
 
-    var menuLeadingPadding: CGFloat {
+    var menuHPadding: CGFloat {
         0.5 * menuSize
     }
 
@@ -136,7 +133,7 @@ struct OrderedReactionLayoutSettings {
     }
 
     var menuTotalWidth: CGFloat {
-        menuSize + menuLeadingPadding
+        menuSize + (2 * menuHPadding)
     }
 
     private var hIsRegular: Bool {
@@ -156,7 +153,7 @@ struct OrderedReactionLayoutSettings {
     private var topStackUtil: TopStackLayoutUtil {
         TopStackLayoutUtil(
             totalWidth: width - menuTotalWidth,
-            totalHeight: (height / 2) - chartsTopPadding
+            totalHeight: (height / 2) - topPadding
         )
     }
 

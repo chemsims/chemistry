@@ -27,7 +27,8 @@ struct MenuButton: View {
                     line(size: size)
                 }
             }.frame(width: size, height: size)
-        }.foregroundColor(.black)
+        }
+        .foregroundColor(.black)
     }
 
     private func line(size: CGFloat) -> some View {

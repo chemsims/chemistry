@@ -60,8 +60,8 @@ struct SecondOrderReactionScreen: View {
             canSetCurrentTime: reaction.reactionHasEnded
         )
         .colorMultiply(reaction.color(for: .secondaryChart))
-        .padding(.top, settings.chartsTopPadding)
-        .padding(.leading, settings.chartsTopPadding / 2)
+        .padding(.top, settings.topPadding)
+        .padding(.leading, settings.topPadding / 2)
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
@@ -87,7 +87,7 @@ struct SecondOrderReactionScreen: View {
     }
 
     private func barChartSize(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        let maxHeight = availableHeight(settings: settings) - (settings.chartsTopPadding)
+        let maxHeight = availableHeight(settings: settings) - (settings.topPadding)
         let maxWidth = availableWidth(settings: settings) / 3
         return min(maxHeight, maxWidth)
     }
@@ -97,7 +97,7 @@ struct SecondOrderReactionScreen: View {
     }
 
     private func availableHeight(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.height - settings.beakerHeight - settings.beakerLeadingPadding
+        settings.height - settings.beakerHeight
     }
 
 }

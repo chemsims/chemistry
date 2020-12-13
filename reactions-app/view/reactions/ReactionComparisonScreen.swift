@@ -71,7 +71,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     private var beakers: some View {
         HStack(spacing: 0) {
             Spacer()
-                .frame(width: settings.ordered.menuSize + settings.ordered.menuLeadingPadding)
+                .frame(width: settings.ordered.menuTotalWidth)
             VStack {
                 beaker(order: settings.ordering[0])
                 beaker(order: settings.ordering[1])

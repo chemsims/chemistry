@@ -52,12 +52,11 @@ struct OrderedReactionScreen<Content: View>: View {
                     currentTime: reaction.currentTime
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
-                .padding(.leading, settings.beakerLeadingPadding)
                 .colorMultiply(reaction.color(for: nil))
 
                 middleCharts(settings: settings)
             }
-            .padding(.top, settings.chartsTopPadding)
+            .padding(.top, settings.topPadding)
             Spacer()
         }
     }

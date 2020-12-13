@@ -31,7 +31,7 @@ struct RootNavigationView: View {
             MainMenuOverlay(
                 size: settings.menuSize,
                 topPadding: settings.menuTopPadding,
-                leadingPadding: settings.menuLeadingPadding,
+                menuHPadding: settings.menuHPadding,
                 navigation: model
             )
         }

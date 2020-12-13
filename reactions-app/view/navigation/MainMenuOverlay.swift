@@ -9,7 +9,7 @@ struct MainMenuOverlay: View {
 
     let size: CGFloat
     let topPadding: CGFloat
-    let leadingPadding: CGFloat
+    let menuHPadding: CGFloat
     let navigation: RootNavigationViewModel
 
     var body: some View {
@@ -20,7 +20,7 @@ struct MainMenuOverlay: View {
                     geometry: geo,
                     menuSize: size,
                     topPadding: topPadding,
-                    leadingPadding: leadingPadding
+                    hPadding: menuHPadding
                 )
             )
         }
@@ -61,7 +61,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 MenuButton(action: toggleMenu)
                     .frame(width: settings.menuSize, height: settings.menuSize)
                     .padding(.top, settings.topPadding)
-                    .padding(.leading, settings.leadingPadding)
+                    .padding(.horizontal, settings.hPadding)
                 Spacer()
             }
             Spacer()
@@ -87,7 +87,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             grabLine
         }
         .frame(width: settings.menuSize, height: settings.menuSize)
-        .padding(settings.leadingPadding)
+        .padding(settings.hPadding)
         .foregroundColor(.black)
     }
 
@@ -158,7 +158,7 @@ fileprivate struct MainMenuLayoutSettings {
     let geometry: GeometryProxy
     let menuSize: CGFloat
     let topPadding: CGFloat
-    let leadingPadding: CGFloat
+    let hPadding: CGFloat
 
     var height: CGFloat {
         geometry.size.height
@@ -185,7 +185,7 @@ fileprivate struct MainMenuLayoutSettings {
     }
 
     var totalMenuWidth: CGFloat {
-        panelWidth + tabWidth + (2 * leadingPadding) + leadingPanelSpace
+        panelWidth + tabWidth + (2 * hPadding) + leadingPanelSpace
     }
 
     var panelWidthFraction: CGFloat {
@@ -214,7 +214,7 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         MainMenuOverlay(
             size: 50,
             topPadding: 10,
-            leadingPadding: 10,
+            menuHPadding: 10,
             navigation: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence()
             )

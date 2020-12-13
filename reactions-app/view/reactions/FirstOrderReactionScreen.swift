@@ -35,8 +35,8 @@ struct FirstOrderReactionScreen: View {
                 Spacer()
                 HStack(spacing: 0) {
                     logChart(settings: settings)
-                        .padding(.top, settings.chartsTopPadding)
-                        .padding(.leading, settings.chartsTopPadding)
+                        .padding(.top, settings.topPadding)
+                        .padding(.leading, settings.topPadding)
 
                     equationView(settings: settings)
                         .padding(.leading, equationLeadingPadding)
@@ -89,7 +89,7 @@ struct FirstOrderReactionScreen: View {
 
 
     private func barChartSize(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        let maxHeight = availableHeight(settings: settings) - (settings.chartsTopPadding)
+        let maxHeight = availableHeight(settings: settings) - (settings.topPadding)
         let maxWidth = availableWidth(settings: settings) / 3
         return min(maxHeight, maxWidth)
     }

@@ -45,13 +45,13 @@ struct ZeroOrderReactionScreen: View {
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
         let availableWidth = settings.width - settings.beakyBoxTotalWidth - (2 * equationHorizontalPadding(settings: settings))
-        let availableHeight = settings.height - settings.beakerHeight - settings.beakerLeadingPadding - (2 * equationVerticalPadding)
+        let availableHeight = settings.height - settings.beakerHeight - (2 * equationVerticalPadding)
 
         let height = min(availableHeight, settings.height / 2.5)
 
         return VStack(alignment: .leading, spacing: 0) {
             Spacer()
-                .frame(height: settings.beakerHeight + settings.beakerLeadingPadding)
+                .frame(height: settings.beakerHeight)
             ZeroOrderEquationView(
                 emphasiseFilledTerms: reaction.currentTime == nil,
                 reactionHasStarted: reaction.reactionHasStarted,
