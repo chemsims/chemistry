@@ -41,8 +41,9 @@ fileprivate struct SpeechBubbleWithSettings: View {
 
             linesView
                 .padding(settings.bubbleTextPadding)
-                .frame(width: settings.bubbleWidth, height: settings.geometry.size.height)
-        }.minimumScaleFactor(0.6)
+                .frame(width: settings.bubbleWidth, height: settings.geometry.size.height, alignment: .leading)
+        }
+        .minimumScaleFactor(0.6)
     }
 
     private var linesView: Text {
@@ -166,8 +167,10 @@ struct SpeechBubble_Previews: PreviewProvider {
         ])
     ]
 
-
     static var previews: some View {
-        SpeechBubble(lines: lines, fontSize: 20).frame(width: 220, height: 200)
+        VStack {
+            SpeechBubble(lines: lines, fontSize: 20).frame(width: 220, height: 200)
+            SpeechBubble(lines: [.init(content: [.init(content: "this is a foo", emphasised: true)])], fontSize: 20).frame(width: 220, height: 200)
+        }
     }
 }

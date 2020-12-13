@@ -98,7 +98,7 @@ struct FirstOrderStatements {
             "ln[A]*(y)*=-kt*(mx)*+ln[A0]*(b)*"
         ),
         SpeechBubbleLineGenerator.makeLine(
-            "Where the slope is *-k*"
+            "Where the slope is *-k*."
         )
     ]
 
