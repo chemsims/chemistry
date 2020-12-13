@@ -36,8 +36,11 @@ struct SecondOrderReactionScreen: View {
                     .frame(height: settings.topStackSize)
                 HStack(spacing: 0) {
                     invChart(settings: settings)
+                        .padding(.top, settings.secondaryChartPadding)
+                        .padding(.leading, settings.secondaryChartPadding)
+
                     equationView(settings: settings)
-                        .padding(equationPadding(settings: settings))
+                        .padding(settings.equationPadding)
                     Spacer()
                         .frame(width: settings.beakyBoxTotalWidth)
                 }
@@ -62,8 +65,6 @@ struct SecondOrderReactionScreen: View {
             canSetCurrentTime: reaction.reactionHasEnded
         )
         .colorMultiply(reaction.color(for: .secondaryChart))
-        .padding(.top, settings.topPadding)
-        .padding(.leading, settings.topPadding)
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
@@ -83,11 +84,6 @@ struct SecondOrderReactionScreen: View {
             )
         }
     }
-
-    private func equationPadding(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        0.1 * settings.chartSize
-    }
-
 }
 
 struct SecondOrderReaction_Previews: PreviewProvider {

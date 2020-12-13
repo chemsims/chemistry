@@ -36,11 +36,11 @@ struct FirstOrderReactionScreen: View {
                     .frame(height: settings.topStackSize)
                 HStack(spacing: 0) {
                     logChart(settings: settings)
-                        .padding(.top, settings.topPadding)
-                        .padding(.leading, settings.topPadding)
+                        .padding(.top, settings.secondaryChartPadding)
+                        .padding(.leading, settings.secondaryChartPadding)
 
                     equationView(settings: settings)
-                        .padding(equationPadding(settings: settings))
+                        .padding(settings.equationPadding)
 
                     Spacer()
                         .frame(width: settings.beakyBoxTotalWidth)
@@ -84,11 +84,6 @@ struct FirstOrderReactionScreen: View {
                 maxHeight: geometry.size.height
             )
         }
-
-    }
-
-    private func equationPadding(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        0.1 * settings.chartSize
     }
 }
 

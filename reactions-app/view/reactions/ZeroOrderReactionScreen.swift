@@ -66,16 +66,11 @@ struct ZeroOrderReactionScreen: View {
                         concentration: reaction.concentrationEquationA
                     )
                 }
-                .padding(.vertical, equationPadding(settings: settings))
-                .padding(.horizontal, equationPadding(settings: settings))
+                .padding(settings.equationPadding)
                 Spacer()
                     .frame(width: settings.beakyBoxTotalWidth)
             }
         }
-    }
-
-    private func equationPadding(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        0.1 * settings.chartSize
     }
 }
 

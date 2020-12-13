@@ -42,6 +42,14 @@ struct OrderedReactionLayoutSettings {
     var chartSettings: TimeChartGeometrySettings {
         TimeChartGeometrySettings(chartSize: chartSize)
     }
+    var secondaryChartPadding: CGFloat {
+        0.1 * chartSize
+    }
+
+    // MARK: Equation size
+    var equationPadding: CGFloat {
+        0.1 * chartSize
+    }
 
     var bubbleWidth: CGFloat {
         if (vIsRegular && hIsRegular) {
