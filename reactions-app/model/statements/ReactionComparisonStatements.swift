@@ -30,7 +30,7 @@ struct ReactionComparisonStatements {
     ]
 
     static let preReaction = [
-        SpeechBubbleLineGenerator.makeLine("Tap next or play on any of the graphs to start the reactions."),
+        SpeechBubbleLineGenerator.makeLine("Tap next or press play on any of the graphs to start the reactions."),
         SpeechBubbleLineGenerator.makeLine("Let's see how long it takes you to guess!")
     ]
 

@@ -13,7 +13,7 @@ struct SecondOrderStatements {
 
     static func explainRateConstant(rateConstant: CGFloat) -> [SpeechBubbleLine] {
         [
-            SpeechBubbleLineGenerator.makeLine("For this reaction, \(Strings.withNoBreaks(str: "*k=\(rateConstant.str(decimals: 2))*")).")
+            SpeechBubbleLineGenerator.makeLine("For this reaction, \(Strings.withNoBreaks(str: "*k=\(rateConstant.str(decimals: 3))*")).")
         ]
     }
 
@@ -82,6 +82,6 @@ struct SecondOrderStatements {
 
     static let end = [
         SpeechBubbleLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
-        SpeechBubbleLineGenerator.makeLine("Now let's compare all the graphs we collected so far!"),
+        SpeechBubbleLineGenerator.makeLine("Now let's take a quiz and then compare all the graphs we collected so far!"),
     ]
 }

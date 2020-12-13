@@ -65,7 +65,7 @@ struct FirstOrderStatements {
 
     static let explainRatePostReaction2 = [
         SpeechBubbleLineGenerator.makeLine(
-            "For this First Order Reaction, \(Strings.withNoBreaks(str: "*Rate=k[A]^1^*")). that's why a graph plotting \(Strings.aVsT) is a curve, given how the *Rate* is proportional to the concentration of *A*."
+            "For this First Order Reaction, \(Strings.withNoBreaks(str: "*Rate=k[A]^1^*")). That's why a graph plotting \(Strings.aVsT) is a curve, given how the *Rate* is proportional to the concentration of *A*."
         )
     ]
 
