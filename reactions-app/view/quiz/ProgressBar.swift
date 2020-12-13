@@ -35,6 +35,7 @@ struct ProgressBar: View {
             Rectangle()
                 .frame(width: progress * geometry.size.width)
             Spacer()
+                .frame(width: (1 - progress) * geometry.size.width)
         }
     }
 
@@ -47,7 +48,7 @@ struct ProgressBar: View {
 struct ProgressBar_Previews: PreviewProvider {
     static var previews: some View {
         ProgressBar(
-            progress: 0.1,
+            progress: 0.9,
             progressColor: .orangeAccent,
             backgroundColor: Styling.quizProgressBackground,
             backgroundBorder: Styling.quizProgressBorder,
