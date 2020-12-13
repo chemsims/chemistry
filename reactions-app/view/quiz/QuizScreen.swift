@@ -95,7 +95,7 @@ fileprivate struct QuizScreenWithSettings: View {
                 NextButton(action: model.next)
                     .frame(width: settings.navSize, height: settings.navSize)
                     .disabled(!model.hasSelectedAnswer)
-                    .opacity(model.hasSelectedAnswer ? 1 : 0.5)
+                    .opacity(model.hasSelectedAnswer ? 1 : 0.3)
             }
         }.padding(settings.navPadding)
     }
