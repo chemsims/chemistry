@@ -12,27 +12,44 @@ struct MainMenuOverlay: View {
     let leadingPadding: CGFloat
     let navigation: RootNavigationViewModel
 
+    var body: some View {
+        GeometryReader { geo in
+            MainMenuOverlayWithSettings(
+                navigation: navigation,
+                settings: MainMenuLayoutSettings(
+                    geometry: geo,
+                    menuSize: size,
+                    topPadding: topPadding,
+                    leadingPadding: leadingPadding
+                )
+            )
+        }
+    }
+}
+
+fileprivate struct MainMenuOverlayWithSettings: View {
+
+    let navigation: RootNavigationViewModel
+    let settings: MainMenuLayoutSettings
+
     @State private var showPanel: Bool = false
     @State private var extraOffset: CGFloat = 0
 
     var body: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                icon
+        ZStack(alignment: .leading) {
+            icon
 
-                panel(height: geo.size.height)
-                    .gesture(
-                        DragGesture(minimumDistance: 0, coordinateSpace: .global)
-                            .onChanged { gesture in
-                                extraOffset = min(0, gesture.translation.width)
-                            }.onEnded { _ in
-                                toggleMenu()
-                                extraOffset = 0
-                            }
-                    )
-                    .offset(x: showPanel ? 0 + extraOffset : -totalMenuWidth)
-            }
-            .edgesIgnoringSafeArea(.all)
+            panel
+                .gesture(
+                    DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                        .onChanged { gesture in
+                            extraOffset = min(0, gesture.translation.width)
+                        }.onEnded { _ in
+                            toggleMenu()
+                            extraOffset = 0
+                        }
+                )
+                .offset(x: showPanel ? 0 + extraOffset : -totalMenuWidth)
         }
     }
 
@@ -40,22 +57,21 @@ struct MainMenuOverlay: View {
         HStack(spacing: 0) {
             VStack(spacing: 0) {
                 MenuButton(action: toggleMenu)
-                .frame(width: size, height: size)
-                .padding(.top, topPadding)
-                .padding(.leading, leadingPadding)
-
+                    .frame(width: settings.menuSize, height: settings.menuSize)
+                    .padding(.top, settings.topPadding)
+                    .padding(.leading, settings.leadingPadding)
                 Spacer()
             }
             Spacer()
         }
     }
 
-    private func panel(height: CGFloat) -> some View {
+    private var panel: some View {
         HStack(alignment: .top, spacing: 0) {
-            panel2(height: height)
+            panel2
             grabHandle
         }
-        .background(panelBackground(height: height))
+        .background(panelBackground)
         .compositingGroup()
         .shadow(radius: 3)
     }
@@ -66,18 +82,18 @@ struct MainMenuOverlay: View {
             grabLine
             grabLine
         }
-        .frame(width: size, height: size)
-        .padding(leadingPadding)
+        .frame(width: settings.menuSize, height: settings.menuSize)
+        .padding(settings.leadingPadding)
         .foregroundColor(.black)
     }
 
     private var grabLine: some View {
         Rectangle()
-            .frame(width: 0.6 * size, height: max(0.015 * size, 1))
+            .frame(width: 0.6 * settings.menuSize, height: max(0.015 * settings.menuSize, 1))
     }
 
 
-    private func panel2(height: CGFloat) -> some View {
+    private var panel2: some View {
         VStack {
             Spacer()
                 .frame(height: tabHeight / 2)
@@ -90,22 +106,22 @@ struct MainMenuOverlay: View {
         .frame(width: panelWidth)
     }
 
-    private func panelBackground(height: CGFloat) -> some View {
+    private var panelBackground: some View {
         ZStack {
-            panelShape(height: height)
+            panelShape
                 .fill()
                 .foregroundColor(Styling.menuPanel)
 
-            panelShape(height: height)
+            panelShape
                 .stroke(lineWidth: 0.75)
         }
     }
 
-    private func panelShape(height: CGFloat) -> some Shape {
+    private var panelShape: some Shape {
         MainMenuPanel(
             panelWidthFraction: panelWidth / totalMenuWidth,
-            panelHeightFraction: 1 - (tabHeight / height),
-            cornerRadius: 0.5 * size
+            panelHeightFraction: 1 - (tabHeight / settings.height),
+            cornerRadius: 0.5 * settings.menuSize
         )
     }
 
@@ -114,7 +130,7 @@ struct MainMenuOverlay: View {
             Image(image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .padding(0.2 * size)
+                .padding(0.2 * settings.menuSize)
         }
     }
 
@@ -132,19 +148,30 @@ struct MainMenuOverlay: View {
     }
 
     private var panelWidth: CGFloat {
-        2.2 * size
+        2.2 * settings.menuSize
     }
 
     private var tabWidth: CGFloat {
-        size
+        settings.menuSize
     }
 
     private var totalMenuWidth: CGFloat {
-        panelWidth + tabWidth + (2 * leadingPadding)
+        panelWidth + tabWidth + (2 * settings.leadingPadding)
     }
 
     private var tabHeight: CGFloat {
-        1.1 * (size + (2 * topPadding))
+        1.1 * (settings.menuSize + (2 * settings.topPadding))
+    }
+}
+
+fileprivate struct MainMenuLayoutSettings {
+    let geometry: GeometryProxy
+    let menuSize: CGFloat
+    let topPadding: CGFloat
+    let leadingPadding: CGFloat
+
+    var height: CGFloat {
+        geometry.size.height
     }
 }
 
