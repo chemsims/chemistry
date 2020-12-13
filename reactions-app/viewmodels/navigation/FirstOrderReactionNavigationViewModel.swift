@@ -28,7 +28,7 @@ struct FirstOrderReactionNavigation {
             ExplainRatePostReaction3(),
             ExplainIntegratedRateLaw1(),
             ExplainIntegratedRateLaw2(),
-            FinalState()
+            FinalState(statement: FirstOrderStatements.end)
         ]
     }
 
@@ -111,22 +111,4 @@ fileprivate class ExplainIntegratedRateLaw2: ReactionState {
     init() {
         super.init(statement: FirstOrderStatements.explainIntegratedRateLaw2)
     }
-}
-
-fileprivate class FinalState: ReactionState {
-
-    init() {
-        super.init(statement: FirstOrderStatements.end)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        model.highlightedElements = []
-        model.reactionHasEnded = true
-    }
-
-    override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.reactionHasEnded = false
-        model.highlightedElements = [.concentrationChart, .secondaryChart]
-    }
-    
 }

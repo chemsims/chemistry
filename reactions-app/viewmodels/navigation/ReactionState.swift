@@ -218,3 +218,17 @@ class SetFinalConcentrationToNonNil: ReactionState {
     }
 
 }
+
+
+class FinalState: ReactionState {
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = []
+        model.reactionHasEnded = true
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.reactionHasEnded = false
+        model.highlightedElements = [.concentrationChart, .secondaryChart]
+    }
+}

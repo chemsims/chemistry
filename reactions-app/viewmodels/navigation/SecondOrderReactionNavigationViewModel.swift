@@ -28,6 +28,7 @@ struct SecondOrderReactionNavigation {
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain4),
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain5),
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain6),
+            FinalState(statement: SecondOrderStatements.end)
         ]
     }
 
@@ -77,14 +78,4 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
 
 fileprivate class PostReactionExplanation: ReactionState {
 
-}
-
-fileprivate class FinalState: ReactionState {
-    init() {
-        super.init(statement: SecondOrderStatements.end)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        model.highlightedElements = []
-    }
 }

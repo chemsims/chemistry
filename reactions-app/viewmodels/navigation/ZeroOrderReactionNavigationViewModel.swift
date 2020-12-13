@@ -12,7 +12,7 @@ struct ZeroOrderReactionNavigation {
             InitialStep(),
             SetFinalValuesToNonNil(),
             ExplainRateState(),
-            ExplainHalflifeState(),
+            ExplainHalfLifeState(),
             RunAnimation(
                 statement: ZeroOrderStatements.reactionInProgress,
                 order: .Zero,
@@ -23,7 +23,7 @@ struct ZeroOrderReactionNavigation {
                 statement: ZeroOrderStatements.endAnimation,
                 highlightChart: true
             ),
-            FinalState()
+            FinalState(statement: ZeroOrderStatements.end)
         ]
     }
 
@@ -92,7 +92,7 @@ fileprivate class ExplainRateState: ReactionState {
 
 }
 
-fileprivate class ExplainHalflifeState: PreReactionAnimation {
+fileprivate class ExplainHalfLifeState: PreReactionAnimation {
 
     init() {
         super.init(highlightedElements: [.halfLifeEquation])
@@ -102,20 +102,5 @@ fileprivate class ExplainHalflifeState: PreReactionAnimation {
         ZeroOrderStatements.halfLifeExplainer(
             halfLife: model.concentrationEquationA?.halfLife ?? 0
         )
-    }
-}
-
-fileprivate class FinalState: ReactionState {
-    init() {
-        super.init(statement: ZeroOrderStatements.end)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        model.highlightedElements = []
-        model.reactionHasEnded = true
-    }
-
-    override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.reactionHasEnded = false
     }
 }
