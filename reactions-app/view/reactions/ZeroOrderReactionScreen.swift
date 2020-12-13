@@ -38,51 +38,45 @@ struct ZeroOrderReactionScreen: View {
             settings: settings,
             canSetInitialTime: true
         ) {
-            EmptyView()
-//            equationView(settings: settings)
+            equationView(settings: settings)
         }
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
-        let availableWidth = settings.width - settings.beakyBoxTotalWidth - (2 * equationHorizontalPadding(settings: settings))
-        let availableHeight = settings.height - settings.beakerHeight - (2 * equationVerticalPadding)
-
-        let height = min(availableHeight, settings.height / 2.5)
-
         return VStack(alignment: .leading, spacing: 0) {
             Spacer()
-                .frame(height: settings.beakerHeight)
-            ZeroOrderEquationView(
-                emphasiseFilledTerms: reaction.currentTime == nil,
-                reactionHasStarted: reaction.reactionHasStarted,
-                initialConcentration: reaction.initialConcentration,
-                initialTime: reaction.initialTime,
-                deltaC: reaction.deltaC,
-                deltaT: reaction.deltaT,
-                c2: reaction.finalConcentration,
-                t2: reaction.finalTime,
-                rateColorMultipy: reaction.color(for: .rateEquation),
-                halfLifeColorMultiply: reaction.color(for: .halfLifeEquation),
-                maxWidth: availableWidth,
-                maxHeight: height,
-                isShowingTooltip: $isShowingTooltip,
-                currentTime: reaction.currentTime,
-                concentration: reaction.concentrationEquationA
-            )
-            .padding(.vertical, equationVerticalPadding)
-            .padding(.horizontal, equationHorizontalPadding(settings: settings))
-            Spacer()
+                .frame(height: settings.topStackSize)
+            HStack {
+                GeometryReader { geometry in
+                    ZeroOrderEquationView(
+                        emphasiseFilledTerms: reaction.currentTime == nil,
+                        reactionHasStarted: reaction.reactionHasStarted,
+                        initialConcentration: reaction.initialConcentration,
+                        initialTime: reaction.initialTime,
+                        deltaC: reaction.deltaC,
+                        deltaT: reaction.deltaT,
+                        c2: reaction.finalConcentration,
+                        t2: reaction.finalTime,
+                        rateColorMultipy: reaction.color(for: .rateEquation),
+                        halfLifeColorMultiply: reaction.color(for: .halfLifeEquation),
+                        maxWidth: geometry.size.width,
+                        maxHeight: geometry.size.height,
+                        isShowingTooltip: $isShowingTooltip,
+                        currentTime: reaction.currentTime,
+                        concentration: reaction.concentrationEquationA
+                    )
+                }
+                .padding(.vertical, equationPadding(settings: settings))
+                .padding(.horizontal, equationPadding(settings: settings))
+                Spacer()
+                    .frame(width: settings.beakyBoxTotalWidth)
+            }
         }
     }
 
-    private var equationVerticalPadding: CGFloat {
-        10
+    private func equationPadding(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        0.1 * settings.chartSize
     }
-
-    private func equationHorizontalPadding(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.chartSize * 0.1
-    }
-
 }
 
 struct ZeroOrderReaction_Previews: PreviewProvider {

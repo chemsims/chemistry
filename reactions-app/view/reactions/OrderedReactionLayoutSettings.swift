@@ -20,6 +20,9 @@ struct OrderedReactionLayoutSettings {
     var topPadding: CGFloat {
         0.05 * height
     }
+    var topStackSize: CGFloat {
+        height / 2
+    }
 
     // MARK: Beaker Size
     var beakerWidth: CGFloat {
@@ -153,7 +156,7 @@ struct OrderedReactionLayoutSettings {
     private var topStackUtil: TopStackLayoutUtil {
         TopStackLayoutUtil(
             totalWidth: width - menuTotalWidth,
-            totalHeight: (height / 2) - topPadding
+            totalHeight: topStackSize - topPadding
         )
     }
 
