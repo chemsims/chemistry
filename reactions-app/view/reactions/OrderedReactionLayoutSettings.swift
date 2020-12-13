@@ -51,29 +51,27 @@ struct OrderedReactionLayoutSettings {
         0.1 * chartSize
     }
 
+    // MARK: Beaky & bubble size
+    var beakyTotalHeight: CGFloat {
+        height - topStackSize - beakyBottomPadding
+    }
+    var beakyRightPadding: CGFloat {
+        0.01 * width
+    }
+    var bubbleHeight: CGFloat {
+        0.8 * beakyTotalHeight
+    }
     var bubbleWidth: CGFloat {
         if (vIsRegular && hIsRegular) {
-            return 0.25 * width
+            return 0.3 * width
         }
-        return 0.22 * width
+        return 0.3 * width
     }
-
-    var bubbleHeight: CGFloat {
-        if (vIsRegular && hIsRegular) {
-            return 1.1 * bubbleWidth
-        }
-        return 0.8 * bubbleWidth
-    }
-
-    var topStackHSpacing: CGFloat {
-        0.1 * chartSize
-    }
-
     var bubbleFontSize: CGFloat {
         bubbleWidth * 0.08
     }
     var beakyHeight: CGFloat {
-        0.7 * bubbleHeight
+        0.4 * bubbleWidth
     }
     var navButtonSize: CGFloat {
         bubbleHeight * 0.2
@@ -81,15 +79,9 @@ struct OrderedReactionLayoutSettings {
     var bubbleStemWidth: CGFloat {
         SpeechBubbleSettings.getStemWidth(width: bubbleWidth)
     }
-
-
-    var beakyRightPadding: CGFloat {
-        bubbleWidth * 0.2
-    }
     var beakyBottomPadding: CGFloat {
-        beakyRightPadding * 0.1
+        beakyRightPadding
     }
-
     var beakyBoxTotalHeight: CGFloat {
         bubbleHeight + navButtonSize + beakyVSpacing + beakyBottomPadding
     }
@@ -100,6 +92,7 @@ struct OrderedReactionLayoutSettings {
         return 2
     }
 
+    // MARK: Table size
     var availableWidthForTable: CGFloat {
         width -
             menuTotalWidth -
@@ -131,6 +124,7 @@ struct OrderedReactionLayoutSettings {
         bubbleFontSize
     }
 
+    // MARK: Menu size
     var menuSize: CGFloat {
         0.03 * width
     }

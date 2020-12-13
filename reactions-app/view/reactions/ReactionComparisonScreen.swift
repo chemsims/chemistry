@@ -512,7 +512,6 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             self.dragOverOrder = nil
         }
     }
-
 }
 
 fileprivate extension ReactionOrder {

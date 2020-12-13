@@ -8,12 +8,16 @@ import SwiftUI
 struct SpeechBubble: View {
 
     let lines: [SpeechBubbleLine]
+    let fontSize: CGFloat
 
     var body: some View {
         GeometryReader { geometry in
             SpeechBubbleWithSettings(
                 lines: lines,
-                settings: SpeechBubbleSettings(geometry: geometry)
+                settings: SpeechBubbleSettings(
+                    geometry: geometry,
+                    fontSize: fontSize
+                )
             )
         }
     }
@@ -97,9 +101,10 @@ struct SpeechBubbleStem: Shape {
 
 struct SpeechBubbleSettings {
     let geometry: GeometryProxy
+    let fontSize: CGFloat
 
     static func getStemWidth(width: CGFloat) -> CGFloat {
-        width * 0.2
+        width * 0.15
     }
 
     var stemWidth: CGFloat {
@@ -116,10 +121,6 @@ struct SpeechBubbleSettings {
 
     var bubbleWidth: CGFloat {
         geometry.size.width - stemWidth
-    }
-
-    var fontSize: CGFloat {
-        0.09 * geometry.size.height
     }
 
     var subscriptFontSize: CGFloat {
@@ -167,6 +168,6 @@ struct SpeechBubble_Previews: PreviewProvider {
 
 
     static var previews: some View {
-        SpeechBubble(lines: lines).frame(width: 220, height: 200)
+        SpeechBubble(lines: lines, fontSize: 20).frame(width: 220, height: 200)
     }
 }
