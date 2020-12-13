@@ -16,19 +16,21 @@ struct MenuButton: View {
     }
 
     private func makeView(size: CGFloat) -> some View {
+        // The button is scaled by 2 to increase the touch target, as it's a little small otherwise.
+        // The button body must be scaled by 0.5 to return it to its original size
         Button(action: action) {
             ZStack {
-                Rectangle()
-                    .stroke(lineWidth: size * 0.02)
-
                 VStack(spacing: size / 5) {
                     line(size: size)
                     line(size: size)
                     line(size: size)
                 }
-            }.frame(width: size, height: size)
-        }
-        .foregroundColor(.black)
+                .frame(width: size, height: size)
+                .border(Color.black)
+                .foregroundColor(.black)
+                .scaleEffect(0.5)
+            }
+        }.scaleEffect(2)
     }
 
     private func line(size: CGFloat) -> some View {
