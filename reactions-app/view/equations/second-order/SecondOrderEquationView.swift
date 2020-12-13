@@ -18,6 +18,7 @@ struct SecondOrderEquationView: View {
     let maxHeight: CGFloat
     let rateConstantColor: Color
     let halfLifeColor: Color
+    let rateColor: Color
 
     var body: some View {
         ScaledView(
@@ -35,7 +36,8 @@ struct SecondOrderEquationView: View {
                 concentration: concentration,
                 reactionHasStarted: reactionHasStarted,
                 rateConstantColor: rateConstantColor,
-                halfLifeColor: halfLifeColor
+                halfLifeColor: halfLifeColor,
+                rateColor: rateColor
             )
         }
         .frame(width: maxWidth, height: maxHeight)
@@ -53,6 +55,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
     let reactionHasStarted: Bool
     let rateConstantColor: Color
     let halfLifeColor: Color
+    let rateColor: Color
 
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
@@ -90,6 +93,8 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
                     emphasise: emphasise
                 )
             }
+            .background(Color.white.padding(-EquationSize.padding))
+            .colorMultiply(rateColor)
         }
         .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
@@ -232,7 +237,8 @@ struct SecondOrderEquationView2_Previews: PreviewProvider {
             concentration: nil,
             reactionHasStarted: false,
             rateConstantColor: .white,
-            halfLifeColor: .white
+            halfLifeColor: .white,
+            rateColor: .white
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSize.width, height: EquationSize.height))

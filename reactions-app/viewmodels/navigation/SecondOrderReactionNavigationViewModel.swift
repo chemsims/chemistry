@@ -12,6 +12,7 @@ struct SecondOrderReactionNavigation {
             InitialOrderedStep(statement: SecondOrderStatements.intro),
             SetFinalConcentrationToNonNil(),
             ExplainRateConstant(),
+            ExplainRate(),
             ExplainHalfLife(),
             RunAnimation(
                 statement: ReactionStatements.inProgress,
@@ -61,6 +62,25 @@ fileprivate class ExplainRateConstant: ReactionState {
         model.currentTime = nil
         model.highlightedElements = []
     }
+}
+
+fileprivate class ExplainRate: ReactionState {
+    init() {
+        super.init(statement: SecondOrderStatements.explainRate)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = [.rateEquation, .concentrationChart]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = []
+    }
+
 }
 
 fileprivate class ExplainHalfLife: PreReactionAnimation {

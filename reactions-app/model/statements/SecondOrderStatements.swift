@@ -17,6 +17,15 @@ struct SecondOrderStatements {
         ]
     }
 
+    static let explainRate = [
+        SpeechBubbleLineGenerator.makeLine(
+            "For a reaction with one reactant it's usually written as \(Strings.withNoBreaks(str: "*Rate=k[A]^Order^*"))."
+        ),
+        SpeechBubbleLineGenerator.makeLine(
+            "For this reaction then, \(Strings.withNoBreaks(str: "*Rate=k[A]^2^*"))."
+        )
+    ]
+
     static let explainChart = [
         SpeechBubbleLineGenerator.makeLine("For a reaction with one reactant, it's usually written as:"),
         SpeechBubbleLineGenerator.makeLine("*Rate=k[A]^order^*"),
@@ -26,9 +35,9 @@ struct SecondOrderStatements {
 
     static func explainHalfLife(halfLife: CGFloat) -> [SpeechBubbleLine] {
         [
-            SpeechBubbleLineGenerator.makeLine("*Half Life (t_1/2_)* is an expression to easily calculate the time at which the concentration of the reactant, in this case A, is half of what the initial concentration was."),
+            SpeechBubbleLineGenerator.makeLine("*Half Life (t_1/2_)* is an expression to easily calculate the time at which the concentration of the reactant, in this case *A*, is half of what the initial concentration was."),
             SpeechBubbleLineGenerator.makeLine("For this reaction,"),
-            SpeechBubbleLineGenerator.makeLine("*t_1/2_=1/k[A_0_]=\(halfLife.str(decimals: 2))*.")
+            SpeechBubbleLineGenerator.makeLine("*t_1/2_=1/k[A_0_]=\(halfLife.str(decimals: 2))s*.")
         ]
     }
 
@@ -64,7 +73,7 @@ struct SecondOrderStatements {
             "Since 0.1 is less than 0.17, it's noticeable how for a Second Order Reaction the *Rate* would drop faster."
         ),
         SpeechBubbleLineGenerator.makeLine(
-            "In other words, the Rate of the reaction will drop *more drastically for a Second Order Reaction at first*, and slowly reduce to a point in which the Rate drops *slower than in a First Order Reaction towards the end*."
+            "In other words, the Rate of the reaction will drop *more drastically for a Second Order Reaction at first*, and slowly reduce to a point at which the Rate drops *slower than in a First Order Reaction towards the end*."
         )
     ]
 
