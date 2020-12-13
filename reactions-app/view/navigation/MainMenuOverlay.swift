@@ -37,7 +37,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        ZStack(alignment: .leading) {
+        ZStack(alignment: .topLeading) {
             icon
             panel
                 .gesture(
@@ -50,7 +50,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                         }
                 )
                 .offset(
-                    x: showPanel ? 0 + extraOffset : -settings.totalMenuWidth - (settings.panelBorder / 2)
+                    x: showPanel ? 0 + extraOffset : -settings.totalMenuWidth - (settings.panelBorder / 2),
+                    y: settings.geometry.safeAreaInsets.top + settings.topPadding
                 )
                 .edgesIgnoringSafeArea(.all)
         }
