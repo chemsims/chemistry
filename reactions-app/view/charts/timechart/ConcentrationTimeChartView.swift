@@ -95,7 +95,7 @@ struct GeneralTimeChartView: View {
                     concentrationSlider
                 }
 
-                VStack {
+                VStack(spacing: settings.chartVStackSpacing) {
                     if (currentTime == nil) {
                         chartWithIndicator
                     } else if (
@@ -155,9 +155,9 @@ struct GeneralTimeChartView: View {
                         .fixedSize()
                 }
                 .foregroundColor(.orangeAccent)
-                .frame(height: settings.chartSize * 0.1)
             }
         }
+        .frame(height: settings.xLabelHeight)
         .font(.system(size: settings.labelFontSize))
         .minimumScaleFactor(1)
     }
@@ -210,9 +210,11 @@ struct GeneralTimeChartView: View {
         decimals: Int
     ) -> some View {
         if (currentTime == nil || equation == nil) {
-            return AnyView(
-                Text(defaultValue.str(decimals: decimals)).minimumScaleFactor(0.5)
-            )
+            return
+                AnyView(
+                    Text(defaultValue.str(decimals: decimals))
+                        .minimumScaleFactor(0.5)
+                )
         }
 
         return AnyView(

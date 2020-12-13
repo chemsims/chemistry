@@ -49,7 +49,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                         }
                 )
                 .offset(
-                    x: showPanel ? 0 + extraOffset : -settings.totalMenuWidth)
+                    x: showPanel ? 0 + extraOffset : -settings.totalMenuWidth - (settings.panelBorder / 2)
+                )
                 .edgesIgnoringSafeArea(.all)
         }
     }
@@ -76,7 +77,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         }
         .background(panelBackground)
         .compositingGroup()
-        .shadow(radius: 3)
+        .shadow(radius: showPanel ? 3 : 0)
     }
 
     private var grabHandle: some View {
@@ -118,7 +119,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 .foregroundColor(Styling.menuPanel)
 
             panelShape
-                .stroke(lineWidth: 0.75)
+                .stroke(lineWidth: settings.panelBorder)
         }
     }
 
@@ -201,6 +202,10 @@ fileprivate struct MainMenuLayoutSettings {
             return leading
         }
         return leading / 2
+    }
+
+    var panelBorder: CGFloat {
+        0.75
     }
 }
 

@@ -50,7 +50,7 @@ struct TimeChartGeometrySettings {
         0.24 * chartSize
     }
     var sliderHandleWidth: CGFloat {
-        0.16 * chartSize
+        TimeChartGeometrySettings.sliderHandleWidthFactor * chartSize
     }
     var sliderHandleThickness: CGFloat {
         0.16 * chartSize
@@ -59,7 +59,10 @@ struct TimeChartGeometrySettings {
         0.28 * chartSize
     }
     var yLabelWidth: CGFloat {
-        0.35 * chartSize
+        TimeChartGeometrySettings.yLabelWidthFactor * chartSize
+    }
+    var xLabelHeight: CGFloat {
+        TimeChartGeometrySettings.xLabelHeightFactor * chartSize
     }
     var handleThickness: CGFloat {
         0.08 * chartSize
@@ -93,7 +96,10 @@ struct TimeChartGeometrySettings {
     }
 
     var chartHStackSpacing: CGFloat {
-        0.1 * chartSize
+        TimeChartGeometrySettings.chartHStackFactor * chartSize
+    }
+    var chartVStackSpacing: CGFloat {
+        chartHStackSpacing
     }
 
     var largeTotalChartWidth: CGFloat {
@@ -117,4 +123,14 @@ struct TimeChartGeometrySettings {
             maxValue: maxTime
         )
     }
+
+    static let chartHStackFactor: CGFloat = 0.03
+    static let sliderHandleWidthFactor: CGFloat = 0.16
+    static let yLabelWidthFactor: CGFloat = 0.35
+
+    static let xLabelHeightFactor: CGFloat = 0.1
+
+    static let totalWidthFactor = 1 + (2 * chartHStackFactor) + sliderHandleWidthFactor + yLabelWidthFactor
+
+    static let totalHeightFactor = 1 + (2 * chartHStackFactor) + sliderHandleWidthFactor + xLabelHeightFactor
 }

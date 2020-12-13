@@ -44,6 +44,8 @@ struct OrderedReactionScreen<Content: View>: View {
     private func topStack(settings: OrderedReactionLayoutSettings) -> some View {
         VStack {
             HStack(alignment: .top, spacing: 0) {
+                Spacer()
+                    .frame(width: settings.menuTotalWidth)
                 FilledBeaker(
                     moleculesA: reaction.moleculesA,
                     concentrationB: reaction.concentrationEquationB,
@@ -51,17 +53,17 @@ struct OrderedReactionScreen<Content: View>: View {
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
                 .padding(.leading, settings.beakerLeadingPadding)
-                .padding(.top, settings.chartsTopPadding)
                 .colorMultiply(reaction.color(for: nil))
 
                 middleCharts(settings: settings)
             }
+            .padding(.top, settings.chartsTopPadding)
             Spacer()
         }
     }
 
     private func middleCharts(settings: OrderedReactionLayoutSettings) -> some View {
-        HStack(alignment: .top, spacing: settings.topStackHSpacing) {
+        HStack(alignment: .top, spacing: 0) {
             ConcentrationTimeChartView(
                 initialConcentration: $reaction.initialConcentration,
                 initialTime: $reaction.initialTime,
@@ -75,6 +77,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 canSetCurrentTime: reaction.reactionHasEnded
             )
             .frame(width: settings.chartSettings.largeTotalChartWidth)
+            .padding(.horizontal, settings.chartHPadding)
             .colorMultiply(reaction.color(for: .concentrationChart))
 
             ConcentrationBarChart(
@@ -89,10 +92,11 @@ struct OrderedReactionScreen<Content: View>: View {
                     minConcentration: ReactionSettings.minConcentration
                 )
             )
+            .padding(.horizontal, settings.chartHPadding)
 
             concentrationTable
-                .padding(.trailing, settings.beakerLeadingPadding)
-        }.padding(.top, settings.chartsTopPadding)
+                .padding(.trailing, settings.tableTrailingPadding)
+        }
     }
 
     private var concentrationTable: some View {

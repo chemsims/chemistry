@@ -99,7 +99,7 @@ struct FirstOrderReactionScreen: View {
     }
 
     private func availableHeight(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.height - settings.beakerHeight - settings.beakerLeadingPadding
+        settings.height / 2
     }
 
     var equationLeadingPadding: CGFloat {

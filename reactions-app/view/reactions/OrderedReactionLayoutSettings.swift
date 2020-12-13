@@ -13,6 +13,7 @@ struct OrderedReactionLayoutSettings {
     var width: CGFloat {
         geometry.size.width
     }
+
     var height: CGFloat {
         geometry.size.height
     }
@@ -29,11 +30,17 @@ struct OrderedReactionLayoutSettings {
         }
         return 0.8 * bubbleWidth
     }
+
     var chartSize: CGFloat {
-        let maxHeight = 0.32 * height
-        let maxWidth = 0.25 * width
-        let idealWidth = 0.2 * width
-        return min(maxHeight, min(maxWidth, idealWidth))
+        return topStackUtil.chartSize
+    }
+
+    var chartHPadding: CGFloat {
+        OrderedReactionLayoutSettings.chartHPaddingFactor * chartSize
+    }
+
+    var beakerWidth: CGFloat {
+        return topStackUtil.beakerWidth
     }
 
     var chartSettings: TimeChartGeometrySettings {
@@ -56,23 +63,15 @@ struct OrderedReactionLayoutSettings {
     var bubbleStemWidth: CGFloat {
         SpeechBubbleSettings.getStemWidth(width: bubbleWidth)
     }
-    var beakerWidth: CGFloat {
-        if let h = horizontalSize, h == .regular, let v = verticalSize, v == .regular {
-            return 0.25 * width
-        }
-        if let h = horizontalSize, h == .regular, let v = verticalSize, v == .compact {
-            return 0.2 * width
-        }
-        return 0.23 * width
-    }
     var beakerHeight: CGFloat {
         beakerWidth * BeakerSettings.heightToWidth
     }
+
     var midChartsLeftPadding: CGFloat {
         chartSize * 0.2
     }
     var chartsTopPadding: CGFloat {
-        chartSize * 0.2
+        0.05 * height
     }
     var beakyRightPadding: CGFloat {
         bubbleWidth * 0.2
@@ -81,7 +80,7 @@ struct OrderedReactionLayoutSettings {
         beakyRightPadding * 0.1
     }
     var beakerLeadingPadding: CGFloat {
-        1.1 * (menuLeadingPadding + menuSize)
+        0.5 * menuSize
     }
     var beakyBoxTotalHeight: CGFloat {
         bubbleHeight + navButtonSize + beakyVSpacing + beakyBottomPadding
@@ -94,9 +93,16 @@ struct OrderedReactionLayoutSettings {
     }
 
     var availableWidthForTable: CGFloat {
-        let totalChartsWidth = chartSettings.largeTotalChartWidth + chartSettings.chartSize
-        let chartsWithSpacing = totalChartsWidth + (2 * topStackHSpacing)
-        return width - beakerWidth - beakerLeadingPadding - chartsWithSpacing - beakerLeadingPadding
+        width -
+            menuTotalWidth -
+            beakerWidth -
+            chartSettings.largeTotalChartWidth -
+            chartSize - (4 * chartHPadding) -
+            tableTrailingPadding
+    }
+
+    var tableTrailingPadding: CGFloat {
+        0.05 * width
     }
 
     var tableCellWidth: CGFloat {
@@ -118,7 +124,7 @@ struct OrderedReactionLayoutSettings {
     }
 
     var menuSize: CGFloat {
-        0.2 * beakerWidth
+        0.03 * width
     }
 
     var menuLeadingPadding: CGFloat {
@@ -127,6 +133,10 @@ struct OrderedReactionLayoutSettings {
 
     var menuTopPadding: CGFloat {
         0.5 * menuSize
+    }
+
+    var menuTotalWidth: CGFloat {
+        menuSize + menuLeadingPadding
     }
 
     private var hIsRegular: Bool {
@@ -141,6 +151,48 @@ struct OrderedReactionLayoutSettings {
             return v == .regular
         }
         return false
+    }
+
+    private var topStackUtil: TopStackLayoutUtil {
+        TopStackLayoutUtil(
+            totalWidth: width - menuTotalWidth,
+            totalHeight: (height / 2) - chartsTopPadding
+        )
+    }
+
+    static let chartHPaddingFactor: CGFloat = 0.05
+}
+
+fileprivate struct TopStackLayoutUtil {
+
+    let totalWidth: CGFloat
+    let totalHeight: CGFloat
+
+    var beakerWidth: CGFloat {
+        min(beakerMaxWidthForHeight, beakerMaxWidth)
+    }
+
+    var chartSize: CGFloat {
+        min(maxChartSizeForHeight, chartMaxWidth)
+    }
+
+    private var beakerMaxWidthForHeight: CGFloat {
+        totalHeight / BeakerSettings.heightToWidth
+    }
+
+    private var beakerMaxWidth: CGFloat {
+        totalWidth / 4
+    }
+
+    private var chartMaxWidth: CGFloat {
+        let totalWidthForBothCharts = totalWidth / 2
+        let wFactor = (TimeChartGeometrySettings.totalWidthFactor + 1) + (4 * OrderedReactionLayoutSettings.chartHPaddingFactor)
+        return totalWidthForBothCharts / wFactor
+    }
+
+    private var maxChartSizeForHeight: CGFloat {
+        let chartToWidth = TimeChartGeometrySettings.totalHeightFactor
+        return (totalHeight / chartToWidth)
     }
 
 }

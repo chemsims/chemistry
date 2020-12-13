@@ -38,7 +38,8 @@ struct ZeroOrderReactionScreen: View {
             settings: settings,
             canSetInitialTime: true
         ) {
-            equationView(settings: settings)
+            EmptyView()
+//            equationView(settings: settings)
         }
     }
 
