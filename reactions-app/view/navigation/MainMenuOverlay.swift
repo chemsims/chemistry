@@ -38,7 +38,6 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     var body: some View {
         ZStack(alignment: .leading) {
             icon
-
             panel
                 .gesture(
                     DragGesture(minimumDistance: 0, coordinateSpace: .global)
@@ -49,7 +48,9 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                             extraOffset = 0
                         }
                 )
-                .offset(x: showPanel ? 0 + extraOffset : -totalMenuWidth)
+                .offset(
+                    x: showPanel ? 0 + extraOffset : -settings.totalMenuWidth)
+                .edgesIgnoringSafeArea(.all)
         }
     }
 
@@ -68,7 +69,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
     private var panel: some View {
         HStack(alignment: .top, spacing: 0) {
-            panel2
+            panelContent
             grabHandle
         }
         .background(panelBackground)
@@ -89,21 +90,23 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
     private var grabLine: some View {
         Rectangle()
-            .frame(width: 0.6 * settings.menuSize, height: max(0.015 * settings.menuSize, 1))
+            .frame(
+                width: settings.grabLineWidth,
+                height: settings.grabLineHeight
+            )
     }
 
-
-    private var panel2: some View {
+    private var panelContent: some View {
         VStack {
             Spacer()
-                .frame(height: tabHeight / 2)
+                .frame(height: settings.tabHeight / 2)
             navIcon(image: "zeroordericon", action: navigation.goToZeroOrder)
             navIcon(image: "firstordericon", action: navigation.goToFirstOrder)
             navIcon(image: "secondordericon", action: navigation.goToSecondOrder)
             navIcon(image: "comparisonicon", action: navigation.goToComparison)
             navIcon(image: "kineticsicon", action: navigation.goToEnergyProfile)
         }
-        .frame(width: panelWidth)
+        .frame(width: settings.panelWidth)
     }
 
     private var panelBackground: some View {
@@ -119,8 +122,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
     private var panelShape: some Shape {
         MainMenuPanel(
-            panelWidthFraction: panelWidth / totalMenuWidth,
-            panelHeightFraction: 1 - (tabHeight / settings.height),
+            panelWidthFraction: settings.panelWidthFraction,
+            panelHeightFraction: settings.panelHeightFraction,
             cornerRadius: 0.5 * settings.menuSize
         )
     }
@@ -146,22 +149,6 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             showPanel.toggle()
         }
     }
-
-    private var panelWidth: CGFloat {
-        2.2 * settings.menuSize
-    }
-
-    private var tabWidth: CGFloat {
-        settings.menuSize
-    }
-
-    private var totalMenuWidth: CGFloat {
-        panelWidth + tabWidth + (2 * settings.leadingPadding)
-    }
-
-    private var tabHeight: CGFloat {
-        1.1 * (settings.menuSize + (2 * settings.topPadding))
-    }
 }
 
 fileprivate struct MainMenuLayoutSettings {
@@ -172,6 +159,38 @@ fileprivate struct MainMenuLayoutSettings {
 
     var height: CGFloat {
         geometry.size.height
+    }
+
+    var grabLineWidth: CGFloat {
+        0.6 * menuSize
+    }
+
+    var grabLineHeight: CGFloat {
+        max(0.015 * menuSize, 1)
+    }
+
+    var panelWidth: CGFloat {
+        2.2 * menuSize
+    }
+
+    var tabHeight: CGFloat {
+        1.1 * (menuSize + (2 * topPadding))
+    }
+
+    var tabWidth: CGFloat {
+        menuSize
+    }
+
+    var totalMenuWidth: CGFloat {
+        panelWidth + tabWidth + (2 * leadingPadding)
+    }
+
+    var panelWidthFraction: CGFloat {
+        panelWidth / totalMenuWidth
+    }
+
+    var panelHeightFraction: CGFloat {
+        1 - (tabHeight / height)
     }
 }
 
