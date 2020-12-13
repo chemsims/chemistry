@@ -88,7 +88,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                     emphasise: emphasise
                 )
             }
-            .background(Color.white)
+            .background(Color.white.padding(-EquationSizes.padding))
             .colorMultiply(rateColorMultipy)
 
             HStack(spacing: 22) {
@@ -102,7 +102,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                     emphasise: emphasise
                 )
             }
-            .background(Color.white)
+            .background(Color.white.padding(-EquationSizes.padding))
             .colorMultiply(halfLifeColorMultiply)
 
             HStack(spacing: 52) {
@@ -322,8 +322,10 @@ fileprivate struct Rate: View {
 
 
 fileprivate struct EquationSizes {
-    static let width: CGFloat = 550
-    static let height: CGFloat = 335
+    static let width: CGFloat = 580
+    static let height: CGFloat = 365
+
+    static let padding: CGFloat = 15
 }
 
 struct ZeroOrderEquationView2_Previews: PreviewProvider {
@@ -337,7 +339,7 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             deltaT: nil,
             c2: nil,
             t2: nil,
-            isShowingTooltip: .constant(true),
+            isShowingTooltip: .constant(false),
             rateColorMultipy: .white,
             halfLifeColorMultiply: .white,
             currentTime: nil,

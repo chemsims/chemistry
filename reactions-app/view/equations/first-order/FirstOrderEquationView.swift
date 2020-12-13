@@ -66,7 +66,9 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
                     t: t?.str(decimals: 2)
                 )
             }
-            .background(Color.white)
+            .background(
+                Color.white.padding(-EquationSizes.padding)
+            )
             .colorMultiply(rateConstantColor)
 
             VStack(alignment: .leading, spacing: 0) {
@@ -77,7 +79,9 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
                     rate: concentration?.rateConstant.str(decimals: 2)
                 )
             }
-            .background(Color.white)
+            .background(
+                Color.white.padding(-EquationSizes.padding)
+            )
             .colorMultiply(halfLifeColor)
 
             VStack(alignment: .leading, spacing: 0) {
@@ -202,8 +206,10 @@ fileprivate struct FirstOrderHalfLifeBlank: View {
 }
 
 fileprivate struct EquationSizes {
-    static let width: CGFloat = 320
-    static let height: CGFloat = 420
+    static let width: CGFloat = 350
+    static let height: CGFloat = 450
+
+    static let padding: CGFloat = 15
 }
 
 struct FirstOrderEquationView2_Preview: PreviewProvider {

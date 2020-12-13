@@ -48,7 +48,7 @@ struct OrderedReactionLayoutSettings {
 
     // MARK: Equation size
     var equationPadding: CGFloat {
-        0.1 * chartSize
+        0.05 * chartSize
     }
 
     // MARK: Beaky & bubble size

@@ -66,7 +66,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
                     time: t?.str(decimals: 2)
                 )
             }
-            .background(Color.white)
+            .background(Color.white.padding(-EquationSize.padding))
             .colorMultiply(rateConstantColor)
 
             VStack(alignment: .leading, spacing: 0) {
@@ -78,7 +78,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
                     a0: c1.str(decimals: 2)
                 )
             }
-            .background(Color.white)
+            .background(Color.white.padding(-EquationSize.padding))
             .colorMultiply(halfLifeColor)
 
             VStack(alignment: .leading, spacing: 0) {
@@ -216,8 +216,9 @@ fileprivate struct SecondOrderHalfLifeBlank: View {
 }
 
 fileprivate struct EquationSize {
-    static let width: CGFloat = 327
-    static let height: CGFloat = 416
+    static let width: CGFloat = 360
+    static let height: CGFloat = 446
+    static let padding: CGFloat = 15
 }
 
 struct SecondOrderEquationView2_Previews: PreviewProvider {
