@@ -78,8 +78,9 @@ struct FirstOrderReactionScreen: View {
                 currentTime: reaction.currentTime,
                 concentration: reaction.concentrationEquationA,
                 reactionHasStarted: reaction.reactionHasStarted,
-                rateConstantColor: reaction.color(for: .rateEquation),
+                rateConstantColor: reaction.color(for: .rateConstantEquation),
                 halfLifeColor: reaction.color(for: .halfLifeEquation),
+                rateColor: reaction.color(for: .rateEquation),
                 maxWidth: geometry.size.width,
                 maxHeight: geometry.size.height
             )

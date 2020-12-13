@@ -57,7 +57,7 @@ struct ZeroOrderReactionScreen: View {
                         deltaT: reaction.deltaT,
                         c2: reaction.finalConcentration,
                         t2: reaction.finalTime,
-                        rateColorMultipy: reaction.color(for: .rateEquation),
+                        rateColorMultipy: reaction.color(for: .rateConstantEquation),
                         halfLifeColorMultiply: reaction.color(for: .halfLifeEquation),
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height,

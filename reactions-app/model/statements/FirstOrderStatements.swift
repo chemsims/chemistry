@@ -105,6 +105,6 @@ struct FirstOrderStatements {
     static let end = [
         SpeechBubbleLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
         SpeechBubbleLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time."),
-        SpeechBubbleLineGenerator.makeLine("Then, let's see take a quiz before having a look at a Second Order Reaction.")
+        SpeechBubbleLineGenerator.makeLine("Then, let's take a quiz before having a look at a Second Order Reaction.")
     ]
 }

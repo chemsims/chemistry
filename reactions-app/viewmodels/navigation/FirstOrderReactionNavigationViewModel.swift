@@ -13,7 +13,7 @@ struct FirstOrderReactionNavigation {
             ExplainRateConstant1(),
             ExplainRateConstant2(),
             ExplainRate(),
-            ExplainHalflife(),
+            ExplainHalfLife(),
             RunAnimation(
                 statement: ReactionStatements.inProgress,
                 order: .First,
@@ -50,7 +50,7 @@ fileprivate class ExplainRateConstant1: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.currentTime = model.initialTime
-        model.highlightedElements = [.rateEquation]
+        model.highlightedElements = [.rateConstantEquation]
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
@@ -69,15 +69,36 @@ fileprivate class ExplainRateConstant2: ReactionState {
             rate: model.concentrationEquationA?.rateConstant ?? 0
         )
     }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = [.rateConstantEquation]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
+
 }
 
 fileprivate class ExplainRate: ReactionState {
     init() {
         super.init(statement: FirstOrderStatements.explainRate)
     }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = [.rateEquation, .concentrationChart]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = []
+    }
 }
 
-fileprivate class ExplainHalflife: PreReactionAnimation {
+fileprivate class ExplainHalfLife: PreReactionAnimation {
 
     init() {
         super.init(highlightedElements: [.halfLifeEquation])

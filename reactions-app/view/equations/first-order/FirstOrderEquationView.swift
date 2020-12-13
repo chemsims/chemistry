@@ -16,6 +16,7 @@ struct FirstOrderEquationView: View {
     let reactionHasStarted: Bool
     let rateConstantColor: Color
     let halfLifeColor: Color
+    let rateColor: Color
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
@@ -36,7 +37,8 @@ struct FirstOrderEquationView: View {
                 concentration: concentration,
                 reactionHasStarted: reactionHasStarted,
                 rateConstantColor: rateConstantColor,
-                halfLifeColor: halfLifeColor
+                halfLifeColor: halfLifeColor,
+                rateColor: rateColor
             ).frame(width: maxWidth, height: maxHeight)
         }
     }
@@ -53,6 +55,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
     let reactionHasStarted: Bool
     let rateConstantColor: Color
     let halfLifeColor: Color
+    let rateColor: Color
 
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
@@ -93,6 +96,10 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
                     emphasise: emphasise
                 )
             }
+            .background(
+                Color.white.padding(-EquationSizes.padding)
+            )
+            .colorMultiply(rateColor)
         }
         .font(.system(size: EquationSettings.fontSize))
         .minimumScaleFactor(1)
@@ -224,7 +231,8 @@ struct FirstOrderEquationView2_Preview: PreviewProvider {
             concentration: FirstOrderConcentration(c1: 1, c2: 0.1, time: 10),
             reactionHasStarted: false,
             rateConstantColor: .white,
-            halfLifeColor: .white
+            halfLifeColor: .white,
+            rateColor: .white
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))

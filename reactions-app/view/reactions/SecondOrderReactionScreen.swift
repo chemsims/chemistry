@@ -79,7 +79,7 @@ struct SecondOrderReactionScreen: View {
                 reactionHasStarted: reaction.reactionHasStarted,
                 maxWidth: geometry.size.width,
                 maxHeight: geometry.size.height,
-                rateConstantColor: reaction.color(for: .rateEquation),
+                rateConstantColor: reaction.color(for: .rateConstantEquation),
                 halfLifeColor: reaction.color(for: .halfLifeEquation)
             )
         }
