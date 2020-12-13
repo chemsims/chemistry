@@ -69,13 +69,13 @@ class ReactionComparisonSubstate: SubState {
 
 fileprivate class InitialComparisonState: ReactionComparisonState {
     init() {
-        super.init(statement: NewReactionComparisonStatements.intro)
+        super.init(statement: ReactionComparisonStatements.intro)
     }
 }
 
 fileprivate class ExplainEquationState: ReactionComparisonState {
     init() {
-        super.init(statement: NewReactionComparisonStatements.equationExplainer)
+        super.init(statement: ReactionComparisonStatements.equationExplainer)
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
@@ -95,7 +95,7 @@ fileprivate class ExplainEquationState: ReactionComparisonState {
 
 fileprivate class ChartExplainerState: ReactionComparisonState {
     init() {
-        super.init(statement: NewReactionComparisonStatements.chartExplainer)
+        super.init(statement: ReactionComparisonStatements.chartExplainer)
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
@@ -117,7 +117,7 @@ fileprivate class ChartExplainerState: ReactionComparisonState {
 
 fileprivate class DragAndDropExplainerState: ReactionComparisonState {
     init() {
-        super.init(statement: NewReactionComparisonStatements.dragAndDropExplainer)
+        super.init(statement: ReactionComparisonStatements.dragAndDropExplainer)
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
@@ -163,7 +163,7 @@ fileprivate class DragAndDropExplainerSubstate: ReactionComparisonSubstate {
 fileprivate class PreAnimationState: ReactionComparisonState {
 
     init() {
-        super.init(statement: NewReactionComparisonStatements.preReaction)
+        super.init(statement: ReactionComparisonStatements.preReaction)
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
@@ -188,7 +188,7 @@ fileprivate class PreAnimationState: ReactionComparisonState {
 
 fileprivate class RunComparisonAnimation: ReactionComparisonState {
     init() {
-        super.init(statement: NewReactionComparisonStatements.reactionRunning)
+        super.init(statement: ReactionComparisonStatements.reactionRunning)
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
@@ -231,7 +231,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
 fileprivate class EndComparisonAnimation: ReactionComparisonState {
 
     init() {
-        super.init(statement: NewReactionComparisonStatements.end)
+        super.init(statement: ReactionComparisonStatements.end)
     }
 
     override func apply(on model: ReactionComparisonViewModel) {

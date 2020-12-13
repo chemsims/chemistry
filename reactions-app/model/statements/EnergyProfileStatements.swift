@@ -23,7 +23,7 @@ struct EnergyProfileStatements {
 
     static let finished: [SpeechBubbleLine] = [
         SpeechBubbleLineGenerator.makeLine("It's done!"),
-        SpeechBubbleLineGenerator.makeLine("Now you're fre to *explore further* the reaction rates.")
+        SpeechBubbleLineGenerator.makeLine("Let's take another quiz, and then you're free to *explore further* the reaction rates.")
     ]
 
 }
