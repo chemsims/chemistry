@@ -33,14 +33,17 @@ struct FirstOrderReactionScreen: View {
         ) {
             VStack {
                 Spacer()
+                    .frame(height: settings.topStackSize)
                 HStack(spacing: 0) {
                     logChart(settings: settings)
                         .padding(.top, settings.topPadding)
                         .padding(.leading, settings.topPadding)
 
                     equationView(settings: settings)
-                        .padding(.leading, equationLeadingPadding)
-                        .padding(.top, equationLeadingPadding)
+                        .padding(equationPadding(settings: settings))
+
+                    Spacer()
+                        .frame(width: settings.beakyBoxTotalWidth)
                 }
             }
         }
@@ -66,46 +69,27 @@ struct FirstOrderReactionScreen: View {
     }
 
     private func equationView(settings: OrderedReactionLayoutSettings) -> some View {
-        FirstOrderEquationView(
-            emphasiseFilledTerms: reaction.currentTime == nil,
-            c1: reaction.initialConcentration,
-            c2: reaction.finalConcentration,
-            t: reaction.finalTime,
-            currentTime: reaction.currentTime,
-            concentration: reaction.concentrationEquationA,
-            reactionHasStarted: reaction.reactionHasStarted,
-            rateConstantColor: reaction.color(for: .rateEquation),
-            halfLifeColor: reaction.color(for: .halfLifeEquation),
-            maxWidth: equationWidth(settings: settings),
-            maxHeight: availableHeight(settings: settings)
-        )
+        GeometryReader { geometry in
+            FirstOrderEquationView(
+                emphasiseFilledTerms: reaction.currentTime == nil,
+                c1: reaction.initialConcentration,
+                c2: reaction.finalConcentration,
+                t: reaction.finalTime,
+                currentTime: reaction.currentTime,
+                concentration: reaction.concentrationEquationA,
+                reactionHasStarted: reaction.reactionHasStarted,
+                rateConstantColor: reaction.color(for: .rateEquation),
+                halfLifeColor: reaction.color(for: .halfLifeEquation),
+                maxWidth: geometry.size.width,
+                maxHeight: geometry.size.height
+            )
+        }
+
     }
 
-    private func equationWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        let freeWidth = availableWidth(settings: settings)
-        let barChartWidth = barChartSize(settings: settings) * 1.7
-        return freeWidth - barChartWidth
+    private func equationPadding(settings: OrderedReactionLayoutSettings) -> CGFloat {
+        0.1 * settings.chartSize
     }
-
-
-    private func barChartSize(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        let maxHeight = availableHeight(settings: settings) - (settings.topPadding)
-        let maxWidth = availableWidth(settings: settings) / 3
-        return min(maxHeight, maxWidth)
-    }
-
-    private func availableWidth(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.width - settings.beakyBoxTotalWidth
-    }
-
-    private func availableHeight(settings: OrderedReactionLayoutSettings) -> CGFloat {
-        settings.height / 2
-    }
-
-    var equationLeadingPadding: CGFloat {
-        return 0
-    }
-
 }
 
 
