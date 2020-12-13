@@ -34,6 +34,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
     @State private var showPanel: Bool = false
     @State private var extraOffset: CGFloat = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -148,7 +149,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 
     private func toggleMenu() {
-        withAnimation(.easeOut(duration: 0.25)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
             showPanel.toggle()
         }
     }

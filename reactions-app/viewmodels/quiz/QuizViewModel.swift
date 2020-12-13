@@ -23,6 +23,10 @@ class QuizViewModel: ObservableObject {
     @Published var correctOption: QuizOption = .A
     @Published var quizHasFinished: Bool = false
 
+    private var reduceMotion: Bool {
+        UIAccessibility.isReduceMotionEnabled
+    }
+
     private var questionIndex: Int = 0
     private var maxIndex: Int = -1
     private var options = [QuizOption:String]()
@@ -74,7 +78,7 @@ class QuizViewModel: ObservableObject {
     }
 
     private func setProgress() {
-        withAnimation(.easeOut(duration: 0.4)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
             progress = CGFloat(questionIndex) / CGFloat(questions.count)
         }
     }

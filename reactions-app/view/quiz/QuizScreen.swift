@@ -25,6 +25,7 @@ fileprivate struct QuizScreenWithSettings: View {
 
     @State private var shakingOption: QuizOption?
     @State private var badgeScale: CGFloat = 1
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -164,6 +165,9 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private func runBadgeAnimation() {
+        guard !reduceMotion else {
+            return
+        }
         badgeScale = 1
         withAnimation(.easeOut(duration: 0.35)) {
             badgeScale = 1.2
@@ -180,7 +184,7 @@ fileprivate struct QuizScreenWithSettings: View {
             return
         }
         if (model.correctOption == option) {
-            withAnimation(.easeOut(duration: 0.125)) {
+            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.125)) {
                 model.hasSelectedAnswer = true
             }
         } else {

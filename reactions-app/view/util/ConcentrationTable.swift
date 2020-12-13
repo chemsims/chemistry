@@ -16,6 +16,7 @@ struct ConcentrationTable: View {
     let buttonSize: CGFloat
 
     @State private var showTable = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
@@ -64,7 +65,7 @@ struct ConcentrationTable: View {
     }
 
     private func toggleTable() {
-        withAnimation(.easeOut(duration: 0.2)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) {
             showTable.toggle()
         }
     }
