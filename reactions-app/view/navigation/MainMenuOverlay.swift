@@ -111,7 +111,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             navIcon(image: "comparisonicon", action: navigation.goToComparison)
             navIcon(image: "kineticsicon", action: navigation.goToEnergyProfile)
         }
-        .frame(width: settings.panelWidth)
+        .frame(width: settings.panelWidth, height: settings.panelHeight)
     }
 
     private var panelBackground: some View {
@@ -195,7 +195,7 @@ fileprivate struct MainMenuLayoutSettings {
     }
 
     var panelHeightFraction: CGFloat {
-        1 - (tabHeight / height)
+        1 - (tabHeight / panelHeight)
     }
 
     var leadingPanelSpace: CGFloat {
@@ -209,6 +209,10 @@ fileprivate struct MainMenuLayoutSettings {
     var panelBorder: CGFloat {
         0.75
     }
+
+    var panelHeight: CGFloat {
+        min(height, 7 * panelWidth)
+    }
 }
 
 struct MainMenuOverlay_Previews: PreviewProvider {
@@ -220,6 +224,6 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             navigation: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence()
             )
-        )
+        ).previewLayout(.fixed(width: 568, height: 320))
     }
 }
