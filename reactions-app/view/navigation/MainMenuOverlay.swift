@@ -69,6 +69,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
     private var panel: some View {
         HStack(alignment: .top, spacing: 0) {
+            Spacer()
+                .frame(width: settings.leadingPanelSpace)
             panelContent
             grabHandle
         }
@@ -182,15 +184,23 @@ fileprivate struct MainMenuLayoutSettings {
     }
 
     var totalMenuWidth: CGFloat {
-        panelWidth + tabWidth + (2 * leadingPadding)
+        panelWidth + tabWidth + (2 * leadingPadding) + leadingPanelSpace
     }
 
     var panelWidthFraction: CGFloat {
-        panelWidth / totalMenuWidth
+        (panelWidth + leadingPanelSpace) / totalMenuWidth
     }
 
     var panelHeightFraction: CGFloat {
         1 - (tabHeight / height)
+    }
+
+    var leadingPanelSpace: CGFloat {
+        let leading = geometry.safeAreaInsets.leading
+        if (UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft) {
+            return leading
+        }
+        return leading / 2
     }
 }
 
