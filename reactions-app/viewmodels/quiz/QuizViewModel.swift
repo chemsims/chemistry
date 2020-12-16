@@ -27,7 +27,7 @@ class QuizViewModel: ObservableObject {
         UIAccessibility.isReduceMotionEnabled
     }
 
-    private var questionIndex: Int = 0
+    private(set) var questionIndex: Int = 0
     private var maxIndex: Int = -1
     private var options = [QuizOption:String]()
 

@@ -101,13 +101,30 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private var progressBar: some View {
-        ProgressBar(
-            progress: model.progress,
-            progressColor: .orangeAccent,
-            backgroundColor: Styling.quizProgressBackground,
-            backgroundBorder: Styling.quizProgressBorder,
-            cornerRadius: settings.progressCornerRadius
-        )
+        ZStack {
+            ProgressBar(
+                progress: model.progress,
+                progressColor: .orangeAccent,
+                backgroundColor: Styling.quizProgressBackground,
+                backgroundBorder: Styling.quizProgressBorder,
+                cornerRadius: settings.progressCornerRadius
+            )
+
+            if (!model.quizHasFinished) {
+                Text(
+                    "\(model.questionIndex + 1)/\(model.questions.count)"
+                )
+                .font(.system(size: settings.progressFontSize))
+                .frame(width: settings.progressLabelWidth)
+                .background(
+                    RoundedRectangle(
+                        cornerRadius: settings.progressCornerRadius
+                    )
+                    .foregroundColor(Color.white)
+                    .opacity(0.3)
+                )
+            }
+        }
     }
 
     private var answers: some View {
@@ -238,7 +255,7 @@ struct QuizLayoutSettings {
     }
 
     var progressHeight: CGFloat {
-        0.06 * geometry.size.height
+        0.07 * geometry.size.height
     }
 
     var progressCornerRadius: CGFloat {
@@ -251,6 +268,14 @@ struct QuizLayoutSettings {
 
     var fontSize: CGFloat {
         0.04 * geometry.size.width
+    }
+
+    var progressFontSize: CGFloat {
+        0.7 * fontSize
+    }
+
+    var progressLabelWidth: CGFloat {
+        0.1 * progressWidth
     }
 
     var navPadding: CGFloat {
