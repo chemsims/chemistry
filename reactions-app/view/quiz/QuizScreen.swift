@@ -112,14 +112,10 @@ fileprivate struct QuizScreenWithSettings: View {
 
     private var answers: some View {
         VStack {
-            HStack {
-                answer(option: .A)
-                answer(option: .B)
-            }
-            HStack {
-                answer(option: .C)
-                answer(option: .D)
-            }
+            answer(option: .A)
+            answer(option: .B)
+            answer(option: .C)
+            answer(option: .D)
         }
     }
 
@@ -140,7 +136,7 @@ fileprivate struct QuizScreenWithSettings: View {
             }
             .onTapGesture(perform: { handleAnswer(option: option) })
             .rotationEffect(shakingOption == option ? .degrees(4) : .zero)
-        }.padding()
+        }
     }
 
     private func overlay(option: QuizOption) -> some View {
