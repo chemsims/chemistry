@@ -22,16 +22,18 @@ class QuizViewModel: ObservableObject {
     @Published var hasSelectedAnswer: Bool = false
     @Published var correctOption: QuizOption = .A
     @Published var quizHasFinished: Bool = false
+    private(set) var questionIndex: Int = 0
+
 
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
     }
 
-    private(set) var questionIndex: Int = 0
-    private var maxIndex: Int = -1
+    private var maxAnsweredIndex: Int = -1
     private var options = [QuizOption:String]()
 
     func next() {
+        setMaxAnsweredIndex()
         if (questionIndex == questions.count) {
             nextScreen?()
         } else if (questionIndex == questions.count - 1) {
@@ -40,7 +42,6 @@ class QuizViewModel: ObservableObject {
             setProgress()
         } else {
             setQuestion(newIndex: questionIndex + 1)
-            maxIndex = max(questionIndex, maxIndex)
         }
     }
 
@@ -49,7 +50,14 @@ class QuizViewModel: ObservableObject {
             prevScreen?()
         } else {
             quizHasFinished = false
+            setMaxAnsweredIndex()
             setQuestion(newIndex: questionIndex - 1)
+        }
+    }
+
+    private func setMaxAnsweredIndex() {
+        if (hasSelectedAnswer) {
+            maxAnsweredIndex = max(questionIndex, maxAnsweredIndex)
         }
     }
 
@@ -66,7 +74,7 @@ class QuizViewModel: ObservableObject {
         options = nextQuestion.options
         question = nextQuestion.question
 
-        if (newIndex <= maxIndex) {
+        if (newIndex <= maxAnsweredIndex) {
             hasSelectedAnswer = true
         } else {
             hasSelectedAnswer = false
