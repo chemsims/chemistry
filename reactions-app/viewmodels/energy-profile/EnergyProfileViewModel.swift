@@ -8,25 +8,29 @@ import SwiftUI
 class EnergyProfileViewModel: ObservableObject {
 
     @Published var temp2: CGFloat?
-    @Published private(set) var peakHeightFactor: CGFloat = 1
+    @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
     @Published private(set) var reactionHasStarted = false
     @Published var selectedReaction = ReactionOrder.Zero
 
-    @Published var selectedCatalyst: Catalyst?
-    @Published var catalystInProgress: Catalyst?
     @Published var emitCatalyst = false
     @Published var catalystIsShaking = false
     @Published var canSelectCatalyst = false
     @Published var reactionHasEnded = false
+    @Published var catalystsAreDisabled = false
+
+    @Published var catalystState = CatalystState.disabled
 
     @Published var highlightedElements = [EnergyProfileScreenElement]()
+
+
+    var catalystToSelect: Catalyst?
 
     var navigation: NavigationViewModel<EnergyProfileState>?
 
 
     var activationEnergy: CGFloat {
-        let reduction = selectedCatalyst?.energyReduction ?? 0
+        let reduction = catalystState.selected?.energyReduction ?? 0
         return selectedReaction.activationEnergy - reduction
     }
 
@@ -59,11 +63,11 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     private func goToEndState() {
-        if (catalystInProgress == nil) {
-            catalystInProgress = .C
+        if (catalystState.pending == nil) {
+            catalystState = .pending(catalyst: .C)
         }
-        if (selectedCatalyst == nil) {
-            doSelectCatalyst(catalyst: catalystInProgress ?? .C, withDelay: false)
+        if (catalystState.selected == nil) {
+            doSelectCatalyst(catalyst: catalystState.pending ?? .C, withDelay: false)
         }
         reactionHasEnded = true
         concentrationC = 1
@@ -76,18 +80,27 @@ class EnergyProfileViewModel: ObservableObject {
     func resetState() {
         withAnimation(.easeOut(duration: 0.75)) {
             catalystIsShaking = false
-            catalystInProgress = nil
         }
         reactionHasEnded = false
         canSelectCatalyst = false
         dispatchId = UUID()
         emitCatalyst = false
-        selectedCatalyst = nil
         reactionHasStarted = false
         withAnimation(.easeOut(duration: 0.6)) {
             peakHeightFactor = 1
             temp2 = nil
             concentrationC = 0
+        }
+    }
+
+    func removeCatalyst() {
+        emitCatalyst = false
+        withAnimation(.easeOut(duration: 0.75)) {
+            catalystIsShaking = false
+        }
+        withAnimation(.easeOut(duration: 0.6)) {
+            peakHeightFactor = 1
+            temp2 = nil
         }
     }
 
@@ -102,7 +115,7 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     var rateEquation: Equation? {
-        if selectedCatalyst != nil {
+        if catalystState.selected != nil {
             return LinearEquation(m: slope, x1: 1 / temp1, y1: log(k1))
         }
         return nil
@@ -127,9 +140,14 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func setCatalystInProgress(catalyst: Catalyst) -> Void {
+        doSetCatalystInProgress(catalyst: catalyst)
+        navigation?.next()
+    }
+
+    func doSetCatalystInProgress(catalyst: Catalyst) {
         let duration = 0.75
         withAnimation(.easeOut(duration: duration)) {
-            catalystInProgress = catalyst
+            catalystState = .pending(catalyst: catalyst)
         }
 
         let id = UUID()
@@ -146,9 +164,8 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func selectCatalyst(catalyst: Catalyst) -> Void {
-        doSelectCatalyst(catalyst: catalyst, withDelay: true)
+        next()
     }
-    
 
     func doSelectCatalyst(
         catalyst: Catalyst,
@@ -170,7 +187,7 @@ class EnergyProfileViewModel: ObservableObject {
         }
     }
 
-    private func setSelectedCatalystState(catalyst: Catalyst) {
+    func setSelectedCatalystState(catalyst: Catalyst) {
         let maxEnergy = selectedReaction.activationEnergy
         let minEnergy = 0.9 * (selectedReaction.activationEnergy - Catalyst.C.energyReduction)
         let resultingEnergy = selectedReaction.activationEnergy - catalyst.energyReduction
@@ -178,10 +195,11 @@ class EnergyProfileViewModel: ObservableObject {
         self.temp2 = self.temp1
         self.reactionHasStarted = true
         withAnimation(.easeOut(duration: 0.8)) {
-            self.selectedCatalyst = catalyst
+            self.catalystState = .selected(catalyst: catalyst)
             self.peakHeightFactor = energyFactor
         }
     }
+
 
     func setConcentrationC(concentration: CGFloat) {
         self.concentrationC = concentration
@@ -194,7 +212,7 @@ class EnergyProfileViewModel: ObservableObject {
         selectedReaction.preExponentFactor * pow(CGFloat(Darwin.M_E), (-1 * activationEnergy) / (temp * .gasConstant))
     }
 
-    private func runCatalystShakingAnimation() {
+    func runCatalystShakingAnimation() {
         let animation = Animation.interpolatingSpring(
             stiffness: 100,
             damping: 1.8
@@ -276,4 +294,20 @@ extension ReactionOrder {
 
 extension CGFloat {
     static let gasConstant: CGFloat = 8.314
+}
+
+extension CatalystState {
+    var pending: Catalyst? {
+        switch (self) {
+        case let .pending(catalyst): return catalyst
+        default: return nil
+        }
+    }
+
+    var selected: Catalyst? {
+        switch (self) {
+        case let .selected(catalyst): return catalyst
+        default: return nil
+        }
+    }
 }

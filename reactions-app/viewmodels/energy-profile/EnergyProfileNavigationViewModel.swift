@@ -63,19 +63,11 @@ struct EnergyProfileNavigationViewModel {
             EnergyProfileStatements.explainEaHump,
             [.reactionProfileTop]
         ),
-        ExplanationState(
-            EnergyProfileStatements.explainCatalyst,
-            [.reactionProfileTop, .reactionProfileBottom, .catalysts]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.instructToChooseCatalyst,
-            [.catalysts, .beaker]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.instructToShakeCatalyst,
-            []
-        ),
-        ShowUpdatedEaValues(),
+        ShowCatalyst(),
+        EnableCatalyst(),
+        PrepareCatalyst(),
+        StartShakingCatalyst(),
+        StopShakingCatalyst(),
         ShowLinearChart(),
         ShowKRatio(),
         ExplanationState(
@@ -178,13 +170,14 @@ fileprivate class ShowInitialEaValues: EnergyProfileState {
     }
 }
 
-fileprivate class ShowUpdatedEaValues: EnergyProfileState {
-    override func statement(model: EnergyProfileViewModel) -> [SpeechBubbleLine] {
-        EnergyProfileStatements.showEaReduction(newEa: model.activationEnergy)
+fileprivate class ShowCatalyst: EnergyProfileState {
+    init() {
+        super.init(statement: EnergyProfileStatements.explainCatalyst)
     }
 
     override func apply(on model: EnergyProfileViewModel) {
-        model.highlightedElements = [.reactionProfileTop, .reactionProfileBottom]
+        model.highlightedElements = [.reactionProfileTop, .reactionProfileBottom, .catalysts]
+        model.catalystState = .visible
     }
 
     override func reapply(on model: EnergyProfileViewModel) {
@@ -193,6 +186,101 @@ fileprivate class ShowUpdatedEaValues: EnergyProfileState {
 
     override func unapply(on model: EnergyProfileViewModel) {
         model.highlightedElements = []
+        model.catalystState = .disabled
+    }
+}
+
+fileprivate class EnableCatalyst: EnergyProfileState {
+    init() {
+        super.init(statement: EnergyProfileStatements.instructToChooseCatalyst)
+    }
+
+    override func apply(on model: EnergyProfileViewModel) {
+        model.highlightedElements = [.catalysts, .beaker]
+        model.catalystState = .active
+    }
+
+    override func reapply(on model: EnergyProfileViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: EnergyProfileViewModel) {
+        model.highlightedElements = []
+        model.catalystState = .visible
+    }
+}
+
+fileprivate class PrepareCatalyst: EnergyProfileState {
+    init() {
+        super.init(statement: EnergyProfileStatements.instructToShakeCatalyst)
+    }
+
+    override func apply(on model: EnergyProfileViewModel) {
+        let catalyst = model.catalystState.pending ?? model.catalystState.selected ?? .C
+        model.doSetCatalystInProgress(catalyst: catalyst)
+    }
+
+    override func reapply(on model: EnergyProfileViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: EnergyProfileViewModel) {
+        withAnimation(.easeOut(duration: 0.75)) {
+            model.catalystState = .active
+        }
+    }
+}
+
+fileprivate class StartShakingCatalyst: EnergyProfileState {
+    init() {
+        super.init(statement: EnergyProfileStatements.instructToShakeCatalyst)
+    }
+
+    override func apply(on model: EnergyProfileViewModel) {
+        model.highlightedElements = []
+        model.emitCatalyst =  true
+        model.runCatalystShakingAnimation()
+    }
+
+    override func reapply(on model: EnergyProfileViewModel) {
+        withAnimation(.linear(duration: 0.1)) {
+            model.emitCatalyst = false
+        }
+        model.catalystIsShaking = false
+        apply(on: model)
+    }
+
+    override func unapply(on model: EnergyProfileViewModel) {
+        withAnimation(.linear(duration: 0.5)) {
+            model.catalystIsShaking = false
+        }
+        model.emitCatalyst = false
+    }
+
+    override func nextStateAutoDispatchDelay(model: EnergyProfileViewModel) -> Double? {
+        1
+    }
+}
+
+fileprivate class StopShakingCatalyst: EnergyProfileState {
+    override func statement(model: EnergyProfileViewModel) -> [SpeechBubbleLine] {
+        EnergyProfileStatements.showEaReduction(newEa: model.activationEnergy)
+    }
+
+    override func apply(on model: EnergyProfileViewModel) {
+        model.highlightedElements = [.reactionProfileTop, .reactionProfileBottom]
+        model.setSelectedCatalystState(catalyst: model.catalystState.pending ?? .C)
+    }
+
+    override func reapply(on model: EnergyProfileViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: EnergyProfileViewModel) {
+        model.catalystState = .pending(catalyst: model.catalystState.selected ?? .C)
+        withAnimation(.easeOut(duration: 0.8)) {
+            model.peakHeightFactor = 1
+        }
     }
 }
 
@@ -241,3 +329,5 @@ fileprivate class ReactionEndedState: EnergyProfileState {
         model.endReaction()
     }
 }
+
+

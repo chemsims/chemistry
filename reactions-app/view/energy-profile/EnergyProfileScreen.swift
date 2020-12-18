@@ -44,7 +44,7 @@ struct EnergyProfileScreen: View {
             beakerView(settings: settings)
         }
     }
-
+    
     private func beakyView(settings: EnergyProfileLayoutSettings) -> some View {
         BeakyOverlay(
             statement: navigation.statement,
@@ -122,9 +122,8 @@ struct EnergyProfileScreen: View {
             Spacer()
                 .frame(width: settings.orderLayoutSettings.menuSize)
             EnergyProfileBeaker(
-                selectedCatalyst: model.selectedCatalyst,
+                catalystState: model.catalystState,
                 selectCatalyst: model.selectCatalyst,
-                catalystInProgress: model.catalystInProgress,
                 setCatalystInProgress: model.setCatalystInProgress,
                 emitCatalyst: model.emitCatalyst,
                 temp: $model.temp2,

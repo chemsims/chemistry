@@ -120,6 +120,7 @@
 		57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4774F256105620041D406 /* ZeroOrderStatements.swift */; };
 		57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775925616F400041D406 /* BoundedSliderPositioning.swift */; };
 		57F4776025617B240041D406 /* BoundedSliderPositioningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775F25617B240041D406 /* BoundedSliderPositioningTests.swift */; };
+		57F56220258D4F64008B2602 /* CatalystState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5621F258D4F64008B2602 /* CatalystState.swift */; };
 		57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */; };
 		57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
@@ -256,6 +257,7 @@
 		57F4774F256105620041D406 /* ZeroOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderStatements.swift; sourceTree = "<group>"; };
 		57F4775925616F400041D406 /* BoundedSliderPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedSliderPositioning.swift; sourceTree = "<group>"; };
 		57F4775F25617B240041D406 /* BoundedSliderPositioningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundedSliderPositioningTests.swift; sourceTree = "<group>"; };
+		57F5621F258D4F64008B2602 /* CatalystState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystState.swift; sourceTree = "<group>"; };
 		57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationPlaceholderView.swift; sourceTree = "<group>"; };
 		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
@@ -482,6 +484,7 @@
 		571D6A6C255AB23D00F4E635 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57F56216258D4EE9008B2602 /* energy-profile */,
 				573F169B2584C028001CE039 /* quiz */,
 				571215542580DCC000E92A99 /* equation */,
 				57D8BA2A257BF168006B3C8B /* ui-enums */,
@@ -495,7 +498,6 @@
 				57FDA144255D835600CB8804 /* BoundType.swift */,
 				57F4775925616F400041D406 /* BoundedSliderPositioning.swift */,
 				571B3CB425658BA70075358B /* Icons.swift */,
-				570E4F0B256D288C001EADCB /* Catalyst.swift */,
 				57517F3225739E5200EB79C7 /* ReactionOrder.swift */,
 				57DAE4FD2577ED76006D945B /* ReactionInput.swift */,
 				573F16A625852D5D001CE039 /* BeakerReactionState.swift */,
@@ -710,6 +712,15 @@
 			path = statements;
 			sourceTree = "<group>";
 		};
+		57F56216258D4EE9008B2602 /* energy-profile */ = {
+			isa = PBXGroup;
+			children = (
+				570E4F0B256D288C001EADCB /* Catalyst.swift */,
+				57F5621F258D4F64008B2602 /* CatalystState.swift */,
+			);
+			path = "energy-profile";
+			sourceTree = "<group>";
+		};
 		57FDA133255D5ED700CB8804 /* util */ = {
 			isa = PBXGroup;
 			children = (
@@ -904,6 +915,7 @@
 				576D5A7825665E170062F722 /* ScaledView.swift in Sources */,
 				571B3C80256560F90075358B /* SecondOrderStatements.swift in Sources */,
 				57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */,
+				57F56220258D4F64008B2602 /* CatalystState.swift in Sources */,
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift in Sources */,
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
 				57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */,

@@ -7,10 +7,8 @@ import SwiftUI
 
 struct EnergyProfileBeaker: View {
 
-    let selectedCatalyst: Catalyst?
+    let catalystState: CatalystState
     let selectCatalyst: (Catalyst) -> Void
-
-    let catalystInProgress: Catalyst?
     let setCatalystInProgress: (Catalyst) -> Void
 
     let emitCatalyst: Bool
@@ -52,7 +50,7 @@ struct EnergyProfileBeaker: View {
             catalystView(settings: settings)
 
             shakeText(settings: settings)
-                .opacity(catalystInProgress != nil && selectedCatalyst == nil ? 1 : 0)
+                .opacity(isPending ? 1 : 0)
                 .animation(.easeOut(duration: 0.75))
         }
     }
@@ -152,7 +150,7 @@ struct EnergyProfileBeaker: View {
                 reactionHasStarted: reactionHasStarted,
                 emitterPosition: settings.emitterPosition,
                 emitting: emitCatalyst,
-                catalystColor: catalystInProgress?.color ?? .black,
+                catalystColor: catalystState.selected?.color ?? catalystState.pending?.color ?? .black,
                 canReactToC: canReactToC,
                 reactionHasEnded: reactionHasEnded
             )
@@ -179,8 +177,8 @@ struct EnergyProfileBeaker: View {
         catalyst: Catalyst,
         settings: EnergyBeakerSettings
     ) -> some View {
-        let isSelected = selectedCatalyst == catalyst
-        let isInProgress = catalystInProgress == catalyst
+        let isSelected = catalystState == .selected(catalyst: catalyst)
+        let isInProgress = catalystState == .pending(catalyst: catalyst)
         let stationaryX = (settings.width / 4) + ((settings.width / 4) * CGFloat(index))
         let x = isInProgress ? settings.width / 2 : stationaryX
         let y = isInProgress ? settings.catHeight : settings.catHeight / 2
@@ -190,7 +188,7 @@ struct EnergyProfileBeaker: View {
         let shadow = isInProgress ? settings.catHeight * 0.05 : 0
         let yOffset = (isInProgress && catalystIsShaking)  ? settings.catHeight * 0.1 : 0
 
-        return Image(catalystInProgress == nil || isInProgress ? catalyst.imageName : "catdeact")
+        return Image(catalystState != .disabled || isInProgress ? catalyst.imageName : "catdeact")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .rotationEffect(rotation, anchor: .center)
@@ -205,13 +203,18 @@ struct EnergyProfileBeaker: View {
             .opacity(isSelected ? 0 : 1)
             .offset(y: yOffset)
             .onTapGesture {
-                if (catalystInProgress == nil) {
+                if (catalystState == .active) {
                     setCatalystInProgress(catalyst)
+                } else if (catalystState == .pending(catalyst: catalyst)) {
+                    doSelectCatalyst(catalyst: catalyst)
+                } else {
+                    return
                 }
-                doSelectCatalyst(catalyst: catalyst)
-            }.onReceive(
+            }
+            .onReceive(
                 NotificationCenter.default.publisher(
-                    for: .deviceDidShakeNotification)
+                    for: .deviceDidShakeNotification
+                )
             ) { _ in
                 doSelectCatalyst(catalyst: catalyst)
             }
@@ -220,8 +223,8 @@ struct EnergyProfileBeaker: View {
     private func doSelectCatalyst(
         catalyst: Catalyst
     ) {
-        let inProgress = catalystInProgress == catalyst
-        let notSelected = selectedCatalyst == nil
+        let inProgress = catalystState.pending == catalyst
+        let notSelected = catalystState.selected == nil
         if (canSelectCatalyst && inProgress && notSelected && !emitCatalyst) {
             selectCatalyst(catalyst)
         }
@@ -326,6 +329,13 @@ struct EnergyProfileBeaker: View {
             return numerator / delta
         }
         return 0
+    }
+
+    private var isPending: Bool {
+        if case .pending = catalystState {
+            return true
+        }
+        return false
     }
 }
 
@@ -460,9 +470,8 @@ extension Catalyst {
 struct EnergyProfileBeaker_Previews: PreviewProvider {
     static var previews: some View {
         EnergyProfileBeaker(
-            selectedCatalyst: nil,
+            catalystState: .disabled,
             selectCatalyst: {_ in },
-            catalystInProgress: nil,
             setCatalystInProgress: {_ in },
             emitCatalyst: false,
             temp: .constant(500),

@@ -169,9 +169,7 @@ struct EnergyProfileStatements {
         [
             SpeechBubbleLineGenerator.makeLine(
                 """
-                Take a look at the linear graph of \(Strings.withNoBreaks(str: "ln(k) vs 1/T")) with a slope of \(slope.str(decimals: 0)).
-                This graph is very useful to determine the relation between the constant *k* and the temperature.
-                Here you can see too that the higher is *k*, the higher is *T*.
+                Take a look at the linear graph of \(Strings.withNoBreaks(str: "ln(k) vs 1/T")) with a slope of \(slope.str(decimals: 0)). This graph is very useful to determine the relation between the constant *k* and the temperature. Here you can see too that the higher is *k*, the higher is *T*.
                 """
             )
         ]
