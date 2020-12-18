@@ -87,6 +87,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
             VStack(alignment: .leading, spacing: 0) {
                 BlankRate(order: 2)
                 FilledRate(
+                    order: 2,
                     reactionHasStarted: reactionHasStarted,
                     currentTime: currentTime,
                     concentration: concentration,

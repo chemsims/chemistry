@@ -90,6 +90,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
             VStack(alignment: .leading, spacing: 0) {
                 BlankRate(order: 1)
                 FilledRate(
+                    order: 1,
                     reactionHasStarted: reactionHasStarted,
                     currentTime: currentTime,
                     concentration: concentration,

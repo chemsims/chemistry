@@ -108,6 +108,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
             HStack(spacing: 52) {
                 BlankRate(order: 0)
                 FilledRate(
+                    order: 0,
                     reactionHasStarted: reactionHasStarted,
                     currentTime: currentTime,
                     concentration: concentration,

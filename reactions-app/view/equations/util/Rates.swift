@@ -38,6 +38,7 @@ struct BlankRate: View {
 
 struct FilledRate: View {
 
+    let order: Int
     let reactionHasStarted: Bool
     let currentTime: CGFloat?
     let concentration: ConcentrationEquation?
@@ -57,7 +58,7 @@ struct FilledRate: View {
                 value(equation: concentration)
                     .foregroundColor(reactionHasStarted ? .orangeAccent : .black)
                 FixedText(")")
-                FixedText("0")
+                FixedText("\(order)")
                     .font(.system(size: EquationSettings.subscriptFontSize))
                     .offset(y: -10)
             }
@@ -86,6 +87,7 @@ struct Rates_Previews: PreviewProvider {
         VStack(alignment: .leading) {
             BlankRate(order: 1)
             FilledRate(
+                order: 0,
                 reactionHasStarted: false,
                 currentTime: nil,
                 concentration: nil,
