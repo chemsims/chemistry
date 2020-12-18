@@ -7,7 +7,6 @@ import SwiftUI
 
 class EnergyProfileViewModel: ObservableObject {
 
-    @Published var statement: [SpeechBubbleLine] = EnergyProfileStatements.intro
     @Published var temp2: CGFloat?
     @Published private(set) var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
@@ -66,7 +65,6 @@ class EnergyProfileViewModel: ObservableObject {
         }
         reactionHasEnded = true
         concentrationC = 1
-        statement = EnergyProfileStatements.finished
     }
 
     func back() {
@@ -84,7 +82,6 @@ class EnergyProfileViewModel: ObservableObject {
         emitCatalyst = false
         selectedCatalyst = nil
         reactionHasStarted = false
-        statement = EnergyProfileStatements.intro
         withAnimation(.easeOut(duration: 0.6)) {
             peakHeightFactor = 1
             temp2 = nil
@@ -104,10 +101,13 @@ class EnergyProfileViewModel: ObservableObject {
 
     var rateEquation: Equation? {
         if selectedCatalyst != nil {
-            let slope = -activationEnergy / .gasConstant
             return LinearEquation(m: slope, x1: 1 / temp1, y1: log(k1))
         }
         return nil
+    }
+
+    var slope: CGFloat {
+        -activationEnergy / .gasConstant
     }
 
     var tempHeightFactor: CGFloat {
@@ -175,7 +175,6 @@ class EnergyProfileViewModel: ObservableObject {
         let energyFactor = (resultingEnergy - minEnergy) / (maxEnergy - minEnergy)
         self.temp2 = self.temp1
         self.reactionHasStarted = true
-        self.statement = EnergyProfileStatements.setT2
         withAnimation(.easeOut(duration: 0.8)) {
             self.selectedCatalyst = catalyst
             self.peakHeightFactor = energyFactor
@@ -184,9 +183,6 @@ class EnergyProfileViewModel: ObservableObject {
 
     func setConcentrationC(concentration: CGFloat) {
         self.concentrationC = concentration
-        if (concentration > 0.4) {
-            statement = EnergyProfileStatements.middle
-        }
         if (concentration == 1) {
             next()
         }

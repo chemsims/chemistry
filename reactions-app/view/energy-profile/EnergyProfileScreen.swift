@@ -7,6 +7,7 @@ import SwiftUI
 
 struct EnergyProfileScreen: View {
 
+    @ObservedObject var navigation: NavigationViewModel<EnergyProfileState>
     @ObservedObject var model: EnergyProfileViewModel
 
     @State private var selectReactionIsToggled = false
@@ -37,9 +38,9 @@ struct EnergyProfileScreen: View {
 
     private func beakyView(settings: EnergyProfileLayoutSettings) -> some View {
         BeakyOverlay(
-            statement: model.statement,
-            next: model.next,
-            back: model.back,
+            statement: navigation.statement,
+            next: navigation.next,
+            back: navigation.back,
             settings: settings.orderLayoutSettings
         )
         .padding(.trailing, settings.orderLayoutSettings.beakyRightPadding)
@@ -177,16 +178,25 @@ struct EnergyProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
 
         // iPhone 11
-        EnergyProfileScreen(model: EnergyProfileViewModel())
+        EnergyProfileScreen(
+            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel()),
+            model: EnergyProfileViewModel()
+        )
             .previewLayout(.fixed(width: 896, height: 414))
 
         // iPhone SE
-        EnergyProfileScreen(model: EnergyProfileViewModel())
+        EnergyProfileScreen(
+            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel()),
+            model: EnergyProfileViewModel()
+        )
             .previewLayout(.fixed(width: 568, height: 320))
 
 
         // iPad Mini
-        EnergyProfileScreen(model: EnergyProfileViewModel())
+        EnergyProfileScreen(
+            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel()),
+            model: EnergyProfileViewModel()
+        )
             .previewLayout(.fixed(width: 1024, height: 768))
 
     }
