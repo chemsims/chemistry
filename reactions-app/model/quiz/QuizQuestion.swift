@@ -38,29 +38,20 @@ struct QuizQuestionOptions: Identifiable {
 
 extension QuizQuestion {
 
-    static let dummyQuestions = [q1, q2, q3]
+    static var dummyQuestions: [QuizQuestion] {
+        (1...20).map { i in
+            question(num1: i, num2: i)
+        }
+    }
 
-    static let q1 = QuizQuestion(
-        question: "What is 1 + 1?",
-        correctAnswer: "2",
-        incorrectAnswer1: "3",
-        incorrectAnswer2: "4",
-        incorrectAnswer3: "5"
-    )
-
-    static let q2 = QuizQuestion(
-        question: "What is 2 + 2?",
-        correctAnswer: "4",
-        incorrectAnswer1: "5",
-        incorrectAnswer2: "6",
-        incorrectAnswer3: "7"
-    )
-
-    static let q3 = QuizQuestion(
-        question: "What is 3 + 3?",
-        correctAnswer: "6",
-        incorrectAnswer1: "7",
-        incorrectAnswer2: "8",
-        incorrectAnswer3: "9"
-    )
+    static func question(num1: Int, num2: Int) -> QuizQuestion {
+        let correctValue = num1 + num2
+        return QuizQuestion(
+            question: "What is \(num1) + \(num2)",
+            correctAnswer: "\(correctValue)",
+            incorrectAnswer1: "\(correctValue + 1)",
+            incorrectAnswer2: "\(correctValue - 1)",
+            incorrectAnswer3: "\(correctValue + 2)"
+        )
+    }
 }

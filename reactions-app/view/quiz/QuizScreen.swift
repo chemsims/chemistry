@@ -39,9 +39,14 @@ fileprivate struct QuizScreenWithSettings: View {
                 HStack(spacing: 0) {
                     Spacer()
                         .frame(width: settings.navTotalWidth)
-                    if (!model.quizHasFinished) {
+                    if (model.quizState == .pending) {
+                        introBody
+                    }
+                    if (model.quizState == .running) {
                         questionBody
-                    } else {
+                    }
+
+                    if (model.quizState == .completed) {
                         reviewList
                     }
                     Spacer()
@@ -54,6 +59,42 @@ fileprivate struct QuizScreenWithSettings: View {
         }
         .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.8)
+    }
+
+    private var introBody: some View {
+        VStack {
+            Text("Let's take a quiz!")
+                .font(.system(size: settings.fontSize))
+            Text("Choose the difficulty level of the quiz")
+                .font(.system(size: 0.8 * settings.fontSize))
+                .foregroundColor(.orangeAccent)
+            ForEach(QuizDifficulty.allCases, id: \.rawValue) { difficulty in
+                quizDifficultyOption(difficulty: difficulty)
+            }
+        }
+    }
+
+    private func quizDifficultyOption(
+        difficulty: QuizDifficulty
+    ) -> some View {
+        let isSelected = model.quizDifficulty == difficulty
+
+        return ZStack {
+            RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                .foregroundColor(Styling.quizAnswer)
+
+            RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                .stroke(lineWidth: isSelected ? activeLineWidth : standardLineWidth)
+                .foregroundColor(isSelected ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerBorder)
+
+            VStack {
+                Text(difficulty.rawValue.capitalized)
+                Text("\(difficulty.quizLength) questions")
+                    .font(.system(size: 0.7 * settings.fontSize))
+            }
+        }.onTapGesture {
+            model.quizDifficulty = difficulty
+        }
     }
 
     private var reviewList: some View {
@@ -94,10 +135,14 @@ fileprivate struct QuizScreenWithSettings: View {
 
                 NextButton(action: model.next)
                     .frame(width: settings.navSize, height: settings.navSize)
-                    .disabled(!model.hasSelectedAnswer)
-                    .opacity(model.hasSelectedAnswer ? 1 : 0.3)
+                    .disabled(nextIsDisabled)
+                    .opacity(nextIsDisabled ? 0.3 : 1)
             }
         }.padding(settings.navPadding)
+    }
+
+    private var nextIsDisabled: Bool {
+        model.quizState == .running && !model.hasSelectedAnswer
     }
 
     private var progressBar: some View {
@@ -110,21 +155,24 @@ fileprivate struct QuizScreenWithSettings: View {
                 cornerRadius: settings.progressCornerRadius
             )
 
-            if (!model.quizHasFinished) {
-                Text(
-                    "\(model.questionIndex + 1)/\(model.questions.count)"
-                )
-                .font(.system(size: settings.progressFontSize))
-                .frame(width: settings.progressLabelWidth)
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: settings.progressCornerRadius
-                    )
-                    .foregroundColor(Color.white)
-                    .opacity(0.3)
-                )
+            if (model.quizState == .running) {
+                progressLabel
             }
         }
+    }
+
+    private var progressLabel: some View {
+        Text("\(model.questionIndex + 1)/\(model.quizDifficulty.quizLength)")
+        .font(.system(size: settings.progressFontSize))
+        .minimumScaleFactor(0.8)
+        .frame(width: settings.progressLabelWidth, height: 0.9 * settings.progressHeight)
+        .background(
+            RoundedRectangle(
+                cornerRadius: settings.progressCornerRadius
+            )
+            .foregroundColor(Color.white)
+            .opacity(0.5)
+        )
     }
 
     private var answers: some View {
@@ -232,8 +280,11 @@ fileprivate struct QuizScreenWithSettings: View {
 
     private func answerLineWidth(option: QuizOption) -> CGFloat {
         let active = model.hasSelectedAnswer && model.correctOption == option
-        return active ? 3 : 1
+        return active ? activeLineWidth : standardLineWidth
     }
+
+    private let activeLineWidth: CGFloat = 3
+    private let standardLineWidth: CGFloat = 1
 }
 
 fileprivate struct RotatedModifier: ViewModifier {

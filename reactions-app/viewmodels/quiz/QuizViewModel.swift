@@ -21,7 +21,8 @@ class QuizViewModel: ObservableObject {
     @Published var question: String = ""
     @Published var hasSelectedAnswer: Bool = false
     @Published var correctOption: QuizOption = .A
-    @Published var quizHasFinished: Bool = false
+    @Published var quizState: QuizState = .pending
+    @Published var quizDifficulty = QuizDifficulty.medium
     private(set) var questionIndex: Int = 0
 
 
@@ -33,23 +34,31 @@ class QuizViewModel: ObservableObject {
     private var options = [QuizOption:String]()
 
     func next() {
-        setMaxAnsweredIndex()
-        if (questionIndex == questions.count) {
+        switch (quizState) {
+        case .pending:
+            quizState = .running
+        case .running:
+            setMaxAnsweredIndex()
+            if (questionIndex == quizDifficulty.quizLength - 1) {
+                quizState = .completed
+                questionIndex += 1
+                setProgress()
+            } else {
+                setQuestion(newIndex: questionIndex + 1)
+            }
+        case .completed:
             nextScreen?()
-        } else if (questionIndex == questions.count - 1) {
-            quizHasFinished = true
-            questionIndex += 1
-            setProgress()
-        } else {
-            setQuestion(newIndex: questionIndex + 1)
         }
     }
 
     func back() {
-        if (questionIndex == 0) {
+        switch (quizState) {
+        case .pending:
             prevScreen?()
-        } else {
-            quizHasFinished = false
+        case .running where questionIndex == 0:
+            quizState = .pending
+        default:
+            quizState = .running
             setMaxAnsweredIndex()
             setQuestion(newIndex: questionIndex - 1)
         }
@@ -87,7 +96,7 @@ class QuizViewModel: ObservableObject {
 
     private func setProgress() {
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
-            progress = CGFloat(questionIndex) / CGFloat(questions.count)
+            progress = CGFloat(questionIndex) / CGFloat(quizDifficulty.quizLength)
         }
     }
 }
