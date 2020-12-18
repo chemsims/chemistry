@@ -105,8 +105,8 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             let magnitude = body.velocity.magnitude
             let factor = velocity / magnitude
 
-            let maxFactor = allowRapidChange ? factor :  1.25
-            let minFactor = allowRapidChange ? factor : 0.75
+            let maxFactor = allowRapidChange ? factor :  1.4
+            let minFactor = allowRapidChange ? factor : 0.6
 
             let adjustedFactor = min(maxFactor, max(minFactor, factor))
             body.velocity = body.velocity.scale(by: adjustedFactor)

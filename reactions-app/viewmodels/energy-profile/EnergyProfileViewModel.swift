@@ -10,7 +10,7 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var statement: [SpeechBubbleLine] = EnergyProfileStatements.intro
     @Published var temp2: CGFloat?
     @Published private(set) var peakHeightFactor: CGFloat = 1
-    @Published private(set) var concentrationC: CGFloat = 0
+    @Published var concentrationC: CGFloat = 0
     @Published private(set) var reactionHasStarted = false
     @Published var selectedReaction = ReactionOrder.Zero
 
@@ -20,6 +20,9 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var catalystIsShaking = false
     @Published var canSelectCatalyst = false
     @Published var reactionHasEnded = false
+
+    var navigation: ReactionNavigationViewModel<EnergyProfileState>?
+
 
     var activationEnergy: CGFloat {
         let reduction = selectedCatalyst?.energyReduction ?? 0
@@ -47,11 +50,11 @@ class EnergyProfileViewModel: ObservableObject {
     var nextScreen: (() -> Void)?
 
     func next() {
-        if (reactionHasEnded) {
-            nextScreen?()
-        } else {
-            goToEndState()
-        }
+        navigation?.next()
+    }
+
+    func endReaction() {
+        goToEndState()
     }
 
     private func goToEndState() {
@@ -67,27 +70,25 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func back() {
-        if (catalystInProgress == nil) {
-            if let goToPrevious = prevScreen {
-                goToPrevious()
-            }
-        } else {
-            withAnimation(.easeOut(duration: 0.75)) {
-                catalystIsShaking = false
-                catalystInProgress = nil
-            }
-            reactionHasEnded = false
-            canSelectCatalyst = false
-            dispatchId = UUID()
-            emitCatalyst = false
-            selectedCatalyst = nil
-            reactionHasStarted = false
-            statement = EnergyProfileStatements.intro
-            withAnimation(.easeOut(duration: 0.6)) {
-                peakHeightFactor = 1
-                temp2 = nil
-                concentrationC = 0
-            }
+        navigation?.back()
+    }
+
+    func resetState() {
+        withAnimation(.easeOut(duration: 0.75)) {
+            catalystIsShaking = false
+            catalystInProgress = nil
+        }
+        reactionHasEnded = false
+        canSelectCatalyst = false
+        dispatchId = UUID()
+        emitCatalyst = false
+        selectedCatalyst = nil
+        reactionHasStarted = false
+        statement = EnergyProfileStatements.intro
+        withAnimation(.easeOut(duration: 0.6)) {
+            peakHeightFactor = 1
+            temp2 = nil
+            concentrationC = 0
         }
     }
 
@@ -147,7 +148,7 @@ class EnergyProfileViewModel: ObservableObject {
     }
     
 
-    private func doSelectCatalyst(
+    func doSelectCatalyst(
         catalyst: Catalyst,
         withDelay: Bool
     ) {
@@ -187,8 +188,7 @@ class EnergyProfileViewModel: ObservableObject {
             statement = EnergyProfileStatements.middle
         }
         if (concentration == 1) {
-            statement = EnergyProfileStatements.finished
-            reactionHasEnded = true
+            next()
         }
     }
 

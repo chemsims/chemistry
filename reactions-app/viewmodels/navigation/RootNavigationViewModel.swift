@@ -34,7 +34,7 @@ class RootNavigationViewModel: ObservableObject {
     ) {
         self.view = AnyView(EmptyView())
         self.persistence = persistence
-        goToZeroOrder()
+        goToEnergyProfile()
     }
 
     func goToZeroOrder() {
@@ -83,8 +83,11 @@ class RootNavigationViewModel: ObservableObject {
 
     func goToEnergyProfile() {
         let model = EnergyProfileViewModel()
-        model.prevScreen = { self.goToComparisonQuiz(restoreState: true) }
-        model.nextScreen = { self.goToEnergyProfileQuiz(restoreState: false) }
+        let navigation = EnergyProfileNavigationViewModel.model(model)
+        navigation.prevScreen = { self.goToComparisonQuiz(restoreState: true) }
+        navigation.nextScreen = { self.goToEnergyProfileQuiz(restoreState: false) }
+        model.navigation = navigation
+
         let view = EnergyProfileScreen(model: model)
         self.view = AnyView(view)
     }

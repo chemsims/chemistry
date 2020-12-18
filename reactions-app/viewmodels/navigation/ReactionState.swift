@@ -68,8 +68,6 @@ class ReactionState: ScreenState, SubState {
 
     func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? { nil }
 
-    let canSelectState: Bool = true
-
     let delayedStates = [DelayedState<ReactionState>]()
 
 }
