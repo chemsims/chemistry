@@ -6,8 +6,8 @@
 import SwiftUI
 
 struct EnergyProfileNavigationViewModel {
-    static func model(_ energyViewModel: EnergyProfileViewModel) -> ReactionNavigationViewModel<EnergyProfileState> {
-        ReactionNavigationViewModel(
+    static func model(_ energyViewModel: EnergyProfileViewModel) -> NavigationViewModel<EnergyProfileState> {
+        NavigationViewModel(
             reactionViewModel: energyViewModel,
             states: [
                 IntroState(),

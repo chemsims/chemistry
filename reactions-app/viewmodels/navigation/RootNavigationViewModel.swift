@@ -12,16 +12,16 @@ class RootNavigationViewModel: ObservableObject {
     private let persistence: ReactionInputPersistence
 
     private var zeroOrderViewModel: ZeroOrderReactionViewModel?
-    private var zeroOrderNavigation: ReactionNavigationViewModel<ReactionState>?
+    private var zeroOrderNavigation: NavigationViewModel<ReactionState>?
 
     private var firstOrderViewModel: FirstOrderReactionViewModel?
-    private var firstOrderNavigation: ReactionNavigationViewModel<ReactionState>?
+    private var firstOrderNavigation: NavigationViewModel<ReactionState>?
 
     private var secondOrderViewModel: SecondOrderReactionViewModel?
-    private var secondOrderNavigation: ReactionNavigationViewModel<ReactionState>?
+    private var secondOrderNavigation: NavigationViewModel<ReactionState>?
 
     private var comparisonViewModel: ReactionComparisonViewModel?
-    private var comparisonNavigation: ReactionNavigationViewModel<ReactionComparisonState>?
+    private var comparisonNavigation: NavigationViewModel<ReactionComparisonState>?
 
     private var zeroOrderQuizViewModel: QuizViewModel?
     private var firstOrderQuizViewModel: QuizViewModel?

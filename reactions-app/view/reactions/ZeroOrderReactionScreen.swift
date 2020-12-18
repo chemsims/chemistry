@@ -8,7 +8,7 @@ import SwiftUI
 struct ZeroOrderReactionScreen: View {
 
     @ObservedObject var reaction: ZeroOrderReactionViewModel
-    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
+    @ObservedObject var navigation: NavigationViewModel<ReactionState>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -76,7 +76,7 @@ struct ZeroOrderReactionScreen: View {
 
 struct ZeroOrderReaction_Previews: PreviewProvider {
 
-    static var navigation: ReactionNavigationViewModel<ReactionState> {
+    static var navigation: NavigationViewModel<ReactionState> {
         ZeroOrderReactionNavigation.model(
             reaction: ZeroOrderReactionViewModel(),
             persistence: InMemoryReactionInputPersistence()

@@ -30,7 +30,7 @@
 		571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C41256405490075358B /* OrderedReactionScreen.swift */; };
 		571B3C4F256555460075358B /* ZeroOrderReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C4E256555460075358B /* ZeroOrderReactionViewModel.swift */; };
 		571B3C55256555600075358B /* FirstOrderReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C54256555600075358B /* FirstOrderReactionViewModel.swift */; };
-		571B3C5A256555C40075358B /* ReactionNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C59256555C40075358B /* ReactionNavigationViewModel.swift */; };
+		571B3C5A256555C40075358B /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C59256555C40075358B /* NavigationViewModel.swift */; };
 		571B3C602565562C0075358B /* FirstOrderReactionNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C5F2565562C0075358B /* FirstOrderReactionNavigationViewModel.swift */; };
 		571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C63256556560075358B /* ZeroOrderReactionNavigationViewModel.swift */; };
 		571B3C68256556740075358B /* ReactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C67256556740075358B /* ReactionState.swift */; };
@@ -163,7 +163,7 @@
 		571B3C41256405490075358B /* OrderedReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedReactionScreen.swift; sourceTree = "<group>"; };
 		571B3C4E256555460075358B /* ZeroOrderReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionViewModel.swift; sourceTree = "<group>"; };
 		571B3C54256555600075358B /* FirstOrderReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionViewModel.swift; sourceTree = "<group>"; };
-		571B3C59256555C40075358B /* ReactionNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionNavigationViewModel.swift; sourceTree = "<group>"; };
+		571B3C59256555C40075358B /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
 		571B3C5F2565562C0075358B /* FirstOrderReactionNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionNavigationViewModel.swift; sourceTree = "<group>"; };
 		571B3C63256556560075358B /* ZeroOrderReactionNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionNavigationViewModel.swift; sourceTree = "<group>"; };
 		571B3C67256556740075358B /* ReactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionState.swift; sourceTree = "<group>"; };
@@ -380,7 +380,7 @@
 		571B3C58256555940075358B /* navigation */ = {
 			isa = PBXGroup;
 			children = (
-				571B3C59256555C40075358B /* ReactionNavigationViewModel.swift */,
+				571B3C59256555C40075358B /* NavigationViewModel.swift */,
 				571B3C5F2565562C0075358B /* FirstOrderReactionNavigationViewModel.swift */,
 				571B3C63256556560075358B /* ZeroOrderReactionNavigationViewModel.swift */,
 				571B3C67256556740075358B /* ReactionState.swift */,
@@ -883,7 +883,7 @@
 				57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */,
 				57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */,
 				5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */,
-				571B3C5A256555C40075358B /* ReactionNavigationViewModel.swift in Sources */,
+				571B3C5A256555C40075358B /* NavigationViewModel.swift in Sources */,
 				57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */,
 				573F16922584ACEC001CE039 /* QuizViewModel.swift in Sources */,
 				57D8BA27257BBCE9006B3C8B /* ReactionComparisonViews.swift in Sources */,

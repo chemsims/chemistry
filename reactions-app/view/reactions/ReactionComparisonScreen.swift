@@ -7,7 +7,7 @@ import SwiftUI
 
 struct ReactionComparisonScreen: View {
 
-    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionComparisonState>
+    @ObservedObject var navigation: NavigationViewModel<ReactionComparisonState>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -30,7 +30,7 @@ struct ReactionComparisonScreen: View {
 
 fileprivate struct ReactionComparisonViewWithSettings: View {
 
-    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionComparisonState>
+    @ObservedObject var navigation: NavigationViewModel<ReactionComparisonState>
     @ObservedObject var reaction: ReactionComparisonViewModel
 
     @State private var dragLocation = CGPoint.zero

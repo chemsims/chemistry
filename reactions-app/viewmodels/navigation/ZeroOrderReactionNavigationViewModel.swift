@@ -30,8 +30,8 @@ struct ZeroOrderReactionNavigation {
     static func model(
         reaction: ZeroOrderReactionViewModel,
         persistence: ReactionInputPersistence
-    ) -> ReactionNavigationViewModel<ReactionState> {
-        ReactionNavigationViewModel(
+    ) -> NavigationViewModel<ReactionState> {
+        NavigationViewModel(
             reactionViewModel: reaction,
             states: states(persistence: persistence)
         )

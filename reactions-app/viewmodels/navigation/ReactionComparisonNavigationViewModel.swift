@@ -19,8 +19,8 @@ struct ReactionComparisonNavigationViewModel {
         ]
     }
 
-    static func model(reaction: ReactionComparisonViewModel) -> ReactionNavigationViewModel<ReactionComparisonState> {
-        ReactionNavigationViewModel(
+    static func model(reaction: ReactionComparisonViewModel) -> NavigationViewModel<ReactionComparisonState> {
+        NavigationViewModel(
             reactionViewModel: reaction,
             states: states
         )

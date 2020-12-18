@@ -35,8 +35,8 @@ struct FirstOrderReactionNavigation {
     static func model(
         reaction: FirstOrderReactionViewModel,
         persistence: ReactionInputPersistence
-    ) -> ReactionNavigationViewModel<ReactionState> {
-        ReactionNavigationViewModel(
+    ) -> NavigationViewModel<ReactionState> {
+        NavigationViewModel(
             reactionViewModel: reaction,
             states: states(persistence: persistence)
         )

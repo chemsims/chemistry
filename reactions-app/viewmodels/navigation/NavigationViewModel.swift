@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-class ReactionNavigationViewModel<State: ScreenState>: ObservableObject {
+class NavigationViewModel<State: ScreenState>: ObservableObject {
 
     @Published var statement: [SpeechBubbleLine] = []
 

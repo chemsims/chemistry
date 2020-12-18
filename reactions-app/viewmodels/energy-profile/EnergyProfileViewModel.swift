@@ -21,7 +21,7 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var canSelectCatalyst = false
     @Published var reactionHasEnded = false
 
-    var navigation: ReactionNavigationViewModel<EnergyProfileState>?
+    var navigation: NavigationViewModel<EnergyProfileState>?
 
 
     var activationEnergy: CGFloat {

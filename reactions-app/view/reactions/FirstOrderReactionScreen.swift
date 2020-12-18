@@ -8,7 +8,7 @@ import SwiftUI
 struct FirstOrderReactionScreen: View {
 
     @ObservedObject var reaction: FirstOrderReactionViewModel
-    @ObservedObject var navigation: ReactionNavigationViewModel<ReactionState>
+    @ObservedObject var navigation: NavigationViewModel<ReactionState>
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
