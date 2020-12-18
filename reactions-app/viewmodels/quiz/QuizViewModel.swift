@@ -18,12 +18,12 @@ class QuizViewModel: ObservableObject {
     var prevScreen: (() -> Void)?
 
     @Published var progress: CGFloat = 0
-    @Published var question: String = ""
-    @Published var hasSelectedAnswer: Bool = false
+    @Published var question = ""
+    @Published var hasSelectedAnswer = false
     @Published var correctOption: QuizOption = .A
-    @Published var quizState: QuizState = .pending
+    @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
-    private(set) var questionIndex: Int = 0
+    private(set) var questionIndex = 0
 
 
     private var reduceMotion: Bool {

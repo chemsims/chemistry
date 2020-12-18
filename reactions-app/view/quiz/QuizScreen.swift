@@ -55,6 +55,7 @@ fileprivate struct QuizScreenWithSettings: View {
 
                 Spacer()
             }
+            .edgesIgnoringSafeArea(model.quizState == .completed ? .bottom : [])
             navButtons
         }
         .font(.system(size: settings.fontSize))
@@ -98,21 +99,30 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private var reviewList: some View {
-        VStack {
-            Text("Let's review the questions!")
-            VStack {
-                ForEach(model.questions) { question in
+        VStack(spacing: 2) {
+            HStack {
+                Spacer()
+                Text("Let's review the questions!")
+                Spacer()
+            }
+            Rectangle()
+                .frame(height: 1)
+                .shadow(radius: 1, y: 2)
+            ScrollView {
+                ForEach(model.questions.prefix(model.quizDifficulty.quizLength)) { question in
                     reviewCard(question: question)
                 }
-            }.edgesIgnoringSafeArea(.bottom)
+            }
         }
     }
 
     private func reviewCard(question: QuizQuestionOptions) -> some View {
         HStack {
+            Spacer()
             Text(question.question)
             Text(question.options[question.correctOption] ?? "")
                 .foregroundColor(.orangeAccent)
+            Spacer()
         }.padding()
     }
 
