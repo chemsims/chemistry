@@ -7,6 +7,11 @@ import SwiftUI
 
 struct EnergyProfileScreen: View {
 
+    init(navigation: NavigationViewModel<EnergyProfileState>) {
+        self.navigation = navigation
+        self.model = navigation.model
+    }
+
     @ObservedObject var navigation: NavigationViewModel<EnergyProfileState>
     @ObservedObject var model: EnergyProfileViewModel
 
@@ -29,6 +34,10 @@ struct EnergyProfileScreen: View {
 
     private func makeView(settings: EnergyProfileLayoutSettings) -> some View {
         ZStack {
+            Rectangle()
+                .edgesIgnoringSafeArea(.all)
+                .foregroundColor(model.color(for: nil))
+
             chartsView(settings: settings)
             beakyView(settings: settings)
             equationView(settings: settings)
@@ -57,7 +66,8 @@ struct EnergyProfileScreen: View {
                         chartSize: settings.chartsSize
                     ),
                     equation: model.rateEquation,
-                    currentTempInverse: model.temp2.map { 1 / $0 }
+                    currentTempInverse: model.temp2.map { 1 / $0 },
+                    highlightChart: model.highlight(element: .linearChart)
                 )
 
                 EnergyProfileChart(
@@ -67,7 +77,9 @@ struct EnergyProfileScreen: View {
                     peakHeightFactor: model.peakHeightFactor,
                     initialHeightFactor: model.initialHeightFactor,
                     tempHeightFactor: model.tempHeightFactor,
-                    showTemperature: model.temp2 != nil
+                    showTemperature: model.temp2 != nil,
+                    highlightTop: model.highlight(element: .reactionProfileTop),
+                    highlightBottom: model.highlight(element: .reactionProfileBottom)
                 )
 
                 ReactionOrderSelection(
@@ -75,6 +87,7 @@ struct EnergyProfileScreen: View {
                     selection: $model.selectedReaction,
                     height: settings.selectOrderHeight
                 )
+                .colorMultiply(model.color(for: .reactionToggle))
             }
             .padding(.top, settings.chartsTopPadding)
             .padding(.trailing, settings.chartsTopPadding * 0.5)
@@ -95,7 +108,8 @@ struct EnergyProfileScreen: View {
                     t1: model.temp1,
                     t2: model.temp2,
                     maxWidth: settings.equationWidth,
-                    maxHeight: settings.equationHeight
+                    maxHeight: settings.equationHeight,
+                    highlights: model.highlightedElements
                 )
                 .padding(.leading, settings.equationLeadingPadding)
                 Spacer()
@@ -120,7 +134,9 @@ struct EnergyProfileScreen: View {
                 catalystIsShaking: model.catalystIsShaking,
                 canReactToC: model.canReactToC,
                 canSelectCatalyst: model.canSelectCatalyst,
-                reactionHasEnded: model.reactionHasEnded
+                reactionHasEnded: model.reactionHasEnded,
+                highlightSlider: model.highlight(element: .tempSlider),
+                highlightBeaker: model.highlight(element: .beaker)
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .padding(.leading, settings.beakerLeadingPadding)
@@ -179,23 +195,20 @@ struct EnergyProfileScreen_Previews: PreviewProvider {
 
         // iPhone 11
         EnergyProfileScreen(
-            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel()),
-            model: EnergyProfileViewModel()
+            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel())
         )
             .previewLayout(.fixed(width: 896, height: 414))
 
         // iPhone SE
         EnergyProfileScreen(
-            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel()),
-            model: EnergyProfileViewModel()
+            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel())
         )
             .previewLayout(.fixed(width: 568, height: 320))
 
 
         // iPad Mini
         EnergyProfileScreen(
-            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel()),
-            model: EnergyProfileViewModel()
+            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel())
         )
             .previewLayout(.fixed(width: 1024, height: 768))
 

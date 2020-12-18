@@ -88,7 +88,7 @@ class RootNavigationViewModel: ObservableObject {
         navigation.nextScreen = { self.goToEnergyProfileQuiz(restoreState: false) }
         model.navigation = navigation
 
-        let view = EnergyProfileScreen(navigation: navigation, model: model)
+        let view = EnergyProfileScreen(navigation: navigation)
         self.view = AnyView(view)
     }
 

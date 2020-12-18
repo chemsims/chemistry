@@ -12,6 +12,8 @@ struct EnergyProfileChart: View {
     let initialHeightFactor: CGFloat
     let tempHeightFactor: CGFloat
     let showTemperature: Bool
+    let highlightTop: Bool
+    let highlightBottom: Bool
 
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
@@ -38,8 +40,32 @@ struct EnergyProfileChart: View {
 
     private var annotatedChart: some View {
         ZStack {
+            chartHighlight
             chart
             annotations
+        }.frame(width: settings.chartSize, height: settings.chartSize)
+    }
+
+    private var chartHighlight: some View {
+        ZStack {
+            VStack {
+                Rectangle()
+                    .foregroundColor(.white)
+                    .opacity(highlightTop ? 1 : 0)
+                    .frame(
+                        height: 0.52 * settings.chartSize
+                    )
+                Spacer()
+            }
+            VStack {
+                Spacer()
+                Rectangle()
+                    .foregroundColor(.white)
+                    .opacity(highlightBottom ? 1 : 0)
+                    .frame(
+                        height: 0.51 * settings.chartSize
+                    )
+            }
         }
     }
 
@@ -275,7 +301,9 @@ struct EnergyProfileChart_Previews: PreviewProvider {
             peakHeightFactor: 0,
             initialHeightFactor: 1,
             tempHeightFactor: 1,
-            showTemperature: true
+            showTemperature: true,
+            highlightTop: true,
+            highlightBottom: true
         )
     }
 }

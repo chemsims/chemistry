@@ -10,6 +10,7 @@ struct EnergyProfileRateChart: View {
     let settings: EnergyRateChartSettings
     let equation: Equation?
     let currentTempInverse: CGFloat?
+    let highlightChart: Bool
 
     var body: some View {
         HStack {
@@ -28,6 +29,10 @@ struct EnergyProfileRateChart: View {
 
     private var chart: some View  {
         ZStack {
+            Rectangle()
+                .foregroundColor(.white)
+                .opacity(highlightChart ? 1 : 0)
+
             if (equation != nil) {
                 ChartLine(
                     equation: equation!,
@@ -157,7 +162,8 @@ struct EnergyProfileRateChart_Previews: PreviewProvider {
         EnergyProfileRateChart(
             settings: EnergyRateChartSettings(chartSize: 250),
             equation: ZeroOrderReaction(a0: 1, rateConstant: 0.1),
-            currentTempInverse: 1 / 500
+            currentTempInverse: 1 / 500,
+            highlightChart: true
         )
     }
 }

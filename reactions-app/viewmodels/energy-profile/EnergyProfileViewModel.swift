@@ -20,6 +20,8 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var canSelectCatalyst = false
     @Published var reactionHasEnded = false
 
+    @Published var highlightedElements = [EnergyProfileScreenElement]()
+
     var navigation: NavigationViewModel<EnergyProfileState>?
 
 
@@ -200,6 +202,23 @@ class EnergyProfileViewModel: ObservableObject {
         withAnimation(animation) {
             catalystIsShaking = true
         }
+    }
+
+    func color(for element: EnergyProfileScreenElement?) -> Color {
+        if (highlight(element: element)) {
+            return .white
+        }
+        return Styling.inactiveScreenElement
+    }
+
+    func highlight(element: EnergyProfileScreenElement?) -> Bool {
+        if (highlightedElements.isEmpty) {
+            return true
+        }
+        if let element = element, highlightedElements.contains(element) {
+            return true
+        }
+        return false
     }
 }
 

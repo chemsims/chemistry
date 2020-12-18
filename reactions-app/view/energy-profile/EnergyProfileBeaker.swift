@@ -24,6 +24,8 @@ struct EnergyProfileBeaker: View {
     let canReactToC: Bool
     let canSelectCatalyst: Bool
     let reactionHasEnded: Bool
+    let highlightSlider: Bool
+    let highlightBeaker: Bool
 
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
@@ -77,6 +79,11 @@ struct EnergyProfileBeaker: View {
             beakerStand(settings: settings)
             slider(settings: settings, temp: tempBinding)
                 .padding(.top, settings.sliderTopPadding)
+                .background(
+                    Color.white
+                        .padding(.bottom, -settings.sliderTopPadding)
+                        .opacity(highlightSlider ? 1 : 0)
+                )
         }
     }
 
@@ -84,10 +91,25 @@ struct EnergyProfileBeaker: View {
         settings: EnergyBeakerSettings
     ) -> some View {
         ZStack(alignment: .bottom) {
+            Color.white.mask(
+                BeakerShape(
+                    lipHeight: settings.beaker.lipRadius,
+                    lipWidthLeft: settings.beaker.lipWidthLeft,
+                    lipWidthRight: settings.beaker.lipWidthLeft,
+                    leftCornerRadius: settings.beaker.outerBottomCornerRadius,
+                    rightCornerRadius: settings.beaker.outerBottomCornerRadius,
+                    bottomGap: 0,
+                    rightGap: 0
+                )
+            )
+            .frame(height: settings.beakerHeight)
+            .opacity(highlightBeaker ? 1 : 0)
+
             beakerTicks(settings: settings)
             beakerFill(settings: settings)
             EmptyBeaker(settings: settings.beaker)
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
+
         }
     }
 
@@ -102,7 +124,7 @@ struct EnergyProfileBeaker: View {
             skSceneView(settings: settings)
         }.mask(
             BeakerBottomShape(cornerRadius: settings.beaker.outerBottomCornerRadius)
-        )
+        ).colorMultiply(highlightBeaker ? .white : Styling.inactiveScreenElement)
     }
 
     private func beakerTicks(settings: EnergyBeakerSettings) -> some View {
@@ -279,7 +301,7 @@ struct EnergyProfileBeaker: View {
             handleColor:tempBinding == nil ? .darkGray : .orangeAccent,
             handleCornerRadius: settings.handleCornerRadius,
             barThickness: settings.barThickness,
-            barColor: Styling.timeAxisCompleteBar,
+            barColor: Styling.energySliderBar,
             orientation: .landscape,
             includeFill: true,
             useHaptics: false
@@ -450,7 +472,11 @@ struct EnergyProfileBeaker_Previews: PreviewProvider {
             catalystIsShaking: false,
             canReactToC: true,
             canSelectCatalyst: true,
-            reactionHasEnded: false
-        ).previewLayout(.fixed(width: 200, height: 320))
+            reactionHasEnded: false,
+            highlightSlider: false,
+            highlightBeaker: true
+        )
+        .background(Styling.inactiveScreenElement)
+        .previewLayout(.fixed(width: 200, height: 320))
     }
 }

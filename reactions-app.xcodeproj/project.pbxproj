@@ -21,6 +21,7 @@
 		57035EFD255C1A7000DB3A19 /* ReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EFC255C1A7000DB3A19 /* ReactionSettings.swift */; };
 		57035F0C255C26D000DB3A19 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
 		57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */; };
+		57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */; };
 		570E4F01256D10CD001EADCB /* EnergyProfileChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */; };
 		570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */; };
 		570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F0B256D288C001EADCB /* Catalyst.swift */; };
@@ -154,6 +155,7 @@
 		57035EFC255C1A7000DB3A19 /* ReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionSettings.swift; sourceTree = "<group>"; };
 		57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAxisShape.swift; sourceTree = "<group>"; };
 		57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTimeChartView.swift; sourceTree = "<group>"; };
+		57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreenElement.swift; sourceTree = "<group>"; };
 		570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChart.swift; sourceTree = "<group>"; };
 		570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileViewModel.swift; sourceTree = "<group>"; };
 		570E4F0B256D288C001EADCB /* Catalyst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalyst.swift; sourceTree = "<group>"; };
@@ -668,6 +670,7 @@
 			isa = PBXGroup;
 			children = (
 				57D8BA2B257BF17E006B3C8B /* ReactionComparisonScreenElement.swift */,
+				57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */,
 			);
 			path = "ui-enums";
 			sourceTree = "<group>";
@@ -903,6 +906,7 @@
 				57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */,
 				57035EF6255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift in Sources */,
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
+				57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */,
 				57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */,
 				57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */,
 				57D8BA1F257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift in Sources */,

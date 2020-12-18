@@ -43,6 +43,8 @@ struct ReactionOrderSelection: View {
     private var indicatorView: some View {
         ZStack {
             Rectangle()
+                .foregroundColor(.white)
+            Rectangle()
                 .stroke()
             Button(action: { isToggled.toggle() }) {
                 Image(systemName: "chevron.up")
