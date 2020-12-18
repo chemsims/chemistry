@@ -50,11 +50,17 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
         let previousIndex = currentIndex - 1
         if let currentState = getState(for: currentIndex),
            let previousState = getState(for: previousIndex) {
-            currentState.unapply(on: model)
-            previousState.reapply(on: model)
+            if (!currentState.ignoreOnBack) {
+                currentState.unapply(on: model)
+            }
             currentIndex = previousIndex
-            scheduleSubState(indexToRun: 0)
-            scheduleNextState(for: previousState)
+            if (previousState.ignoreOnBack) {
+                back()
+            } else {
+                previousState.reapply(on: model)
+                scheduleSubState(indexToRun: 0)
+                scheduleNextState(for: previousState)
+            }
         } else if let prevScreen = prevScreen {
             prevScreen()
         }

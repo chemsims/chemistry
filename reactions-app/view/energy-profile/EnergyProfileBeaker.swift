@@ -179,13 +179,14 @@ struct EnergyProfileBeaker: View {
     ) -> some View {
         let isSelected = catalystState == .selected(catalyst: catalyst)
         let isInProgress = catalystState == .pending(catalyst: catalyst)
+        let hasMoved = isSelected || isInProgress
         let stationaryX = (settings.width / 4) + ((settings.width / 4) * CGFloat(index))
-        let x = isInProgress ? settings.width / 2 : stationaryX
-        let y = isInProgress ? settings.catHeight : settings.catHeight / 2
-        let zIndex: Double = isInProgress ? 1 : 0
-        let rotation: Angle = isInProgress ? .degrees(135) : .zero
-        let scale: CGFloat = isInProgress ? 1.2 : 1
-        let shadow = isInProgress ? settings.catHeight * 0.05 : 0
+        let x = hasMoved ? settings.width / 2 : stationaryX
+        let y = hasMoved ? settings.catHeight : settings.catHeight / 2
+        let zIndex: Double = hasMoved ? 1 : 0
+        let rotation: Angle = hasMoved ? .degrees(135) : .zero
+        let scale: CGFloat = hasMoved ? 1.2 : 1
+        let shadow = hasMoved ? settings.catHeight * 0.05 : 0
         let yOffset = (isInProgress && catalystIsShaking)  ? settings.catHeight * 0.1 : 0
 
         return Image(catalystState != .disabled || isInProgress ? catalyst.imageName : "catdeact")

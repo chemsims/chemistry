@@ -34,6 +34,15 @@ protocol ScreenState {
 
     /// Interval to wait before automatically progressing to the next state
     func nextStateAutoDispatchDelay(model: Model) -> Double?
+
+    /// When clicking back, should this state be ignored
+    var ignoreOnBack: Bool { get }
+}
+
+extension ScreenState {
+    var ignoreOnBack: Bool {
+        false
+    }
 }
 
 protocol SubState {

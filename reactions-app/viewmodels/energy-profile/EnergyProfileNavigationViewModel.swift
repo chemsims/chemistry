@@ -108,6 +108,10 @@ class EnergyProfileState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: EnergyProfileViewModel) -> Double? { nil }
 
     let delayedStates = [DelayedState<EnergyProfileState>]()
+
+    var ignoreOnBack: Bool {
+        false
+    }
 }
 
 fileprivate class IntroState: EnergyProfileState {
@@ -197,7 +201,11 @@ fileprivate class EnableCatalyst: EnergyProfileState {
 
     override func apply(on model: EnergyProfileViewModel) {
         model.highlightedElements = [.catalysts, .beaker]
-        model.catalystState = .active
+        withAnimation(.easeOut(duration: 0.75)) {
+            model.catalystState = .active
+        }
+        model.emitCatalyst = false
+        model.catalystIsShaking = false
     }
 
     override func reapply(on model: EnergyProfileViewModel) {
@@ -218,16 +226,17 @@ fileprivate class PrepareCatalyst: EnergyProfileState {
     override func apply(on model: EnergyProfileViewModel) {
         let catalyst = model.catalystState.pending ?? model.catalystState.selected ?? .C
         model.doSetCatalystInProgress(catalyst: catalyst)
-    }
-
-    override func reapply(on model: EnergyProfileViewModel) {
-        apply(on: model)
+        model.highlightedElements = []
     }
 
     override func unapply(on model: EnergyProfileViewModel) {
         withAnimation(.easeOut(duration: 0.75)) {
             model.catalystState = .active
         }
+    }
+
+    override var ignoreOnBack: Bool {
+        true
     }
 }
 
@@ -237,17 +246,8 @@ fileprivate class StartShakingCatalyst: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
-        model.highlightedElements = []
         model.emitCatalyst =  true
         model.runCatalystShakingAnimation()
-    }
-
-    override func reapply(on model: EnergyProfileViewModel) {
-        withAnimation(.linear(duration: 0.1)) {
-            model.emitCatalyst = false
-        }
-        model.catalystIsShaking = false
-        apply(on: model)
     }
 
     override func unapply(on model: EnergyProfileViewModel) {
@@ -259,6 +259,10 @@ fileprivate class StartShakingCatalyst: EnergyProfileState {
 
     override func nextStateAutoDispatchDelay(model: EnergyProfileViewModel) -> Double? {
         1
+    }
+
+    override var ignoreOnBack: Bool {
+        true
     }
 }
 
@@ -277,7 +281,6 @@ fileprivate class StopShakingCatalyst: EnergyProfileState {
     }
 
     override func unapply(on model: EnergyProfileViewModel) {
-        model.catalystState = .pending(catalyst: model.catalystState.selected ?? .C)
         withAnimation(.easeOut(duration: 0.8)) {
             model.peakHeightFactor = 1
         }
