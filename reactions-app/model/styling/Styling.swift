@@ -65,6 +65,8 @@ struct Styling {
     static let quizAnswerBorder = RGB(r: 114, g: 165, b: 213).color
     static let quizAnswerInactive = RGB(r: 191, g: 207, b: 222).color
     static let quizAnswerCorrectBorder = RGB(r: 38, g: 83, b: 43).color
+
+    static let navIcon = RGB(r: 68, g: 150, b: 247).color
 }
 
 

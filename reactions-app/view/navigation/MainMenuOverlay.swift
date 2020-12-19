@@ -32,7 +32,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     let navigation: RootNavigationViewModel
     let settings: MainMenuLayoutSettings
 
-    @State private var showPanel: Bool = false
+    @State private var showPanel: Bool = true
     @State private var extraOffset: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -102,16 +102,37 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 
     private var panelContent: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Spacer()
                 .frame(height: settings.tabHeight / 2)
-            navIcon(image: "zeroordericon", screen: .zeroOrderReaction)
-            navIcon(image: "firstordericon", screen: .firstOrderReaction)
-            navIcon(image: "secondordericon", screen: .secondOrderReaction)
+            beakerWithFilingCabinet(order: .Zero)
+            beakerWithFilingCabinet(order: .First)
+            beakerWithFilingCabinet(order: .Second)
             navIcon(image: "comparisonicon", screen: .reactionComparison)
+                .frame(width: settings.beakerImageWidth)
             navIcon(image: "kineticsicon", screen: .energyProfile)
+                .frame(width: settings.beakerImageWidth)
         }
         .frame(width: settings.panelWidth, height: settings.panelHeight)
+        .padding(.trailing, settings.panelTrailingPadding)
+    }
+
+    private func beakerWithFilingCabinet(order: ReactionOrder) -> some View {
+        HStack(spacing: 0) {
+            navIcon(image: order.navImage, screen: order.screen)
+                .frame(width: settings.beakerImageWidth)
+            Spacer()
+            filingCabinet
+                .frame(width: settings.filingCabinetWidth)
+        }
+    }
+
+    private var filingCabinet: some View {
+        Image(systemName: "archivebox")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .foregroundColor(Styling.navIcon)
+            .font(.system(size: 10, weight: .ultraLight))
     }
 
     private var panelBackground: some View {
@@ -138,7 +159,6 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             Image(image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .padding(0.2 * settings.menuSize)
         }
     }
 
@@ -152,6 +172,24 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     private func toggleMenu() {
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
             showPanel.toggle()
+        }
+    }
+}
+
+fileprivate extension ReactionOrder {
+    var navImage: String {
+        switch (self) {
+        case .Zero: return "zeroordericon"
+        case .First: return "firstordericon"
+        case .Second: return "secondordericon"
+        }
+    }
+
+    var screen: AppScreen {
+        switch (self) {
+        case .Zero: return .zeroOrderReaction
+        case .First: return .firstOrderReaction
+        case .Second: return .secondOrderReaction
         }
     }
 }
@@ -175,7 +213,19 @@ fileprivate struct MainMenuLayoutSettings {
     }
 
     var panelWidth: CGFloat {
-        2.2 * menuSize
+        3.5 * menuSize
+    }
+
+    var panelTrailingPadding: CGFloat {
+        0.1 * panelWidth
+    }
+
+    var beakerImageWidth: CGFloat {
+        0.5 * panelWidth
+    }
+
+    var filingCabinetWidth: CGFloat {
+        0.3 * panelWidth
     }
 
     var tabHeight: CGFloat {
@@ -187,11 +237,11 @@ fileprivate struct MainMenuLayoutSettings {
     }
 
     var totalMenuWidth: CGFloat {
-        panelWidth + tabWidth + (2 * hPadding) + leadingPanelSpace
+        panelWidth + panelTrailingPadding + tabWidth + (2 * hPadding) + leadingPanelSpace
     }
 
     var panelWidthFraction: CGFloat {
-        (panelWidth + leadingPanelSpace) / totalMenuWidth
+        (panelWidth + leadingPanelSpace + panelTrailingPadding) / totalMenuWidth
     }
 
     var panelHeightFraction: CGFloat {
@@ -224,6 +274,6 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             navigation: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence()
             )
-        ).previewLayout(.fixed(width: 568, height: 320))
+        ).previewLayout(.fixed(width: 926, height: 428))
     }
 }
