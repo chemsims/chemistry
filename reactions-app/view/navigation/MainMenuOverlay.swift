@@ -126,6 +126,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 filingCabinet
                     .frame(width: settings.filingCabinetWidth)
             }
+            .modifier(DisabledNavIcon(disabled: !navigation.canSelectFilingCabinet(order: order)))
         }
     }
 
@@ -162,6 +163,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
+        .modifier(DisabledNavIcon(disabled: !navigation.canSelect(screen: screen)))
     }
 
     private func goToScreen(action: @escaping () -> Void) -> () -> Void {
@@ -175,6 +177,17 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
             showPanel.toggle()
         }
+    }
+}
+
+fileprivate struct DisabledNavIcon: ViewModifier {
+    let disabled: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .disabled(disabled)
+            .colorMultiply(disabled ? .black : .white)
+            .opacity(disabled ? 0.4 : 1)
     }
 }
 

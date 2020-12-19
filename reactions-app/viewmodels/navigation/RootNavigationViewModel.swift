@@ -23,6 +23,17 @@ class RootNavigationViewModel: ObservableObject {
         goToFresh(screen: firstScreen)
     }
 
+    func canSelect(screen: AppScreen) -> Bool {
+        if let previousScreen = screenOrdering.element(before: screen) {
+            return persistence.hasCompleted(screen: previousScreen)
+        }
+        return true
+    }
+
+    func canSelectFilingCabinet(order: ReactionOrder) -> Bool {
+        persistence.hasCompleted(screen: order.screen)
+    }
+
     func goToFresh(screen: AppScreen) {
         let provider = screen.screenProvider(persistence: persistence, next: next, prev: prev)
         goTo(screen: screen, with: provider)
@@ -35,6 +46,7 @@ class RootNavigationViewModel: ObservableObject {
 
     private func next() {
         if let nextScreen = screenOrdering.element(after: currentScreen) {
+            persistence.setCompleted(screen: currentScreen)
             goToFresh(screen: nextScreen)
         }
     }
@@ -57,7 +69,17 @@ class RootNavigationViewModel: ObservableObject {
     }
 }
 
-extension AppScreen {
+fileprivate extension ReactionOrder {
+    var screen: AppScreen {
+        switch (self) {
+        case .Zero: return .zeroOrderReaction
+        case .First: return .firstOrderReaction
+        case .Second: return .secondOrderReaction
+        }
+    }
+}
+
+fileprivate extension AppScreen {
     func screenProvider(
         persistence: ReactionInputPersistence,
         next: @escaping () -> Void,
