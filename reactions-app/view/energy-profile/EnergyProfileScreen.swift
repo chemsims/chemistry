@@ -83,11 +83,12 @@ struct EnergyProfileScreen: View {
                 )
 
                 ReactionOrderSelection(
-                    isToggled: $selectReactionIsToggled,
+                    isToggled: model.canSetReaction ? $selectReactionIsToggled : .constant(false),
                     selection: $model.selectedReaction,
                     height: settings.selectOrderHeight
                 )
                 .colorMultiply(model.color(for: .reactionToggle))
+                .disabled(!model.canSetReaction)
             }
             .padding(.top, settings.chartsTopPadding)
             .padding(.trailing, settings.chartsTopPadding * 0.5)

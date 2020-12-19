@@ -22,6 +22,8 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var catalystState = CatalystState.disabled
 
     @Published var highlightedElements = [EnergyProfileScreenElement]()
+    @Published var canSetReaction = true
+    @Published var canSetTemp = false
 
 
     var catalystToSelect: Catalyst?
@@ -90,17 +92,6 @@ class EnergyProfileViewModel: ObservableObject {
             peakHeightFactor = 1
             temp2 = nil
             concentrationC = 0
-        }
-    }
-
-    func removeCatalyst() {
-        emitCatalyst = false
-        withAnimation(.easeOut(duration: 0.75)) {
-            catalystIsShaking = false
-        }
-        withAnimation(.easeOut(duration: 0.6)) {
-            peakHeightFactor = 1
-            temp2 = nil
         }
     }
 
@@ -192,7 +183,6 @@ class EnergyProfileViewModel: ObservableObject {
         let minEnergy = 0.9 * (selectedReaction.activationEnergy - Catalyst.C.energyReduction)
         let resultingEnergy = selectedReaction.activationEnergy - catalyst.energyReduction
         let energyFactor = (resultingEnergy - minEnergy) / (maxEnergy - minEnergy)
-        self.temp2 = self.temp1
         self.reactionHasStarted = true
         withAnimation(.easeOut(duration: 0.8)) {
             self.catalystState = .selected(catalyst: catalyst)

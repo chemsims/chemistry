@@ -18,10 +18,7 @@ struct EnergyProfileNavigationViewModel {
             EnergyProfileStatements.intro,
             [.reactionToggle]
         ),
-        ExplanationState(
-            EnergyProfileStatements.introCollisionTheory,
-            []
-        ),
+        IntroToCollisionTheory(),
         ExplanationState(
             EnergyProfileStatements.explainCollisionTheory,
             []
@@ -70,10 +67,7 @@ struct EnergyProfileNavigationViewModel {
         StopShakingCatalyst(),
         ShowLinearChart(),
         ShowKRatio(),
-        ExplanationState(
-            EnergyProfileStatements.instructToSetTemp,
-            [.beaker, .tempSlider]
-        ),
+        InstructToSetTemp(),
         ExplanationState(
             EnergyProfileStatements.reactionInProgress,
             []
@@ -114,17 +108,22 @@ class EnergyProfileState: ScreenState, SubState {
     }
 }
 
-fileprivate class IntroState: EnergyProfileState {
+fileprivate class IntroToCollisionTheory: EnergyProfileState {
     init() {
-        super.init(statement: EnergyProfileStatements.intro)
+        super.init(statement: EnergyProfileStatements.introCollisionTheory)
     }
 
     override func apply(on model: EnergyProfileViewModel) {
-        model.resetState()
+        model.highlightedElements = []
+        model.canSetReaction = false
     }
 
     override func reapply(on model: EnergyProfileViewModel) {
         apply(on: model)
+    }
+
+    override func unapply(on model: EnergyProfileViewModel) {
+        model.canSetReaction = true
     }
 }
 
@@ -319,6 +318,26 @@ fileprivate class ShowKRatio: EnergyProfileState {
     }
 
     override func unapply(on model: EnergyProfileViewModel) {
+        model.highlightedElements = []
+    }
+}
+
+fileprivate class InstructToSetTemp: EnergyProfileState {
+    init() {
+        super.init(statement: EnergyProfileStatements.instructToSetTemp)
+    }
+
+    override func apply(on model: EnergyProfileViewModel) {
+        model.temp2 = model.temp2 ?? model.temp1
+        model.highlightedElements = [.beaker, .tempSlider]
+    }
+
+    override func reapply(on model: EnergyProfileViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: EnergyProfileViewModel) {
+        model.temp2 = nil
         model.highlightedElements = []
     }
 }
