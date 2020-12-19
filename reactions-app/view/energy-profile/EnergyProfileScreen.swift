@@ -47,7 +47,7 @@ struct EnergyProfileScreen: View {
     
     private func beakyView(settings: EnergyProfileLayoutSettings) -> some View {
         BeakyOverlay(
-            statement: navigation.statement,
+            statement: model.statement,
             next: navigation.next,
             back: navigation.back,
             settings: settings.orderLayoutSettings
@@ -55,7 +55,6 @@ struct EnergyProfileScreen: View {
         .padding(.trailing, settings.orderLayoutSettings.beakyRightPadding)
         .padding(.bottom, settings.orderLayoutSettings.beakyBottomPadding)
     }
-
 
     private func chartsView(settings: EnergyProfileLayoutSettings) -> some View {
         VStack {

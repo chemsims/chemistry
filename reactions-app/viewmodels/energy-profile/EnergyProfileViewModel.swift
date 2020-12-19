@@ -7,6 +7,7 @@ import SwiftUI
 
 class EnergyProfileViewModel: ObservableObject {
 
+    @Published var statement = [SpeechBubbleLine]()
     @Published var temp2: CGFloat?
     @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
@@ -193,7 +194,10 @@ class EnergyProfileViewModel: ObservableObject {
 
     func setConcentrationC(concentration: CGFloat) {
         self.concentrationC = concentration
-        if (concentration == 1) {
+        if (concentration >= 0.25) {
+            statement = EnergyProfileStatements.reactionInProgress
+            highlightedElements = []
+        } else if (concentration == 1) {
             next()
         }
     }

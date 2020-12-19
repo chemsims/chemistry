@@ -21,16 +21,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     var canReactToC: Bool = false
-    var reactionHasStarted: Bool = false {
-        willSet {
-            if (reactionHasStarted != newValue) {
-                if (!newValue) {
-                    resetCollisions()
-                }
-            }
-        }
-    }
-    
+    var reactionHasStarted: Bool = false
     var reactionHasEnded: Bool = false {
         willSet {
             if (newValue != reactionHasEnded) {
@@ -38,6 +29,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
                     endReaction()
                 } else {
                     removeAllActions()
+                    resetCollisions()
                 }
             }
         }

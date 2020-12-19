@@ -68,14 +68,7 @@ struct EnergyProfileNavigationViewModel {
         ShowLinearChart(),
         ShowKRatio(),
         InstructToSetTemp(),
-        ExplanationState(
-            EnergyProfileStatements.reactionInProgress,
-            []
-        ),
-        ExplanationState(
-            EnergyProfileStatements.finished,
-            []
-        ),
+        ReactionEndedState(),
     ]
 }
 
@@ -93,7 +86,9 @@ class EnergyProfileState: ScreenState, SubState {
         constantStatement
     }
 
-    func apply(on model: EnergyProfileViewModel) { }
+    func apply(on model: EnergyProfileViewModel) {
+        model.statement = constantStatement
+    }
 
     func unapply(on model: EnergyProfileViewModel) { }
 
@@ -114,6 +109,7 @@ fileprivate class IntroToCollisionTheory: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
         model.highlightedElements = []
         model.canSetReaction = false
     }
@@ -139,6 +135,7 @@ fileprivate class ExplanationState: EnergyProfileState {
     private let highlightedElements: [EnergyProfileScreenElement]
 
     override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
         model.highlightedElements = highlightedElements
     }
 
@@ -161,6 +158,8 @@ fileprivate class ShowInitialEaValues: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
+        model.statement = statement(model: model)
         model.highlightedElements = [.rateRatioEquation]
     }
 
@@ -179,6 +178,7 @@ fileprivate class ShowCatalyst: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
         model.highlightedElements = [.reactionProfileTop, .reactionProfileBottom, .catalysts]
         model.catalystState = .visible
     }
@@ -199,6 +199,7 @@ fileprivate class EnableCatalyst: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
         model.highlightedElements = [.catalysts, .beaker]
         withAnimation(.easeOut(duration: 0.75)) {
             model.catalystState = .active
@@ -223,6 +224,7 @@ fileprivate class PrepareCatalyst: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
         let catalyst = model.catalystState.pending ?? model.catalystState.selected ?? .C
         model.doSetCatalystInProgress(catalyst: catalyst)
         model.highlightedElements = []
@@ -245,6 +247,7 @@ fileprivate class StartShakingCatalyst: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
         model.emitCatalyst =  true
         model.runCatalystShakingAnimation()
     }
@@ -271,6 +274,7 @@ fileprivate class StopShakingCatalyst: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        model.statement = statement(model: model)
         model.highlightedElements = [.reactionProfileTop, .reactionProfileBottom]
         model.setSelectedCatalystState(catalyst: model.catalystState.pending ?? .C)
     }
@@ -292,6 +296,7 @@ fileprivate class ShowLinearChart: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        model.statement = statement(model: model)
         model.highlightedElements = [.linearChart]
     }
 
@@ -310,6 +315,8 @@ fileprivate class ShowKRatio: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
+        model.statement = statement(model: model)
         model.highlightedElements = [.linearChart, .rateRatioEquation]
     }
 
@@ -328,6 +335,7 @@ fileprivate class InstructToSetTemp: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
         model.temp2 = model.temp2 ?? model.temp1
         model.highlightedElements = [.beaker, .tempSlider]
     }
@@ -348,7 +356,14 @@ fileprivate class ReactionEndedState: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
-        model.endReaction()
+        super.apply(on: model)
+        model.reactionHasEnded = true
+        model.concentrationC = 1
+    }
+
+    override func unapply(on model: EnergyProfileViewModel) {
+        model.reactionHasEnded = false
+        model.concentrationC = 0
     }
 }
 
