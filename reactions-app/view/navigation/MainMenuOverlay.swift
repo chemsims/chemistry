@@ -32,7 +32,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     let navigation: RootNavigationViewModel
     let settings: MainMenuLayoutSettings
 
-    @State private var showPanel: Bool = true
+    @State private var showPanel: Bool = false
     @State private var extraOffset: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -122,8 +122,10 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             navIcon(image: order.navImage, screen: order.screen)
                 .frame(width: settings.beakerImageWidth)
             Spacer()
-            filingCabinet
-                .frame(width: settings.filingCabinetWidth)
+            Button(action: goToScreen { navigation.goToFilingCabinet(order: order) }) {
+                filingCabinet
+                    .frame(width: settings.filingCabinetWidth)
+            }
         }
     }
 

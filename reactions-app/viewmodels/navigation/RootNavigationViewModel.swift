@@ -28,6 +28,11 @@ class RootNavigationViewModel: ObservableObject {
         goTo(screen: screen, with: provider)
     }
 
+    func goToFilingCabinet(order: ReactionOrder) {
+        let provider = ReactionFilingScreenProvider(persistence: persistence, order: order)
+        self.view = provider.screen
+    }
+
     private func next() {
         if let nextScreen = screenOrdering.element(after: currentScreen) {
             goToFresh(screen: nextScreen)
@@ -179,5 +184,17 @@ fileprivate class EnergyProfileScreenProvider: ScreenProvider {
 
     var screen: AnyView {
         AnyView(EnergyProfileScreen(navigation: navigation))
+    }
+}
+
+fileprivate class ReactionFilingScreenProvider: ScreenProvider {
+    init(persistence: ReactionInputPersistence, order: ReactionOrder) {
+        self.viewModel = ReactionFilingViewModel(persistence: persistence, initialOrder: order)
+    }
+
+    let viewModel: ReactionFilingViewModel
+
+    var screen: AnyView {
+        AnyView(ReactionFilingScreen(model: viewModel))
     }
 }

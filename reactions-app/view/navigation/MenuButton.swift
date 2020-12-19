@@ -28,6 +28,7 @@ struct MenuButton: View {
                 .frame(width: size, height: size)
                 .border(Color.black)
                 .foregroundColor(.black)
+                .background(Color.white)
                 .scaleEffect(0.5)
             }
         }.scaleEffect(2)
