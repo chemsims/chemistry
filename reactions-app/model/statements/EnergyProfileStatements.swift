@@ -175,12 +175,12 @@ struct EnergyProfileStatements {
         ]
     }
 
-    static func showKRatio(newK: CGFloat) -> [SpeechBubbleLine] {
+    static func showKRatio(newK: CGFloat, temp: CGFloat) -> [SpeechBubbleLine] {
         [
             SpeechBubbleLineGenerator.makeLine(
                 """
                 Points of that graph are being represented in this equation. As of now, *k* went up to *\(newK.str(decimals: 1))* \
-                when *T* is *\(newK.str(decimals: 0))K*, because the catalyst lowered the E_a_, making the constant k higher, thus making the Rate higher too.
+                when *T* is *\(temp.str(decimals: 0))K*, because the catalyst lowered the E_a_, making the constant k higher, thus making the Rate higher too.
                 """
             )
         ]

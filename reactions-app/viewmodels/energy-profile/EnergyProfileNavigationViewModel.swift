@@ -311,7 +311,7 @@ fileprivate class ShowLinearChart: EnergyProfileState {
 
 fileprivate class ShowKRatio: EnergyProfileState {
     override func statement(model: EnergyProfileViewModel) -> [SpeechBubbleLine] {
-        EnergyProfileStatements.showKRatio(newK: model.k2 ?? 0)
+        EnergyProfileStatements.showKRatio(newK: model.k1, temp: model.temp1)
     }
 
     override func apply(on model: EnergyProfileViewModel) {
