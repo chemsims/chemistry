@@ -25,7 +25,8 @@ struct CompletedReactionScreen<Content: View>: View {
                 .blur(radius: enabled ? 0 : 8)
                 .disabled(!enabled)
             if (!enabled) {
-                Text("Finish more of the app, and then come back here to take a look at your reaction!")
+                Text("Complete this part of the app, and then come back here to view your reaction!")
+                    .font(.headline)
             }
         }
     }

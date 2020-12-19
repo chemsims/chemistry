@@ -32,16 +32,20 @@ class ReactionFilingViewModel: ObservableObject {
             navigation: navigation
         )
 
+        let zeroInput = persistence.get(order: .Zero)
+        let firstInput = persistence.get(order: .First)
+        let secondInput = persistence.get(order: .Second)
+
         pages = [
-            AnyView(CompletedReactionScreen(enabled: true) { zeroOrderScreen }),
-            AnyView(CompletedReactionScreen(enabled: true) { firstOrderScreen }),
-            AnyView(CompletedReactionScreen(enabled: false) { secondOrderScreen })
+            AnyView(CompletedReactionScreen(enabled: zeroInput != nil) { zeroOrderScreen }),
+            AnyView(CompletedReactionScreen(enabled: firstInput != nil) { firstOrderScreen }),
+            AnyView(CompletedReactionScreen(enabled: secondInput != nil) { secondOrderScreen })
         ]
         currentPage = initialOrder.page
 
-        setFinalState(viewModel: zeroOrderViewModel, input: persistence.get(order: .Zero) ?? ReactionComparisonDefaults.input)
-        setFinalState(viewModel: firstOrderViewModel, input: persistence.get(order: .First) ?? ReactionComparisonDefaults.input)
-        setFinalState(viewModel: secondOrderViewModel, input: persistence.get(order: .Second) ?? ReactionComparisonDefaults.input)
+        setFinalState(viewModel: zeroOrderViewModel, order: .Zero, input: zeroInput, next: firstInput == nil ? nil : .First)
+        setFinalState(viewModel: firstOrderViewModel, order: .First, input: firstInput, next: secondInput == nil ? nil : .Second)
+        setFinalState(viewModel: secondOrderViewModel, order: .Second, input: secondInput, next: nil)
         navigation.nextScreen = next
         navigation.prevScreen = prev
     }
@@ -49,14 +53,25 @@ class ReactionFilingViewModel: ObservableObject {
     let pages: [AnyView]
     @Published var currentPage: Int
 
-    private func setFinalState(viewModel: ZeroOrderReactionViewModel, input: ReactionInput) {
-        viewModel.initialConcentration = input.c1
-        viewModel.finalConcentration = input.c2
-        viewModel.initialTime = input.t1
-        viewModel.finalTime = input.t2
-        viewModel.currentTime = viewModel.finalTime
-        viewModel.reactionHasStarted = true
-        viewModel.reactionHasEnded = true
+    private func setFinalState(
+        viewModel: ZeroOrderReactionViewModel,
+        order: ReactionOrder,
+        input: ReactionInput?,
+        next: ReactionOrder?
+    ) {
+        if let input = input {
+            viewModel.initialConcentration = input.c1
+            viewModel.finalConcentration = input.c2
+            viewModel.initialTime = input.t1
+            viewModel.finalTime = input.t2
+            viewModel.currentTime = viewModel.finalTime
+            viewModel.reactionHasStarted = true
+            viewModel.reactionHasEnded = true
+
+            viewModel.statement = ReactionFilingStatements.message(order: order, next: next)
+        } else {
+            viewModel.statement = ReactionFilingStatements.blankMessage
+        }
     }
 
     private func next() {
@@ -74,7 +89,6 @@ class ReactionFilingViewModel: ObservableObject {
     let zeroOrderViewModel: ZeroOrderReactionViewModel
     let firstOrderViewModel: FirstOrderReactionViewModel
     let secondOrderViewModel: SecondOrderReactionViewModel
-
 }
 
 fileprivate extension ReactionOrder {
@@ -83,6 +97,14 @@ fileprivate extension ReactionOrder {
         case .Zero: return 0
         case .First: return 1
         case .Second: return 2
+        }
+    }
+
+    var next: ReactionOrder? {
+        switch (self) {
+        case .Zero: return .First
+        case .First: return .Second
+        case .Second: return nil
         }
     }
 }
