@@ -87,6 +87,8 @@
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
 		57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */; };
 		57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */; };
+		57B23314258E8BCB00128760 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23313258E8BCB00128760 /* AppScreen.swift */; };
+		57B2331A258E8BD900128760 /* ScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23319258E8BD900128760 /* ScreenProvider.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
 		57C3A8272563248F00EE753E /* FirstOrderReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */; };
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
@@ -224,6 +226,8 @@
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
 		57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
+		57B23313258E8BCB00128760 /* AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreen.swift; sourceTree = "<group>"; };
+		57B23319258E8BD900128760 /* ScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProvider.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
 		57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionScreen.swift; sourceTree = "<group>"; };
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
@@ -484,6 +488,7 @@
 		571D6A6C255AB23D00F4E635 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57B23312258E8BC100128760 /* navigation */,
 				57F56216258D4EE9008B2602 /* energy-profile */,
 				573F169B2584C028001CE039 /* quiz */,
 				571215542580DCC000E92A99 /* equation */,
@@ -666,6 +671,15 @@
 				57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */,
 			);
 			path = fonts;
+			sourceTree = "<group>";
+		};
+		57B23312258E8BC100128760 /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				57B23313258E8BCB00128760 /* AppScreen.swift */,
+				57B23319258E8BD900128760 /* ScreenProvider.swift */,
+			);
+			path = navigation;
 			sourceTree = "<group>";
 		};
 		57D8BA2A257BF168006B3C8B /* ui-enums */ = {
@@ -890,6 +904,7 @@
 				573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */,
 				5712155E258103A600E92A99 /* Rates.swift in Sources */,
 				571B3C7425655AA60075358B /* SecondOrderReactionScreen.swift in Sources */,
+				57B23314258E8BCB00128760 /* AppScreen.swift in Sources */,
 				571B3CAA256581100075358B /* BeakyBox.swift in Sources */,
 				5736B66F258A7C20002CEF5E /* QuizState.swift in Sources */,
 				57035EBF255BCF6E00DB3A19 /* BeakerBottomShape.swift in Sources */,
@@ -958,6 +973,7 @@
 				576D5AA52566BAB50062F722 /* FirstOrderEquationView.swift in Sources */,
 				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
 				57517F2F25739E3A00EB79C7 /* ReactionOrderSelection.swift in Sources */,
+				57B2331A258E8BD900128760 /* ScreenProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

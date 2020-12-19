@@ -17,3 +17,24 @@ extension CGFloat {
         return rounded / power
     }
 }
+
+extension Array where Self.Element : Equatable {
+
+    func element(after element: Element) -> Element? {
+        self.element(after: element, distance: 1)
+    }
+
+    func element(before element: Element) -> Element? {
+        self.element(after: element, distance: -1)
+    }
+
+    private func element(after element: Element, distance: Int) -> Element? {
+        let index = firstIndex(of: element)
+        let nextIndex = index.map { $0 + distance }
+        return nextIndex.flatMap { self[safe: $0] }
+    }
+
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}

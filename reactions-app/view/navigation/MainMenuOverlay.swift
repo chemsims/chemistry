@@ -105,11 +105,11 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         VStack {
             Spacer()
                 .frame(height: settings.tabHeight / 2)
-            navIcon(image: "zeroordericon", action: navigation.goToZeroOrder)
-            navIcon(image: "firstordericon", action: navigation.goToFirstOrder)
-            navIcon(image: "secondordericon", action: navigation.goToSecondOrder)
-            navIcon(image: "comparisonicon", action: navigation.goToComparison)
-            navIcon(image: "kineticsicon", action: navigation.goToEnergyProfile)
+            navIcon(image: "zeroordericon", screen: .zeroOrderReaction)
+            navIcon(image: "firstordericon", screen: .firstOrderReaction)
+            navIcon(image: "secondordericon", screen: .secondOrderReaction)
+            navIcon(image: "comparisonicon", screen: .reactionComparison)
+            navIcon(image: "kineticsicon", screen: .energyProfile)
         }
         .frame(width: settings.panelWidth, height: settings.panelHeight)
     }
@@ -133,8 +133,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         )
     }
 
-    private func navIcon(image: String, action: @escaping () -> Void) -> some View {
-        Button(action: goToScreen(action: action)) {
+    private func navIcon(image: String, screen: AppScreen) -> some View {
+        Button(action: goToScreen(action: { navigation.goToFresh(screen: screen) })) {
             Image(image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)

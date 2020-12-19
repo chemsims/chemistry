@@ -10,124 +10,174 @@ class RootNavigationViewModel: ObservableObject {
     @Published var view: AnyView
 
     private let persistence: ReactionInputPersistence
-
-    private var zeroOrderViewModel: ZeroOrderReactionViewModel?
-    private var zeroOrderNavigation: NavigationViewModel<ReactionState>?
-
-    private var firstOrderViewModel: FirstOrderReactionViewModel?
-    private var firstOrderNavigation: NavigationViewModel<ReactionState>?
-
-    private var secondOrderViewModel: SecondOrderReactionViewModel?
-    private var secondOrderNavigation: NavigationViewModel<ReactionState>?
-
-    private var comparisonViewModel: ReactionComparisonViewModel?
-    private var comparisonNavigation: NavigationViewModel<ReactionComparisonState>?
-
-    private var zeroOrderQuizViewModel: QuizViewModel?
-    private var firstOrderQuizViewModel: QuizViewModel?
-    private var secondOrderQuizViewModel: QuizViewModel?
-    private var comparisonOrderQuizViewModel: QuizViewModel?
-    private var energyProfileQuizViewModel: QuizViewModel?
+    private var models = [AppScreen:ScreenProvider]()
+    private var currentScreen: AppScreen
 
     init(
         persistence: ReactionInputPersistence
     ) {
-        self.view = AnyView(EmptyView())
+        let firstScreen = AppScreen.zeroOrderReaction
+        self.currentScreen = firstScreen
         self.persistence = persistence
-        goToEnergyProfile()
+        self.view = AnyView(EmptyView())
+        goToFresh(screen: firstScreen)
     }
 
-    func goToZeroOrder() {
-        let reaction = zeroOrderViewModel ?? ZeroOrderReactionViewModel()
-        let navigation = zeroOrderNavigation ?? ZeroOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
-        self.zeroOrderViewModel = reaction
-        self.zeroOrderNavigation = navigation
-        self.view = AnyView(ZeroOrderReactionScreen(reaction: reaction, navigation: navigation))
-        navigation.nextScreen = { self.goToZeroOrderQuiz(restoreState: false) }
+    func goToFresh(screen: AppScreen) {
+        let provider = screen.screenProvider(persistence: persistence, next: next, prev: prev)
+        goTo(screen: screen, with: provider)
     }
 
-    func goToFirstOrder() {
-        let reaction = firstOrderViewModel ?? FirstOrderReactionViewModel()
-        let navigation = firstOrderNavigation ?? FirstOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
-        self.firstOrderViewModel = reaction
-        self.firstOrderNavigation = navigation
-        navigation.prevScreen = { self.goToZeroOrderQuiz(restoreState: true) }
-        navigation.nextScreen = { self.goToFirstOrderQuiz(restoreState: false) }
-        self.view = AnyView(FirstOrderReactionScreen(reaction: reaction, navigation: navigation))
+    private func next() {
+        if let nextScreen = screenOrdering.element(after: currentScreen) {
+            goToFresh(screen: nextScreen)
+        }
     }
 
-    func goToSecondOrder() {
-        let reaction = secondOrderViewModel ?? SecondOrderReactionViewModel()
-        let navigation = secondOrderNavigation ?? SecondOrderReactionNavigation.model(reaction: reaction, persistence: persistence)
-        self.secondOrderViewModel = reaction
-        self.secondOrderNavigation = navigation
-        navigation.prevScreen = { self.goToFirstOrderQuiz(restoreState: true) }
-        navigation.nextScreen = { self.goToSecondOrderQuiz(restoreState: false) }
-
-        // Reset these models in case returning to second order
-        self.comparisonViewModel = nil
-        self.comparisonNavigation = nil
-
-        self.view = AnyView(SecondOrderReactionScreen(reaction: reaction, navigation: navigation))
+    private func prev() {
+        if let prevScreen = screenOrdering.element(before: currentScreen) {
+            let provider = models[prevScreen] ?? prevScreen.screenProvider(persistence: persistence, next: next, prev: prev)
+            goTo(screen: prevScreen, with: provider)
+        }
     }
 
-    func goToComparison() {
-        let reaction = comparisonViewModel ?? ReactionComparisonViewModel(persistence: persistence)
-        let navigation = comparisonNavigation ?? ReactionComparisonNavigationViewModel.model(reaction: reaction)
-        self.comparisonViewModel = reaction
-        self.comparisonNavigation = navigation
-        navigation.prevScreen = { self.goToSecondOrderQuiz(restoreState: true) }
-        navigation.nextScreen = { self.goToComparisonQuiz(restoreState: false) }
-        self.view = AnyView(ReactionComparisonScreen(navigation: navigation))
+    private func goTo(screen: AppScreen, with provider: ScreenProvider) {
+        models[screen] = provider
+        self.view = provider.screen
+        self.currentScreen = screen
     }
 
-    func goToEnergyProfile() {
-        let model = EnergyProfileViewModel()
-        let navigation = EnergyProfileNavigationViewModel.model(model)
-        navigation.prevScreen = { self.goToComparisonQuiz(restoreState: true) }
-        navigation.nextScreen = { self.goToEnergyProfileQuiz(restoreState: false) }
-        model.navigation = navigation
+    private var screenOrdering: [AppScreen] {
+        AppScreen.allCases
+    }
+}
 
-        let view = EnergyProfileScreen(navigation: navigation)
-        self.view = AnyView(view)
+extension AppScreen {
+    func screenProvider(
+        persistence: ReactionInputPersistence,
+        next: @escaping () -> Void,
+        prev: @escaping () -> Void
+    ) -> ScreenProvider {
+        switch (self) {
+        case .zeroOrderReaction:
+            return ZeroOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
+        case .zeroOrderReactionQuiz:
+            return QuizScreenProvider(next: next, prev: prev)
+        case .firstOrderReaction:
+            return FirstOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
+        case .firstOrderReactionQuiz:
+            return QuizScreenProvider(next: next, prev: prev)
+        case .secondOrderReaction:
+            return SecondOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
+        case .secondOrderReactionQuiz:
+            return QuizScreenProvider(next: next, prev: prev)
+        case .reactionComparison:
+            return ReactionComparisonScreenProvider(persistence: persistence, next: next, prev: prev)
+        case .reactionComparisonQuiz:
+            return QuizScreenProvider(next: next, prev: prev)
+        case .energyProfile:
+            return EnergyProfileScreenProvider(next: next, prev: prev)
+        case .energyProfileQuiz:
+            return QuizScreenProvider(next: next, prev: prev)
+        }
+    }
+}
+
+fileprivate class ZeroOrderReactionScreenProvider: ScreenProvider {
+    init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
+        self.persistence = persistence
+        self.viewModel = ZeroOrderReactionViewModel()
+        self.navigation = ZeroOrderReactionNavigation.model(reaction: viewModel, persistence: persistence)
+        navigation.nextScreen = next
+        navigation.prevScreen = prev
     }
 
-    private func goToZeroOrderQuiz(restoreState: Bool) {
-        let model = restoreState ? zeroOrderQuizViewModel ?? QuizViewModel() : QuizViewModel()
-        zeroOrderQuizViewModel = model
-        model.prevScreen = goToZeroOrder
-        model.nextScreen = goToFirstOrder
-        self.view = AnyView(QuizScreen(model: model))
+    let persistence: ReactionInputPersistence
+    let viewModel: ZeroOrderReactionViewModel
+    let navigation: NavigationViewModel<ReactionState>
+
+    var screen: AnyView {
+        AnyView(ZeroOrderReactionScreen(reaction: viewModel, navigation: navigation))
+    }
+}
+
+fileprivate class FirstOrderReactionScreenProvider: ScreenProvider {
+    init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
+        self.persistence = persistence
+        self.viewModel = FirstOrderReactionViewModel()
+        self.navigation = FirstOrderReactionNavigation.model(reaction: viewModel, persistence: persistence)
+        navigation.nextScreen = next
+        navigation.prevScreen = prev
     }
 
-    private func goToFirstOrderQuiz(restoreState: Bool) {
-        let model = restoreState ? firstOrderQuizViewModel ?? QuizViewModel() : QuizViewModel()
-        firstOrderQuizViewModel = model
-        model.prevScreen = goToFirstOrder
-        model.nextScreen = goToSecondOrder
-        self.view = AnyView(QuizScreen(model: model))
+    let persistence: ReactionInputPersistence
+    let viewModel: FirstOrderReactionViewModel
+    let navigation: NavigationViewModel<ReactionState>
+
+    var screen: AnyView {
+        AnyView(FirstOrderReactionScreen(reaction: viewModel, navigation: navigation))
+    }
+}
+
+fileprivate class SecondOrderReactionScreenProvider: ScreenProvider {
+    init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
+        self.persistence = persistence
+        self.viewModel = SecondOrderReactionViewModel()
+        self.navigation = SecondOrderReactionNavigation.model(reaction: viewModel, persistence: persistence)
+        navigation.nextScreen = next
+        navigation.prevScreen = prev
     }
 
-    private func goToSecondOrderQuiz(restoreState: Bool) {
-        let model = restoreState ? secondOrderQuizViewModel ?? QuizViewModel() : QuizViewModel()
-        secondOrderQuizViewModel = model
-        model.prevScreen = goToSecondOrder
-        model.nextScreen = goToComparison
-        self.view = AnyView(QuizScreen(model: model))
+    let persistence: ReactionInputPersistence
+    let viewModel: SecondOrderReactionViewModel
+    let navigation: NavigationViewModel<ReactionState>
+
+    var screen: AnyView {
+        AnyView(SecondOrderReactionScreen(reaction: viewModel, navigation: navigation))
+    }
+}
+
+fileprivate class QuizScreenProvider: ScreenProvider {
+    init(next: @escaping () -> Void, prev: @escaping () -> Void) {
+        self.viewModel = QuizViewModel()
+        viewModel.nextScreen = next
+        viewModel.prevScreen = prev
     }
 
-    private func goToComparisonQuiz(restoreState: Bool) {
-        let model = restoreState ? comparisonOrderQuizViewModel ?? QuizViewModel() : QuizViewModel()
-        comparisonOrderQuizViewModel = model
-        model.prevScreen = goToComparison
-        model.nextScreen = goToEnergyProfile
-        self.view = AnyView(QuizScreen(model: model))
+    let viewModel: QuizViewModel
+
+    var screen: AnyView {
+        AnyView(QuizScreen(model: viewModel))
+    }
+}
+
+fileprivate class ReactionComparisonScreenProvider: ScreenProvider {
+    init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
+        let viewModel = ReactionComparisonViewModel(persistence: persistence)
+        navigation = ReactionComparisonNavigationViewModel.model(reaction: viewModel)
+        navigation.nextScreen = next
+        navigation.prevScreen = prev
     }
 
-    private func goToEnergyProfileQuiz(restoreState: Bool) {
-        let model = restoreState ? energyProfileQuizViewModel ?? QuizViewModel() : QuizViewModel()
-        energyProfileQuizViewModel = model
-        model.prevScreen = goToEnergyProfile
-        self.view = AnyView(QuizScreen(model: model))
+    let navigation: NavigationViewModel<ReactionComparisonState>
+
+    var screen: AnyView {
+        AnyView(ReactionComparisonScreen(navigation: navigation))
+    }
+}
+
+fileprivate class EnergyProfileScreenProvider: ScreenProvider {
+
+    init(next: @escaping () -> Void, prev: @escaping () -> Void) {
+        let viewModel = EnergyProfileViewModel()
+        self.navigation = EnergyProfileNavigationViewModel.model(viewModel)
+        navigation.nextScreen = next
+        navigation.prevScreen = prev
+    }
+
+    let navigation: NavigationViewModel<EnergyProfileState>
+
+    var screen: AnyView {
+        AnyView(EnergyProfileScreen(navigation: navigation))
     }
 }
