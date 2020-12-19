@@ -38,11 +38,9 @@ class ReactionComparisonState: ScreenState {
         self.statement = statement
     }
 
-    func statement(model: ReactionComparisonViewModel) -> [SpeechBubbleLine] {
-        statement
+    func apply(on model: ReactionComparisonViewModel) {
+        model.statement = statement
     }
-
-    func apply(on model: ReactionComparisonViewModel) { }
 
     func unapply(on model: ReactionComparisonViewModel) { }
 
@@ -63,7 +61,6 @@ class ReactionComparisonSubstate: SubState {
     func apply(on model: ReactionComparisonViewModel) {
 
     }
-
 }
 
 
@@ -79,6 +76,7 @@ fileprivate class ExplainEquationState: ReactionComparisonState {
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
+        super.apply(on: model)
         model.highlightedElements = [
             .equations
         ]
@@ -99,6 +97,7 @@ fileprivate class ChartExplainerState: ReactionComparisonState {
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
+        super.apply(on: model)
         model.highlightedElements = [
             .charts,
             .beakers
@@ -121,6 +120,7 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
+        super.apply(on: model)
         model.highlightedElements = [
             .charts,
             .equations
@@ -167,6 +167,7 @@ fileprivate class PreAnimationState: ReactionComparisonState {
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
+        super.apply(on: model)
         model.highlightedElements = [
             .charts
         ]
@@ -192,6 +193,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
+        super.apply(on: model)
         model.currentTime0 = model.initialTime
         model.currentTime1 = model.initialTime
         model.currentTime2 = model.initialTime
@@ -235,6 +237,7 @@ fileprivate class EndComparisonAnimation: ReactionComparisonState {
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
+        super.apply(on: model)
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime0 = 1.00001 * model.finalTime0
             model.currentTime1 = 1.00001 * model.finalTime1

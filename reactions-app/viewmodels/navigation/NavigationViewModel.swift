@@ -7,8 +7,6 @@ import SwiftUI
 
 class NavigationViewModel<State: ScreenState>: ObservableObject {
 
-    @Published var statement: [SpeechBubbleLine] = []
-
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
 
@@ -22,17 +20,12 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
         self.states = states
         self.currentIndex = 0
         self.model = reactionViewModel
-        setStatement()
         if let state = getState(for: currentIndex) {
             state.apply(on: reactionViewModel)
         }
     }
 
-    private var currentIndex: Int {
-        didSet {
-            setStatement()
-        }
-    }
+    private var currentIndex: Int
 
     @objc func next() {
         let nextIndex = currentIndex + 1
@@ -100,11 +93,6 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
         if let delay = state.nextStateAutoDispatchDelay(model: model) {
             nextTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(next), userInfo: nil, repeats: false)
         }
-    }
-
-    private func setStatement() {
-        let state = getState(for: currentIndex)
-        statement = state?.statement(model: model) ?? []
     }
 
     private func getState(for n: Int) -> State? {

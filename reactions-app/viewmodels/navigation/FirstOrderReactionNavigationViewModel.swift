@@ -49,6 +49,7 @@ fileprivate class ExplainRateConstant1: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         model.currentTime = model.initialTime
         model.highlightedElements = [.rateConstantEquation]
     }
@@ -64,14 +65,11 @@ fileprivate class ExplainRateConstant1: ReactionState {
 }
 
 fileprivate class ExplainRateConstant2: ReactionState {
-    override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        FirstOrderStatements.explainRateConstant2(
-            rate: model.concentrationEquationA?.rateConstant ?? 0
-        )
-    }
-
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.highlightedElements = [.rateConstantEquation]
+        model.statement = FirstOrderStatements.explainRateConstant2(
+            rate: model.concentrationEquationA?.rateConstant ?? 0
+        )
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
@@ -86,6 +84,7 @@ fileprivate class ExplainRate: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         model.highlightedElements = [.rateEquation, .concentrationChart]
     }
 
@@ -104,8 +103,8 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
         super.init(highlightedElements: [.halfLifeEquation])
     }
 
-    override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        FirstOrderStatements.explainHalfLife(
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.statement = FirstOrderStatements.explainHalfLife(
             halfLife: model.concentrationEquationA?.halfLife ?? 0
         )
     }

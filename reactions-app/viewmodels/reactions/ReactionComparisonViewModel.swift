@@ -19,6 +19,7 @@ class ReactionComparisonViewModel: ObservableObject {
     private let firstOrderInput: ReactionInput
     private let secondOrderInput: ReactionInput
 
+    @Published var statement = [SpeechBubbleLine]()
     @Published var currentTime0: CGFloat?
     @Published var currentTime1: CGFloat?
     @Published var currentTime2: CGFloat?

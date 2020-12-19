@@ -52,6 +52,7 @@ fileprivate class SetFinalValuesToNonNil: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         let initialConcentration = model.initialConcentration
         let minConcentration = ReactionSettings.minConcentration
 
@@ -70,13 +71,10 @@ fileprivate class SetFinalValuesToNonNil: ReactionState {
 
 fileprivate class ExplainRateState: ReactionState {
 
-    override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        ZeroOrderStatements.rateExplainer(
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.statement = ZeroOrderStatements.rateExplainer(
             k: model.concentrationEquationA?.rateConstant ?? 0
         )
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
         model.currentTime = model.initialTime
         model.highlightedElements = [.rateConstantEquation]
     }
@@ -98,8 +96,8 @@ fileprivate class ExplainHalfLifeState: PreReactionAnimation {
         super.init(highlightedElements: [.halfLifeEquation])
     }
 
-    override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        ZeroOrderStatements.halfLifeExplainer(
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.statement = ZeroOrderStatements.halfLifeExplainer(
             halfLife: model.concentrationEquationA?.halfLife ?? 0
         )
     }

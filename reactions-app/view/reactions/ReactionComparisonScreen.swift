@@ -418,7 +418,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             HStack {
                 Spacer()
                 BeakyBox(
-                    statement: navigation.statement,
+                    statement: reaction.statement,
                     next: navigation.next,
                     back: navigation.back,
                     verticalSpacing: settings.ordered.beakyVSpacing,

@@ -9,9 +9,6 @@ protocol ScreenState {
     associatedtype Model
     associatedtype NestedState: SubState where NestedState.Model == Model
 
-    /// The statement to display to the user
-    func statement(model: Model) -> [SpeechBubbleLine]
-
     /// Optionally provide delayed states which will be automatically applied. Each delay is relative to the previous state,
     /// as opposed to an absolute delay.
     ///
@@ -65,11 +62,9 @@ class ReactionState: ScreenState, SubState {
         self.constantStatement = statement
     }
 
-    func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        constantStatement
+    func apply(on model: ZeroOrderReactionViewModel) {
+        model.statement = constantStatement
     }
-
-    func apply(on model: ZeroOrderReactionViewModel) { }
 
     func unapply(on model: ZeroOrderReactionViewModel) { }
 
@@ -107,6 +102,7 @@ class PreReactionAnimation: ReactionState {
         model.highlightedElements = []
     }
 }
+
 class RunAnimation: ReactionState {
 
     let order: ReactionOrder?
@@ -126,6 +122,7 @@ class RunAnimation: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         model.reactionHasEnded = false
         model.reactionHasStarted = true
         model.highlightedElements = []
@@ -171,6 +168,7 @@ class EndAnimation: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         if (highlightChart) {
             model.highlightedElements = [.concentrationChart, .secondaryChart]
         }
@@ -205,6 +203,7 @@ class EndAnimation: ReactionState {
 class InitialOrderedStep: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         model.initialTime = 0
         model.finalTime = ReactionSettings.initialT
     }
@@ -217,6 +216,7 @@ class SetFinalConcentrationToNonNil: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         model.finalConcentration = max(model.initialConcentration / 2, ReactionSettings.minCInput)
     }
 
@@ -230,6 +230,7 @@ class SetFinalConcentrationToNonNil: ReactionState {
 class FinalState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         model.highlightedElements = []
         model.reactionHasEnded = true
     }

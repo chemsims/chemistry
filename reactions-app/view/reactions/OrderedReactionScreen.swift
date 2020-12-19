@@ -34,7 +34,7 @@ struct OrderedReactionScreen<Content: View>: View {
 
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
         BeakyOverlay(
-            statement: navigation.statement,
+            statement: reaction.statement,
             next: navigation.next,
             back: navigation.back,
             settings: settings

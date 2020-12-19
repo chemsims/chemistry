@@ -45,11 +45,9 @@ struct SecondOrderReactionNavigation {
 }
 
 fileprivate class ExplainRateConstant: ReactionState {
-    override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        SecondOrderStatements.explainRateConstant(rateConstant: model.concentrationEquationA?.rateConstant ?? 0)
-    }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        model.statement = SecondOrderStatements.explainRateConstant(rateConstant: model.concentrationEquationA?.rateConstant ?? 0)
         model.currentTime = model.initialTime
         model.highlightedElements = [.rateConstantEquation]
     }
@@ -70,6 +68,7 @@ fileprivate class ExplainRate: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         model.highlightedElements = [.rateEquation, .concentrationChart]
     }
 
@@ -89,8 +88,8 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
         super.init(highlightedElements: [.halfLifeEquation])
     }
 
-    override func statement(model: ZeroOrderReactionViewModel) -> [SpeechBubbleLine] {
-        SecondOrderStatements.explainHalfLife(
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.statement = SecondOrderStatements.explainHalfLife(
             halfLife: model.concentrationEquationA?.halfLife ?? 0
         )
     }
