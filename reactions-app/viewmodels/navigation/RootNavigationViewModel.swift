@@ -90,7 +90,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     private var navigationAnimation: Animation? {
-        reduceMotion ? nil : Animation.easeOut(duration: 0.25)
+        reduceMotion ? nil : Animation.easeOut(duration: 0.35)
     }
 
     // The linear navigation flow. i.e, when the user clicks 'next' they will navigate through these screens, in this order

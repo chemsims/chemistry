@@ -108,9 +108,17 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             beakerWithFilingCabinet(order: .Zero)
             beakerWithFilingCabinet(order: .First)
             beakerWithFilingCabinet(order: .Second)
-            navIcon(image: "comparisonicon", screen: .reactionComparison)
+            navIcon(
+                image: "comparisonicon",
+                selectedImage: "comparisonicon-pressed",
+                screen: .reactionComparison
+            )
                 .frame(width: settings.beakerImageWidth)
-            navIcon(image: "kineticsicon", screen: .energyProfile)
+            navIcon(
+                image: "kineticsicon",
+                selectedImage: "kineticsicon-pressed",
+                screen: .energyProfile
+            )
                 .frame(width: settings.beakerImageWidth)
         }
         .frame(width: settings.panelWidth, height: settings.panelHeight)
@@ -119,23 +127,28 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
     private func beakerWithFilingCabinet(order: ReactionOrder) -> some View {
         HStack(spacing: 0) {
-            navIcon(image: order.navImage, screen: order.reactionScreen)
+            navIcon(
+                image: order.navImage,
+                selectedImage: order.selectedNavImage,
+                screen: order.reactionScreen
+            )
                 .frame(width: settings.beakerImageWidth)
             Spacer()
             Button(action: goToScreen { navigation.goToFresh(screen: order.filingScreen) }) {
-                filingCabinet
+                filingCabinet(order: order)
                     .frame(width: settings.filingCabinetWidth)
             }
             .modifier(DisabledNavIcon(disabled: !navigation.canSelectFilingCabinet(order: order)))
         }
     }
 
-    private var filingCabinet: some View {
-        Image(systemName: "archivebox")
+    private func filingCabinet(order: ReactionOrder) -> some View {
+        let isSelected = navigation.currentScreen == order.filingScreen
+        return Image(systemName: "archivebox")
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .foregroundColor(Styling.navIcon)
-            .font(.system(size: 10, weight: .ultraLight))
+            .foregroundColor(isSelected ? Styling.navIconSelected : Styling.navIcon)
+            .font(.system(size: 10, weight: isSelected ? .light : .ultraLight))
     }
 
     private var panelBackground: some View {
@@ -157,9 +170,13 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         )
     }
 
-    private func navIcon(image: String, screen: AppScreen) -> some View {
+    private func navIcon(
+        image: String,
+        selectedImage: String,
+        screen: AppScreen
+    ) -> some View {
         Button(action: goToScreen(action: { navigation.goToFresh(screen: screen) })) {
-            Image(image)
+            Image(navigation.currentScreen == screen ? selectedImage : image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
@@ -197,6 +214,14 @@ fileprivate extension ReactionOrder {
         case .Zero: return "zeroordericon"
         case .First: return "firstordericon"
         case .Second: return "secondordericon"
+        }
+    }
+
+    var selectedNavImage: String {
+        switch(self) {
+        case .Zero: return "zeroordericon-pressed"
+        case .First: return "firstordericon-pressed"
+        case .Second: return "secondordericon-pressed"
         }
     }
 
