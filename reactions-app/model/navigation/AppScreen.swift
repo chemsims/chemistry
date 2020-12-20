@@ -18,5 +18,6 @@ enum AppScreen: CaseIterable {
          energyProfileQuiz,
          zeroOrderFiling,
          firstOrderFiling,
-         secondOrderFiling
+         secondOrderFiling,
+         finalAppScreen
 }

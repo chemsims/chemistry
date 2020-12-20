@@ -12,6 +12,7 @@ class EnergyProfileViewModel: ObservableObject {
         self.persistence = persistence
     }
 
+    var interactionEnabled: Bool = true
     @Published var reactionState = EnergyReactionState.pending
     @Published var statement = [SpeechBubbleLine]()
     @Published var temp2: CGFloat?

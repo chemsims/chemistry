@@ -221,4 +221,8 @@ struct EnergyProfileStatements {
         SpeechBubbleLineGenerator.makeLine("*Tap a different catalyst to select it*.")
     ]
 
+    static let endOfApp: [SpeechBubbleLine] = [
+        SpeechBubbleLineGenerator.makeLine("Now you can explore all parts of kinetics, just tap the button at the top left corner to reveal the navigation menu, then choose your favorite part to review it once more!")
+    ]
+
 }

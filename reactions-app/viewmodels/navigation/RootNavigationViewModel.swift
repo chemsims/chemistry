@@ -21,8 +21,7 @@ class RootNavigationViewModel: ObservableObject {
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.view = AnyView(EmptyView())
-        let provider = firstScreen.screenProvider(persistence: persistence, next: next, prev: prev)
-        goTo(screen: firstScreen, with: provider)
+        goTo(screen: firstScreen, with: getProvider(for: firstScreen))
     }
 
     private var reduceMotion: Bool {
@@ -44,8 +43,7 @@ class RootNavigationViewModel: ObservableObject {
         guard screen != currentScreen else {
             return
         }
-        let provider = screen.screenProvider(persistence: persistence, next: next, prev: prev)
-        goTo(screen: screen, with: provider)
+        goTo(screen: screen, with: getProvider(for: screen))
     }
 
     private func next() {
@@ -57,7 +55,7 @@ class RootNavigationViewModel: ObservableObject {
 
     private func prev() {
         if let prevScreen = linearScreens.element(before: currentScreen) {
-            let provider = models[prevScreen] ?? prevScreen.screenProvider(persistence: persistence, next: next, prev: prev)
+            let provider = models[prevScreen] ?? getProvider(for: prevScreen)
             goTo(screen: prevScreen, with: provider)
         }
     }
@@ -79,6 +77,14 @@ class RootNavigationViewModel: ObservableObject {
         return false
     }
 
+    private func getProvider(for screen: AppScreen) -> ScreenProvider {
+        let energyViewModel: EnergyProfileViewModel? = models[.energyProfile].flatMap {
+            let provider = $0 as? EnergyProfileScreenProvider
+            return provider?.viewModel
+        }
+        return screen.screenProvider(persistence: persistence, energyViewModel: energyViewModel, next: next, prev: prev)
+    }
+
     enum NavigationDirection {
         case forward, back
     }
@@ -98,7 +104,8 @@ class RootNavigationViewModel: ObservableObject {
         .reactionComparison,
         .reactionComparisonQuiz,
         .energyProfile,
-        .energyProfileQuiz
+        .energyProfileQuiz,
+        .finalAppScreen
     ]
 }
 
@@ -115,6 +122,7 @@ extension ReactionOrder {
 fileprivate extension AppScreen {
     func screenProvider(
         persistence: ReactionInputPersistence,
+        energyViewModel: EnergyProfileViewModel?,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) -> ScreenProvider {
@@ -145,6 +153,8 @@ fileprivate extension AppScreen {
             return ReactionFilingScreenProvider(persistence: persistence, order: .First)
         case .secondOrderFiling:
             return ReactionFilingScreenProvider(persistence: persistence, order: .Second)
+        case .finalAppScreen:
+            return FinalAppScreenProvider(persistence: persistence, underlying: energyViewModel)
         }
     }
 }
@@ -235,7 +245,7 @@ fileprivate class ReactionComparisonScreenProvider: ScreenProvider {
 fileprivate class EnergyProfileScreenProvider: ScreenProvider {
 
     init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
-        let viewModel = EnergyProfileViewModel(persistence: persistence)
+        self.viewModel = EnergyProfileViewModel(persistence: persistence)
         self.navigation = EnergyProfileNavigationViewModel.model(viewModel)
         viewModel.navigation = navigation
         navigation.nextScreen = next
@@ -243,6 +253,7 @@ fileprivate class EnergyProfileScreenProvider: ScreenProvider {
     }
 
     let navigation: NavigationViewModel<EnergyProfileState>
+    let viewModel: EnergyProfileViewModel
 
     var screen: AnyView {
         AnyView(EnergyProfileScreen(navigation: navigation))
@@ -258,5 +269,35 @@ fileprivate class ReactionFilingScreenProvider: ScreenProvider {
 
     var screen: AnyView {
         AnyView(ReactionFilingScreen(model: viewModel))
+    }
+}
+
+fileprivate class FinalAppScreenProvider: ScreenProvider {
+
+    init(
+        persistence: ReactionInputPersistence,
+        underlying: EnergyProfileViewModel?
+    ) {
+        let viewModel = underlying ?? EnergyProfileViewModel(persistence: persistence)
+        self.navigation = NavigationViewModel(reactionViewModel: viewModel, states: [FinalEnergyProfileState()])
+    }
+
+    let navigation: NavigationViewModel<EnergyProfileState>
+
+    var screen: AnyView {
+        return AnyView(EnergyProfileScreen(navigation: navigation))
+    }
+}
+
+fileprivate class FinalEnergyProfileState: EnergyProfileState {
+    init() {
+        super.init(statement: EnergyProfileStatements.endOfApp)
+    }
+
+    override func apply(on model: EnergyProfileViewModel) {
+        super.apply(on: model)
+        model.highlightedElements = [.menuIcon]
+        model.interactionEnabled = false
+        model.temp2 = model.temp1
     }
 }

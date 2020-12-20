@@ -42,6 +42,7 @@ struct EnergyProfileScreen: View {
             beakyView(settings: settings)
             equationView(settings: settings)
             beakerView(settings: settings)
+                .disabled(!model.interactionEnabled)
         }
     }
     
