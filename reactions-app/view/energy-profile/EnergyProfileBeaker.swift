@@ -191,8 +191,9 @@ struct EnergyProfileBeaker: View {
         let scale: CGFloat = hasMoved ? 1.2 : 1
         let shadow = hasMoved ? settings.catHeight * 0.05 : 0
         let yOffset = (isInProgress && catalystIsShaking)  ? settings.catHeight * 0.1 : 0
+        let shouldHighlight = highlightCatalyst && availableCatalysts.contains(catalyst)
 
-        return Image(catalystState != .disabled || isInProgress ? catalyst.imageName : "catdeact")
+        return Image(catalystState == .disabled ? "catdeact" : catalyst.imageName)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .rotationEffect(rotation, anchor: .center)
@@ -206,7 +207,7 @@ struct EnergyProfileBeaker: View {
             .scaleEffect(x: scale, y: scale, anchor: .top)
             .opacity(isSelected ? 0 : 1)
             .offset(y: yOffset)
-            .opacity(highlightCatalyst && !availableCatalysts.contains(catalyst) ? 0.2 : 1)
+            .opacity(availableCatalysts.contains(catalyst) ? 1 : 0.2)
             .onTapGesture {
                 if (catalystState == .active) {
                     setCatalystInProgress(catalyst)
@@ -216,7 +217,7 @@ struct EnergyProfileBeaker: View {
                     return
                 }
             }
-            .colorMultiply(highlightCatalyst && availableCatalysts.contains(catalyst) ? .white : Styling.inactiveScreenElement)
+            .colorMultiply(shouldHighlight ? .white : Styling.inactiveScreenElement)
             .onReceive(
                 NotificationCenter.default.publisher(
                     for: .deviceDidShakeNotification
@@ -230,9 +231,7 @@ struct EnergyProfileBeaker: View {
         catalyst: Catalyst
     ) {
         let inProgress = catalystState.pending == catalyst
-        print("IP \(inProgress) CS \(canSelectCatalyst) E \(emitCatalyst)")
         if (canSelectCatalyst && inProgress && !emitCatalyst) {
-            print("Selecting!")
             selectCatalyst(catalyst)
         }
     }
