@@ -30,35 +30,33 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
-        if let previousScreen = screenOrdering.element(before: screen) {
+        if let previousScreen = linearScreens.element(before: screen) {
             return persistence.hasCompleted(screen: previousScreen)
         }
         return true
     }
 
     func canSelectFilingCabinet(order: ReactionOrder) -> Bool {
-        persistence.hasCompleted(screen: order.screen)
+        persistence.hasCompleted(screen: order.reactionScreen)
     }
 
     func goToFresh(screen: AppScreen) {
+        guard screen != currentScreen else {
+            return
+        }
         let provider = screen.screenProvider(persistence: persistence, next: next, prev: prev)
         goTo(screen: screen, with: provider)
     }
 
-    func goToFilingCabinet(order: ReactionOrder) {
-        let provider = ReactionFilingScreenProvider(persistence: persistence, order: order)
-        self.view = provider.screen
-    }
-
     private func next() {
-        if let nextScreen = screenOrdering.element(after: currentScreen) {
+        if let nextScreen = linearScreens.element(after: currentScreen) {
             persistence.setCompleted(screen: currentScreen)
             goToFresh(screen: nextScreen)
         }
     }
 
     private func prev() {
-        if let prevScreen = screenOrdering.element(before: currentScreen) {
+        if let prevScreen = linearScreens.element(before: currentScreen) {
             let provider = models[prevScreen] ?? prevScreen.screenProvider(persistence: persistence, next: next, prev: prev)
             goTo(screen: prevScreen, with: provider)
         }
@@ -74,15 +72,11 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     private func screenIsAfterCurrent(nextScreen: AppScreen) -> Bool {
-        if let indexOfCurrent = screenOrdering.firstIndex(of: currentScreen),
-           let indexOfNew = screenOrdering.firstIndex(of: nextScreen) {
+        if let indexOfCurrent = AppScreen.allCases.firstIndex(of: currentScreen),
+           let indexOfNew = AppScreen.allCases.firstIndex(of: nextScreen) {
             return indexOfNew > indexOfCurrent
         }
         return false
-    }
-
-    private var screenOrdering: [AppScreen] {
-        AppScreen.allCases
     }
 
     enum NavigationDirection {
@@ -92,10 +86,24 @@ class RootNavigationViewModel: ObservableObject {
     private var navigationAnimation: Animation? {
         reduceMotion ? nil : Animation.easeOut(duration: 0.25)
     }
+
+    // The linear navigation flow. i.e, when the user clicks 'next' they will navigate through these screens, in this order
+    private let linearScreens: [AppScreen] = [
+        .zeroOrderReaction,
+        .zeroOrderReactionQuiz,
+        .firstOrderReaction,
+        .firstOrderReactionQuiz,
+        .secondOrderReaction,
+        .secondOrderReactionQuiz,
+        .reactionComparison,
+        .reactionComparisonQuiz,
+        .energyProfile,
+        .energyProfileQuiz
+    ]
 }
 
-fileprivate extension ReactionOrder {
-    var screen: AppScreen {
+extension ReactionOrder {
+    var reactionScreen: AppScreen {
         switch (self) {
         case .Zero: return .zeroOrderReaction
         case .First: return .firstOrderReaction
@@ -131,6 +139,12 @@ fileprivate extension AppScreen {
             return EnergyProfileScreenProvider(next: next, prev: prev)
         case .energyProfileQuiz:
             return QuizScreenProvider(next: next, prev: prev)
+        case .zeroOrderFiling:
+            return ReactionFilingScreenProvider(persistence: persistence, order: .Zero)
+        case .firstOrderFiling:
+            return ReactionFilingScreenProvider(persistence: persistence, order: .First)
+        case .secondOrderFiling:
+            return ReactionFilingScreenProvider(persistence: persistence, order: .Second)
         }
     }
 }

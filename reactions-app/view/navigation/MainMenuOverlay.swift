@@ -119,10 +119,10 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
     private func beakerWithFilingCabinet(order: ReactionOrder) -> some View {
         HStack(spacing: 0) {
-            navIcon(image: order.navImage, screen: order.screen)
+            navIcon(image: order.navImage, screen: order.reactionScreen)
                 .frame(width: settings.beakerImageWidth)
             Spacer()
-            Button(action: goToScreen { navigation.goToFilingCabinet(order: order) }) {
+            Button(action: goToScreen { navigation.goToFresh(screen: order.filingScreen) }) {
                 filingCabinet
                     .frame(width: settings.filingCabinetWidth)
             }
@@ -200,11 +200,11 @@ fileprivate extension ReactionOrder {
         }
     }
 
-    var screen: AppScreen {
+    var filingScreen: AppScreen {
         switch (self) {
-        case .Zero: return .zeroOrderReaction
-        case .First: return .firstOrderReaction
-        case .Second: return .secondOrderReaction
+        case .Zero: return .zeroOrderFiling
+        case .First: return .firstOrderFiling
+        case .Second: return .secondOrderFiling
         }
     }
 }
