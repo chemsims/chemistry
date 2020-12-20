@@ -44,7 +44,9 @@ class ReactionComparisonState: ScreenState {
 
     func unapply(on model: ReactionComparisonViewModel) { }
 
-    func reapply(on model: ReactionComparisonViewModel) { }
+    func reapply(on model: ReactionComparisonViewModel) {
+        apply(on: model)
+    }
 
     func nextStateAutoDispatchDelay(model: ReactionComparisonViewModel) -> Double? { nil }
 

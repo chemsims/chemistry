@@ -101,4 +101,8 @@ fileprivate class ExplainHalfLifeState: PreReactionAnimation {
             halfLife: model.concentrationEquationA?.halfLife ?? 0
         )
     }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
 }

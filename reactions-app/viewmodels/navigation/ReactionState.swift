@@ -68,7 +68,9 @@ class ReactionState: ScreenState, SubState {
 
     func unapply(on model: ZeroOrderReactionViewModel) { }
 
-    func reapply(on model: ZeroOrderReactionViewModel) { }
+    func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
 
     func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? { nil }
 
@@ -191,6 +193,7 @@ class EndAnimation: ReactionState {
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
         if (highlightChart) {
             model.highlightedElements = [.concentrationChart, .secondaryChart]
         }

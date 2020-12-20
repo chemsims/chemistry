@@ -92,7 +92,9 @@ class EnergyProfileState: ScreenState, SubState {
 
     func unapply(on model: EnergyProfileViewModel) { }
 
-    func reapply(on model: EnergyProfileViewModel) { }
+    func reapply(on model: EnergyProfileViewModel) {
+        apply(on: model)
+    }
 
     func nextStateAutoDispatchDelay(model: EnergyProfileViewModel) -> Double? { nil }
 
@@ -366,5 +368,4 @@ fileprivate class ReactionEndedState: EnergyProfileState {
         model.concentrationC = 0
     }
 }
-
 
