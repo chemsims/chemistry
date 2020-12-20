@@ -114,7 +114,8 @@ struct OrderedReactionScreen<Content: View>: View {
             showRate: showRate,
             cellWidth: settings.tableCellWidth,
             cellHeight: settings.tableCellHeight,
-            buttonSize: settings.tableButtonSize
+            buttonSize: settings.tableButtonSize,
+            highlighted: reaction.highlight(element: .concentrationTable)
         )
         .font(.system(size: settings.tableFontSize))
     }

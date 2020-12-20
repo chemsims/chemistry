@@ -53,6 +53,11 @@ struct ZeroOrderStatements {
         SpeechBubbleLineGenerator.makeLine("*Where -k is the slope*.")
     ]
 
+    static let showConcentrationTable = [
+        SpeechBubbleLineGenerator.makeLine("You can click the button in the top right corner to see the initial and final concentration and time for this reaction."),
+        SpeechBubbleLineGenerator.makeLine("*Try clicking the toggle to see your results*."),
+    ]
+
     static let end = [
         SpeechBubbleLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
         SpeechBubbleLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time."),

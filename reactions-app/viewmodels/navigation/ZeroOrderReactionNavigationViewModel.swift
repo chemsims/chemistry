@@ -23,7 +23,8 @@ struct ZeroOrderReactionNavigation {
                 statement: ZeroOrderStatements.endAnimation,
                 highlightChart: true
             ),
-            FinalState(statement: ZeroOrderStatements.end)
+            ShowConcentrationTableState(),
+            FinalReactionState(statement: ZeroOrderStatements.end)
         ]
     }
 
@@ -102,4 +103,19 @@ fileprivate class ExplainHalfLifeState: PreReactionAnimation {
         )
     }
 
+}
+
+fileprivate class ShowConcentrationTableState: ReactionState {
+    init() {
+        super.init(statement: ZeroOrderStatements.showConcentrationTable)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.highlightedElements = [.concentrationTable]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
 }

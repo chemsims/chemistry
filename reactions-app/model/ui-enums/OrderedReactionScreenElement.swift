@@ -12,5 +12,6 @@ enum OrderedReactionScreenElement {
          secondaryChart,
          rateEquation,
          rateCurveLhs,
-         rateCurveRhs
+         rateCurveRhs,
+         concentrationTable
 }

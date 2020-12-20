@@ -29,7 +29,7 @@ struct SecondOrderReactionNavigation {
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain4, highlights: [.concentrationChart]),
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain5, highlights: [.concentrationChart]),
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain6, highlights: [.concentrationChart]),
-            FinalState(statement: SecondOrderStatements.end)
+            FinalReactionState(statement: SecondOrderStatements.end)
         ]
     }
 

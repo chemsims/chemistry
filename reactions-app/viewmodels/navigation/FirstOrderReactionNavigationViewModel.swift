@@ -28,7 +28,7 @@ struct FirstOrderReactionNavigation {
             ExplainRatePostReaction3(),
             ExplainIntegratedRateLaw1(),
             ExplainIntegratedRateLaw2(),
-            FinalState(statement: FirstOrderStatements.end)
+            FinalReactionState(statement: FirstOrderStatements.end)
         ]
     }
 

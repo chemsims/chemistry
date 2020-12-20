@@ -21,8 +21,9 @@ struct ConcentrationTable: View {
     let cellWidth: CGFloat
     let cellHeight: CGFloat
     let buttonSize: CGFloat
+    let highlighted: Bool
 
-    @State private var showTable = true
+    @State private var showTable = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -58,8 +59,7 @@ struct ConcentrationTable: View {
     private var button: some View {
         Button(action: toggleTable) {
             ZStack {
-                Rectangle()
-                    .stroke()
+                rectWithStroke
                 Image(systemName: "plus")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -73,8 +73,7 @@ struct ConcentrationTable: View {
 
     private func cell(value: String?) -> some View {
         ZStack {
-            Rectangle()
-                .stroke()
+            rectWithStroke
             Text(value ?? "-")
                 .padding(0.1 * cellWidth)
         }.frame(width: cellWidth, height: cellHeight)
@@ -82,8 +81,7 @@ struct ConcentrationTable: View {
 
     private var rateCell: some View {
         ZStack {
-            Rectangle()
-                .stroke()
+            rectWithStroke
             if (rate != nil && currentTime != nil) {
                 AnimatingNumber(
                     x: currentTime!,
@@ -96,7 +94,17 @@ struct ConcentrationTable: View {
                     .padding(0.1 * cellWidth)
             }
         }.frame(width: 2 * cellWidth, height: cellHeight)
+    }
 
+    private var rectWithStroke: some View {
+        ZStack {
+            if (highlighted) {
+                Rectangle()
+                    .foregroundColor(.white)
+            }
+            Rectangle()
+                .stroke()
+        }
     }
 
     private func toggleTable() {
@@ -119,7 +127,8 @@ struct ConcentrationTable_Previews: PreviewProvider {
             showRate: true,
             cellWidth: 50,
             cellHeight: 40,
-            buttonSize: 25
-        )
+            buttonSize: 25,
+            highlighted: true
+        ).background(Styling.inactiveScreenElement)
     }
 }

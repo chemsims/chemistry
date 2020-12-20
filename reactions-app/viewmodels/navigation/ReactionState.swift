@@ -230,7 +230,7 @@ class SetFinalConcentrationToNonNil: ReactionState {
 }
 
 
-class FinalState: ReactionState {
+class FinalReactionState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
