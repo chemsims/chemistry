@@ -47,13 +47,13 @@ struct SecondOrderStatements {
         )
     ]
 
-    static let postReactionExplain2 = [
+    static let postReactionExplainFastRate = [
         SpeechBubbleLineGenerator.makeLine(
             "Notice how *[A]* drops a lot faster at the beginning of because there's more of *A* present, making the *Rate* much higher."
         )
     ]
 
-    static let postReactionExplain3 = [
+    static let postReactionExplainSlowRate = [
         SpeechBubbleLineGenerator.makeLine(
             "Subsequently, towards the end of the reaction, there's much less *[A]* present, so the *Rate* of the reaction is a lot lower, making *[A]* drop significantly slower at this point."
         )

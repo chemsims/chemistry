@@ -43,13 +43,25 @@ class ZeroOrderReactionViewModel: ObservableObject {
     }
 
     func color(for element: OrderedReactionScreenHighlightingElements?) -> Color {
-        if (highlightedElements.isEmpty) {
-            return .white
-        }
-        if let element = element, highlightedElements.contains(element) {
+        if (highlightedElements.isEmpty || highlight(element: element)) {
             return .white
         }
         return Styling.inactiveScreenElement
+    }
+
+    func color(for elements: [OrderedReactionScreenHighlightingElements]) -> Color {
+        let index = elements.firstIndex { highlight(element: $0) }
+        if (highlightedElements.isEmpty || index != nil) {
+            return .white
+        }
+        return Styling.inactiveScreenElement
+    }
+
+    func highlight(element: OrderedReactionScreenHighlightingElements?) -> Bool {
+        if let element = element, highlightedElements.contains(element) {
+            return true
+        }
+        return false
     }
 
     var concentrationEquationA: ConcentrationEquation? {

@@ -69,7 +69,7 @@ struct FirstOrderStatements {
         )
     ]
 
-    static let explainRatePostReaction3 = [
+    static let explainChangeInRate = [
         SpeechBubbleLineGenerator.makeLine(
             "Notice how *[A]* drops faster at the beginning because there's more of *A* present, making the *Rate* higher."
         ),

@@ -109,25 +109,51 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
         )
     }
 
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
 }
 
 fileprivate class ExplainRatePostReaction2: ReactionState {
     init() {
         super.init(statement: FirstOrderStatements.explainRatePostReaction2)
     }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.highlightedElements = [.concentrationChart]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
 }
+
 fileprivate class ExplainRatePostReaction3: ReactionState {
     init() {
-        super.init(statement: FirstOrderStatements.explainRatePostReaction3)
+        super.init(statement: FirstOrderStatements.explainChangeInRate)
     }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.highlightedElements = [.rateCurveLhs]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
+
 }
 
 fileprivate class ExplainIntegratedRateLaw1: ReactionState {
     init() {
         super.init(statement: FirstOrderStatements.explainIntegratedRateLaw1)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.highlightedElements = [.concentrationChart]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
     }
 }
 

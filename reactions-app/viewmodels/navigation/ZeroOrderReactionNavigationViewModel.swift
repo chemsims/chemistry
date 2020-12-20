@@ -102,7 +102,4 @@ fileprivate class ExplainHalfLifeState: PreReactionAnimation {
         )
     }
 
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
 }

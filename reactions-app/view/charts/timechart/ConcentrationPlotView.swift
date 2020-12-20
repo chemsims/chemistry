@@ -21,6 +21,10 @@ struct ConcentrationPlotView: View {
 
     let includeAxis: Bool
 
+    let highlightChart: Bool
+    let highlightLhsCurve: Bool
+    let highlightRhsCurve: Bool
+
     init(
         settings: TimeChartGeometrySettings,
         concentrationA: Equation,
@@ -31,6 +35,9 @@ struct ConcentrationPlotView: View {
         currentTime: Binding<CGFloat>,
         finalTime: CGFloat,
         canSetCurrentTime: Bool,
+        highlightChart: Bool,
+        highlightLhsCurve: Bool,
+        highlightRhsCurve: Bool,
         includeAxis: Bool = true
     ) {
         self.settings = settings
@@ -43,12 +50,24 @@ struct ConcentrationPlotView: View {
         self.finalTime = finalTime
         self.canSetCurrentTime = canSetCurrentTime
         self.includeAxis = includeAxis
+        self.highlightChart = highlightChart
+        self.highlightLhsCurve = highlightLhsCurve
+        self.highlightRhsCurve = highlightRhsCurve
     }
 
     var body: some View {
         ZStack {
-            Rectangle()
-                .fill(Color.white)
+            if (highlightChart) {
+                Rectangle()
+                    .fill(Color.white)
+            }
+            if (highlightLhsCurve) {
+                rectangleHighlight(t1: initialTime, t2: (initialTime + finalTime) / 2)
+            }
+            if (highlightRhsCurve) {
+                rectangleHighlight(t1: (initialTime + finalTime) / 2, t2: finalTime)
+            }
+
 
             if (includeAxis) {
                 verticalIndicator(at: initialTime)
@@ -79,7 +98,9 @@ struct ConcentrationPlotView: View {
                     headColor: Styling.moleculeB,
                     headRadius: settings.chartHeadSecondarySize,
                     haloColor: nil,
-                    canSetCurrentTime: canSetCurrentTime
+                    canSetCurrentTime: canSetCurrentTime,
+                    highlightLhs: false,
+                    highlightRhs: false
                 )
             }
 
@@ -93,7 +114,9 @@ struct ConcentrationPlotView: View {
                 headColor: Styling.moleculeA,
                 headRadius: settings.chartHeadPrimarySize,
                 haloColor: Styling.moleculeAChartHeadHalo,
-                canSetCurrentTime: canSetCurrentTime
+                canSetCurrentTime: canSetCurrentTime,
+                highlightLhs: highlightLhsCurve,
+                highlightRhs: highlightRhsCurve
             )
 
         }.frame(width: settings.chartSize, height: settings.chartSize)
@@ -134,6 +157,31 @@ struct ConcentrationPlotView: View {
         }.stroke(lineWidth: 0.3)
     }
 
+    private func rectangleHighlight(
+        t1: CGFloat,
+        t2: CGFloat
+    ) -> some View {
+        let equation = concentrationA
+        let x1 = settings.xAxis.getPosition(at: t1)
+        let x2 = settings.xAxis.getPosition(at: t2)
+        let width = x2 - x1
+        let midX = (x2 + x1) / 2
+
+        let c1 = equation.getY(at: t1)
+        let c2 = equation.getY(at: t2)
+        let y1 = settings.yAxis.getPosition(at: c1)
+        let y2 = settings.yAxis.getPosition(at: c2)
+
+        let height = abs(y2 - y1)
+        let midY = (y1 + y2) / 2
+
+        return Rectangle()
+            .foregroundColor(.white)
+            .frame(width: width, height: height)
+            .position(x: midX, y: midY)
+            .zIndex(-1)
+    }
+
 }
 
 struct ChartPlotWithHead: View {
@@ -150,10 +198,14 @@ struct ChartPlotWithHead: View {
     let haloColor: Color?
     let canSetCurrentTime: Bool
 
+    let highlightLhs: Bool
+    let highlightRhs: Bool
+
     var body: some View {
         ZStack {
-            line(time: finalTime, color: filledBarColor)
-            line(time: currentTime, color: headColor)
+            dataLine(time: finalTime, color: filledBarColor)
+            dataLine(time: currentTime, color: headColor)
+
             if (haloColor != nil) {
                 head(
                     radius: settings.chartHeadPrimaryHaloSize,
@@ -191,18 +243,44 @@ struct ChartPlotWithHead: View {
         .foregroundColor(color)
     }
 
-    private func line(
+    private func dataLine(
         time: CGFloat,
         color: Color
+    ) -> some View {
+        line(
+            startTime: initialTime,
+            time: time,
+            color: color,
+            lineWidth: settings.timePlotLineWidth
+        )
+    }
+
+    private func highlightLine(
+        startTime: CGFloat,
+        endTime: CGFloat
+    ) -> some View {
+        line(
+            startTime: startTime,
+            time: endTime,
+            color: headColor,
+            lineWidth: 2 * settings.timePlotLineWidth
+        )
+    }
+
+    private func line(
+        startTime: CGFloat,
+        time: CGFloat,
+        color: Color,
+        lineWidth: CGFloat
     ) -> some View {
         ChartLine(
             equation: equation,
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
-            startX: initialTime,
+            startX: startTime,
             endX: time
         )
-        .stroke(lineWidth: settings.timePlotLineWidth)
+        .stroke(lineWidth: lineWidth)
         .foregroundColor(color)
     }
 }
@@ -218,9 +296,12 @@ struct TimeChartPlotView_Previews: PreviewProvider {
             initialConcentration: 0.8,
             finalConcentration: 0.2,
             initialTime: 0,
-            currentTime: .constant(0.8),
+            currentTime: .constant(10),
             finalTime: 10,
-            canSetCurrentTime: true
+            canSetCurrentTime: true,
+            highlightChart: false,
+            highlightLhsCurve: true,
+            highlightRhsCurve: false
         )
     }
 

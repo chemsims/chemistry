@@ -18,6 +18,9 @@ struct ConcentrationTimeChartView: View {
     @Binding var currentTime: CGFloat?
     let canSetInitialTime: Bool
     let canSetCurrentTime: Bool
+    let highlightChart: Bool
+    let highlightLhsCurve: Bool
+    let highlightRhsCurve: Bool
 
     var body: some View {
         GeneralTimeChartView(
@@ -33,7 +36,10 @@ struct ConcentrationTimeChartView: View {
             includeSliders: true,
             yLabel: "[A]",
             includeValuesInLabel: true,
-            canSetCurrentTime: canSetCurrentTime
+            canSetCurrentTime: canSetCurrentTime,
+            highlightChart: highlightChart,
+            highlightLhsCurve: highlightLhsCurve,
+            highlightRhsCurve: highlightRhsCurve
         )
     }
 }
@@ -63,7 +69,10 @@ struct SingleConcentrationPlot: View {
             includeSliders: false,
             yLabel: yLabel,
             includeValuesInLabel: false,
-            canSetCurrentTime: canSetCurrentTime
+            canSetCurrentTime: canSetCurrentTime,
+            highlightChart: false,
+            highlightLhsCurve: false,
+            highlightRhsCurve: false
         )
     }
 }
@@ -85,6 +94,10 @@ struct GeneralTimeChartView: View {
     let yLabel: String
     let includeValuesInLabel: Bool
     let canSetCurrentTime: Bool
+
+    let highlightChart: Bool
+    let highlightLhsCurve: Bool
+    let highlightRhsCurve: Bool
 
     var body: some View {
         HStack(spacing: settings.chartHStackSpacing) {
@@ -242,7 +255,10 @@ struct GeneralTimeChartView: View {
             initialTime: initialTime,
             currentTime: currentTime,
             finalTime: finalTime,
-            canSetCurrentTime: canSetCurrentTime
+            canSetCurrentTime: canSetCurrentTime,
+            highlightChart: highlightChart,
+            highlightLhsCurve: highlightLhsCurve,
+            highlightRhsCurve: highlightRhsCurve
         ).frame(width: settings.chartSize, height: settings.chartSize)
     }
 
@@ -327,7 +343,10 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             concentrationB: ConstantEquation(value: 1),
             currentTime: .constant(nil),
             canSetInitialTime: true,
-            canSetCurrentTime: true
+            canSetCurrentTime: true,
+            highlightChart: false,
+            highlightLhsCurve: false,
+            highlightRhsCurve: false
         )
         .previewLayout(.fixed(width: 500, height: 300))
 
@@ -366,7 +385,10 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     concentrationB: equation2,
                     currentTime: .constant(nil),
                     canSetInitialTime: true,
-                    canSetCurrentTime: true
+                    canSetCurrentTime: true,
+                    highlightChart: false,
+                    highlightLhsCurve: false,
+                    highlightRhsCurve: false
                 )
 
                 ConcentrationTimeChartView(
@@ -381,7 +403,10 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     concentrationB: equation2,
                     currentTime: .constant(t2!),
                     canSetInitialTime: true,
-                    canSetCurrentTime: true
+                    canSetCurrentTime: true,
+                    highlightChart: false,
+                    highlightLhsCurve: false,
+                    highlightRhsCurve: false
                 )
             }
         }

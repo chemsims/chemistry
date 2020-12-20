@@ -380,6 +380,9 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     currentTime: currentTime,
                     finalTime: finalTime,
                     canSetCurrentTime: reaction.reactionHasEnded,
+                    highlightChart: false,
+                    highlightLhsCurve: false,
+                    highlightRhsCurve: false,
                     includeAxis: false
                 )
             }

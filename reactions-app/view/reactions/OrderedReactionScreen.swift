@@ -73,11 +73,14 @@ struct OrderedReactionScreen<Content: View>: View {
                 concentrationB: reaction.concentrationEquationB,
                 currentTime: $reaction.currentTime,
                 canSetInitialTime: canSetInitialTime,
-                canSetCurrentTime: reaction.reactionHasEnded
+                canSetCurrentTime: reaction.reactionHasEnded,
+                highlightChart: reaction.highlight(element: .concentrationChart),
+                highlightLhsCurve: reaction.highlight(element: .rateCurveLhs),
+                highlightRhsCurve: reaction.highlight(element: .rateCurveRhs)
             )
             .frame(width: settings.chartSettings.largeTotalChartWidth)
             .padding(.horizontal, settings.chartHPadding)
-            .colorMultiply(reaction.color(for: .concentrationChart))
+            .colorMultiply(reaction.color(for: [.concentrationChart, .rateCurveLhs, .rateCurveRhs]))
 
             ConcentrationBarChart(
                 initialA: reaction.initialConcentration,

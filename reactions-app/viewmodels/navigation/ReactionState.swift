@@ -69,7 +69,7 @@ class ReactionState: ScreenState, SubState {
     func unapply(on model: ZeroOrderReactionViewModel) { }
 
     func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
+        model.statement = constantStatement
     }
 
     func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? { nil }

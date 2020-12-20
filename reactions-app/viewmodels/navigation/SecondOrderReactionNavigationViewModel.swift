@@ -24,11 +24,11 @@ struct SecondOrderReactionNavigation {
                 statement: SecondOrderStatements.postReactionExplain1,
                 highlightChart: true
             ),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain2),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain3),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain4),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain5),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain6),
+            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplainFastRate, highlights: [.rateCurveLhs]),
+            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplainSlowRate, highlights: [.rateCurveRhs]),
+            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain4, highlights: [.concentrationChart]),
+            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain5, highlights: [.concentrationChart]),
+            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain6, highlights: [.concentrationChart]),
             FinalState(statement: SecondOrderStatements.end)
         ]
     }
@@ -93,12 +93,22 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
             halfLife: model.concentrationEquationA?.halfLife ?? 0
         )
     }
+}
+
+fileprivate class PostReactionExplanation: ReactionState {
+    init(statement: [SpeechBubbleLine], highlights: [OrderedReactionScreenHighlightingElements]) {
+        self.highlights = highlights
+        super.init(statement: statement)
+    }
+
+    let highlights: [OrderedReactionScreenHighlightingElements]
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.highlightedElements = highlights
+    }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
         apply(on: model)
     }
-}
-
-fileprivate class PostReactionExplanation: ReactionState {
-
 }

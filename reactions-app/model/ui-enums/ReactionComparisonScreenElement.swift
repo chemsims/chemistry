@@ -14,5 +14,7 @@ enum OrderedReactionScreenHighlightingElements {
          halfLifeEquation,
          concentrationChart,
          secondaryChart,
-         rateEquation
+         rateEquation,
+         rateCurveLhs,
+         rateCurveRhs
 }
