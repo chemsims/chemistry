@@ -26,7 +26,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var reactionHasEnded: Bool = false
     @Published var reactionHasStarted: Bool = false
 
-    @Published var highlightedElements = [OrderedReactionScreenHighlightingElements]()
+    @Published var highlightedElements = [OrderedReactionScreenElement]()
 
     func generateEquation(
         c1: CGFloat,
@@ -42,14 +42,14 @@ class ZeroOrderReactionViewModel: ObservableObject {
         )
     }
 
-    func color(for element: OrderedReactionScreenHighlightingElements?) -> Color {
+    func color(for element: OrderedReactionScreenElement?) -> Color {
         if (highlightedElements.isEmpty || highlight(element: element)) {
             return .white
         }
         return Styling.inactiveScreenElement
     }
 
-    func color(for elements: [OrderedReactionScreenHighlightingElements]) -> Color {
+    func color(for elements: [OrderedReactionScreenElement]) -> Color {
         let index = elements.firstIndex { highlight(element: $0) }
         if (highlightedElements.isEmpty || index != nil) {
             return .white
@@ -57,7 +57,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
         return Styling.inactiveScreenElement
     }
 
-    func highlight(element: OrderedReactionScreenHighlightingElements?) -> Bool {
+    func highlight(element: OrderedReactionScreenElement?) -> Bool {
         if let element = element, highlightedElements.contains(element) {
             return true
         }

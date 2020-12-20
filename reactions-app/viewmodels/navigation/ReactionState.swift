@@ -83,8 +83,8 @@ class ReactionState: ScreenState, SubState {
 
 class PreReactionAnimation: ReactionState {
 
-    let highlightedElements: [OrderedReactionScreenHighlightingElements]
-    init(highlightedElements: [OrderedReactionScreenHighlightingElements]) {
+    let highlightedElements: [OrderedReactionScreenElement]
+    init(highlightedElements: [OrderedReactionScreenElement]) {
         self.highlightedElements = highlightedElements
     }
 

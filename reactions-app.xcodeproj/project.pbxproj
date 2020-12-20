@@ -26,6 +26,7 @@
 		570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */; };
 		570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F0B256D288C001EADCB /* Catalyst.swift */; };
 		570FCD05258F6FFF0030D92E /* EnergyReactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FCD04258F6FFF0030D92E /* EnergyReactionState.swift */; };
+		570FCD09258F8E0C0030D92E /* OrderedReactionScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FCD08258F8E0C0030D92E /* OrderedReactionScreenElement.swift */; };
 		571215562580DCD000E92A99 /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571215552580DCD000E92A99 /* Equation.swift */; };
 		5712155E258103A600E92A99 /* Rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5712155D258103A600E92A99 /* Rates.swift */; };
 		571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */; };
@@ -168,6 +169,7 @@
 		570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileViewModel.swift; sourceTree = "<group>"; };
 		570E4F0B256D288C001EADCB /* Catalyst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalyst.swift; sourceTree = "<group>"; };
 		570FCD04258F6FFF0030D92E /* EnergyReactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyReactionState.swift; sourceTree = "<group>"; };
+		570FCD08258F8E0C0030D92E /* OrderedReactionScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedReactionScreenElement.swift; sourceTree = "<group>"; };
 		571215552580DCD000E92A99 /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		5712155D258103A600E92A99 /* Rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rates.swift; sourceTree = "<group>"; };
 		571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderStatements.swift; sourceTree = "<group>"; };
@@ -708,6 +710,7 @@
 			children = (
 				57D8BA2B257BF17E006B3C8B /* ReactionComparisonScreenElement.swift */,
 				57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */,
+				570FCD08258F8E0C0030D92E /* OrderedReactionScreenElement.swift */,
 			);
 			path = "ui-enums";
 			sourceTree = "<group>";
@@ -995,6 +998,7 @@
 				571B3C4F256555460075358B /* ZeroOrderReactionViewModel.swift in Sources */,
 				57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */,
 				579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */,
+				570FCD09258F8E0C0030D92E /* OrderedReactionScreenElement.swift in Sources */,
 				57DAE4D82577C4F1006D945B /* HalfLife.swift in Sources */,
 				570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */,
 				573F168D2584AC56001CE039 /* ProgressBar.swift in Sources */,

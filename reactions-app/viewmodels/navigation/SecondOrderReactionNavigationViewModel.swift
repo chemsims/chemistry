@@ -96,12 +96,12 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
 }
 
 fileprivate class PostReactionExplanation: ReactionState {
-    init(statement: [SpeechBubbleLine], highlights: [OrderedReactionScreenHighlightingElements]) {
+    init(statement: [SpeechBubbleLine], highlights: [OrderedReactionScreenElement]) {
         self.highlights = highlights
         super.init(statement: statement)
     }
 
-    let highlights: [OrderedReactionScreenHighlightingElements]
+    let highlights: [OrderedReactionScreenElement]
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
