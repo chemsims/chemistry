@@ -135,7 +135,9 @@ struct EnergyProfileScreen: View {
                 canSelectCatalyst: model.canSelectCatalyst,
                 reactionHasEnded: model.reactionHasEnded,
                 highlightSlider: model.highlight(element: .tempSlider),
-                highlightBeaker: model.highlight(element: .beaker)
+                highlightBeaker: model.highlight(element: .beaker),
+                highlightCatalyst: model.highlight(element: .catalysts),
+                availableCatalysts: model.availableCatalysts
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .padding(.leading, settings.beakerLeadingPadding)
@@ -194,20 +196,27 @@ struct EnergyProfileScreen_Previews: PreviewProvider {
 
         // iPhone 11
         EnergyProfileScreen(
-            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel())
+            navigation:
+                EnergyProfileNavigationViewModel.model(
+                    EnergyProfileViewModel(persistence: InMemoryReactionInputPersistence())
+                )
         )
             .previewLayout(.fixed(width: 896, height: 414))
 
         // iPhone SE
         EnergyProfileScreen(
-            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel())
+            navigation: EnergyProfileNavigationViewModel.model(
+                EnergyProfileViewModel(persistence: InMemoryReactionInputPersistence())
+            )
         )
             .previewLayout(.fixed(width: 568, height: 320))
 
 
         // iPad Mini
         EnergyProfileScreen(
-            navigation: EnergyProfileNavigationViewModel.model(EnergyProfileViewModel())
+            navigation: EnergyProfileNavigationViewModel.model(
+                EnergyProfileViewModel(persistence: InMemoryReactionInputPersistence())
+            )
         )
             .previewLayout(.fixed(width: 1024, height: 768))
 

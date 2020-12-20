@@ -6,7 +6,9 @@
 import SwiftUI
 
 struct EnergyProfileNavigationViewModel {
-    static func model(_ energyViewModel: EnergyProfileViewModel) -> NavigationViewModel<EnergyProfileState> {
+    static func model(
+        _ energyViewModel: EnergyProfileViewModel
+    ) -> NavigationViewModel<EnergyProfileState> {
         NavigationViewModel(
             reactionViewModel: energyViewModel,
             states: states
@@ -227,7 +229,7 @@ fileprivate class PrepareCatalyst: EnergyProfileState {
 
     override func apply(on model: EnergyProfileViewModel) {
         super.apply(on: model)
-        let catalyst = model.catalystState.pending ?? model.catalystState.selected ?? .C
+        let catalyst = model.catalystToSelect ?? model.availableCatalysts.first!
         model.doSetCatalystInProgress(catalyst: catalyst)
         model.highlightedElements = []
     }
@@ -236,6 +238,7 @@ fileprivate class PrepareCatalyst: EnergyProfileState {
         withAnimation(.easeOut(duration: 0.75)) {
             model.catalystState = .active
         }
+        model.catalystToSelect = nil
     }
 
     override var ignoreOnBack: Bool {
@@ -278,7 +281,10 @@ fileprivate class StopShakingCatalyst: EnergyProfileState {
     override func apply(on model: EnergyProfileViewModel) {
         model.statement = statement(model: model)
         model.highlightedElements = [.reactionProfileTop, .reactionProfileBottom]
-        model.setSelectedCatalystState(catalyst: model.catalystState.pending ?? .C)
+        let catalyst = model.catalystState.pending ?? model.catalystState.selected
+        if let catalyst = catalyst {
+            model.setSelectedCatalystState(catalyst: catalyst)
+        }
     }
 
     override func reapply(on model: EnergyProfileViewModel) {
@@ -360,7 +366,9 @@ fileprivate class ReactionEndedState: EnergyProfileState {
     override func apply(on model: EnergyProfileViewModel) {
         super.apply(on: model)
         model.reactionHasEnded = true
+        model.highlightedElements = []
         model.concentrationC = 1
+        model.saveCatalyst()
     }
 
     override func unapply(on model: EnergyProfileViewModel) {

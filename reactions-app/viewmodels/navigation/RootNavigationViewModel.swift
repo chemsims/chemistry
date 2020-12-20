@@ -17,7 +17,7 @@ class RootNavigationViewModel: ObservableObject {
     init(
         persistence: ReactionInputPersistence
     ) {
-        let firstScreen = AppScreen.secondOrderReaction
+        let firstScreen = AppScreen.energyProfile
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.view = AnyView(EmptyView())
@@ -136,7 +136,7 @@ fileprivate extension AppScreen {
         case .reactionComparisonQuiz:
             return QuizScreenProvider(next: next, prev: prev)
         case .energyProfile:
-            return EnergyProfileScreenProvider(next: next, prev: prev)
+            return EnergyProfileScreenProvider(persistence: persistence, next: next, prev: prev)
         case .energyProfileQuiz:
             return QuizScreenProvider(next: next, prev: prev)
         case .zeroOrderFiling:
@@ -234,9 +234,10 @@ fileprivate class ReactionComparisonScreenProvider: ScreenProvider {
 
 fileprivate class EnergyProfileScreenProvider: ScreenProvider {
 
-    init(next: @escaping () -> Void, prev: @escaping () -> Void) {
-        let viewModel = EnergyProfileViewModel()
+    init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
+        let viewModel = EnergyProfileViewModel(persistence: persistence)
         self.navigation = EnergyProfileNavigationViewModel.model(viewModel)
+        viewModel.navigation = navigation
         navigation.nextScreen = next
         navigation.prevScreen = prev
     }

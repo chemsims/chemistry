@@ -24,6 +24,9 @@ struct EnergyProfileBeaker: View {
     let reactionHasEnded: Bool
     let highlightSlider: Bool
     let highlightBeaker: Bool
+    let highlightCatalyst: Bool
+
+    let availableCatalysts: [Catalyst]
 
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
@@ -203,6 +206,7 @@ struct EnergyProfileBeaker: View {
             .scaleEffect(x: scale, y: scale, anchor: .top)
             .opacity(isSelected ? 0 : 1)
             .offset(y: yOffset)
+            .opacity(highlightCatalyst && !availableCatalysts.contains(catalyst) ? 0.2 : 1)
             .onTapGesture {
                 if (catalystState == .active) {
                     setCatalystInProgress(catalyst)
@@ -212,6 +216,7 @@ struct EnergyProfileBeaker: View {
                     return
                 }
             }
+            .colorMultiply(highlightCatalyst && availableCatalysts.contains(catalyst) ? .white : Styling.inactiveScreenElement)
             .onReceive(
                 NotificationCenter.default.publisher(
                     for: .deviceDidShakeNotification
@@ -225,8 +230,9 @@ struct EnergyProfileBeaker: View {
         catalyst: Catalyst
     ) {
         let inProgress = catalystState.pending == catalyst
-        let notSelected = catalystState.selected == nil
-        if (canSelectCatalyst && inProgress && notSelected && !emitCatalyst) {
+        print("IP \(inProgress) CS \(canSelectCatalyst) E \(emitCatalyst)")
+        if (canSelectCatalyst && inProgress && !emitCatalyst) {
+            print("Selecting!")
             selectCatalyst(catalyst)
         }
     }
@@ -484,7 +490,9 @@ struct EnergyProfileBeaker_Previews: PreviewProvider {
             canSelectCatalyst: true,
             reactionHasEnded: false,
             highlightSlider: false,
-            highlightBeaker: true
+            highlightBeaker: true,
+            highlightCatalyst: false,
+            availableCatalysts: Catalyst.allCases
         )
         .background(Styling.inactiveScreenElement)
         .previewLayout(.fixed(width: 200, height: 320))

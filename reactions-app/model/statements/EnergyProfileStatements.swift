@@ -216,4 +216,9 @@ struct EnergyProfileStatements {
         SpeechBubbleLineGenerator.makeLine("Let's take another quiz, and then you're free to *explore further* the reaction rates.")
     ]
 
+    static let chooseADifferentCatalyst: [SpeechBubbleLine] = [
+        SpeechBubbleLineGenerator.makeLine("You've already used this catalyst, so let's try another one."),
+        SpeechBubbleLineGenerator.makeLine("*Tap a different catalyst to select it*.")
+    ]
+
 }

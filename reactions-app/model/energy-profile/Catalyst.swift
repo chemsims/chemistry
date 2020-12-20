@@ -5,6 +5,6 @@
 
 import Foundation
 
-enum Catalyst {
+enum Catalyst: CaseIterable {
     case A, B, C
 }

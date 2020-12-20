@@ -7,6 +7,11 @@ import SwiftUI
 
 class EnergyProfileViewModel: ObservableObject {
 
+    let persistence: ReactionInputPersistence
+    init(persistence: ReactionInputPersistence) {
+        self.persistence = persistence
+    }
+
     @Published var statement = [SpeechBubbleLine]()
     @Published var temp2: CGFloat?
     @Published var peakHeightFactor: CGFloat = 1
@@ -26,11 +31,9 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var canSetReaction = true
     @Published var canSetTemp = false
 
-
     var catalystToSelect: Catalyst?
 
     var navigation: NavigationViewModel<EnergyProfileState>?
-
 
     var activationEnergy: CGFloat {
         let reduction = catalystState.selected?.energyReduction ?? 0
@@ -63,6 +66,20 @@ class EnergyProfileViewModel: ObservableObject {
 
     func endReaction() {
         goToEndState()
+    }
+
+    func saveCatalyst() {
+        if let catalyst = catalystState.selected {
+            persistence.setUsed(catalyst: catalyst)
+        }
+    }
+
+    var availableCatalysts: [Catalyst] {
+        let notUsed = Catalyst.allCases.filter { !persistence.hasUsed(catalyst: $0) }
+        if (notUsed.isEmpty) {
+            return Catalyst.allCases
+        }
+        return notUsed
     }
 
     private func goToEndState() {
@@ -132,8 +149,12 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func setCatalystInProgress(catalyst: Catalyst) -> Void {
-        doSetCatalystInProgress(catalyst: catalyst)
-        navigation?.next()
+        if (availableCatalysts.contains(catalyst)) {
+            catalystToSelect = catalyst
+            navigation?.next()
+        } else {
+            statement = EnergyProfileStatements.chooseADifferentCatalyst
+        }
     }
 
     func doSetCatalystInProgress(catalyst: Catalyst) {

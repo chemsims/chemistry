@@ -33,9 +33,9 @@ struct RootNavigationView: View {
                         insertion: .move(
                             edge: model.navigationDirection == .forward ? .trailing : .leading
                         ),
-                        removal: .move(
+                        removal: AnyTransition.move(
                             edge: model.navigationDirection == .forward ? .leading : .trailing
-                        )
+                        ).combined(with: .opacity)
                     )
                 )
 
@@ -48,6 +48,8 @@ struct RootNavigationView: View {
         }
     }
 }
+
+
 
 struct RootNavigationView_Previews: PreviewProvider {
     static var previews: some View {
