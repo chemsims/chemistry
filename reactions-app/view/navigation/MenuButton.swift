@@ -36,7 +36,7 @@ struct MenuButton: View {
 
     private func line(size: CGFloat) -> some View {
         Rectangle()
-            .frame(width: 0.65 * size, height: size * 0.02)
+            .frame(width: 0.65 * size, height: max(size * 0.02, 1))
     }
 }
 
