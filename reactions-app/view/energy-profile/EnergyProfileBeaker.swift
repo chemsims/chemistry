@@ -7,6 +7,7 @@ import SwiftUI
 
 struct EnergyProfileBeaker: View {
 
+    let reactionState: EnergyReactionState
     let catalystState: CatalystState
     let selectCatalyst: (Catalyst) -> Void
     let setCatalystInProgress: (Catalyst) -> Void
@@ -16,12 +17,10 @@ struct EnergyProfileBeaker: View {
     @Binding var temp: CGFloat?
     let extraEnergyFactor: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
-    let reactionHasStarted: Bool
     let catalystIsShaking: Bool
 
     let canReactToC: Bool
     let canSelectCatalyst: Bool
-    let reactionHasEnded: Bool
     let highlightSlider: Bool
     let highlightBeaker: Bool
     let highlightCatalyst: Bool
@@ -150,12 +149,11 @@ struct EnergyProfileBeaker: View {
                 waterHeight: settings.waterHeight,
                 speed: extraEnergyFactor,
                 updateConcentrationC: updateConcentrationC,
-                reactionHasStarted: reactionHasStarted,
                 emitterPosition: settings.emitterPosition,
                 emitting: emitCatalyst,
                 catalystColor: catalystState.selected?.color ?? catalystState.pending?.color ?? .black,
                 canReactToC: canReactToC,
-                reactionHasEnded: reactionHasEnded
+                reactionState: reactionState
             )
         }
         .frame(
@@ -476,6 +474,7 @@ extension Catalyst {
 struct EnergyProfileBeaker_Previews: PreviewProvider {
     static var previews: some View {
         EnergyProfileBeaker(
+            reactionState: .pending,
             catalystState: .disabled,
             selectCatalyst: {_ in },
             setCatalystInProgress: {_ in },
@@ -483,11 +482,9 @@ struct EnergyProfileBeaker_Previews: PreviewProvider {
             temp: .constant(500),
             extraEnergyFactor: 0,
             updateConcentrationC: {_ in },
-            reactionHasStarted: true,
             catalystIsShaking: false,
             canReactToC: true,
             canSelectCatalyst: true,
-            reactionHasEnded: false,
             highlightSlider: false,
             highlightBeaker: true,
             highlightCatalyst: false,

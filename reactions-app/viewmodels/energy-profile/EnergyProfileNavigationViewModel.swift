@@ -326,6 +326,7 @@ fileprivate class ShowKRatio: EnergyProfileState {
         super.apply(on: model)
         model.statement = statement(model: model)
         model.highlightedElements = [.linearChart, .rateRatioEquation]
+        model.reactionState = .pending
     }
 
     override func reapply(on model: EnergyProfileViewModel) {
@@ -344,16 +345,22 @@ fileprivate class InstructToSetTemp: EnergyProfileState {
 
     override func apply(on model: EnergyProfileViewModel) {
         super.apply(on: model)
-        model.temp2 = model.temp2 ?? model.temp1
+        model.temp2 = model.temp1
         model.highlightedElements = [.beaker, .tempSlider]
+        model.reactionState = .running
+        model.concentrationC = 0
     }
 
     override func reapply(on model: EnergyProfileViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.temp2 = model.temp1
+        }
         apply(on: model)
     }
 
     override func unapply(on model: EnergyProfileViewModel) {
         model.temp2 = nil
+        model.reactionState = .pending
         model.highlightedElements = []
     }
 }
@@ -365,14 +372,14 @@ fileprivate class ReactionEndedState: EnergyProfileState {
 
     override func apply(on model: EnergyProfileViewModel) {
         super.apply(on: model)
-        model.reactionHasEnded = true
+        model.reactionState = .completed
         model.highlightedElements = []
         model.concentrationC = 1
         model.saveCatalyst()
     }
 
     override func unapply(on model: EnergyProfileViewModel) {
-        model.reactionHasEnded = false
+        model.reactionState = .running
         model.concentrationC = 0
     }
 }

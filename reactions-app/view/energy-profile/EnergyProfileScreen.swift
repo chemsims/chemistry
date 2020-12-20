@@ -122,6 +122,7 @@ struct EnergyProfileScreen: View {
             Spacer()
                 .frame(width: settings.orderLayoutSettings.menuSize)
             EnergyProfileBeaker(
+                reactionState: model.reactionState,
                 catalystState: model.catalystState,
                 selectCatalyst: model.selectCatalyst,
                 setCatalystInProgress: model.setCatalystInProgress,
@@ -129,11 +130,9 @@ struct EnergyProfileScreen: View {
                 temp: $model.temp2,
                 extraEnergyFactor: model.extraEnergyFactor,
                 updateConcentrationC: model.setConcentrationC,
-                reactionHasStarted: model.reactionHasStarted,
                 catalystIsShaking: model.catalystIsShaking,
                 canReactToC: model.canReactToC,
                 canSelectCatalyst: model.canSelectCatalyst,
-                reactionHasEnded: model.reactionHasEnded,
                 highlightSlider: model.highlight(element: .tempSlider),
                 highlightBeaker: model.highlight(element: .beaker),
                 highlightCatalyst: model.highlight(element: .catalysts),

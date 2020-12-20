@@ -12,17 +12,16 @@ class EnergyProfileViewModel: ObservableObject {
         self.persistence = persistence
     }
 
+    @Published var reactionState = EnergyReactionState.pending
     @Published var statement = [SpeechBubbleLine]()
     @Published var temp2: CGFloat?
     @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
-    @Published private(set) var reactionHasStarted = false
     @Published var selectedReaction = ReactionOrder.Zero
 
     @Published var emitCatalyst = false
     @Published var catalystIsShaking = false
     @Published var canSelectCatalyst = false
-    @Published var reactionHasEnded = false
     @Published var catalystsAreDisabled = false
 
     @Published var catalystState = CatalystState.disabled
@@ -64,9 +63,9 @@ class EnergyProfileViewModel: ObservableObject {
         navigation?.next()
     }
 
-    func endReaction() {
-        goToEndState()
-    }
+//    func endReaction() {
+//        goToEndState()
+//    }
 
     func saveCatalyst() {
         if let catalyst = catalystState.selected {
@@ -82,36 +81,36 @@ class EnergyProfileViewModel: ObservableObject {
         return notUsed
     }
 
-    private func goToEndState() {
-        if (catalystState.pending == nil) {
-            catalystState = .pending(catalyst: .C)
-        }
-        if (catalystState.selected == nil) {
-            doSelectCatalyst(catalyst: catalystState.pending ?? .C, withDelay: false)
-        }
-        reactionHasEnded = true
-        concentrationC = 1
-    }
+//    private func goToEndState() {
+//        if (catalystState.pending == nil) {
+//            catalystState = .pending(catalyst: .C)
+//        }
+//        if (catalystState.selected == nil) {
+//            doSelectCatalyst(catalyst: catalystState.pending ?? .C, withDelay: false)
+//        }
+//        reactionHasEnded = true
+//        concentrationC = 1
+//    }
 
     func back() {
         navigation?.back()
     }
 
-    func resetState() {
-        withAnimation(.easeOut(duration: 0.75)) {
-            catalystIsShaking = false
-        }
-        reactionHasEnded = false
-        canSelectCatalyst = false
-        dispatchId = UUID()
-        emitCatalyst = false
-        reactionHasStarted = false
-        withAnimation(.easeOut(duration: 0.6)) {
-            peakHeightFactor = 1
-            temp2 = nil
-            concentrationC = 0
-        }
-    }
+//    func resetState() {
+//        withAnimation(.easeOut(duration: 0.75)) {
+//            catalystIsShaking = false
+//        }
+//        reactionHasEnded = false
+//        canSelectCatalyst = false
+//        dispatchId = UUID()
+//        emitCatalyst = false
+//        reactionHasStarted = false
+//        withAnimation(.easeOut(duration: 0.6)) {
+//            peakHeightFactor = 1
+//            temp2 = nil
+//            concentrationC = 0
+//        }
+//    }
 
     let temp1: CGFloat = EnergyBeakerSettings.minTemp
 
@@ -205,13 +204,11 @@ class EnergyProfileViewModel: ObservableObject {
         let minEnergy = 0.9 * (selectedReaction.activationEnergy - Catalyst.C.energyReduction)
         let resultingEnergy = selectedReaction.activationEnergy - catalyst.energyReduction
         let energyFactor = (resultingEnergy - minEnergy) / (maxEnergy - minEnergy)
-        self.reactionHasStarted = true
         withAnimation(.easeOut(duration: 0.8)) {
             self.catalystState = .selected(catalyst: catalyst)
             self.peakHeightFactor = energyFactor
         }
     }
-
 
     func setConcentrationC(concentration: CGFloat) {
         self.concentrationC = concentration

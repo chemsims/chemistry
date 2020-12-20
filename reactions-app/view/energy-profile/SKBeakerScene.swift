@@ -21,13 +21,13 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     var canReactToC: Bool = false
-    var reactionHasStarted: Bool = false
-    var reactionHasEnded: Bool = false {
-        willSet {
-            if (newValue != reactionHasEnded) {
-                if (newValue) {
+    var reactionState: EnergyReactionState = .pending {
+        didSet {
+            if (reactionState != oldValue) {
+                print("Set reaction state from \(oldValue) to \(reactionState)")
+                if (reactionState == .completed) {
                     endReaction()
-                } else {
+                } else if (reactionState == .pending || oldValue == .completed && reactionState == .running) {
                     removeAllActions()
                     resetCollisions()
                 }
@@ -284,7 +284,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
-        guard reactionHasStarted else {
+        guard reactionState == .running else {
             return
         }
         collisionsSinceLastCMolecule += 1
@@ -352,7 +352,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     }
 
     private func shouldCollide() -> Bool {
-        canReactToC && !reactionHasEnded && collisionsSinceLastCMolecule >= settings.collisionsForC
+        canReactToC && collisionsSinceLastCMolecule >= settings.collisionsForC
     }
 
     private func addMolecule(
