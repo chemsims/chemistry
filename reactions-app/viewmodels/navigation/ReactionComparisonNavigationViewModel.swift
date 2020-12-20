@@ -15,7 +15,8 @@ struct ReactionComparisonNavigationViewModel {
             DragAndDropExplainerState(),
             PreAnimationState(),
             RunComparisonAnimation(),
-            EndComparisonAnimation()
+            EndComparisonAnimation(),
+            FinalComparisonState()
         ]
     }
 
@@ -235,7 +236,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
 fileprivate class EndComparisonAnimation: ReactionComparisonState {
 
     init() {
-        super.init(statement: ReactionComparisonStatements.end)
+        super.init(statement: ReactionComparisonStatements.instructToScrubReaction)
     }
 
     override func apply(on model: ReactionComparisonViewModel) {
@@ -246,10 +247,16 @@ fileprivate class EndComparisonAnimation: ReactionComparisonState {
             model.currentTime2 = 1.00001 * model.finalTime2
             model.reactionHasEnded = true
         }
+        model.highlightedElements = [.charts]
     }
 
     override func unapply(on model: ReactionComparisonViewModel) {
         model.reactionHasEnded = false
     }
+}
 
+fileprivate class FinalComparisonState: ReactionComparisonState {
+    init() {
+        super.init(statement: ReactionComparisonStatements.end)
+    }
 }
