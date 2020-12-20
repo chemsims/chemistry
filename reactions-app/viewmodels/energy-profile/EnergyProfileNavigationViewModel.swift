@@ -279,12 +279,13 @@ fileprivate class StopShakingCatalyst: EnergyProfileState {
     }
 
     override func apply(on model: EnergyProfileViewModel) {
-        model.statement = statement(model: model)
         model.highlightedElements = [.reactionProfileTop, .reactionProfileBottom]
         let catalyst = model.catalystState.pending ?? model.catalystState.selected
         if let catalyst = catalyst {
             model.setSelectedCatalystState(catalyst: catalyst)
         }
+        model.temp2 = model.temp1
+        model.statement = statement(model: model)
     }
 
     override func reapply(on model: EnergyProfileViewModel) {

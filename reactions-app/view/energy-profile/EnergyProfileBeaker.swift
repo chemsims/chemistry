@@ -305,7 +305,7 @@ struct EnergyProfileBeaker: View {
             value: temp ?? .constant(settings.axis.minValue),
             axis: settings.axis,
             handleThickness: settings.handleThickness,
-            handleColor:tempBinding == nil ? .darkGray : .orangeAccent,
+            handleColor: tempIsDisabled ? .darkGray : .orangeAccent,
             handleCornerRadius: settings.handleCornerRadius,
             barThickness: settings.barThickness,
             barColor: Styling.energySliderBar,
@@ -314,7 +314,11 @@ struct EnergyProfileBeaker: View {
             useHaptics: false
         )
         .frame(height: settings.handleHeight)
-        .disabled(tempBinding == nil)
+        .disabled(tempIsDisabled)
+    }
+
+    private var tempIsDisabled: Bool {
+        tempBinding == nil || reactionState == .pending
     }
 
     private var tempBinding: Binding<CGFloat>? {

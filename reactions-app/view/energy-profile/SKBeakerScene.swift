@@ -24,7 +24,6 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     var reactionState: EnergyReactionState = .pending {
         didSet {
             if (reactionState != oldValue) {
-                print("Set reaction state from \(oldValue) to \(reactionState)")
                 if (reactionState == .completed) {
                     endReaction()
                 } else if (reactionState == .pending || oldValue == .completed && reactionState == .running) {

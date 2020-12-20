@@ -182,11 +182,11 @@ class EnergyProfileViewModel: ObservableObject {
 
     func setConcentrationC(concentration: CGFloat) {
         self.concentrationC = concentration
-        if (concentration >= 0.25) {
+        if (concentration == 1) {
+            next()
+        } else if (concentration >= 0.25) {
             statement = EnergyProfileStatements.reactionInProgress
             highlightedElements = []
-        } else if (concentration == 1) {
-            next()
         }
     }
 

@@ -62,8 +62,8 @@ struct EnergyProfileStatements {
     static let explainRateTempRelation = [
         SpeechBubbleLineGenerator.makeLine(
             """
-            As you can tell by the equation, the higher the temperature, the higher the rate constant will be ,this making the *Rate* higher too. \
-            In a more practical way, high temperatures make the avg. energy of molecules go up, beating the *E_a_* barrier.
+            As you can tell by the equation, the higher the temperature, the higher the rate constant will be, thus making the *Rate* higher too. \
+            In a more practical way, high temperatures make the avgerage energy of molecules go up, beating the *E_a_* barrier.
             """
         )
     ]
@@ -71,7 +71,7 @@ struct EnergyProfileStatements {
     static let explainLinearKEquation = [
         SpeechBubbleLineGenerator.makeLine("When applying logarithmic properties to both sides, you get a version of the equation that's linear, where:"),
         SpeechBubbleLineGenerator.makeLine(Strings.withNoBreaks(str: "ln(k)*(y)*=(-E_a_/RT)*(mx)*+ln(a)*(b)*")),
-        SpeechBubbleLineGenerator.makeLine("With a slope of -E_a_/R")
+        SpeechBubbleLineGenerator.makeLine("With a slope of \(Strings.withNoBreaks(str: "-E_a_/R")).")
     ]
 
     static let explainArrheniusTwoPoints = [
@@ -93,8 +93,8 @@ struct EnergyProfileStatements {
         return [
             SpeechBubbleLineGenerator.makeLine(
                 """
-                For this reaction, \(Strings.withNoBreaks(str: "*E_a_=\(eaString)*")) and *k is \(k.str(decimals: 1))* \
-                when the temperature is \(Strings.withNoBreaks(str: "*\(t.str(decimals: 0)) K*")) K. \
+                For this reaction, \(Strings.withNoBreaks(str: "*E_a_ is \(eaString)*")) and *k is \(k.str(decimals: 1))* \
+                when the temperature is \(Strings.withNoBreaks(str: "*\(t.str(decimals: 0)) K*")). \
                 In other words, the kinetic energy of the molecules have to be one that when colliding, the potential \
                 energy resultant is higher than *\(eaString)* in order for A and B to successfully transform into a C molecule.
                 """
@@ -159,7 +159,7 @@ struct EnergyProfileStatements {
                 """
                 Look! The E_a_ was reduced to \(Strings.withNoBreaks(str: "*\(newEa.str(decimals: 0)) J*")) \
                 thanks to that catalyst. See that horizontal line? It represents the average kinetic energy of the molecules. \
-                Right now it's lower than Ea, so no products are going to be formed just yet.
+                Right now it's lower than E_a_, so no products are going to be formed just yet.
                 """
             )
         ]
@@ -169,7 +169,7 @@ struct EnergyProfileStatements {
         [
             SpeechBubbleLineGenerator.makeLine(
                 """
-                Take a look at the linear graph of \(Strings.withNoBreaks(str: "ln(k) vs 1/T")) with a slope of \(slope.str(decimals: 0)). This graph is very useful to determine the relation between the constant *k* and the temperature. Here you can see too that the higher is *k*, the higher is *T*.
+                Take a look at the linear graph of \(Strings.withNoBreaks(str: "ln(k) vs 1/T")) with a slope of \(slope.str(decimals: 0)). This graph is very useful to determine the relation between the constant *k* and the temperature. Here you can see too that the higher *k* is, the higher *T* is.
                 """
             )
         ]
@@ -180,7 +180,7 @@ struct EnergyProfileStatements {
             SpeechBubbleLineGenerator.makeLine(
                 """
                 Points of that graph are being represented in this equation. As of now, *k* went up to *\(newK.str(decimals: 1))* \
-                when *T* is *\(temp.str(decimals: 0))K*, because the catalyst lowered the E_a_, making the constant k higher, thus making the Rate higher too.
+                when *T* is *\(temp.str(decimals: 0))K*, because the catalyst lowered the E_a_, making the constant *k* higher, thus making the *Rate* higher too.
                 """
             )
         ]
