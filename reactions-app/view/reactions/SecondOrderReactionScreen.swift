@@ -29,7 +29,8 @@ struct SecondOrderReactionScreen: View {
             reaction: reaction,
             navigation: navigation,
             settings: settings,
-            canSetInitialTime: false
+            canSetInitialTime: false,
+            showRate: true
         ) {
             VStack {
                 Spacer()

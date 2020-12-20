@@ -11,6 +11,7 @@ struct OrderedReactionScreen<Content: View>: View {
     @ObservedObject var navigation: NavigationViewModel<ReactionState>
     let settings: OrderedReactionLayoutSettings
     let canSetInitialTime: Bool
+    let showRate: Bool
     let rhsView: () -> Content
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -107,6 +108,10 @@ struct OrderedReactionScreen<Content: View>: View {
             c2: reaction.finalConcentration?.str(decimals: 2),
             t1: reaction.initialTime.str(decimals: 1),
             t2: reaction.finalTime?.str(decimals: 1),
+            rate: reaction.concentrationEquationA?.rateEquation,
+            currentTime: reaction.currentTime,
+            showTime: !showRate,
+            showRate: showRate,
             cellWidth: settings.tableCellWidth,
             cellHeight: settings.tableCellHeight,
             buttonSize: settings.tableButtonSize

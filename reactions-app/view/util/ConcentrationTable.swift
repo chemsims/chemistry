@@ -11,11 +11,18 @@ struct ConcentrationTable: View {
     let c2: String?
     let t1: String?
     let t2: String?
+
+    let rate: Equation?
+    let currentTime: CGFloat?
+
+    let showTime: Bool
+    let showRate: Bool
+
     let cellWidth: CGFloat
     let cellHeight: CGFloat
     let buttonSize: CGFloat
 
-    @State private var showTable = false
+    @State private var showTable = true
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -27,10 +34,19 @@ struct ConcentrationTable: View {
                     cell(value: c1)
                     cell(value: c2)
                 }
-                HStack(spacing: 0) {
-                    cell(value: "t")
-                    cell(value: t1)
-                    cell(value: t2)
+                if (showTime) {
+                    HStack(spacing: 0) {
+                        cell(value: "t")
+                        cell(value: t1)
+                        cell(value: t2)
+                    }
+                }
+
+                if (showRate) {
+                    HStack(spacing: 0) {
+                        cell(value: "rate")
+                        rateCell
+                    }
                 }
             }
             .scaleEffect(y: showTable ? 1 : 0, anchor: .top)
@@ -64,6 +80,25 @@ struct ConcentrationTable: View {
         }.frame(width: cellWidth, height: cellHeight)
     }
 
+    private var rateCell: some View {
+        ZStack {
+            Rectangle()
+                .stroke()
+            if (rate != nil && currentTime != nil) {
+                AnimatingNumber(
+                    x: currentTime!,
+                    equation: rate!,
+                    formatter: {$0.str(decimals: 3)}
+                )
+                .padding(0.1 * cellWidth)
+            } else {
+                Text("-")
+                    .padding(0.1 * cellWidth)
+            }
+        }.frame(width: 2 * cellWidth, height: cellHeight)
+
+    }
+
     private func toggleTable() {
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) {
             showTable.toggle()
@@ -78,6 +113,10 @@ struct ConcentrationTable_Previews: PreviewProvider {
             c2: "0.23",
             t1: "1.2",
             t2: "13.4",
+            rate: ConstantEquation(value: 0.1),
+            currentTime: 0.1,
+            showTime: false,
+            showRate: true,
             cellWidth: 50,
             cellHeight: 40,
             buttonSize: 25
