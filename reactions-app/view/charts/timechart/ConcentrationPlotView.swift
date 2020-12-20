@@ -205,6 +205,12 @@ struct ChartPlotWithHead: View {
         ZStack {
             dataLine(time: finalTime, color: filledBarColor)
             dataLine(time: currentTime, color: headColor)
+            if (highlightLhs) {
+                highlightLine(startTime: initialTime, endTime: (initialTime + finalTime) / 2)
+            }
+            if (highlightRhs) {
+                highlightLine(startTime: (initialTime + finalTime) / 2, endTime: finalTime)
+            }
 
             if (haloColor != nil) {
                 head(
@@ -263,7 +269,7 @@ struct ChartPlotWithHead: View {
             startTime: startTime,
             time: endTime,
             color: headColor,
-            lineWidth: 2 * settings.timePlotLineWidth
+            lineWidth: 2.5 * settings.timePlotLineWidth
         )
     }
 
