@@ -27,6 +27,17 @@ struct RootNavigationView: View {
     private func makeView(settings: OrderedReactionLayoutSettings) -> some View {
         ZStack {
             model.view
+                .id(model.currentScreen)
+                .transition(
+                    .asymmetric(
+                        insertion: .move(
+                            edge: model.navigationDirection == .forward ? .trailing : .leading
+                        ),
+                        removal: .move(
+                            edge: model.navigationDirection == .forward ? .leading : .trailing
+                        )
+                    )
+                )
 
             MainMenuOverlay(
                 size: settings.menuSize,

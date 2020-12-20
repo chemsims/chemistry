@@ -8,10 +8,11 @@ import SwiftUI
 class RootNavigationViewModel: ObservableObject {
 
     @Published var view: AnyView
+    private(set) var navigationDirection = NavigationDirection.forward
 
     private let persistence: ReactionInputPersistence
     private var models = [AppScreen:ScreenProvider]()
-    private var currentScreen: AppScreen
+    private(set) var currentScreen: AppScreen
 
     init(
         persistence: ReactionInputPersistence
@@ -20,7 +21,12 @@ class RootNavigationViewModel: ObservableObject {
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.view = AnyView(EmptyView())
-        goToFresh(screen: firstScreen)
+        let provider = firstScreen.screenProvider(persistence: persistence, next: next, prev: prev)
+        goTo(screen: firstScreen, with: provider)
+    }
+
+    private var reduceMotion: Bool {
+        UIAccessibility.isReduceMotionEnabled
     }
 
     func canSelect(screen: AppScreen) -> Bool {
@@ -60,12 +66,31 @@ class RootNavigationViewModel: ObservableObject {
 
     private func goTo(screen: AppScreen, with provider: ScreenProvider) {
         models[screen] = provider
-        self.view = provider.screen
+        navigationDirection = screenIsAfterCurrent(nextScreen: screen) ? .forward : .back
         self.currentScreen = screen
+        withAnimation(navigationAnimation) {
+            self.view = provider.screen
+        }
+    }
+
+    private func screenIsAfterCurrent(nextScreen: AppScreen) -> Bool {
+        if let indexOfCurrent = screenOrdering.firstIndex(of: currentScreen),
+           let indexOfNew = screenOrdering.firstIndex(of: nextScreen) {
+            return indexOfNew > indexOfCurrent
+        }
+        return false
     }
 
     private var screenOrdering: [AppScreen] {
         AppScreen.allCases
+    }
+
+    enum NavigationDirection {
+        case forward, back
+    }
+
+    private var navigationAnimation: Animation? {
+        reduceMotion ? nil : Animation.easeOut(duration: 0.25)
     }
 }
 
