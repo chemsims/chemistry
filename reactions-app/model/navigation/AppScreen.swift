@@ -7,14 +7,14 @@ import Foundation
 
 enum AppScreen: CaseIterable {
     case zeroOrderReaction,
-         zeroOrderFiling,
          zeroOrderReactionQuiz,
+         zeroOrderFiling,
          firstOrderReaction,
-         firstOrderFiling,
          firstOrderReactionQuiz,
+         firstOrderFiling,
          secondOrderReaction,
-         secondOrderFiling,
          secondOrderReactionQuiz,
+         secondOrderFiling,
          reactionComparison,
          reactionComparisonQuiz,
          energyProfile,

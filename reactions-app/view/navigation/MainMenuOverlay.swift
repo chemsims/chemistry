@@ -319,7 +319,7 @@ fileprivate struct MainMenuLayoutSettings {
     }
 
     var navRowHSpacing: CGFloat {
-        5
+        10
     }
 
     var leadingPanelSpace: CGFloat {

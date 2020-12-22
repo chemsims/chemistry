@@ -29,10 +29,16 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
-        if let previousScreen = AppScreen.allCases.element(before: screen) {
-            return persistence.hasCompleted(screen: previousScreen)
+        switch (screen) {
+        case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
+        case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)
+        case .secondOrderFiling: return canSelect(screen: .reactionComparison)
+        default:
+            if let previousScreen = linearScreens.element(before: screen) {
+                return persistence.hasCompleted(screen: previousScreen)
+            }
+            return true
         }
-        return true
     }
 
     func canSelectFilingCabinet(order: ReactionOrder) -> Bool {
