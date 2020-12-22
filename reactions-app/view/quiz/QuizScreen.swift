@@ -236,6 +236,7 @@ fileprivate struct QuizScreenWithSettings: View {
         }
         .frame(width: settings.navSize, height: settings.navSize)
         .offset(x: settings.navSize / 3, y: -settings.navSize / 3)
+        .id("\(model.questionIndex)-\(option.hashValue)")
     }
 
     private func runBadgeAnimation() {
