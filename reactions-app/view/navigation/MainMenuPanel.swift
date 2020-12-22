@@ -7,8 +7,8 @@ import SwiftUI
 
 struct MainMenuPanel: Shape {
 
-    let panelWidthFraction: CGFloat
-    let panelHeightFraction: CGFloat
+    let tabWidth: CGFloat
+    let tabHeight: CGFloat
     let cornerRadius: CGFloat
 
     func path(in rect: CGRect) -> Path {
@@ -17,8 +17,8 @@ struct MainMenuPanel: Shape {
         let height = rect.size.height
         let width = rect.size.width
 
-        let panelWidth = width * panelWidthFraction
-        let panelHeight = height * panelHeightFraction
+        let panelWidth = width - tabWidth
+        let panelHeight = height - tabHeight
         let tabHeight = height - panelHeight
 
         path.addLines([
@@ -60,8 +60,8 @@ struct MainMenuPanel: Shape {
 struct MainMenuPanel_Previews: PreviewProvider {
     static var previews: some View {
         MainMenuPanel(
-            panelWidthFraction: 0.8,
-            panelHeightFraction: 0.8,
+            tabWidth: 100,
+            tabHeight: 130,
             cornerRadius: 20
         )
     }

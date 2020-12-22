@@ -32,29 +32,35 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     let navigation: RootNavigationViewModel
     let settings: MainMenuLayoutSettings
 
-    @State private var showPanel: Bool = false
-    @State private var extraOffset: CGFloat = 0
+    @State private var showPanel: Bool = true
+    @State private var panelDragOffset: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             icon
-            panel
-                .gesture(
-                    DragGesture(minimumDistance: 0, coordinateSpace: .global)
-                        .onChanged { gesture in
-                            extraOffset = min(0, gesture.translation.width)
-                        }.onEnded { _ in
-                            toggleMenu()
-                            extraOffset = 0
-                        }
-                )
-                .offset(
-                    x: showPanel ? 0 + extraOffset : -settings.totalMenuWidth - (settings.panelBorder / 2),
-                    y: settings.geometry.safeAreaInsets.top + settings.topPadding
-                )
-                .edgesIgnoringSafeArea(.all)
+                .padding(.leading, settings.geometry.safeAreaInsets.leading)
+                .padding(.vertical, settings.geometry.safeAreaInsets.top)
+
+            if (showPanel) {
+                panel
+                    .gesture(
+                        DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                            .onChanged { gesture in
+                                panelDragOffset = min(0, gesture.translation.width)
+                            }.onEnded { _ in
+                                toggleMenu()
+                                panelDragOffset = 0
+                            }
+                    )
+                    .offset(x: panelDragOffset)
+                    .padding(.top, settings.totalTopPadding)
+                    .padding(.bottom, settings.totalBottomPadding)
+                    .transition(AnyTransition.move(edge: .leading))
+                    .zIndex(1)
+            }
         }
+        .edgesIgnoringSafeArea(.all)
     }
 
     private var icon: some View {
@@ -102,53 +108,44 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 
     private var panelContent: some View {
-        VStack(alignment: .leading) {
-            Spacer()
-                .frame(height: settings.tabHeight / 2)
-            beakerWithFilingCabinet(order: .Zero)
-            beakerWithFilingCabinet(order: .First)
-            beakerWithFilingCabinet(order: .Second)
-            navIcon(
-                image: "comparisonicon",
-                selectedImage: "comparisonicon-pressed",
-                screen: .reactionComparison
-            )
-                .frame(width: settings.beakerImageWidth)
-            navIcon(
-                image: "kineticsicon",
-                selectedImage: "kineticsicon-pressed",
-                screen: .energyProfile
-            )
-                .frame(width: settings.beakerImageWidth)
+        VStack(alignment: .leading, spacing: settings.navVStackSpacing) {
+            navRow(screen: .zeroOrderReaction)
+            navRow(screen: .firstOrderReaction)
+            navRow(screen: .secondOrderReaction)
+            navRow(screen: .reactionComparison)
+            navRow(screen: .energyProfile)
         }
-        .frame(width: settings.panelWidth, height: settings.panelHeight)
-        .padding(.trailing, settings.panelTrailingPadding)
+        .padding(settings.panelContentPadding)
     }
 
-    private func beakerWithFilingCabinet(order: ReactionOrder) -> some View {
-        HStack(spacing: 0) {
+    private func navRow(screen: TopLevelScreen) -> some View {
+        HStack(alignment: .bottom, spacing: settings.navRowHSpacing) {
             navIcon(
-                image: order.navImage,
-                selectedImage: order.selectedNavImage,
-                screen: order.reactionScreen
+                image: screen.navImage,
+                selectedImage: screen.navImagePressed,
+                isSystem: false,
+                screen: screen.appScreen
             )
-                .frame(width: settings.beakerImageWidth)
-            Spacer()
-            Button(action: goToScreen { navigation.goToFresh(screen: order.filingScreen) }) {
-                filingCabinet(order: order)
-                    .frame(width: settings.filingCabinetWidth)
+            .frame(height: settings.navIconHeight)
+
+            navIcon(
+                image: "text-book-closed",
+                selectedImage: "text-book-closed",
+                isSystem: false,
+                screen: screen.quizScreen
+            )
+            .frame(height: settings.secondaryIconHeight)
+
+            if (screen.filingScreen != nil) {
+                navIcon(
+                    image: "archivebox",
+                    selectedImage: "archivebox",
+                    isSystem: true,
+                    screen: screen.filingScreen!
+                )
+                .frame(height: settings.secondaryIconHeight)
             }
-            .modifier(DisabledNavIcon(disabled: !navigation.canSelectFilingCabinet(order: order)))
         }
-    }
-
-    private func filingCabinet(order: ReactionOrder) -> some View {
-        let isSelected = navigation.currentScreen == order.filingScreen
-        return Image(systemName: "archivebox")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .foregroundColor(isSelected ? Styling.navIconSelected : Styling.navIcon)
-            .font(.system(size: 10, weight: isSelected ? .light : .ultraLight))
     }
 
     private var panelBackground: some View {
@@ -164,30 +161,45 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
     private var panelShape: some Shape {
         MainMenuPanel(
-            panelWidthFraction: settings.panelWidthFraction,
-            panelHeightFraction: settings.panelHeightFraction,
-            cornerRadius: 0.5 * settings.menuSize
+            tabWidth: settings.tabSize,
+            tabHeight: settings.tabSize,
+            cornerRadius: 0.5 * settings.tabSize
         )
     }
 
     private func navIcon(
         image: String,
         selectedImage: String,
+        isSystem: Bool,
         screen: AppScreen
     ) -> some View {
-        Button(action: goToScreen(action: { navigation.goToFresh(screen: screen) })) {
-            Image(navigation.currentScreen == screen ? selectedImage : image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+        let isSelected = navigation.currentScreen == screen
+        let canSelect = navigation.canSelect(screen: screen)
+
+        return Button(action: { goTo(screen: screen) } ) {
+            makeImage(
+                name: isSelected ? selectedImage : image,
+                isSystem: isSystem
+            )
+            .renderingMode(.template)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .font(.system(size: 10, weight: isSelected ? .light : .ultraLight))
+            .foregroundColor(canSelect ? Styling.navIcon : Styling.inactiveScreenElement)
         }
-        .modifier(DisabledNavIcon(disabled: !navigation.canSelect(screen: screen)))
+        .disabled(!canSelect)
     }
 
-    private func goToScreen(action: @escaping () -> Void) -> () -> Void {
-        {
-            action()
-            toggleMenu()
+    private func makeImage(name: String, isSystem: Bool) -> Image {
+        if (isSystem) {
+            return Image(systemName: name)
         }
+        return Image(name)
+    }
+
+    private func goTo(screen: AppScreen) -> Void {
+        navigation.goToFresh(screen: screen)
+        toggleMenu()
     }
 
     private func toggleMenu() {
@@ -197,44 +209,59 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 }
 
-fileprivate struct DisabledNavIcon: ViewModifier {
-    let disabled: Bool
+fileprivate enum TopLevelScreen {
+    case zeroOrderReaction,
+          firstOrderReaction,
+          secondOrderReaction,
+          reactionComparison,
+          energyProfile
 
-    func body(content: Content) -> some View {
-        content
-            .disabled(disabled)
-            .colorMultiply(disabled ? .black : .white)
-            .opacity(disabled ? 0.4 : 1)
-    }
-}
-
-fileprivate extension ReactionOrder {
-    var navImage: String {
+    var navImage: String  {
         switch (self) {
-        case .Zero: return "zeroordericon"
-        case .First: return "firstordericon"
-        case .Second: return "secondordericon"
+        case .zeroOrderReaction: return "zeroordericon"
+        case .firstOrderReaction: return "firstordericon"
+        case .secondOrderReaction: return "secondordericon"
+        case .reactionComparison: return "comparisonicon"
+        case .energyProfile: return "kineticsicon"
         }
     }
 
-    var selectedNavImage: String {
-        switch(self) {
-        case .Zero: return "zeroordericon-pressed"
-        case .First: return "firstordericon-pressed"
-        case .Second: return "secondordericon-pressed"
+    var navImagePressed: String {
+        "\(navImage)-pressed"
+    }
+
+    var appScreen: AppScreen {
+        switch (self) {
+        case .zeroOrderReaction: return .zeroOrderReaction
+        case .firstOrderReaction: return .firstOrderReaction
+        case .secondOrderReaction: return .secondOrderReaction
+        case .reactionComparison: return .reactionComparison
+        case .energyProfile: return .energyProfile
         }
     }
 
-    var filingScreen: AppScreen {
+    var quizScreen: AppScreen {
         switch (self) {
-        case .Zero: return .zeroOrderFiling
-        case .First: return .firstOrderFiling
-        case .Second: return .secondOrderFiling
+        case .zeroOrderReaction: return .zeroOrderReactionQuiz
+        case .firstOrderReaction: return .firstOrderReactionQuiz
+        case .secondOrderReaction: return .secondOrderReactionQuiz
+        case .reactionComparison: return .reactionComparisonQuiz
+        case .energyProfile: return .energyProfileQuiz
+        }
+    }
+
+    var filingScreen: AppScreen? {
+        switch (self) {
+        case .zeroOrderReaction: return .zeroOrderFiling
+        case .firstOrderReaction: return .firstOrderFiling
+        case .secondOrderReaction: return .secondOrderFiling
+        default: return nil
         }
     }
 }
 
 fileprivate struct MainMenuLayoutSettings {
+
     let geometry: GeometryProxy
     let menuSize: CGFloat
     let topPadding: CGFloat
@@ -252,40 +279,47 @@ fileprivate struct MainMenuLayoutSettings {
         max(0.015 * menuSize, 1)
     }
 
-    var panelWidth: CGFloat {
-        3.5 * menuSize
+    var navVStackSpacing: CGFloat {
+        0.05 * height
     }
 
-    var panelTrailingPadding: CGFloat {
-        0.1 * panelWidth
+    var navIconHeight: CGFloat {
+        let availableHeight = panelContentHeight - (4 * navVStackSpacing)
+        return availableHeight / 5
     }
 
-    var beakerImageWidth: CGFloat {
-        0.5 * panelWidth
+    var totalTopPadding: CGFloat {
+        topPadding + geometry.safeAreaInsets.top
     }
 
-    var filingCabinetWidth: CGFloat {
-        0.3 * panelWidth
+    var totalBottomPadding: CGFloat {
+        geometry.safeAreaInsets.bottom
     }
 
-    var tabHeight: CGFloat {
-        1.1 * (menuSize + (2 * topPadding))
+    private var panelHeight: CGFloat {
+        let maxAvailableHeight = height - totalTopPadding - totalBottomPadding
+        let maxHeight: CGFloat = 550
+        return min(maxAvailableHeight, maxHeight)
     }
 
-    var tabWidth: CGFloat {
-        menuSize
+    private var panelContentHeight: CGFloat {
+        panelHeight - (2 * panelContentPadding)
     }
 
-    var totalMenuWidth: CGFloat {
-        panelWidth + panelTrailingPadding + tabWidth + (2 * hPadding) + leadingPanelSpace
+    var secondaryIconHeight: CGFloat {
+        0.5 * navIconHeight
     }
 
-    var panelWidthFraction: CGFloat {
-        (panelWidth + leadingPanelSpace + panelTrailingPadding) / totalMenuWidth
+    var panelContentPadding: CGFloat {
+        0.35 * menuSize
     }
 
-    var panelHeightFraction: CGFloat {
-        1 - (tabHeight / panelHeight)
+    var tabSize: CGFloat {
+        menuSize + (2 * hPadding)
+    }
+
+    var navRowHSpacing: CGFloat {
+        5
     }
 
     var leadingPanelSpace: CGFloat {
@@ -298,10 +332,6 @@ fileprivate struct MainMenuLayoutSettings {
 
     var panelBorder: CGFloat {
         0.75
-    }
-
-    var panelHeight: CGFloat {
-        min(height, 7 * panelWidth)
     }
 }
 

@@ -29,7 +29,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
-        if let previousScreen = linearScreens.element(before: screen) {
+        if let previousScreen = AppScreen.allCases.element(before: screen) {
             return persistence.hasCompleted(screen: previousScreen)
         }
         return true
