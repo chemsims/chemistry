@@ -17,20 +17,24 @@ class QuizViewModel: ObservableObject {
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
 
+    @Published private var answers = [Int:QuizOption]()
+
     @Published var progress: CGFloat = 0
     @Published var question = ""
-    @Published var hasSelectedAnswer = false
+
+    var selectedAnswer: QuizOption? {
+        answers[questionIndex]
+    }
+
     @Published var correctOption: QuizOption = .A
     @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
     private(set) var questionIndex = 0
 
-
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
     }
 
-    private var maxAnsweredIndex: Int = -1
     private var options = [QuizOption:String]()
 
     func next() {
@@ -42,7 +46,6 @@ class QuizViewModel: ObservableObject {
         case .pending:
             quizState = .running
         case .running:
-            setMaxAnsweredIndex()
             if (questionIndex == quizDifficulty.quizLength - 1) {
                 quizState = .completed
                 questionIndex += 1
@@ -63,15 +66,12 @@ class QuizViewModel: ObservableObject {
             quizState = .pending
         default:
             quizState = .running
-            setMaxAnsweredIndex()
             setQuestion(newIndex: questionIndex - 1)
         }
     }
 
-    private func setMaxAnsweredIndex() {
-        if (hasSelectedAnswer) {
-            maxAnsweredIndex = max(questionIndex, maxAnsweredIndex)
-        }
+    func answer(option: QuizOption) {
+        answers[questionIndex] = option
     }
 
     func optionText(_ option: QuizOption) -> String {
@@ -86,15 +86,7 @@ class QuizViewModel: ObservableObject {
         correctOption = nextQuestion.correctOption
         options = nextQuestion.options
         question = nextQuestion.question
-
-        if (newIndex <= maxAnsweredIndex) {
-            hasSelectedAnswer = true
-        } else {
-            hasSelectedAnswer = false
-        }
-
         questionIndex = newIndex
-
         setProgress()
     }
 

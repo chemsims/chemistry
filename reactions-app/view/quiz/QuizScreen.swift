@@ -155,7 +155,7 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private var nextIsDisabled: Bool {
-        model.quizState == .running && !model.hasSelectedAnswer
+        model.quizState == .running && model.selectedAnswer == nil
     }
 
     private var progressBar: some View {
@@ -219,15 +219,15 @@ fileprivate struct QuizScreenWithSettings: View {
 
     private func overlay(option: QuizOption) -> some View {
         ZStack {
-            if (model.hasSelectedAnswer && model.correctOption == option) {
+            if (styleCorrect(option) || styleIncorrect(option)) {
                 Group {
                     Circle()
                         .foregroundColor(.white)
 
-                    Image(systemName: "checkmark.circle.fill")
+                    Image(systemName: styleCorrect(option) ? "checkmark.circle.fill" : "xmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(Styling.quizAnswerCorrectBorder)
+                        .foregroundColor(styleCorrect(option) ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerIncorrectBorder)
                         .scaleEffect(badgeScale)
                 }
                 .scaleEffect(badgeScale)
@@ -242,28 +242,29 @@ fileprivate struct QuizScreenWithSettings: View {
         guard !reduceMotion else {
             return
         }
-        badgeScale = 1
-        withAnimation(.easeOut(duration: 0.35)) {
-            badgeScale = 1.2
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(350)) {
-            withAnimation(.easeInOut(duration: 0.25)) {
+        if (model.selectedAnswer == model.correctOption) {
+            badgeScale = 1
+            withAnimation(.easeOut(duration: 0.35)) {
+                badgeScale = 1.2
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(350)) {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    badgeScale = 1
+                }
+            }
+        } else {
+            badgeScale = 0.75
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.5)) {
                 badgeScale = 1
             }
         }
     }
 
     private func handleAnswer(option: QuizOption) {
-        guard !model.hasSelectedAnswer else {
+        guard model.selectedAnswer == nil else {
             return
         }
-        if (model.correctOption == option) {
-            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.125)) {
-                model.hasSelectedAnswer = true
-            }
-        } else {
-            runShake(option: option)
-        }
+        model.answer(option: option)
     }
 
     private func runShake(option: QuizOption) {
@@ -282,18 +283,29 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private func answerBackground(option: QuizOption) -> Color {
-        let active = !model.hasSelectedAnswer || model.correctOption == option
+        let active = styleCorrect(option) || styleIncorrect(option) || model.selectedAnswer == nil
         return active ? Styling.quizAnswer : Styling.quizAnswerInactive
     }
 
     private func answerBorder(option: QuizOption) -> Color {
-        let active = model.hasSelectedAnswer && model.correctOption == option
-        return active ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerBorder
+        if (styleCorrect(option)) {
+            return Styling.quizAnswerCorrectBorder
+        } else if (styleIncorrect(option)) {
+            return Styling.quizAnswerIncorrectBorder
+        }
+        return Styling.quizAnswerBorder
     }
 
     private func answerLineWidth(option: QuizOption) -> CGFloat {
-        let active = model.hasSelectedAnswer && model.correctOption == option
-        return active ? activeLineWidth : standardLineWidth
+        styleCorrect(option) || styleIncorrect(option) ? activeLineWidth : standardLineWidth
+    }
+
+    private func styleCorrect(_ option: QuizOption) -> Bool {
+        model.selectedAnswer != nil && model.correctOption == option
+    }
+
+    private func styleIncorrect(_ option: QuizOption) -> Bool {
+        model.selectedAnswer == option && model.correctOption != option
     }
 
     private let activeLineWidth: CGFloat = 3
