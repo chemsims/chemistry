@@ -27,7 +27,7 @@ class QuizViewModel: ObservableObject {
     }
 
     @Published var correctOption: QuizOption = .A
-    @Published var quizState = QuizState.pending
+    @Published var quizState = QuizState.completed
     @Published var quizDifficulty = QuizDifficulty.medium
     private(set) var questionIndex = 0
 

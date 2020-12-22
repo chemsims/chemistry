@@ -23,8 +23,6 @@ fileprivate struct QuizScreenWithSettings: View {
     @ObservedObject var model: QuizViewModel
     let settings: QuizLayoutSettings
 
-    @State private var shakingOption: QuizOption?
-    @State private var badgeScale: CGFloat = 1
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -41,14 +39,17 @@ fileprivate struct QuizScreenWithSettings: View {
                     Spacer()
                         .frame(width: settings.navTotalWidth)
                     if (model.quizState == .pending) {
-                        introBody
+                        QuizIntroBody(
+                            settings: settings,
+                            model: model
+                        )
                     }
                     if (model.quizState == .running) {
-                        questionBody
+                        QuizQuestionsBody(settings: settings, model: model)
                     }
 
                     if (model.quizState == .completed) {
-                        reviewList
+                        QuizReviewBody(settings: settings, model: model)
                     }
                     Spacer()
                         .frame(width: settings.navTotalWidth)
@@ -61,80 +62,6 @@ fileprivate struct QuizScreenWithSettings: View {
         }
         .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.8)
-    }
-
-    private var introBody: some View {
-        VStack {
-            Text("Let's take a quiz!")
-                .font(.system(size: settings.fontSize))
-            Text("Choose the difficulty level of the quiz")
-                .font(.system(size: 0.8 * settings.fontSize))
-                .foregroundColor(.orangeAccent)
-            ForEach(QuizDifficulty.allCases, id: \.rawValue) { difficulty in
-                quizDifficultyOption(difficulty: difficulty)
-            }
-        }
-        .minimumScaleFactor(0.5)
-    }
-
-    private func quizDifficultyOption(
-        difficulty: QuizDifficulty
-    ) -> some View {
-        let isSelected = model.quizDifficulty == difficulty
-        let subline = difficulty == .skip ? "Skip this quiz" : "\(difficulty.quizLength) questions"
-
-        return ZStack {
-            RoundedRectangle(cornerRadius: settings.progressCornerRadius)
-                .foregroundColor(Styling.quizAnswer)
-
-            RoundedRectangle(cornerRadius: settings.progressCornerRadius)
-                .stroke(lineWidth: isSelected ? activeLineWidth : standardLineWidth)
-                .foregroundColor(isSelected ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerBorder)
-
-            VStack {
-                Text(difficulty.rawValue.capitalized)
-                Text(subline)
-                    .font(.system(size: 0.7 * settings.fontSize))
-            }
-        }.onTapGesture {
-            model.quizDifficulty = difficulty
-        }
-    }
-
-    private var reviewList: some View {
-        VStack(spacing: 2) {
-            HStack {
-                Spacer()
-                Text("Let's review the questions!")
-                Spacer()
-            }
-            Rectangle()
-                .frame(height: 1)
-                .shadow(radius: 1, y: 2)
-            ScrollView {
-                ForEach(model.questions.prefix(model.quizDifficulty.quizLength)) { question in
-                    reviewCard(question: question)
-                }
-            }
-        }
-    }
-
-    private func reviewCard(question: QuizQuestionOptions) -> some View {
-        HStack {
-            Spacer()
-            Text(question.question)
-            Text(question.options[question.correctOption] ?? "")
-                .foregroundColor(.orangeAccent)
-            Spacer()
-        }.padding()
-    }
-
-    private var questionBody: some View {
-        VStack {
-            Text(model.question)
-                .lineLimit(1)
-            answers
-        }
     }
 
     private var navButtons: some View {
@@ -187,6 +114,68 @@ fileprivate struct QuizScreenWithSettings: View {
             .opacity(0.5)
         )
     }
+}
+
+fileprivate struct QuizIntroBody: View {
+
+    let settings: QuizLayoutSettings
+    @ObservedObject var model: QuizViewModel
+
+    var body: some View {
+        VStack {
+            Text("Let's take a quiz!")
+                .font(.system(size: settings.fontSize))
+            Text("Choose the difficulty level of the quiz")
+                .font(.system(size: 0.8 * settings.fontSize))
+                .foregroundColor(.orangeAccent)
+            ForEach(QuizDifficulty.allCases, id: \.rawValue) { difficulty in
+                quizDifficultyOption(difficulty: difficulty)
+            }
+        }
+        .minimumScaleFactor(0.5)
+    }
+
+    private func quizDifficultyOption(
+        difficulty: QuizDifficulty
+    ) -> some View {
+        let isSelected = model.quizDifficulty == difficulty
+        let subline = difficulty == .skip ? "Skip this quiz" : "\(difficulty.quizLength) questions"
+
+        return ZStack {
+            RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                .foregroundColor(Styling.quizAnswer)
+
+            RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                .stroke(lineWidth: isSelected ? settings.activeLineWidth : settings.standardLineWidth)
+                .foregroundColor(isSelected ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerBorder)
+
+            VStack {
+                Text(difficulty.rawValue.capitalized)
+                Text(subline)
+                    .font(.system(size: 0.7 * settings.fontSize))
+            }
+        }.onTapGesture {
+            model.quizDifficulty = difficulty
+        }
+    }
+}
+
+fileprivate struct QuizQuestionsBody: View {
+
+    let settings: QuizLayoutSettings
+    @ObservedObject var model: QuizViewModel
+
+
+    @State private var badgeScale: CGFloat = 1
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        VStack {
+            Text(model.question)
+                .lineLimit(1)
+            answers
+        }
+    }
 
     private var answers: some View {
         VStack {
@@ -202,7 +191,7 @@ fileprivate struct QuizScreenWithSettings: View {
             Group {
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .foregroundColor(answerBackground(option: option))
-                
+
 
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .stroke(lineWidth: answerLineWidth(option: option))
@@ -213,7 +202,6 @@ fileprivate struct QuizScreenWithSettings: View {
                     .foregroundColor(.black)
             }
             .onTapGesture(perform: { handleAnswer(option: option) })
-            .rotationEffect(shakingOption == option ? .degrees(4) : .zero)
         }
     }
 
@@ -268,21 +256,6 @@ fileprivate struct QuizScreenWithSettings: View {
         model.answer(option: option)
     }
 
-    private func runShake(option: QuizOption) {
-        let animation = Animation.spring(
-            response: 0.1,
-            dampingFraction: 0.125
-        )
-        withAnimation(animation) {
-            shakingOption = option
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-            withAnimation(animation) {
-                shakingOption = nil
-            }
-        }
-    }
-
     private func answerBackground(option: QuizOption) -> Color {
         let active = styleCorrect(option) || styleIncorrect(option) || model.selectedAnswer == nil
         return active ? Styling.quizAnswer : Styling.quizAnswerInactive
@@ -298,7 +271,7 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private func answerLineWidth(option: QuizOption) -> CGFloat {
-        styleCorrect(option) || styleIncorrect(option) ? activeLineWidth : standardLineWidth
+        styleCorrect(option) || styleIncorrect(option) ? settings.activeLineWidth : settings.standardLineWidth
     }
 
     private func styleCorrect(_ option: QuizOption) -> Bool {
@@ -308,19 +281,39 @@ fileprivate struct QuizScreenWithSettings: View {
     private func styleIncorrect(_ option: QuizOption) -> Bool {
         model.selectedAnswer == option && model.correctOption != option
     }
-
-    private let activeLineWidth: CGFloat = 3
-    private let standardLineWidth: CGFloat = 1
 }
 
-fileprivate struct RotatedModifier: ViewModifier {
+fileprivate struct QuizReviewBody: View {
 
-    let active: Bool
+    let settings: QuizLayoutSettings
+    @ObservedObject var model: QuizViewModel
 
-    func body(content: Content) -> some View {
-        content
-            .scaleEffect(active ? 0 : 1)
-            .rotationEffect(active ? .zero : .degrees(360))
+    var body: some View {
+        VStack(spacing: 2) {
+            HStack {
+                Spacer()
+                Text("Let's review the questions!")
+                Spacer()
+            }
+            Rectangle()
+                .frame(height: 1)
+                .shadow(radius: 1, y: 2)
+            ScrollView {
+                ForEach(model.questions.prefix(model.quizDifficulty.quizLength)) { question in
+                    reviewCard(question: question)
+                }
+            }
+        }
+    }
+
+    private func reviewCard(question: QuizQuestionOptions) -> some View {
+        HStack {
+            Spacer()
+            Text(question.question)
+            Text(question.options[question.correctOption] ?? "")
+                .foregroundColor(.orangeAccent)
+            Spacer()
+        }.padding()
     }
 }
 
@@ -365,6 +358,14 @@ struct QuizLayoutSettings {
 
     var progressBarPadding: CGFloat {
         navPadding
+    }
+
+    var activeLineWidth: CGFloat {
+        3
+    }
+
+    var standardLineWidth: CGFloat {
+        1
     }
 
 }
