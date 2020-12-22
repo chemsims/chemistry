@@ -27,13 +27,15 @@ fileprivate struct QuizScreenWithSettings: View {
 
     var body: some View {
         ZStack {
+            navButtons
             VStack(spacing: 0) {
                 progressBar
                     .frame(
                         width: settings.progressWidth,
                         height: settings.progressHeight
                     )
-                    .padding(settings.progressBarPadding)
+                    .padding(.horizontal, settings.progressBarPadding)
+                    .padding(.top, settings.progressBarPadding)
 
                 HStack(spacing: 0) {
                     Spacer()
@@ -42,10 +44,14 @@ fileprivate struct QuizScreenWithSettings: View {
                         QuizIntroBody(
                             settings: settings,
                             model: model
-                        )
+                        ).padding(.top, settings.progressBarPadding)
                     }
                     if (model.quizState == .running) {
-                        QuizQuestionsBody(settings: settings, model: model)
+                        QuizQuestionsBody(
+                            settings: settings,
+                            model: model
+                        )
+                        .padding(.top, settings.progressBarPadding)
                     }
 
                     if (model.quizState == .completed) {
@@ -57,8 +63,9 @@ fileprivate struct QuizScreenWithSettings: View {
 
                 Spacer()
             }
-            .edgesIgnoringSafeArea(model.quizState == .completed ? .bottom : [])
-            navButtons
+            .edgesIgnoringSafeArea(
+                model.quizState == .completed ? .bottom : []
+            )
         }
         .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.8)
@@ -289,31 +296,45 @@ fileprivate struct QuizReviewBody: View {
     @ObservedObject var model: QuizViewModel
 
     var body: some View {
-        VStack(spacing: 2) {
-            HStack {
-                Spacer()
-                Text("Let's review the questions!")
-                Spacer()
-            }
-            Rectangle()
-                .frame(height: 1)
-                .shadow(radius: 1, y: 2)
-            ScrollView {
+        ScrollView {
+            VStack(spacing: 12) {
+                heading
                 ForEach(model.questions.prefix(model.quizDifficulty.quizLength)) { question in
                     reviewCard(question: question)
                 }
             }
+            .padding(.top, settings.progressBarPadding)
+        }
+    }
+
+    private var heading: some View {
+        HStack {
+            Spacer()
+            VStack {
+                Text("Your score is \(model.correctAnswers)/\(model.quizDifficulty.quizLength)")
+                    .foregroundColor(.orangeAccent)
+                Text("Let's review the questions!")
+            }
+
+            Spacer()
         }
     }
 
     private func reviewCard(question: QuizQuestionOptions) -> some View {
-        HStack {
-            Spacer()
-            Text(question.question)
-            Text(question.options[question.correctOption] ?? "")
-                .foregroundColor(.orangeAccent)
-            Spacer()
-        }.padding()
+        ZStack(alignment: .leading) {
+            RoundedRectangle(
+                cornerRadius: settings.progressCornerRadius
+            )
+            .foregroundColor(.white)
+//            .stroke()
+            .shadow(radius: 2)
+
+            VStack(alignment: .leading) {
+                Text(question.question)
+                Text(question.options[question.correctOption] ?? "")
+                    .foregroundColor(.orangeAccent)
+            }.padding()
+        }.padding(.horizontal, 2)
     }
 }
 

@@ -22,14 +22,20 @@ class QuizViewModel: ObservableObject {
     @Published var progress: CGFloat = 0
     @Published var question = ""
 
-    var selectedAnswer: QuizOption? {
-        answers[questionIndex]
-    }
-
     @Published var correctOption: QuizOption = .A
     @Published var quizState = QuizState.completed
     @Published var quizDifficulty = QuizDifficulty.medium
     private(set) var questionIndex = 0
+
+    var selectedAnswer: QuizOption? {
+        answers[questionIndex]
+    }
+
+    var correctAnswers: Int {
+        answers.filter { answer in
+            questions[answer.key].correctOption == answer.value
+        }.count
+    }
 
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
