@@ -32,7 +32,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     let navigation: RootNavigationViewModel
     let settings: MainMenuLayoutSettings
 
-    @State private var showPanel: Bool = true
+    @State private var showPanel: Bool = false
     @State private var panelDragOffset: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 

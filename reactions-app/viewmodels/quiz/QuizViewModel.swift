@@ -34,6 +34,10 @@ class QuizViewModel: ObservableObject {
     private var options = [QuizOption:String]()
 
     func next() {
+        guard quizDifficulty != .skip else {
+            nextScreen?()
+            return
+        }
         switch (quizState) {
         case .pending:
             quizState = .running

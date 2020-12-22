@@ -29,12 +29,13 @@ fileprivate struct QuizScreenWithSettings: View {
 
     var body: some View {
         ZStack {
-            VStack {
+            VStack(spacing: 0) {
                 progressBar
                     .frame(
                         width: settings.progressWidth,
                         height: settings.progressHeight
-                    ).padding(settings.navPadding)
+                    )
+                    .padding(settings.progressBarPadding)
 
                 HStack(spacing: 0) {
                     Spacer()
@@ -73,12 +74,14 @@ fileprivate struct QuizScreenWithSettings: View {
                 quizDifficultyOption(difficulty: difficulty)
             }
         }
+        .minimumScaleFactor(0.5)
     }
 
     private func quizDifficultyOption(
         difficulty: QuizDifficulty
     ) -> some View {
         let isSelected = model.quizDifficulty == difficulty
+        let subline = difficulty == .skip ? "Skip this quiz" : "\(difficulty.quizLength) questions"
 
         return ZStack {
             RoundedRectangle(cornerRadius: settings.progressCornerRadius)
@@ -90,7 +93,7 @@ fileprivate struct QuizScreenWithSettings: View {
 
             VStack {
                 Text(difficulty.rawValue.capitalized)
-                Text("\(difficulty.quizLength) questions")
+                Text(subline)
                     .font(.system(size: 0.7 * settings.fontSize))
             }
         }.onTapGesture {
@@ -346,12 +349,18 @@ struct QuizLayoutSettings {
     var navTotalWidth: CGFloat {
         navSize + (2 * navPadding)
     }
+
+    var progressBarPadding: CGFloat {
+        navPadding
+    }
+
 }
 
 struct QuizScreen_Previews: PreviewProvider {
     static var previews: some View {
         QuizScreen(
             model: QuizViewModel()
-        ).previewLayout(.fixed(width: 568, height: 320))
+        )
+        .previewLayout(.fixed(width: 568, height: 320))
     }
 }
