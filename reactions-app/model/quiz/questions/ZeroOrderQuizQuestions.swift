@@ -6,8 +6,8 @@
 import Foundation
 
 struct ZeroOrderQuizQuestions {
-    let questions = [
-        QuizQuestion2(
+    static let questions = [
+        QuizQuestion(
             question: "In which unit is the Rate of a reaction written in?",
             correctAnswer: "M/s",
             otherAnswers: [
@@ -18,7 +18,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "The rate (or speed) of reaction is related to the change in concentration (Molarity) of either a reactant or product over time (seconds). The rate then represents the speed of consumption of the reactants or which is the same, the speed of formation of the products. The standard units for rate are Molarity/seconds (M/s).",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "A zero order reaction (A to B) has a rate of 1 M/s. It starts with a concentration of A of 10 M, and after 5 seconds, there are 5 M of A left, and 5 M more of A are added. How much time in seconds will it take for the 10 M to fully convert into B?",
             correctAnswer: "10 seconds",
             otherAnswers: [
@@ -29,7 +29,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "No calculations are needed since there's a lot of data to get the answer from. Given the reaction is of zero order, the rate of 1 M/s will always be the same. If the reaction started with 10 M of A, and 5 M of A were consumed after 5 seconds of the reaction, this just means that we can confirm that in fact the rate of the reaction is 1 M/s. With 5 M of A left, and 5 M more of A added, there are 10 M of A now, and it will take 10 seconds for it to be fully consumed.",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "A zero order reaction (2A to B), has A disappearing at a Rate of 1.5 M/s. What is the rate of appearance of B?",
             correctAnswer: "0.75 M/s",
             otherAnswers: [
@@ -40,7 +40,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "The rates of disappearance of reactants and appearance of products can be related to each other based on the stoichiometry of the reaction. Rate = -[ΔA]/2Δt = [ΔB]/Δt where -[ΔA]/Δt = rate of disappearance of A and [ΔB]/Δt = rate of appearance of B. Replacing the equation then we get that: (1.5 M/s)/2 = rate of appearance of B ==> 0.75 M/s = rate of appearance of B. In other words, for each M of B that's being produced, there are 2 M of A that are being consumed. Note: B) -0.75 M/s is not the correct answer because the the rate of appearance is positive. The reason for the rate of disappearance to be positive too, is that the negative sign ( - ) is already taken into account within the expression -[ΔA]/Δt.",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: TextLineGenerator.makeLine(
                 "There is a reaction (4A to B + C). The rate of disappearance of A can be written as \(Strings.withNoBreaks(str: "Rate=-[∆]/Δt")). This is equivalent to:"
             ),
@@ -53,7 +53,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "The rates of disappearance of reactants and appearance of products can be related to each other based on the stoichiometry of the reaction. Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt. If we multiply the whole expression by 4 to get rid of the denominator, we get the equation of: -[ΔA]/Δt = 4[ΔB]/Δt",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: TextLineGenerator.makeLine(
                 "A zero order reaction (A to B) started 1 minute ago. A currently has a concentration of 5 M in the solution. After 30 seconds, there are 4 M of A left. Which of the following is the initial concentration of A ([A_0_])?"
             ),
@@ -66,7 +66,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "Since it's a zero order reaction, we can first determine the Rate (or k) by simply: -ΔC/Δt. When there were 5M of A, it was reduced to 4M in 30 seconds. In other words, 1M of A was consumed in 30 seconds. We can replace in the equation: Rate = k = -(4M - 5M)/(90s - 60s) = 0.03333 M/s. The equation for a zero order reaction is: [A] = [Ao] - kt. Now we can use either data point to solve for [Ao]: [Ao] = [A] + kt ====> [Ao] = 5 + 0.03333(60) = 7 M.",
             difficulty: .medium
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: TextLineGenerator.makeLine(
                 "Rate has the same value as k when:"
             ),
@@ -79,7 +79,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "For zero order reactions, Rate = k and it's of course constant, in units of M/s.",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "Half life is the time at which:",
             correctAnswer: "The reactant has halved its concentration",
             otherAnswers: [
@@ -92,7 +92,7 @@ struct ZeroOrderQuizQuestions {
             ),
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "Rate always has the same value regardless of the concentration of the reactants for a particular reaction if:",
             correctAnswer: "It's a zero order reaction",
             otherAnswers: [
@@ -103,7 +103,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "For a zero order reaction rate = k, which in other words means it's constant. So the rate of the reaction won't change with the concentration of the reactants",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "'The speed of a reaction is dependent on the concentration of the reactants' applies for:",
             correctAnswer: "First and second order reactions",
             otherAnswers: [
@@ -114,7 +114,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "Speed or rate of a reaction depends on the concentration of the reactants for all types of reactions except for zero order reactions",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "A reaaction (A to B) started 1 day ago. A currently has a concentration of 10 M in the solution. After 5 hours, there are 8 M of A left. Which of the following is the time at which the concentration of A will be half of what is it was at the beginning of the reaction?",
             correctAnswer: "A little more than a day",
             otherAnswers: [
@@ -132,7 +132,7 @@ struct ZeroOrderQuizQuestions {
             ),
             difficulty: .medium
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "A reaction (A to 3B) tool place. It started with only A, and it ended up being 8 M. Which of the following was the initial concentration of A?",
             correctAnswer: "2.666 M",
             otherAnswers: [
@@ -143,7 +143,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "Based on the stoichiometry of the balanced equation, for each 1M of A that's consumed, 3M of B are produced. If after all A was totally consumed, the product was 8M of B, that means that a third of that value has to be the initial concentration of A at the beginning of the reaction. 8/3 = 2.666M. There were 2.666M of A when the reaction started.",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "There is a reaction (2A to 5B + C). The rate of appearance of B can be written as Rate=[ΔB]/Δt. This is equivalent to:",
             correctAnswer: "-5[ΔA]/2Δt",
             otherAnswers: [
@@ -154,7 +154,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "The rates of disappearance of reactants and appearance of products can be related to each other based on the stoichiometry of the reaction. Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt. If we multiply the whole expression by 5 to get rid of the denominator, we get the equation of: -5[ΔA]/2Δt = [ΔB]/Δt",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "What's another way to write the unit for the rate?",
             correctAnswer:
                 QuizAnswer(answer: "All of the above", explanation: "They are all M/s written in other forms", position: .D),
@@ -166,7 +166,7 @@ struct ZeroOrderQuizQuestions {
             explanation: nil,
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "The rate constant k has the units of",
             correctAnswer: "It can vary",
             otherAnswers: [
@@ -177,7 +177,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "The units of k can vary depending on the order of the reaction. It's normally determined by: M^(1-n)/s where n is the order of the reaction.",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "If the rate of a reaction varies, it definitely:",
             correctAnswer: "Isn't a zero order reaction",
             otherAnswers: [
@@ -188,7 +188,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "For a zero order reaction, Rate = k, so it's a constant.",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "A reaction (A to B) has started 12 hours ago. A has currently a concentration of 7M in the solution. After 3 hours, A has been reduced to 5M. Which of the following is the time at which the concentration of A will be 0?",
             correctAnswer: "22.5 h",
             otherAnswers: [
@@ -199,7 +199,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "Since it's a zero order reaction, we can first determine the Rate (or k) by simply: -ΔC/Δt. When there were 7M of A, it was reduced to 5M in 3 hours. In other words, 2M of A was consumed in 3 hours. We can replace in the equation: Rate = k = -(5M - 7M)/(15 - 12) = 0.667 M/h. The equation for a zero order reaction is: [A] = [Ao] - kt. Now we can use either data point to solve for [Ao]: [Ao] = [A] + kt ====> [Ao] = 7 + 0.667(12) = 15 M. Knowing that, for the whole 15 M we can determine with the same equation how much time should pass: t = [Ao]/k ====> 15/0.667 = 22.5 h",
             difficulty: .medium
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "A drug's decomposition follow a zero-order kinetics with a rate constant of 0.001 g mL-1 month-1. The initial concentration is 100 mg mL-1. Which of the following corresponds to the shelf life (t10%)?",
             correctAnswer: "10 months",
             otherAnswers: [
@@ -210,7 +210,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "Using the equation for a zero order reaction: [A] = [Ao] - kt. We want to know the time at which 10% of [A] has been consumed, or in other words: [A] = 0.9[Ao]. We also need to adjust the k units for them to be aligned with the other variables: 0.001 g mL-1 month-1* 1000mg/g = 1 g mL-1 month-1. Replacing in the equation: 0.9[Ao] = [Ao] - t. Solving for t: t = 0.10[Ao] = 0.10(100) = 10 months.",
             difficulty: .medium
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "For a zero order reaction, which of the following is false?",
             correctAnswer: QuizAnswer(
                 answer: "The half-life may be represented by the expression t_1/2_ = 0.69 / k",
@@ -234,7 +234,7 @@ struct ZeroOrderQuizQuestions {
             explanation: nil,
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "Which one of the following is the half equation for Zero Order reactions?",
             correctAnswer: "t_1/2_ = [A_0] / 2k",
             otherAnswers: [
@@ -245,7 +245,7 @@ struct ZeroOrderQuizQuestions {
             explanation: "For zero order reactions, half life equation is t1/2 = [Ao]/2k. Remember half-life is the time at which [A] = 0.5[Ao]. So replacing in the equation we get: [A] = [Ao] - kt ==> 0.5[Ao] = [Ao] - kt ==> kt = [Ao] - 0.5[Ao] ==> t = 0.5[Ao]/k or what is the same t = [Ao]/2k",
             difficulty: .easy
         ),
-        QuizQuestion2(
+        QuizQuestion(
             question: "Rate always has the units of:",
             correctAnswer: "Concentration / time",
             otherAnswers: [

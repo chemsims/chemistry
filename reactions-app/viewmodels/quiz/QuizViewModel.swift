@@ -7,10 +7,10 @@ import SwiftUI
 
 class QuizViewModel: ObservableObject {
 
-    let questions: [QuizQuestionOptions]
+    let questions: [QuizQuestionDisplay]
 
     init() {
-        questions = QuizQuestion.dummyQuestions.map { $0.randomOptions }
+        questions = ZeroOrderQuizQuestions.questions.map { $0.randomDisplay() }
         setQuestion(newIndex: 0)
     }
 
@@ -20,8 +20,6 @@ class QuizViewModel: ObservableObject {
     @Published private var answers = [Int:QuizOption]()
 
     @Published var progress: CGFloat = 0
-    @Published var question = ""
-
     @Published var correctOption: QuizOption = .A
     @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
@@ -40,8 +38,6 @@ class QuizViewModel: ObservableObject {
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
     }
-
-    private var options = [QuizOption:String]()
 
     func selectedOption(index: Int) -> QuizOption? {
         answers[index]
@@ -84,8 +80,16 @@ class QuizViewModel: ObservableObject {
         answers[questionIndex] = option
     }
 
-    func optionText(_ option: QuizOption) -> String {
-        options[option] ?? ""
+    func optionText(_ option: QuizOption) -> TextLine {
+        currentQuestion.options[option] ?? ""
+    }
+
+    var question: TextLine {
+        currentQuestion.question
+    }
+
+    private var currentQuestion: QuizQuestionDisplay {
+        questions[questionIndex]
     }
 
     private func setQuestion(newIndex: Int) {
@@ -94,8 +98,6 @@ class QuizViewModel: ObservableObject {
         }
         let nextQuestion = questions[newIndex]
         correctOption = nextQuestion.correctOption
-        options = nextQuestion.options
-        question = nextQuestion.question
         questionIndex = newIndex
         setProgress()
     }

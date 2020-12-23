@@ -13,6 +13,34 @@ struct TextLinesView: View {
     let superscriptOffset: CGFloat
     let subscriptOffset: CGFloat
 
+    init(
+        lines: [TextLine],
+        fontSize: CGFloat,
+        subscriptFontSize: CGFloat,
+        superscriptOffset: CGFloat,
+        subscriptOffset: CGFloat
+    ) {
+        self.lines = lines
+        self.fontSize = fontSize
+        self.subscriptFontSize = subscriptFontSize
+        self.superscriptOffset = superscriptOffset
+        self.subscriptOffset = subscriptOffset
+    }
+
+    init(lines: [TextLine], fontSize: CGFloat) {
+        self.init(
+            lines: lines,
+            fontSize: fontSize,
+            subscriptFontSize: 0.65 * fontSize,
+            superscriptOffset: 0.26 * fontSize,
+            subscriptOffset: -0.26 * fontSize
+        )
+    }
+
+    init(line: TextLine, fontSize: CGFloat) {
+        self.init(lines: [line], fontSize: fontSize)
+    }
+
     var body: some View {
         if let firstLine = lines.first {
             return lines.dropFirst().reduce(lineView(firstLine)) { acc, next in

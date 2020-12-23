@@ -178,8 +178,7 @@ fileprivate struct QuizQuestionsBody: View {
 
     var body: some View {
         VStack {
-            Text(model.question)
-                .lineLimit(1)
+            TextLinesView(line: model.question, fontSize: settings.fontSize)
             answers
         }
     }
@@ -205,7 +204,7 @@ fileprivate struct QuizQuestionsBody: View {
                     .foregroundColor(answerBorder(option: option))
                     .overlay(overlay(option: option), alignment: .topTrailing)
 
-                Text(model.optionText(option))
+                TextLinesView(line: model.optionText(option), fontSize: settings.fontSize)
                     .foregroundColor(.black)
             }
             .onTapGesture(perform: { handleAnswer(option: option) })
@@ -334,8 +333,8 @@ fileprivate struct QuizReviewBody: View {
             .shadow(radius: 2)
 
             VStack(alignment: .leading) {
-                Text(question.question)
-                Text(question.options[question.correctOption] ?? "")
+                TextLinesView(line: question.question, fontSize: settings.fontSize)
+                TextLinesView(line: question.options[question.correctOption] ?? "", fontSize: settings.fontSize)
                     .foregroundColor(.orangeAccent)
                 if (selectedOption != question.correctOption) {
                     incorrectAnswer(
@@ -348,14 +347,14 @@ fileprivate struct QuizReviewBody: View {
     }
 
     private func incorrectAnswer(
-        question: QuizQuestionOptions,
+        question: QuizQuestionDisplay,
         selectedOption: QuizOption?
     ) -> some View {
-        let selectedAnswer = selectedOption.flatMap { question.options[$0] } ?? "foo"
+        let selectedAnswer = selectedOption.flatMap { question.options[$0] } ?? ""
         return VStack(alignment: .leading) {
             HStack {
                 Text("Your answer")
-                Text(selectedAnswer)
+                TextLinesView(line: selectedAnswer, fontSize: settings.fontSize)
                     .foregroundColor(.orangeAccent)
             }
         }
