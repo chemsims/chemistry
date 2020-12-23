@@ -14,7 +14,7 @@ class EnergyProfileViewModel: ObservableObject {
 
     var interactionEnabled: Bool = true
     @Published var reactionState = EnergyReactionState.pending
-    @Published var statement = [SpeechBubbleLine]()
+    @Published var statement = [TextLine]()
     @Published var temp2: CGFloat?
     @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0

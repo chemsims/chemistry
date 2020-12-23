@@ -8,60 +8,60 @@ import CoreGraphics
 struct ZeroOrderStatements {
 
     static let initial = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             "This is a Zero Order Reaction in which a reactant A turns into the product B. But what does it mean? Let's find out!"
         ),
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             "*Set the initial concentration of A (c_1_) and the initial time at which it'll start (t_1_)*."
         )
     ]
 
-    static func rateExplainer(k: CGFloat) -> [SpeechBubbleLine] {
+    static func rateExplainer(k: CGFloat) -> [TextLine] {
         [
-            SpeechBubbleLineGenerator.makeLine(
+            TextLineGenerator.makeLine(
                 "The Order of a reaction has to do with the Rate of it. *Rate* is the rate of change in the concentration per unit time. The Rate Constant *k* is a value on which the *Rate* depends. For this reaction, \(Strings.withNoBreaks(str: "*k=\(k.str(decimals: 3))M/s*"))."
             )
         ]
     }
 
-    static func halfLifeExplainer(halfLife: CGFloat) -> [SpeechBubbleLine] {
+    static func halfLifeExplainer(halfLife: CGFloat) -> [TextLine] {
         [
-            SpeechBubbleLineGenerator.makeLine(
+            TextLineGenerator.makeLine(
                 "*Half Life (t_1/2_)* is an expression to easily calculate the point in time at which the concentration of the reactant, in this case *A*, is half of what the initial concentration was. For this reaction, \(Strings.withNoBreaks(str: "*t_1/2_=\(halfLife.str(decimals: 2))s*"))."
             )
         ]
     }
     
     static let setFinalValues = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             "Great! Now you can set the *concentration of A at the end of the reaction (c_2_)* and the *time the reaction will last (t_2_)*."
         )
     ]
 
     static let reactionInProgress = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             "Let's watch how all the molecules are changing! As A disappears, B is being produced."
         ),
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             "This happens at a constant *Rate (in units of M/s),* which is dependent on *k*."
         )
     ]
 
     static let endAnimation = [
-        SpeechBubbleLineGenerator.makeLine("For this Zero Order Reaction, *Rate* is constant and it's equal to *k*, that's why a graph plotting \(Strings.aVsT) is a straight line."),
-        SpeechBubbleLineGenerator.makeLine("[A]*(y)*=-kt*(mx)*+[A0]*(b)*"),
-        SpeechBubbleLineGenerator.makeLine("*Where -k is the slope*.")
+        TextLineGenerator.makeLine("For this Zero Order Reaction, *Rate* is constant and it's equal to *k*, that's why a graph plotting \(Strings.aVsT) is a straight line."),
+        TextLineGenerator.makeLine("[A]*(y)*=-kt*(mx)*+[A0]*(b)*"),
+        TextLineGenerator.makeLine("*Where -k is the slope*.")
     ]
 
     static let showConcentrationTable = [
-        SpeechBubbleLineGenerator.makeLine("You can click the button in the top right corner to see the initial and final concentration and time for this reaction."),
-        SpeechBubbleLineGenerator.makeLine("*Try clicking the toggle to see your results*."),
+        TextLineGenerator.makeLine("You can click the button in the top right corner to see the initial and final concentration and time for this reaction."),
+        TextLineGenerator.makeLine("*Try clicking the toggle to see your results*."),
     ]
 
     static let end = [
-        SpeechBubbleLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
-        SpeechBubbleLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time."),
-        SpeechBubbleLineGenerator.makeLine("Then, let's take a quiz before seeing how Integrated Rate Law works.")
+        TextLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
+        TextLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time."),
+        TextLineGenerator.makeLine("Then, let's take a quiz before seeing how Integrated Rate Law works.")
     ]
 
 }

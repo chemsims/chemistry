@@ -54,7 +54,7 @@
 		571D6A4C255A780900F4E635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A4A255A780900F4E635 /* LaunchScreen.storyboard */; };
 		571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A69255AADDB00F4E635 /* SpeechBubble.swift */; };
 		571D6A6F255AB25400F4E635 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A6E255AB25400F4E635 /* Styling.swift */; };
-		571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */; };
+		571D6A76255AC27400F4E635 /* TextLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A75255AC27400F4E635 /* TextLine.swift */; };
 		571D6A7C255AC75C00F4E635 /* BeakerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A7B255AC75C00F4E635 /* BeakerShape.swift */; };
 		571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A80255AD40900F4E635 /* EmptyBeaker.swift */; };
 		571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */; };
@@ -84,6 +84,7 @@
 		577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */; };
 		577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* SKBeakerScene.swift */; };
 		577077D325698DF2003E750E /* SkBeakerSceneRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077D225698DF2003E750E /* SkBeakerSceneRepresentable.swift */; };
+		57778B7F259368B800254262 /* TextLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57778B7E259368B800254262 /* TextLineView.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
@@ -199,7 +200,7 @@
 		571D6A4D255A780900F4E635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		571D6A69255AADDB00F4E635 /* SpeechBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBubble.swift; sourceTree = "<group>"; };
 		571D6A6E255AB25400F4E635 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
-		571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBubbleLine.swift; sourceTree = "<group>"; };
+		571D6A75255AC27400F4E635 /* TextLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLine.swift; sourceTree = "<group>"; };
 		571D6A7B255AC75C00F4E635 /* BeakerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerShape.swift; sourceTree = "<group>"; };
 		571D6A80255AD40900F4E635 /* EmptyBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBeaker.swift; sourceTree = "<group>"; };
 		571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGeometrySettings.swift; sourceTree = "<group>"; };
@@ -229,6 +230,7 @@
 		577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileBeaker.swift; sourceTree = "<group>"; };
 		577077CE25698CE0003E750E /* SKBeakerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKBeakerScene.swift; sourceTree = "<group>"; };
 		577077D225698DF2003E750E /* SkBeakerSceneRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkBeakerSceneRepresentable.swift; sourceTree = "<group>"; };
+		57778B7E259368B800254262 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		57AA05E62562F3750080C538 /* SliderIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderIndicator.swift; sourceTree = "<group>"; };
@@ -485,18 +487,19 @@
 				57035EF4255C19EC00DB3A19 /* reactions */,
 				57035ED6255BF03300DB3A19 /* slider */,
 				571D6A7A255AC75000F4E635 /* beaker */,
-				571D6A56255AAC0F00F4E635 /* speech-bubble */,
+				571D6A56255AAC0F00F4E635 /* text */,
 				579628CE25659054007A7A6D /* RootNavigationView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
 		};
-		571D6A56255AAC0F00F4E635 /* speech-bubble */ = {
+		571D6A56255AAC0F00F4E635 /* text */ = {
 			isa = PBXGroup;
 			children = (
 				571D6A69255AADDB00F4E635 /* SpeechBubble.swift */,
+				57778B7E259368B800254262 /* TextLineView.swift */,
 			);
-			path = "speech-bubble";
+			path = text;
 			sourceTree = "<group>";
 		};
 		571D6A6C255AB23D00F4E635 /* model */ = {
@@ -738,7 +741,7 @@
 		57F4774E256105430041D406 /* statements */ = {
 			isa = PBXGroup;
 			children = (
-				571D6A75255AC27400F4E635 /* SpeechBubbleLine.swift */,
+				571D6A75255AC27400F4E635 /* TextLine.swift */,
 				57F4774F256105620041D406 /* ZeroOrderStatements.swift */,
 				571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */,
 				571B3C7B256560E40075358B /* ReactionStatements.swift */,
@@ -890,7 +893,7 @@
 				57DAE4E42577C53B006D945B /* EquationSettings.swift in Sources */,
 				57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */,
 				571B3C7C256560E40075358B /* ReactionStatements.swift in Sources */,
-				571D6A76255AC27400F4E635 /* SpeechBubbleLine.swift in Sources */,
+				571D6A76255AC27400F4E635 /* TextLine.swift in Sources */,
 				570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */,
 				57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */,
 				57F477422560FD440041D406 /* Beaky.swift in Sources */,
@@ -949,6 +952,7 @@
 				57E7FF72258289B200A30582 /* MenuButton.swift in Sources */,
 				57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */,
 				57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */,
+				57778B7F259368B800254262 /* TextLineView.swift in Sources */,
 				57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */,
 				57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */,
 				57DAE4FA2577ECD9006D945B /* ReactionInputPersistence.swift in Sources */,

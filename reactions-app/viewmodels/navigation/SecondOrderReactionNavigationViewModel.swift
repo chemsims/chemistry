@@ -96,7 +96,7 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
 }
 
 fileprivate class PostReactionExplanation: ReactionState {
-    init(statement: [SpeechBubbleLine], highlights: [OrderedReactionScreenElement]) {
+    init(statement: [TextLine], highlights: [OrderedReactionScreenElement]) {
         self.highlights = highlights
         super.init(statement: statement)
     }

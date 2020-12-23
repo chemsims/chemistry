@@ -79,12 +79,12 @@ class EnergyProfileState: ScreenState, SubState {
     typealias NestedState = EnergyProfileState
     typealias Model = EnergyProfileViewModel
 
-    let constantStatement: [SpeechBubbleLine]
-    init(statement: [SpeechBubbleLine] = []) {
+    let constantStatement: [TextLine]
+    init(statement: [TextLine] = []) {
         self.constantStatement = statement
     }
 
-    func statement(model: EnergyProfileViewModel) -> [SpeechBubbleLine] {
+    func statement(model: EnergyProfileViewModel) -> [TextLine] {
         constantStatement
     }
 
@@ -129,7 +129,7 @@ fileprivate class IntroToCollisionTheory: EnergyProfileState {
 
 fileprivate class ExplanationState: EnergyProfileState {
     init(
-        _ statement: [SpeechBubbleLine],
+        _ statement: [TextLine],
         _ highlightedElements: [EnergyProfileScreenElement]
     ) {
         self.highlightedElements = highlightedElements
@@ -153,7 +153,7 @@ fileprivate class ExplanationState: EnergyProfileState {
 }
 
 fileprivate class ShowInitialEaValues: EnergyProfileState {
-    override func statement(model: EnergyProfileViewModel) -> [SpeechBubbleLine] {
+    override func statement(model: EnergyProfileViewModel) -> [TextLine] {
         EnergyProfileStatements.showCurrentValues(
             ea: model.activationEnergy,
             k: model.k1,
@@ -274,7 +274,7 @@ fileprivate class StartShakingCatalyst: EnergyProfileState {
 }
 
 fileprivate class StopShakingCatalyst: EnergyProfileState {
-    override func statement(model: EnergyProfileViewModel) -> [SpeechBubbleLine] {
+    override func statement(model: EnergyProfileViewModel) -> [TextLine] {
         EnergyProfileStatements.showEaReduction(newEa: model.activationEnergy)
     }
 
@@ -300,7 +300,7 @@ fileprivate class StopShakingCatalyst: EnergyProfileState {
 }
 
 fileprivate class ShowLinearChart: EnergyProfileState {
-    override func statement(model: EnergyProfileViewModel) -> [SpeechBubbleLine] {
+    override func statement(model: EnergyProfileViewModel) -> [TextLine] {
         EnergyProfileStatements.showLinearChart(slope: model.slope)
     }
 
@@ -319,7 +319,7 @@ fileprivate class ShowLinearChart: EnergyProfileState {
 }
 
 fileprivate class ShowKRatio: EnergyProfileState {
-    override func statement(model: EnergyProfileViewModel) -> [SpeechBubbleLine] {
+    override func statement(model: EnergyProfileViewModel) -> [TextLine] {
         EnergyProfileStatements.showKRatio(newK: model.k1, temp: model.temp1)
     }
 

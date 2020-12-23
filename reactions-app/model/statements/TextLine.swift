@@ -11,18 +11,18 @@ import Foundation
 /// line. If the text is too long for the available width, it will wrap on to the next line.
 /// However, each line will be separated from each other.
 ///
-struct SpeechBubbleLine: Identifiable {
+struct TextLine: Identifiable {
     let id = UUID()
 
     /// The content of the line
     /// - Note: The content will be concatenated as is, without adding
     ///         any whitespace between segments.
-    let content: [SpeechBubbleLineSegment]
+    let content: [TextSegment]
 }
 
 /// An individual segment of a line, including whether the content should
 /// appear emphasised.
-struct SpeechBubbleLineSegment: Equatable {
+struct TextSegment: Equatable {
     let content: String
     let emphasised: Bool
     let scriptType: ScriptType?
@@ -42,21 +42,21 @@ enum ScriptType {
     case superScript, subScript
 }
 
-struct SpeechBubbleLineGenerator {
+struct TextLineGenerator {
 
     private static let emphasis = Character("*")
     private static let sub = Character("_")
     private static let superScript = Character("^")
 
-    static func makeLine(_ str: String) -> SpeechBubbleLine {
-        var segments = [SpeechBubbleLineSegment]()
+    static func makeLine(_ str: String) -> TextLine {
+        var segments = [TextSegment]()
         var builder: String = ""
         var buildingEmphasis: Bool = false
         var scriptType: ScriptType? = nil
 
         func addIfNonEmpty() {
             if (!builder.isEmpty) {
-                segments.append(SpeechBubbleLineSegment(content: builder, emphasised: buildingEmphasis, scriptType: scriptType))
+                segments.append(TextSegment(content: builder, emphasised: buildingEmphasis, scriptType: scriptType))
             }
         }
 
@@ -75,7 +75,7 @@ struct SpeechBubbleLineGenerator {
             }
         }
         addIfNonEmpty()
-        return SpeechBubbleLine(content: segments)
+        return TextLine(content: segments)
     }
 
     private static func charToScript(_ c: Character) -> ScriptType? {

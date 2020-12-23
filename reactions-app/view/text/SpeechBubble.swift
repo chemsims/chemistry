@@ -7,7 +7,7 @@ import SwiftUI
 
 struct SpeechBubble: View {
 
-    let lines: [SpeechBubbleLine]
+    let lines: [TextLine]
     let fontSize: CGFloat
 
     var body: some View {
@@ -25,7 +25,7 @@ struct SpeechBubble: View {
 
 fileprivate struct SpeechBubbleWithSettings: View {
 
-    let lines: [SpeechBubbleLine]
+    let lines: [TextLine]
     let settings: SpeechBubbleSettings
 
     var body: some View {
@@ -39,47 +39,22 @@ fileprivate struct SpeechBubbleWithSettings: View {
                 .frame(width: settings.stemWidth, height: settings.stemHeight)
                 .offset(x: settings.bubbleWidth, y: settings.stemYOffset)
 
-            linesView
-                .padding(settings.bubbleTextPadding)
-                .frame(width: settings.bubbleWidth, height: settings.geometry.size.height, alignment: .leading)
+            TextLinesView(
+                lines: lines,
+                fontSize: settings.fontSize,
+                subscriptFontSize: settings.subscriptFontSize,
+                superscriptOffset: settings.superscriptOffset,
+                subscriptOffset: settings.subscriptOffset
+            )
+            .padding(settings.bubbleTextPadding)
+            .frame(
+                width: settings.bubbleWidth,
+                height: settings.geometry.size.height,
+                alignment: .leading
+            )
         }
         .minimumScaleFactor(0.6)
     }
-
-    private var linesView: Text {
-        if let firstLine = lines.first {
-            return lines.dropFirst().reduce(lineView(firstLine)) { acc, next in
-                acc + Text("\n\n") + lineView(next)
-            }
-        }
-        return Text("")
-    }
-
-    private func lineView(_ line: SpeechBubbleLine) -> Text {
-        line.content.reduce(Text(""), {
-            $0 + text($1)
-        })
-    }
-
-    private func text(_ segment: SpeechBubbleLineSegment) -> Text {
-        Text(segment.content)
-            .foregroundColor(segment.emphasised ? .orangeAccent : .black)
-            .font(.system(size: fontSize(line: segment)))
-            .baselineOffset(fontOffset(line: segment))
-    }
-
-    private func fontSize(line: SpeechBubbleLineSegment) -> CGFloat {
-        line.scriptType == nil ? settings.fontSize : settings.subscriptFontSize
-    }
-
-    private func fontOffset(line: SpeechBubbleLineSegment) -> CGFloat {
-        switch (line.scriptType) {
-        case .some(.superScript): return settings.superscriptOffset
-        case .some(.subScript): return settings.subscriptOffset
-        case .none: return 0
-        }
-    }
-
 }
 
 struct SpeechBubbleStem: Shape {
@@ -155,10 +130,10 @@ struct SpeechBubbleSettings {
 struct SpeechBubble_Previews: PreviewProvider {
 
     static let lines = [
-        SpeechBubbleLine(content: [
+        TextLine(content: [
             .init(content: "Hey there, fellow student!", emphasised: false)
         ]),
-        SpeechBubbleLine(content: [
+        TextLine(content: [
             .init(content: "Choose a reaction ", emphasised: true),
             .init(content: "too elor it!A", emphasised: false),
             .init(content: "0", emphasised: false, scriptType: .superScript),

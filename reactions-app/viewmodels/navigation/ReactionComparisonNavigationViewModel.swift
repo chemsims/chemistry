@@ -33,9 +33,9 @@ class ReactionComparisonState: ScreenState {
     typealias Model = ReactionComparisonViewModel
     typealias NestedState = ReactionComparisonSubstate
 
-    let statement: [SpeechBubbleLine]
+    let statement: [TextLine]
 
-    init(statement: [SpeechBubbleLine]) {
+    init(statement: [TextLine]) {
         self.statement = statement
     }
 

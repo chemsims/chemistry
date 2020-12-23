@@ -7,7 +7,7 @@ import SwiftUI
 
 struct BeakyOverlay: View {
 
-    let statement: [SpeechBubbleLine]
+    let statement: [TextLine]
     let next: () -> Void
     let back: () -> Void
     let settings: OrderedReactionLayoutSettings

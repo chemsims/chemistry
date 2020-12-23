@@ -57,8 +57,8 @@ class ReactionState: ScreenState, SubState {
     typealias Model = ZeroOrderReactionViewModel
     typealias NestedState = ReactionState
 
-    let constantStatement: [SpeechBubbleLine]
-    init(statement: [SpeechBubbleLine] = []) {
+    let constantStatement: [TextLine]
+    init(statement: [TextLine] = []) {
         self.constantStatement = statement
     }
 
@@ -112,7 +112,7 @@ class RunAnimation: ReactionState {
     let initialiseCurrentTime: Bool
 
     init(
-        statement: [SpeechBubbleLine],
+        statement: [TextLine],
         order: ReactionOrder?,
         persistence: ReactionInputPersistence?,
         initialiseCurrentTime: Bool
@@ -164,7 +164,7 @@ class RunAnimation: ReactionState {
 class EndAnimation: ReactionState {
 
     let highlightChart: Bool
-    init(statement: [SpeechBubbleLine], highlightChart: Bool) {
+    init(statement: [TextLine], highlightChart: Bool) {
         self.highlightChart = highlightChart
         super.init(statement: statement)
     }

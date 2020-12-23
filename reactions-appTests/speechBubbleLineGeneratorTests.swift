@@ -6,7 +6,7 @@
 import XCTest
 @testable import reactions_app
 
-class SpeechBubbleLineGeneratorTests: XCTestCase {
+class TextLineGeneratorTests: XCTestCase {
 
     func testMakingSimpleLine() {
         let content = generate("Hello, world")
@@ -74,12 +74,12 @@ class SpeechBubbleLineGeneratorTests: XCTestCase {
         )
     }
 
-    private func segment(_ str: String, emphasis: Bool = false, scriptType: ScriptType? = nil) -> SpeechBubbleLineSegment {
-        SpeechBubbleLineSegment(content: str, emphasised: emphasis, scriptType: scriptType)
+    private func segment(_ str: String, emphasis: Bool = false, scriptType: ScriptType? = nil) -> TextSegment {
+        TextSegment(content: str, emphasised: emphasis, scriptType: scriptType)
     }
 
-    private func generate(_ str: String) -> [SpeechBubbleLineSegment] {
-        SpeechBubbleLineGenerator.makeLine(str).content
+    private func generate(_ str: String) -> [TextSegment] {
+        TextLineGenerator.makeLine(str).content
     }
     
 }

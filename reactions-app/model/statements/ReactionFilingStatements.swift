@@ -10,15 +10,15 @@ struct ReactionFilingStatements {
     static func message(
         order: ReactionOrder,
         next: ReactionOrder?
-    ) -> [SpeechBubbleLine] {
+    ) -> [TextLine] {
         var msg = [
-            SpeechBubbleLineGenerator.makeLine("This is the \(order.string) Order Reaction you completed earlier."),
-            SpeechBubbleLineGenerator.makeLine("*Drag the chart to scrub through the reaction time.*")
+            TextLineGenerator.makeLine("This is the \(order.string) Order Reaction you completed earlier."),
+            TextLineGenerator.makeLine("*Drag the chart to scrub through the reaction time.*")
         ]
 
         if let next = next {
             msg.append(
-                SpeechBubbleLineGenerator.makeLine("Swipe left or press next to see your \(next.string) Order Reaction.")
+                TextLineGenerator.makeLine("Swipe left or press next to see your \(next.string) Order Reaction.")
             )
         }
 
@@ -27,7 +27,7 @@ struct ReactionFilingStatements {
 
     // This message is blurred, but it's worth writing something as it's still partially visible
     static let blankMessage = [
-        SpeechBubbleLineGenerator.makeLine("This screen will become available when you've completed this part of the app!")
+        TextLineGenerator.makeLine("This screen will become available when you've completed this part of the app!")
     ]
 }
 

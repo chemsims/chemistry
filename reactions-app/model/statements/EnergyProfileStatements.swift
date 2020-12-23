@@ -7,14 +7,14 @@ import CoreGraphics
 
 struct EnergyProfileStatements {
 
-    static let intro: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine("Not so fast!"),
-        SpeechBubbleLineGenerator.makeLine("Choose a reaction to work with for this experiment."),
-        SpeechBubbleLineGenerator.makeLine("*Tap the right corner button to show the dropdown list.*"),
+    static let intro: [TextLine] = [
+        TextLineGenerator.makeLine("Not so fast!"),
+        TextLineGenerator.makeLine("Choose a reaction to work with for this experiment."),
+        TextLineGenerator.makeLine("*Tap the right corner button to show the dropdown list.*"),
     ]
 
     static let introCollisionTheory = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             We now know that the concentration can affect the *Rate* of a reaction. \
             But there are other variables that can affect in one way or another the *Rate* too. Let's first talk about *Collision Theory*.
@@ -23,7 +23,7 @@ struct EnergyProfileStatements {
     ]
 
     static let explainCollisionTheory = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             It states that the reaction rate is equal to the frequency of effective collisions between reactants. \
             For a collision to be effective, the molecules must collide with sufficient energy and in the proper orientation so that products can form.
@@ -32,7 +32,7 @@ struct EnergyProfileStatements {
     ]
 
     static let explainActivationEnergy = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             This minimum amount of energy that is needed to initiate or start a chemical reaction is called *Activation Energy (E_a_).* \
             As long as the collision of the molecules orientated properly have enough energy to surpass the *E_a_*, the collision will be successful.
@@ -41,7 +41,7 @@ struct EnergyProfileStatements {
     ]
 
     static let explainArrhenius = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             But how is the temperature related to the *Rate*? Well, an equation that portrays this mode accurately is the *Arrhenius Equation*. \
             As you can see, the temperature specifically affects the rate constant *k*.
@@ -50,7 +50,7 @@ struct EnergyProfileStatements {
     ]
 
     static let explainTerms = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             *k* is the rate constant, *A* is a term called the frequency factor that accounts for molecular orientation, \
             *e* is the natural logarithm base, *R* is the universal gas constant \(Strings.withNoBreaks(str: "8.314 J mol^-1^ K^-1^")), \
@@ -60,7 +60,7 @@ struct EnergyProfileStatements {
     ]
 
     static let explainRateTempRelation = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             As you can tell by the equation, the higher the temperature, the higher the rate constant will be, thus making the *Rate* higher too. \
             In a more practical way, high temperatures make the avgerage energy of molecules go up, beating the *E_a_* barrier.
@@ -69,13 +69,13 @@ struct EnergyProfileStatements {
     ]
 
     static let explainLinearKEquation = [
-        SpeechBubbleLineGenerator.makeLine("When applying logarithmic properties to both sides, you get a version of the equation that's linear, where:"),
-        SpeechBubbleLineGenerator.makeLine(Strings.withNoBreaks(str: "ln(k)*(y)*=(-E_a_/RT)*(mx)*+ln(a)*(b)*")),
-        SpeechBubbleLineGenerator.makeLine("With a slope of \(Strings.withNoBreaks(str: "-E_a_/R")).")
+        TextLineGenerator.makeLine("When applying logarithmic properties to both sides, you get a version of the equation that's linear, where:"),
+        TextLineGenerator.makeLine(Strings.withNoBreaks(str: "ln(k)*(y)*=(-E_a_/RT)*(mx)*+ln(a)*(b)*")),
+        TextLineGenerator.makeLine("With a slope of \(Strings.withNoBreaks(str: "-E_a_/R")).")
     ]
 
     static let explainArrheniusTwoPoints = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             If the linear equation is used to represent 2 different points (point 1 and point 2) of the line, we can sum \
             up the equations to get this form of the Arrhenius Equation. This is a very common way to use the Arrhenius Equation \
@@ -88,10 +88,10 @@ struct EnergyProfileStatements {
         ea: CGFloat,
         k: CGFloat,
         t: CGFloat
-    ) -> [SpeechBubbleLine] {
+    ) -> [TextLine] {
         let eaString = Strings.withNoBreaks(str: "\(ea.str(decimals: 0))J")
         return [
-            SpeechBubbleLineGenerator.makeLine(
+            TextLineGenerator.makeLine(
                 """
                 For this reaction, \(Strings.withNoBreaks(str: "*E_a_ is \(eaString)*")) and *k is \(k.str(decimals: 1))* \
                 when the temperature is \(Strings.withNoBreaks(str: "*\(t.str(decimals: 0)) K*")). \
@@ -103,7 +103,7 @@ struct EnergyProfileStatements {
     }
 
     static let explainEnergyDiagram = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             One way to depict the reaction's Activation Energy and potential energy is with an *energy diagram or reaction profile*. \
             The reaction profile plots the increase in potential energy of the reactants as they approach, reaching a maximum at the moment \
@@ -113,7 +113,7 @@ struct EnergyProfileStatements {
     ]
 
     static let explainExothermic = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             This is an exothermic reaction because the reaction starts at a higher point of energy than where it ends. \
             In other words, energy is being released when the reaction takes place. This energy released is usually \
@@ -123,7 +123,7 @@ struct EnergyProfileStatements {
     ]
 
     static let explainEaHump = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             The hump or bell in the graph represents the *Activation Energy*. The reaction energy has to be one \
             that overcomes that difference for it to occur. Otherwise, even with the proper orientation the molecules colliding of \
@@ -133,7 +133,7 @@ struct EnergyProfileStatements {
     ]
 
     static let explainCatalyst = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             There's a way to reduce the *Activation Energy*, and that is with the use of a *catalyst*. \
             Catalysts make reactions faster, and even though there are various types, in one way or another they do \
@@ -143,19 +143,19 @@ struct EnergyProfileStatements {
     ]
 
     static let instructToChooseCatalyst = [
-        SpeechBubbleLineGenerator.makeLine("Let's try that out!"),
-        SpeechBubbleLineGenerator.makeLine("Choose a catalyst to use to make the reaction in the beaker go faster."),
-        SpeechBubbleLineGenerator.makeLine("*Tap a catalyst to select it*.")
+        TextLineGenerator.makeLine("Let's try that out!"),
+        TextLineGenerator.makeLine("Choose a catalyst to use to make the reaction in the beaker go faster."),
+        TextLineGenerator.makeLine("*Tap a catalyst to select it*.")
     ]
 
     static let instructToShakeCatalyst = [
-        SpeechBubbleLineGenerator.makeLine("Perfect! Now shake the catalyst to drop it into the beaker, and let's see what happens."),
-        SpeechBubbleLineGenerator.makeLine("*Shake your phone or tablet or just tap the shaker once again*.")
+        TextLineGenerator.makeLine("Perfect! Now shake the catalyst to drop it into the beaker, and let's see what happens."),
+        TextLineGenerator.makeLine("*Shake your phone or tablet or just tap the shaker once again*.")
     ]
 
-    static func showEaReduction(newEa: CGFloat) -> [SpeechBubbleLine] {
+    static func showEaReduction(newEa: CGFloat) -> [TextLine] {
         [
-            SpeechBubbleLineGenerator.makeLine(
+            TextLineGenerator.makeLine(
                 """
                 Look! The E_a_ was reduced to \(Strings.withNoBreaks(str: "*\(newEa.str(decimals: 0)) J*")) \
                 thanks to that catalyst. See that horizontal line? It represents the average kinetic energy of the molecules. \
@@ -165,9 +165,9 @@ struct EnergyProfileStatements {
         ]
     }
 
-    static func showLinearChart(slope: CGFloat) -> [SpeechBubbleLine] {
+    static func showLinearChart(slope: CGFloat) -> [TextLine] {
         [
-            SpeechBubbleLineGenerator.makeLine(
+            TextLineGenerator.makeLine(
                 """
                 Take a look at the linear graph of \(Strings.withNoBreaks(str: "ln(k) vs 1/T")) with a slope of \(slope.str(decimals: 0)). This graph is very useful to determine the relation between the constant *k* and the temperature. Here you can see too that the higher *k* is, the higher *T* is.
                 """
@@ -175,9 +175,9 @@ struct EnergyProfileStatements {
         ]
     }
 
-    static func showKRatio(newK: CGFloat, temp: CGFloat) -> [SpeechBubbleLine] {
+    static func showKRatio(newK: CGFloat, temp: CGFloat) -> [TextLine] {
         [
-            SpeechBubbleLineGenerator.makeLine(
+            TextLineGenerator.makeLine(
                 """
                 Points of that graph are being represented in this equation. As of now, *k* went up to *\(newK.str(decimals: 1))* \
                 when *T* is *\(temp.str(decimals: 0))K*, because the catalyst lowered the E_a_, making the constant *k* higher, thus making the *Rate* higher too.
@@ -187,7 +187,7 @@ struct EnergyProfileStatements {
     }
 
     static let instructToSetTemp = [
-        SpeechBubbleLineGenerator.makeLine(
+        TextLineGenerator.makeLine(
             """
             Let's try to produce C. *Use the flame slider to increase the temperature in the beaker*. \
             This will make the kinetic energy of the molecules increase too, meaning they will go faster so that when they collide \
@@ -197,32 +197,32 @@ struct EnergyProfileStatements {
     ]
 
     static let reactionInProgress = [
-        SpeechBubbleLineGenerator.makeLine("Perfect! Successful collisions are taking place!"),
-        SpeechBubbleLineGenerator.makeLine("Notice how the average kinetic bar goes up when the temperature goes up too. Also, notice how the rate constant can vary with the temperature.")
+        TextLineGenerator.makeLine("Perfect! Successful collisions are taking place!"),
+        TextLineGenerator.makeLine("Notice how the average kinetic bar goes up when the temperature goes up too. Also, notice how the rate constant can vary with the temperature.")
     ]
 
-    static let setT2: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine("Awesome!"),
-        SpeechBubbleLineGenerator.makeLine("Play with temperature to set T_2_. *Use the flame slider.*")
+    static let setT2: [TextLine] = [
+        TextLineGenerator.makeLine("Awesome!"),
+        TextLineGenerator.makeLine("Play with temperature to set T_2_. *Use the flame slider.*")
     ]
 
-    static let middle: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine("Keep playing with temperature to see more collisions."),
-        SpeechBubbleLineGenerator.makeLine("*Use the flame slider.*")
+    static let middle: [TextLine] = [
+        TextLineGenerator.makeLine("Keep playing with temperature to see more collisions."),
+        TextLineGenerator.makeLine("*Use the flame slider.*")
     ]
 
-    static let finished: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine("It's all done! All of A and B has turned into C successfully."),
-        SpeechBubbleLineGenerator.makeLine("Let's take another quiz, and then you're free to *explore further* the reaction rates.")
+    static let finished: [TextLine] = [
+        TextLineGenerator.makeLine("It's all done! All of A and B has turned into C successfully."),
+        TextLineGenerator.makeLine("Let's take another quiz, and then you're free to *explore further* the reaction rates.")
     ]
 
-    static let chooseADifferentCatalyst: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine("You've already used this catalyst, so let's try another one."),
-        SpeechBubbleLineGenerator.makeLine("*Tap a different catalyst to select it*.")
+    static let chooseADifferentCatalyst: [TextLine] = [
+        TextLineGenerator.makeLine("You've already used this catalyst, so let's try another one."),
+        TextLineGenerator.makeLine("*Tap a different catalyst to select it*.")
     ]
 
-    static let endOfApp: [SpeechBubbleLine] = [
-        SpeechBubbleLineGenerator.makeLine("Now you can explore all parts of kinetics, just tap the button at the top left corner to reveal the navigation menu, then choose your favorite part to review it once more!")
+    static let endOfApp: [TextLine] = [
+        TextLineGenerator.makeLine("Now you can explore all parts of kinetics, just tap the button at the top left corner to reveal the navigation menu, then choose your favorite part to review it once more!")
     ]
 
 }

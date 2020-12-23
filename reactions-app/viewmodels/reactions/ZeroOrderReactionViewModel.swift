@@ -11,7 +11,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
         setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
     }
 
-    @Published var statement = [SpeechBubbleLine]()
+    @Published var statement = [TextLine]()
     @Published var initialConcentration: CGFloat = ReactionSettings.initialC {
         didSet {
             setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
