@@ -43,6 +43,10 @@ class QuizViewModel: ObservableObject {
 
     private var options = [QuizOption:String]()
 
+    func selectedOption(index: Int) -> QuizOption? {
+        answers[index]
+    }
+
     func next() {
         guard quizDifficulty != .skip else {
             nextScreen?()

@@ -299,8 +299,10 @@ fileprivate struct QuizReviewBody: View {
         ScrollView {
             VStack(spacing: 12) {
                 heading
-                ForEach(model.questions.prefix(model.quizDifficulty.quizLength)) { question in
-                    reviewCard(question: question)
+                ForEach(
+                    0..<model.quizDifficulty.quizLength
+                ) { index in
+                    reviewCard(index: index)
                 }
             }
             .padding(.top, settings.progressBarPadding)
@@ -320,21 +322,43 @@ fileprivate struct QuizReviewBody: View {
         }
     }
 
-    private func reviewCard(question: QuizQuestionOptions) -> some View {
-        ZStack(alignment: .leading) {
+    private func reviewCard(index: Int) -> some View {
+        let question = model.questions[index]
+        let selectedOption = model.selectedOption(index: index)
+
+        return ZStack(alignment: .leading) {
             RoundedRectangle(
                 cornerRadius: settings.progressCornerRadius
             )
             .foregroundColor(.white)
-//            .stroke()
             .shadow(radius: 2)
 
             VStack(alignment: .leading) {
                 Text(question.question)
                 Text(question.options[question.correctOption] ?? "")
                     .foregroundColor(.orangeAccent)
+                if (selectedOption != question.correctOption) {
+                    incorrectAnswer(
+                        question: question,
+                        selectedOption: selectedOption
+                    )
+                }
             }.padding()
         }.padding(.horizontal, 2)
+    }
+
+    private func incorrectAnswer(
+        question: QuizQuestionOptions,
+        selectedOption: QuizOption?
+    ) -> some View {
+        let selectedAnswer = selectedOption.flatMap { question.options[$0] } ?? "foo"
+        return VStack(alignment: .leading) {
+            HStack {
+                Text("Your answer")
+                Text(selectedAnswer)
+                    .foregroundColor(.orangeAccent)
+            }
+        }
     }
 }
 
