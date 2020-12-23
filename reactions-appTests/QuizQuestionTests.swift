@@ -10,7 +10,7 @@ import XCTest
 class QuizQuestionTests: XCTestCase {
 
     func testCorrectOption() {
-        let quizData = QuizQuestion2(question: "foo", correctAnswer: "answer", otherAnswers: [], explanation: nil, difficulty: .easy)
+        let quizData = QuizQuestion(question: "foo", correctAnswer: "answer", otherAnswers: [], explanation: nil, difficulty: .easy)
         let quiz = quizData.randomDisplay()
         XCTAssertEqual(quiz.options.count, 1)
         XCTAssertEqual(quiz.question, quizData.question)
@@ -18,7 +18,7 @@ class QuizQuestionTests: XCTestCase {
     }
 
     func testCorrectOptionWithPosition() {
-        let quizData = QuizQuestion2(
+        let quizData = QuizQuestion(
             question: "foo",
             correctAnswer: QuizAnswer(answer: "answer", explanation: nil, position: .D),
             otherAnswers: [],
@@ -33,7 +33,7 @@ class QuizQuestionTests: XCTestCase {
     }
 
     func testCorrectionOptionNoPositionAndSingleOtherOptionWithPosition() {
-        let quizData = QuizQuestion2(
+        let quizData = QuizQuestion(
             question: "foo",
             correctAnswer: "answer",
             otherAnswers: [
@@ -50,7 +50,7 @@ class QuizQuestionTests: XCTestCase {
     }
 
     func testCorrectionOptionWithPositionAndOtherOptionsWithMixedPositions() {
-        let quizData = QuizQuestion2(
+        let quizData = QuizQuestion(
             question: "foo",
             correctAnswer: QuizAnswer(answer: "answer", explanation: nil, position: .D),
             otherAnswers: [
@@ -70,6 +70,22 @@ class QuizQuestionTests: XCTestCase {
         ]
         XCTAssertEqual(quiz.correctOption, .D)
         XCTAssertEqual(quiz.options, expected)
+    }
+
+    func testOtherOptionsWhereOnlyTheLastHasAPosition() {
+        let quizData = QuizQuestion(
+            question: "foo",
+            correctAnswer: "bar",
+            otherAnswers: [
+                "wrong 1",
+                "wrong 2",
+                QuizAnswer(answer: "wrong 3", explanation: nil, position: .A)
+            ],
+            explanation: nil,
+            difficulty: .easy
+        )
+        let quiz = quizData.randomDisplay()
+        XCTAssertEqual(quiz.options[.A], quizData.otherAnswers.last!.answer)
     }
 
     /// Since the function chooses random elements, all tests are run multiple times to avoid flaky tests

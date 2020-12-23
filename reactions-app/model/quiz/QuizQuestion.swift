@@ -14,25 +14,23 @@ struct QuizQuestion {
 
     func randomDisplay() -> QuizQuestionDisplay {
         assert(otherAnswers.count < QuizOption.allCases.count)
-
-        var options = QuizOption.allCases
+        let protectedOptions = Set(([correctAnswer] + otherAnswers).compactMap(\.position))
+        var options = QuizOption.allCases.filter { !protectedOptions.contains($0) }
         var answers = [QuizOption: TextLine]()
+
         func add(_ answer: QuizAnswer, _ option: QuizOption) {
             assert(answers[option] == nil)
             options = options.filter { $0 != option }
             answers[option] = answer.answer
         }
 
-        if let correctOption = correctAnswer.position {
-            options = options.filter { $0 != correctOption }
-        }
+        let correctOption = correctAnswer.position ?? options.randomElement()!
+        add(correctAnswer, correctOption)
 
         otherAnswers.forEach { answer in
             let option = answer.position ?? options.randomElement()!
             add(answer, option)
         }
-        let correctOption = correctAnswer.position ?? options.randomElement()!
-        add(correctAnswer, correctOption)
 
         return QuizQuestionDisplay(
             question: question,
