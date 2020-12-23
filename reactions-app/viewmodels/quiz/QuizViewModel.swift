@@ -11,7 +11,7 @@ class QuizViewModel: ObservableObject {
 
     init() {
         questions = ZeroOrderQuizQuestions.questions.map { $0.randomDisplay() }
-        setQuestion(newIndex: 0)
+        setQuestion(newIndex: 1)
     }
 
     var nextScreen: (() -> Void)?
@@ -21,7 +21,7 @@ class QuizViewModel: ObservableObject {
 
     @Published var progress: CGFloat = 0
     @Published var correctOption: QuizOption = .A
-    @Published var quizState = QuizState.pending
+    @Published var quizState = QuizState.running
     @Published var quizDifficulty = QuizDifficulty.medium
     private(set) var questionIndex = 0
 

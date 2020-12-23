@@ -27,7 +27,6 @@ fileprivate struct QuizScreenWithSettings: View {
 
     var body: some View {
         ZStack {
-            navButtons
             VStack(spacing: 0) {
                 progressBar
                     .frame(
@@ -37,6 +36,13 @@ fileprivate struct QuizScreenWithSettings: View {
                     .padding(.horizontal, settings.progressBarPadding)
                     .padding(.top, settings.progressBarPadding)
 
+                if (model.quizState == .running) {
+                    QuizQuestionsBody(
+                        settings: settings,
+                        model: model
+                    )
+                }
+
                 HStack(spacing: 0) {
                     Spacer()
                         .frame(width: settings.navTotalWidth)
@@ -45,13 +51,6 @@ fileprivate struct QuizScreenWithSettings: View {
                             settings: settings,
                             model: model
                         ).padding(.top, settings.progressBarPadding)
-                    }
-                    if (model.quizState == .running) {
-                        QuizQuestionsBody(
-                            settings: settings,
-                            model: model
-                        )
-                        .padding(.top, settings.progressBarPadding)
                     }
 
                     if (model.quizState == .completed) {
@@ -64,8 +63,9 @@ fileprivate struct QuizScreenWithSettings: View {
                 Spacer()
             }
             .edgesIgnoringSafeArea(
-                model.quizState == .completed ? .bottom : []
+                model.quizState == .pending ? [] : .bottom
             )
+            navButtons
         }
         .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.8)
@@ -177,9 +177,19 @@ fileprivate struct QuizQuestionsBody: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        VStack {
-            TextLinesView(line: model.question, fontSize: settings.fontSize)
-            answers
+        ScrollView {
+            HStack {
+                Spacer()
+                    .frame(width: settings.navTotalWidth)
+                VStack {
+                    TextLinesView(line: model.question, fontSize: settings.questionFontSize)
+                    answers
+                }
+                Spacer()
+                    .frame(width: settings.navTotalWidth)
+            }
+            .padding(.top, settings.progressBarPadding)
+            .padding(.bottom, settings.geometry.safeAreaInsets.bottom)
         }
     }
 
@@ -198,14 +208,17 @@ fileprivate struct QuizQuestionsBody: View {
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .foregroundColor(answerBackground(option: option))
 
-
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .stroke(lineWidth: answerLineWidth(option: option))
                     .foregroundColor(answerBorder(option: option))
                     .overlay(overlay(option: option), alignment: .topTrailing)
 
-                TextLinesView(line: model.optionText(option), fontSize: settings.fontSize)
-                    .foregroundColor(.black)
+                TextLinesView(
+                    line: model.optionText(option),
+                    fontSize: settings.answerFontSize
+                )
+                .foregroundColor(.black)
+                .padding()
             }
             .onTapGesture(perform: { handleAnswer(option: option) })
         }
@@ -378,6 +391,14 @@ struct QuizLayoutSettings {
 
     var navSize: CGFloat {
         0.05 * geometry.size.width
+    }
+
+    var questionFontSize: CGFloat {
+        0.05 * geometry.size.height
+    }
+
+    var answerFontSize: CGFloat {
+        0.9 * questionFontSize
     }
 
     var fontSize: CGFloat {
