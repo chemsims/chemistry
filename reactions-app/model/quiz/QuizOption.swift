@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum QuizOption: CaseIterable {
+enum QuizOption: CaseIterable, Equatable {
     case A, B, C, D
 }
 

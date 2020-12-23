@@ -86,6 +86,7 @@
 		577077D325698DF2003E750E /* SkBeakerSceneRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077D225698DF2003E750E /* SkBeakerSceneRepresentable.swift */; };
 		57778B7F259368B800254262 /* TextLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57778B7E259368B800254262 /* TextLineView.swift */; };
 		57778B8625937B6600254262 /* ZeroOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57778B8525937B6600254262 /* ZeroOrderQuizQuestions.swift */; };
+		57778B8A25937D8C00254262 /* QuizQuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57778B8925937D8C00254262 /* QuizQuestionTests.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
@@ -233,6 +234,7 @@
 		577077D225698DF2003E750E /* SkBeakerSceneRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkBeakerSceneRepresentable.swift; sourceTree = "<group>"; };
 		57778B7E259368B800254262 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		57778B8525937B6600254262 /* ZeroOrderQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderQuizQuestions.swift; sourceTree = "<group>"; };
+		57778B8925937D8C00254262 /* QuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTests.swift; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		57AA05E62562F3750080C538 /* SliderIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderIndicator.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				57F4775F25617B240041D406 /* BoundedSliderPositioningTests.swift */,
 				57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */,
 				5736B668258A79BD002CEF5E /* QuizViewModelTests.swift */,
+				57778B8925937D8C00254262 /* QuizQuestionTests.swift */,
 			);
 			path = "reactions-appTests";
 			sourceTree = "<group>";
@@ -893,6 +896,7 @@
 				57F4776025617B240041D406 /* BoundedSliderPositioningTests.swift in Sources */,
 				57035EE5255BFE5200DB3A19 /* sliderCalculationsTest.swift in Sources */,
 				57DAE4C62577A299006D945B /* CGFloatRoundingTests.swift in Sources */,
+				57778B8A25937D8C00254262 /* QuizQuestionTests.swift in Sources */,
 				57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

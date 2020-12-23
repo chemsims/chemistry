@@ -11,7 +11,7 @@ import Foundation
 /// line. If the text is too long for the available width, it will wrap on to the next line.
 /// However, each line will be separated from each other.
 ///
-struct TextLine: Identifiable, ExpressibleByStringLiteral {
+struct TextLine: Identifiable, ExpressibleByStringLiteral, Equatable {
     let id = UUID()
 
     /// The content of the line
