@@ -11,13 +11,22 @@ import Foundation
 /// line. If the text is too long for the available width, it will wrap on to the next line.
 /// However, each line will be separated from each other.
 ///
-struct TextLine: Identifiable {
+struct TextLine: Identifiable, ExpressibleByStringLiteral {
     let id = UUID()
 
     /// The content of the line
     /// - Note: The content will be concatenated as is, without adding
     ///         any whitespace between segments.
     let content: [TextSegment]
+
+    init(content: [TextSegment]) {
+        self.content = content
+    }
+
+    /// Creates a new TextLine from the literal string `value`
+    init(stringLiteral value: String) {
+        self.init(content: [TextSegment(content: value, emphasised: false)])
+    }
 }
 
 /// An individual segment of a line, including whether the content should

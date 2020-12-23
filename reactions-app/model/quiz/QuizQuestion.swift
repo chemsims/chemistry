@@ -5,6 +5,30 @@
 
 import Foundation
 
+struct QuizQuestion2 {
+    let question: TextLine
+    let correctAnswer: QuizAnswer
+    let otherAnswers: [QuizAnswer]
+    let explanation: TextLine?
+    let difficulty: QuizDifficulty
+}
+
+struct QuizAnswer: ExpressibleByStringLiteral {
+    let answer: TextLine
+    let explanation: TextLine?
+    let position: QuizOption?
+
+    init(answer: TextLine, explanation: TextLine?, position: QuizOption? = nil) {
+        self.answer = answer
+        self.explanation = explanation
+        self.position = position
+    }
+
+    init(stringLiteral value: String) {
+        self.init(answer: TextLine(stringLiteral: value), explanation: nil)
+    }
+}
+
 
 struct QuizQuestion {
     let question: String
