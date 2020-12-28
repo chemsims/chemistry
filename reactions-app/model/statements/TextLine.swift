@@ -59,6 +59,7 @@ struct TextLineGenerator {
     private static let sub = Character("_")
     private static let superScript = Character("^")
     private static let noBreaks = Character("$")
+    private static let escape = Character("\\")
 
     /// Creates a `TextLine` by parsing the provided String.
     ///
@@ -103,17 +104,25 @@ struct TextLineGenerator {
             }
         }
 
-        for char in str {
+
+        for index in str.indices {
+            let char = str[index]
+            if char == escape {
+                continue
+            }
+
             let charScript = charToScript(char)
-            if (char == emphasis) {
+            let hasPrev = str.indices.first! < index
+            let prevIsEscape = hasPrev && str[str.index(before: index)] == escape
+            if (char == emphasis && !prevIsEscape) {
                 addIfNonEmpty()
                 builder = ""
                 buildingEmphasis.toggle()
-            } else if (charScript != nil) {
+            } else if (charScript != nil && !prevIsEscape) {
                 addIfNonEmpty()
                 builder = ""
                 scriptType = scriptType == nil ? charScript : nil
-            } else if (char == noBreaks) {
+            } else if (char == noBreaks && !prevIsEscape) {
                 addIfNonEmpty()
                 builder = ""
                 allowBreaks.toggle()

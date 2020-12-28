@@ -103,6 +103,11 @@ class TextLineGeneratorTests: XCTestCase {
         XCTAssertEqual(content3Variant2, expected3)
     }
 
+    func testEscapingAControlCharacter() {
+        let content = generate("A \\* B")
+        XCTAssertEqual(content, [segment("A * B")])
+    }
+
     private func segment(_ str: String, emphasis: Bool = false, scriptType: ScriptType? = nil, allowBreaks: Bool = true) -> TextSegment {
         TextSegment(content: str, emphasised: emphasis, scriptType: scriptType, allowBreaks: allowBreaks)
     }
