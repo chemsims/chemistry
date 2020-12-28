@@ -236,7 +236,7 @@ struct ZeroOrderQuizQuestions {
         ),
         QuizQuestion(
             question: "Which one of the following is the half equation for Zero Order reactions?",
-            correctAnswer: "t_1/2_ = [A_0] / 2k",
+            correctAnswer: "t_1/2_ = [A_0_] / 2k",
             otherAnswers: [
                 "t_1/2_ = 0.69 / k",
                 "t_1/2_ = [A_0_] / 2k",

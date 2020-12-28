@@ -23,9 +23,9 @@ struct TextLine: Identifiable, ExpressibleByStringLiteral, Equatable {
         self.content = content
     }
 
-    /// Creates a new TextLine from the literal string `value`
+    /// Creates a new `TextLine` from the literal String `value`, after parsing the String.
     init(stringLiteral value: String) {
-        self.init(content: [TextSegment(content: value, emphasised: false)])
+        self.init(content: TextLineGenerator.makeLine(value).content)
     }
 }
 
