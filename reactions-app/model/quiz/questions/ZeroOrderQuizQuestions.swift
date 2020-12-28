@@ -247,7 +247,7 @@ struct ZeroOrderQuizQuestions {
             question: "Rate always has the units of:",
             correctAnswer: "Concentration / time",
             otherAnswers: [
-                "Concentration * time",
+                "Concentration \\* time",
                 "Time / concentration",
                 "It varies"
             ],
