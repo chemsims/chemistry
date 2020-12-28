@@ -74,8 +74,37 @@ class TextLineGeneratorTests: XCTestCase {
         )
     }
 
-    private func segment(_ str: String, emphasis: Bool = false, scriptType: ScriptType? = nil) -> TextSegment {
-        TextSegment(content: str, emphasised: emphasis, scriptType: scriptType)
+    func testStringsWithNoBreaks() {
+        let content1 = generate("$A = B + C$")
+        XCTAssertEqual(content1, [segment("A = B + C", allowBreaks: false)])
+
+        let content2 = generate("The equation is $*A = B + C*$")
+        XCTAssertEqual(
+            content2,
+            [
+                segment("The equation is "),
+                segment("A = B + C", emphasis: true, allowBreaks: false)
+            ]
+        )
+
+        let content3         = generate("The equation $*t_1/2_ = ln(2) / k*$ gives the half life")
+        let content3Variant1 = generate("The equation *$t_1/2_ = ln(2) / k$* gives the half life")
+        let content3Variant2 = generate("The equation *$t_1/2_ = ln(2) / k*$ gives the half life")
+        let expected3 = [
+            segment("The equation "),
+            segment("t", emphasis: true, allowBreaks: false),
+            segment("1/2", emphasis: true, scriptType: .subScript, allowBreaks: false),
+            segment(" = ln(2) / k", emphasis: true, allowBreaks: false),
+            segment(" gives the half life")
+        ]
+
+        XCTAssertEqual(content3, expected3)
+        XCTAssertEqual(content3Variant1, expected3)
+        XCTAssertEqual(content3Variant2, expected3)
+    }
+
+    private func segment(_ str: String, emphasis: Bool = false, scriptType: ScriptType? = nil, allowBreaks: Bool = true) -> TextSegment {
+        TextSegment(content: str, emphasised: emphasis, scriptType: scriptType, allowBreaks: allowBreaks)
     }
 
     private func generate(_ str: String) -> [TextSegment] {

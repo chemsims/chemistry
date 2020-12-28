@@ -35,15 +35,18 @@ struct TextSegment: Equatable {
     let content: String
     let emphasised: Bool
     let scriptType: ScriptType?
+    let allowBreaks: Bool
 
     init(
         content: String,
         emphasised: Bool,
-        scriptType: ScriptType? = nil
+        scriptType: ScriptType? = nil,
+        allowBreaks: Bool = true
     ) {
         self.content = content
         self.emphasised = emphasised
         self.scriptType = scriptType
+        self.allowBreaks = allowBreaks
     }
 }
 
@@ -56,16 +59,25 @@ struct TextLineGenerator {
     private static let emphasis = Character("*")
     private static let sub = Character("_")
     private static let superScript = Character("^")
+    private static let noBreaks = Character("$")
 
     static func makeLine(_ str: String) -> TextLine {
         var segments = [TextSegment]()
         var builder: String = ""
         var buildingEmphasis: Bool = false
         var scriptType: ScriptType? = nil
+        var allowBreaks: Bool = true
 
         func addIfNonEmpty() {
             if (!builder.isEmpty) {
-                segments.append(TextSegment(content: builder, emphasised: buildingEmphasis, scriptType: scriptType))
+                segments.append(
+                    TextSegment(
+                        content: builder,
+                        emphasised: buildingEmphasis,
+                        scriptType: scriptType,
+                        allowBreaks: allowBreaks
+                    )
+                )
             }
         }
 
@@ -79,6 +91,10 @@ struct TextLineGenerator {
                 addIfNonEmpty()
                 builder = ""
                 scriptType = scriptType == nil ? charScript : nil
+            } else if (char == noBreaks) {
+                addIfNonEmpty()
+                builder = ""
+                allowBreaks.toggle()
             } else {
                 builder.append(char)
             }

@@ -57,7 +57,7 @@ struct TextLinesView: View {
     }
 
     private func text(_ segment: TextSegment) -> Text {
-        Text(segment.content)
+        Text(segment.allowBreaks ? segment.content : Strings.withNoBreaks(str: segment.content))
             .foregroundColor(segment.emphasised ? .orangeAccent : .black)
             .font(.system(size: fontSize(line: segment)))
             .baselineOffset(fontOffset(line: segment))
