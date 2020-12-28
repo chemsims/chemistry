@@ -17,7 +17,7 @@ class RootNavigationViewModel: ObservableObject {
     init(
         persistence: ReactionInputPersistence
     ) {
-        let firstScreen = AppScreen.zeroOrderReactionQuiz
+        let firstScreen = AppScreen.firstOrderReactionQuiz
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.view = AnyView(EmptyView())
@@ -140,7 +140,11 @@ fileprivate extension AppScreen {
         case .firstOrderReaction:
             return FirstOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .firstOrderReactionQuiz:
-            return QuizScreenProvider(questions: QuizQuestion.zeroOrderQuestions, next: next, prev: prev)
+            return QuizScreenProvider(
+                questions: QuizQuestion.firstOrderQuestions,
+                next: next,
+                prev: prev
+            )
         case .secondOrderReaction:
             return SecondOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .secondOrderReactionQuiz:
