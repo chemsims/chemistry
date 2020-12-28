@@ -61,6 +61,29 @@ struct TextLineGenerator {
     private static let superScript = Character("^")
     private static let noBreaks = Character("$")
 
+    /// Creates a `TextLine` by parsing the provided String.
+    ///
+    /// - Parameter str: The string value to parse
+    ///
+    /// Usage
+    /// =====
+    /// The provided string is parsed by surrounding text with control characters
+    /// The following control characters are supported
+    /// - Emphasis: `*`
+    ///     Adds emphasis to the text
+    /// - Subscript: `_`
+    ///     Makes the text a subscript
+    /// - Superscript: `^`
+    ///     Makes the text a superscript
+    /// - No-breaks: `$`
+    ///     Ensures the text cannot be broken to fit into a new line
+    ///
+    /// An example using each of these control characters is,
+    ///
+    /// `makeLine("This equation for *Half Life* is incorrect: $t_1/2_ = [A_0_]^Order^$")`
+    ///
+    /// Note that it is possible to nest control characters - with the exception of subscript and superscript.
+    /// It is generally a good idea to wrap mathematical expressions with the `$` to avoid the term wrapping over multiple line.
     static func makeLine(_ str: String) -> TextLine {
         var segments = [TextSegment]()
         var builder: String = ""
