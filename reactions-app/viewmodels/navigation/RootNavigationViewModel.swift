@@ -136,23 +136,23 @@ fileprivate extension AppScreen {
         case .zeroOrderReaction:
             return ZeroOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .zeroOrderReactionQuiz:
-            return QuizScreenProvider(next: next, prev: prev)
+            return QuizScreenProvider(questions: QuizQuestion.zeroOrderQuestions, next: next, prev: prev)
         case .firstOrderReaction:
             return FirstOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .firstOrderReactionQuiz:
-            return QuizScreenProvider(next: next, prev: prev)
+            return QuizScreenProvider(questions: QuizQuestion.zeroOrderQuestions, next: next, prev: prev)
         case .secondOrderReaction:
             return SecondOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .secondOrderReactionQuiz:
-            return QuizScreenProvider(next: next, prev: prev)
+            return QuizScreenProvider(questions: QuizQuestion.zeroOrderQuestions, next: next, prev: prev)
         case .reactionComparison:
             return ReactionComparisonScreenProvider(persistence: persistence, next: next, prev: prev)
         case .reactionComparisonQuiz:
-            return QuizScreenProvider(next: next, prev: prev)
+            return QuizScreenProvider(questions: QuizQuestion.zeroOrderQuestions, next: next, prev: prev)
         case .energyProfile:
             return EnergyProfileScreenProvider(persistence: persistence, next: next, prev: prev)
         case .energyProfileQuiz:
-            return QuizScreenProvider(next: next, prev: prev)
+            return QuizScreenProvider(questions: QuizQuestion.zeroOrderQuestions, next: next, prev: prev)
         case .zeroOrderFiling:
             return ReactionFilingScreenProvider(persistence: persistence, order: .Zero)
         case .firstOrderFiling:
@@ -220,8 +220,12 @@ fileprivate class SecondOrderReactionScreenProvider: ScreenProvider {
 }
 
 fileprivate class QuizScreenProvider: ScreenProvider {
-    init(next: @escaping () -> Void, prev: @escaping () -> Void) {
-        self.viewModel = QuizViewModel()
+    init(
+        questions: [QuizQuestion],
+        next: @escaping () -> Void,
+        prev: @escaping () -> Void
+    ) {
+        self.viewModel = QuizViewModel(questions: questions)
         viewModel.nextScreen = next
         viewModel.prevScreen = prev
     }

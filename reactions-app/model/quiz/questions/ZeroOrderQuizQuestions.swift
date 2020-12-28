@@ -5,8 +5,8 @@
 
 import Foundation
 
-struct ZeroOrderQuizQuestions {
-    static let questions = [
+extension QuizQuestion {
+    static let zeroOrderQuestions = [
         QuizQuestion(
             question: "In which unit is the Rate of a reaction written in?",
             correctAnswer: "M/s",

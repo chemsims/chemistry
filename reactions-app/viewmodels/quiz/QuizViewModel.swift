@@ -10,10 +10,10 @@ class QuizViewModel: ObservableObject {
     private let allQuestions: [QuizQuestionDisplay]
     let difficultyCount: [QuizDifficulty:Int]
 
-    init() {
-        let questions = ZeroOrderQuizQuestions.questions.map { $0.randomDisplay() }
-        self.allQuestions = questions
-        difficultyCount = QuizDifficulty.counts(questions: questions)
+    init(questions: [QuizQuestion]) {
+        let displayQuestions = questions.map { $0.randomDisplay() }
+        self.allQuestions = displayQuestions
+        difficultyCount = QuizDifficulty.counts(questions: displayQuestions)
     }
 
     var nextScreen: (() -> Void)?

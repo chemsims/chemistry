@@ -35,7 +35,7 @@ fileprivate struct QuizReviewScreenWithSettings: View {
 struct QuizReviewScreen_Previews: PreviewProvider {
     static var previews: some View {
         QuizReviewScreen(
-            model: QuizViewModel()
+            model: QuizViewModel(questions: QuizQuestion.zeroOrderQuestions)
         )
     }
 }

@@ -450,7 +450,7 @@ struct QuizLayoutSettings {
 struct QuizScreen_Previews: PreviewProvider {
     static var previews: some View {
         QuizScreen(
-            model: QuizViewModel()
+            model: QuizViewModel(questions: QuizQuestion.zeroOrderQuestions)
         )
         .previewLayout(.fixed(width: 568, height: 320))
     }
