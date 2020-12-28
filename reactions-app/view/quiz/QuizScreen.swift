@@ -28,13 +28,15 @@ fileprivate struct QuizScreenWithSettings: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                progressBar
-                    .frame(
-                        width: settings.progressWidth,
-                        height: settings.progressHeight
-                    )
-                    .padding(.horizontal, settings.progressBarPadding)
-                    .padding(.top, settings.progressBarPadding)
+                if (model.quizState != .completed) {
+                    progressBar
+                        .frame(
+                            width: settings.progressWidth,
+                            height: settings.progressHeight
+                        )
+                        .padding(.horizontal, settings.progressBarPadding)
+                        .padding(.top, settings.progressBarPadding)
+                }
 
                 if (model.quizState == .running) {
                     QuizQuestionsBody(
@@ -109,7 +111,7 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private var progressLabel: some View {
-        Text("\(model.questionIndex + 1)/\(model.quizDifficulty.quizLength)")
+        Text("\(model.questionIndex + 1)/\(model.quizLength)")
         .font(.system(size: settings.progressFontSize))
         .minimumScaleFactor(0.8)
         .frame(width: settings.progressLabelWidth, height: 0.9 * settings.progressHeight)
@@ -135,7 +137,7 @@ fileprivate struct QuizIntroBody: View {
             Text("Choose the difficulty level of the quiz")
                 .font(.system(size: 0.8 * settings.fontSize))
                 .foregroundColor(.orangeAccent)
-            ForEach(QuizDifficulty.allCases, id: \.rawValue) { difficulty in
+            ForEach(model.availableDifficulties, id: \.rawValue) { difficulty in
                 quizDifficultyOption(difficulty: difficulty)
             }
         }
@@ -146,7 +148,8 @@ fileprivate struct QuizIntroBody: View {
         difficulty: QuizDifficulty
     ) -> some View {
         let isSelected = model.quizDifficulty == difficulty
-        let subline = difficulty == .skip ? "Skip this quiz" : "\(difficulty.quizLength) questions"
+        let count = model.difficultyCount[difficulty] ?? 0
+        let subline = difficulty == .skip ? "Skip this quiz" : "\(count) questions"
 
         return ZStack {
             RoundedRectangle(cornerRadius: settings.progressCornerRadius)
@@ -157,7 +160,7 @@ fileprivate struct QuizIntroBody: View {
                 .foregroundColor(isSelected ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerBorder)
 
             VStack {
-                Text(difficulty.rawValue.capitalized)
+                Text(difficulty.displayName)
                 Text(subline)
                     .font(.system(size: 0.7 * settings.fontSize))
             }
@@ -311,9 +314,7 @@ fileprivate struct QuizReviewBody: View {
         ScrollView {
             VStack(spacing: 12) {
                 heading
-                ForEach(
-                    0..<model.quizDifficulty.quizLength
-                ) { index in
+                ForEach(0..<model.quizLength) { index in
                     reviewCard(index: index)
                 }
             }
@@ -325,7 +326,7 @@ fileprivate struct QuizReviewBody: View {
         HStack {
             Spacer()
             VStack {
-                Text("Your score is \(model.correctAnswers)/\(model.quizDifficulty.quizLength)")
+                Text("Your score is \(model.correctAnswers)/\(model.quizLength)")
                     .foregroundColor(.orangeAccent)
                 Text("Let's review the questions!")
             }
@@ -335,7 +336,7 @@ fileprivate struct QuizReviewBody: View {
     }
 
     private func reviewCard(index: Int) -> some View {
-        let question = model.questions[index]
+        let question = model.availableQuestions[index]
         let selectedOption = model.selectedOption(index: index)
 
         return ZStack(alignment: .leading) {
@@ -370,6 +371,17 @@ fileprivate struct QuizReviewBody: View {
                 TextLinesView(line: selectedAnswer, fontSize: settings.fontSize)
                     .foregroundColor(.orangeAccent)
             }
+        }
+    }
+}
+
+fileprivate extension QuizDifficulty {
+    var displayName: String {
+        switch (self) {
+        case .skip: return "Skip"
+        case .easy: return "Easy"
+        case .medium: return "Medium"
+        case .hard: return "Hard"
         }
     }
 }

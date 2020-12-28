@@ -36,7 +36,8 @@ struct QuizQuestion {
             question: question,
             options: answers,
             correctOption: correctOption,
-            explanation: nil
+            explanation: nil,
+            difficulty: difficulty
         )
     }
 }
@@ -46,6 +47,7 @@ struct QuizQuestionDisplay {
     let options: [QuizOption:TextLine]
     let correctOption: QuizOption
     let explanation: TextLine?
+    let difficulty: QuizDifficulty
 }
 
 struct QuizAnswer: ExpressibleByStringLiteral {

@@ -7,32 +7,52 @@ import SwiftUI
 
 class QuizViewModel: ObservableObject {
 
-    let questions: [QuizQuestionDisplay]
+    private let allQuestions: [QuizQuestionDisplay]
+    let difficultyCount: [QuizDifficulty:Int]
 
     init() {
-        questions = ZeroOrderQuizQuestions.questions.map { $0.randomDisplay() }
-        setQuestion(newIndex: 1)
+        let questions = ZeroOrderQuizQuestions.questions.map { $0.randomDisplay() }
+        self.allQuestions = questions
+        difficultyCount = QuizDifficulty.counts(questions: questions)
     }
 
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
 
     @Published private var answers = [Int:QuizOption]()
-
     @Published var progress: CGFloat = 0
-    @Published var correctOption: QuizOption = .A
-    @Published var quizState = QuizState.running
+    @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
-    private(set) var questionIndex = 0
+    @Published private(set) var questionIndex = 0
 
     var selectedAnswer: QuizOption? {
         answers[questionIndex]
     }
 
+    var correctOption: QuizOption {
+        currentQuestion.correctOption
+    }
+
     var correctAnswers: Int {
         answers.filter { answer in
-            questions[answer.key].correctOption == answer.value
+            availableQuestions[answer.key].correctOption == answer.value
         }.count
+    }
+
+    var availableQuestions: [QuizQuestionDisplay] {
+        allQuestions.filter { question in
+            question.difficulty <= quizDifficulty
+        }
+    }
+
+    var availableDifficulties: [QuizDifficulty] {
+        QuizDifficulty.allCases.filter {
+            (difficultyCount[$0] ?? 0) > 0
+        }.sorted()
+    }
+
+    var quizLength: Int {
+        difficultyCount[quizDifficulty] ?? 0
     }
 
     private var reduceMotion: Bool {
@@ -51,10 +71,11 @@ class QuizViewModel: ObservableObject {
         switch (quizState) {
         case .pending:
             quizState = .running
+            answers = [Int:QuizOption]()
+            setProgress()
         case .running:
-            if (questionIndex == quizDifficulty.quizLength - 1) {
+            if (questionIndex == quizLength - 1) {
                 quizState = .completed
-                questionIndex += 1
                 setProgress()
             } else {
                 setQuestion(newIndex: questionIndex + 1)
@@ -70,9 +91,11 @@ class QuizViewModel: ObservableObject {
             prevScreen?()
         case .running where questionIndex == 0:
             quizState = .pending
-        default:
-            quizState = .running
+            setProgress()
+        case .running:
             setQuestion(newIndex: questionIndex - 1)
+        case .completed:
+            quizState = .running
         }
     }
 
@@ -89,22 +112,21 @@ class QuizViewModel: ObservableObject {
     }
 
     private var currentQuestion: QuizQuestionDisplay {
-        questions[questionIndex]
+        availableQuestions[questionIndex]
     }
 
     private func setQuestion(newIndex: Int) {
-        guard newIndex < questions.count && newIndex >= 0 else {
+        guard newIndex < availableQuestions.count && newIndex >= 0 else {
             return
         }
-        let nextQuestion = questions[newIndex]
-        correctOption = nextQuestion.correctOption
         questionIndex = newIndex
         setProgress()
     }
 
     private func setProgress() {
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
-            progress = CGFloat(questionIndex) / CGFloat(quizDifficulty.quizLength)
+            let pending = quizState == .pending
+            progress = pending ? 0 : CGFloat(questionIndex + 1) / CGFloat(quizLength)
         }
     }
 }
