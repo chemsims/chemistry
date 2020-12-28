@@ -19,7 +19,7 @@ struct ZeroOrderQuizQuestions {
             difficulty: .easy
         ),
         QuizQuestion(
-            question: "A zero order reaction (A to B) has a rate of 1 M/s. It starts with a concentration of A of 10 M, and after 5 seconds, there are 5 M of A left, and 5 M more of A are added. How much time in seconds will it take for the 10 M to fully convert into B?",
+            question: "A zero order reaction (A to B) has a rate of $1 M/s$. It starts with a concentration of A of $10 M$, and after 5 seconds, there are $5 M$ of A left, and $5 M$ more of A are added. How much time in seconds will it take for the $10 M$ to fully convert into B?",
             correctAnswer: "10 seconds",
             otherAnswers: [
                 "5 seconds",
@@ -30,7 +30,7 @@ struct ZeroOrderQuizQuestions {
             difficulty: .easy
         ),
         QuizQuestion(
-            question: "A zero order reaction (2A to B), has A disappearing at a Rate of 1.5 M/s. What is the rate of appearance of B?",
+            question: "A zero order reaction $(2A to B)$, has A disappearing at a Rate of $1.5 M/s$. What is the rate of appearance of B?",
             correctAnswer: "0.75 M/s",
             otherAnswers: [
                 "-0.75 M/s",
@@ -41,9 +41,7 @@ struct ZeroOrderQuizQuestions {
             difficulty: .easy
         ),
         QuizQuestion(
-            question: TextLineGenerator.makeLine(
-                "There is a reaction (4A to B + C). The rate of disappearance of A can be written as \(Strings.withNoBreaks(str: "Rate=-[∆]/Δt")). This is equivalent to:"
-            ),
+            question: "There is a reaction $(4A to B + C)$. The rate of disappearance of A can be written as $Rate=-[∆A]/Δt$. This is equivalent to:",
             correctAnswer: "4[ΔB]/Δt",
             otherAnswers: [
                 "-1/4[ΔB]/Δt",
@@ -55,7 +53,7 @@ struct ZeroOrderQuizQuestions {
         ),
         QuizQuestion(
             question: TextLineGenerator.makeLine(
-                "A zero order reaction (A to B) started 1 minute ago. A currently has a concentration of 5 M in the solution. After 30 seconds, there are 4 M of A left. Which of the following is the initial concentration of A ([A_0_])?"
+                "A zero order reaction $(A to B)$ started 1 minute ago. A currently has a concentration of $5 M$ in the solution. After 30 seconds, there are $4 M$ of A left. Which of the following is the initial concentration of $A ([A_0_])$?"
             ),
             correctAnswer: "7 M",
             otherAnswers: [
@@ -115,7 +113,7 @@ struct ZeroOrderQuizQuestions {
             difficulty: .easy
         ),
         QuizQuestion(
-            question: "A reaaction (A to B) started 1 day ago. A currently has a concentration of 10 M in the solution. After 5 hours, there are 8 M of A left. Which of the following is the time at which the concentration of A will be half of what is it was at the beginning of the reaction?",
+            question: "A reaction $(A to B)$ started 1 day ago. A currently has a concentration of $10 M$ in the solution. After 5 hours, there are $8 M$ of A left. Which of the following is the time at which the concentration of A will be half of what is it was at the beginning of the reaction?",
             correctAnswer: "A little more than a day",
             otherAnswers: [
                 "5 hours",
@@ -133,7 +131,7 @@ struct ZeroOrderQuizQuestions {
             difficulty: .medium
         ),
         QuizQuestion(
-            question: "A reaction (A to 3B) tool place. It started with only A, and it ended up being 8 M. Which of the following was the initial concentration of A?",
+            question: "A reaction $(A to 3B)$ tool place. It started with only A, and it ended up being $8 M$. Which of the following was the initial concentration of A?",
             correctAnswer: "2.666 M",
             otherAnswers: [
                 "8 M",
@@ -144,7 +142,7 @@ struct ZeroOrderQuizQuestions {
             difficulty: .easy
         ),
         QuizQuestion(
-            question: "There is a reaction (2A to 5B + C). The rate of appearance of B can be written as Rate=[ΔB]/Δt. This is equivalent to:",
+            question: "There is a reaction $(2A to 5B + C)$. The rate of appearance of B can be written as $Rate=[ΔB]/Δt$. This is equivalent to:",
             correctAnswer: "-5[ΔA]/2Δt",
             otherAnswers: [
                 "2[ΔC]/5Δt",
@@ -174,7 +172,7 @@ struct ZeroOrderQuizQuestions {
                 "M/s",
                 "1/s"
             ],
-            explanation: "The units of k can vary depending on the order of the reaction. It's normally determined by: M^(1-n)/s where n is the order of the reaction.",
+            explanation: "The units of k can vary depending on the order of the reaction. It's normally determined by: $M^(1-n)^/s$ where n is the order of the reaction.",
             difficulty: .easy
         ),
         QuizQuestion(
@@ -189,7 +187,7 @@ struct ZeroOrderQuizQuestions {
             difficulty: .easy
         ),
         QuizQuestion(
-            question: "A reaction (A to B) has started 12 hours ago. A has currently a concentration of 7M in the solution. After 3 hours, A has been reduced to 5M. Which of the following is the time at which the concentration of A will be 0?",
+            question: "A reaction $(A to B)$ has started 12 hours ago. A has currently a concentration of $7 M$ in the solution. After 3 hours, A has been reduced to $5 M$. Which of the following is the time at which the concentration of A will be 0?",
             correctAnswer: "22.5 h",
             otherAnswers: [
                 "11.25 h",
@@ -200,7 +198,7 @@ struct ZeroOrderQuizQuestions {
             difficulty: .medium
         ),
         QuizQuestion(
-            question: "A drug's decomposition follow a zero-order kinetics with a rate constant of 0.001 g mL-1 month-1. The initial concentration is 100 mg mL-1. Which of the following corresponds to the shelf life (t10%)?",
+            question: "A drug's decomposition follow a zero-order kinetics with a rate constant of $0.001 g mL^-1^ month^-1^$. The initial concentration is $100 mg mL^-1^$. Which of the following corresponds to the shelf life (t10%)?",
             correctAnswer: "10 months",
             otherAnswers: [
                 "5 months",
@@ -213,7 +211,7 @@ struct ZeroOrderQuizQuestions {
         QuizQuestion(
             question: "For a zero order reaction, which of the following is false?",
             correctAnswer: QuizAnswer(
-                answer: "The half-life may be represented by the expression t_1/2_ = 0.69 / k",
+                answer: "The half-life may be represented by the expression $t_1/2_ = 0.69 / k$",
                 explanation: "It's false because t_1/2_ = 0.69/k is the half-life equation for first order reactions. For zero order reactions, t_1/2_ = [A_0_]/2k"
             ),
             otherAnswers: [
