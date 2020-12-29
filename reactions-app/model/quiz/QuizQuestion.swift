@@ -79,6 +79,7 @@ struct QuizQuestion {
     let explanation: TextLine?
     let difficulty: QuizDifficulty
     let image: String?
+    let table: QuizTable?
 
     init(
         question: TextLine,
@@ -86,7 +87,8 @@ struct QuizQuestion {
         otherAnswers: [QuizAnswer],
         explanation: TextLine?,
         difficulty: QuizDifficulty,
-        image: String? = nil
+        image: String? = nil,
+        table: QuizTable? = nil
     ) {
         self.question = question
         self.correctAnswer = correctAnswer
@@ -94,6 +96,7 @@ struct QuizQuestion {
         self.explanation = explanation
         self.difficulty = difficulty
         self.image = image
+        self.table = table
     }
 
     func randomDisplay() -> QuizQuestionDisplay {
@@ -122,7 +125,8 @@ struct QuizQuestion {
             correctOption: correctOption,
             explanation: nil,
             difficulty: difficulty,
-            image: image
+            image: image,
+            table: table
         )
     }
 }
@@ -134,6 +138,7 @@ struct QuizQuestionDisplay {
     let explanation: TextLine?
     let difficulty: QuizDifficulty
     let image: String?
+    let table: QuizTable?
 }
 
 struct QuizAnswer: ExpressibleByStringLiteral {

@@ -507,7 +507,7 @@ extension QuizQuestion {
             The table below experimental kinetics data extracted from this \
             reaction:
 
-            C_a_Cl_2_(aq) + 2A_g_NO_3_(aq) -> C_a_(NO_3_)_2_(aq) + 2A_g_Cl(s)
+            C_a_Cl_2_(aq) + 2A_g_NO_3_(aq) ➜ C_a_(NO_3_)_2_(aq) + 2A_g_Cl(s)
 
             What is the rate law equation?
             """,
@@ -528,7 +528,31 @@ extension QuizQuestion {
             a factor of 2). $2^x^ = 2$ where $x = 1$; the reaction is \
             first order for [AgNO_3_].
             """,
-            difficulty: .easy
+            difficulty: .easy,
+            table: QuizTable(
+                rows: [
+                    [
+                        "[C_a_Cl_2_] (M)",
+                        "[AgNO_3_] (M)",
+                        "Rate M/s"
+                    ],
+                    [
+                        "0.025",
+                        "0.025",
+                        "8.33x10^-4^"
+                    ],
+                    [
+                        "0.050",
+                        "0.025",
+                        "1.66x10^-3^"
+                    ],
+                    [
+                        "0.050",
+                        "0.050",
+                        "3.33x10^-3"
+                    ]
+                ]
+            )
         )
     ]
 }

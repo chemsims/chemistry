@@ -8,29 +8,29 @@ import Foundation
 struct SizeAdjuster {
     /// Returns a new array where each element is at each `minElementSize`, and the sum is
     /// less than or equal to `maximumSum`
-    static func adjust(
-        sizes: [Double],
-        minElementSize: Double,
-        maximumSum: Double
-    ) -> [Double] {
+    static func adjust<T: BinaryFloatingPoint>(
+        sizes: [T],
+        minElementSize: T,
+        maximumSum: T
+    ) -> [T] {
         sizes
             .withMinElementSize(minElementSize)
             .withSumBelow(limit: maximumSum, minSize: minElementSize)
     }
 }
 
-fileprivate extension Array where Element == Double {
+fileprivate extension Array where Element: BinaryFloatingPoint {
 
-    func withMinElementSize(_ minSize: Double) -> [Double] {
+    func withMinElementSize(_ minSize: Element) -> [Element] {
         self.map { size in
             size < minSize ? minSize : size
         }
     }
 
     func withSumBelow(
-        limit: Double,
-        minSize: Double
-    ) -> [Double] {
+        limit: Element,
+        minSize: Element
+    ) -> [Element] {
         let surplus = sum - limit
         if (surplus <= 0) {
             return self
@@ -55,10 +55,8 @@ fileprivate extension Array where Element == Double {
         }
         return result
     }
-}
 
-fileprivate extension Sequence where Element == Double {
-    var sum: Double {
+    var sum: Element {
         reduce(0) { $0 + $1 }
     }
 }

@@ -73,6 +73,10 @@
 		573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16A625852D5D001CE039 /* BeakerReactionState.swift */; };
 		57517F2F25739E3A00EB79C7 /* ReactionOrderSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */; };
 		57517F3325739E5200EB79C7 /* ReactionOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57517F3225739E5200EB79C7 /* ReactionOrder.swift */; };
+		57631764259B66CF00D7CE2C /* QuizTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57631763259B66CF00D7CE2C /* QuizTable.swift */; };
+		57631768259B68EC00D7CE2C /* QuizTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57631767259B68EC00D7CE2C /* QuizTableView.swift */; };
+		57631772259B814100D7CE2C /* SizeAdjusterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57631771259B814100D7CE2C /* SizeAdjusterTests.swift */; };
+		5763177E259B8EAF00D7CE2C /* SizeAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5763177D259B8EAF00D7CE2C /* SizeAdjuster.swift */; };
 		57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */; };
 		5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766B71E256EC20200569CB9 /* ShakeExtension.swift */; };
 		576D5A7825665E170062F722 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
@@ -223,6 +227,10 @@
 		573F16A625852D5D001CE039 /* BeakerReactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerReactionState.swift; sourceTree = "<group>"; };
 		57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrderSelection.swift; sourceTree = "<group>"; };
 		57517F3225739E5200EB79C7 /* ReactionOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrder.swift; sourceTree = "<group>"; };
+		57631763259B66CF00D7CE2C /* QuizTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTable.swift; sourceTree = "<group>"; };
+		57631767259B68EC00D7CE2C /* QuizTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTableView.swift; sourceTree = "<group>"; };
+		57631771259B814100D7CE2C /* SizeAdjusterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeAdjusterTests.swift; sourceTree = "<group>"; };
+		5763177D259B8EAF00D7CE2C /* SizeAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeAdjuster.swift; sourceTree = "<group>"; };
 		57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateEquation.swift; sourceTree = "<group>"; };
 		5766B71E256EC20200569CB9 /* ShakeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeExtension.swift; sourceTree = "<group>"; };
 		576D5A7725665E170062F722 /* ScaledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledView.swift; sourceTree = "<group>"; };
@@ -332,6 +340,7 @@
 				5736B668258A79BD002CEF5E /* QuizViewModelTests.swift */,
 				57778B8925937D8C00254262 /* QuizQuestionTests.swift */,
 				57A26854259A011600919E48 /* QuizDifficultyCountTests.swift */,
+				57631771259B814100D7CE2C /* SizeAdjusterTests.swift */,
 			);
 			path = "reactions-appTests";
 			sourceTree = "<group>";
@@ -460,6 +469,7 @@
 		571D6A3E255A780700F4E635 /* reactions-app */ = {
 			isa = PBXGroup;
 			children = (
+				5763177C259B8E9B00D7CE2C /* util */,
 				57B0FBC82565D44500BB6ACC /* fonts */,
 				57035EFB255C1A2700DB3A19 /* viewmodels */,
 				571D6A6C255AB23D00F4E635 /* model */,
@@ -626,8 +636,17 @@
 				573F16972584B277001CE039 /* QuizOption.swift */,
 				573F169C2584C035001CE039 /* QuizQuestion.swift */,
 				5736B66E258A7C20002CEF5E /* QuizState.swift */,
+				57631763259B66CF00D7CE2C /* QuizTable.swift */,
 			);
 			path = quiz;
+			sourceTree = "<group>";
+		};
+		5763177C259B8E9B00D7CE2C /* util */ = {
+			isa = PBXGroup;
+			children = (
+				5763177D259B8EAF00D7CE2C /* SizeAdjuster.swift */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 		57655D43256C0906006FB93C /* energy-profile */ = {
@@ -754,6 +773,7 @@
 				57E7FF8725829DE400A30582 /* QuizScreen.swift */,
 				573F168C2584AC56001CE039 /* ProgressBar.swift */,
 				573F16A22584FA2E001CE039 /* QuizReviewScreen.swift */,
+				57631767259B68EC00D7CE2C /* QuizTableView.swift */,
 			);
 			path = quiz;
 			sourceTree = "<group>";
@@ -905,6 +925,7 @@
 				57778B8A25937D8C00254262 /* QuizQuestionTests.swift in Sources */,
 				57A26855259A011600919E48 /* QuizDifficultyCountTests.swift in Sources */,
 				57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */,
+				57631772259B814100D7CE2C /* SizeAdjusterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -974,6 +995,7 @@
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
 				5736B673258CCC69002CEF5E /* EnergyProfileNavigationViewModel.swift in Sources */,
 				57E7FF72258289B200A30582 /* MenuButton.swift in Sources */,
+				57631768259B68EC00D7CE2C /* QuizTableView.swift in Sources */,
 				57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */,
 				57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */,
 				57778B7F259368B800254262 /* TextLineView.swift in Sources */,
@@ -1030,9 +1052,11 @@
 				57DAE4D82577C4F1006D945B /* HalfLife.swift in Sources */,
 				570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */,
 				573F168D2584AC56001CE039 /* ProgressBar.swift in Sources */,
+				5763177E259B8EAF00D7CE2C /* SizeAdjuster.swift in Sources */,
 				576D5AA52566BAB50062F722 /* FirstOrderEquationView.swift in Sources */,
 				57035ED4255BE09D00DB3A19 /* FilledBeaker.swift in Sources */,
 				57517F2F25739E3A00EB79C7 /* ReactionOrderSelection.swift in Sources */,
+				57631764259B66CF00D7CE2C /* QuizTable.swift in Sources */,
 				57B2331A258E8BD900128760 /* ScreenProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

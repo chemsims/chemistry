@@ -28,6 +28,14 @@ struct TextLine: ExpressibleByStringLiteral, Equatable {
     }
 }
 
+extension TextLine {
+    var length: Int {
+        content.reduce(0) { (acc, next) in
+            acc + next.content.count
+        }
+    }
+}
+
 /// An individual segment of a line, including whether the content should
 /// appear emphasised.
 struct TextSegment: Equatable {

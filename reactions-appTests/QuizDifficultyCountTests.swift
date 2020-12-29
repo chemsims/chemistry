@@ -52,7 +52,9 @@ class QuizDifficultyCountTests: XCTestCase {
             options: [QuizOption:TextLine](),
             correctOption: .A,
             explanation: nil,
-            difficulty: difficulty
+            difficulty: difficulty,
+            image: nil,
+            table: nil
         )
     }
 }

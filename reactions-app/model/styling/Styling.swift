@@ -71,6 +71,10 @@ struct Styling {
 
     static let navIcon = RGB(r: 68, g: 150, b: 247).color
     static let navIconSelected = RGB(r: 91, g: 141, b: 197).color
+
+    static let tableOddRow = RGB(r: 240, g: 240, b: 240).color
+    static let tableEvenRow = RGB(r: 230, g: 230, b: 230).color
+    static let tableCellBorder = RGB(r: 190, g: 190, b: 190).color
 }
 
 

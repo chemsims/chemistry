@@ -23,7 +23,7 @@ class QuizViewModel: ObservableObject {
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.running
     @Published var quizDifficulty = QuizDifficulty.medium
-    @Published private(set) var questionIndex = 0
+    @Published private(set) var questionIndex = 22
 
     var selectedAnswer: QuizOption? {
         answers[questionIndex]

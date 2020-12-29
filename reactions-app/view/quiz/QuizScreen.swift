@@ -193,6 +193,14 @@ fileprivate struct QuizQuestionsBody: View {
                             .frame(height: settings.imageHeight)
                     }
 
+                    if (model.currentQuestion.table != nil) {
+                        QuizTableView(
+                            table: model.currentQuestion.table!,
+                            fontSize: settings.questionFontSize,
+                            availableWidth: settings.progressWidth
+                        )
+                    }
+
                     answers
                 }
                 Spacer()
