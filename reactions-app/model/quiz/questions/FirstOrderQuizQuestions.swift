@@ -499,7 +499,8 @@ extension QuizQuestion {
                 )
             ],
             explanation: nil,
-            difficulty: .medium
+            difficulty: .medium,
+            image: "first-order-a-b-concentration"
         ),
         QuizQuestion(
             question: """

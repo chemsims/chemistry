@@ -185,7 +185,14 @@ fileprivate struct QuizQuestionsBody: View {
                 Spacer()
                     .frame(width: settings.navTotalWidth)
                 VStack {
-                    TextLinesView(line: model.question, fontSize: settings.questionFontSize)
+                    TextLinesView(line: model.currentQuestion.question, fontSize: settings.questionFontSize)
+                    if (model.currentQuestion.image != nil) {
+                        Image(model.currentQuestion.image!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: settings.imageHeight)
+                    }
+
                     answers
                 }
                 Spacer()
@@ -443,6 +450,10 @@ struct QuizLayoutSettings {
 
     var standardLineWidth: CGFloat {
         1
+    }
+
+    var imageHeight: CGFloat {
+        0.8 * geometry.size.height
     }
 
 }

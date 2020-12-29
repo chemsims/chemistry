@@ -78,6 +78,23 @@ struct QuizQuestion {
     let otherAnswers: [QuizAnswer]
     let explanation: TextLine?
     let difficulty: QuizDifficulty
+    let image: String?
+
+    init(
+        question: TextLine,
+        correctAnswer: QuizAnswer,
+        otherAnswers: [QuizAnswer],
+        explanation: TextLine?,
+        difficulty: QuizDifficulty,
+        image: String? = nil
+    ) {
+        self.question = question
+        self.correctAnswer = correctAnswer
+        self.otherAnswers = otherAnswers
+        self.explanation = explanation
+        self.difficulty = difficulty
+        self.image = image
+    }
 
     func randomDisplay() -> QuizQuestionDisplay {
         assert(otherAnswers.count < QuizOption.allCases.count)
@@ -104,7 +121,8 @@ struct QuizQuestion {
             options: answers,
             correctOption: correctOption,
             explanation: nil,
-            difficulty: difficulty
+            difficulty: difficulty,
+            image: image
         )
     }
 }
@@ -115,6 +133,7 @@ struct QuizQuestionDisplay {
     let correctOption: QuizOption
     let explanation: TextLine?
     let difficulty: QuizDifficulty
+    let image: String?
 }
 
 struct QuizAnswer: ExpressibleByStringLiteral {
