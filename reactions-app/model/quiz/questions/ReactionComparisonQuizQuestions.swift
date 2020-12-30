@@ -245,6 +245,49 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question: """
+            Based on the information below, what is the constant rate for the reaction?
+
+            The table below shows recorded concentration data for the following reaction:
+            """,
+            correctAnswer: "106 M^-2^s^-1^",
+            otherAnswers: [
+                "106 s^-1^",
+                "55 M s^-1^",
+                "55 M^-2^s^-1^"
+            ],
+            explanation: """
+            The Rate Law for this reaction can be determined as $Rate = k[NO]^2^[Br_2_]$, so by replacing the values using the data we get:
+
+            $4.30x10^-4^ = k(0.0176^2^)(0.0132)$. Clearing for k: $k = (4.30x10^-4^)/((0.0176^2^)(0.0132)) = 106 M^-2^ s^-1^$
+            """,
+            difficulty: .easy,
+            table: QuizTable(
+                rows: [
+                    [
+                        "[NO] (M)",
+                        "[Br_2_]",
+                        "NOBr rate of appearance M/s"
+                    ],
+                    [
+                        "0.0176",
+                        "0.0132",
+                        "4.30x10^-4^"
+                    ],
+                    [
+                        "0.0176",
+                        "0.0264",
+                        "8.55x10^-4^"
+                    ],
+                    [
+                        "0.0352",
+                        "0.0066",
+                        "8.60x10^-4^"
+                    ]
+                ]
+            )
+        ),
+        QuizQuestion(
+            question: """
             Based on the information below, how would you write the Rate Law equation for this reaction? Take into account that the reaction is of third order for [H^+^]
 
             The table below shows recorded concentration data for the following reaction:
