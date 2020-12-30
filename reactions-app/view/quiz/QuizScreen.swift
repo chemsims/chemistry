@@ -190,7 +190,7 @@ fileprivate struct QuizQuestionsBody: View {
                         Image(model.currentQuestion.image!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: settings.imageHeight)
+                            .frame(maxHeight: settings.maxImageHeight)
                     }
 
                     if (model.currentQuestion.table != nil) {
@@ -237,6 +237,7 @@ fileprivate struct QuizQuestionsBody: View {
                 )
                 .foregroundColor(.black)
                 .padding()
+                .minimumScaleFactor(0.5)
             }
             .onTapGesture(perform: { handleAnswer(option: option) })
         }
@@ -460,7 +461,7 @@ struct QuizLayoutSettings {
         1
     }
 
-    var imageHeight: CGFloat {
+    var maxImageHeight: CGFloat {
         0.8 * geometry.size.height
     }
 
