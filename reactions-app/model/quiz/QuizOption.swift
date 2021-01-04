@@ -5,8 +5,14 @@
 
 import Foundation
 
-enum QuizOption: CaseIterable, Equatable {
+enum QuizOption: String, CaseIterable, Equatable {
     case A, B, C, D
+}
+
+extension QuizOption: Comparable {
+    static func < (lhs: QuizOption, rhs: QuizOption) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
 }
 
 enum QuizDifficulty: Int, CaseIterable, Comparable {

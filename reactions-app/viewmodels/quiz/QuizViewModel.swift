@@ -19,11 +19,13 @@ class QuizViewModel: ObservableObject {
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
 
-    @Published private var answers = [Int:QuizOption]()
+    @Published var answers = [Int:QuizOption]()
     @Published var progress: CGFloat = 0
-    @Published var quizState = QuizState.pending
+    @Published var quizState = QuizState.running
     @Published var quizDifficulty = QuizDifficulty.medium
     @Published private(set) var questionIndex = 0
+
+    @Published var showExplanation: Bool = false
 
     var selectedAnswer: QuizOption? {
         answers[questionIndex]
@@ -83,6 +85,7 @@ class QuizViewModel: ObservableObject {
         case .completed:
             nextScreen?()
         }
+        setShowExplanation(animate: false)
     }
 
     func back() {
@@ -97,14 +100,23 @@ class QuizViewModel: ObservableObject {
         case .completed:
             quizState = .running
         }
+        setShowExplanation(animate: false)
     }
 
     func answer(option: QuizOption) {
         answers[questionIndex] = option
+        setShowExplanation(animate: true)
     }
 
     func optionText(_ option: QuizOption) -> TextLine {
         currentQuestion.options[option] ?? ""
+    }
+
+    private func setShowExplanation(animate: Bool) {
+        let shouldShowExplanation = selectedAnswer != nil && selectedAnswer != correctOption
+        withAnimation(animate && !reduceMotion ? .easeOut(duration: 0.4) : nil) {
+            showExplanation = shouldShowExplanation
+        }
     }
 
     var question: TextLine {

@@ -201,7 +201,12 @@ fileprivate struct QuizQuestionsBody: View {
                         )
                     }
 
+                    if (model.showExplanation) {
+                        explanation
+                    }
+
                     answers
+
                 }
                 Spacer()
                     .frame(width: settings.navTotalWidth)
@@ -209,6 +214,27 @@ fileprivate struct QuizQuestionsBody: View {
             .padding(.top, settings.progressBarPadding)
             .padding(.bottom, settings.geometry.safeAreaInsets.bottom)
         }
+    }
+
+    private var explanation: some View {
+        VStack {
+            Text("Explanation")
+                .font(.system(size: settings.questionFontSize))
+                .italic()
+                .foregroundColor(.orangeAccent)
+            TextLinesView(
+                lines: model.currentQuestion.explanation,
+                fontSize: settings.answerFontSize
+            )
+        }
+        .padding()
+        .background(
+            RoundedRectangle(
+                cornerRadius: settings.progressCornerRadius
+            )
+            .foregroundColor(.white)
+            .shadow(radius: 2)
+        )
     }
 
     private var answers: some View {

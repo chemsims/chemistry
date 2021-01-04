@@ -103,12 +103,12 @@ struct QuizQuestion {
         assert(otherAnswers.count < QuizOption.allCases.count)
         let protectedOptions = Set(([correctAnswer] + otherAnswers).compactMap(\.position))
         var options = QuizOption.allCases.filter { !protectedOptions.contains($0) }
-        var answers = [QuizOption: TextLine]()
+        var answers = [QuizOption: QuizAnswer]()
 
         func add(_ answer: QuizAnswer, _ option: QuizOption) {
             assert(answers[option] == nil)
             options = options.filter { $0 != option }
-            answers[option] = answer.answer
+            answers[option] = answer
         }
 
         let correctOption = correctAnswer.position ?? options.randomElement()!
@@ -121,13 +121,29 @@ struct QuizQuestion {
 
         return QuizQuestionDisplay(
             question: question,
-            options: answers,
+            options: answers.mapValues(\.answer),
             correctOption: correctOption,
-            explanation: nil,
+            explanation: makeExplanation(answers: answers),
             difficulty: difficulty,
             image: image,
             table: table
         )
+    }
+
+    private func makeExplanation(answers: [QuizOption : QuizAnswer]) -> [TextLine] {
+        var explanations = [TextLine]()
+        if let explanation = explanation {
+            explanations.append(explanation)
+        }
+
+        answers.keys.sorted().forEach { option in
+            if let answer = answers[option], let explanation = answer.explanation {
+                let start = TextSegment(content: "\(option.rawValue))", emphasised: true)
+                let rest = explanation.content
+                explanations.append(TextLine(content: [start] + rest))
+            }
+        }
+        return explanations
     }
 }
 
@@ -135,7 +151,7 @@ struct QuizQuestionDisplay {
     let question: TextLine
     let options: [QuizOption:TextLine]
     let correctOption: QuizOption
-    let explanation: TextLine?
+    let explanation: [TextLine]
     let difficulty: QuizDifficulty
     let image: String?
     let table: QuizTable?
