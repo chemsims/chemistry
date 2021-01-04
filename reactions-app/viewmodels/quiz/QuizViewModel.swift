@@ -14,6 +14,12 @@ class QuizViewModel: ObservableObject {
         let displayQuestions = questions.map { $0.randomDisplay() }
         self.allQuestions = displayQuestions
         difficultyCount = QuizDifficulty.counts(questions: displayQuestions)
+
+        var a = [Int:QuizOption]()
+        availableQuestions.enumerated().forEach { (index, _) in
+            a[index] = QuizOption.A
+        }
+        answers = a
     }
 
     var nextScreen: (() -> Void)?
@@ -21,7 +27,7 @@ class QuizViewModel: ObservableObject {
 
     @Published var answers = [Int:QuizOption]()
     @Published var progress: CGFloat = 0
-    @Published var quizState = QuizState.running
+    @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
     @Published private(set) var questionIndex = 0
 

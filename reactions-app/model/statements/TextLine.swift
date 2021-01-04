@@ -40,6 +40,10 @@ extension TextLine {
     func italic() -> TextLine {
         TextLine(content: content.map { c in c.setItalic(true) })
     }
+
+    func emphasised() -> TextLine {
+        TextLine(content: content.map { $0.setEmphasised(true) })
+    }
 }
 
 /// An individual segment of a line, including whether the content should
@@ -74,6 +78,16 @@ extension TextSegment {
             scriptType: scriptType,
             allowBreaks: allowBreaks,
             italic: newValue
+        )
+    }
+
+    func setEmphasised(_ newValue: Bool) -> TextSegment {
+        TextSegment(
+            content: content,
+            emphasised: newValue,
+            scriptType: scriptType,
+            allowBreaks: allowBreaks,
+            italic: italic
         )
     }
 }

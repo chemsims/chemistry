@@ -129,22 +129,6 @@ struct QuizQuestion {
             table: table
         )
     }
-
-    private func makeExplanation(answers: [QuizOption : QuizAnswer]) -> [TextLine] {
-        var explanations = [TextLine]()
-        if let explanation = explanation {
-            explanations.append(explanation)
-        }
-
-        answers.keys.sorted().forEach { option in
-            if let answer = answers[option], let explanation = answer.explanation {
-                let start = TextSegment(content: "\(option.rawValue))", emphasised: true)
-                let rest = explanation.content
-                explanations.append(TextLine(content: [start] + rest))
-            }
-        }
-        return explanations
-    }
 }
 
 struct QuizQuestionDisplay {
@@ -162,6 +146,25 @@ struct QuizQuestionDisplay {
 
     func hasExplanation(option: QuizOption) -> Bool {
         options[option]?.explanation != nil
+    }
+
+    var longExplanation: [TextLine] {
+        var explanations = [TextLine]()
+        if let explanation = explanation {
+            explanations.append(explanation)
+        }
+
+        options.keys.sorted().forEach { option in
+            if let answer = options[option], let explanation = answer.explanation {
+                let optionSegment = TextSegment(content: "\(option.rawValue))", emphasised: true)
+                let answerSegment = answer.answer.content.map { $0.setEmphasised(true) }
+                let newLineSegment = TextSegment(content: "\n", emphasised: false)
+                let explanationSegment = explanation.content.map { $0.setItalic(true) }
+                let segments: [TextSegment] = [optionSegment] + answerSegment + [newLineSegment] + explanationSegment
+                explanations.append(TextLine(content: segments))
+            }
+        }
+        return explanations
     }
 }
 

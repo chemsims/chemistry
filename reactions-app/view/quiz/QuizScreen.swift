@@ -44,22 +44,21 @@ fileprivate struct QuizScreenWithSettings: View {
                         model: model
                     )
                 }
+                if (model.quizState == .completed) {
+                    QuizReviewBody(settings: settings, model: model)
+                }
 
-                HStack(spacing: 0) {
-                    Spacer()
-                        .frame(width: settings.navTotalWidth)
-                    if (model.quizState == .pending) {
+                if (model.quizState == .pending) {
+                    HStack(spacing: 0) {
+                        Spacer()
+                            .frame(width: settings.navTotalWidth)
                         QuizIntroBody(
                             settings: settings,
                             model: model
                         ).padding(.top, settings.progressBarPadding)
+                        Spacer()
+                            .frame(width: settings.navTotalWidth)
                     }
-
-                    if (model.quizState == .completed) {
-                        QuizReviewBody(settings: settings, model: model)
-                    }
-                    Spacer()
-                        .frame(width: settings.navTotalWidth)
                 }
 
                 Spacer()
@@ -382,15 +381,25 @@ fileprivate struct QuizReviewBody: View {
     let settings: QuizLayoutSettings
     @ObservedObject var model: QuizViewModel
 
+    @State private var expandedExplanations = Set<Int>()
+
     var body: some View {
-        ScrollView {
-            VStack(spacing: 12) {
-                heading
-                ForEach(0..<model.quizLength) { index in
-                    reviewCard(index: index)
+        HStack(spacing: 0) {
+            ScrollView {
+                HStack(spacing: 0) {
+                    Spacer()
+                        .frame(width: settings.navTotalWidth)
+                    VStack(spacing: 20) {
+                        heading
+                        ForEach(0..<model.quizLength) { index in
+                            reviewCard(index: index)
+                        }
+                    }
+                    .padding(.top, settings.progressBarPadding)
+                    Spacer()
+                        .frame(width: settings.navTotalWidth)
                 }
             }
-            .padding(.top, settings.progressBarPadding)
         }
     }
 
@@ -398,7 +407,7 @@ fileprivate struct QuizReviewBody: View {
         HStack {
             Spacer()
             VStack {
-                Text("Your score is \(model.correctAnswers)/\(model.quizLength)")
+                Text("You got \(model.correctAnswers) correct out of \(model.quizLength)")
                     .foregroundColor(.orangeAccent)
                 Text("Let's review the questions!")
             }
@@ -410,29 +419,101 @@ fileprivate struct QuizReviewBody: View {
     private func reviewCard(index: Int) -> some View {
         let question = model.availableQuestions[index]
         let selectedOption = model.selectedOption(index: index)
+        let isCorrect = selectedOption == question.correctOption
 
         return ZStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 0) {
+                    Spacer()
+                }
+                QuizQuestionView(
+                    question: question,
+                    settings: settings
+                )
+
+                optionLine(
+                    option: selectedOption!,
+                    topLine: "Your answer",
+                    question: question
+                )
+
+                if (selectedOption != question.correctOption) {
+                    optionLine(
+                        option: question.correctOption,
+                        topLine: "Correct answer",
+                        question: question
+                    )
+                }
+
+                VStack(alignment: .leading, spacing: 0) {
+                    Button(action: { handleExplanationPress(index: index) }) {
+                        Text(expandedExplanations.contains(index) ? "Hide Explanation" : "Show Explanation")
+                            .font(.system(size: settings.questionFontSize))
+                    }
+                    if (expandedExplanations.contains(index)) {
+                        TextLinesView(
+                            lines: question.longExplanation,
+                            fontSize: settings.questionFontSize
+                        )
+                    }
+
+                }
+            }
+            .padding()
+            .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, 2)
+        .font(.system(size: settings.questionFontSize))
+        .background(
+            reviewBackground(isCorrect: isCorrect)
+        )
+    }
+
+    private func reviewBackground(isCorrect: Bool) -> some View {
+        ZStack(alignment: .topTrailing) {
             RoundedRectangle(
                 cornerRadius: settings.progressCornerRadius
             )
             .foregroundColor(.white)
             .shadow(radius: 2)
 
-            VStack(alignment: .leading) {
-                TextLinesView(line: question.question, fontSize: settings.fontSize)
-                TextLinesView(
-                    line: question.options[question.correctOption]?.answer ?? "",
-                    fontSize: settings.fontSize
-                )
+            RoundedRectangle(
+                cornerRadius: settings.progressCornerRadius
+            )
+            .stroke(lineWidth: 4)
+            .foregroundColor(isCorrect ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerIncorrectBorder)
+
+            Group {
+                Circle()
+                    .foregroundColor(.white)
+                QuizAnswerIconOverlay(isCorrect: isCorrect)
+            }
+            .frame(width: 30, height: 30)
+            .offset(x: 10, y: -10)
+        }
+    }
+
+    private func optionLine(
+        option: QuizOption,
+        topLine: String,
+        question: QuizQuestionDisplay
+    ) -> some View {
+        let answer = question.options[option]?.answer ?? ""
+        return VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 0) {
+                Text(topLine)
+                    .font(.system(size: settings.questionFontSize))
                     .foregroundColor(.orangeAccent)
-                if (selectedOption != question.correctOption) {
-                    incorrectAnswer(
-                        question: question,
-                        selectedOption: selectedOption
-                    )
-                }
-            }.padding()
-        }.padding(.horizontal, 2)
+                Spacer()
+            }
+
+            TextLinesView(
+                line: answer,
+                fontSize: settings.questionFontSize
+            )
+        }
+        .minimumScaleFactor(1)
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     private func incorrectAnswer(
@@ -450,6 +531,59 @@ fileprivate struct QuizReviewBody: View {
                 .foregroundColor(.orangeAccent)
             }
         }
+    }
+
+    private func handleExplanationPress(index: Int) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            if (expandedExplanations.contains(index)) {
+                expandedExplanations.remove(index)
+            } else {
+                expandedExplanations.insert(index)
+            }
+        }
+    }
+}
+
+fileprivate struct QuizQuestionView: View {
+
+    let question: QuizQuestionDisplay
+    let settings: QuizLayoutSettings
+
+    var body: some View {
+        VStack(spacing: 10) {
+            TextLinesView(
+                line: question.question,
+                fontSize: settings.questionFontSize
+            )
+            .minimumScaleFactor(1)
+            .fixedSize(horizontal: false, vertical: true)
+
+            if (question.image != nil) {
+                Image(question.image!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: settings.maxImageHeight)
+            }
+
+            if (question.table != nil) {
+                QuizTableView(
+                    table: question.table!,
+                    fontSize: settings.questionFontSize,
+                    availableWidth: settings.progressWidth
+                )
+            }
+        }
+    }
+}
+
+fileprivate struct QuizAnswerIconOverlay: View {
+    let isCorrect: Bool
+
+    var body: some View {
+        Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .foregroundColor(isCorrect ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerIncorrectBorder)
     }
 }
 
@@ -532,7 +666,7 @@ struct QuizLayoutSettings {
 struct QuizScreen_Previews: PreviewProvider {
     static var previews: some View {
         QuizScreen(
-            model: QuizViewModel(questions: QuizQuestion.zeroOrderQuestions)
+            model: QuizViewModel(questions: QuizQuestion.energyProfileQuizQuestions)
         )
         .previewLayout(.fixed(width: 568, height: 320))
     }
