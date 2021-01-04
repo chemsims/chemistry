@@ -185,7 +185,10 @@ fileprivate struct QuizQuestionsBody: View {
                 Spacer()
                     .frame(width: settings.navTotalWidth)
                 VStack {
-                    TextLinesView(line: model.currentQuestion.question, fontSize: settings.questionFontSize)
+                    TextLinesView(
+                        line: model.currentQuestion.question,
+                        fontSize: settings.questionFontSize
+                    )
                     if (model.currentQuestion.image != nil) {
                         Image(model.currentQuestion.image!)
                             .resizable()
@@ -201,8 +204,10 @@ fileprivate struct QuizQuestionsBody: View {
                         )
                     }
 
-                    if (model.showExplanation) {
-                        explanation
+                    if (model.showExplanation &&
+                            model.currentQuestion.hasExplanation) {
+                        explanationView
+                            .padding(.bottom, 10)
                     }
 
                     answers
@@ -216,33 +221,47 @@ fileprivate struct QuizQuestionsBody: View {
         }
     }
 
-    private var explanation: some View {
-        VStack {
-            Text("Explanation")
-                .font(.system(size: settings.questionFontSize))
-                .italic()
-                .foregroundColor(.orangeAccent)
-            TextLinesView(
-                lines: model.currentQuestion.explanation,
-                fontSize: settings.answerFontSize
-            )
-        }
+    private var explanationView: some View {
+        TextLinesView(
+            line: model.currentQuestion.explanation ?? "",
+            fontSize: settings.answerFontSize
+        )
         .padding()
         .background(
             RoundedRectangle(
                 cornerRadius: settings.progressCornerRadius
             )
             .foregroundColor(.white)
-            .shadow(radius: 2)
+            .shadow(radius: 4)
+            .overlay(
+                Image(systemName: "lightbulb.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 30)
+                    .offset(x: 10, y: -10)
+                    .foregroundColor(.orangeAccent),
+                alignment: .topTrailing
+            )
         )
     }
 
     private var answers: some View {
-        VStack {
-            answer(option: .A)
-            answer(option: .B)
-            answer(option: .C)
-            answer(option: .D)
+        VStack(spacing: 20) {
+            answerWithExplanation(option: .A)
+            answerWithExplanation(option: .B)
+            answerWithExplanation(option: .C)
+            answerWithExplanation(option: .D)
+        }
+    }
+
+    private func answerWithExplanation(option: QuizOption) -> some View {
+        VStack(spacing: 0) {
+            answer(option: option)
+            if (model.showExplanation &&
+                    model.currentQuestion.hasExplanation(option: option)
+            ) {
+                optionExplanation(option: option)
+            }
         }
     }
 
@@ -267,6 +286,17 @@ fileprivate struct QuizQuestionsBody: View {
             }
             .onTapGesture(perform: { handleAnswer(option: option) })
         }
+        .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private func optionExplanation(option: QuizOption) -> some View {
+        let explanation = model.currentQuestion.options[option]?.explanation
+        return
+            TextLinesView(
+                line: explanation?.italic() ?? "",
+                fontSize: settings.answerFontSize
+        )
+        .padding()
     }
 
     private func overlay(option: QuizOption) -> some View {
@@ -390,7 +420,10 @@ fileprivate struct QuizReviewBody: View {
 
             VStack(alignment: .leading) {
                 TextLinesView(line: question.question, fontSize: settings.fontSize)
-                TextLinesView(line: question.options[question.correctOption] ?? "", fontSize: settings.fontSize)
+                TextLinesView(
+                    line: question.options[question.correctOption]?.answer ?? "",
+                    fontSize: settings.fontSize
+                )
                     .foregroundColor(.orangeAccent)
                 if (selectedOption != question.correctOption) {
                     incorrectAnswer(
@@ -406,12 +439,15 @@ fileprivate struct QuizReviewBody: View {
         question: QuizQuestionDisplay,
         selectedOption: QuizOption?
     ) -> some View {
-        let selectedAnswer = selectedOption.flatMap { question.options[$0] } ?? ""
+        let selectedAnswer = selectedOption.flatMap { question.options[$0]?.answer } ?? ""
         return VStack(alignment: .leading) {
             HStack {
                 Text("Your answer")
-                TextLinesView(line: selectedAnswer, fontSize: settings.fontSize)
-                    .foregroundColor(.orangeAccent)
+                TextLinesView(
+                    line: selectedAnswer,
+                    fontSize: settings.fontSize
+                )
+                .foregroundColor(.orangeAccent)
             }
         }
     }

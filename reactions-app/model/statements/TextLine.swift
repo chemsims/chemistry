@@ -36,6 +36,12 @@ extension TextLine {
     }
 }
 
+extension TextLine {
+    func italic() -> TextLine {
+        TextLine(content: content.map { c in c.setItalic(true) })
+    }
+}
+
 /// An individual segment of a line, including whether the content should
 /// appear emphasised.
 struct TextSegment: Equatable {
@@ -43,17 +49,32 @@ struct TextSegment: Equatable {
     let emphasised: Bool
     let scriptType: ScriptType?
     let allowBreaks: Bool
+    let italic: Bool
 
     init(
         content: String,
         emphasised: Bool,
         scriptType: ScriptType? = nil,
-        allowBreaks: Bool = true
+        allowBreaks: Bool = true,
+        italic: Bool = false
     ) {
         self.content = content
         self.emphasised = emphasised
         self.scriptType = scriptType
         self.allowBreaks = allowBreaks
+        self.italic = italic
+    }
+}
+
+extension TextSegment {
+    func setItalic(_ newValue: Bool) -> TextSegment {
+        TextSegment(
+            content: content,
+            emphasised: emphasised,
+            scriptType: scriptType,
+            allowBreaks: allowBreaks,
+            italic: newValue
+        )
     }
 }
 
@@ -106,7 +127,8 @@ struct TextLineGenerator {
                         content: builder,
                         emphasised: buildingEmphasis,
                         scriptType: scriptType,
-                        allowBreaks: allowBreaks
+                        allowBreaks: allowBreaks,
+                        italic: false
                     )
                 )
             }

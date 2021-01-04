@@ -109,7 +109,7 @@ class QuizViewModel: ObservableObject {
     }
 
     func optionText(_ option: QuizOption) -> TextLine {
-        currentQuestion.options[option] ?? ""
+        currentQuestion.options[option]?.answer ?? ""
     }
 
     private func setShowExplanation(animate: Bool) {

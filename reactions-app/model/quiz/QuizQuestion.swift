@@ -121,9 +121,9 @@ struct QuizQuestion {
 
         return QuizQuestionDisplay(
             question: question,
-            options: answers.mapValues(\.answer),
+            options: answers,
             correctOption: correctOption,
-            explanation: makeExplanation(answers: answers),
+            explanation: explanation,
             difficulty: difficulty,
             image: image,
             table: table
@@ -149,12 +149,20 @@ struct QuizQuestion {
 
 struct QuizQuestionDisplay {
     let question: TextLine
-    let options: [QuizOption:TextLine]
+    let options: [QuizOption:QuizAnswer]
     let correctOption: QuizOption
-    let explanation: [TextLine]
+    let explanation: TextLine?
     let difficulty: QuizDifficulty
     let image: String?
     let table: QuizTable?
+
+    var hasExplanation: Bool {
+        explanation != nil
+    }
+
+    func hasExplanation(option: QuizOption) -> Bool {
+        options[option]?.explanation != nil
+    }
 }
 
 struct QuizAnswer: ExpressibleByStringLiteral {

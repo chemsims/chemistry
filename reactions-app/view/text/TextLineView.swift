@@ -65,6 +65,7 @@ struct TextLinesView: View {
             .foregroundColor(segment.emphasised ? .orangeAccent : .black)
             .font(.system(size: fontSize(line: segment), weight: weight))
             .baselineOffset(fontOffset(line: segment))
+            .italic(enabled: segment.italic)
     }
 
     private func fontSize(line: TextSegment) -> CGFloat {
@@ -77,5 +78,14 @@ struct TextLinesView: View {
         case .some(.subScript): return subscriptOffset
         case .none: return 0
         }
+    }
+}
+
+extension Text {
+    func italic(enabled: Bool) -> Text {
+        if (enabled) {
+            return self.italic()
+        }
+        return self
     }
 }
