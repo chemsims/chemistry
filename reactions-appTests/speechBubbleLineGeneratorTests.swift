@@ -22,7 +22,7 @@ class TextLineGeneratorTests: XCTestCase {
         let content1 = generate("*Hello*, world")
         XCTAssertEqual(content1, [segment("Hello", emphasis: true), segment(", world")])
 
-        let content2 = generate("Hello,* world")
+        let content2 = generate("Hello,* world*")
         XCTAssertEqual(content2, [segment("Hello,"), segment(" world", emphasis: true)])
 
         let content3 = generate("*Hello*, this *is* a t*est*")

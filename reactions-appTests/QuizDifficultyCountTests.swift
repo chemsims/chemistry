@@ -49,7 +49,7 @@ class QuizDifficultyCountTests: XCTestCase {
     private func makeQuestion(_ difficulty: QuizDifficulty) -> QuizQuestionDisplay {
         QuizQuestionDisplay(
             question: "",
-            options: [QuizOption:TextLine](),
+            options: [QuizOption:QuizAnswer](),
             correctOption: .A,
             explanation: nil,
             difficulty: difficulty,

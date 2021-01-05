@@ -6,6 +6,7 @@ import XCTest
 @testable import reactions_app
 
 class QuizViewModelTests: XCTestCase {
+
     func testNavigatingBackAndThenForwardFromUnansweredQuestion() {
         let model = QuizViewModel(questions: QuizQuestion.zeroOrderQuestions)
         XCTAssertEqual(QuizState.pending, model.quizState)
