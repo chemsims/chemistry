@@ -84,4 +84,8 @@ struct QuizLayoutSettings {
         0.8 * answerFontSize
     }
 
+    var skipFontSize: CGFloat {
+        0.55 * fontSize
+    }
+
 }

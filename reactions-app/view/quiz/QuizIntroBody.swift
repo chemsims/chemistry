@@ -17,6 +17,13 @@ struct QuizIntroBody: View {
             Text("Choose the difficulty level of the quiz")
                 .font(.system(size: 0.8 * settings.fontSize))
                 .foregroundColor(.orangeAccent)
+            HStack {
+                Spacer()
+                Button(action: model.skip) {
+                    Text("Skip this quiz")
+                        .font(.system(size: settings.skipFontSize))
+                }
+            }
             ForEach(model.availableDifficulties, id: \.rawValue) { difficulty in
                 quizDifficultyOption(difficulty: difficulty)
             }
@@ -29,7 +36,6 @@ struct QuizIntroBody: View {
     ) -> some View {
         let isSelected = model.quizDifficulty == difficulty
         let count = model.difficultyCount[difficulty] ?? 0
-        let subline = difficulty == .skip ? "Skip this quiz" : "\(count) questions"
 
         return ZStack {
             RoundedRectangle(cornerRadius: settings.progressCornerRadius)
@@ -41,7 +47,7 @@ struct QuizIntroBody: View {
 
             VStack {
                 Text(difficulty.displayName)
-                Text(subline)
+                Text("\(count) questions")
                     .font(.system(size: 0.7 * settings.fontSize))
             }
         }.onTapGesture {
@@ -53,7 +59,6 @@ struct QuizIntroBody: View {
 fileprivate extension QuizDifficulty {
     var displayName: String {
         switch (self) {
-        case .skip: return "Skip"
         case .easy: return "Easy"
         case .medium: return "Medium"
         case .hard: return "Hard"

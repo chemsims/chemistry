@@ -27,7 +27,7 @@ class QuizViewModel: ObservableObject {
 
     @Published var answers = [Int:QuizOption]()
     @Published var progress: CGFloat = 0
-    @Published var quizState = QuizState.completed
+    @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
     @Published private(set) var questionIndex = 0
 
@@ -72,10 +72,6 @@ class QuizViewModel: ObservableObject {
     }
 
     func next() {
-        guard quizDifficulty != .skip else {
-            nextScreen?()
-            return
-        }
         switch (quizState) {
         case .pending:
             quizState = .running
@@ -122,6 +118,10 @@ class QuizViewModel: ObservableObject {
         quizState = .pending
         questionIndex = 0
         setProgress()
+    }
+
+    func skip() {
+        nextScreen?()
     }
 
     private func setShowExplanation(animate: Bool) {
