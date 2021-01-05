@@ -186,6 +186,4 @@ fileprivate struct QuestionReviewCard: View {
             explanationIsExpanded.toggle()
         }
     }
-
-
 }

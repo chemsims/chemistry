@@ -115,11 +115,20 @@ fileprivate struct QuizScreenWithSettings: View {
         .minimumScaleFactor(0.8)
         .frame(width: settings.progressLabelWidth, height: 0.9 * settings.progressHeight)
         .background(
-            RoundedRectangle(
-                cornerRadius: settings.progressCornerRadius
-            )
-            .foregroundColor(Color.white)
-            .opacity(0.5)
+            ZStack {
+                RoundedRectangle(
+                    cornerRadius: settings.progressCornerRadius
+                )
+                .foregroundColor(Color.white)
+                .opacity(0.5)
+
+                RoundedRectangle(
+                    cornerRadius: settings.progressCornerRadius
+                )
+                .stroke(lineWidth: 0.5)
+                .foregroundColor(.black)
+                .opacity(0.5)
+            }
         )
     }
 }

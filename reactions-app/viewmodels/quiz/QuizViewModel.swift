@@ -26,10 +26,10 @@ class QuizViewModel: ObservableObject {
     var prevScreen: (() -> Void)?
 
     @Published var answers = [Int:QuizOption]()
-    @Published var progress: CGFloat = 0
-    @Published var quizState = QuizState.pending
+    @Published var progress: CGFloat = 0.56
+    @Published var quizState = QuizState.running
     @Published var quizDifficulty = QuizDifficulty.medium
-    @Published private(set) var questionIndex = 0
+    @Published private(set) var questionIndex = 2
 
     @Published var showExplanation: Bool = false
 
