@@ -16,7 +16,8 @@ extension QuizQuestion {
                 "It doesn't depend on anything"
             ],
             explanation: """
-            If the overall order of the reaction is 1, that means that the rate of the reaction depends on the concentration of the reactant, given its rate law: $Rate=k[A]$
+            If the overall order of the reaction is 1, that means that the rate of the reaction depends on \
+            the concentration of the reactant, given its rate law: $Rate=k[A]$
             """,
             difficulty: .easy
         ),
@@ -47,7 +48,7 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question: """
-            The rate constant of a first order reaction is $0.0254 mins^-1^$. What is the half life for this \
+            The rate constant of a first order reaction is $0.0254 mins^-1^$. What is the half-life for this \
             reaction, in days?
             """,
             correctAnswer: "0.019",
@@ -57,9 +58,12 @@ extension QuizQuestion {
                 "27.28"
             ],
             explanation: """
-            The equation for half-life for a first order reaction is $t_1/2=ln(2)/k$. If k is \
-            $0.0254/minutes$, we only need to replace it in the equation: \
-            $t_1/2 = ln(2)/0.0254 minutes^-1^ = 27.3 mins$. To get that time in days, we convert it: \
+            The equation for half-life for a first order reaction is $t_1/2_=ln(2)/k$. If k is \
+            $0.0254/minutes$, we only need to replace it in the equation:
+
+            $t_1/2_ = ln(2)/0.0254 minutes^-1^ = 27.3 mins$.
+
+            To get that time in days, we convert it: \
             $27.3 mins \\* (1 hour/60 mins) \\* (1 day/24 hours) = 0.019 days$.
             """,
             difficulty: .easy
@@ -91,9 +95,9 @@ extension QuizQuestion {
                 "It depends"
             ],
             explanation: """
-            Units for the rate constant are M^(1-n)/s where n is the order. When $n = 0$, $M^(1-1)^/s = 1/s$ \
-            which is the same s^-1^. When useful, it can be represented in any $time^-1^$ unit, for example \
-            $days^-1^$.
+            Units for the rate constant are $M^(1-n)^/s$ where n is the order. When $n = 0$, \
+            $M^(1-1)^/s = 1/s$ which is the same s^-1^. When useful, it can be represented in any \
+            $time^-1^$ unit, for example $days^-1^$.
             """,
             difficulty: .easy
         ),
@@ -110,10 +114,19 @@ extension QuizQuestion {
             ],
             explanation: """
             The equation for a first order reaction is $ln[A] = ln[A_0_] - kt$. After an hour passed (or 60 \
-            minutes), there's only 12.5% of A remaining, or: $[A] = 0.125[A_0_]$. Replacing we get: \
-            $ln(0.125[A_0_]) = ln[A_0_] - k(1)$. Solving for k = $(ln[Ao] - ln(0.125[A_0_]))$. Using \
-            logarithmic properties: $k = ln([A_0_]/0.125[A_0_]) k = ln(1/0.125) = 2.08 hours^-1^$, which is \
-            the same $2.08 hours^-1^ \\* (1 hour/60 mins) = 0.034667 min^-1^$.
+            minutes), there's only 12.5% of A remaining, or: $[A] = 0.125[A_0_]$. Replacing we get:
+
+            $ln(0.125[A_0_]) = ln[A_0_] - k(1)$.
+
+            Solving for k, $k = (ln[Ao] - ln(0.125[A_0_]))$.
+
+            Using logarithmic properties:
+
+            k = ln([A_0_]/0.125[A_0_]) ➝
+            k = ln(1/0.125) = 2.08 hours^-1^
+
+            which is the same as:
+            2.08 hours^-1^ \\* (1 hour/60 mins) = 0.034667 min^-1^.
             """,
             difficulty: .medium
         ),
@@ -128,7 +141,7 @@ extension QuizQuestion {
             ),
             otherAnswers: [
                 QuizAnswer(
-                    answer: "Rate constant k has the units of 1/time",
+                    answer: "Rate constant k has the units of $1/time$",
                     explanation: """
                     It's true, units for the rate constant are $M^(1-n)^/s$ where n is the order. When $n=0$ \
                     $M^(1-1)^/s=1/s$ which is the same as s^-1^. Or, whichever measurement of $time^-1^$ \
@@ -138,7 +151,7 @@ extension QuizQuestion {
                 QuizAnswer(
                     answer: "Half life is independent of concentration of the species.",
                     explanation: """
-                    It's true, half life equation is $t_1/2 = ln(2)/k$ so it doesn't depend on the initial \
+                    It's true, half life equation is $t_1/2_ = ln(2)/k$ so it doesn't depend on the initial \
                     concentration of the species.
                     """
                 ),
@@ -155,7 +168,7 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question:
-                "What is the half life for a first order reaction whose rate constant is $34.62 h^-1^$?",
+                "What is the half life for a first order reaction whose rate constant is 34.62 $h^-1^$?",
             correctAnswer: "72 s",
             otherAnswers: [
                 "12 s",
@@ -163,10 +176,14 @@ extension QuizQuestion {
                 "1 h"
             ],
             explanation: """
-            The equation for half-life for a first order reaction is $t_1/2 = ln(2)/k$. If k is \
-            $34.62 h^-1^$, we only need to replace it in the equation: \
-            $t_1/2 = ln(2)/34.62 h^-1^ = 0.02 hours$. To get that time in seconds, we need to convert it: \
-            $0.02 hours * (60 mins / 1 hour) * (60 seconds / 1 min) = 72 seconds.$
+            The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$. If k is \
+            $34.62 h^-1^$, we only need to replace it in the equation:
+
+            $t_1/2_ = ln(2)/34.62 h^-1^ = 0.02 hours$.
+
+            To get that time in seconds, we need to convert it:
+
+            $0.02 hours \\* (60 mins / 1 hour) \\* (60 seconds / 1 min) = 72 seconds.$
             """,
             difficulty: .easy
         ),
@@ -174,20 +191,20 @@ extension QuizQuestion {
             question: "Which of the following is the rate law for a first order reaction",
             correctAnswer: QuizAnswer(
                 answer: "Rate = k[A]^0^[B]",
-                explanation: "Rate=k[A]^0^[B], is a first order reaction overall"
+                explanation: "This is a first order reaction overall"
             ),
             otherAnswers: [
                 QuizAnswer(
                     answer: "Rate = k[A][B]",
-                    explanation: "Rate = k[A][B] is a second order reaction overall"
+                    explanation: "This is a second order reaction overall"
                 ),
                 QuizAnswer(
                     answer: "Rate = k[A]^0^[B]^0^",
-                    explanation: "Rate = k[A]^0^[B]^0^ is a zero order reaction overall"
+                    explanation: "This is a zero order reaction overall"
                 ),
                 QuizAnswer(
                     answer: "Rate = k[A]^1^[B]",
-                    explanation: "Rate = k[A]^1^[B] is a second order reaction overall"
+                    explanation: "This is a second order reaction overall"
                 )
             ],
             explanation: nil,
@@ -206,9 +223,15 @@ extension QuizQuestion {
             ],
             explanation: """
             The equation for a first order reaction is $ln[A] = ln[A_0_] - kt$. After an a day and a half \
-            passed (or 1.5 days), there's 3/5 of A remaining, or: $[A] = 0.6[A_0_]$. Replacing, we get: \
-            $ln(0.6[A_0_]) = ln[A_0_] - k(1.5)$. Solving for $k = (ln[A_0_] - ln(0.6[A_0_]))/1.5$. Using \
-            logarithmic properties: $k = ln([A_0_]/0.6[A_0_])/1.5 k = ln(1/0.6)/1.5 = 0.340 d^-1^$. \
+            passed (or 1.5 days), there's 3/5 of A remaining, or: $[A] = 0.6[A_0_]$.
+
+            Replacing, we get: $ln(0.6[A_0_]) = ln[A_0_] - k(1.5)$. Solving for \
+            $k = (ln[A_0_] - ln(0.6[A_0_]))/1.5$.
+
+            Using logarithmic properties:
+
+            $k = ln([A_0_]/0.6[A_0_])/1.5 k = ln(1/0.6)/1.5 = 0.340 d^-1^$.
+
             Since it's a first order equation, according to the rate law we get that: $Rate = 0.340d^-1^[A]$.
             """,
             difficulty: .medium
@@ -216,7 +239,7 @@ extension QuizQuestion {
         QuizQuestion(
             question: """
             The half-life for a first order reaction is 48s. What was the original concentration if, after 1 \
-            minute, the reactant concentration is $0.3 M$?
+            minute, the reactant concentration is 0.3 M?
             """,
             correctAnswer: "0.713 M",
             otherAnswers: [
@@ -225,17 +248,20 @@ extension QuizQuestion {
                 "0.4 M"
             ],
             explanation: """
-            The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$. If t1/2 is 48 \
-            seconds, we only need to replace it in the equation and solve for k: \
-            $k = ln(2)/48s = 0.0144 seconds^-1^$. The equation for first order reaction is \
-            $[A] = [A_0_]e^-kt^$. If we solve for $[A_0_] = [A]/e^-kt^$, we only have to replace the values: \
+            The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$. If t_1/2_ is 48 \
+            seconds, we only need to replace it in the equation and solve for \
+            $k = ln(2)/48s = 0.0144 seconds^-1^$.
+
+            The equation for a first order reaction is $[A] = [A_0_]e^-kt^$. If we solve for \
+            $[A_0_] = [A]/e^-kt^$, we only have to replace the values:
+
             $[A_0_] = 0.3/e^(-0.0144)(60)^ = 0.713 M$
             """,
             difficulty: .medium
         ),
         QuizQuestion(
             question: """
-            For a reaction (A to B), if a graph plotted with axis $ln[A] vs t$ produces a straight line, \
+            For a reaction $(A to B)$, if a graph plotted with axis $ln[A] vs t$ produces a straight line, \
             what is the order of the equation, and what is the slope of the line?
             """,
             correctAnswer: "First Order and -k",
@@ -250,15 +276,15 @@ extension QuizQuestion {
             ],
             explanation: """
             For a $ln[A] vs t$ graph, if the resultant line is a straight line, the reaction is a first \
-            order reaction. The equation for the line is $ln[A] = -kt + ln[A_0_]$ where \
-            $ln[A] = y$, $t = x$, $-k = m$ (slope) and $ln[Ao] = b$ (cut in Y axis), making it $y = mx + b$.
+            order reaction. The equation for the line is $ln[A] = -kt + ln[A_0_]$ where $ln[A] = y$, \
+            $t = x$, $-k = m$ (slope) and $ln[A_0_] = b$ (cut in Y axis), making it $y = mx + b$.
             """,
             difficulty: .easy
         ),
         QuizQuestion(
             question: """
-            If the rate of a reaction (A to B) is $0.03 M/s$ when there is $0.02 M$ of A present, what would \
-            the Rate of the reaction be if there was $0.1 M$ of A, in the case it is a first order reaction?
+            If the rate of a reaction $(A to B)$ is 0.03 $M/s$ when there is 0.02 M of A present, what would \
+            the Rate of the reaction be if there was 0.1 M of A, in the case it is a first order reaction?
             """,
             correctAnswer: "0.015 M/s",
             otherAnswers: [
@@ -272,15 +298,15 @@ extension QuizQuestion {
             ],
             explanation: """
             Following the rate law equation, $Rate = k[A]$. Replacing the first values we have, and solving \
-            for $k = Rate/[A]$ => $k = 0.03 M/s / 0.02 M = 1.5 s^-1^$. So for a concentration of 0.01 M of A \
+            for $k = Rate/[A]$ ➝ $k = 0.03 M/s / 0.02 M = 1.5 s^-1^$. So for a concentration of 0.01 M of A \
             we just replace: $Rate = 1.5(0.01) = 0.015 M/s$.
             """,
             difficulty: .easy
         ),
         QuizQuestion(
             question: """
-            If the Rate of a reaction $(A to B)$ is $0.02 M/s$ when there is $0.01 M$ of A present, how much \
-            of [A] would it take for the Rate to be $0.015 M/s$ considering it is a first order reaction?
+            If the Rate of a reaction $(A to B)$ is 0.02 $M/s$ when there is 0.01 M of A present, how much \
+            of [A] would it take for the Rate to be 0.015 $M/s$ considering it is a first order reaction?
             """,
             correctAnswer: "0.0075 M",
             otherAnswers: [
@@ -290,7 +316,7 @@ extension QuizQuestion {
             ],
             explanation: """
             Following the rate law equation, $Rate = k[A]$. Replacing the first values, and solving for \
-            $k = Rate/[A]$ => $k = 0.020 M/s / 0.010 M = 2 s^-1^$. So for a Rate of $0.015 M/s$ we just \
+            $k = Rate/[A]$ ➝ $k = 0.020 M/s / 0.010 M = 2 s^-1^$. So for a Rate of $0.015 M/s$ we just \
             replace and solve for $[A] = Rate/k$ => $[A] = 0.015 M/s / 2 s^-1^ = 0.0075 M$.
             """,
             difficulty: .easy
@@ -316,7 +342,7 @@ extension QuizQuestion {
         QuizQuestion(
             question: """
             The half-life for a first order reaction is 36 mins. What was the original concentration if, \
-            after 52 minutes, the reactant concentration is $0.2 M$?
+            after 52 minutes, the reactant concentration is 0.2 M?
             """,
             correctAnswer: "0.544 M",
             otherAnswers: [
@@ -326,8 +352,9 @@ extension QuizQuestion {
             ],
             explanation: """
             The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$. If $t_1/2_$ is 36 \
-            mins, we only need to replace it and solve for k: $k = ln(2)/36mins = 0.0192 mins^-1^$. The \
-            equation for first order reactions is $[A] = [A_0_]e^-kt^$. If we solve for \
+            mins, we only need to replace it and solve for k: $k = ln(2)/36mins = 0.0192 mins^-1^$.
+
+            The equation for first order reactions is $[A] = [A_0_]e^-kt^$. If we solve for \
             $[A_0_] = [A]/e^-kt^$, we only have to replace the values: \
             $[A_0_] = 0.2/e^(-0.0192)(52)^ = 0.544 M$
             """,
@@ -352,8 +379,8 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question: """
-            The rate constant of a first order reaction is 0.0042/hours. Which of the following is the half \
-            life of the reaction in days?
+            The rate constant of a first order reaction is $0.0042/hours$. Which of the following is the \
+            half-life of the reaction in days?
             """,
             correctAnswer: "Almost 7 days",
             otherAnswers: [
@@ -405,14 +432,26 @@ extension QuizQuestion {
             The radioactive decay is a first order process. Given the data, using first order equation \
             (where A is just 131 I in this case):
 
-            $[A] = [A_0_]e-^kt^$.  After 16 days, the remaining of 131 I is (100% - 75%) 12.5% of the \
-            initial value, or 0.25[A_0_]. Replacing in the equation: $[A_0_]e-^k(24)^ = 0.25[A_0_]$. \
-            Applying natural log to each side we get: $ln([A_0_]e-^k(16)^) = ln(0.25[A_0_])$. Using \
-            logarithmic properties: \
-            $ln([A_0_]) + ln(e-^k(16)^) = ln[0.25A_0_]$ => $ln([A_0_]) - k(16) = ln(0.25[A_0_])$. \
-            Clearing for k: $k = ln[A_0_] - ln(0.25[A_0_]) / 16$ => $k = ln([A_0_]/0.25[A_0_]) / 16 = k$ \
-            => $ln(1/0.25) / 16 = k$ we get $k = 0.08666 d^-1^$. Now to determine half life, we use the half \
-            life equation $t_1/2_ = ln(2) / 0.08666 d^-1^ = 8 days$.
+            $[A] = [A_0_]e-^kt^$.
+
+            After 16 days, the remaining of 131 I is 12.5% (100% - 75%) of the initial value, or 0.25[A_0_].
+
+            Replacing in the equation: $[A_0_]e-^k(24)^ = 0.25[A_0_]$. Applying natural log to each side we \
+            get: $ln([A_0_]e-^k(16)^) = ln(0.25[A_0_])$.
+
+            Using logarithmic properties:
+
+            $ln([A_0_]) + ln(e-^k(16)^) = ln[0.25A_0_]$ ➝
+            $ln([A_0_]) - k(16) = ln(0.25[A_0_])$.
+
+            Clearing for k:
+
+            $k = ln[A_0_] - ln(0.25[A_0_]) / 16$ ➝
+            $k = ln([A_0_]/0.25[A_0_]) / 16 = k$ ➝
+            $ln(1/0.25) / 16 = k$
+
+            we get $k = 0.08666 d^-1^$. Now to determine half life, we use the half-life equation \
+            $t_1/2_ = ln(2) / 0.08666 d^-1^ = 8 days$.
             """,
             difficulty: .medium
         ),
@@ -460,7 +499,7 @@ extension QuizQuestion {
             question: """
             The table below experimental kinetics data extracted from this reaction:
 
-            C_a_Cl_2_(aq) + 2A_g_NO_3_(aq) ➜ C_a_(NO_3_)_2_(aq) + 2A_g_Cl(s)
+            C_a_Cl_2_(aq) + 2A_g_NO_3_(aq) ➝ C_a_(NO_3_)_2_(aq) + 2A_g_Cl(s)
 
             What is the rate law equation?
             """,
@@ -473,34 +512,19 @@ extension QuizQuestion {
             explanation: """
             When [C_a_Cl_2_] goes from 0.025 to 0.050 (it's doubled, goes up by a factor of 2), the Rate \
             goes from $8.33x10^-4^$ to $1.66x10^-3^$ (it's doubled, goes up by a factor of 2). $2^x^ = 2$ \
-            where $x = 1$; the reaction is first order for [C_a_Cl_2_]. When [A_g_NO_3_] goes from \
-            0.025 to 0.050 (it's doubled, goes up up by a factor of 2), the Rate goes from $1.66x10^-3^$ to \
-            $3.33x10^-3^$ (it's doubled, it goes up by a factor of 2). $2^x^ = 2$ where $x = 1$; the \
-            reaction is first order for [AgNO_3_].
+            where $x = 1$; the reaction is first order for [C_a_Cl_2_].
+
+            When [A_g_NO_3_] goes from 0.025 to 0.050 (it's doubled, goes up up by a factor of 2), the Rate \
+            goes from $1.66x10^-3^$ to $3.33x10^-3^$ (it's doubled, it goes up by a factor of 2). $2^x^ = 2$ \
+            where $x = 1$; the reaction is first order for [AgNO_3_].
             """,
             difficulty: .easy,
             table: QuizTable(
                 rows: [
-                    [
-                        "[C_a_Cl_2_] (M)",
-                        "[AgNO_3_] (M)",
-                        "Rate M/s"
-                    ],
-                    [
-                        "0.025",
-                        "0.025",
-                        "8.33x10^-4^"
-                    ],
-                    [
-                        "0.050",
-                        "0.025",
-                        "1.66x10^-3^"
-                    ],
-                    [
-                        "0.050",
-                        "0.050",
-                        "3.33x10^-3"
-                    ]
+                    ["[C_a_Cl_2_] (M)", "[AgNO_3_] (M)", "Rate M/s"],
+                    [ "0.025", "0.025", "8.33x10^-4^"],
+                    ["0.050", "0.025", "1.66x10^-3^"],
+                    ["0.050", "0.050", "3.33x10^-3"]
                 ]
             )
         )

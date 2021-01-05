@@ -291,12 +291,12 @@ fileprivate struct QuizQuestionsBody: View {
 
     private func optionExplanation(option: QuizOption) -> some View {
         let explanation = model.currentQuestion.options[option]?.explanation
-        return
-            TextLinesView(
+        return TextLinesView(
                 line: explanation?.italic() ?? "",
                 fontSize: settings.answerFontSize
         )
         .padding()
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     private func overlay(option: QuizOption) -> some View {
