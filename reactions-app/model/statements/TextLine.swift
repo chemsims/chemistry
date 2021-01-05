@@ -175,8 +175,12 @@ struct TextLineGenerator {
             }
         }
         addIfNonEmpty()
+
+        assert(allowBreaks && !buildingEmphasis && scriptType == .none,
+               "String '\(str)' did not close all control characters")
         return TextLine(content: segments)
     }
+
 
     private static func charToScript(_ c: Character) -> ScriptType? {
         if (c == sub) {
