@@ -107,7 +107,7 @@ extension QuizQuestion {
             When there were 5 M of A, it was reduced to 4 M in 30 seconds. In other words, 1 M of A was \
             consumed in 30 seconds. We can replace in the equation:
 
-            *$Rate = k = -(4M - 5M)/(90s - 60s) = 0.03333 M/s$*.
+            *$Rate = k = -(4M - 5M)/(90s - 60s) =$ 0.03333 $M/s$*.
 
             The equation for a zero order reaction is: $[A] = [A_0_] - kt$. Now we can use either data \
             point to solve for [A_0_]:
@@ -193,7 +193,7 @@ extension QuizQuestion {
                 $-ΔC/Δt$. When there were 10 M of A, it was reduced to 8 M in 5 hours. In other words, 2 M \
                 of A was consumed in 5 hours. We can replace in the equation:
 
-                *$Rate = k = -(8M - 10M)/(29 - 24) = 0.4 M/h$*.
+                *Rate = k = -(8M - 10M)/(29 - 24) = 0.4 M/h*.
 
                 The equation for a zero order reaction is: $[A] = [A_0_] - kt$. Now we can use either data \
                 point to solve for [A_0_]:
@@ -240,7 +240,7 @@ extension QuizQuestion {
             The rates of disappearance of reactants and appearance of products can be related to each other \
             based on the stoichiometry of the reaction.
 
-            $Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt$.
+            Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt.
 
             If we multiply the whole expression by 5 to get rid of the denominator, we get the equation of: \
             $-5[ΔA]/2Δt = [ΔB]/Δt$
@@ -337,7 +337,7 @@ extension QuizQuestion {
             which 10% of [A] has been consumed, or in other words: $[A] = 0.9[A_0_]$. We also need to adjust \
             the k units for them to be aligned with the other variables:
 
-            $0.001 g mL^-1^ month^-1^ \\* 1000mg/g = 1 g mL^-1^ month^-1^$.
+            0.001 g mL^-1^ month^-1^ \\* 1000mg/g = 1 g mL^-1^ month^-1^.
 
             Replacing in the equation: $0.9[A_0_] = [A_0_] - t$. Solving for t: \
             $t = 0.10[A_0_] = 0.10(100) = 10 months$.

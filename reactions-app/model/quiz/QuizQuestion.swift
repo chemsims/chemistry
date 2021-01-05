@@ -168,7 +168,7 @@ struct QuizQuestionDisplay {
     }
 }
 
-struct QuizAnswer: ExpressibleByStringLiteral {
+struct QuizAnswer: ExpressibleByStringLiteral, Equatable {
     let answer: TextLine
     let explanation: TextLine?
     let position: QuizOption?

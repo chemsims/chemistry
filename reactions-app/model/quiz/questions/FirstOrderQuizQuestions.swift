@@ -61,7 +61,7 @@ extension QuizQuestion {
             The equation for half-life for a first order reaction is $t_1/2_=ln(2)/k$. If k is \
             $0.0254/minutes$, we only need to replace it in the equation:
 
-            $t_1/2_ = ln(2)/0.0254 minutes^-1^ = 27.3 mins$.
+            t_1/2_ = ln(2)/0.0254 minutes^-1^ = 27.3 mins.
 
             To get that time in days, we convert it: \
             $27.3 mins \\* (1 hour/60 mins) \\* (1 day/24 hours) = 0.019 days$.
@@ -116,7 +116,7 @@ extension QuizQuestion {
             The equation for a first order reaction is $ln[A] = ln[A_0_] - kt$. After an hour passed (or 60 \
             minutes), there's only 12.5% of A remaining, or: $[A] = 0.125[A_0_]$. Replacing we get:
 
-            $ln(0.125[A_0_]) = ln[A_0_] - k(1)$.
+            ln(0.125[A_0_]) = ln[A_0_] - k(1).
 
             Solving for k, $k = (ln[Ao] - ln(0.125[A_0_]))$.
 
@@ -179,11 +179,11 @@ extension QuizQuestion {
             The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$. If k is \
             $34.62 h^-1^$, we only need to replace it in the equation:
 
-            $t_1/2_ = ln(2)/34.62 h^-1^ = 0.02 hours$.
+            t_1/2_ = ln(2)/34.62 h^-1^ = 0.02 hours.
 
             To get that time in seconds, we need to convert it:
 
-            $0.02 hours \\* (60 mins / 1 hour) \\* (60 seconds / 1 min) = 72 seconds.$
+            0.02 hours \\* (60 mins / 1 hour) \\* (60 seconds / 1 min) = 72 seconds.
             """,
             difficulty: .easy
         ),
@@ -230,7 +230,7 @@ extension QuizQuestion {
 
             Using logarithmic properties:
 
-            $k = ln([A_0_]/0.6[A_0_])/1.5 k = ln(1/0.6)/1.5 = 0.340 d^-1^$.
+            k = ln([A_0_]/0.6[A_0_])/1.5 k = ln(1/0.6)/1.5 = 0.340 d^-1^.
 
             Since it's a first order equation, according to the rate law we get that: $Rate = 0.340d^-1^[A]$.
             """,
@@ -255,7 +255,7 @@ extension QuizQuestion {
             The equation for a first order reaction is $[A] = [A_0_]e^-kt^$. If we solve for \
             $[A_0_] = [A]/e^-kt^$, we only have to replace the values:
 
-            $[A_0_] = 0.3/e^(-0.0144)(60)^ = 0.713 M$
+            [A_0_] = 0.3/e^(-0.0144)(60)^ = 0.713 M
             """,
             difficulty: .medium
         ),

@@ -85,7 +85,7 @@ fileprivate struct QuestionReviewCard: View {
     let settings: QuizLayoutSettings
 
 
-    @State private var explanationIsExpanded: Bool = true
+    @State private var explanationIsExpanded: Bool = false
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -124,10 +124,9 @@ fileprivate struct QuestionReviewCard: View {
                             fontSize: settings.questionFontSize
                         )
                     }
-
                 }
             }
-            .padding(settings.questionReviewPadding)
+            .padding(4 * settings.questionReviewPadding)
             .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.horizontal, settings.questionReviewPadding)
