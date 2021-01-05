@@ -41,28 +41,43 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question: """
-            Consider the energy diagram bellow. By adding the catalyst, this one has created a new pathways \
-            that's being represented by the red line in the diagram. How exactly does this make the reaction \
-            faster?
+            Consider the energy diagram below. By adding the catalyst, this one has created a new pathways \
+            that's being represented by the red line (line 2) in the diagram. How exactly does this make the \
+            reaction faster?
             """,
             correctAnswer: """
             The catalyst lowers the activation energy required for the reaction to take place, making the \
             transition state more stabilized
             """,
             otherAnswers: [
-                "Adding the catalyst creates two different pathways for the reactants to form products",
-                "The catalyst increases the heat, leading to a less stabilized transition state",
-                "The catalyst alters the reactants, leading to an alternate energy pathway"
+                QuizAnswer(
+                    answer: """
+                    Adding the catalyst creates two different pathways for the reactants to form products
+                    """,
+                    explanation: nil,
+                    position: .A
+                ),
+                QuizAnswer(
+                    answer: "The catalyst increases the heat, leading to a less stabilized transition state",
+                    explanation: nil,
+                    position: .C
+                ),
+                QuizAnswer(
+                    answer: "The catalyst alters the reactants, leading to an alternate energy pathway",
+                    explanation: nil,
+                    position: .D
+                )
             ],
             explanation: """
             Notice how the products and reactants stay in the same place in the diagram for both lines or \
             pathways, so that makes C incorrect since the heart (difference in energy between reactants and \
-            products) remains the same and D incorrect because the reactants also stay the same. Although a \
-            new pathway is created by adding the catalyst, the grey pathway requires much more activation \
-            energy, which would make it less likely to be used, making A not so accurate.
+            products) remains the same and D is incorrect because the reactants also stay the same.
 
-            The red line represents the new pathway created, and it has a much lower activation energy \
-            making it easier for the reactants to meet the energy requirements to react.
+            Although a new pathway is created by adding the catalyst, the grey pathway (line 1) requires \
+            much more activation energy, which would make it less likely to be used, making A not so accurate.
+
+            The red line (line 2) represents the new pathway created, and it has a much lower activation \
+            energy making it easier for the reactants to meet the energy requirements to react.
             """,
             difficulty: .easy,
             image: "energy-profile-reaction-profile"
@@ -88,9 +103,11 @@ extension QuizQuestion {
             question: """
             Which of the following has the lowest Activation Energy?
             """,
-            correctAnswer: """
-            H2O + CO2 <==> H2CO3 (In the presence of a catalyst)
-            """,
+            correctAnswer: QuizAnswer(
+                answer: "H2O + CO2 <==>͍ H2CO3 (In the presence of a catalyst)",
+                explanation: nil,
+                position: .A
+            ),
             otherAnswers: [
                 "2H2O <==> 2H2 + O2 (In an open system)",
                 "H2O + CO2 <==> H2CO3 (In an open system)",
@@ -100,8 +117,10 @@ extension QuizQuestion {
             Correct answer is A, because in general, comparing both reactions, the formation of carbonic \
             acid (H2O + CO2 <==> H2CO3) is spontaneous while the decomposition of water (2H2O <==> 2H2 + O2) \
             is non-spontaneous, so from the get go, the spontaneous reaction would have a lower activation \
-            energy. An inhibitor is meant to slow down a reaction while a catalyst is meant to speed the \
-            reaction up, so that's why the formation of carbonic acid with a catalyst would have the lowest \
+            energy.
+
+            An inhibitor is meant to slow down a reaction while a catalyst is meant to speed the reaction \
+            up, so that's why the formation of carbonic acid with a catalyst would have the lowest \
             activation energy.
             """,
             difficulty: .hard
@@ -111,13 +130,8 @@ extension QuizQuestion {
             When a piece (100 mg) of zinc metal is added to a solution of hydrochloric acid, a reaction \
             occurs. The products are aqueous zinc chloride and hydrogen gas. At which of the following \
             conditions the Rate of the reaction would be higher?
-
-            A student puts 100 mg of a piece of metal to a hydrochloric acid solution, which triggers a \
-            reaction. Which conditions would make the reaction go at a faster rate?
             """,
-            correctAnswer: """
-            [HCl] = 0.200M @70°C
-            """,
+            correctAnswer: QuizAnswer(answer: "[HCl] = 0.200M @70°C", explanation: nil, position: .D),
             otherAnswers: [
                 "[HCl] = 0.030M @5°C",
                 "[HCl] = 0.030M @70°C",
@@ -135,7 +149,7 @@ extension QuizQuestion {
             Catalyst can be of different shapes and different states of matter, but which kind of catalyst \
             is being added to the reaction below to increase the rate of the reaction?
 
-            CH_3_CH_2_OH_(g)_ + HCl_(g)_ ➝ CH_3_CH_2_Cl + H_2_O_(l)
+            CH_3_CH_2_OH_(g)_ + HCl_(g)_ ➝ CH_3_CH_2_Cl + H_2_O_(l)_
             """,
             correctAnswer: """
             A heterogeneous acid-base catalyst
@@ -175,7 +189,7 @@ extension QuizQuestion {
 
             Canceling, we get:
 
-            D2 + 2C ==> 2CD
+            D2 + 2C ==> 2CD.
             """,
             difficulty: .easy
         ),
@@ -267,7 +281,7 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question: """
-            A reaction (2A + B ➝ A2B) has the proposed mechanism:
+            A reaction $(2A + B ➝ A2B)$ has the proposed mechanism:
 
             Step 1: A + B ➝ M (slow)
             Step 2: M + A ➝ A2B (fast)
@@ -292,10 +306,13 @@ extension QuizQuestion {
             explanation: """
             The rate determining step would be the slowest step, which in this case is Step 1 $(A + B ➝ M)$. \
             A termolecular step would be the one with three reactants, since this one only has two \
-            (A and B), it is said that it's bimolecular. On the other hand, the rate law equation is \
-            determined by the rate determining step, and since the slowest reaction is A + B ➝ M, then it's \
-            safe to say that the rate law equation is $Rate = k[A][B]$. Since A and B are in fact reactants \
-            of the overall reaction, then the equation stays that way.
+            (A and B), it is said that it's bimolecular.
+
+            On the other hand, the rate law equation is determined by the rate determining step, and since \
+            the slowest reaction is $A + B ➝ M$, then it's safe to say that the rate law equation is \
+            $Rate = k[A][B]$.
+
+            Since A and B are in fact reactants of the overall reaction, then the equation stays that way.
             """,
             difficulty: .hard
         ),
@@ -341,14 +358,19 @@ extension QuizQuestion {
             ],
             explanation: """
             In the diagram, the difference between where the reaction starts with reactants (in this case, \
-            on the right for the reverse reactions) and the peak of the hump is the activation energy. For G \
-            (reactants) to get to E, the activation energy is the difference between G and F, which since it \
-            is very small, it means it has a low activation energy. For C to get to A (products), the \
-            activation energy is the difference between C and B, which since it is a little bit bigger, it \
-            means it has a higher activation energy than from G to E. Finally, for E to get to C, the \
-            activation energy is the difference between E and D, which is the highest of all the reverse \
-            reactions. We get then that: E to C > C to A > G to E. Notice how the activation energy doesn't \
-            depend on the product side of the hump, but only on the reactants side.
+            on the right for the reverse reactions) and the peak of the hump is the activation energy.
+
+            For G (reactants) to get to E, the activation energy is the difference between G and F, which since it \
+            is very small, it means it has a low activation energy.
+
+            For C to get to A (products), the activation energy is the difference between C and B, which \
+            since it is a little bit bigger, it means it has a higher activation energy than from G to E.
+
+            Finally, for E to get to C, the activation energy is the difference between E and D, which is \
+            the highest of all the reverse reactions. We get then that: E to C > C to A > G to E.
+
+            Notice how the activation energy doesn't depend on the product side of the hump, but only on the \
+            reactants side.
             """,
             difficulty: .medium,
             image: "energy-profile-reaction-coordinate"
@@ -403,7 +425,11 @@ extension QuizQuestion {
             Consider a reaction represented by the energy diagram below. What is a true statement about this \
             reaction?
             """,
-            correctAnswer: "It has a three-step mechanism and it's an endothermic reaction",
+            correctAnswer: QuizAnswer(
+                answer: "It has a three-step mechanism and it's an endothermic reaction",
+                explanation: nil,
+                position: .A
+            ),
             otherAnswers: [
                 "It has a two-step mechanism and it's an endothermic reaction",
                 "It has a three-step mechanism and it's an exothermic reaction",
@@ -412,17 +438,20 @@ extension QuizQuestion {
             explanation: """
             At a first glance is noticeable that the reaction has three humps representing the activated \
             complexes, meaning that it has three step (three elementary reactions that compose the overall \
-            reaction). Reactants started at a lower energy in comparison to the energy of the final \
-            products, meaning that energy was consumed by the overall reaction to occur. In other words, the \
-            reaction is endothermic because it absorbed energy instead of releasing it. Considering these \
-            things, the correct answer is A.
+            reaction).
+
+            Reactants started at a lower energy in comparison to the energy of the final products, meaning \
+            that energy was consumed by the overall reaction to occur.
+
+            In other words, the reaction is endothermic because it absorbed energy instead of releasing it. \
+            Considering these things, the correct answer is A.
             """,
             difficulty: .easy,
             image: "energy-profile-reaction-profile-3"
         ),
         QuizQuestion(
             question: """
-            A student it decomposing hydrogen peroxide (as shown in the reaction below) and wants to speed \
+            A student is decomposing hydrogen peroxide (as shown in the reaction below) and wants to speed \
             up the rate of decomposition. What should he do?
 
             H_2_O_2(g)_ ➝ H_2(g)_ + O_2(g)_
@@ -436,7 +465,7 @@ extension QuizQuestion {
             explanation: """
             A way to increase the kinetic energy of the molecules, creating a higher frequency of collisions \
             and increasing the changes that the collisions meet the energy requirements to be successful is \
-            by increasing the temperature
+            by increasing the temperature.
             """,
             difficulty: .easy
         ),
@@ -444,10 +473,13 @@ extension QuizQuestion {
             question: """
             How are temperature and activation energy related to each other?
             """,
-            correctAnswer: """
-            The higher the temperature, the more molecules with a higher kinetic energy that meet or exceed \
-            the amount of energy that's required for the reaction to take place
-            """,
+            correctAnswer: QuizAnswer(
+                answer: """
+                    The higher the temperature, the more molecules with a higher kinetic energy that meet or exceed \
+                    the amount of energy that's required for the reaction to take place
+                    """,
+                position: .B
+            ),
             otherAnswers: [
                 """
                 The higher the temperature, the higher the number of collisions is, which leads to a lower \
@@ -457,9 +489,13 @@ extension QuizQuestion {
                 The higher the temperature, the lower is the overall amount of energy required for the \
                 reaction to take place, allowing more reactants to turn into products
                 """,
-                """
-                A high temperature results in the creation of a new pathway that has lower energy requirements
-                """
+                QuizAnswer(
+                    answer: """
+                    A high temperature results in the creation of a new pathway that has lower energy \
+                    requirements
+                    """,
+                    position: .D
+                ),
             ],
             explanation: """
             Increasing the temperature will not lower the energy required for the reaction to take place, \
@@ -481,11 +517,13 @@ extension QuizQuestion {
                 "G + H ➝ I"
             ],
             explanation: """
-            The rate-determining step would probably be J + K + L ➝ M. Of all the elementary reactions, this \
-            one is termolecular and has three reactants, which implies that a successful collision of 3 \
-            molecules has to take place for the reaction to occur. Since the probabilities of this happening \
-            are lower, the chances of this reaction to be slower than the other ones is greater. Being the \
-            slowest of all the steps, this would be the rate-determining step.
+            The rate-determining step would probably be $J + K + L ➝ M$. Of all the elementary reactions, \
+            this one is termolecular and has three reactants, which implies that a successful collision of 3 \
+            molecules has to take place for the reaction to occur.
+
+            Since the probabilities of this happening are lower, the chances of this reaction to be slower \
+            than the other ones is greater. Being the slowest of all the steps, this would be the \
+            rate-determining step.
             """,
             difficulty: .medium
         ),

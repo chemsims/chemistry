@@ -173,7 +173,7 @@ struct QuizAnswer: ExpressibleByStringLiteral {
     let explanation: TextLine?
     let position: QuizOption?
 
-    init(answer: TextLine, explanation: TextLine?, position: QuizOption? = nil) {
+    init(answer: TextLine, explanation: TextLine? = nil, position: QuizOption? = nil) {
         self.answer = answer
         self.explanation = explanation
         self.position = position
