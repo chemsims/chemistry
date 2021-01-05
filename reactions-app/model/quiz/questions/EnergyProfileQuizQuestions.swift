@@ -104,7 +104,7 @@ extension QuizQuestion {
             Which of the following has the lowest Activation Energy?
             """,
             correctAnswer: QuizAnswer(
-                answer: "H2O + CO2 <==>͍ H2CO3 (In the presence of a catalyst)",
+                answer: "H2O + CO2 <==> H2CO3 (In the presence of a catalyst)",
                 explanation: nil,
                 position: .A
             ),
