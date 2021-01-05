@@ -28,8 +28,8 @@ class QuizViewModel: ObservableObject {
     @Published var answers = [Int:QuizOption]()
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.running
-    @Published var quizDifficulty = QuizDifficulty.medium
-    @Published private(set) var questionIndex = 17
+    @Published var quizDifficulty = QuizDifficulty.hard
+    @Published private(set) var questionIndex = 16
 
     @Published var showExplanation: Bool = false
 
