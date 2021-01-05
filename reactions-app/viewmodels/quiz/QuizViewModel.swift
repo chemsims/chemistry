@@ -119,7 +119,7 @@ class QuizViewModel: ObservableObject {
     }
 
     private func setShowExplanation(animate: Bool) {
-        let shouldShowExplanation = selectedAnswer != nil && selectedAnswer != correctOption
+        let shouldShowExplanation = true // selectedAnswer != nil && selectedAnswer != correctOption
         withAnimation(animate && !reduceMotion ? .easeOut(duration: 0.4) : nil) {
             showExplanation = shouldShowExplanation
         }
