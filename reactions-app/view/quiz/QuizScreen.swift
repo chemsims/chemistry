@@ -242,6 +242,7 @@ fileprivate struct QuizQuestionsBody: View {
                 alignment: .topTrailing
             )
         )
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     private var answers: some View {
