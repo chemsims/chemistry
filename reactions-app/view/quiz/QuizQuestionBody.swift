@@ -19,16 +19,18 @@ struct QuizQuestionsBody: View {
             HStack {
                 Spacer()
                     .frame(width: settings.navTotalWidth)
-                VStack {
+                VStack(spacing: 10) {
                     QuizQuestionView(
                         question: model.currentQuestion,
-                        settings: settings
+                        settings: settings,
+                        tableWidth: settings.tableWidthQuestionCard
                     )
 
                     if (model.showExplanation &&
                             model.currentQuestion.hasExplanation) {
                         explanationView
                             .padding(.bottom, 10)
+                            .padding(.top, 10)
                     }
 
                     answers

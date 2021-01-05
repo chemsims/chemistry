@@ -55,13 +55,12 @@ fileprivate struct QuizScreenWithSettings: View {
                         QuizIntroBody(
                             settings: settings,
                             model: model
-                        ).padding(.top, settings.progressBarPadding)
+                        )
+                        .padding(.vertical, settings.progressBarPadding)
                         Spacer()
                             .frame(width: settings.navTotalWidth)
                     }
                 }
-
-                Spacer()
             }
             .edgesIgnoringSafeArea(
                 model.quizState == .pending ? [] : .bottom

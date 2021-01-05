@@ -88,4 +88,15 @@ struct QuizLayoutSettings {
         0.55 * fontSize
     }
 
+    var questionReviewPadding: CGFloat {
+        2
+    }
+
+    var tableWidthReviewCard: CGFloat {
+        0.95 * tableWidthQuestionCard
+    }
+
+    var tableWidthQuestionCard: CGFloat {
+        0.95 * progressWidth
+    }
 }

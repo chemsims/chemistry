@@ -156,7 +156,7 @@ struct QuizQuestionDisplay {
 
         options.keys.sorted().forEach { option in
             if let answer = options[option], let explanation = answer.explanation {
-                let optionSegment = TextSegment(content: "\(option.rawValue))", emphasised: true)
+                let optionSegment = TextSegment(content: "\(option.rawValue)) ", emphasised: true)
                 let answerSegment = answer.answer.content.map { $0.setEmphasised(true) }
                 let newLineSegment = TextSegment(content: "\n", emphasised: false)
                 let explanationSegment = explanation.content.map { $0.setItalic(true) }

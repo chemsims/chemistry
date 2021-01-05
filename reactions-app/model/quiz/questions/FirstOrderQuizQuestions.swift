@@ -316,8 +316,10 @@ extension QuizQuestion {
             ],
             explanation: """
             Following the rate law equation, $Rate = k[A]$. Replacing the first values, and solving for \
-            $k = Rate/[A]$ ➝ $k = 0.020 M/s / 0.010 M = 2 s^-1^$. So for a Rate of $0.015 M/s$ we just \
-            replace and solve for $[A] = Rate/k$ => $[A] = 0.015 M/s / 2 s^-1^ = 0.0075 M$.
+            $k = Rate/[A]$ ➝ $k = 0.020 M/s / 0.010 M = 2 s^-1^$.
+
+            So for a Rate of $0.015 M/s$ we just replace and solve for $[A] = Rate/k$ ➝ \
+            $[A] = 0.015 M/s / 2 s^-1^ = 0.0075 M$.
             """,
             difficulty: .easy
         ),

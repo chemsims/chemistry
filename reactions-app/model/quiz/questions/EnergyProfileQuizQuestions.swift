@@ -127,9 +127,8 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question: """
-            When a piece (100 mg) of zinc metal is added to a solution of hydrochloric acid, a reaction \
-            occurs. The products are aqueous zinc chloride and hydrogen gas. At which of the following \
-            conditions the Rate of the reaction would be higher?
+            A student puts 100 mg of a piece of metal to a hydrochloric acid solution, which triggers a \
+            reaction. Which conditions would make the reaction go at a faster rate?
             """,
             correctAnswer: QuizAnswer(answer: "[HCl] = 0.200M @70°C", explanation: nil, position: .D),
             otherAnswers: [

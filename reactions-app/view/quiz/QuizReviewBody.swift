@@ -11,27 +11,26 @@ struct QuizReviewBody: View {
     @ObservedObject var model: QuizViewModel
 
     var body: some View {
-        HStack(spacing: 0) {
-            ScrollView {
-                HStack(spacing: 0) {
-                    Spacer()
-                        .frame(width: settings.navTotalWidth)
-                    VStack(spacing: 20) {
-                        heading
-                        ForEach(0..<model.quizLength) { index in
-                            reviewCard(index: index)
-                        }
+        ScrollView {
+            HStack(spacing: 0) {
+                Spacer()
+                    .frame(width: settings.navTotalWidth)
+                VStack(spacing: 20) {
+                    heading
+                        .fixedSize(horizontal: false, vertical: true)
+                    ForEach(0..<model.quizLength) { index in
+                        reviewCard(index: index)
                     }
-                    .padding(.top, settings.progressBarPadding)
-                    Spacer()
-                        .frame(width: settings.navTotalWidth)
                 }
+                .padding(.top, settings.progressBarPadding)
+                Spacer()
+                    .frame(width: settings.navTotalWidth)
             }
         }
     }
 
     private var heading: some View {
-        HStack {
+        HStack(spacing: 0) {
             Spacer()
                 .frame(width: settings.retryLabelWidth)
             Spacer()
@@ -74,6 +73,7 @@ struct QuizReviewBody: View {
             isCorrect: isCorrect,
             settings: settings
         )
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
@@ -85,7 +85,7 @@ fileprivate struct QuestionReviewCard: View {
     let settings: QuizLayoutSettings
 
 
-    @State private var explanationIsExpanded: Bool = false
+    @State private var explanationIsExpanded: Bool = true
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -95,7 +95,8 @@ fileprivate struct QuestionReviewCard: View {
                 }
                 QuizQuestionView(
                     question: question,
-                    settings: settings
+                    settings: settings,
+                    tableWidth: settings.tableWidthReviewCard
                 )
 
                 optionLine(
@@ -126,10 +127,10 @@ fileprivate struct QuestionReviewCard: View {
 
                 }
             }
-            .padding()
+            .padding(settings.questionReviewPadding)
             .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.horizontal, 2)
+        .padding(.horizontal, settings.questionReviewPadding)
         .font(.system(size: settings.questionFontSize))
         .background(reviewBackground)
     }

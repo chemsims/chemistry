@@ -9,6 +9,7 @@ struct QuizQuestionView: View {
 
     let question: QuizQuestionDisplay
     let settings: QuizLayoutSettings
+    let tableWidth: CGFloat
 
     var body: some View {
         VStack(spacing: 10) {
@@ -17,7 +18,6 @@ struct QuizQuestionView: View {
                 fontSize: settings.questionFontSize
             )
             .minimumScaleFactor(1)
-            .fixedSize(horizontal: false, vertical: true)
 
             if (question.image != nil) {
                 Image(question.image!)
@@ -30,9 +30,10 @@ struct QuizQuestionView: View {
                 QuizTableView(
                     table: question.table!,
                     fontSize: settings.questionFontSize,
-                    availableWidth: settings.progressWidth
+                    availableWidth: tableWidth
                 )
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
     }
 }

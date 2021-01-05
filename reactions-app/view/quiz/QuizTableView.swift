@@ -42,7 +42,6 @@ fileprivate struct QuizTableViewWithGeometry: View {
                     rowIndex: rowIndex,
                     colIndex: colIndex
                 )
-
             }
         }
     }
@@ -57,6 +56,7 @@ fileprivate struct QuizTableViewWithGeometry: View {
             fontSize: settings.fontSize,
             weight: rowIndex == 0 ? .semibold : .regular
         )
+        .padding(.horizontal, 0.07 * settings.colWidths[colIndex])
         .frame(
             width: settings.colWidths[colIndex],
             height: settings.rowHeights[rowIndex]
@@ -65,6 +65,7 @@ fileprivate struct QuizTableViewWithGeometry: View {
             rowIndex % 2 == 0 ? Styling.tableEvenRow : Styling.tableOddRow
         )
         .border(Styling.tableCellBorder, width: 0.5)
+        .lineLimit(rowIndex == 0 ? 1 : nil)
     }
 }
 
