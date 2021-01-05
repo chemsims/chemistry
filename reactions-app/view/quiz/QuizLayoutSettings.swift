@@ -68,4 +68,20 @@ struct QuizLayoutSettings {
         0.8 * geometry.size.height
     }
 
+    var retryIconWidth: CGFloat {
+        progressHeight
+    }
+
+    var retryLabelWidth: CGFloat {
+        2 * retryIconWidth
+    }
+
+    var retryPadding: CGFloat {
+        0.1 * retryIconWidth
+    }
+
+    var retryLabelFontSize: CGFloat {
+        0.8 * answerFontSize
+    }
+
 }

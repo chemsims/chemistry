@@ -27,7 +27,7 @@ class QuizViewModel: ObservableObject {
 
     @Published var answers = [Int:QuizOption]()
     @Published var progress: CGFloat = 0
-    @Published var quizState = QuizState.pending
+    @Published var quizState = QuizState.completed
     @Published var quizDifficulty = QuizDifficulty.medium
     @Published private(set) var questionIndex = 0
 
@@ -116,6 +116,12 @@ class QuizViewModel: ObservableObject {
 
     func optionText(_ option: QuizOption) -> TextLine {
         currentQuestion.options[option]?.answer ?? ""
+    }
+
+    func restart() {
+        quizState = .pending
+        questionIndex = 0
+        setProgress()
     }
 
     private func setShowExplanation(animate: Bool) {

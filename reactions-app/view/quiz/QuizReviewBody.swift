@@ -35,13 +35,33 @@ struct QuizReviewBody: View {
     private var heading: some View {
         HStack {
             Spacer()
-            VStack {
+                .frame(width: settings.retryLabelWidth)
+            Spacer()
+            VStack(spacing: 5) {
                 Text("You got \(model.correctAnswers) correct out of \(model.quizLength)")
                     .foregroundColor(.orangeAccent)
                 Text("Let's review the questions!")
             }
 
             Spacer()
+            Button(action: model.restart) {
+                VStack(spacing: 5) {
+                    Image(systemName: "arrow.clockwise.circle")
+                        .padding(settings.retryPadding)
+                        .background(
+                            Circle()
+                                .foregroundColor(Styling.speechBubble)
+                        )
+                        .frame(width: settings.retryIconWidth, height: settings.retryIconWidth)
+
+                    Text("Retry")
+                        .font(.system(size: settings.retryLabelFontSize))
+                        .minimumScaleFactor(0.5)
+                        .foregroundColor(Styling.navIcon)
+                }
+                .foregroundColor(Styling.navIcon)
+            }
+            .frame(width: settings.retryLabelWidth)
         }
     }
 
@@ -104,19 +124,22 @@ struct QuizReviewBody: View {
                 cornerRadius: settings.progressCornerRadius
             )
             .foregroundColor(.white)
-            .shadow(radius: 2)
+            .shadow(color: borderColor(isCorrect: isCorrect), radius: 3, x: 0, y: 0)
 
             RoundedRectangle(
                 cornerRadius: settings.progressCornerRadius
             )
-            .stroke(lineWidth: 4)
-            .foregroundColor(isCorrect ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerIncorrectBorder)
-
+            .strokeBorder(lineWidth: 2)
+            .foregroundColor(borderColor(isCorrect: isCorrect))
 
             QuizAnswerIconOverlay(isCorrect: isCorrect)
                 .frame(width: 30, height: 30)
                 .offset(x: 10, y: -10)
         }
+    }
+
+    private func borderColor(isCorrect: Bool) -> Color {
+        isCorrect ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerIncorrectBorder
     }
 
     private func optionLine(
@@ -169,3 +192,4 @@ struct QuizReviewBody: View {
         }
     }
 }
+
