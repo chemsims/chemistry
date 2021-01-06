@@ -61,6 +61,8 @@
 		571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E802560483A00A1C45E /* BarChartBar.swift */; };
 		571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
 		5727485F25A5F489000CFA1E /* NavigationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */; };
+		5727486325A5FB49000CFA1E /* ScreenStateTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486225A5FB49000CFA1E /* ScreenStateTree.swift */; };
+		5727486725A60445000CFA1E /* ScreenStateTreeNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */; };
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
 		572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB943255C3BCF0071C600 /* ValueRange.swift */; };
 		57333063259C7AD300FD7DC0 /* SecondOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57333062259C7AD300FD7DC0 /* SecondOrderQuizQuestions.swift */; };
@@ -225,6 +227,8 @@
 		571F6E802560483A00A1C45E /* BarChartBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartBar.swift; sourceTree = "<group>"; };
 		571F6E862560486400A1C45E /* BarChartAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartAxis.swift; sourceTree = "<group>"; };
 		5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModelTests.swift; sourceTree = "<group>"; };
+		5727486225A5FB49000CFA1E /* ScreenStateTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenStateTree.swift; sourceTree = "<group>"; };
+		5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenStateTreeNodeTests.swift; sourceTree = "<group>"; };
 		572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationBarChart.swift; sourceTree = "<group>"; };
 		572CB943255C3BCF0071C600 /* ValueRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRange.swift; sourceTree = "<group>"; };
 		57333062259C7AD300FD7DC0 /* SecondOrderQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderQuizQuestions.swift; sourceTree = "<group>"; };
@@ -363,6 +367,7 @@
 				57631771259B814100D7CE2C /* SizeAdjusterTests.swift */,
 				5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */,
 				5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */,
+				5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */,
 			);
 			path = "reactions-appTests";
 			sourceTree = "<group>";
@@ -452,6 +457,7 @@
 				571B3C772565605C0075358B /* SecondOrderReactionNavigationViewModel.swift */,
 				571B3CBA25658D300075358B /* RootNavigationViewModel.swift */,
 				57D8BA1E257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift */,
+				5727486225A5FB49000CFA1E /* ScreenStateTree.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -948,6 +954,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5727486725A60445000CFA1E /* ScreenStateTreeNodeTests.swift in Sources */,
 				5736B669258A79BD002CEF5E /* QuizViewModelTests.swift in Sources */,
 				57F4776025617B240041D406 /* BoundedSliderPositioningTests.swift in Sources */,
 				57035EE5255BFE5200DB3A19 /* sliderCalculationsTest.swift in Sources */,
@@ -1070,6 +1077,7 @@
 				571B3CBB25658D300075358B /* RootNavigationViewModel.swift in Sources */,
 				57DAE4D42577C2FD006D945B /* FixedText.swift in Sources */,
 				572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */,
+				5727486325A5FB49000CFA1E /* ScreenStateTree.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */,
 				571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */,
