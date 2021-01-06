@@ -29,7 +29,6 @@ class ScreenStateTreeNodeTests: XCTestCase {
         XCTAssertEqual(s3Node!.prev(model: TesterClass())?.state.value, s2.value)
         XCTAssertNil(s3Node?.next(model: TesterClass()))
     }
-
 }
 
 fileprivate class TesterClass { var value = 0 }

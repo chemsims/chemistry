@@ -11,27 +11,29 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
     var prevScreen: (() -> Void)?
 
     let model: State.Model
-    private let states: [State]
+
+    private var currentNode: ScreenStateTreeNode<State>
 
     private var nextTimer: Timer?
     private var subTimer: Timer?
 
-    init(model: State.Model, states: [State]) {
-        self.states = states
-        self.currentIndex = 0
-        self.model = model
-        if let state = getState(for: currentIndex) {
-            state.apply(on: model)
-        }
+    convenience init(model: State.Model, states: [State]) {
+        let rootNode = ScreenStateTreeNode<State>.build(states: states)
+        assert(rootNode != nil)
+        self.init(model: model, rootNode: rootNode!)
     }
 
-    private var currentIndex: Int
+    init(model: State.Model, rootNode: ScreenStateTreeNode<State>) {
+        self.currentNode = rootNode
+        self.model = model
+        currentNode.state.apply(on: self.model)
+    }
 
     @objc func next() {
-        let nextIndex = currentIndex + 1
-        if let state = getState(for: nextIndex) {
+        if let nextNode = currentNode.next(model: model) {
+            let state = nextNode.state
             state.apply(on: model)
-            currentIndex = nextIndex
+            currentNode = nextNode
             scheduleSubState(indexToRun: 0)
             scheduleNextState(for: state)
         } else if let nextScreen = nextScreen {
@@ -40,13 +42,13 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
     }
 
     func back() {
-        let previousIndex = currentIndex - 1
-        if let currentState = getState(for: currentIndex),
-           let previousState = getState(for: previousIndex) {
+        if let previousNode = currentNode.prev(model: model) {
+            let currentState = currentNode.state
+            let previousState = previousNode.state
             if (!currentState.ignoreOnBack) {
                 currentState.unapply(on: model)
             }
-            currentIndex = previousIndex
+            currentNode = previousNode
             if (previousState.ignoreOnBack) {
                 back()
             } else {
@@ -64,20 +66,24 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
             timer.invalidate()
             nextTimer = nil
         }
-        guard let state = getState(for: currentIndex),
-              state.delayedStates.count > indexToRun else {
+        let state = currentNode.state
+        guard state.delayedStates.count > indexToRun else {
             return
         }
 
         let next = state.delayedStates[indexToRun]
-        subTimer = Timer.scheduledTimer(timeInterval: next.delay, target: self, selector: #selector(runForIndex), userInfo: indexToRun, repeats: false)
+        subTimer = Timer.scheduledTimer(
+            timeInterval: next.delay,
+            target: self,
+            selector: #selector(runForIndex),
+            userInfo: indexToRun,
+            repeats: false
+        )
     }
 
     @objc private func runForIndex(timer: Timer) {
-        guard let state = getState(for: currentIndex),
-              let index = timer.userInfo as? Int,
-              state.delayedStates.count > index
-        else {
+        let state = currentNode.state
+        guard let index = timer.userInfo as? Int, state.delayedStates.count > index else {
             return
         }
         state.delayedStates[index].state.apply(on: model)
@@ -93,9 +99,5 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
         if let delay = state.nextStateAutoDispatchDelay(model: model) {
             nextTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(next), userInfo: nil, repeats: false)
         }
-    }
-
-    private func getState(for n: Int) -> State? {
-        states.indices.contains(n) ? states[n] : nil
     }
 }
