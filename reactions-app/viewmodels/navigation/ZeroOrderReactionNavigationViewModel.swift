@@ -33,7 +33,7 @@ struct ZeroOrderReactionNavigation {
         persistence: ReactionInputPersistence
     ) -> NavigationViewModel<ReactionState> {
         NavigationViewModel(
-            reactionViewModel: reaction,
+            model: reaction,
             states: states(persistence: persistence)
         )
     }

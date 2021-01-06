@@ -15,7 +15,7 @@ class ReactionFilingViewModel: ObservableObject {
         firstOrderViewModel = FirstOrderReactionViewModel()
         secondOrderViewModel = SecondOrderReactionViewModel()
 
-        let navigation = NavigationViewModel(reactionViewModel: zeroOrderViewModel, states: [ReactionState]())
+        let navigation = NavigationViewModel(model: zeroOrderViewModel, states: [ReactionState]())
 
         let zeroOrderScreen = ZeroOrderReactionScreen(
             reaction: zeroOrderViewModel,

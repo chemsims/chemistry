@@ -29,7 +29,7 @@ protocol ScreenState {
     /// Reapplies the state, when returning from a subsequent state.
     func reapply(on model: Model) -> Void
 
-    /// Interval to wait before automatically progressing to the next state
+    /// TimeInterval (i.e. time in seconds) to wait before automatically progressing to the next state
     func nextStateAutoDispatchDelay(model: Model) -> Double?
 
     /// When clicking back, should this state be ignored

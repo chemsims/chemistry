@@ -10,7 +10,7 @@ struct EnergyProfileNavigationViewModel {
         _ energyViewModel: EnergyProfileViewModel
     ) -> NavigationViewModel<EnergyProfileState> {
         NavigationViewModel(
-            reactionViewModel: energyViewModel,
+            model: energyViewModel,
             states: states
         )
     }

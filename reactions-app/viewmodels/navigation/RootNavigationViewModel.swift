@@ -305,7 +305,7 @@ fileprivate class FinalAppScreenProvider: ScreenProvider {
         underlying: EnergyProfileViewModel?
     ) {
         let viewModel = underlying ?? EnergyProfileViewModel(persistence: persistence)
-        self.navigation = NavigationViewModel(reactionViewModel: viewModel, states: [FinalEnergyProfileState()])
+        self.navigation = NavigationViewModel(model: viewModel, states: [FinalEnergyProfileState()])
     }
 
     let navigation: NavigationViewModel<EnergyProfileState>

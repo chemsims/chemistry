@@ -16,12 +16,12 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
     private var nextTimer: Timer?
     private var subTimer: Timer?
 
-    init(reactionViewModel: State.Model, states: [State]) {
+    init(model: State.Model, states: [State]) {
         self.states = states
         self.currentIndex = 0
-        self.model = reactionViewModel
+        self.model = model
         if let state = getState(for: currentIndex) {
-            state.apply(on: reactionViewModel)
+            state.apply(on: model)
         }
     }
 
