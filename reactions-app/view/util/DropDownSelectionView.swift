@@ -100,3 +100,23 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     }
 }
 
+
+struct DropDownSelectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            Rectangle()
+
+
+            DropDownSelectionView(
+                title: "foo",
+                options: ReactionOrder.allCases,
+                isToggled: .constant(true),
+                selection: .constant(.First),
+                height: 30,
+                displayString: { "\($0)"}
+            )
+        }
+        .previewLayout(.fixed(width: 700, height: 200))
+    }
+}
+

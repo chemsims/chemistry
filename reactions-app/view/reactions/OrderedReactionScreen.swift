@@ -17,6 +17,9 @@ struct OrderedReactionScreen<Content: View>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
+    @State private var reactionSelectionIsToggled: Bool = false
+    @State private var reactionSelection: OrderedReactionSet = .A
+
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
@@ -97,9 +100,28 @@ struct OrderedReactionScreen<Content: View>: View {
             )
             .padding(.horizontal, settings.chartHPadding)
 
-            concentrationTable
+            topRightControls
                 .padding(.trailing, settings.tableTrailingPadding)
         }
+    }
+
+    private var topRightControls: some View {
+        VStack(alignment: .trailing, spacing: 0.5 * settings.tableButtonSize) {
+            reactionToggle.zIndex(1)
+            concentrationTable
+        }
+    }
+
+    private var reactionToggle: some View {
+        DropDownSelectionView(
+            title: "Choose a reaction",
+            options: OrderedReactionSet.allCases,
+            isToggled:  $reactionSelectionIsToggled,
+            selection: $reactionSelection,
+            height: settings.tableButtonSize,
+            displayString: { $0.name}
+        )
+        .frame(height: settings.tableButtonSize, alignment: .top)
     }
 
     private var concentrationTable: some View {
@@ -127,5 +149,31 @@ struct OrderedReactionScreen<Content: View>: View {
             Text(value)
         }.frame(width: settings.tableCellWidth, height: settings.tableCellHeight)
     }
+}
 
+struct OrderedReactionScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        GeometryReader { geometry in
+            OrderedReactionScreen(
+                reaction: ZeroOrderReactionViewModel(),
+                navigation: NavigationViewModel(
+                    model: ZeroOrderReactionViewModel(),
+                    states: [ReactionState()]
+                ),
+                settings: OrderedReactionLayoutSettings(
+                    geometry: geometry,
+                    horizontalSize: nil,
+                    verticalSize: nil
+                ),
+                canSetInitialTime: false,
+                showRate: false
+            ) {
+                VStack {
+                    Spacer()
+                    Text("Hello, world")
+                }
+            }
+        }
+        .previewLayout(.fixed(width: 568, height: 320))
+    }
 }
