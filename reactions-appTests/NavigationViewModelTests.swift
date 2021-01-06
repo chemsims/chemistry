@@ -79,6 +79,30 @@ class NavigationViewModelTests: XCTestCase {
 
         XCTAssertGreaterThanOrEqual(elapsedSeconds, 0.9 * delay)
     }
+
+    func testIgnoreOnBack() {
+        let s1 = SetValueState(value: 1)
+        class S2: SetValueState {
+            init() { super.init(value: 2) }
+            override var ignoreOnBack: Bool { true }
+        }
+        let s2 = S2()
+
+        let s3 = SetValueState(value: 3)
+
+        let tester = TesterClass()
+        let model = NavigationViewModel(model: tester, states: [s1, s2, s3])
+
+        model.next()
+        model.next()
+        XCTAssertEqual(tester.value, s3.value)
+
+        model.back()
+        XCTAssertEqual(tester.value, s1.value)
+
+        model.next()
+        XCTAssertEqual(tester.value, s2.value)
+    }
 }
 
 fileprivate class TesterClass { var value = 0 }
@@ -93,6 +117,10 @@ fileprivate class TesterState: ScreenState, SubState {
 
     func nextStateAutoDispatchDelay(model: TesterClass) -> Double? {
         nil
+    }
+
+    var ignoreOnBack: Bool {
+        false
     }
 
     typealias NestedState = TesterState
