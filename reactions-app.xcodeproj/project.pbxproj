@@ -63,6 +63,7 @@
 		5727485F25A5F489000CFA1E /* NavigationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */; };
 		5727486325A5FB49000CFA1E /* ScreenStateTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486225A5FB49000CFA1E /* ScreenStateTree.swift */; };
 		5727486725A60445000CFA1E /* ScreenStateTreeNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */; };
+		5727486B25A60D30000CFA1E /* DropDownSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */; };
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
 		572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB943255C3BCF0071C600 /* ValueRange.swift */; };
 		57333063259C7AD300FD7DC0 /* SecondOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57333062259C7AD300FD7DC0 /* SecondOrderQuizQuestions.swift */; };
@@ -229,6 +230,7 @@
 		5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModelTests.swift; sourceTree = "<group>"; };
 		5727486225A5FB49000CFA1E /* ScreenStateTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenStateTree.swift; sourceTree = "<group>"; };
 		5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenStateTreeNodeTests.swift; sourceTree = "<group>"; };
+		5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownSelectionView.swift; sourceTree = "<group>"; };
 		572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationBarChart.swift; sourceTree = "<group>"; };
 		572CB943255C3BCF0071C600 /* ValueRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueRange.swift; sourceTree = "<group>"; };
 		57333062259C7AD300FD7DC0 /* SecondOrderQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderQuizQuestions.swift; sourceTree = "<group>"; };
@@ -467,11 +469,11 @@
 			children = (
 				57F477462560FF300041D406 /* NavButton.swift */,
 				571B3CAE25658ACC0075358B /* CircleIconButton.swift */,
-				57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */,
 				57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */,
 				57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */,
 				57F337F82578CE7E00EF90A1 /* Tooltip.swift */,
 				57E7FF6D2582831000A30582 /* ConcentrationTable.swift */,
+				5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -712,6 +714,7 @@
 		577077B32568E2F6003E750E /* energy-profile */ = {
 			isa = PBXGroup;
 			children = (
+				57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */,
 				577077B42568E318003E750E /* EnergyProfileScreen.swift */,
 				577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */,
 				577077CE25698CE0003E750E /* SKBeakerScene.swift */,
@@ -1020,6 +1023,7 @@
 				571B3C602565562C0075358B /* FirstOrderReactionNavigationViewModel.swift in Sources */,
 				573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */,
 				5712155E258103A600E92A99 /* Rates.swift in Sources */,
+				5727486B25A60D30000CFA1E /* DropDownSelectionView.swift in Sources */,
 				571B3C7425655AA60075358B /* SecondOrderReactionScreen.swift in Sources */,
 				57B23314258E8BCB00128760 /* AppScreen.swift in Sources */,
 				571B3CAA256581100075358B /* BeakyBox.swift in Sources */,

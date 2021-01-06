@@ -5,6 +5,10 @@
 
 import Foundation
 
-enum ReactionOrder {
+enum ReactionOrder: Int, CaseIterable {
     case Zero, First, Second
+}
+
+extension ReactionOrder: Identifiable {
+    var id: Int { self.rawValue }
 }
