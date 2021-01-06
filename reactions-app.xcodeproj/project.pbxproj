@@ -155,7 +155,6 @@
 		57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
 		57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */; };
-		57FDA145255D835600CB8804 /* BoundType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA144255D835600CB8804 /* BoundType.swift */; };
 		57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -322,7 +321,6 @@
 		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
 		57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartGeometrySettings.swift; sourceTree = "<group>"; };
-		57FDA144255D835600CB8804 /* BoundType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundType.swift; sourceTree = "<group>"; };
 		57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = speechBubbleLineGeneratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -555,24 +553,20 @@
 		571D6A6C255AB23D00F4E635 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5727487225A61B9C000CFA1E /* enums */,
 				57B23312258E8BC100128760 /* navigation */,
 				57F56216258D4EE9008B2602 /* energy-profile */,
 				573F169B2584C028001CE039 /* quiz */,
 				571215542580DCC000E92A99 /* equation */,
-				57D8BA2A257BF168006B3C8B /* ui-enums */,
+				57D8BA2A257BF168006B3C8B /* screen-element-enums */,
 				57F4774E256105430041D406 /* statements */,
 				571D6A6D255AB24300F4E635 /* styling */,
 				57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */,
 				57035EDB255BFDB400DB3A19 /* AxisPositionCalculations.swift */,
-				57035EF0255C09B500DB3A19 /* Orientation.swift */,
 				572CB943255C3BCF0071C600 /* ValueRange.swift */,
 				57FDA138255D6C5000CB8804 /* Extensions.swift */,
-				57FDA144255D835600CB8804 /* BoundType.swift */,
 				57F4775925616F400041D406 /* BoundedSliderPositioning.swift */,
-				571B3CB425658BA70075358B /* Icons.swift */,
-				57517F3225739E5200EB79C7 /* ReactionOrder.swift */,
 				57DAE4FD2577ED76006D945B /* ReactionInput.swift */,
-				573F16A625852D5D001CE039 /* BeakerReactionState.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -580,6 +574,7 @@
 		571D6A6D255AB24300F4E635 /* styling */ = {
 			isa = PBXGroup;
 			children = (
+				571B3CB425658BA70075358B /* Icons.swift */,
 				571D6A6E255AB25400F4E635 /* Styling.swift */,
 			);
 			path = styling;
@@ -606,6 +601,16 @@
 				571F6E862560486400A1C45E /* BarChartAxis.swift */,
 			);
 			path = shapes;
+			sourceTree = "<group>";
+		};
+		5727487225A61B9C000CFA1E /* enums */ = {
+			isa = PBXGroup;
+			children = (
+				57517F3225739E5200EB79C7 /* ReactionOrder.swift */,
+				573F16A625852D5D001CE039 /* BeakerReactionState.swift */,
+				57035EF0255C09B500DB3A19 /* Orientation.swift */,
+			);
+			path = enums;
 			sourceTree = "<group>";
 		};
 		572CB93B255C36B00071C600 /* timechart */ = {
@@ -781,14 +786,14 @@
 			path = "reaction-page-view";
 			sourceTree = "<group>";
 		};
-		57D8BA2A257BF168006B3C8B /* ui-enums */ = {
+		57D8BA2A257BF168006B3C8B /* screen-element-enums */ = {
 			isa = PBXGroup;
 			children = (
 				57D8BA2B257BF17E006B3C8B /* ReactionComparisonScreenElement.swift */,
 				57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */,
 				570FCD08258F8E0C0030D92E /* OrderedReactionScreenElement.swift */,
 			);
-			path = "ui-enums";
+			path = "screen-element-enums";
 			sourceTree = "<group>";
 		};
 		57E7FF7525828BED00A30582 /* navigation */ = {
@@ -995,7 +1000,6 @@
 				57B2332B258EA93F00128760 /* ReactionFilingViewModel.swift in Sources */,
 				571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */,
 				577077BC2568E3E1003E750E /* BeakyOverlay.swift in Sources */,
-				57FDA145255D835600CB8804 /* BoundType.swift in Sources */,
 				57D8BA2C257BF17E006B3C8B /* ReactionComparisonScreenElement.swift in Sources */,
 				571B3C842565638F0075358B /* OrderedReactionLayoutSettings.swift in Sources */,
 				57DAE4FE2577ED76006D945B /* ReactionInput.swift in Sources */,
