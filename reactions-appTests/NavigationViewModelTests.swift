@@ -82,12 +82,7 @@ class NavigationViewModelTests: XCTestCase {
 
     func testIgnoreOnBack() {
         let s1 = SetValueState(value: 1)
-        class S2: SetValueState {
-            init() { super.init(value: 2) }
-            override var ignoreOnBack: Bool { true }
-        }
-        let s2 = S2()
-
+        let s2 = SetValueState(value: 2, ignoreOnBack: true)
         let s3 = SetValueState(value: 3)
 
         let tester = TesterClass()
@@ -102,6 +97,41 @@ class NavigationViewModelTests: XCTestCase {
 
         model.next()
         XCTAssertEqual(tester.value, s2.value)
+    }
+
+    func testBiConditionalNavigation() {
+        let s1 = SetValueState(value: 1)
+        let s2 = SetValueState(value: 2, shouldReapply: false)
+        let s3 = SetValueState(value: 3)
+        let s3Alternative = SetValueState(value: 4)
+
+
+        let s1Node = ScreenStateTreeNode(state: s1)
+        let s2Node = BiConditionalScreenStateNode(state: s2, applyAlternativeNode: { $0.value == 2 })
+        let s3Node = ScreenStateTreeNode(state: s3)
+        let s3AlternativeNode = ScreenStateTreeNode(state: s3Alternative)
+
+        s1Node.staticNext = s2Node
+        s2Node.staticNext = s3Node
+        s2Node.staticNextAlternative = s3AlternativeNode
+        s3AlternativeNode.staticPrev = s2Node
+
+        let tester = TesterClass()
+        let model = NavigationViewModel(model: tester, rootNode: s1Node)
+
+        XCTAssertEqual(tester.value, s1.value)
+
+        model.next()
+        XCTAssertEqual(tester.value, s2.value)
+
+        model.next()
+        XCTAssertEqual(tester.value, s3Alternative.value)
+
+        model.back()
+        XCTAssertEqual(tester.value, s3Alternative.value)
+
+        model.next()
+        XCTAssertEqual(tester.value, s3.value)
     }
 }
 
@@ -128,15 +158,22 @@ fileprivate class TesterState: ScreenState, SubState {
 }
 
 fileprivate class SetValueState: TesterState {
-    init(value: Int, shouldReapply: Bool = true, expectation: XCTestExpectation? = nil) {
+    init(
+        value: Int,
+        shouldReapply: Bool = true,
+        expectation: XCTestExpectation? = nil,
+        ignoreOnBack: Bool = false
+    ) {
         self.value = value
         self.shouldReapply = shouldReapply
         self.expectation = expectation
+        self.doIgnoreOnBack = ignoreOnBack
     }
 
     let value: Int
     let shouldReapply: Bool
     let expectation: XCTestExpectation?
+    let doIgnoreOnBack: Bool
 
     override func apply(on model: TesterClass) {
         model.value = value
@@ -150,6 +187,11 @@ fileprivate class SetValueState: TesterState {
             apply(on: model)
         }
     }
+
+    override var ignoreOnBack: Bool {
+        doIgnoreOnBack
+    }
+
 }
 
 fileprivate class StateWithAutoDispatch: SetValueState {

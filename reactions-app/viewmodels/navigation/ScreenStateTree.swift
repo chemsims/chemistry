@@ -24,6 +24,23 @@ class ScreenStateTreeNode<State: ScreenState> {
     }
 }
 
+class BiConditionalScreenStateNode<State: ScreenState>: ScreenStateTreeNode<State> {
+    init(state: State, applyAlternativeNode: @escaping (State.Model) -> Bool) {
+        self.applyAlternativeNode = applyAlternativeNode
+        super.init(state: state)
+    }
+
+    private let applyAlternativeNode: (State.Model) -> Bool
+    var staticNextAlternative: ScreenStateTreeNode<State>?
+
+    override func next(model: State.Model) -> ScreenStateTreeNode<State>? {
+        if (applyAlternativeNode(model)) {
+            return staticNextAlternative
+        }
+        return staticNext
+    }
+}
+
 extension ScreenStateTreeNode {
     static func build<State: ScreenState>(states: [State]) -> ScreenStateTreeNode<State>? {
         let nodes = states.map { ScreenStateTreeNode<State>(state: $0) }
