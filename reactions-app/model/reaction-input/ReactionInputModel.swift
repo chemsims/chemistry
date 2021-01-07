@@ -79,7 +79,7 @@ class ReactionInputAllProperties: ReactionInputModel {
         rateConstant.map { k in
             switch (order) {
             case .Zero:
-                return ZeroOrderReaction(c1: inputC1, t1: inputT1, rateConstant: k)
+                return ZeroOrderConcentration(c1: inputC1, t1: inputT1, rateConstant: k)
             case .First:
                 return FirstOrderConcentration(c1: inputC1, t1: inputT1, rateConstant: k)
             case .Second:
@@ -92,7 +92,7 @@ class ReactionInputAllProperties: ReactionInputModel {
         if let c2 = inputC2, let t2 = inputT2 {
             switch (order) {
             case .Zero:
-                return ZeroOrderReaction.getRate(t1: inputT1, c1: inputC1, t2: t2, c2: c2)
+                return ZeroOrderConcentration.getRate(t1: inputT1, c1: inputC1, t2: t2, c2: c2)
             case .First:
                 return FirstOrderConcentration.getRate(c1: inputC1, c2: c2, time: t2)
             case .Second:

@@ -8,15 +8,21 @@ import Darwin
 
 protocol ConcentrationEquation: Equation {
 
+    /// The concentration at t=0
     var a0: CGFloat { get }
+
     var rateConstant: CGFloat { get }
+
     var order: Int { get }
     var halfLife: CGFloat { get }
 
+    /// Returns concentration at time `time`
     func getConcentration(at time: CGFloat) -> CGFloat
 
+    /// Returns the time at which the concentration is `concentration`
     func time(for concentration: CGFloat) -> CGFloat?
 
+    /// Returns the rate at time `time`
     func getRate(at time: CGFloat) -> CGFloat
 }
 
@@ -34,8 +40,7 @@ extension ConcentrationEquation {
     }
 }
 
-/// Linear concentration which is c1 at t1, and c2 at t2.
-struct ZeroOrderReaction: ConcentrationEquation {
+struct ZeroOrderConcentration: ConcentrationEquation {
 
     let a0: CGFloat
     let rateConstant: CGFloat
@@ -53,7 +58,7 @@ struct ZeroOrderReaction: ConcentrationEquation {
     }
 
     init(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) {
-        self.rateConstant = ZeroOrderReaction.getRate(t1: t1, c1: c1, t2: t2, c2: c2)
+        self.rateConstant = ZeroOrderConcentration.getRate(t1: t1, c1: c1, t2: t2, c2: c2)
         let a0Numerator = (t1 * c2) - (t2 * c1)
         self.a0 = a0Numerator / (t1 - t2)
     }
