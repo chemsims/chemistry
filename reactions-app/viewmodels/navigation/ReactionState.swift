@@ -122,7 +122,7 @@ struct OrderedReactionInitialNodes {
 
 class SelectReactionState: ReactionState {
     init() {
-        super.init(statement: ZeroOrderStatements.chooseReaction)
+        super.init(statement: ReactionStatements.chooseReaction)
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
@@ -140,7 +140,6 @@ class SelectReactionState: ReactionState {
 class SetT0ForFixedRate: ReactionState {
     init(order: ReactionOrder) {
         self.order = order
-        super.init(statement: ZeroOrderStatements.setT0FixedRate)
     }
 
     let order: ReactionOrder
@@ -158,19 +157,35 @@ class SetT0ForFixedRate: ReactionState {
             ReactionInputWithoutT2(order: order)
         model.input.copyFrom(currentInput)
         model.input.didSetC1 = model.didSetC1
+        setStatement(model)
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        setStatement(model)
+    }
+
+    private func setStatement(_ model: ZeroOrderReactionViewModel) {
+        let k = model.input.concentrationA?.rateConstant ?? 0
+        model.statement = ReactionStatements.setInitialInputs(rateConstant: k)
     }
 }
 
 class SetT1ForFixedRate: ReactionState {
-    init() {
-        super.init(statement: ZeroOrderStatements.setT1FixedRate)
-    }
 
-    
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
+        setStatement(model)
         model.input.inputT2 = model.input.midTime
         model.input.inputC2 = model.input.midConcentration
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        setStatement(model)
+    }
+
+    private func setStatement(_ model: ZeroOrderReactionViewModel) {
+        model.statement = model.selectedReaction == .B ?
+            ReactionStatements.setT2ForFixedRate : ReactionStatements.setC2ForFixedRate
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
