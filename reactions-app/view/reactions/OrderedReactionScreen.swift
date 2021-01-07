@@ -84,6 +84,7 @@ struct OrderedReactionScreen<Content: View>: View {
             .frame(width: settings.chartSettings.largeTotalChartWidth)
             .padding(.horizontal, settings.chartHPadding)
             .colorMultiply(reaction.color(for: [.concentrationChart, .rateCurveLhs, .rateCurveRhs]))
+            .disabled(reaction.inputsAreDisabled)
 
             ConcentrationBarChart(
                 initialA: reaction.initialConcentration,

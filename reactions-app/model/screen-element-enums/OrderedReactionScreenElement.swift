@@ -13,5 +13,6 @@ enum OrderedReactionScreenElement {
          rateEquation,
          rateCurveLhs,
          rateCurveRhs,
-         concentrationTable
+         concentrationTable,
+         reactionToggle
 }

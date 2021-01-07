@@ -20,8 +20,12 @@ struct ZeroOrderStatements {
         "Choose a reaction!"
     ]
 
-    static let setFinalTimes: [TextLine] = [
-        "Set initial and final time, and initial concentration to see the final concentration"
+    static let setT0FixedRate: [TextLine] = [
+        "Set initial time of the reaction"
+    ]
+
+    static let setT1FixedRate: [TextLine] = [
+        "Set final time of the reaction, and initial concentration, to see how the final concentration changes"
     ]
 
     static func rateExplainer(k: CGFloat) -> [TextLine] {

@@ -22,10 +22,8 @@ struct ZeroOrderReactionNavigation {
             state: SelectReactionState(),
             applyAlternativeNode: { $0.selectedReaction != .A }
         )
-        let standardRoute = standardPathStates(persistence: persistence)
-        let alternativeRoute = alternativePathStates(persistence: persistence)
 
-        node1.staticNext = standardRoute
+        node1.staticNext = standardPathStates(persistence: persistence)
         node1.staticNextAlternative = alternativePathStates(persistence: persistence)
         return node1
     }
@@ -35,7 +33,8 @@ struct ZeroOrderReactionNavigation {
     ) -> ScreenStateTreeNode<ReactionState> {
         ScreenStateTreeNode<ReactionState>.build(
             states: [
-                SetTimesAndInitialConcentrationForFixedTime()
+                SetT0ForFixedRate(),
+                SetT1ForFixedRate()
             ]
         )!
     }
@@ -73,18 +72,50 @@ fileprivate class SelectReactionState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
+        model.inputsAreDisabled = true
+        model.highlightedElements = [.reactionToggle]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
     }
 }
 
-fileprivate class SetTimesAndInitialConcentrationForFixedTime: ReactionState {
+fileprivate class SetT0ForFixedRate: ReactionState {
     init() {
-        super.init(statement: ZeroOrderStatements.setFinalTimes)
+        super.init(statement: ZeroOrderStatements.setT0FixedRate)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.inputsAreDisabled = false
+        model.highlightedElements = []
+    }
+}
+
+fileprivate class SetT1ForFixedRate: ReactionState {
+    init() {
+        super.init(statement: ZeroOrderStatements.setT1FixedRate)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+
+        // TODO refactor
+        let maxTime = ReactionSettings.maxTime
+        model.finalTime = max((model.initialTime + maxTime) / 2, ReactionSettings.minT2Input)
     }
 }
 
 fileprivate class InitialStep: ReactionState {
     init() {
         super.init(statement: ZeroOrderStatements.initial)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.inputsAreDisabled = false
+        model.highlightedElements = []
     }
 }
 

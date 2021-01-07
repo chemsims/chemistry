@@ -47,6 +47,11 @@ struct ZeroOrderReaction: ConcentrationEquation {
         self.rateConstant = rateConstant
     }
 
+    init(c1: CGFloat, t1: CGFloat, rateConstant: CGFloat) {
+        let a0 = c1 + (rateConstant * t1)
+        self.init(a0: a0, rateConstant: rateConstant)
+    }
+
     init(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) {
         self.rateConstant = ZeroOrderReaction.getRate(t1: t1, c1: c1, t2: t2, c2: c2)
         let a0Numerator = (t1 * c2) - (t2 * c1)

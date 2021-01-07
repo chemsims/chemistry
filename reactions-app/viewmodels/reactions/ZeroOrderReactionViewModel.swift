@@ -27,6 +27,19 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var reactionHasStarted: Bool = false
 
     @Published var highlightedElements = [OrderedReactionScreenElement]()
+    @Published var inputsAreDisabled = false
+
+    var selectedReaction = OrderedReactionSet.A
+
+    var c2: CGFloat? {
+        if (selectedReaction == .A) {
+            return finalConcentration
+        }
+        if let t2 = finalTime {
+            return concentrationEquationA?.getConcentration(at: t2)
+        }
+        return nil
+    }
 
     func generateEquation(
         c1: CGFloat,
@@ -65,15 +78,22 @@ class ZeroOrderReactionViewModel: ObservableObject {
     }
 
     var concentrationEquationA: ConcentrationEquation? {
-        if let t2 = finalTime, let c2 = finalConcentration {
-            return generateEquation(
-                c1: initialConcentration.rounded(decimals: 2),
-                c2: c2.rounded(decimals: 2),
-                t1: initialTime.rounded(decimals: 2),
-                t2: t2.rounded(decimals: 2)
-            )
+        if (selectedReaction == .A) {
+            if let t2 = finalTime, let c2 = finalConcentration {
+                return generateEquation(
+                    c1: initialConcentration.rounded(decimals: 2),
+                    c2: c2.rounded(decimals: 2),
+                    t1: initialTime.rounded(decimals: 2),
+                    t2: t2.rounded(decimals: 2)
+                )
+            }
+            return nil
         }
-        return nil
+
+        return ZeroOrderReaction(
+            c1: initialConcentration,
+            t1: initialTime, rateConstant: 0.06
+        )
     }
 
     var concentrationEquationB: Equation? {
@@ -88,7 +108,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
     var moleculesA = [GridCoordinate]()
 
     var deltaC: CGFloat? {
-        if let c2 = finalConcentration {
+        if let c2 = c2 {
             return c2.rounded(decimals: 2) - initialConcentration.rounded(decimals: 2)
         }
         return nil
