@@ -126,7 +126,9 @@ struct OrderedReactionScreen<Content: View>: View {
             displayString: { $0.name}
         )
         .frame(height: settings.tableButtonSize, alignment: .top)
+        .colorMultiply(reaction.color(for: .reactionToggle))
         .disabled(!reaction.canSelectReaction)
+        .opacity(reaction.canSelectReaction ? 1 : 0.3)
     }
 
     private var concentrationTable: some View {
