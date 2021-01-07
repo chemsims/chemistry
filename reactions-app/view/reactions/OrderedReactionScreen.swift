@@ -18,7 +18,6 @@ struct OrderedReactionScreen<Content: View>: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     @State private var reactionSelectionIsToggled: Bool = false
-    @State private var reactionSelection: OrderedReactionSet = .A
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -117,7 +116,7 @@ struct OrderedReactionScreen<Content: View>: View {
             title: "Choose a reaction",
             options: OrderedReactionSet.allCases,
             isToggled:  $reactionSelectionIsToggled,
-            selection: $reactionSelection,
+            selection: $reaction.selectedReaction,
             height: settings.tableButtonSize,
             displayString: { $0.name}
         )

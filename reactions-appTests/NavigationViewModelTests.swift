@@ -114,7 +114,6 @@ class NavigationViewModelTests: XCTestCase {
         s1Node.staticNext = s2Node
         s2Node.staticNext = s3Node
         s2Node.staticNextAlternative = s3AlternativeNode
-        s3AlternativeNode.staticPrev = s2Node
 
         let tester = TesterClass()
         let model = NavigationViewModel(model: tester, rootNode: s1Node)

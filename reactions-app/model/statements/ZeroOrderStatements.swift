@@ -16,6 +16,14 @@ struct ZeroOrderStatements {
         )
     ]
 
+    static let chooseReaction: [TextLine] = [
+        "Choose a reaction!"
+    ]
+
+    static let setFinalTimes: [TextLine] = [
+        "Set initial and final time, and initial concentration to see the final concentration"
+    ]
+
     static func rateExplainer(k: CGFloat) -> [TextLine] {
         [
             TextLineGenerator.makeLine(

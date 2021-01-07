@@ -12,8 +12,12 @@ class ScreenStateTreeNode<State: ScreenState> {
     }
 
     let state: State
-    var staticNext: ScreenStateTreeNode<State>?
-    var staticPrev: ScreenStateTreeNode<State>?
+    var staticNext: ScreenStateTreeNode<State>? {
+        didSet {
+            staticNext?.staticPrev = self
+        }
+    }
+    fileprivate var staticPrev: ScreenStateTreeNode<State>?
 
     func next(model: State.Model) -> ScreenStateTreeNode<State>? {
         staticNext
@@ -31,7 +35,11 @@ class BiConditionalScreenStateNode<State: ScreenState>: ScreenStateTreeNode<Stat
     }
 
     private let applyAlternativeNode: (State.Model) -> Bool
-    var staticNextAlternative: ScreenStateTreeNode<State>?
+    var staticNextAlternative: ScreenStateTreeNode<State>? {
+        didSet {
+            staticNextAlternative?.staticPrev = self
+        }
+    }
 
     override func next(model: State.Model) -> ScreenStateTreeNode<State>? {
         if (applyAlternativeNode(model)) {
@@ -46,12 +54,8 @@ extension ScreenStateTreeNode {
         let nodes = states.map { ScreenStateTreeNode<State>(state: $0) }
 
         (0..<nodes.count).forEach { index in
-            let prevIndex = index - 1
             let nextIndex = index + 1
-
-            let prevNode = nodes.indices.contains(prevIndex) ? nodes[prevIndex] : nil
             let nextNode = nodes.indices.contains(nextIndex) ? nodes[nextIndex] : nil
-            nodes[index].staticPrev = prevNode
             nodes[index].staticNext = nextNode
         }
 

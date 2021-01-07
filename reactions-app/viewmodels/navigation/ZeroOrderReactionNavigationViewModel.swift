@@ -7,37 +7,79 @@ import SwiftUI
 
 struct ZeroOrderReactionNavigation {
 
-    static func states(persistence: ReactionInputPersistence) -> [ReactionState] {
-        [
-            InitialStep(),
-            SetFinalValuesToNonNil(),
-            ExplainRateState(),
-            ExplainHalfLifeState(),
-            RunAnimation(
-                statement: ZeroOrderStatements.reactionInProgress,
-                order: .Zero,
-                persistence: persistence,
-                initialiseCurrentTime: false
-            ),
-            EndAnimation(
-                statement: ZeroOrderStatements.endAnimation,
-                highlightChart: true
-            ),
-            ShowConcentrationTableState(),
-            FinalReactionState(statement: ZeroOrderStatements.end)
-        ]
-    }
-
     static func model(
         reaction: ZeroOrderReactionViewModel,
         persistence: ReactionInputPersistence
     ) -> NavigationViewModel<ReactionState> {
         NavigationViewModel(
             model: reaction,
-            states: states(persistence: persistence)
+            rootNode: rootNode(persistence: persistence)
         )
     }
 
+    static func rootNode(persistence: ReactionInputPersistence) -> ScreenStateTreeNode<ReactionState> {
+        let node1 = BiConditionalScreenStateNode<ReactionState>(
+            state: SelectReactionState(),
+            applyAlternativeNode: { $0.selectedReaction != .A }
+        )
+        let standardRoute = standardPathStates(persistence: persistence)
+        let alternativeRoute = alternativePathStates(persistence: persistence)
+
+        node1.staticNext = standardRoute
+        node1.staticNextAlternative = alternativePathStates(persistence: persistence)
+        return node1
+    }
+
+    private static func alternativePathStates(
+        persistence: ReactionInputPersistence
+    ) -> ScreenStateTreeNode<ReactionState> {
+        ScreenStateTreeNode<ReactionState>.build(
+            states: [
+                SetTimesAndInitialConcentrationForFixedTime()
+            ]
+        )!
+    }
+
+    private static func standardPathStates(
+        persistence: ReactionInputPersistence
+    ) -> ScreenStateTreeNode<ReactionState> {
+        ScreenStateTreeNode<ReactionState>.build(
+            states: [
+                InitialStep(),
+                SetFinalValuesToNonNil(),
+                ExplainRateState(),
+                ExplainHalfLifeState(),
+                RunAnimation(
+                    statement: ZeroOrderStatements.reactionInProgress,
+                    order: .Zero,
+                    persistence: persistence,
+                    initialiseCurrentTime: false
+                ),
+                EndAnimation(
+                    statement: ZeroOrderStatements.endAnimation,
+                    highlightChart: true
+                ),
+                ShowConcentrationTableState(),
+                FinalReactionState(statement: ZeroOrderStatements.end)
+            ]
+        )!
+    }
+}
+
+fileprivate class SelectReactionState: ReactionState {
+    init() {
+        super.init(statement: ZeroOrderStatements.chooseReaction)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+    }
+}
+
+fileprivate class SetTimesAndInitialConcentrationForFixedTime: ReactionState {
+    init() {
+        super.init(statement: ZeroOrderStatements.setFinalTimes)
+    }
 }
 
 fileprivate class InitialStep: ReactionState {
