@@ -105,10 +105,8 @@ fileprivate class InitialStep: ReactionState {
         model.highlightedElements = []
 
         let currentInput = model.input
-
         model.input = ReactionInputAllProperties()
-        model.input.inputT1 = currentInput.inputT1
-        model.input.inputC1 = currentInput.inputC1
+        model.input.copyFrom(currentInput)
 
         model.input.didSetC1 = model.didSetC1
     }
@@ -128,10 +126,8 @@ fileprivate class SetT0ForFixedRate: ReactionState {
 
         let currentInput = model.input
 
-        model.input = ReactionInputWithoutC2()
-        model.input.inputT1 = currentInput.inputT1
-        model.input.inputC1 = currentInput.inputC1
-
+        model.input = model.selectedReaction == .B ? ReactionInputWithoutC2() : ReactionInputWithoutT2()
+        model.input.copyFrom(currentInput)
         model.input.didSetC1 = model.didSetC1
     }
 }
@@ -143,14 +139,14 @@ fileprivate class SetT1ForFixedRate: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-
-        // TODO refactor
         let maxTime = ReactionSettings.maxTime
         model.input.inputT2 = max((model.input.inputT1 + maxTime) / 2, ReactionSettings.minT2Input)
+        model.input.inputC2 = max(ReactionSettings.minConcentration, model.input.inputC1 / 2)
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
         model.input.inputT2 = nil
+        model.input.inputC2 = nil
     }
 }
 

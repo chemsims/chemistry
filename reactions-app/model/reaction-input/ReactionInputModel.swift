@@ -25,6 +25,13 @@ extension ReactionInputModel {
             )
         }
     }
+
+    mutating func copyFrom(_ other: ReactionInputModel) {
+        inputC1 = other.inputC1
+        inputC2 = other.inputC2
+        inputT1 = other.inputT1
+        inputT2 = other.inputT2
+    }
 }
 
 class ReactionInputAllProperties: ReactionInputModel {
@@ -39,6 +46,8 @@ class ReactionInputAllProperties: ReactionInputModel {
     var inputT2: CGFloat?
 
     var didSetC1: (() -> Void)?
+
+
 
     var concentrationA: ConcentrationEquation? {
         if let c2 = inputC2, let t2 = inputT2 {
@@ -71,3 +80,21 @@ class ReactionInputWithoutC2: ReactionInputAllProperties {
     }
 }
 
+class ReactionInputWithoutT2: ReactionInputAllProperties {
+
+    override var inputT2: CGFloat? {
+        get { computedT2 }
+        set { }
+    }
+
+    private var computedT2: CGFloat? {
+        if let concentrationA = concentrationA, let c2 = inputC2 {
+            return concentrationA.time(for: c2)
+        }
+        return nil
+    }
+
+    override var concentrationA: ConcentrationEquation? {
+        return ZeroOrderReaction(c1: inputC1, t1: inputT1, rateConstant: 0.05)
+    }
+}
