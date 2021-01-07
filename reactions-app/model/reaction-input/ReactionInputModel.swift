@@ -29,14 +29,6 @@ extension ReactionInputModel {
         }
     }
 
-    mutating func copyFrom(_ other: ReactionInputModel) {
-        inputC1 = other.inputC1
-        inputC2 = other.inputC2
-        inputT1 = other.inputT1
-        inputT2 = other.inputT2
-        didSetC1 = other.didSetC1
-    }
-
     /// Returns a concentration at the mid-point between `inputC1`, and `minC2`
     var midConcentration: CGFloat {
         (inputC1 + minC2) / 2

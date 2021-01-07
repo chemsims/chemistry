@@ -150,12 +150,10 @@ class SetT0ForFixedRate: ReactionState {
         model.canSelectReaction = false
         model.highlightedElements = []
 
-        let currentInput = model.input
-
         model.input = model.selectedReaction == .B ?
             ReactionInputWithoutC2(order: order) :
             ReactionInputWithoutT2(order: order)
-        model.input.copyFrom(currentInput)
+
         model.input.didSetC1 = model.didSetC1
         setStatement(model)
     }

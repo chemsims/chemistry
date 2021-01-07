@@ -84,7 +84,7 @@ fileprivate class InitialStep: ReactionState {
 
         let currentInput = model.input
         model.input = ReactionInputAllProperties(order: .Zero)
-        model.input.copyFrom(currentInput)
+        model.input.didSetC1 = currentInput.didSetC1
     }
 }
 
