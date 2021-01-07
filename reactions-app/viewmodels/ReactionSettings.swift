@@ -34,4 +34,10 @@ struct ReactionSettings {
 
     /// The minimum value that time 2 may be. Time 1 is limited to ensure there is sufficient space
     static let minFinalTime: CGFloat = 15
+
+    /// Fixed rate constant for B reactions (i.e., the second reaction type which can be chosen on parts 1-3)
+    static let reactionBRateConstant: CGFloat = 0.04
+
+    /// Fixed rate constant for C reactions (i.e., the third reaction type which can be chosen on parts 1-3)
+    static let reactionCRateConstant: CGFloat = 0.07
 }

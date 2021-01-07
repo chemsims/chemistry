@@ -78,8 +78,109 @@ class ReactionState: ScreenState, SubState {
 
 }
 
+// MARK: Common reaction nodes
+
+struct OrderedReactionInitialNodes {
+
+    static func build(
+        persistence: ReactionInputPersistence,
+        standardFlow: [ReactionState],
+        order: ReactionOrder
+    ) -> ScreenStateTreeNode<ReactionState> {
+        let node1 = BiConditionalScreenStateNode<ReactionState>(
+            state: SelectReactionState(),
+            applyAlternativeNode: { $0.selectedReaction != .A }
+        )
+
+        node1.staticNext = ScreenStateTreeNode<ReactionState>.build(states: standardFlow)
+        node1.staticNextAlternative = alternativePathStates(persistence: persistence, order: order)
+        return node1
+    }
+
+    private static func alternativePathStates(
+        persistence: ReactionInputPersistence,
+        order: ReactionOrder
+    ) -> ScreenStateTreeNode<ReactionState> {
+        ScreenStateTreeNode<ReactionState>.build(
+            states: [
+                SetT0ForFixedRate(order: order),
+                SetT1ForFixedRate(),
+                RunAnimation(
+                    statement: ZeroOrderStatements.reactionInProgress,
+                    order: order,
+                    persistence: persistence,
+                    initialiseCurrentTime: true
+                ),
+                EndAnimation(
+                    statement: ZeroOrderStatements.end,
+                    highlightChart: false
+                )
+            ]
+        )!
+    }
+}
+
+class SelectReactionState: ReactionState {
+    init() {
+        super.init(statement: ZeroOrderStatements.chooseReaction)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.inputsAreDisabled = true
+        model.canSelectReaction = true
+        model.highlightedElements = [.reactionToggle]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
+}
+
+class SetT0ForFixedRate: ReactionState {
+    init(order: ReactionOrder) {
+        self.order = order
+        super.init(statement: ZeroOrderStatements.setT0FixedRate)
+    }
+
+    let order: ReactionOrder
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.inputsAreDisabled = false
+        model.canSelectReaction = false
+        model.highlightedElements = []
+
+        let currentInput = model.input
+
+        model.input = model.selectedReaction == .B ?
+            ReactionInputWithoutC2(order: order) :
+            ReactionInputWithoutT2(order: order)
+        model.input.copyFrom(currentInput)
+        model.input.didSetC1 = model.didSetC1
+    }
+}
+
+class SetT1ForFixedRate: ReactionState {
+    init() {
+        super.init(statement: ZeroOrderStatements.setT1FixedRate)
+    }
+
+    
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.input.inputT2 = model.input.midTime
+        model.input.inputC2 = model.input.midConcentration
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.input.inputT2 = nil
+        model.input.inputC2 = nil
+    }
+}
 
 // MARK: Common reaction states
+
 
 class PreReactionAnimation: ReactionState {
 
@@ -205,10 +306,22 @@ class EndAnimation: ReactionState {
 
 class InitialOrderedStep: ReactionState {
 
+    init(order: ReactionOrder, statement: [TextLine]) {
+        self.order = order
+        super.init(statement: statement)
+    }
+
+    private let order: ReactionOrder
+
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
+        let currentInput = model.input
+        model.input = ReactionInputAllProperties(order: order)
+        model.input.inputC1 = currentInput.inputC1
         model.input.inputT1 = 0
         model.input.inputT2 = ReactionSettings.initialT
+        model.inputsAreDisabled = false
+        model.highlightedElements = []
     }
 }
 

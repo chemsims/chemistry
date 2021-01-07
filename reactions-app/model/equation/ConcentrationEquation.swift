@@ -98,6 +98,11 @@ struct FirstOrderConcentration: ConcentrationEquation {
         )
     }
 
+    init(c1: CGFloat, t1: CGFloat, rateConstant: CGFloat) {
+        let a0 = c1 / CGFloat(pow(Darwin.M_E, -Double(rateConstant * t1)))
+        self.init(a0: a0, rateConstant: rateConstant)
+    }
+
     func getConcentration(at time: CGFloat) -> CGFloat {
         a0 * CGFloat(pow(Darwin.M_E, -Double(rateConstant * time)))
     }
@@ -152,6 +157,15 @@ struct SecondOrderConcentration: ConcentrationEquation {
         )
     }
 
+    init(c1: CGFloat, t1: CGFloat, rateConstant: CGFloat) {
+        assert(c1 != 0)
+        let invC1 = 1 / c1
+        let denominator = invC1 - (rateConstant * t1)
+        assert(denominator != 0)
+        let a0 = 1 / denominator
+        self.init(a0: a0, rateConstant: rateConstant)
+    }
+
     var halfLife: CGFloat {
         1 / (rateConstant * a0)
     }
@@ -169,7 +183,6 @@ struct SecondOrderConcentration: ConcentrationEquation {
         }
         return (1 / (concentration  * rateConstant)) - (1 / (a0 * rateConstant))
     }
-
 
     static func getRate(c1: CGFloat, c2: CGFloat, time: CGFloat) -> CGFloat {
         assert(c1 != 0)

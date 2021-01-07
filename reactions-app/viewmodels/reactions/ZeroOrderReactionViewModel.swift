@@ -13,7 +13,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
     }
 
     @Published var statement = [TextLine]()
-    @Published var input: ReactionInputModel = ReactionInputAllProperties()
+    @Published var input: ReactionInputModel = ReactionInputAllProperties(order: .Zero)
 
     @Published var currentTime: CGFloat?
 

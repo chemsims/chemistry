@@ -6,9 +6,30 @@
 import SwiftUI
 
 struct FirstOrderReactionNavigation {
-    static func states(persistence: ReactionInputPersistence) -> [ReactionState] {
+
+    static func model(
+        reaction: FirstOrderReactionViewModel,
+        persistence: ReactionInputPersistence
+    ) -> NavigationViewModel<ReactionState> {
+        NavigationViewModel(
+            model: reaction,
+            rootNode: rootNode(persistence: persistence)
+        )
+    }
+
+    private static func rootNode(
+        persistence: ReactionInputPersistence
+    ) -> ScreenStateTreeNode<ReactionState> {
+        OrderedReactionInitialNodes.build(
+            persistence: persistence,
+            standardFlow: states(persistence: persistence),
+            order: .First
+        )
+    }
+
+    private static func states(persistence: ReactionInputPersistence) -> [ReactionState] {
         [
-            InitialOrderedStep(statement: FirstOrderStatements.intro),
+            InitialOrderedStep(order: .First, statement: FirstOrderStatements.intro),
             SetFinalConcentrationToNonNil(),
             ExplainRateConstant1(),
             ExplainRateConstant2(),
@@ -30,16 +51,6 @@ struct FirstOrderReactionNavigation {
             ExplainIntegratedRateLaw2(),
             FinalReactionState(statement: FirstOrderStatements.end)
         ]
-    }
-
-    static func model(
-        reaction: FirstOrderReactionViewModel,
-        persistence: ReactionInputPersistence
-    ) -> NavigationViewModel<ReactionState> {
-        NavigationViewModel(
-            model: reaction,
-            states: states(persistence: persistence)
-        )
     }
 }
 

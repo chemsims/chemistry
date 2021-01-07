@@ -34,6 +34,7 @@ extension ReactionInputModel {
         inputC2 = other.inputC2
         inputT1 = other.inputT1
         inputT2 = other.inputT2
+        didSetC1 = other.didSetC1
     }
 
     /// Returns a concentration at the mid-point between `inputC1`, and `minC2`
@@ -48,6 +49,13 @@ extension ReactionInputModel {
 }
 
 class ReactionInputAllProperties: ReactionInputModel {
+
+    init(order: ReactionOrder) {
+        self.order = order
+    }
+
+    let fixedRateConstant: CGFloat? = nil
+    let order: ReactionOrder
 
     var inputC1: CGFloat = ReactionSettings.initialC {
         didSet {
@@ -68,13 +76,28 @@ class ReactionInputAllProperties: ReactionInputModel {
     }
 
     var concentrationA: ConcentrationEquation? {
+        rateConstant.map { k in
+            switch (order) {
+            case .Zero:
+                return ZeroOrderReaction(c1: inputC1, t1: inputT1, rateConstant: k)
+            case .First:
+                return FirstOrderConcentration(c1: inputC1, t1: inputT1, rateConstant: k)
+            case .Second:
+                return SecondOrderConcentration(c1: inputC1, t1: inputT1, rateConstant: k)
+            }
+        }
+    }
+
+    fileprivate var rateConstant: CGFloat? {
         if let c2 = inputC2, let t2 = inputT2 {
-            return ZeroOrderReaction(
-                t1: inputT1,
-                c1: inputC1,
-                t2: t2,
-                c2: c2
-            )
+            switch (order) {
+            case .Zero:
+                return ZeroOrderReaction.getRate(t1: inputT1, c1: inputC1, t2: t2, c2: c2)
+            case .First:
+                return FirstOrderConcentration.getRate(c1: inputC1, c2: c2, time: t2)
+            case .Second:
+                return SecondOrderConcentration.getRate(c1: inputC1, c2: c2, time: t2)
+            }
         }
         return nil
     }
@@ -99,9 +122,10 @@ class ReactionInputWithoutC2: ReactionInputAllProperties {
         return nil
     }
 
-    override var concentrationA: ConcentrationEquation? {
-        return ZeroOrderReaction(c1: inputC1, t1: inputT1, rateConstant: 0.05)
+    override var rateConstant: CGFloat {
+        ReactionSettings.reactionBRateConstant
     }
+
 }
 
 class ReactionInputWithoutT2: ReactionInputAllProperties {
@@ -124,7 +148,7 @@ class ReactionInputWithoutT2: ReactionInputAllProperties {
         return nil
     }
 
-    override var concentrationA: ConcentrationEquation? {
-        return ZeroOrderReaction(c1: inputC1, t1: inputT1, rateConstant: 0.05)
+    override var rateConstant: CGFloat {
+        ReactionSettings.reactionCRateConstant
     }
 }

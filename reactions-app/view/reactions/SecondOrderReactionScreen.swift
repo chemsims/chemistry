@@ -29,7 +29,7 @@ struct SecondOrderReactionScreen: View {
             reaction: reaction,
             navigation: navigation,
             settings: settings,
-            canSetInitialTime: false,
+            canSetInitialTime: reaction.selectedReaction != .A,
             showRate: true
         ) {
             VStack {

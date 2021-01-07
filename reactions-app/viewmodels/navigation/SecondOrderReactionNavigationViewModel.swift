@@ -7,9 +7,29 @@ import Foundation
 
 struct SecondOrderReactionNavigation {
 
-    static func states(persistence: ReactionInputPersistence) -> [ReactionState] {
+    static func model(
+        reaction: SecondOrderReactionViewModel,
+        persistence: ReactionInputPersistence
+    ) -> NavigationViewModel<ReactionState> {
+        NavigationViewModel(
+            model: reaction,
+            rootNode: rootNode(persistence: persistence)
+        )
+    }
+
+    private static func rootNode(
+        persistence: ReactionInputPersistence
+    ) -> ScreenStateTreeNode<ReactionState> {
+        OrderedReactionInitialNodes.build(
+            persistence: persistence,
+            standardFlow: standardFlow(persistence: persistence),
+            order: .Second
+        )
+    }
+
+    private static func standardFlow(persistence: ReactionInputPersistence) -> [ReactionState] {
         [
-            InitialOrderedStep(statement: SecondOrderStatements.intro),
+            InitialOrderedStep(order: .Second, statement: SecondOrderStatements.intro),
             SetFinalConcentrationToNonNil(),
             ExplainRateConstant(),
             ExplainRate(),
@@ -31,16 +51,6 @@ struct SecondOrderReactionNavigation {
             PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain6, highlights: [.concentrationChart]),
             FinalReactionState(statement: SecondOrderStatements.end)
         ]
-    }
-
-    static func model(
-        reaction: SecondOrderReactionViewModel,
-        persistence: ReactionInputPersistence
-    ) -> NavigationViewModel<ReactionState> {
-        NavigationViewModel(
-            model: reaction,
-            states: states(persistence: persistence)
-        )
     }
 }
 

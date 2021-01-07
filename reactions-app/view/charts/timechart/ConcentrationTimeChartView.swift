@@ -197,7 +197,7 @@ struct GeneralTimeChartView: View {
         ConcentrationValueSlider(
             initialConcentration: $initialConcentration,
             finalConcentration: canSetC2 ? $finalConcentration : .constant(nil),
-            c1Disabled: initialInputsDisabled,
+            c1Disabled: finalConcentration != nil,
             minC2: minC2Input,
             settings: settings
         )
@@ -214,18 +214,13 @@ struct GeneralTimeChartView: View {
             t1: $initialTime,
             t2: canSetT2 ? $finalTime : .constant(nil),
             canSetInitialTime: canSetInitialTime,
-            t1Disabled: initialInputsDisabled,
+            t1Disabled: finalTime != nil,
             maxT2Input: maxT2Input,
             settings: settings
         ).frame(
             width: settings.chartSize,
             height: settings.sliderHandleWidth
         ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
-    }
-
-    // Whether to disable t1 && c1 inputs
-    private var initialInputsDisabled: Bool {
-        finalTime != nil || finalConcentration != nil
     }
 
     private var animatingTime: some View {
