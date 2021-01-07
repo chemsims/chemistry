@@ -18,18 +18,15 @@ class ReactionFilingViewModel: ObservableObject {
         let navigation = NavigationViewModel(model: zeroOrderViewModel, states: [ReactionState]())
 
         let zeroOrderScreen = ZeroOrderReactionScreen(
-            reaction: zeroOrderViewModel,
-            navigation: navigation
+            reaction: zeroOrderViewModel
         )
 
         let firstOrderScreen = FirstOrderReactionScreen(
-            reaction: firstOrderViewModel,
-            navigation: navigation
+            reaction: firstOrderViewModel
         )
 
         let secondOrderScreen = SecondOrderReactionScreen(
-            reaction: secondOrderViewModel,
-            navigation: navigation
+            reaction: secondOrderViewModel
         )
 
         let zeroInput = persistence.get(order: .Zero)

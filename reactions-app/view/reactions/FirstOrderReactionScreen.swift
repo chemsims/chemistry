@@ -8,7 +8,6 @@ import SwiftUI
 struct FirstOrderReactionScreen: View {
 
     @ObservedObject var reaction: FirstOrderReactionViewModel
-    @ObservedObject var navigation: NavigationViewModel<ReactionState>
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
@@ -27,7 +26,6 @@ struct FirstOrderReactionScreen: View {
     private func makeBody(settings: OrderedReactionLayoutSettings) -> some View {
         OrderedReactionScreen(
             reaction: reaction,
-            navigation: navigation,
             settings: settings,
             canSetInitialTime: reaction.selectedReaction != .A,
             showRate: true
@@ -112,8 +110,7 @@ struct FirstOrderReaction_Previews: PreviewProvider {
 
         var body: some View {
             FirstOrderReactionScreen(
-                reaction: foo.model as! FirstOrderReactionViewModel,
-                navigation: foo
+                reaction: foo.model as! FirstOrderReactionViewModel
             )
         }
     }

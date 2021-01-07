@@ -12,6 +12,8 @@ class ZeroOrderReactionViewModel: ObservableObject {
         input.didSetC1 = didSetC1
     }
 
+    var navigation: NavigationViewModel<ReactionState>?
+
     @Published var statement = [TextLine]()
     @Published var input: ReactionInputModel = ReactionInputAllProperties(order: .Zero)
 
@@ -26,6 +28,14 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var showReactionToggle = false
 
     var selectedReaction = OrderedReactionSet.A
+
+    func next() {
+        navigation?.next()
+    }
+
+    func back() {
+        navigation?.back()
+    }
 
     func didSetC1() {
         setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)

@@ -8,7 +8,6 @@ import SwiftUI
 struct OrderedReactionScreen<Content: View>: View {
 
     @ObservedObject var reaction: ZeroOrderReactionViewModel
-    @ObservedObject var navigation: NavigationViewModel<ReactionState>
     let settings: OrderedReactionLayoutSettings
     let canSetInitialTime: Bool
     let showRate: Bool
@@ -38,8 +37,8 @@ struct OrderedReactionScreen<Content: View>: View {
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
         BeakyOverlay(
             statement: reaction.statement,
-            next: navigation.next,
-            back: navigation.back,
+            next: reaction.next,
+            back: reaction.back,
             settings: settings
         )
     }
@@ -166,10 +165,6 @@ struct OrderedReactionScreen_Previews: PreviewProvider {
         GeometryReader { geometry in
             OrderedReactionScreen(
                 reaction: ZeroOrderReactionViewModel(),
-                navigation: NavigationViewModel(
-                    model: ZeroOrderReactionViewModel(),
-                    states: [ReactionState()]
-                ),
                 settings: OrderedReactionLayoutSettings(
                     geometry: geometry,
                     horizontalSize: nil,

@@ -8,7 +8,6 @@ import SwiftUI
 struct ZeroOrderReactionScreen: View {
 
     @ObservedObject var reaction: ZeroOrderReactionViewModel
-    @ObservedObject var navigation: NavigationViewModel<ReactionState>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -34,7 +33,6 @@ struct ZeroOrderReactionScreen: View {
     func makeView(settings: OrderedReactionLayoutSettings) -> some View {
         OrderedReactionScreen(
             reaction: reaction,
-            navigation: navigation,
             settings: settings,
             canSetInitialTime: true,
             showRate: false
@@ -77,34 +75,29 @@ struct ZeroOrderReactionScreen: View {
 
 struct ZeroOrderReaction_Previews: PreviewProvider {
 
-    static var navigation: NavigationViewModel<ReactionState> {
-        ZeroOrderReactionNavigation.model(
-            reaction: ZeroOrderReactionViewModel(),
-            persistence: InMemoryReactionInputPersistence()
-        )
-    }
+    static var model = ZeroOrderReactionViewModel()
 
     static var previews: some View {
 
         // iPhone SE landscape
         ZeroOrderReactionScreen(
-            reaction: navigation.model, navigation: navigation
+            reaction: model
         ).previewLayout(.fixed(width: 568, height: 320))
 
         // iPhone 11 landscape
         ZeroOrderReactionScreen(
-            reaction: navigation.model, navigation: navigation
+            reaction: model
         ).previewLayout(.fixed(width: 812, height: 375))
 
 
         /// iPad mini 4 landscape
         ZeroOrderReactionScreen(
-            reaction: navigation.model, navigation: navigation
+            reaction: model
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro
         ZeroOrderReactionScreen(
-            reaction: navigation.model, navigation: navigation
+            reaction: model
         ).previewLayout(.fixed(width: 1366, height: 1024))
 
     }
