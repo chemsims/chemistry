@@ -7,6 +7,7 @@ import CoreGraphics
 
 struct ReactionSettings {
 
+    // TODO rename axis settings variables
     // Axis settings
     static let minConcentration: CGFloat = 0
     static let maxConcentration: CGFloat = 1

@@ -10,6 +10,7 @@ struct ConcentrationValueSlider: View {
     @Binding var initialConcentration: CGFloat
     @Binding var finalConcentration: CGFloat?
     let c1Disabled: Bool
+    let minC2: CGFloat
 
     let settings: TimeChartGeometrySettings
 
@@ -25,7 +26,7 @@ struct ConcentrationValueSlider: View {
             orientation: .portrait,
             settings: settings,
             canSetInitialValue: true,
-            absoluteMin: ReactionSettings.minCInput,
+            absoluteMin: minC2,
             absoluteMax: ReactionSettings.maxCInput,
             value1Disabled: c1Disabled
         )
@@ -42,6 +43,10 @@ struct TimeValueSlider: View {
     /// Disabled changes to the t1 value
     let t1Disabled: Bool
 
+    /// Maximum allowed t2 value
+    let maxT2Input: CGFloat
+
+    /// Layout settings
     let settings: TimeChartGeometrySettings
 
     var body: some View {
@@ -57,7 +62,7 @@ struct TimeValueSlider: View {
             settings: settings,
             canSetInitialValue: canSetInitialTime,
             absoluteMin: canSetInitialTime ? ReactionSettings.minT1Input : ReactionSettings.minT2Input,
-            absoluteMax: ReactionSettings.maxTInput,
+            absoluteMax: maxT2Input,
             value1Disabled: t1Disabled
         )
     }

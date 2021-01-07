@@ -81,7 +81,9 @@ struct OrderedReactionScreen<Content: View>: View {
                 highlightLhsCurve: reaction.highlight(element: .rateCurveLhs),
                 highlightRhsCurve: reaction.highlight(element: .rateCurveRhs),
                 canSetC2: reaction.selectedReaction != .B,
-                canSetT2: reaction.selectedReaction != .C
+                canSetT2: reaction.selectedReaction != .C,
+                maxT2Input: reaction.input.maxT2,
+                minC2Input: reaction.input.minC2
             )
             .frame(width: settings.chartSettings.largeTotalChartWidth)
             .padding(.horizontal, settings.chartHPadding)

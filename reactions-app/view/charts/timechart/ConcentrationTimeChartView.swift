@@ -24,6 +24,8 @@ struct ConcentrationTimeChartView: View {
 
     let canSetC2: Bool
     let canSetT2: Bool
+    let maxT2Input: CGFloat
+    let minC2Input: CGFloat
 
     var body: some View {
         GeneralTimeChartView(
@@ -44,7 +46,9 @@ struct ConcentrationTimeChartView: View {
             highlightLhsCurve: highlightLhsCurve,
             highlightRhsCurve: highlightRhsCurve,
             canSetC2: canSetC2,
-            canSetT2: canSetT2
+            canSetT2: canSetT2,
+            maxT2Input: maxT2Input,
+            minC2Input: minC2Input
         )
     }
 }
@@ -79,7 +83,9 @@ struct SingleConcentrationPlot: View {
             highlightLhsCurve: false,
             highlightRhsCurve: false,
             canSetC2: true,
-            canSetT2: true
+            canSetT2: true,
+            maxT2Input: ReactionSettings.maxTInput,
+            minC2Input: ReactionSettings.minCInput
         )
     }
 }
@@ -108,6 +114,8 @@ struct GeneralTimeChartView: View {
 
     let canSetC2: Bool
     let canSetT2: Bool
+    let maxT2Input: CGFloat
+    let minC2Input: CGFloat
 
     var body: some View {
         HStack(spacing: settings.chartHStackSpacing) {
@@ -190,6 +198,7 @@ struct GeneralTimeChartView: View {
             initialConcentration: $initialConcentration,
             finalConcentration: canSetC2 ? $finalConcentration : .constant(nil),
             c1Disabled: initialInputsDisabled,
+            minC2: minC2Input,
             settings: settings
         )
         .frame(
@@ -206,6 +215,7 @@ struct GeneralTimeChartView: View {
             t2: canSetT2 ? $finalTime : .constant(nil),
             canSetInitialTime: canSetInitialTime,
             t1Disabled: initialInputsDisabled,
+            maxT2Input: maxT2Input,
             settings: settings
         ).frame(
             width: settings.chartSize,
@@ -367,7 +377,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             highlightLhsCurve: false,
             highlightRhsCurve: false,
             canSetC2: true,
-            canSetT2: true
+            canSetT2: true,
+            maxT2Input: ReactionSettings.maxTInput,
+            minC2Input: ReactionSettings.minCInput
         )
         .previewLayout(.fixed(width: 500, height: 300))
 
@@ -411,7 +423,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     highlightLhsCurve: false,
                     highlightRhsCurve: false,
                     canSetC2: true,
-                    canSetT2: true
+                    canSetT2: true,
+                    maxT2Input: ReactionSettings.maxTInput,
+                    minC2Input: ReactionSettings.minCInput
                 )
 
                 ConcentrationTimeChartView(
@@ -431,7 +445,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     highlightLhsCurve: false,
                     highlightRhsCurve: false,
                     canSetC2: true,
-                    canSetT2: true
+                    canSetT2: true,
+                    maxT2Input: ReactionSettings.maxTInput,
+                    minC2Input: ReactionSettings.minCInput
                 )
             }
         }

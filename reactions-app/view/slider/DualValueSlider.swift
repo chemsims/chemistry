@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+
 struct DualValueSlider: View {
 
     @Binding var value1: CGFloat

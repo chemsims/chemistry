@@ -139,9 +139,8 @@ fileprivate class SetT1ForFixedRate: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        let maxTime = ReactionSettings.maxTime
-        model.input.inputT2 = max((model.input.inputT1 + maxTime) / 2, ReactionSettings.minT2Input)
-        model.input.inputC2 = max(ReactionSettings.minConcentration, model.input.inputC1 / 2)
+        model.input.inputT2 = model.input.midTime
+        model.input.inputC2 = model.input.midConcentration
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {

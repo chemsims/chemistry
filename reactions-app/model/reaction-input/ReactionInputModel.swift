@@ -13,6 +13,9 @@ protocol ReactionInputModel {
 
     var didSetC1: (() -> Void)? { get set }
 
+    var minC2: CGFloat { get }
+    var maxT2: CGFloat { get }
+
     var concentrationA: ConcentrationEquation? { get }
 }
 
@@ -32,6 +35,16 @@ extension ReactionInputModel {
         inputT1 = other.inputT1
         inputT2 = other.inputT2
     }
+
+    /// Returns a concentration at the mid-point between `inputC1`, and `minC2`
+    var midConcentration: CGFloat {
+        (inputC1 + minC2) / 2
+    }
+
+    /// Returns a time at the mid-point between `inputT1` and `maxT2`
+    var midTime: CGFloat {
+        (inputT1 + maxT2) / 2
+    }
 }
 
 class ReactionInputAllProperties: ReactionInputModel {
@@ -47,7 +60,12 @@ class ReactionInputAllProperties: ReactionInputModel {
 
     var didSetC1: (() -> Void)?
 
-
+    var minC2: CGFloat {
+        ReactionSettings.minCInput
+    }
+    var maxT2: CGFloat {
+        ReactionSettings.maxTime
+    }
 
     var concentrationA: ConcentrationEquation? {
         if let c2 = inputC2, let t2 = inputT2 {
@@ -68,6 +86,12 @@ class ReactionInputWithoutC2: ReactionInputAllProperties {
         set { }
     }
 
+    override var maxT2: CGFloat {
+        let maxTimeForMinConcentration = concentrationA?.time(for: minC2) ?? super.maxT2
+        let absoluteMaxTime = ReactionSettings.maxTInput
+        return min(maxTimeForMinConcentration, absoluteMaxTime)
+    }
+
     private var computedC2: CGFloat? {
         if let concentrationA = concentrationA, let t2 = inputT2 {
             return concentrationA.getConcentration(at: t2)
@@ -85,6 +109,12 @@ class ReactionInputWithoutT2: ReactionInputAllProperties {
     override var inputT2: CGFloat? {
         get { computedT2 }
         set { }
+    }
+
+    override var minC2: CGFloat {
+        let minForMaxTime = concentrationA?.getConcentration(at: maxT2) ?? super.minC2
+        let absoluteMin = ReactionSettings.minCInput
+        return max(minForMaxTime, absoluteMin)
     }
 
     private var computedT2: CGFloat? {
