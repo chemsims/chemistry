@@ -34,7 +34,17 @@ struct ZeroOrderReactionNavigation {
         ScreenStateTreeNode<ReactionState>.build(
             states: [
                 SetT0ForFixedRate(),
-                SetT1ForFixedRate()
+                SetT1ForFixedRate(),
+                RunAnimation(
+                    statement: ZeroOrderStatements.reactionInProgress,
+                    order: .Zero,
+                    persistence: persistence,
+                    initialiseCurrentTime: true
+                ),
+                EndAnimation(
+                    statement: ZeroOrderStatements.end,
+                    highlightChart: false
+                )
             ]
         )!
     }
@@ -65,6 +75,7 @@ struct ZeroOrderReactionNavigation {
     }
 }
 
+// MARK: Initial states
 fileprivate class SelectReactionState: ReactionState {
     init() {
         super.init(statement: ZeroOrderStatements.chooseReaction)
@@ -73,6 +84,7 @@ fileprivate class SelectReactionState: ReactionState {
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
         model.inputsAreDisabled = true
+        model.canSelectReaction = true
         model.highlightedElements = [.reactionToggle]
     }
 
@@ -81,6 +93,28 @@ fileprivate class SelectReactionState: ReactionState {
     }
 }
 
+fileprivate class InitialStep: ReactionState {
+    init() {
+        super.init(statement: ZeroOrderStatements.initial)
+    }
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.inputsAreDisabled = false
+        model.canSelectReaction = false
+        model.highlightedElements = []
+
+        let currentInput = model.input
+
+        model.input = ReactionInputAllProperties()
+        model.input.inputT1 = currentInput.inputT1
+        model.input.inputC1 = currentInput.inputC1
+
+        model.input.didSetC1 = model.didSetC1
+    }
+}
+
+// MARK: Reactions B & C states
 fileprivate class SetT0ForFixedRate: ReactionState {
     init() {
         super.init(statement: ZeroOrderStatements.setT0FixedRate)
@@ -89,7 +123,16 @@ fileprivate class SetT0ForFixedRate: ReactionState {
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
         model.inputsAreDisabled = false
+        model.canSelectReaction = false
         model.highlightedElements = []
+
+        let currentInput = model.input
+
+        model.input = ReactionInputWithoutC2()
+        model.input.inputT1 = currentInput.inputT1
+        model.input.inputC1 = currentInput.inputC1
+
+        model.input.didSetC1 = model.didSetC1
     }
 }
 
@@ -105,20 +148,13 @@ fileprivate class SetT1ForFixedRate: ReactionState {
         let maxTime = ReactionSettings.maxTime
         model.input.inputT2 = max((model.input.inputT1 + maxTime) / 2, ReactionSettings.minT2Input)
     }
-}
 
-fileprivate class InitialStep: ReactionState {
-    init() {
-        super.init(statement: ZeroOrderStatements.initial)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        super.apply(on: model)
-        model.inputsAreDisabled = false
-        model.highlightedElements = []
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.input.inputT2 = nil
     }
 }
 
+// MARK: Reaction A states
 fileprivate class SetFinalValuesToNonNil: ReactionState {
 
     init() {

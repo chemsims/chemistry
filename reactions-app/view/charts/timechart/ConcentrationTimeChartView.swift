@@ -175,7 +175,6 @@ struct GeneralTimeChartView: View {
         .minimumScaleFactor(1)
     }
 
-
     private var concentrationSlider: some View {
         ConcentrationValueSlider(
             initialConcentration: $initialConcentration,
@@ -214,7 +213,6 @@ struct GeneralTimeChartView: View {
             defaultValue: finalConcentration ?? initialConcentration,
             decimals: 2
         )
-
     }
 
     private func animatingValue(

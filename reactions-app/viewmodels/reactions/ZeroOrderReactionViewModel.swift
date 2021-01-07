@@ -8,15 +8,12 @@ import SwiftUI
 class ZeroOrderReactionViewModel: ObservableObject {
 
     init () {
-        input = ReactionInputWithoutC2()
-        input.didSetC1 = {
-            self.setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
-        }
-        input.didSetC1?()
+        setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
+        input.didSetC1 = didSetC1
     }
 
     @Published var statement = [TextLine]()
-    @Published var input: ReactionInputModel
+    @Published var input: ReactionInputModel = ReactionInputAllProperties()
 
     @Published var currentTime: CGFloat?
 
@@ -25,8 +22,13 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     @Published var highlightedElements = [OrderedReactionScreenElement]()
     @Published var inputsAreDisabled = false
+    @Published var canSelectReaction = false
 
     var selectedReaction = OrderedReactionSet.A
+
+    func didSetC1() {
+        setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
+    }
 
     func color(for element: OrderedReactionScreenElement?) -> Color {
         if (highlightedElements.isEmpty || highlight(element: element)) {
