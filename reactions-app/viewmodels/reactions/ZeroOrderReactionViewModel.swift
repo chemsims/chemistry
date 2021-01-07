@@ -27,7 +27,11 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var canSelectReaction = false
     @Published var showReactionToggle = false
 
-    var selectedReaction = OrderedReactionSet.A
+    var selectedReaction = OrderedReactionSet.A {
+        didSet {
+            navigation?.next()
+        }
+    }
 
     func next() {
         navigation?.next()
