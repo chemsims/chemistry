@@ -15,7 +15,12 @@ protocol ReactionInputPersistence {
 
     func setUsed(catalyst: Catalyst)
     func hasUsed(catalyst: Catalyst) -> Bool
+}
 
+extension ReactionInputPersistence {
+    var hasCompletedApp: Bool {
+        hasCompleted(screen: .energyProfileQuiz)
+    }
 }
 
 class InMemoryReactionInputPersistence: ReactionInputPersistence {

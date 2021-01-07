@@ -108,6 +108,7 @@
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
 		57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */; };
 		57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */; };
+		57B168C025A7C09200F6668E /* ScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B168BF25A7C09200F6668E /* ScreenState.swift */; };
 		57B23314258E8BCB00128760 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23313258E8BCB00128760 /* AppScreen.swift */; };
 		57B2331A258E8BD900128760 /* ScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23319258E8BD900128760 /* ScreenProvider.swift */; };
 		57B2331F258E93AE00128760 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B2331E258E93AE00128760 /* PageViewController.swift */; };
@@ -276,6 +277,7 @@
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
 		57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
+		57B168BF25A7C09200F6668E /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
 		57B23313258E8BCB00128760 /* AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreen.swift; sourceTree = "<group>"; };
 		57B23319258E8BD900128760 /* ScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProvider.swift; sourceTree = "<group>"; };
 		57B2331E258E93AE00128760 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
@@ -470,7 +472,6 @@
 				571B3C772565605C0075358B /* SecondOrderReactionNavigationViewModel.swift */,
 				571B3CBA25658D300075358B /* RootNavigationViewModel.swift */,
 				57D8BA1E257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift */,
-				5727486225A5FB49000CFA1E /* ScreenStateTree.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -785,8 +786,10 @@
 		57B23312258E8BC100128760 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
+				5727486225A5FB49000CFA1E /* ScreenStateTree.swift */,
 				57B23313258E8BCB00128760 /* AppScreen.swift */,
 				57B23319258E8BD900128760 /* ScreenProvider.swift */,
+				57B168BF25A7C09200F6668E /* ScreenState.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -1029,6 +1032,7 @@
 				576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */,
 				57F337F32578BFBE00EF90A1 /* AnimatingNumber.swift in Sources */,
 				571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */,
+				57B168C025A7C09200F6668E /* ScreenState.swift in Sources */,
 				57F337F92578CE7E00EF90A1 /* Tooltip.swift in Sources */,
 				57DE4DA925A5031800644790 /* QuizReviewBody.swift in Sources */,
 				57E7FF8825829DE400A30582 /* QuizScreen.swift in Sources */,

@@ -5,53 +5,6 @@
 
 import SwiftUI
 
-protocol ScreenState {
-    associatedtype Model
-    associatedtype NestedState: SubState where NestedState.Model == Model
-
-    /// Optionally provide delayed states which will be automatically applied. Each delay is relative to the previous state,
-    /// as opposed to an absolute delay.
-    ///
-    /// The difference between a delayed state and `nextStateAutoDispatchDelay` is that the
-    /// latter is a state which can be navigated to/from by the user, whereas a substate will only be applied
-    /// while the parent state is still selected.
-    ///
-    /// Note that if `nextStateAutoDispatchDelays` is set, it's value is respected and any
-    /// delayed states which have yet to be run will be ignored.
-    var delayedStates: [DelayedState<NestedState>] { get }
-
-    /// Applies the reaction state to the model
-    func apply(on model: Model) -> Void
-
-    /// Unapplies the reaction state to the model. i.e., reversing the effect of `apply`
-    func unapply(on model: Model) -> Void
-
-    /// Reapplies the state, when returning from a subsequent state.
-    func reapply(on model: Model) -> Void
-
-    /// TimeInterval (i.e. time in seconds) to wait before automatically progressing to the next state
-    func nextStateAutoDispatchDelay(model: Model) -> Double?
-
-    /// When clicking back, should this state be ignored
-    var ignoreOnBack: Bool { get }
-}
-
-extension ScreenState {
-    var ignoreOnBack: Bool {
-        false
-    }
-}
-
-protocol SubState {
-    associatedtype Model
-    func apply(on model: Model)
-}
-
-struct DelayedState<State: SubState> {
-    let state: State
-    let delay: Double
-}
-
 class ReactionState: ScreenState, SubState {
 
     typealias Model = ZeroOrderReactionViewModel
@@ -87,12 +40,18 @@ struct OrderedReactionInitialNodes {
         standardFlow: [ReactionState],
         order: ReactionOrder
     ) -> ScreenStateTreeNode<ReactionState> {
+        assert(!standardFlow.isEmpty)
+        let standardNodes = ScreenStateTreeNode<ReactionState>.build(states: standardFlow)!
+        if (!persistence.hasCompletedApp) {
+            return standardNodes
+        }
+
         let node1 = BiConditionalScreenStateNode<ReactionState>(
             state: SelectReactionState(),
             applyAlternativeNode: { $0.selectedReaction != .A }
         )
 
-        node1.staticNext = ScreenStateTreeNode<ReactionState>.build(states: standardFlow)
+        node1.staticNext = standardNodes
         node1.staticNextAlternative = alternativePathStates(persistence: persistence, order: order)
         return node1
     }
@@ -129,6 +88,7 @@ class SelectReactionState: ReactionState {
         super.apply(on: model)
         model.inputsAreDisabled = true
         model.canSelectReaction = true
+        model.showReactionToggle = true
         model.highlightedElements = [.reactionToggle]
     }
 

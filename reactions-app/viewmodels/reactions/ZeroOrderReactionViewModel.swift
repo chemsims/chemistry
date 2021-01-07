@@ -23,6 +23,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var highlightedElements = [OrderedReactionScreenElement]()
     @Published var inputsAreDisabled = false
     @Published var canSelectReaction = false
+    @Published var showReactionToggle = false
 
     var selectedReaction = OrderedReactionSet.A
 

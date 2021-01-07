@@ -111,7 +111,9 @@ struct OrderedReactionScreen<Content: View>: View {
 
     private var topRightControls: some View {
         VStack(alignment: .trailing, spacing: 0.5 * settings.tableButtonSize) {
-            reactionToggle.zIndex(1)
+            if (reaction.showReactionToggle) {
+                reactionToggle.zIndex(1)
+            }
             concentrationTable
         }
     }
