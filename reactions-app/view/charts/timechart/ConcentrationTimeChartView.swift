@@ -22,6 +22,11 @@ struct ConcentrationTimeChartView: View {
     let highlightLhsCurve: Bool
     let highlightRhsCurve: Bool
 
+    let canSetC2: Bool
+    let canSetT2: Bool
+    let maxT2Input: CGFloat
+    let minC2Input: CGFloat
+
     var body: some View {
         GeneralTimeChartView(
             initialConcentration: $initialConcentration,
@@ -39,7 +44,11 @@ struct ConcentrationTimeChartView: View {
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: highlightChart,
             highlightLhsCurve: highlightLhsCurve,
-            highlightRhsCurve: highlightRhsCurve
+            highlightRhsCurve: highlightRhsCurve,
+            canSetC2: canSetC2,
+            canSetT2: canSetT2,
+            maxT2Input: maxT2Input,
+            minC2Input: minC2Input
         )
     }
 }
@@ -72,7 +81,11 @@ struct SingleConcentrationPlot: View {
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: false,
             highlightLhsCurve: false,
-            highlightRhsCurve: false
+            highlightRhsCurve: false,
+            canSetC2: true,
+            canSetT2: true,
+            maxT2Input: ReactionSettings.maxTInput,
+            minC2Input: ReactionSettings.minCInput
         )
     }
 }
@@ -98,6 +111,11 @@ struct GeneralTimeChartView: View {
     let highlightChart: Bool
     let highlightLhsCurve: Bool
     let highlightRhsCurve: Bool
+
+    let canSetC2: Bool
+    let canSetT2: Bool
+    let maxT2Input: CGFloat
+    let minC2Input: CGFloat
 
     var body: some View {
         HStack(spacing: settings.chartHStackSpacing) {
@@ -175,25 +193,30 @@ struct GeneralTimeChartView: View {
         .minimumScaleFactor(1)
     }
 
-
     private var concentrationSlider: some View {
         ConcentrationValueSlider(
             initialConcentration: $initialConcentration,
-            finalConcentration: $finalConcentration,
+            finalConcentration: canSetC2 ? $finalConcentration : .constant(nil),
+            c1Disabled: finalConcentration != nil,
+            minC2: minC2Input,
             settings: settings
         )
         .frame(
             width: settings.sliderHandleWidth,
             height: settings.chartSize
-        ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
+        ).modifier(
+            DisabledSliderModifier(disabled: currentTime != nil)
+        )
     }
 
     private var timeSlider: some View {
         TimeValueSlider(
             t1: $initialTime,
-            t2: $finalTime,
-            settings: settings,
-            canSetInitialTime: canSetInitialTime
+            t2: canSetT2 ? $finalTime : .constant(nil),
+            canSetInitialTime: canSetInitialTime,
+            t1Disabled: finalTime != nil,
+            maxT2Input: maxT2Input,
+            settings: settings
         ).frame(
             width: settings.chartSize,
             height: settings.sliderHandleWidth
@@ -214,7 +237,6 @@ struct GeneralTimeChartView: View {
             defaultValue: finalConcentration ?? initialConcentration,
             decimals: 2
         )
-
     }
 
     private func animatingValue(
@@ -259,7 +281,10 @@ struct GeneralTimeChartView: View {
             highlightChart: highlightChart,
             highlightLhsCurve: highlightLhsCurve,
             highlightRhsCurve: highlightRhsCurve
-        ).frame(width: settings.chartSize, height: settings.chartSize)
+        ).frame(
+            width: settings.chartSize,
+            height: settings.chartSize
+        )
     }
 
     private var unsafeCurrentTimeBinding: Binding<CGFloat> {
@@ -268,7 +293,6 @@ struct GeneralTimeChartView: View {
             set: { currentTime = $0 }
         )
     }
-
 
     private var chartWithIndicator: some View {
         let axis = ZStack {
@@ -346,7 +370,11 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             canSetCurrentTime: true,
             highlightChart: false,
             highlightLhsCurve: false,
-            highlightRhsCurve: false
+            highlightRhsCurve: false,
+            canSetC2: true,
+            canSetT2: true,
+            maxT2Input: ReactionSettings.maxTInput,
+            minC2Input: ReactionSettings.minCInput
         )
         .previewLayout(.fixed(width: 500, height: 300))
 
@@ -388,7 +416,11 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     canSetCurrentTime: true,
                     highlightChart: false,
                     highlightLhsCurve: false,
-                    highlightRhsCurve: false
+                    highlightRhsCurve: false,
+                    canSetC2: true,
+                    canSetT2: true,
+                    maxT2Input: ReactionSettings.maxTInput,
+                    minC2Input: ReactionSettings.minCInput
                 )
 
                 ConcentrationTimeChartView(
@@ -406,12 +438,16 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     canSetCurrentTime: true,
                     highlightChart: false,
                     highlightLhsCurve: false,
-                    highlightRhsCurve: false
+                    highlightRhsCurve: false,
+                    canSetC2: true,
+                    canSetT2: true,
+                    maxT2Input: ReactionSettings.maxTInput,
+                    minC2Input: ReactionSettings.minCInput
                 )
             }
         }
         private var equation: ConcentrationEquation {
-            ZeroOrderReaction(
+            ZeroOrderConcentration(
                 t1: t1,
                 c1: c1,
                 t2: t2 ?? 0,
@@ -420,7 +456,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
         }
 
         private var equation2: ConcentrationEquation {
-            ZeroOrderReaction(
+            ZeroOrderConcentration(
                 t1: t1,
                 c1: c2 ?? 0,
                 t2: t2 ?? 0,

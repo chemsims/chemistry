@@ -161,7 +161,7 @@ struct EnergyProfileRateChart_Previews: PreviewProvider {
     static var previews: some View {
         EnergyProfileRateChart(
             settings: EnergyRateChartSettings(chartSize: 250),
-            equation: ZeroOrderReaction(a0: 1, rateConstant: 0.1),
+            equation: ZeroOrderConcentration(a0: 1, rateConstant: 0.1),
             currentTempInverse: 1 / 500,
             highlightChart: true
         )

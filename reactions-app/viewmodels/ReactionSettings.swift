@@ -7,6 +7,7 @@ import CoreGraphics
 
 struct ReactionSettings {
 
+    // TODO rename axis settings variables
     // Axis settings
     static let minConcentration: CGFloat = 0
     static let maxConcentration: CGFloat = 1
@@ -28,9 +29,15 @@ struct ReactionSettings {
     static let minInverseConcentration: CGFloat = 0
     static let maxInverseConcentration: CGFloat = 10
 
-    /// The minimum value that concentration 2 may be. Concentration 1 is liited to ensure there is sufficient space
+    /// The minimum value that concentration 2 may be. Concentration 1 is limited to ensure there is sufficient space
     static let minFinalConcentration: CGFloat = 0.15
 
-    /// The minimum value that time 2 may be. Time 1 is liited to ensure there is sufficient space
+    /// The minimum value that time 2 may be. Time 1 is limited to ensure there is sufficient space
     static let minFinalTime: CGFloat = 15
+
+    /// Fixed rate constant for B reactions (i.e., the second reaction type which can be chosen on parts 1-3)
+    static let reactionBRateConstant: CGFloat = 0.04
+
+    /// Fixed rate constant for C reactions (i.e., the third reaction type which can be chosen on parts 1-3)
+    static let reactionCRateConstant: CGFloat = 0.07
 }

@@ -18,18 +18,15 @@ class ReactionFilingViewModel: ObservableObject {
         let navigation = NavigationViewModel(model: zeroOrderViewModel, states: [ReactionState]())
 
         let zeroOrderScreen = ZeroOrderReactionScreen(
-            reaction: zeroOrderViewModel,
-            navigation: navigation
+            reaction: zeroOrderViewModel
         )
 
         let firstOrderScreen = FirstOrderReactionScreen(
-            reaction: firstOrderViewModel,
-            navigation: navigation
+            reaction: firstOrderViewModel
         )
 
         let secondOrderScreen = SecondOrderReactionScreen(
-            reaction: secondOrderViewModel,
-            navigation: navigation
+            reaction: secondOrderViewModel
         )
 
         let zeroInput = persistence.get(order: .Zero)
@@ -60,11 +57,11 @@ class ReactionFilingViewModel: ObservableObject {
         next: ReactionOrder?
     ) {
         if let input = input {
-            viewModel.initialConcentration = input.c1
-            viewModel.finalConcentration = input.c2
-            viewModel.initialTime = input.t1
-            viewModel.finalTime = input.t2
-            viewModel.currentTime = viewModel.finalTime
+            viewModel.input.inputC1 = input.c1
+            viewModel.input.inputC2 = input.c2
+            viewModel.input.inputT1 = input.t1
+            viewModel.input.inputT2 = input.t2
+            viewModel.currentTime = viewModel.input.inputT2
             viewModel.reactionHasStarted = true
             viewModel.reactionHasEnded = true
 

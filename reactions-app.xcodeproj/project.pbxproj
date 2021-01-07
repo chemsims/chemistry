@@ -21,6 +21,7 @@
 		57035EFD255C1A7000DB3A19 /* ReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EFC255C1A7000DB3A19 /* ReactionSettings.swift */; };
 		57035F0C255C26D000DB3A19 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
 		57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */; };
+		57064BA225A77787008102CE /* ReactionInputModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57064BA125A77787008102CE /* ReactionInputModel.swift */; };
 		57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */; };
 		570E4F01256D10CD001EADCB /* EnergyProfileChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */; };
 		570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */; };
@@ -107,6 +108,7 @@
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
 		57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */; };
 		57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */; };
+		57B168C025A7C09200F6668E /* ScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B168BF25A7C09200F6668E /* ScreenState.swift */; };
 		57B23314258E8BCB00128760 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23313258E8BCB00128760 /* AppScreen.swift */; };
 		57B2331A258E8BD900128760 /* ScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23319258E8BD900128760 /* ScreenProvider.swift */; };
 		57B2331F258E93AE00128760 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B2331E258E93AE00128760 /* PageViewController.swift */; };
@@ -186,6 +188,7 @@
 		57035EFC255C1A7000DB3A19 /* ReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionSettings.swift; sourceTree = "<group>"; };
 		57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAxisShape.swift; sourceTree = "<group>"; };
 		57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTimeChartView.swift; sourceTree = "<group>"; };
+		57064BA125A77787008102CE /* ReactionInputModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputModel.swift; sourceTree = "<group>"; };
 		57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreenElement.swift; sourceTree = "<group>"; };
 		570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChart.swift; sourceTree = "<group>"; };
 		570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileViewModel.swift; sourceTree = "<group>"; };
@@ -274,6 +277,7 @@
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
 		57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
+		57B168BF25A7C09200F6668E /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
 		57B23313258E8BCB00128760 /* AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreen.swift; sourceTree = "<group>"; };
 		57B23319258E8BD900128760 /* ScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProvider.swift; sourceTree = "<group>"; };
 		57B2331E258E93AE00128760 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
@@ -410,6 +414,15 @@
 			path = charts;
 			sourceTree = "<group>";
 		};
+		57064BA025A77774008102CE /* reaction-input */ = {
+			isa = PBXGroup;
+			children = (
+				57DAE4FD2577ED76006D945B /* ReactionInput.swift */,
+				57064BA125A77787008102CE /* ReactionInputModel.swift */,
+			);
+			path = "reaction-input";
+			sourceTree = "<group>";
+		};
 		570E4EFF256D10B8001EADCB /* energy-profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,7 +472,6 @@
 				571B3C772565605C0075358B /* SecondOrderReactionNavigationViewModel.swift */,
 				571B3CBA25658D300075358B /* RootNavigationViewModel.swift */,
 				57D8BA1E257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift */,
-				5727486225A5FB49000CFA1E /* ScreenStateTree.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -555,6 +567,7 @@
 		571D6A6C255AB23D00F4E635 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57064BA025A77774008102CE /* reaction-input */,
 				5727487225A61B9C000CFA1E /* enums */,
 				57B23312258E8BC100128760 /* navigation */,
 				57F56216258D4EE9008B2602 /* energy-profile */,
@@ -568,7 +581,6 @@
 				572CB943255C3BCF0071C600 /* ValueRange.swift */,
 				57FDA138255D6C5000CB8804 /* Extensions.swift */,
 				57F4775925616F400041D406 /* BoundedSliderPositioning.swift */,
-				57DAE4FD2577ED76006D945B /* ReactionInput.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -774,8 +786,10 @@
 		57B23312258E8BC100128760 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
+				5727486225A5FB49000CFA1E /* ScreenStateTree.swift */,
 				57B23313258E8BCB00128760 /* AppScreen.swift */,
 				57B23319258E8BD900128760 /* ScreenProvider.swift */,
+				57B168BF25A7C09200F6668E /* ScreenState.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -1018,6 +1032,7 @@
 				576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */,
 				57F337F32578BFBE00EF90A1 /* AnimatingNumber.swift in Sources */,
 				571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */,
+				57B168C025A7C09200F6668E /* ScreenState.swift in Sources */,
 				57F337F92578CE7E00EF90A1 /* Tooltip.swift in Sources */,
 				57DE4DA925A5031800644790 /* QuizReviewBody.swift in Sources */,
 				57E7FF8825829DE400A30582 /* QuizScreen.swift in Sources */,
@@ -1056,6 +1071,7 @@
 				57778B7F259368B800254262 /* TextLineView.swift in Sources */,
 				57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */,
 				57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */,
+				57064BA225A77787008102CE /* ReactionInputModel.swift in Sources */,
 				57DAE4FA2577ECD9006D945B /* ReactionInputPersistence.swift in Sources */,
 				57C3A8272563248F00EE753E /* FirstOrderReactionScreen.swift in Sources */,
 				572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */,

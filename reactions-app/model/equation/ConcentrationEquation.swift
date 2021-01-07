@@ -8,15 +8,21 @@ import Darwin
 
 protocol ConcentrationEquation: Equation {
 
+    /// The concentration at t=0
     var a0: CGFloat { get }
+
     var rateConstant: CGFloat { get }
+
     var order: Int { get }
     var halfLife: CGFloat { get }
 
+    /// Returns concentration at time `time`
     func getConcentration(at time: CGFloat) -> CGFloat
 
+    /// Returns the time at which the concentration is `concentration`
     func time(for concentration: CGFloat) -> CGFloat?
 
+    /// Returns the rate at time `time`
     func getRate(at time: CGFloat) -> CGFloat
 }
 
@@ -34,8 +40,7 @@ extension ConcentrationEquation {
     }
 }
 
-/// Linear concentration which is c1 at t1, and c2 at t2.
-struct ZeroOrderReaction: ConcentrationEquation {
+struct ZeroOrderConcentration: ConcentrationEquation {
 
     let a0: CGFloat
     let rateConstant: CGFloat
@@ -53,7 +58,7 @@ struct ZeroOrderReaction: ConcentrationEquation {
     }
 
     init(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) {
-        self.rateConstant = ZeroOrderReaction.getRate(t1: t1, c1: c1, t2: t2, c2: c2)
+        self.rateConstant = ZeroOrderConcentration.getRate(t1: t1, c1: c1, t2: t2, c2: c2)
         let a0Numerator = (t1 * c2) - (t2 * c1)
         self.a0 = a0Numerator / (t1 - t2)
     }
@@ -96,6 +101,11 @@ struct FirstOrderConcentration: ConcentrationEquation {
             a0: c1,
             rateConstant: FirstOrderConcentration.getRate(c1: c1, c2: c2, time: time)
         )
+    }
+
+    init(c1: CGFloat, t1: CGFloat, rateConstant: CGFloat) {
+        let a0 = c1 / CGFloat(pow(Darwin.M_E, -Double(rateConstant * t1)))
+        self.init(a0: a0, rateConstant: rateConstant)
     }
 
     func getConcentration(at time: CGFloat) -> CGFloat {
@@ -152,6 +162,15 @@ struct SecondOrderConcentration: ConcentrationEquation {
         )
     }
 
+    init(c1: CGFloat, t1: CGFloat, rateConstant: CGFloat) {
+        assert(c1 != 0)
+        let invC1 = 1 / c1
+        let denominator = invC1 - (rateConstant * t1)
+        assert(denominator != 0)
+        let a0 = 1 / denominator
+        self.init(a0: a0, rateConstant: rateConstant)
+    }
+
     var halfLife: CGFloat {
         1 / (rateConstant * a0)
     }
@@ -169,7 +188,6 @@ struct SecondOrderConcentration: ConcentrationEquation {
         }
         return (1 / (concentration  * rateConstant)) - (1 / (a0 * rateConstant))
     }
-
 
     static func getRate(c1: CGFloat, c2: CGFloat, time: CGFloat) -> CGFloat {
         assert(c1 != 0)

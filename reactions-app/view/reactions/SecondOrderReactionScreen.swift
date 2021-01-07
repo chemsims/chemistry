@@ -8,7 +8,6 @@ import SwiftUI
 struct SecondOrderReactionScreen: View {
 
     @ObservedObject var reaction: SecondOrderReactionViewModel
-    @ObservedObject var navigation: NavigationViewModel<ReactionState>
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
@@ -27,9 +26,8 @@ struct SecondOrderReactionScreen: View {
     private func makeView(settings: OrderedReactionLayoutSettings) -> some View {
         OrderedReactionScreen(
             reaction: reaction,
-            navigation: navigation,
             settings: settings,
-            canSetInitialTime: false,
+            canSetInitialTime: reaction.selectedReaction != .A,
             showRate: true
         ) {
             VStack {
@@ -51,10 +49,10 @@ struct SecondOrderReactionScreen: View {
 
     private func invChart(settings: OrderedReactionLayoutSettings) -> some View {
         SingleConcentrationPlot(
-            initialConcentration: reaction.initialConcentration,
-            initialTime: reaction.initialTime,
-            finalConcentration: reaction.finalConcentration,
-            finalTime: reaction.finalTime,
+            initialConcentration: reaction.input.inputC1,
+            initialTime: reaction.input.inputT1,
+            finalConcentration: reaction.input.inputC2,
+            finalTime: reaction.input.inputT2,
             settings: TimeChartGeometrySettings(
                 chartSize: settings.chartSize,
                 minConcentration: ReactionSettings.minInverseConcentration,
@@ -72,11 +70,11 @@ struct SecondOrderReactionScreen: View {
         GeometryReader { geometry in
             SecondOrderEquationView(
                 emphasiseFilledTerms: reaction.currentTime == nil,
-                c1: reaction.initialConcentration,
-                c2: reaction.finalConcentration,
-                t: reaction.finalTime,
+                c1: reaction.input.inputC1,
+                c2: reaction.input.inputC2,
+                t: reaction.input.inputT2,
                 currentTime: reaction.currentTime,
-                concentration: reaction.concentrationEquationA,
+                concentration: reaction.input.concentrationA,
                 reactionHasStarted: reaction.reactionHasStarted,
                 maxWidth: geometry.size.width,
                 maxHeight: geometry.size.height,
@@ -103,16 +101,11 @@ struct SecondOrderReaction_Previews: PreviewProvider {
     }
 
     static let reaction = SecondOrderReactionViewModel()
-    static let navigation = SecondOrderReactionNavigation.model(
-        reaction: reaction,
-        persistence: InMemoryReactionInputPersistence()
-    )
 
     struct StateWrapper: View {
         var body: some View {
             SecondOrderReactionScreen(
-                reaction: reaction,
-                navigation: navigation
+                reaction: reaction
             )
         }
     }

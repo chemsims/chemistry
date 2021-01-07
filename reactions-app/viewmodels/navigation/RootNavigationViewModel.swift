@@ -29,6 +29,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
+        return true
         switch (screen) {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)
@@ -186,6 +187,7 @@ fileprivate class ZeroOrderReactionScreenProvider: ScreenProvider {
         self.persistence = persistence
         self.viewModel = ZeroOrderReactionViewModel()
         self.navigation = ZeroOrderReactionNavigation.model(reaction: viewModel, persistence: persistence)
+        self.viewModel.navigation = navigation
         navigation.nextScreen = next
         navigation.prevScreen = prev
     }
@@ -195,7 +197,7 @@ fileprivate class ZeroOrderReactionScreenProvider: ScreenProvider {
     let navigation: NavigationViewModel<ReactionState>
 
     var screen: AnyView {
-        AnyView(ZeroOrderReactionScreen(reaction: viewModel, navigation: navigation))
+        AnyView(ZeroOrderReactionScreen(reaction: viewModel))
     }
 }
 
@@ -204,6 +206,7 @@ fileprivate class FirstOrderReactionScreenProvider: ScreenProvider {
         self.persistence = persistence
         self.viewModel = FirstOrderReactionViewModel()
         self.navigation = FirstOrderReactionNavigation.model(reaction: viewModel, persistence: persistence)
+        self.viewModel.navigation = navigation
         navigation.nextScreen = next
         navigation.prevScreen = prev
     }
@@ -213,7 +216,7 @@ fileprivate class FirstOrderReactionScreenProvider: ScreenProvider {
     let navigation: NavigationViewModel<ReactionState>
 
     var screen: AnyView {
-        AnyView(FirstOrderReactionScreen(reaction: viewModel, navigation: navigation))
+        AnyView(FirstOrderReactionScreen(reaction: viewModel))
     }
 }
 
@@ -222,6 +225,7 @@ fileprivate class SecondOrderReactionScreenProvider: ScreenProvider {
         self.persistence = persistence
         self.viewModel = SecondOrderReactionViewModel()
         self.navigation = SecondOrderReactionNavigation.model(reaction: viewModel, persistence: persistence)
+        self.viewModel.navigation = navigation
         navigation.nextScreen = next
         navigation.prevScreen = prev
     }
@@ -231,7 +235,7 @@ fileprivate class SecondOrderReactionScreenProvider: ScreenProvider {
     let navigation: NavigationViewModel<ReactionState>
 
     var screen: AnyView {
-        AnyView(SecondOrderReactionScreen(reaction: viewModel, navigation: navigation))
+        AnyView(SecondOrderReactionScreen(reaction: viewModel))
     }
 }
 

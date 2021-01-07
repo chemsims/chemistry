@@ -5,7 +5,9 @@
 
 import SwiftUI
 
+
 struct DualValueSlider: View {
+
     @Binding var value1: CGFloat
     @Binding var value2: CGFloat?
 
@@ -22,6 +24,8 @@ struct DualValueSlider: View {
     let absoluteMin: CGFloat
     let absoluteMax: CGFloat
 
+    let value1Disabled: Bool
+
     var body: some View {
         ZStack {
             if (canSetInitialValue) {
@@ -31,7 +35,7 @@ struct DualValueSlider: View {
                         minValue: value1PreviousHandle,
                         maxValue: value1NextHandle
                     ),
-                    disabled: value2 != nil,
+                    disabled: value1Disabled,
                     showBar: true
                 )
             }

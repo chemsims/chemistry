@@ -15,7 +15,7 @@ struct ZeroOrderEquationView: View {
     let deltaT: CGFloat?
     let c2: CGFloat?
     let t2: CGFloat?
-    let rateColorMultipy: Color
+    let rateColorMultiply: Color
     let halfLifeColorMultiply: Color
 
     let maxWidth: CGFloat
@@ -46,7 +46,7 @@ struct ZeroOrderEquationView: View {
                 c2: c2,
                 t2: t2,
                 isShowingTooltip: $isShowingTooltip,
-                rateColorMultipy: rateColorMultipy,
+                rateColorMultipy: rateColorMultiply,
                 halfLifeColorMultiply: halfLifeColorMultiply,
                 currentTime: currentTime,
                 concentration: concentration
@@ -344,7 +344,7 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             rateColorMultipy: .white,
             halfLifeColorMultiply: .white,
             currentTime: nil,
-            concentration: ZeroOrderReaction(a0: 1, rateConstant: 0.1)
+            concentration: ZeroOrderConcentration(a0: 1, rateConstant: 0.1)
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))

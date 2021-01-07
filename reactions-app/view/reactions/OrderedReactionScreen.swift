@@ -8,7 +8,6 @@ import SwiftUI
 struct OrderedReactionScreen<Content: View>: View {
 
     @ObservedObject var reaction: ZeroOrderReactionViewModel
-    @ObservedObject var navigation: NavigationViewModel<ReactionState>
     let settings: OrderedReactionLayoutSettings
     let canSetInitialTime: Bool
     let showRate: Bool
@@ -38,8 +37,8 @@ struct OrderedReactionScreen<Content: View>: View {
     private func beaky(settings: OrderedReactionLayoutSettings) -> some View {
         BeakyOverlay(
             statement: reaction.statement,
-            next: navigation.next,
-            back: navigation.back,
+            next: reaction.next,
+            back: reaction.back,
             settings: settings
         )
     }
@@ -51,7 +50,7 @@ struct OrderedReactionScreen<Content: View>: View {
                     .frame(width: settings.menuTotalWidth)
                 FilledBeaker(
                     moleculesA: reaction.moleculesA,
-                    concentrationB: reaction.concentrationEquationB,
+                    concentrationB: reaction.input.concentrationB,
                     currentTime: reaction.currentTime
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
@@ -67,19 +66,23 @@ struct OrderedReactionScreen<Content: View>: View {
     private func middleCharts(settings: OrderedReactionLayoutSettings) -> some View {
         HStack(alignment: .top, spacing: 0) {
             ConcentrationTimeChartView(
-                initialConcentration: $reaction.initialConcentration,
-                initialTime: $reaction.initialTime,
-                finalConcentration: $reaction.finalConcentration,
-                finalTime: $reaction.finalTime,
+                initialConcentration: $reaction.input.inputC1,
+                initialTime: $reaction.input.inputT1,
+                finalConcentration: $reaction.input.inputC2,
+                finalTime: $reaction.input.inputT2,
                 settings: settings.chartSettings,
-                concentrationA: reaction.concentrationEquationA,
-                concentrationB: reaction.concentrationEquationB,
+                concentrationA: reaction.input.concentrationA,
+                concentrationB: reaction.input.concentrationB,
                 currentTime: $reaction.currentTime,
                 canSetInitialTime: canSetInitialTime,
                 canSetCurrentTime: reaction.reactionHasEnded,
                 highlightChart: reaction.highlight(element: .concentrationChart),
                 highlightLhsCurve: reaction.highlight(element: .rateCurveLhs),
-                highlightRhsCurve: reaction.highlight(element: .rateCurveRhs)
+                highlightRhsCurve: reaction.highlight(element: .rateCurveRhs),
+                canSetC2: reaction.selectedReaction != .B,
+                canSetT2: reaction.selectedReaction != .C,
+                maxT2Input: reaction.input.maxT2,
+                minC2Input: reaction.input.minC2
             )
             .frame(width: settings.chartSettings.largeTotalChartWidth)
             .padding(.horizontal, settings.chartHPadding)
@@ -87,10 +90,10 @@ struct OrderedReactionScreen<Content: View>: View {
             .disabled(reaction.inputsAreDisabled)
 
             ConcentrationBarChart(
-                initialA: reaction.initialConcentration,
-                initialTime: reaction.initialTime,
-                concentrationA: reaction.concentrationEquationA,
-                concentrationB: reaction.concentrationEquationB,
+                initialA: reaction.input.inputC1,
+                initialTime: reaction.input.inputT1,
+                concentrationA: reaction.input.concentrationA,
+                concentrationB: reaction.input.concentrationB,
                 currentTime: reaction.currentTime,
                 settings: BarChartGeometrySettings(
                     chartWidth: settings.chartSize,
@@ -107,7 +110,9 @@ struct OrderedReactionScreen<Content: View>: View {
 
     private var topRightControls: some View {
         VStack(alignment: .trailing, spacing: 0.5 * settings.tableButtonSize) {
-            reactionToggle.zIndex(1)
+            if (reaction.showReactionToggle) {
+                reactionToggle.zIndex(1)
+            }
             concentrationTable
         }
     }
@@ -116,21 +121,24 @@ struct OrderedReactionScreen<Content: View>: View {
         DropDownSelectionView(
             title: "Choose a reaction",
             options: OrderedReactionSet.allCases,
-            isToggled:  $reactionSelectionIsToggled,
+            isToggled: reaction.canSelectReaction ? $reactionSelectionIsToggled : .constant(false),
             selection: $reaction.selectedReaction,
             height: settings.tableButtonSize,
             displayString: { $0.name}
         )
         .frame(height: settings.tableButtonSize, alignment: .top)
+        .colorMultiply(reaction.color(for: .reactionToggle))
+        .disabled(!reaction.canSelectReaction)
+        .opacity(reaction.canSelectReaction ? 1 : 0.3)
     }
 
     private var concentrationTable: some View {
         ConcentrationTable(
-            c1: reaction.initialConcentration.str(decimals: 2),
-            c2: reaction.finalConcentration?.str(decimals: 2),
-            t1: reaction.initialTime.str(decimals: 1),
-            t2: reaction.finalTime?.str(decimals: 1),
-            rate: reaction.concentrationEquationA?.rateEquation,
+            c1: reaction.input.inputC1.str(decimals: 2),
+            c2: reaction.input.inputC2?.str(decimals: 2),
+            t1: reaction.input.inputT1.str(decimals: 1),
+            t2: reaction.input.inputT2?.str(decimals: 1),
+            rate: reaction.input.concentrationA?.rateEquation,
             currentTime: reaction.currentTime,
             showTime: !showRate,
             showRate: showRate,
@@ -140,6 +148,7 @@ struct OrderedReactionScreen<Content: View>: View {
             highlighted: reaction.highlight(element: .concentrationTable)
         )
         .font(.system(size: settings.tableFontSize))
+        .disabled(reaction.inputsAreDisabled)
     }
 
     private func cell(value: String) -> some View {
@@ -156,10 +165,6 @@ struct OrderedReactionScreen_Previews: PreviewProvider {
         GeometryReader { geometry in
             OrderedReactionScreen(
                 reaction: ZeroOrderReactionViewModel(),
-                navigation: NavigationViewModel(
-                    model: ZeroOrderReactionViewModel(),
-                    states: [ReactionState()]
-                ),
                 settings: OrderedReactionLayoutSettings(
                     geometry: geometry,
                     horizontalSize: nil,

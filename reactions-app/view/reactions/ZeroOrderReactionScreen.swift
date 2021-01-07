@@ -8,7 +8,6 @@ import SwiftUI
 struct ZeroOrderReactionScreen: View {
 
     @ObservedObject var reaction: ZeroOrderReactionViewModel
-    @ObservedObject var navigation: NavigationViewModel<ReactionState>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -34,7 +33,6 @@ struct ZeroOrderReactionScreen: View {
     func makeView(settings: OrderedReactionLayoutSettings) -> some View {
         OrderedReactionScreen(
             reaction: reaction,
-            navigation: navigation,
             settings: settings,
             canSetInitialTime: true,
             showRate: false
@@ -52,19 +50,19 @@ struct ZeroOrderReactionScreen: View {
                     ZeroOrderEquationView(
                         emphasiseFilledTerms: reaction.currentTime == nil,
                         reactionHasStarted: reaction.reactionHasStarted,
-                        initialConcentration: reaction.initialConcentration,
-                        initialTime: reaction.initialTime,
+                        initialConcentration: reaction.input.inputC1,
+                        initialTime: reaction.input.inputT1,
                         deltaC: reaction.deltaC,
                         deltaT: reaction.deltaT,
-                        c2: reaction.c2,
-                        t2: reaction.finalTime,
-                        rateColorMultipy: reaction.color(for: .rateConstantEquation),
+                        c2: reaction.input.inputC2,
+                        t2: reaction.input.inputT2,
+                        rateColorMultiply: reaction.color(for: .rateConstantEquation),
                         halfLifeColorMultiply: reaction.color(for: .halfLifeEquation),
                         maxWidth: geometry.size.width,
                         maxHeight: geometry.size.height,
                         isShowingTooltip: $isShowingTooltip,
                         currentTime: reaction.currentTime,
-                        concentration: reaction.concentrationEquationA
+                        concentration: reaction.input.concentrationA
                     )
                 }
                 .padding(settings.equationPadding)
@@ -77,34 +75,29 @@ struct ZeroOrderReactionScreen: View {
 
 struct ZeroOrderReaction_Previews: PreviewProvider {
 
-    static var navigation: NavigationViewModel<ReactionState> {
-        ZeroOrderReactionNavigation.model(
-            reaction: ZeroOrderReactionViewModel(),
-            persistence: InMemoryReactionInputPersistence()
-        )
-    }
+    static var model = ZeroOrderReactionViewModel()
 
     static var previews: some View {
 
         // iPhone SE landscape
         ZeroOrderReactionScreen(
-            reaction: navigation.model, navigation: navigation
+            reaction: model
         ).previewLayout(.fixed(width: 568, height: 320))
 
         // iPhone 11 landscape
         ZeroOrderReactionScreen(
-            reaction: navigation.model, navigation: navigation
+            reaction: model
         ).previewLayout(.fixed(width: 812, height: 375))
 
 
         /// iPad mini 4 landscape
         ZeroOrderReactionScreen(
-            reaction: navigation.model, navigation: navigation
+            reaction: model
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro
         ZeroOrderReactionScreen(
-            reaction: navigation.model, navigation: navigation
+            reaction: model
         ).previewLayout(.fixed(width: 1366, height: 1024))
 
     }

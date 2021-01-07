@@ -7,9 +7,29 @@ import Foundation
 
 struct SecondOrderReactionNavigation {
 
-    static func states(persistence: ReactionInputPersistence) -> [ReactionState] {
+    static func model(
+        reaction: SecondOrderReactionViewModel,
+        persistence: ReactionInputPersistence
+    ) -> NavigationViewModel<ReactionState> {
+        NavigationViewModel(
+            model: reaction,
+            rootNode: rootNode(persistence: persistence)
+        )
+    }
+
+    private static func rootNode(
+        persistence: ReactionInputPersistence
+    ) -> ScreenStateTreeNode<ReactionState> {
+        OrderedReactionInitialNodes.build(
+            persistence: persistence,
+            standardFlow: standardFlow(persistence: persistence),
+            order: .Second
+        )
+    }
+
+    private static func standardFlow(persistence: ReactionInputPersistence) -> [ReactionState] {
         [
-            InitialOrderedStep(statement: SecondOrderStatements.intro),
+            InitialOrderedStep(order: .Second, statement: SecondOrderStatements.intro),
             SetFinalConcentrationToNonNil(),
             ExplainRateConstant(),
             ExplainRate(),
@@ -32,23 +52,15 @@ struct SecondOrderReactionNavigation {
             FinalReactionState(statement: SecondOrderStatements.end)
         ]
     }
-
-    static func model(
-        reaction: SecondOrderReactionViewModel,
-        persistence: ReactionInputPersistence
-    ) -> NavigationViewModel<ReactionState> {
-        NavigationViewModel(
-            model: reaction,
-            states: states(persistence: persistence)
-        )
-    }
 }
 
 fileprivate class ExplainRateConstant: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
-        model.statement = SecondOrderStatements.explainRateConstant(rateConstant: model.concentrationEquationA?.rateConstant ?? 0)
-        model.currentTime = model.initialTime
+        model.statement = SecondOrderStatements.explainRateConstant(
+            rateConstant: model.input.concentrationA?.rateConstant ?? 0
+        )
+        model.currentTime = model.input.inputT1
         model.highlightedElements = [.rateConstantEquation]
     }
 
@@ -90,7 +102,7 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.statement = SecondOrderStatements.explainHalfLife(
-            halfLife: model.concentrationEquationA?.halfLife ?? 0
+            halfLife: model.input.concentrationA?.halfLife ?? 0
         )
     }
 }
