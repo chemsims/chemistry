@@ -22,6 +22,9 @@ struct ConcentrationTimeChartView: View {
     let highlightLhsCurve: Bool
     let highlightRhsCurve: Bool
 
+    let canSetC2: Bool
+    let canSetT2: Bool
+
     var body: some View {
         GeneralTimeChartView(
             initialConcentration: $initialConcentration,
@@ -39,7 +42,9 @@ struct ConcentrationTimeChartView: View {
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: highlightChart,
             highlightLhsCurve: highlightLhsCurve,
-            highlightRhsCurve: highlightRhsCurve
+            highlightRhsCurve: highlightRhsCurve,
+            canSetC2: canSetC2,
+            canSetT2: canSetT2
         )
     }
 }
@@ -72,7 +77,9 @@ struct SingleConcentrationPlot: View {
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: false,
             highlightLhsCurve: false,
-            highlightRhsCurve: false
+            highlightRhsCurve: false,
+            canSetC2: true,
+            canSetT2: true
         )
     }
 }
@@ -98,6 +105,9 @@ struct GeneralTimeChartView: View {
     let highlightChart: Bool
     let highlightLhsCurve: Bool
     let highlightRhsCurve: Bool
+
+    let canSetC2: Bool
+    let canSetT2: Bool
 
     var body: some View {
         HStack(spacing: settings.chartHStackSpacing) {
@@ -178,25 +188,34 @@ struct GeneralTimeChartView: View {
     private var concentrationSlider: some View {
         ConcentrationValueSlider(
             initialConcentration: $initialConcentration,
-            finalConcentration: $finalConcentration,
+            finalConcentration: canSetC2 ? $finalConcentration : .constant(nil),
+            c1Disabled: initialInputsDisabled,
             settings: settings
         )
         .frame(
             width: settings.sliderHandleWidth,
             height: settings.chartSize
-        ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
+        ).modifier(
+            DisabledSliderModifier(disabled: currentTime != nil)
+        )
     }
 
     private var timeSlider: some View {
         TimeValueSlider(
             t1: $initialTime,
-            t2: $finalTime,
-            settings: settings,
-            canSetInitialTime: canSetInitialTime
+            t2: canSetT2 ? $finalTime : .constant(nil),
+            canSetInitialTime: canSetInitialTime,
+            t1Disabled: initialInputsDisabled,
+            settings: settings
         ).frame(
             width: settings.chartSize,
             height: settings.sliderHandleWidth
         ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
+    }
+
+    // Whether to disable t1 && c1 inputs
+    private var initialInputsDisabled: Bool {
+        finalTime != nil || finalConcentration != nil
     }
 
     private var animatingTime: some View {
@@ -257,7 +276,10 @@ struct GeneralTimeChartView: View {
             highlightChart: highlightChart,
             highlightLhsCurve: highlightLhsCurve,
             highlightRhsCurve: highlightRhsCurve
-        ).frame(width: settings.chartSize, height: settings.chartSize)
+        ).frame(
+            width: settings.chartSize,
+            height: settings.chartSize
+        )
     }
 
     private var unsafeCurrentTimeBinding: Binding<CGFloat> {
@@ -266,7 +288,6 @@ struct GeneralTimeChartView: View {
             set: { currentTime = $0 }
         )
     }
-
 
     private var chartWithIndicator: some View {
         let axis = ZStack {
@@ -344,7 +365,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             canSetCurrentTime: true,
             highlightChart: false,
             highlightLhsCurve: false,
-            highlightRhsCurve: false
+            highlightRhsCurve: false,
+            canSetC2: true,
+            canSetT2: true
         )
         .previewLayout(.fixed(width: 500, height: 300))
 
@@ -386,7 +409,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     canSetCurrentTime: true,
                     highlightChart: false,
                     highlightLhsCurve: false,
-                    highlightRhsCurve: false
+                    highlightRhsCurve: false,
+                    canSetC2: true,
+                    canSetT2: true
                 )
 
                 ConcentrationTimeChartView(
@@ -404,7 +429,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     canSetCurrentTime: true,
                     highlightChart: false,
                     highlightLhsCurve: false,
-                    highlightRhsCurve: false
+                    highlightRhsCurve: false,
+                    canSetC2: true,
+                    canSetT2: true
                 )
             }
         }

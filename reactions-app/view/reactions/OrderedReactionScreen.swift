@@ -79,7 +79,9 @@ struct OrderedReactionScreen<Content: View>: View {
                 canSetCurrentTime: reaction.reactionHasEnded,
                 highlightChart: reaction.highlight(element: .concentrationChart),
                 highlightLhsCurve: reaction.highlight(element: .rateCurveLhs),
-                highlightRhsCurve: reaction.highlight(element: .rateCurveRhs)
+                highlightRhsCurve: reaction.highlight(element: .rateCurveRhs),
+                canSetC2: reaction.selectedReaction != .B,
+                canSetT2: reaction.selectedReaction != .C
             )
             .frame(width: settings.chartSettings.largeTotalChartWidth)
             .padding(.horizontal, settings.chartHPadding)
@@ -141,6 +143,7 @@ struct OrderedReactionScreen<Content: View>: View {
             highlighted: reaction.highlight(element: .concentrationTable)
         )
         .font(.system(size: settings.tableFontSize))
+        .disabled(reaction.inputsAreDisabled)
     }
 
     private func cell(value: String) -> some View {
