@@ -147,7 +147,7 @@ fileprivate class ExplainRateState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.statement = ZeroOrderStatements.rateExplainer(
-            k: model.concentrationEquationA?.rateConstant ?? 0
+            k: model.input.concentrationA?.rateConstant ?? 0
         )
         model.currentTime = model.input.inputT1
         model.highlightedElements = [.rateConstantEquation]
@@ -172,7 +172,7 @@ fileprivate class ExplainHalfLifeState: PreReactionAnimation {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.statement = ZeroOrderStatements.halfLifeExplainer(
-            halfLife: model.concentrationEquationA?.halfLife ?? 0
+            halfLife: model.input.concentrationA?.halfLife ?? 0
         )
     }
 

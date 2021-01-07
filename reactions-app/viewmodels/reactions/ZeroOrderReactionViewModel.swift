@@ -17,6 +17,27 @@ struct ReactionInputModel {
     var inputT2: CGFloat?
 
     var didSetC1: (() -> Void)?
+
+    var concentrationA: ConcentrationEquation? {
+        if let c2 = inputC2, let t2 = inputT2 {
+            return ZeroOrderReaction(
+                t1: inputT1,
+                c1: inputC1,
+                t2: t2,
+                c2: c2
+            )
+        }
+        return nil
+    }
+
+    var concentrationB: Equation? {
+        concentrationA.map {
+            ConcentrationBEquation(
+                concentrationA: $0,
+                initialAConcentration: inputC1
+            )
+        }
+    }
 }
 
 class ZeroOrderReactionViewModel: ObservableObject {
@@ -41,16 +62,6 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var inputsAreDisabled = false
 
     var selectedReaction = OrderedReactionSet.A
-
-    var c2: CGFloat? {
-        if (selectedReaction == .A) {
-            return input.inputC2
-        }
-        if let t2 = input.inputT2 {
-            return concentrationEquationA?.getConcentration(at: t2)
-        }
-        return nil
-    }
 
     func generateEquation(
         c1: CGFloat,
@@ -88,38 +99,10 @@ class ZeroOrderReactionViewModel: ObservableObject {
         return false
     }
 
-    var concentrationEquationA: ConcentrationEquation? {
-        if (selectedReaction == .A) {
-            if let t2 = input.inputT2, let c2 = input.inputC2 {
-                return generateEquation(
-                    c1: input.inputC1.rounded(decimals: 2),
-                    c2: c2.rounded(decimals: 2),
-                    t1: input.inputT1.rounded(decimals: 2),
-                    t2: t2.rounded(decimals: 2)
-                )
-            }
-            return nil
-        }
-
-        return ZeroOrderReaction(
-            c1: input.inputC1,
-            t1: input.inputT1, rateConstant: 0.06
-        )
-    }
-
-    var concentrationEquationB: Equation? {
-        concentrationEquationA.map {
-            ConcentrationBEquation(
-                concentrationA: $0,
-                initialAConcentration: input.inputC1
-            )
-        }
-    }
-
     var moleculesA = [GridCoordinate]()
 
     var deltaC: CGFloat? {
-        if let c2 = c2 {
+        if let c2 = input.inputC2 {
             return c2.rounded(decimals: 2) - input.inputC1.rounded(decimals: 2)
         }
         return nil
@@ -139,7 +122,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
         return nil
     }
 
-    var input: ReactionInput? {
+    var inputToSave: ReactionInput? {
         if let c2 = input.inputC2, let t2 = input.inputT2 {
             return ReactionInput(
                 c1: input.inputC1,

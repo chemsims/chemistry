@@ -56,7 +56,7 @@ struct ZeroOrderReactionScreen: View {
                         initialTime: reaction.input.inputT1,
                         deltaC: reaction.deltaC,
                         deltaT: reaction.deltaT,
-                        c2: reaction.c2,
+                        c2: reaction.input.inputC2,
                         t2: reaction.input.inputT2,
                         rateColorMultipy: reaction.color(for: .rateConstantEquation),
                         halfLifeColorMultiply: reaction.color(for: .halfLifeEquation),
@@ -64,7 +64,7 @@ struct ZeroOrderReactionScreen: View {
                         maxHeight: geometry.size.height,
                         isShowingTooltip: $isShowingTooltip,
                         currentTime: reaction.currentTime,
-                        concentration: reaction.concentrationEquationA
+                        concentration: reaction.input.concentrationA
                     )
                 }
                 .padding(settings.equationPadding)

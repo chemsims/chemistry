@@ -21,7 +21,7 @@ class FirstOrderReactionViewModel: ZeroOrderReactionViewModel {
     }
 
     var logAEquation: Equation? {
-        concentrationEquationA.map { LogEquation(underlying: $0) }
+        input.concentrationA.map { LogEquation(underlying: $0) }
     }
 
 }

@@ -21,6 +21,6 @@ class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
     }
 
     var inverseAEquation: Equation? {
-        concentrationEquationA.map { InverseEquation(underlying: $0) }
+        input.concentrationA.map { InverseEquation(underlying: $0) }
     }
 }

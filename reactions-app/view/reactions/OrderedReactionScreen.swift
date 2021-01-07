@@ -51,7 +51,7 @@ struct OrderedReactionScreen<Content: View>: View {
                     .frame(width: settings.menuTotalWidth)
                 FilledBeaker(
                     moleculesA: reaction.moleculesA,
-                    concentrationB: reaction.concentrationEquationB,
+                    concentrationB: reaction.input.concentrationB,
                     currentTime: reaction.currentTime
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
@@ -72,8 +72,8 @@ struct OrderedReactionScreen<Content: View>: View {
                 finalConcentration: $reaction.input.inputC2,
                 finalTime: $reaction.input.inputT2,
                 settings: settings.chartSettings,
-                concentrationA: reaction.concentrationEquationA,
-                concentrationB: reaction.concentrationEquationB,
+                concentrationA: reaction.input.concentrationA,
+                concentrationB: reaction.input.concentrationB,
                 currentTime: $reaction.currentTime,
                 canSetInitialTime: canSetInitialTime,
                 canSetCurrentTime: reaction.reactionHasEnded,
@@ -89,8 +89,8 @@ struct OrderedReactionScreen<Content: View>: View {
             ConcentrationBarChart(
                 initialA: reaction.input.inputC1,
                 initialTime: reaction.input.inputT1,
-                concentrationA: reaction.concentrationEquationA,
-                concentrationB: reaction.concentrationEquationB,
+                concentrationA: reaction.input.concentrationA,
+                concentrationB: reaction.input.concentrationB,
                 currentTime: reaction.currentTime,
                 settings: BarChartGeometrySettings(
                     chartWidth: settings.chartSize,
@@ -130,7 +130,7 @@ struct OrderedReactionScreen<Content: View>: View {
             c2: reaction.input.inputC2?.str(decimals: 2),
             t1: reaction.input.inputT1.str(decimals: 1),
             t2: reaction.input.inputT2?.str(decimals: 1),
-            rate: reaction.concentrationEquationA?.rateEquation,
+            rate: reaction.input.concentrationA?.rateEquation,
             currentTime: reaction.currentTime,
             showTime: !showRate,
             showRate: showRate,

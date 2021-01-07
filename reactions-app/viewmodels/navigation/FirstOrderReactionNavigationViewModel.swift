@@ -68,7 +68,7 @@ fileprivate class ExplainRateConstant2: ReactionState {
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.highlightedElements = [.rateConstantEquation]
         model.statement = FirstOrderStatements.explainRateConstant2(
-            rate: model.concentrationEquationA?.rateConstant ?? 0
+            rate: model.input.concentrationA?.rateConstant ?? 0
         )
     }
 
@@ -105,7 +105,7 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.statement = FirstOrderStatements.explainHalfLife(
-            halfLife: model.concentrationEquationA?.halfLife ?? 0
+            halfLife: model.input.concentrationA?.halfLife ?? 0
         )
     }
 

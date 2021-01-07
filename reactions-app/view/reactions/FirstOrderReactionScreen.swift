@@ -77,7 +77,7 @@ struct FirstOrderReactionScreen: View {
                 c2: reaction.input.inputC2,
                 t: reaction.input.inputT2,
                 currentTime: reaction.currentTime,
-                concentration: reaction.concentrationEquationA,
+                concentration: reaction.input.concentrationA,
                 reactionHasStarted: reaction.reactionHasStarted,
                 rateConstantColor: reaction.color(for: .rateConstantEquation),
                 halfLifeColor: reaction.color(for: .halfLifeEquation),
