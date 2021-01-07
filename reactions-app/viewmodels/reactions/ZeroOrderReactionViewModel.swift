@@ -5,45 +5,10 @@
 
 import SwiftUI
 
-struct ReactionInputModel {
-
-    var inputC1: CGFloat = ReactionSettings.initialC {
-        didSet {
-            didSetC1?()
-        }
-    }
-    var inputT1: CGFloat = ReactionSettings.initialT
-    var inputC2: CGFloat?
-    var inputT2: CGFloat?
-
-    var didSetC1: (() -> Void)?
-
-    var concentrationA: ConcentrationEquation? {
-        if let c2 = inputC2, let t2 = inputT2 {
-            return ZeroOrderReaction(
-                t1: inputT1,
-                c1: inputC1,
-                t2: t2,
-                c2: c2
-            )
-        }
-        return nil
-    }
-
-    var concentrationB: Equation? {
-        concentrationA.map {
-            ConcentrationBEquation(
-                concentrationA: $0,
-                initialAConcentration: inputC1
-            )
-        }
-    }
-}
-
 class ZeroOrderReactionViewModel: ObservableObject {
 
     init () {
-        input = ReactionInputModel()
+        input = ReactionInputWithoutC2()
         input.didSetC1 = {
             self.setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
         }
@@ -62,20 +27,6 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var inputsAreDisabled = false
 
     var selectedReaction = OrderedReactionSet.A
-
-    func generateEquation(
-        c1: CGFloat,
-        c2: CGFloat,
-        t1: CGFloat,
-        t2: CGFloat
-    ) -> ConcentrationEquation {
-        ZeroOrderReaction(
-            t1: input.inputT1,
-            c1: input.inputC1,
-            t2: t2,
-            c2: c2
-        )
-    }
 
     func color(for element: OrderedReactionScreenElement?) -> Color {
         if (highlightedElements.isEmpty || highlight(element: element)) {

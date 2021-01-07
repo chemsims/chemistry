@@ -7,7 +7,7 @@ import CoreGraphics
 
 class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
 
-    override func generateEquation(
+    func generateEquation(
         c1: CGFloat,
         c2: CGFloat,
         t1: CGFloat,
