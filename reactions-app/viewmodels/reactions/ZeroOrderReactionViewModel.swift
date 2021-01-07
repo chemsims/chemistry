@@ -5,21 +5,32 @@
 
 import SwiftUI
 
+struct ReactionInputModel {
+
+    var inputC1: CGFloat = ReactionSettings.initialC {
+        didSet {
+            didSetC1?()
+        }
+    }
+    var inputT1: CGFloat = ReactionSettings.initialT
+    var inputC2: CGFloat?
+    var inputT2: CGFloat?
+
+    var didSetC1: (() -> Void)?
+}
+
 class ZeroOrderReactionViewModel: ObservableObject {
 
     init () {
-        setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
+        input = ReactionInputModel()
+        input.didSetC1 = {
+            self.setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
+        }
+        input.didSetC1?()
     }
 
     @Published var statement = [TextLine]()
-    @Published var initialConcentration: CGFloat = ReactionSettings.initialC {
-        didSet {
-            setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
-        }
-    }
-    @Published var initialTime: CGFloat = ReactionSettings.initialT
-    @Published var finalConcentration: CGFloat?
-    @Published var finalTime: CGFloat?
+    @Published var input: ReactionInputModel
 
     @Published var currentTime: CGFloat?
 
@@ -33,9 +44,9 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     var c2: CGFloat? {
         if (selectedReaction == .A) {
-            return finalConcentration
+            return input.inputC2
         }
-        if let t2 = finalTime {
+        if let t2 = input.inputT2 {
             return concentrationEquationA?.getConcentration(at: t2)
         }
         return nil
@@ -48,8 +59,8 @@ class ZeroOrderReactionViewModel: ObservableObject {
         t2: CGFloat
     ) -> ConcentrationEquation {
         ZeroOrderReaction(
-            t1: initialTime,
-            c1: initialConcentration,
+            t1: input.inputT1,
+            c1: input.inputC1,
             t2: t2,
             c2: c2
         )
@@ -79,11 +90,11 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     var concentrationEquationA: ConcentrationEquation? {
         if (selectedReaction == .A) {
-            if let t2 = finalTime, let c2 = finalConcentration {
+            if let t2 = input.inputT2, let c2 = input.inputC2 {
                 return generateEquation(
-                    c1: initialConcentration.rounded(decimals: 2),
+                    c1: input.inputC1.rounded(decimals: 2),
                     c2: c2.rounded(decimals: 2),
-                    t1: initialTime.rounded(decimals: 2),
+                    t1: input.inputT1.rounded(decimals: 2),
                     t2: t2.rounded(decimals: 2)
                 )
             }
@@ -91,8 +102,8 @@ class ZeroOrderReactionViewModel: ObservableObject {
         }
 
         return ZeroOrderReaction(
-            c1: initialConcentration,
-            t1: initialTime, rateConstant: 0.06
+            c1: input.inputC1,
+            t1: input.inputT1, rateConstant: 0.06
         )
     }
 
@@ -100,7 +111,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
         concentrationEquationA.map {
             ConcentrationBEquation(
                 concentrationA: $0,
-                initialAConcentration: initialConcentration
+                initialAConcentration: input.inputC1
             )
         }
     }
@@ -109,31 +120,31 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     var deltaC: CGFloat? {
         if let c2 = c2 {
-            return c2.rounded(decimals: 2) - initialConcentration.rounded(decimals: 2)
+            return c2.rounded(decimals: 2) - input.inputC1.rounded(decimals: 2)
         }
         return nil
     }
 
     var deltaT: CGFloat? {
-        if let t2 = finalTime {
-            return t2.rounded(decimals: 2) - initialTime.rounded(decimals: 2)
+        if let t2 = input.inputT2 {
+            return t2.rounded(decimals: 2) - input.inputT1.rounded(decimals: 2)
         }
         return nil
     }
 
     var reactionDuration: CGFloat? {
-        if let t2 = finalTime {
-            return t2 - initialTime
+        if let t2 = input.inputT2 {
+            return t2 - input.inputT1
         }
         return nil
     }
 
     var input: ReactionInput? {
-        if let c2 = finalConcentration, let t2 = finalTime {
+        if let c2 = input.inputC2, let t2 = input.inputT2 {
             return ReactionInput(
-                c1: initialConcentration,
+                c1: input.inputC1,
                 c2: c2,
-                t1: initialTime,
+                t1: input.inputT1,
                 t2: t2
             )
         }
@@ -144,7 +155,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
         cols: Int,
         rows: Int
     ) {
-        let desiredMolecues = Int(initialConcentration * CGFloat(cols * rows))
+        let desiredMolecues = Int(input.inputC1 * CGFloat(cols * rows))
 
         let surplus = desiredMolecues - moleculesA.count
         if (surplus < 0) {

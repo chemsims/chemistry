@@ -52,10 +52,10 @@ struct FirstOrderReactionScreen: View {
 
     private func logChart(settings: OrderedReactionLayoutSettings) -> some View {
         SingleConcentrationPlot(
-            initialConcentration: reaction.initialConcentration,
-            initialTime: reaction.initialTime,
-            finalConcentration: reaction.finalConcentration,
-            finalTime: reaction.finalTime,
+            initialConcentration: reaction.input.inputC1,
+            initialTime: reaction.input.inputT1,
+            finalConcentration: reaction.input.inputC2,
+            finalTime: reaction.input.inputT2,
             settings: TimeChartGeometrySettings(
                 chartSize: settings.chartSize,
                 minConcentration: ReactionSettings.minLogConcentration,
@@ -73,9 +73,9 @@ struct FirstOrderReactionScreen: View {
         GeometryReader { geometry in
             FirstOrderEquationView(
                 emphasiseFilledTerms: reaction.currentTime == nil,
-                c1: reaction.initialConcentration,
-                c2: reaction.finalConcentration,
-                t: reaction.finalTime,
+                c1: reaction.input.inputC1,
+                c2: reaction.input.inputC2,
+                t: reaction.input.inputT2,
                 currentTime: reaction.currentTime,
                 concentration: reaction.concentrationEquationA,
                 reactionHasStarted: reaction.reactionHasStarted,

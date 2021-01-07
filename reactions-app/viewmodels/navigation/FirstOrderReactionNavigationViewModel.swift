@@ -50,7 +50,7 @@ fileprivate class ExplainRateConstant1: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        model.currentTime = model.initialTime
+        model.currentTime = model.input.inputT1
         model.highlightedElements = [.rateConstantEquation]
     }
 

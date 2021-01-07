@@ -89,14 +89,14 @@ class PreReactionAnimation: ReactionState {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
-        model.currentTime = model.initialTime
+        model.currentTime = model.input.inputT1
         model.highlightedElements = highlightedElements
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
         model.highlightedElements = highlightedElements
         withAnimation(.easeOut(duration: 0.5)) {
-            model.currentTime = model.initialTime
+            model.currentTime = model.input.inputT1
         }
     }
 
@@ -128,8 +128,8 @@ class RunAnimation: ReactionState {
         model.reactionHasEnded = false
         model.reactionHasStarted = true
         model.highlightedElements = []
-        if let duration = model.reactionDuration, let finalTime = model.finalTime {
-            model.currentTime = model.initialTime
+        if let duration = model.reactionDuration, let finalTime = model.input.inputT2 {
+            model.currentTime = model.input.inputT1
             withAnimation(.linear(duration: Double(duration))) {
                 model.currentTime = finalTime
             }
@@ -177,7 +177,7 @@ class EndAnimation: ReactionState {
         // For the current time to 'sprint' to the end, it must animate to a value
         // which is not equal to the current value
         withAnimation(.easeOut(duration: 0.5)) {
-            if let finalTime = model.finalTime {
+            if let finalTime = model.input.inputT2 {
                 model.currentTime = finalTime * 1.00001
             }
             if (!highlightChart) {
@@ -207,8 +207,8 @@ class InitialOrderedStep: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        model.initialTime = 0
-        model.finalTime = ReactionSettings.initialT
+        model.input.inputT1 = 0
+        model.input.inputT2 = ReactionSettings.initialT
     }
 }
 
@@ -220,13 +220,12 @@ class SetFinalConcentrationToNonNil: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        model.finalConcentration = max(model.initialConcentration / 2, ReactionSettings.minCInput)
+        model.input.inputC2 = max(model.input.inputC1 / 2, ReactionSettings.minCInput)
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.finalConcentration = nil
+        model.input.inputC2 = nil
     }
-
 }
 
 

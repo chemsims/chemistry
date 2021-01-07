@@ -67,10 +67,10 @@ struct OrderedReactionScreen<Content: View>: View {
     private func middleCharts(settings: OrderedReactionLayoutSettings) -> some View {
         HStack(alignment: .top, spacing: 0) {
             ConcentrationTimeChartView(
-                initialConcentration: $reaction.initialConcentration,
-                initialTime: $reaction.initialTime,
-                finalConcentration: $reaction.finalConcentration,
-                finalTime: $reaction.finalTime,
+                initialConcentration: $reaction.input.inputC1,
+                initialTime: $reaction.input.inputT1,
+                finalConcentration: $reaction.input.inputC2,
+                finalTime: $reaction.input.inputT2,
                 settings: settings.chartSettings,
                 concentrationA: reaction.concentrationEquationA,
                 concentrationB: reaction.concentrationEquationB,
@@ -87,8 +87,8 @@ struct OrderedReactionScreen<Content: View>: View {
             .disabled(reaction.inputsAreDisabled)
 
             ConcentrationBarChart(
-                initialA: reaction.initialConcentration,
-                initialTime: reaction.initialTime,
+                initialA: reaction.input.inputC1,
+                initialTime: reaction.input.inputT1,
                 concentrationA: reaction.concentrationEquationA,
                 concentrationB: reaction.concentrationEquationB,
                 currentTime: reaction.currentTime,
@@ -126,10 +126,10 @@ struct OrderedReactionScreen<Content: View>: View {
 
     private var concentrationTable: some View {
         ConcentrationTable(
-            c1: reaction.initialConcentration.str(decimals: 2),
-            c2: reaction.finalConcentration?.str(decimals: 2),
-            t1: reaction.initialTime.str(decimals: 1),
-            t2: reaction.finalTime?.str(decimals: 1),
+            c1: reaction.input.inputC1.str(decimals: 2),
+            c2: reaction.input.inputC2?.str(decimals: 2),
+            t1: reaction.input.inputT1.str(decimals: 1),
+            t2: reaction.input.inputT2?.str(decimals: 1),
             rate: reaction.concentrationEquationA?.rateEquation,
             currentTime: reaction.currentTime,
             showTime: !showRate,

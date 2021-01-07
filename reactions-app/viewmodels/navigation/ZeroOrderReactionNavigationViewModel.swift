@@ -103,7 +103,7 @@ fileprivate class SetT1ForFixedRate: ReactionState {
 
         // TODO refactor
         let maxTime = ReactionSettings.maxTime
-        model.finalTime = max((model.initialTime + maxTime) / 2, ReactionSettings.minT2Input)
+        model.input.inputT2 = max((model.input.inputT1 + maxTime) / 2, ReactionSettings.minT2Input)
     }
 }
 
@@ -127,19 +127,19 @@ fileprivate class SetFinalValuesToNonNil: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        let initialConcentration = model.initialConcentration
+        let initialConcentration = model.input.inputC1
         let minConcentration = ReactionSettings.minConcentration
 
-        let initialTime = model.initialTime
+        let initialTime = model.input.inputT1
         let maxTime = ReactionSettings.maxTime
 
-        model.finalConcentration = max((initialConcentration + minConcentration) / 2, ReactionSettings.minCInput)
-        model.finalTime = max((initialTime + maxTime) / 2, ReactionSettings.minT2Input)
+        model.input.inputC2 = max((initialConcentration + minConcentration) / 2, ReactionSettings.minCInput)
+        model.input.inputT2 = max((initialTime + maxTime) / 2, ReactionSettings.minT2Input)
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.finalConcentration = nil
-        model.finalTime = nil
+        model.input.inputC2 = nil
+        model.input.inputT2 = nil
     }
 }
 
@@ -149,7 +149,7 @@ fileprivate class ExplainRateState: ReactionState {
         model.statement = ZeroOrderStatements.rateExplainer(
             k: model.concentrationEquationA?.rateConstant ?? 0
         )
-        model.currentTime = model.initialTime
+        model.currentTime = model.input.inputT1
         model.highlightedElements = [.rateConstantEquation]
     }
 

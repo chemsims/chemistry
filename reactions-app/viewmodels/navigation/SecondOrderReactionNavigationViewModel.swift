@@ -48,7 +48,7 @@ fileprivate class ExplainRateConstant: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.statement = SecondOrderStatements.explainRateConstant(rateConstant: model.concentrationEquationA?.rateConstant ?? 0)
-        model.currentTime = model.initialTime
+        model.currentTime = model.input.inputT1
         model.highlightedElements = [.rateConstantEquation]
     }
 
