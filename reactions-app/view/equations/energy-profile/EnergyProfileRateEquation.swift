@@ -178,7 +178,7 @@ fileprivate struct EnergyProfileRateLn: View {
             ln {
                 FixedText("A")
             }
-            FixedText("+")
+            FixedText("-")
             VStack(spacing: 0) {
                 FixedText("Ea")
                     .background(TermBG(highlight: highlightEa))
