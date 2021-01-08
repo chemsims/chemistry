@@ -7,8 +7,8 @@ import Foundation
 
 protocol ReactionInputPersistence {
 
-    func save(input: ReactionInput, order: ReactionOrder, reaction: OrderedReactionSet)
-    func get(order: ReactionOrder, reaction: OrderedReactionSet) -> ReactionInput?
+    func save(input: ReactionInput, order: ReactionOrder, reaction: ReactionType)
+    func get(order: ReactionOrder, reaction: ReactionType) -> ReactionInput?
 
     func setCompleted(screen: AppScreen)
     func hasCompleted(screen: AppScreen) -> Bool
@@ -31,12 +31,12 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
     private var underlyingCatalyst = Set<Catalyst>()
 
-    func save(input: ReactionInput, order: ReactionOrder, reaction: OrderedReactionSet) {
+    func save(input: ReactionInput, order: ReactionOrder, reaction: ReactionType) {
         let key = ReactionInputKey(order: order, type: reaction)
         underlying[key] = input
     }
 
-    func get(order: ReactionOrder, reaction: OrderedReactionSet) -> ReactionInput? {
+    func get(order: ReactionOrder, reaction: ReactionType) -> ReactionInput? {
         let key = ReactionInputKey(order: order, type: reaction)
         return underlying[key]
     }
@@ -59,7 +59,7 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
     fileprivate struct ReactionInputKey: Hashable {
         let order: ReactionOrder
-        let type: OrderedReactionSet
+        let type: ReactionType
     }
 
 }

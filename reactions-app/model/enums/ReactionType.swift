@@ -5,17 +5,17 @@
 
 import Foundation
 
-enum OrderedReactionSet: Int, CaseIterable {
+enum ReactionType: Int, CaseIterable {
     case A, B, C
 }
 
-extension OrderedReactionSet: Identifiable {
+extension ReactionType: Identifiable {
     var id: Int {
         self.rawValue
     }
 }
 
-extension OrderedReactionSet {
+extension ReactionType {
     var name: String {
         switch (self) {
         case .A: return "A to B"

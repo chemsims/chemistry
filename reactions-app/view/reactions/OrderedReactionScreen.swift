@@ -120,7 +120,7 @@ struct OrderedReactionScreen<Content: View>: View {
     private var reactionToggle: some View {
         DropDownSelectionView(
             title: "Choose a reaction",
-            options: OrderedReactionSet.allCases,
+            options: ReactionType.allCases,
             isToggled: reaction.canSelectReaction ? $reactionSelectionIsToggled : .constant(false),
             selection: $reaction.selectedReaction,
             height: settings.tableButtonSize,

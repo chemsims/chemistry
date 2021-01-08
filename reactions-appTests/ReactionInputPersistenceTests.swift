@@ -33,7 +33,7 @@ class ReactionInputPersistenceTests: XCTestCase {
     func testSavingReactionInputs() {
         let model = newModel()
         let reactionOrders = ReactionOrder.allCases
-        let reactionTypes = OrderedReactionSet.allCases
+        let reactionTypes = ReactionType.allCases
         reactionOrders.forEach { order in
             reactionTypes.forEach { type in
                 let msg = "\(order) - \(type)"
