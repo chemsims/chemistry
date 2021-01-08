@@ -57,8 +57,8 @@ class NavigationViewModelTests: XCTestCase {
     func testTheNextStateIsAutomaticallyDispatched() {
         let expectation = self.expectation(description: "Set state to 2")
         let delay = 0.1
-        let maxDelay = 1.25 * delay
-        let minDelay = 0.75 * delay
+        let maxDelay = 1.35 * delay
+        let minDelay = 0.65 * delay
         let s0 = SetValueState(value: 0)
         let s1 = StateWithAutoDispatch(value: 1, nextStateDelay: delay)
         let s2 = SetValueState(value: 2, expectation: expectation)

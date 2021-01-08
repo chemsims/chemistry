@@ -102,6 +102,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 )
             )
             .padding(.horizontal, settings.chartHPadding)
+            .colorMultiply(reaction.color(for: []))
 
             topRightControls
                 .padding(.trailing, settings.tableTrailingPadding)
