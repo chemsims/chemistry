@@ -12,8 +12,8 @@ struct ConcentrationTable: View {
     let t1: String?
     let t2: String?
 
-    let rate: Equation?
-    let currentTime: CGFloat?
+    let rate1: String?
+    let rate2: String?
 
     let showTime: Bool
     let showRate: Bool
@@ -45,8 +45,9 @@ struct ConcentrationTable: View {
 
                 if (showRate) {
                     HStack(spacing: 0) {
-                        cell(value: "rate")
-                        rateCell
+                        cell(value: "Rate")
+                        cell(value: rate1)
+                        cell(value: rate2)
                     }
                 }
             }
@@ -79,23 +80,6 @@ struct ConcentrationTable: View {
         }.frame(width: cellWidth, height: cellHeight)
     }
 
-    private var rateCell: some View {
-        ZStack {
-            rectWithStroke
-            if (rate != nil && currentTime != nil) {
-                AnimatingNumber(
-                    x: currentTime!,
-                    equation: rate!,
-                    formatter: {$0.str(decimals: 3)}
-                )
-                .padding(0.1 * cellWidth)
-            } else {
-                Text("-")
-                    .padding(0.1 * cellWidth)
-            }
-        }.frame(width: 2 * cellWidth, height: cellHeight)
-    }
-
     private var rectWithStroke: some View {
         ZStack {
             if (highlighted) {
@@ -121,8 +105,8 @@ struct ConcentrationTable_Previews: PreviewProvider {
             c2: "0.23",
             t1: "1.2",
             t2: "13.4",
-            rate: ConstantEquation(value: 0.1),
-            currentTime: 0.1,
+            rate1: "0.05",
+            rate2: "0.08",
             showTime: false,
             showRate: true,
             cellWidth: 50,

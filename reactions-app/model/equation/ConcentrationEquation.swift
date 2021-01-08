@@ -21,9 +21,6 @@ protocol ConcentrationEquation: Equation {
 
     /// Returns the time at which the concentration is `concentration`
     func time(for concentration: CGFloat) -> CGFloat?
-
-    /// Returns the rate at time `time`
-    func getRate(at time: CGFloat) -> CGFloat
 }
 
 extension ConcentrationEquation {
@@ -31,8 +28,9 @@ extension ConcentrationEquation {
         getConcentration(at: x)
     }
 
+    /// Returns the rate at time `time`
     func getRate(at time: CGFloat) -> CGFloat {
-        rateConstant * pow(a0, CGFloat(order))
+        rateConstant * pow(getConcentration(at: time), CGFloat(order))
     }
 
     var rateEquation: Equation {

@@ -38,6 +38,14 @@ extension ReactionInputModel {
     var midTime: CGFloat {
         (inputT1 + maxT2) / 2
     }
+
+    var rateAtT1: CGFloat? {
+        concentrationA?.getRate(at: inputT1)
+    }
+
+    var rateAtT2: CGFloat? {
+        inputT2.flatMap { t2 in concentrationA?.getRate(at: t2) }
+    }
 }
 
 class ReactionInputAllProperties: ReactionInputModel {
