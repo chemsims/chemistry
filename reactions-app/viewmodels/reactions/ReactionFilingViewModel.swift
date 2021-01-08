@@ -14,8 +14,8 @@ class ReactionFilingViewModel: ObservableObject {
         persistence: ReactionInputPersistence,
         order: ReactionOrder
     ) {
-        currentPage = 0
-        pages = []
+        self.currentPage = 0
+        self.pages = []
 
         func makeScreen(reactionType: ReactionType) -> AnyView {
             switch (order) {
@@ -58,10 +58,11 @@ class ReactionFilingViewModel: ObservableObject {
         let inputB = persistence.get(order: order, reaction: .B)
         let inputC = persistence.get(order: order, reaction: .C)
 
+        let statement = ReactionFilingStatements.pageNotEnabledMessage(order: order)
         pages = [
-            CompletedReactionScreen(enabled: inputA != nil) { makeScreen(reactionType: .A) },
-            CompletedReactionScreen(enabled: inputB != nil) { makeScreen(reactionType: .B) },
-            CompletedReactionScreen(enabled: inputC != nil) { makeScreen(reactionType: .C) }
+            CompletedReactionScreen(enabled: inputA != nil, disabledStatement: statement) { makeScreen(reactionType: .A) },
+            CompletedReactionScreen(enabled: inputB != nil, disabledStatement: statement) { makeScreen(reactionType: .B) },
+            CompletedReactionScreen(enabled: inputC != nil, disabledStatement: statement) { makeScreen(reactionType: .C) }
         ]
     }
 
@@ -106,7 +107,8 @@ fileprivate class ReactionFilingState: ReactionState {
             model.reactionHasEnded = true
             model.statement = ReactionFilingStatements.message(order: order, reactionType: reactionType)
         } else {
-            model.statement = ReactionFilingStatements.blankMessage(order: order, reactionType: reactionType)
+            model.statement = ReactionFilingStatements.blankMessage
         }
     }
 }
+

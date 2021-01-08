@@ -16,7 +16,7 @@ struct ReactionFilingStatements {
             ", which has a fixed rate constant of \(k)."
         }
         let msgSuffix = rateConstantMsg ?? "."
-        let firstLine = "This is the \(order.string) Order Reaction you created earlier\(msgSuffix)"
+        let firstLine = "This is the \(order.name) Order Reaction you created earlier\(msgSuffix)"
 
         let hasNext = reactionType != .C
 
@@ -34,6 +34,13 @@ struct ReactionFilingStatements {
         return msg
     }
 
+    static func pageNotEnabledMessage(order: ReactionOrder) -> String {
+        """
+        When you've completed the whole app, head back to the \(order.name) order reaction screen to try a
+        different reaction type, which will then show up here.
+        """
+    }
+
     private static func rateConstant(reactionType: ReactionType) -> String? {
         switch (reactionType) {
         case .A: return nil
@@ -42,24 +49,9 @@ struct ReactionFilingStatements {
         }
     }
 
-    // This message is blurred, but it's worth writing something as it's still partially visible
-    static func blankMessage(order: ReactionOrder, reactionType: ReactionType) -> [TextLine] {
-        assert(reactionType != .A)
-        return [
-            TextLineGenerator.makeLine("""
-            When you've completed the whole app, head back to the \(order.string) screen to try a
-            different reaction, which will then show up here
-            """)
-        ]
-    }
-}
+    // This message will be blurred, but it's worth writing something as it's still partially visible
+    static let blankMessage: [TextLine] = [
+        "This screen will become available when you've completed this part of the app!"
+    ]
 
-fileprivate extension ReactionOrder {
-    var string: String {
-        switch (self) {
-        case .Zero: return "Zero"
-        case .First: return "First"
-        case .Second: return "Second"
-        }
-    }
 }

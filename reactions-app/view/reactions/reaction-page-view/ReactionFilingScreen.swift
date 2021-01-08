@@ -17,6 +17,7 @@ struct ReactionFilingScreen: View {
 struct CompletedReactionScreen<Content: View>: View {
 
     let enabled: Bool
+    let disabledStatement: String
     var content: () -> Content
 
     var body: some View {
@@ -25,7 +26,7 @@ struct CompletedReactionScreen<Content: View>: View {
                 .blur(radius: enabled ? 0 : 8)
                 .disabled(!enabled)
             if (!enabled) {
-                Text("Complete this part of the app, and then come back here to view your reaction!")
+                Text(disabledStatement)
                     .font(.headline)
             }
         }
