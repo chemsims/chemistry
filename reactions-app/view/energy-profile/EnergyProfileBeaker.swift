@@ -12,7 +12,7 @@ struct EnergyProfileBeaker: View {
     let selectCatalyst: (Catalyst) -> Void
     let setCatalystInProgress: (Catalyst) -> Void
 
-    let emitCatalyst: Bool
+    let particleState: CatalystParticleState
 
     @Binding var temp: CGFloat?
     let extraEnergyFactor: CGFloat
@@ -151,8 +151,12 @@ struct EnergyProfileBeaker: View {
                 speed: extraEnergyFactor,
                 updateConcentrationC: updateConcentrationC,
                 emitterPosition: settings.emitterPosition,
-                emitting: emitCatalyst,
-                catalystColor: catalystState.selected?.color ?? catalystState.pending?.color ?? .black,
+                particleState: particleState,
+                catalystColor:
+                    catalystState.selected?.color ??
+                    catalystState.pending?.color ??
+                    usedCatalysts.last?.color ??
+                    .black,
                 canReactToC: canReactToC,
                 reactionState: reactionState
             )
@@ -229,7 +233,7 @@ struct EnergyProfileBeaker: View {
         catalyst: Catalyst
     ) {
         let inProgress = catalystState.pending == catalyst
-        if (canSelectCatalyst && inProgress && !emitCatalyst) {
+        if (canSelectCatalyst && inProgress && particleState == .none) {
             selectCatalyst(catalyst)
         }
     }
@@ -482,7 +486,7 @@ struct EnergyProfileBeaker_Previews: PreviewProvider {
             catalystState: .disabled,
             selectCatalyst: {_ in },
             setCatalystInProgress: {_ in },
-            emitCatalyst: false,
+            particleState: .none,
             temp: .constant(500),
             extraEnergyFactor: 0,
             updateConcentrationC: {_ in },

@@ -16,7 +16,7 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
     let speed: CGFloat
     let updateConcentrationC: (CGFloat) -> Void
     let emitterPosition: CGPoint
-    let emitting: Bool
+    let particleState: CatalystParticleState
     let catalystColor: UIColor
     let canReactToC: Bool
     let reactionState: EnergyReactionState
@@ -28,7 +28,7 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
             waterHeight: waterHeight,
             updateConcentrationC: updateConcentrationC,
             emitterPosition: emitterPosition,
-            emitting: emitting,
+            particleState: particleState,
             catalystColor: catalystColor
         )
         scene.scaleMode = .aspectFit
@@ -41,7 +41,7 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
         if let scene = uiView.scene as? SKBeakerScene {
             scene.extraSpeed = speed
             scene.reactionState = reactionState
-            scene.emitting = emitting
+            scene.particleState = particleState
             scene.catalystColor = catalystColor
             scene.canReactToC = canReactToC
         }

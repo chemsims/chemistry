@@ -10,3 +10,7 @@ enum CatalystState: Equatable {
     case pending(catalyst: Catalyst)
     case selected(catalyst: Catalyst)
 }
+
+enum CatalystParticleState {
+    case none, fallFromContainer, appearInBeaker
+}

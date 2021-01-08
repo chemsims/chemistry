@@ -127,7 +127,7 @@ struct EnergyProfileScreen: View {
                 catalystState: model.catalystState,
                 selectCatalyst: model.selectCatalyst,
                 setCatalystInProgress: model.setCatalystInProgress,
-                emitCatalyst: model.emitCatalyst,
+                particleState: model.particleState,
                 temp: $model.temp2,
                 extraEnergyFactor: model.extraEnergyFactor,
                 updateConcentrationC: model.setConcentrationC,

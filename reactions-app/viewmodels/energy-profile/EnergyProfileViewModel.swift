@@ -14,8 +14,6 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
     @Published var selectedReaction = ReactionOrder.Zero
-
-    @Published var emitCatalyst = false
     @Published var catalystIsShaking = false
     @Published var canSelectCatalyst = false
     @Published var catalystsAreDisabled = false
@@ -25,6 +23,8 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var highlightedElements = [EnergyProfileScreenElement]()
     @Published var canSetReaction = true
     @Published var canSetTemp = false
+
+    @Published var particleState = CatalystParticleState.none
 
     var catalystToSelect: Catalyst?
 
@@ -153,7 +153,7 @@ class EnergyProfileViewModel: ObservableObject {
         catalyst: Catalyst,
         withDelay: Bool
     ) {
-        emitCatalyst = true
+        particleState = .fallFromContainer
         let id = UUID()
         dispatchId = id
         runCatalystShakingAnimation()

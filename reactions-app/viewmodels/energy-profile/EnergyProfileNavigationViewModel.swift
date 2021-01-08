@@ -16,53 +16,53 @@ struct EnergyProfileNavigationViewModel {
     }
 
     private static let states = [
-        ExplanationState(
-            EnergyProfileStatements.intro,
-            [.reactionToggle]
-        ),
-        IntroToCollisionTheory(),
-        ExplanationState(
-            EnergyProfileStatements.explainCollisionTheory,
-            []
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainActivationEnergy,
-            [.eaTerms]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainArrhenius,
-            [.rateEquation]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainTerms,
-            [.rateEquation]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainRateTempRelation,
-            [.rateEquation]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainLinearKEquation,
-            [.rateAndLinearRateEquation]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainArrheniusTwoPoints,
-            [.rateAndLinearAndRatioEquation]
-        ),
-        ShowInitialEaValues(),
-        ExplanationState(
-            EnergyProfileStatements.explainEnergyDiagram,
-            [.reactionProfileTop, .reactionProfileBottom]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainExothermic,
-            [.reactionProfileBottom]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainEaHump,
-            [.reactionProfileTop]
-        ),
-        ExplainCatalyst(),
+//        ExplanationState(
+//            EnergyProfileStatements.intro,
+//            [.reactionToggle]
+//        ),
+//        IntroToCollisionTheory(),
+//        ExplanationState(
+//            EnergyProfileStatements.explainCollisionTheory,
+//            []
+//        ),
+//        ExplanationState(
+//            EnergyProfileStatements.explainActivationEnergy,
+//            [.eaTerms]
+//        ),
+//        ExplanationState(
+//            EnergyProfileStatements.explainArrhenius,
+//            [.rateEquation]
+//        ),
+//        ExplanationState(
+//            EnergyProfileStatements.explainTerms,
+//            [.rateEquation]
+//        ),
+//        ExplanationState(
+//            EnergyProfileStatements.explainRateTempRelation,
+//            [.rateEquation]
+//        ),
+//        ExplanationState(
+//            EnergyProfileStatements.explainLinearKEquation,
+//            [.rateAndLinearRateEquation]
+//        ),
+//        ExplanationState(
+//            EnergyProfileStatements.explainArrheniusTwoPoints,
+//            [.rateAndLinearAndRatioEquation]
+//        ),
+//        ShowInitialEaValues(),
+//        ExplanationState(
+//            EnergyProfileStatements.explainEnergyDiagram,
+//            [.reactionProfileTop, .reactionProfileBottom]
+//        ),
+//        ExplanationState(
+//            EnergyProfileStatements.explainExothermic,
+//            [.reactionProfileBottom]
+//        ),
+//        ExplanationState(
+//            EnergyProfileStatements.explainEaHump,
+//            [.reactionProfileTop]
+//        ),
+//        ExplainCatalyst(),
         InstructToChooseCatalyst(),
         PrepareChosenCatalyst(),
         StartShakingCatalyst(),
@@ -222,7 +222,7 @@ fileprivate class InstructToChooseCatalyst: EnergyProfileState {
         withAnimation(setCatalystToActive) {
             model.catalystState = .active
         }
-        model.emitCatalyst = false
+        model.particleState = .none
         model.catalystIsShaking = false
     }
 
@@ -262,7 +262,7 @@ fileprivate class StartShakingCatalyst: EnergyProfileState {
 
     override func apply(on model: EnergyProfileViewModel) {
         super.apply(on: model)
-        model.emitCatalyst =  true
+        model.particleState = .fallFromContainer
         model.runCatalystShakingAnimation()
     }
 
@@ -395,7 +395,7 @@ fileprivate class ReactionHasEndedSoInstructToChooseAnotherCatalyst: EnergyProfi
 
     override func reapply(on model: EnergyProfileViewModel) {
         apply(on: model)
-
+        model.particleState = .appearInBeaker
     }
 
     override func unapply(on model: EnergyProfileViewModel) {
@@ -416,7 +416,7 @@ fileprivate class PrepareAnotherCatalystState: EnergyProfileState {
         super.apply(on: model)
         assert(!model.availableCatalysts.isEmpty)
         let catalyst = model.catalystToSelect ?? model.availableCatalysts.first!
-        model.emitCatalyst = false
+        model.particleState = .none
         model.concentrationC = 0
         model.highlightedElements = []
         model.reactionState = .pending
