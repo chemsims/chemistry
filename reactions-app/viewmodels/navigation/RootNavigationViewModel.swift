@@ -292,7 +292,7 @@ fileprivate class EnergyProfileScreenProvider: ScreenProvider {
 
 fileprivate class ReactionFilingScreenProvider: ScreenProvider {
     init(persistence: ReactionInputPersistence, order: ReactionOrder) {
-        self.viewModel = ReactionFilingViewModel(persistence: persistence, initialOrder: order)
+        self.viewModel = ReactionFilingViewModel(persistence: persistence, order: order)
     }
 
     let viewModel: ReactionFilingViewModel

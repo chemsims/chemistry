@@ -7,68 +7,62 @@ import SwiftUI
 
 class ReactionFilingViewModel: ObservableObject {
 
-    init(
-        persistence: ReactionInputPersistence,
-        initialOrder: ReactionOrder
-    ) {
-        zeroOrderViewModel = ZeroOrderReactionViewModel()
-        firstOrderViewModel = FirstOrderReactionViewModel()
-        secondOrderViewModel = SecondOrderReactionViewModel()
-
-        let navigation = NavigationViewModel(model: zeroOrderViewModel, states: [ReactionState]())
-
-        let zeroOrderScreen = ZeroOrderReactionScreen(
-            reaction: zeroOrderViewModel
-        )
-
-        let firstOrderScreen = FirstOrderReactionScreen(
-            reaction: firstOrderViewModel
-        )
-
-        let secondOrderScreen = SecondOrderReactionScreen(
-            reaction: secondOrderViewModel
-        )
-
-        let zeroInput = persistence.get(order: .Zero, reaction: .A)
-        let firstInput = persistence.get(order: .First, reaction: .A)
-        let secondInput = persistence.get(order: .Second, reaction: .A)
-
-        pages = [
-            AnyView(CompletedReactionScreen(enabled: zeroInput != nil) { zeroOrderScreen }),
-            AnyView(CompletedReactionScreen(enabled: firstInput != nil) { firstOrderScreen }),
-            AnyView(CompletedReactionScreen(enabled: secondInput != nil) { secondOrderScreen })
-        ]
-        currentPage = initialOrder.page
-
-        setFinalState(viewModel: zeroOrderViewModel, order: .Zero, input: zeroInput, next: firstInput == nil ? nil : .First)
-        setFinalState(viewModel: firstOrderViewModel, order: .First, input: firstInput, next: secondInput == nil ? nil : .Second)
-        setFinalState(viewModel: secondOrderViewModel, order: .Second, input: secondInput, next: nil)
-        navigation.nextScreen = next
-        navigation.prevScreen = prev
-    }
-
-    let pages: [AnyView]
+    private(set) var pages: [CompletedReactionScreen<AnyView>]
     @Published var currentPage: Int
 
-    private func setFinalState(
-        viewModel: ZeroOrderReactionViewModel,
-        order: ReactionOrder,
-        input: ReactionInput?,
-        next: ReactionOrder?
+    init(
+        persistence: ReactionInputPersistence,
+        order: ReactionOrder
     ) {
-        if let input = input {
-            viewModel.input.inputC1 = input.c1
-            viewModel.input.inputC2 = input.c2
-            viewModel.input.inputT1 = input.t1
-            viewModel.input.inputT2 = input.t2
-            viewModel.currentTime = viewModel.input.inputT2
-            viewModel.reactionHasStarted = true
-            viewModel.reactionHasEnded = true
+        currentPage = 0
+        pages = []
 
-            viewModel.statement = ReactionFilingStatements.message(order: order, next: next)
-        } else {
-            viewModel.statement = ReactionFilingStatements.blankMessage
+        func makeScreen(reactionType: ReactionType) -> AnyView {
+            switch (order) {
+            case .Zero:
+                let model = ZeroOrderReactionViewModel()
+                model.navigation = navigation(model: model, reactionType: reactionType)
+                return AnyView(ZeroOrderReactionScreen(reaction: model))
+            case .First:
+                let model = FirstOrderReactionViewModel()
+                model.navigation = navigation(model: model, reactionType: reactionType)
+                return AnyView(FirstOrderReactionScreen(reaction: model))
+            case .Second:
+                let model = SecondOrderReactionViewModel()
+                model.navigation = navigation(model: model, reactionType: reactionType)
+                return AnyView(SecondOrderReactionScreen(reaction: model))
+            }
         }
+
+        func navigation(
+            model: ZeroOrderReactionViewModel,
+            reactionType: ReactionType
+        ) -> NavigationViewModel<ReactionState> {
+            let input = persistence.get(order: order, reaction: reactionType)
+            let state: ReactionState =
+                ReactionFilingState(
+                    order: order,
+                    reactionType: reactionType,
+                    input: input
+                )
+            let nav = NavigationViewModel(
+                model: model,
+                rootNode: ScreenStateTreeNode<ReactionState>.build(states: [state])!
+            )
+            nav.prevScreen = prev
+            nav.nextScreen = next
+            return nav
+        }
+
+        let inputA = persistence.get(order: order, reaction: .A)
+        let inputB = persistence.get(order: order, reaction: .B)
+        let inputC = persistence.get(order: order, reaction: .C)
+
+        pages = [
+            CompletedReactionScreen(enabled: inputA != nil) { makeScreen(reactionType: .A) },
+            CompletedReactionScreen(enabled: inputB != nil) { makeScreen(reactionType: .B) },
+            CompletedReactionScreen(enabled: inputC != nil) { makeScreen(reactionType: .C) }
+        ]
     }
 
     private func next() {
@@ -82,26 +76,37 @@ class ReactionFilingViewModel: ObservableObject {
             currentPage -= 1
         }
     }
-
-    let zeroOrderViewModel: ZeroOrderReactionViewModel
-    let firstOrderViewModel: FirstOrderReactionViewModel
-    let secondOrderViewModel: SecondOrderReactionViewModel
 }
 
-fileprivate extension ReactionOrder {
-    var page: Int {
-        switch (self) {
-        case .Zero: return 0
-        case .First: return 1
-        case .Second: return 2
-        }
+fileprivate class ReactionFilingState: ReactionState {
+
+    init(
+        order: ReactionOrder,
+        reactionType: ReactionType,
+        input: ReactionInput?
+    ) {
+        self.order = order
+        self.reactionType = reactionType
+        self.input = input
     }
 
-    var next: ReactionOrder? {
-        switch (self) {
-        case .Zero: return .First
-        case .First: return .Second
-        case .Second: return nil
+    let order: ReactionOrder
+    let reactionType: ReactionType
+    let input: ReactionInput?
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        model.input = ReactionInputAllProperties(order: order)
+        if let input = input {
+            model.input.inputC1 = input.c1
+            model.input.inputC2 = input.c2
+            model.input.inputT1 = input.t1
+            model.input.inputT2 = input.t2
+            model.currentTime = model.input.inputT2
+            model.reactionHasStarted = true
+            model.reactionHasEnded = true
+            model.statement = ReactionFilingStatements.message(order: order, reactionType: reactionType)
+        } else {
+            model.statement = ReactionFilingStatements.blankMessage(order: order, reactionType: reactionType)
         }
     }
 }
