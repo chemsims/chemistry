@@ -19,6 +19,8 @@ class ReactionComparisonViewModel: ObservableObject {
     private let firstOrderInput: ReactionInput
     private let secondOrderInput: ReactionInput
 
+    var navigation: NavigationViewModel<ReactionComparisonState>?
+
     @Published var statement = [TextLine]()
     @Published var currentTime0: CGFloat?
     @Published var currentTime1: CGFloat?
@@ -41,6 +43,24 @@ class ReactionComparisonViewModel: ObservableObject {
 
     func addToCorrectSelection(order: ReactionOrder) {
         correctOrderSelections.append(order)
+    }
+
+    func next() {
+        let hasIdentifiedOrders = persistence.hasIdentifiedReactionOrders()
+        let reactionIsRunning = currentTime0 != nil && reactionHasEnded == false
+        let ordersHaveBeenSelected = correctOrderSelections.count == ReactionOrder.allCases.count
+        if (reactionIsRunning && !hasIdentifiedOrders && !ordersHaveBeenSelected) {
+            statement = ReactionComparisonStatements.blockClickingNextBeforeChoosingReactions
+        } else {
+            navigation?.next()
+            if (reactionHasEnded) {
+                persistence.setHasIdentifiedReactionOrders()
+            }
+        }
+    }
+
+    func back() {
+        navigation?.back()
     }
 
     var finalTime0: CGFloat {

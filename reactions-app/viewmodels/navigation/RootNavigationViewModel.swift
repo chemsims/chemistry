@@ -17,7 +17,7 @@ class RootNavigationViewModel: ObservableObject {
     init(
         persistence: ReactionInputPersistence
     ) {
-        let firstScreen = AppScreen.firstOrderReaction
+        let firstScreen = AppScreen.reactionComparison
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.view = AnyView(EmptyView())
@@ -260,15 +260,17 @@ fileprivate class QuizScreenProvider: ScreenProvider {
 fileprivate class ReactionComparisonScreenProvider: ScreenProvider {
     init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
         let viewModel = ReactionComparisonViewModel(persistence: persistence)
-        navigation = ReactionComparisonNavigationViewModel.model(reaction: viewModel)
+        let navigation = ReactionComparisonNavigationViewModel.model(reaction: viewModel)
         navigation.nextScreen = next
         navigation.prevScreen = prev
+        viewModel.navigation = navigation
+        self.viewModel = viewModel
     }
 
-    let navigation: NavigationViewModel<ReactionComparisonState>
+    let viewModel: ReactionComparisonViewModel
 
     var screen: AnyView {
-        AnyView(ReactionComparisonScreen(navigation: navigation))
+        AnyView(ReactionComparisonScreen(model: viewModel))
     }
 }
 

@@ -13,6 +13,8 @@ protocol ReactionInputPersistence {
     func setCompleted(screen: AppScreen)
     func hasCompleted(screen: AppScreen) -> Bool
 
+    func hasIdentifiedReactionOrders() -> Bool
+    func setHasIdentifiedReactionOrders()
 }
 
 extension ReactionInputPersistence {
@@ -26,6 +28,8 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
     private var underlying = [ReactionInputKey:ReactionInput]()
 
     private var underlyingScreenCompletions = Set<AppScreen>()
+
+    private var _hasIdentifiedReactionOrders = false
 
     func save(input: ReactionInput, order: ReactionOrder, reaction: ReactionType) {
         let key = ReactionInputKey(order: order, type: reaction)
@@ -43,6 +47,14 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
     func hasCompleted(screen: AppScreen) -> Bool {
         underlyingScreenCompletions.contains(screen)
+    }
+
+    func hasIdentifiedReactionOrders() -> Bool {
+        _hasIdentifiedReactionOrders
+    }
+
+    func setHasIdentifiedReactionOrders() {
+        _hasIdentifiedReactionOrders = true
     }
 
     fileprivate struct ReactionInputKey: Hashable {

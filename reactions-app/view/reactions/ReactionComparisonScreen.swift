@@ -7,21 +7,19 @@ import SwiftUI
 
 struct ReactionComparisonScreen: View {
 
-    @ObservedObject var navigation: NavigationViewModel<ReactionComparisonState>
-
+    @ObservedObject var model: ReactionComparisonViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     var body: some View {
         GeometryReader { geometry in
             ReactionComparisonViewWithSettings(
-                navigation: navigation,
-                reaction: navigation.model,
+                reaction: model,
                 settings: ReactionComparisonLayoutSettings(
                     geometry: geometry,
                     horizontalSizeClass: horizontalSizeClass,
                     verticalSizeClass: verticalSizeClass,
-                    ordering: navigation.model.reactionOrdering
+                    ordering: model.reactionOrdering
                 )
             )
         }
@@ -30,7 +28,6 @@ struct ReactionComparisonScreen: View {
 
 fileprivate struct ReactionComparisonViewWithSettings: View {
 
-    @ObservedObject var navigation: NavigationViewModel<ReactionComparisonState>
     @ObservedObject var reaction: ReactionComparisonViewModel
 
     @State private var dragLocation = CGPoint.zero
@@ -360,7 +357,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         ZStack {
             if (reaction.currentTime0 == nil) {
                 CircleIconButton(
-                    action: navigation.next,
+                    action: reaction.next,
                     systemImage: Icons.rightArrow,
                     background: .clear,
                     border: .black,
@@ -422,8 +419,8 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                 Spacer()
                 BeakyBox(
                     statement: reaction.statement,
-                    next: navigation.next,
-                    back: navigation.back,
+                    next: reaction.next,
+                    back: reaction.back,
                     verticalSpacing: settings.ordered.beakyVSpacing,
                     bubbleWidth: settings.ordered.bubbleWidth,
                     bubbleHeight: settings.ordered.bubbleHeight,
@@ -505,7 +502,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                 if (dragOverOrder == order) {
                     reaction.addToCorrectSelection(order: order)
                     if (reaction.correctOrderSelections.count == 3 && !reaction.reactionHasEnded) {
-                        navigation.next()
+                        reaction.next()
                     }
                 } else if (!reaction.correctOrderSelections.contains(dragOverOrder)) {
                     runShakeAnimation(order: order)
@@ -741,11 +738,9 @@ struct ReactionComparisonLayoutSettings {
 struct ReactionComparisonScreen_Previews: PreviewProvider {
     static var previews: some View {
         ReactionComparisonScreen(
-            navigation: ReactionComparisonNavigationViewModel.model(
-                reaction: ReactionComparisonViewModel(
-                    persistence: InMemoryReactionInputPersistence()
-                )
-            )
+            model: ReactionComparisonViewModel(
+               persistence: InMemoryReactionInputPersistence()
+           )
         ).previewLayout(.fixed(width: 500, height: 300))
     }
 }

@@ -48,5 +48,10 @@ struct ReactionComparisonStatements {
         TextLineGenerator.makeLine("Took you a while didn't it?"),
         TextLineGenerator.makeLine("Let's see how to make things faster."),
     ]
+
+    static let blockClickingNextBeforeChoosingReactions: [TextLine] = [
+        "Try to identify the correct orders for each graph first!",
+        "*Drag and drop the equations to the graph of the corresponding order*.",
+    ]
 }
 
