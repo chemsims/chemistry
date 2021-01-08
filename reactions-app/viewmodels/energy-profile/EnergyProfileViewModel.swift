@@ -7,11 +7,6 @@ import SwiftUI
 
 class EnergyProfileViewModel: ObservableObject {
 
-    let persistence: ReactionInputPersistence
-    init(persistence: ReactionInputPersistence) {
-        self.persistence = persistence
-    }
-
     var interactionEnabled: Bool = true
     @Published var reactionState = EnergyReactionState.pending
     @Published var statement = [TextLine]()

@@ -275,7 +275,7 @@ fileprivate class ReactionComparisonScreenProvider: ScreenProvider {
 fileprivate class EnergyProfileScreenProvider: ScreenProvider {
 
     init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
-        self.viewModel = EnergyProfileViewModel(persistence: persistence)
+        self.viewModel = EnergyProfileViewModel()
         self.navigation = EnergyProfileNavigationViewModel.model(viewModel)
         viewModel.navigation = navigation
         navigation.nextScreen = next
@@ -308,7 +308,7 @@ fileprivate class FinalAppScreenProvider: ScreenProvider {
         persistence: ReactionInputPersistence,
         underlying: EnergyProfileViewModel?
     ) {
-        let viewModel = underlying ?? EnergyProfileViewModel(persistence: persistence)
+        let viewModel = underlying ?? EnergyProfileViewModel()
         self.navigation = NavigationViewModel(model: viewModel, states: [FinalEnergyProfileState()])
     }
 

@@ -9,7 +9,7 @@ import XCTest
 class EnergyProfileViewModelTests: XCTestCase {
 
     func testCatalystsAreUsedUp() {
-        let model = EnergyProfileViewModel(persistence: InMemoryReactionInputPersistence())
+        let model = EnergyProfileViewModel()
         XCTAssertEqual(model.availableCatalysts, Catalyst.allCases)
 
         model.catalystState = .selected(catalyst: .A)
@@ -35,7 +35,7 @@ class EnergyProfileViewModelTests: XCTestCase {
     }
 
     func testNavigationCompletesWithoutError() {
-        let model = EnergyProfileViewModel(persistence: InMemoryReactionInputPersistence())
+        let model = EnergyProfileViewModel()
         let navigation = EnergyProfileNavigationViewModel.model(model)
 
         var didFinish = false

@@ -21,15 +21,6 @@ class ReactionInputPersistenceTests: XCTestCase {
         }
     }
 
-    func testUsingCatalysts() {
-        let model = newModel()
-        Catalyst.allCases.forEach { catalyst in
-            XCTAssertFalse(model.hasUsed(catalyst: catalyst), "\(catalyst)")
-            model.setUsed(catalyst: catalyst)
-            XCTAssertTrue(model.hasUsed(catalyst: catalyst), "\(catalyst)")
-        }
-    }
-
     func testSavingReactionInputs() {
         let model = newModel()
         let reactionOrders = ReactionOrder.allCases

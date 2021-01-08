@@ -16,48 +16,48 @@ struct EnergyProfileNavigationViewModel {
     }
 
     private static let states = [
-//        ExplanationState(
-//            EnergyProfileStatements.intro,
-//            [.reactionToggle]
-//        ),
-//        IntroToCollisionTheory(),
-//        ExplanationState(
-//            EnergyProfileStatements.explainCollisionTheory,
-//            []
-//        ),
-//        ExplanationState(
-//            EnergyProfileStatements.explainActivationEnergy,
-//            [.eaTerms]
-//        ),
-//        ExplanationState(
-//            EnergyProfileStatements.explainArrhenius,
-//            [.rateEquation]
-//        ),
-//        ExplanationState(
-//            EnergyProfileStatements.explainTerms,
-//            [.rateEquation]
-//        ),
-//        ExplanationState(
-//            EnergyProfileStatements.explainRateTempRelation,
-//            [.rateEquation]
-//        ),
-//        ExplanationState(
-//            EnergyProfileStatements.explainLinearKEquation,
-//            [.rateAndLinearRateEquation]
-//        ),
-//        ExplanationState(
-//            EnergyProfileStatements.explainArrheniusTwoPoints,
-//            [.rateAndLinearAndRatioEquation]
-//        ),
-//        ShowInitialEaValues(),
-//        ExplanationState(
-//            EnergyProfileStatements.explainEnergyDiagram,
-//            [.reactionProfileTop, .reactionProfileBottom]
-//        ),
-//        ExplanationState(
-//            EnergyProfileStatements.explainExothermic,
-//            [.reactionProfileBottom]
-//        ),
+        ExplanationState(
+            EnergyProfileStatements.intro,
+            [.reactionToggle]
+        ),
+        IntroToCollisionTheory(),
+        ExplanationState(
+            EnergyProfileStatements.explainCollisionTheory,
+            []
+        ),
+        ExplanationState(
+            EnergyProfileStatements.explainActivationEnergy,
+            [.eaTerms]
+        ),
+        ExplanationState(
+            EnergyProfileStatements.explainArrhenius,
+            [.rateEquation]
+        ),
+        ExplanationState(
+            EnergyProfileStatements.explainTerms,
+            [.rateEquation]
+        ),
+        ExplanationState(
+            EnergyProfileStatements.explainRateTempRelation,
+            [.rateEquation]
+        ),
+        ExplanationState(
+            EnergyProfileStatements.explainLinearKEquation,
+            [.rateAndLinearRateEquation]
+        ),
+        ExplanationState(
+            EnergyProfileStatements.explainArrheniusTwoPoints,
+            [.rateAndLinearAndRatioEquation]
+        ),
+        ShowInitialEaValues(),
+        ExplanationState(
+            EnergyProfileStatements.explainEnergyDiagram,
+            [.reactionProfileTop, .reactionProfileBottom]
+        ),
+        ExplanationState(
+            EnergyProfileStatements.explainExothermic,
+            [.reactionProfileBottom]
+        ),
         ExplanationState(
             EnergyProfileStatements.explainEaHump,
             [.reactionProfileTop]

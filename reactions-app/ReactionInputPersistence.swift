@@ -13,8 +13,6 @@ protocol ReactionInputPersistence {
     func setCompleted(screen: AppScreen)
     func hasCompleted(screen: AppScreen) -> Bool
 
-    func setUsed(catalyst: Catalyst)
-    func hasUsed(catalyst: Catalyst) -> Bool
 }
 
 extension ReactionInputPersistence {
@@ -28,8 +26,6 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
     private var underlying = [ReactionInputKey:ReactionInput]()
 
     private var underlyingScreenCompletions = Set<AppScreen>()
-
-    private var underlyingCatalyst = Set<Catalyst>()
 
     func save(input: ReactionInput, order: ReactionOrder, reaction: ReactionType) {
         let key = ReactionInputKey(order: order, type: reaction)
@@ -47,14 +43,6 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
     func hasCompleted(screen: AppScreen) -> Bool {
         underlyingScreenCompletions.contains(screen)
-    }
-
-    func setUsed(catalyst: Catalyst) {
-        underlyingCatalyst.insert(catalyst)
-    }
-
-    func hasUsed(catalyst: Catalyst) -> Bool {
-        underlyingCatalyst.contains(catalyst)
     }
 
     fileprivate struct ReactionInputKey: Hashable {

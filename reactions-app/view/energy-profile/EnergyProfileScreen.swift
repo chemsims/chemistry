@@ -197,29 +197,28 @@ struct EnergyProfileScreen_Previews: PreviewProvider {
 
         // iPhone 11
         EnergyProfileScreen(
-            navigation:
-                EnergyProfileNavigationViewModel.model(
-                    EnergyProfileViewModel(persistence: InMemoryReactionInputPersistence())
-                )
+            navigation: EnergyProfileNavigationViewModel.model(
+                EnergyProfileViewModel()
+            )
         )
-            .previewLayout(.fixed(width: 896, height: 414))
+        .previewLayout(.fixed(width: 896, height: 414))
 
         // iPhone SE
         EnergyProfileScreen(
             navigation: EnergyProfileNavigationViewModel.model(
-                EnergyProfileViewModel(persistence: InMemoryReactionInputPersistence())
+                EnergyProfileViewModel()
             )
         )
-            .previewLayout(.fixed(width: 568, height: 320))
+        .previewLayout(.fixed(width: 568, height: 320))
 
 
         // iPad Mini
         EnergyProfileScreen(
             navigation: EnergyProfileNavigationViewModel.model(
-                EnergyProfileViewModel(persistence: InMemoryReactionInputPersistence())
+                EnergyProfileViewModel()
             )
         )
-            .previewLayout(.fixed(width: 1024, height: 768))
+        .previewLayout(.fixed(width: 1024, height: 768))
 
     }
 }
