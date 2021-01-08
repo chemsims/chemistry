@@ -329,5 +329,6 @@ fileprivate class FinalEnergyProfileState: EnergyProfileState {
         model.highlightedElements = [.menuIcon]
         model.interactionEnabled = false
         model.temp2 = model.temp1
+        model.particleState = .appearInBeaker
     }
 }

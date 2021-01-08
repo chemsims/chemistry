@@ -29,7 +29,8 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
             updateConcentrationC: updateConcentrationC,
             emitterPosition: emitterPosition,
             particleState: particleState,
-            catalystColor: catalystColor
+            catalystColor: catalystColor,
+            reactionState: reactionState
         )
         scene.scaleMode = .aspectFit
         view.allowsTransparency = true

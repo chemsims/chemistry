@@ -20,16 +20,16 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             switch (particleState) {
             case .none: break
             case .appearInBeaker: addCatalystsInWater()
-            case .fallFromContainer: addCatalysts()
+            case .fallFromContainer: emitCatalysts()
             }
         }
     }
     var canReactToC: Bool = false
-    var reactionState: EnergyReactionState = .pending {
+    var reactionState: EnergyReactionState {
         didSet {
             if (reactionState != oldValue) {
                 if (reactionState == .completed) {
-                    endReaction()
+                    endReaction(duration: settings.endReactionDuration)
                 } else if (reactionState == .pending || oldValue == .completed && reactionState == .running) {
                     removeAllActions()
                     resetCollisions()
@@ -44,13 +44,15 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         updateConcentrationC: @escaping (CGFloat) -> Void,
         emitterPosition: CGPoint,
         particleState: CatalystParticleState,
-        catalystColor: UIColor
+        catalystColor: UIColor,
+        reactionState: EnergyReactionState
     ) {
         self.waterHeight = waterHeight
         self.updateConcentrationC = updateConcentrationC
         self.emitterPosition = emitterPosition
         self.particleState = particleState
         self.catalystColor = catalystColor
+        self.reactionState = reactionState
         self.settings = SKBeakerSceneSettings(width: size.width, height: size.height)
         self.velocity = settings.minVelocity
         super.init(size: size)
@@ -114,7 +116,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    private func endReaction() {
+    private func endReaction(duration: Double?) {
         let aMolecules = molecules.withCategory(moleculeACategory).compactMap { $0.node as? SKShapeNode }
         let bMolecules = molecules.withCategory(moleculeBCategory).compactMap { $0.node as? SKShapeNode }
 
@@ -132,20 +134,29 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             let bFinalPos = CGPoint(x: midPos.x + settings.moleculeRadius, y: midPos.y)
 
             if let bodyA = aMolecule.physicsBody, let bodyB = bMolecule.physicsBody {
-                let duration: TimeInterval = 0.5
                 bodyA.collisionBitMask = 0
                 bodyB.collisionBitMask = 0
 
-                aMolecule.run(SKAction.move(to: aFinalPos, duration: duration))
-                bMolecule.run(SKAction.move(to: bFinalPos, duration: duration))
-
-                let join = SKAction.run { [self] in
+                func doJoin() {
                     joinMolecules(bodyA: bodyA, nodeA: aMolecule, bodyB: bodyB, nodeB: bMolecule, anchor: midPos)
                     bodyA.collisionBitMask = allCollisions
                     bodyB.collisionBitMask = allCollisions
                 }
-                let delay = SKAction.wait(forDuration: duration)
-                self.run(SKAction.sequence([delay, join]))
+
+                if let duration = duration {
+                    aMolecule.run(SKAction.move(to: aFinalPos, duration: duration))
+                    bMolecule.run(SKAction.move(to: bFinalPos, duration: duration))
+
+                    let join = SKAction.run {
+                        doJoin()
+                    }
+                    let delay = SKAction.wait(forDuration: duration)
+                    self.run(SKAction.sequence([delay, join]))
+                } else {
+                    aMolecule.position = aFinalPos
+                    bMolecule.position = bFinalPos
+                    doJoin()
+                }
             }
         }
     }
@@ -202,22 +213,34 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
 
         addWedges()
-        if (particleState == .fallFromContainer) {
-            addCatalysts()
-        } else if (particleState == .appearInBeaker) {
-            addCatalystsInWater()
-        }
+        initialiseCatalysts()
         self.physicsWorld.contactDelegate = self
+
+        if (reactionState == .completed) {
+            endReaction(duration: nil)
+        }
+
         let updateSpeedAction = SKAction.run { self.updateSpeeds(allowRapidChange: false) }
         let wait = SKAction.wait(forDuration: updateSpeedDelay)
         let sequence = SKAction.sequence([wait, updateSpeedAction])
         self.run(SKAction.repeatForever(sequence))
     }
 
-    private func addCatalysts() {
+    private func initialiseCatalysts() {
+        let reactionIsComplete = reactionState == .completed
+        let isFalling = particleState == .fallFromContainer
+        let isInBeaker = particleState == .appearInBeaker
+        if (isFalling && !reactionIsComplete) {
+            emitCatalyst()
+        } else if (isInBeaker || (isFalling && reactionIsComplete)) {
+            addCatalystsInWater()
+        }
+    }
+
+    private func emitCatalysts() {
         let wait = SKAction.wait(forDuration: catalystFallDelay)
         let run = SKAction.run {
-            self.addCatalyst()
+            self.emitCatalyst()
         }
         let sequence = SKAction.sequence([run, wait])
         let repeatAction = SKAction.repeat(sequence, count: settings.catalystParticles)
@@ -275,7 +298,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         return catalyst
     }
 
-    private func addCatalyst() {
+    private func emitCatalyst() {
         let radius = settings.moleculeRadius
         let path = catalystPath(radius: radius)
 
@@ -489,6 +512,9 @@ fileprivate struct SKBeakerSceneSettings {
     }
     let catalystMinAngle: CGFloat = 5
     let catalystMaxAngle: CGFloat = 30
+
+    /// How long the end reaction animation should run for
+    let endReactionDuration: Double = 0.5
 
     var moleculeRadius: CGFloat {
         MoleculeGridSettings.moleculeRadius(width: width)
