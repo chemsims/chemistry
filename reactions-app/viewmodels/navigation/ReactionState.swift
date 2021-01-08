@@ -210,7 +210,7 @@ class RunAnimation: ReactionState {
         }
 
         if let input = model.inputToSave, let order = order, let persistence = persistence {
-            persistence.save(input: input, order: order)
+            persistence.save(input: input, order: order, reaction: model.selectedReaction)
         }
 
     }

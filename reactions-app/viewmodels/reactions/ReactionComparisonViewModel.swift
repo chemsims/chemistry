@@ -10,9 +10,9 @@ class ReactionComparisonViewModel: ObservableObject {
     let persistence: ReactionInputPersistence
     init(persistence: ReactionInputPersistence) {
         self.persistence = persistence
-        self.zeroOrderInput = persistence.get(order: .Zero) ?? ReactionComparisonDefaults.input
-        self.firstOrderInput = persistence.get(order: .First) ?? ReactionComparisonDefaults.input
-        self.secondOrderInput = persistence.get(order: .Second) ?? ReactionComparisonDefaults.input
+        self.zeroOrderInput = persistence.get(order: .Zero, reaction: .A) ?? ReactionComparisonDefaults.input
+        self.firstOrderInput = persistence.get(order: .First, reaction: .A) ?? ReactionComparisonDefaults.input
+        self.secondOrderInput = persistence.get(order: .Second, reaction: .A) ?? ReactionComparisonDefaults.input
     }
 
     private let zeroOrderInput: ReactionInput

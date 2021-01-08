@@ -104,6 +104,7 @@
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
 		57A26855259A011600919E48 /* QuizDifficultyCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A26854259A011600919E48 /* QuizDifficultyCountTests.swift */; };
 		57A26859259A6FD000919E48 /* FirstOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A26858259A6FD000919E48 /* FirstOrderQuizQuestions.swift */; };
+		57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
 		57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */; };
@@ -273,6 +274,7 @@
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		57A26854259A011600919E48 /* QuizDifficultyCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDifficultyCountTests.swift; sourceTree = "<group>"; };
 		57A26858259A6FD000919E48 /* FirstOrderQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderQuizQuestions.swift; sourceTree = "<group>"; };
+		57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputPersistenceTests.swift; sourceTree = "<group>"; };
 		57AA05E62562F3750080C538 /* SliderIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderIndicator.swift; sourceTree = "<group>"; };
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
 		57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-VariableFont_wght.ttf"; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */,
 				5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */,
 				5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */,
+				57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */,
 			);
 			path = "reactions-appTests";
 			sourceTree = "<group>";
@@ -982,6 +985,7 @@
 				5727486725A60445000CFA1E /* ScreenStateTreeNodeTests.swift in Sources */,
 				5736B669258A79BD002CEF5E /* QuizViewModelTests.swift in Sources */,
 				57F4776025617B240041D406 /* BoundedSliderPositioningTests.swift in Sources */,
+				57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */,
 				57035EE5255BFE5200DB3A19 /* sliderCalculationsTest.swift in Sources */,
 				5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */,
 				57DAE4C62577A299006D945B /* CGFloatRoundingTests.swift in Sources */,

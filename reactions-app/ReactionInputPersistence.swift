@@ -7,8 +7,8 @@ import Foundation
 
 protocol ReactionInputPersistence {
 
-    func save(input: ReactionInput, order: ReactionOrder)
-    func get(order: ReactionOrder) -> ReactionInput?
+    func save(input: ReactionInput, order: ReactionOrder, reaction: OrderedReactionSet)
+    func get(order: ReactionOrder, reaction: OrderedReactionSet) -> ReactionInput?
 
     func setCompleted(screen: AppScreen)
     func hasCompleted(screen: AppScreen) -> Bool
@@ -25,18 +25,20 @@ extension ReactionInputPersistence {
 
 class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
-    private var underlying = [ReactionOrder:ReactionInput]()
+    private var underlying = [ReactionInputKey:ReactionInput]()
 
     private var underlyingScreenCompletions = Set<AppScreen>()
 
     private var underlyingCatalyst = Set<Catalyst>()
 
-    func save(input: ReactionInput, order: ReactionOrder) {
-        underlying[order] = input
+    func save(input: ReactionInput, order: ReactionOrder, reaction: OrderedReactionSet) {
+        let key = ReactionInputKey(order: order, type: reaction)
+        underlying[key] = input
     }
 
-    func get(order: ReactionOrder) -> ReactionInput? {
-        underlying[order]
+    func get(order: ReactionOrder, reaction: OrderedReactionSet) -> ReactionInput? {
+        let key = ReactionInputKey(order: order, type: reaction)
+        return underlying[key]
     }
 
     func setCompleted(screen: AppScreen) {
@@ -53,6 +55,11 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
     func hasUsed(catalyst: Catalyst) -> Bool {
         underlyingCatalyst.contains(catalyst)
+    }
+
+    fileprivate struct ReactionInputKey: Hashable {
+        let order: ReactionOrder
+        let type: OrderedReactionSet
     }
 
 }

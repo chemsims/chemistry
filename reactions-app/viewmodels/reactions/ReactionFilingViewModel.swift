@@ -29,9 +29,9 @@ class ReactionFilingViewModel: ObservableObject {
             reaction: secondOrderViewModel
         )
 
-        let zeroInput = persistence.get(order: .Zero)
-        let firstInput = persistence.get(order: .First)
-        let secondInput = persistence.get(order: .Second)
+        let zeroInput = persistence.get(order: .Zero, reaction: .A)
+        let firstInput = persistence.get(order: .First, reaction: .A)
+        let secondInput = persistence.get(order: .Second, reaction: .A)
 
         pages = [
             AnyView(CompletedReactionScreen(enabled: zeroInput != nil) { zeroOrderScreen }),
