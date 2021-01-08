@@ -14,6 +14,28 @@ struct RGB {
     var color: Color {
         Color(red: r / 255, green: g / 255, blue: b / 255)
     }
+
+    var skColor: SKColor {
+        SKColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: 1)
+    }
+
+    var uiColor: UIColor {
+        UIColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: 1)
+    }
+}
+
+extension RGB {
+    static let moleculeA = RGB(r: 8, g: 168, b: 232)
+    static let moleculeB = RGB(r: 255, g: 19, b: 19)
+    static let moleculeC = RGB(r: 225, g: 132, b: 19)
+
+    static let moleculeD = RGB(r: 213, g: 111, b: 62)
+    static let moleculeE = RGB(r: 99, g: 105, b: 209)
+    static let moleculeF = RGB(r: 84, g: 35, b: 68)
+
+    static let moleculeG = RGB(r: 156, g: 109, b: 138)
+    static let moleculeH = RGB(r: 27, g: 153, b: 139)
+    static let moleculeI = RGB(r: 221, g: 183, b: 113)
 }
 
 struct Styling {
@@ -25,9 +47,9 @@ struct Styling {
 
     static let moleculePlaceholder = Color(red: 206 / 255, green: 227 / 255, blue: 237 / 255)
 
-    static let moleculeA = UIColor.moleculeA.color
-    static let moleculeB = UIColor.moleculeB.color
-
+    static let moleculeA = RGB.moleculeA.color
+    static let moleculeB = RGB.moleculeB.color
+    static let moleculeC = RGB.moleculeC.color
 
     static let moleculeAChartHeadHalo = Color(red: 143 / 255, green: 190 / 255, blue: 226 / 255, opacity: 0.7)
 
@@ -79,11 +101,6 @@ struct Styling {
 
 
 extension UIColor {
-
-    static let moleculeA = UIColor(red: 8 / 255, green: 168 / 255, blue: 232  / 255, alpha: 1)
-    static let moleculeB = UIColor(red: 255 / 255, green: 19 / 255, blue: 19 / 255, alpha: 1)
-    static let moleculeC = UIColor(red: 226 / 255, green: 132 / 255, blue: 19 / 255, alpha: 1)
-
     static let catalystA = UIColor(red: 246 / 255, green: 83  / 255, blue: 166 / 255, alpha: 1)
     static let catalystB = UIColor(red: 227 / 255, green: 215  / 255, blue: 89 / 255, alpha: 1)
     static let catalystC = UIColor(red: 152 / 255, green: 251  / 255, blue: 251 / 255, alpha: 1)

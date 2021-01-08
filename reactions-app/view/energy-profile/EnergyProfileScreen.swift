@@ -80,7 +80,8 @@ struct EnergyProfileScreen: View {
                     showTemperature: model.temp2 != nil,
                     highlightTop: model.highlight(element: .reactionProfileTop),
                     highlightBottom: model.highlight(element: .reactionProfileBottom),
-                    moleculeHighlightColor: model.color(for: [.moleculeChartLabel, .reactionProfileBottom])
+                    moleculeHighlightColor: model.color(for: [.moleculeChartLabel, .reactionProfileBottom]),
+                    input: model.selectedReaction.energyProfileReactionInput
                 )
                 .colorMultiply(model.color(for: [.reactionProfileTop, .reactionProfileBottom]))
 
@@ -140,7 +141,8 @@ struct EnergyProfileScreen: View {
                 highlightBeaker: model.highlight(element: .beaker),
                 highlightCatalyst: model.highlight(element: .catalysts),
                 availableCatalysts: model.availableCatalysts,
-                usedCatalysts: model.usedCatalysts
+                usedCatalysts: model.usedCatalysts,
+                reactionInput: model.selectedReaction.energyProfileReactionInput
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .padding(.leading, settings.beakerLeadingPadding)

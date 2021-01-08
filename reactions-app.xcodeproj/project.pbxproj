@@ -106,6 +106,7 @@
 		57A26859259A6FD000919E48 /* FirstOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A26858259A6FD000919E48 /* FirstOrderQuizQuestions.swift */; };
 		57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */; };
 		57AA012425A8C635001131A0 /* EnergyProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA012325A8C635001131A0 /* EnergyProfileViewModelTests.swift */; };
+		57AA012E25A90172001131A0 /* EnergyProfileReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA012D25A90172001131A0 /* EnergyProfileReactionType.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
 		57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */; };
@@ -277,6 +278,7 @@
 		57A26858259A6FD000919E48 /* FirstOrderQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputPersistenceTests.swift; sourceTree = "<group>"; };
 		57AA012325A8C635001131A0 /* EnergyProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileViewModelTests.swift; sourceTree = "<group>"; };
+		57AA012D25A90172001131A0 /* EnergyProfileReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileReactionType.swift; sourceTree = "<group>"; };
 		57AA05E62562F3750080C538 /* SliderIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderIndicator.swift; sourceTree = "<group>"; };
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
 		57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-VariableFont_wght.ttf"; sourceTree = "<group>"; };
@@ -867,6 +869,7 @@
 				570E4F0B256D288C001EADCB /* Catalyst.swift */,
 				57F5621F258D4F64008B2602 /* CatalystState.swift */,
 				570FCD04258F6FFF0030D92E /* EnergyReactionState.swift */,
+				57AA012D25A90172001131A0 /* EnergyProfileReactionType.swift */,
 			);
 			path = "energy-profile";
 			sourceTree = "<group>";
@@ -1085,6 +1088,7 @@
 				572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */,
 				577077D325698DF2003E750E /* SkBeakerSceneRepresentable.swift in Sources */,
 				576D5A7825665E170062F722 /* ScaledView.swift in Sources */,
+				57AA012E25A90172001131A0 /* EnergyProfileReactionType.swift in Sources */,
 				571B3C80256560F90075358B /* SecondOrderStatements.swift in Sources */,
 				570FCD05258F6FFF0030D92E /* EnergyReactionState.swift in Sources */,
 				57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */,

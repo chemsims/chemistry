@@ -28,6 +28,8 @@ struct EnergyProfileBeaker: View {
     let availableCatalysts: [Catalyst]
     let usedCatalysts: [Catalyst]
 
+    let reactionInput: EnergyProfileReactionInput
+
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
 
@@ -158,7 +160,8 @@ struct EnergyProfileBeaker: View {
                     usedCatalysts.last?.color ??
                     .black,
                 canReactToC: canReactToC,
-                reactionState: reactionState
+                reactionState: reactionState,
+                input: reactionInput
             )
         }
         .frame(
@@ -497,7 +500,8 @@ struct EnergyProfileBeaker_Previews: PreviewProvider {
             highlightBeaker: true,
             highlightCatalyst: false,
             availableCatalysts: Catalyst.allCases,
-            usedCatalysts: []
+            usedCatalysts: [],
+            reactionInput: ReactionOrder.Zero.energyProfileReactionInput
         )
         .background(Styling.inactiveScreenElement)
         .previewLayout(.fixed(width: 200, height: 320))

@@ -15,6 +15,7 @@ struct EnergyProfileChart: View {
     let highlightTop: Bool
     let highlightBottom: Bool
     let moleculeHighlightColor: Color
+    let input: EnergyProfileReactionInput
 
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
@@ -159,10 +160,10 @@ struct EnergyProfileChart: View {
                 Spacer()
                 VStack(spacing: 1) {
                     HStack(spacing: 0) {
-                        annotationMolecule(color: UIColor.moleculeC.color)
-                        annotationMolecule(color: UIColor.moleculeC.color)
+                        annotationMolecule(color: input.moleculeC.color.color)
+                        annotationMolecule(color: input.moleculeC.color.color)
                     }
-                    Text("C")
+                    Text(input.moleculeC.name)
                 }
             }.padding(.trailing, settings.chartSize * 0.02)
             Spacer()
@@ -174,9 +175,9 @@ struct EnergyProfileChart: View {
             Spacer()
                 .frame(height: settings.chartSize * 0.58)
             HStack(alignment: .bottom, spacing: 1) {
-                reactantAnnotation(color: Styling.moleculeA, value: "A")
+                reactantAnnotation(color: input.moleculeA.color.color, value: input.moleculeA.name)
                 Text("+")
-                reactantAnnotation(color: Styling.moleculeB, value: "B")
+                reactantAnnotation(color: input.moleculeB.color.color, value: input.moleculeB.name)
                 Spacer()
             }.padding(.leading, settings.chartSize * 0.02)
             Spacer()
@@ -309,7 +310,8 @@ struct EnergyProfileChart_Previews: PreviewProvider {
             showTemperature: true,
             highlightTop: true,
             highlightBottom: true,
-            moleculeHighlightColor: .white
+            moleculeHighlightColor: .white,
+            input: ReactionOrder.Zero.energyProfileReactionInput
         )
     }
 }

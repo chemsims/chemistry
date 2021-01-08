@@ -11,6 +11,23 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     let updateConcentrationC: ((CGFloat) -> Void)
     let emitterPosition: CGPoint
     var catalystColor: UIColor
+
+    var moleculeAColor: UIColor {
+        didSet {
+            updateMoleculeColors()
+        }
+    }
+    var moleculeBColor: UIColor {
+        didSet {
+            updateMoleculeColors()
+        }
+    }
+    var moleculeCColor: UIColor {
+        didSet {
+            updateMoleculeColors()
+        }
+    }
+
     var particleState: CatalystParticleState {
         didSet {
             guard particleState != oldValue else {
@@ -45,7 +62,10 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         emitterPosition: CGPoint,
         particleState: CatalystParticleState,
         catalystColor: UIColor,
-        reactionState: EnergyReactionState
+        reactionState: EnergyReactionState,
+        moleculeAColor: UIColor,
+        moleculeBColor: UIColor,
+        moleculeCColor: UIColor
     ) {
         self.waterHeight = waterHeight
         self.updateConcentrationC = updateConcentrationC
@@ -55,11 +75,28 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         self.reactionState = reactionState
         self.settings = SKBeakerSceneSettings(width: size.width, height: size.height)
         self.velocity = settings.minVelocity
+        self.moleculeAColor = moleculeAColor
+        self.moleculeBColor = moleculeBColor
+        self.moleculeCColor = moleculeCColor
         super.init(size: size)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func updateMoleculeColors() {
+        children.forEach { node in
+            if let shape = node as? SKShapeNode, let physics = node.physicsBody {
+                if (physics.categoryBitMask == moleculeACategory) {
+                    shape.fillColor = moleculeAColor
+                } else if (physics.categoryBitMask == moleculeBCategory) {
+                    shape.fillColor = moleculeBColor
+                } else if (physics.categoryBitMask == moleculeCCategory) {
+                    shape.fillColor = moleculeCColor
+                }
+            }
+        }
     }
 
     private let settings: SKBeakerSceneSettings
@@ -170,7 +207,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             if molecule.categoryBitMask == moleculeCCategory,
                let node = molecule.node as? SKShapeNode {
                 let addA = aMoleculesToAdd > 0
-                let color: UIColor = addA ? .moleculeA : .moleculeB
+                let color: UIColor = addA ? moleculeAColor : moleculeBColor
                 let category = addA ? moleculeACategory : moleculeBCategory
                 aMoleculesToAdd -= 1
                 node.fillColor = color
@@ -205,11 +242,11 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundColor = .clear
 
         for _ in 0..<settings.aMolecules {
-            addMolecule(color: UIColor.moleculeA, category: moleculeACategory)
+            addMolecule(color: moleculeAColor, category: moleculeACategory)
         }
 
         for _ in 0..<settings.bMolecules {
-            addMolecule(color: UIColor.moleculeB, category: moleculeBCategory)
+            addMolecule(color: moleculeBColor, category: moleculeBCategory)
         }
 
         addWedges()
@@ -370,8 +407,8 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
                     anchor: contact.contactPoint
                 )
                 self.physicsWorld.add(joint)
-                nodeA.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
-                nodeB.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
+                nodeA.fillColor = moleculeCColor
+                nodeB.fillColor = moleculeCColor
                 cMolecules += 2
                 let concentrationC = CGFloat(cMolecules) / CGFloat(settings.aMolecules + settings.bMolecules)
                 updateConcentrationC(concentrationC)
@@ -399,8 +436,8 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
             anchor: anchor
         )
         self.physicsWorld.add(joint)
-        nodeA.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
-        nodeB.fillColor = SKColor(cgColor: UIColor.moleculeC.cgColor)
+        nodeA.fillColor = moleculeCColor
+        nodeB.fillColor = moleculeCColor
         cMolecules += 2
     }
 

@@ -20,6 +20,7 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
     let catalystColor: UIColor
     let canReactToC: Bool
     let reactionState: EnergyReactionState
+    let input: EnergyProfileReactionInput
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
@@ -30,7 +31,10 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
             emitterPosition: emitterPosition,
             particleState: particleState,
             catalystColor: catalystColor,
-            reactionState: reactionState
+            reactionState: reactionState,
+            moleculeAColor: input.moleculeA.color.uiColor,
+            moleculeBColor: input.moleculeB.color.uiColor,
+            moleculeCColor: input.moleculeC.color.uiColor
         )
         scene.scaleMode = .aspectFit
         view.allowsTransparency = true
@@ -45,6 +49,9 @@ struct SkBeakerSceneRepresentable: UIViewRepresentable {
             scene.particleState = particleState
             scene.catalystColor = catalystColor
             scene.canReactToC = canReactToC
+            scene.moleculeAColor = input.moleculeA.color.uiColor
+            scene.moleculeBColor = input.moleculeB.color.uiColor
+            scene.moleculeCColor = input.moleculeC.color.uiColor
         }
     }
 }

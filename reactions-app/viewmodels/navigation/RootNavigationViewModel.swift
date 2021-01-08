@@ -17,7 +17,7 @@ class RootNavigationViewModel: ObservableObject {
     init(
         persistence: ReactionInputPersistence
     ) {
-        let firstScreen = AppScreen.reactionComparison
+        let firstScreen = AppScreen.energyProfile
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.view = AnyView(EmptyView())
