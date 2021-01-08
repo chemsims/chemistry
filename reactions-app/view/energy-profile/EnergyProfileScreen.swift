@@ -137,7 +137,8 @@ struct EnergyProfileScreen: View {
                 highlightSlider: model.highlight(element: .tempSlider),
                 highlightBeaker: model.highlight(element: .beaker),
                 highlightCatalyst: model.highlight(element: .catalysts),
-                availableCatalysts: model.availableCatalysts
+                availableCatalysts: model.availableCatalysts,
+                usedCatalysts: model.usedCatalysts
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .padding(.leading, settings.beakerLeadingPadding)

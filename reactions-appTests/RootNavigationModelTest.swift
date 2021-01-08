@@ -24,3 +24,4 @@ class RootNavigationModelTest: XCTestCase {
         RootNavigationViewModel(persistence: InMemoryReactionInputPersistence())
     }
 }
+

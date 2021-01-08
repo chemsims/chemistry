@@ -26,6 +26,7 @@ struct EnergyProfileBeaker: View {
     let highlightCatalyst: Bool
 
     let availableCatalysts: [Catalyst]
+    let usedCatalysts: [Catalyst]
 
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
@@ -184,7 +185,6 @@ struct EnergyProfileBeaker: View {
         let stationaryX = (settings.width / 4) + ((settings.width / 4) * CGFloat(index))
         let x = hasMoved ? settings.width / 2 : stationaryX
         let y = hasMoved ? settings.catHeight : settings.catHeight / 2
-        let zIndex: Double = hasMoved ? 1 : 0
         let rotation: Angle = hasMoved ? .degrees(135) : .zero
         let scale: CGFloat = hasMoved ? 1.2 : 1
         let shadow = hasMoved ? settings.catHeight * 0.05 : 0
@@ -200,10 +200,10 @@ struct EnergyProfileBeaker: View {
                 y: y
             )
             .frame(height: settings.catHeight)
-            .zIndex(zIndex)
+            .zIndex(index == 1 ? 0 : 1)
             .shadow(radius: shadow)
             .scaleEffect(x: scale, y: scale, anchor: .top)
-            .opacity(isSelected ? 0 : 1)
+            .opacity(isSelected || usedCatalysts.contains(catalyst) ? 0 : 1)
             .offset(y: yOffset)
             .opacity(availableCatalysts.contains(catalyst) ? 1 : 0.2)
             .onTapGesture {
@@ -492,7 +492,8 @@ struct EnergyProfileBeaker_Previews: PreviewProvider {
             highlightSlider: false,
             highlightBeaker: true,
             highlightCatalyst: false,
-            availableCatalysts: Catalyst.allCases
+            availableCatalysts: Catalyst.allCases,
+            usedCatalysts: []
         )
         .background(Styling.inactiveScreenElement)
         .previewLayout(.fixed(width: 200, height: 320))

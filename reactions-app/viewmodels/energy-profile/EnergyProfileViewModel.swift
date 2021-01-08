@@ -60,22 +60,27 @@ class EnergyProfileViewModel: ObservableObject {
     var prevScreen: (() -> Void)?
     var nextScreen: (() -> Void)?
 
+    private(set) var usedCatalysts = [Catalyst]()
+
     func next() {
         navigation?.next()
     }
 
     func saveCatalyst() {
         if let catalyst = catalystState.selected {
-            persistence.setUsed(catalyst: catalyst)
+            usedCatalysts.append(catalyst)
         }
     }
 
-    var availableCatalysts: [Catalyst] {
-        let notUsed = Catalyst.allCases.filter { !persistence.hasUsed(catalyst: $0) }
-        if (notUsed.isEmpty) {
-            return Catalyst.allCases
+    func removeCatalystFromStack() {
+        guard !usedCatalysts.isEmpty else {
+            return
         }
-        return notUsed
+        usedCatalysts.removeLast()
+    }
+
+    var availableCatalysts: [Catalyst] {
+        Catalyst.allCases.filter { !usedCatalysts.contains($0) }
     }
 
     func back() {
@@ -291,5 +296,9 @@ extension CatalystState {
         case let .selected(catalyst): return catalyst
         default: return nil
         }
+    }
+
+    var catalyst: Catalyst? {
+        selected ?? pending
     }
 }

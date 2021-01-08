@@ -216,6 +216,11 @@ struct EnergyProfileStatements {
         TextLineGenerator.makeLine("Let's take another quiz, and then you're free to *explore further* the reaction rates.")
     ]
 
+    static let finishedFirstCatalyst: [TextLine] = [
+        TextLineGenerator.makeLine("It's all done! All of A and B has turned into C successfully"),
+        TextLineGenerator.makeLine("*Choose another catalyst*, and let's see how it compares.")
+    ]
+
     static let chooseADifferentCatalyst: [TextLine] = [
         TextLineGenerator.makeLine("You've already used this catalyst, so let's try another one."),
         TextLineGenerator.makeLine("*Tap a different catalyst to select it*.")

@@ -57,6 +57,8 @@ class NavigationViewModelTests: XCTestCase {
     func testTheNextStateIsAutomaticallyDispatched() {
         let expectation = self.expectation(description: "Set state to 2")
         let delay = 0.1
+        let maxDelay = 1.25 * delay
+        let minDelay = 0.75 * delay
         let s0 = SetValueState(value: 0)
         let s1 = StateWithAutoDispatch(value: 1, nextStateDelay: delay)
         let s2 = SetValueState(value: 2, expectation: expectation)
@@ -70,14 +72,14 @@ class NavigationViewModelTests: XCTestCase {
         let t0 = DispatchTime.now()
         XCTAssertEqual(tester.value, s1.value)
 
-        waitForExpectations(timeout: 1.1 * delay, handler: nil)
+        waitForExpectations(timeout: maxDelay, handler: nil)
         XCTAssertEqual(tester.value, s2.value)
 
         let t1 = DispatchTime.now()
         let elapsedNano = t1.uptimeNanoseconds - t0.uptimeNanoseconds
         let elapsedSeconds = Double(elapsedNano) / (1E9)
 
-        XCTAssertGreaterThanOrEqual(elapsedSeconds, 0.9 * delay)
+        XCTAssertGreaterThanOrEqual(elapsedSeconds, minDelay)
     }
 
     func testIgnoreOnBack() {
