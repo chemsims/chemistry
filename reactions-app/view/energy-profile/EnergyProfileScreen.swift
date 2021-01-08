@@ -79,8 +79,10 @@ struct EnergyProfileScreen: View {
                     tempHeightFactor: model.tempHeightFactor,
                     showTemperature: model.temp2 != nil,
                     highlightTop: model.highlight(element: .reactionProfileTop),
-                    highlightBottom: model.highlight(element: .reactionProfileBottom)
+                    highlightBottom: model.highlight(element: .reactionProfileBottom),
+                    moleculeHighlightColor: model.color(for: [.moleculeChartLabel, .reactionProfileBottom])
                 )
+                .colorMultiply(model.color(for: [.reactionProfileTop, .reactionProfileBottom]))
 
                 ReactionOrderSelection(
                     isToggled: model.canSetReaction ? $selectReactionIsToggled : .constant(false),

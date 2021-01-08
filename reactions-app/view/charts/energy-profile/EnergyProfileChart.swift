@@ -14,6 +14,7 @@ struct EnergyProfileChart: View {
     let showTemperature: Bool
     let highlightTop: Bool
     let highlightBottom: Bool
+    let moleculeHighlightColor: Color
 
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
@@ -111,8 +112,12 @@ struct EnergyProfileChart: View {
 
     private var annotations: some View {
         ZStack {
-            reactantsAnnotations
-            productAnnotation
+            Group {
+                reactantsAnnotations
+                productAnnotation
+            }
+            .colorMultiply(moleculeHighlightColor)
+
             eaHeightAnnotation
         }
         .frame(width: settings.chartSize, height: settings.chartSize)
@@ -303,7 +308,8 @@ struct EnergyProfileChart_Previews: PreviewProvider {
             tempHeightFactor: 1,
             showTemperature: true,
             highlightTop: true,
-            highlightBottom: true
+            highlightBottom: true,
+            moleculeHighlightColor: .white
         )
     }
 }

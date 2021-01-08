@@ -18,5 +18,6 @@ enum EnergyProfileScreenElement {
          catalysts,
          beaker,
          tempSlider,
-         menuIcon
+         menuIcon,
+         moleculeChartLabel
 }

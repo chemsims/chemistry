@@ -205,7 +205,12 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func color(for element: EnergyProfileScreenElement?) -> Color {
-        if (highlight(element: element)) {
+        color(for: [element])
+    }
+
+    func color(for elements: [EnergyProfileScreenElement?]) -> Color {
+        let highlightIndex = elements.first { highlight(element: $0) }
+        if (highlightIndex != nil) {
             return .white
         }
         return Styling.inactiveScreenElement
