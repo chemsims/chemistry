@@ -15,7 +15,7 @@ class QuizViewModelTests: XCTestCase {
         XCTAssertEqual(QuizState.running, model.quizState)
         XCTAssertTrue(model.selectedAnswer == nil)
         model.answer(option: QuizOption.A)
-        XCTAssertTrue(model.selectedAnswer == QuizOption.A)
+        XCTAssertTrue(model.selectedAnswer == QuizAnswerInput(firstAnswer: .A))
         XCTAssertTrue(model.questionIndex == 0)
 
         model.next()
@@ -24,7 +24,7 @@ class QuizViewModelTests: XCTestCase {
 
         model.back()
         XCTAssertTrue(model.questionIndex == 0)
-        XCTAssertTrue(model.selectedAnswer == QuizOption.A)
+        XCTAssertTrue(model.selectedAnswer == QuizAnswerInput(firstAnswer: .A))
 
         model.next()
         XCTAssertTrue(model.questionIndex == 1)

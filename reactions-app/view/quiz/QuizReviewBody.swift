@@ -40,7 +40,7 @@ struct QuizReviewBody: View {
 
     private func reviewCard(index: Int) -> some View {
         let question = model.availableQuestions[index]
-        let selectedOption = model.selectedOption(index: index)
+        let selectedOption = model.selectedAnswer(index: index)?.firstAnswer
         let isCorrect = selectedOption == question.correctOption
 
         return QuestionReviewCard(

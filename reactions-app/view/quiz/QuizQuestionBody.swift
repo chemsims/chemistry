@@ -100,7 +100,7 @@ struct QuizQuestionsBody: View {
 
                 if (styleCorrect(option) || styleIncorrect(option)) {
                     RoundedRectangle(cornerRadius: settings.progressCornerRadius)
-                        .strokeBorder(lineWidth: answerLineWidth(option: option))
+                        .strokeBorder(lineWidth: settings.activeLineWidth)
                         .foregroundColor(answerBorder(option: option))
                         .overlay(overlay(option: option), alignment: .topTrailing)
                 }
@@ -133,7 +133,7 @@ struct QuizQuestionsBody: View {
             if (styleCorrect(option) || styleIncorrect(option)) {
                 QuizAnswerIconOverlay(isCorrect: styleCorrect(option))
                     .scaleEffect(badgeScale)
-                    .onAppear(perform: runBadgeAnimation)
+//                    .onAppear(perform: runBadgeAnimation)
             }
         }
         .frame(width: settings.navSize, height: settings.navSize)
@@ -141,30 +141,30 @@ struct QuizQuestionsBody: View {
         .id("\(model.questionIndex)-\(option.hashValue)")
     }
 
-    private func runBadgeAnimation() {
-        guard !reduceMotion else {
-            return
-        }
-        if (model.selectedAnswer == model.correctOption) {
-            badgeScale = 1
-            withAnimation(.easeOut(duration: 0.35)) {
-                badgeScale = 1.2
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(350)) {
-                withAnimation(.easeInOut(duration: 0.25)) {
-                    badgeScale = 1
-                }
-            }
-        } else {
-            badgeScale = 0.75
-            withAnimation(.spring(response: 0.4, dampingFraction: 0.5)) {
-                badgeScale = 1
-            }
-        }
-    }
+//    private func runBadgeAnimation() {
+//        guard !reduceMotion else {
+//            return
+//        }
+//        if (model.selectedAnswer == model.correctOption) {
+//            badgeScale = 1
+//            withAnimation(.easeOut(duration: 0.35)) {
+//                badgeScale = 1.2
+//            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(350)) {
+//                withAnimation(.easeInOut(duration: 0.25)) {
+//                    badgeScale = 1
+//                }
+//            }
+//        } else {
+//            badgeScale = 0.75
+//            withAnimation(.spring(response: 0.4, dampingFraction: 0.5)) {
+//                badgeScale = 1
+//            }
+//        }
+//    }
 
     private func handleAnswer(option: QuizOption) {
-        guard model.selectedAnswer == nil else {
+        guard !model.hasSelectedCorrectOption else {
             return
         }
         model.answer(option: option)
@@ -175,7 +175,7 @@ struct QuizQuestionsBody: View {
             return Styling.Quiz.correctAnswerBackground
         } else if (styleIncorrect(option)) {
             return Styling.Quiz.wrongAnswerBackground
-        } else if (model.selectedAnswer != nil) {
+        } else if (model.hasSelectedCorrectOption) {
             return Styling.Quiz.disabledAnswerBackground
         }
         return Styling.Quiz.answerBackground
@@ -190,15 +190,13 @@ struct QuizQuestionsBody: View {
         return Styling.Quiz.answerBackground
     }
 
-    private func answerLineWidth(option: QuizOption) -> CGFloat {
-        styleCorrect(option) || styleIncorrect(option) ? settings.activeLineWidth : settings.standardLineWidth
-    }
-
     private func styleCorrect(_ option: QuizOption) -> Bool {
-        model.selectedAnswer != nil && model.correctOption == option
+        option == model.correctOption && model.hasSelectedCorrectOption
     }
 
     private func styleIncorrect(_ option: QuizOption) -> Bool {
-        model.selectedAnswer == option && model.correctOption != option
+        let isIncorrect = model.correctOption != option
+        let isSelected = model.selectedAnswer?.allAnswers.contains(option) ?? false
+        return isIncorrect && isSelected
     }
 }

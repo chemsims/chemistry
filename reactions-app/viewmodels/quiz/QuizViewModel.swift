@@ -17,7 +17,7 @@ class QuizViewModel: ObservableObject {
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
 
-    @Published var answers = [Int:QuizOption]()
+    @Published var answers = [Int:QuizAnswerInput]()
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
@@ -25,7 +25,7 @@ class QuizViewModel: ObservableObject {
 
     @Published var showExplanation: Bool = false
 
-    var selectedAnswer: QuizOption? {
+    var selectedAnswer: QuizAnswerInput? {
         answers[questionIndex]
     }
 
@@ -35,7 +35,7 @@ class QuizViewModel: ObservableObject {
 
     var correctAnswers: Int {
         answers.filter { answer in
-            availableQuestions[answer.key].correctOption == answer.value
+            availableQuestions[answer.key].correctOption == answer.value.firstAnswer
         }.count
     }
 
@@ -55,7 +55,7 @@ class QuizViewModel: ObservableObject {
         UIAccessibility.isReduceMotionEnabled
     }
 
-    func selectedOption(index: Int) -> QuizOption? {
+    func selectedAnswer(index: Int) -> QuizAnswerInput? {
         answers[index]
     }
 
@@ -63,7 +63,7 @@ class QuizViewModel: ObservableObject {
         switch (quizState) {
         case .pending:
             quizState = .running
-            answers = [Int:QuizOption]()
+            answers = [Int:QuizAnswerInput]()
             setProgress()
         case .running:
             if (questionIndex == quizLength - 1) {
@@ -94,7 +94,10 @@ class QuizViewModel: ObservableObject {
     }
 
     func answer(option: QuizOption) {
-        answers[questionIndex] = option
+        let newAnswer =
+            answers[questionIndex]?.appending(option) ?? QuizAnswerInput(firstAnswer: option)
+
+        answers[questionIndex] = newAnswer
         setShowExplanation(animate: true)
     }
 
@@ -113,7 +116,7 @@ class QuizViewModel: ObservableObject {
     }
 
     private func setShowExplanation(animate: Bool) {
-        let shouldShowExplanation = selectedAnswer != nil && selectedAnswer != correctOption
+        let shouldShowExplanation = selectedAnswer != nil && selectedAnswer?.firstAnswer != correctOption
 
         let duration = QuizViewModel.explanationExpansionDuration(currentQuestion)
 
@@ -128,6 +131,10 @@ class QuizViewModel: ObservableObject {
 
     var currentQuestion: QuizQuestionDisplay {
         availableQuestions[questionIndex]
+    }
+
+    var hasSelectedCorrectOption: Bool {
+        answers[questionIndex]?.allAnswers.contains(correctOption) ?? false
     }
 
     private func setQuestion(newIndex: Int) {
@@ -157,5 +164,29 @@ extension QuizViewModel {
 
         let duration = equation.getY(at: CGFloat(contentLength))
         return Double(min(maxDuration, max(duration, minDuration)))
+    }
+}
+
+struct QuizAnswerInput: Equatable {
+    let firstAnswer: QuizOption
+    let otherAnswers: [QuizOption]
+
+    init(firstAnswer: QuizOption, otherAnswers: [QuizOption] = []) {
+        self.firstAnswer = firstAnswer
+        self.otherAnswers = otherAnswers
+    }
+
+    func appending(_ option: QuizOption) -> QuizAnswerInput {
+        guard option != firstAnswer else {
+            return self
+        }
+        return QuizAnswerInput(
+            firstAnswer: firstAnswer,
+            otherAnswers: otherAnswers + [option]
+        )
+    }
+
+    var allAnswers: [QuizOption] {
+        [firstAnswer] + otherAnswers
     }
 }
