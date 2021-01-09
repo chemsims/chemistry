@@ -103,7 +103,9 @@ struct EnergyProfileChart: View {
         let curve = BellCurve(
             peak: tempHeightFactor,
             frameWidth: settings.chartSize,
-            frameHeight: settings.chartSize
+            frameHeight: settings.chartSize,
+            leftAsymptote: eaShape.leftAsymptote,
+            rightAsymptote: eaShape.rightAsymptote
         )
         return Rectangle()
             .frame(height: 1)
@@ -130,16 +132,12 @@ struct EnergyProfileChart: View {
     }
 
     private var eaHeightAnnotation: some View {
-        let curve = BellCurve(
-            peak: scaledPeak,
-            frameWidth: settings.chartSize,
-            frameHeight: settings.chartSize
-        )
-
-        let startY = curve.absoluteY(absoluteX: 0)
-        let midY = curve.absoluteY(absoluteX: settings.chartSize / 2)
+        let leftY = scaledBellCurve.absoluteY(absoluteX: 0)
+        let rightY = scaledBellCurve.absoluteY(absoluteX: settings.chartSize)
+        let startY = min(leftY, rightY)
+        let midY = scaledBellCurve.absoluteY(absoluteX: settings.chartSize / 2)
         let height = startY - midY
-        let padding = settings.chartSize * 0.06
+        let padding = settings.chartSize * 0.04
 
         return VStack(spacing: 0) {
             Spacer()
@@ -150,7 +148,7 @@ struct EnergyProfileChart: View {
                     width: settings.chartSize * 0.05,
                     height: height - padding
                 )
-            Text("Ea")
+            TextLinesView(line: "E_a_", fontSize: settings.fontSize)
             Spacer()
         }.foregroundColor(.black)
     }
@@ -212,6 +210,24 @@ struct EnergyProfileChart: View {
         order.energyProfileShapeSettings
     }
 
+    private var bellCurve: BellCurve {
+        makeCurve(peak: eaShape.peak)
+    }
+
+    private var scaledBellCurve: BellCurve {
+        makeCurve(peak: eaShape.peak * peakHeightFactor)
+    }
+
+    private func makeCurve(peak: CGFloat) -> BellCurve {
+        BellCurve(
+            peak: peak,
+            frameWidth: settings.chartSize,
+            frameHeight: settings.chartSize,
+            leftAsymptote: eaShape.leftAsymptote,
+            rightAsymptote: eaShape.rightAsymptote
+        )
+    }
+
     private var curve: BellCurve2 {
         BellCurve2(
             peak: eaShape.peak,
@@ -233,38 +249,6 @@ struct EnergyProfileChart: View {
         let padding = settings.annotationMoleculeSize * 0.4
         return spacer + padding
     }
-}
-
-fileprivate struct EnergyProfileHead: Shape {
-
-    let radius: CGFloat
-    var concentrationC: CGFloat
-    var peak: CGFloat
-
-    var animatableData: AnimatablePair<CGFloat, CGFloat> {
-        get { AnimatablePair(concentrationC, peak) }
-        set {
-            concentrationC = newValue.first
-            peak = newValue.second
-        }
-    }
-
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-
-        let curve = BellCurve(peak: peak, frameWidth: rect.width, frameHeight: rect.height)
-        let absoluteX: CGFloat = concentrationC * rect.width
-        let absoluteY = curve.absoluteY(absoluteX: absoluteX)
-
-        let originX = absoluteX - radius
-        let originY = absoluteY - radius
-
-        let headRect = CGRect(x: originX, y: originY, width: radius * 2, height: radius * 2)
-        path.addEllipse(in: headRect)
-
-        return path
-    }
-
 }
 
 
@@ -321,8 +305,8 @@ fileprivate struct BellCurve {
     let frameWidth: CGFloat
     let frameHeight: CGFloat
 
-    let leftAsymptote: CGFloat = 0.5
-    let rightAsymptote: CGFloat = 0.2
+    let leftAsymptote: CGFloat
+    let rightAsymptote: CGFloat
     private let minPeak: CGFloat = 0.7
     private let maxPeak: CGFloat = 0.9
 
