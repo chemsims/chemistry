@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct QuizTable {
+struct QuizTable: Equatable {
     let rows: [[TextLine]]
 
     init(rows: [[TextLine]]) {

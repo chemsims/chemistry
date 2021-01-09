@@ -131,7 +131,7 @@ struct QuizQuestion {
     }
 }
 
-struct QuizQuestionDisplay {
+struct QuizQuestionDisplay: Equatable {
     let question: TextLine
     let options: [QuizOption:QuizAnswer]
     let correctOption: QuizOption

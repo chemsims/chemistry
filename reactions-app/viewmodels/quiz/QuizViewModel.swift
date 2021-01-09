@@ -8,12 +8,10 @@ import SwiftUI
 class QuizViewModel: ObservableObject {
 
     private let allQuestions: [QuizQuestionDisplay]
-    let difficultyCount: [QuizDifficulty:Int]
 
     init(questions: [QuizQuestion]) {
         let displayQuestions = questions.map { $0.randomDisplay() }
         self.allQuestions = displayQuestions
-        difficultyCount = QuizDifficulty.counts(questions: displayQuestions)
     }
 
     var nextScreen: (() -> Void)?
@@ -21,7 +19,7 @@ class QuizViewModel: ObservableObject {
 
     @Published var answers = [Int:QuizOption]()
     @Published var progress: CGFloat = 0
-    @Published var quizState = QuizState.completed
+    @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
     @Published private(set) var questionIndex = 0
 
@@ -42,19 +40,15 @@ class QuizViewModel: ObservableObject {
     }
 
     var availableQuestions: [QuizQuestionDisplay] {
-        allQuestions.filter { question in
-            question.difficulty <= quizDifficulty
-        }
+        QuizDifficulty.availableQuestions(at: quizDifficulty, questions: allQuestions)
     }
 
     var availableDifficulties: [QuizDifficulty] {
-        QuizDifficulty.allCases.filter {
-            (difficultyCount[$0] ?? 0) > 0
-        }.sorted()
+        QuizDifficulty.allCases
     }
 
     var quizLength: Int {
-        difficultyCount[quizDifficulty] ?? 0
+        quizDifficulty.quizLength
     }
 
     private var reduceMotion: Bool {

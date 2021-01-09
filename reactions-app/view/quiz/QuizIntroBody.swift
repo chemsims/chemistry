@@ -35,7 +35,6 @@ struct QuizIntroBody: View {
         difficulty: QuizDifficulty
     ) -> some View {
         let isSelected = model.quizDifficulty == difficulty
-        let count = model.difficultyCount[difficulty] ?? 0
 
         return ZStack {
             RoundedRectangle(cornerRadius: settings.progressCornerRadius)
@@ -53,7 +52,7 @@ struct QuizIntroBody: View {
                 .foregroundColor(
                     isSelected ? Styling.Quiz.selectedDifficultyBorder : .black
                 )
-            questionCount(count)
+            questionCount(difficulty.quizLength)
                 .foregroundColor(
                     isSelected ? Styling.Quiz.selectedDifficultyBorder : Styling.Quiz.unselectedDifficultyCount
                 )

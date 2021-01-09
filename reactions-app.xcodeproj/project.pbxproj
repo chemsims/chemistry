@@ -105,7 +105,7 @@
 		5787A72B259D15DC00730D50 /* EnergyProfileQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787A72A259D15DC00730D50 /* EnergyProfileQuizQuestions.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
-		57A26855259A011600919E48 /* QuizDifficultyCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A26854259A011600919E48 /* QuizDifficultyCountTests.swift */; };
+		57A26855259A011600919E48 /* QuizDifficultyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A26854259A011600919E48 /* QuizDifficultyTests.swift */; };
 		57A26859259A6FD000919E48 /* FirstOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A26858259A6FD000919E48 /* FirstOrderQuizQuestions.swift */; };
 		57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */; };
 		57AA012425A8C635001131A0 /* EnergyProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA012325A8C635001131A0 /* EnergyProfileViewModelTests.swift */; };
@@ -280,7 +280,7 @@
 		5787A72A259D15DC00730D50 /* EnergyProfileQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileQuizQuestions.swift; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
-		57A26854259A011600919E48 /* QuizDifficultyCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDifficultyCountTests.swift; sourceTree = "<group>"; };
+		57A26854259A011600919E48 /* QuizDifficultyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDifficultyTests.swift; sourceTree = "<group>"; };
 		57A26858259A6FD000919E48 /* FirstOrderQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputPersistenceTests.swift; sourceTree = "<group>"; };
 		57AA012325A8C635001131A0 /* EnergyProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileViewModelTests.swift; sourceTree = "<group>"; };
@@ -381,7 +381,7 @@
 				57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */,
 				5736B668258A79BD002CEF5E /* QuizViewModelTests.swift */,
 				57778B8925937D8C00254262 /* QuizQuestionTests.swift */,
-				57A26854259A011600919E48 /* QuizDifficultyCountTests.swift */,
+				57A26854259A011600919E48 /* QuizDifficultyTests.swift */,
 				57631771259B814100D7CE2C /* SizeAdjusterTests.swift */,
 				5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */,
 				5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */,
@@ -1008,7 +1008,7 @@
 				57DAE4C62577A299006D945B /* CGFloatRoundingTests.swift in Sources */,
 				57778B8A25937D8C00254262 /* QuizQuestionTests.swift in Sources */,
 				5727485F25A5F489000CFA1E /* NavigationViewModelTests.swift in Sources */,
-				57A26855259A011600919E48 /* QuizDifficultyCountTests.swift in Sources */,
+				57A26855259A011600919E48 /* QuizDifficultyTests.swift in Sources */,
 				57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */,
 				57631772259B814100D7CE2C /* SizeAdjusterTests.swift in Sources */,
 			);

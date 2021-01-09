@@ -34,6 +34,19 @@ enum QuizDifficulty: Int, CaseIterable, Comparable {
 
 
 extension QuizDifficulty {
+
+    static func availableQuestions(
+        at difficulty: QuizDifficulty,
+        questions: [QuizQuestionDisplay]
+    ) -> [QuizQuestionDisplay] {
+        let easyQuestions = questions.filter { $0.difficulty == .easy }
+        let mediumQuestions = questions.filter { $0.difficulty == .medium }
+        let hardQuestions = questions.filter { $0.difficulty == .hard }
+
+        let allQuestions = easyQuestions + mediumQuestions + hardQuestions
+        return Array(allQuestions.prefix(difficulty.quizLength))
+    }
+
     static func counts(questions: [QuizQuestionDisplay]) -> [QuizDifficulty:Int] {
         let allCounts = QuizDifficulty.allCases.map { difficulty in
             (difficulty, questions.filter { $0.difficulty == difficulty }.count)
