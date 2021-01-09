@@ -25,6 +25,14 @@ class EnergyProfileViewModel: ObservableObject {
 
     @Published var particleState = CatalystParticleState.none
 
+    var catalystColor: UIColor {
+        catalystInBeaker?.color ?? .black
+    }
+
+    var catalystInBeaker: Catalyst? {
+        catalystState.catalyst ?? usedCatalysts.last
+    }
+
     var chartInput: EnergyProfileChartInput {
         EnergyProfileChartInput(
             shape: selectedReaction.energyProfileShapeSettings,

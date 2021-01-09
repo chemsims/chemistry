@@ -142,7 +142,8 @@ struct EnergyProfileScreen: View {
                 highlightCatalyst: model.highlight(element: .catalysts),
                 availableCatalysts: model.availableCatalysts,
                 usedCatalysts: model.usedCatalysts,
-                reactionInput: model.selectedReaction.energyProfileReactionInput
+                reactionInput: model.selectedReaction.energyProfileReactionInput,
+                catalystColor: model.catalystColor
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .padding(.leading, settings.beakerLeadingPadding)

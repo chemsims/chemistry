@@ -89,6 +89,7 @@ class EnergyProfileViewModelTests: XCTestCase {
             // A starts shaking
             navigation.next()
             XCTAssertEqual(model.particleState, .fallFromContainer)
+            XCTAssertEqual(model.catalystInBeaker, .A)
 
             // A stops shaking
             navigation.next()
@@ -98,7 +99,6 @@ class EnergyProfileViewModelTests: XCTestCase {
             while (model.reactionState != .completed) {
                 navigation.next()
             }
-            print("B")
             // First reaction has ended
             XCTAssertEqual(model.reactionState, .completed)
             XCTAssertEqual(model.catalystState, .active)
@@ -114,6 +114,7 @@ class EnergyProfileViewModelTests: XCTestCase {
             // B starts shaking
             navigation.next()
             XCTAssertEqual(model.particleState, .fallFromContainer)
+            XCTAssertEqual(model.catalystInBeaker, .B)
 
             // B stops shaking
             navigation.next()
@@ -129,7 +130,7 @@ class EnergyProfileViewModelTests: XCTestCase {
             XCTAssertEqual(model.catalystState, .active)
             XCTAssertEqual(model.usedCatalysts, [.A, .B])
             XCTAssertEqual(model.particleState, .fallFromContainer)
-            print("C")
+
             // Prepare a new catalyst (C)
             navigation.next()
             XCTAssertEqual(model.reactionState, .pending)
@@ -139,13 +140,12 @@ class EnergyProfileViewModelTests: XCTestCase {
             // C starts shaking
             navigation.next()
             XCTAssertEqual(model.particleState, .fallFromContainer)
+            XCTAssertEqual(model.catalystInBeaker, .C)
 
             // C stops shaking
             navigation.next()
             XCTAssertEqual(model.catalystState, .selected(catalyst: .C))
             XCTAssertEqual(model.particleState, .fallFromContainer)
-
-
 
             // Last reaction has ended
             while (model.reactionState != .completed) {
@@ -160,7 +160,6 @@ class EnergyProfileViewModelTests: XCTestCase {
             navigation.back()
             XCTAssertEqual(model.reactionState, .running)
 
-
             // Back to end of 2nd reaction
             while (model.reactionState != .completed) {
                 navigation.back()
@@ -169,6 +168,7 @@ class EnergyProfileViewModelTests: XCTestCase {
             XCTAssertEqual(model.catalystState, .active)
             XCTAssertEqual(model.particleState, .appearInBeaker)
             XCTAssertEqual(model.usedCatalysts, [.A, .B])
+            XCTAssertEqual(model.catalystInBeaker, .B)
 
             navigation.back()
             XCTAssertEqual(model.reactionState, .running)
@@ -183,13 +183,14 @@ class EnergyProfileViewModelTests: XCTestCase {
             XCTAssertEqual(model.catalystState, .active)
             XCTAssertEqual(model.particleState, .appearInBeaker)
             XCTAssertEqual(model.usedCatalysts, [.A])
-            print("D")
+            XCTAssertEqual(model.catalystInBeaker, .A)
+
             navigation.back()
             XCTAssertEqual(model.reactionState, .running)
             XCTAssertEqual(model.catalystState, .selected(catalyst: .A))
             XCTAssertEqual(model.particleState, .appearInBeaker)
+            XCTAssertEqual(model.catalystColor, Catalyst.A.color)
 
-            print("E")
             while (model.catalystState != .active) {
                 navigation.back()
             }
@@ -201,7 +202,6 @@ class EnergyProfileViewModelTests: XCTestCase {
         while (model.catalystState != .active) {
             navigation.next()
         }
-
         runForwardFromFirstActiveState()
         runBackToFirstActiveState()
         runForwardFromFirstActiveState()

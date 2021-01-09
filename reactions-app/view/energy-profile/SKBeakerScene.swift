@@ -10,7 +10,11 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     let waterHeight: CGFloat
     let updateConcentrationC: ((CGFloat) -> Void)
     let emitterPosition: CGPoint
-    var catalystColor: UIColor
+    var catalystColor: UIColor {
+        didSet {
+            updateCatalystColor()
+        }
+    }
 
     var moleculeAColor: UIColor {
         didSet {
@@ -94,6 +98,16 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
                     shape.fillColor = moleculeBColor
                 } else if (physics.categoryBitMask == moleculeCCategory) {
                     shape.fillColor = moleculeCColor
+                }
+            }
+        }
+    }
+
+    private func updateCatalystColor() {
+        children.forEach { node in
+            if let shape = node as? SKShapeNode, let physics = node.physicsBody {
+                if (physics.categoryBitMask == catalystCategory) {
+                    shape.fillColor = catalystColor
                 }
             }
         }
@@ -321,6 +335,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         physics.restitution = 1
         physics.mass = 0.3
         physics.usesPreciseCollisionDetection = true
+        physics.categoryBitMask = catalystCategory
 
         physics.collisionBitMask = sceneFrameCategory
         return physics
@@ -356,7 +371,6 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         let xVelocity = verticalMagnitude * tan(radians)
 
         physics.velocity = CGVector(dx: xVelocity, dy: -verticalMagnitude)
-        physics.categoryBitMask = catalystCategory
 
         let catalyst = catalystNode(radius: radius, path: path)
         catalyst.physicsBody = physics
