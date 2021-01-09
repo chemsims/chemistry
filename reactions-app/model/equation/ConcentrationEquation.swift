@@ -94,13 +94,6 @@ struct FirstOrderConcentration: ConcentrationEquation {
         self.rateConstant = rateConstant
     }
 
-    init(c1: CGFloat, c2: CGFloat, time: CGFloat) {
-        self.init(
-            a0: c1,
-            rateConstant: FirstOrderConcentration.getRate(c1: c1, c2: c2, time: time)
-        )
-    }
-
     init(c1: CGFloat, t1: CGFloat, rateConstant: CGFloat) {
         let a0 = c1 / CGFloat(pow(Darwin.M_E, -Double(rateConstant * t1)))
         self.init(a0: a0, rateConstant: rateConstant)
@@ -121,11 +114,13 @@ struct FirstOrderConcentration: ConcentrationEquation {
         log(2) / rateConstant
     }
 
-    static func getRate(c1: CGFloat, c2: CGFloat, time: CGFloat) -> CGFloat {
+    static func rateConstant(c1: CGFloat, c2: CGFloat, t1: CGFloat, t2: CGFloat) -> CGFloat {
         assert(c1 != 0)
-        assert(time != 0)
-        let logC = log(c2 / c1)
-        return -1 * (logC / time)
+        assert(c2 != 0)
+        assert(t2 != t1)
+        let numerator = log(c2 / c1)
+        let denominator = t1 - t2
+        return numerator / denominator
     }
 }
 
@@ -151,13 +146,6 @@ struct SecondOrderConcentration: ConcentrationEquation {
         assert(a0 != 0)
         self.a0 = a0
         self.rateConstant = rateConstant
-    }
-
-    init(c1: CGFloat, c2: CGFloat, time: CGFloat) {
-        self.init(
-            a0: c1,
-            rateConstant: SecondOrderConcentration.getRate(c1: c1, c2: c2, time: time)
-        )
     }
 
     init(c1: CGFloat, t1: CGFloat, rateConstant: CGFloat) {
@@ -187,12 +175,13 @@ struct SecondOrderConcentration: ConcentrationEquation {
         return (1 / (concentration  * rateConstant)) - (1 / (a0 * rateConstant))
     }
 
-    static func getRate(c1: CGFloat, c2: CGFloat, time: CGFloat) -> CGFloat {
-        assert(c1 != 0)
+    static func rateConstant(c1: CGFloat, c2: CGFloat, t1: CGFloat, t2: CGFloat) -> CGFloat {
         assert(c2 != 0)
-        let invC1 = 1 / c1
-        let invC2 = 1 / c2
-        return (invC2 - invC1) / time
+        assert(c1 != 0)
+        assert(t2 != t1)
+        let invA2 = 1 / c2
+        let invA1 = 1 / c1
+        return (invA2 - invA1) / (t2 - t1)
     }
 }
 

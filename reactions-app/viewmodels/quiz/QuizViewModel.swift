@@ -158,9 +158,9 @@ extension QuizViewModel {
     static func explanationExpansionDuration(_ question: QuizQuestionDisplay) -> Double {
         let contentLength = question.longExplanation.map(\.length).reduce(0) { $0 + $1 }
 
-        let minDuration: CGFloat = 0.4
+        let minDuration: CGFloat = 0.3
         let maxDuration: CGFloat = 1
-        let equation = LinearEquation(x1: 100, y1: minDuration, x2: 600, y2: 1)
+        let equation = LinearEquation(x1: 100, y1: minDuration, x2: 700, y2: 1)
 
         let duration = equation.getY(at: CGFloat(contentLength))
         return Double(min(maxDuration, max(duration, minDuration)))

@@ -46,6 +46,18 @@ extension ReactionInputModel {
     var rateAtT2: CGFloat? {
         inputT2.flatMap { t2 in concentrationA?.getRate(at: t2) }
     }
+
+    var reactionInput: ReactionInput? {
+        if let c2 = inputC2, let t2 = inputT2 {
+            return ReactionInput(
+                c1: inputC1,
+                c2: c2,
+                t1: inputT1,
+                t2: t2
+            )
+        }
+        return nil
+    }
 }
 
 class ReactionInputAllProperties: ReactionInputModel {
@@ -94,9 +106,9 @@ class ReactionInputAllProperties: ReactionInputModel {
             case .Zero:
                 return ZeroOrderConcentration.getRate(t1: inputT1, c1: inputC1, t2: t2, c2: c2)
             case .First:
-                return FirstOrderConcentration.getRate(c1: inputC1, c2: c2, time: t2)
+                return FirstOrderConcentration.rateConstant(c1: inputC1, c2: c2, t1: inputT1, t2: t2)
             case .Second:
-                return SecondOrderConcentration.getRate(c1: inputC1, c2: c2, time: t2)
+                return SecondOrderConcentration.rateConstant(c1: inputC1, c2: c2, t1: inputT1, t2: t2)
             }
         }
         return nil

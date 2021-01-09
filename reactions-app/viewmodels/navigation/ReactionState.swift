@@ -65,7 +65,7 @@ struct OrderedReactionInitialNodes {
                 SetT0ForFixedRate(order: order),
                 SetT1ForFixedRate(),
                 RunAnimation(
-                    statement: ZeroOrderStatements.reactionInProgress,
+                    statement: reactionInProgressStatement(order: order),
                     order: order,
                     persistence: persistence,
                     initialiseCurrentTime: true
@@ -76,6 +76,13 @@ struct OrderedReactionInitialNodes {
                 )
             ]
         )!
+    }
+
+    private static func reactionInProgressStatement(order: ReactionOrder) -> [TextLine] {
+        switch (order) {
+        case .Zero: return ZeroOrderStatements.reactionInProgress
+        default: return ReactionStatements.inProgress
+        }
     }
 }
 
@@ -295,6 +302,7 @@ class InitialOrderedStep: ReactionState {
         model.input.inputT2 = ReactionSettings.initialT
         model.inputsAreDisabled = false
         model.highlightedElements = []
+        model.canSelectReaction = false
     }
 }
 

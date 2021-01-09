@@ -229,7 +229,7 @@ struct FirstOrderEquationView2_Preview: PreviewProvider {
             c2: 2,
             t: 1,
             currentTime: nil,
-            concentration: FirstOrderConcentration(c1: 1, c2: 0.1, time: 10),
+            concentration: FirstOrderConcentration(a0: 1, rateConstant: 0.05),
             reactionHasStarted: false,
             rateConstantColor: .white,
             halfLifeColor: .white,
