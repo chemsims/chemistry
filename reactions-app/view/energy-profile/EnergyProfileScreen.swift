@@ -75,7 +75,6 @@ struct EnergyProfileScreen: View {
                         chartSize: settings.chartsSize
                     ),
                     peakHeightFactor: model.peakHeightFactor,
-                    initialHeightFactor: model.initialHeightFactor,
                     tempHeightFactor: model.tempHeightFactor,
                     showTemperature: model.temp2 != nil,
                     highlightTop: model.highlight(element: .reactionProfileTop),

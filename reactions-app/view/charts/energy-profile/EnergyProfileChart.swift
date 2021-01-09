@@ -9,7 +9,6 @@ struct EnergyProfileChart: View {
 
     let settings: EnergyRateChartSettings
     let peakHeightFactor: CGFloat
-    let initialHeightFactor: CGFloat
     let tempHeightFactor: CGFloat
     let showTemperature: Bool
     let highlightTop: Bool
@@ -79,7 +78,7 @@ struct EnergyProfileChart: View {
                 }
 
                 EnergyProfileChartShape(
-                    peak: initialHeightFactor,
+                    peak: eaShape.peak,
                     leftAsymptote: eaShape.leftAsymptote,
                     rightAsymptote: eaShape.rightAsymptote
                 )
@@ -202,7 +201,7 @@ struct EnergyProfileChart: View {
     }
 
     private var scaledPeak: CGFloat {
-        peakHeightFactor * initialHeightFactor
+        peakHeightFactor * eaShape.peak
     }
 
     private var input: EnergyProfileReactionInput {
@@ -275,14 +274,20 @@ fileprivate struct EnergyProfileChartShape: Shape {
     var leftAsymptote: CGFloat
     var rightAsymptote: CGFloat
 
+    var animatableData: AnimatablePair<CGFloat, AnimatablePair<CGFloat, CGFloat>> {
+        get {
+            AnimatablePair(peak, AnimatablePair(leftAsymptote, rightAsymptote))
+        }
+        set {
+            peak = newValue.first
+            leftAsymptote = newValue.second.first
+            rightAsymptote = newValue.second.second
+        }
+    }
+
     private let points: CGFloat = 100
     private let minPeak: CGFloat = 0.7
     private let maxPeak: CGFloat = 0.9
-
-    var animatableData: CGFloat {
-        get { peak }
-        set { peak = newValue }
-    }
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -356,13 +361,12 @@ struct EnergyProfileChart_Previews: PreviewProvider {
         EnergyProfileChart(
             settings: EnergyRateChartSettings(chartSize: 250),
             peakHeightFactor: 0,
-            initialHeightFactor: 1,
             tempHeightFactor: 1,
             showTemperature: true,
             highlightTop: true,
             highlightBottom: true,
             moleculeHighlightColor: .white,
-            order: .First
+            order: .Zero
         )
     }
 }

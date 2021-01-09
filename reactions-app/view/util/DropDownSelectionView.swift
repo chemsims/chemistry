@@ -12,7 +12,10 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     @Binding var isToggled: Bool
     @Binding var selection: Data
     let height: CGFloat
+    let animation: Animation?
     let displayString: (Data) -> String
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion: Bool
 
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
@@ -56,7 +59,9 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(75)) {
                     isToggled = false
                 }
-                selection = option
+                withAnimation(reduceMotion ? nil : animation) {
+                    selection = option
+                }
             }
         }) {
             textBox(
@@ -113,6 +118,7 @@ struct DropDownSelectionView_Previews: PreviewProvider {
                 isToggled: .constant(true),
                 selection: .constant(.First),
                 height: 30,
+                animation: nil,
                 displayString: { "\($0)"}
             )
         }

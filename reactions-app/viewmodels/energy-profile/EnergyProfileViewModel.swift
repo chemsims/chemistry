@@ -46,10 +46,6 @@ class EnergyProfileViewModel: ObservableObject {
         return minEnergy + (tempFactor * (maxEnergy - minEnergy))
     }
 
-    var initialHeightFactor: CGFloat {
-        selectedReaction.eaHeightFactor
-    }
-
     private var dispatchId = UUID()
 
     var prevScreen: (() -> Void)?
@@ -114,7 +110,7 @@ class EnergyProfileViewModel: ObservableObject {
     }
     
     var canReactToC: Bool {
-        tempHeightFactor >= (peakHeightFactor * initialHeightFactor)
+        tempHeightFactor >= (peakHeightFactor * selectedReaction.energyProfileShapeSettings.peak)
     }
 
     func setCatalystInProgress(catalyst: Catalyst) -> Void {

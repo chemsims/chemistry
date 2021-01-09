@@ -18,6 +18,7 @@ struct ReactionOrderSelection: View {
             isToggled: $isToggled,
             selection: $selection,
             height: height,
+            animation: Animation.easeOut(duration: 0.75),
             displayString: { "\($0.string) Order Reactions" }
         )
     }

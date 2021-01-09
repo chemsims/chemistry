@@ -22,13 +22,13 @@ extension ReactionOrder {
             )
         case .First:
             return EnergyProfileShapeSettings(
-                peak: 0.9,
+                peak: 0.85,
                 leftAsymptote: 0.2,
                 rightAsymptote: 0.5
             )
         case .Second:
             return EnergyProfileShapeSettings(
-                peak: 0.8,
+                peak: 0.75,
                 leftAsymptote: 0.4,
                 rightAsymptote: 0.3
             )

@@ -125,6 +125,7 @@ struct OrderedReactionScreen<Content: View>: View {
             isToggled: reaction.canSelectReaction ? $reactionSelectionIsToggled : .constant(false),
             selection: $reaction.selectedReaction,
             height: settings.tableButtonSize,
+            animation: nil,
             displayString: { $0.name}
         )
         .frame(height: settings.tableButtonSize, alignment: .top)
