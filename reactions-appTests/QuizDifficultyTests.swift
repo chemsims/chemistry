@@ -55,6 +55,31 @@ class QuizDifficultyTests: XCTestCase {
         XCTAssertEqual(availableQuestions(.hard, questions), questions)
     }
 
+    func testGettingListOfQuestionsWhenTheyAreNotOrderedByDifficulty() {
+        let questions = [
+            makeQuestion(.easy),
+            makeQuestion(.medium),
+            makeQuestion(.medium),
+            makeQuestion(.hard),
+            makeQuestion(.hard),
+            makeQuestion(.hard),
+            makeQuestion(.easy),
+            makeQuestion(.hard),
+            makeQuestion(.medium),
+            makeQuestion(.easy),
+            makeQuestion(.easy),
+            makeQuestion(.medium),
+            makeQuestion(.easy),
+            makeQuestion(.medium),
+        ]
+
+        let expectedEasy = questions.filter { $0.difficulty == .easy }
+        XCTAssertEqual(availableQuestions(.easy, questions), expectedEasy)
+
+        let expectedMedium = questions.filter { $0.difficulty != .hard }
+        XCTAssertEqual(availableQuestions(.medium, questions), expectedMedium)
+    }
+
     func testAllDifficultiesHaveOneQuestion() {
         let questions = makeQuestions(1, .easy) + makeQuestions(1, .medium) + makeQuestions(1, .hard)
         let count = QuizDifficulty.counts(questions: questions.shuffled())

@@ -48,7 +48,7 @@ class QuizViewModel: ObservableObject {
     }
 
     var quizLength: Int {
-        quizDifficulty.quizLength
+        availableQuestions.count
     }
 
     private var reduceMotion: Bool {
