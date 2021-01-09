@@ -30,12 +30,7 @@ fileprivate struct QuizScreenWithSettings: View {
             VStack(spacing: 0) {
                 if (model.quizState != .completed) {
                     progressBar
-                        .frame(
-                            width: settings.progressWidth,
-                            height: settings.progressHeight
-                        )
-                        .padding(.horizontal, settings.progressBarPadding)
-                        .padding(.top, settings.progressBarPadding)
+                        .zIndex(2)
                 }
 
                 if (model.quizState == .running) {
@@ -94,15 +89,25 @@ fileprivate struct QuizScreenWithSettings: View {
 
     private var progressBar: some View {
         ZStack {
+            Rectangle()
+                .frame(height: settings.progressHeight + (2 * settings.progressBarPadding))
+                .foregroundColor(.white)
+                .shadow(radius: 3, y: 0)
+                .edgesIgnoringSafeArea(.all)
+
             ProgressBar(
                 progress: model.progress,
-                progressColor: .orangeAccent,
-                backgroundColor: Styling.quizProgressBackground,
-                backgroundBorder: Styling.quizProgressBorder,
-                cornerRadius: settings.progressCornerRadius
+                progressColor: Styling.Quiz.progressForeground,
+                backgroundColor: Styling.Quiz.progressBackground,
+                cornerRadius: 0
             )
+            .frame(
+                width: settings.progressWidth,
+                height: settings.progressHeight
+            )
+            .padding(.horizontal, settings.progressBarPadding)
 
-            if (model.quizState == .running) {
+            if (model.quizState != .pending) {
                 progressLabel
             }
         }
@@ -111,15 +116,15 @@ fileprivate struct QuizScreenWithSettings: View {
     private var progressLabel: some View {
         Text("\(model.questionIndex + 1)/\(model.quizLength)")
         .font(.system(size: settings.progressFontSize))
-        .minimumScaleFactor(0.8)
-        .frame(width: settings.progressLabelWidth, height: 0.9 * settings.progressHeight)
+        .frame(width: settings.progressLabelWidth)
+        .minimumScaleFactor(0.7)
         .background(
             ZStack {
                 RoundedRectangle(
                     cornerRadius: settings.progressCornerRadius
                 )
                 .foregroundColor(Color.white)
-                .opacity(0.5)
+                .opacity(0.8)
 
                 RoundedRectangle(
                     cornerRadius: settings.progressCornerRadius
@@ -132,11 +137,10 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 }
 
-
 struct QuizScreen_Previews: PreviewProvider {
     static var previews: some View {
         QuizScreen(
-            model: QuizViewModel(questions: QuizQuestion.energyProfileQuizQuestions)
+            model: QuizViewModel(questions: QuizQuestion.zeroOrderQuestions)
         )
         .previewLayout(.fixed(width: 568, height: 320))
     }

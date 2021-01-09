@@ -15,7 +15,9 @@ struct QuizAnswerIconOverlay: View {
             Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .foregroundColor(isCorrect ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerIncorrectBorder)
+                .foregroundColor(
+                    isCorrect ? Styling.Quiz.correctAnswerBorder : Styling.Quiz.wrongAnswerBorder
+                )
         }
     }
 }

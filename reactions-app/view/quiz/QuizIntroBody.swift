@@ -15,13 +15,13 @@ struct QuizIntroBody: View {
             Text("Let's take a quiz!")
                 .font(.system(size: settings.fontSize))
             Text("Choose the difficulty level of the quiz")
-                .font(.system(size: 0.8 * settings.fontSize))
-                .foregroundColor(.orangeAccent)
+                .font(.system(size: settings.h2FontSize))
             HStack {
                 Spacer()
                 Button(action: model.skip) {
-                    Text("Skip this quiz")
-                        .font(.system(size: settings.skipFontSize))
+                    Text("Skip Quiz")
+                        .font(.system(size: settings.skipFontSize, weight: .medium))
+                        .foregroundColor(.orangeAccent)
                 }
             }
             ForEach(model.availableDifficulties, id: \.rawValue) { difficulty in
@@ -39,19 +39,38 @@ struct QuizIntroBody: View {
 
         return ZStack {
             RoundedRectangle(cornerRadius: settings.progressCornerRadius)
-                .foregroundColor(Styling.quizAnswer)
+                .foregroundColor(isSelected ? Styling.Quiz.selectedDifficultyBackground : .white)
+                .shadow(radius: 2)
 
-            RoundedRectangle(cornerRadius: settings.progressCornerRadius)
-                .stroke(lineWidth: isSelected ? settings.activeLineWidth : settings.standardLineWidth)
-                .foregroundColor(isSelected ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerBorder)
-
-            VStack {
-                Text(difficulty.displayName)
-                Text("\(count) questions")
-                    .font(.system(size: 0.7 * settings.fontSize))
+            if (isSelected) {
+                RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                    .strokeBorder(lineWidth: settings.activeLineWidth)
+                    .foregroundColor(Styling.Quiz.selectedDifficultyBorder)
             }
+
+            Text(difficulty.displayName)
+                .font(.system(size: settings.fontSize, weight: .bold))
+                .foregroundColor(
+                    isSelected ? Styling.Quiz.selectedDifficultyBorder : .black
+                )
+            questionCount(count)
+                .foregroundColor(
+                    isSelected ? Styling.Quiz.selectedDifficultyBorder : Styling.Quiz.unselectedDifficultyCount
+                )
         }.onTapGesture {
             model.quizDifficulty = difficulty
+        }
+    }
+
+    private func questionCount(_ count: Int) -> some View {
+        VStack {
+            Spacer()
+            HStack {
+                Text("\(count) questions")
+                    .font(.system(size: 0.55 * settings.fontSize, weight: .semibold))
+                    .padding(2 * settings.progressCornerRadius)
+                Spacer()
+            }
         }
     }
 }
@@ -65,3 +84,4 @@ fileprivate extension QuizDifficulty {
         }
     }
 }
+

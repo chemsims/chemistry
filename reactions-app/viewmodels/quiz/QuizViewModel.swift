@@ -120,7 +120,10 @@ class QuizViewModel: ObservableObject {
 
     private func setShowExplanation(animate: Bool) {
         let shouldShowExplanation = selectedAnswer != nil && selectedAnswer != correctOption
-        withAnimation(animate && !reduceMotion ? .easeOut(duration: 0.4) : nil) {
+
+        let duration = QuizViewModel.explanationExpansionDuration(currentQuestion)
+
+        withAnimation(animate && !reduceMotion ? .easeOut(duration: duration) : nil) {
             showExplanation = shouldShowExplanation
         }
     }
@@ -146,5 +149,19 @@ class QuizViewModel: ObservableObject {
             let pending = quizState == .pending
             progress = pending ? 0 : CGFloat(questionIndex + 1) / CGFloat(quizLength)
         }
+    }
+}
+
+
+extension QuizViewModel {
+    static func explanationExpansionDuration(_ question: QuizQuestionDisplay) -> Double {
+        let contentLength = question.longExplanation.map(\.length).reduce(0) { $0 + $1 }
+
+        let minDuration: CGFloat = 0.4
+        let maxDuration: CGFloat = 1
+        let equation = LinearEquation(x1: 100, y1: minDuration, x2: 600, y2: 1)
+
+        let duration = equation.getY(at: CGFloat(contentLength))
+        return Double(min(maxDuration, max(duration, minDuration)))
     }
 }

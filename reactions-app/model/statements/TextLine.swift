@@ -44,6 +44,11 @@ extension TextLine {
     func emphasised() -> TextLine {
         TextLine(content: content.map { $0.setEmphasised(true) })
     }
+
+    func prepending(_ other: TextSegment) -> TextLine {
+        TextLine(content: [other] + content)
+    }
+
 }
 
 /// An individual segment of a line, including whether the content should
@@ -57,7 +62,7 @@ struct TextSegment: Equatable {
 
     init(
         content: String,
-        emphasised: Bool,
+        emphasised: Bool = false,
         scriptType: ScriptType? = nil,
         allowBreaks: Bool = true,
         italic: Bool = false

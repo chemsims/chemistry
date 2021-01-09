@@ -10,7 +10,6 @@ struct ProgressBar: View {
     let progress: CGFloat
     let progressColor: Color
     let backgroundColor: Color
-    let backgroundBorder: Color
     let cornerRadius: CGFloat
 
     var body: some View {
@@ -18,11 +17,7 @@ struct ProgressBar: View {
             ZStack(alignment: .leading) {
                 pill
                     .foregroundColor(backgroundColor)
-
-                pill
-                    .stroke()
-                    .foregroundColor(backgroundBorder)
-
+                
                 pill
                     .foregroundColor(progressColor)
                     .mask(progressMask(geometry: geometry))
@@ -50,8 +45,7 @@ struct ProgressBar_Previews: PreviewProvider {
         ProgressBar(
             progress: 0.9,
             progressColor: .orangeAccent,
-            backgroundColor: Styling.quizProgressBackground,
-            backgroundBorder: Styling.quizProgressBorder,
+            backgroundColor: Styling.Quiz.progressBackground,
             cornerRadius: 10
         ).frame(height: 50)
     }
