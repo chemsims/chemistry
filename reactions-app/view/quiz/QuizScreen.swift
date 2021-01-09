@@ -149,7 +149,7 @@ fileprivate struct QuizScreenWithSettings: View {
                     cornerRadius: settings.progressCornerRadius
                 )
                 .foregroundColor(Color.white)
-                .opacity(0.8)
+                .opacity(0.9)
 
                 RoundedRectangle(
                     cornerRadius: settings.progressCornerRadius
