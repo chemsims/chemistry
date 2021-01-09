@@ -11,6 +11,8 @@ struct EnergyProfileReactionInput {
     let moleculeC: EnergyProfileMoleculeSettings
 }
 
+
+
 extension ReactionOrder {
 
     var energyProfileReactionInput: EnergyProfileReactionInput {

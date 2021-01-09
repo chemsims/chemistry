@@ -29,7 +29,6 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
-        return true
         switch (screen) {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)

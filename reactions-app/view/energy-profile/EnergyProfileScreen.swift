@@ -80,8 +80,10 @@ struct EnergyProfileScreen: View {
                     showTemperature: model.temp2 != nil,
                     highlightTop: model.highlight(element: .reactionProfileTop),
                     highlightBottom: model.highlight(element: .reactionProfileBottom),
-                    moleculeHighlightColor: model.color(for: [.moleculeChartLabel, .reactionProfileBottom]),
-                    input: model.selectedReaction.energyProfileReactionInput
+                    moleculeHighlightColor: model.color(
+                        for: [.moleculeChartLabel, .reactionProfileBottom]
+                    ),
+                    order: model.selectedReaction
                 )
                 .colorMultiply(model.color(for: [.reactionProfileTop, .reactionProfileBottom]))
 
