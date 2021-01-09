@@ -81,20 +81,6 @@ struct Styling {
 
     static let menuPanel = RGB(r: 242, g: 242, b: 242).color
 
-    static let quizProgressBackground = RGB(r: 245, g: 203, b: 196).color
-    static let quizProgressBorder = RGB(r: 240, g: 179, b: 168).color
-    static let quizAnswer = RGB(r: 143, g: 184, b: 222).color
-    static let quizAnswerBorder = RGB(r: 114, g: 165, b: 213).color
-    static let quizAnswerInactive = RGB(r: 191, g: 207, b: 222).color
-
-    static let quizActiveBlue = RGB(r: 232, g: 244, b: 250).color
-    static let quizActiveDarkBlue = RGB(r: 96, g: 147, b: 202).color
-    static let quizAnswerCorrectBackground = RGB(r: 233, g: 243, b: 238).color
-    static let quizAnswerCorrectBorder = RGB(r: 95, g: 181, b: 128).color
-
-    static let quizAnswerIncorrectBorder = RGB(r: 212, g: 91, b: 73).color
-    static let quizAnswerIncorrectBackground = RGB(r: 247, g: 237, b: 234).color
-
     static let navIcon = RGB(r: 68, g: 150, b: 247).color
     static let navIconSelected = RGB(r: 91, g: 141, b: 197).color
 
@@ -138,8 +124,13 @@ extension Styling {
         private static let darkGreen = RGB(r: 95, g: 181, b: 128).color
         private static let veryDarkGreen = RGB(r: 56, g: 121, b: 81).color
 
+        static let progressBackground = Styling.inactiveScreenElement
+        static let progressForeground = darkBlue
+
         static let selectedDifficultyBackground = lightBlue
         static let selectedDifficultyBorder = darkBlue
+
+        static let unselectedDifficultyCount = Styling.inactiveScreenElement
 
         static let correctAnswerBackground = lightGreen
         static let correctAnswerBorder = darkGreen

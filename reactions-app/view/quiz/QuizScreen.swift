@@ -97,9 +97,8 @@ fileprivate struct QuizScreenWithSettings: View {
 
             ProgressBar(
                 progress: model.progress,
-                progressColor: Styling.quizAnswer,
-                backgroundColor: Styling.inactiveScreenElement,
-                backgroundBorder: Styling.inactiveScreenElement,
+                progressColor: Styling.Quiz.progressForeground,
+                backgroundColor: Styling.Quiz.progressBackground,
                 cornerRadius: 0
             )
             .frame(

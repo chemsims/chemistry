@@ -39,23 +39,23 @@ struct QuizIntroBody: View {
 
         return ZStack {
             RoundedRectangle(cornerRadius: settings.progressCornerRadius)
-                .foregroundColor(isSelected ? Styling.quizActiveBlue : .white)
+                .foregroundColor(isSelected ? Styling.Quiz.selectedDifficultyBackground : .white)
                 .shadow(radius: 2)
 
             if (isSelected) {
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .strokeBorder(lineWidth: settings.activeLineWidth)
-                    .foregroundColor(Styling.quizActiveDarkBlue)
+                    .foregroundColor(Styling.Quiz.selectedDifficultyBorder)
             }
 
             Text(difficulty.displayName)
                 .font(.system(size: settings.fontSize, weight: .bold))
                 .foregroundColor(
-                    isSelected ? Styling.quizActiveDarkBlue : .black
+                    isSelected ? Styling.Quiz.selectedDifficultyBorder : .black
                 )
             questionCount(count)
                 .foregroundColor(
-                    isSelected ? Styling.quizActiveDarkBlue : Styling.inactiveScreenElement
+                    isSelected ? Styling.Quiz.selectedDifficultyBorder : Styling.Quiz.unselectedDifficultyCount
                 )
         }.onTapGesture {
             model.quizDifficulty = difficulty
@@ -84,3 +84,4 @@ fileprivate extension QuizDifficulty {
         }
     }
 }
+
