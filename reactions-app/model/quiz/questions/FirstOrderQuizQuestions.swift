@@ -48,28 +48,6 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question: """
-            The rate constant of a first order reaction is $0.0254 mins^-1^$. What is the half-life for this \
-            reaction, in days?
-            """,
-            correctAnswer: "0.019",
-            otherAnswers: [
-                "1",
-                "0.45",
-                "27.28"
-            ],
-            explanation: """
-            The equation for half-life for a first order reaction is $t_1/2_=ln(2)/k$. If k is \
-            $0.0254/minutes$, we only need to replace it in the equation:
-
-            t_1/2_ = ln(2)/0.0254 minutes^-1^ = 27.3 mins.
-
-            To get that time in days, we convert it: \
-            $27.3 mins \\* (1 hour/60 mins) \\* (1 day/24 hours) = 0.019 days$.
-            """,
-            difficulty: .easy
-        ),
-        QuizQuestion(
-            question: """
             If a reaction $(A + B to C)$ is first order for A and zero order for B, how do you write the \
             Rate law for this reaction?
             """,
@@ -188,29 +166,6 @@ extension QuizQuestion {
             difficulty: .easy
         ),
         QuizQuestion(
-            question: "Which of the following is the rate law for a first order reaction",
-            correctAnswer: QuizAnswer(
-                answer: "Rate = k[A]^0^[B]",
-                explanation: "This is a first order reaction overall"
-            ),
-            otherAnswers: [
-                QuizAnswer(
-                    answer: "Rate = k[A][B]",
-                    explanation: "This is a second order reaction overall"
-                ),
-                QuizAnswer(
-                    answer: "Rate = k[A]^0^[B]^0^",
-                    explanation: "This is a zero order reaction overall"
-                ),
-                QuizAnswer(
-                    answer: "Rate = k[A]^1^[B]",
-                    explanation: "This is a second order reaction overall"
-                )
-            ],
-            explanation: nil,
-            difficulty: .easy
-        ),
-        QuizQuestion(
             question: """
             Consider the reaction A to B. The reaction started a long time ago. After a day and a half, \
             there's only 3/5 of the initial amount of A left. What is the rate for this reaction?
@@ -278,28 +233,6 @@ extension QuizQuestion {
             For a $ln[A] vs t$ graph, if the resultant line is a straight line, the reaction is a first \
             order reaction. The equation for the line is $ln[A] = -kt + ln[A_0_]$ where $ln[A] = y$, \
             $t = x$, $-k = m$ (slope) and $ln[A_0_] = b$ (cut in Y axis), making it $y = mx + b$.
-            """,
-            difficulty: .easy
-        ),
-        QuizQuestion(
-            question: """
-            If the rate of a reaction $(A to B)$ is 0.03 $M/s$ when there is 0.02 M of A present, what would \
-            the Rate of the reaction be if there was 0.1 M of A, in the case it is a first order reaction?
-            """,
-            correctAnswer: "0.015 M/s",
-            otherAnswers: [
-                "0.02 M/s",
-                "0.01 M/s",
-                QuizAnswer(
-                    answer: "None of the above",
-                    explanation: nil,
-                    position: .D
-                )
-            ],
-            explanation: """
-            Following the rate law equation, $Rate = k[A]$. Replacing the first values we have, and solving \
-            for $k = Rate/[A]$ ➝ $k = 0.03 M/s / 0.02 M = 1.5 s^-1^$. So for a concentration of 0.01 M of A \
-            we just replace: $Rate = 1.5(0.01) = 0.015 M/s$.
             """,
             difficulty: .easy
         ),
