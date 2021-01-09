@@ -15,7 +15,7 @@ struct QuizIntroBody: View {
             Text("Let's take a quiz!")
                 .font(.system(size: settings.fontSize))
             Text("Choose the difficulty level of the quiz")
-                .font(.system(size: 0.7 * settings.fontSize))
+                .font(.system(size: settings.h2FontSize))
             HStack {
                 Spacer()
                 Button(action: model.skip) {

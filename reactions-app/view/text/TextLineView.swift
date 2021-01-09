@@ -13,6 +13,7 @@ struct TextLinesView: View {
     let superscriptOffset: CGFloat
     let subscriptOffset: CGFloat
     let weight: Font.Weight
+    let color: Color
 
     init(
         lines: [TextLine],
@@ -20,7 +21,8 @@ struct TextLinesView: View {
         subscriptFontSize: CGFloat,
         superscriptOffset: CGFloat,
         subscriptOffset: CGFloat,
-        weight: Font.Weight
+        weight: Font.Weight,
+        color: Color
     ) {
         self.lines = lines
         self.fontSize = fontSize
@@ -28,21 +30,33 @@ struct TextLinesView: View {
         self.superscriptOffset = superscriptOffset
         self.subscriptOffset = subscriptOffset
         self.weight = weight
+        self.color = color
     }
 
-    init(lines: [TextLine], fontSize: CGFloat, weight: Font.Weight = .regular) {
+    init(
+        lines: [TextLine],
+        fontSize: CGFloat,
+        weight: Font.Weight = .regular,
+        color: Color = .black
+    ) {
         self.init(
             lines: lines,
             fontSize: fontSize,
             subscriptFontSize: 0.65 * fontSize,
             superscriptOffset: 0.26 * fontSize,
             subscriptOffset: -0.26 * fontSize,
-            weight: weight
+            weight: weight,
+            color: color
         )
     }
 
-    init(line: TextLine, fontSize: CGFloat, weight: Font.Weight = .regular) {
-        self.init(lines: [line], fontSize: fontSize, weight: weight)
+    init(
+        line: TextLine,
+        fontSize: CGFloat,
+        weight: Font.Weight = .regular,
+        color: Color = .black
+    ) {
+        self.init(lines: [line], fontSize: fontSize, weight: weight, color: color)
     }
 
     var body: some View {
@@ -62,7 +76,7 @@ struct TextLinesView: View {
 
     private func text(_ segment: TextSegment) -> Text {
         Text(segment.allowBreaks ? segment.content : Strings.withNoBreaks(str: segment.content))
-            .foregroundColor(segment.emphasised ? .orangeAccent : .black)
+            .foregroundColor(segment.emphasised ? .orangeAccent : color)
             .font(.system(size: fontSize(line: segment), weight: weight))
             .baselineOffset(fontOffset(line: segment))
             .italic(enabled: segment.italic)

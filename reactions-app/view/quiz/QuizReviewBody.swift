@@ -32,33 +32,12 @@ struct QuizReviewBody: View {
     private var heading: some View {
         HStack(spacing: 0) {
             Spacer()
-                .frame(width: settings.retryLabelWidth)
-            Spacer()
             VStack(spacing: 5) {
                 Text("You got \(model.correctAnswers) correct out of \(model.quizLength)")
-                    .foregroundColor(.orangeAccent)
                 Text("Let's review the questions!")
+                    .font(.system(size: settings.h2FontSize))
             }
-
             Spacer()
-            Button(action: model.restart) {
-                VStack(spacing: 5) {
-                    Image(systemName: "arrow.clockwise.circle")
-                        .padding(settings.retryPadding)
-                        .background(
-                            Circle()
-                                .foregroundColor(Styling.speechBubble)
-                        )
-                        .frame(width: settings.retryIconWidth, height: settings.retryIconWidth)
-
-                    Text("Retry")
-                        .font(.system(size: settings.retryLabelFontSize))
-                        .minimumScaleFactor(0.5)
-                        .foregroundColor(Styling.navIcon)
-                }
-                .foregroundColor(Styling.navIcon)
-            }
-            .frame(width: settings.retryLabelWidth)
         }
     }
 
@@ -84,7 +63,6 @@ fileprivate struct QuestionReviewCard: View {
     let isCorrect: Bool
     let settings: QuizLayoutSettings
 
-
     @State private var explanationIsExpanded: Bool = false
 
     var body: some View {
@@ -105,20 +83,20 @@ fileprivate struct QuestionReviewCard: View {
                     question: question
                 )
 
-                if (selectedOption != question.correctOption) {
-                    optionLine(
-                        option: question.correctOption,
-                        topLine: "Correct answer",
-                        question: question
-                    )
-                }
-
                 VStack(alignment: .leading, spacing: 0) {
                     Button(action: handleExplanationPress) {
                         Text(explanationIsExpanded ? "Hide Explanation" : "Show Explanation")
                             .font(.system(size: settings.questionFontSize))
                     }
                     if (explanationIsExpanded) {
+                        if (selectedOption != question.correctOption) {
+                            optionLine(
+                                option: question.correctOption,
+                                topLine: "Correct answer",
+                                question: question
+                            )
+                        }
+
                         TextLinesView(
                             lines: question.longExplanation,
                             fontSize: settings.questionFontSize
@@ -140,21 +118,19 @@ fileprivate struct QuestionReviewCard: View {
         question: QuizQuestionDisplay
     ) -> some View {
         let answer = question.options[option]?.answer ?? ""
+        let fullLine = answer.prepending(TextSegment(content: "\(topLine): "))
+        let isCorrect = option == question.correctOption
         return VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 0) {
-                Text(topLine)
-                    .font(.system(size: settings.questionFontSize))
-                    .foregroundColor(.orangeAccent)
-                Spacer()
-            }
-
             TextLinesView(
-                line: answer,
-                fontSize: settings.questionFontSize
+                line: fullLine,
+                fontSize: settings.questionFontSize,
+                color: isCorrect ?
+                    Styling.Quiz.reviewCorrectAnswerFont : Styling.Quiz.reviewWrongAnswerFont
             )
         }
         .minimumScaleFactor(1)
         .fixedSize(horizontal: false, vertical: true)
+        .foregroundColor(Styling.Quiz.reviewCorrectAnswerFont)
     }
 
     private var reviewBackground: some View {
@@ -163,7 +139,7 @@ fileprivate struct QuestionReviewCard: View {
                 cornerRadius: settings.progressCornerRadius
             )
             .foregroundColor(.white)
-            .shadow(color: borderColor, radius: 3, x: 0, y: 0)
+            .shadow(radius: 3)
 
             RoundedRectangle(
                 cornerRadius: settings.progressCornerRadius
@@ -178,7 +154,7 @@ fileprivate struct QuestionReviewCard: View {
     }
 
     private var borderColor: Color {
-        isCorrect ? Styling.quizAnswerCorrectBorder : Styling.quizAnswerIncorrectBorder
+        isCorrect ? Styling.Quiz.correctAnswerBorder : Styling.Quiz.wrongAnswerBorder
     }
 
     private func handleExplanationPress() {

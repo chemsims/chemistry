@@ -36,6 +36,10 @@ struct QuizLayoutSettings {
         0.04 * geometry.size.width
     }
 
+    var h2FontSize: CGFloat {
+        0.7 * fontSize
+    }
+
     var progressFontSize: CGFloat {
         0.6 * fontSize
     }

@@ -45,7 +45,8 @@ fileprivate struct SpeechBubbleWithSettings: View {
                 subscriptFontSize: settings.subscriptFontSize,
                 superscriptOffset: settings.superscriptOffset,
                 subscriptOffset: settings.subscriptOffset,
-                weight: .regular
+                weight: .regular,
+                color: .black
             )
             .padding(settings.bubbleTextPadding)
             .frame(

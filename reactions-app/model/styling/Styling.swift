@@ -129,10 +129,14 @@ extension Styling {
 
         private static let lightBlue = RGB(r: 232, g: 244, b: 250).color
         private static let darkBlue = RGB(r: 96, g: 147, b: 202).color
+
         private static let lightRed = RGB(r: 247, g: 237, b: 234).color
         private static let darkRed = RGB(r: 212, g: 91, b: 73).color
+        private static let veryDarkRed = RGB(r: 198, g: 67, b: 47).color
+
         private static let lightGreen = RGB(r: 233, g: 243, b: 238).color
         private static let darkGreen = RGB(r: 95, g: 181, b: 128).color
+        private static let veryDarkGreen = RGB(r: 56, g: 121, b: 81).color
 
         static let selectedDifficultyBackground = lightBlue
         static let selectedDifficultyBorder = darkBlue
@@ -150,5 +154,8 @@ extension Styling {
 
         static let infoIconForeground = darkBlue
         static let infoIconBackground = lightBlue
+
+        static let reviewCorrectAnswerFont = veryDarkGreen
+        static let reviewWrongAnswerFont = veryDarkRed
     }
 }
