@@ -88,6 +88,9 @@ struct Styling {
     static let quizAnswerInactive = RGB(r: 191, g: 207, b: 222).color
     static let quizAnswerCorrectBorder = RGB(r: 38, g: 83, b: 43).color
 
+    static let quizActiveBlue = RGB(r: 232, g: 244, b: 250).color
+    static let quizActiveDarkBlue = RGB(r: 96, g: 147, b: 202).color
+
     static let quizAnswerIncorrectBorder = RGB(r: 163, g: 22, b: 33).color
     static let quizAnswerIncorrectBackground = RGB(r: 208, g: 0, b: 0).color
 

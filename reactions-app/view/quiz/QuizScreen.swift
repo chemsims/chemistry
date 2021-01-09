@@ -30,10 +30,6 @@ fileprivate struct QuizScreenWithSettings: View {
             VStack(spacing: 0) {
                 if (model.quizState != .completed) {
                     progressBar
-                        .frame(
-                            width: settings.progressWidth,
-                            height: settings.progressHeight
-                        )
                         .padding(.horizontal, settings.progressBarPadding)
                         .padding(.top, settings.progressBarPadding)
                 }
@@ -95,31 +91,32 @@ fileprivate struct QuizScreenWithSettings: View {
     private var progressBar: some View {
         ZStack {
             ProgressBar(
-                progress: model.progress,
-                progressColor: .orangeAccent,
-                backgroundColor: Styling.quizProgressBackground,
-                backgroundBorder: Styling.quizProgressBorder,
-                cornerRadius: settings.progressCornerRadius
+                progress: 0.9,
+                progressColor: Styling.quizAnswer,
+                backgroundColor: Styling.inactiveScreenElement,
+                backgroundBorder: Styling.inactiveScreenElement,
+                cornerRadius: 0
+            )
+            .frame(
+                width: settings.progressWidth,
+                height: settings.progressHeight
             )
 
-            if (model.quizState == .running) {
-                progressLabel
-            }
+            progressLabel
         }
     }
 
     private var progressLabel: some View {
         Text("\(model.questionIndex + 1)/\(model.quizLength)")
         .font(.system(size: settings.progressFontSize))
-        .minimumScaleFactor(0.8)
-        .frame(width: settings.progressLabelWidth, height: 0.9 * settings.progressHeight)
+        .padding(.horizontal, settings.progressLabelPadding)
         .background(
             ZStack {
                 RoundedRectangle(
                     cornerRadius: settings.progressCornerRadius
                 )
                 .foregroundColor(Color.white)
-                .opacity(0.5)
+                .opacity(0.8)
 
                 RoundedRectangle(
                     cornerRadius: settings.progressCornerRadius
@@ -131,7 +128,6 @@ fileprivate struct QuizScreenWithSettings: View {
         )
     }
 }
-
 
 struct QuizScreen_Previews: PreviewProvider {
     static var previews: some View {

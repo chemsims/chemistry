@@ -13,7 +13,7 @@ struct QuizLayoutSettings {
     }
 
     var progressHeight: CGFloat {
-        0.07 * geometry.size.height
+        0.03 * geometry.size.height
     }
 
     var progressCornerRadius: CGFloat {
@@ -37,11 +37,11 @@ struct QuizLayoutSettings {
     }
 
     var progressFontSize: CGFloat {
-        0.7 * fontSize
+        0.6 * fontSize
     }
 
-    var progressLabelWidth: CGFloat {
-        0.1 * progressWidth
+    var progressLabelPadding: CGFloat {
+        progressHeight
     }
 
     var navPadding: CGFloat {
