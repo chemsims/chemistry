@@ -104,18 +104,18 @@ extension QuizQuestion {
             Which of the following has the lowest Activation Energy?
             """,
             correctAnswer: QuizAnswer(
-                answer: "H2O + CO2 <==> H2CO3 (In the presence of a catalyst)",
+                answer: "H2O + CO2 ⇌ H2CO3 (In the presence of a catalyst)",
                 explanation: nil,
                 position: .A
             ),
             otherAnswers: [
-                "2H2O <==> 2H2 + O2 (In an open system)",
-                "H2O + CO2 <==> H2CO3 (In an open system)",
-                "2H2O <==> 2H2 + O2 (In the presence of an inhibitor)"
+                "2H2O ⇌ 2H2 + O2 (In an open system)",
+                "H2O + CO2 ⇌ H2CO3 (In an open system)",
+                "2H2O ⇌ 2H2 + O2 (In the presence of an inhibitor)"
             ],
             explanation: """
             Correct answer is A, because in general, comparing both reactions, the formation of carbonic \
-            acid (H2O + CO2 <==> H2CO3) is spontaneous while the decomposition of water (2H2O <==> 2H2 + O2) \
+            acid (H2O + CO2 ⇌ H2CO3) is spontaneous while the decomposition of water (2H2O ⇌ 2H2 + O2) \
             is non-spontaneous, so from the get go, the spontaneous reaction would have a lower activation \
             energy.
 
