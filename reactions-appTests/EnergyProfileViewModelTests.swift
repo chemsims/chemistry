@@ -65,4 +65,153 @@ class EnergyProfileViewModelTests: XCTestCase {
             navigation.next()
         }
     }
+
+    func testNavigationCatalystStates() {
+        let model = EnergyProfileViewModel()
+        let navigation = EnergyProfileNavigationViewModel.model(model)
+        navigation.nextScreen = { XCTFail("Reached final screen") }
+        navigation.prevScreen = { XCTFail("Reached first screen") }
+
+        func runForwardFromFirstActiveState() {
+            navigation.back()
+            XCTAssertEqual(model.catalystState, .visible)
+            navigation.next()
+
+            // They are now active - can be clicked
+            XCTAssertEqual(model.catalystState, .active)
+            XCTAssertEqual(model.particleState, .none)
+
+            // A is primed
+            navigation.next()
+            XCTAssertEqual(model.catalystState, .pending(catalyst: .A))
+            XCTAssertEqual(model.particleState, .none)
+
+            // A starts shaking
+            navigation.next()
+            XCTAssertEqual(model.particleState, .fallFromContainer)
+
+            // A stops shaking
+            navigation.next()
+            XCTAssertEqual(model.catalystState, .selected(catalyst: .A))
+            XCTAssertEqual(model.particleState, .fallFromContainer)
+
+            while (model.reactionState != .completed) {
+                navigation.next()
+            }
+            print("B")
+            // First reaction has ended
+            XCTAssertEqual(model.reactionState, .completed)
+            XCTAssertEqual(model.catalystState, .active)
+            XCTAssertEqual(model.usedCatalysts, [.A])
+            XCTAssertEqual(model.particleState, .fallFromContainer)
+
+            // Prepare a new catalyst (B)
+            navigation.next()
+            XCTAssertEqual(model.reactionState, .pending)
+            XCTAssertEqual(model.catalystState, .pending(catalyst: .B))
+            XCTAssertEqual(model.particleState, .none)
+
+            // B starts shaking
+            navigation.next()
+            XCTAssertEqual(model.particleState, .fallFromContainer)
+
+            // B stops shaking
+            navigation.next()
+            XCTAssertEqual(model.catalystState, .selected(catalyst: .B))
+            XCTAssertEqual(model.particleState, .fallFromContainer)
+
+            while (model.reactionState != .completed) {
+                navigation.next()
+            }
+
+            // Second reaction has ended
+            XCTAssertEqual(model.reactionState, .completed)
+            XCTAssertEqual(model.catalystState, .active)
+            XCTAssertEqual(model.usedCatalysts, [.A, .B])
+            XCTAssertEqual(model.particleState, .fallFromContainer)
+            print("C")
+            // Prepare a new catalyst (C)
+            navigation.next()
+            XCTAssertEqual(model.reactionState, .pending)
+            XCTAssertEqual(model.catalystState, .pending(catalyst: .C))
+            XCTAssertEqual(model.particleState, .none)
+
+            // C starts shaking
+            navigation.next()
+            XCTAssertEqual(model.particleState, .fallFromContainer)
+
+            // C stops shaking
+            navigation.next()
+            XCTAssertEqual(model.catalystState, .selected(catalyst: .C))
+            XCTAssertEqual(model.particleState, .fallFromContainer)
+
+
+
+            // Last reaction has ended
+            while (model.reactionState != .completed) {
+                navigation.next()
+            }
+            XCTAssertEqual(model.reactionState, .completed)
+            XCTAssertEqual(model.catalystState, .selected(catalyst: .C))
+            XCTAssertEqual(model.usedCatalysts, [.A, .B, .C])
+        }
+
+        func runBackToFirstActiveState() {
+            navigation.back()
+            XCTAssertEqual(model.reactionState, .running)
+
+
+            // Back to end of 2nd reaction
+            while (model.reactionState != .completed) {
+                navigation.back()
+            }
+            XCTAssertEqual(model.reactionState, .completed)
+            XCTAssertEqual(model.catalystState, .active)
+            XCTAssertEqual(model.particleState, .appearInBeaker)
+            XCTAssertEqual(model.usedCatalysts, [.A, .B])
+
+            navigation.back()
+            XCTAssertEqual(model.reactionState, .running)
+            XCTAssertEqual(model.catalystState, .selected(catalyst: .B))
+            XCTAssertEqual(model.particleState, .appearInBeaker)
+
+            // Back to end of 1st reaction
+            while (model.reactionState != .completed) {
+                navigation.back()
+            }
+            XCTAssertEqual(model.reactionState, .completed)
+            XCTAssertEqual(model.catalystState, .active)
+            XCTAssertEqual(model.particleState, .appearInBeaker)
+            XCTAssertEqual(model.usedCatalysts, [.A])
+            print("D")
+            navigation.back()
+            XCTAssertEqual(model.reactionState, .running)
+            XCTAssertEqual(model.catalystState, .selected(catalyst: .A))
+            XCTAssertEqual(model.particleState, .appearInBeaker)
+
+            print("E")
+            while (model.catalystState != .active) {
+                navigation.back()
+            }
+            XCTAssertEqual(model.reactionState, .pending)
+            XCTAssertEqual(model.catalystState, .active)
+            XCTAssertEqual(model.availableCatalysts, [.A, .B, .C])
+        }
+
+        while (model.catalystState != .active) {
+            navigation.next()
+        }
+
+        runForwardFromFirstActiveState()
+        runBackToFirstActiveState()
+        runForwardFromFirstActiveState()
+        runBackToFirstActiveState()
+    }
+
+    private func testForwardFromActiveState(
+        model: EnergyProfileViewModel,
+        navigation: NavigationViewModel<EnergyProfileState>
+    ) {
+
+    }
 }
