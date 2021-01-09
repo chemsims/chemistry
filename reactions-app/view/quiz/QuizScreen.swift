@@ -67,20 +67,45 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private var navButtons: some View {
-        VStack(spacing: 0) {
-            Spacer()
-            HStack(spacing: 0) {
-                PreviousButton(action: model.back)
-                    .frame(width: settings.navSize, height: settings.navSize)
-
+        HStack(spacing: 0) {
+            VStack(spacing: 0) {
                 Spacer()
+                PreviousButton(action: model.back)
+                    .frame(width: settings.leftNavSize, height: settings.leftNavSize)
+                    .padding(settings.leftNavPadding)
+            }
+            Spacer()
+            VStack(spacing: 0) {
+                Spacer()
+                if (model.quizState == .completed) {
+                    retryButton
+                }
 
                 NextButton(action: model.next)
-                    .frame(width: settings.navSize, height: settings.navSize)
+                    .frame(width: settings.rightNavSize, height: settings.rightNavSize)
                     .disabled(nextIsDisabled)
                     .opacity(nextIsDisabled ? 0.3 : 1)
+                    .padding(settings.rightNavPadding)
             }
-        }.padding(settings.navPadding)
+        }
+    }
+
+    private var retryButton: some View {
+        Button(action: model.restart) {
+            ZStack {
+                Circle()
+                    .foregroundColor(Styling.speechBubble)
+
+                Image(systemName: "arrow.counterclockwise")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(.black)
+                    .padding(0.15 * settings.leftNavSize)
+                    .font(.system(size: 15, weight: .bold))
+            }
+            .frame(width: settings.leftNavSize, height: settings.navSize)
+        }
+        .buttonStyle(NavButtonButtonStyle())
     }
 
     private var nextIsDisabled: Bool {

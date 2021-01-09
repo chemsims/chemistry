@@ -32,6 +32,30 @@ struct QuizLayoutSettings {
         0.05 * geometry.size.width
     }
 
+    var navPadding: CGFloat {
+        0.5 * navSize
+    }
+
+    var leftNavSize: CGFloat {
+        0.4 * navTotalWidth
+    }
+
+    var rightNavSize: CGFloat {
+        0.7 * navTotalWidth
+    }
+
+    var leftNavPadding: CGFloat {
+        0.5 * (navTotalWidth - leftNavSize)
+    }
+
+    var rightNavPadding: CGFloat {
+        0.5 * (navTotalWidth - rightNavSize)
+    }
+
+    var navTotalWidth: CGFloat {
+        0.15 * width
+    }
+
     var questionFontSize: CGFloat {
         0.05 * geometry.size.height
     }
@@ -56,13 +80,7 @@ struct QuizLayoutSettings {
         6 * progressHeight
     }
 
-    var navPadding: CGFloat {
-        0.5 * navSize
-    }
 
-    var navTotalWidth: CGFloat {
-        navSize + (2 * navPadding)
-    }
 
     var progressBarPadding: CGFloat {
         0.4 * navSize
