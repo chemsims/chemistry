@@ -30,8 +30,7 @@ fileprivate struct QuizScreenWithSettings: View {
             VStack(spacing: 0) {
                 if (model.quizState != .completed) {
                     progressBar
-                        .padding(.horizontal, settings.progressBarPadding)
-                        .padding(.top, settings.progressBarPadding)
+                        .zIndex(2)
                 }
 
                 if (model.quizState == .running) {
@@ -90,8 +89,14 @@ fileprivate struct QuizScreenWithSettings: View {
 
     private var progressBar: some View {
         ZStack {
+            Rectangle()
+                .frame(height: settings.progressHeight + (2 * settings.progressBarPadding))
+                .foregroundColor(.white)
+                .shadow(radius: 3, y: 0)
+                .edgesIgnoringSafeArea(.all)
+
             ProgressBar(
-                progress: 0.9,
+                progress: model.progress,
                 progressColor: Styling.quizAnswer,
                 backgroundColor: Styling.inactiveScreenElement,
                 backgroundBorder: Styling.inactiveScreenElement,
@@ -101,15 +106,19 @@ fileprivate struct QuizScreenWithSettings: View {
                 width: settings.progressWidth,
                 height: settings.progressHeight
             )
+            .padding(.horizontal, settings.progressBarPadding)
 
-            progressLabel
+            if (model.quizState != .pending) {
+                progressLabel
+            }
         }
     }
 
     private var progressLabel: some View {
         Text("\(model.questionIndex + 1)/\(model.quizLength)")
         .font(.system(size: settings.progressFontSize))
-        .padding(.horizontal, settings.progressLabelPadding)
+        .frame(width: settings.progressLabelWidth)
+        .minimumScaleFactor(0.7)
         .background(
             ZStack {
                 RoundedRectangle(

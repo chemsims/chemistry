@@ -12,9 +12,6 @@ struct QuizReviewBody: View {
 
     var body: some View {
         ScrollView {
-            HStack(spacing: 0) {
-                Spacer()
-                    .frame(width: settings.navTotalWidth)
                 VStack(spacing: 20) {
                     heading
                         .fixedSize(horizontal: false, vertical: true)
@@ -22,10 +19,10 @@ struct QuizReviewBody: View {
                         reviewCard(index: index)
                     }
                 }
+                .frame(width: settings.contentWidth)
                 .padding(.top, settings.progressBarPadding)
-                Spacer()
-                    .frame(width: settings.navTotalWidth)
-            }
+                .padding(.bottom, settings.geometry.safeAreaInsets.bottom + 10)
+                .frame(width: settings.width)
         }
     }
 

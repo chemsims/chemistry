@@ -15,30 +15,25 @@ struct QuizQuestionsBody: View {
 
     var body: some View {
         ScrollView {
-            HStack {
-                Spacer()
-                    .frame(width: settings.navTotalWidth)
-                VStack(spacing: 10) {
-                    QuizQuestionView(
-                        question: model.currentQuestion,
-                        settings: settings,
-                        tableWidth: settings.tableWidthQuestionCard
-                    )
+            VStack(spacing: 10) {
+                QuizQuestionView(
+                    question: model.currentQuestion,
+                    settings: settings,
+                    tableWidth: settings.tableWidthQuestionCard
+                )
 
-                    if (model.showExplanation && model.currentQuestion.hasExplanation) {
-                        explanationView
-                            .padding(.bottom, 10)
-                            .padding(.top, 10)
-                    }
-
-                    answers
-
+                if (model.showExplanation && model.currentQuestion.hasExplanation) {
+                    explanationView
+                        .padding(.bottom, 10)
+                        .padding(.top, 10)
                 }
-                Spacer()
-                    .frame(width: settings.navTotalWidth)
+
+                answers
             }
+            .frame(width: settings.contentWidth)
             .padding(.top, settings.progressBarPadding)
-            .padding(.bottom, settings.geometry.safeAreaInsets.bottom)
+            .padding(.bottom, settings.geometry.safeAreaInsets.bottom + 10)
+            .frame(width: settings.width)
         }
     }
 

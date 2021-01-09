@@ -8,8 +8,16 @@ import SwiftUI
 struct QuizLayoutSettings {
     let geometry: GeometryProxy
 
+    var width: CGFloat {
+        geometry.size.width
+    }
+
     var progressWidth: CGFloat {
         0.8 * geometry.size.width
+    }
+
+    var contentWidth: CGFloat {
+        geometry.size.width - (2 * navTotalWidth)
     }
 
     var progressHeight: CGFloat {
@@ -44,8 +52,8 @@ struct QuizLayoutSettings {
         0.6 * fontSize
     }
 
-    var progressLabelPadding: CGFloat {
-        progressHeight
+    var progressLabelWidth: CGFloat {
+        6 * progressHeight
     }
 
     var navPadding: CGFloat {
@@ -57,7 +65,7 @@ struct QuizLayoutSettings {
     }
 
     var progressBarPadding: CGFloat {
-        navPadding
+        0.4 * navSize
     }
 
     var activeLineWidth: CGFloat {
@@ -101,6 +109,6 @@ struct QuizLayoutSettings {
     }
 
     var tableWidthQuestionCard: CGFloat {
-        0.95 * progressWidth
+        contentWidth
     }
 }
