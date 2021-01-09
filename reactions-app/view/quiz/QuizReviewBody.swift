@@ -61,6 +61,7 @@ fileprivate struct QuestionReviewCard: View {
     let settings: QuizLayoutSettings
 
     @State private var explanationIsExpanded: Bool = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -155,7 +156,9 @@ fileprivate struct QuestionReviewCard: View {
     }
 
     private func handleExplanationPress() {
-        withAnimation(.easeOut(duration: 0.5)) {
+        let duration = QuizViewModel.explanationExpansionDuration(question)
+
+        withAnimation( reduceMotion ? nil : .easeOut(duration: duration)) {
             explanationIsExpanded.toggle()
         }
     }
