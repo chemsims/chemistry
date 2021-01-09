@@ -228,26 +228,17 @@ struct EnergyProfileChart: View {
         )
     }
 
-    private var curve: BellCurve2 {
-        BellCurve2(
-            peak: eaShape.peak,
-            leftAsymptote: eaShape.leftAsymptote,
-            rightAsymptote: eaShape.rightAsymptote
-        )
-    }
-
     private var leftAsymptoteVerticalSpacer: CGFloat {
-        asymptoteVerticalSpacer(asymptoteRelativeHeight: curve.getY(at: 0))
+        asymptoteVerticalSpacer(x: 0)
     }
 
     private var rightAsymptoteVerticalSpacer: CGFloat {
-        asymptoteVerticalSpacer(asymptoteRelativeHeight: curve.getY(at: 1))
+        asymptoteVerticalSpacer(x: settings.chartSize)
     }
 
-    private func asymptoteVerticalSpacer(asymptoteRelativeHeight: CGFloat) -> CGFloat {
-        let spacer = settings.chartSize * (1 - asymptoteRelativeHeight)
+    private func asymptoteVerticalSpacer(x: CGFloat) -> CGFloat {
         let padding = settings.annotationMoleculeSize * 0.4
-        return spacer + padding
+        return bellCurve.absoluteY(absoluteX: x) + padding
     }
 }
 
@@ -276,23 +267,19 @@ fileprivate struct EnergyProfileChartShape: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let adjustedPeak = minPeak + (peak * (maxPeak - minPeak))
-        let equation = BellCurve2(
+        let curve = BellCurve(
             peak: adjustedPeak,
+            frameWidth: rect.width,
+            frameHeight: rect.height,
             leftAsymptote: leftAsymptote,
             rightAsymptote: rightAsymptote
         )
-        func absoluteY(_ relativeX: CGFloat) -> CGFloat {
-            let relativeY = equation.getY(at: relativeX)
-            let yFromBottom = relativeY * rect.height
-            return rect.height - yFromBottom
-        }
 
-        path.move(to: CGPoint(x: 0, y: absoluteY(0)))
-        let dx = 1 / points
-        for x in stride(from: CGFloat(0), through: 1, by: dx) {
-            let absoluteX = x * rect.width
-            let y = absoluteY(x)
-            path.addLine(to: CGPoint(x: absoluteX, y: y))
+        path.move(to: CGPoint(x: 0, y: curve.absoluteY(absoluteX: 0)))
+        let dx = rect.width / points
+        for x in stride(from: CGFloat(0), through: rect.width, by: dx) {
+            let y = curve.absoluteY(absoluteX: x)
+            path.addLine(to: CGPoint(x: x, y: y))
         }
         return path
     }
@@ -322,19 +309,6 @@ fileprivate struct BellCurve {
         let adjustedPeak = minPeak + (peak * (maxPeak - minPeak))
         let height = adjustedPeak - asymptote
         let exponent = -1 * pow((relativeX - 0.5), 2) * 30
-        return (height * pow(CGFloat(Darwin.M_E), exponent)) + asymptote
-    }
-}
-
-fileprivate struct BellCurve2: Equation {
-    let peak: CGFloat
-    let leftAsymptote: CGFloat
-    let rightAsymptote: CGFloat
-
-    func getY(at x: CGFloat) -> CGFloat {
-        let asymptote = x < 0.5 ? leftAsymptote : rightAsymptote
-        let height = peak - asymptote
-        let exponent = -1 * pow((x - 0.5), 2) * 30
         return (height * pow(CGFloat(Darwin.M_E), exponent)) + asymptote
     }
 }
