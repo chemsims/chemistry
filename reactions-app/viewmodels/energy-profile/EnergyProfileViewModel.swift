@@ -11,7 +11,6 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var reactionState = EnergyReactionState.pending
     @Published var statement = [TextLine]()
     @Published var temp2: CGFloat?
-    @Published var peakHeightFactor: CGFloat = 1
     @Published var concentrationC: CGFloat = 0
     @Published var selectedReaction = ReactionOrder.Zero
     @Published var catalystIsShaking = false
@@ -25,6 +24,14 @@ class EnergyProfileViewModel: ObservableObject {
     @Published var canSetTemp = false
 
     @Published var particleState = CatalystParticleState.none
+
+    var chartInput: EnergyProfileChartInput {
+        EnergyProfileChartInput(
+            shape: selectedReaction.energyProfileShapeSettings,
+            temperature: temp2 ?? temp1,
+            catalyst: catalystState.selected
+        )
+    }
 
     var catalystToSelect: Catalyst?
 
@@ -57,6 +64,10 @@ class EnergyProfileViewModel: ObservableObject {
         navigation?.next()
     }
 
+    func back() {
+        navigation?.back()
+    }
+
     func saveCatalyst() {
         if let catalyst = catalystState.selected {
             usedCatalysts.append(catalyst)
@@ -72,10 +83,6 @@ class EnergyProfileViewModel: ObservableObject {
 
     var availableCatalysts: [Catalyst] {
         Catalyst.allCases.filter { !usedCatalysts.contains($0) }
-    }
-
-    func back() {
-        navigation?.back()
     }
 
     let temp1: CGFloat = EnergyBeakerSettings.minTemp
@@ -98,19 +105,9 @@ class EnergyProfileViewModel: ObservableObject {
     var slope: CGFloat {
         -activationEnergy / .gasConstant
     }
-
-    var tempHeightFactor: CGFloat {
-        let min: CGFloat = -0.5
-        let max: CGFloat = 1.1
-        let minT: CGFloat = 400
-        let maxT: CGFloat = 600
-        let temp = temp2 ?? temp1
-        let tFactor = (temp - minT) / (maxT - minT)
-        return min + ((max - min) * tFactor)
-    }
     
     var canReactToC: Bool {
-        tempHeightFactor >= (peakHeightFactor * selectedReaction.energyProfileShapeSettings.peak)
+        chartInput.canReactToC
     }
 
     func setCatalystInProgress(catalyst: Catalyst) -> Void {
@@ -166,13 +163,8 @@ class EnergyProfileViewModel: ObservableObject {
     }
 
     func setSelectedCatalystState(catalyst: Catalyst) {
-        let maxEnergy = selectedReaction.activationEnergy
-        let minEnergy = 0.9 * (selectedReaction.activationEnergy - Catalyst.C.energyReduction)
-        let resultingEnergy = selectedReaction.activationEnergy - catalyst.energyReduction
-        let energyFactor = (resultingEnergy - minEnergy) / (maxEnergy - minEnergy)
         withAnimation(.easeOut(duration: 0.8)) {
             self.catalystState = .selected(catalyst: catalyst)
-            self.peakHeightFactor = energyFactor
         }
     }
 

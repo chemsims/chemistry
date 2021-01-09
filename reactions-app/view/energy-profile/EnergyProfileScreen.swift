@@ -74,15 +74,14 @@ struct EnergyProfileScreen: View {
                     settings: EnergyRateChartSettings(
                         chartSize: settings.chartsSize
                     ),
-                    peakHeightFactor: model.peakHeightFactor,
-                    tempHeightFactor: model.tempHeightFactor,
                     showTemperature: model.temp2 != nil,
                     highlightTop: model.highlight(element: .reactionProfileTop),
                     highlightBottom: model.highlight(element: .reactionProfileBottom),
                     moleculeHighlightColor: model.color(
                         for: [.moleculeChartLabel, .reactionProfileBottom]
                     ),
-                    order: model.selectedReaction
+                    order: model.selectedReaction,
+                    chartInput: model.chartInput
                 )
                 .colorMultiply(model.color(for: [.reactionProfileTop, .reactionProfileBottom]))
 

@@ -8,13 +8,12 @@ import SwiftUI
 struct EnergyProfileChart: View {
 
     let settings: EnergyRateChartSettings
-    let peakHeightFactor: CGFloat
-    let tempHeightFactor: CGFloat
     let showTemperature: Bool
     let highlightTop: Bool
     let highlightBottom: Bool
     let moleculeHighlightColor: Color
     let order: ReactionOrder
+    let chartInput: EnergyProfileChartInput
 
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
@@ -78,18 +77,18 @@ struct EnergyProfileChart: View {
                 }
 
                 EnergyProfileChartShape(
-                    peak: eaShape.peak,
-                    leftAsymptote: eaShape.leftAsymptote,
-                    rightAsymptote: eaShape.rightAsymptote
+                    peak: chartInput.initialPeak,
+                    leftAsymptote: chartInput.leftAsymptote,
+                    rightAsymptote: chartInput.rightAsymptote
                 )
                 .stroke()
                 .foregroundColor(Styling.energyProfileCompleteBar)
                 .frame(width: settings.chartSize, height: settings.chartSize)
 
                 EnergyProfileChartShape(
-                    peak: scaledPeak,
-                    leftAsymptote: eaShape.leftAsymptote,
-                    rightAsymptote: eaShape.rightAsymptote
+                    peak: chartInput.reducedPeak,
+                    leftAsymptote: chartInput.leftAsymptote,
+                    rightAsymptote: chartInput.rightAsymptote
                 )
                 .stroke()
                 .foregroundColor(.orangeAccent)
@@ -100,13 +99,7 @@ struct EnergyProfileChart: View {
     }
 
     private var tempLine: some View {
-        let curve = BellCurve(
-            peak: tempHeightFactor,
-            frameWidth: settings.chartSize,
-            frameHeight: settings.chartSize,
-            leftAsymptote: eaShape.leftAsymptote,
-            rightAsymptote: eaShape.rightAsymptote
-        )
+        let curve = makeCurve(peak: chartInput.currentEnergy)
         return Rectangle()
             .frame(height: 1)
             .foregroundColor(Color.black.opacity(0.6))
@@ -132,10 +125,11 @@ struct EnergyProfileChart: View {
     }
 
     private var eaHeightAnnotation: some View {
-        let leftY = scaledBellCurve.absoluteY(absoluteX: 0)
-        let rightY = scaledBellCurve.absoluteY(absoluteX: settings.chartSize)
+        let curve = makeCurve(peak: chartInput.reducedPeak)
+        let leftY = curve.absoluteY(absoluteX: 0)
+        let rightY = curve.absoluteY(absoluteX: settings.chartSize)
         let startY = min(leftY, rightY)
-        let midY = scaledBellCurve.absoluteY(absoluteX: settings.chartSize / 2)
+        let midY = curve.absoluteY(absoluteX: settings.chartSize / 2)
         let height = startY - midY
         let padding = settings.chartSize * 0.04
 
@@ -198,33 +192,17 @@ struct EnergyProfileChart: View {
             .frame(width: settings.annotationMoleculeSize, height: settings.annotationMoleculeSize)
     }
 
-    private var scaledPeak: CGFloat {
-        peakHeightFactor * eaShape.peak
-    }
-
     private var input: EnergyProfileReactionInput {
         order.energyProfileReactionInput
-    }
-
-    private var eaShape: EnergyProfileShapeSettings {
-        order.energyProfileShapeSettings
-    }
-
-    private var bellCurve: BellCurve {
-        makeCurve(peak: eaShape.peak)
-    }
-
-    private var scaledBellCurve: BellCurve {
-        makeCurve(peak: eaShape.peak * peakHeightFactor)
     }
 
     private func makeCurve(peak: CGFloat) -> BellCurve {
         BellCurve(
             peak: peak,
+            leftAsymptote: chartInput.leftAsymptote,
+            rightAsymptote: chartInput.rightAsymptote,
             frameWidth: settings.chartSize,
-            frameHeight: settings.chartSize,
-            leftAsymptote: eaShape.leftAsymptote,
-            rightAsymptote: eaShape.rightAsymptote
+            frameHeight: settings.chartSize
         )
     }
 
@@ -238,10 +216,10 @@ struct EnergyProfileChart: View {
 
     private func asymptoteVerticalSpacer(x: CGFloat) -> CGFloat {
         let padding = settings.annotationMoleculeSize * 0.4
-        return bellCurve.absoluteY(absoluteX: x) + padding
+        let curve = makeCurve(peak: chartInput.reducedPeak)
+        return curve.absoluteY(absoluteX: x) + padding
     }
 }
-
 
 fileprivate struct EnergyProfileChartShape: Shape {
 
@@ -261,18 +239,15 @@ fileprivate struct EnergyProfileChartShape: Shape {
     }
 
     private let points: CGFloat = 100
-    private let minPeak: CGFloat = 0.7
-    private let maxPeak: CGFloat = 0.9
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        let adjustedPeak = minPeak + (peak * (maxPeak - minPeak))
         let curve = BellCurve(
-            peak: adjustedPeak,
-            frameWidth: rect.width,
-            frameHeight: rect.height,
+            peak: peak,
             leftAsymptote: leftAsymptote,
-            rightAsymptote: rightAsymptote
+            rightAsymptote: rightAsymptote,
+            frameWidth: rect.width,
+            frameHeight: rect.height
         )
 
         path.move(to: CGPoint(x: 0, y: curve.absoluteY(absoluteX: 0)))
@@ -283,19 +258,15 @@ fileprivate struct EnergyProfileChartShape: Shape {
         }
         return path
     }
-
 }
 
 fileprivate struct BellCurve {
 
     let peak: CGFloat
-    let frameWidth: CGFloat
-    let frameHeight: CGFloat
-
     let leftAsymptote: CGFloat
     let rightAsymptote: CGFloat
-    private let minPeak: CGFloat = 0.7
-    private let maxPeak: CGFloat = 0.9
+    let frameWidth: CGFloat
+    let frameHeight: CGFloat
 
     func absoluteY(absoluteX: CGFloat) -> CGFloat {
         let relativeX = absoluteX / frameWidth
@@ -306,25 +277,26 @@ fileprivate struct BellCurve {
 
     private func relativeY(relativeX: CGFloat) -> CGFloat {
         let asymptote = relativeX < 0.5 ? leftAsymptote : rightAsymptote
-        let adjustedPeak = minPeak + (peak * (maxPeak - minPeak))
-        let height = adjustedPeak - asymptote
+        let height = peak - asymptote
         let exponent = -1 * pow((relativeX - 0.5), 2) * 30
         return (height * pow(CGFloat(Darwin.M_E), exponent)) + asymptote
     }
 }
 
-
 struct EnergyProfileChart_Previews: PreviewProvider {
     static var previews: some View {
         EnergyProfileChart(
             settings: EnergyRateChartSettings(chartSize: 250),
-            peakHeightFactor: 0,
-            tempHeightFactor: 1,
             showTemperature: true,
             highlightTop: true,
             highlightBottom: true,
             moleculeHighlightColor: .white,
-            order: .Zero
+            order: .Second,
+            chartInput: .init(
+                shape: ReactionOrder.Second.energyProfileShapeSettings,
+                temperature: 400,
+                catalyst: .A
+            )
         )
     }
 }

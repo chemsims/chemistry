@@ -304,7 +304,8 @@ fileprivate class StopShakingCatalyst: EnergyProfileState {
     override func unapply(on model: EnergyProfileViewModel) {
         model.removeCatalystFromStack()
         withAnimation(.easeOut(duration: 0.8)) {
-            model.peakHeightFactor = 1
+            model.catalystState = .active
+            model.temp2 = nil
         }
     }
 }

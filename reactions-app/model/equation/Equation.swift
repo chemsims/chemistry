@@ -18,6 +18,12 @@ struct LinearEquation: Equation {
         self.c = y1 - (m * x1)
     }
 
+    init(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) {
+        assert(x2 != x1)
+        let m = (y2 - y1) / (x2 - x1)
+        self.init(m: m, x1: x1, y1: y1)
+    }
+
     func getY(at x: CGFloat) -> CGFloat {
         (m * x) + c
     }
