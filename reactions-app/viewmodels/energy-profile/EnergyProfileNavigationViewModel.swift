@@ -54,10 +54,7 @@ struct EnergyProfileNavigationViewModel {
             EnergyProfileStatements.explainEnergyDiagram,
             [.reactionProfileTop, .reactionProfileBottom]
         ),
-        ExplanationState(
-            EnergyProfileStatements.explainExothermic,
-            [.reactionProfileBottom]
-        ),
+        ExplainExoOrEndoThermic(),
         ExplanationState(
             EnergyProfileStatements.explainEaHump,
             [.reactionProfileTop]
@@ -187,6 +184,21 @@ fileprivate class ShowInitialEaValues: EnergyProfileState {
 
     override func unapply(on model: EnergyProfileViewModel) {
         model.highlightedElements = []
+    }
+}
+
+fileprivate class ExplainExoOrEndoThermic: EnergyProfileState {
+    override func apply(on model: EnergyProfileViewModel) {
+        let isExoThermic = model.selectedReaction.energyProfileShapeSettings.isExoThermic
+        let statement = isExoThermic ?
+            EnergyProfileStatements.explainExothermic :
+            EnergyProfileStatements.explainEndothermic
+        model.statement = statement
+        model.highlightedElements = [.reactionProfileBottom]
+    }
+
+    override func reapply(on model: EnergyProfileViewModel) {
+        apply(on: model)
     }
 }
 

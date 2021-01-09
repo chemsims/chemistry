@@ -115,11 +115,21 @@ struct EnergyProfileStatements {
     static let explainExothermic = [
         TextLineGenerator.makeLine(
             """
-            This is an exothermic reaction because the reaction starts at a higher point of energy than where it ends. \
-            In other words, energy is being released when the reaction takes place. This energy released is usually \
-            referred to as heat, but we'll talk about that deeper in other units.
+            This is an *exothermic reaction* because the reaction starts at a higher point of \
+            energy than where it ends. In other words, energy is being released when the reaction \
+            takes place. This energy released is usually referred to as heat, but we'll talk about \
+            that deeper in other units.
             """
         )
+    ]
+
+    static let explainEndothermic: [TextLine] = [
+        """
+        This is an *endothermic reaction* because the reaction starts at a lower point of energy \
+        than where it ends. In other words, energy is being absorbed when the reaction takes \
+        place. This energy is usually referred to as heat, but we'll talk about that deeper in \
+        other units.
+        """
     ]
 
     static let explainEaHump = [

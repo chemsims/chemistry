@@ -21,6 +21,10 @@ struct EnergyProfileShapeSettings {
 
     /// Energy at the maximum temperature input
     let maxTempEnergy: CGFloat
+
+    var isExoThermic: Bool {
+        leftAsymptote > rightAsymptote
+    }
 }
 
 extension ReactionOrder {
