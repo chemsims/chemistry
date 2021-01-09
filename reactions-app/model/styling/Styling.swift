@@ -86,13 +86,14 @@ struct Styling {
     static let quizAnswer = RGB(r: 143, g: 184, b: 222).color
     static let quizAnswerBorder = RGB(r: 114, g: 165, b: 213).color
     static let quizAnswerInactive = RGB(r: 191, g: 207, b: 222).color
-    static let quizAnswerCorrectBorder = RGB(r: 38, g: 83, b: 43).color
 
     static let quizActiveBlue = RGB(r: 232, g: 244, b: 250).color
     static let quizActiveDarkBlue = RGB(r: 96, g: 147, b: 202).color
+    static let quizAnswerCorrectBackground = RGB(r: 233, g: 243, b: 238).color
+    static let quizAnswerCorrectBorder = RGB(r: 95, g: 181, b: 128).color
 
-    static let quizAnswerIncorrectBorder = RGB(r: 163, g: 22, b: 33).color
-    static let quizAnswerIncorrectBackground = RGB(r: 208, g: 0, b: 0).color
+    static let quizAnswerIncorrectBorder = RGB(r: 212, g: 91, b: 73).color
+    static let quizAnswerIncorrectBackground = RGB(r: 247, g: 237, b: 234).color
 
     static let navIcon = RGB(r: 68, g: 150, b: 247).color
     static let navIconSelected = RGB(r: 91, g: 141, b: 197).color
@@ -117,3 +118,37 @@ extension Color {
 
 }
 
+
+extension Styling {
+    struct Quiz {
+
+        private static let standardActive = Color.white
+
+        private static let lightGray = RGB(r: 245, g: 245, b: 245).color
+        private static let veryLightGray = RGB(r: 249, g: 249, b: 249).color
+
+        private static let lightBlue = RGB(r: 232, g: 244, b: 250).color
+        private static let darkBlue = RGB(r: 96, g: 147, b: 202).color
+        private static let lightRed = RGB(r: 247, g: 237, b: 234).color
+        private static let darkRed = RGB(r: 212, g: 91, b: 73).color
+        private static let lightGreen = RGB(r: 233, g: 243, b: 238).color
+        private static let darkGreen = RGB(r: 95, g: 181, b: 128).color
+
+        static let selectedDifficultyBackground = lightBlue
+        static let selectedDifficultyBorder = darkBlue
+
+        static let correctAnswerBackground = lightGreen
+        static let correctAnswerBorder = darkGreen
+
+        static let wrongAnswerBorder = darkRed
+        static let wrongAnswerBackground = lightRed
+
+        static let answerBackground = Color.white
+        static let disabledAnswerBackground = lightGray
+
+        static let explanationBackground = veryLightGray
+
+        static let infoIconForeground = darkBlue
+        static let infoIconBackground = lightBlue
+    }
+}

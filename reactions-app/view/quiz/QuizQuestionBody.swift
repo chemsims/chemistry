@@ -10,7 +10,6 @@ struct QuizQuestionsBody: View {
     let settings: QuizLayoutSettings
     @ObservedObject var model: QuizViewModel
 
-
     @State private var badgeScale: CGFloat = 1
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -26,8 +25,7 @@ struct QuizQuestionsBody: View {
                         tableWidth: settings.tableWidthQuestionCard
                     )
 
-                    if (model.showExplanation &&
-                            model.currentQuestion.hasExplanation) {
+                    if (model.showExplanation && model.currentQuestion.hasExplanation) {
                         explanationView
                             .padding(.bottom, 10)
                             .padding(.top, 10)
@@ -54,19 +52,28 @@ struct QuizQuestionsBody: View {
             RoundedRectangle(
                 cornerRadius: settings.progressCornerRadius
             )
-            .foregroundColor(.white)
+            .foregroundColor(Styling.Quiz.explanationBackground)
             .shadow(radius: 4)
             .overlay(
-                Image(systemName: "lightbulb.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 30)
-                    .offset(x: 10, y: -10)
-                    .foregroundColor(.orangeAccent),
+                infoIcon,
                 alignment: .topTrailing
             )
         )
         .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private var infoIcon: some View {
+        ZStack {
+            Circle()
+                .foregroundColor(Styling.Quiz.infoIconBackground)
+
+            Image(systemName: "info.circle")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(Styling.Quiz.infoIconForeground)
+        }
+        .frame(width: 30, height: 30)
+        .offset(x: 10, y: -10)
     }
 
     private var answers: some View {
@@ -94,11 +101,14 @@ struct QuizQuestionsBody: View {
             Group {
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .foregroundColor(answerBackground(option: option))
+                    .shadow(radius: 3)
 
-                RoundedRectangle(cornerRadius: settings.progressCornerRadius)
-                    .stroke(lineWidth: answerLineWidth(option: option))
-                    .foregroundColor(answerBorder(option: option))
-                    .overlay(overlay(option: option), alignment: .topTrailing)
+                if (styleCorrect(option) || styleIncorrect(option)) {
+                    RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                        .strokeBorder(lineWidth: answerLineWidth(option: option))
+                        .foregroundColor(answerBorder(option: option))
+                        .overlay(overlay(option: option), alignment: .topTrailing)
+                }
 
                 TextLinesView(
                     line: model.optionText(option),
@@ -166,17 +176,23 @@ struct QuizQuestionsBody: View {
     }
 
     private func answerBackground(option: QuizOption) -> Color {
-        let active = styleCorrect(option) || styleIncorrect(option) || model.selectedAnswer == nil
-        return active ? Styling.quizAnswer : Styling.quizAnswerInactive
+        if (styleCorrect(option)) {
+            return Styling.Quiz.correctAnswerBackground
+        } else if (styleIncorrect(option)) {
+            return Styling.Quiz.wrongAnswerBackground
+        } else if (model.selectedAnswer != nil) {
+            return Styling.Quiz.disabledAnswerBackground
+        }
+        return Styling.Quiz.answerBackground
     }
 
     private func answerBorder(option: QuizOption) -> Color {
         if (styleCorrect(option)) {
-            return Styling.quizAnswerCorrectBorder
+            return Styling.Quiz.correctAnswerBorder
         } else if (styleIncorrect(option)) {
-            return Styling.quizAnswerIncorrectBorder
+            return Styling.Quiz.wrongAnswerBorder
         }
-        return Styling.quizAnswerBorder
+        return Styling.Quiz.answerBackground
     }
 
     private func answerLineWidth(option: QuizOption) -> CGFloat {
