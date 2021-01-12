@@ -60,8 +60,7 @@ struct ZeroOrderStatements {
 
     static let end = [
         TextLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
-        TextLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time."),
-        TextLineGenerator.makeLine("Then, let's take a quiz before seeing how Integrated Rate Law works.")
+        TextLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time.")
     ]
 
 }

@@ -56,7 +56,6 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         let background = selected ? Color.gray : Color.white
 
         return Button(action: {
-            onSelection?()
             if (selected) {
                 isToggled = false
             } else {
@@ -67,6 +66,7 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
                     selection = option
                 }
             }
+            onSelection?()
         }) {
             textBox(
                 text: displayString(option)

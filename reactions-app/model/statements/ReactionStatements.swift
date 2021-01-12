@@ -8,8 +8,8 @@ import CoreGraphics
 struct ReactionStatements {
 
     static let chooseReaction: [TextLine] = [
-        "Now that you've completed the app, why don't you try a different reaction type?",
-        "Choose a reaction above, with a fixed rate constant, *k*"
+        "Now, let's try choosing a different reaction, which has a fixed rate constant, *k*.",
+        "*Choose a reaction above*."
     ]
 
     static func setInitialInputs(rateConstant: CGFloat) -> [TextLine] {
@@ -42,6 +42,17 @@ struct ReactionStatements {
         TextLineGenerator.makeLine(
             "This happens at a variable *Rate (in units of M/s)*, which is dependant on *k* and *[A]*."
         )
+    ]
+
+    static let endOfSecondReaction: [TextLine] = [
+        "Amazing, let's take another snapshot!",
+        "Try *dragging the time indicator* again to scrub through the reaction time."
+    ]
+
+    static let end: [TextLine] = [
+        "Amazing, let's take another shapshot!",
+        "Try *dragging the time indicator* to scrub through the reaction time.",
+        "Then, let's take a quiz to review what we've learnt."
     ]
     
 }

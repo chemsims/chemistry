@@ -24,7 +24,7 @@ class ReactionInputTests: XCTestCase {
 
 
     private func testMakingSecondOrderReactionInputFromAFixedRateReaction(_ order: ReactionOrder) {
-        let fixedReaction = ReactionInputWithoutC2(order: order)
+        var fixedReaction = ReactionInputWithoutC2(order: order)
         fixedReaction.inputC1 = 1
         fixedReaction.inputT1 = 10
         fixedReaction.inputT2 = 20
@@ -32,7 +32,7 @@ class ReactionInputTests: XCTestCase {
         let inputToSave = fixedReaction.reactionInput
         XCTAssertNotNil(inputToSave)
 
-        let variedReaction = ReactionInputAllProperties(order: order)
+        var variedReaction = ReactionInputAllProperties(order: order)
         variedReaction.inputT1 = inputToSave!.t1
         variedReaction.inputT2 = inputToSave!.t2
         variedReaction.inputC1 = inputToSave!.c1

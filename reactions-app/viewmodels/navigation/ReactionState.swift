@@ -42,15 +42,20 @@ struct OrderedReactionInitialNodes {
     ) -> ScreenStateTreeNode<ReactionState> {
         assert(!standardFlow.isEmpty)
         var states = standardFlow
-        states += alternativePathStates(persistence: persistence, order: order)
+        states += secondaryReactionStates(persistence: persistence, order: order, hasNext: true)
+        states += secondaryReactionStates(persistence: persistence, order: order, hasNext: false)
         return ScreenStateTreeNode<ReactionState>.build(states: states)!
     }
 
-    private static func alternativePathStates(
+    private static func secondaryReactionStates(
         persistence: ReactionInputPersistence,
-        order: ReactionOrder
+        order: ReactionOrder,
+        hasNext: Bool
     ) -> [ReactionState] {
-        [
+        let finalStatement = hasNext ?
+            ReactionStatements.endOfSecondReaction :
+            ReactionStatements.end
+        return [
             SelectReactionState(),
             SetT0ForFixedRate(order: order),
             SetT1ForFixedRate(),
@@ -61,7 +66,7 @@ struct OrderedReactionInitialNodes {
                 initialiseCurrentTime: true
             ),
             EndAnimation(
-                statement: ZeroOrderStatements.end,
+                statement: finalStatement,
                 highlightChart: false
             )
         ]
@@ -121,6 +126,7 @@ class SelectReactionState: ReactionState {
         if let previousInput = previousInput {
             model.input = previousInput
         }
+        model.canSelectReaction = false
     }
 }
 
@@ -131,12 +137,16 @@ class SetT0ForFixedRate: ReactionState {
 
     let order: ReactionOrder
 
+    private var insertedReaction: ReactionType?
+
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
+        assert(model.selectedReaction != .A)
         model.inputsAreDisabled = false
         model.canSelectReaction = false
         model.highlightedElements = []
 
+        insertedReaction = model.selectedReaction
         model.usedReactions.insert(model.selectedReaction)
 
         model.input = model.selectedReaction == .B ?
@@ -155,7 +165,9 @@ class SetT0ForFixedRate: ReactionState {
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.usedReactions.remove(model.selectedReaction)
+        if let reaction = insertedReaction {
+            model.usedReactions.remove(reaction)
+        }
     }
 
     private func setStatement(_ model: ZeroOrderReactionViewModel) {
