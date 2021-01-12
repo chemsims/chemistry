@@ -11,8 +11,6 @@ protocol ReactionInputModel {
     var inputT1: CGFloat { get set }
     var inputT2: CGFloat? { get set }
 
-    var didSetC1: (() -> Void)? { get set }
-
     var minC2: CGFloat { get }
     var maxT2: CGFloat { get }
 
@@ -87,22 +85,12 @@ extension ReactionInputModel {
 
 struct ReactionInputAllProperties: ReactionInputModel {
 
-    init(order: ReactionOrder) {
-        self.order = order
-    }
-
     let order: ReactionOrder
 
-    var inputC1: CGFloat = ReactionSettings.initialC {
-        didSet {
-            didSetC1?()
-        }
-    }
+    var inputC1: CGFloat = ReactionSettings.initialC
     var inputT1: CGFloat = ReactionSettings.initialT
     var inputC2: CGFloat?
     var inputT2: CGFloat?
-
-    var didSetC1: (() -> Void)?
 
     var rateConstant: CGFloat? {
         if let c2 = inputC2, let t2 = inputT2 {
@@ -122,18 +110,10 @@ struct ReactionInputAllProperties: ReactionInputModel {
 struct ReactionInputWithoutC2: ReactionInputModel {
 
     let order: ReactionOrder
-    var didSetC1: (() -> Void)?
 
-    var inputC1: CGFloat = ReactionSettings.initialC {
-        didSet {
-            didSetC1?()
-        }
-    }
-
+    var inputC1: CGFloat = ReactionSettings.initialC
     var inputT1: CGFloat = ReactionSettings.initialT
-
     var inputT2: CGFloat?
-
     var inputC2: CGFloat? {
         get { computedC2 }
         set { }
@@ -155,24 +135,15 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     var rateConstant: CGFloat? {
         ReactionSettings.reactionBRateConstant
     }
-
 }
 
 struct ReactionInputWithoutT2: ReactionInputModel {
 
     let order: ReactionOrder
 
-    var didSetC1: (() -> Void)?
-    var inputC1: CGFloat = ReactionSettings.initialC {
-        didSet {
-            didSetC1?()
-        }
-    }
-
+    var inputC1: CGFloat = ReactionSettings.initialC
     var inputC2: CGFloat?
-
     var inputT1: CGFloat =  ReactionSettings.initialT
-
     var inputT2: CGFloat? {
         get { computedT2 }
         set { }

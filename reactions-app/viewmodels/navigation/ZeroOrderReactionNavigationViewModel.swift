@@ -61,9 +61,7 @@ fileprivate class InitialStep: ReactionState {
         model.canSelectReaction = false
         model.highlightedElements = []
 
-        let currentInput = model.input
         model.input = ReactionInputAllProperties(order: .Zero)
-        model.input.didSetC1 = currentInput.didSetC1
     }
 }
 

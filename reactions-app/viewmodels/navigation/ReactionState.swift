@@ -94,7 +94,6 @@ class SelectReactionState: ReactionState {
         super.apply(on: model)
         if (saveInput) {
             previousInput = model.input
-            previousInput?.didSetC1 = nil
         }
         model.inputsAreDisabled = true
         model.canSelectReaction = true
@@ -138,7 +137,6 @@ class SetT0ForFixedRate: ReactionState {
             ReactionInputWithoutC2(order: order) :
             ReactionInputWithoutT2(order: order)
 
-        model.input.didSetC1 = model.didSetC1
         setStatement(model)
     }
 

@@ -8,14 +8,20 @@ import SwiftUI
 class ZeroOrderReactionViewModel: ObservableObject {
 
     init () {
-        setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
-        input.didSetC1 = didSetC1
+        setMoleculesA(
+            cols: MoleculeGridSettings.cols,
+            rows: MoleculeGridSettings.rows
+        )
     }
 
     var navigation: NavigationViewModel<ReactionState>?
 
     @Published var statement = [TextLine]()
-    @Published var input: ReactionInputModel = ReactionInputAllProperties(order: .Zero)
+    @Published var input: ReactionInputModel = ReactionInputAllProperties(order: .Zero) {
+        didSet {
+            setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
+        }
+    }
 
     @Published var currentTime: CGFloat?
 
@@ -39,10 +45,6 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     func back() {
         navigation?.back()
-    }
-
-    func didSetC1() {
-        setMoleculesA(cols: MoleculeGridSettings.cols, rows: MoleculeGridSettings.rows)
     }
 
     func color(for element: OrderedReactionScreenElement?) -> Color {
