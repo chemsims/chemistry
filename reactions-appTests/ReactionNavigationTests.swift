@@ -62,7 +62,7 @@ class ReactionNavigationTests: XCTestCase {
 
         nav.nextUntil(\.canSelectReaction)
         XCTAssertEqual(model.usedReactions, [.A])
-        model.selectedReaction = .C
+        model.pendingReactionSelection = .C
 
         nav.next()
         XCTAssertFalse(model.canSelectReaction)
@@ -70,7 +70,7 @@ class ReactionNavigationTests: XCTestCase {
         nav.nextUntil(\.canSelectReaction)
 
         XCTAssertEqual(model.usedReactions, [.A, .C])
-        XCTAssertEqual(model.selectedReaction, .B)
+        XCTAssertEqual(model.pendingReactionSelection, .B)
 
         nav.back()
         XCTAssertFalse(model.canSelectReaction)
@@ -128,6 +128,28 @@ class ReactionNavigationTests: XCTestCase {
         model.currentTime = 20
         nav.next()
         XCTAssertEqual(model.currentTime!, 20)
+    }
+
+    func testPendingReactionTypeState() {
+        let model = ZeroOrderReactionViewModel()
+        let nav = navModel(model)
+
+        nav.nextUntil(\.canSelectReaction)
+        XCTAssertTrue(model.canSelectReaction)
+        XCTAssertEqual(model.pendingReactionSelection, .B)
+
+        nav.next()
+        XCTAssertEqual(model.selectedReaction, .B)
+    }
+
+    func testNoElementsAreHighlightedWhenGoingBackFromSelectReactionState() {
+        let model = ZeroOrderReactionViewModel()
+        let nav = navModel(model)
+
+        nav.nextUntil(\.canSelectReaction)
+        nav.back()
+
+        XCTAssertEqual(model.highlightedElements, [])
     }
 
     private func navModel(

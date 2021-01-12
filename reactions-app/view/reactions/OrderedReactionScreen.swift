@@ -121,7 +121,7 @@ struct OrderedReactionScreen<Content: View>: View {
             title: "Choose a reaction",
             options: ReactionType.allCases,
             isToggled: reaction.canSelectReaction ? $reactionSelectionIsToggled : .constant(false),
-            selection: $reaction.selectedReaction,
+            selection: $reaction.pendingReactionSelection,
             height: settings.tableButtonSize,
             animation: nil,
             displayString: { $0.name},

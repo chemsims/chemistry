@@ -109,15 +109,12 @@ class SelectReactionState: ReactionState {
 
         assert(!availableReaction.isEmpty)
         let nextReaction = availableReaction.first
-        model.selectedReaction = nextReaction!
+        model.pendingReactionSelection = nextReaction!
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
         if let previousInput = previousInput {
             model.input = previousInput
-        }
-        if let previousReaction = previousReaction {
-            model.selectedReaction = previousReaction
         }
         apply(on: model)
     }
@@ -128,6 +125,7 @@ class SelectReactionState: ReactionState {
         }
         model.canSelectReaction = false
         model.inputsAreDisabled = false
+        model.highlightedElements = []
     }
 }
 
@@ -142,13 +140,14 @@ class SetT0ForFixedRate: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        assert(model.selectedReaction != .A)
+        assert(model.pendingReactionSelection != .A)
+
         model.inputsAreDisabled = false
         model.canSelectReaction = false
         model.highlightedElements = []
 
-        insertedReaction = model.selectedReaction
-        model.usedReactions.insert(model.selectedReaction)
+        insertedReaction = model.pendingReactionSelection
+        model.usedReactions.append(model.pendingReactionSelection)
 
         model.input = model.selectedReaction == .B ?
             ReactionInputWithoutC2(order: order) :
@@ -167,7 +166,7 @@ class SetT0ForFixedRate: ReactionState {
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
         if let reaction = insertedReaction {
-            model.usedReactions.remove(reaction)
+            model.usedReactions.removeAll { $0 == reaction }
         }
     }
 
