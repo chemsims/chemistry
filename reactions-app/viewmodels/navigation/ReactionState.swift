@@ -84,39 +84,25 @@ class SelectReactionState: ReactionState {
     private var previousInput: ReactionInputModel?
 
     override func apply(on model: ZeroOrderReactionViewModel) {
-        doApply(on: model, saveInput: true)
-    }
-
-    private func doApply(
-        on model: ZeroOrderReactionViewModel,
-        saveInput: Bool
-    ) {
         super.apply(on: model)
-        if (saveInput) {
-            previousInput = model.input
-        }
+        previousInput = model.input
         model.inputsAreDisabled = true
         model.canSelectReaction = true
         model.showReactionToggle = true
         model.highlightedElements = [.reactionToggle]
-        model.currentTime = nil
-        model.input.inputT2 = nil
-        model.input.inputC2 = nil
-        model.reactionHasStarted = false
-        model.reactionHasEnded = false
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
-        doApply(on: model, saveInput: false)
+        if let previousInput = previousInput {
+            model.input = previousInput
+        }
+        apply(on: model)
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
         if let previousInput = previousInput {
             model.input = previousInput
         }
-        model.currentTime = model.input.inputT2
-        model.reactionHasStarted = true
-        model.reactionHasEnded = true
     }
 }
 
@@ -138,10 +124,20 @@ class SetT0ForFixedRate: ReactionState {
             ReactionInputWithoutT2(order: order)
 
         setStatement(model)
+
+        model.currentTime = nil
+        model.reactionHasStarted = false
+        model.reactionHasEnded = false
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
         setStatement(model)
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.currentTime = model.input.inputT2
+        model.reactionHasStarted = true
+        model.reactionHasEnded = true
     }
 
     private func setStatement(_ model: ZeroOrderReactionViewModel) {
