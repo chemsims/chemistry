@@ -111,9 +111,7 @@ struct OrderedReactionScreen<Content: View>: View {
 
     private var topRightControls: some View {
         VStack(alignment: .trailing, spacing: 0.5 * settings.tableButtonSize) {
-            if (reaction.showReactionToggle) {
-                reactionToggle.zIndex(1)
-            }
+            reactionToggle.zIndex(1)
             concentrationTable
         }
     }
@@ -126,7 +124,9 @@ struct OrderedReactionScreen<Content: View>: View {
             selection: $reaction.selectedReaction,
             height: settings.tableButtonSize,
             animation: nil,
-            displayString: { $0.name}
+            displayString: { $0.name},
+            disabledOptions: Array(reaction.usedReactions),
+            onSelection: reaction.next
         )
         .frame(height: settings.tableButtonSize, alignment: .top)
         .colorMultiply(reaction.color(for: .reactionToggle))

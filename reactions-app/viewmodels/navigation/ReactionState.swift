@@ -82,19 +82,37 @@ class SelectReactionState: ReactionState {
     }
 
     private var previousInput: ReactionInputModel?
+    private var previousReaction: ReactionType?
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
         previousInput = model.input
+        previousReaction = model.selectedReaction
         model.inputsAreDisabled = true
         model.canSelectReaction = true
-        model.showReactionToggle = true
         model.highlightedElements = [.reactionToggle]
+
+        model.reactionHasStarted = true
+        model.reactionHasEnded = true
+        if let t2 = model.input.inputT2 {
+            model.currentTime = reactionEndTime(t2: t2)
+        }
+
+        let availableReaction = ReactionType.allCases.filter {
+            !model.usedReactions.contains($0)
+        }
+
+        assert(!availableReaction.isEmpty)
+        let nextReaction = availableReaction.first
+        model.selectedReaction = nextReaction!
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
         if let previousInput = previousInput {
             model.input = previousInput
+        }
+        if let previousReaction = previousReaction {
+            model.selectedReaction = previousReaction
         }
         apply(on: model)
     }
@@ -119,6 +137,8 @@ class SetT0ForFixedRate: ReactionState {
         model.canSelectReaction = false
         model.highlightedElements = []
 
+        model.usedReactions.insert(model.selectedReaction)
+
         model.input = model.selectedReaction == .B ?
             ReactionInputWithoutC2(order: order) :
             ReactionInputWithoutT2(order: order)
@@ -135,9 +155,7 @@ class SetT0ForFixedRate: ReactionState {
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.currentTime = model.input.inputT2
-        model.reactionHasStarted = true
-        model.reactionHasEnded = true
+        model.usedReactions.remove(model.selectedReaction)
     }
 
     private func setStatement(_ model: ZeroOrderReactionViewModel) {
@@ -270,7 +288,7 @@ class EndAnimation: ReactionState {
         // which is not equal to the current value
         withAnimation(.easeOut(duration: 0.5)) {
             if let finalTime = model.input.inputT2 {
-                model.currentTime = finalTime * 1.00001
+                model.currentTime = reactionEndTime(t2: finalTime)
             }
             if (!highlightChart) {
                 model.reactionHasEnded = true
@@ -348,3 +366,6 @@ class FinalReactionState: ReactionState {
     }
 }
 
+fileprivate func reactionEndTime(t2: CGFloat) -> CGFloat {
+    t2 * 1.00001
+}

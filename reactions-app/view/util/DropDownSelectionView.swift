@@ -14,6 +14,8 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     let height: CGFloat
     let animation: Animation?
     let displayString: (Data) -> String
+    let disabledOptions: [Data]
+    let onSelection: (() -> Void)?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion: Bool
 
@@ -27,6 +29,8 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         .frame(width: height, alignment: .trailing)
     }
 
+    private let width: CGFloat = 1
+
     private var selectionView: some View {
         VStack(spacing: 0) {
             textBox(text: title)
@@ -39,7 +43,7 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
             .compositingGroup()
             .shadow(radius: height * 0.07)
         }
-        .border(Color.black)
+        .border(Color.black, width: width)
         .background(Color.white)
         .font(.system(size: height * 0.44))
         .minimumScaleFactor(0.8)
@@ -50,9 +54,9 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     ) -> some View {
         let selected = selection == option
         let background = selected ? Color.gray : Color.white
-        let fontColor = selected ? Color.white : Color.black
 
         return Button(action: {
+            onSelection?()
             if (selected) {
                 isToggled = false
             } else {
@@ -68,8 +72,9 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
                 text: displayString(option)
             )
             .background(background)
-            .foregroundColor(fontColor)
+            .foregroundColor(fontColor(option))
         }
+        .disabled(disabledOptions.contains(option))
     }
 
     private func textBox(
@@ -89,8 +94,6 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         ZStack {
             Rectangle()
                 .foregroundColor(.white)
-            Rectangle()
-                .stroke()
             Button(action: { isToggled.toggle() }) {
                 Image(systemName: "chevron.up")
                     .animation(.linear)
@@ -101,25 +104,37 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         }.frame(
             width: height,
             height: height
-        ).foregroundColor(.black)
+        )
+        .foregroundColor(.black)
+        .border(Color.black, width: width)
+        .offset(x: -width)
+    }
+
+    private func fontColor(_ option: Data) -> Color {
+        let disabled = disabledOptions.contains(option)
+        let selected = selection == option
+        if (selected) {
+            return .white
+        }
+        return disabled ? Color.gray : Color.black
     }
 }
-
 
 struct DropDownSelectionView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Rectangle()
-
+//            Rectangle()
 
             DropDownSelectionView(
                 title: "foo",
                 options: ReactionOrder.allCases,
                 isToggled: .constant(true),
-                selection: .constant(.First),
+                selection: .constant(.Zero),
                 height: 30,
                 animation: nil,
-                displayString: { "\($0)"}
+                displayString: { "\($0)"},
+                disabledOptions: [.First],
+                onSelection: nil
             )
         }
         .previewLayout(.fixed(width: 700, height: 200))

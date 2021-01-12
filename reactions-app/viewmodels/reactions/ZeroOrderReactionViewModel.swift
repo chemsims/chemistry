@@ -31,14 +31,11 @@ class ZeroOrderReactionViewModel: ObservableObject {
     @Published var highlightedElements = [OrderedReactionScreenElement]()
     @Published var inputsAreDisabled = false
     @Published var canSelectReaction = false
-    @Published var showReactionToggle = false
 
-    var selectedReaction = ReactionType.A {
-        didSet {
-            navigation?.next()
-        }
-    }
+    @Published var usedReactions: Set<ReactionType> = [.A]
 
+    var selectedReaction = ReactionType.A
+    
     func next() {
         navigation?.next()
     }
