@@ -104,7 +104,6 @@ struct FirstOrderStatements {
 
     static let end = [
         TextLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
-        TextLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time."),
-        TextLineGenerator.makeLine("Then, let's take a quiz before having a look at a Second Order Reaction.")
+        TextLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time.")
     ]
 }

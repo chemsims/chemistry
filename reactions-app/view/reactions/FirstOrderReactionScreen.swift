@@ -27,7 +27,7 @@ struct FirstOrderReactionScreen: View {
         OrderedReactionScreen(
             reaction: reaction,
             settings: settings,
-            canSetInitialTime: reaction.selectedReaction != .A,
+            canSetInitialTime: reaction.usedReactions.count > 1,
             showRate: true
         ) {
             VStack {

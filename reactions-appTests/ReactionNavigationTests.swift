@@ -114,6 +114,22 @@ class ReactionNavigationTests: XCTestCase {
         canSelect()
     }
 
+    func testCurrentTimeAndInputSelectionStateWhenChangingReactionType() {
+        let model = ZeroOrderReactionViewModel()
+        let nav = navModel(model)
+
+        nav.nextUntil(\.canSelectReaction)
+        XCTAssertTrue(model.canSelectReaction)
+
+        nav.back()
+        XCTAssertTrue(model.reactionHasEnded)
+        XCTAssertFalse(model.inputsAreDisabled)
+
+        model.currentTime = 20
+        nav.next()
+        XCTAssertEqual(model.currentTime!, 20)
+    }
+
     private func navModel(
         _ viewModel: ZeroOrderReactionViewModel
     ) -> NavigationViewModel<ReactionState> {

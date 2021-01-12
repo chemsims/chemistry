@@ -100,7 +100,7 @@ class SelectReactionState: ReactionState {
         model.reactionHasStarted = true
         model.reactionHasEnded = true
         if let t2 = model.input.inputT2 {
-            model.currentTime = reactionEndTime(t2: t2)
+            model.currentTime = model.currentTime ?? reactionEndTime(t2: t2)
         }
 
         let availableReaction = ReactionType.allCases.filter {
@@ -127,6 +127,7 @@ class SelectReactionState: ReactionState {
             model.input = previousInput
         }
         model.canSelectReaction = false
+        model.inputsAreDisabled = false
     }
 }
 

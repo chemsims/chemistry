@@ -91,6 +91,6 @@ struct SecondOrderStatements {
 
     static let end = [
         TextLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
-        TextLineGenerator.makeLine("Now let's take a quiz and then compare all the graphs we collected so far!"),
+        TextLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time."),
     ]
 }
