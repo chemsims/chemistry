@@ -17,6 +17,10 @@ protocol ReactionInputModel {
     var maxT2: CGFloat { get }
 
     var concentrationA: ConcentrationEquation? { get }
+
+    var rateConstant: CGFloat? { get }
+
+    var order: ReactionOrder { get }
 }
 
 extension ReactionInputModel {
@@ -58,31 +62,11 @@ extension ReactionInputModel {
         }
         return nil
     }
-}
-
-class ReactionInputAllProperties: ReactionInputModel {
-
-    init(order: ReactionOrder) {
-        self.order = order
-    }
-
-    let fixedRateConstant: CGFloat? = nil
-    let order: ReactionOrder
-
-    var inputC1: CGFloat = ReactionSettings.initialC {
-        didSet {
-            didSetC1?()
-        }
-    }
-    var inputT1: CGFloat = ReactionSettings.initialT
-    var inputC2: CGFloat?
-    var inputT2: CGFloat?
-
-    var didSetC1: (() -> Void)?
 
     var minC2: CGFloat {
         ReactionSettings.minCInput
     }
+
     var maxT2: CGFloat {
         ReactionSettings.maxTime
     }
@@ -99,8 +83,28 @@ class ReactionInputAllProperties: ReactionInputModel {
             }
         }
     }
+}
 
-    fileprivate var rateConstant: CGFloat? {
+struct ReactionInputAllProperties: ReactionInputModel {
+
+    init(order: ReactionOrder) {
+        self.order = order
+    }
+
+    let order: ReactionOrder
+
+    var inputC1: CGFloat = ReactionSettings.initialC {
+        didSet {
+            didSetC1?()
+        }
+    }
+    var inputT1: CGFloat = ReactionSettings.initialT
+    var inputC2: CGFloat?
+    var inputT2: CGFloat?
+
+    var didSetC1: (() -> Void)?
+
+    var rateConstant: CGFloat? {
         if let c2 = inputC2, let t2 = inputT2 {
             switch (order) {
             case .Zero:
@@ -115,16 +119,30 @@ class ReactionInputAllProperties: ReactionInputModel {
     }
 }
 
-class ReactionInputWithoutC2: ReactionInputAllProperties {
-    override var inputC2: CGFloat? {
+struct ReactionInputWithoutC2: ReactionInputModel {
+
+    let order: ReactionOrder
+    var didSetC1: (() -> Void)?
+
+    var inputC1: CGFloat = ReactionSettings.initialC {
+        didSet {
+            didSetC1?()
+        }
+    }
+
+    var inputT1: CGFloat = ReactionSettings.initialT
+
+    var inputT2: CGFloat?
+
+    var inputC2: CGFloat? {
         get { computedC2 }
         set { }
     }
 
-    override var maxT2: CGFloat {
-        let maxTimeForMinConcentration = concentrationA?.time(for: minC2) ?? super.maxT2
-        let absoluteMaxTime = ReactionSettings.maxTInput
-        return min(maxTimeForMinConcentration, absoluteMaxTime)
+    var maxT2: CGFloat {
+        let absoluteMax = ReactionSettings.maxTInput
+        let maxTimeForMinConcentration = concentrationA?.time(for: minC2) ?? absoluteMax
+        return min(maxTimeForMinConcentration, absoluteMax)
     }
 
     private var computedC2: CGFloat? {
@@ -134,33 +152,46 @@ class ReactionInputWithoutC2: ReactionInputAllProperties {
         return nil
     }
 
-    override var rateConstant: CGFloat {
+    var rateConstant: CGFloat? {
         ReactionSettings.reactionBRateConstant
     }
 
 }
 
-class ReactionInputWithoutT2: ReactionInputAllProperties {
+struct ReactionInputWithoutT2: ReactionInputModel {
 
-    override var inputT2: CGFloat? {
+    let order: ReactionOrder
+
+    var didSetC1: (() -> Void)?
+    var inputC1: CGFloat = ReactionSettings.initialC {
+        didSet {
+            didSetC1?()
+        }
+    }
+
+    var inputC2: CGFloat?
+
+    var inputT1: CGFloat =  ReactionSettings.initialT
+
+    var inputT2: CGFloat? {
         get { computedT2 }
         set { }
     }
 
-    override var minC2: CGFloat {
-        let minForMaxTime = concentrationA?.getConcentration(at: maxT2) ?? super.minC2
+    var minC2: CGFloat {
         let absoluteMin = ReactionSettings.minCInput
+        let minForMaxTime = concentrationA?.getConcentration(at: maxT2) ?? absoluteMin
         return max(minForMaxTime, absoluteMin)
     }
 
-    private var computedT2: CGFloat? {
+    var computedT2: CGFloat? {
         if let concentrationA = concentrationA, let c2 = inputC2 {
             return concentrationA.time(for: c2)
         }
         return nil
     }
 
-    override var rateConstant: CGFloat {
+    var rateConstant: CGFloat? {
         ReactionSettings.reactionCRateConstant
     }
 }

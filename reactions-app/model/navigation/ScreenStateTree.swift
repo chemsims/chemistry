@@ -28,7 +28,7 @@ class ScreenStateTreeNode<State: ScreenState> {
     }
 }
 
-class BiConditionalScreenStateNode<State: ScreenState>: ScreenStateTreeNode<State> {
+class ConditionalScreenStateNode<State: ScreenState>: ScreenStateTreeNode<State> {
     init(state: State, applyAlternativeNode: @escaping (State.Model) -> Bool) {
         self.applyAlternativeNode = applyAlternativeNode
         super.init(state: state)

@@ -25,27 +25,6 @@ struct ZeroOrderReactionNavigation {
         )
     }
 
-    private static func alternativePathStates(
-        persistence: ReactionInputPersistence
-    ) -> ScreenStateTreeNode<ReactionState> {
-        ScreenStateTreeNode<ReactionState>.build(
-            states: [
-                SetT0ForFixedRate(order: .Zero),
-                SetT1ForFixedRate(),
-                RunAnimation(
-                    statement: ZeroOrderStatements.reactionInProgress,
-                    order: .Zero,
-                    persistence: persistence,
-                    initialiseCurrentTime: true
-                ),
-                EndAnimation(
-                    statement: ZeroOrderStatements.end,
-                    highlightChart: false
-                )
-            ]
-        )!
-    }
-
     private static func standardPathStates(
         persistence: ReactionInputPersistence
     ) -> [ReactionState] {

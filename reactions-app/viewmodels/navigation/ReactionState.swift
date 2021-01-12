@@ -41,41 +41,30 @@ struct OrderedReactionInitialNodes {
         order: ReactionOrder
     ) -> ScreenStateTreeNode<ReactionState> {
         assert(!standardFlow.isEmpty)
-        let standardNodes = ScreenStateTreeNode<ReactionState>.build(states: standardFlow)!
-        if (!persistence.hasCompletedApp) {
-            return standardNodes
-        }
-
-        let node1 = BiConditionalScreenStateNode<ReactionState>(
-            state: SelectReactionState(),
-            applyAlternativeNode: { $0.selectedReaction != .A }
-        )
-
-        node1.staticNext = standardNodes
-        node1.staticNextAlternative = alternativePathStates(persistence: persistence, order: order)
-        return node1
+        var states = standardFlow
+        states += alternativePathStates(persistence: persistence, order: order)
+        return ScreenStateTreeNode<ReactionState>.build(states: states)!
     }
 
     private static func alternativePathStates(
         persistence: ReactionInputPersistence,
         order: ReactionOrder
-    ) -> ScreenStateTreeNode<ReactionState> {
-        ScreenStateTreeNode<ReactionState>.build(
-            states: [
-                SetT0ForFixedRate(order: order),
-                SetT1ForFixedRate(),
-                RunAnimation(
-                    statement: reactionInProgressStatement(order: order),
-                    order: order,
-                    persistence: persistence,
-                    initialiseCurrentTime: true
-                ),
-                EndAnimation(
-                    statement: ZeroOrderStatements.end,
-                    highlightChart: false
-                )
-            ]
-        )!
+    ) -> [ReactionState] {
+        [
+            SelectReactionState(),
+            SetT0ForFixedRate(order: order),
+            SetT1ForFixedRate(),
+            RunAnimation(
+                statement: reactionInProgressStatement(order: order),
+                order: order,
+                persistence: persistence,
+                initialiseCurrentTime: true
+            ),
+            EndAnimation(
+                statement: ZeroOrderStatements.end,
+                highlightChart: false
+            )
+        ]
     }
 
     private static func reactionInProgressStatement(order: ReactionOrder) -> [TextLine] {
@@ -87,20 +76,48 @@ struct OrderedReactionInitialNodes {
 }
 
 class SelectReactionState: ReactionState {
+    
     init() {
         super.init(statement: ReactionStatements.chooseReaction)
     }
 
+    private var previousInput: ReactionInputModel?
+
     override func apply(on model: ZeroOrderReactionViewModel) {
+        doApply(on: model, saveInput: true)
+    }
+
+    private func doApply(
+        on model: ZeroOrderReactionViewModel,
+        saveInput: Bool
+    ) {
         super.apply(on: model)
+        if (saveInput) {
+            previousInput = model.input
+            previousInput?.didSetC1 = nil
+        }
         model.inputsAreDisabled = true
         model.canSelectReaction = true
         model.showReactionToggle = true
         model.highlightedElements = [.reactionToggle]
+        model.currentTime = nil
+        model.input.inputT2 = nil
+        model.input.inputC2 = nil
+        model.reactionHasStarted = false
+        model.reactionHasEnded = false
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
+        doApply(on: model, saveInput: false)
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        if let previousInput = previousInput {
+            model.input = previousInput
+        }
+        model.currentTime = model.input.inputT2
+        model.reactionHasStarted = true
+        model.reactionHasEnded = true
     }
 }
 
@@ -336,3 +353,4 @@ class FinalReactionState: ReactionState {
         model.highlightedElements = [.concentrationChart, .secondaryChart]
     }
 }
+

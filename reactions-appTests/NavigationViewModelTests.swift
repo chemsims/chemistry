@@ -109,7 +109,7 @@ class NavigationViewModelTests: XCTestCase {
 
 
         let s1Node = ScreenStateTreeNode(state: s1)
-        let s2Node = BiConditionalScreenStateNode(state: s2, applyAlternativeNode: { $0.value == 2 })
+        let s2Node = ConditionalScreenStateNode(state: s2, applyAlternativeNode: { $0.value == 2 })
         let s3Node = ScreenStateTreeNode(state: s3)
         let s3AlternativeNode = ScreenStateTreeNode(state: s3Alternative)
 
