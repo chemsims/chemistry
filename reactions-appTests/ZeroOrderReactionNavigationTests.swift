@@ -169,6 +169,27 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
         XCTAssertEqual(model.highlightedElements, [.halfLifeEquation])
     }
 
+    func testStatementsAreAlwaysReappliedOnBack() {
+        let model = ZeroOrderReactionViewModel()
+        let nav = navModel(model)
+
+        var hasEnded = false
+        nav.nextScreen = { hasEnded = true }
+
+        func checkCurrentStatementIsReapplied() {
+            let statement = model.statement
+            nav.next()
+            if (!hasEnded) {
+                nav.back()
+                XCTAssertEqual(model.statement, statement)
+            }
+        }
+
+        while(!hasEnded) {
+            checkCurrentStatementIsReapplied()
+            nav.next()
+        }
+    }
 
     private func navModel(
         _ viewModel: ZeroOrderReactionViewModel

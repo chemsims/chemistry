@@ -74,6 +74,7 @@
 		5736B669258A79BD002CEF5E /* QuizViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B668258A79BD002CEF5E /* QuizViewModelTests.swift */; };
 		5736B66F258A7C20002CEF5E /* QuizState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B66E258A7C20002CEF5E /* QuizState.swift */; };
 		5736B673258CCC69002CEF5E /* EnergyProfileNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B672258CCC69002CEF5E /* EnergyProfileNavigationViewModel.swift */; };
+		5738AD9025AF131B002D4EB7 /* TextLineExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD8F25AF131B002D4EB7 /* TextLineExtensions.swift */; };
 		573F168D2584AC56001CE039 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F168C2584AC56001CE039 /* ProgressBar.swift */; };
 		573F16922584ACEC001CE039 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16912584ACEC001CE039 /* QuizViewModel.swift */; };
 		573F16982584B277001CE039 /* QuizOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16972584B277001CE039 /* QuizOption.swift */; };
@@ -252,6 +253,7 @@
 		5736B668258A79BD002CEF5E /* QuizViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModelTests.swift; sourceTree = "<group>"; };
 		5736B66E258A7C20002CEF5E /* QuizState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizState.swift; sourceTree = "<group>"; };
 		5736B672258CCC69002CEF5E /* EnergyProfileNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileNavigationViewModel.swift; sourceTree = "<group>"; };
+		5738AD8F25AF131B002D4EB7 /* TextLineExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineExtensions.swift; sourceTree = "<group>"; };
 		573F168C2584AC56001CE039 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		573F16912584ACEC001CE039 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
 		573F16972584B277001CE039 /* QuizOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizOption.swift; sourceTree = "<group>"; };
@@ -719,6 +721,7 @@
 			isa = PBXGroup;
 			children = (
 				5760536F25AE519B0068B533 /* NavigationExtensions.swift */,
+				5738AD8F25AF131B002D4EB7 /* TextLineExtensions.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -1022,6 +1025,7 @@
 				57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */,
 				5783965925A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift in Sources */,
 				57035EE5255BFE5200DB3A19 /* sliderCalculationsTest.swift in Sources */,
+				5738AD9025AF131B002D4EB7 /* TextLineExtensions.swift in Sources */,
 				5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */,
 				57DAE4C62577A299006D945B /* CGFloatRoundingTests.swift in Sources */,
 				57778B8A25937D8C00254262 /* QuizQuestionTests.swift in Sources */,
