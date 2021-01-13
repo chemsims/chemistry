@@ -35,7 +35,7 @@ struct SecondOrderStatements {
 
     static func explainHalfLife(halfLife: CGFloat) -> [TextLine] {
         [
-            TextLineGenerator.makeLine("*Half Life (t_1/2_)* is an expression to easily calculate the time at which the concentration of the reactant, in this case *A*, is half of what the initial concentration was."),
+            TextLineGenerator.makeLine("*Half-life (t_1/2_)* is an expression to easily calculate the time at which the concentration of the reactant, in this case *A*, is half of what the initial concentration was."),
             TextLineGenerator.makeLine("For this reaction,"),
             TextLineGenerator.makeLine("*t_1/2_=1/k[A_0_]=\(halfLife.str(decimals: 2))s*.")
         ]

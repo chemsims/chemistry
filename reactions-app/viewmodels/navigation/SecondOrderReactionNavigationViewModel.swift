@@ -104,6 +104,11 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
         model.statement = SecondOrderStatements.explainHalfLife(
             halfLife: model.input.concentrationA?.halfLife ?? 0
         )
+        model.highlightedElements = [.halfLifeEquation]
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
     }
 }
 
