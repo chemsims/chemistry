@@ -126,9 +126,7 @@ struct EnergyProfileChart: View {
 
     private var eaHeightAnnotation: some View {
         let curve = makeCurve(peak: chartInput.reducedPeak)
-        let leftY = curve.absoluteY(absoluteX: 0)
-        let rightY = curve.absoluteY(absoluteX: settings.chartSize)
-        let startY = min(leftY, rightY)
+        let startY = curve.absoluteY(absoluteX: 0)
         let midY = curve.absoluteY(absoluteX: settings.chartSize / 2)
         let height = startY - midY
         let padding = settings.chartSize * 0.04
