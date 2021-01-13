@@ -65,45 +65,50 @@ struct FirstOrderStatements {
 
     static let explainRatePostReaction2 = [
         TextLineGenerator.makeLine(
-            "For this First Order Reaction, \(Strings.withNoBreaks(str: "*Rate=k[A]^1^*")). That's why a graph plotting \(Strings.aVsT) is a curve, given how the *Rate* is proportional to the concentration of *A*."
+            """
+            For this First Order Reaction, $*Rate=k[A]^1^*$. That's why a graph plotting \
+            \(Strings.aVsT) is a curve, given how the *Rate* is proportional to the concentration \
+            of *A*.
+            """
         )
     ]
 
-    static let explainChangeInRate = [
-        TextLineGenerator.makeLine(
-            "Notice how *[A]* drops faster at the beginning because there's more of *A* present, making the *Rate* higher."
-        ),
-        TextLineGenerator.makeLine(
-            "Towards the end of the reaction there's much less *[A]* present, so the *Rate* of the reaction is lower, making *[A]* drop slower."
-        )
+    static let explainChangeInRate: [TextLine] = [
+        """
+        Notice how *[A]* drops faster at the beginning because there's more of *A* present, making \
+        the *Rate* higher.
+        """,
+        """
+        Towards the end of the reaction there's much less *[A]* present, so the *Rate* of the \
+        reaction is lower, making *[A]* drop slower.
+        """
     ]
 
-    static let explainIntegratedRateLaw1 = [
-        TextLineGenerator.makeLine(
-            "For simplification purposes, when integrating the Rate Law or the Rate Equation, we get the *Integrated Rate Law*."
-        ),
-        TextLineGenerator.makeLine(
-            "This is a form of the Rate Law that makes it simpler to make calculations and graphs from the original Rate Law Equation."
-        )
+    static let explainIntegratedRateLaw1: [TextLine] = [
+        """
+        For simplification purposes, when integrating the Rate Law or the Rate Equation, we get \
+        the *Integrated Rate Law*.
+        """,
+        """
+        This is a form of the Rate Law that makes it simpler to make calculations and graphs from \
+        the original Rate Law Equation.
+        """
     ]
 
-    static let explainIntegratedRateLaw2 = [
+    static let explainIntegratedRateLaw2: [TextLine] = [
         TextLineGenerator.makeLine(
-            "For this First Order Reaction, the resultant Integrated Rate Law is \(Strings.withNoBreaks(str: "*k=(ln[A_0_]-ln[A])/t*"))."
+            """
+            For this First Order Reaction, the resultant Integrated Rate Law is \
+            $*k=(ln[A_0_]-ln[A])/t*$.
+            """
         ),
-        TextLineGenerator.makeLine(
-            "That's why a graph plotting \(Strings.withNoBreaks(str: "(ln[A] vs t)")) is a straight line."
-        ),
-        TextLineGenerator.makeLine(
-            "ln[A]*(y)*=-kt*(mx)*+ln[A0]*(b)*"
-        ),
-        TextLineGenerator.makeLine(
-            "Where the slope is *-k*."
-        )
+        "That's why a graph plotting $(ln[A] vs t)$ is a straight line.",
+        "ln[A]*(y)*=-kt*(mx)*+ln[A0]*(b)*",
+        "Where the slope is *-k*."
     ]
 
-    static let end = [
-        TextLineGenerator.makeLine("Amazing! Let's take a snapshot!"),
-        TextLineGenerator.makeLine("Try *dragging the time indicator* to scrub through the reaction time.")
+    static let end: [TextLine] = [
+        "Amazing! Let's take a snapshot!",
+        "Try *dragging the time indicator* to scrub through the reaction time."
     ]
 }

@@ -62,7 +62,8 @@ struct FirstOrderReactionScreen: View {
             concentrationA: reaction.logAEquation,
             currentTime: $reaction.currentTime,
             yLabel: "ln(A)",
-            canSetCurrentTime: reaction.reactionHasEnded
+            canSetCurrentTime: reaction.reactionHasEnded,
+            highlightChart: reaction.highlight(element: .secondaryChart)
         )
         .colorMultiply(reaction.color(for: .secondaryChart))
     }

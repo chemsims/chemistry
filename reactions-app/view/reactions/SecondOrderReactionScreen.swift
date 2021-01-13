@@ -61,7 +61,8 @@ struct SecondOrderReactionScreen: View {
             concentrationA: reaction.inverseAEquation,
             currentTime: $reaction.currentTime,
             yLabel: "1/[A]",
-            canSetCurrentTime: reaction.reactionHasEnded
+            canSetCurrentTime: reaction.reactionHasEnded,
+            highlightChart: reaction.highlight(element: .secondaryChart)
         )
         .colorMultiply(reaction.color(for: .secondaryChart))
     }

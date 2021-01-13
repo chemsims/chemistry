@@ -32,7 +32,10 @@ struct SecondOrderReactionNavigation {
             InitialOrderedStep(order: .Second, statement: SecondOrderStatements.intro),
             SetFinalConcentrationToNonNil(),
             ExplainRateConstant(),
-            ExplainRate(),
+            StaticStatementWithHighlight(
+                SecondOrderStatements.explainRate,
+                [.rateEquation, .concentrationChart]
+            ),
             ExplainHalfLife(),
             RunAnimation(
                 statement: ReactionStatements.inProgress,
@@ -44,11 +47,26 @@ struct SecondOrderReactionNavigation {
                 statement: SecondOrderStatements.postReactionExplain1,
                 highlightChart: true
             ),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplainFastRate, highlights: [.rateCurveLhs]),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplainSlowRate, highlights: [.rateCurveRhs]),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain4, highlights: [.concentrationChart]),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain5, highlights: [.concentrationChart]),
-            PostReactionExplanation(statement: SecondOrderStatements.postReactionExplain6, highlights: [.concentrationChart]),
+            StaticStatementWithHighlight(
+                SecondOrderStatements.postReactionExplainFastRate,
+                [.rateCurveLhs]
+            ),
+            StaticStatementWithHighlight(
+                SecondOrderStatements.postReactionExplainSlowRate,
+                [.rateCurveRhs]
+            ),
+            StaticStatementWithHighlight(
+                SecondOrderStatements.postReactionExplain4,
+                .charts
+            ),
+            StaticStatementWithHighlight(
+                SecondOrderStatements.postReactionExplain5,
+                .charts
+            ),
+            StaticStatementWithHighlight(
+                SecondOrderStatements.postReactionExplain6,
+                .charts
+            ),
             FinalReactionState(statement: SecondOrderStatements.end)
         ]
     }
@@ -74,26 +92,6 @@ fileprivate class ExplainRateConstant: ReactionState {
     }
 }
 
-fileprivate class ExplainRate: ReactionState {
-    init() {
-        super.init(statement: SecondOrderStatements.explainRate)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        super.apply(on: model)
-        model.highlightedElements = [.rateEquation, .concentrationChart]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
-
-    override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.highlightedElements = []
-    }
-
-}
-
 fileprivate class ExplainHalfLife: PreReactionAnimation {
 
     init() {
@@ -101,31 +99,19 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        setStatementAndHighlightedElements(model: model)
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        super.reapply(on: model)
+        setStatementAndHighlightedElements(model: model)
+    }
+
+    private func setStatementAndHighlightedElements(model: ZeroOrderReactionViewModel) {
         model.statement = SecondOrderStatements.explainHalfLife(
             halfLife: model.input.concentrationA?.halfLife ?? 0
         )
         model.highlightedElements = [.halfLifeEquation]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
-}
-
-fileprivate class PostReactionExplanation: ReactionState {
-    init(statement: [TextLine], highlights: [OrderedReactionScreenElement]) {
-        self.highlights = highlights
-        super.init(statement: statement)
-    }
-
-    let highlights: [OrderedReactionScreenElement]
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        super.apply(on: model)
-        model.highlightedElements = highlights
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
     }
 }

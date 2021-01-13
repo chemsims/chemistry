@@ -63,6 +63,7 @@ struct SingleConcentrationPlot: View {
     @Binding var currentTime: CGFloat?
     let yLabel: String
     let canSetCurrentTime: Bool
+    let highlightChart: Bool
 
     var body: some View {
         GeneralTimeChartView(
@@ -79,7 +80,7 @@ struct SingleConcentrationPlot: View {
             yLabel: yLabel,
             includeValuesInLabel: false,
             canSetCurrentTime: canSetCurrentTime,
-            highlightChart: false,
+            highlightChart: highlightChart,
             highlightLhsCurve: false,
             highlightRhsCurve: false,
             canSetC2: true,
@@ -389,7 +390,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                 concentrationA: ConstantEquation(value: 1),
                 currentTime: .constant(nil),
                 yLabel: "foo",
-                canSetCurrentTime: true
+                canSetCurrentTime: true,
+                highlightChart: true
             ).previewLayout(.fixed(width: 500, height: 300))
     }
 

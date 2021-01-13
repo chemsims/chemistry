@@ -42,7 +42,7 @@ private func checkPreviousValueIsReapplied<T: Equatable>(
         navigation.next()
         if (!hasEnded) {
             navigation.back()
-            XCTAssertEqual(model[keyPath: prevValueKeyPath], previousValue)
+            XCTAssertEqual(model[keyPath: prevValueKeyPath], previousValue, model.firstLine)
         }
     }
 

@@ -43,7 +43,11 @@ struct SecondOrderStatements {
 
     static let postReactionExplain1 = [
         TextLineGenerator.makeLine(
-            "For this Second Order Reaction, \(Strings.withNoBreaks(str: "*Rate=k[A]^2^*")), that's why a graph plotting \(Strings.aVsT) is a steeper curve, given how the *Rate* is proportional to the concentration of *A* squared."
+            """
+            For this Second Order Reaction, $*Rate=k[A]^2^*$, that's why a graph plotting \
+            \(Strings.aVsT) is a steeper curve, given how the *Rate* is proportional to the \
+            concentration of *A* squared.
+            """
         )
     ]
 

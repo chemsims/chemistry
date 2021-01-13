@@ -201,6 +201,30 @@ class SetT1ForFixedRate: ReactionState {
 }
 
 // MARK: Common reaction states
+class StaticStatementWithHighlight: ReactionState {
+    init(
+        _ statement: [TextLine],
+        _ highlightedElements: [OrderedReactionScreenElement]
+    ) {
+        self.highlightedElements = highlightedElements
+        super.init(statement: statement)
+    }
+
+    private let highlightedElements: [OrderedReactionScreenElement]
+
+    override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        model.highlightedElements = highlightedElements
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        apply(on: model)
+    }
+
+    override func unapply(on model: ZeroOrderReactionViewModel) {
+        model.highlightedElements = []
+    }
+}
 
 
 class PreReactionAnimation: ReactionState {
@@ -317,7 +341,7 @@ class EndAnimation: ReactionState {
     override func reapply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
         if (highlightChart) {
-            model.highlightedElements = [.concentrationChart, .secondaryChart]
+            model.highlightedElements = .charts
         }
     }
 }

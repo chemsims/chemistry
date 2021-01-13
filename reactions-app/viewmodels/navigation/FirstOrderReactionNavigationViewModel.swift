@@ -33,7 +33,10 @@ struct FirstOrderReactionNavigation {
             SetFinalConcentrationToNonNil(),
             ExplainRateConstant1(),
             ExplainRateConstant2(),
-            ExplainRate(),
+            StaticStatementWithHighlight(
+                FirstOrderStatements.explainRate,
+                [.rateEquation, .concentrationChart]
+            ),
             ExplainHalfLife(),
             RunAnimation(
                 statement: ReactionStatements.inProgress,
@@ -45,10 +48,22 @@ struct FirstOrderReactionNavigation {
                 statement: FirstOrderStatements.explainRatePostReaction1,
                 highlightChart: true
             ),
-            ExplainRatePostReaction2(),
-            ExplainRatePostReaction3(),
-            ExplainIntegratedRateLaw1(),
-            ExplainIntegratedRateLaw2(),
+            StaticStatementWithHighlight(
+                FirstOrderStatements.explainRatePostReaction2,
+                .charts
+            ),
+            StaticStatementWithHighlight(
+                FirstOrderStatements.explainChangeInRate,
+                [.rateCurveLhs]
+            ),
+            StaticStatementWithHighlight(
+                FirstOrderStatements.explainIntegratedRateLaw1,
+                .charts
+            ),
+            StaticStatementWithHighlight(
+                FirstOrderStatements.explainIntegratedRateLaw2,
+                .charts
+            ),
             FinalReactionState(statement: FirstOrderStatements.end)
         ]
     }
@@ -89,25 +104,6 @@ fileprivate class ExplainRateConstant2: ReactionState {
 
 }
 
-fileprivate class ExplainRate: ReactionState {
-    init() {
-        super.init(statement: FirstOrderStatements.explainRate)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        super.apply(on: model)
-        model.highlightedElements = [.rateEquation, .concentrationChart]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
-
-    override func unapply(on model: ZeroOrderReactionViewModel) {
-        model.highlightedElements = []
-    }
-}
-
 fileprivate class ExplainHalfLife: PreReactionAnimation {
 
     init() {
@@ -115,65 +111,19 @@ fileprivate class ExplainHalfLife: PreReactionAnimation {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        setStatementAndHighlightedElements(model: model)
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        super.reapply(on: model)
+        setStatementAndHighlightedElements(model: model)
+    }
+
+    private func setStatementAndHighlightedElements(model: ZeroOrderReactionViewModel) {
         model.statement = FirstOrderStatements.explainHalfLife(
             halfLife: model.input.concentrationA?.halfLife ?? 0
         )
         model.highlightedElements = [.halfLifeEquation]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
-}
-
-fileprivate class ExplainRatePostReaction2: ReactionState {
-    init() {
-        super.init(statement: FirstOrderStatements.explainRatePostReaction2)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        super.apply(on: model)
-        model.highlightedElements = [.concentrationChart]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
-}
-
-fileprivate class ExplainRatePostReaction3: ReactionState {
-    init() {
-        super.init(statement: FirstOrderStatements.explainChangeInRate)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        super.apply(on: model)
-        model.highlightedElements = [.rateCurveLhs]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
-
-}
-
-fileprivate class ExplainIntegratedRateLaw1: ReactionState {
-    init() {
-        super.init(statement: FirstOrderStatements.explainIntegratedRateLaw1)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        super.apply(on: model)
-        model.highlightedElements = [.concentrationChart]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
-}
-
-fileprivate class ExplainIntegratedRateLaw2: ReactionState {
-    init() {
-        super.init(statement: FirstOrderStatements.explainIntegratedRateLaw2)
     }
 }

@@ -43,13 +43,15 @@ struct ZeroOrderReactionNavigation {
                 statement: ZeroOrderStatements.endAnimation,
                 highlightChart: true
             ),
-            ShowConcentrationTableState(),
+            StaticStatementWithHighlight(
+                ZeroOrderStatements.showConcentrationTable,
+                [.concentrationTable]
+            ),
             FinalReactionState(statement: ZeroOrderStatements.end)
         ]
     }
 }
 
-// MARK: Initial states
 fileprivate class InitialStep: ReactionState {
     init() {
         super.init(statement: ZeroOrderStatements.initial)
@@ -65,7 +67,6 @@ fileprivate class InitialStep: ReactionState {
     }
 }
 
-// MARK: Reaction A states
 fileprivate class SetFinalValuesToNonNil: ReactionState {
 
     init() {
@@ -118,29 +119,19 @@ fileprivate class ExplainHalfLifeState: PreReactionAnimation {
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
+        super.apply(on: model)
+        setStatementAndHighlightedElements(model: model)
+    }
+
+    override func reapply(on model: ZeroOrderReactionViewModel) {
+        super.reapply(on: model)
+        setStatementAndHighlightedElements(model: model)
+    }
+
+    private func setStatementAndHighlightedElements(model: ZeroOrderReactionViewModel) {
         model.statement = ZeroOrderStatements.halfLifeExplainer(
             halfLife: model.input.concentrationA?.halfLife ?? 0
         )
         model.highlightedElements = [.halfLifeEquation]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
-    }
-
-}
-
-fileprivate class ShowConcentrationTableState: ReactionState {
-    init() {
-        super.init(statement: ZeroOrderStatements.showConcentrationTable)
-    }
-
-    override func apply(on model: ZeroOrderReactionViewModel) {
-        super.apply(on: model)
-        model.highlightedElements = [.concentrationTable]
-    }
-
-    override func reapply(on model: ZeroOrderReactionViewModel) {
-        apply(on: model)
     }
 }

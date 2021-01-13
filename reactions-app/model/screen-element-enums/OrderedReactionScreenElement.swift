@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum OrderedReactionScreenElement {
+enum OrderedReactionScreenElement: CaseIterable {
     case rateConstantEquation,
          halfLifeEquation,
          concentrationChart,
@@ -15,4 +15,8 @@ enum OrderedReactionScreenElement {
          rateCurveRhs,
          concentrationTable,
          reactionToggle
+}
+
+extension Array where Element == OrderedReactionScreenElement {
+    static let charts: [OrderedReactionScreenElement] = [.concentrationChart, .secondaryChart]
 }

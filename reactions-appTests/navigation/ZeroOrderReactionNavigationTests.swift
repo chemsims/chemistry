@@ -159,7 +159,7 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
         XCTAssertEqual(model.highlightedElements, [])
 
         nav.nextUntil {
-            $0.statement.first!.content.first!.content.starts(with: "Half-life")
+            $0.firstLine.starts(with: "Half-life")
         }
 
         XCTAssertEqual(model.highlightedElements, [.halfLifeEquation])
@@ -179,6 +179,47 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
         let model = ZeroOrderReactionViewModel()
         let nav = navModel(model)
         doTestHighlightedElementsAreReappliedOnBack(model: model, navigation: nav)
+    }
+
+    /// This test could be a little more fragile than the others, so it's worth keeping the
+    /// other tests to test more specific highlighting states (e.g., that half-life is highlighted)
+    func testFlowOfHighlightedElementsAndStatements() {
+        let model = ZeroOrderReactionViewModel()
+        let nav = navModel(model)
+
+        func checkElements(_ expected: [OrderedReactionScreenElement]) {
+            XCTAssertEqual(model.highlightedElements.sorted(), expected.sorted())
+        }
+
+        func checkStartOfLine(_ expectedStartOfLine: String) {
+            XCTAssertTrue(model.firstLine.starts(with: expectedStartOfLine), model.firstLine)
+        }
+
+        func nextUntil(_ startOfLine: String) {
+            nav.nextUntil { $0.firstLine.starts(with: startOfLine) }
+        }
+
+        checkElements([])
+
+        nextUntil("The Order of a reaction has to do")
+        checkElements([.rateConstantEquation])
+
+        nav.next()
+        checkStartOfLine("Half-life")
+        checkElements([.halfLifeEquation])
+
+        nextUntil("For this Zero Order")
+        // Secondary chart may be marked as highlighted too, but we don't care about it for zero order so filter it
+        let elementsWithoutSecondary = model.highlightedElements.filter { $0 != .secondaryChart }
+        XCTAssertEqual(elementsWithoutSecondary, [.concentrationChart])
+
+        nav.next()
+        checkStartOfLine("You can click the button")
+        checkElements([.concentrationTable])
+
+        nav.next()
+        checkStartOfLine("Amazing!")
+        checkElements([])
     }
 
     private func navModel(
