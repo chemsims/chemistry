@@ -6,7 +6,7 @@
 import XCTest
 @testable import reactions_app
 
-class ReactionNavigationTests: XCTestCase {
+class ZeroOrderReactionNavigationTests: XCTestCase {
 
     func testReactionInputsAreResetAndRestoredWhenReactionTypeChanges() {
         let model = ZeroOrderReactionViewModel()
@@ -151,6 +151,24 @@ class ReactionNavigationTests: XCTestCase {
 
         XCTAssertEqual(model.highlightedElements, [])
     }
+
+    func testHalfLifeIsHighlightedAtTheCorrectTime() {
+        let model = ZeroOrderReactionViewModel()
+        let nav = navModel(model)
+
+        XCTAssertEqual(model.highlightedElements, [])
+
+        nav.nextUntil {
+            $0.statement.first!.content.first!.content.starts(with: "Half-life")
+        }
+
+        XCTAssertEqual(model.highlightedElements, [.halfLifeEquation])
+        nav.next()
+        XCTAssertEqual(model.highlightedElements, [])
+        nav.back()
+        XCTAssertEqual(model.highlightedElements, [.halfLifeEquation])
+    }
+
 
     private func navModel(
         _ viewModel: ZeroOrderReactionViewModel
