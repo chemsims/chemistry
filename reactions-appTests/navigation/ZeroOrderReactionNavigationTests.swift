@@ -152,7 +152,7 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
         XCTAssertEqual(model.highlightedElements, [])
     }
 
-    func testHalfLifeIsHighlightedAtTheCorrectTime() {
+    func testHalfLifeIsHighlightedWhenItIsBeingExplained() {
         let model = ZeroOrderReactionViewModel()
         let nav = navModel(model)
 
@@ -169,26 +169,16 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
         XCTAssertEqual(model.highlightedElements, [.halfLifeEquation])
     }
 
-    func testStatementsAreAlwaysReappliedOnBack() {
+    func testStatementsAreReappliedOnBack() {
         let model = ZeroOrderReactionViewModel()
         let nav = navModel(model)
+        doTestStatementsAreReappliedOnBack(model: model, navigation: nav)
+    }
 
-        var hasEnded = false
-        nav.nextScreen = { hasEnded = true }
-
-        func checkCurrentStatementIsReapplied() {
-            let statement = model.statement
-            nav.next()
-            if (!hasEnded) {
-                nav.back()
-                XCTAssertEqual(model.statement, statement)
-            }
-        }
-
-        while(!hasEnded) {
-            checkCurrentStatementIsReapplied()
-            nav.next()
-        }
+    func testHighlightedElementsAreReappliedOnBack() {
+        let model = ZeroOrderReactionViewModel()
+        let nav = navModel(model)
+        doTestHighlightedElementsAreReappliedOnBack(model: model, navigation: nav)
     }
 
     private func navModel(

@@ -45,7 +45,7 @@ struct FirstOrderStatements {
         [
             TextLineGenerator.makeLine(
                 """
-                *Half Life (t_1/2_)* is an expression to easily calculate the point in time at which the concentration of the reactant, \
+                *Half-life (t_1/2_)* is an expression to easily calculate the point in time at which the concentration of the reactant, \
                 in this case *A*, is half of what the initial concentration was. For this reaction,
                 """
             ),

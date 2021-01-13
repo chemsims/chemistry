@@ -101,7 +101,7 @@ class NavigationViewModelTests: XCTestCase {
         XCTAssertEqual(tester.value, s2.value)
     }
 
-    func testBiConditionalNavigation() {
+    func testConditionalNavigation() {
         let s1 = SetValueState(value: 1)
         let s2 = SetValueState(value: 2, shouldReapply: false)
         let s3 = SetValueState(value: 3)
