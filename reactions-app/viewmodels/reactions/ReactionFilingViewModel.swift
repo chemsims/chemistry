@@ -106,8 +106,6 @@ fileprivate class ReactionFilingState: ReactionState {
             model.reactionHasStarted = true
             model.reactionHasEnded = true
             model.statement = ReactionFilingStatements.message(order: order, reactionType: reactionType)
-            print("The input is \(input)")
-            print("The rate constant for \(order) is \(model.input.concentrationA?.rateConstant ?? 0)")
         } else {
             model.statement = ReactionFilingStatements.blankMessage
         }

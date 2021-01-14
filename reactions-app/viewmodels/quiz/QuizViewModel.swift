@@ -13,13 +13,25 @@ class QuizViewModel: ObservableObject {
 
     init(
         questions: QuizQuestionsList,
-        persistence: QuizPersistence
+        persistence: QuizPersistence,
+        restoreLastPersistedQuiz: Bool = true
     ) {
         let displayQuestions = questions.createQuestions()
         self.allQuestions = displayQuestions
-        self.currentQuestion = displayQuestions.first!
-        self.questionSet = questions.questionSet
         self.persistence = persistence
+        self.questionSet = questions.questionSet
+        self.currentQuestion = displayQuestions.first!
+        let previousQuiz = persistence.getAnswers(
+            questionSet: questions.questionSet,
+            questions: displayQuestions
+        )
+        if let previousQuiz = previousQuiz, restoreLastPersistedQuiz {
+            self.quizDifficulty = previousQuiz.difficulty
+            self.quizState = .completed
+            self.currentQuestion = availableQuestions.last!
+            self.answers = previousQuiz.answers
+            setProgress()
+        }
     }
 
 

@@ -137,6 +137,32 @@ class QuizViewModelTests: XCTestCase {
         XCTAssertEqual(getAnswers(), answer2)
     }
 
+    func testThatTheQuizStateIsRestoredIfTheQuizWasCompleted() {
+        let persistence = InMemoryQuizPersistence()
+        let questions = makeQuestions(n: 3)
+        let model = newModel(questions, persistence: persistence)
+
+        model.next()
+        model.answer(option: .A)
+        model.next()
+        model.answer(option: .B)
+        model.next()
+        model.answer(option: .C)
+        model.next()
+
+        XCTAssertEqual(model.quizState, .completed)
+
+        let model2 = newModel(questions, persistence: persistence)
+        XCTAssertEqual(model2.quizState, .completed)
+        XCTAssertEqual(model.currentQuestion.id, 2)
+        let expectedAnswers = [
+            0: QuizAnswerInput(firstAnswer: .A),
+            1: QuizAnswerInput(firstAnswer: .B),
+            2: QuizAnswerInput(firstAnswer: .C)
+        ]
+        XCTAssertEqual(model.answers, expectedAnswers)
+    }
+
     private func makeQuestions(n: Int) -> QuizQuestionsList {
         QuizQuestionsList(questionSet: .zeroOrder, (0..<n).map(makeQuestion))
     }
