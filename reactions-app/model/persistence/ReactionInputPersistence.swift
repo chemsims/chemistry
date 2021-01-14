@@ -38,7 +38,7 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
     func get(order: ReactionOrder, reaction: ReactionType) -> ReactionInput? {
         let key = ReactionInputKey(order: order, type: reaction)
-        return underlying[key]
+        return underlying[key] ?? ReactionInput(c1: 0.8, c2: 0.2, t1: 0, t2: 15)
     }
 
     func setCompleted(screen: AppScreen) {

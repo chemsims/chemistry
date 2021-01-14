@@ -7,67 +7,61 @@ import SwiftUI
 
 class ReactionFilingViewModel: ObservableObject {
 
-    private(set) var pages: [CompletedReactionScreen<AnyView>]
-    @Published var currentPage: Int
+    let persistence: ReactionInputPersistence
+    let order: ReactionOrder
+    @Published var currentPage = 0
 
     init(
         persistence: ReactionInputPersistence,
         order: ReactionOrder
     ) {
-        self.currentPage = 0
-        self.pages = []
+        self.persistence = persistence
+        self.order = order
+    }
 
-        func makeScreen(reactionType: ReactionType) -> AnyView {
-            switch (order) {
-            case .Zero:
-                let model = ZeroOrderReactionViewModel()
-                model.navigation = navigation(model: model, reactionType: reactionType)
-                return AnyView(ZeroOrderReactionScreen(reaction: model))
-            case .First:
-                let model = FirstOrderReactionViewModel()
-                model.navigation = navigation(model: model, reactionType: reactionType)
-                return AnyView(FirstOrderReactionScreen(reaction: model))
-            case .Second:
-                let model = SecondOrderReactionViewModel()
-                model.navigation = navigation(model: model, reactionType: reactionType)
-                return AnyView(SecondOrderReactionScreen(reaction: model))
-            }
-        }
-
-        func navigation(
-            model: ZeroOrderReactionViewModel,
-            reactionType: ReactionType
-        ) -> NavigationViewModel<ReactionState> {
-            let input = persistence.get(order: order, reaction: reactionType)
-            let state: ReactionState =
-                ReactionFilingState(
-                    order: order,
-                    reactionType: reactionType,
-                    input: input
-                )
-            let nav = NavigationViewModel(
-                model: model,
-                rootNode: ScreenStateTreeNode<ReactionState>.build(states: [state])!
+    func makeView(
+        reactionType: ReactionType
+    ) -> AnyView {
+        switch (order) {
+        case .Zero:
+            let model = ZeroOrderReactionViewModel()
+            model.navigation = navigation(model: model, reactionType: reactionType)
+            return AnyView(
+                ZeroOrderReactionScreen(reaction: model)
             )
-            nav.prevScreen = prev
-            nav.nextScreen = next
-            return nav
+        case .First:
+            let model = FirstOrderReactionViewModel()
+            model.navigation = navigation(model: model, reactionType: reactionType)
+            return AnyView(FirstOrderReactionScreen(reaction: model))
+        case .Second:
+            let model = SecondOrderReactionViewModel()
+            model.navigation = navigation(model: model, reactionType: reactionType)
+            return AnyView(SecondOrderReactionScreen(reaction: model))
         }
+    }
 
-        let inputA = persistence.get(order: order, reaction: .A)
-        let inputB = persistence.get(order: order, reaction: .B)
-        let inputC = persistence.get(order: order, reaction: .C)
-
-        let statement = ReactionFilingStatements.pageNotEnabledMessage(order: order)
-        pages = [
-            CompletedReactionScreen(enabled: inputA != nil, disabledStatement: statement) { makeScreen(reactionType: .A) },
-            CompletedReactionScreen(enabled: inputB != nil, disabledStatement: statement) { makeScreen(reactionType: .B) },
-            CompletedReactionScreen(enabled: inputC != nil, disabledStatement: statement) { makeScreen(reactionType: .C) }
-        ]
+    private func navigation(
+        model: ZeroOrderReactionViewModel,
+        reactionType: ReactionType
+    ) -> NavigationViewModel<ReactionState> {
+        let input = persistence.get(order: order, reaction: reactionType)
+        let state: ReactionState =
+            ReactionFilingState(
+                order: order,
+                reactionType: reactionType,
+                input: input
+            )
+        let nav = NavigationViewModel(
+            model: model,
+            rootNode: ScreenStateTreeNode<ReactionState>.build(states: [state])!
+        )
+        nav.prevScreen = prev
+        nav.nextScreen = next
+        return nav
     }
 
     private func next() {
-        if (currentPage + 1 < pages.count) {
+        if (currentPage + 1 < 3) {
             currentPage += 1
         }
     }
@@ -76,6 +70,10 @@ class ReactionFilingViewModel: ObservableObject {
         if (currentPage > 0) {
             currentPage -= 1
         }
+    }
+
+    private var statement: String {
+        ReactionFilingStatements.pageNotEnabledMessage(order: order)
     }
 }
 
