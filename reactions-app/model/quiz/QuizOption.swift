@@ -21,7 +21,7 @@ enum QuizDifficulty: Int, CaseIterable, Comparable {
 
     var quizLength: Int {
         switch (self) {
-        case .easy: return 1 // TODO change back
+        case .easy: return 5
         case .medium: return 10
         case .hard: return 20
         }
