@@ -163,6 +163,40 @@ class QuizViewModelTests: XCTestCase {
         XCTAssertEqual(model.answers, expectedAnswers)
     }
 
+    func testThatExplanationsAreShownWhenForIncorrectSelectedAnswers() {
+        let questions = makeQuestions(n: 3)
+        let model = newModel(questions)
+
+        func notShown(_ options: [QuizOption]) {
+            options.forEach { o in
+                XCTAssertFalse(model.showExplanation(option: o))
+            }
+        }
+
+        func shown(_ options: [QuizOption]) {
+            options.forEach { o in
+                XCTAssertTrue(model.showExplanation(option: o))
+            }
+        }
+
+        model.next()
+        notShown([.B, .C, .D])
+
+        model.answer(option: .D)
+        shown([.D])
+        notShown([.B, .C])
+
+        model.next()
+        notShown(QuizOption.allCases)
+        model.back()
+        shown([.D])
+        notShown([.B, .C])
+
+        model.next()
+        model.answer(option: .A)
+        notShown(QuizOption.allCases)
+    }
+
     private func makeQuestions(n: Int) -> QuizQuestionsList {
         QuizQuestionsList(questionSet: .zeroOrder, (0..<n).map(makeQuestion))
     }

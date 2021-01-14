@@ -39,13 +39,12 @@ class QuizViewModel: ObservableObject {
     var prevScreen: (() -> Void)?
 
     // MARK: Published properties
+    @Published var currentQuestion: QuizQuestion
     @Published var answers = [Int:QuizAnswerInput]()
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
 
-    @Published var showExplanation: Bool = false
-    @Published var currentQuestion: QuizQuestion
 
     // MARK: Public computed properties
     var selectedAnswer: QuizAnswerInput? {
@@ -103,28 +102,26 @@ class QuizViewModel: ObservableObject {
     }
 
     func answer(option: QuizOption) {
-        let newAnswer =
-            answers[currentQuestion.id]?.appending(option) ?? QuizAnswerInput(firstAnswer: option)
-
-        answers[currentQuestion.id] = newAnswer
-        setShowExplanation(animate: true)
+        let prevAnswer = answers[currentQuestion.id]?.appending(option)
+        let newAnswer = prevAnswer ?? QuizAnswerInput(firstAnswer: option)
+        let duration = QuizViewModel.explanationExpansionDuration(currentQuestion, option: option)
+        withAnimation(.easeOut(duration: duration)) {
+            answers[currentQuestion.id] = newAnswer
+        }
     }
 
     func optionText(_ option: QuizOption) -> TextLine {
         currentQuestion.options[option]?.answer ?? ""
     }
 
-    // MARK: Private methods
-    private func setShowExplanation(animate: Bool) {
-        let shouldShowExplanation = selectedAnswer != nil && selectedAnswer?.firstAnswer != correctOption
-
-        let duration = QuizViewModel.explanationExpansionDuration(currentQuestion)
-
-        withAnimation(animate && !reduceMotion ? .easeOut(duration: duration) : nil) {
-            showExplanation = shouldShowExplanation
+    func showExplanation(option: QuizOption) -> Bool {
+        guard let answer = selectedAnswer?.allAnswers else {
+            return false
         }
+        return option != correctOption && answer.contains(option)
     }
 
+    // MARK: Private methods
     private func setQuestion(newIndex: Int) {
         guard newIndex < availableQuestions.count && newIndex >= 0 else {
             return
@@ -165,7 +162,6 @@ extension QuizViewModel {
         case .completed:
             nextScreen?()
         }
-        setShowExplanation(animate: false)
     }
 
     func back() {
@@ -180,7 +176,6 @@ extension QuizViewModel {
         case .completed:
             quizState = .running
         }
-        setShowExplanation(animate: false)
     }
 
     func restart() {
@@ -196,9 +191,18 @@ extension QuizViewModel {
 
 // MARK: Animation methods
 extension QuizViewModel {
+
+    static func explanationExpansionDuration(_ question: QuizQuestion, option: QuizOption) -> Double {
+        let contentLength = question.options[option]?.explanation?.length ?? 0
+        return explanationExpansionDuration(contentLength: contentLength)
+    }
+
     static func explanationExpansionDuration(_ question: QuizQuestion) -> Double {
         let contentLength = question.longExplanation.map(\.length).reduce(0) { $0 + $1 }
+        return explanationExpansionDuration(contentLength: contentLength)
+    }
 
+    private static func explanationExpansionDuration(contentLength: Int) -> Double {
         let minDuration: CGFloat = 0.3
         let maxDuration: CGFloat = 1
         let equation = LinearEquation(x1: 200, y1: minDuration, x2: 800, y2: 1)

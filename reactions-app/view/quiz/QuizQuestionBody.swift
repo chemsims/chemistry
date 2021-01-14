@@ -21,12 +21,6 @@ struct QuizQuestionsBody: View {
                     tableWidth: settings.tableWidthQuestionCard
                 )
 
-                if (model.showExplanation && model.currentQuestion.hasExplanation) {
-                    explanationView
-                        .padding(.bottom, 10)
-                        .padding(.top, 10)
-                }
-
                 answers
             }
             .frame(width: settings.contentWidth)
@@ -101,8 +95,7 @@ fileprivate struct QuizAnswerOption: View {
     var body: some View {
         VStack(spacing: 0) {
             answer
-            if (model.showExplanation && model.currentQuestion.hasExplanation(option: option)
-            ) {
+            if (model.showExplanation(option: option)) {
                 explanation
             }
         }
@@ -136,13 +129,14 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private var explanation: some View {
-        let explanation = model.currentQuestion.options[option]?.explanation
-        return TextLinesView(
-                line: explanation?.italic() ?? "",
+        let explanation = model.currentQuestion.options[option]?.explanation?.italic()
+        return
+            TextLinesView(
+                line: explanation ?? TextLine(stringLiteral: "Explanation for option \(option)"),
                 fontSize: settings.answerFontSize
-        )
-        .padding()
-        .fixedSize(horizontal: false, vertical: true)
+            )
+            .padding()
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     private var overlay: some View {
