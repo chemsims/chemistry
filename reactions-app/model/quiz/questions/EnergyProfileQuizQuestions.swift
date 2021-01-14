@@ -169,10 +169,10 @@ extension QuizQuestion {
             question: """
             Determine what are the reactants of the overall reaction that has the following mechanism
 
-            Step 1: A + B ==> AB
-            Step 2: AB + C ==> CB + A
-            Step 3: CB + D2 ==> DB + CD
-            Step 4: DB + C ==> CD + B
+            Step 1: A + B ➝ AB
+            Step 2: AB + C ➝ CB + A
+            Step 3: CB + D2 ➝ DB + CD
+            Step 4: DB + C ➝ CD + B
             """,
             correctAnswer: "C, D2",
             otherAnswers: [
@@ -184,11 +184,11 @@ extension QuizQuestion {
             The easies way to determine the overall reaction is by summing up all steps and cancel out all \
             of those species that repeat themselves in both reactant and product sides:
 
-            A + B + AB +CB + D2 + DB + 2C ==> AB + CB + A + DB + 2CD + B
+            A + B + AB +CB + D2 + DB + 2C ➝ AB + CB + A + DB + 2CD + B
 
             Canceling, we get:
 
-            D2 + 2C ==> 2CD.
+            D2 + 2C ➝ 2CD.
             """,
             difficulty: .easy
         ),
