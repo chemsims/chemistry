@@ -229,7 +229,7 @@ struct QuizAnswerInput: Equatable {
     }
 
     func appending(_ option: QuizOption) -> QuizAnswerInput {
-        guard option != firstAnswer else {
+        guard !allAnswers.contains(option) else {
             return self
         }
         return QuizAnswerInput(

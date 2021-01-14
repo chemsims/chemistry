@@ -175,7 +175,9 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private func handleAnswer() {
-        guard !model.hasSelectedCorrectOption else {
+        let notFinished = !model.hasSelectedCorrectOption
+        let notSelected = !(model.selectedAnswer?.allAnswers.contains(option) ?? false)
+        guard notFinished && notSelected else {
             return
         }
         model.answer(option: option)
