@@ -6,7 +6,7 @@
 import Foundation
 
 extension QuizQuestion {
-    static let reactionComparisonQuizQuestions = [
+    static let reactionComparisonQuizQuestions = QuizQuestionsList([
         QuizQuestion(
             question: """
             The rate at which the reactants disappear is equal to the rate of formation of the products \
@@ -553,5 +553,5 @@ extension QuizQuestion {
             """,
             difficulty: .medium
         ),
-    ]
+    ])
 }

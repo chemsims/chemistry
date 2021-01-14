@@ -6,7 +6,7 @@
 import Foundation
 
 extension QuizQuestion {
-    static let firstOrderQuestions = [
+    static let firstOrderQuestions = QuizQuestionsList([
         QuizQuestion(
             question: "If a reaction is of first order, it means the Rate is dependent on:",
             correctAnswer: "The concentration of one reactant",
@@ -463,5 +463,5 @@ extension QuizQuestion {
                 ]
             )
         )
-    ]
+    ])
 }

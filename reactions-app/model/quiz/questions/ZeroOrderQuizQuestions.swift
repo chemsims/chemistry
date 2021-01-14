@@ -1,12 +1,13 @@
 //
 // Reactions App
 //
-  
+
 
 import Foundation
 
-extension QuizQuestion {
-    static let zeroOrderQuestions = [
+extension QuizQuestionsList {
+    static let zeroOrderQuestions = QuizQuestionsList(
+        [
         QuizQuestion(
             question: "In which unit is the Rate of a reaction written in?",
             correctAnswer: "M/s",
@@ -419,4 +420,5 @@ extension QuizQuestion {
             difficulty: .easy
         )
     ]
+    )
 }

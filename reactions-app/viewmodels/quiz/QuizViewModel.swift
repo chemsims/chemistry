@@ -9,33 +9,41 @@ class QuizViewModel: ObservableObject {
 
     private let allQuestions: [QuizQuestionDisplay]
 
-    init(questions: [QuizQuestion]) {
-        let displayQuestions = questions.map { $0.randomDisplay() }
+    init(questions: QuizQuestionsList) {
+        let displayQuestions = questions.createQuestions()
         self.allQuestions = displayQuestions
+        self.currentQuestion = displayQuestions.first!
     }
 
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
 
+    // MARK: Published properties
     @Published var answers = [Int:QuizAnswerInput]()
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
-    @Published private(set) var questionIndex = 0
 
     @Published var showExplanation: Bool = false
+    @Published var currentQuestion: QuizQuestionDisplay
 
+    // MARK: Public computed properties
     var selectedAnswer: QuizAnswerInput? {
-        answers[questionIndex]
+        answers[currentQuestion.id]
     }
 
     var correctOption: QuizOption {
         currentQuestion.correctOption
     }
 
+    var question: TextLine {
+        currentQuestion.question
+    }
+
     var correctAnswers: Int {
         answers.filter { answer in
-            availableQuestions[answer.key].correctOption == answer.value.firstAnswer
+            let question = availableQuestions.first { $0.id == answer.key }
+            return question?.correctOption == answer.value.firstAnswer
         }.count
     }
 
@@ -51,13 +59,64 @@ class QuizViewModel: ObservableObject {
         availableQuestions.count
     }
 
+    var currentIndex: Int {
+        let i = availableQuestions.firstIndex { $0.id == currentQuestion.id }
+        assert(i != nil)
+        return i ?? 0
+    }
+
+    var hasSelectedCorrectOption: Bool {
+        answers[currentQuestion.id]?.allAnswers.contains(correctOption) ?? false
+    }
+
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
     }
 
-    func selectedAnswer(index: Int) -> QuizAnswerInput? {
-        answers[index]
+    // MARK: Public methods
+    func question(with id: Int) -> QuizQuestionDisplay {
+        availableQuestions.first { $0.id == id }!
     }
+
+    func selectedAnswer(id: Int) -> QuizAnswerInput? {
+        answers[id]
+    }
+
+    func answer(option: QuizOption) {
+        let newAnswer =
+            answers[currentQuestion.id]?.appending(option) ?? QuizAnswerInput(firstAnswer: option)
+
+        answers[currentQuestion.id] = newAnswer
+        setShowExplanation(animate: true)
+    }
+
+    func optionText(_ option: QuizOption) -> TextLine {
+        currentQuestion.options[option]?.answer ?? ""
+    }
+
+    // MARK: Private methods
+    private func setShowExplanation(animate: Bool) {
+        let shouldShowExplanation = selectedAnswer != nil && selectedAnswer?.firstAnswer != correctOption
+
+        let duration = QuizViewModel.explanationExpansionDuration(currentQuestion)
+
+        withAnimation(animate && !reduceMotion ? .easeOut(duration: duration) : nil) {
+            showExplanation = shouldShowExplanation
+        }
+    }
+
+    private func setQuestion(newIndex: Int) {
+        guard newIndex < availableQuestions.count && newIndex >= 0 else {
+            return
+        }
+        currentQuestion = availableQuestions[newIndex]
+        setProgress()
+    }
+
+}
+
+// MARK: Quiz Navigation
+extension QuizViewModel {
 
     func next() {
         switch (quizState) {
@@ -66,11 +125,11 @@ class QuizViewModel: ObservableObject {
             answers = [Int:QuizAnswerInput]()
             setProgress()
         case .running:
-            if (questionIndex == quizLength - 1) {
+            if (currentIndex == quizLength - 1) {
                 quizState = .completed
                 setProgress()
             } else {
-                setQuestion(newIndex: questionIndex + 1)
+                setQuestion(newIndex: currentIndex + 1)
             }
         case .completed:
             nextScreen?()
@@ -82,78 +141,29 @@ class QuizViewModel: ObservableObject {
         switch (quizState) {
         case .pending:
             prevScreen?()
-        case .running where questionIndex == 0:
+        case .running where currentIndex == 0:
             quizState = .pending
             setProgress()
         case .running:
-            setQuestion(newIndex: questionIndex - 1)
+            setQuestion(newIndex: currentIndex - 1)
         case .completed:
             quizState = .running
         }
         setShowExplanation(animate: false)
     }
 
-    func answer(option: QuizOption) {
-        let newAnswer =
-            answers[questionIndex]?.appending(option) ?? QuizAnswerInput(firstAnswer: option)
-
-        answers[questionIndex] = newAnswer
-        setShowExplanation(animate: true)
-    }
-
-    func optionText(_ option: QuizOption) -> TextLine {
-        currentQuestion.options[option]?.answer ?? ""
-    }
-
     func restart() {
         quizState = .pending
-        questionIndex = 0
+        currentQuestion = availableQuestions.first!
         setProgress()
     }
 
     func skip() {
         nextScreen?()
     }
-
-    private func setShowExplanation(animate: Bool) {
-        let shouldShowExplanation = selectedAnswer != nil && selectedAnswer?.firstAnswer != correctOption
-
-        let duration = QuizViewModel.explanationExpansionDuration(currentQuestion)
-
-        withAnimation(animate && !reduceMotion ? .easeOut(duration: duration) : nil) {
-            showExplanation = shouldShowExplanation
-        }
-    }
-
-    var question: TextLine {
-        currentQuestion.question
-    }
-
-    var currentQuestion: QuizQuestionDisplay {
-        availableQuestions[questionIndex]
-    }
-
-    var hasSelectedCorrectOption: Bool {
-        answers[questionIndex]?.allAnswers.contains(correctOption) ?? false
-    }
-
-    private func setQuestion(newIndex: Int) {
-        guard newIndex < availableQuestions.count && newIndex >= 0 else {
-            return
-        }
-        questionIndex = newIndex
-        setProgress()
-    }
-
-    private func setProgress() {
-        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
-            let pending = quizState == .pending
-            progress = pending ? 0 : CGFloat(questionIndex + 1) / CGFloat(quizLength)
-        }
-    }
 }
 
-
+// MARK: Animation methods
 extension QuizViewModel {
     static func explanationExpansionDuration(_ question: QuizQuestionDisplay) -> Double {
         let contentLength = question.longExplanation.map(\.length).reduce(0) { $0 + $1 }
@@ -164,6 +174,13 @@ extension QuizViewModel {
 
         let duration = equation.getY(at: CGFloat(contentLength))
         return Double(min(maxDuration, max(duration, minDuration)))
+    }
+
+    fileprivate func setProgress() {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
+            let pending = quizState == .pending
+            progress = pending ? 0 : CGFloat(currentIndex + 1) / CGFloat(quizLength)
+        }
     }
 }
 

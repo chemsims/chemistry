@@ -7,7 +7,7 @@ import Foundation
 
 extension QuizQuestion {
 
-    static let secondOrderQuestions = [
+    static let secondOrderQuestions = QuizQuestionsList([
         QuizQuestion(
             question: """
             The rate constant for a second order reaction $(A ➝ B)$ is 0.178 M^-1^s^-1^. How much time will \
@@ -493,5 +493,5 @@ extension QuizQuestion {
             """,
             difficulty: .easy
         )
-    ]
+    ])
 }

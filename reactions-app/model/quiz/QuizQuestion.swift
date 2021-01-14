@@ -33,7 +33,7 @@ import Foundation
 /// ```
 /// QuizQuestion(
 ///     question: "Which numbers are less than 5?",
-///     correctAnswer: QuizAnswer(answer: "All of the above", explanation: nil, position: QuizOption.D),
+///     correctAnswer: QuizAnswer(answer: "All of the above", position: QuizOption.D),
 ///     otherAnswers: ["1", "2", "3"],
 ///     explanation: "1, 2 and 3 are all less than 5",
 ///     difficulty: .easy
@@ -63,7 +63,10 @@ import Foundation
 /// ```
 /// QuizQuestion(
 ///     question: "What is the largest country in the world?",
-///     correctAnswer: QuizAnswer("Russia", "The area of Russia is 17.1 million square km which is the largest in the world"),
+///     correctAnswer: QuizAnswer(
+///         "Russia",
+///         "The area of Russia is 17.1 million square km which is the largest in the world"
+///     ),
 ///     otherAnswers: [
 ///         QuizAnswer("Canada", "The area of Canada is 10 million square km"),
 ///         QuizAnswer("USA", "The area of USA is 9.8 million square km")
@@ -99,27 +102,34 @@ struct QuizQuestion {
         self.table = table
     }
 
-    func randomDisplay() -> QuizQuestionDisplay {
+    /// Creates a quiz question
+    func createQuestion(questionId: Int) -> QuizQuestionDisplay {
         assert(otherAnswers.count < QuizOption.allCases.count)
         let protectedOptions = Set(([correctAnswer] + otherAnswers).compactMap(\.position))
         var options = QuizOption.allCases.filter { !protectedOptions.contains($0) }
-        var answers = [QuizOption: QuizAnswer]()
+        var answers = [QuizOption: QuizAnswer2]()
 
-        func add(_ answer: QuizAnswer, _ option: QuizOption) {
+        func add(_ answer: QuizAnswer, _ option: QuizOption, id: Int) {
             assert(answers[option] == nil)
             options = options.filter { $0 != option }
-            answers[option] = answer
+            let a2 = QuizAnswer2(
+                answer: answer.answer,
+                explanation: answer.explanation,
+                id: id
+            )
+            answers[option] = a2
         }
 
         let correctOption = correctAnswer.position ?? options.randomElement()!
-        add(correctAnswer, correctOption)
+        add(correctAnswer, correctOption, id: -1)
 
-        otherAnswers.forEach { answer in
+        otherAnswers.enumerated().forEach { (index, answer) in
             let option = answer.position ?? options.randomElement()!
-            add(answer, option)
+            add(answer, option, id: index)
         }
 
         return QuizQuestionDisplay(
+            id: questionId,
             question: question,
             options: answers,
             correctOption: correctOption,
@@ -132,8 +142,9 @@ struct QuizQuestion {
 }
 
 struct QuizQuestionDisplay: Equatable {
+    let id: Int
     let question: TextLine
-    let options: [QuizOption:QuizAnswer]
+    let options: [QuizOption:QuizAnswer2]
     let correctOption: QuizOption
     let explanation: TextLine?
     let difficulty: QuizDifficulty
@@ -168,6 +179,23 @@ struct QuizQuestionDisplay: Equatable {
     }
 }
 
+struct QuizAnswerInputFoo: ExpressibleByStringLiteral {
+    let answer: TextLine
+    let explanation: TextLine?
+    let position: QuizOption?
+
+    init(answer: TextLine, explanation: TextLine? = nil, position: QuizOption? = nil) {
+        self.answer = answer
+        self.explanation = explanation
+        self.position = position
+    }
+
+    init(stringLiteral value: String) {
+        self.init(answer: TextLine(stringLiteral: value), explanation: nil)
+    }
+
+}
+
 struct QuizAnswer: ExpressibleByStringLiteral, Equatable {
     let answer: TextLine
     let explanation: TextLine?
@@ -181,5 +209,26 @@ struct QuizAnswer: ExpressibleByStringLiteral, Equatable {
 
     init(stringLiteral value: String) {
         self.init(answer: TextLine(stringLiteral: value), explanation: nil)
+    }
+}
+
+struct QuizAnswer2: Equatable {
+    let answer: TextLine
+    let explanation: TextLine?
+    let id: Int
+}
+
+struct QuizQuestionsList {
+
+    init(_ questions: [QuizQuestion]) {
+        self.questions = questions
+    }
+
+    private let questions: [QuizQuestion]
+
+    func createQuestions() -> [QuizQuestionDisplay] {
+        (0..<questions.count).map { i in
+            questions[i].createQuestion(questionId: i)
+        }
     }
 }

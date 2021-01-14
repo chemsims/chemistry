@@ -139,7 +139,7 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private var progressLabel: some View {
-        Text("\(model.questionIndex + 1)/\(model.quizLength)")
+        Text("\(model.currentIndex + 1)/\(model.quizLength)")
         .font(.system(size: settings.progressFontSize))
         .frame(width: settings.progressLabelWidth)
         .minimumScaleFactor(0.7)
@@ -165,7 +165,7 @@ fileprivate struct QuizScreenWithSettings: View {
 struct QuizScreen_Previews: PreviewProvider {
     static var previews: some View {
         QuizScreen(
-            model: QuizViewModel(questions: QuizQuestion.zeroOrderQuestions)
+            model: QuizViewModel(questions: .zeroOrderQuestions)
         )
         .previewLayout(.fixed(width: 568, height: 320))
     }

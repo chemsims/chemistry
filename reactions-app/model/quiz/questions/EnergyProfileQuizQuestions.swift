@@ -6,7 +6,7 @@
 import Foundation
 
 extension QuizQuestion {
-    static let energyProfileQuizQuestions = [
+    static let energyProfileQuizQuestions = QuizQuestionsList([
         QuizQuestion(
             question: "What is the concept of Activation Energy (E_a_)?",
             correctAnswer: QuizAnswer(
@@ -640,5 +640,5 @@ extension QuizQuestion {
             difficulty: .medium,
             image: "energy-profile-reaction-progress"
         ),
-    ]
+    ])
 }

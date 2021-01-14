@@ -15,8 +15,8 @@ struct QuizReviewBody: View {
                 VStack(spacing: 20) {
                     heading
                         .fixedSize(horizontal: false, vertical: true)
-                    ForEach(0..<model.quizLength) { index in
-                        reviewCard(index: index)
+                    ForEach(model.availableQuestions, id: \.id) { question in
+                        reviewCard(question: question)
                     }
                 }
                 .frame(width: settings.contentWidth)
@@ -38,9 +38,8 @@ struct QuizReviewBody: View {
         }
     }
 
-    private func reviewCard(index: Int) -> some View {
-        let question = model.availableQuestions[index]
-        let selectedOption = model.selectedAnswer(index: index)?.firstAnswer
+    private func reviewCard(question: QuizQuestionDisplay) -> some View {
+        let selectedOption = model.selectedAnswer(id: question.id)?.firstAnswer
         let isCorrect = selectedOption == question.correctOption
 
         return QuestionReviewCard(

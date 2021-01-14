@@ -11,10 +11,10 @@ class QuizQuestionTests: XCTestCase {
 
     func testCorrectOption() {
         let quizData = QuizQuestion(question: "foo", correctAnswer: "answer", otherAnswers: [], explanation: nil, difficulty: .easy)
-        let quiz = quizData.randomDisplay()
+        let quiz = quizData.createQuestion(questionId: 0)
         XCTAssertEqual(quiz.options.count, 1)
         XCTAssertEqual(quiz.question, quizData.question)
-        XCTAssertEqual(quiz.options[quiz.correctOption], quizData.correctAnswer)
+        XCTAssertEqual(quiz.options[quiz.correctOption], quizData.correctAnswer.toAnswer(i: -1))
     }
 
     func testCorrectOptionWithPosition() {
@@ -25,11 +25,11 @@ class QuizQuestionTests: XCTestCase {
             explanation: nil,
             difficulty: .easy
         )
-        let quiz = quizData.randomDisplay()
+        let quiz = quizData.createQuestion(questionId: 0)
         XCTAssertEqual(quiz.options.count, 1)
         XCTAssertEqual(quiz.options.keys.first, .D)
         XCTAssertEqual(quiz.correctOption, .D)
-        XCTAssertEqual(quiz.options[.D], quizData.correctAnswer)
+        XCTAssertEqual(quiz.options[.D], quizData.correctAnswer.toAnswer(i: -1))
     }
 
     func testCorrectionOptionNoPositionAndSingleOtherOptionWithPosition() {
@@ -42,11 +42,11 @@ class QuizQuestionTests: XCTestCase {
             explanation: nil,
             difficulty: .easy
         )
-        let quiz = quizData.randomDisplay()
+        let quiz = quizData.createQuestion(questionId: 0)
         XCTAssertEqual(quiz.options.count, 2)
-        XCTAssertEqual(quiz.options[.D], quizData.otherAnswers.first!)
+        XCTAssertEqual(quiz.options[.D], quizData.otherAnswers.first!.toAnswer(i: 0))
         XCTAssertNotEqual(quiz.correctOption, .D)
-        XCTAssertEqual(quiz.options[quiz.correctOption], quizData.correctAnswer)
+        XCTAssertEqual(quiz.options[quiz.correctOption], quizData.correctAnswer.toAnswer(i: -1))
     }
 
     func testCorrectionOptionWithPositionAndOtherOptionsWithMixedPositions() {
@@ -61,12 +61,12 @@ class QuizQuestionTests: XCTestCase {
             explanation: nil,
             difficulty: .easy
         )
-        let quiz = quizData.randomDisplay()
+        let quiz = quizData.createQuestion(questionId: 0)
         let expected = [
-            QuizOption.A: quizData.otherAnswers[0],
-            QuizOption.B: quizData.otherAnswers[2],
-            QuizOption.C: quizData.otherAnswers[1],
-            QuizOption.D: quizData.correctAnswer
+            QuizOption.A: quizData.otherAnswers[0].toAnswer(i: 0),
+            QuizOption.B: quizData.otherAnswers[2].toAnswer(i: 2),
+            QuizOption.C: quizData.otherAnswers[1].toAnswer(i: 1),
+            QuizOption.D: quizData.correctAnswer.toAnswer(i: -1)
         ]
         XCTAssertEqual(quiz.correctOption, .D)
         XCTAssertEqual(quiz.options, expected)
@@ -84,8 +84,8 @@ class QuizQuestionTests: XCTestCase {
             explanation: nil,
             difficulty: .easy
         )
-        let quiz = quizData.randomDisplay()
-        XCTAssertEqual(quiz.options[.A], quizData.otherAnswers.last!)
+        let quiz = quizData.createQuestion(questionId: 0)
+        XCTAssertEqual(quiz.options[.A], quizData.otherAnswers.last!.toAnswer(i: 2))
     }
 
     /// Since the function chooses random elements, all tests are run multiple times to avoid flaky tests
@@ -95,4 +95,14 @@ class QuizQuestionTests: XCTestCase {
         }
     }
 
+}
+
+fileprivate extension QuizAnswer {
+    func toAnswer(i: Int) -> QuizAnswer2 {
+        QuizAnswer2(
+            answer: answer,
+            explanation: explanation,
+            id: i
+        )
+    }
 }
