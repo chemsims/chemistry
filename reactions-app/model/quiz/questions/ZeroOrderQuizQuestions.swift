@@ -7,6 +7,7 @@ import Foundation
 
 extension QuizQuestionsList {
     static let zeroOrderQuestions = QuizQuestionsList(
+        questionSet: .zeroOrder,
         [
             QuizQuestionData(
                 question: "In which unit is the Rate of a reaction written in?",

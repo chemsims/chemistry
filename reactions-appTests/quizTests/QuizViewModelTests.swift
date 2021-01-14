@@ -8,7 +8,7 @@ import XCTest
 class QuizViewModelTests: XCTestCase {
 
     func testNavigatingBackAndThenForwardFromUnansweredQuestion() {
-        let model = QuizViewModel(questions: .zeroOrderQuestions)
+        let model = newModel(.zeroOrderQuestions)
         XCTAssertEqual(QuizState.pending, model.quizState)
         model.next()
 
@@ -33,7 +33,7 @@ class QuizViewModelTests: XCTestCase {
 
     func testTakingASmallQuiz() {
         let questions = makeQuestions(n: 5)
-        let model = QuizViewModel(questions: questions)
+        let model = newModel(questions)
 
         XCTAssertEqual(model.quizState, .pending)
 
@@ -93,8 +93,53 @@ class QuizViewModelTests: XCTestCase {
         XCTAssertNil(model.selectedAnswer(id: qs[4].id))
     }
 
+    func testThatTheQuizIsSavedWhenItEnds() {
+        let persistence = InMemoryQuizPersistence()
+        let questionList = QuizQuestionsList(questionSet: .zeroOrder, [makeQuestion(i: 0)])
+        let model = newModel(questionList, persistence: persistence)
+
+        func getAnswers() -> [Int:QuizAnswerInput] {
+            persistence.getAnswers(
+                difficulty: .medium,
+                questionSet: .zeroOrder,
+                questions: questionList.createQuestions()
+            )
+        }
+
+        XCTAssertEqual(model.quizState, .pending)
+        XCTAssertEqual(getAnswers(), [:])
+
+        model.quizDifficulty = .medium
+        model.next()
+
+        XCTAssertEqual(model.quizState, .running)
+
+        model.answer(option: .B)
+        model.answer(option: .C)
+        model.answer(option: .D)
+
+        let answer1 = [
+            0: QuizAnswerInput(firstAnswer: .B, otherAnswers: [.C, .D])
+        ]
+        model.next()
+
+        XCTAssertEqual(model.quizState, .completed)
+        XCTAssertEqual(getAnswers(), answer1)
+
+        model.restart()
+        XCTAssertEqual(getAnswers(), answer1)
+
+        model.next()
+        model.answer(option: .A)
+        model.next()
+        let answer2 = [
+            0: QuizAnswerInput(firstAnswer: .A)
+        ]
+        XCTAssertEqual(getAnswers(), answer2)
+    }
+
     private func makeQuestions(n: Int) -> QuizQuestionsList {
-        QuizQuestionsList((0..<n).map(makeQuestion))
+        QuizQuestionsList(questionSet: .zeroOrder, (0..<n).map(makeQuestion))
     }
 
     private func makeQuestion(i: Int) -> QuizQuestionData {
@@ -109,6 +154,13 @@ class QuizViewModelTests: XCTestCase {
             explanation: "",
             difficulty: .easy
         )
+    }
+
+    func newModel(
+        _ questions: QuizQuestionsList,
+        persistence: QuizPersistence = InMemoryQuizPersistence()
+    ) -> QuizViewModel {
+        QuizViewModel(questions: questions, persistence: persistence )
     }
 
 }

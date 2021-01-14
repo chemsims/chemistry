@@ -8,11 +8,18 @@ import SwiftUI
 class QuizViewModel: ObservableObject {
 
     private let allQuestions: [QuizQuestion]
+    private let questionSet: QuestionSet
+    private let persistence: QuizPersistence
 
-    init(questions: QuizQuestionsList) {
+    init(
+        questions: QuizQuestionsList,
+        persistence: QuizPersistence
+    ) {
         let displayQuestions = questions.createQuestions()
         self.allQuestions = displayQuestions
         self.currentQuestion = displayQuestions.first!
+        self.questionSet = questions.questionSet
+        self.persistence = persistence
     }
 
     var nextScreen: (() -> Void)?
@@ -113,6 +120,15 @@ class QuizViewModel: ObservableObject {
         setProgress()
     }
 
+    private func saveQuiz() {
+        persistence.saveAnswers(
+            difficulty: quizDifficulty,
+            questionSet: questionSet,
+            questions: allQuestions,
+            answers: answers
+        )
+    }
+
 }
 
 // MARK: Quiz Navigation
@@ -128,6 +144,7 @@ extension QuizViewModel {
             if (currentIndex == quizLength - 1) {
                 quizState = .completed
                 setProgress()
+                saveQuiz()
             } else {
                 setQuestion(newIndex: currentIndex + 1)
             }

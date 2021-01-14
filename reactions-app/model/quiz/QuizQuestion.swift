@@ -206,7 +206,9 @@ struct QuizAnswer: Equatable {
 
 struct QuizQuestionsList {
 
-    init(_ questions: [QuizQuestionData]) {
+    let questionSet: QuestionSet
+    init(questionSet: QuestionSet, _ questions: [QuizQuestionData]) {
+        self.questionSet = questionSet
         self.questions = questions
     }
 

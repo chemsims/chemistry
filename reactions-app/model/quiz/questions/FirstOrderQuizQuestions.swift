@@ -7,6 +7,7 @@ import Foundation
 
 extension QuizQuestionsList {
     static let firstOrderQuestions = QuizQuestionsList(
+        questionSet: .firstOrder,
         [
             QuizQuestionData(
                 question: "If a reaction is of first order, it means the Rate is dependent on:",

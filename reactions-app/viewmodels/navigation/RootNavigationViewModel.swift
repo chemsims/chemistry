@@ -11,15 +11,18 @@ class RootNavigationViewModel: ObservableObject {
     private(set) var navigationDirection = NavigationDirection.forward
 
     private let persistence: ReactionInputPersistence
+    private let quizPersistence: QuizPersistence
     private var models = [AppScreen:ScreenProvider]()
     private(set) var currentScreen: AppScreen
 
     init(
-        persistence: ReactionInputPersistence
+        persistence: ReactionInputPersistence,
+        quizPersistence: QuizPersistence
     ) {
         let firstScreen = AppScreen.zeroOrderReaction
         self.currentScreen = firstScreen
         self.persistence = persistence
+        self.quizPersistence = quizPersistence
         self.view = AnyView(EmptyView())
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
     }
@@ -88,7 +91,13 @@ class RootNavigationViewModel: ObservableObject {
             let provider = $0 as? EnergyProfileScreenProvider
             return provider?.viewModel
         }
-        return screen.screenProvider(persistence: persistence, energyViewModel: energyViewModel, next: next, prev: prev)
+        return screen.screenProvider(
+            persistence: persistence,
+            quizPersistence: quizPersistence,
+            energyViewModel: energyViewModel,
+            next: next,
+            prev: prev
+        )
     }
 
     enum NavigationDirection {
@@ -128,6 +137,7 @@ extension ReactionOrder {
 fileprivate extension AppScreen {
     func screenProvider(
         persistence: ReactionInputPersistence,
+        quizPersistence: QuizPersistence,
         energyViewModel: EnergyProfileViewModel?,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
@@ -136,12 +146,18 @@ fileprivate extension AppScreen {
         case .zeroOrderReaction:
             return ZeroOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .zeroOrderReactionQuiz:
-            return QuizScreenProvider(questions: .zeroOrderQuestions, next: next, prev: prev)
+            return QuizScreenProvider(
+                questions: .zeroOrderQuestions,
+                persistence: quizPersistence,
+                next: next,
+                prev: prev
+            )
         case .firstOrderReaction:
             return FirstOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .firstOrderReactionQuiz:
             return QuizScreenProvider(
                 questions: .firstOrderQuestions,
+                persistence: quizPersistence,
                 next: next,
                 prev: prev
             )
@@ -150,6 +166,7 @@ fileprivate extension AppScreen {
         case .secondOrderReactionQuiz:
             return QuizScreenProvider(
                 questions: .secondOrderQuestions,
+                persistence: quizPersistence,
                 next: next,
                 prev: prev
             )
@@ -158,6 +175,7 @@ fileprivate extension AppScreen {
         case .reactionComparisonQuiz:
             return QuizScreenProvider(
                 questions: .reactionComparisonQuizQuestions,
+                persistence: quizPersistence,
                 next: next,
                 prev: prev
             )
@@ -166,6 +184,7 @@ fileprivate extension AppScreen {
         case .energyProfileQuiz:
             return QuizScreenProvider(
                 questions: .energyProfileQuizQuestions,
+                persistence: quizPersistence,
                 next: next,
                 prev: prev
             )
@@ -241,10 +260,11 @@ fileprivate class SecondOrderReactionScreenProvider: ScreenProvider {
 fileprivate class QuizScreenProvider: ScreenProvider {
     init(
         questions: QuizQuestionsList,
+        persistence: QuizPersistence,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) {
-        self.viewModel = QuizViewModel(questions: questions)
+        self.viewModel = QuizViewModel(questions: questions, persistence: persistence)
         viewModel.nextScreen = next
         viewModel.prevScreen = prev
     }

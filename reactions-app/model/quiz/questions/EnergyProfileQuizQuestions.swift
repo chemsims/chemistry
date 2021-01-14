@@ -7,6 +7,7 @@ import Foundation
 
 extension QuizQuestionsList {
     static let energyProfileQuizQuestions = QuizQuestionsList(
+        questionSet: .energyProfile,
         [
             QuizQuestionData(
                 question: "What is the concept of Activation Energy (E_a_)?",

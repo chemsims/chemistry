@@ -342,7 +342,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             topPadding: 10,
             menuHPadding: 10,
             navigation: RootNavigationViewModel(
-                persistence: InMemoryReactionInputPersistence()
+                persistence: InMemoryReactionInputPersistence(),
+                quizPersistence: InMemoryQuizPersistence()
             )
         ).previewLayout(.fixed(width: 926, height: 428))
     }

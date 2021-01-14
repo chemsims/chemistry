@@ -8,6 +8,7 @@ import Foundation
 extension QuizQuestionsList {
 
     static let secondOrderQuestions = QuizQuestionsList(
+        questionSet: .secondOrder,
         [
             QuizQuestionData(
                 question: """
