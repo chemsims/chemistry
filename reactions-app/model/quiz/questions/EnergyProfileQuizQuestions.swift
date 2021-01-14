@@ -10,7 +10,7 @@ extension QuizQuestionsList {
         [
             QuizQuestionData(
                 question: "What is the concept of Activation Energy (E_a_)?",
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer:  "The energy required to form the transition state in a chemical reaction",
                     explanation: """
                 This is the definition of Activation Energy. It's the one that's required for a chemical \
@@ -18,21 +18,21 @@ extension QuizQuestionsList {
                 """
                 ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     The energy required to convert a ground-state atom in the gas phase to a gaseous \
                     positive ion
                     """,
                         explanation: "This is the definition of Ionization Energy"
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     The energy change that occurs in the conversion of an ionic solid to widely separated \
                     gaseous ions
                     """,
                         explanation: "This is the definition of Lattice Energy"
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The energy in a chemical or physical change that is available to do useful work",
                         explanation: "This is the definition of Gibbs Free Energy"
                     )
@@ -51,19 +51,19 @@ extension QuizQuestionsList {
             transition state more stabilized
             """,
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     Adding the catalyst creates two different pathways for the reactants to form products
                     """,
                         explanation: nil,
                         position: .A
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The catalyst increases the heat, leading to a less stabilized transition state",
                         explanation: nil,
                         position: .C
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The catalyst alters the reactants, leading to an alternate energy pathway",
                         explanation: nil,
                         position: .D
@@ -104,7 +104,7 @@ extension QuizQuestionsList {
                 question: """
             Which of the following has the lowest Activation Energy?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: "H2O + CO2 ⇌ H2CO3 (In the presence of a catalyst)",
                     explanation: nil,
                     position: .A
@@ -131,7 +131,7 @@ extension QuizQuestionsList {
             A student puts 100 mg of a piece of metal to a hydrochloric acid solution, which triggers a \
             reaction. Which conditions would make the reaction go at a faster rate?
             """,
-                correctAnswer: QuizAnswer(answer: "[HCl] = 0.200M @70°C", explanation: nil, position: .D),
+                correctAnswer: QuizAnswerData(answer: "[HCl] = 0.200M @70°C", explanation: nil, position: .D),
                 otherAnswers: [
                     "[HCl] = 0.030M @5°C",
                     "[HCl] = 0.030M @70°C",
@@ -197,7 +197,7 @@ extension QuizQuestionsList {
                 question: """
             How does a catalyst affects a reaction without taking a part in it?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: """
                 It encourages collisions because it reduces the space the reactants have to move around.
                 """,
@@ -208,7 +208,7 @@ extension QuizQuestionsList {
                 """
                 ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     It doesn't participate in the reaction. Just by being near the reactants it makes the \
                     reaction faster
@@ -221,13 +221,13 @@ extension QuizQuestionsList {
                     surface in which the reactants can interact easier
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     It participates in the reaction, but is then recovered in the later steps of the reaction
                     """,
                         explanation: nil
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     It transfers its energy to the reactants, adding energy to the overall reaction and \
                     lowering the energy needed for it to occur
@@ -247,27 +247,27 @@ extension QuizQuestionsList {
             Consider two reactions (Reaction A and Reaction B). The black line (A) in the energy diagram \
             below represents Reaction A and the red line (B) represents Reaction B. What is a true statement?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: """
                 The reverse reaction of B has the same relative activation energy as the reverse reaction of A
                 """,
                     explanation: nil
                 ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Both reactions are the same one but a catalyst was used for Reaction B",
                         explanation: """
                     Cannot be true as a catalyst only lowers the activation energy, it doesn't lower the \
                     final energy of the reaction
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     The forward reaction of B has a higher activation energy than the forward reaction of A
                     """,
                         explanation: "Reaction A actually has a higher activation energy than Reaction B"
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The rate of Reaction B is half of the rate of Reaction A",
                         explanation: """
                     The rate of Reaction A, since it has a higher activation energy, it actually should be \
@@ -382,7 +382,7 @@ extension QuizQuestionsList {
             collision of two molecules will be successful?
             """,
                 correctAnswer:
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     Molecules of A and B have to be properly oriented and to have enough energy that's \
                     enough to surpass the activation energy when the collision takes place.
@@ -393,14 +393,14 @@ extension QuizQuestionsList {
                     """
                     ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer:
                             "Molecules of A and B have to be properly oriented when the collision takes place",
                         explanation: """
                     Is true, but only the orientation won't be enough to guarantee a successful collision
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     Molecules of A and B have to have enough energy that's enough to surpass the activation \
                     energy
@@ -409,7 +409,7 @@ extension QuizQuestionsList {
                     Is true, but the molecules having enough energy won't guarantee a successful collision
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Molecules of A and B have to be gaseous when the collision takes place",
                         explanation: """
                     Is not true, the molecules don't have to be in any particular state of matter for a \
@@ -425,7 +425,7 @@ extension QuizQuestionsList {
             Consider a reaction represented by the energy diagram below. What is a true statement about this \
             reaction?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: "It has a three-step mechanism and it's an endothermic reaction",
                     explanation: nil,
                     position: .A
@@ -473,7 +473,7 @@ extension QuizQuestionsList {
                 question: """
             How are temperature and activation energy related to each other?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: """
                     The higher the temperature, the more molecules with a higher kinetic energy that meet or exceed \
                     the amount of energy that's required for the reaction to take place
@@ -489,7 +489,7 @@ extension QuizQuestionsList {
                 The higher the temperature, the lower is the overall amount of energy required for the \
                 reaction to take place, allowing more reactants to turn into products
                 """,
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     A high temperature results in the creation of a new pathway that has lower energy \
                     requirements
@@ -595,7 +595,7 @@ extension QuizQuestionsList {
             The position of a reaction is right now being represented by the point in the energy diagram \
             below. At that point, what could be happening?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: """
                 Molecules of reactants colliding unsuccessfully because of their lack of kinetic energy, \
                 making them unable to form any complex
@@ -606,7 +606,7 @@ extension QuizQuestionsList {
                 """
                 ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     Molecules of reactants barely colliding successfully, just starting to form an activated \
                     complex
@@ -614,7 +614,7 @@ extension QuizQuestionsList {
                         explanation:
                             "Molecules won't collide successfully at this point because of the lack of energy"
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "An intermediate in stable conditions",
                         explanation: """
                     An intermediate is only stable within a reaction, and in an energy diagram, this ones is \
@@ -622,7 +622,7 @@ extension QuizQuestionsList {
                     step reaction with no intermediates
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     Molecules of reactants colliding successfully with enough energy to form C molecules
                     """,

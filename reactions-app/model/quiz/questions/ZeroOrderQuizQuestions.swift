@@ -251,18 +251,18 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 question: "What's another way to write the unit for the rate?",
                 correctAnswer:
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "All of the above",
                         explanation: "They are all M/s written in other forms",
                         position: .D
                     ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Mol L^-1^ s^-1^",
                         explanation: "Mol L^-1^ s^-1^ is the same as Mol/L \\* s which is M/s"
                     ),
-                    QuizAnswer(answer: "M s^-1^", explanation: "M s^-1^ is the same as M/s"),
-                    QuizAnswer(answer: "Mol/L s", explanation: "Mol/L s is the same as M/s")
+                    QuizAnswerData(answer: "M s^-1^", explanation: "M s^-1^ is the same as M/s"),
+                    QuizAnswerData(answer: "Mol/L s", explanation: "Mol/L s is the same as M/s")
                 ],
                 explanation: nil,
                 difficulty: .easy
@@ -287,7 +287,7 @@ extension QuizQuestionsList {
                 otherAnswers: [
                     "Is a first order reaction",
                     "Is a second order reaction",
-                    QuizAnswer(answer: "None of the above", explanation: nil, position: .D)
+                    QuizAnswerData(answer: "None of the above", explanation: nil, position: .D)
                 ],
                 explanation: "For a zero order reaction, $Rate = k$, so it's a constant.",
                 difficulty: .easy
@@ -347,7 +347,7 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: "For a zero order reaction, which of the following is false?",
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: "The half-life may be represented by the expression $t_1/2_ = 0.69 / k$",
                     explanation: """
                 It's false because $t_1/2_ = 0.69/k$ is the half-life equation for first order reactions. \
@@ -355,14 +355,14 @@ extension QuizQuestionsList {
                 """
                 ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The rate of degradation is independent of the concentration of the reactant(s)",
                         explanation: """
                     It's true, the rate of the reaction is constant regardless of the concentration of the \
                     reactant(s)
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     A plot of the concentration remaining against time is a straight line with a gradient of \
                     -k
@@ -370,7 +370,7 @@ extension QuizQuestionsList {
                         explanation:
                             "It's true, a graph [A] vs t will result in a straight line for a zero order reaction"
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The units of the rate constant (k) are M/s",
                         explanation: """
                     It's true, for a zero order reaction the rate constant's units are $M^(1-n)^/s$ and \

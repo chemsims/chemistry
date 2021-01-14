@@ -13,24 +13,24 @@ extension QuizQuestionsList {
             The rate at which the reactants disappear is equal to the rate of formation of the products \
             within a chemical system. What ways are there to determine the rate law for a reaction?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: "The rate law must be determined experimentally for each reaction",
                     explanation:
                         "This is the correct answer, it has to be experimentally determined for each reaction"
                 ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The rate law for most common reactions can be found in a reference table",
                         explanation: "The rate law cannot be found in a reference table"
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The rate law is always determined by the coefficients of the balanced equation",
                         explanation: """
                     The rate law is only determined by the coefficients of the balanced equation in the case \
                     of elementary single step reactions
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The rate law is based on the use of a catalyst",
                         explanation: "The rate law cannot be solely determined by the use of a catalyst"
                     )
@@ -188,7 +188,7 @@ extension QuizQuestionsList {
 
             2CH_3_OH(g) + 3O_2_(g) ➝ 2CO_2_(g) + 4H_2_O(g)
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: "Rate = k[CH_3_OH]^x^[O_2_]y",
                     explanation:"""
                 Rate = k[CH_3_OH]^x^[O2]^y^ is correct because there's no way to know the exponents without \
@@ -196,21 +196,21 @@ extension QuizQuestionsList {
                 """
                 ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Rate = k[CH_3_OH][O_2_]",
                         explanation: """
                     Rate = k[CH_3_OH][O_2_] assumes that the reaction is first order for each reactant \
                     without any information to back it up.
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Rate = k[CH_3_OH][O_2_]^2^",
                         explanation: """
                     Rate = k[CH_3_OH]^x^[CO]^y^ has a product as an element for the equation, which is \
                     incorrect.
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Rate = k[CH_3_OH]^2^[O_2_]^3^",
                         explanation: """
                     Rate = k[CH_3_OH]^2^[O_2_]^3^ assumes that the coefficients are the exponents for the \
@@ -391,13 +391,13 @@ extension QuizQuestionsList {
                 question: """
             What would be true about the order of a reaction?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: "Reaction order can only be determined by experiment",
                     explanation:
                         "The correct answer is that the reaction order can only be determined experimentally"
                 ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Reaction order can only be a whole number",
                         explanation: """
                     For high school chemistry, most common reactions studied are of second order, first \
@@ -405,7 +405,7 @@ extension QuizQuestionsList {
                     order of a reaction to be a whole number.
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: """
                     Reaction order can be determined only by the coefficients of the balanced equation for \
                     the reaction
@@ -415,7 +415,7 @@ extension QuizQuestionsList {
                     the case of elementary single step reactions
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Reaction order increases with increasing temperature",
                         explanation: """
                     Increasing the temperature does result in an increase of the rate of the reaction, but \

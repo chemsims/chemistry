@@ -112,14 +112,14 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 question: "What is false for first order reactions?",
                 correctAnswer:
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "The Concentration vs Time graph for it is a straight line",
                         explanation: """
                 It's false, a graph of [A] vs t will only result in a straight line for zero order reactions
                 """
                     ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Rate constant k has the units of $1/time$",
                         explanation: """
                     It's true, units for the rate constant are $M^(1-n)^/s$ where n is the order. When $n=0$ \
@@ -127,14 +127,14 @@ extension QuizQuestionsList {
                     which is the same as $1/time$
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Half-life is independent of concentration of the species.",
                         explanation: """
                     It's true, half-life equation is $t_1/2_ = ln(2)/k$ so it doesn't depend on \
                     the initial concentration of the species.
                     """
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "Rate is dependant on the concentration of one reactant",
                         explanation: """
                     It's true, the rate law for first order reactions is $Rate=k[A]$ where A is the \
@@ -224,7 +224,7 @@ extension QuizQuestionsList {
                 otherAnswers: [
                     "Zero Order and -([A_0_] - [A_t_])/(t_0_- t)",
                     "Second Order and -ln[A_0_/A_t_]/(t_0_ - t)",
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "None of the above",
                         explanation: nil,
                         position: .D
@@ -337,7 +337,7 @@ extension QuizQuestionsList {
             For a reaction $(A to B)$, if a graph plotted with axis $[A] vs t$ produces a curved line, what \
             is the order of the equation and what is the slope of the line?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: "Any of the above except for Zero Order Reaction",
                     explanation: nil,
                     position: .D
@@ -398,7 +398,7 @@ extension QuizQuestionsList {
             the results, which of the following can be concluded about the rate law for the reaction under \
             the conditions studied?
             """,
-                correctAnswer: QuizAnswer(
+                correctAnswer: QuizAnswerData(
                     answer: "It is first order in [B]",
                     explanation: """
                 B can be inferred to be of first order by looking at how the concentration of it changed \
@@ -410,16 +410,16 @@ extension QuizQuestionsList {
                 """
                 ),
                 otherAnswers: [
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "It is zero order in [B]",
                         explanation:
                             "B cannot be of Zero Order because the concentration changes at a variable rate"
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "It is second order in [B]",
                         explanation: "B data doesn't align with second order equations"
                     ),
-                    QuizAnswer(
+                    QuizAnswerData(
                         answer: "It is first order in [A]",
                         explanation: """
                     A is in so much excess that it's concentration within the graph is apparently unchanged, \

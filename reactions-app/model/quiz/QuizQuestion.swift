@@ -63,13 +63,13 @@ import Foundation
 /// ```
 /// QuizQuestionData(
 ///     question: "What is the largest country in the world?",
-///     correctAnswer: QuizAnswer(
+///     correctAnswer: QuizAnswerData(
 ///         "Russia",
 ///         "The area of Russia is 17.1 million square km which is the largest in the world"
 ///     ),
 ///     otherAnswers: [
-///         QuizAnswer("Canada", "The area of Canada is 10 million square km"),
-///         QuizAnswer("USA", "The area of USA is 9.8 million square km")
+///         QuizAnswerData("Canada", "The area of Canada is 10 million square km"),
+///         QuizAnswerData("USA", "The area of USA is 9.8 million square km")
 ///     ],
 ///     explanation: nil,
 ///     difficulty: .hard
@@ -77,8 +77,8 @@ import Foundation
 /// ```
 struct QuizQuestionData {
     let question: TextLine
-    let correctAnswer: QuizAnswer
-    let otherAnswers: [QuizAnswer]
+    let correctAnswer: QuizAnswerData
+    let otherAnswers: [QuizAnswerData]
     let explanation: TextLine?
     let difficulty: QuizDifficulty
     let image: String?
@@ -86,8 +86,8 @@ struct QuizQuestionData {
 
     init(
         question: TextLine,
-        correctAnswer: QuizAnswer,
-        otherAnswers: [QuizAnswer],
+        correctAnswer: QuizAnswerData,
+        otherAnswers: [QuizAnswerData],
         explanation: TextLine?,
         difficulty: QuizDifficulty,
         image: String? = nil,
@@ -109,7 +109,7 @@ struct QuizQuestionData {
         var options = QuizOption.allCases.filter { !protectedOptions.contains($0) }
         var answers = [QuizOption: QuizAnswer2]()
 
-        func add(_ answer: QuizAnswer, _ option: QuizOption, id: Int) {
+        func add(_ answer: QuizAnswerData, _ option: QuizOption, id: Int) {
             assert(answers[option] == nil)
             options = options.filter { $0 != option }
             let a2 = QuizAnswer2(
@@ -196,7 +196,7 @@ struct QuizAnswerInputFoo: ExpressibleByStringLiteral {
 
 }
 
-struct QuizAnswer: ExpressibleByStringLiteral, Equatable {
+struct QuizAnswerData: ExpressibleByStringLiteral, Equatable {
     let answer: TextLine
     let explanation: TextLine?
     let position: QuizOption?

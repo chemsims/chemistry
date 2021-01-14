@@ -100,11 +100,11 @@ class QuizViewModelTests: XCTestCase {
     private func makeQuestion(i: Int) -> QuizQuestionData {
         QuizQuestionData(
             question: TextLine(stringLiteral: "\(i)"),
-            correctAnswer: QuizAnswer(answer: TextLine(stringLiteral: "\(i) - A"), position: .A),
+            correctAnswer: QuizAnswerData(answer: TextLine(stringLiteral: "\(i) - A"), position: .A),
             otherAnswers: [
-                QuizAnswer(answer: TextLine(stringLiteral: "\(i) - B"), position: .B),
-                QuizAnswer(answer: TextLine(stringLiteral: "\(i) - C"), position: .C),
-                QuizAnswer(answer: TextLine(stringLiteral: "\(i) - D"), position: .D)
+                QuizAnswerData(answer: TextLine(stringLiteral: "\(i) - B"), position: .B),
+                QuizAnswerData(answer: TextLine(stringLiteral: "\(i) - C"), position: .C),
+                QuizAnswerData(answer: TextLine(stringLiteral: "\(i) - D"), position: .D)
             ],
             explanation: "",
             difficulty: .easy

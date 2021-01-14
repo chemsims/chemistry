@@ -20,7 +20,7 @@ class QuizQuestionTests: XCTestCase {
     func testCorrectOptionWithPosition() {
         let quizData = QuizQuestionData(
             question: "foo",
-            correctAnswer: QuizAnswer(answer: "answer", explanation: nil, position: .D),
+            correctAnswer: QuizAnswerData(answer: "answer", explanation: nil, position: .D),
             otherAnswers: [],
             explanation: nil,
             difficulty: .easy
@@ -37,7 +37,7 @@ class QuizQuestionTests: XCTestCase {
             question: "foo",
             correctAnswer: "answer",
             otherAnswers: [
-                QuizAnswer(answer: "wrong answer", explanation: nil, position: .D)
+                QuizAnswerData(answer: "wrong answer", explanation: nil, position: .D)
             ],
             explanation: nil,
             difficulty: .easy
@@ -52,11 +52,11 @@ class QuizQuestionTests: XCTestCase {
     func testCorrectionOptionWithPositionAndOtherOptionsWithMixedPositions() {
         let quizData = QuizQuestionData(
             question: "foo",
-            correctAnswer: QuizAnswer(answer: "answer", explanation: nil, position: .D),
+            correctAnswer: QuizAnswerData(answer: "answer", explanation: nil, position: .D),
             otherAnswers: [
-                QuizAnswer(answer: "wrong 1", explanation: nil, position: .A),
-                QuizAnswer(answer: "wrong 2", explanation: nil, position: .C),
-                QuizAnswer(answer: "wrong 3", explanation: nil, position: nil),
+                QuizAnswerData(answer: "wrong 1", explanation: nil, position: .A),
+                QuizAnswerData(answer: "wrong 2", explanation: nil, position: .C),
+                QuizAnswerData(answer: "wrong 3", explanation: nil, position: nil),
             ],
             explanation: nil,
             difficulty: .easy
@@ -79,7 +79,7 @@ class QuizQuestionTests: XCTestCase {
             otherAnswers: [
                 "wrong 1",
                 "wrong 2",
-                QuizAnswer(answer: "wrong 3", explanation: nil, position: .A)
+                QuizAnswerData(answer: "wrong 3", explanation: nil, position: .A)
             ],
             explanation: nil,
             difficulty: .easy
@@ -97,7 +97,7 @@ class QuizQuestionTests: XCTestCase {
 
 }
 
-fileprivate extension QuizAnswer {
+fileprivate extension QuizAnswerData {
     func toAnswer(i: Int) -> QuizAnswer2 {
         QuizAnswer2(
             answer: answer,
