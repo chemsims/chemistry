@@ -238,7 +238,12 @@ struct EnergyProfileStatements {
     ]
 
     static let endOfApp: [TextLine] = [
-        TextLineGenerator.makeLine("Now you can explore all parts of kinetics, just tap the button at the top left corner to reveal the navigation menu, then choose your favorite part to review it once more!")
+        """
+        Now you can explore all parts of kinetics, just tap the button at the top left corner to \
+        reveal the navigation menu, then choose your favorite part to review it once more!
+        """,
+        """
+        Why don't you try *selecting the filing cabinet* to view the reactions you created earlier?
+        """
     ]
-
 }
