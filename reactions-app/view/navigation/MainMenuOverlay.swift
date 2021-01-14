@@ -198,7 +198,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 
     private func goTo(screen: AppScreen) -> Void {
-        navigation.goToFresh(screen: screen)
+        navigation.jumpTo(screen: screen)
         toggleMenu()
     }
 

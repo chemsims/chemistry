@@ -21,3 +21,14 @@ enum AppScreen: CaseIterable {
          energyProfileQuiz,
          finalAppScreen
 }
+
+extension AppScreen {
+    var isQuiz: Bool {
+        switch (self) {
+        case .zeroOrderReactionQuiz, .firstOrderReactionQuiz, .secondOrderReactionQuiz,
+             .reactionComparisonQuiz, .energyProfileQuiz:
+            return true
+        default: return false
+        }
+    }
+}

@@ -48,7 +48,15 @@ class RootNavigationViewModel: ObservableObject {
         persistence.hasCompleted(screen: order.reactionScreen)
     }
 
-    func goToFresh(screen: AppScreen) {
+    func jumpTo(screen: AppScreen) {
+        if (screen.isQuiz) {
+            goToExisting(screen: screen)
+        } else {
+            goToFresh(screen: screen)
+        }
+    }
+
+    private func goToFresh(screen: AppScreen) {
         guard screen != currentScreen else {
             return
         }
@@ -64,9 +72,13 @@ class RootNavigationViewModel: ObservableObject {
 
     private func prev() {
         if let prevScreen = linearScreens.element(before: currentScreen) {
-            let provider = models[prevScreen] ?? getProvider(for: prevScreen)
-            goTo(screen: prevScreen, with: provider)
+            goToExisting(screen: prevScreen)
         }
+    }
+
+    private func goToExisting(screen: AppScreen) {
+        let provider = models[screen] ?? getProvider(for: screen)
+        goTo(screen: screen, with: provider)
     }
 
     private func goTo(screen: AppScreen, with provider: ScreenProvider) {
