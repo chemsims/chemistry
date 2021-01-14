@@ -451,7 +451,6 @@
 		57064BA025A77774008102CE /* reaction-input */ = {
 			isa = PBXGroup;
 			children = (
-				57DAE4FD2577ED76006D945B /* ReactionInput.swift */,
 				57064BA125A77787008102CE /* ReactionInputModel.swift */,
 			);
 			path = "reaction-input";
@@ -557,7 +556,6 @@
 				571D6A4D255A780900F4E635 /* Info.plist */,
 				571D6A47255A780900F4E635 /* Preview Content */,
 				5766B71E256EC20200569CB9 /* ShakeExtension.swift */,
-				57DAE4F92577ECD9006D945B /* ReactionInputPersistence.swift */,
 			);
 			path = "reactions-app";
 			sourceTree = "<group>";
@@ -601,6 +599,7 @@
 		571D6A6C255AB23D00F4E635 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				578031FF25B0670300A0F610 /* persistence */,
 				57064BA025A77774008102CE /* reaction-input */,
 				5727487225A61B9C000CFA1E /* enums */,
 				57B23312258E8BC100128760 /* navigation */,
@@ -821,6 +820,15 @@
 				5787A72A259D15DC00730D50 /* EnergyProfileQuizQuestions.swift */,
 			);
 			path = questions;
+			sourceTree = "<group>";
+		};
+		578031FF25B0670300A0F610 /* persistence */ = {
+			isa = PBXGroup;
+			children = (
+				57DAE4FD2577ED76006D945B /* ReactionInput.swift */,
+				57DAE4F92577ECD9006D945B /* ReactionInputPersistence.swift */,
+			);
+			path = persistence;
 			sourceTree = "<group>";
 		};
 		57976928255EBFE300CD7FD3 /* shapes */ = {
