@@ -34,6 +34,8 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     @Published var usedReactions: [ReactionType] = [.A]
 
+    @Published var showDataAtT2 = false
+
     var pendingReactionSelection = ReactionType.A
     var selectedReaction: ReactionType {
         usedReactions.last!

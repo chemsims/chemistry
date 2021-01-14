@@ -82,7 +82,8 @@ struct OrderedReactionScreen<Content: View>: View {
                 canSetC2: reaction.selectedReaction != .B,
                 canSetT2: reaction.selectedReaction != .C,
                 maxT2Input: reaction.input.maxT2,
-                minC2Input: reaction.input.minC2
+                minC2Input: reaction.input.minC2,
+                showDataAtT2: reaction.showDataAtT2
             )
             .frame(width: settings.chartSettings.largeTotalChartWidth)
             .padding(.horizontal, settings.chartHPadding)

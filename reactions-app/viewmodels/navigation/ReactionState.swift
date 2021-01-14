@@ -183,10 +183,12 @@ class SetT1ForFixedRate: ReactionState {
         setStatement(model)
         model.input.inputT2 = model.input.midTime
         model.input.inputC2 = model.input.midConcentration
+        model.showDataAtT2 = true
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
         setStatement(model)
+        model.showDataAtT2 = true
     }
 
     private func setStatement(_ model: ZeroOrderReactionViewModel) {
@@ -197,6 +199,7 @@ class SetT1ForFixedRate: ReactionState {
     override func unapply(on model: ZeroOrderReactionViewModel) {
         model.input.inputT2 = nil
         model.input.inputC2 = nil
+        model.showDataAtT2 = false
     }
 }
 
@@ -274,6 +277,7 @@ class RunAnimation: ReactionState {
         model.reactionHasEnded = false
         model.reactionHasStarted = true
         model.highlightedElements = []
+        model.showDataAtT2 = false
         if let duration = model.reactionDuration, let finalTime = model.input.inputT2 {
             model.currentTime = model.input.inputT1
             withAnimation(.linear(duration: Double(duration))) {

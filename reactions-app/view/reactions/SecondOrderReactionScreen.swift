@@ -62,7 +62,8 @@ struct SecondOrderReactionScreen: View {
             currentTime: $reaction.currentTime,
             yLabel: "1/[A]",
             canSetCurrentTime: reaction.reactionHasEnded,
-            highlightChart: reaction.highlight(element: .secondaryChart)
+            highlightChart: reaction.highlight(element: .secondaryChart),
+            showDataAtT2: reaction.showDataAtT2
         )
         .colorMultiply(reaction.color(for: .secondaryChart))
     }
