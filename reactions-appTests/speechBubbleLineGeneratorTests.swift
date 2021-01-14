@@ -87,15 +87,15 @@ class TextLineGeneratorTests: XCTestCase {
             ]
         )
 
-        let content3         = generate("The equation $*t_1/2_ = ln(2) / k*$ gives the half life")
-        let content3Variant1 = generate("The equation *$t_1/2_ = ln(2) / k$* gives the half life")
-        let content3Variant2 = generate("The equation *$t_1/2_ = ln(2) / k*$ gives the half life")
+        let content3         = generate("The equation $*t_1/2_ = ln(2) / k*$ gives the half-life")
+        let content3Variant1 = generate("The equation *$t_1/2_ = ln(2) / k$* gives the half-life")
+        let content3Variant2 = generate("The equation *$t_1/2_ = ln(2) / k*$ gives the half-life")
         let expected3 = [
             segment("The equation "),
             segment("t", emphasis: true, allowBreaks: false),
             segment("1/2", emphasis: true, scriptType: .subScript, allowBreaks: false),
             segment(" = ln(2) / k", emphasis: true, allowBreaks: false),
-            segment(" gives the half life")
+            segment(" gives the half-life")
         ]
 
         XCTAssertEqual(content3, expected3)

@@ -390,8 +390,8 @@ extension QuizQuestion {
                 "t_1/2_ = ln(2) / k"
             ],
             explanation: """
-            For zero order reactions, half life equation is $t_1/2_ = [A_0_]/2k$. Remember half-life is the \
-            time at which $[A] = 0.5[A_0_]$. So replacing in the equation we get:
+            For zero order reactions, the half-life equation is $t_1/2_ = [A_0_]/2k$. Remember \
+            half-life is the time at which $[A] = 0.5[A_0_]$. So replacing in the equation we get:
 
             $[A] = [A_0_] - kt$ ➝
             $0.5[A_0_] = [A_0_] - kt$ ➝

@@ -71,7 +71,7 @@ extension QuizQuestion {
             difficulty: .easy
         ),
         QuizQuestion(
-            question:"What is the half life for a first order reaction whose rate constant is 0.02875 h^-1^?",
+            question:"What is the half-life for a first order reaction whose rate constant is 0.02875 h^-1^?",
             correctAnswer: "1 day",
             otherAnswers: [
                 "12 hours",
@@ -124,7 +124,7 @@ extension QuizQuestion {
                 Radioactive rate laws are zero order reactions because the rate doesn't depend on the material
                 """,
                 """
-                Radioactive rate laws are second order reactions because the half life of the substance \
+                Radioactive rate laws are second order reactions because the half-life of the substance \
                 depends on the interactions of it with other components
                 """,
                 """

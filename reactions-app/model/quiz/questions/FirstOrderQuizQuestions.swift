@@ -127,10 +127,10 @@ extension QuizQuestion {
                     """
                 ),
                 QuizAnswer(
-                    answer: "Half life is independent of concentration of the species.",
+                    answer: "Half-life is independent of concentration of the species.",
                     explanation: """
-                    It's true, half life equation is $t_1/2_ = ln(2)/k$ so it doesn't depend on the initial \
-                    concentration of the species.
+                    It's true, half-life equation is $t_1/2_ = ln(2)/k$ so it doesn't depend on \
+                    the initial concentration of the species.
                     """
                 ),
                 QuizAnswer(
@@ -146,7 +146,7 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question:
-                "What is the half life for a first order reaction whose rate constant is 34.62 $h^-1^$?",
+                "What is the half-life for a first order reaction whose rate constant is 34.62 $h^-1^$?",
             correctAnswer: "72 s",
             otherAnswers: [
                 "12 s",
@@ -354,8 +354,8 @@ extension QuizQuestion {
         ),
         QuizQuestion(
             question: """
-            3/4 of a substance that's 100% composed by 131 I, decays in 16 days. What is the half life of \
-            131 I?
+            3/4 of a substance that's 100% composed by 131 I, decays in 16 days. What is the \
+            half-life of 131 I?
             """,
             correctAnswer: "8 days",
             otherAnswers: [
@@ -385,7 +385,7 @@ extension QuizQuestion {
             $k = ln([A_0_]/0.25[A_0_]) / 16 = k$ ➝
             $ln(1/0.25) / 16 = k$
 
-            we get $k = 0.08666 d^-1^$. Now to determine half life, we use the half-life equation \
+            we get $k = 0.08666 d^-1^$. Now to determine half-life, we use the half-life equation \
             $t_1/2_ = ln(2) / 0.08666 d^-1^ = 8 days$.
             """,
             difficulty: .medium
