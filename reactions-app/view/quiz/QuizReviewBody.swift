@@ -38,7 +38,7 @@ struct QuizReviewBody: View {
         }
     }
 
-    private func reviewCard(question: QuizQuestionDisplay) -> some View {
+    private func reviewCard(question: QuizQuestion) -> some View {
         let selectedOption = model.selectedAnswer(id: question.id)?.firstAnswer
         let isCorrect = selectedOption == question.correctOption
 
@@ -54,7 +54,7 @@ struct QuizReviewBody: View {
 
 fileprivate struct QuestionReviewCard: View {
 
-    let question: QuizQuestionDisplay
+    let question: QuizQuestion
     let selectedOption: QuizOption
     let isCorrect: Bool
     let settings: QuizLayoutSettings
@@ -112,7 +112,7 @@ fileprivate struct QuestionReviewCard: View {
     private func optionLine(
         option: QuizOption,
         topLine: String,
-        question: QuizQuestionDisplay
+        question: QuizQuestion
     ) -> some View {
         let answer = question.options[option]?.answer ?? ""
         let fullLine = answer.prepending(TextSegment(content: "\(topLine): "))

@@ -7,7 +7,7 @@ import SwiftUI
 
 class QuizViewModel: ObservableObject {
 
-    private let allQuestions: [QuizQuestionDisplay]
+    private let allQuestions: [QuizQuestion]
 
     init(questions: QuizQuestionsList) {
         let displayQuestions = questions.createQuestions()
@@ -25,7 +25,7 @@ class QuizViewModel: ObservableObject {
     @Published var quizDifficulty = QuizDifficulty.medium
 
     @Published var showExplanation: Bool = false
-    @Published var currentQuestion: QuizQuestionDisplay
+    @Published var currentQuestion: QuizQuestion
 
     // MARK: Public computed properties
     var selectedAnswer: QuizAnswerInput? {
@@ -47,7 +47,7 @@ class QuizViewModel: ObservableObject {
         }.count
     }
 
-    var availableQuestions: [QuizQuestionDisplay] {
+    var availableQuestions: [QuizQuestion] {
         QuizDifficulty.availableQuestions(at: quizDifficulty, questions: allQuestions)
     }
 
@@ -74,7 +74,7 @@ class QuizViewModel: ObservableObject {
     }
 
     // MARK: Public methods
-    func question(with id: Int) -> QuizQuestionDisplay {
+    func question(with id: Int) -> QuizQuestion {
         availableQuestions.first { $0.id == id }!
     }
 
@@ -165,7 +165,7 @@ extension QuizViewModel {
 
 // MARK: Animation methods
 extension QuizViewModel {
-    static func explanationExpansionDuration(_ question: QuizQuestionDisplay) -> Double {
+    static func explanationExpansionDuration(_ question: QuizQuestion) -> Double {
         let contentLength = question.longExplanation.map(\.length).reduce(0) { $0 + $1 }
 
         let minDuration: CGFloat = 0.3

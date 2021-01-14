@@ -26,14 +26,14 @@ protocol QuizPersistence {
     func saveAnswers(
         difficulty: QuizDifficulty,
         questionSet: QuestionSet,
-        questions: [QuizQuestionDisplay],
+        questions: [QuizQuestion],
         answers: [Int: QuizAnswerInput]
     )
 
     func getAnswers(
         difficulty: QuizDifficulty,
         questionSet: QuestionSet,
-        questions: [QuizQuestionDisplay]
+        questions: [QuizQuestion]
     ) -> [Int:QuizAnswerInput]
 }
 
@@ -54,7 +54,7 @@ class InMemoryQuizPersistence: QuizPersistence {
     func saveAnswers(
         difficulty: QuizDifficulty,
         questionSet: QuestionSet,
-        questions: [QuizQuestionDisplay],
+        questions: [QuizQuestion],
         answers: [Int : QuizAnswerInput]
     ) {
         let key = QuizResultsKey(difficulty: difficulty, questionSet: questionSet)
@@ -64,7 +64,7 @@ class InMemoryQuizPersistence: QuizPersistence {
     func getAnswers(
         difficulty: QuizDifficulty,
         questionSet: QuestionSet,
-        questions: [QuizQuestionDisplay]
+        questions: [QuizQuestion]
     ) -> [Int : QuizAnswerInput] {
         let key = QuizResultsKey(difficulty: difficulty, questionSet: questionSet)
         let deserialized = underlyingResults[key].map { answers in
@@ -75,7 +75,7 @@ class InMemoryQuizPersistence: QuizPersistence {
 
     private func deserialiseAnswers(
         _ answers: [Int: QuizAnswerPersistedInput],
-        questions: [QuizQuestionDisplay]
+        questions: [QuizQuestion]
     ) -> [Int:QuizAnswerInput] {
         var deserializedAnswers = [Int: QuizAnswerInput]()
 
@@ -91,7 +91,7 @@ class InMemoryQuizPersistence: QuizPersistence {
 
     private func serialiseAnswers(
         _ answers: [Int : QuizAnswerInput],
-        questions: [QuizQuestionDisplay]
+        questions: [QuizQuestion]
     ) -> [Int : QuizAnswerPersistedInput] {
         var serializedAnswers = [Int:QuizAnswerPersistedInput]()
 
@@ -107,7 +107,7 @@ class InMemoryQuizPersistence: QuizPersistence {
     }
 
     private func serializeAnswer(
-        questions: [QuizQuestionDisplay],
+        questions: [QuizQuestion],
         questionId: Int,
         answer: QuizAnswerInput
     ) -> QuizAnswerPersistedInput? {
@@ -126,7 +126,7 @@ class InMemoryQuizPersistence: QuizPersistence {
     private func deserializeAnswer(
         _ answer: QuizAnswerPersistedInput,
         questionId: Int,
-        questions: [QuizQuestionDisplay]
+        questions: [QuizQuestion]
     ) -> QuizAnswerInput? {
         let question = questions.first { $0.id == questionId }
 

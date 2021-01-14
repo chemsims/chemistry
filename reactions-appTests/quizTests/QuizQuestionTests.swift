@@ -98,8 +98,8 @@ class QuizQuestionTests: XCTestCase {
 }
 
 fileprivate extension QuizAnswerData {
-    func toAnswer(i: Int) -> QuizAnswer2 {
-        QuizAnswer2(
+    func toAnswer(i: Int) -> QuizAnswer {
+        QuizAnswer(
             answer: answer,
             explanation: explanation,
             id: i

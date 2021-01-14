@@ -103,16 +103,16 @@ struct QuizQuestionData {
     }
 
     /// Creates a quiz question
-    func createQuestion(questionId: Int) -> QuizQuestionDisplay {
+    func createQuestion(questionId: Int) -> QuizQuestion {
         assert(otherAnswers.count < QuizOption.allCases.count)
         let protectedOptions = Set(([correctAnswer] + otherAnswers).compactMap(\.position))
         var options = QuizOption.allCases.filter { !protectedOptions.contains($0) }
-        var answers = [QuizOption: QuizAnswer2]()
+        var answers = [QuizOption: QuizAnswer]()
 
         func add(_ answer: QuizAnswerData, _ option: QuizOption, id: Int) {
             assert(answers[option] == nil)
             options = options.filter { $0 != option }
-            let a2 = QuizAnswer2(
+            let a2 = QuizAnswer(
                 answer: answer.answer,
                 explanation: answer.explanation,
                 id: id
@@ -128,7 +128,7 @@ struct QuizQuestionData {
             add(answer, option, id: index)
         }
 
-        return QuizQuestionDisplay(
+        return QuizQuestion(
             id: questionId,
             question: question,
             options: answers,
@@ -141,10 +141,28 @@ struct QuizQuestionData {
     }
 }
 
-struct QuizQuestionDisplay: Equatable {
+/// Definition of a quiz answer
+struct QuizAnswerData: ExpressibleByStringLiteral, Equatable {
+    let answer: TextLine
+    let explanation: TextLine?
+    let position: QuizOption?
+
+    init(answer: TextLine, explanation: TextLine? = nil, position: QuizOption? = nil) {
+        self.answer = answer
+        self.explanation = explanation
+        self.position = position
+    }
+
+    init(stringLiteral value: String) {
+        self.init(answer: TextLine(stringLiteral: value), explanation: nil)
+    }
+}
+
+/// Internal representation of a quiz question
+struct QuizQuestion: Equatable {
     let id: Int
     let question: TextLine
-    let options: [QuizOption:QuizAnswer2]
+    let options: [QuizOption:QuizAnswer]
     let correctOption: QuizOption
     let explanation: TextLine?
     let difficulty: QuizDifficulty
@@ -179,40 +197,8 @@ struct QuizQuestionDisplay: Equatable {
     }
 }
 
-struct QuizAnswerInputFoo: ExpressibleByStringLiteral {
-    let answer: TextLine
-    let explanation: TextLine?
-    let position: QuizOption?
-
-    init(answer: TextLine, explanation: TextLine? = nil, position: QuizOption? = nil) {
-        self.answer = answer
-        self.explanation = explanation
-        self.position = position
-    }
-
-    init(stringLiteral value: String) {
-        self.init(answer: TextLine(stringLiteral: value), explanation: nil)
-    }
-
-}
-
-struct QuizAnswerData: ExpressibleByStringLiteral, Equatable {
-    let answer: TextLine
-    let explanation: TextLine?
-    let position: QuizOption?
-
-    init(answer: TextLine, explanation: TextLine? = nil, position: QuizOption? = nil) {
-        self.answer = answer
-        self.explanation = explanation
-        self.position = position
-    }
-
-    init(stringLiteral value: String) {
-        self.init(answer: TextLine(stringLiteral: value), explanation: nil)
-    }
-}
-
-struct QuizAnswer2: Equatable {
+/// Internal representation of a quiz answer
+struct QuizAnswer: Equatable {
     let answer: TextLine
     let explanation: TextLine?
     let id: Int
@@ -226,7 +212,7 @@ struct QuizQuestionsList {
 
     private let questions: [QuizQuestionData]
 
-    func createQuestions() -> [QuizQuestionDisplay] {
+    func createQuestions() -> [QuizQuestion] {
         (0..<questions.count).map { i in
             questions[i].createQuestion(questionId: i)
         }

@@ -34,7 +34,7 @@ class QuizPersistenceTests: XCTestCase {
     func testGettingAnAnswerWithOneOptionWhenTheOptionOrderingChanges() {
         let model = newModel()
 
-        func questionWithCorrectOption(_ option: QuizOption) -> QuizQuestionDisplay {
+        func questionWithCorrectOption(_ option: QuizOption) -> QuizQuestion {
             questionWithOptions([option], correctOption: option)
         }
 
@@ -80,7 +80,7 @@ class QuizPersistenceTests: XCTestCase {
         XCTAssertEqual(model.getAnswers([shuffledQ1]), expected)
     }
 
-    private func zeroOrderQuestions() -> [QuizQuestionDisplay] {
+    private func zeroOrderQuestions() -> [QuizQuestion] {
         QuizQuestionsList.zeroOrderQuestions.createQuestions()
     }
 
@@ -91,15 +91,15 @@ class QuizPersistenceTests: XCTestCase {
     private func questionWithOptions(
         _ options: [QuizOption],
         correctOption: QuizOption
-    ) -> QuizQuestionDisplay {
+    ) -> QuizQuestion {
 
-        var mappedOptions = [QuizOption:QuizAnswer2]()
+        var mappedOptions = [QuizOption:QuizAnswer]()
         options.enumerated().forEach { (i, option) in
-            let answer = QuizAnswer2(answer: "", explanation: "", id: i)
+            let answer = QuizAnswer(answer: "", explanation: "", id: i)
             mappedOptions[option] = answer
         }
 
-        return QuizQuestionDisplay(
+        return QuizQuestion(
             id: 0,
             question: "",
             options: mappedOptions,
@@ -113,11 +113,11 @@ class QuizPersistenceTests: XCTestCase {
 }
 
 fileprivate extension QuizPersistence {
-    func getAnswers(_ questions: [QuizQuestionDisplay]) -> [Int: QuizAnswerInput] {
+    func getAnswers(_ questions: [QuizQuestion]) -> [Int: QuizAnswerInput] {
         getAnswers(difficulty: .easy, questionSet: .zeroOrder, questions: questions)
     }
 
-    func saveAnswers(_ questions: [QuizQuestionDisplay], _ answers:[Int: QuizAnswerInput]) {
+    func saveAnswers(_ questions: [QuizQuestion], _ answers:[Int: QuizAnswerInput]) {
         saveAnswers(
             difficulty: .easy,
             questionSet: .zeroOrder,
