@@ -8,7 +8,7 @@ import Foundation
 extension QuizQuestionsList {
     static let zeroOrderQuestions = QuizQuestionsList(
         [
-            QuizQuestion(
+            QuizQuestionData(
                 question: "In which unit is the Rate of a reaction written in?",
                 correctAnswer: "M/s",
                 otherAnswers: [
@@ -24,7 +24,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A zero order reaction $(A to B)$ has a rate of 1 $M/s$. It starts with a concentration of A of \
             10 M, and after 5 seconds, there are 5 M of A left, and 5 M more of A are added. How much \
@@ -46,7 +46,7 @@ extension QuizQuestionsList {
                 """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A zero order reaction $(2A to B)$, has A disappearing at a Rate of 1.5 $M/s$. What is the rate \
             of appearance of B?
@@ -72,7 +72,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             There is a reaction $(4A to B + C)$. The rate of disappearance of A can be written as \
             $Rate=-[∆A]/Δt$. This is equivalent to:
@@ -91,7 +91,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A zero order reaction $(A to B)$ started 1 minute ago. A currently has a concentration of 5 M \
             in the solution. After 30 seconds, there are 4 M of A left. Which of the following is the \
@@ -117,7 +117,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "Rate has the same value as k when:",
                 correctAnswer: "The reaction is of zero order",
                 otherAnswers: [
@@ -129,7 +129,7 @@ extension QuizQuestionsList {
                     "For zero order reactions, $Rate = k$ and it's of course constant, in units of $M/s$.",
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "Half-life is the time at which:",
                 correctAnswer: "The reactant has halved its concentration",
                 otherAnswers: [
@@ -144,7 +144,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Rate always has the same value regardless of the concentration of the reactants for a particular \
             reaction if:
@@ -161,7 +161,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question:
                     "'The speed of a reaction is dependent on the concentration of the reactants' applies for:",
                 correctAnswer: "First and second order reactions",
@@ -176,7 +176,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A reaction $(A to B)$ started 1 day ago. A currently has a concentration of 10 M in the \
             solution. After 5 hours, there are 8 M of A left. Which of the following is the time at which \
@@ -207,7 +207,7 @@ extension QuizQuestionsList {
                 ),
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A reaction $(A to 3B)$ tool place. It started with only A, and it ended up being 8 M. Which of \
             the following was the initial concentration of A?
@@ -226,7 +226,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             There is a reaction $(2A to 5B + C)$. The rate of appearance of B can be written as \
             $Rate=[ΔB]/Δt$. This is equivalent to:
@@ -248,7 +248,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "What's another way to write the unit for the rate?",
                 correctAnswer:
                     QuizAnswer(
@@ -267,7 +267,7 @@ extension QuizQuestionsList {
                 explanation: nil,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "The rate constant k has the units of",
                 correctAnswer: "It can vary",
                 otherAnswers: [
@@ -281,7 +281,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "If the rate of a reaction varies, it definitely:",
                 correctAnswer: "Is not a zero order reaction",
                 otherAnswers: [
@@ -292,7 +292,7 @@ extension QuizQuestionsList {
                 explanation: "For a zero order reaction, $Rate = k$, so it's a constant.",
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A reaction $(A to B)$ has started 12 hours ago. A has currently a concentration of 7 M in the \
             solution. After 3 hours, A has been reduced to 5 M. Which of the following is the time at \
@@ -321,7 +321,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A drug's decomposition follow a zero-order kinetics with a rate constant of \
             $0.001 g mL^-1^ month^-1^$. The initial concentration is $100 mg mL^-1^$. Which of the following \
@@ -345,7 +345,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "For a zero order reaction, which of the following is false?",
                 correctAnswer: QuizAnswer(
                     answer: "The half-life may be represented by the expression $t_1/2_ = 0.69 / k$",
@@ -382,7 +382,7 @@ extension QuizQuestionsList {
                 explanation: nil,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "Which one of the following is the half equation for Zero Order reactions?",
                 correctAnswer: "t_1/2_ = [A_0_] / 2k",
                 otherAnswers: [
@@ -403,7 +403,7 @@ extension QuizQuestionsList {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "Rate always has the units of:",
                 correctAnswer: "Concentration / time",
                 otherAnswers: [

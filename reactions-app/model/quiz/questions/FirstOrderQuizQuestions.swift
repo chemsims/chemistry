@@ -5,10 +5,10 @@
 
 import Foundation
 
-extension QuizQuestion {
+extension QuizQuestionsList {
     static let firstOrderQuestions = QuizQuestionsList(
         [
-            QuizQuestion(
+            QuizQuestionData(
                 question: "If a reaction is of first order, it means the Rate is dependent on:",
                 correctAnswer: "The concentration of one reactant",
                 otherAnswers: [
@@ -22,7 +22,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "If the rate law for a reaction is $Rate=k[A]$, what order is the reaction?",
                 correctAnswer: "First Order",
                 otherAnswers: [
@@ -33,7 +33,7 @@ extension QuizQuestion {
                 explanation: "The rate law for first order reactions is $Rate=k[A]$ where A is the reactant",
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "Rate constant k for a first order reaction has the units of:",
                 correctAnswer: "s^-1^",
                 otherAnswers: [
@@ -47,7 +47,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             If a reaction $(A + B to C)$ is first order for A and zero order for B, how do you write the \
             Rate law for this reaction?
@@ -65,7 +65,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "If the rate constant k has the units of days^-1^, what order is the reaction?",
                 correctAnswer: "First Order",
                 otherAnswers: [
@@ -80,7 +80,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider the reaction A to B. The reaction started a long time ago. After 1 hour, there's only \
             12.5% of the initial amount of A left. What is the rate constant for this reaction?
@@ -109,7 +109,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "What is false for first order reactions?",
                 correctAnswer:
                     QuizAnswer(
@@ -145,7 +145,7 @@ extension QuizQuestion {
                 explanation: nil,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question:
                     "What is the half-life for a first order reaction whose rate constant is 34.62 $h^-1^$?",
                 correctAnswer: "72 s",
@@ -166,7 +166,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider the reaction A to B. The reaction started a long time ago. After a day and a half, \
             there's only 3/5 of the initial amount of A left. What is the rate for this reaction?
@@ -192,7 +192,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The half-life for a first order reaction is 48s. What was the original concentration if, after 1 \
             minute, the reactant concentration is 0.3 M?
@@ -215,7 +215,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             For a reaction $(A to B)$, if a graph plotted with axis $ln[A] vs t$ produces a straight line, \
             what is the order of the equation, and what is the slope of the line?
@@ -237,7 +237,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             If the Rate of a reaction $(A to B)$ is 0.02 $M/s$ when there is 0.01 M of A present, how much \
             of [A] would it take for the Rate to be 0.015 $M/s$ considering it is a first order reaction?
@@ -257,7 +257,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             If a reaction $(A + B to C)$ is zero order for A and first order for B, how do you write the \
             Rate law for the reaction?
@@ -275,7 +275,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The half-life for a first order reaction is 36 mins. What was the original concentration if, \
             after 52 minutes, the reactant concentration is 0.2 M?
@@ -296,7 +296,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             If the rate constant k has units of $week^-1^$, what order is the reaction?
             """,
@@ -313,7 +313,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate constant of a first order reaction is $0.0042/hours$. Which of the following is the \
             half-life of the reaction in days?
@@ -332,7 +332,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             For a reaction $(A to B)$, if a graph plotted with axis $[A] vs t$ produces a curved line, what \
             is the order of the equation and what is the slope of the line?
@@ -353,7 +353,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             3/4 of a substance that's 100% composed by 131 I, decays in 16 days. What is the \
             half-life of 131 I?
@@ -391,7 +391,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The graph below shows the results of a study of the reaction with reactants A (in excess) and B. \
             The concentrations of A and B were measured periodically over time for a few hours. According to \
@@ -431,7 +431,7 @@ extension QuizQuestion {
                 difficulty: .medium,
                 image: "first-order-a-b-concentration"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The table below experimental kinetics data extracted from this reaction:
 

@@ -5,10 +5,10 @@
 
 import Foundation
 
-extension QuizQuestion {
+extension QuizQuestionsList {
     static let energyProfileQuizQuestions = QuizQuestionsList(
         [
-            QuizQuestion(
+            QuizQuestionData(
                 question: "What is the concept of Activation Energy (E_a_)?",
                 correctAnswer: QuizAnswer(
                     answer:  "The energy required to form the transition state in a chemical reaction",
@@ -40,7 +40,7 @@ extension QuizQuestion {
                 explanation: nil,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider the energy diagram below. By adding the catalyst, this one has created a new pathways \
             that's being represented by the red line (line 2) in the diagram. How exactly does this make the \
@@ -83,7 +83,7 @@ extension QuizQuestion {
                 difficulty: .easy,
                 image: "energy-profile-reaction-profile"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The energy profile of a reaction shows the successful collision of molecules. Which is the right \
             order for an energy profile when reading it from left or right?
@@ -100,7 +100,7 @@ extension QuizQuestion {
                 difficulty: .hard,
                 image: "energy-profile-reaction-pathway"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Which of the following has the lowest Activation Energy?
             """,
@@ -126,7 +126,7 @@ extension QuizQuestion {
             """,
                 difficulty: .hard
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A student puts 100 mg of a piece of metal to a hydrochloric acid solution, which triggers a \
             reaction. Which conditions would make the reaction go at a faster rate?
@@ -144,7 +144,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Catalyst can be of different shapes and different states of matter, but which kind of catalyst \
             is being added to the reaction below to increase the rate of the reaction?
@@ -166,7 +166,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Determine what are the reactants of the overall reaction that has the following mechanism
 
@@ -193,7 +193,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             How does a catalyst affects a reaction without taking a part in it?
             """,
@@ -242,7 +242,7 @@ extension QuizQuestion {
                 explanation: nil,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider two reactions (Reaction A and Reaction B). The black line (A) in the energy diagram \
             below represents Reaction A and the red line (B) represents Reaction B. What is a true statement?
@@ -279,7 +279,7 @@ extension QuizQuestion {
                 difficulty: .hard,
                 image: "energy-profile-reaction-profile-2"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A reaction $(2A + B ➝ A2B)$ has the proposed mechanism:
 
@@ -316,7 +316,7 @@ extension QuizQuestion {
             """,
                 difficulty: .hard
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A student conducted an experiment that consisted in testing 4 different catalyst in the same \
             reaction and monitor the temperature at which the reaction occurred to its completion. Which of \
@@ -345,7 +345,7 @@ extension QuizQuestion {
                     ]
                 )
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider the following energy diagram and determine, which reverse reaction has the highest \
             activation energy?
@@ -375,7 +375,7 @@ extension QuizQuestion {
                 difficulty: .medium,
                 image: "energy-profile-reaction-coordinate"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             In the reaction A + B ➝ C, that a molecule of A collides with a molecule B doesn't 100% mean \
             that a molecule of C will be produced. What are some factors that help to determine if a \
@@ -420,7 +420,7 @@ extension QuizQuestion {
                 explanation: nil,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider a reaction represented by the energy diagram below. What is a true statement about this \
             reaction?
@@ -449,7 +449,7 @@ extension QuizQuestion {
                 difficulty: .easy,
                 image: "energy-profile-reaction-profile-3"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A student is decomposing hydrogen peroxide (as shown in the reaction below) and wants to speed \
             up the rate of decomposition. What should he do?
@@ -469,7 +469,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             How are temperature and activation energy related to each other?
             """,
@@ -505,7 +505,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Which one of these elementary reactions is probably the rate-determining one in the mechanism \
             for the overall reaction?
@@ -527,7 +527,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider a reaction represented by the energy diagram below. What is a true statement about this \
             reaction?
@@ -559,7 +559,7 @@ extension QuizQuestion {
                 difficulty: .medium,
                 image: "energy-profile-energy-diagram"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate law equation can help determine the number of collisions and the success rate of the \
             collisions. What parts of the equation are related to these factors?
@@ -590,7 +590,7 @@ extension QuizQuestion {
             """,
                 difficulty: .hard
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The position of a reaction is right now being represented by the point in the energy diagram \
             below. At that point, what could be happening?

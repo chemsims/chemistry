@@ -5,11 +5,11 @@
 
 import Foundation
 
-extension QuizQuestion {
+extension QuizQuestionsList {
 
     static let secondOrderQuestions = QuizQuestionsList(
         [
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate constant for a second order reaction $(A ➝ B)$ is 0.178 M^-1^s^-1^. How much time will \
             it take for the concentration of A to drop to 0.21 M considering that the reaction started \
@@ -30,7 +30,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate constant for a second order reaction $(A ➝ B)$ is 0.44 M^-1^s^-1^. How much time will it \
             take for the concentration of A to drop to $0.05 M$ considering that the reaction started with \
@@ -51,7 +51,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate constant for a second order reaction $(A ➝ B)$ is 0.09 M^-1^s^-1^. How much of A would \
             be remaining after 25 seconds has passed? Considering the initial concentration of A is 0.44 M
@@ -71,7 +71,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question:"What is the half-life for a first order reaction whose rate constant is 0.02875 h^-1^?",
                 correctAnswer: "1 day",
                 otherAnswers: [
@@ -86,7 +86,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider a reaction (A ➝ B) that has this rate law: $Rate = k[A][B]^2^$. Which of the following \
             concentration ratios would lead to a higher rate of reaction?
@@ -111,7 +111,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Rate for radioactive decay remains unchanged regardless of environmental factors. The nuclear \
             waste from large nuclear plants lead to problems worldwide because of this characteristic. What \
@@ -140,7 +140,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             According to the steady state approximation, what has to be true to determine the rate law for \
             the reaction that has the following reaction mechanism:
@@ -172,7 +172,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A patient receives medications to treat his allergies. He takes 25 mg of this drug twice a day, \
             with a span of 12 hours in between in order for the drug to be effective. This particular drug \
@@ -193,7 +193,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider a reaction: $2A+B+C ➝ 2D$. Based on the table below, what would be the rate law of this \
             reaction?
@@ -228,7 +228,7 @@ extension QuizQuestion {
                     ]
                 )
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             What would be the rate law equation for a reaction that follows this reaction mechanism?
 
@@ -256,7 +256,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Which type of elementary reaction steps would have a higher rate of reaction?
             """,
@@ -276,7 +276,7 @@ extension QuizQuestion {
             """,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate of disappearance of bromine is -0.021 $M/s$ in this reaction: \
             $H_2(g)_ + Br_2(g)_ ➝ 2HBr_(aq)_$. What would be rate of formation for HBr?
@@ -301,7 +301,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider the following zero order reaction: $A + B ➝ C + D$. What is the rate law for it?
             """,
@@ -317,7 +317,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             2NO_(g)_ + O_2__(g)_ to NO_2__(g)_
 
@@ -350,7 +350,7 @@ extension QuizQuestion {
                     ]
                 )
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider the reaction below:
 
@@ -375,7 +375,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider the following graph, what would be the order for that reaction?
             """,
@@ -393,7 +393,7 @@ extension QuizQuestion {
                 difficulty: .easy,
                 image: "second-order-inverse-a"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider a reaction that's $(A ➝ B)$ when [A] and [B] are doubled, the rate goes up by a factor \
             of eight. The rate law is $Rate = k[A]x[B]^2^$. What's the rate order with respect to [A]?
@@ -413,7 +413,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Kinetic data was collected experimentally of the decomposition of A. The concentration of A was \
             measured through time while the reaction was taking place. Based on the data in the table, what \
@@ -452,7 +452,7 @@ extension QuizQuestion {
                     ]
                 )
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: "Consider the following graph, what would be the order for that reaction?",
                 correctAnswer: "First Order",
                 otherAnswers: [
@@ -468,7 +468,7 @@ extension QuizQuestion {
                 difficulty: .easy,
                 image: "second-order-ln-a"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A first-order reaction $(A to B)$ has a rate constant of 0.6 min^-1^. What fraction of the \
             reactant A would be left after 5 minutes?

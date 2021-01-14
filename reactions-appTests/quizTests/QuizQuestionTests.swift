@@ -10,7 +10,7 @@ import XCTest
 class QuizQuestionTests: XCTestCase {
 
     func testCorrectOption() {
-        let quizData = QuizQuestion(question: "foo", correctAnswer: "answer", otherAnswers: [], explanation: nil, difficulty: .easy)
+        let quizData = QuizQuestionData(question: "foo", correctAnswer: "answer", otherAnswers: [], explanation: nil, difficulty: .easy)
         let quiz = quizData.createQuestion(questionId: 0)
         XCTAssertEqual(quiz.options.count, 1)
         XCTAssertEqual(quiz.question, quizData.question)
@@ -18,7 +18,7 @@ class QuizQuestionTests: XCTestCase {
     }
 
     func testCorrectOptionWithPosition() {
-        let quizData = QuizQuestion(
+        let quizData = QuizQuestionData(
             question: "foo",
             correctAnswer: QuizAnswer(answer: "answer", explanation: nil, position: .D),
             otherAnswers: [],
@@ -33,7 +33,7 @@ class QuizQuestionTests: XCTestCase {
     }
 
     func testCorrectionOptionNoPositionAndSingleOtherOptionWithPosition() {
-        let quizData = QuizQuestion(
+        let quizData = QuizQuestionData(
             question: "foo",
             correctAnswer: "answer",
             otherAnswers: [
@@ -50,7 +50,7 @@ class QuizQuestionTests: XCTestCase {
     }
 
     func testCorrectionOptionWithPositionAndOtherOptionsWithMixedPositions() {
-        let quizData = QuizQuestion(
+        let quizData = QuizQuestionData(
             question: "foo",
             correctAnswer: QuizAnswer(answer: "answer", explanation: nil, position: .D),
             otherAnswers: [
@@ -73,7 +73,7 @@ class QuizQuestionTests: XCTestCase {
     }
 
     func testOtherOptionsWhereOnlyTheLastHasAPosition() {
-        let quizData = QuizQuestion(
+        let quizData = QuizQuestionData(
             question: "foo",
             correctAnswer: "bar",
             otherAnswers: [

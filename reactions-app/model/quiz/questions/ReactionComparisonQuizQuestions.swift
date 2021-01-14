@@ -5,10 +5,10 @@
 
 import Foundation
 
-extension QuizQuestion {
+extension QuizQuestionsList {
     static let reactionComparisonQuizQuestions = QuizQuestionsList(
         [
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate at which the reactants disappear is equal to the rate of formation of the products \
             within a chemical system. What ways are there to determine the rate law for a reaction?
@@ -38,7 +38,7 @@ extension QuizQuestion {
                 explanation: nil,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             A student conducts an experiment that consists on making 10 mL of a 0.20 M violet solution react \
             with 10 mL of a 0.20 M base solution. After this, the student takes a sample of the resulting \
@@ -59,7 +59,7 @@ extension QuizQuestion {
                 difficulty: .easy,
                 image: "reaction-comparison"
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Units for the rate constant vary with the order and the rate law of the equation. For this rate \
             law $Rate = k[A]^3^[B]$ what would be the units for k, the rate constant?
@@ -86,7 +86,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider a reaction: $A + 2B ➝ C$. Based on the table below, what would be the rate law of this \
             reaction?
@@ -118,7 +118,7 @@ extension QuizQuestion {
                     ]
                 )
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider a multi-step reaction. The rate laws for the elementary reactions that are part of the \
             proposed mechanism are given. Which one would probably be the rate-determining step of the \
@@ -141,7 +141,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate constant for a second order reaction $(A ➝ B)$ is 0.11 M^-1^s^-1^. How much time will \
             it take for the concentration of A to drop to 0.43 M considering that the reaction started \
@@ -162,7 +162,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate constant for a second order reaction $(A ➝ B)$ is 0.11 M^-1^s^-1^. How much of A would \
             be remaining after 12 seconds has passed? Considering the initial concentration of A is 0.94 M?
@@ -182,7 +182,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             For the reaction below, what would the rate law be?
 
@@ -222,7 +222,7 @@ extension QuizQuestion {
                 explanation: nil,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Based on the information below, what is the constant rate for the reaction?
 
@@ -257,7 +257,7 @@ extension QuizQuestion {
                     ]
                 )
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Based on the information below, what is the constant rate for the reaction?
 
@@ -288,7 +288,7 @@ extension QuizQuestion {
                     ]
                 )
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Based on the information below, how would you write the Rate Law equation for this reaction? \
             Take into account that the reaction is of third order for [H^+^]
@@ -322,7 +322,7 @@ extension QuizQuestion {
                     ]
                 )
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The Rate Law for a reaction $A + B ➝ C$ has been determined: $Rate = k[A]^2^[B]^3^$. Which of \
             the following is the overall order of the reaction?
@@ -339,7 +339,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider the following mechanism for a reaction:
 
@@ -369,7 +369,7 @@ extension QuizQuestion {
             """,
                 difficulty: .hard
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Consider an elementary reaction whose rate law is: $Rate = k[A]^2^[B]^2^$. Which are the \
             reactants of the balanced reaction?
@@ -387,7 +387,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             What would be true about the order of a reaction?
             """,
@@ -426,7 +426,7 @@ extension QuizQuestion {
                 explanation: nil,
                 difficulty: .medium
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The rate of which type of reaction would remain the same if it was taking place within a closed \
             container at standard conditions and the concentrations of all reactants were doubled at the \
@@ -444,7 +444,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Calculating the rate constant only knowing the half-life of a reaction, is only possible for \
             which type of reaction?
@@ -461,7 +461,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The half-life of a first order reaction $(A ➝ B)$ is equal to 198 seconds. What percentage of \
             the reactant would be left after 390 seconds have passed?
@@ -493,7 +493,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             The half-life of a first order reaction $(A ➝ B)$ is equal to 232 seconds. What percentage of \
             the reactant would be left after 490 seconds have passed?
@@ -525,7 +525,7 @@ extension QuizQuestion {
             """,
                 difficulty: .easy
             ),
-            QuizQuestion(
+            QuizQuestionData(
                 question: """
             Considering that radioactive decay is a first order process: half-life for the decay of I-131 \
             is 8 days, while for ruthenium-106 is 1 year. Which of the following statements would be correct?

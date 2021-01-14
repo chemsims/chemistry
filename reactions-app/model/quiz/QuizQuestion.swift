@@ -15,7 +15,7 @@ import Foundation
 /// The simplest way to create a quiz question is to use String literals, since most parameters can be expressed as a String.
 /// For example,
 /// ```
-/// QuizQuestion(
+/// QuizQuestionData(
 ///   question: "What is 1 + 1?",
 ///   correctAnswer: "2",
 ///   otherAnswers: ["1", "3", "4"],
@@ -31,7 +31,7 @@ import Foundation
 ///
 /// For example,
 /// ```
-/// QuizQuestion(
+/// QuizQuestionData(
 ///     question: "Which numbers are less than 5?",
 ///     correctAnswer: QuizAnswer(answer: "All of the above", position: QuizOption.D),
 ///     otherAnswers: ["1", "2", "3"],
@@ -50,7 +50,7 @@ import Foundation
 ///
 /// Below is an example using a single explanation for the entire question.
 /// ```
-/// QuizQuestion(
+/// QuizQuestionData(
 ///     question: "What is tallest mountain in the world?",
 ///     correctAnswer: "Mount Everest",
 ///     otherAnswers: ["Mount Blanc", "Mount Fuji"],
@@ -61,7 +61,7 @@ import Foundation
 ///
 /// Below is an example with a different explanation for each answer
 /// ```
-/// QuizQuestion(
+/// QuizQuestionData(
 ///     question: "What is the largest country in the world?",
 ///     correctAnswer: QuizAnswer(
 ///         "Russia",
@@ -75,7 +75,7 @@ import Foundation
 ///     difficulty: .hard
 /// )
 /// ```
-struct QuizQuestion {
+struct QuizQuestionData {
     let question: TextLine
     let correctAnswer: QuizAnswer
     let otherAnswers: [QuizAnswer]
@@ -220,11 +220,11 @@ struct QuizAnswer2: Equatable {
 
 struct QuizQuestionsList {
 
-    init(_ questions: [QuizQuestion]) {
+    init(_ questions: [QuizQuestionData]) {
         self.questions = questions
     }
 
-    private let questions: [QuizQuestion]
+    private let questions: [QuizQuestionData]
 
     func createQuestions() -> [QuizQuestionDisplay] {
         (0..<questions.count).map { i in

@@ -97,8 +97,8 @@ class QuizViewModelTests: XCTestCase {
         QuizQuestionsList((0..<n).map(makeQuestion))
     }
 
-    private func makeQuestion(i: Int) -> QuizQuestion {
-        QuizQuestion(
+    private func makeQuestion(i: Int) -> QuizQuestionData {
+        QuizQuestionData(
             question: TextLine(stringLiteral: "\(i)"),
             correctAnswer: QuizAnswer(answer: TextLine(stringLiteral: "\(i) - A"), position: .A),
             otherAnswers: [

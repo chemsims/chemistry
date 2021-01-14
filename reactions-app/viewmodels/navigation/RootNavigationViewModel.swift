@@ -141,7 +141,7 @@ fileprivate extension AppScreen {
             return FirstOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .firstOrderReactionQuiz:
             return QuizScreenProvider(
-                questions: QuizQuestion.firstOrderQuestions,
+                questions: .firstOrderQuestions,
                 next: next,
                 prev: prev
             )
@@ -149,7 +149,7 @@ fileprivate extension AppScreen {
             return SecondOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .secondOrderReactionQuiz:
             return QuizScreenProvider(
-                questions: QuizQuestion.secondOrderQuestions,
+                questions: .secondOrderQuestions,
                 next: next,
                 prev: prev
             )
@@ -157,7 +157,7 @@ fileprivate extension AppScreen {
             return ReactionComparisonScreenProvider(persistence: persistence, next: next, prev: prev)
         case .reactionComparisonQuiz:
             return QuizScreenProvider(
-                questions: QuizQuestion.reactionComparisonQuizQuestions,
+                questions: .reactionComparisonQuizQuestions,
                 next: next,
                 prev: prev
             )
@@ -165,7 +165,7 @@ fileprivate extension AppScreen {
             return EnergyProfileScreenProvider(persistence: persistence, next: next, prev: prev)
         case .energyProfileQuiz:
             return QuizScreenProvider(
-                questions: QuizQuestion.energyProfileQuizQuestions,
+                questions: .energyProfileQuizQuestions,
                 next: next,
                 prev: prev
             )
