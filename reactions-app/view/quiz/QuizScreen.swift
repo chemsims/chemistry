@@ -26,7 +26,7 @@ fileprivate struct QuizScreenWithSettings: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             VStack(spacing: 0) {
                 if (model.quizState != .completed) {
                     progressBar
@@ -61,9 +61,22 @@ fileprivate struct QuizScreenWithSettings: View {
                 model.quizState == .pending ? [] : .bottom
             )
             navButtons
+
+            if (model.popupIsShowing) {
+                notificationView
+
+            }
         }
         .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.8)
+    }
+
+    private var notificationView: some View {
+        NotificationView(
+            isShowing: $model.popupIsShowing,
+            fontSize: settings.answerFontSize
+        )
+        .zIndex(1)
     }
 
     private var navButtons: some View {
@@ -81,14 +94,28 @@ fileprivate struct QuizScreenWithSettings: View {
                     retryButton
                 }
 
-                NextButton(action: model.next)
-                    .frame(width: settings.rightNavSize, height: settings.rightNavSize)
-                    .disabled(nextIsDisabled)
-                    .opacity(nextIsDisabled ? 0.3 : 1)
-                    .padding(settings.rightNavPadding)
+                nextButton
             }
         }
     }
+
+    private var nextButton: some View {
+        ZStack {
+            NextButton(action: model.next)
+                .frame(width: settings.rightNavSize, height: settings.rightNavSize)
+                .disabled(nextIsDisabled)
+                .opacity(nextIsDisabled ? 0.3 : 1)
+                .padding(settings.rightNavPadding)
+
+            if (nextIsDisabled) {
+                Button(action: { model.popupIsShowing = true }) {
+                    Circle()
+                        .opacity(0)
+                }
+            }
+        }.frame(width: settings.rightNavSize, height: settings.rightNavSize)
+    }
+
 
     private var retryButton: some View {
         Button(action: model.restart) {
@@ -159,6 +186,74 @@ fileprivate struct QuizScreenWithSettings: View {
                 .opacity(0.5)
             }
         )
+    }
+}
+
+
+fileprivate struct NotificationView: View {
+
+    @Binding var isShowing: Bool
+    @State private var offset: CGFloat = 0
+
+    let fontSize: CGFloat
+
+    var body: some View {
+        Text("Choose the correct answer to progress to the next question")
+            .font(.system(size: fontSize))
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .foregroundColor(.white)
+                    .shadow(radius: 2)
+            )
+            .padding(.top, 15)
+            .offset(y: offset)
+            .gesture(gesture)
+            .transition(.move(edge: .top))
+            .animation(.easeOut(duration: 0.5))
+            .onAppear(perform: scheduleRemoval)
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: UIApplication.willResignActiveNotification
+                )
+            ) { _ in
+                isShowing = false
+            }
+    }
+
+    private func scheduleRemoval() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
+            self.doHide()
+        }
+    }
+
+    private func doHide() {
+        if (offset == 0) {
+            isShowing = false
+        } else {
+            scheduleRemoval()
+        }
+    }
+
+    private var gesture: some Gesture  {
+        DragGesture()
+            .onChanged { gesture in
+                let dy = gesture.translation.height
+                if (dy > 0) {
+                    self.offset = dy * 0.33
+                } else {
+                    self.offset = dy
+                }
+            }.onEnded { gesture in
+                withAnimation(.easeOut(duration: 0.35)) {
+                    let dy = gesture.translation.height
+                    if (dy < 10) {
+                        isShowing = false
+                    } else {
+                        self.offset = 0
+                    }
+                }
+            }
     }
 }
 
