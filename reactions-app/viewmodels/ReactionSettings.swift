@@ -15,6 +15,8 @@ struct ReactionSettings {
     static let maxTime: CGFloat = 20
 
     // Input settings
+
+    /// Minimum allowed C input on the slider
     static let minCInput: CGFloat = 0.1
     static let maxCInput: CGFloat = 1
     static let minT1Input: CGFloat = 0
@@ -29,8 +31,8 @@ struct ReactionSettings {
     static let minInverseConcentration: CGFloat = 0
     static let maxInverseConcentration: CGFloat = 10
 
-    /// The minimum value that concentration 2 may be. Concentration 1 is limited to ensure there is sufficient space
-    static let minFinalConcentration: CGFloat = 0.15
+    /// The minimum range of the C2 input
+    static let minC2InputRange: CGFloat = 0.05
 
     /// The minimum value that time 2 may be. Time 1 is limited to ensure there is sufficient space
     static let minFinalTime: CGFloat = 15

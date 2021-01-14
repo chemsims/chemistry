@@ -18,7 +18,7 @@ struct ConcentrationValueSlider: View {
         DualValueSlider(
             value1: $initialConcentration,
             value2: $finalConcentration,
-            value1PreviousHandle: settings.minFinalConcentration,
+            value1PreviousHandle: minC2 + ReactionSettings.minC2InputRange,
             value1NextHandle: nil,
             value2PreviousHandle: nil,
             value2NextHandle: initialConcentration,

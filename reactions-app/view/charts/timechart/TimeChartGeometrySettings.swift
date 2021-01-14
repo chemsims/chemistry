@@ -32,8 +32,6 @@ struct TimeChartGeometrySettings {
 
     private let includeAxisPadding: Bool
 
-    let minFinalConcentration: CGFloat = ReactionSettings.minFinalConcentration
-
     let minFinalTime: CGFloat = ReactionSettings.minFinalTime
 
     /// minimum spacing between the edge of a slider
