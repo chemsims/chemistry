@@ -138,9 +138,9 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
             if (screen.filingScreen != nil) {
                 navIcon(
-                    image: "archivebox",
-                    selectedImage: "archivebox",
-                    isSystem: true,
+                    image: "archivebox-thinner",
+                    selectedImage: "archivebox-thinner",
+                    isSystem: false,
                     screen: screen.filingScreen!
                 )
                 .frame(height: settings.secondaryIconHeight)
