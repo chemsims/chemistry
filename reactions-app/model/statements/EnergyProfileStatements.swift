@@ -43,8 +43,9 @@ struct EnergyProfileStatements {
     static let explainArrhenius = [
         TextLineGenerator.makeLine(
             """
-            But how is the temperature related to the *Rate*? Well, an equation that portrays this mode accurately is the *Arrhenius Equation*. \
-            As you can see, the temperature specifically affects the rate constant *k*.
+            But how is the temperature related to the *Rate*? Well, an equation that portrays this \
+            more accurately is the *Arrhenius Equation*. As you can see, the temperature \
+            specifically affects the rate constant *k*.
             """
         )
     ]
@@ -63,7 +64,7 @@ struct EnergyProfileStatements {
         TextLineGenerator.makeLine(
             """
             As you can tell by the equation, the higher the temperature, the higher the rate constant will be, thus making the *Rate* higher too. \
-            In a more practical way, high temperatures make the avgerage energy of molecules go up, beating the *E_a_* barrier.
+            In a more practical way, high temperatures make the average energy of molecules go up, beating the *E_a_* barrier.
             """
         )
     ]
