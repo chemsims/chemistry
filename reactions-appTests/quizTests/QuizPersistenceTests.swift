@@ -9,20 +9,11 @@ import XCTest
 
 class QuizPersistenceTests: XCTestCase {
 
-    func testSettingAndGettingDifficulty() {
-        let model = newModel()
-        QuestionSet.allCases.forEach { questionSet in
-            XCTAssertNil(model.getDifficulty(for: questionSet))
-            let difficulty = QuizDifficulty.allCases.randomElement()!
-            model.setDifficulty(for: questionSet, difficulty: difficulty)
-            XCTAssertEqual(model.getDifficulty(for: questionSet), difficulty)
-        }
-    }
 
     func testSavingAndGettingASingleOption() {
         let model = newModel()
         let questions = zeroOrderQuestions()
-        XCTAssertEqual(model.getAnswers(questions), [:])
+        XCTAssertNil(model.getAnswers(questions))
 
         let answers = [
             0: QuizAnswerInput(firstAnswer: .A)
@@ -113,16 +104,21 @@ class QuizPersistenceTests: XCTestCase {
 }
 
 fileprivate extension QuizPersistence {
-    func getAnswers(_ questions: [QuizQuestion]) -> [Int: QuizAnswerInput] {
-        getAnswers(difficulty: .easy, questionSet: .zeroOrder, questions: questions)
+    func getAnswers(_ questions: [QuizQuestion]) -> [Int: QuizAnswerInput]? {
+        getAnswers(
+            questionSet: .zeroOrder,
+            questions: questions
+        )?.answers
     }
 
     func saveAnswers(_ questions: [QuizQuestion], _ answers:[Int: QuizAnswerInput]) {
         saveAnswers(
-            difficulty: .easy,
-            questionSet: .zeroOrder,
-            questions: questions,
-            answers: answers
+            quiz: SavedQuiz(
+                questionSet: .zeroOrder,
+                difficulty: .easy,
+                answers: answers
+            ),
+            questions: questions
         )
     }
 }

@@ -22,6 +22,7 @@ class QuizViewModel: ObservableObject {
         self.persistence = persistence
     }
 
+
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
 
@@ -122,13 +123,14 @@ class QuizViewModel: ObservableObject {
 
     private func saveQuiz() {
         persistence.saveAnswers(
-            difficulty: quizDifficulty,
-            questionSet: questionSet,
-            questions: allQuestions,
-            answers: answers
+            quiz: SavedQuiz(
+                questionSet: questionSet,
+                difficulty: quizDifficulty,
+                answers: answers
+            ),
+            questions: allQuestions
         )
     }
-
 }
 
 // MARK: Quiz Navigation

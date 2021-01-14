@@ -98,16 +98,15 @@ class QuizViewModelTests: XCTestCase {
         let questionList = QuizQuestionsList(questionSet: .zeroOrder, [makeQuestion(i: 0)])
         let model = newModel(questionList, persistence: persistence)
 
-        func getAnswers() -> [Int:QuizAnswerInput] {
+        func getAnswers() -> [Int:QuizAnswerInput]? {
             persistence.getAnswers(
-                difficulty: .medium,
                 questionSet: .zeroOrder,
                 questions: questionList.createQuestions()
-            )
+            )?.answers
         }
 
         XCTAssertEqual(model.quizState, .pending)
-        XCTAssertEqual(getAnswers(), [:])
+        XCTAssertNil(getAnswers())
 
         model.quizDifficulty = .medium
         model.next()

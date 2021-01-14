@@ -5,9 +5,35 @@
 
 import Foundation
 
-fileprivate struct SavedQuizAnswer {
-    let difficulty: QuizDifficulty
+protocol QuizPersistence {
+
+    func saveAnswers(
+        quiz: SavedQuiz,
+        questions: [QuizQuestion]
+    )
+
+    func getAnswers(
+        questionSet: QuestionSet,
+        questions: [QuizQuestion]
+    ) -> SavedQuiz?
 }
+
+struct SavedQuiz {
+    let questionSet: QuestionSet
+    let difficulty: QuizDifficulty
+    let answers: [Int:QuizAnswerInput]
+}
+
+fileprivate struct SavedPersistedQuiz {
+    let difficulty: QuizDifficulty
+    let answers: [Int: QuizAnswerPersistedInput]
+}
+
+fileprivate struct QuizAnswerPersistedInput {
+    let firstAnswerId: Int
+    let otherAnswersId: [Int]
+}
+
 
 enum QuestionSet: CaseIterable {
     case zeroOrder,
@@ -17,93 +43,45 @@ enum QuestionSet: CaseIterable {
          energyProfile
 }
 
-protocol QuizPersistence {
-
-    func setDifficulty(for questionSet: QuestionSet, difficulty: QuizDifficulty)
-
-    func getDifficulty(for questionSet: QuestionSet) -> QuizDifficulty?
-
-    func saveAnswers(
-        difficulty: QuizDifficulty,
-        questionSet: QuestionSet,
-        questions: [QuizQuestion],
-        answers: [Int: QuizAnswerInput]
-    )
-
-    func getAnswers(
-        difficulty: QuizDifficulty,
-        questionSet: QuestionSet,
-        questions: [QuizQuestion]
-    ) -> [Int:QuizAnswerInput]
-}
-
 class InMemoryQuizPersistence: QuizPersistence {
 
-    private var underlyingDifficulty = [QuestionSet:QuizDifficulty]()
-
-    private var underlyingResults = [QuizResultsKey:[Int:QuizAnswerPersistedInput]]()
-
-    func setDifficulty(for questionSet: QuestionSet, difficulty: QuizDifficulty) {
-        underlyingDifficulty[questionSet] = difficulty
-    }
-
-    func getDifficulty(for questionSet: QuestionSet) -> QuizDifficulty? {
-        underlyingDifficulty[questionSet]
-    }
+    private var underlyingResults = [QuestionSet:SavedPersistedQuiz]()
 
     func saveAnswers(
-        difficulty: QuizDifficulty,
-        questionSet: QuestionSet,
-        questions: [QuizQuestion],
-        answers: [Int : QuizAnswerInput]
+        quiz: SavedQuiz,
+        questions: [QuizQuestion]
     ) {
-        let key = QuizResultsKey(difficulty: difficulty, questionSet: questionSet)
-        underlyingResults[key] = serialiseAnswers(answers, questions: questions)
+        underlyingResults[quiz.questionSet] = serialiseAnswers(quiz, questions: questions)
     }
 
     func getAnswers(
-        difficulty: QuizDifficulty,
         questionSet: QuestionSet,
         questions: [QuizQuestion]
-    ) -> [Int : QuizAnswerInput] {
-        let key = QuizResultsKey(difficulty: difficulty, questionSet: questionSet)
-        let deserialized = underlyingResults[key].map { answers in
-            deserialiseAnswers(answers, questions: questions)
+    ) -> SavedQuiz? {
+        let quiz = underlyingResults[questionSet]
+        return quiz.map { q in
+            deserialiseAnswers(q, questionSet: questionSet, questions: questions)
         }
-        return deserialized ?? [:]
     }
+}
 
-    private func deserialiseAnswers(
-        _ answers: [Int: QuizAnswerPersistedInput],
-        questions: [QuizQuestion]
-    ) -> [Int:QuizAnswerInput] {
-        var deserializedAnswers = [Int: QuizAnswerInput]()
-
-        answers.forEach { (questionId, answer) in
-            if let deserialized =
-                deserializeAnswer(answer, questionId: questionId, questions: questions) {
-                deserializedAnswers[questionId] = deserialized
-            }
-        }
-        assert(deserializedAnswers.count == answers.count)
-        return deserializedAnswers
-    }
-
+// MARK: Serialize
+fileprivate extension InMemoryQuizPersistence {
     private func serialiseAnswers(
-        _ answers: [Int : QuizAnswerInput],
+        _ quiz: SavedQuiz,
         questions: [QuizQuestion]
-    ) -> [Int : QuizAnswerPersistedInput] {
+    ) -> SavedPersistedQuiz {
         var serializedAnswers = [Int:QuizAnswerPersistedInput]()
 
-        answers.forEach { (questionId, answer) in
+        quiz.answers.forEach { (questionId, answer) in
             if let serialized =
                 serializeAnswer(questions: questions, questionId: questionId, answer: answer) {
                 serializedAnswers[questionId] = serialized
             }
         }
 
-        assert(serializedAnswers.count == answers.count)
-        return serializedAnswers
+        assert(serializedAnswers.count == quiz.answers.count)
+        return SavedPersistedQuiz(difficulty: quiz.difficulty, answers: serializedAnswers)
     }
 
     private func serializeAnswer(
@@ -121,6 +99,31 @@ class InMemoryQuizPersistence: QuizPersistence {
         return firstId.map {
             QuizAnswerPersistedInput(firstAnswerId: $0, otherAnswersId: otherIds)
         }
+    }
+}
+
+// MARK: Deserialize
+fileprivate extension InMemoryQuizPersistence {
+
+    private func deserialiseAnswers(
+        _ quiz: SavedPersistedQuiz,
+        questionSet: QuestionSet,
+        questions: [QuizQuestion]
+    ) -> SavedQuiz {
+
+        var deserializedAnswers = [Int: QuizAnswerInput]()
+        quiz.answers.forEach { (questionId, answer) in
+            if let deserialized =
+                deserializeAnswer(answer, questionId: questionId, questions: questions) {
+                deserializedAnswers[questionId] = deserialized
+            }
+        }
+        assert(deserializedAnswers.count == quiz.answers.count)
+        return SavedQuiz(
+            questionSet: questionSet,
+            difficulty: quiz.difficulty,
+            answers: deserializedAnswers
+        )
     }
 
     private func deserializeAnswer(
@@ -151,7 +154,4 @@ fileprivate struct QuizResultsKey: Hashable {
     let questionSet: QuestionSet
 }
 
-fileprivate struct QuizAnswerPersistedInput {
-    let firstAnswerId: Int
-    let otherAnswersId: [Int]
-}
+
