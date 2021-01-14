@@ -60,6 +60,7 @@ fileprivate struct QuizScreenWithSettings: View {
             .edgesIgnoringSafeArea(
                 model.quizState == .pending ? [] : .bottom
             )
+
             navButtons
 
             if (model.popupIsShowing) {
@@ -88,7 +89,7 @@ fileprivate struct QuizScreenWithSettings: View {
                     .padding(settings.leftNavPadding)
             }
             Spacer()
-            VStack(spacing: 0) {
+            VStack(spacing: 5) {
                 Spacer()
                 if (model.quizState == .completed) {
                     retryButton

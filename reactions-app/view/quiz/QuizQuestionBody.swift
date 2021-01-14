@@ -108,12 +108,11 @@ fileprivate struct QuizAnswerOption: View {
                     .foregroundColor(answerBackground)
                     .shadow(radius: 3)
 
-                if (styleCorrect || styleIncorrect) {
-                    RoundedRectangle(cornerRadius: settings.progressCornerRadius)
-                        .strokeBorder(lineWidth: settings.activeLineWidth)
-                        .foregroundColor(answerBorder)
-                        .overlay(overlay, alignment: .topTrailing)
-                }
+                RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                    .strokeBorder(lineWidth: settings.activeLineWidth)
+                    .foregroundColor(answerBorder)
+                    .overlay(overlay, alignment: .topTrailing)
+                    .opacity(styleCorrect || styleIncorrect ? 1 : 0)
 
                 TextLinesView(
                     line: model.optionText(option),
@@ -129,10 +128,11 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private var explanation: some View {
-        let explanation = model.currentQuestion.options[option]?.explanation?.italic()
+        let explanation = model.currentQuestion.options[option]?.explanation
+        let defaultExplanation = TextLine(stringLiteral: "Explanation for option \(option)")
         return
             TextLinesView(
-                line: explanation ?? TextLine(stringLiteral: "Explanation for option \(option)"),
+                line: (explanation ?? defaultExplanation).italic(),
                 fontSize: settings.answerFontSize
             )
             .padding()
