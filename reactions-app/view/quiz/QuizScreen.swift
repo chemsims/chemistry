@@ -25,6 +25,8 @@ fileprivate struct QuizScreenWithSettings: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    @State private var showNotification = false
+
     var body: some View {
         ZStack(alignment: .top) {
             VStack(spacing: 0) {
@@ -63,7 +65,7 @@ fileprivate struct QuizScreenWithSettings: View {
 
             navButtons
 
-            if (model.popupIsShowing) {
+            if (showNotification) {
                 notificationView
 
             }
@@ -74,7 +76,7 @@ fileprivate struct QuizScreenWithSettings: View {
 
     private var notificationView: some View {
         NotificationView(
-            isShowing: $model.popupIsShowing,
+            isShowing: $showNotification,
             fontSize: settings.answerFontSize
         )
         .zIndex(1)
@@ -109,7 +111,7 @@ fileprivate struct QuizScreenWithSettings: View {
                 .padding(settings.rightNavPadding)
 
             if (nextIsDisabled) {
-                Button(action: { model.popupIsShowing = true }) {
+                Button(action: { showNotification = true }) {
                     Circle()
                         .opacity(0)
                 }

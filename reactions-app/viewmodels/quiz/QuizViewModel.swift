@@ -44,7 +44,6 @@ class QuizViewModel: ObservableObject {
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
-    @Published var popupIsShowing = false
 
     // MARK: Public computed properties
     var selectedAnswer: QuizAnswerInput? {
@@ -123,15 +122,6 @@ class QuizViewModel: ObservableObject {
         }
         return option != correctOption && answer.contains(option)
     }
-
-    func showPopup() {
-//        hidePopupTimer?.invalidate()
-//        popupIsShowing = true
-//        hidePopupTimer = Timer(timeInterval: 1, repeats: false) { _ in
-//            self.popupIsShowing = false
-//        }
-    }
-    
 
     // MARK: Private methods
     private func setQuestion(newIndex: Int) {
