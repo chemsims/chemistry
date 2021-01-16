@@ -11,6 +11,10 @@ class RootNavigationViewModel: ObservableObject {
     @Published var showMenu = false
     private(set) var navigationDirection = NavigationDirection.forward
 
+    var focusScreen: AppScreen? {
+        currentScreen == .finalAppScreen ? .zeroOrderFiling : nil
+    }
+
     private let persistence: ReactionInputPersistence
     private let quizPersistence: QuizPersistence
     private var models = [AppScreen:ScreenProvider]()
@@ -20,7 +24,7 @@ class RootNavigationViewModel: ObservableObject {
         persistence: ReactionInputPersistence,
         quizPersistence: QuizPersistence
     ) {
-        let firstScreen = AppScreen.energyProfileQuiz
+        let firstScreen = AppScreen.zeroOrderReaction
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.quizPersistence = quizPersistence
@@ -33,7 +37,6 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
-        return true
         switch (screen) {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)

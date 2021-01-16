@@ -43,8 +43,7 @@ struct RootNavigationView: View {
                 size: settings.menuSize,
                 topPadding: settings.menuTopPadding,
                 menuHPadding: settings.menuHPadding,
-                navigation: model,
-                showMenu: $model.showMenu
+                navigation: model
             )
         }
     }
@@ -54,7 +53,7 @@ struct RootNavigationView: View {
 
 struct RootNavigationView_Previews: PreviewProvider {
     static var previews: some View {
-        // iPhone SEo
+        // iPhone SE
         RootNavigationView(
             model: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence(),

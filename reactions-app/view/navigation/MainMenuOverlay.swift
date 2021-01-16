@@ -10,14 +10,12 @@ struct MainMenuOverlay: View {
     let size: CGFloat
     let topPadding: CGFloat
     let menuHPadding: CGFloat
-    let navigation: RootNavigationViewModel
-    @Binding var showMenu: Bool
+    @ObservedObject var navigation: RootNavigationViewModel
 
     var body: some View {
         GeometryReader { geo in
             MainMenuOverlayWithSettings(
                 navigation: navigation,
-                showMenu: $showMenu,
                 settings: MainMenuLayoutSettings(
                     geometry: geo,
                     menuSize: size,
@@ -31,8 +29,7 @@ struct MainMenuOverlay: View {
 
 fileprivate struct MainMenuOverlayWithSettings: View {
 
-    let navigation: RootNavigationViewModel
-    @Binding var showMenu: Bool
+    @ObservedObject var navigation: RootNavigationViewModel
     let settings: MainMenuLayoutSettings
 
     @State private var panelDragOffset: CGFloat = 0
@@ -44,7 +41,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 .padding(.leading, settings.geometry.safeAreaInsets.leading)
                 .padding(.vertical, settings.geometry.safeAreaInsets.top)
 
-            if (showMenu) {
+            if (navigation.showMenu) {
                 panel
                     .gesture(
                         DragGesture(minimumDistance: 0, coordinateSpace: .global)
@@ -88,7 +85,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         }
         .background(panelBackground)
         .compositingGroup()
-        .shadow(radius: showMenu ? 3 : 0)
+        .shadow(radius: navigation.showMenu ? 3 : 0)
     }
 
     private var grabHandle: some View {
@@ -179,6 +176,10 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         let isSelected = navigation.currentScreen == screen
         let canSelect = navigation.canSelect(screen: screen)
 
+        let shouldFocus = navigation.focusScreen == screen
+        let mainColor = shouldFocus ? Color.orangeAccent : Styling.navIcon
+        let color = canSelect ? mainColor : Styling.inactiveScreenElement
+
         return Button(action: { goTo(screen: screen) } ) {
             makeImage(
                 name: isSelected ? selectedImage : image,
@@ -188,7 +189,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .font(.system(size: 10, weight: isSelected ? .light : .ultraLight))
-            .foregroundColor(canSelect ? Styling.navIcon : Styling.inactiveScreenElement)
+            .foregroundColor(color)
         }
         .disabled(!canSelect)
     }
@@ -206,9 +207,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 
     private func toggleMenu() {
-//        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
-            showMenu.toggle()
-//        }
+        navigation.showMenu.toggle()
     }
 }
 
@@ -347,8 +346,7 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             navigation: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence(),
                 quizPersistence: InMemoryQuizPersistence()
-            ),
-            showMenu: .constant(true)
+            )
         ).previewLayout(.fixed(width: 926, height: 428))
     }
 }
