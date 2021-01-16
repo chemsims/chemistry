@@ -16,8 +16,6 @@ struct OrderedReactionScreen<Content: View>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
-    @State private var reactionSelectionIsToggled: Bool = false
-
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
@@ -121,13 +119,13 @@ struct OrderedReactionScreen<Content: View>: View {
         DropDownSelectionView(
             title: "Choose a reaction",
             options: ReactionType.allCases,
-            isToggled: reaction.canSelectReaction ? $reactionSelectionIsToggled : .constant(false),
+            isToggled: $reaction.showReactionSelection,
             selection: $reaction.pendingReactionSelection,
             height: settings.tableButtonSize,
             animation: nil,
             displayString: { $0.name},
             disabledOptions: Array(reaction.usedReactions),
-            onSelection: reaction.next
+            onSelection: reaction.forcedNext
         )
         .frame(height: settings.tableButtonSize, alignment: .top)
         .colorMultiply(reaction.color(for: .reactionToggle))

@@ -95,6 +95,7 @@ class SelectReactionState: ReactionState {
         previousReaction = model.selectedReaction
         model.inputsAreDisabled = true
         model.canSelectReaction = true
+        model.showReactionSelection = true
         model.highlightedElements = [.reactionToggle]
 
         model.reactionHasStarted = true
@@ -126,6 +127,7 @@ class SelectReactionState: ReactionState {
         model.canSelectReaction = false
         model.inputsAreDisabled = false
         model.highlightedElements = []
+        model.showReactionSelection = false
     }
 }
 
@@ -144,6 +146,7 @@ class SetT0ForFixedRate: ReactionState {
 
         model.inputsAreDisabled = false
         model.canSelectReaction = false
+        model.showReactionSelection = false
         model.highlightedElements = []
 
         insertedReaction = model.pendingReactionSelection
