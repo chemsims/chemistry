@@ -43,7 +43,8 @@ struct RootNavigationView: View {
                 size: settings.menuSize,
                 topPadding: settings.menuTopPadding,
                 menuHPadding: settings.menuHPadding,
-                navigation: model
+                navigation: model,
+                showMenu: $model.showMenu
             )
         }
     }

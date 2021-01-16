@@ -8,6 +8,7 @@ import SwiftUI
 class RootNavigationViewModel: ObservableObject {
 
     @Published var view: AnyView
+    @Published var showMenu = false
     private(set) var navigationDirection = NavigationDirection.forward
 
     private let persistence: ReactionInputPersistence
@@ -19,7 +20,7 @@ class RootNavigationViewModel: ObservableObject {
         persistence: ReactionInputPersistence,
         quizPersistence: QuizPersistence
     ) {
-        let firstScreen = AppScreen.zeroOrderReaction
+        let firstScreen = AppScreen.energyProfileQuiz
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.quizPersistence = quizPersistence
@@ -32,6 +33,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
+        return true
         switch (screen) {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)
@@ -88,6 +90,9 @@ class RootNavigationViewModel: ObservableObject {
         withAnimation(navigationAnimation) {
             self.view = provider.screen
         }
+        if (screen == .finalAppScreen) {
+            showMenu = true
+        }
     }
 
     private func screenIsAfterCurrent(nextScreen: AppScreen) -> Bool {
@@ -108,7 +113,8 @@ class RootNavigationViewModel: ObservableObject {
             quizPersistence: quizPersistence,
             energyViewModel: energyViewModel,
             next: next,
-            prev: prev
+            prev: prev,
+            hideMenu: { self.showMenu = false }
         )
     }
 
@@ -152,7 +158,8 @@ fileprivate extension AppScreen {
         quizPersistence: QuizPersistence,
         energyViewModel: EnergyProfileViewModel?,
         next: @escaping () -> Void,
-        prev: @escaping () -> Void
+        prev: @escaping () -> Void,
+        hideMenu: @escaping () -> Void
     ) -> ScreenProvider {
         switch (self) {
         case .zeroOrderReaction:
@@ -207,7 +214,14 @@ fileprivate extension AppScreen {
         case .secondOrderFiling:
             return ReactionFilingScreenProvider(persistence: persistence, order: .Second)
         case .finalAppScreen:
-            return FinalAppScreenProvider(persistence: persistence, underlying: energyViewModel)
+            return FinalAppScreenProvider(
+                persistence: persistence,
+                underlying: energyViewModel,
+                prev: {
+                    prev()
+                    hideMenu()
+                }
+            )
         }
     }
 }
@@ -339,10 +353,12 @@ fileprivate class FinalAppScreenProvider: ScreenProvider {
 
     init(
         persistence: ReactionInputPersistence,
-        underlying: EnergyProfileViewModel?
+        underlying: EnergyProfileViewModel?,
+        prev: @escaping () -> Void
     ) {
         let viewModel = underlying ?? EnergyProfileViewModel()
         self.navigation = NavigationViewModel(model: viewModel, states: [FinalEnergyProfileState()])
+        self.navigation.prevScreen = prev
     }
 
     let navigation: NavigationViewModel<EnergyProfileState>
