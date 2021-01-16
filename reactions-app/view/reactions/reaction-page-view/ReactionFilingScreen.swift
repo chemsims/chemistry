@@ -27,8 +27,13 @@ struct ReactionFilingScreen: View {
         _ reactionType: ReactionType,
         geo: GeometryProxy
     ) -> some View {
-        model.makeView(reactionType: reactionType)
-            .frame(width: geo.size.width, height: geo.size.height)
+        CompletedReactionScreen(
+            enabled: model.enabled(reactionType: reactionType),
+            disabledStatement: ReactionFilingStatements.pageNotEnabledMessage(order: model.order)
+        ) {
+            model.makeView(reactionType: reactionType)
+                .frame(width: geo.size.width, height: geo.size.height)
+        }
     }
 }
 

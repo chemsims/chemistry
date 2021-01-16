@@ -40,6 +40,10 @@ class ReactionFilingViewModel: ObservableObject {
         }
     }
 
+    func enabled(reactionType: ReactionType) -> Bool {
+        persistence.get(order: order, reaction: reactionType) != nil
+    }
+
     private func navigation(
         model: ZeroOrderReactionViewModel,
         reactionType: ReactionType
