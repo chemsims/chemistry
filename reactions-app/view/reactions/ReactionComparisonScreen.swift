@@ -23,6 +23,11 @@ struct ReactionComparisonScreen: View {
                 )
             )
         }
+        .onAppear {
+            DeferScreenEdgesState.shared.deferEdges = .top
+        }.onDisappear {
+            DeferScreenEdgesState.shared.deferEdges = []
+        }
     }
 }
 

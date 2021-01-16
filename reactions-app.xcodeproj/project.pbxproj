@@ -100,6 +100,7 @@
 		576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */; };
 		576D5AA52566BAB50062F722 /* FirstOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */; };
 		576D5AAC2566CA900062F722 /* SecondOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */; };
+		576EBF9F25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
 		577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077B42568E318003E750E /* EnergyProfileScreen.swift */; };
 		577077BC2568E3E1003E750E /* BeakyOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077BB2568E3E1003E750E /* BeakyOverlay.swift */; };
 		577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */; };
@@ -286,6 +287,7 @@
 		576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderEquationView.swift; sourceTree = "<group>"; };
 		576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderEquationView.swift; sourceTree = "<group>"; };
 		576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderEquationView.swift; sourceTree = "<group>"; };
+		576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDeferEdgeGesturesController.swift; sourceTree = "<group>"; };
 		577077B42568E318003E750E /* EnergyProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreen.swift; sourceTree = "<group>"; };
 		577077BB2568E3E1003E750E /* BeakyOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyOverlay.swift; sourceTree = "<group>"; };
 		577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileBeaker.swift; sourceTree = "<group>"; };
@@ -558,6 +560,7 @@
 				571D6A4D255A780900F4E635 /* Info.plist */,
 				571D6A47255A780900F4E635 /* Preview Content */,
 				5766B71E256EC20200569CB9 /* ShakeExtension.swift */,
+				576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */,
 			);
 			path = "reactions-app";
 			sourceTree = "<group>";
@@ -1122,6 +1125,7 @@
 				57035EBA255BBF1200DB3A19 /* BeakerTicks.swift in Sources */,
 				57B23325258E94A500128760 /* ReactionFilingScreen.swift in Sources */,
 				577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */,
+				576EBF9F25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift in Sources */,
 				57A26859259A6FD000919E48 /* FirstOrderQuizQuestions.swift in Sources */,
 				57035EC3255BD33A00DB3A19 /* MoleculeGridShape.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
