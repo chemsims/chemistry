@@ -247,7 +247,6 @@ fileprivate class EndComparisonAnimation: ReactionComparisonState {
             model.currentTime2 = 1.00001 * model.finalTime2
             model.reactionHasEnded = true
         }
-        model.highlightedElements = [.charts]
     }
 
     override func unapply(on model: ReactionComparisonViewModel) {
