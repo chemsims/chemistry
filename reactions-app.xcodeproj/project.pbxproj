@@ -133,6 +133,8 @@
 		57B2331F258E93AE00128760 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B2331E258E93AE00128760 /* PageViewController.swift */; };
 		57B23325258E94A500128760 /* ReactionFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23324258E94A500128760 /* ReactionFilingScreen.swift */; };
 		57B2332B258EA93F00128760 /* ReactionFilingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B2332A258EA93F00128760 /* ReactionFilingViewModel.swift */; };
+		57B528E625B38A2300381550 /* ReviewPrompter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B528E525B38A2300381550 /* ReviewPrompter.swift */; };
+		57B528EA25B38A4E00381550 /* ReviewPromptPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
 		57C3A8272563248F00EE753E /* FirstOrderReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */; };
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
@@ -321,6 +323,8 @@
 		57B2331E258E93AE00128760 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		57B23324258E94A500128760 /* ReactionFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingScreen.swift; sourceTree = "<group>"; };
 		57B2332A258EA93F00128760 /* ReactionFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingViewModel.swift; sourceTree = "<group>"; };
+		57B528E525B38A2300381550 /* ReviewPrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompter.swift; sourceTree = "<group>"; };
+		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
 		57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionScreen.swift; sourceTree = "<group>"; };
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
@@ -760,6 +764,7 @@
 			isa = PBXGroup;
 			children = (
 				5763177D259B8EAF00D7CE2C /* SizeAdjuster.swift */,
+				57B528E525B38A2300381550 /* ReviewPrompter.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -836,6 +841,7 @@
 				57DAE4FD2577ED76006D945B /* ReactionInput.swift */,
 				57DAE4F92577ECD9006D945B /* ReactionInputPersistence.swift */,
 				5780320225B0677F00A0F610 /* SavedQuizInput.swift */,
+				57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -1139,6 +1145,7 @@
 				57B168C025A7C09200F6668E /* ScreenState.swift in Sources */,
 				57F337F92578CE7E00EF90A1 /* Tooltip.swift in Sources */,
 				57DE4DA925A5031800644790 /* QuizReviewBody.swift in Sources */,
+				57B528E625B38A2300381550 /* ReviewPrompter.swift in Sources */,
 				57E7FF8825829DE400A30582 /* QuizScreen.swift in Sources */,
 				57D8BA1B257B6AD5006B3C8B /* ReactionComparisonViewModel.swift in Sources */,
 				57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */,
@@ -1180,6 +1187,7 @@
 				57064BA225A77787008102CE /* ReactionInputModel.swift in Sources */,
 				57DAE4FA2577ECD9006D945B /* ReactionInputPersistence.swift in Sources */,
 				57C3A8272563248F00EE753E /* FirstOrderReactionScreen.swift in Sources */,
+				57B528EA25B38A4E00381550 /* ReviewPromptPersistence.swift in Sources */,
 				572CB944255C3BCF0071C600 /* ValueRange.swift in Sources */,
 				577077D325698DF2003E750E /* SkBeakerSceneRepresentable.swift in Sources */,
 				576D5A7825665E170062F722 /* ScaledView.swift in Sources */,

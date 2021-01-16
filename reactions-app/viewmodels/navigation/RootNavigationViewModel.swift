@@ -4,6 +4,7 @@
   
 
 import SwiftUI
+import StoreKit
 
 class RootNavigationViewModel: ObservableObject {
 
@@ -17,17 +18,20 @@ class RootNavigationViewModel: ObservableObject {
 
     private let persistence: ReactionInputPersistence
     private let quizPersistence: QuizPersistence
+    private let reviewPersistence: ReviewPromptPersistence
     private var models = [AppScreen:ScreenProvider]()
     private(set) var currentScreen: AppScreen
 
     init(
         persistence: ReactionInputPersistence,
-        quizPersistence: QuizPersistence
+        quizPersistence: QuizPersistence,
+        reviewPersistence: ReviewPromptPersistence
     ) {
         let firstScreen = AppScreen.zeroOrderReaction
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.quizPersistence = quizPersistence
+        self.reviewPersistence = reviewPersistence
         self.view = AnyView(EmptyView())
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
     }
@@ -95,6 +99,7 @@ class RootNavigationViewModel: ObservableObject {
         }
         if (screen == .finalAppScreen) {
             showMenu = true
+            ReviewPrompter.requestReview(persistence: reviewPersistence)
         }
     }
 

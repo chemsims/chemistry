@@ -23,7 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let contentView = RootNavigationView(
             model: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence(),
-                quizPersistence: InMemoryQuizPersistence()
+                quizPersistence: InMemoryQuizPersistence(),
+                reviewPersistence: InMemoryReviewPromptPersistence()
             )
         )
 

@@ -57,7 +57,8 @@ struct RootNavigationView_Previews: PreviewProvider {
         RootNavigationView(
             model: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence(),
-                quizPersistence: InMemoryQuizPersistence()
+                quizPersistence: InMemoryQuizPersistence(),
+                reviewPersistence: InMemoryReviewPromptPersistence()
             )
         ).previewLayout(.fixed(width: 568, height: 320))
 
@@ -65,7 +66,8 @@ struct RootNavigationView_Previews: PreviewProvider {
         RootNavigationView(
             model: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence(),
-                quizPersistence: InMemoryQuizPersistence()
+                quizPersistence: InMemoryQuizPersistence(),
+                reviewPersistence: InMemoryReviewPromptPersistence()
             )
         ).previewLayout(.fixed(width: 1024, height: 768))
 
@@ -73,7 +75,8 @@ struct RootNavigationView_Previews: PreviewProvider {
         RootNavigationView(
             model: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence(),
-                quizPersistence: InMemoryQuizPersistence()
+                quizPersistence: InMemoryQuizPersistence(),
+                reviewPersistence: InMemoryReviewPromptPersistence()
             )
         ).previewLayout(.fixed(width: 1194, height: 834))
     }
