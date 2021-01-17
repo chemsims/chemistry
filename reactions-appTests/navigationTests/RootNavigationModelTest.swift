@@ -23,7 +23,8 @@ class RootNavigationModelTest: XCTestCase {
     private func newModel() -> RootNavigationViewModel {
         RootNavigationViewModel(
             persistence: InMemoryReactionInputPersistence(),
-            quizPersistence: InMemoryQuizPersistence()
+            quizPersistence: InMemoryQuizPersistence(),
+            reviewPersistence: InMemoryReviewPromptPersistence()
         )
     }
 }
