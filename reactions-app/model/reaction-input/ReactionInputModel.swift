@@ -111,17 +111,21 @@ extension ReactionInputModel {
             min: 0,
             max: 20,
             smallerOtherValue: 0,
-            largerOtherValue: 17
+            largerOtherValue: ReactionSettings.minT2Input
         )
     }
 
     var t2Limits: InputLimits {
         InputLimits(
-            min: 0,
-            max: 20,
-            smallerOtherValue: inputT1,
+            min: hasT1Input ? 0 : ReactionSettings.minT2Input,
+            max: ReactionSettings.maxTime,
+            smallerOtherValue: hasT1Input ? inputT1 : nil,
             largerOtherValue: nil
         )
+    }
+
+    private var hasT1Input: Bool {
+        order == .Zero
     }
 }
 
