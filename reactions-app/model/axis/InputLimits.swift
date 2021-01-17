@@ -13,22 +13,15 @@ protocol InputLimits {
     /// Maximum input value
     var max: CGFloat { get }
 
-    /// The safe area defines an input area where no other input should overlap
-    var safeAreaSize: CGFloat { get }
+    var largerOtherValue: CGFloat? { get }
+
+    var smallerOtherValue: CGFloat? { get }
 }
 
-extension InputLimits {
-    var lowerSafeAreaEnd: CGFloat {
-        min + safeAreaSize
-    }
-
-    var upperSafeAreaStart: CGFloat {
-        max - safeAreaSize
-    }
-}
 
 struct FixedInputLimits: InputLimits {
     let min: CGFloat
     let max: CGFloat
-    let safeAreaSize: CGFloat
+    let smallerOtherValue: CGFloat?
+    let largerOtherValue: CGFloat?
 }

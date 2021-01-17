@@ -18,20 +18,17 @@ struct LimitConstraints {
     static func constrain(
         limit: InputLimits,
         axis: AxisPositionCalculations<CGFloat>,
-        lowerSafeAreaEnd: CGFloat?,
-        higherSafeAreaStart: CGFloat?,
         spacing: CGFloat
     ) -> AxisPositionCalculations<CGFloat> {
         BoundedSliderPositioning(
             axis: axis,
             absoluteMin: limit.min,
             absoluteMax: limit.max,
-            minPreSpacing: lowerSafeAreaEnd,
-            maxPreSpacing: higherSafeAreaStart,
+            minPreSpacing: limit.smallerOtherValue,
+            maxPreSpacing: limit.largerOtherValue,
             spacing: spacing
         ).boundedAxis
     }
-
 }
 
 

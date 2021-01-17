@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+// TODO remove values which can be obtained from reactionInput
 struct ConcentrationTimeChartView: View {
     @Binding var initialConcentration: CGFloat
     @Binding var initialTime: CGFloat
@@ -28,6 +29,8 @@ struct ConcentrationTimeChartView: View {
     let minC2Input: CGFloat
     let showDataAtT2: Bool
 
+    let input: ReactionInputModel
+
     var body: some View {
         GeneralTimeChartView(
             initialConcentration: $initialConcentration,
@@ -50,7 +53,8 @@ struct ConcentrationTimeChartView: View {
             canSetT2: canSetT2,
             maxT2Input: maxT2Input,
             minC2Input: minC2Input,
-            showDataAtT2: showDataAtT2
+            showDataAtT2: showDataAtT2,
+            input: input
         )
     }
 }
@@ -67,6 +71,7 @@ struct SingleConcentrationPlot: View {
     let canSetCurrentTime: Bool
     let highlightChart: Bool
     let showDataAtT2: Bool
+    let input: ReactionInputModel
 
     var body: some View {
         GeneralTimeChartView(
@@ -90,7 +95,8 @@ struct SingleConcentrationPlot: View {
             canSetT2: true,
             maxT2Input: ReactionSettings.maxTInput,
             minC2Input: ReactionSettings.minCInput,
-            showDataAtT2: showDataAtT2
+            showDataAtT2: showDataAtT2,
+            input: input
         )
     }
 }
@@ -123,6 +129,8 @@ struct GeneralTimeChartView: View {
     let minC2Input: CGFloat
 
     let showDataAtT2: Bool
+
+    let input: ReactionInputModel
 
     var body: some View {
         HStack(spacing: settings.chartHStackSpacing) {
@@ -225,7 +233,8 @@ struct GeneralTimeChartView: View {
             initialConcentration: $initialConcentration,
             finalConcentration: canSetC2 ? $finalConcentration : .constant(nil),
             c1Disabled: finalConcentration != nil,
-            minC2: minC2Input,
+            c1Limits: input.c1Limits,
+            c2Limits: input.c2Limits,
             settings: settings
         )
         .frame(
@@ -242,7 +251,8 @@ struct GeneralTimeChartView: View {
             t2: canSetT2 ? $finalTime : .constant(nil),
             canSetInitialTime: canSetInitialTime,
             t1Disabled: finalTime != nil,
-            maxT2Input: maxT2Input,
+            t1Limits: input.t1Limits,
+            t2Limits: input.t2Limits,
             settings: settings
         ).frame(
             width: settings.chartSize,
@@ -409,7 +419,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             canSetT2: true,
             maxT2Input: ReactionSettings.maxTInput,
             minC2Input: ReactionSettings.minCInput,
-            showDataAtT2: false
+            showDataAtT2: false,
+            input: ReactionInputAllProperties(order: .Zero)
         )
         .previewLayout(.fixed(width: 500, height: 300))
 
@@ -426,7 +437,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                 yLabel: "foo",
                 canSetCurrentTime: true,
                 highlightChart: true,
-                showDataAtT2: false
+                showDataAtT2: false,
+                input: ReactionInputAllProperties(order: .Zero)
             ).previewLayout(.fixed(width: 500, height: 300))
     }
 
@@ -458,7 +470,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     canSetT2: true,
                     maxT2Input: ReactionSettings.maxTInput,
                     minC2Input: ReactionSettings.minCInput,
-                    showDataAtT2: false
+                    showDataAtT2: false,
+                    input: ReactionInputAllProperties(order: .Zero)
                 )
 
                 ConcentrationTimeChartView(
@@ -481,7 +494,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     canSetT2: true,
                     maxT2Input: ReactionSettings.maxTInput,
                     minC2Input: ReactionSettings.minCInput,
-                    showDataAtT2: false
+                    showDataAtT2: false,
+                    input: ReactionInputAllProperties(order: .Zero)
                 )
             }
         }

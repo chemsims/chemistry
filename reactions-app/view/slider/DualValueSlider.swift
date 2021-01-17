@@ -11,30 +11,23 @@ struct DualValueSlider: View {
     @Binding var value1: CGFloat
     @Binding var value2: CGFloat?
 
-    let value1PreviousHandle: CGFloat?
-    let value1NextHandle: CGFloat?
-    let value2PreviousHandle: CGFloat?
-    let value2NextHandle: CGFloat?
+    let value1Limits: InputLimits
+    let value2Limits: InputLimits
 
     let axis: AxisPositionCalculations<CGFloat>
     let orientation: Orientation
     let settings: TimeChartGeometrySettings
     let canSetInitialValue: Bool
 
-    let absoluteMin: CGFloat
-    let absoluteMax: CGFloat
-
     let value1Disabled: Bool
+    let value1IsLower: Bool
 
     var body: some View {
         ZStack {
             if (canSetInitialValue) {
                 slider(
                     binding: $value1,
-                    axis: axis(
-                        minValue: value1PreviousHandle,
-                        maxValue: value1NextHandle
-                    ),
+                    axis: axis(limits: value1Limits),
                     disabled: value1Disabled,
                     showBar: true
                 )
@@ -43,10 +36,7 @@ struct DualValueSlider: View {
             if (value2 != nil) {
                 slider(
                     binding: value2UnsafeBinding,
-                    axis: axis(
-                        minValue: value2PreviousHandle,
-                        maxValue: value2NextHandle
-                    ),
+                    axis: axis(limits: value2Limits),
                     disabled: false,
                     showBar: canSetInitialValue ? false : true
                 )
@@ -73,15 +63,12 @@ struct DualValueSlider: View {
         ).disabled(disabled)
     }
 
-    private func axis(minValue: CGFloat? = nil, maxValue: CGFloat? = nil) -> AxisPositionCalculations<CGFloat> {
-        BoundedSliderPositioning(
+    private func axis(limits: InputLimits) -> AxisPositionCalculations<CGFloat> {
+        LimitConstraints.constrain(
+            limit: limits,
             axis: axis,
-            absoluteMin: absoluteMin,
-            absoluteMax: absoluteMax,
-            minPreSpacing: minValue,
-            maxPreSpacing: maxValue,
             spacing: settings.handleThickness + settings.sliderMinSpacing
-        ).boundedAxis
+        )
     }
 
     private var value2UnsafeBinding: Binding<CGFloat> {

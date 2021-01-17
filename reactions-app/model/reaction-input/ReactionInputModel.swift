@@ -19,6 +19,12 @@ protocol ReactionInputModel {
     var rateConstant: CGFloat? { get }
 
     var order: ReactionOrder { get }
+
+    var c1Limits: InputLimits { get }
+    var c2Limits: InputLimits { get }
+
+    var t1Limits: InputLimits { get }
+    var t2Limits: InputLimits { get }
 }
 
 extension ReactionInputModel {
@@ -80,6 +86,42 @@ extension ReactionInputModel {
                 return SecondOrderConcentration(c1: inputC1, t1: inputT1, rateConstant: k)
             }
         }
+    }
+
+    var c1Limits: InputLimits {
+        FixedInputLimits(
+            min: 0.1,
+            max: 1,
+            smallerOtherValue: 0.15,
+            largerOtherValue: nil
+        )
+    }
+
+    var c2Limits: InputLimits {
+        FixedInputLimits(
+            min: 0.1,
+            max: 1,
+            smallerOtherValue: nil,
+            largerOtherValue: inputC1
+        )
+    }
+
+    var t1Limits: InputLimits {
+        FixedInputLimits(
+            min: 0,
+            max: 20,
+            smallerOtherValue: 0,
+            largerOtherValue: 17
+        )
+    }
+
+    var t2Limits: InputLimits {
+        FixedInputLimits(
+            min: 0,
+            max: 20,
+            smallerOtherValue: inputT1,
+            largerOtherValue: nil
+        )
     }
 }
 
@@ -165,4 +207,5 @@ struct ReactionInputWithoutT2: ReactionInputModel {
     var rateConstant: CGFloat? {
         ReactionSettings.reactionCRateConstant
     }
+
 }
