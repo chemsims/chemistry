@@ -40,7 +40,7 @@ class ReactionInputModelTests: XCTestCase {
         model.inputT1 = 15
 
         let expectedC2 = InputLimits(
-            min: model.concentrationA!.getConcentration(at: maxTInput),
+            min: model.concentrationA!.getConcentration(at: maxT),
             max: maxCInput,
             smallerOtherValue: nil,
             largerOtherValue: 1
@@ -52,12 +52,12 @@ class ReactionInputModelTests: XCTestCase {
     func testZeroOrderReactionFixedC2Limits() {
         var model = ReactionInputWithoutC2(order: .Zero)
         model.inputC1 = 0.2
-        model.inputT1 = 0
+        model.inputT1 = 1
 
         let expectedT2 = InputLimits(
-            min: minTInput,
+            min: ReactionSettings.Input.minT1,
             max: model.concentrationA!.time(for: minCInput)!,
-            smallerOtherValue: 0,
+            smallerOtherValue: 1,
             largerOtherValue: nil
         )
         XCTAssertEqual(model.t2Limits, expectedT2)
@@ -66,18 +66,16 @@ class ReactionInputModelTests: XCTestCase {
     func testFirstOrderReactionInputAllPropertiesLimits() {
         let model = ReactionInputAllProperties(order: .First)
         let expectedT2 = InputLimits(
-            min: ReactionSettings.minT2Input,
-            max: maxTInput,
+            min: ReactionSettings.Input.minT2,
+            max: maxT,
             smallerOtherValue: nil,
             largerOtherValue: nil
         )
         XCTAssertEqual(model.t2Limits, expectedT2)
     }
 
-    private let minCInput = ReactionSettings.minCInput
-    private let maxCInput = ReactionSettings.maxCInput
-    private let minC2Input = ReactionSettings.minC2Input
-    private let minTInput = ReactionSettings.minTime
-    private let maxTInput = ReactionSettings.maxTInput
-
+    private let minCInput = ReactionSettings.Input.minC
+    private let maxCInput = ReactionSettings.Input.maxC
+    private let minC2Input = ReactionSettings.Input.minC2Input
+    private let maxT = ReactionSettings.Input.maxT
 }

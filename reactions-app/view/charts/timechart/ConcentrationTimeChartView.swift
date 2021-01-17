@@ -93,8 +93,8 @@ struct SingleConcentrationPlot: View {
             highlightRhsCurve: false,
             canSetC2: true,
             canSetT2: true,
-            maxT2Input: ReactionSettings.maxTInput,
-            minC2Input: ReactionSettings.minCInput,
+            maxT2Input: ReactionSettings.Input.maxT,
+            minC2Input: ReactionSettings.Input.maxC,
             showDataAtT2: showDataAtT2,
             input: input
         )
@@ -417,8 +417,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             highlightRhsCurve: false,
             canSetC2: true,
             canSetT2: true,
-            maxT2Input: ReactionSettings.maxTInput,
-            minC2Input: ReactionSettings.minCInput,
+            maxT2Input: ReactionSettings.Input.maxT,
+            minC2Input: ReactionSettings.Input.minC2Input,
             showDataAtT2: false,
             input: ReactionInputAllProperties(order: .Zero)
         )
@@ -468,8 +468,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     highlightRhsCurve: false,
                     canSetC2: true,
                     canSetT2: true,
-                    maxT2Input: ReactionSettings.maxTInput,
-                    minC2Input: ReactionSettings.minCInput,
+                    maxT2Input: ReactionSettings.Input.maxT,
+                    minC2Input: ReactionSettings.Input.minC,
                     showDataAtT2: false,
                     input: ReactionInputAllProperties(order: .Zero)
                 )
@@ -492,8 +492,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     highlightRhsCurve: false,
                     canSetC2: true,
                     canSetT2: true,
-                    maxT2Input: ReactionSettings.maxTInput,
-                    minC2Input: ReactionSettings.minCInput,
+                    maxT2Input: ReactionSettings.Input.maxT,
+                    minC2Input: ReactionSettings.Input.minC,
                     showDataAtT2: false,
                     input: ReactionInputAllProperties(order: .Zero)
                 )

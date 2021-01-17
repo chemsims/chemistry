@@ -55,8 +55,8 @@ struct SecondOrderReactionScreen: View {
             finalTime: reaction.input.inputT2,
             settings: TimeChartGeometrySettings(
                 chartSize: settings.chartSize,
-                minConcentration: ReactionSettings.minInverseConcentration,
-                maxConcentration: ReactionSettings.maxInverseConcentration
+                minConcentration: ReactionSettings.Axis.minInverseC,
+                maxConcentration: ReactionSettings.Axis.maxInverseC
             ),
             concentrationA: reaction.inverseAEquation,
             currentTime: $reaction.currentTime,

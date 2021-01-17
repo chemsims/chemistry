@@ -68,11 +68,11 @@ extension ReactionInputModel {
     }
 
     var minC2: CGFloat {
-        ReactionSettings.minCInput
+        ReactionSettings.Input.minC
     }
 
     var maxT2: CGFloat {
-        ReactionSettings.maxTime
+        ReactionSettings.Axis.maxT
     }
 
     var concentrationA: ConcentrationEquation? {
@@ -90,17 +90,17 @@ extension ReactionInputModel {
 
     var c1Limits: InputLimits {
         InputLimits(
-            min: ReactionSettings.minCInput,
-            max: ReactionSettings.maxCInput,
-            smallerOtherValue: ReactionSettings.minC2Input,
+            min: ReactionSettings.Input.minC,
+            max: ReactionSettings.Input.maxC,
+            smallerOtherValue: ReactionSettings.Input.minC2Input,
             largerOtherValue: nil
         )
     }
 
     var c2Limits: InputLimits {
         InputLimits(
-            min: ReactionSettings.minCInput,
-            max: ReactionSettings.maxCInput,
+            min: ReactionSettings.Input.minC,
+            max: ReactionSettings.Input.maxC,
             smallerOtherValue: nil,
             largerOtherValue: inputC1
         )
@@ -111,14 +111,14 @@ extension ReactionInputModel {
             min: 0,
             max: 20,
             smallerOtherValue: 0,
-            largerOtherValue: ReactionSettings.minT2Input
+            largerOtherValue: ReactionSettings.Input.minT2Input
         )
     }
 
     var t2Limits: InputLimits {
         InputLimits(
-            min: hasT1Input ? 0 : ReactionSettings.minT2Input,
-            max: ReactionSettings.maxTime,
+            min: hasT1Input ? 0 : ReactionSettings.Input.minT2,
+            max: ReactionSettings.Axis.maxT,
             smallerOtherValue: hasT1Input ? inputT1 : nil,
             largerOtherValue: nil
         )
@@ -166,7 +166,7 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     }
 
     var maxT2: CGFloat {
-        let absoluteMax = ReactionSettings.maxTInput
+        let absoluteMax = ReactionSettings.Input.maxT
         let maxTimeForMinConcentration = concentrationA?.time(for: minC2) ?? absoluteMax
         return min(maxTimeForMinConcentration, absoluteMax)
     }
@@ -205,7 +205,7 @@ struct ReactionInputWithoutT2: ReactionInputModel {
     }
 
     var minC2: CGFloat {
-        let absoluteMin = ReactionSettings.minCInput
+        let absoluteMin = ReactionSettings.Input.minC
         let minForMaxTime = concentrationA?.getConcentration(at: maxT2) ?? absoluteMin
         return max(minForMaxTime, absoluteMin)
     }

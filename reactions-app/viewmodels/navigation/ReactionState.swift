@@ -386,7 +386,7 @@ class SetFinalConcentrationToNonNil: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        model.input.inputC2 = max(model.input.inputC1 / 2, ReactionSettings.minCInput)
+        model.input.inputC2 = max(model.input.inputC1 / 2, ReactionSettings.Input.minC)
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {

@@ -56,8 +56,8 @@ struct FirstOrderReactionScreen: View {
             finalTime: reaction.input.inputT2,
             settings: TimeChartGeometrySettings(
                 chartSize: settings.chartSize,
-                minConcentration: ReactionSettings.minLogConcentration,
-                maxConcentration: ReactionSettings.maxLogConcentration
+                minConcentration: ReactionSettings.Axis.minLogC,
+                maxConcentration: ReactionSettings.Axis.maxLogC
             ),
             concentrationA: reaction.logAEquation,
             currentTime: $reaction.currentTime,
