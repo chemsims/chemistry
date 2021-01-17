@@ -233,8 +233,8 @@ struct GeneralTimeChartView: View {
             initialConcentration: $initialConcentration,
             finalConcentration: canSetC2 ? $finalConcentration : .constant(nil),
             c1Disabled: finalConcentration != nil,
-            c1Limits: input.c1Limits,
-            c2Limits: input.c2Limits,
+            c1Limits: limits.c1Limits,
+            c2Limits: limits.c2Limits,
             settings: settings
         )
         .frame(
@@ -251,8 +251,8 @@ struct GeneralTimeChartView: View {
             t2: canSetT2 ? $finalTime : .constant(nil),
             canSetInitialTime: canSetInitialTime,
             t1Disabled: finalTime != nil,
-            t1Limits: input.t1Limits,
-            t2Limits: input.t2Limits,
+            t1Limits: limits.t1Limits,
+            t2Limits: limits.t2Limits,
             settings: settings
         ).frame(
             width: settings.chartSize,
@@ -383,6 +383,21 @@ struct GeneralTimeChartView: View {
         ).frame(width: settings.chartSize, height: settings.indicatorWidth)
     }
 
+    private var limits: ReactionInputLimits {
+        input.limits(cAbsoluteSpacing: cAbsoluteSpacing, tAbsoluteSpacing: tAbsoluteSpacing)
+    }
+
+    private var cAbsoluteSpacing: CGFloat {
+        settings.yAxis.getValue(at: spacing) - settings.yAxis.getValue(at: 0)
+    }
+
+    private var tAbsoluteSpacing: CGFloat {
+        settings.xAxis.getValue(at: spacing) - settings.xAxis.getValue(at: 0)
+    }
+
+    private var spacing: CGFloat {
+        settings.sliderHandleWidth + settings.sliderMinSpacing
+    }
 }
 
 struct DisabledSliderModifier: ViewModifier {

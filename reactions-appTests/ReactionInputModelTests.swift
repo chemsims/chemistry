@@ -17,7 +17,7 @@ class ReactionInputModelTests: XCTestCase {
             smallerOtherValue: minC2Input,
             largerOtherValue: nil
         )
-        XCTAssertEqual(model.c1Limits, expected)
+        checkInputs(model.limitsNoSpacing.c1Limits, expected)
 
         var c2Expected: InputLimits {
             InputLimits(
@@ -28,9 +28,9 @@ class ReactionInputModelTests: XCTestCase {
             )
         }
 
-        XCTAssertEqual(model.c2Limits, c2Expected)
+        checkInputs(model.limitsNoSpacing.c2Limits, c2Expected)
         model.inputC1 = 0.2
-        XCTAssertEqual(model.c2Limits, c2Expected)
+        checkInputs(model.limitsNoSpacing.c2Limits, c2Expected)
 
         let t1Expected = InputLimits(
             min: minT,
@@ -38,7 +38,7 @@ class ReactionInputModelTests: XCTestCase {
             smallerOtherValue: nil,
             largerOtherValue: ReactionSettings.Input.minT2Input
         )
-        XCTAssertEqual(model.t1Limits, t1Expected)
+        checkInputs(model.limitsNoSpacing.t1Limits, t1Expected)
     }
 
     func testZeroOrderReactionWithoutT2Limits() {
@@ -54,7 +54,7 @@ class ReactionInputModelTests: XCTestCase {
             largerOtherValue: 1
         )
 
-        XCTAssertEqual(model.c2Limits, expectedC2)
+        checkInputs(model.limitsNoSpacing.c2Limits, expectedC2)
     }
 
     func testZeroOrderReactionWithoutC2() {
@@ -68,7 +68,7 @@ class ReactionInputModelTests: XCTestCase {
             smallerOtherValue: 1,
             largerOtherValue: nil
         )
-        XCTAssertEqual(model.t2Limits, expectedT2)
+        checkInputs(model.limitsNoSpacing.t2Limits, expectedT2)
     }
 
     func testFirstOrderReactionInputAllPropertiesLimits() {
@@ -79,7 +79,7 @@ class ReactionInputModelTests: XCTestCase {
             smallerOtherValue: nil,
             largerOtherValue: nil
         )
-        XCTAssertEqual(model.t2Limits, expectedT2)
+        checkInputs(model.limitsNoSpacing.t2Limits, expectedT2)
     }
 
     func testSecondOrderReactionWithoutT2() {
@@ -95,16 +95,33 @@ class ReactionInputModelTests: XCTestCase {
             largerOtherValue: nil
         )
 
-        XCTAssertEqual(model.c1Limits, expectedC1)
+        checkInputs(model.limitsNoSpacing.c1Limits, expectedC1)
 
-        let timeAtMinC1 = model.concentrationA?.time(for: upperC2)!
+        let timeAtMinC1 = model.concentrationA!.time(for: upperC2)!
         let expectedT1 = InputLimits(
             min: minT,
             max: timeAtMinC1,
             smallerOtherValue: nil,
             largerOtherValue: minT2Input
         )
-        XCTAssertEqual(model.t1Limits, expectedT1)
+        checkInputs(model.limitsNoSpacing.t1Limits, expectedT1)
+    }
+
+    private func checkInputs(_ l: InputLimits, _ r: InputLimits) {
+        let accuracy: CGFloat = 0.00001
+        XCTAssertEqual(l.min, r.min, accuracy: accuracy)
+        XCTAssertEqual(l.max, r.max, accuracy: accuracy)
+        checkOptFloat(l.smallerOtherValue, r.smallerOtherValue)
+        checkOptFloat(l.largerOtherValue, r.largerOtherValue)
+    }
+
+    private func checkOptFloat(_ l: CGFloat?, _ r: CGFloat?) {
+        if (l == nil) {
+            XCTAssertEqual(l, r)
+        } else {
+            XCTAssertNotNil(r)
+            XCTAssertEqual(l!, r!, accuracy: 0.00001)
+        }
     }
 
     private let minCInput = ReactionSettings.Input.minC
@@ -113,4 +130,10 @@ class ReactionInputModelTests: XCTestCase {
     private let maxT = ReactionSettings.Input.maxT
     private let minT = ReactionSettings.Input.minT1
     private let minT2Input = ReactionSettings.Input.minT2Input
+}
+
+fileprivate extension ReactionInputModel {
+    var limitsNoSpacing: ReactionInputLimits {
+        limits(cAbsoluteSpacing: 0, tAbsoluteSpacing: 0)
+    }
 }

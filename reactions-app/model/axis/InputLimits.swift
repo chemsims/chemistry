@@ -5,7 +5,7 @@
 
 import CoreGraphics
 
-struct InputLimits: Equatable {
+struct InputLimits {
     let min: CGFloat
     let max: CGFloat
     let smallerOtherValue: CGFloat?
