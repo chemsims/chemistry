@@ -89,7 +89,7 @@ extension ReactionInputModel {
     }
 
     var c1Limits: InputLimits {
-        FixedInputLimits(
+        InputLimits(
             min: ReactionSettings.minCInput,
             max: ReactionSettings.maxCInput,
             smallerOtherValue: ReactionSettings.minC2Input,
@@ -98,7 +98,7 @@ extension ReactionInputModel {
     }
 
     var c2Limits: InputLimits {
-        FixedInputLimits(
+        InputLimits(
             min: ReactionSettings.minCInput,
             max: ReactionSettings.maxCInput,
             smallerOtherValue: nil,
@@ -107,7 +107,7 @@ extension ReactionInputModel {
     }
 
     var t1Limits: InputLimits {
-        FixedInputLimits(
+        InputLimits(
             min: 0,
             max: 20,
             smallerOtherValue: 0,
@@ -116,7 +116,7 @@ extension ReactionInputModel {
     }
 
     var t2Limits: InputLimits {
-        FixedInputLimits(
+        InputLimits(
             min: 0,
             max: 20,
             smallerOtherValue: inputT1,
@@ -179,7 +179,7 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     }
 
     var t2Limits: InputLimits {
-        FixedInputLimits(
+        InputLimits(
             min: 0,
             max: maxT2,
             smallerOtherValue: inputT1,
@@ -218,7 +218,7 @@ struct ReactionInputWithoutT2: ReactionInputModel {
     }
 
     var c2Limits: InputLimits {
-        FixedInputLimits(
+        InputLimits(
             min: minC2,
             max: 1,
             smallerOtherValue: nil,

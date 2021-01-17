@@ -10,7 +10,7 @@ class BoundedSliderPositioningTest: XCTestCase {
     func testAbsoluteBounds() {
         let axis = makeAxis(minPos: 0, maxPos: 10, minValue: 10, maxValue: 30)
         let updatedAxis = LimitConstraints.constrain(
-            limit: FixedInputLimits(min: 15, max: 25, smallerOtherValue: nil, largerOtherValue: nil),
+            limit: InputLimits(min: 15, max: 25, smallerOtherValue: nil, largerOtherValue: nil),
             axis: axis,
             spacing: 0
         )
@@ -23,7 +23,7 @@ class BoundedSliderPositioningTest: XCTestCase {
     func testAddingMinSpacing1() {
         let axis = makeAxis(minPos: 0, maxPos: 50, minValue: 0, maxValue: 100)
         let updatedAxis = LimitConstraints.constrain(
-            limit: FixedInputLimits(min: 0, max: 100, smallerOtherValue: 50, largerOtherValue: nil),
+            limit: InputLimits(min: 0, max: 100, smallerOtherValue: 50, largerOtherValue: nil),
             axis: axis,
             spacing: 5
         )
@@ -37,7 +37,7 @@ class BoundedSliderPositioningTest: XCTestCase {
     func testAddingMinSpacing1Reverse() {
         let axis = makeAxis(minPos: 50, maxPos: 0, minValue: 0, maxValue: 100)
         let updatedAxis = LimitConstraints.constrain(
-            limit: FixedInputLimits(min: 0, max: 100, smallerOtherValue: 50, largerOtherValue: nil),
+            limit: InputLimits(min: 0, max: 100, smallerOtherValue: 50, largerOtherValue: nil),
             axis: axis,
             spacing: 5
         )
@@ -51,7 +51,7 @@ class BoundedSliderPositioningTest: XCTestCase {
     func testAddingMinSpacing2() {
         let axis = makeAxis(minPos: -50, maxPos: 0, minValue: 100, maxValue: 200)
         let updatedAxis = LimitConstraints.constrain(
-            limit: FixedInputLimits(min: 100, max: 200, smallerOtherValue: 120, largerOtherValue: nil),
+            limit: InputLimits(min: 100, max: 200, smallerOtherValue: 120, largerOtherValue: nil),
             axis: axis,
             spacing: 10
         )
@@ -65,7 +65,7 @@ class BoundedSliderPositioningTest: XCTestCase {
     func testAddingMaxSpacing1() {
         let axis = makeAxis(minPos: 50, maxPos: 250, minValue: 0, maxValue: 100)
         let updatedAxis = LimitConstraints.constrain(
-            limit: FixedInputLimits(min: 0, max: 100, smallerOtherValue: nil, largerOtherValue: 50),
+            limit: InputLimits(min: 0, max: 100, smallerOtherValue: nil, largerOtherValue: 50),
             axis: axis,
             spacing: 20
         )
@@ -79,7 +79,7 @@ class BoundedSliderPositioningTest: XCTestCase {
     func testAddingMaxSpacing1Reverse() {
         let axis = makeAxis(minPos: 250, maxPos: 50, minValue: 0, maxValue: 100)
         let updatedAxis = LimitConstraints.constrain(
-            limit: FixedInputLimits(min: 0, max: 100, smallerOtherValue: nil, largerOtherValue: 50),
+            limit: InputLimits(min: 0, max: 100, smallerOtherValue: nil, largerOtherValue: 50),
             axis: axis,
             spacing: 20
         )
@@ -92,7 +92,7 @@ class BoundedSliderPositioningTest: XCTestCase {
     func testAddingMaxSpacing2() {
         let axis = makeAxis(minPos: -100, maxPos: -50, minValue: -200, maxValue: -100)
         let updatedAxis = LimitConstraints.constrain(
-            limit: FixedInputLimits(min: -200, max: -100, smallerOtherValue: nil, largerOtherValue: -120),
+            limit: InputLimits(min: -200, max: -100, smallerOtherValue: nil, largerOtherValue: -120),
             axis: axis,
             spacing: 10
         )
@@ -106,7 +106,7 @@ class BoundedSliderPositioningTest: XCTestCase {
     func testSpacingWithAbsoluteBounds() {
         let axis = makeAxis(minPos: 0, maxPos: 10, minValue: 0, maxValue: 10)
         let updatedAxis = LimitConstraints.constrain(
-            limit: FixedInputLimits(min: 5, max: 7, smallerOtherValue: 2, largerOtherValue: 10),
+            limit: InputLimits(min: 5, max: 7, smallerOtherValue: 2, largerOtherValue: 10),
             axis: axis,
             spacing: 1
         )

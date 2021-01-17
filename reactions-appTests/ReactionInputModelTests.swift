@@ -11,16 +11,16 @@ class ReactionInputModelTests: XCTestCase {
     func testZeroOrderReactionALimits() {
         var model = ReactionInputAllProperties(order: .Zero)
 
-        let expected = FixedInputLimits(
+        let expected = InputLimits(
             min: ReactionSettings.minCInput,
             max: ReactionSettings.maxCInput,
             smallerOtherValue: ReactionSettings.minC2Input,
             largerOtherValue: nil
         )
-        XCTAssertEqual(model.c1Limits as! FixedInputLimits, expected)
+        XCTAssertEqual(model.c1Limits, expected)
 
-        var c2Expected: FixedInputLimits {
-            FixedInputLimits(
+        var c2Expected: InputLimits {
+            InputLimits(
                 min: ReactionSettings.minCInput,
                 max: ReactionSettings.maxCInput,
                 smallerOtherValue: nil,
@@ -28,9 +28,9 @@ class ReactionInputModelTests: XCTestCase {
             )
         }
 
-        XCTAssertEqual(model.c2Limits as! FixedInputLimits, c2Expected)
+        XCTAssertEqual(model.c2Limits, c2Expected)
         model.inputC1 = 0.2
-        XCTAssertEqual(model.c2Limits as! FixedInputLimits, c2Expected)
+        XCTAssertEqual(model.c2Limits, c2Expected)
     }
 
 }
