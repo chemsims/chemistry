@@ -32,11 +32,6 @@ struct TimeChartGeometrySettings {
 
     private let includeAxisPadding: Bool
 
-    /// minimum spacing between the edge of a slider
-    var sliderMinSpacing: CGFloat {
-        sliderHandleThickness * 0.1
-    }
-
     let verticalTicks = 10
     let horizontalTicks = 10
     var tickSize: CGFloat {
@@ -118,6 +113,11 @@ struct TimeChartGeometrySettings {
             minValue: minTime,
             maxValue: maxTime
         )
+    }
+
+    /// Minimum spacing between two inputs
+    var inputSpacing: CGFloat {
+        1.1 * handleThickness
     }
 
     static let chartHStackFactor: CGFloat = 0.03

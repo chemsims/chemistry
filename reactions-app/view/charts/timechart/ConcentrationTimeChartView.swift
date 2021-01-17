@@ -388,15 +388,15 @@ struct GeneralTimeChartView: View {
     }
 
     private var cAbsoluteSpacing: CGFloat {
-        settings.yAxis.getValue(at: spacing) - settings.yAxis.getValue(at: 0)
+        settings.yAxis.valueForDistance(spacing)
     }
 
     private var tAbsoluteSpacing: CGFloat {
-        settings.xAxis.getValue(at: spacing) - settings.xAxis.getValue(at: 0)
+        settings.xAxis.valueForDistance(spacing)
     }
 
     private var spacing: CGFloat {
-        settings.sliderHandleWidth + settings.sliderMinSpacing
+        settings.inputSpacing
     }
 }
 

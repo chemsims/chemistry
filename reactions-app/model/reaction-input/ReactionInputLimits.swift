@@ -97,6 +97,7 @@ struct ReactionInputsLimitsWithoutT2: ReactionInputLimits {
 
     let concentration: ConcentrationEquation?
     let inputC1: CGFloat
+    let cAbsoluteSpacing: CGFloat
     let underlying: ReactionInputLimitsAllProperties
 
     var c1Limits: InputLimits {
@@ -118,7 +119,8 @@ struct ReactionInputsLimitsWithoutT2: ReactionInputLimits {
     }
 
     var t1Limits: InputLimits {
-        let time = upperC2Limit.flatMap { concentration?.time(for: $0) }
+        let lowerC1 = upperC2Limit.map { $0 + cAbsoluteSpacing }
+        let time = lowerC1.flatMap { concentration?.time(for: $0) }
         let upperLimit = time ?? ReactionSettings.Input.minT2Input
         return InputLimits(
             min: ReactionSettings.Input.minT1,

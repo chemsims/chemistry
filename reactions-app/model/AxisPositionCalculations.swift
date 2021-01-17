@@ -48,6 +48,13 @@ struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
         return withNewMax(position: position, value: valueForPosition)
     }
 
+    /// Returns a value which corresponds to the distance `distance`
+    func valueForDistance(_ distance: Value) -> Value {
+        let scaledDistance = abs(distance / (maxValuePosition - minValuePosition))
+        let dValue = maxValue - minValue
+        return minValue + (scaledDistance * dValue)
+    }
+
     private func withNewMin(position: Value, value: Value) -> AxisPositionCalculations<Value> {
         AxisPositionCalculations(
             minValuePosition: position,

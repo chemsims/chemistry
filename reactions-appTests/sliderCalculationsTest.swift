@@ -130,6 +130,17 @@ class AxisPositionCalculationsTests: XCTestCase {
         XCTAssertEqual(updatedModel2.maxValuePosition, 40)
     }
 
+    func testGettingValueForDistance() {
+        let model1 = AxisPositionCalculations(minValuePosition: 10, maxValuePosition: 20, minValue: 0, maxValue: 10)
+        XCTAssertEqual(model1.valueForDistance(5), 5)
+
+        let model2 = AxisPositionCalculations(minValuePosition: 10, maxValuePosition: 30, minValue: 0, maxValue: 10)
+        XCTAssertEqual(model2.valueForDistance(10), 5)
+
+        let model3 = AxisPositionCalculations(minValuePosition: 50, maxValuePosition: 0, minValue: 0, maxValue: 25)
+        XCTAssertEqual(model3.valueForDistance(10), 5)
+    }
+
     // Tests that getting the value returned for the given position is correct, and vice versa.
     private func testSlider(handlePosition: Double, value: Double, model: AxisPositionCalculations<Double>) {
         XCTAssertEqual(value, model.getValue(at: handlePosition), accuracy: 0.00001)

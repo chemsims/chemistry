@@ -222,6 +222,7 @@ struct ReactionInputWithoutT2: ReactionInputModel {
         ReactionInputsLimitsWithoutT2(
             concentration: concentrationA,
             inputC1: inputC1,
+            cAbsoluteSpacing: cAbsoluteSpacing,
             underlying: ReactionInputLimitsAllProperties(
                 inputC1: inputC1,
                 inputT1: inputT1,

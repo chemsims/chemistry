@@ -67,7 +67,7 @@ struct DualValueSlider: View {
         LimitConstraints.constrain(
             limit: limits,
             axis: axis,
-            spacing: settings.handleThickness + settings.sliderMinSpacing
+            spacing: settings.inputSpacing
         )
     }
 

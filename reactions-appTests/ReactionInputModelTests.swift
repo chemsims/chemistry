@@ -97,14 +97,17 @@ class ReactionInputModelTests: XCTestCase {
 
         checkInputs(model.limitsNoSpacing.c1Limits, expectedC1)
 
-        let timeAtMinC1 = model.concentrationA!.time(for: upperC2)!
+        let cSpacing: CGFloat = 0.1
+        let lowerC1 = upperC2 + cSpacing
+        let timeAtMinC1 = model.concentrationA!.time(for: lowerC1)!
         let expectedT1 = InputLimits(
             min: minT,
             max: timeAtMinC1,
             smallerOtherValue: nil,
             largerOtherValue: minT2Input
         )
-        checkInputs(model.limitsNoSpacing.t1Limits, expectedT1)
+        let limits = model.limits(cAbsoluteSpacing: cSpacing, tAbsoluteSpacing: 0)
+        checkInputs(limits.t1Limits, expectedT1)
     }
 
     private func checkInputs(_ l: InputLimits, _ r: InputLimits) {
