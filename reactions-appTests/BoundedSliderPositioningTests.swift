@@ -8,17 +8,14 @@ import XCTest
 class BoundedSliderPositioningTest: XCTestCase {
 
     func testAbsoluteBounds() {
-        let axis = AxisPositionCalculations<CGFloat>(minValuePosition: 0, maxValuePosition: 10, minValue: 10, maxValue: 30)
-        let model = BoundedSliderPositioning(
+        let axis = makeAxis(minPos: 0, maxPos: 10, minValue: 10, maxValue: 30)
+        let updatedAxis = LimitConstraints.constrain(
+            limit: FixedInputLimits(min: 15, max: 25, safeAreaSize: 0),
             axis: axis,
-            absoluteMin: 15,
-            absoluteMax: 25,
-            minPreSpacing: nil,
-            maxPreSpacing: nil,
+            lowerSafeAreaEnd: nil,
+            higherSafeAreaStart: nil,
             spacing: 0
         )
-
-        let updatedAxis = model.boundedAxis
         XCTAssertEqual(updatedAxis.minValue, 15)
         XCTAssertEqual(updatedAxis.maxValue, 25)
         XCTAssertEqual(updatedAxis.minValuePosition, 2.5)
@@ -26,18 +23,15 @@ class BoundedSliderPositioningTest: XCTestCase {
     }
 
     func testAddingMinSpacing1() {
-        let axis = AxisPositionCalculations<CGFloat>(minValuePosition: 0, maxValuePosition: 50, minValue: 0, maxValue: 100)
-
-        let model = BoundedSliderPositioning(
+        let axis = makeAxis(minPos: 0, maxPos: 50, minValue: 0, maxValue: 100)
+        let updatedAxis = LimitConstraints.constrain(
+            limit: FixedInputLimits(min: 0, max: 100, safeAreaSize: 0),
             axis: axis,
-            absoluteMin: axis.minValue,
-            absoluteMax: axis.maxValue,
-            minPreSpacing: 50,
-            maxPreSpacing: nil,
+            lowerSafeAreaEnd: 50,
+            higherSafeAreaStart: nil,
             spacing: 5
         )
 
-        let updatedAxis = model.boundedAxis
         XCTAssertEqual(updatedAxis.minValue, 60)
         XCTAssertEqual(updatedAxis.maxValue, 100)
         XCTAssertEqual(updatedAxis.minValuePosition, 30)
@@ -45,18 +39,15 @@ class BoundedSliderPositioningTest: XCTestCase {
     }
 
     func testAddingMinSpacing1Reverse() {
-        let axis = AxisPositionCalculations<CGFloat>(minValuePosition: 50, maxValuePosition: 0, minValue: 0, maxValue: 100)
-
-        let model = BoundedSliderPositioning(
+        let axis = makeAxis(minPos: 50, maxPos: 0, minValue: 0, maxValue: 100)
+        let updatedAxis = LimitConstraints.constrain(
+            limit: FixedInputLimits(min: 0, max: 100, safeAreaSize: 0),
             axis: axis,
-            absoluteMin: axis.minValue,
-            absoluteMax: axis.maxValue,
-            minPreSpacing: 50,
-            maxPreSpacing: nil,
+            lowerSafeAreaEnd: 50,
+            higherSafeAreaStart: nil,
             spacing: 5
         )
 
-        let updatedAxis = model.boundedAxis
         XCTAssertEqual(updatedAxis.minValue, 60)
         XCTAssertEqual(updatedAxis.maxValue, 100)
         XCTAssertEqual(updatedAxis.minValuePosition, 20)
@@ -64,17 +55,15 @@ class BoundedSliderPositioningTest: XCTestCase {
     }
 
     func testAddingMinSpacing2() {
-        let axis = AxisPositionCalculations<CGFloat>(minValuePosition: -50, maxValuePosition: 0, minValue: 100, maxValue: 200)
-        let model = BoundedSliderPositioning(
+        let axis = makeAxis(minPos: -50, maxPos: 0, minValue: 100, maxValue: 200)
+        let updatedAxis = LimitConstraints.constrain(
+            limit: FixedInputLimits(min: 100, max: 200, safeAreaSize: 0),
             axis: axis,
-            absoluteMin: axis.minValue,
-            absoluteMax: axis.maxValue,
-            minPreSpacing: 120,
-            maxPreSpacing: nil,
+            lowerSafeAreaEnd: 120,
+            higherSafeAreaStart: nil,
             spacing: 10
         )
 
-        let updatedAxis = model.boundedAxis
         XCTAssertEqual(updatedAxis.minValue, 140)
         XCTAssertEqual(updatedAxis.maxValue, 200)
         XCTAssertEqual(updatedAxis.minValuePosition, -30)
@@ -82,17 +71,15 @@ class BoundedSliderPositioningTest: XCTestCase {
     }
 
     func testAddingMaxSpacing1() {
-        let axis = AxisPositionCalculations<CGFloat>(minValuePosition: 50, maxValuePosition: 250, minValue: 0, maxValue: 100)
-        let model = BoundedSliderPositioning(
+        let axis = makeAxis(minPos: 50, maxPos: 250, minValue: 0, maxValue: 100)
+        let updatedAxis = LimitConstraints.constrain(
+            limit: FixedInputLimits(min: 0, max: 100, safeAreaSize: 0),
             axis: axis,
-            absoluteMin: axis.minValue,
-            absoluteMax: axis.maxValue,
-            minPreSpacing: nil,
-            maxPreSpacing: 50,
+            lowerSafeAreaEnd: nil,
+            higherSafeAreaStart: 50,
             spacing: 20
         )
 
-        let updatedAxis = model.boundedAxis
         XCTAssertEqual(updatedAxis.minValue, 0)
         XCTAssertEqual(updatedAxis.maxValue, 40)
         XCTAssertEqual(updatedAxis.minValuePosition, 50)
@@ -100,17 +87,14 @@ class BoundedSliderPositioningTest: XCTestCase {
     }
 
     func testAddingMaxSpacing1Reverse() {
-        let axis = AxisPositionCalculations<CGFloat>(minValuePosition: 250, maxValuePosition: 50, minValue: 0, maxValue: 100)
-        let model = BoundedSliderPositioning(
+        let axis = makeAxis(minPos: 250, maxPos: 50, minValue: 0, maxValue: 100)
+        let updatedAxis = LimitConstraints.constrain(
+            limit: FixedInputLimits(min: 0, max: 100, safeAreaSize: 0),
             axis: axis,
-            absoluteMin: axis.minValue,
-            absoluteMax: axis.maxValue,
-            minPreSpacing: nil,
-            maxPreSpacing: 50,
+            lowerSafeAreaEnd: nil,
+            higherSafeAreaStart: 50,
             spacing: 20
         )
-
-        let updatedAxis = model.boundedAxis
         XCTAssertEqual(updatedAxis.minValue, 0)
         XCTAssertEqual(updatedAxis.maxValue, 40)
         XCTAssertEqual(updatedAxis.minValuePosition, 250)
@@ -118,37 +102,46 @@ class BoundedSliderPositioningTest: XCTestCase {
     }
 
     func testAddingMaxSpacing2() {
-        let axis = AxisPositionCalculations<CGFloat>(minValuePosition: -100, maxValuePosition: -50, minValue: -200, maxValue: -100)
-
-        let model = BoundedSliderPositioning(
+        let axis = makeAxis(minPos: -100, maxPos: -50, minValue: -200, maxValue: -100)
+        let updatedAxis = LimitConstraints.constrain(
+            limit: FixedInputLimits(min: -200, max: -100, safeAreaSize: 0),
             axis: axis,
-            absoluteMin: axis.minValue,
-            absoluteMax: axis.maxValue,
-            minPreSpacing: nil,
-            maxPreSpacing: -120,
+            lowerSafeAreaEnd: nil,
+            higherSafeAreaStart: -120,
             spacing: 10
         )
 
-        let updatedAxis = model.boundedAxis
         XCTAssertEqual(updatedAxis.minValue, -200)
         XCTAssertEqual(updatedAxis.maxValue, -140)
         XCTAssertEqual(updatedAxis.minValuePosition, -100)
         XCTAssertEqual(updatedAxis.maxValuePosition, -70)
     }
 
-    func testSpacingWithAbosluteBounds() {
-        let axis = AxisPositionCalculations<CGFloat>(minValuePosition: 0, maxValuePosition: 10, minValue: 0, maxValue: 10)
-        let model = BoundedSliderPositioning(
+    func testSpacingWithAbsoluteBounds() {
+        let axis = makeAxis(minPos: 0, maxPos: 10, minValue: 0, maxValue: 10)
+        let updatedAxis = LimitConstraints.constrain(
+            limit: FixedInputLimits(min: 5, max: 7, safeAreaSize: 0),
             axis: axis,
-            absoluteMin: 5,
-            absoluteMax: 7,
-            minPreSpacing: 2,
-            maxPreSpacing: 10,
+            lowerSafeAreaEnd: 2,
+            higherSafeAreaStart: 10,
             spacing: 1
         )
 
-        let updatedAxis = model.boundedAxis
         XCTAssertEqual(updatedAxis.minValue, 5)
         XCTAssertEqual(updatedAxis.maxValue, 7)
+    }
+
+    private func makeAxis(
+        minPos: CGFloat,
+        maxPos: CGFloat,
+        minValue: CGFloat,
+        maxValue: CGFloat
+    ) -> AxisPositionCalculations<CGFloat> {
+        AxisPositionCalculations(
+            minValuePosition: minPos,
+            maxValuePosition: maxPos,
+            minValue: minValue,
+            maxValue: maxValue
+        )
     }
 }

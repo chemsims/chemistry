@@ -85,6 +85,8 @@
 		573F169D2584C035001CE039 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F169C2584C035001CE039 /* QuizQuestion.swift */; };
 		573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16A625852D5D001CE039 /* BeakerReactionState.swift */; };
 		5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */; };
+		574F14BC25B4898700EB316C /* InputLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F14BB25B4898700EB316C /* InputLimits.swift */; };
+		574F14C025B48C9200EB316C /* NewDualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F14BF25B48C9200EB316C /* NewDualValueSlider.swift */; };
 		57517F2F25739E3A00EB79C7 /* ReactionOrderSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */; };
 		57517F3325739E5200EB79C7 /* ReactionOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57517F3225739E5200EB79C7 /* ReactionOrder.swift */; };
 		5760536B25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */; };
@@ -274,6 +276,8 @@
 		573F169C2584C035001CE039 /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
 		573F16A625852D5D001CE039 /* BeakerReactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerReactionState.swift; sourceTree = "<group>"; };
 		5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationModelTest.swift; sourceTree = "<group>"; };
+		574F14BB25B4898700EB316C /* InputLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLimits.swift; sourceTree = "<group>"; };
+		574F14BF25B48C9200EB316C /* NewDualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDualValueSlider.swift; sourceTree = "<group>"; };
 		57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrderSelection.swift; sourceTree = "<group>"; };
 		57517F3225739E5200EB79C7 /* ReactionOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrder.swift; sourceTree = "<group>"; };
 		5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionNavigationTests.swift; sourceTree = "<group>"; };
@@ -395,6 +399,7 @@
 				57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */,
 				57AA05E62562F3750080C538 /* SliderIndicator.swift */,
 				57AA05EA2562F3910080C538 /* SpecificSliders.swift */,
+				574F14BF25B48C9200EB316C /* NewDualValueSlider.swift */,
 			);
 			path = slider;
 			sourceTree = "<group>";
@@ -750,6 +755,7 @@
 		574F14B625B488D400EB316C /* axis */ = {
 			isa = PBXGroup;
 			children = (
+				574F14BB25B4898700EB316C /* InputLimits.swift */,
 			);
 			path = axis;
 			sourceTree = "<group>";
@@ -1197,6 +1203,7 @@
 				576D5A7825665E170062F722 /* ScaledView.swift in Sources */,
 				57AA012E25A90172001131A0 /* EnergyProfileReactionType.swift in Sources */,
 				571B3C80256560F90075358B /* SecondOrderStatements.swift in Sources */,
+				574F14C025B48C9200EB316C /* NewDualValueSlider.swift in Sources */,
 				570FCD05258F6FFF0030D92E /* EnergyReactionState.swift in Sources */,
 				57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */,
 				57F56220258D4F64008B2602 /* CatalystState.swift in Sources */,
@@ -1221,6 +1228,7 @@
 				577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */,
 				576D5AAC2566CA900062F722 /* SecondOrderEquationView.swift in Sources */,
 				570E4F01256D10CD001EADCB /* EnergyProfileChart.swift in Sources */,
+				574F14BC25B4898700EB316C /* InputLimits.swift in Sources */,
 				571B3CBB25658D300075358B /* RootNavigationViewModel.swift in Sources */,
 				57DAE4D42577C2FD006D945B /* FixedText.swift in Sources */,
 				572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */,
