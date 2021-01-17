@@ -19,6 +19,9 @@ struct ReactionSettings {
     /// Minimum allowed C input on the slider
     static let minCInput: CGFloat = 0.1
     static let maxCInput: CGFloat = 1
+    static let minC2Input: CGFloat = 0.15
+
+
     static let minT1Input: CGFloat = 0
     static let minT2Input: CGFloat = 3
     static let maxTInput: CGFloat = 20

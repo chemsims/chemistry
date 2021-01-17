@@ -90,17 +90,17 @@ extension ReactionInputModel {
 
     var c1Limits: InputLimits {
         FixedInputLimits(
-            min: 0.1,
-            max: 1,
-            smallerOtherValue: 0.15,
+            min: ReactionSettings.minCInput,
+            max: ReactionSettings.maxCInput,
+            smallerOtherValue: ReactionSettings.minC2Input,
             largerOtherValue: nil
         )
     }
 
     var c2Limits: InputLimits {
         FixedInputLimits(
-            min: 0.1,
-            max: 1,
+            min: ReactionSettings.minCInput,
+            max: ReactionSettings.maxCInput,
             smallerOtherValue: nil,
             largerOtherValue: inputC1
         )
@@ -177,6 +177,15 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     var rateConstant: CGFloat? {
         ReactionSettings.reactionBRateConstant
     }
+
+    var t2Limits: InputLimits {
+        FixedInputLimits(
+            min: 0,
+            max: maxT2,
+            smallerOtherValue: inputT1,
+            largerOtherValue: nil
+        )
+    }
 }
 
 struct ReactionInputWithoutT2: ReactionInputModel {
@@ -206,6 +215,15 @@ struct ReactionInputWithoutT2: ReactionInputModel {
 
     var rateConstant: CGFloat? {
         ReactionSettings.reactionCRateConstant
+    }
+
+    var c2Limits: InputLimits {
+        FixedInputLimits(
+            min: minC2,
+            max: 1,
+            smallerOtherValue: nil,
+            largerOtherValue: inputC1
+        )
     }
 
 }

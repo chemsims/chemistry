@@ -19,7 +19,7 @@ protocol InputLimits {
 }
 
 
-struct FixedInputLimits: InputLimits {
+struct FixedInputLimits: InputLimits, Equatable {
     let min: CGFloat
     let max: CGFloat
     let smallerOtherValue: CGFloat?

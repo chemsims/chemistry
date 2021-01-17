@@ -32,7 +32,7 @@ struct LimitConstraints {
 }
 
 
-struct BoundedSliderPositioning {
+fileprivate struct BoundedSliderPositioning {
 
     let axis: AxisPositionCalculations<CGFloat>
     let absoluteMin: CGFloat
