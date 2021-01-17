@@ -110,7 +110,7 @@ extension ReactionInputModel {
         InputLimits(
             min: 0,
             max: 20,
-            smallerOtherValue: 0,
+            smallerOtherValue: nil,
             largerOtherValue: ReactionSettings.Input.minT2Input
         )
     }
@@ -230,4 +230,30 @@ struct ReactionInputWithoutT2: ReactionInputModel {
         )
     }
 
+
+    var c1Limits: InputLimits {
+        return InputLimits(
+            min: ReactionSettings.Input.minC,
+            max: ReactionSettings.Input.maxC,
+            smallerOtherValue: upperC2Limit ?? ReactionSettings.Input.minC2Input,
+            largerOtherValue: nil
+        )
+    }
+
+    var t1Limits: InputLimits {
+        let time = upperC2Limit.flatMap { concentrationA?.time(for: $0) }
+        let upperLimit = time ?? maxT2
+        return InputLimits(
+            min: ReactionSettings.Input.minT1,
+            max: upperLimit,
+            smallerOtherValue: nil,
+            largerOtherValue: ReactionSettings.Input.minT2Input
+        )
+    }
+
+
+    private var upperC2Limit: CGFloat? {
+        let cAtMaxT = concentrationA?.getConcentration(at: ReactionSettings.Input.maxT)
+        return cAtMaxT.map { $0 + ReactionSettings.Input.minCRange }
+    }
 }

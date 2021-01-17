@@ -23,7 +23,9 @@ struct ReactionSettings {
     struct Input {
         static let minC: CGFloat = 0.1
         static let maxC: CGFloat = 1
-        static let minC2Input: CGFloat = 0.15
+        static let minCRange: CGFloat = 0.05
+        static let minC2Input: CGFloat = minC + minCRange
+
 
         static let minT1: CGFloat = 0
         static let minT2: CGFloat = 3
