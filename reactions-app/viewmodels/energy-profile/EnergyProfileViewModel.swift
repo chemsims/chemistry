@@ -10,7 +10,11 @@ class EnergyProfileViewModel: ObservableObject {
     var interactionEnabled: Bool = true
     @Published var reactionState = EnergyReactionState.pending
     @Published var statement = [TextLine]()
-    @Published var temp2: CGFloat?
+    @Published var temp2: CGFloat? {
+        didSet {
+            canClickNext = true
+        }
+    }
     @Published var concentrationC: CGFloat = 0
     @Published var selectedReaction = ReactionOrder.Zero
     @Published var catalystIsShaking = false
@@ -61,6 +65,8 @@ class EnergyProfileViewModel: ObservableObject {
         return minEnergy + (tempFactor * (maxEnergy - minEnergy))
     }
 
+    var canClickNext = true
+
     private var dispatchId = UUID()
 
     var prevScreen: (() -> Void)?
@@ -69,7 +75,9 @@ class EnergyProfileViewModel: ObservableObject {
     private(set) var usedCatalysts = [Catalyst]()
 
     func next() {
-        navigation?.next()
+        if (canClickNext) {
+            navigation?.next()
+        }
     }
 
     func back() {

@@ -373,6 +373,7 @@ fileprivate class InstructToSetTemp: EnergyProfileState {
         model.highlightedElements = [.beaker, .tempSlider]
         model.reactionState = .running
         model.concentrationC = 0
+        model.canClickNext = false
     }
 
     override func reapply(on model: EnergyProfileViewModel) {
@@ -386,6 +387,7 @@ fileprivate class InstructToSetTemp: EnergyProfileState {
         model.temp2 = nil
         model.reactionState = .pending
         model.highlightedElements = []
+        model.canClickNext = true
     }
 }
 
