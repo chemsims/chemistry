@@ -147,8 +147,7 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     }
 
     var rateConstant: CGFloat? {
-        0.07
-//        ReactionSettings.reactionBRateConstant
+        ReactionSettings.reactionBRateConstant
     }
 
     var t2Limits: InputLimits {
@@ -174,7 +173,7 @@ struct ReactionInputWithoutC2: ReactionInputModel {
                 minInputRange: ReactionSettings.Input.minTRange,
                 valueSpacing: tAbsoluteSpacing
             )
-            return CoupledConstraints(
+            return Foo(
                 cRange: cRange,
                 tRange: tRange,
                 c1: inputC1,
@@ -242,7 +241,28 @@ struct ReactionInputWithoutT2: ReactionInputModel {
         cAbsoluteSpacing: CGFloat,
         tAbsoluteSpacing: CGFloat
     ) -> ReactionInputLimits {
-        ReactionInputsLimitsWithoutT2(
+        if let concentration = concentrationA {
+            let cRange = InputRange(
+                min: ReactionSettings.Input.minC,
+                max: ReactionSettings.Input.maxC,
+                minInputRange: ReactionSettings.Input.minCRange,
+                valueSpacing: cAbsoluteSpacing
+            )
+            let tRange = InputRange(
+                min: ReactionSettings.Input.minT1,
+                max: ReactionSettings.Input.maxT,
+                minInputRange: ReactionSettings.Input.minTRange,
+                valueSpacing: tAbsoluteSpacing
+            )
+            return Bar(
+                cRange: cRange,
+                tRange: tRange,
+                c1: inputC1,
+                t1: inputT1,
+                concentration: concentration
+            )
+        }
+        return ReactionInputsLimitsWithoutT2(
             concentration: concentrationA,
             inputC1: inputC1,
             cAbsoluteSpacing: cAbsoluteSpacing,
