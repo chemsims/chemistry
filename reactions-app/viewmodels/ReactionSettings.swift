@@ -23,14 +23,21 @@ struct ReactionSettings {
     struct Input {
         static let minC: CGFloat = 0.1
         static let maxC: CGFloat = 1
+
+        /// The smallest input range the user should be given to adjust C by.
+        /// This in turn will impact limits of other coupled limits (such as the other concentration value being set), to ensure
+        /// this range is provided
         static let minCRange: CGFloat = 0.05
+
+        /// The smallest C2 input the user can be given. i.e., the range of C2 the user can select will be at least `minC` to `minC2Input`
         static let minC2Input: CGFloat = minC + minCRange
 
 
         static let minT1: CGFloat = 0
         static let minT2: CGFloat = 3
         static let maxT: CGFloat = 20
-        static let minT2Input: CGFloat = 16
+        static let minTRange: CGFloat = 2
+        static let minT2Input: CGFloat = maxT - minTRange
     }
 
     static let initialC: CGFloat = 0.7

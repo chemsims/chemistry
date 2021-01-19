@@ -147,7 +147,8 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     }
 
     var rateConstant: CGFloat? {
-        ReactionSettings.reactionBRateConstant
+        0.07
+//        ReactionSettings.reactionBRateConstant
     }
 
     var t2Limits: InputLimits {
@@ -160,9 +161,31 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     }
 
     func limits(cAbsoluteSpacing: CGFloat, tAbsoluteSpacing: CGFloat) -> ReactionInputLimits {
-        ReactionInputLimitsWithoutC2(
+        if let concentration = concentrationA {
+            let cRange = InputRange(
+                min: ReactionSettings.Input.minC,
+                max: ReactionSettings.Input.maxC,
+                minInputRange: ReactionSettings.Input.minCRange,
+                valueSpacing: cAbsoluteSpacing
+            )
+            let tRange = InputRange(
+                min: ReactionSettings.Input.minT1,
+                max: ReactionSettings.Input.maxT,
+                minInputRange: ReactionSettings.Input.minTRange,
+                valueSpacing: tAbsoluteSpacing
+            )
+            return CoupledConstraints(
+                cRange: cRange,
+                tRange: tRange,
+                c1: inputC1,
+                t1: inputT1,
+                concentration: concentration
+            )
+        }
+        return ReactionInputLimitsWithoutC2(
             inputT1: inputT1,
             concentration: concentrationA,
+            tAbsoluteSpacing: tAbsoluteSpacing,
             underlying: ReactionInputLimitsAllProperties(
                 inputC1: inputC1,
                 inputT1: inputT1,

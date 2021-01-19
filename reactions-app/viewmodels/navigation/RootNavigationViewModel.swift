@@ -27,7 +27,7 @@ class RootNavigationViewModel: ObservableObject {
         quizPersistence: QuizPersistence,
         reviewPersistence: ReviewPromptPersistence
     ) {
-        let firstScreen = AppScreen.secondOrderReaction
+        let firstScreen = AppScreen.zeroOrderReaction
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.quizPersistence = quizPersistence
@@ -41,6 +41,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
+        return true
         switch (screen) {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)

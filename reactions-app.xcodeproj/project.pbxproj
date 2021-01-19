@@ -109,6 +109,8 @@
 		577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */; };
 		577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* SKBeakerScene.swift */; };
 		577077D325698DF2003E750E /* SkBeakerSceneRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077D225698DF2003E750E /* SkBeakerSceneRepresentable.swift */; };
+		5771CFF025B5CDCE00666F57 /* CoupledConstraintsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5771CFEF25B5CDCE00666F57 /* CoupledConstraintsTests.swift */; };
+		5771CFF425B5ECA800666F57 /* CoupledConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5771CFF325B5ECA800666F57 /* CoupledConstraints.swift */; };
 		57778B7F259368B800254262 /* TextLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57778B7E259368B800254262 /* TextLineView.swift */; };
 		57778B8625937B6600254262 /* ZeroOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57778B8525937B6600254262 /* ZeroOrderQuizQuestions.swift */; };
 		57778B8A25937D8C00254262 /* QuizQuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57778B8925937D8C00254262 /* QuizQuestionTests.swift */; };
@@ -302,6 +304,8 @@
 		577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileBeaker.swift; sourceTree = "<group>"; };
 		577077CE25698CE0003E750E /* SKBeakerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKBeakerScene.swift; sourceTree = "<group>"; };
 		577077D225698DF2003E750E /* SkBeakerSceneRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkBeakerSceneRepresentable.swift; sourceTree = "<group>"; };
+		5771CFEF25B5CDCE00666F57 /* CoupledConstraintsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupledConstraintsTests.swift; sourceTree = "<group>"; };
+		5771CFF325B5ECA800666F57 /* CoupledConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupledConstraints.swift; sourceTree = "<group>"; };
 		57778B7E259368B800254262 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		57778B8525937B6600254262 /* ZeroOrderQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57778B8925937D8C00254262 /* QuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTests.swift; sourceTree = "<group>"; };
@@ -427,6 +431,7 @@
 				572CF3A325AA6E2100B49E34 /* ReactionInputTests.swift */,
 				5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */,
 				574F14C325B4AC1E00EB316C /* ReactionInputModelTests.swift */,
+				5771CFEF25B5CDCE00666F57 /* CoupledConstraintsTests.swift */,
 			);
 			path = "reactions-appTests";
 			sourceTree = "<group>";
@@ -762,6 +767,7 @@
 			isa = PBXGroup;
 			children = (
 				574F14BB25B4898700EB316C /* InputLimits.swift */,
+				5771CFF325B5ECA800666F57 /* CoupledConstraints.swift */,
 			);
 			path = axis;
 			sourceTree = "<group>";
@@ -1102,6 +1108,7 @@
 				5738ADAF25AF2907002D4EB7 /* ReactionModelExtensions.swift in Sources */,
 				5738ADA325AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift in Sources */,
 				5738ADA725AF2713002D4EB7 /* EnumExtensions.swift in Sources */,
+				5771CFF025B5CDCE00666F57 /* CoupledConstraintsTests.swift in Sources */,
 				5738AD9925AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift in Sources */,
 				5783965925A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift in Sources */,
 				57035EE5255BFE5200DB3A19 /* sliderCalculationsTest.swift in Sources */,
@@ -1195,6 +1202,7 @@
 				571D6A81255AD40900F4E635 /* EmptyBeaker.swift in Sources */,
 				5736B673258CCC69002CEF5E /* EnergyProfileNavigationViewModel.swift in Sources */,
 				57E7FF72258289B200A30582 /* MenuButton.swift in Sources */,
+				5771CFF425B5ECA800666F57 /* CoupledConstraints.swift in Sources */,
 				57631768259B68EC00D7CE2C /* QuizTableView.swift in Sources */,
 				57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */,
 				57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */,

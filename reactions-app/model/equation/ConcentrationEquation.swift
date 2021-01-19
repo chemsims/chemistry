@@ -21,6 +21,9 @@ protocol ConcentrationEquation: Equation {
 
     /// Returns the time at which the concentration is `concentration`
     func time(for concentration: CGFloat) -> CGFloat?
+
+    /// Creates a new equation, shifted such that concentration is `c` at time `t`, while keeping the rate constant the same
+    func shiftWith(c: CGFloat, t: CGFloat) -> ConcentrationEquation
 }
 
 extension ConcentrationEquation {
@@ -45,7 +48,6 @@ struct ZeroOrderConcentration: ConcentrationEquation {
     let order = 0
 
     init(a0: CGFloat, rateConstant: CGFloat) {
-        assert(rateConstant != 0)
         self.a0 = a0
         self.rateConstant = rateConstant
     }
@@ -56,6 +58,7 @@ struct ZeroOrderConcentration: ConcentrationEquation {
     }
 
     init(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) {
+        assert(t1 != t2)
         self.rateConstant = ZeroOrderConcentration.getRate(t1: t1, c1: c1, t2: t2, c2: c2)
         let a0Numerator = (t1 * c2) - (t2 * c1)
         self.a0 = a0Numerator / (t1 - t2)
@@ -71,6 +74,10 @@ struct ZeroOrderConcentration: ConcentrationEquation {
 
     var halfLife: CGFloat {
         a0 / (2 * rateConstant)
+    }
+
+    func shiftWith(c: CGFloat, t: CGFloat) -> ConcentrationEquation {
+        ZeroOrderConcentration(c1: c, t1: t, rateConstant: rateConstant)
     }
 
     static func getRate(t1: CGFloat, c1: CGFloat, t2: CGFloat, c2: CGFloat) -> CGFloat {
@@ -113,6 +120,11 @@ struct FirstOrderConcentration: ConcentrationEquation {
     var halfLife: CGFloat {
         log(2) / rateConstant
     }
+
+    func shiftWith(c: CGFloat, t: CGFloat) -> ConcentrationEquation {
+        FirstOrderConcentration(c1: c, t1: t, rateConstant: rateConstant)
+    }
+
 
     static func rateConstant(c1: CGFloat, c2: CGFloat, t1: CGFloat, t2: CGFloat) -> CGFloat {
         assert(c1 != 0)
@@ -173,6 +185,10 @@ struct SecondOrderConcentration: ConcentrationEquation {
             return nil
         }
         return (1 / (concentration  * rateConstant)) - (1 / (a0 * rateConstant))
+    }
+
+    func shiftWith(c: CGFloat, t: CGFloat) -> ConcentrationEquation {
+        SecondOrderConcentration(c1: c, t1: t, rateConstant: rateConstant)
     }
 
     static func rateConstant(c1: CGFloat, c2: CGFloat, t1: CGFloat, t2: CGFloat) -> CGFloat {

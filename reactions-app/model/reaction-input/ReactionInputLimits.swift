@@ -5,6 +5,7 @@
 
 import CoreGraphics
 
+fileprivate let settings = ReactionSettings.Input.self
 fileprivate let minC = ReactionSettings.Input.minC
 fileprivate let maxC = ReactionSettings.Input.maxC
 fileprivate let maxT = ReactionSettings.Input.maxT
@@ -42,8 +43,8 @@ struct ReactionInputLimitsAllProperties: ReactionInputLimits {
 
     var t1Limits: InputLimits {
         InputLimits(
-            min: 0,
-            max: 20,
+            min: ReactionSettings.Input.minT1,
+            max: ReactionSettings.Input.maxT,
             smallerOtherValue: nil,
             largerOtherValue: ReactionSettings.Input.minT2Input
         )
@@ -63,11 +64,19 @@ struct ReactionInputLimitsWithoutC2: ReactionInputLimits {
 
     let inputT1: CGFloat
     let concentration: ConcentrationEquation?
+    let tAbsoluteSpacing: CGFloat
     let underlying: ReactionInputLimitsAllProperties
 
 
     var c1Limits: InputLimits {
-        underlying.c1Limits
+        let minT2Input = inputT1 + tAbsoluteSpacing + settings.minTRange
+        let cAtMinT2 = concentration?.getConcentration(at: minT2Input)
+        return InputLimits(
+            min: cAtMinT2 ?? underlying.c1Limits.min,
+            max: underlying.c1Limits.max,
+            smallerOtherValue: underlying.c1Limits.smallerOtherValue,
+            largerOtherValue: nil
+        )
     }
 
     var c2Limits: InputLimits {
@@ -75,7 +84,12 @@ struct ReactionInputLimitsWithoutC2: ReactionInputLimits {
     }
 
     var t1Limits: InputLimits {
-        underlying.t1Limits
+        return InputLimits(
+            min: underlying.t1Limits.min,
+            max: underlying.t1Limits.max,
+            smallerOtherValue: nil,
+            largerOtherValue: t1LargerOtherValue
+        )
     }
 
     var t2Limits: InputLimits {
@@ -91,6 +105,15 @@ struct ReactionInputLimitsWithoutC2: ReactionInputLimits {
         let maxTimeForMinConcentration = concentration?.time(for: minC) ?? maxT
         return min(maxTimeForMinConcentration, maxT)
     }
+
+    private var t1LargerOtherValue: CGFloat? {
+        let timeForMinConcentration = concentration?.time(for: c2Limits.min)
+        let t2MinInputOpt = timeForMinConcentration.map { $0 - settings.minTRange }
+        let t2MinInput = t2MinInputOpt.map { min($0, settings.minT2Input) }
+        return t2MinInput
+    }
+
+
 }
 
 struct ReactionInputsLimitsWithoutT2: ReactionInputLimits {
