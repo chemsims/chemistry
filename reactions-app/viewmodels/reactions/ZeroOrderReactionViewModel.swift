@@ -34,13 +34,24 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     @Published var usedReactions: [ReactionType] = [.A]
 
+    @Published var showDataAtT2 = false
+
+    @Published var showReactionSelection = false
+
     var pendingReactionSelection = ReactionType.A
     var selectedReaction: ReactionType {
         usedReactions.last!
     }
 
-    
     func next() {
+        guard !canSelectReaction else {
+            showReactionSelection = true
+            return
+        }
+        forcedNext()
+    }
+
+    func forcedNext() {
         navigation?.next()
     }
 

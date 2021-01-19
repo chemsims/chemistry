@@ -10,7 +10,7 @@ struct MainMenuOverlay: View {
     let size: CGFloat
     let topPadding: CGFloat
     let menuHPadding: CGFloat
-    let navigation: RootNavigationViewModel
+    @ObservedObject var navigation: RootNavigationViewModel
 
     var body: some View {
         GeometryReader { geo in
@@ -29,10 +29,9 @@ struct MainMenuOverlay: View {
 
 fileprivate struct MainMenuOverlayWithSettings: View {
 
-    let navigation: RootNavigationViewModel
+    @ObservedObject var navigation: RootNavigationViewModel
     let settings: MainMenuLayoutSettings
 
-    @State private var showPanel: Bool = false
     @State private var panelDragOffset: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -42,7 +41,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 .padding(.leading, settings.geometry.safeAreaInsets.leading)
                 .padding(.vertical, settings.geometry.safeAreaInsets.top)
 
-            if (showPanel) {
+            if (navigation.showMenu) {
                 panel
                     .gesture(
                         DragGesture(minimumDistance: 0, coordinateSpace: .global)
@@ -61,6 +60,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             }
         }
         .edgesIgnoringSafeArea(.all)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.25))
     }
 
     private var icon: some View {
@@ -85,7 +85,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         }
         .background(panelBackground)
         .compositingGroup()
-        .shadow(radius: showPanel ? 3 : 0)
+        .shadow(radius: navigation.showMenu ? 3 : 0)
     }
 
     private var grabHandle: some View {
@@ -176,6 +176,10 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         let isSelected = navigation.currentScreen == screen
         let canSelect = navigation.canSelect(screen: screen)
 
+        let shouldFocus = navigation.focusScreen == screen
+        let mainColor = shouldFocus ? Color.orangeAccent : Styling.navIcon
+        let color = canSelect ? mainColor : Styling.inactiveScreenElement
+
         return Button(action: { goTo(screen: screen) } ) {
             makeImage(
                 name: isSelected ? selectedImage : image,
@@ -185,7 +189,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .font(.system(size: 10, weight: isSelected ? .light : .ultraLight))
-            .foregroundColor(canSelect ? Styling.navIcon : Styling.inactiveScreenElement)
+            .foregroundColor(color)
         }
         .disabled(!canSelect)
     }
@@ -198,14 +202,12 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 
     private func goTo(screen: AppScreen) -> Void {
-        navigation.goToFresh(screen: screen)
+        navigation.jumpTo(screen: screen)
         toggleMenu()
     }
 
     private func toggleMenu() {
-        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
-            showPanel.toggle()
-        }
+        navigation.showMenu.toggle()
     }
 }
 
@@ -342,7 +344,9 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             topPadding: 10,
             menuHPadding: 10,
             navigation: RootNavigationViewModel(
-                persistence: InMemoryReactionInputPersistence()
+                persistence: InMemoryReactionInputPersistence(),
+                quizPersistence: InMemoryQuizPersistence(),
+                reviewPersistence: InMemoryReviewPromptPersistence()
             )
         ).previewLayout(.fixed(width: 926, height: 428))
     }

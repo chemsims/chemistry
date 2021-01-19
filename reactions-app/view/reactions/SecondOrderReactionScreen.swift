@@ -55,14 +55,16 @@ struct SecondOrderReactionScreen: View {
             finalTime: reaction.input.inputT2,
             settings: TimeChartGeometrySettings(
                 chartSize: settings.chartSize,
-                minConcentration: ReactionSettings.minInverseConcentration,
-                maxConcentration: ReactionSettings.maxInverseConcentration
+                minConcentration: ReactionSettings.Axis.minInverseC,
+                maxConcentration: ReactionSettings.Axis.maxInverseC
             ),
             concentrationA: reaction.inverseAEquation,
             currentTime: $reaction.currentTime,
             yLabel: "1/[A]",
             canSetCurrentTime: reaction.reactionHasEnded,
-            highlightChart: reaction.highlight(element: .secondaryChart)
+            highlightChart: reaction.highlight(element: .secondaryChart),
+            showDataAtT2: reaction.showDataAtT2,
+            input: reaction.input
         )
         .colorMultiply(reaction.color(for: .secondaryChart))
     }

@@ -23,6 +23,11 @@ struct ReactionComparisonScreen: View {
                 )
             )
         }
+        .onAppear {
+            DeferScreenEdgesState.shared.deferEdges = .top
+        }.onDisappear {
+            DeferScreenEdgesState.shared.deferEdges = []
+        }
     }
 }
 
@@ -118,6 +123,13 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         .frame(width: settings.orderDragWidth, height: settings.orderDragHeight)
         .position(position)
         .offset(settings.dragOffset)
+        .onReceive(
+            NotificationCenter.default.publisher(
+                for: UIApplication.willResignActiveNotification
+            )
+        ) { _ in
+            endDrag()
+        }
     }
 
     private var charts: some View {
@@ -508,9 +520,13 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     runShakeAnimation(order: order)
                 }
             }
-            self.draggingOrder = nil
-            self.dragOverOrder = nil
+            endDrag()
         }
+    }
+
+    private func endDrag() {
+        self.draggingOrder = nil
+        self.dragOverOrder = nil
     }
 }
 

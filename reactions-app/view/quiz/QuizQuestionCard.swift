@@ -7,7 +7,7 @@ import SwiftUI
 
 struct QuizQuestionView: View {
 
-    let question: QuizQuestionDisplay
+    let question: QuizQuestion
     let settings: QuizLayoutSettings
     let tableWidth: CGFloat
 

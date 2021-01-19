@@ -10,10 +10,10 @@ struct TimeChartGeometrySettings {
 
     init(
         chartSize: CGFloat,
-        minConcentration: CGFloat = ReactionSettings.minConcentration,
-        maxConcentration: CGFloat = ReactionSettings.maxConcentration,
-        minTime: CGFloat = ReactionSettings.minTime,
-        maxTime: CGFloat = ReactionSettings.maxTime,
+        minConcentration: CGFloat = ReactionSettings.Axis.minC,
+        maxConcentration: CGFloat = ReactionSettings.Axis.maxC,
+        minTime: CGFloat = ReactionSettings.Axis.minT,
+        maxTime: CGFloat = ReactionSettings.Axis.maxT,
         includeAxisPadding: Bool = true
     ) {
         self.chartSize = chartSize
@@ -31,15 +31,6 @@ struct TimeChartGeometrySettings {
     let maxTime: CGFloat
 
     private let includeAxisPadding: Bool
-
-    let minFinalConcentration: CGFloat = ReactionSettings.minFinalConcentration
-
-    let minFinalTime: CGFloat = ReactionSettings.minFinalTime
-
-    /// minimum spacing between the edge of a slider
-    var sliderMinSpacing: CGFloat {
-        sliderHandleThickness * 0.1
-    }
 
     let verticalTicks = 10
     let horizontalTicks = 10
@@ -122,6 +113,11 @@ struct TimeChartGeometrySettings {
             minValue: minTime,
             maxValue: maxTime
         )
+    }
+
+    /// Minimum spacing between two inputs
+    var inputSpacing: CGFloat {
+        1.1 * handleThickness
     }
 
     static let chartHStackFactor: CGFloat = 0.03

@@ -15,8 +15,13 @@ struct QuizReviewBody: View {
                 VStack(spacing: 20) {
                     heading
                         .fixedSize(horizontal: false, vertical: true)
-                    ForEach(0..<model.quizLength) { index in
-                        reviewCard(index: index)
+                    ForEach(model.availableQuestions, id: \.id) { question in
+                        if (model.selectedAnswer(id: question.id) != nil) {
+                            reviewCard(
+                                question: question,
+                                answer: model.selectedAnswer(id: question.id)!
+                            )
+                        }
                     }
                 }
                 .frame(width: settings.contentWidth)
@@ -38,15 +43,10 @@ struct QuizReviewBody: View {
         }
     }
 
-    private func reviewCard(index: Int) -> some View {
-        let question = model.availableQuestions[index]
-        let selectedOption = model.selectedAnswer(index: index)?.firstAnswer
-        let isCorrect = selectedOption == question.correctOption
-
+    private func reviewCard(question: QuizQuestion, answer: QuizAnswerInput) -> some View {
         return QuestionReviewCard(
             question: question,
-            selectedOption: selectedOption ?? .A,
-            isCorrect: isCorrect,
+            answer: answer,
             settings: settings
         )
         .fixedSize(horizontal: false, vertical: true)
@@ -55,9 +55,8 @@ struct QuizReviewBody: View {
 
 fileprivate struct QuestionReviewCard: View {
 
-    let question: QuizQuestionDisplay
-    let selectedOption: QuizOption
-    let isCorrect: Bool
+    let question: QuizQuestion
+    let answer: QuizAnswerInput
     let settings: QuizLayoutSettings
 
     @State private var explanationIsExpanded: Bool = false
@@ -75,31 +74,11 @@ fileprivate struct QuestionReviewCard: View {
                     tableWidth: settings.tableWidthReviewCard
                 )
 
-                optionLine(
-                    option: selectedOption,
-                    topLine: "Your answer",
-                    question: question
-                )
-
-                VStack(alignment: .leading, spacing: 0) {
-                    Button(action: handleExplanationPress) {
-                        Text(explanationIsExpanded ? "Hide Explanation" : "Show Explanation")
-                            .font(.system(size: settings.questionFontSize))
-                    }
-                    if (explanationIsExpanded) {
-                        if (selectedOption != question.correctOption) {
-                            optionLine(
-                                option: question.correctOption,
-                                topLine: "Correct answer",
-                                question: question
-                            )
-                        }
-
-                        TextLinesView(
-                            lines: question.longExplanation,
-                            fontSize: settings.questionFontSize
-                        )
-                    }
+                ForEach(answer.allAnswers, id: \.self) { option in
+                    optionLine(
+                        option: option,
+                        topLine: "Your answer"
+                    )
                 }
             }
             .padding(4 * settings.questionReviewPadding)
@@ -112,23 +91,16 @@ fileprivate struct QuestionReviewCard: View {
 
     private func optionLine(
         option: QuizOption,
-        topLine: String,
-        question: QuizQuestionDisplay
+        topLine: String
     ) -> some View {
-        let answer = question.options[option]?.answer ?? ""
-        let fullLine = answer.prepending(TextSegment(content: "\(topLine): "))
-        let isCorrect = option == question.correctOption
-        return VStack(alignment: .leading, spacing: 0) {
-            TextLinesView(
-                line: fullLine,
-                fontSize: settings.questionFontSize,
-                color: isCorrect ?
-                    Styling.Quiz.reviewCorrectAnswerFont : Styling.Quiz.reviewWrongAnswerFont
-            )
-        }
-        .minimumScaleFactor(1)
-        .fixedSize(horizontal: false, vertical: true)
-        .foregroundColor(Styling.Quiz.reviewCorrectAnswerFont)
+        let optionIsCorrect = question.correctOption == option
+        let topLine = optionIsCorrect && !isCorrect ? "Correct answer" : "Your answer"
+        return QuizReviewSingleOption(
+            question: question,
+            topLine: topLine,
+            option: option,
+            settings: settings
+        )
     }
 
     private var reviewBackground: some View {
@@ -161,5 +133,72 @@ fileprivate struct QuestionReviewCard: View {
         withAnimation( reduceMotion ? nil : .easeOut(duration: duration)) {
             explanationIsExpanded.toggle()
         }
+    }
+
+    private var isCorrect: Bool {
+        answer.firstAnswer == question.correctOption
+    }
+}
+
+
+fileprivate struct QuizReviewSingleOption: View {
+
+    let question: QuizQuestion
+    let topLine: String
+    let option: QuizOption
+    let settings: QuizLayoutSettings
+
+    @State private var explanationIsExpanded: Bool = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        let answer = question.options[option]?.answer ?? ""
+        let fullLine = answer.prepending(TextSegment(content: "\(topLine): "))
+
+
+        return VStack(alignment: .leading, spacing: 0) {
+            TextLinesView(
+                line: fullLine,
+                fontSize: settings.questionFontSize,
+                color: isCorrect ?
+                    Styling.Quiz.reviewCorrectAnswerFont : Styling.Quiz.reviewWrongAnswerFont
+            )
+
+            Button(action: handleExplanationPress) {
+                Text(explanationIsExpanded ? "Hide Explanation" : "Show Explanation")
+                    .font(.system(size: settings.questionFontSize))
+            }
+
+            if (explanationIsExpanded) {
+                TextLinesView(
+                    lines: [explanationString],
+                    fontSize: settings.questionFontSize
+                )
+            }
+
+        }
+        .minimumScaleFactor(1)
+        .fixedSize(horizontal: false, vertical: true)
+//        .foregroundColor(Styling.Quiz.reviewCorrectAnswerFont)
+    }
+
+    private func handleExplanationPress() {
+        withAnimation( reduceMotion ? nil : .easeOut(duration: 0.2)) {
+            explanationIsExpanded.toggle()
+        }
+    }
+
+    private var explanationString: TextLine {
+        let specificExplanation = question.options[option]?.explanation
+        let defaultExplanation = TextLine(stringLiteral: "Explanation for option \(option)")
+        if (isCorrect) {
+            let fullExplanation = question.explanation
+            return specificExplanation ?? fullExplanation ?? defaultExplanation
+        }
+        return specificExplanation ?? defaultExplanation
+    }
+
+    private var isCorrect: Bool {
+        option == question.correctOption
     }
 }

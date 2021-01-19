@@ -10,7 +10,9 @@ struct ConcentrationValueSlider: View {
     @Binding var initialConcentration: CGFloat
     @Binding var finalConcentration: CGFloat?
     let c1Disabled: Bool
-    let minC2: CGFloat
+
+    let c1Limits: InputLimits
+    let c2Limits: InputLimits
 
     let settings: TimeChartGeometrySettings
 
@@ -18,17 +20,14 @@ struct ConcentrationValueSlider: View {
         DualValueSlider(
             value1: $initialConcentration,
             value2: $finalConcentration,
-            value1PreviousHandle: settings.minFinalConcentration,
-            value1NextHandle: nil,
-            value2PreviousHandle: nil,
-            value2NextHandle: initialConcentration,
+            value1Limits: c1Limits,
+            value2Limits: c2Limits,
             axis: settings.yAxis,
             orientation: .portrait,
             settings: settings,
             canSetInitialValue: true,
-            absoluteMin: minC2,
-            absoluteMax: ReactionSettings.maxCInput,
-            value1Disabled: c1Disabled
+            value1Disabled: c1Disabled,
+            value1IsLower: false
         )
     }
 }
@@ -43,8 +42,8 @@ struct TimeValueSlider: View {
     /// Disabled changes to the t1 value
     let t1Disabled: Bool
 
-    /// Maximum allowed t2 value
-    let maxT2Input: CGFloat
+    let t1Limits: InputLimits
+    let t2Limits: InputLimits
 
     /// Layout settings
     let settings: TimeChartGeometrySettings
@@ -53,17 +52,14 @@ struct TimeValueSlider: View {
         DualValueSlider(
             value1: $t1,
             value2: $t2,
-            value1PreviousHandle: nil,
-            value1NextHandle: canSetInitialTime ? settings.minFinalTime : nil,
-            value2PreviousHandle: canSetInitialTime ? t1 : nil,
-            value2NextHandle: nil,
+            value1Limits: t1Limits,
+            value2Limits: t2Limits,
             axis: settings.xAxis,
             orientation: .landscape,
             settings: settings,
             canSetInitialValue: canSetInitialTime,
-            absoluteMin: canSetInitialTime ? ReactionSettings.minT1Input : ReactionSettings.minT2Input,
-            absoluteMax: maxT2Input,
-            value1Disabled: t1Disabled
+            value1Disabled: t1Disabled,
+            value1IsLower: true
         )
     }
 }

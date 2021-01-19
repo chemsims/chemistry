@@ -21,14 +21,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
 
         let contentView = RootNavigationView(
-            model: RootNavigationViewModel(persistence: InMemoryReactionInputPersistence())
+            model: RootNavigationViewModel(
+                persistence: InMemoryReactionInputPersistence(),
+                quizPersistence: InMemoryQuizPersistence(),
+                reviewPersistence: InMemoryReviewPromptPersistence()
+            )
         )
 
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
+            let controller = DeferScreenEdgesHostingController(rootView: contentView)
+            DeferScreenEdgesState.shared.didSetEdgesDelegate = controller.didSetEdges
+            window.rootViewController = controller
             self.window = window
             window.makeKeyAndVisible()
         }

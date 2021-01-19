@@ -5,7 +5,34 @@
 
 import CoreGraphics
 
-struct BoundedSliderPositioning {
+struct LimitConstraints {
+
+    /// Returns an axis based on the supplied input limits
+    ///
+    /// - Parameters:
+    ///     - limit: The current input limits
+    ///     - axis: Definition of the axis
+    ///     - lowerSafeAreaEnd: Optional inputs of a smaller value
+    ///     - higherSafeAreaStart: Optional inputs of a higher value
+    ///     - spacing: Spacing between upper/lower safe areas and this value
+    static func constrain(
+        limit: InputLimits,
+        axis: AxisPositionCalculations<CGFloat>,
+        spacing: CGFloat
+    ) -> AxisPositionCalculations<CGFloat> {
+        BoundedSliderPositioning(
+            axis: axis,
+            absoluteMin: limit.min,
+            absoluteMax: limit.max,
+            minPreSpacing: limit.smallerOtherValue,
+            maxPreSpacing: limit.largerOtherValue,
+            spacing: spacing
+        ).boundedAxis
+    }
+}
+
+
+fileprivate struct BoundedSliderPositioning {
 
     let axis: AxisPositionCalculations<CGFloat>
     let absoluteMin: CGFloat

@@ -16,8 +16,6 @@ struct OrderedReactionScreen<Content: View>: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
-    @State private var reactionSelectionIsToggled: Bool = false
-
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
@@ -82,7 +80,9 @@ struct OrderedReactionScreen<Content: View>: View {
                 canSetC2: reaction.selectedReaction != .B,
                 canSetT2: reaction.selectedReaction != .C,
                 maxT2Input: reaction.input.maxT2,
-                minC2Input: reaction.input.minC2
+                minC2Input: reaction.input.minC2,
+                showDataAtT2: reaction.showDataAtT2,
+                input: reaction.input
             )
             .frame(width: settings.chartSettings.largeTotalChartWidth)
             .padding(.horizontal, settings.chartHPadding)
@@ -97,8 +97,8 @@ struct OrderedReactionScreen<Content: View>: View {
                 currentTime: reaction.currentTime,
                 settings: BarChartGeometrySettings(
                     chartWidth: settings.chartSize,
-                    maxConcentration: ReactionSettings.maxConcentration,
-                    minConcentration: ReactionSettings.minConcentration
+                    maxConcentration: ReactionSettings.Axis.maxC,
+                    minConcentration: ReactionSettings.Axis.minC
                 )
             )
             .padding(.horizontal, settings.chartHPadding)
@@ -120,13 +120,13 @@ struct OrderedReactionScreen<Content: View>: View {
         DropDownSelectionView(
             title: "Choose a reaction",
             options: ReactionType.allCases,
-            isToggled: reaction.canSelectReaction ? $reactionSelectionIsToggled : .constant(false),
+            isToggled: $reaction.showReactionSelection,
             selection: $reaction.pendingReactionSelection,
             height: settings.tableButtonSize,
             animation: nil,
             displayString: { $0.name},
             disabledOptions: Array(reaction.usedReactions),
-            onSelection: reaction.next
+            onSelection: reaction.forcedNext
         )
         .frame(height: settings.tableButtonSize, alignment: .top)
         .colorMultiply(reaction.color(for: .reactionToggle))

@@ -4,22 +4,34 @@
   
 
 import SwiftUI
+import StoreKit
 
 class RootNavigationViewModel: ObservableObject {
 
     @Published var view: AnyView
+    @Published var showMenu = false
     private(set) var navigationDirection = NavigationDirection.forward
 
+    var focusScreen: AppScreen? {
+        currentScreen == .finalAppScreen ? .zeroOrderFiling : nil
+    }
+
     private let persistence: ReactionInputPersistence
+    private let quizPersistence: QuizPersistence
+    private let reviewPersistence: ReviewPromptPersistence
     private var models = [AppScreen:ScreenProvider]()
     private(set) var currentScreen: AppScreen
 
     init(
-        persistence: ReactionInputPersistence
+        persistence: ReactionInputPersistence,
+        quizPersistence: QuizPersistence,
+        reviewPersistence: ReviewPromptPersistence
     ) {
-        let firstScreen = AppScreen.energyProfile
+        let firstScreen = AppScreen.zeroOrderReaction
         self.currentScreen = firstScreen
         self.persistence = persistence
+        self.quizPersistence = quizPersistence
+        self.reviewPersistence = reviewPersistence
         self.view = AnyView(EmptyView())
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
     }
@@ -29,6 +41,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
+        return true
         switch (screen) {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)
@@ -45,7 +58,15 @@ class RootNavigationViewModel: ObservableObject {
         persistence.hasCompleted(screen: order.reactionScreen)
     }
 
-    func goToFresh(screen: AppScreen) {
+    func jumpTo(screen: AppScreen) {
+        if (screen.isQuiz) {
+            goToExisting(screen: screen)
+        } else {
+            goToFresh(screen: screen)
+        }
+    }
+
+    private func goToFresh(screen: AppScreen) {
         guard screen != currentScreen else {
             return
         }
@@ -61,9 +82,13 @@ class RootNavigationViewModel: ObservableObject {
 
     private func prev() {
         if let prevScreen = linearScreens.element(before: currentScreen) {
-            let provider = models[prevScreen] ?? getProvider(for: prevScreen)
-            goTo(screen: prevScreen, with: provider)
+            goToExisting(screen: prevScreen)
         }
+    }
+
+    private func goToExisting(screen: AppScreen) {
+        let provider = models[screen] ?? getProvider(for: screen)
+        goTo(screen: screen, with: provider)
     }
 
     private func goTo(screen: AppScreen, with provider: ScreenProvider) {
@@ -72,6 +97,10 @@ class RootNavigationViewModel: ObservableObject {
         self.currentScreen = screen
         withAnimation(navigationAnimation) {
             self.view = provider.screen
+        }
+        if (screen == .finalAppScreen) {
+            showMenu = true
+            ReviewPrompter.requestReview(persistence: reviewPersistence)
         }
     }
 
@@ -88,7 +117,14 @@ class RootNavigationViewModel: ObservableObject {
             let provider = $0 as? EnergyProfileScreenProvider
             return provider?.viewModel
         }
-        return screen.screenProvider(persistence: persistence, energyViewModel: energyViewModel, next: next, prev: prev)
+        return screen.screenProvider(
+            persistence: persistence,
+            quizPersistence: quizPersistence,
+            energyViewModel: energyViewModel,
+            next: next,
+            prev: prev,
+            hideMenu: { self.showMenu = false }
+        )
     }
 
     enum NavigationDirection {
@@ -128,20 +164,28 @@ extension ReactionOrder {
 fileprivate extension AppScreen {
     func screenProvider(
         persistence: ReactionInputPersistence,
+        quizPersistence: QuizPersistence,
         energyViewModel: EnergyProfileViewModel?,
         next: @escaping () -> Void,
-        prev: @escaping () -> Void
+        prev: @escaping () -> Void,
+        hideMenu: @escaping () -> Void
     ) -> ScreenProvider {
         switch (self) {
         case .zeroOrderReaction:
             return ZeroOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .zeroOrderReactionQuiz:
-            return QuizScreenProvider(questions: QuizQuestion.zeroOrderQuestions, next: next, prev: prev)
+            return QuizScreenProvider(
+                questions: .zeroOrderQuestions,
+                persistence: quizPersistence,
+                next: next,
+                prev: prev
+            )
         case .firstOrderReaction:
             return FirstOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .firstOrderReactionQuiz:
             return QuizScreenProvider(
-                questions: QuizQuestion.firstOrderQuestions,
+                questions: .firstOrderQuestions,
+                persistence: quizPersistence,
                 next: next,
                 prev: prev
             )
@@ -149,7 +193,8 @@ fileprivate extension AppScreen {
             return SecondOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .secondOrderReactionQuiz:
             return QuizScreenProvider(
-                questions: QuizQuestion.secondOrderQuestions,
+                questions: .secondOrderQuestions,
+                persistence: quizPersistence,
                 next: next,
                 prev: prev
             )
@@ -157,7 +202,8 @@ fileprivate extension AppScreen {
             return ReactionComparisonScreenProvider(persistence: persistence, next: next, prev: prev)
         case .reactionComparisonQuiz:
             return QuizScreenProvider(
-                questions: QuizQuestion.reactionComparisonQuizQuestions,
+                questions: .reactionComparisonQuizQuestions,
+                persistence: quizPersistence,
                 next: next,
                 prev: prev
             )
@@ -165,7 +211,8 @@ fileprivate extension AppScreen {
             return EnergyProfileScreenProvider(persistence: persistence, next: next, prev: prev)
         case .energyProfileQuiz:
             return QuizScreenProvider(
-                questions: QuizQuestion.energyProfileQuizQuestions,
+                questions: .energyProfileQuizQuestions,
+                persistence: quizPersistence,
                 next: next,
                 prev: prev
             )
@@ -176,7 +223,14 @@ fileprivate extension AppScreen {
         case .secondOrderFiling:
             return ReactionFilingScreenProvider(persistence: persistence, order: .Second)
         case .finalAppScreen:
-            return FinalAppScreenProvider(persistence: persistence, underlying: energyViewModel)
+            return FinalAppScreenProvider(
+                persistence: persistence,
+                underlying: energyViewModel,
+                prev: {
+                    prev()
+                    hideMenu()
+                }
+            )
         }
     }
 }
@@ -240,11 +294,12 @@ fileprivate class SecondOrderReactionScreenProvider: ScreenProvider {
 
 fileprivate class QuizScreenProvider: ScreenProvider {
     init(
-        questions: [QuizQuestion],
+        questions: QuizQuestionsList,
+        persistence: QuizPersistence,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) {
-        self.viewModel = QuizViewModel(questions: questions)
+        self.viewModel = QuizViewModel(questions: questions, persistence: persistence)
         viewModel.nextScreen = next
         viewModel.prevScreen = prev
     }
@@ -307,10 +362,12 @@ fileprivate class FinalAppScreenProvider: ScreenProvider {
 
     init(
         persistence: ReactionInputPersistence,
-        underlying: EnergyProfileViewModel?
+        underlying: EnergyProfileViewModel?,
+        prev: @escaping () -> Void
     ) {
         let viewModel = underlying ?? EnergyProfileViewModel()
         self.navigation = NavigationViewModel(model: viewModel, states: [FinalEnergyProfileState()])
+        self.navigation.prevScreen = prev
     }
 
     let navigation: NavigationViewModel<EnergyProfileState>

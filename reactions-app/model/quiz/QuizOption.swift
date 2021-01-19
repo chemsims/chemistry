@@ -37,10 +37,10 @@ extension QuizDifficulty {
 
     static func availableQuestions(
         at difficulty: QuizDifficulty,
-        questions: [QuizQuestionDisplay]
-    ) -> [QuizQuestionDisplay] {
+        questions: [QuizQuestion]
+    ) -> [QuizQuestion] {
 
-        func loop(_ diffToInclude: QuizDifficulty) -> [QuizQuestionDisplay] {
+        func loop(_ diffToInclude: QuizDifficulty) -> [QuizQuestion] {
             let available = questions.filter { $0.difficulty <= diffToInclude }
             let filtered = Array(available.prefix(difficulty.quizLength))
             let requiresMore = filtered.count < difficulty.quizLength
@@ -55,7 +55,7 @@ extension QuizDifficulty {
         return loop(difficulty)
     }
 
-    static func counts(questions: [QuizQuestionDisplay]) -> [QuizDifficulty:Int] {
+    static func counts(questions: [QuizQuestion]) -> [QuizDifficulty:Int] {
         let allCounts = QuizDifficulty.allCases.map { difficulty in
             (difficulty, questions.filter { $0.difficulty == difficulty }.count)
         }

@@ -112,14 +112,15 @@ class QuizDifficultyTests: XCTestCase {
         XCTAssertEqual(count[.hard], 3)
     }
 
-    private func makeQuestions(_ count: Int, _ difficulty: QuizDifficulty) -> [QuizQuestionDisplay] {
+    private func makeQuestions(_ count: Int, _ difficulty: QuizDifficulty) -> [QuizQuestion] {
         (1...count).map { _ in
             makeQuestion(difficulty)
         }
     }
 
-    private func makeQuestion(_ difficulty: QuizDifficulty) -> QuizQuestionDisplay {
-        QuizQuestionDisplay(
+    private func makeQuestion(_ difficulty: QuizDifficulty) -> QuizQuestion {
+        QuizQuestion(
+            id: 0,
             question: "",
             options: [QuizOption:QuizAnswer](),
             correctOption: .A,
@@ -132,8 +133,8 @@ class QuizDifficultyTests: XCTestCase {
 
     private func availableQuestions(
         _ difficulty: QuizDifficulty,
-        _ questions: [QuizQuestionDisplay]
-    ) -> [QuizQuestionDisplay] {
+        _ questions: [QuizQuestion]
+    ) -> [QuizQuestion] {
         QuizDifficulty.availableQuestions(at: difficulty, questions: questions)
     }
 }

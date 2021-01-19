@@ -10,7 +10,30 @@ struct ReactionFilingScreen: View {
     @ObservedObject var model: ReactionFilingViewModel
 
     var body: some View {
-        PageViewController(pages: model.pages, currentPage: $model.currentPage)
+        GeometryReader { geo in
+            PageViewController(
+                pages: [
+                    getView(.A, geo: geo),
+                    getView(.B, geo: geo),
+                    getView(.C, geo: geo)
+                ],
+                currentPage: $model.currentPage
+            )
+            .frame(width: geo.size.width, height: geo.size.height)
+        }
+    }
+
+    private func getView(
+        _ reactionType: ReactionType,
+        geo: GeometryProxy
+    ) -> some View {
+        CompletedReactionScreen(
+            enabled: model.enabled(reactionType: reactionType),
+            disabledStatement: ReactionFilingStatements.pageNotEnabledMessage(order: model.order)
+        ) {
+            model.makeView(reactionType: reactionType)
+                .frame(width: geo.size.width, height: geo.size.height)
+        }
     }
 }
 

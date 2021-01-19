@@ -95,6 +95,7 @@ class SelectReactionState: ReactionState {
         previousReaction = model.selectedReaction
         model.inputsAreDisabled = true
         model.canSelectReaction = true
+        model.showReactionSelection = true
         model.highlightedElements = [.reactionToggle]
 
         model.reactionHasStarted = true
@@ -126,6 +127,7 @@ class SelectReactionState: ReactionState {
         model.canSelectReaction = false
         model.inputsAreDisabled = false
         model.highlightedElements = []
+        model.showReactionSelection = false
     }
 }
 
@@ -144,6 +146,7 @@ class SetT0ForFixedRate: ReactionState {
 
         model.inputsAreDisabled = false
         model.canSelectReaction = false
+        model.showReactionSelection = false
         model.highlightedElements = []
 
         insertedReaction = model.pendingReactionSelection
@@ -183,10 +186,12 @@ class SetT1ForFixedRate: ReactionState {
         setStatement(model)
         model.input.inputT2 = model.input.midTime
         model.input.inputC2 = model.input.midConcentration
+        model.showDataAtT2 = true
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
         setStatement(model)
+        model.showDataAtT2 = true
     }
 
     private func setStatement(_ model: ZeroOrderReactionViewModel) {
@@ -197,6 +202,7 @@ class SetT1ForFixedRate: ReactionState {
     override func unapply(on model: ZeroOrderReactionViewModel) {
         model.input.inputT2 = nil
         model.input.inputC2 = nil
+        model.showDataAtT2 = false
     }
 }
 
@@ -274,6 +280,7 @@ class RunAnimation: ReactionState {
         model.reactionHasEnded = false
         model.reactionHasStarted = true
         model.highlightedElements = []
+        model.showDataAtT2 = false
         if let duration = model.reactionDuration, let finalTime = model.input.inputT2 {
             model.currentTime = model.input.inputT1
             withAnimation(.linear(duration: Double(duration))) {
@@ -379,7 +386,7 @@ class SetFinalConcentrationToNonNil: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        model.input.inputC2 = max(model.input.inputC1 / 2, ReactionSettings.minCInput)
+        model.input.inputC2 = max(model.input.inputC1 / 2, ReactionSettings.Input.minC)
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {

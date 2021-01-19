@@ -7,33 +7,42 @@ import CoreGraphics
 
 struct ReactionSettings {
 
-    // TODO rename axis settings variables
-    // Axis settings
-    static let minConcentration: CGFloat = 0
-    static let maxConcentration: CGFloat = 1
-    static let minTime: CGFloat = 0
-    static let maxTime: CGFloat = 20
+    struct Axis {
+        static let minC: CGFloat = 0
+        static let maxC: CGFloat = 1
+        static let minT: CGFloat = 0
+        static let maxT: CGFloat = 20
 
-    // Input settings
-    static let minCInput: CGFloat = 0.1
-    static let maxCInput: CGFloat = 1
-    static let minT1Input: CGFloat = 0
-    static let minT2Input: CGFloat = 3
-    static let maxTInput: CGFloat = 20
+        static let minLogC: CGFloat = -4
+        static let maxLogC: CGFloat = 0
+
+        static let minInverseC: CGFloat = 0
+        static let maxInverseC: CGFloat = 10
+    }
+
+    struct Input {
+        static let minC: CGFloat = 0.1
+        static let maxC: CGFloat = 1
+
+        /// The smallest input range the user should be given to adjust C by.
+        /// This in turn will impact limits of other coupled limits (such as the other concentration value being set), to ensure
+        /// this range is provided
+        static let minCRange: CGFloat = 0.05
+
+        /// The smallest C2 input the user can be given. i.e., the range of C2 the user can select will be at least `minC` to `minC2Input`
+        static let minC2Input: CGFloat = minC + minCRange
+
+
+        static let minT1: CGFloat = 0
+        static let minT2: CGFloat = 3
+        static let maxT: CGFloat = 20
+        static let minTRange: CGFloat = 2
+        static let minT2Input: CGFloat = maxT - minTRange
+    }
+
     static let initialC: CGFloat = 0.7
     static let initialT: CGFloat = 10
-    
-    static let minLogConcentration: CGFloat = -4
-    static let maxLogConcentration: CGFloat = 0
 
-    static let minInverseConcentration: CGFloat = 0
-    static let maxInverseConcentration: CGFloat = 10
-
-    /// The minimum value that concentration 2 may be. Concentration 1 is limited to ensure there is sufficient space
-    static let minFinalConcentration: CGFloat = 0.15
-
-    /// The minimum value that time 2 may be. Time 1 is limited to ensure there is sufficient space
-    static let minFinalTime: CGFloat = 15
 
     /// Fixed rate constant for B reactions (i.e., the second reaction type which can be chosen on parts 1-3)
     static let reactionBRateConstant: CGFloat = 0.04

@@ -83,8 +83,14 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
         let model = ZeroOrderReactionViewModel()
         let nav = navModel(model)
 
-        func canSelect() { XCTAssertTrue(model.canSelectReaction) }
-        func cannotSelect() { XCTAssertFalse(model.canSelectReaction) }
+        func canSelect() {
+            XCTAssertTrue(model.canSelectReaction)
+            XCTAssertTrue(model.showReactionSelection)
+        }
+        func cannotSelect() {
+            XCTAssertFalse(model.canSelectReaction)
+            XCTAssertFalse(model.showReactionSelection)
+        }
 
         nav.nextUntil(\.canSelectReaction)
         canSelect()

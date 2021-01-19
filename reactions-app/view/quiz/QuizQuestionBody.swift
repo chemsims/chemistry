@@ -21,12 +21,6 @@ struct QuizQuestionsBody: View {
                     tableWidth: settings.tableWidthQuestionCard
                 )
 
-                if (model.showExplanation && model.currentQuestion.hasExplanation) {
-                    explanationView
-                        .padding(.bottom, 10)
-                        .padding(.top, 10)
-                }
-
                 answers
             }
             .frame(width: settings.contentWidth)
@@ -101,8 +95,7 @@ fileprivate struct QuizAnswerOption: View {
     var body: some View {
         VStack(spacing: 0) {
             answer
-            if (model.showExplanation && model.currentQuestion.hasExplanation(option: option)
-            ) {
+            if (model.showExplanation(option: option)) {
                 explanation
             }
         }
@@ -115,12 +108,11 @@ fileprivate struct QuizAnswerOption: View {
                     .foregroundColor(answerBackground)
                     .shadow(radius: 3)
 
-                if (styleCorrect || styleIncorrect) {
-                    RoundedRectangle(cornerRadius: settings.progressCornerRadius)
-                        .strokeBorder(lineWidth: settings.activeLineWidth)
-                        .foregroundColor(answerBorder)
-                        .overlay(overlay, alignment: .topTrailing)
-                }
+                RoundedRectangle(cornerRadius: settings.progressCornerRadius)
+                    .strokeBorder(lineWidth: settings.activeLineWidth)
+                    .foregroundColor(answerBorder)
+                    .overlay(overlay, alignment: .topTrailing)
+                    .opacity(styleCorrect || styleIncorrect ? 1 : 0)
 
                 TextLinesView(
                     line: model.optionText(option),
@@ -137,12 +129,14 @@ fileprivate struct QuizAnswerOption: View {
 
     private var explanation: some View {
         let explanation = model.currentQuestion.options[option]?.explanation
-        return TextLinesView(
-                line: explanation?.italic() ?? "",
+        let defaultExplanation = TextLine(stringLiteral: "Explanation for option \(option)")
+        return
+            TextLinesView(
+                line: (explanation ?? defaultExplanation).italic(),
                 fontSize: settings.answerFontSize
-        )
-        .padding()
-        .fixedSize(horizontal: false, vertical: true)
+            )
+            .padding()
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     private var overlay: some View {
@@ -155,7 +149,7 @@ fileprivate struct QuizAnswerOption: View {
         }
         .frame(width: settings.navSize, height: settings.navSize)
         .offset(x: settings.navSize / 3, y: -settings.navSize / 3)
-        .id("\(model.questionIndex)-\(option.hashValue)")
+        .id("\(model.currentIndex)-\(option.hashValue)")
     }
 
     private func runBadgeAnimation() {
@@ -181,7 +175,9 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private func handleAnswer() {
-        guard !model.hasSelectedCorrectOption else {
+        let notFinished = !model.hasSelectedCorrectOption
+        let notSelected = !(model.selectedAnswer?.allAnswers.contains(option) ?? false)
+        guard notFinished && notSelected else {
             return
         }
         model.answer(option: option)

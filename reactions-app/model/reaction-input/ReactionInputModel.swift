@@ -19,7 +19,13 @@ protocol ReactionInputModel {
     var rateConstant: CGFloat? { get }
 
     var order: ReactionOrder { get }
+
+    func limits(
+        cAbsoluteSpacing: CGFloat,
+        tAbsoluteSpacing: CGFloat
+    ) -> ReactionInputLimits
 }
+
 
 extension ReactionInputModel {
     var concentrationB: Equation? {
@@ -62,11 +68,11 @@ extension ReactionInputModel {
     }
 
     var minC2: CGFloat {
-        ReactionSettings.minCInput
+        ReactionSettings.Input.minC
     }
 
     var maxT2: CGFloat {
-        ReactionSettings.maxTime
+        ReactionSettings.Axis.maxT
     }
 
     var concentrationA: ConcentrationEquation? {
@@ -105,6 +111,14 @@ struct ReactionInputAllProperties: ReactionInputModel {
         }
         return nil
     }
+
+    func limits(cAbsoluteSpacing: CGFloat, tAbsoluteSpacing: CGFloat) -> ReactionInputLimits {
+        ReactionInputLimitsAllProperties(
+            inputC1: inputC1,
+            inputT1: inputT1,
+            hasT1Input: order == .Zero
+        )
+    }
 }
 
 struct ReactionInputWithoutC2: ReactionInputModel {
@@ -120,7 +134,7 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     }
 
     var maxT2: CGFloat {
-        let absoluteMax = ReactionSettings.maxTInput
+        let absoluteMax = ReactionSettings.Input.maxT
         let maxTimeForMinConcentration = concentrationA?.time(for: minC2) ?? absoluteMax
         return min(maxTimeForMinConcentration, absoluteMax)
     }
@@ -133,7 +147,51 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     }
 
     var rateConstant: CGFloat? {
-        ReactionSettings.reactionBRateConstant
+        0.07
+//        ReactionSettings.reactionBRateConstant
+    }
+
+    var t2Limits: InputLimits {
+        InputLimits(
+            min: 0,
+            max: maxT2,
+            smallerOtherValue: inputT1,
+            largerOtherValue: nil
+        )
+    }
+
+    func limits(cAbsoluteSpacing: CGFloat, tAbsoluteSpacing: CGFloat) -> ReactionInputLimits {
+        if let concentration = concentrationA {
+            let cRange = InputRange(
+                min: ReactionSettings.Input.minC,
+                max: ReactionSettings.Input.maxC,
+                minInputRange: ReactionSettings.Input.minCRange,
+                valueSpacing: cAbsoluteSpacing
+            )
+            let tRange = InputRange(
+                min: ReactionSettings.Input.minT1,
+                max: ReactionSettings.Input.maxT,
+                minInputRange: ReactionSettings.Input.minTRange,
+                valueSpacing: tAbsoluteSpacing
+            )
+            return CoupledConstraints(
+                cRange: cRange,
+                tRange: tRange,
+                c1: inputC1,
+                t1: inputT1,
+                concentration: concentration
+            )
+        }
+        return ReactionInputLimitsWithoutC2(
+            inputT1: inputT1,
+            concentration: concentrationA,
+            tAbsoluteSpacing: tAbsoluteSpacing,
+            underlying: ReactionInputLimitsAllProperties(
+                inputC1: inputC1,
+                inputT1: inputT1,
+                hasT1Input: order == .Zero
+            )
+        )
     }
 }
 
@@ -149,12 +207,6 @@ struct ReactionInputWithoutT2: ReactionInputModel {
         set { }
     }
 
-    var minC2: CGFloat {
-        let absoluteMin = ReactionSettings.minCInput
-        let minForMaxTime = concentrationA?.getConcentration(at: maxT2) ?? absoluteMin
-        return max(minForMaxTime, absoluteMin)
-    }
-
     var computedT2: CGFloat? {
         if let concentrationA = concentrationA, let c2 = inputC2 {
             return concentrationA.time(for: c2)
@@ -164,5 +216,46 @@ struct ReactionInputWithoutT2: ReactionInputModel {
 
     var rateConstant: CGFloat? {
         ReactionSettings.reactionCRateConstant
+    }
+
+    var c1Limits: InputLimits {
+        return InputLimits(
+            min: ReactionSettings.Input.minC,
+            max: ReactionSettings.Input.maxC,
+            smallerOtherValue: upperC2Limit ?? ReactionSettings.Input.minC2Input,
+            largerOtherValue: nil
+        )
+    }
+
+    func t1Limits(cSpacing: CGFloat) -> InputLimits {
+        let time = upperC2Limit.flatMap { concentrationA?.time(for: $0) }
+        let upperLimit = time ?? maxT2
+        return InputLimits(
+            min: ReactionSettings.Input.minT1,
+            max: upperLimit,
+            smallerOtherValue: nil,
+            largerOtherValue: ReactionSettings.Input.minT2Input
+        )
+    }
+
+    func limits(
+        cAbsoluteSpacing: CGFloat,
+        tAbsoluteSpacing: CGFloat
+    ) -> ReactionInputLimits {
+        ReactionInputsLimitsWithoutT2(
+            concentration: concentrationA,
+            inputC1: inputC1,
+            cAbsoluteSpacing: cAbsoluteSpacing,
+            underlying: ReactionInputLimitsAllProperties(
+                inputC1: inputC1,
+                inputT1: inputT1,
+                hasT1Input: order == .Zero
+            )
+        )
+    }
+
+    private var upperC2Limit: CGFloat? {
+        let cAtMaxT = concentrationA?.getConcentration(at: ReactionSettings.Input.maxT)
+        return cAtMaxT.map { $0 + ReactionSettings.Input.minCRange }
     }
 }

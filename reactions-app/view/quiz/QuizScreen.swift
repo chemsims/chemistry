@@ -25,8 +25,10 @@ fileprivate struct QuizScreenWithSettings: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    @State private var showNotification = false
+
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             VStack(spacing: 0) {
                 if (model.quizState != .completed) {
                     progressBar
@@ -60,10 +62,24 @@ fileprivate struct QuizScreenWithSettings: View {
             .edgesIgnoringSafeArea(
                 model.quizState == .pending ? [] : .bottom
             )
+
             navButtons
+
+            if (showNotification) {
+                notificationView
+
+            }
         }
         .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.8)
+    }
+
+    private var notificationView: some View {
+        NotificationView(
+            isShowing: $showNotification,
+            fontSize: settings.answerFontSize
+        )
+        .zIndex(1)
     }
 
     private var navButtons: some View {
@@ -75,20 +91,34 @@ fileprivate struct QuizScreenWithSettings: View {
                     .padding(settings.leftNavPadding)
             }
             Spacer()
-            VStack(spacing: 0) {
+            VStack(spacing: 5) {
                 Spacer()
                 if (model.quizState == .completed) {
                     retryButton
                 }
 
-                NextButton(action: model.next)
-                    .frame(width: settings.rightNavSize, height: settings.rightNavSize)
-                    .disabled(nextIsDisabled)
-                    .opacity(nextIsDisabled ? 0.3 : 1)
-                    .padding(settings.rightNavPadding)
+                nextButton
             }
         }
     }
+
+    private var nextButton: some View {
+        ZStack {
+            NextButton(action: model.next)
+                .frame(width: settings.rightNavSize, height: settings.rightNavSize)
+                .disabled(nextIsDisabled)
+                .opacity(nextIsDisabled ? 0.3 : 1)
+                .padding(settings.rightNavPadding)
+
+            if (nextIsDisabled) {
+                Button(action: { showNotification = true }) {
+                    Circle()
+                        .opacity(0)
+                }
+            }
+        }.frame(width: settings.rightNavSize, height: settings.rightNavSize)
+    }
+
 
     private var retryButton: some View {
         Button(action: model.restart) {
@@ -139,7 +169,7 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private var progressLabel: some View {
-        Text("\(model.questionIndex + 1)/\(model.quizLength)")
+        Text("\(model.currentIndex + 1)/\(model.quizLength)")
         .font(.system(size: settings.progressFontSize))
         .frame(width: settings.progressLabelWidth)
         .minimumScaleFactor(0.7)
@@ -162,10 +192,81 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 }
 
+
+fileprivate struct NotificationView: View {
+
+    @Binding var isShowing: Bool
+    @State private var offset: CGFloat = 0
+
+    let fontSize: CGFloat
+
+    var body: some View {
+        Text("Choose the correct answer to progress to the next question")
+            .font(.system(size: fontSize))
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .foregroundColor(.white)
+                    .shadow(radius: 2)
+            )
+            .padding(.top, 15)
+            .offset(y: offset)
+            .gesture(gesture)
+            .transition(.move(edge: .top))
+            .animation(.easeOut(duration: 0.5))
+            .onAppear(perform: scheduleRemoval)
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: UIApplication.willResignActiveNotification
+                )
+            ) { _ in
+                isShowing = false
+            }
+    }
+
+    private func scheduleRemoval() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
+            self.doHide()
+        }
+    }
+
+    private func doHide() {
+        if (offset == 0) {
+            isShowing = false
+        } else {
+            scheduleRemoval()
+        }
+    }
+
+    private var gesture: some Gesture  {
+        DragGesture()
+            .onChanged { gesture in
+                let dy = gesture.translation.height
+                if (dy > 0) {
+                    self.offset = dy * 0.33
+                } else {
+                    self.offset = dy
+                }
+            }.onEnded { gesture in
+                withAnimation(.easeOut(duration: 0.35)) {
+                    let dy = gesture.translation.height
+                    if (dy < 10) {
+                        isShowing = false
+                    } else {
+                        self.offset = 0
+                    }
+                }
+            }
+    }
+}
+
 struct QuizScreen_Previews: PreviewProvider {
     static var previews: some View {
         QuizScreen(
-            model: QuizViewModel(questions: QuizQuestion.zeroOrderQuestions)
+            model: QuizViewModel(
+                questions: .zeroOrderQuestions,
+                persistence: InMemoryQuizPersistence()
+            )
         )
         .previewLayout(.fixed(width: 568, height: 320))
     }
