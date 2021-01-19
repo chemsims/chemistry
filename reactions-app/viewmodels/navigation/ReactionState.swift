@@ -184,8 +184,8 @@ class SetT1ForFixedRate: ReactionState {
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
         setStatement(model)
-        model.input.inputT2 = model.input.midTime
-        model.input.inputC2 = model.input.midConcentration
+        model.input.inputT2 = model.input.initT2
+        model.input.inputC2 = model.input.initC2
         model.showDataAtT2 = true
     }
 

@@ -25,8 +25,6 @@ struct ConcentrationTimeChartView: View {
 
     let canSetC2: Bool
     let canSetT2: Bool
-    let maxT2Input: CGFloat
-    let minC2Input: CGFloat
     let showDataAtT2: Bool
 
     let input: ReactionInputModel
@@ -51,8 +49,6 @@ struct ConcentrationTimeChartView: View {
             highlightRhsCurve: highlightRhsCurve,
             canSetC2: canSetC2,
             canSetT2: canSetT2,
-            maxT2Input: maxT2Input,
-            minC2Input: minC2Input,
             showDataAtT2: showDataAtT2,
             input: input
         )
@@ -93,8 +89,6 @@ struct SingleConcentrationPlot: View {
             highlightRhsCurve: false,
             canSetC2: true,
             canSetT2: true,
-            maxT2Input: ReactionSettings.Input.maxT,
-            minC2Input: ReactionSettings.Input.maxC,
             showDataAtT2: showDataAtT2,
             input: input
         )
@@ -125,8 +119,6 @@ struct GeneralTimeChartView: View {
 
     let canSetC2: Bool
     let canSetT2: Bool
-    let maxT2Input: CGFloat
-    let minC2Input: CGFloat
 
     let showDataAtT2: Bool
 
@@ -432,8 +424,6 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             highlightRhsCurve: false,
             canSetC2: true,
             canSetT2: true,
-            maxT2Input: ReactionSettings.Input.maxT,
-            minC2Input: ReactionSettings.Input.minC2Input,
             showDataAtT2: false,
             input: ReactionInputAllProperties(order: .Zero)
         )
@@ -483,8 +473,6 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     highlightRhsCurve: false,
                     canSetC2: true,
                     canSetT2: true,
-                    maxT2Input: ReactionSettings.Input.maxT,
-                    minC2Input: ReactionSettings.Input.minC,
                     showDataAtT2: false,
                     input: ReactionInputAllProperties(order: .Zero)
                 )
@@ -507,8 +495,6 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     highlightRhsCurve: false,
                     canSetC2: true,
                     canSetT2: true,
-                    maxT2Input: ReactionSettings.Input.maxT,
-                    minC2Input: ReactionSettings.Input.minC,
                     showDataAtT2: false,
                     input: ReactionInputAllProperties(order: .Zero)
                 )
