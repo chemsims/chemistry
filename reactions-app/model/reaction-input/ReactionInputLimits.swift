@@ -19,42 +19,44 @@ protocol ReactionInputLimits {
 
 struct ReactionInputLimitsAllProperties: ReactionInputLimits {
 
-    let inputC1: CGFloat
-    let inputT1: CGFloat
+    let cRange: InputRange
+    let tRange: InputRange
+    let c1: CGFloat
+    let t1: CGFloat
     let hasT1Input: Bool
 
     var c1Limits: InputLimits {
         InputLimits(
-            min: minC,
-            max: maxC,
-            smallerOtherValue: ReactionSettings.Input.minC2Input,
+            min: cRange.min,
+            max: cRange.max,
+            smallerOtherValue: cRange.min + cRange.minInputRange,
             largerOtherValue: nil
         )
     }
 
     var c2Limits: InputLimits {
         InputLimits(
-            min: minC,
-            max: maxC,
+            min: cRange.min,
+            max: cRange.max,
             smallerOtherValue: nil,
-            largerOtherValue: inputC1
+            largerOtherValue: c1
         )
     }
 
     var t1Limits: InputLimits {
         InputLimits(
-            min: ReactionSettings.Input.minT1,
-            max: ReactionSettings.Input.maxT,
+            min: tRange.min,
+            max: tRange.max,
             smallerOtherValue: nil,
-            largerOtherValue: ReactionSettings.Input.minT2Input
+            largerOtherValue: tRange.max - tRange.minInputRange
         )
     }
 
     var t2Limits: InputLimits {
         InputLimits(
-            min: hasT1Input ? 0 : ReactionSettings.Input.minT2,
-            max: maxT,
-            smallerOtherValue: hasT1Input ? inputT1 : nil,
+            min: tRange.min,
+            max: tRange.max,
+            smallerOtherValue: hasT1Input ? t1 : nil,
             largerOtherValue: nil
         )
     }

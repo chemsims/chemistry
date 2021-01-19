@@ -105,11 +105,28 @@ extension ReactionInputModel {
         }
     }
 
-    fileprivate var allValuesInput: ReactionInputLimits {
+    fileprivate func allValuesInput(
+        cSpacing: CGFloat,
+        tSpacing: CGFloat
+    ) -> ReactionInputLimits {
         ReactionInputLimitsAllProperties(
-            inputC1: inputC1,
-            inputT1: inputT1,
+            cRange: cRange(spacing: cSpacing),
+            tRange: getTRangeForOrder(spacing: tSpacing),
+            c1: inputC1,
+            t1: inputT1,
             hasT1Input: order == .Zero
+        )
+    }
+
+    fileprivate func getTRangeForOrder(spacing: CGFloat) -> InputRange {
+        if (order == .Zero) {
+            return tRange(spacing: spacing)
+        }
+        return InputRange(
+            min: ReactionSettings.Input.minT2,
+            max: ReactionSettings.Input.maxT,
+            minInputRange: ReactionSettings.Input.minTRange,
+            valueSpacing: spacing
         )
     }
 }
@@ -138,7 +155,7 @@ struct ReactionInputAllProperties: ReactionInputModel {
     }
 
     func limits(cAbsoluteSpacing: CGFloat, tAbsoluteSpacing: CGFloat) -> ReactionInputLimits {
-        allValuesInput
+        allValuesInput(cSpacing: cAbsoluteSpacing, tSpacing: tAbsoluteSpacing)
     }
 }
 
@@ -189,7 +206,7 @@ struct ReactionInputWithoutC2: ReactionInputModel {
                 concentration: concentration
             )
         }
-        return allValuesInput
+        return allValuesInput(cSpacing: cAbsoluteSpacing, tSpacing: tAbsoluteSpacing)
     }
 }
 
@@ -248,7 +265,7 @@ struct ReactionInputWithoutT2: ReactionInputModel {
                 concentration: concentration
             )
         }
-        return allValuesInput
+        return allValuesInput(cSpacing: cAbsoluteSpacing, tSpacing: tAbsoluteSpacing)
     }
 
     private var upperC2Limit: CGFloat? {
