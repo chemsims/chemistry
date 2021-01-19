@@ -26,6 +26,23 @@ protocol ReactionInputModel {
     ) -> ReactionInputLimits
 }
 
+fileprivate func cRange(spacing: CGFloat) -> InputRange {
+    InputRange(
+        min: ReactionSettings.Input.minC,
+        max: ReactionSettings.Input.maxC,
+        minInputRange: ReactionSettings.Input.minCRange,
+        valueSpacing: spacing
+    )
+}
+
+fileprivate func tRange(spacing: CGFloat) -> InputRange {
+    InputRange(
+        min: ReactionSettings.Input.minT1,
+        max: ReactionSettings.Input.maxT,
+        minInputRange: ReactionSettings.Input.minTRange,
+        valueSpacing: ReactionSettings.Input.minTRange
+    )
+}
 
 extension ReactionInputModel {
     var concentrationB: Equation? {
@@ -87,6 +104,14 @@ extension ReactionInputModel {
             }
         }
     }
+
+    fileprivate var allValuesInput: ReactionInputLimits {
+        ReactionInputLimitsAllProperties(
+            inputC1: inputC1,
+            inputT1: inputT1,
+            hasT1Input: order == .Zero
+        )
+    }
 }
 
 struct ReactionInputAllProperties: ReactionInputModel {
@@ -113,11 +138,7 @@ struct ReactionInputAllProperties: ReactionInputModel {
     }
 
     func limits(cAbsoluteSpacing: CGFloat, tAbsoluteSpacing: CGFloat) -> ReactionInputLimits {
-        ReactionInputLimitsAllProperties(
-            inputC1: inputC1,
-            inputT1: inputT1,
-            hasT1Input: order == .Zero
-        )
+        allValuesInput
     }
 }
 
@@ -161,36 +182,14 @@ struct ReactionInputWithoutC2: ReactionInputModel {
 
     func limits(cAbsoluteSpacing: CGFloat, tAbsoluteSpacing: CGFloat) -> ReactionInputLimits {
         if let concentration = concentrationA {
-            let cRange = InputRange(
-                min: ReactionSettings.Input.minC,
-                max: ReactionSettings.Input.maxC,
-                minInputRange: ReactionSettings.Input.minCRange,
-                valueSpacing: cAbsoluteSpacing
-            )
-            let tRange = InputRange(
-                min: ReactionSettings.Input.minT1,
-                max: ReactionSettings.Input.maxT,
-                minInputRange: ReactionSettings.Input.minTRange,
-                valueSpacing: tAbsoluteSpacing
-            )
-            return Foo(
-                cRange: cRange,
-                tRange: tRange,
-                c1: inputC1,
+            return ReactionInputLimitsWithoutC2(
+                cRange: cRange(spacing: cAbsoluteSpacing),
+                tRange: tRange(spacing: tAbsoluteSpacing),
                 t1: inputT1,
                 concentration: concentration
             )
         }
-        return ReactionInputLimitsWithoutC2(
-            inputT1: inputT1,
-            concentration: concentrationA,
-            tAbsoluteSpacing: tAbsoluteSpacing,
-            underlying: ReactionInputLimitsAllProperties(
-                inputC1: inputC1,
-                inputT1: inputT1,
-                hasT1Input: order == .Zero
-            )
-        )
+        return allValuesInput
     }
 }
 
@@ -242,36 +241,14 @@ struct ReactionInputWithoutT2: ReactionInputModel {
         tAbsoluteSpacing: CGFloat
     ) -> ReactionInputLimits {
         if let concentration = concentrationA {
-            let cRange = InputRange(
-                min: ReactionSettings.Input.minC,
-                max: ReactionSettings.Input.maxC,
-                minInputRange: ReactionSettings.Input.minCRange,
-                valueSpacing: cAbsoluteSpacing
-            )
-            let tRange = InputRange(
-                min: ReactionSettings.Input.minT1,
-                max: ReactionSettings.Input.maxT,
-                minInputRange: ReactionSettings.Input.minTRange,
-                valueSpacing: tAbsoluteSpacing
-            )
-            return Bar(
-                cRange: cRange,
-                tRange: tRange,
+            return ReactionInputLimitsWithoutT2(
+                cRange: cRange(spacing: cAbsoluteSpacing),
+                tRange: tRange(spacing: tAbsoluteSpacing),
                 c1: inputC1,
-                t1: inputT1,
                 concentration: concentration
             )
         }
-        return ReactionInputsLimitsWithoutT2(
-            concentration: concentrationA,
-            inputC1: inputC1,
-            cAbsoluteSpacing: cAbsoluteSpacing,
-            underlying: ReactionInputLimitsAllProperties(
-                inputC1: inputC1,
-                inputT1: inputT1,
-                hasT1Input: order == .Zero
-            )
-        )
+        return allValuesInput
     }
 
     private var upperC2Limit: CGFloat? {

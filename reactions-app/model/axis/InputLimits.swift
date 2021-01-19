@@ -11,3 +11,10 @@ struct InputLimits: Equatable {
     let smallerOtherValue: CGFloat?
     let largerOtherValue: CGFloat?
 }
+
+struct InputRange {
+    let min: CGFloat
+    let max: CGFloat
+    let minInputRange: CGFloat
+    let valueSpacing: CGFloat
+}

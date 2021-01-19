@@ -9,7 +9,7 @@ import XCTest
 class RootNavigationModelTest: XCTestCase {
 
     func testInitialScreen() {
-//        XCTAssertEqual(newModel().currentScreen, .zeroOrderReaction)
+        XCTAssertEqual(newModel().currentScreen, .zeroOrderReaction)
     }
 
     func testCanSelectOtherScreens() {
