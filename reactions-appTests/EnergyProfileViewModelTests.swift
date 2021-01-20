@@ -36,7 +36,7 @@ class EnergyProfileViewModelTests: XCTestCase {
 
     func testNavigationCompletesWithoutError() {
         let model = EnergyProfileViewModel()
-        let navigation = EnergyProfileNavigationViewModel.model(model)
+        let navigation = EnergyProfileNavigationViewModel.model(model, persistence: InMemoryEnergyProfilePersistence())
 
         var didFinish = false
         var didGetBackToStart = false
@@ -68,7 +68,7 @@ class EnergyProfileViewModelTests: XCTestCase {
 
     func testNavigationCatalystStates() {
         let model = EnergyProfileViewModel()
-        let navigation = EnergyProfileNavigationViewModel.model(model)
+        let navigation = EnergyProfileNavigationViewModel.model(model, persistence: InMemoryEnergyProfilePersistence())
         navigation.nextScreen = { XCTFail("Reached final screen") }
         navigation.prevScreen = { XCTFail("Reached first screen") }
 

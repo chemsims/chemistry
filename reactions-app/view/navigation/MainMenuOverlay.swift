@@ -314,6 +314,7 @@ fileprivate enum TopLevelScreen {
         case .zeroOrderReaction: return .zeroOrderFiling
         case .firstOrderReaction: return .firstOrderFiling
         case .secondOrderReaction: return .secondOrderFiling
+        case .energyProfile: return .energyProfileFiling
         default: return nil
         }
     }

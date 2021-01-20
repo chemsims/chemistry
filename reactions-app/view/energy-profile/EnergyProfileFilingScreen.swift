@@ -10,18 +10,23 @@ struct EnergyProfileFilingScreen: View {
     @ObservedObject var model: EnergyProfileFilingViewModel
 
     var body: some View {
-        PageViewController(
-            pages: [
-                EnergyProfileScreen(navigation: model.navigation(index: 0)),
-                EnergyProfileScreen(navigation: model.navigation(index: 1)),
-                EnergyProfileScreen(navigation: model.navigation(index: 2))
-            ],
-            currentPage: $model.page
-        )
+        GeometryReader { geo in
+            PageViewController(
+                pages: [
+                    view(index: 0, geo: geo),
+                    view(index: 1, geo: geo),
+                    view(index: 2, geo: geo)
+                ],
+                currentPage: $model.page
+            )
+        }
     }
 
-    private var nav: NavigationViewModel<EnergyProfileState> {
-        EnergyProfileNavigationViewModel.model(EnergyProfileViewModel())
+    private func view(index: Int, geo: GeometryProxy) -> some View {
+        EnergyProfileScreen(
+            navigation: model.navigation(index: index)
+        )
+        .frame(width: geo.size.width, height: geo.size.height)
     }
 }
 

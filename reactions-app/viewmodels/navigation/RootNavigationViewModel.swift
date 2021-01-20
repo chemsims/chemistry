@@ -29,7 +29,7 @@ class RootNavigationViewModel: ObservableObject {
         reviewPersistence: ReviewPromptPersistence,
         energyPersistence: EnergyProfilePersistence
     ) {
-        let firstScreen = AppScreen.energyProfileFiling
+        let firstScreen = AppScreen.energyProfile
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.quizPersistence = quizPersistence
@@ -44,6 +44,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
+        return true
         switch (screen) {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)
@@ -213,7 +214,7 @@ fileprivate extension AppScreen {
                 prev: prev
             )
         case .energyProfile:
-            return EnergyProfileScreenProvider(persistence: persistence, next: next, prev: prev)
+            return EnergyProfileScreenProvider(persistence: energyPersistence, next: next, prev: prev)
         case .energyProfileFiling:
             return EnergyProfileFilingScreenProvider(persistence: energyPersistence)
         case .energyProfileQuiz:
@@ -337,9 +338,13 @@ fileprivate class ReactionComparisonScreenProvider: ScreenProvider {
 
 fileprivate class EnergyProfileScreenProvider: ScreenProvider {
 
-    init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
+    init(
+        persistence: EnergyProfilePersistence,
+        next: @escaping () -> Void,
+        prev: @escaping () -> Void
+    ) {
         self.viewModel = EnergyProfileViewModel()
-        self.navigation = EnergyProfileNavigationViewModel.model(viewModel)
+        self.navigation = EnergyProfileNavigationViewModel.model(viewModel, persistence: persistence)
         viewModel.navigation = navigation
         navigation.nextScreen = next
         navigation.prevScreen = prev

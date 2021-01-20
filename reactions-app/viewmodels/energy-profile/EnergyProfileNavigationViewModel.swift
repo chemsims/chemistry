@@ -7,82 +7,85 @@ import SwiftUI
 
 struct EnergyProfileNavigationViewModel {
     static func model(
-        _ energyViewModel: EnergyProfileViewModel
+        _ energyViewModel: EnergyProfileViewModel,
+        persistence: EnergyProfilePersistence
     ) -> NavigationViewModel<EnergyProfileState> {
         NavigationViewModel(
             model: energyViewModel,
-            states: states
+            states: states(persistence: persistence)
         )
     }
 
-    private static let states = [
-        ExplanationState(
-            EnergyProfileStatements.intro,
-            [.reactionToggle]
-        ),
-        IntroToCollisionTheory(),
-        ExplanationState(
-            EnergyProfileStatements.explainCollisionTheory,
-            []
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainActivationEnergy,
-            [.eaTerms]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainArrhenius,
-            [.rateEquation]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainTerms,
-            [.rateEquation]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainRateTempRelation,
-            [.rateEquation]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainLinearKEquation,
-            [.rateAndLinearRateEquation]
-        ),
-        ExplanationState(
-            EnergyProfileStatements.explainArrheniusTwoPoints,
-            [.rateAndLinearAndRatioEquation]
-        ),
-        ShowInitialEaValues(),
-        ExplanationState(
-            EnergyProfileStatements.explainEnergyDiagram,
-            [.reactionProfileTop, .reactionProfileBottom]
-        ),
-        ExplainExoOrEndoThermic(),
-        ExplanationState(
-            EnergyProfileStatements.explainEaHump,
-            [.reactionProfileTop]
-        ),
-        ExplainCatalyst(),
-        InstructToChooseCatalyst(),
-        PrepareChosenCatalyst(),
-        StartShakingCatalyst(),
-        StopShakingCatalyst(),
-        ShowLinearChart(),
-        ShowKRatio(),
-        InstructToSetTemp(),
+    private static func states(persistence: EnergyProfilePersistence) -> [EnergyProfileState] {
+        [
+            ExplanationState(
+                EnergyProfileStatements.intro,
+                [.reactionToggle]
+            ),
+            IntroToCollisionTheory(),
+            ExplanationState(
+                EnergyProfileStatements.explainCollisionTheory,
+                []
+            ),
+            ExplanationState(
+                EnergyProfileStatements.explainActivationEnergy,
+                [.eaTerms]
+            ),
+            ExplanationState(
+                EnergyProfileStatements.explainArrhenius,
+                [.rateEquation]
+            ),
+            ExplanationState(
+                EnergyProfileStatements.explainTerms,
+                [.rateEquation]
+            ),
+            ExplanationState(
+                EnergyProfileStatements.explainRateTempRelation,
+                [.rateEquation]
+            ),
+            ExplanationState(
+                EnergyProfileStatements.explainLinearKEquation,
+                [.rateAndLinearRateEquation]
+            ),
+            ExplanationState(
+                EnergyProfileStatements.explainArrheniusTwoPoints,
+                [.rateAndLinearAndRatioEquation]
+            ),
+            ShowInitialEaValues(),
+            ExplanationState(
+                EnergyProfileStatements.explainEnergyDiagram,
+                [.reactionProfileTop, .reactionProfileBottom]
+            ),
+            ExplainExoOrEndoThermic(),
+            ExplanationState(
+                EnergyProfileStatements.explainEaHump,
+                [.reactionProfileTop]
+            ),
+            ExplainCatalyst(),
+            InstructToChooseCatalyst(),
+            PrepareChosenCatalyst(),
+            StartShakingCatalyst(),
+            StopShakingCatalyst(),
+            ShowLinearChart(),
+            ShowKRatio(),
+            InstructToSetTemp(),
 
-        // Second catalyst
-        ReactionHasEndedSoInstructToChooseAnotherCatalyst(),
-        PrepareAnotherCatalystState(),
-        StartShakingCatalyst(),
-        StopShakingCatalyst(),
-        InstructToSetTemp(),
+            // Second catalyst
+            ReactionHasEndedSoInstructToChooseAnotherCatalyst(),
+            PrepareAnotherCatalystState(),
+            StartShakingCatalyst(),
+            StopShakingCatalyst(),
+            InstructToSetTemp(),
 
-        // Final catalyst
-        ReactionHasEndedSoInstructToChooseAnotherCatalyst(),
-        PrepareAnotherCatalystState(),
-        StartShakingCatalyst(),
-        StopShakingCatalyst(),
-        InstructToSetTemp(),
-        ReactionEndedState()
-    ]
+            // Final catalyst
+            ReactionHasEndedSoInstructToChooseAnotherCatalyst(),
+            PrepareAnotherCatalystState(),
+            StartShakingCatalyst(),
+            StopShakingCatalyst(),
+            InstructToSetTemp(),
+            ReactionEndedState(persistence: persistence)
+        ]
+    }
 }
 
 class EnergyProfileState: ScreenState, SubState {
@@ -444,15 +447,21 @@ fileprivate class PrepareAnotherCatalystState: EnergyProfileState {
 }
 
 fileprivate class ReactionEndedState: EnergyProfileState {
-    init() {
+    init(persistence: EnergyProfilePersistence) {
+        self.persistence = persistence
         super.init(statement: EnergyProfileStatements.finished)
     }
+
+    private let persistence: EnergyProfilePersistence
 
     override func apply(on model: EnergyProfileViewModel) {
         super.apply(on: model)
         model.reactionState = .completed
         model.highlightedElements = []
         model.concentrationC = 1
+
+        let input = EnergyProfileInput(catalysts: model.usedCatalysts, order: model.selectedReaction)
+        persistence.setInput(input)
     }
 
     override func unapply(on model: EnergyProfileViewModel) {

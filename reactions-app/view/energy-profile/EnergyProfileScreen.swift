@@ -201,7 +201,8 @@ struct EnergyProfileScreen_Previews: PreviewProvider {
         // iPhone 11
         EnergyProfileScreen(
             navigation: EnergyProfileNavigationViewModel.model(
-                EnergyProfileViewModel()
+                EnergyProfileViewModel(),
+                persistence: InMemoryEnergyProfilePersistence()
             )
         )
         .previewLayout(.fixed(width: 896, height: 414))
@@ -209,7 +210,8 @@ struct EnergyProfileScreen_Previews: PreviewProvider {
         // iPhone SE
         EnergyProfileScreen(
             navigation: EnergyProfileNavigationViewModel.model(
-                EnergyProfileViewModel()
+                EnergyProfileViewModel(),
+                persistence: InMemoryEnergyProfilePersistence()
             )
         )
         .previewLayout(.fixed(width: 568, height: 320))
@@ -218,7 +220,8 @@ struct EnergyProfileScreen_Previews: PreviewProvider {
         // iPad Mini
         EnergyProfileScreen(
             navigation: EnergyProfileNavigationViewModel.model(
-                EnergyProfileViewModel()
+                EnergyProfileViewModel(),
+                persistence: InMemoryEnergyProfilePersistence()
             )
         )
         .previewLayout(.fixed(width: 1024, height: 768))

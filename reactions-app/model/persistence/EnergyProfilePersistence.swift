@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct EnergyProfileInput {
+struct EnergyProfileInput: Equatable {
     let catalysts: [Catalyst]
     let order: ReactionOrder
 }
