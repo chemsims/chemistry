@@ -24,7 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             model: RootNavigationViewModel(
                 persistence: InMemoryReactionInputPersistence(),
                 quizPersistence: InMemoryQuizPersistence(),
-                reviewPersistence: InMemoryReviewPromptPersistence()
+                reviewPersistence: InMemoryReviewPromptPersistence(),
+                energyPersistence: InMemoryEnergyProfilePersistence()
             )
         )
 

@@ -16,7 +16,7 @@ class RootNavigationModelTest: XCTestCase {
         let model = newModel()
         let screens = AppScreen.allCases.filter { $0 != .zeroOrderReaction}
         screens.forEach { screen in
-            XCTAssertFalse(model.canSelect(screen: screen))
+            XCTAssertFalse(model.canSelect(screen: screen), "\(screen)")
         }
     }
     
@@ -24,7 +24,8 @@ class RootNavigationModelTest: XCTestCase {
         RootNavigationViewModel(
             persistence: InMemoryReactionInputPersistence(),
             quizPersistence: InMemoryQuizPersistence(),
-            reviewPersistence: InMemoryReviewPromptPersistence()
+            reviewPersistence: InMemoryReviewPromptPersistence(),
+            energyPersistence: InMemoryEnergyProfilePersistence()
         )
     }
 }

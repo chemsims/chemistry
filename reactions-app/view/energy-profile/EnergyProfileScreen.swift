@@ -8,11 +8,9 @@ import SwiftUI
 struct EnergyProfileScreen: View {
 
     init(navigation: NavigationViewModel<EnergyProfileState>) {
-        self.navigation = navigation
         self.model = navigation.model
     }
 
-    @ObservedObject var navigation: NavigationViewModel<EnergyProfileState>
     @ObservedObject var model: EnergyProfileViewModel
 
     @State private var selectReactionIsToggled = false

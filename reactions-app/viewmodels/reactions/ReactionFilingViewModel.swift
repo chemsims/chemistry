@@ -65,7 +65,7 @@ class ReactionFilingViewModel: ObservableObject {
     }
 
     private func next() {
-        if (currentPage + 1 < 3) {
+        if (currentPage < 2) {
             currentPage += 1
         }
     }

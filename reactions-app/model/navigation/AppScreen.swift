@@ -19,6 +19,7 @@ enum AppScreen: CaseIterable {
          reactionComparisonQuiz,
          energyProfile,
          energyProfileQuiz,
+         energyProfileFiling,
          finalAppScreen
 }
 

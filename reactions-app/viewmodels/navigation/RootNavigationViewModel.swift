@@ -19,19 +19,22 @@ class RootNavigationViewModel: ObservableObject {
     private let persistence: ReactionInputPersistence
     private let quizPersistence: QuizPersistence
     private let reviewPersistence: ReviewPromptPersistence
+    private let energyPersistence: EnergyProfilePersistence
     private var models = [AppScreen:ScreenProvider]()
     private(set) var currentScreen: AppScreen
 
     init(
         persistence: ReactionInputPersistence,
         quizPersistence: QuizPersistence,
-        reviewPersistence: ReviewPromptPersistence
+        reviewPersistence: ReviewPromptPersistence,
+        energyPersistence: EnergyProfilePersistence
     ) {
-        let firstScreen = AppScreen.zeroOrderReaction
+        let firstScreen = AppScreen.energyProfileFiling
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.quizPersistence = quizPersistence
         self.reviewPersistence = reviewPersistence
+        self.energyPersistence = energyPersistence
         self.view = AnyView(EmptyView())
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
     }
@@ -45,6 +48,7 @@ class RootNavigationViewModel: ObservableObject {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)
         case .secondOrderFiling: return canSelect(screen: .reactionComparison)
+        case .energyProfileFiling: return persistence.hasCompleted(screen: .energyProfileQuiz)
         default:
             if let previousScreen = linearScreens.element(before: screen) {
                 return persistence.hasCompleted(screen: previousScreen)
@@ -119,6 +123,7 @@ class RootNavigationViewModel: ObservableObject {
         return screen.screenProvider(
             persistence: persistence,
             quizPersistence: quizPersistence,
+            energyPersistence: energyPersistence,
             energyViewModel: energyViewModel,
             next: next,
             prev: prev,
@@ -164,6 +169,7 @@ fileprivate extension AppScreen {
     func screenProvider(
         persistence: ReactionInputPersistence,
         quizPersistence: QuizPersistence,
+        energyPersistence: EnergyProfilePersistence,
         energyViewModel: EnergyProfileViewModel?,
         next: @escaping () -> Void,
         prev: @escaping () -> Void,
@@ -208,6 +214,8 @@ fileprivate extension AppScreen {
             )
         case .energyProfile:
             return EnergyProfileScreenProvider(persistence: persistence, next: next, prev: prev)
+        case .energyProfileFiling:
+            return EnergyProfileFilingScreenProvider(persistence: energyPersistence)
         case .energyProfileQuiz:
             return QuizScreenProvider(
                 questions: .energyProfileQuizQuestions,
@@ -342,6 +350,25 @@ fileprivate class EnergyProfileScreenProvider: ScreenProvider {
 
     var screen: AnyView {
         AnyView(EnergyProfileScreen(navigation: navigation))
+    }
+}
+
+fileprivate class EnergyProfileFilingScreenProvider: ScreenProvider {
+
+    init(persistence: EnergyProfilePersistence) {
+        self.persistence = persistence
+    }
+
+    private let persistence: EnergyProfilePersistence
+
+    var screen: AnyView {
+        AnyView(
+            EnergyProfileFilingScreen(
+                model: EnergyProfileFilingViewModel(
+                    persistence: persistence
+                )
+            )
+        )
     }
 }
 
