@@ -10,16 +10,19 @@ struct FilledBeaker: View {
     let moleculesA: [GridCoordinate]
     let concentrationB: Equation?
     let currentTime: CGFloat?
+    let reactionPair: ReactionPairDisplay
     let outlineColor: Color
     init(
         moleculesA: [GridCoordinate],
         concentrationB: Equation?,
         currentTime: CGFloat?,
+        reactionPair: ReactionPairDisplay,
         outlineColor: Color = Styling.beakerOutline
     ) {
         self.moleculesA = moleculesA
         self.concentrationB = concentrationB
         self.currentTime = currentTime
+        self.reactionPair = reactionPair
         self.outlineColor = outlineColor
     }
 
@@ -87,7 +90,7 @@ struct FilledBeaker: View {
 
             moleculeGrid(
                 settings,
-                color: Styling.moleculeA,
+                color: reactionPair.reactant.color,
                 coordinates: moleculesA
             )
 
@@ -95,13 +98,12 @@ struct FilledBeaker: View {
                 AnimatingMoleculeGrid(
                     settings: settings,
                     coords: moleculesA,
-                    color: Styling.moleculeB,
+                    color: reactionPair.product.color,
                     fractionOfCoordsToDraw: concentrationB!,
                     currentTime: currentTime!
                 )
                 .frame(height: settings.height)
             }
-
         }
     }
 
@@ -127,7 +129,8 @@ struct FilledBeaker_Previews: PreviewProvider {
                 GridCoordinate(col: 2, row: 2)
             ],
             concentrationB: ConstantEquation(value: 0),
-            currentTime: 0
+            currentTime: 0,
+            reactionPair: ReactionType.A.display
         )
     }
 }

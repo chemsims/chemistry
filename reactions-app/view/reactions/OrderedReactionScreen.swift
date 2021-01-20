@@ -49,7 +49,8 @@ struct OrderedReactionScreen<Content: View>: View {
                 FilledBeaker(
                     moleculesA: reaction.moleculesA,
                     concentrationB: reaction.input.concentrationB,
-                    currentTime: reaction.currentTime
+                    currentTime: reaction.currentTime,
+                    reactionPair: reaction.selectedReaction.display
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
                 .colorMultiply(reaction.color(for: nil))
@@ -80,7 +81,8 @@ struct OrderedReactionScreen<Content: View>: View {
                 canSetC2: reaction.selectedReaction != .B,
                 canSetT2: reaction.selectedReaction != .C,
                 showDataAtT2: reaction.showDataAtT2,
-                input: reaction.input
+                input: reaction.input,
+                display: reaction.selectedReaction.display
             )
             .frame(width: settings.chartSettings.largeTotalChartWidth)
             .padding(.horizontal, settings.chartHPadding)
@@ -93,6 +95,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 concentrationA: reaction.input.concentrationA,
                 concentrationB: reaction.input.concentrationB,
                 currentTime: reaction.currentTime,
+                display: reaction.selectedReaction.display,
                 settings: BarChartGeometrySettings(
                     chartWidth: settings.chartSize,
                     maxConcentration: ReactionSettings.Axis.maxC,

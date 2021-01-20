@@ -25,6 +25,8 @@ struct ConcentrationPlotView: View {
     let highlightLhsCurve: Bool
     let highlightRhsCurve: Bool
 
+    let display: ReactionPairDisplay
+
     init(
         settings: TimeChartGeometrySettings,
         concentrationA: Equation,
@@ -38,6 +40,7 @@ struct ConcentrationPlotView: View {
         highlightChart: Bool,
         highlightLhsCurve: Bool,
         highlightRhsCurve: Bool,
+        display: ReactionPairDisplay,
         includeAxis: Bool = true
     ) {
         self.settings = settings
@@ -53,6 +56,7 @@ struct ConcentrationPlotView: View {
         self.highlightChart = highlightChart
         self.highlightLhsCurve = highlightLhsCurve
         self.highlightRhsCurve = highlightRhsCurve
+        self.display = display
     }
 
     var body: some View {
@@ -95,7 +99,7 @@ struct ConcentrationPlotView: View {
                     currentTime: .constant(currentTime),
                     finalTime: finalTime,
                     filledBarColor: Styling.timeAxisCompleteBar,
-                    headColor: Styling.moleculeB,
+                    headColor: display.product.color,
                     headRadius: settings.chartHeadSecondarySize,
                     haloColor: nil,
                     canSetCurrentTime: canSetCurrentTime,
@@ -111,9 +115,9 @@ struct ConcentrationPlotView: View {
                 currentTime: $currentTime,
                 finalTime: finalTime,
                 filledBarColor: Styling.timeAxisCompleteBar,
-                headColor: Styling.moleculeA,
+                headColor: display.reactant.color,
                 headRadius: settings.chartHeadPrimarySize,
-                haloColor: Styling.moleculeAChartHeadHalo,
+                haloColor: display.reactant.color.opacity(0.3),
                 canSetCurrentTime: canSetCurrentTime,
                 highlightLhs: highlightLhsCurve,
                 highlightRhs: highlightRhsCurve
@@ -307,7 +311,8 @@ struct TimeChartPlotView_Previews: PreviewProvider {
             canSetCurrentTime: true,
             highlightChart: false,
             highlightLhsCurve: true,
-            highlightRhsCurve: false
+            highlightRhsCurve: false,
+            display: ReactionType.A.display
         )
     }
 

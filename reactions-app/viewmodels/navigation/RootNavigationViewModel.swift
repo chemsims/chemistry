@@ -9,7 +9,7 @@ import StoreKit
 class RootNavigationViewModel: ObservableObject {
 
     @Published var view: AnyView
-    @Published var showMenu = true
+    @Published var showMenu = false
     private(set) var navigationDirection = NavigationDirection.forward
 
     var focusScreen: AppScreen? {
@@ -44,6 +44,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
+        return true
         switch (screen) {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)

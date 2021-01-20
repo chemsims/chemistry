@@ -304,6 +304,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             moleculesA: reaction.moleculesA,
             concentrationB: concentration(order: order),
             currentTime: time(order: order) ?? 0,
+            reactionPair: ReactionType.A.display,
             outlineColor: chartBorderColor(order: order)
         )
         .frame(width: settings.beakerWidth)
@@ -392,6 +393,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     highlightChart: false,
                     highlightLhsCurve: false,
                     highlightRhsCurve: false,
+                    display: ReactionType.A.display,
                     includeAxis: false
                 )
             }

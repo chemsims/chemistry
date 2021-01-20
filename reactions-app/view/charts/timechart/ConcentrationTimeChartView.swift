@@ -28,6 +28,7 @@ struct ConcentrationTimeChartView: View {
     let showDataAtT2: Bool
 
     let input: ReactionInputModel
+    let display: ReactionPairDisplay
 
     var body: some View {
         GeneralTimeChartView(
@@ -41,7 +42,7 @@ struct ConcentrationTimeChartView: View {
             currentTime: $currentTime,
             canSetInitialTime: canSetInitialTime,
             includeSliders: true,
-            yLabel: "[A]",
+            yLabel: "[\(display.reactant.name)]",
             includeValuesInLabel: true,
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: highlightChart,
@@ -50,7 +51,8 @@ struct ConcentrationTimeChartView: View {
             canSetC2: canSetC2,
             canSetT2: canSetT2,
             showDataAtT2: showDataAtT2,
-            input: input
+            input: input,
+            display: display
         )
     }
 }
@@ -68,6 +70,7 @@ struct SingleConcentrationPlot: View {
     let highlightChart: Bool
     let showDataAtT2: Bool
     let input: ReactionInputModel
+    let display: ReactionPairDisplay
 
     var body: some View {
         GeneralTimeChartView(
@@ -90,7 +93,8 @@ struct SingleConcentrationPlot: View {
             canSetC2: true,
             canSetT2: true,
             showDataAtT2: showDataAtT2,
-            input: input
+            input: input,
+            display: display
         )
     }
 }
@@ -123,6 +127,7 @@ struct GeneralTimeChartView: View {
     let showDataAtT2: Bool
 
     let input: ReactionInputModel
+    let display: ReactionPairDisplay
 
     var body: some View {
         HStack(spacing: settings.chartHStackSpacing) {
@@ -309,7 +314,8 @@ struct GeneralTimeChartView: View {
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: highlightChart,
             highlightLhsCurve: highlightLhsCurve,
-            highlightRhsCurve: highlightRhsCurve
+            highlightRhsCurve: highlightRhsCurve,
+            display: display
         ).frame(
             width: settings.chartSize,
             height: settings.chartSize
@@ -425,7 +431,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             canSetC2: true,
             canSetT2: true,
             showDataAtT2: false,
-            input: ReactionInputAllProperties(order: .Zero)
+            input: ReactionInputAllProperties(order: .Zero),
+            display: ReactionType.A.display
         )
         .previewLayout(.fixed(width: 500, height: 300))
 
@@ -443,7 +450,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                 canSetCurrentTime: true,
                 highlightChart: true,
                 showDataAtT2: false,
-                input: ReactionInputAllProperties(order: .Zero)
+                input: ReactionInputAllProperties(order: .Zero),
+                display: ReactionType.A.display
             ).previewLayout(.fixed(width: 500, height: 300))
     }
 
@@ -474,7 +482,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     canSetC2: true,
                     canSetT2: true,
                     showDataAtT2: false,
-                    input: ReactionInputAllProperties(order: .Zero)
+                    input: ReactionInputAllProperties(order: .Zero),
+                    display: ReactionType.A.display
                 )
 
                 ConcentrationTimeChartView(
@@ -496,7 +505,8 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     canSetC2: true,
                     canSetT2: true,
                     showDataAtT2: false,
-                    input: ReactionInputAllProperties(order: .Zero)
+                    input: ReactionInputAllProperties(order: .Zero),
+                    display: ReactionType.A.display
                 )
             }
         }

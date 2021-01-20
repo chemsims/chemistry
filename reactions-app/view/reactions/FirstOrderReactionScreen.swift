@@ -65,7 +65,8 @@ struct FirstOrderReactionScreen: View {
             canSetCurrentTime: reaction.reactionHasEnded,
             highlightChart: reaction.highlight(element: .secondaryChart),
             showDataAtT2: reaction.showDataAtT2,
-            input: reaction.input
+            input: reaction.input,
+            display: reaction.selectedReaction.display
         )
         .colorMultiply(reaction.color(for: .secondaryChart))
     }

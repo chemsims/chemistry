@@ -14,6 +14,8 @@ struct ConcentrationBarChart: View {
 
     let currentTime: CGFloat?
 
+    let display: ReactionPairDisplay
+
     let settings: BarChartGeometrySettings
 
     var body: some View {
@@ -29,8 +31,8 @@ struct ConcentrationBarChart: View {
 
             }.frame(width: settings.chartWidth, height: settings.chartWidth)
             ZStack {
-                drawLabel(label: "A", color: Styling.moleculeA, barX: settings.barACenterX)
-                drawLabel(label: "B", color: Styling.moleculeB, barX: settings.barBCenterX)
+                drawLabel(molecule: display.reactant, barX: settings.barACenterX)
+                drawLabel(molecule: display.product, barX: settings.barBCenterX)
             }
         }
     }
@@ -41,14 +43,14 @@ struct ConcentrationBarChart: View {
                 concentration: ConstantEquation(value: initialA),
                 currentTime: 0,
                 barCenterX: settings.barACenterX
-            ).foregroundColor(currentTime == nil ? Styling.moleculeA : Styling.barChartEmpty)
+            ).foregroundColor(currentTime == nil ? display.reactant.color : Styling.barChartEmpty)
 
             if (currentTime != nil && concentrationA != nil) {
                 drawBar(
                     concentration: concentrationA!,
                     currentTime: currentTime!,
                     barCenterX: settings.barACenterX
-                ).foregroundColor(Styling.moleculeA)
+                ).foregroundColor(display.reactant.color)
             }
         }
     }
@@ -69,7 +71,7 @@ struct ConcentrationBarChart: View {
                     barCenterX: settings.barBCenterX
                 )
             }
-        }.foregroundColor(Styling.moleculeB)
+        }.foregroundColor(display.product.color)
     }
 
     private func drawBar(
@@ -86,24 +88,20 @@ struct ConcentrationBarChart: View {
     }
 
     private func drawLabel(
-        label: String,
-        color: Color,
+        molecule: ReactionMoleculeDisplay,
         barX: CGFloat
     ) -> some View {
         VStack {
             Circle()
                 .frame(width: settings.labelDiameter, height: settings.labelDiameter)
-                .foregroundColor(color)
+                .foregroundColor(molecule.color)
 
-            Text(label)
+            Text(molecule.name)
                 .font(.system(size: settings.labelFontSize))
         }.offset(x: barX - (settings.chartWidth / 2))
     }
 
 }
-
-
-
 
 
 struct BarChartAxisShape_Previews: PreviewProvider {
@@ -115,6 +113,7 @@ struct BarChartAxisShape_Previews: PreviewProvider {
                 concentrationA: equation,
                 concentrationB: equation2,
                 currentTime: nil,
+                display: ReactionType.A.display,
                 settings: BarChartGeometrySettings(
                     chartWidth: 300,
                     maxConcentration: 1,
@@ -128,6 +127,7 @@ struct BarChartAxisShape_Previews: PreviewProvider {
                 concentrationA: equation,
                 concentrationB: equation2,
                 currentTime: 1.5,
+                display: ReactionType.A.display,
                 settings: BarChartGeometrySettings(
                     chartWidth: 300,
                     maxConcentration: 1,
