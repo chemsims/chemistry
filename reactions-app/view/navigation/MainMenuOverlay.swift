@@ -4,6 +4,7 @@
   
 
 import SwiftUI
+import MessageUI
 
 struct MainMenuOverlay: View {
 
@@ -12,16 +13,30 @@ struct MainMenuOverlay: View {
     let menuHPadding: CGFloat
     @ObservedObject var navigation: RootNavigationViewModel
 
+    @State private var showMailComposer = false
+    @State private var showFailedMailAlert = false
+
     var body: some View {
         GeometryReader { geo in
             MainMenuOverlayWithSettings(
                 navigation: navigation,
+                showMailComposer: $showMailComposer,
+                showFailedMailAlert: $showFailedMailAlert,
                 settings: MainMenuLayoutSettings(
                     geometry: geo,
                     menuSize: size,
                     topPadding: topPadding,
                     hPadding: menuHPadding
                 )
+            )
+        }.sheet(isPresented: $showMailComposer) {
+            MailComposerView(isShowing: $showMailComposer)
+                .edgesIgnoringSafeArea(.all)
+        }.alert(isPresented: $showFailedMailAlert) {
+            Alert(
+                title: Text("Send Feedback"),
+                message: Text("Could not open Mail composer. Please send feedback to \(FeedbackSettings.toAddress)."),
+                dismissButton: .default(Text("OK"))
             )
         }
     }
@@ -30,6 +45,8 @@ struct MainMenuOverlay: View {
 fileprivate struct MainMenuOverlayWithSettings: View {
 
     @ObservedObject var navigation: RootNavigationViewModel
+    @Binding var showMailComposer: Bool
+    @Binding var showFailedMailAlert: Bool
     let settings: MainMenuLayoutSettings
 
     @State private var panelDragOffset: CGFloat = 0
@@ -80,6 +97,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         HStack(alignment: .top, spacing: 0) {
             Spacer()
                 .frame(width: settings.leadingPanelSpace)
+            feedback
             panelContent
             grabHandle
         }
@@ -105,6 +123,22 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 width: settings.grabLineWidth,
                 height: settings.grabLineHeight
             )
+    }
+
+    private var feedback: some View {
+        VStack(spacing: 0) {
+            Spacer()
+            Button(action: openMailComposer) {
+                Image(systemName: "envelope")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(Styling.navIcon)
+                    .frame(height: 0.4 * settings.navIconHeight)
+                    .font(.system(size: 10, weight: .ultraLight))
+            }
+        }
+        .frame(height: settings.panelContentHeight)
+        .padding(settings.panelContentPadding)
     }
 
     private var panelContent: some View {
@@ -211,6 +245,29 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 }
 
+extension MainMenuOverlayWithSettings {
+    private func openMailComposer() {
+        if (MailComposerView.canSendMail()) {
+            showMailComposer = true
+            return
+        }
+
+        if let url = FeedbackSettings.mailToUrl {
+            openMailToLink(url)
+        } else {
+            showFailedMailAlert = true
+        }
+    }
+
+    private func openMailToLink(_ url: URL) {
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            showFailedMailAlert = true
+        }
+    }
+}
+
 fileprivate enum TopLevelScreen {
     case zeroOrderReaction,
           firstOrderReaction,
@@ -304,7 +361,7 @@ fileprivate struct MainMenuLayoutSettings {
         return min(maxAvailableHeight, maxHeight)
     }
 
-    private var panelContentHeight: CGFloat {
+    var panelContentHeight: CGFloat {
         panelHeight - (2 * panelContentPadding)
     }
 
@@ -335,6 +392,7 @@ fileprivate struct MainMenuLayoutSettings {
     var panelBorder: CGFloat {
         0.75
     }
+
 }
 
 struct MainMenuOverlay_Previews: PreviewProvider {
@@ -348,6 +406,6 @@ struct MainMenuOverlay_Previews: PreviewProvider {
                 quizPersistence: InMemoryQuizPersistence(),
                 reviewPersistence: InMemoryReviewPromptPersistence()
             )
-        ).previewLayout(.fixed(width: 926, height: 428))
+        ).previewLayout(.fixed(width: 1300, height: 600))
     }
 }

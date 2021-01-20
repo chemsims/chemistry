@@ -19,10 +19,6 @@ struct ReviewPrompter {
     }
 
     static private func getCurrentVersion() -> String {
-        let key = kCFBundleVersionKey as String?
-        let version = key.flatMap { k in
-            Bundle.main.object(forInfoDictionaryKey: k) as? String
-        }
-        return version ?? "unknown-bundle-version"
+        Version.getCurrentVersion() ?? "unknown-bundle-version"
     }
 }
