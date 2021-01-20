@@ -72,7 +72,7 @@ class EnergyProfileViewModel: ObservableObject {
     var prevScreen: (() -> Void)?
     var nextScreen: (() -> Void)?
 
-    private(set) var usedCatalysts = [Catalyst]()
+    var usedCatalysts = [Catalyst]()
 
     func next() {
         if (canClickNext) {

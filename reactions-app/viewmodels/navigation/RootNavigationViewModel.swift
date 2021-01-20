@@ -29,7 +29,7 @@ class RootNavigationViewModel: ObservableObject {
         reviewPersistence: ReviewPromptPersistence,
         energyPersistence: EnergyProfilePersistence
     ) {
-        let firstScreen = AppScreen.energyProfile
+        let firstScreen = AppScreen.zeroOrderReaction
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.quizPersistence = quizPersistence
@@ -44,7 +44,6 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
-        return true
         switch (screen) {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)
@@ -117,15 +116,10 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     private func getProvider(for screen: AppScreen) -> ScreenProvider {
-        let energyViewModel: EnergyProfileViewModel? = models[.energyProfile].flatMap {
-            let provider = $0 as? EnergyProfileScreenProvider
-            return provider?.viewModel
-        }
-        return screen.screenProvider(
+        screen.screenProvider(
             persistence: persistence,
             quizPersistence: quizPersistence,
             energyPersistence: energyPersistence,
-            energyViewModel: energyViewModel,
             next: next,
             prev: prev,
             hideMenu: { self.showMenu = false }
@@ -171,7 +165,6 @@ fileprivate extension AppScreen {
         persistence: ReactionInputPersistence,
         quizPersistence: QuizPersistence,
         energyPersistence: EnergyProfilePersistence,
-        energyViewModel: EnergyProfileViewModel?,
         next: @escaping () -> Void,
         prev: @escaping () -> Void,
         hideMenu: @escaping () -> Void
@@ -232,8 +225,7 @@ fileprivate extension AppScreen {
             return ReactionFilingScreenProvider(persistence: persistence, order: .Second)
         case .finalAppScreen:
             return FinalAppScreenProvider(
-                persistence: persistence,
-                underlying: energyViewModel,
+                persistence: energyPersistence,
                 prev: {
                     prev()
                     hideMenu()
@@ -392,13 +384,16 @@ fileprivate class ReactionFilingScreenProvider: ScreenProvider {
 fileprivate class FinalAppScreenProvider: ScreenProvider {
 
     init(
-        persistence: ReactionInputPersistence,
-        underlying: EnergyProfileViewModel?,
+        persistence: EnergyProfilePersistence,
         prev: @escaping () -> Void
     ) {
-        let viewModel = underlying ?? EnergyProfileViewModel()
-        self.navigation = NavigationViewModel(model: viewModel, states: [FinalEnergyProfileState()])
+        let viewModel = EnergyProfileViewModel()
+        self.navigation = NavigationViewModel(
+            model: viewModel,
+            states: [FinalEnergyProfileState(persistence: persistence)]
+        )
         self.navigation.prevScreen = prev
+        viewModel.navigation = navigation
     }
 
     let navigation: NavigationViewModel<EnergyProfileState>
@@ -409,15 +404,26 @@ fileprivate class FinalAppScreenProvider: ScreenProvider {
 }
 
 fileprivate class FinalEnergyProfileState: EnergyProfileState {
-    init() {
+
+    init(persistence: EnergyProfilePersistence) {
+        self.persistence = persistence
         super.init(statement: EnergyProfileStatements.endOfApp)
     }
+
+    let persistence: EnergyProfilePersistence
 
     override func apply(on model: EnergyProfileViewModel) {
         super.apply(on: model)
         model.highlightedElements = [.menuIcon]
         model.interactionEnabled = false
-        model.temp2 = model.temp1
         model.particleState = .appearInBeaker
+        model.usedCatalysts = Catalyst.allCases
+        model.concentrationC = 1
+
+        let input = persistence.getInput()
+
+        model.catalystState = .selected(catalyst: input?.catalysts.last ?? .A)
+        model.selectedReaction = input?.order ?? .Zero
+        model.reactionState = .completed
     }
 }
