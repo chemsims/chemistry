@@ -9,11 +9,11 @@ import MessageUI
 
 struct MailComposerView: UIViewControllerRepresentable {
 
-    @Binding var isShowing: Bool
+    let onDismiss: () -> Void
 
-    init(isShowing: Binding<Bool>) {
+    init(onDismiss: @escaping () -> Void) {
         assert(Self.canSendMail())
-        _isShowing = isShowing
+        self.onDismiss = onDismiss
     }
 
     static func canSendMail() -> Bool {
@@ -33,14 +33,14 @@ struct MailComposerView: UIViewControllerRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(isShowing: $isShowing)
+        Coordinator(onDismiss: onDismiss)
     }
 
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-        @Binding var isShowing: Bool
+        let onDismiss: () -> Void
 
-        init(isShowing: Binding<Bool>) {
-            _isShowing = isShowing
+        init(onDismiss: @escaping () -> Void) {
+            self.onDismiss = onDismiss
         }
 
         func mailComposeController(
@@ -48,7 +48,7 @@ struct MailComposerView: UIViewControllerRepresentable {
             didFinishWith result: MFMailComposeResult,
             error: Error?
         ) {
-            isShowing = false
+            onDismiss()
         }
 
     }
@@ -57,6 +57,6 @@ struct MailComposerView: UIViewControllerRepresentable {
 
 struct MailComposerView_Previews: PreviewProvider {
     static var previews: some View {
-        MailComposerView(isShowing: .constant(true))
+        MailComposerView(onDismiss: {})
     }
 }

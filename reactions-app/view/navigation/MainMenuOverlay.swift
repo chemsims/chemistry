@@ -13,14 +13,14 @@ struct MainMenuOverlay: View {
     let menuHPadding: CGFloat
     @ObservedObject var navigation: RootNavigationViewModel
 
-    @State private var showMailComposer = false
     @State private var showFailedMailAlert = false
+    @State private var activeSheet: ActiveSheet?
 
     var body: some View {
         GeometryReader { geo in
             MainMenuOverlayWithSettings(
                 navigation: navigation,
-                showMailComposer: $showMailComposer,
+                activeSheet: $activeSheet,
                 showFailedMailAlert: $showFailedMailAlert,
                 settings: MainMenuLayoutSettings(
                     geometry: geo,
@@ -29,10 +29,18 @@ struct MainMenuOverlay: View {
                     hPadding: menuHPadding
                 )
             )
-        }.sheet(isPresented: $showMailComposer) {
-            MailComposerView(isShowing: $showMailComposer)
-                .edgesIgnoringSafeArea(.all)
-        }.alert(isPresented: $showFailedMailAlert) {
+        }
+        .sheet(item: $activeSheet) { item in
+            switch item {
+            case .mail:
+                MailComposerView(onDismiss: { activeSheet = nil })
+                    .edgesIgnoringSafeArea(.all)
+            case .share:
+                ShareSheetView(activityItems: [ShareSettings.message])
+                    .edgesIgnoringSafeArea(.all)
+            }
+        }
+        .alert(isPresented: $showFailedMailAlert) {
             Alert(
                 title: Text("Send Feedback"),
                 message: Text("Could not open Mail composer. Please send feedback to \(FeedbackSettings.toAddress)."),
@@ -42,10 +50,18 @@ struct MainMenuOverlay: View {
     }
 }
 
+fileprivate enum ActiveSheet: Int, Identifiable {
+    case mail, share
+
+    var id: Int {
+        rawValue
+    }
+}
+
 fileprivate struct MainMenuOverlayWithSettings: View {
 
     @ObservedObject var navigation: RootNavigationViewModel
-    @Binding var showMailComposer: Bool
+    @Binding var activeSheet: ActiveSheet?
     @Binding var showFailedMailAlert: Bool
     let settings: MainMenuLayoutSettings
 
@@ -97,7 +113,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         HStack(alignment: .top, spacing: 0) {
             Spacer()
                 .frame(width: settings.leadingPanelSpace)
-            feedback
+            settingsButtons
             panelContent
             grabHandle
         }
@@ -125,20 +141,34 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             )
     }
 
-    private var feedback: some View {
-        VStack(spacing: 0) {
-            Spacer()
-            Button(action: openMailComposer) {
-                Image(systemName: "envelope")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Styling.navIcon)
-                    .frame(height: 0.4 * settings.navIconHeight)
-                    .font(.system(size: 10, weight: .ultraLight))
-            }
+    private var settingsButtons: some View {
+        VStack(spacing: settings.navVStackSpacing) {
+            mailButton
+            shareButton
         }
-        .frame(height: settings.panelContentHeight)
-        .padding(settings.panelContentPadding)
+        .frame(width: settings.settingButtonsWidth)
+        .padding(.top, 2 * settings.panelContentPadding)
+        .padding(.leading, settings.panelContentPadding)
+        .padding(.trailing, 2 * settings.panelContentPadding)
+    }
+
+    private var mailButton: some View {
+        Button(action: openMailComposer) {
+            Image(systemName: "envelope.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(Styling.navIcon)
+                .font(.system(size: 10, weight: .ultraLight))
+        }
+    }
+
+    private var shareButton: some View {
+        Button(action: { activeSheet = .share }) {
+            Image("share-icon")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .colorMultiply(Styling.navIcon)
+        }
     }
 
     private var panelContent: some View {
@@ -248,7 +278,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 extension MainMenuOverlayWithSettings {
     private func openMailComposer() {
         if (MailComposerView.canSendMail()) {
-            showMailComposer = true
+            activeSheet = .mail
             return
         }
 
@@ -352,6 +382,10 @@ fileprivate struct MainMenuLayoutSettings {
         topPadding + geometry.safeAreaInsets.top
     }
 
+    var settingButtonsWidth: CGFloat {
+        navIconHeight * 0.45
+    }
+
     var totalBottomPadding: CGFloat {
         geometry.safeAreaInsets.bottom
     }
@@ -393,7 +427,6 @@ fileprivate struct MainMenuLayoutSettings {
     var panelBorder: CGFloat {
         0.75
     }
-
 }
 
 struct MainMenuOverlay_Previews: PreviewProvider {

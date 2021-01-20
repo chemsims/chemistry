@@ -9,7 +9,7 @@ import StoreKit
 class RootNavigationViewModel: ObservableObject {
 
     @Published var view: AnyView
-    @Published var showMenu = false
+    @Published var showMenu = true
     private(set) var navigationDirection = NavigationDirection.forward
 
     var focusScreen: AppScreen? {

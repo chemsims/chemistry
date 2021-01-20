@@ -30,3 +30,11 @@ struct FeedbackSettings {
     }
 }
 
+struct ShareSettings {
+
+    static let url = "https://apps.apple.com/us/app/reaction-rate-stem/id1531309001"
+    static let message = """
+    Hey, check out the Reactions Rate app! Download it at \(url).
+    """
+}
+
