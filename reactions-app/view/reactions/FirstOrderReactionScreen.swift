@@ -85,7 +85,8 @@ struct FirstOrderReactionScreen: View {
                 halfLifeColor: reaction.color(for: .halfLifeEquation),
                 rateColor: reaction.color(for: .rateEquation),
                 maxWidth: geometry.size.width,
-                maxHeight: geometry.size.height
+                maxHeight: geometry.size.height,
+                reactant: reaction.selectedReaction.display.reactant.name
             )
         }
     }

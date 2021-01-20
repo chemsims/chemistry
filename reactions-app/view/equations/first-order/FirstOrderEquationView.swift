@@ -19,6 +19,7 @@ struct FirstOrderEquationView: View {
     let rateColor: Color
     let maxWidth: CGFloat
     let maxHeight: CGFloat
+    let reactant: String
 
 
     var body: some View {
@@ -38,7 +39,8 @@ struct FirstOrderEquationView: View {
                 reactionHasStarted: reactionHasStarted,
                 rateConstantColor: rateConstantColor,
                 halfLifeColor: halfLifeColor,
-                rateColor: rateColor
+                rateColor: rateColor,
+                reactant: reactant
             ).frame(width: maxWidth, height: maxHeight)
         }
     }
@@ -56,11 +58,12 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
     let rateConstantColor: Color
     let halfLifeColor: Color
     let rateColor: Color
+    let reactant: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
             VStack(alignment: .leading, spacing: 0) {
-                FirstOrderRateFilled()
+                FirstOrderRateFilled(reactant: reactant)
                 FirstOrderRateBlank(
                     emphasise: emphasise,
                     rate: concentration?.rateConstant.str(decimals: 2),
@@ -88,7 +91,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
             .colorMultiply(halfLifeColor)
 
             VStack(alignment: .leading, spacing: 0) {
-                BlankRate(order: 1)
+                BlankRate(order: 1, reactant: reactant)
                 FilledRate(
                     order: 1,
                     reactionHasStarted: reactionHasStarted,
@@ -114,6 +117,8 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
 
 fileprivate struct FirstOrderRateFilled: View {
 
+    let reactant: String
+
     var body: some View {
         HStack(spacing: 12) {
             Text("k")
@@ -122,11 +127,11 @@ fileprivate struct FirstOrderRateFilled: View {
             VStack(spacing: 3) {
                 HStack(spacing: 5) {
                     lnA {
-                        A_0()
+                        BracketSubscript(mainValue: reactant, subscriptValue: "0")
                     }.frame(width: 89)
                     FixedText("-")
                     lnA {
-                        A_t()
+                        BracketSubscript(mainValue: reactant, subscriptValue: "t")
                     }.frame(width: 89)
                 }
                 Rectangle()
@@ -233,7 +238,8 @@ struct FirstOrderEquationView2_Preview: PreviewProvider {
             reactionHasStarted: false,
             rateConstantColor: .white,
             halfLifeColor: .white,
-            rateColor: .white
+            rateColor: .white,
+            reactant: "C"
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))

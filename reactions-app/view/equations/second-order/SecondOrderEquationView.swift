@@ -19,6 +19,7 @@ struct SecondOrderEquationView: View {
     let rateConstantColor: Color
     let halfLifeColor: Color
     let rateColor: Color
+    let reactant: String
 
     var body: some View {
         ScaledView(
@@ -37,7 +38,8 @@ struct SecondOrderEquationView: View {
                 reactionHasStarted: reactionHasStarted,
                 rateConstantColor: rateConstantColor,
                 halfLifeColor: halfLifeColor,
-                rateColor: rateColor
+                rateColor: rateColor,
+                reactant: reactant
             )
         }
         .frame(width: maxWidth, height: maxHeight)
@@ -56,11 +58,12 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
     let rateConstantColor: Color
     let halfLifeColor: Color
     let rateColor: Color
+    let reactant: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
             VStack(spacing: 0) {
-                SecondOrderRateFilled()
+                SecondOrderRateFilled(reactant: reactant)
                 SecondOrderRateBlank(
                     emphasise: emphasise,
                     rateConstant: concentration?.rateConstant.str(decimals: 2),
@@ -73,7 +76,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
             .colorMultiply(rateConstantColor)
 
             VStack(alignment: .leading, spacing: 0) {
-                SecondOrderHalfLifeFilled()
+                SecondOrderHalfLifeFilled(reactant: reactant)
                 SecondOrderHalfLifeBlank(
                     emphasise: emphasise,
                     halfLife: concentration?.halfLife.str(decimals: 2),
@@ -85,7 +88,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
             .colorMultiply(halfLifeColor)
 
             VStack(alignment: .leading, spacing: 0) {
-                BlankRate(order: 2)
+                BlankRate(order: 2, reactant: reactant)
                 FilledRate(
                     order: 2,
                     reactionHasStarted: reactionHasStarted,
@@ -108,6 +111,9 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
 }
 
 fileprivate struct SecondOrderRateFilled: View {
+
+    let reactant: String
+
     var body: some View {
         HStack(spacing: 5) {
             Text("k")
@@ -117,11 +123,11 @@ fileprivate struct SecondOrderRateFilled: View {
             VStack(spacing: 1) {
                 HStack(spacing: 5) {
                     inverse {
-                        A_t()
+                        BracketSubscript(mainValue: reactant, subscriptValue: "t")
                     }.frame(width: 100)
                     FixedText("-")
                     inverse {
-                        A_0()
+                        BracketSubscript(mainValue: reactant, subscriptValue: "0")
                     }.frame(width: 100)
                 }
                 Rectangle()
@@ -178,6 +184,9 @@ fileprivate struct SecondOrderRateBlank: View {
 }
 
 fileprivate struct SecondOrderHalfLifeFilled: View {
+
+    let reactant: String
+
     var body: some View {
         HStack(spacing: 5) {
             HalfLife()
@@ -186,7 +195,7 @@ fileprivate struct SecondOrderHalfLifeFilled: View {
             FixedText("1")
             FixedText("/")
             FixedText("(k")
-            A_0()
+            BracketSubscript(mainValue: reactant, subscriptValue: "0")
             FixedText(")")
         }
     }
@@ -239,7 +248,8 @@ struct SecondOrderEquationView2_Previews: PreviewProvider {
             reactionHasStarted: false,
             rateConstantColor: .white,
             halfLifeColor: .white,
-            rateColor: .white
+            rateColor: .white,
+            reactant: "A"
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSize.width, height: EquationSize.height))

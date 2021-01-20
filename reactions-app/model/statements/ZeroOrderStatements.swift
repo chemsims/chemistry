@@ -42,14 +42,19 @@ struct ZeroOrderStatements {
         )
     ]
 
-    static let reactionInProgress = [
-        TextLineGenerator.makeLine(
-            "Let's watch how all the molecules are changing! As A disappears, B is being produced."
-        ),
-        TextLineGenerator.makeLine(
-            "This happens at a constant *Rate (in units of M/s),* which is dependent on *k*."
-        )
-    ]
+    static func reactionInProgress(display: ReactionPairDisplay) -> [TextLine] {
+        [
+            TextLineGenerator.makeLine(
+                """
+                Let's watch how all the molecules are changing! As \(display.reactant.name) \
+                disappears, \(display.product.name) is being produced.
+                """
+            ),
+            TextLineGenerator.makeLine(
+                "This happens at a constant *Rate (in units of M/s),* which is dependent on *k*."
+            )
+        ]
+    }
 
     static let endAnimation = [
         TextLineGenerator.makeLine("For this Zero Order Reaction, *Rate* is constant and it's equal to *k*, that's why a graph plotting \(Strings.aVsT) is a straight line."),

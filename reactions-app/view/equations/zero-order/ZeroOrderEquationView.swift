@@ -26,6 +26,8 @@ struct ZeroOrderEquationView: View {
     let currentTime: CGFloat?
     let concentration: ConcentrationEquation?
 
+    let reactant: String
+
     private let naturalWidth: CGFloat = EquationSizes.width
     private let naturalHeight: CGFloat = EquationSizes.height
 
@@ -49,7 +51,8 @@ struct ZeroOrderEquationView: View {
                 rateColorMultipy: rateColorMultiply,
                 halfLifeColorMultiply: halfLifeColorMultiply,
                 currentTime: currentTime,
-                concentration: concentration
+                concentration: concentration,
+                reactant: reactant
             )
             .frame(width: maxWidth, height: maxHeight)
         }
@@ -72,6 +75,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
 
     let currentTime: CGFloat?
     let concentration: ConcentrationEquation?
+    let reactant: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -93,6 +97,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
 
             HStack(spacing: 22) {
                 FilledHalfLife(
+                    reactant: reactant,
                     isShowingToolip: $isShowingTooltip
                 )
                 BlankHalfLife(
@@ -106,7 +111,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
             .colorMultiply(halfLifeColorMultiply)
 
             HStack(spacing: 52) {
-                BlankRate(order: 0)
+                BlankRate(order: 0, reactant: reactant)
                 FilledRate(
                     order: 0,
                     reactionHasStarted: reactionHasStarted,
@@ -242,6 +247,7 @@ fileprivate struct EmptyRateConstant: View {
 
 fileprivate struct FilledHalfLife: View {
 
+    let reactant: String
     @Binding var isShowingToolip: Bool
 
     var body: some View {
@@ -249,6 +255,7 @@ fileprivate struct FilledHalfLife: View {
             HalfLife()
             FixedText("=")
             A0WithTooltip(
+                reactant: reactant,
                 isShowingTooltip: $isShowingToolip,
                 offset: -60
             )
@@ -261,11 +268,12 @@ fileprivate struct FilledHalfLife: View {
 
 fileprivate struct A0WithTooltip: View {
 
+    let reactant: String
     @Binding var isShowingTooltip: Bool
     let offset: CGFloat
 
     var body: some View {
-            A_0()
+            BracketSubscript(mainValue: reactant, subscriptValue: "0")
                 .onTapGesture {
                     isShowingTooltip.toggle()
                 }
@@ -275,7 +283,7 @@ fileprivate struct A0WithTooltip: View {
     private var overlay: some View {
         if (isShowingTooltip) {
             return AnyView(
-                Tooltip(text: "Concentration of A at t=0")
+                Tooltip(text: "Concentration of \(reactant) at t=0")
                     .font(.system(size: EquationSettings.fontSize * 0.73))
                     .frame(width: 170)
                     .lineLimit(3)
@@ -329,7 +337,7 @@ fileprivate struct EquationSizes {
     static let padding: CGFloat = 15
 }
 
-struct ZeroOrderEquationView2_Previews: PreviewProvider {
+struct ZeroOrderEquationView_Previews: PreviewProvider {
     static var previews: some View {
         UnscaledZeroOrderEquationView(
             emphasise: false,
@@ -344,7 +352,8 @@ struct ZeroOrderEquationView2_Previews: PreviewProvider {
             rateColorMultipy: .white,
             halfLifeColorMultiply: .white,
             currentTime: nil,
-            concentration: ZeroOrderConcentration(a0: 1, rateConstant: 0.1)
+            concentration: ZeroOrderConcentration(a0: 1, rateConstant: 0.1),
+            reactant: "A"
         )
         .border(Color.red)
         .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))

@@ -8,6 +8,7 @@ import SwiftUI
 struct BlankRate: View {
 
     let order: Int
+    let reactant: String
     let alignWithFilled: Bool = true
 
     var body: some View {
@@ -18,7 +19,7 @@ struct BlankRate: View {
             FixedText("k")
                 .padding(.leading, 10)
             HStack(spacing: 0) {
-                FixedText("[A]")
+                FixedText("[\(reactant)]")
                 FixedText("\(order)")
                     .font(.system(size: EquationSettings.subscriptFontSize))
                     .offset(y: -10)
@@ -85,7 +86,7 @@ struct FilledRate: View {
 struct Rates_Previews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading) {
-            BlankRate(order: 1)
+            BlankRate(order: 1, reactant: "B")
             FilledRate(
                 order: 0,
                 reactionHasStarted: false,

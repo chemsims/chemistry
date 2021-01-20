@@ -62,7 +62,8 @@ struct ZeroOrderReactionScreen: View {
                         maxHeight: geometry.size.height,
                         isShowingTooltip: $isShowingTooltip,
                         currentTime: reaction.currentTime,
-                        concentration: reaction.input.concentrationA
+                        concentration: reaction.input.concentrationA,
+                        reactant: reaction.selectedReaction.display.reactant.name
                     )
                 }
                 .padding(settings.equationPadding)

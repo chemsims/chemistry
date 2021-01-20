@@ -38,7 +38,9 @@ struct SecondOrderReactionNavigation {
             ),
             ExplainHalfLife(),
             RunAnimation(
-                statement: ReactionStatements.inProgress,
+                makeStatement: {
+                    ReactionStatements.inProgress(display: $0.selectedReaction.display)
+                },
                 order: .Second,
                 persistence: persistence,
                 initialiseCurrentTime: false

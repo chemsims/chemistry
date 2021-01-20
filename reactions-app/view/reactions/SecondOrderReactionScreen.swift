@@ -84,7 +84,8 @@ struct SecondOrderReactionScreen: View {
                 maxHeight: geometry.size.height,
                 rateConstantColor: reaction.color(for: .rateConstantEquation),
                 halfLifeColor: reaction.color(for: .halfLifeEquation),
-                rateColor: reaction.color(for: .rateEquation)
+                rateColor: reaction.color(for: .rateEquation),
+                reactant: reaction.selectedReaction.display.reactant.name
             )
         }
     }

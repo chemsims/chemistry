@@ -7,27 +7,29 @@ import SwiftUI
 
 struct A_0: View {
     var body: some View {
-        HStack(spacing: 1) {
-            BracketA()
-            Text("0")
-                .font(.system(size: EquationSettings.subscriptFontSize))
-                .offset(y: 9)
-                .fixedSize()
-            EndBracket()
-        }.minimumScaleFactor(1)
+        BracketSubscript(mainValue: "A", subscriptValue: "0")
     }
 }
 
 struct A_t: View {
     var body: some View {
+        BracketSubscript(mainValue: "A", subscriptValue: "t")
+    }
+}
+
+struct BracketSubscript: View {
+    let mainValue: String
+    let subscriptValue: String
+
+    var body: some View {
         HStack(spacing: 1) {
-            BracketA()
-            Text("t")
+            FixedText("[\(mainValue)")
+            Text(subscriptValue)
                 .font(.system(size: EquationSettings.subscriptFontSize))
                 .offset(y: 9)
                 .fixedSize()
             EndBracket()
-        }
+        }.minimumScaleFactor(1)
     }
 }
 

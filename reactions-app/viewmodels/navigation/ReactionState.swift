@@ -60,7 +60,7 @@ struct OrderedReactionInitialNodes {
             SetT0ForFixedRate(order: order),
             SetT1ForFixedRate(),
             RunAnimation(
-                statement: reactionInProgressStatement(order: order),
+                makeStatement: reactionInProgressStatement(order: order),
                 order: order,
                 persistence: persistence,
                 initialiseCurrentTime: true
@@ -72,12 +72,19 @@ struct OrderedReactionInitialNodes {
         ]
     }
 
-    private static func reactionInProgressStatement(order: ReactionOrder) -> [TextLine] {
+    private static func reactionInProgressStatement(
+        order: ReactionOrder
+    ) -> (ZeroOrderReactionViewModel) -> [TextLine] {
         switch (order) {
-        case .Zero: return ZeroOrderStatements.reactionInProgress
-        default: return ReactionStatements.inProgress
+        case .Zero: return {
+            ZeroOrderStatements.reactionInProgress(display: $0.selectedReaction.display)
+        }
+        default: return {
+            ReactionStatements.inProgress(display: $0.selectedReaction.display)
+        }
         }
     }
+
 }
 
 class SelectReactionState: ReactionState {
@@ -263,8 +270,10 @@ class RunAnimation: ReactionState {
     let persistence: ReactionInputPersistence?
     let initialiseCurrentTime: Bool
 
+    let makeStatement: (Model) -> [TextLine]
+
     init(
-        statement: [TextLine],
+        makeStatement: @escaping (Model) -> [TextLine],
         order: ReactionOrder?,
         persistence: ReactionInputPersistence?,
         initialiseCurrentTime: Bool
@@ -272,11 +281,12 @@ class RunAnimation: ReactionState {
         self.order = order
         self.persistence = persistence
         self.initialiseCurrentTime = initialiseCurrentTime
-        super.init(statement: statement)
+        self.makeStatement = makeStatement
     }
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
+        model.statement = makeStatement(model)
         model.reactionHasEnded = false
         model.reactionHasStarted = true
         model.highlightedElements = []

@@ -34,7 +34,9 @@ struct ZeroOrderReactionNavigation {
             ExplainRateState(),
             ExplainHalfLifeState(),
             RunAnimation(
-                statement: ZeroOrderStatements.reactionInProgress,
+                makeStatement: {
+                    ZeroOrderStatements.reactionInProgress(display: $0.selectedReaction.display)
+                },
                 order: .Zero,
                 persistence: persistence,
                 initialiseCurrentTime: false
