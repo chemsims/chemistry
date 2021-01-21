@@ -11,7 +11,6 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
     func testReactionInputsAreResetAndRestoredWhenReactionTypeChanges() {
         let model = ZeroOrderReactionViewModel()
         let nav = navModel(model)
-        print(model.canSelectReaction)
 
         nav.nextUntil(\.canSelectReaction)
         let t2 = model.input.inputT2!

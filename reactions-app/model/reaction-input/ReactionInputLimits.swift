@@ -141,7 +141,6 @@ struct ReactionInputLimitsWithoutT2: ReactionInputLimits {
             c = c.shiftWith(c: minInput, t: t1)
             let newMinC = c.getConcentration(at: tRange.max)
             let delta = abs(newMinC - minC)
-            print("\(i) | \(delta) | \(minC) | \(newMinC)")
             minC = newMinC
         }
 
