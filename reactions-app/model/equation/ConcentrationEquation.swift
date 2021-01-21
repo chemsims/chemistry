@@ -22,7 +22,7 @@ protocol ConcentrationEquation: Equation {
     /// Returns the time at which the concentration is `concentration`
     func time(for concentration: CGFloat) -> CGFloat?
 
-    /// Creates a new equation, shifted such that concentration is `c` at time `t`, while keeping the rate constant the same
+    /// Creates a new equation which is shifted in the x axis, such that concentration is `c` at time `t`, while keeping the rate constant the same
     func shiftWith(c: CGFloat, t: CGFloat) -> ConcentrationEquation
 }
 

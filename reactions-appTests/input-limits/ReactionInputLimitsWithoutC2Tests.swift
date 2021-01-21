@@ -17,6 +17,7 @@ class ReactionInputLimitsWithoutC2Tests: XCTestCase {
             cRange: cRange,
             tRange: tRange,
             t1: 0,
+            c1: 10,
             concentration: concentration
         )
 
@@ -38,6 +39,7 @@ class ReactionInputLimitsWithoutC2Tests: XCTestCase {
             cRange: cRange,
             tRange: tRange,
             t1: 0,
+            c1: 10,
             concentration: concentration
         )
 
@@ -59,6 +61,7 @@ class ReactionInputLimitsWithoutC2Tests: XCTestCase {
             cRange: cRange,
             tRange: tRange,
             t1: 0,
+            c1: 10,
             concentration: concentration
         )
 
@@ -80,6 +83,7 @@ class ReactionInputLimitsWithoutC2Tests: XCTestCase {
             cRange: cRange,
             tRange: tRange,
             t1: 0,
+            c1: 10,
             concentration: concentration
         )
 
@@ -92,7 +96,7 @@ class ReactionInputLimitsWithoutC2Tests: XCTestCase {
         XCTAssertEqual(model.t2Limits, expectedT2)
     }
 
-    func testT1LimitsWithNoC2WhereT1IsBoundByCAtMaxT() {
+    func testT1LimitsWhereNoReductionInT1LimitIsNeeded() {
         let cRange = InputRange(min: 0, max: 10, minInputRange: 1, valueSpacing: 1)
         let tRange = InputRange(min: 0, max: 10, minInputRange: 1, valueSpacing: 1)
 
@@ -101,15 +105,20 @@ class ReactionInputLimitsWithoutC2Tests: XCTestCase {
             cRange: cRange,
             tRange: tRange,
             t1: 0,
+            c1: 10,
             concentration: concentration
         )
 
         let expectedT1 = InputLimits(
             min: 0,
-            max: 3,
+            max: 10,
             smallerOtherValue: nil,
             largerOtherValue: 9
         )
         XCTAssertEqual(model.t1Limits, expectedT1)
+    }
+
+    func testT1LimitsWhereAReductionInT1LimitIsNeededToMaintainTInputRange() {
+
     }
 }

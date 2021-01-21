@@ -66,6 +66,7 @@ struct ReactionInputLimitsWithoutC2: ReactionInputLimits {
     let cRange: InputRange
     let tRange: InputRange
     let t1: CGFloat
+    let c1: CGFloat
     let concentration: ConcentrationEquation
 
     var c1Limits: InputLimits {
@@ -82,11 +83,15 @@ struct ReactionInputLimitsWithoutC2: ReactionInputLimits {
     }
 
     var t1Limits: InputLimits {
-        let minT = concentration.time(for: cRange.min)!
-        let maxInput = minT - tRange.valueSpacing - tRange.minInputRange
+        let shifted = concentration.shiftWith(c: cRange.max, t: tRange.max)
+        let t1AtShiftedEq = shifted.time(for: c1) ?? tRange.max
+
+        let withLowerBound = max(t1AtShiftedEq, tRange.max - tRange.minInputRange)
+        let withUpperBound = min(withLowerBound, tRange.max)
+
         return InputLimits(
             min: tRange.min,
-            max: min(tRange.max, maxInput),
+            max: withUpperBound,
             smallerOtherValue: nil,
             largerOtherValue: tRange.max - tRange.minInputRange
         )
@@ -110,18 +115,37 @@ struct ReactionInputLimitsWithoutC2: ReactionInputLimits {
 struct ReactionInputLimitsWithoutT2: ReactionInputLimits {
     let cRange: InputRange
     let tRange: InputRange
+    let t1: CGFloat
     let c1: CGFloat
     let concentration: ConcentrationEquation
 
     var c1Limits: InputLimits {
-        let minC = concentration.getConcentration(at: tRange.max)
-        let minInput = minC + cRange.minInputRange + cRange.valueSpacing
+//        let minC = concentration.getConcentration(at: tRange.max)
+//        let minInput = minC + cRange.minInputRange + cRange.valueSpacing
         return InputLimits(
-            min: max(minInput, cRange.min),
+            min: max(nonLinearC1, cRange.min),
             max: cRange.max,
             smallerOtherValue: cRange.min + cRange.minInputRange,
             largerOtherValue: nil
         )
+    }
+
+    /// We need to find a C1, such that we have the minimum change in c, at t2.
+    /// This currently requires solving the equations non-linearly since the equations themselves depend on C1
+    private var nonLinearC1: CGFloat {
+        var c = concentration
+        var minC = c.getConcentration(at: tRange.max)
+
+        for i in 0...50 {
+            let minInput = minC + cRange.minInputRange + cRange.valueSpacing
+            c = c.shiftWith(c: minInput, t: t1)
+            let newMinC = c.getConcentration(at: tRange.max)
+            let delta = abs(newMinC - minC)
+            print("\(i) | \(delta) | \(minC) | \(newMinC)")
+            minC = newMinC
+        }
+
+        return c.getConcentration(at: t1)
     }
 
     var c2Limits: InputLimits {
@@ -147,7 +171,12 @@ struct ReactionInputLimitsWithoutT2: ReactionInputLimits {
     }
 
     var t2Limits: InputLimits {
-        c1Limits
+        InputLimits(
+            min: tRange.min,
+            max: tRange.max,
+            smallerOtherValue: t1,
+            largerOtherValue: nil
+        )
     }
 }
 

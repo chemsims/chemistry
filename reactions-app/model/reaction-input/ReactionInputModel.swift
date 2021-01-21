@@ -181,6 +181,7 @@ struct ReactionInputWithoutC2: ReactionInputModel {
                 cRange: cRange(spacing: cAbsoluteSpacing),
                 tRange: tRange(spacing: tAbsoluteSpacing),
                 t1: inputT1,
+                c1: inputC1,
                 concentration: concentration
             )
         }
@@ -219,6 +220,7 @@ struct ReactionInputWithoutT2: ReactionInputModel {
             return ReactionInputLimitsWithoutT2(
                 cRange: cRange(spacing: cAbsoluteSpacing),
                 tRange: tRange(spacing: tAbsoluteSpacing),
+                t1: inputT1,
                 c1: inputC1,
                 concentration: concentration
             )
