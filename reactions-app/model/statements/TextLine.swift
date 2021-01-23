@@ -26,6 +26,10 @@ struct TextLine: ExpressibleByStringLiteral, Equatable {
     init(stringLiteral value: String) {
         self.init(content: TextLineGenerator.makeLine(value).content)
     }
+
+    static func +(lhs: TextLine, rhs: TextLine) -> TextLine {
+        TextLine(content: lhs.content + rhs.content)
+    }
 }
 
 extension TextLine {

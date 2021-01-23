@@ -128,6 +128,13 @@ struct QuizQuestionData {
             add(answer, option, id: index)
         }
 
+        if let e = explanation {
+            QuizOption.allCases.forEach { o in
+                answers[o] = answers[o]?.prependingExplanation(e)
+            }
+        }
+
+
         return QuizQuestion(
             id: questionId,
             question: question,
@@ -137,6 +144,17 @@ struct QuizQuestionData {
             difficulty: difficulty,
             image: image,
             table: table
+        )
+    }
+}
+
+fileprivate extension QuizAnswer {
+    func prependingExplanation(_ other: TextLine) -> QuizAnswer {
+        let appendWithSpace = explanation ?? ""
+        return QuizAnswer(
+            answer: answer,
+            explanation: other + appendWithSpace,
+            id: id
         )
     }
 }
