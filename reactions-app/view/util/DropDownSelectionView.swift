@@ -14,6 +14,7 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     let height: CGFloat
     let animation: Animation?
     let displayString: (Data) -> String
+    let label: (Data) -> String
     let disabledOptions: [Data]
     let onSelection: (() -> Void)?
 
@@ -73,6 +74,8 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
             )
             .background(background)
             .foregroundColor(fontColor(option))
+            .accessibility(addTraits: selected ? .isSelected : [])
+            .accessibility(label: Text(label(option)))
         }
         .disabled(disabledOptions.contains(option))
     }
@@ -91,17 +94,25 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     }
 
     private var indicatorView: some View {
-        ZStack {
-            Rectangle()
-                .foregroundColor(.white)
+        let label = "\(isToggled ? "close" : "open") selection"
+        return ZStack {
             Button(action: { isToggled.toggle() }) {
-                Image(systemName: "chevron.up")
-                    .animation(.linear)
-                    .font(.system(size: height * 0.6))
-                    .rotationEffect(isToggled ? .degrees(180) : .zero)
-                    .animation(.spring(response: 0.3))
-            }.buttonStyle(NavButtonButtonStyle())
-        }.frame(
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.white)
+
+                    Image(systemName: "chevron.up")
+                        .animation(.linear)
+                        .font(.system(size: height * 0.6))
+                        .rotationEffect(isToggled ? .degrees(180) : .zero)
+                        .animation(.spring(response: 0.3))
+                }
+                .accessibilityElement()
+                .accessibility(label: Text(label))
+            }
+            .buttonStyle(NavButtonButtonStyle())
+        }
+        .frame(
             width: height,
             height: height
         )
@@ -131,6 +142,7 @@ struct DropDownSelectionView_Previews: PreviewProvider {
                 height: 30,
                 animation: nil,
                 displayString: { "\($0)"},
+                label: { "\($0)"},
                 disabledOptions: [.First],
                 onSelection: nil
             )

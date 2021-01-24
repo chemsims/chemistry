@@ -20,6 +20,11 @@ extension ReactionType {
         "\(reactant) to \(product)"
     }
 
+    // Accessibility label
+    var label: String {
+        "'\(reactant)' to '\(product)'"
+    }
+
     var display: ReactionPairDisplay {
         ReactionPairDisplay(
             reactant: ReactionMoleculeDisplay(

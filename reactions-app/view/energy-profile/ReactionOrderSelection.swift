@@ -19,10 +19,15 @@ struct ReactionOrderSelection: View {
             selection: $selection,
             height: height,
             animation: Animation.easeOut(duration: 0.75),
-            displayString: { "\($0.string) Order Reactions" },
+            displayString: toString,
+            label: toString,
             disabledOptions: [],
             onSelection: nil
         )
+    }
+
+    private func toString(_ order: ReactionOrder) -> String {
+        "\(order.string) Order Reactions"
     }
 }
 

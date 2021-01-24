@@ -57,7 +57,7 @@ struct TimeValueSlider: View {
             value2: $t2,
             value1Limits: t1Limits,
             value2Limits: t2Limits,
-            value1Label: "Start time of reaction in Moles",
+            value1Label: "Start time of reaction in seconds",
             value2Label: "End time of reaction in seconds",
             axis: settings.xAxis,
             orientation: .landscape,
