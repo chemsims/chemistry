@@ -42,7 +42,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -76,7 +75,6 @@ extension QuizQuestionsList {
                         """
                     ),
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -110,7 +108,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -149,7 +146,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -186,7 +182,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -238,7 +233,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -275,7 +269,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -320,7 +313,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -371,7 +363,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -410,7 +401,6 @@ extension QuizQuestionsList {
                         explanation: "0.4 M is far too little."
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -448,7 +438,6 @@ extension QuizQuestionsList {
                         position: .D
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -460,7 +449,7 @@ extension QuizQuestionsList {
                 correctAnswer: QuizAnswerData(
                     answer: "0.0075 M",
                     explanation: """
-                    Replacing the first values, and solving for $k = rate/[A]$ ➝ \
+                    Following the rate law equation, $rate = k[A]$. Replacing the first values, and solving for $k = rate/[A]$ ➝ \
                     $k = 0.020 M/s / 0.010 M = 2 s^-1^$.
 
                     So for a rate of $0.015 M/s$ we just replace and solve for $[A] = rate/k$ ➝ \
@@ -471,26 +460,25 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "0.075 M",
                         explanation: """
-                        Meaning that if the reactant's concentration is 0.075 M, the rate of the \
+                        Following the rate law equation, $rate = k[A]$. Meaning that if the reactant's concentration is 0.075 M, the rate of the \
                         reaction at that point is 0.15 M/s.
                         """
                     ),
                     QuizAnswerData(
                         answer: "0.01 M",
                         explanation: """
-                        Meaning that if the reactant's concentration is 0.010 M, the rate of the \
+                        Following the rate law equation, $rate = k[A]$. Meaning that if the reactant's concentration is 0.010 M, the rate of the \
                         reaction at that point is 0.020 M/s.
                         """
                     ),
                     QuizAnswerData(
                         answer: "0.015 M",
                         explanation: """
-                        Meaning that if the reactant's concentration is 0.015 M, the rate of the \
+                        Following the rate law equation, $rate = k[A]$. Meaning that if the reactant's concentration is 0.015 M, the rate of the \
                         reaction at that point is 0.030 M/s.
                         """
                     )
                 ],
-                explanation: "Following the rate law equation, $rate = k[A]$. ",
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -530,7 +518,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -568,7 +555,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -606,7 +592,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -646,7 +631,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -685,7 +669,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -746,7 +729,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -788,7 +770,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium,
                 image: "first-order-a-b-concentration"
             ),
@@ -842,7 +823,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 table: QuizTable(
                     rows: [

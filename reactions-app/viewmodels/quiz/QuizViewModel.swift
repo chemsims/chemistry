@@ -117,7 +117,6 @@ class QuizViewModel: ObservableObject {
     }
 
     func showExplanation(option: QuizOption) -> Bool {
-        return true
         guard let answer = selectedAnswer?.allAnswers else {
             return false
         }
@@ -196,12 +195,7 @@ extension QuizViewModel {
 extension QuizViewModel {
 
     static func explanationExpansionDuration(_ question: QuizQuestion, option: QuizOption) -> Double {
-        let contentLength = question.options[option]?.explanation?.length ?? 0
-        return explanationExpansionDuration(contentLength: contentLength)
-    }
-
-    static func explanationExpansionDuration(_ question: QuizQuestion) -> Double {
-        let contentLength = question.longExplanation.map(\.length).reduce(0) { $0 + $1 }
+        let contentLength = question.options[option]?.explanation.length ?? 0
         return explanationExpansionDuration(contentLength: contentLength)
     }
 

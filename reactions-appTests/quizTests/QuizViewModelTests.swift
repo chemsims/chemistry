@@ -202,15 +202,23 @@ class QuizViewModelTests: XCTestCase {
     }
 
     private func makeQuestion(i: Int) -> QuizQuestionData {
-        QuizQuestionData(
+
+        func answer(_ suffix: String, _ position: QuizOption) -> QuizAnswerData {
+            QuizAnswerData(
+                answer: TextLine(stringLiteral: "\(i) - \(suffix)"),
+                explanation: TextLine(stringLiteral: "\(i)"),
+                position: position
+            )
+        }
+
+        return QuizQuestionData(
             question: TextLine(stringLiteral: "\(i)"),
-            correctAnswer: QuizAnswerData(answer: TextLine(stringLiteral: "\(i) - A"), position: .A),
+            correctAnswer: answer("A", .A),
             otherAnswers: [
-                QuizAnswerData(answer: TextLine(stringLiteral: "\(i) - B"), position: .B),
-                QuizAnswerData(answer: TextLine(stringLiteral: "\(i) - C"), position: .C),
-                QuizAnswerData(answer: TextLine(stringLiteral: "\(i) - D"), position: .D)
+                answer("B", .B),
+                answer("C", .C),
+                answer("D", .D)
             ],
-            explanation: "",
             difficulty: .easy
         )
     }

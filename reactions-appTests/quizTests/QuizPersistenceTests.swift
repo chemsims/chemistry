@@ -95,7 +95,6 @@ class QuizPersistenceTests: XCTestCase {
             question: "",
             options: mappedOptions,
             correctOption: correctOption,
-            explanation: "",
             difficulty: .easy,
             image: nil,
             table: nil

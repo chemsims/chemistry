@@ -43,7 +43,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -79,7 +78,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -120,7 +118,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -158,7 +155,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -204,7 +200,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -254,7 +249,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -323,7 +317,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -366,7 +359,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -418,7 +410,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 table: QuizTable(
                     rows: [
@@ -477,7 +468,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -524,7 +514,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -572,7 +561,6 @@ extension QuizQuestionsList {
                         explanation: "The rate of appearance is given in positive values."
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -611,7 +599,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -660,7 +647,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium,
                 table: QuizTable(
                     rows: [
@@ -726,7 +712,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -762,7 +747,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 image: "second-order-inverse-a"
             ),
@@ -804,7 +788,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -859,7 +842,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 table: QuizTable(
                     rows: [
@@ -904,7 +886,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 image: "second-order-ln-a"
             ),
@@ -954,7 +935,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             )
         ]

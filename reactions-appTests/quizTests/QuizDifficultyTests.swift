@@ -124,7 +124,6 @@ class QuizDifficultyTests: XCTestCase {
             question: "",
             options: [QuizOption:QuizAnswer](),
             correctOption: .A,
-            explanation: nil,
             difficulty: difficulty,
             image: nil,
             table: nil

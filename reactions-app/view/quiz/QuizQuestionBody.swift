@@ -30,26 +30,6 @@ struct QuizQuestionsBody: View {
         }
     }
 
-    private var explanationView: some View {
-        TextLinesView(
-            line: model.currentQuestion.explanation ?? "",
-            fontSize: settings.answerFontSize
-        )
-        .padding()
-        .background(
-            RoundedRectangle(
-                cornerRadius: settings.progressCornerRadius
-            )
-            .foregroundColor(Styling.Quiz.explanationBackground)
-            .shadow(radius: 4)
-            .overlay(
-                infoIcon,
-                alignment: .topTrailing
-            )
-        )
-        .fixedSize(horizontal: false, vertical: true)
-    }
-
     private var infoIcon: some View {
         ZStack {
             Circle()

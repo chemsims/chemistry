@@ -37,7 +37,6 @@ extension QuizQuestionsList {
                         explanation: "The rate law cannot be solely determined by the use of a catalyst"
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -77,7 +76,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 image: "reaction-comparison"
             ),
@@ -130,7 +128,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -178,7 +175,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 table: QuizTable(
                     rows: [
@@ -232,7 +228,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -271,7 +266,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -309,7 +303,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -350,7 +343,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -400,7 +392,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium,
                 table: QuizTable(
                     rows: [
@@ -451,7 +442,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 table: QuizTable(
                     rows: [
@@ -512,7 +502,6 @@ extension QuizQuestionsList {
                         """
                     ),
                 ],
-                explanation: nil,
                 difficulty: .medium,
                 table: QuizTable(
                     rows: [
@@ -557,7 +546,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -611,7 +599,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .hard
             ),
             QuizQuestionData(
@@ -650,7 +637,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -691,7 +677,6 @@ extension QuizQuestionsList {
                     """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -730,7 +715,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -767,7 +751,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -817,7 +800,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -867,7 +849,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -923,7 +904,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
         ]

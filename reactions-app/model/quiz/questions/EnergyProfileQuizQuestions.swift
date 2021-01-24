@@ -38,7 +38,6 @@ extension QuizQuestionsList {
                         explanation: "This is the definition of Gibbs Free Energy"
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -87,7 +86,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 image: "energy-profile-reaction-profile"
             ),
@@ -129,7 +127,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .hard,
                 image: "energy-profile-reaction-pathway"
             ),
@@ -174,7 +171,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .hard
             ),
             QuizQuestionData(
@@ -210,7 +206,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -249,7 +244,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation:  nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -299,7 +293,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -354,7 +347,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -397,7 +389,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .hard,
                 image: "energy-profile-reaction-profile-2"
             ),
@@ -460,7 +451,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .hard
             ),
             QuizQuestionData(
@@ -501,7 +491,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium,
                 table: QuizTable(
                     rows: [
@@ -562,7 +551,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium,
                 image: "energy-profile-reaction-coordinate"
             ),
@@ -608,7 +596,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -653,7 +640,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy,
                 image: "energy-profile-reaction-profile-3"
             ),
@@ -696,7 +682,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -745,7 +730,6 @@ extension QuizQuestionsList {
                         """
                     ),
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -787,7 +771,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -839,7 +822,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium,
                 image: "energy-profile-energy-diagram"
             ),
@@ -890,7 +872,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .hard
             ),
             QuizQuestionData(
@@ -936,7 +917,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium,
                 image: "energy-profile-reaction-progress"
             ),

@@ -47,7 +47,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -91,7 +90,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -102,6 +100,12 @@ extension QuizQuestionsList {
                 correctAnswer: QuizAnswerData(
                     answer: "0.75 M/s",
                     explanation: """
+                    The rates of disappearance of reactants and appearance of products can be related \
+                    to each other based on the stoichiometry of the reaction. \
+                    $Rate = -[ΔA]/2Δt = [ΔB]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of A and \
+                    $[ΔB]/Δt$ = rate of appearance of B.
+
+
                     Replacing the equation then we get that: $(1.5 M/s)/2 =$ rate of appearance of \
                     $B ➝ 0.75 M/s =$ rate of appearance of B. In other words, for each 1 M of B \
                     that's being produced, there are 2 M of A that are being consumed.
@@ -111,6 +115,12 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "-0.75 M/s",
                         explanation: """
+                        The rates of disappearance of reactants and appearance of products can be related \
+                        to each other based on the stoichiometry of the reaction. \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of A and \
+                        $[ΔB]/Δt$ = rate of appearance of B.
+
+
                         So -0.75 $M/s$ is not the correct answer because the rate of appearance is \
                         positive. The reason for the rate of disappearance to be positive too, is \
                         that the negative sign (-) is already taken into account within the \
@@ -120,6 +130,12 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer:  "1.5 M/s",
                         explanation: """
+                        The rates of disappearance of reactants and appearance of products can be related \
+                        to each other based on the stoichiometry of the reaction. \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of A and \
+                        $[ΔB]/Δt$ = rate of appearance of B.
+
+
                         Notice the factor (2) in the denominator, that's because for each 2 moles \
                         of A that are consumed, 1 mole of B is produced. So 1.5 $M/s$ is not the \
                         correct answer because that's the rate of disappearance of A, so in one \
@@ -130,6 +146,12 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "3 M/s",
                         explanation: """
+                        The rates of disappearance of reactants and appearance of products can be related \
+                        to each other based on the stoichiometry of the reaction. \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of A and \
+                        $[ΔB]/Δt$ = rate of appearance of B.
+
+
                         Notice the factor (2) in the denominator and not in the numerator. The \
                         rate of a reaction is based on 1 mole or M, so because of the \
                         stoichiometry of the reaction, the rate of the reaction will be half of \
@@ -138,14 +160,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: """
-                The rates of disappearance of reactants and appearance of products can be related \
-                to each other based on the stoichiometry of the reaction. \
-                $Rate = -[ΔA]/2Δt = [ΔB]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of A and \
-                $[ΔB]/Δt$ = rate of appearance of B.
-
-
-                """,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -156,6 +170,13 @@ extension QuizQuestionsList {
                 correctAnswer: QuizAnswerData(
                     answer: "4[ΔB]/Δt",
                     explanation: """
+                    The rates of disappearance of reactants and appearance of products can be related \
+                    to each other based on the stoichiometry of the reaction. \
+                    $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of \
+                    A and $[ΔB]/Δt =$ rate of appearance of B and $[ΔC]/Δt =$ the rate of appearance \
+                    of C.
+
+
                     Easily enough, if we solve for $-[ΔA]/Δt$ in the equation \
                     $-[ΔA]/4Δt = [ΔB]/Δt$, we get that $-[ΔA]/Δt = 4[ΔB]/Δt$.
                     """
@@ -164,6 +185,13 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "-1/4[ΔB]/Δt",
                         explanation: """
+                        The rates of disappearance of reactants and appearance of products can be related \
+                        to each other based on the stoichiometry of the reaction. \
+                        $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of \
+                        A and $[ΔB]/Δt =$ rate of appearance of B and $[ΔC]/Δt =$ the rate of appearance \
+                        of C.
+
+
                         So $-1/4[ΔB]/Δt$ is not the correct answer because that'd be equivalent to \
                         $[ΔA]/16Δt$.
                         """
@@ -171,6 +199,13 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "-[ΔC]/Δt",
                         explanation: """
+                        The rates of disappearance of reactants and appearance of products can be related \
+                        to each other based on the stoichiometry of the reaction. \
+                        $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of \
+                        A and $[ΔB]/Δt =$ rate of appearance of B and $[ΔC]/Δt =$ the rate of appearance \
+                        of C.
+
+
                         So $-[ΔC]/Δt$ is not the correct answer because that'd be equivalent to \
                         $[ΔA]/4Δt$.
                         """
@@ -178,20 +213,18 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "[ΔB]/[Δt]",
                         explanation: """
+                        The rates of disappearance of reactants and appearance of products can be related \
+                        to each other based on the stoichiometry of the reaction. \
+                        $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of \
+                        A and $[ΔB]/Δt =$ rate of appearance of B and $[ΔC]/Δt =$ the rate of appearance \
+                        of C.
+
+
                         So [ΔB]/Δt is not the correct answer because that'd be equivalent to \
                         $-[ΔA]/4Δt$.
                         """
                     )
                 ],
-                explanation: """
-                The rates of disappearance of reactants and appearance of products can be related \
-                to each other based on the stoichiometry of the reaction. \
-                $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of \
-                A and $[ΔB]/Δt =$ rate of appearance of B and $[ΔC]/Δt =$ the rate of appearance \
-                of C.
-
-
-                """,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -242,7 +275,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -282,7 +314,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -320,7 +351,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -356,7 +386,6 @@ extension QuizQuestionsList {
                         explanation: "Rate is always the same for some types of reactions."
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -396,7 +425,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -464,7 +492,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -505,7 +532,6 @@ extension QuizQuestionsList {
                         explanation: "There's enough info give an answer."
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -516,7 +542,9 @@ extension QuizQuestionsList {
                 correctAnswer: QuizAnswerData(
                     answer: "-5[ΔA]/2Δt",
                     explanation: """
-                    If we multiply the whole expression by 5 to get rid of the denominator, we get \
+                    The rates of disappearance of reactants and appearance of products can be related \
+                    to each other based on the stoichiometry of the reaction. \
+                    $Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt$. If we multiply the whole expression by 5 to get rid of the denominator, we get \
                     the equation of: $-5[ΔA]/2Δt = [ΔB]/Δt$.
                     """
                 ),
@@ -524,14 +552,18 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "2[ΔC]/5Δt",
                         explanation: """
-                        So $2[ΔC]/5Δt$ is not the correct answer because that'd be equivalent to \
+                        The rates of disappearance of reactants and appearance of products can be related \
+                        to each other based on the stoichiometry of the reaction. \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt$. So $2[ΔC]/5Δt$ is not the correct answer because that'd be equivalent to \
                         $2[ΔB]/25Δt$.
                         """
                     ),
                     QuizAnswerData(
                         answer: "-5[ΔC]/Δt",
                         explanation: """
-                        So $-5[ΔC]/Δt$ is not the correct answer because that'd be equivalent to \
+                        The rates of disappearance of reactants and appearance of products can be related \
+                        to each other based on the stoichiometry of the reaction. \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt$. So $-5[ΔC]/Δt$ is not the correct answer because that'd be equivalent to \
                         $-[ΔB]/Δt$.
                         """
                     ),
@@ -543,11 +575,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: """
-                The rates of disappearance of reactants and appearance of products can be related \
-                to each other based on the stoichiometry of the reaction. \
-                $Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt$.
-                """,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -566,7 +593,6 @@ extension QuizQuestionsList {
                     QuizAnswerData(answer: "M s^-1^", explanation: "M s^-1^ is the same as M/s."),
                     QuizAnswerData(answer: "Mol/L s", explanation: "Mol/L s is the same as M/s.")
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -595,7 +621,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -630,7 +655,6 @@ extension QuizQuestionsList {
                         position: .D
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -678,7 +702,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -715,7 +738,6 @@ extension QuizQuestionsList {
                         explanation: "After 3 months only 3% of the drug has decomposed."
                     )
                 ],
-                explanation: nil,
                 difficulty: .medium
             ),
             QuizQuestionData(
@@ -756,7 +778,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -797,7 +818,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             ),
             QuizQuestionData(
@@ -835,7 +855,6 @@ extension QuizQuestionsList {
                         """
                     )
                 ],
-                explanation: nil,
                 difficulty: .easy
             )
         ]

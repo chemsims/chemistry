@@ -127,14 +127,6 @@ fileprivate struct QuestionReviewCard: View {
         isCorrect ? Styling.Quiz.correctAnswerBorder : Styling.Quiz.wrongAnswerBorder
     }
 
-    private func handleExplanationPress() {
-        let duration = QuizViewModel.explanationExpansionDuration(question)
-
-        withAnimation( reduceMotion ? nil : .easeOut(duration: duration)) {
-            explanationIsExpanded.toggle()
-        }
-    }
-
     private var isCorrect: Bool {
         answer.firstAnswer == question.correctOption
     }
@@ -179,7 +171,6 @@ fileprivate struct QuizReviewSingleOption: View {
         }
         .minimumScaleFactor(1)
         .fixedSize(horizontal: false, vertical: true)
-//        .foregroundColor(Styling.Quiz.reviewCorrectAnswerFont)
     }
 
     private func handleExplanationPress() {
@@ -189,13 +180,7 @@ fileprivate struct QuizReviewSingleOption: View {
     }
 
     private var explanationString: TextLine {
-        let specificExplanation = question.options[option]?.explanation
-        let defaultExplanation = TextLine(stringLiteral: "Explanation for option \(option)")
-        if (isCorrect) {
-            let fullExplanation = question.explanation
-            return specificExplanation ?? fullExplanation ?? defaultExplanation
-        }
-        return specificExplanation ?? defaultExplanation
+        question.options[option]?.explanation ?? ""
     }
 
     private var isCorrect: Bool {

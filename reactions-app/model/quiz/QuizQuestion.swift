@@ -79,7 +79,6 @@ struct QuizQuestionData {
     let question: TextLine
     let correctAnswer: QuizAnswerData
     let otherAnswers: [QuizAnswerData]
-    let explanation: TextLine?
     let difficulty: QuizDifficulty
     let image: String?
     let table: QuizTable?
@@ -88,7 +87,6 @@ struct QuizQuestionData {
         question: TextLine,
         correctAnswer: QuizAnswerData,
         otherAnswers: [QuizAnswerData],
-        explanation: TextLine?,
         difficulty: QuizDifficulty,
         image: String? = nil,
         table: QuizTable? = nil
@@ -96,7 +94,6 @@ struct QuizQuestionData {
         self.question = question
         self.correctAnswer = correctAnswer
         self.otherAnswers = otherAnswers
-        self.explanation = explanation
         self.difficulty = difficulty
         self.image = image
         self.table = table
@@ -128,19 +125,11 @@ struct QuizQuestionData {
             add(answer, option, id: index)
         }
 
-        if let e = explanation {
-            QuizOption.allCases.forEach { o in
-                answers[o] = answers[o]?.prependingExplanation(e)
-            }
-        }
-
-
         return QuizQuestion(
             id: questionId,
             question: question,
             options: answers,
             correctOption: correctOption,
-            explanation: explanation,
             difficulty: difficulty,
             image: image,
             table: table
@@ -148,31 +137,16 @@ struct QuizQuestionData {
     }
 }
 
-fileprivate extension QuizAnswer {
-    func prependingExplanation(_ other: TextLine) -> QuizAnswer {
-        let appendWithSpace = explanation ?? ""
-        return QuizAnswer(
-            answer: answer,
-            explanation: other + appendWithSpace,
-            id: id
-        )
-    }
-}
-
 /// Definition of a quiz answer
-struct QuizAnswerData: ExpressibleByStringLiteral, Equatable {
+struct QuizAnswerData: Equatable {
     let answer: TextLine
-    let explanation: TextLine?
+    let explanation: TextLine
     let position: QuizOption?
 
-    init(answer: TextLine, explanation: TextLine? = nil, position: QuizOption? = nil) {
+    init(answer: TextLine, explanation: TextLine, position: QuizOption? = nil) {
         self.answer = answer
         self.explanation = explanation
         self.position = position
-    }
-
-    init(stringLiteral value: String) {
-        self.init(answer: TextLine(stringLiteral: value), explanation: nil)
     }
 }
 
@@ -182,43 +156,16 @@ struct QuizQuestion: Equatable {
     let question: TextLine
     let options: [QuizOption:QuizAnswer]
     let correctOption: QuizOption
-    let explanation: TextLine?
     let difficulty: QuizDifficulty
     let image: String?
     let table: QuizTable?
 
-    var hasExplanation: Bool {
-        explanation != nil
-    }
-
-    func hasExplanation(option: QuizOption) -> Bool {
-        options[option]?.explanation != nil
-    }
-
-    var longExplanation: [TextLine] {
-        var explanations = [TextLine]()
-        if let explanation = explanation {
-            explanations.append(explanation)
-        }
-
-        options.keys.sorted().forEach { option in
-            if let answer = options[option], let explanation = answer.explanation {
-                let optionSegment = TextSegment(content: "\(option.rawValue)) ", emphasised: true)
-                let answerSegment = answer.answer.content.map { $0.setEmphasised(true) }
-                let newLineSegment = TextSegment(content: "\n", emphasised: false)
-                let explanationSegment = explanation.content.map { $0.setItalic(true) }
-                let segments: [TextSegment] = [optionSegment] + answerSegment + [newLineSegment] + explanationSegment
-                explanations.append(TextLine(content: segments))
-            }
-        }
-        return explanations
-    }
 }
 
 /// Internal representation of a quiz answer
 struct QuizAnswer: Equatable {
     let answer: TextLine
-    let explanation: TextLine?
+    let explanation: TextLine
     let id: Int
 }
 

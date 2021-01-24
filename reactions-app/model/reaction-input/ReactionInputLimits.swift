@@ -120,9 +120,7 @@ struct ReactionInputLimitsWithoutT2: ReactionInputLimits {
     let concentration: ConcentrationEquation
 
     var c1Limits: InputLimits {
-//        let minC = concentration.getConcentration(at: tRange.max)
-//        let minInput = minC + cRange.minInputRange + cRange.valueSpacing
-        return InputLimits(
+        InputLimits(
             min: max(nonLinearC1, cRange.min),
             max: cRange.max,
             smallerOtherValue: cRange.min + cRange.minInputRange,
@@ -136,11 +134,10 @@ struct ReactionInputLimitsWithoutT2: ReactionInputLimits {
         var c = concentration
         var minC = c.getConcentration(at: tRange.max)
 
-        for i in 0...50 {
+        for _ in 0...50 {
             let minInput = minC + cRange.minInputRange + cRange.valueSpacing
             c = c.shiftWith(c: minInput, t: t1)
             let newMinC = c.getConcentration(at: tRange.max)
-            let delta = abs(newMinC - minC)
             minC = newMinC
         }
 

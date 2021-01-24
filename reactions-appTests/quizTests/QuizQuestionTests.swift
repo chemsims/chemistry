@@ -10,7 +10,7 @@ import XCTest
 class QuizQuestionTests: XCTestCase {
 
     func testCorrectOption() {
-        let quizData = QuizQuestionData(question: "foo", correctAnswer: "answer", otherAnswers: [], explanation: nil, difficulty: .easy)
+        let quizData = QuizQuestionData(question: "foo", correctAnswer: newAnswer("answer"), otherAnswers: [], difficulty: .easy)
         let quiz = quizData.createQuestion(questionId: 0)
         XCTAssertEqual(quiz.options.count, 1)
         XCTAssertEqual(quiz.question, quizData.question)
@@ -20,9 +20,8 @@ class QuizQuestionTests: XCTestCase {
     func testCorrectOptionWithPosition() {
         let quizData = QuizQuestionData(
             question: "foo",
-            correctAnswer: QuizAnswerData(answer: "answer", explanation: nil, position: .D),
+            correctAnswer: newAnswer("answer", position: .D),
             otherAnswers: [],
-            explanation: nil,
             difficulty: .easy
         )
         let quiz = quizData.createQuestion(questionId: 0)
@@ -35,11 +34,10 @@ class QuizQuestionTests: XCTestCase {
     func testCorrectionOptionNoPositionAndSingleOtherOptionWithPosition() {
         let quizData = QuizQuestionData(
             question: "foo",
-            correctAnswer: "answer",
+            correctAnswer: newAnswer("answer"),
             otherAnswers: [
-                QuizAnswerData(answer: "wrong answer", explanation: nil, position: .D)
+                newAnswer("wrong answer", position: .D)
             ],
-            explanation: nil,
             difficulty: .easy
         )
         let quiz = quizData.createQuestion(questionId: 0)
@@ -52,13 +50,12 @@ class QuizQuestionTests: XCTestCase {
     func testCorrectionOptionWithPositionAndOtherOptionsWithMixedPositions() {
         let quizData = QuizQuestionData(
             question: "foo",
-            correctAnswer: QuizAnswerData(answer: "answer", explanation: nil, position: .D),
+            correctAnswer: newAnswer("answer", position: .D),
             otherAnswers: [
-                QuizAnswerData(answer: "wrong 1", explanation: nil, position: .A),
-                QuizAnswerData(answer: "wrong 2", explanation: nil, position: .C),
-                QuizAnswerData(answer: "wrong 3", explanation: nil, position: nil),
+                newAnswer("wrong 1", position: .A),
+                newAnswer("wrong 2", position: .C),
+                newAnswer("wrong 3", position: nil),
             ],
-            explanation: nil,
             difficulty: .easy
         )
         let quiz = quizData.createQuestion(questionId: 0)
@@ -75,20 +72,27 @@ class QuizQuestionTests: XCTestCase {
     func testOtherOptionsWhereOnlyTheLastHasAPosition() {
         let quizData = QuizQuestionData(
             question: "foo",
-            correctAnswer: "bar",
+            correctAnswer: newAnswer("answer"),
             otherAnswers: [
-                "wrong 1",
-                "wrong 2",
-                QuizAnswerData(answer: "wrong 3", explanation: nil, position: .A)
+                newAnswer("wrong 1"),
+                newAnswer("wrong 2"),
+                newAnswer("wrong 3", position: .A)
             ],
-            explanation: nil,
             difficulty: .easy
         )
         let quiz = quizData.createQuestion(questionId: 0)
         XCTAssertEqual(quiz.options[.A], quizData.otherAnswers.last!.toAnswer(i: 2))
     }
 
-    /// Since the function chooses random elements, all tests are run multiple times to avoid flaky tests
+    private func newAnswer(_ str: String, position: QuizOption? = nil) -> QuizAnswerData {
+        QuizAnswerData(
+            answer: TextLine(stringLiteral: str),
+            explanation: TextLine(stringLiteral: str),
+            position: position
+        )
+    }
+
+    /// Since the quiz options are generated randomly, all tests are run multiple times to avoid flaky tests
     override func invokeTest() {
         (0...4).forEach { _ in
             super.invokeTest()
