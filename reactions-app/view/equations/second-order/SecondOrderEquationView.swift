@@ -94,7 +94,8 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
                     reactionHasStarted: reactionHasStarted,
                     currentTime: currentTime,
                     concentration: concentration,
-                    emphasise: emphasise
+                    emphasise: emphasise,
+                    reactant: reactant
                 )
             }
             .background(Color.white.padding(-EquationSize.padding))

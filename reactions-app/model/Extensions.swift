@@ -18,6 +18,12 @@ extension CGFloat {
     }
 }
 
+extension BinaryFloatingPoint {
+    func str(decimals: Int) -> String {
+        String(format: "%.\(decimals)f", Double(self))
+    }
+}
+
 extension Array where Self.Element : Equatable {
 
     func element(after element: Element) -> Element? {

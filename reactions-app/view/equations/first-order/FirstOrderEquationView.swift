@@ -97,7 +97,8 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
                     reactionHasStarted: reactionHasStarted,
                     currentTime: currentTime,
                     concentration: concentration,
-                    emphasise: emphasise
+                    emphasise: emphasise,
+                    reactant: reactant
                 )
             }
             .background(

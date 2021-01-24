@@ -43,6 +43,7 @@ struct ConcentrationTimeChartView: View {
             canSetInitialTime: canSetInitialTime,
             includeSliders: true,
             yLabel: "[\(display.reactant.name)]",
+            yAccessibilityLabel: yAccessibilityLabel,
             includeValuesInLabel: true,
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: highlightChart,
@@ -54,6 +55,19 @@ struct ConcentrationTimeChartView: View {
             input: input,
             display: display
         )
+    }
+
+    private var yAccessibilityLabel: String {
+        "concentration of \(display.reactant.name) \(yAccessibilityLabelSuffix), molar"
+    }
+
+    private var yAccessibilityLabelSuffix: String {
+        if (currentTime == nil && finalConcentration == nil) {
+            return "at t1"
+        } else if (currentTime == nil && finalConcentration != nil) {
+            return "at t2"
+        }
+        return "at current reaction time"
     }
 }
 
@@ -85,6 +99,7 @@ struct SingleConcentrationPlot: View {
             canSetInitialTime: false,
             includeSliders: false,
             yLabel: yLabel,
+            yAccessibilityLabel: "todo",
             includeValuesInLabel: false,
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: highlightChart,
@@ -114,6 +129,7 @@ struct GeneralTimeChartView: View {
     let canSetInitialTime: Bool
     let includeSliders: Bool
     let yLabel: String
+    let yAccessibilityLabel: String
     let includeValuesInLabel: Bool
     let canSetCurrentTime: Bool
 
@@ -187,6 +203,9 @@ struct GeneralTimeChartView: View {
         VStack(spacing: 1) {
             Text(yLabel)
                 .fixedSize()
+                .accessibility(label: Text(yAccessibilityLabel))
+                .accessibility(hidden: includeValuesInLabel)
+
             if (includeValuesInLabel) {
                 HStack(spacing: 1) {
                     animatingConcentration
@@ -194,8 +213,12 @@ struct GeneralTimeChartView: View {
                             width: settings.yLabelWidth * 0.7,
                             height: settings.chartSize * 0.18, alignment: .leading
                         )
+                        .accessibility(label: Text(yAccessibilityLabel))
+
+
                     Text("M")
                         .fixedSize()
+                        .accessibility(hidden: true)
                 }
                 .foregroundColor(.orangeAccent)
             }
@@ -209,13 +232,17 @@ struct GeneralTimeChartView: View {
         HStack(spacing: 1) {
             Text("Time")
                 .fixedSize()
+                .accessibility(label: Text("time, seconds"))
+                .accessibility(hidden: includeValuesInLabel)
             if (includeValuesInLabel) {
                 HStack(spacing: 1) {
                     animatingTime
                         .frame(width: settings.chartSize * 0.25, alignment: .leading)
                         .padding(.leading, settings.chartSize * 0.05)
+                        .accessibility(label: Text("time, seconds"))
                     Text("s")
                         .fixedSize()
+                        .accessibility(hidden: true)
                 }
                 .foregroundColor(.orangeAccent)
             }
@@ -232,6 +259,7 @@ struct GeneralTimeChartView: View {
             c1Disabled: finalConcentration != nil,
             c1Limits: limits.c1Limits,
             c2Limits: limits.c2Limits,
+            reactant: display.reactant.name,
             settings: settings
         )
         .frame(
@@ -273,27 +301,25 @@ struct GeneralTimeChartView: View {
         )
     }
 
+    @ViewBuilder
     private func animatingValue(
         equation: Equation?,
         defaultValue: CGFloat,
         decimals: Int
     ) -> some View {
         if (currentTime == nil || equation == nil) {
-            return
-                AnyView(
-                    Text(defaultValue.str(decimals: decimals))
-                        .minimumScaleFactor(0.5)
-                )
-        }
-
-        return AnyView(
+            Text(defaultValue.str(decimals: decimals))
+                .minimumScaleFactor(0.5)
+                .accessibility(value: Text(defaultValue.str(decimals: decimals)))
+        } else {
             AnimatingNumber(
                 x: currentTime!,
                 equation: equation!,
                 formatter: { $0.str(decimals: decimals)},
                 alignment: .leading
-            ).minimumScaleFactor(0.5)
-        )
+            )
+            .minimumScaleFactor(0.5)
+        }
     }
 
     private func chartWithData(
@@ -356,6 +382,7 @@ struct GeneralTimeChartView: View {
             axis
             .overlay(verticalIndicator, alignment: .leading)
             .overlay(horizontalIndicator, alignment: .bottom)
+            .accessibility(hidden: true)
         )
     }
 

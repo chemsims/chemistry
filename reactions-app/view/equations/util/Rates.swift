@@ -24,7 +24,14 @@ struct BlankRate: View {
                     .font(.system(size: EquationSettings.subscriptFontSize))
                     .offset(y: -10)
             }
-        }.font(.system(size: EquationSettings.fontSize))
+        }
+        .font(.system(size: EquationSettings.fontSize))
+        .accessibilityElement()
+        .accessibility(
+            label: Text(
+                "Rate equals k, times concentration of \(reactant) to the power of \(order)"
+            )
+        )
     }
 
     private func aligned<Content: View>(width: CGFloat, v: () -> Content) -> some View {
@@ -44,24 +51,39 @@ struct FilledRate: View {
     let currentTime: CGFloat?
     let concentration: ConcentrationEquation?
     let emphasise: Bool
+    let reactant: String
 
     var body: some View {
         HStack(spacing: 4) {
             value(equation: concentration?.rateEquation)
                 .foregroundColor(reactionHasStarted ? .orangeAccent : .black)
+                .accessibility(label: Text("Rate"))
+                .accessibility(addTraits: order == 0 ? [] : .updatesFrequently)
+
             FixedText("=")
+
             Placeholder(
                 value: concentration?.rateConstant.str(decimals: 3),
                 emphasise: emphasise
             )
+            .accessibility(label: Text("k"))
+
+
             HStack(spacing: 0) {
                 FixedText("(")
+                    .accessibility(hidden: true)
+
                 value(equation: concentration)
                     .foregroundColor(reactionHasStarted ? .orangeAccent : .black)
+                    .accessibility(label: Text("Concentration of \(reactant)"))
+                    .accessibility(addTraits: .updatesFrequently)
+
                 FixedText(")")
+                    .accessibility(hidden: true)
                 FixedText("\(order)")
                     .font(.system(size: EquationSettings.subscriptFontSize))
                     .offset(y: -10)
+                    .accessibility(label: Text("To the power of \(order)"))
             }
         }.font(.system(size: EquationSettings.fontSize))
     }
@@ -92,7 +114,8 @@ struct Rates_Previews: PreviewProvider {
                 reactionHasStarted: false,
                 currentTime: nil,
                 concentration: nil,
-                emphasise: false
+                emphasise: false,
+                reactant: "A"
             )
         }
     }

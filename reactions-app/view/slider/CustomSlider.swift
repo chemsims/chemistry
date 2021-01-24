@@ -22,7 +22,6 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     let includeFill: Bool
     let useHaptics: Bool
 
-
     init(
         value: Binding<Value>,
         axis: AxisPositionCalculations<Value>,
@@ -76,6 +75,14 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     axis: axis
                 )
             }
+            .accessibility(value: Text(value.str(decimals: 2)))
+            .accessibilityAdjustableAction { direction in
+                if (direction == .increment) {
+                    setNewValue(newValue: value + axis.accessibilityIncrement)
+                } else if (direction == .decrement) {
+                    setNewValue(newValue: value - axis.accessibilityIncrement)
+                }
+            }
         }
     }
 
@@ -97,22 +104,13 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                 DragGesture(minimumDistance: 0)
                     .onChanged { gesture in
                         let inputValue = orientation == .portrait ? gesture.location.y : gesture.location.x
-                        var newValue = axis.getValue(at: Value(inputValue))
+                        let newValue = axis.getValue(at: Value(inputValue))
                         setHandleScale(
                             geometry: geometry,
                             value: newValue,
                             location: inputValue
                         )
-                        if (newValue > axis.maxValue) {
-                            newValue = axis.maxValue
-                        } else if (newValue < axis.minValue) {
-                            newValue = axis.minValue
-                        }
-                        if (useHaptics) {
-                            handleHaptics(newValue: newValue, oldValue: self.value)
-                        }
-
-                        self.value = newValue
+                        setNewValue(newValue: newValue)
                     }.onEnded { _ in
                         let animation = Animation.spring(
                             response: 0.1,
@@ -125,6 +123,19 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             )
     }
 
+    private func setNewValue(newValue value: Value) {
+        var newValue = value
+        if (newValue > axis.maxValue) {
+            newValue = axis.maxValue
+        } else if (newValue < axis.minValue) {
+            newValue = axis.minValue
+        }
+        if (useHaptics) {
+            handleHaptics(newValue: newValue, oldValue: self.value)
+        }
+
+        self.value = newValue
+    }
 
     /// Sets the handle scale when `value` exceeds the axis limits.
     /// The scale is calculated using the formula a(1 - e^(bx)), where

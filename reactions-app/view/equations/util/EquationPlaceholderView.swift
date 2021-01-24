@@ -21,9 +21,11 @@ struct Placeholder: View {
                 .modifier(PlaceholderFraming())
                 .animation(.none)
                 .foregroundColor(emphasise ? .orangeAccent : .black)
+                .accessibility(value: Text(value!))
         } else {
             Box()
                 .modifier(PlaceholderFraming())
+                .accessibility(value: Text("Place-holder"))
         }
     }
 }

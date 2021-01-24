@@ -14,6 +14,7 @@ struct NextButton: View {
             action: action,
             systemImage: "arrowtriangle.right.fill"
         )
+        .accessibility(label: Text("Next"))
     }
 }
 
@@ -25,6 +26,7 @@ struct PreviousButton: View {
             action: action,
             systemImage: "arrowtriangle.left.fill"
         )
+        .accessibility(label: Text("Back"))
     }
 }
 

@@ -52,8 +52,11 @@ struct AnimatingNumberModifier: AnimatableModifier {
     }
 
     func body(content: Content) -> some View {
-        content
-            .overlay(Text(formatter(equation.getY(at: x))), alignment: alignment)
+        let value = Text(formatter(equation.getY(at: x)))
+        return content
+            .overlay(value, alignment: alignment)
+            .accessibility(value: value)
+            .accessibility(addTraits: .updatesFrequently)
     }
 
 }

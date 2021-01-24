@@ -14,6 +14,9 @@ struct DualValueSlider: View {
     let value1Limits: InputLimits
     let value2Limits: InputLimits
 
+    let value1Label: String
+    let value2Label: String
+
     let axis: AxisPositionCalculations<CGFloat>
     let orientation: Orientation
     let settings: TimeChartGeometrySettings
@@ -31,6 +34,8 @@ struct DualValueSlider: View {
                     disabled: value1Disabled,
                     showBar: true
                 )
+                .accessibility(label: Text(value1Label))
+                .accessibility(hidden: value2 != nil)
             }
 
             if (value2 != nil) {
@@ -40,6 +45,7 @@ struct DualValueSlider: View {
                     disabled: false,
                     showBar: canSetInitialValue ? false : true
                 )
+                .accessibility(label: Text(value2Label))
             }
         }
     }
@@ -60,7 +66,8 @@ struct DualValueSlider: View {
             barColor: Color.black,
             orientation: orientation,
             includeFill: false
-        ).disabled(disabled)
+        )
+        .disabled(disabled)
     }
 
     private func axis(limits: InputLimits) -> AxisPositionCalculations<CGFloat> {

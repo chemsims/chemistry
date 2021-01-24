@@ -20,6 +20,11 @@ struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
         return (position - c) / m
     }
 
+    /// Returns the increment to use for accessibility
+    var accessibilityIncrement: Value {
+        (maxValue - minValue) / 10
+    }
+
     /// Returns a new axis with the minimum value updated to the provided value.
     /// The minimum value position is updated to keep the same axis scale
     func updateMin(value: Value) -> AxisPositionCalculations<Value> {

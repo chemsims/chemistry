@@ -14,6 +14,7 @@ struct ConcentrationValueSlider: View {
     let c1Limits: InputLimits
     let c2Limits: InputLimits
 
+    let reactant: String
     let settings: TimeChartGeometrySettings
 
     var body: some View {
@@ -22,6 +23,8 @@ struct ConcentrationValueSlider: View {
             value2: $finalConcentration,
             value1Limits: c1Limits,
             value2Limits: c2Limits,
+            value1Label: "Concentration of \(reactant) at start of reaction, molar",
+            value2Label: "Concentration of \(reactant) at end of reaction, molar",
             axis: settings.yAxis,
             orientation: .portrait,
             settings: settings,
@@ -54,6 +57,8 @@ struct TimeValueSlider: View {
             value2: $t2,
             value1Limits: t1Limits,
             value2Limits: t2Limits,
+            value1Label: "Start time of reaction in Moles",
+            value2Label: "End time of reaction in seconds",
             axis: settings.xAxis,
             orientation: .landscape,
             settings: settings,
