@@ -141,9 +141,8 @@ struct ConcentrationPlotView: View {
     }
 
     private var label: String {
-        """
-        Plot of time in seconds vs concentration of \(display.reactant.name) and \(display.product.name) in Molar
-        """
+        let bMsg = concentrationB == nil ? "" : ", and concentration of \(display.product.name) in Molar"
+        return "Chart showing time in seconds, concentration of \(display.reactant.name) in Molar\(bMsg)"
     }
 
     private var currentValueModifier: some ViewModifier {
@@ -151,8 +150,9 @@ struct ConcentrationPlotView: View {
             x: currentTime
         ) { t in
             let a = concentrationA.getY(at: t).str(decimals: 2)
-            let b = (concentrationB?.getY(at: t)).map { ", B \($0.str(decimals: 2))" } ?? ""
-            return "T \(t.str(decimals: 1)), A \(a)\(b)"
+            let b = (concentrationB?.getY(at: t)).map { ", \($0.str(decimals: 2))" } ?? ""
+            let b2 = concentrationB == nil ? "" : ", B"
+            return "\(t.str(decimals: 1)), \(a)\(b). Time, A\(b2)"
         }
     }
 
