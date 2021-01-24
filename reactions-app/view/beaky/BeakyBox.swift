@@ -22,7 +22,9 @@ struct BeakyBox: View {
         VStack(alignment: .leading, spacing: verticalSpacing) {
             HStack(alignment: .bottom, spacing: 0) {
                 SpeechBubble(lines: statement, fontSize: fontSize)
+                    .accessibility(sortPriority: 1)
                     .frame(width: bubbleWidth, height: bubbleHeight)
+
                 Beaky()
                     .frame(height: beakyHeight)
             }

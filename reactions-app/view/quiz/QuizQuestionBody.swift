@@ -82,7 +82,8 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private var answer: some View {
-        ZStack {
+        let hasSelected = model.selectedAnswer?.allAnswers.contains(option) ?? false
+        return ZStack {
             Group {
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .foregroundColor(answerBackground)
@@ -105,11 +106,27 @@ fileprivate struct QuizAnswerOption: View {
             .onTapGesture(perform: { handleAnswer() })
         }
         .fixedSize(horizontal: false, vertical: true)
+        .accessibilityElement()
+        .accessibility(label: Text(label))
+        .accessibility(addTraits: .isButton)
+        .accessibility(addTraits: hasSelected ? .isSelected : [])
+    }
+
+    private var label: String {
+        let optionLabel = model.optionText(option).asString
+        var prefix = ""
+        if (styleCorrect) {
+            prefix = "Correct. "
+        } else if (styleIncorrect) {
+            prefix = "Incorrect. "
+        }
+        return "Option \(option.rawValue). \(prefix)\(optionLabel)"
     }
 
     private var explanation: some View {
         let explanation = model.currentQuestion.options[option]?.explanation
         let defaultExplanation = TextLine(stringLiteral: "Explanation for option \(option)")
+        let label = (explanation ?? defaultExplanation).asString
         return
             TextLinesView(
                 line: (explanation ?? defaultExplanation).italic(),
@@ -117,6 +134,7 @@ fileprivate struct QuizAnswerOption: View {
             )
             .padding()
             .fixedSize(horizontal: false, vertical: true)
+            .accessibility(label: Text("Explanation for option \(option.rawValue). \(label)"))
     }
 
     private var overlay: some View {

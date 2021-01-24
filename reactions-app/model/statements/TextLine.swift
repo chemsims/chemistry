@@ -38,6 +38,12 @@ extension TextLine {
             acc + next.content.count
         }
     }
+
+    var asString: String {
+        content.reduce("") { (acc, next) in
+            acc + next.content
+        }
+    }
 }
 
 extension TextLine {

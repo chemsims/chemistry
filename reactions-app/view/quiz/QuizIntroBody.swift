@@ -59,6 +59,10 @@ struct QuizIntroBody: View {
         }.onTapGesture {
             model.quizDifficulty = difficulty
         }
+        .accessibilityElement()
+        .accessibility(addTraits: .isButton)
+        .accessibility(addTraits: isSelected ? .isSelected : [])
+        .accessibility(label: Text("\(difficulty.displayName), \(difficulty.quizLength) questions"))
     }
 
     private func questionCount(_ count: Int) -> some View {
