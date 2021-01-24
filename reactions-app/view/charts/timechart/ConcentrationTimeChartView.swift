@@ -188,7 +188,8 @@ struct GeneralTimeChartView: View {
                     timeLabel
                 }
             }
-        }.lineLimit(1)
+        }
+        .lineLimit(1)
         .minimumScaleFactor(0.5)
     }
 

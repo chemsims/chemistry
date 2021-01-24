@@ -52,9 +52,50 @@ struct AnimatingNumberModifier: AnimatableModifier {
     }
 
     func body(content: Content) -> some View {
-        let value = Text(formatter(equation.getY(at: x)))
+        content
+            .modifier(
+                AnimatingValueModifier(
+                    x: x,
+                    alignment: alignment,
+                    format: { x in
+                        formatter(equation.getY(at: x))
+                    }
+                )
+            )
+    }
+
+}
+
+struct AnimatingValueModifier: AnimatableModifier {
+
+    var x: CGFloat
+    let alignment: Alignment
+    var format: (CGFloat) -> String
+
+    var animatableData: CGFloat {
+        get { x }
+        set { x = newValue }
+    }
+
+    func body(content: Content) -> some View {
+        let value = Text(format(x))
         return content
             .overlay(value, alignment: alignment)
+            .accessibility(value: value)
+            .accessibility(addTraits: .updatesFrequently)
+    }
+
+}
+
+/// An animatable modifier which also hides the view, for example to use in accessibility values
+struct HiddenAnimatingValueModifier: AnimatableModifier {
+    var x: CGFloat
+    let format: (CGFloat) -> String
+
+    func body(content: Content) -> some View {
+        let value = Text(format(x))
+        return content
+            .overlay(value.opacity(0))
             .accessibility(value: value)
             .accessibility(addTraits: .updatesFrequently)
     }

@@ -122,8 +122,38 @@ struct ConcentrationPlotView: View {
                 highlightLhs: highlightLhsCurve,
                 highlightRhs: highlightRhsCurve
             )
+        }
+        .frame(width: settings.chartSize, height: settings.chartSize)
+        .accessibilityElement()
+        .modifier(currentValueModifier)
+        .accessibility(label: Text(label))
+        .accessibilityAdjustableAction { direction in
+            guard canSetCurrentTime else {
+                return
+            }
+            let dt = finalTime - initialTime
+            let increment = dt / 10
+            let sign: CGFloat = direction == .increment ? 1 : -1
+            let newValue = currentTime + (sign * increment)
+            currentTime = min(finalTime, max(newValue, initialTime))
+        }
+        .disabled(!canSetCurrentTime)
+    }
 
-        }.frame(width: settings.chartSize, height: settings.chartSize)
+    private var label: String {
+        """
+        Plot of time in seconds vs concentration of \(display.reactant.name) and \(display.product.name) in Molar
+        """
+    }
+
+    private var currentValueModifier: some ViewModifier {
+        HiddenAnimatingValueModifier(
+            x: currentTime
+        ) { t in
+            let a = concentrationA.getY(at: t).str(decimals: 2)
+            let b = (concentrationB?.getY(at: t)).map { ", B \($0.str(decimals: 2))" } ?? ""
+            return "T \(t.str(decimals: 1)), A \(a)\(b)"
+        }
     }
 
     private func verticalIndicator(at time: CGFloat) -> some View {
@@ -319,3 +349,4 @@ struct TimeChartPlotView_Previews: PreviewProvider {
     static var equation = ZeroOrderConcentration(t1: 0, c1: 0.8, t2: 10, c2: 0.2)
     static var equation2 = ZeroOrderConcentration(t1: 0, c1: 0.2, t2: 10, c2: 0.8)
 }
+
