@@ -7,7 +7,7 @@ import SwiftUI
 
 struct Beaky: View {
     var body: some View {
-        Image("beaky")
+        Image("beaky", label: Text("test tube with a smiling face"))
             .resizable()
             .aspectRatio(contentMode: .fit)
     }

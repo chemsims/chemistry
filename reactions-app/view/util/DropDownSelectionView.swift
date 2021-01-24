@@ -123,8 +123,6 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
 struct DropDownSelectionView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-//            Rectangle()
-
             DropDownSelectionView(
                 title: "foo",
                 options: ReactionOrder.allCases,

@@ -67,6 +67,8 @@ struct ConcentrationTable: View {
                     .padding(0.2 * buttonSize)
                     .rotationEffect(showTable ? .degrees(135) : .zero)
             }
+            .accessibilityElement()
+            .accessibility(label: Text("\(showTable ? "hide" : "show") concentration table"))
         }
         .foregroundColor(.black)
         .frame(width: buttonSize, height: buttonSize)
