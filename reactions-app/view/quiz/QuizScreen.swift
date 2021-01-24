@@ -166,10 +166,20 @@ fileprivate struct QuizScreenWithSettings: View {
                 progressLabel
             }
         }
+        .accessibilityElement()
+        .accessibility(label: Text("Quiz progress"))
+        .accessibility(value: Text(accessibilityValue))
+    }
+
+    private var accessibilityValue: String {
+        if (model.quizState == .pending) {
+            return "0 out of \(model.quizLength)"
+        }
+        return "\(labelLhs) out of \(model.quizLength)"
     }
 
     private var progressLabel: some View {
-        Text("\(model.currentIndex + 1)/\(model.quizLength)")
+        Text("\(labelLhs)/\(model.quizLength)")
         .font(.system(size: settings.progressFontSize))
         .frame(width: settings.progressLabelWidth)
         .minimumScaleFactor(0.7)
@@ -190,6 +200,10 @@ fileprivate struct QuizScreenWithSettings: View {
             }
         )
     }
+
+    private var labelLhs: String {
+        "\(model.currentIndex + 1)"
+    }
 }
 
 
@@ -198,10 +212,12 @@ fileprivate struct NotificationView: View {
     @Binding var isShowing: Bool
     @State private var offset: CGFloat = 0
 
+    @State private var didPostNotification = false
+
     let fontSize: CGFloat
 
     var body: some View {
-        Text("Choose the correct answer to progress to the next question")
+        Text(message)
             .font(.system(size: fontSize))
             .padding()
             .background(
@@ -227,7 +243,24 @@ fileprivate struct NotificationView: View {
     private func scheduleRemoval() {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
             self.doHide()
+
+            // Read out the notification after a small delay, otherwise the system ignores
+            // it while reading out the description of the next button itself
+            postNotification()
+
         }
+    }
+
+    // Ensure notification is not sent more than once
+    private func postNotification() {
+        guard !didPostNotification else {
+            return
+        }
+        UIAccessibility.post(
+            notification: .announcement,
+            argument: NSString(string: message)
+        )
+        didPostNotification = true
     }
 
     private func doHide() {
@@ -257,6 +290,10 @@ fileprivate struct NotificationView: View {
                     }
                 }
             }
+    }
+
+    private var message: String {
+        "Choose the correct answer to progress to the next question"
     }
 }
 

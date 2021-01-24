@@ -120,7 +120,7 @@ fileprivate struct QuizAnswerOption: View {
         } else if (styleIncorrect) {
             prefix = "Incorrect. "
         }
-        return "Option \(option.rawValue). \(prefix)\(optionLabel)"
+        return "\(prefix)\(optionLabel). Option \(option.rawValue)"
     }
 
     private var explanation: some View {
