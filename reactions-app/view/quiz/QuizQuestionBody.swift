@@ -20,6 +20,8 @@ struct QuizQuestionsBody: View {
                     settings: settings,
                     tableWidth: settings.tableWidthQuestionCard
                 )
+                .accessibility(sortPriority: 2)
+                .accessibility(addTraits: .isHeader)
 
                 answers
             }
@@ -60,7 +62,6 @@ struct QuizQuestionsBody: View {
             option: option
         )
     }
-
 }
 
 fileprivate struct QuizAnswerOption: View {
@@ -75,6 +76,7 @@ fileprivate struct QuizAnswerOption: View {
     var body: some View {
         VStack(spacing: 0) {
             answer
+                .accessibility(addTraits: .isHeader)
             if (model.showExplanation(option: option)) {
                 explanation
             }
@@ -82,8 +84,7 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private var answer: some View {
-        let hasSelected = model.selectedAnswer?.allAnswers.contains(option) ?? false
-        return ZStack {
+        ZStack {
             Group {
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .foregroundColor(answerBackground)
@@ -109,7 +110,8 @@ fileprivate struct QuizAnswerOption: View {
         .accessibilityElement()
         .accessibility(label: Text(label))
         .accessibility(addTraits: .isButton)
-        .accessibility(addTraits: hasSelected ? .isSelected : [])
+        .accessibility(addTraits: hasSelectedOption ? .isSelected : [])
+        .disabled(answerIsDisabled)
     }
 
     private var label: String {
@@ -120,21 +122,20 @@ fileprivate struct QuizAnswerOption: View {
         } else if (styleIncorrect) {
             prefix = "Incorrect. "
         }
-        return "\(prefix)\(optionLabel). Option \(option.rawValue)"
+        return "\(prefix)\(optionLabel). Option \(option.label) out of four"
     }
 
     private var explanation: some View {
-        let explanation = model.currentQuestion.options[option]?.explanation
-        let defaultExplanation = TextLine(stringLiteral: "Explanation for option \(option)")
-        let label = (explanation ?? defaultExplanation).asString
+        let explanation = model.currentQuestion.options[option]?.explanation ?? ""
+        let label = (explanation).asString
         return
             TextLinesView(
-                line: (explanation ?? defaultExplanation).italic(),
+                line: (explanation).italic(),
                 fontSize: settings.answerFontSize
             )
             .padding()
             .fixedSize(horizontal: false, vertical: true)
-            .accessibility(label: Text("Explanation for option \(option.rawValue). \(label)"))
+            .accessibility(label: Text("Explanation for option \(option.label). \(label)"))
     }
 
     private var overlay: some View {
@@ -151,7 +152,7 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private func runBadgeAnimation() {
-        guard !reduceMotion, model.selectedAnswer?.allAnswers.contains(option) ?? false else {
+        guard !reduceMotion, hasSelectedOption else {
             return
         }
         if (option == model.correctOption) {
@@ -173,12 +174,18 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private func handleAnswer() {
-        let notFinished = !model.hasSelectedCorrectOption
-        let notSelected = !(model.selectedAnswer?.allAnswers.contains(option) ?? false)
-        guard notFinished && notSelected else {
+        guard !answerIsDisabled else {
             return
         }
         model.answer(option: option)
+    }
+
+    private var answerIsDisabled: Bool {
+        return model.hasSelectedCorrectOption || hasSelectedOption
+    }
+
+    private var hasSelectedOption: Bool {
+        model.selectedAnswer?.allAnswers.contains(option) ?? false
     }
 
     private var answerBackground: Color {
@@ -207,7 +214,6 @@ fileprivate struct QuizAnswerOption: View {
 
     private var styleIncorrect: Bool {
         let isIncorrect = model.correctOption != option
-        let isSelected = model.selectedAnswer?.allAnswers.contains(option) ?? false
-        return isIncorrect && isSelected
+        return isIncorrect && hasSelectedOption
     }
 }

@@ -12,10 +12,7 @@ struct QuizIntroBody: View {
 
     var body: some View {
         VStack {
-            Text("Let's take a quiz!")
-                .font(.system(size: settings.fontSize))
-            Text("Choose the difficulty level of the quiz")
-                .font(.system(size: settings.h2FontSize))
+            header
             HStack {
                 Spacer()
                 Button(action: model.skip) {
@@ -26,9 +23,24 @@ struct QuizIntroBody: View {
             }
             ForEach(model.availableDifficulties, id: \.rawValue) { difficulty in
                 quizDifficultyOption(difficulty: difficulty)
+                    .accessibility(addTraits: .isHeader)
             }
         }
         .minimumScaleFactor(0.5)
+    }
+
+    private var header: some View {
+        let heading = "Let's take a quiz"
+        let subHeading = "Choose the difficulty level of the quiz"
+        return VStack {
+            Text(heading)
+                .font(.system(size: settings.fontSize))
+            Text(subHeading)
+                .font(.system(size: settings.h2FontSize))
+        }
+        .accessibilityElement()
+        .accessibility(addTraits: .isHeader)
+        .accessibility(label: Text("\(heading), \(subHeading)"))
     }
 
     private func quizDifficultyOption(

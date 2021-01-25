@@ -15,13 +15,9 @@ struct QuizReviewBody: View {
                 VStack(spacing: 20) {
                     heading
                         .fixedSize(horizontal: false, vertical: true)
-                    ForEach(model.availableQuestions, id: \.id) { question in
-                        if (model.selectedAnswer(id: question.id) != nil) {
-                            reviewCard(
-                                question: question,
-                                answer: model.selectedAnswer(id: question.id)!
-                            )
-                        }
+
+                    ForEach(0..<filteredQuestions.count) { index in
+                        reviewCard(index: index)
                     }
                 }
                 .frame(width: settings.contentWidth)
@@ -31,23 +27,46 @@ struct QuizReviewBody: View {
         }
     }
 
+    private var filteredQuestions: [QuizQuestion] {
+        model.availableQuestions.filter {
+            model.selectedAnswer(id: $0.id) != nil
+        }
+    }
+
+    private var correctCount: Int {
+        filteredQuestions.filter {  q in
+            model.selectedAnswer(id: q.id)!.firstAnswer == q.correctOption
+        }.count
+    }
+
     private var heading: some View {
-        HStack(spacing: 0) {
+        let header = "You got \(correctCount) correct out of \(filteredQuestions.count)"
+        let subHeader = "Let's review the questions!"
+
+        return HStack(spacing: 0) {
             Spacer()
             VStack(spacing: 5) {
-                Text("You got \(model.correctAnswers) correct out of \(model.quizLength)")
-                Text("Let's review the questions!")
+                Text(header)
+                Text(subHeader)
                     .font(.system(size: settings.h2FontSize))
             }
+            .accessibilityElement()
+            .accessibility(addTraits: .isHeader)
+            .accessibility(label: Text("\(header), \(subHeader)"))
             Spacer()
         }
     }
 
-    private func reviewCard(question: QuizQuestion, answer: QuizAnswerInput) -> some View {
+    private func reviewCard(
+        index: Int
+    ) -> some View {
+        let question = filteredQuestions[index]
         return QuestionReviewCard(
             question: question,
-            answer: answer,
-            settings: settings
+            answer: model.selectedAnswer(id: question.id)!,
+            settings: settings,
+            questionNumber: index + 1,
+            totalQuestions: filteredQuestions.count
         )
         .fixedSize(horizontal: false, vertical: true)
     }
@@ -58,6 +77,9 @@ fileprivate struct QuestionReviewCard: View {
     let question: QuizQuestion
     let answer: QuizAnswerInput
     let settings: QuizLayoutSettings
+
+    let questionNumber: Int
+    let totalQuestions: Int
 
     @State private var explanationIsExpanded: Bool = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -73,6 +95,8 @@ fileprivate struct QuestionReviewCard: View {
                     settings: settings,
                     tableWidth: settings.tableWidthReviewCard
                 )
+                .accessibility(label: Text(label))
+                .accessibility(addTraits: .isHeader)
 
                 ForEach(answer.allAnswers, id: \.self) { option in
                     optionLine(
@@ -87,6 +111,12 @@ fileprivate struct QuestionReviewCard: View {
         .padding(.horizontal, settings.questionReviewPadding)
         .font(.system(size: settings.questionFontSize))
         .background(reviewBackground)
+    }
+
+    private var label: String {
+        let correct = isCorrect ? "correct" : "incorrect"
+        let prefix = "Question \(questionNumber) of \(totalQuestions), \(correct)"
+        return "\(prefix). \(question.question.asString)"
     }
 
     private func optionLine(
@@ -120,6 +150,7 @@ fileprivate struct QuestionReviewCard: View {
             QuizAnswerIconOverlay(isCorrect: isCorrect)
                 .frame(width: 30, height: 30)
                 .offset(x: 10, y: -10)
+                .accessibility(hidden: true)
         }
     }
 

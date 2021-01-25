@@ -33,6 +33,7 @@ fileprivate struct QuizScreenWithSettings: View {
                 if (model.quizState != .completed) {
                     progressBar
                         .zIndex(2)
+                        .accessibility(sortPriority: 0.5)
                 }
 
                 if (model.quizState == .running) {
@@ -40,9 +41,11 @@ fileprivate struct QuizScreenWithSettings: View {
                         settings: settings,
                         model: model
                     )
+                    .accessibility(sortPriority: 2)
                 }
                 if (model.quizState == .completed) {
                     QuizReviewBody(settings: settings, model: model)
+                        .accessibility(sortPriority: 2)
                 }
 
                 if (model.quizState == .pending) {
@@ -54,6 +57,7 @@ fileprivate struct QuizScreenWithSettings: View {
                             model: model
                         )
                         .padding(.vertical, settings.progressBarPadding)
+                        .accessibility(sortPriority: 2)
                         Spacer()
                             .frame(width: settings.navTotalWidth)
                     }
@@ -86,39 +90,54 @@ fileprivate struct QuizScreenWithSettings: View {
         HStack(spacing: 0) {
             VStack(spacing: 0) {
                 Spacer()
-                PreviousButton(action: model.back)
+                PreviousButton(action: { navigate(next: false)} )
                     .frame(width: settings.leftNavSize, height: settings.leftNavSize)
                     .padding(settings.leftNavPadding)
+                    .accessibility(sortPriority: 0.7)
             }
             Spacer()
             VStack(spacing: 5) {
                 Spacer()
                 if (model.quizState == .completed) {
                     retryButton
+                        .accessibility(sortPriority: 0.8)
                 }
 
                 nextButton
+                    .accessibility(sortPriority: 0.9)
             }
         }
     }
 
     private var nextButton: some View {
         ZStack {
-            NextButton(action: model.next)
+            NextButton(action: { navigate(next: true)} )
                 .frame(width: settings.rightNavSize, height: settings.rightNavSize)
                 .disabled(nextIsDisabled)
                 .opacity(nextIsDisabled ? 0.3 : 1)
                 .padding(settings.rightNavPadding)
+                .ifTrue(nextIsDisabled) {
+                    $0.accessibility(hint: Text("Select correct answer to enable next button"))
+                }
 
             if (nextIsDisabled) {
                 Button(action: { showNotification = true }) {
                     Circle()
                         .opacity(0)
                 }
+                .accessibility(hidden: true)
             }
         }.frame(width: settings.rightNavSize, height: settings.rightNavSize)
     }
 
+    private func navigate(next: Bool) {
+        UIAccessibility.post(notification: .screenChanged, argument: NSString(""))
+        if (next) {
+            model.next()
+        } else {
+            model.back()
+        }
+    }
 
     private var retryButton: some View {
         Button(action: model.restart) {
@@ -134,6 +153,8 @@ fileprivate struct QuizScreenWithSettings: View {
                     .font(.system(size: 15, weight: .bold))
             }
             .frame(width: settings.leftNavSize, height: settings.navSize)
+            .accessibilityElement()
+            .accessibility(label: Text("Restart quiz"))
         }
         .buttonStyle(NavButtonButtonStyle())
     }
@@ -206,13 +227,21 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 }
 
+fileprivate extension View {
+    @ViewBuilder
+    func ifTrue<T: View>(_ condition: Bool, apply: (Self) -> T) -> some View {
+        if (condition) {
+            apply(self)
+        } else {
+            self
+        }
+    }
+}
 
 fileprivate struct NotificationView: View {
 
     @Binding var isShowing: Bool
     @State private var offset: CGFloat = 0
-
-    @State private var didPostNotification = false
 
     let fontSize: CGFloat
 
@@ -243,24 +272,7 @@ fileprivate struct NotificationView: View {
     private func scheduleRemoval() {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
             self.doHide()
-
-            // Read out the notification after a small delay, otherwise the system ignores
-            // it while reading out the description of the next button itself
-            postNotification()
-
         }
-    }
-
-    // Ensure notification is not sent more than once
-    private func postNotification() {
-        guard !didPostNotification else {
-            return
-        }
-        UIAccessibility.post(
-            notification: .announcement,
-            argument: NSString(string: message)
-        )
-        didPostNotification = true
     }
 
     private func doHide() {
