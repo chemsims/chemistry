@@ -20,7 +20,6 @@ struct QuizQuestionsBody: View {
                     settings: settings,
                     tableWidth: settings.tableWidthQuestionCard
                 )
-                .accessibility(sortPriority: 2)
                 .accessibility(addTraits: .isHeader)
 
                 answers
@@ -76,7 +75,6 @@ fileprivate struct QuizAnswerOption: View {
     var body: some View {
         VStack(spacing: 0) {
             answer
-                .accessibility(addTraits: .isHeader)
             if (model.showExplanation(option: option)) {
                 explanation
             }
@@ -135,7 +133,8 @@ fileprivate struct QuizAnswerOption: View {
             )
             .padding()
             .fixedSize(horizontal: false, vertical: true)
-            .accessibility(label: Text("Explanation for option \(option.label). \(label)"))
+            .accessibility(label: Text(label))
+            .accessibility(hint: Text("Explanation for option \(option.label)"))
     }
 
     private var overlay: some View {

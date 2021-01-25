@@ -23,7 +23,6 @@ struct QuizIntroBody: View {
             }
             ForEach(model.availableDifficulties, id: \.rawValue) { difficulty in
                 quizDifficultyOption(difficulty: difficulty)
-                    .accessibility(addTraits: .isHeader)
             }
         }
         .minimumScaleFactor(0.5)
