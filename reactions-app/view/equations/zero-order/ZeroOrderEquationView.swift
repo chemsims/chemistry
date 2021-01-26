@@ -56,6 +56,8 @@ struct ZeroOrderEquationView: View {
             )
             .frame(width: maxWidth, height: maxHeight)
         }
+        .accessibilityElement(children: .contain)
+        .accessibility(sortPriority: 0)
     }
 }
 
@@ -81,6 +83,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
         VStack(alignment: .leading, spacing: 20) {
             VStack(alignment: .leading, spacing: 4) {
                 FilledRateConstant()
+                    .accessibility(sortPriority: 4)
                 EmptyRateConstant(
                     deltaC: deltaC?.str(decimals: 2),
                     deltaT: deltaT?.str(decimals: 2),
@@ -91,6 +94,8 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
                     rate: concentration?.rateConstant.str(decimals: 2),
                     emphasise: emphasise
                 )
+                .accessibilityElement(children: .contain)
+                .accessibility(sortPriority: 3)
             }
             .background(Color.white.padding(-EquationSizes.padding))
             .colorMultiply(rateColorMultipy)
@@ -144,7 +149,7 @@ fileprivate struct FilledRateConstant: View {
         .accessibilityElement()
         .accessibility(
             label: Text(
-                "Rate equals k equals negative delta c divided by delta t. Equals negative c2 minus c1, divided by t2 minus t1"
+                "Rate equals k equals negative delta c divided by delta t. Equals negative, c2 minus c1, divided by t2 minus t1"
             )
         )
     }
@@ -204,15 +209,19 @@ fileprivate struct EmptyRateConstant: View {
     var body: some View {
         HStack(spacing: EquationSettings.hSpacing) {
             Rate()
+                .accessibility(sortPriority: 5)
             Placeholder(
                 value: rate,
                 emphasise: emphasise
             )
             .accessibility(label: Text("k"))
+            .accessibility(sortPriority: 4)
             Text("=")
                 .fixedSize()
+                .accessibility(sortPriority: 3)
             fraction1
             FixedText("=")
+                .accessibility(sortPriority: 1)
             fraction2
         }
         .font(.system(size: EquationSettings.fontSize))
@@ -223,14 +232,18 @@ fileprivate struct EmptyRateConstant: View {
         HStack(spacing: 0) {
             FixedText("-")
                 .accessibility(label: Text("negative"))
+                .accessibility(sortPriority: 2.9)
             VStack(spacing: 1) {
                 Placeholder(value: deltaC, emphasise: emphasise)
                     .accessibility(label: Text("delta c"))
+                    .accessibility(sortPriority: 2.8)
                 Rectangle()
                     .frame(width: 60, height: 2)
                     .accessibility(label: Text("Divide by"))
+                    .accessibility(sortPriority: 2.7)
                 Placeholder(value: deltaT, emphasise: emphasise)
                     .accessibility(label: Text("delta t"))
+                    .accessibility(sortPriority: 2.6)
             }
         }
     }
@@ -238,25 +251,34 @@ fileprivate struct EmptyRateConstant: View {
     private var fraction2: some View {
         HStack(spacing: 0) {
             FixedText("-")
+                .accessibility(label: Text("negative"))
+                .accessibility(sortPriority: 0.9)
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     Placeholder(value: c2, emphasise: emphasise)
                         .accessibility(label: Text("c2"))
+                        .accessibility(sortPriority: 0.8)
                     FixedText("-")
                         .accessibility(label: Text("minus"))
+                        .accessibility(sortPriority: 0.7)
                     Placeholder(value: c1, emphasise: c2 == nil)
                         .accessibility(label: Text("c1"))
+                        .accessibility(sortPriority: 0.6)
                 }
                 Rectangle()
                     .frame(width: 140, height: 2)
                     .accessibility(label: Text("Divide by"))
+                    .accessibility(sortPriority: 0.5)
                 HStack(spacing: 1) {
                     Placeholder(value: t2, emphasise: emphasise)
                         .accessibility(label: Text("t2"))
+                        .accessibility(sortPriority: 0.4)
                     FixedText("-")
                         .accessibility(label: Text("minus"))
+                        .accessibility(sortPriority: 0.3)
                     Placeholder(value: t1, emphasise: t2 == nil)
                         .accessibility(label: Text("t1"))
+                        .accessibility(sortPriority: 0.2)
                 }
             }
         }
@@ -338,17 +360,19 @@ fileprivate struct BlankHalfLife: View {
             FixedText("/")
                 .accessibility(label: Text("Divide by"))
 
-            Group {
-                FixedText("(2")
-                FixedText("x")
+            HStack(spacing: 0) {
+                FixedText("(")
+                    .accessibility(label: Text(Labels.openParen))
+                FixedText("2")
             }
-            .accessibility(label: Text("2 times"))
+            FixedText("x")
+            .accessibility(label: Text("times"))
 
             Placeholder(value: rate, emphasise: emphasise)
                 .accessibility(label: Text("k"))
 
             FixedText(")")
-                .accessibility(hidden: true)
+                .accessibility(label: Text(Labels.closedParen))
         }
         .font(.system(size: EquationSettings.fontSize))
     }

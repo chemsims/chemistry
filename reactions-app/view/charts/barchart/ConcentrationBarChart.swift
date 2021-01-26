@@ -27,15 +27,53 @@ struct ConcentrationBarChart: View {
                     .stroke(lineWidth: 1.4)
 
                 barA
-                barB
+                    .accessibility(label: Text(label(name: display.reactant.name)))
+                    .modifier(
+                        valueModifier(
+                            equation: concentrationA,
+                            defaultValue: initialA
+                        )
+                    )
 
-            }.frame(width: settings.chartWidth, height: settings.chartWidth)
+                barB
+                    .accessibility(label: Text(label(name: display.product.name)))
+                    .modifier(
+                        valueModifier(
+                            equation: concentrationB,
+                            defaultValue: 0
+                        )
+                    )
+            }
+            .frame(width: settings.chartWidth, height: settings.chartWidth)
             ZStack {
                 drawLabel(molecule: display.reactant, barX: settings.barACenterX)
                 drawLabel(molecule: display.product, barX: settings.barBCenterX)
             }
+            .accessibility(hidden: true)
         }
     }
+
+    private func label(name: String) -> String {
+        "Bar chart showing concentration of \(name) in molar"
+    }
+
+    private func valueModifier(
+        equation: Equation?,
+        defaultValue: CGFloat
+    ) -> some ViewModifier {
+        AccessibleValueModifier(
+            x: currentTime ?? initialTime,
+            format: { time in
+                var concentration = defaultValue
+                if let eq = equation {
+                    concentration = eq.getY(at: time)
+                }
+                return concentration.str(decimals: 2)
+            }
+        )
+    }
+
+
 
     private var barA: some View {
         return ZStack {
@@ -100,7 +138,6 @@ struct ConcentrationBarChart: View {
                 .font(.system(size: settings.labelFontSize))
         }.offset(x: barX - (settings.chartWidth / 2))
     }
-
 }
 
 

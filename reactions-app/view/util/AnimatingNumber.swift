@@ -88,9 +88,14 @@ struct AnimatingValueModifier: AnimatableModifier {
 }
 
 /// An animatable modifier which also hides the view, for example to use in accessibility values
-struct HiddenAnimatingValueModifier: AnimatableModifier {
+struct AccessibleValueModifier: AnimatableModifier {
     var x: CGFloat
     let format: (CGFloat) -> String
+
+    var animatableData: CGFloat {
+        get { x }
+        set { x = newValue }
+    }
 
     func body(content: Content) -> some View {
         let value = Text(format(x))
@@ -99,5 +104,10 @@ struct HiddenAnimatingValueModifier: AnimatableModifier {
             .accessibility(value: value)
             .accessibility(addTraits: .updatesFrequently)
     }
+}
 
+extension View {
+    func updatingAccessibilityValue(x: CGFloat, format: @escaping (CGFloat) -> String) -> some View {
+        self.modifier(AccessibleValueModifier(x: x, format: format))
+    }
 }

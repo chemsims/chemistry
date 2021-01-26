@@ -38,7 +38,7 @@ struct ZeroOrderStatements {
     
     static let setFinalValues = [
         TextLineGenerator.makeLine(
-            "Great! Now you can set the *concentration of A at the end of the reaction (c_2_)* and the *time the reaction will last (t_2_)*."
+            "Great! Now you can set the *concentration of A at the end of the reaction (c_2_)* and the *time the reaction will end (t_2_)*."
         )
     ]
 

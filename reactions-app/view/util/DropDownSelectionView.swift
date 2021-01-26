@@ -94,7 +94,7 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     }
 
     private var indicatorView: some View {
-        let label = "\(isToggled ? "close" : "open") selection"
+        let label = "\(isToggled ? "close" : "open") selection to \(title)"
         return ZStack {
             Button(action: { isToggled.toggle() }) {
                 ZStack {

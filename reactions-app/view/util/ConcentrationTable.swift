@@ -32,26 +32,42 @@ struct ConcentrationTable: View {
             Group {
                 HStack(spacing: 0) {
                     cell(value: "c")
+                        .accessibility(hidden: true)
                     cell(value: c1)
+                        .accessibility(label: Text("c1"))
+                        .accessibility(value: Text(c1 ?? "no value"))
                     cell(value: c2)
+                        .accessibility(label: Text("c2"))
+                        .accessibility(value: Text(c2 ?? "no value"))
                 }
                 if (showTime) {
                     HStack(spacing: 0) {
                         cell(value: "t")
+                            .accessibility(hidden: true)
                         cell(value: t1)
+                            .accessibility(label: Text("t1"))
+                            .accessibility(value: Text(t1 ?? "no value"))
                         cell(value: t2)
+                            .accessibility(label: Text("t2"))
+                            .accessibility(value: Text(t2 ?? "no value"))
                     }
                 }
 
                 if (showRate) {
                     HStack(spacing: 0) {
                         cell(value: "Rate")
+                            .accessibility(hidden: true)
                         cell(value: rate1)
+                            .accessibility(label: Text("rate at c1"))
+                            .accessibility(value: Text(rate1 ?? "no value"))
                         cell(value: rate2)
+                            .accessibility(label: Text("rate at c2"))
+                            .accessibility(value: Text(rate2 ?? "no value"))
                     }
                 }
             }
             .scaleEffect(y: showTable ? 1 : 0, anchor: .top)
+            .accessibility(hidden: !showTable)
         }
         .lineLimit(1)
         .minimumScaleFactor(0.5)

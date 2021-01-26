@@ -71,7 +71,7 @@ struct FilledRate: View {
 
             HStack(spacing: 0) {
                 FixedText("(")
-                    .accessibility(hidden: true)
+                    .accessibility(label: Text(Labels.openParen))
 
                 value(equation: concentration)
                     .foregroundColor(reactionHasStarted ? .orangeAccent : .black)
@@ -79,7 +79,8 @@ struct FilledRate: View {
                     .accessibility(addTraits: .updatesFrequently)
 
                 FixedText(")")
-                    .accessibility(hidden: true)
+                    .accessibility(label: Text(Labels.closedParen))
+
                 FixedText("\(order)")
                     .font(.system(size: EquationSettings.subscriptFontSize))
                     .offset(y: -10)

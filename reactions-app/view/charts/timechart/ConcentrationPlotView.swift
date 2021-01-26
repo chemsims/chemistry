@@ -126,7 +126,6 @@ struct ConcentrationPlotView: View {
         .frame(width: settings.chartSize, height: settings.chartSize)
         .accessibilityElement()
         .modifier(currentValueModifier)
-        .accessibility(label: Text(label))
         .accessibilityAdjustableAction { direction in
             guard canSetCurrentTime else {
                 return
@@ -140,19 +139,16 @@ struct ConcentrationPlotView: View {
         .disabled(!canSetCurrentTime)
     }
 
-    private var label: String {
-        let bMsg = concentrationB == nil ? "" : ", and concentration of \(display.product.name) in Molar"
-        return "Chart showing time in seconds, concentration of \(display.reactant.name) in Molar\(bMsg)"
-    }
-
     private var currentValueModifier: some ViewModifier {
-        HiddenAnimatingValueModifier(
+        AccessibleValueModifier(
             x: currentTime
         ) { t in
             let a = concentrationA.getY(at: t).str(decimals: 2)
-            let b = (concentrationB?.getY(at: t)).map { ", \($0.str(decimals: 2))" } ?? ""
-            let b2 = concentrationB == nil ? "" : ", B"
-            return "\(t.str(decimals: 1)), \(a)\(b). Time, A\(b2)"
+
+            let conB = concentrationB?.getY(at: t)
+            let b = conB.map { ", B \($0.str(decimals: 2))" } ?? ""
+
+            return "time \(t.str(decimals: 1)), A \(a)\(b)"
         }
     }
 

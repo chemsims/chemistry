@@ -44,6 +44,7 @@ struct ConcentrationTimeChartView: View {
             includeSliders: true,
             yLabel: "[\(display.reactant.name)]",
             yAccessibilityLabel: yAccessibilityLabel,
+            xAccessibilityLabel: xAccessibilityLabel,
             includeValuesInLabel: true,
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: highlightChart,
@@ -58,17 +59,31 @@ struct ConcentrationTimeChartView: View {
     }
 
     private var yAccessibilityLabel: String {
-        "concentration of \(display.reactant.name) \(yAccessibilityLabelSuffix), molar"
+        "Concentration of \(display.reactant.name) in molar \(yAccessibilityLabelSuffix)"
     }
 
     private var yAccessibilityLabelSuffix: String {
         if (currentTime == nil && finalConcentration == nil) {
-            return "at t1"
+            return ", c1"
         } else if (currentTime == nil && finalConcentration != nil) {
-            return "at t2"
+            return ", c2"
         }
-        return "at current reaction time"
+        return ""
     }
+
+    private var xAccessibilityLabel: String {
+        "time in seconds\(xAccessibilityLabelSuffix)"
+    }
+
+    private var xAccessibilityLabelSuffix: String {
+        if (currentTime == nil && finalTime == nil) {
+            return ", t1"
+        } else if (currentTime == nil) {
+            return ", t2"
+        }
+        return ""
+    }
+
 }
 
 struct SingleConcentrationPlot: View {
@@ -100,6 +115,7 @@ struct SingleConcentrationPlot: View {
             includeSliders: false,
             yLabel: yLabel,
             yAccessibilityLabel: "todo",
+            xAccessibilityLabel: "todo",
             includeValuesInLabel: false,
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: highlightChart,
@@ -130,6 +146,7 @@ struct GeneralTimeChartView: View {
     let includeSliders: Bool
     let yLabel: String
     let yAccessibilityLabel: String
+    let xAccessibilityLabel: String
     let includeValuesInLabel: Bool
     let canSetCurrentTime: Bool
 
@@ -157,6 +174,9 @@ struct GeneralTimeChartView: View {
                 VStack(spacing: settings.chartVStackSpacing) {
                     if (showIndicatorLines) {
                         chartWithIndicator
+                            .accessibilityElement(children: .ignore)
+                            .accessibility(label: Text(label))
+                            .accessibility(value: Text("no data"))
                     } else if (
                         finalTime != nil &&
                             finalConcentration != nil &&
@@ -181,6 +201,7 @@ struct GeneralTimeChartView: View {
                                 )
                             }
                         }
+                        .accessibility(label: Text(label))
                     }
                     if (includeSliders) {
                         timeSlider
@@ -193,6 +214,10 @@ struct GeneralTimeChartView: View {
         .minimumScaleFactor(0.5)
     }
 
+    private var label: String {
+        "Chart showing time in seconds vs concentration in molar"
+    }
+
     private var showIndicatorLines: Bool {
         if (showDataAtT2) {
             return finalTime == nil
@@ -201,10 +226,11 @@ struct GeneralTimeChartView: View {
     }
 
     private var concentrationLabel: some View {
-        VStack(spacing: 1) {
+        let label = "Chart Y axis: \(yAccessibilityLabel)"
+        return VStack(spacing: 1) {
             Text(yLabel)
                 .fixedSize()
-                .accessibility(label: Text(yAccessibilityLabel))
+                .accessibility(label: Text(label))
                 .accessibility(hidden: includeValuesInLabel)
 
             if (includeValuesInLabel) {
@@ -214,7 +240,7 @@ struct GeneralTimeChartView: View {
                             width: settings.yLabelWidth * 0.7,
                             height: settings.chartSize * 0.18, alignment: .leading
                         )
-                        .accessibility(label: Text(yAccessibilityLabel))
+                        .accessibility(label: Text(label))
 
 
                     Text("M")
@@ -230,17 +256,18 @@ struct GeneralTimeChartView: View {
     }
 
     private var timeLabel: some View {
-        HStack(spacing: 1) {
+        let accessibilityLabel = "Chart X axis: \(xAccessibilityLabel)"
+        return HStack(spacing: 1) {
             Text("Time")
                 .fixedSize()
-                .accessibility(label: Text("time, seconds"))
+                .accessibility(label: Text(accessibilityLabel))
                 .accessibility(hidden: includeValuesInLabel)
             if (includeValuesInLabel) {
                 HStack(spacing: 1) {
                     animatingTime
                         .frame(width: settings.chartSize * 0.25, alignment: .leading)
                         .padding(.leading, settings.chartSize * 0.05)
-                        .accessibility(label: Text("time, seconds"))
+                        .accessibility(label: Text(accessibilityLabel))
                     Text("s")
                         .fixedSize()
                         .accessibility(hidden: true)
@@ -383,7 +410,6 @@ struct GeneralTimeChartView: View {
             axis
             .overlay(verticalIndicator, alignment: .leading)
             .overlay(horizontalIndicator, alignment: .bottom)
-            .accessibility(hidden: true)
         )
     }
 
