@@ -42,18 +42,22 @@ struct TextLine: ExpressibleByStringLiteral, Equatable {
 }
 
 extension TextLine {
+    /// Character count, based on the semantics of `String.count`
     var length: Int {
         content.reduce(0) { (acc, next) in
             acc + next.content.count
         }
     }
 
+    /// Content as a String
     var asString: String {
         content.reduce("") { (acc, next) in
             acc + next.content
         }
     }
 
+
+    /// Accessibility label for the content
     var label: String {
         customLabel ?? asString
     }

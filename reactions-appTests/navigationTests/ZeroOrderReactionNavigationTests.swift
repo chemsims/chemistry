@@ -206,14 +206,14 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
 
         checkElements([])
 
-        nextUntil("The Order of a reaction has to do")
+        nextUntil("The order of a reaction has to do")
         checkElements([.rateConstantEquation])
 
         nav.next()
         checkStartOfLine("Half-life")
         checkElements([.halfLifeEquation])
 
-        nextUntil("For this Zero Order")
+        nextUntil("For this zero order")
         // Secondary chart may be marked as highlighted too, but we don't care about it for zero order so filter it
         let elementsWithoutSecondary = model.highlightedElements.filter { $0 != .secondaryChart }
         XCTAssertEqual(elementsWithoutSecondary, [.concentrationChart])

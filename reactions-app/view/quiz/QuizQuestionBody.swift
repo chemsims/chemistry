@@ -113,7 +113,7 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private var label: String {
-        let optionLabel = model.optionText(option).asString
+        let optionLabel = model.optionText(option).label
         var prefix = ""
         if (styleCorrect) {
             prefix = "Correct. "
@@ -125,7 +125,6 @@ fileprivate struct QuizAnswerOption: View {
 
     private var explanation: some View {
         let explanation = model.currentQuestion.options[option]?.explanation ?? ""
-        let label = (explanation).asString
         return
             TextLinesView(
                 line: (explanation).italic(),
@@ -133,7 +132,7 @@ fileprivate struct QuizAnswerOption: View {
             )
             .padding()
             .fixedSize(horizontal: false, vertical: true)
-            .accessibility(label: Text(label))
+            .accessibility(label: Text(explanation.label))
             .accessibility(hint: Text("Explanation for option \(option.label)"))
     }
 

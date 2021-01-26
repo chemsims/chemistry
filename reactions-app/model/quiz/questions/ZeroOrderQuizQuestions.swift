@@ -102,9 +102,8 @@ extension QuizQuestionsList {
                     explanation: """
                     The rates of disappearance of reactants and appearance of products can be related \
                     to each other based on the stoichiometry of the reaction. \
-                    $Rate = -[ΔA]/2Δt = [ΔB]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of A and \
+                    $Rate = -[ΔA]/2Δt = [ΔB]/Δt$, where $-[ΔA]/Δt =$ rate of disappearance of A, and \
                     $[ΔB]/Δt$ = rate of appearance of B.
-
 
                     Replacing the equation then we get that: $(1.5 M/s)/2 =$ rate of appearance of \
                     $B ➝ 0.75 M/s =$ rate of appearance of B. In other words, for each 1 M of B \
@@ -117,9 +116,8 @@ extension QuizQuestionsList {
                         explanation: """
                         The rates of disappearance of reactants and appearance of products can be related \
                         to each other based on the stoichiometry of the reaction. \
-                        $Rate = -[ΔA]/2Δt = [ΔB]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of A and \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/Δt$, where $-[ΔA]/Δt =$ rate of disappearance of A, and \
                         $[ΔB]/Δt$ = rate of appearance of B.
-
 
                         So -0.75 $M/s$ is not the correct answer because the rate of appearance is \
                         positive. The reason for the rate of disappearance to be positive too, is \
@@ -132,9 +130,8 @@ extension QuizQuestionsList {
                         explanation: """
                         The rates of disappearance of reactants and appearance of products can be related \
                         to each other based on the stoichiometry of the reaction. \
-                        $Rate = -[ΔA]/2Δt = [ΔB]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of A and \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/Δt$, where $-[ΔA]/Δt =$ rate of disappearance of A, and \
                         $[ΔB]/Δt$ = rate of appearance of B.
-
 
                         Notice the factor (2) in the denominator, that's because for each 2 moles \
                         of A that are consumed, 1 mole of B is produced. So 1.5 $M/s$ is not the \
@@ -148,9 +145,8 @@ extension QuizQuestionsList {
                         explanation: """
                         The rates of disappearance of reactants and appearance of products can be related \
                         to each other based on the stoichiometry of the reaction. \
-                        $Rate = -[ΔA]/2Δt = [ΔB]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of A and \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/Δt$, where $-[ΔA]/Δt =$ rate of disappearance of A, and \
                         $[ΔB]/Δt$ = rate of appearance of B.
-
 
                         Notice the factor (2) in the denominator and not in the numerator. The \
                         rate of a reaction is based on 1 mole or M, so because of the \
@@ -165,17 +161,16 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 question: """
                 There is a reaction $(4A to B + C)$. The rate of disappearance of A can be written \
-                as $rate=-[∆A]/Δt$. This is equivalent to:
+                as $rate=-[ΔA]/Δt$. This is equivalent to:
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: "4[ΔB]/Δt",
                     explanation: """
                     The rates of disappearance of reactants and appearance of products can be related \
                     to each other based on the stoichiometry of the reaction. \
-                    $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of \
-                    A and $[ΔB]/Δt =$ rate of appearance of B and $[ΔC]/Δt =$ the rate of appearance \
+                    $Rate = -[ΔA]/4Δt] = [ΔB]/Δt = [ΔC]/Δt$, where $-[ΔA]/Δt =$ rate of disappearance of \
+                    A, and $[ΔB]/Δt =$ rate of appearance of B, and $[ΔC]/Δt =$ the rate of appearance \
                     of C.
-
 
                     Easily enough, if we solve for $-[ΔA]/Δt$ in the equation \
                     $-[ΔA]/4Δt = [ΔB]/Δt$, we get that $-[ΔA]/Δt = 4[ΔB]/Δt$.
@@ -187,12 +182,11 @@ extension QuizQuestionsList {
                         explanation: """
                         The rates of disappearance of reactants and appearance of products can be related \
                         to each other based on the stoichiometry of the reaction. \
-                        $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of \
-                        A and $[ΔB]/Δt =$ rate of appearance of B and $[ΔC]/Δt =$ the rate of appearance \
+                        $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$, where $-[ΔA]/Δt =$ rate of disappearance of \
+                        A, and $[ΔB]/Δt =$ rate of appearance of B, and $[ΔC]/Δt =$ the rate of appearance \
                         of C.
 
-
-                        So $-1/4[ΔB]/Δt$ is not the correct answer because that'd be equivalent to \
+                        So $-1/4[ΔB]/Δt$ is not the correct answer because that would be equivalent to \
                         $[ΔA]/16Δt$.
                         """
                     ),
@@ -201,12 +195,11 @@ extension QuizQuestionsList {
                         explanation: """
                         The rates of disappearance of reactants and appearance of products can be related \
                         to each other based on the stoichiometry of the reaction. \
-                        $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of \
-                        A and $[ΔB]/Δt =$ rate of appearance of B and $[ΔC]/Δt =$ the rate of appearance \
+                        $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$, where $-[ΔA]/Δt =$ rate of disappearance of \
+                        A, and $[ΔB]/Δt =$ rate of appearance of B, and $[ΔC]/Δt =$ the rate of appearance \
                         of C.
 
-
-                        So $-[ΔC]/Δt$ is not the correct answer because that'd be equivalent to \
+                        So $-[ΔC]/Δt$ is not the correct answer because that would be equivalent to \
                         $[ΔA]/4Δt$.
                         """
                     ),
@@ -215,12 +208,11 @@ extension QuizQuestionsList {
                         explanation: """
                         The rates of disappearance of reactants and appearance of products can be related \
                         to each other based on the stoichiometry of the reaction. \
-                        $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$ where $-[ΔA]/Δt =$ rate of disappearance of \
-                        A and $[ΔB]/Δt =$ rate of appearance of B and $[ΔC]/Δt =$ the rate of appearance \
+                        $Rate = -[ΔA]/4Δt = [ΔB]/Δt = [ΔC]/Δt$, where $-[ΔA]/Δt =$ rate of disappearance of \
+                        A, and $[ΔB]/Δt =$ rate of appearance of B, and $[ΔC]/Δt =$ the rate of appearance \
                         of C.
 
-
-                        So [ΔB]/Δt is not the correct answer because that'd be equivalent to \
+                        So [ΔB]/Δt is not the correct answer because that would be equivalent to \
                         $-[ΔA]/4Δt$.
                         """
                     )
@@ -247,6 +239,19 @@ extension QuizQuestionsList {
                     either data point to solve for $[A_0_]$:
 
                     $[A_0_] = [A] + kt$ ➝ $[A_0_] = 5 + 0.03333(60) = 7 M$.
+                    """,
+                    explanationLabel: """
+                    Since it's a zero order reaction, we can first determine the rate (or k) by \
+                    simply: $-ΔC/Δt$. When there were 5 M of A, it was reduced to 4 M in 30 \
+                    seconds. In other words, 1 M of A was consumed in 30 seconds. We can replace \
+                    in the equation:
+
+                    $Rate = k = negative (4M - 5M)/(90 seconds - 60 seconds) = 0.03333 M/s$.
+
+                    The equation for a zero order reaction is: $[A] = [A_0_] - kt$. Now we can use \
+                    either data point to solve for $[A_0_]$:
+
+                    $[A_0_] = [A] + kt$ ➝ $[A_0_] = 5 + 0.03333 times 60 = 7 M$.
                     """
                 ),
                 otherAnswers: [
@@ -260,7 +265,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "3.5 M",
                         explanation: """
-                        It's incorrect, 3.5 M, after 1 minute and a half of the reaction there's \
+                        It's incorrect, after 1 minute and a half of the reaction there's \
                         still 4 M of A left, meaning that it's impossible for it to have started \
                         with 3.5 M which is less than that.
                         """
@@ -309,7 +314,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "Never",
                         explanation: """
-                        Wrong, there are some types of reactions where the rate is always equal to \
+                        There are some types of reactions where the rate is always equal to \
                         the rate constant k.
                         """
                     )
@@ -330,7 +335,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "The product has doubled its concentration",
                         explanation: """
-                        Wrong, this is not the definition of half-life, although this could be \
+                        This is not the definition of half-life, although this could be \
                         true in the case that the reaction starts with an amount of product that's \
                         half of the initial amount of reactant. This would only apply for \
                         reactions where the reactant and the product are stoichiometrically 1 to \
@@ -340,14 +345,14 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "A zero order reaction is halfway through",
                         explanation: """
-                        Wrong, half-life is a concept that applies to all kinds of reactions \
+                        Half-life is a concept that applies to all kinds of reactions \
                         (zero, first and second order reactions).
                         """
                     ),
                     QuizAnswerData(
                         answer: "The product has halved its concentration",
                         explanation: """
-                        Wrong, the product is being formed rather than being consumed.
+                        The product is being formed rather than being consumed.
                         """
                     )
                 ],
@@ -452,6 +457,23 @@ extension QuizQuestionsList {
 
                     Knowing that, the equation for half-life of zero order reaction is: \
                     $t_1/2_ = [A_0_]/2k$. Replacing the values: $t_1/2_ = 19.6/2(0.4) = 24.5 h$.
+                    """,
+                    explanationLabel: """
+                    Since it's a zero order reaction, we can first determine the rate (or k) by \
+                    simply: $-ΔC/Δt$. When there were 10 M of A, it was reduced to 8 M in 5 hours. \
+                    In other words, 2 M of A was consumed in 5 hours. We can replace in the \
+                    equation:
+
+                    $Rate = k = negative (8M - 10M)/(29 - 24) = 0.4 M/h$.
+
+                    The equation for a zero order reaction is: $[A] = [A_0_] - kt$. Now we can use \
+                    either data point to solve for $[A_0_]$:
+
+                    [A_0_] = [A] + kt ➝
+                    [A_0_] = 10 + 0.4 times 24 = 19.6 M
+
+                    Knowing that, the equation for half-life of zero order reaction is: \
+                    $t_1/2_ = [A_0_]/2k$. Replacing the values: $t_1/2_ = 19.6, divided by 2 times 0.4, = 24.5 h$.
                     """
                 ),
                 otherAnswers: [
@@ -465,7 +487,7 @@ extension QuizQuestionsList {
                         only 2 M of A were consumed in that period of time. Since it's a zero \
                         order reaction, the rate is always the same, so if the initial \
                         concentration of A is more than 10 M and after 5 hours only 2 M of A were \
-                        consumed, it'd be impossible for 5 hours to be the correct answer.
+                        consumed, it would be impossible for 5 hours to be the correct answer.
                         """
                     ),
                     QuizAnswerData(
@@ -496,7 +518,7 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-                A reaction $(A to 3B)$ tool place. It started with only A, and it ended up being \
+                A reaction $(A to 3B)$ took place. It started with only A, and it ended up being \
                 8 M. Which of the following was the initial concentration of A?
                 """,
                 correctAnswer: QuizAnswerData(
@@ -529,7 +551,7 @@ extension QuizQuestionsList {
                     ),
                     QuizAnswerData(
                         answer: "Need more info",
-                        explanation: "There's enough info give an answer."
+                        explanation: "There's enough info to give an answer."
                     )
                 ],
                 difficulty: .easy
@@ -554,7 +576,7 @@ extension QuizQuestionsList {
                         explanation: """
                         The rates of disappearance of reactants and appearance of products can be related \
                         to each other based on the stoichiometry of the reaction. \
-                        $Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt$. So $2[ΔC]/5Δt$ is not the correct answer because that'd be equivalent to \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt$. So $2[ΔC]/5Δt$ is not the correct answer because that would be equivalent to \
                         $2[ΔB]/25Δt$.
                         """
                     ),
@@ -563,14 +585,14 @@ extension QuizQuestionsList {
                         explanation: """
                         The rates of disappearance of reactants and appearance of products can be related \
                         to each other based on the stoichiometry of the reaction. \
-                        $Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt$. So $-5[ΔC]/Δt$ is not the correct answer because that'd be equivalent to \
+                        $Rate = -[ΔA]/2Δt = [ΔB]/5Δt = [ΔC]/Δt$. So $-5[ΔC]/Δt$ is not the correct answer because that would be equivalent to \
                         $-[ΔB]/Δt$.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "5[ΔA]2/Δt",
+                        answer: "5[ΔA]/2Δt",
                         explanation: """
-                        So $5[ΔA]/2Δt$ is not the correct answer because that'd be equivalent to \
+                        So $5[ΔA]/2Δt$ is not the correct answer because that would be equivalent to \
                         $-[ΔB]/Δt$.
                         """
                     )
@@ -588,10 +610,10 @@ extension QuizQuestionsList {
                 otherAnswers: [
                     QuizAnswerData(
                         answer: "Mol L^-1^ s^-1^",
-                        explanation: "Mol L^-1^ s^-1^ is the same as Mol/L \\* s which is M/s."
+                        explanation: "Mol L^-1^ s^-1^ is the same as Mol/(L \\* s) which is M/s."
                     ),
                     QuizAnswerData(answer: "M s^-1^", explanation: "M s^-1^ is the same as M/s."),
-                    QuizAnswerData(answer: "Mol/L s", explanation: "Mol/L s is the same as M/s.")
+                    QuizAnswerData(answer: "Mol/(L s)", explanation: "Mol/(L s) is the same as M/s.")
                 ],
                 difficulty: .easy
             ),
@@ -680,6 +702,22 @@ extension QuizQuestionsList {
 
                     Knowing that, for the whole 15 M we can determine with the same equation how \
                     much time should pass: $t = [A_0_]/k$ ➝ $15/0.667 = 22.5 h$.
+                    """,
+                    explanationLabel: """
+                    Since it's a zero order reaction, we can first determine the rate (or k) by \
+                    simply: $-ΔC/Δt$. When there were 7 M of A, it was reduced to 5 M in 3 hours. \
+                    In other words, 2 M of A was consumed in 3 hours. We can replace in the \
+                    equation:
+
+                    $Rate = k = negative (5M - 7M)/(15 - 12), = 0.667 M/h$.
+
+                    The equation for a zero order reaction is: $[A]$ = $[A_0_] - kt$. Now we can \
+                    use either data point to solve for $[A_0_]$:
+
+                    [A_0_] = [A] + kt ➝ [A_0_] = 7 + 0.667 times 12, = 15 M.
+
+                    Knowing that, for the whole 15 M we can determine with the same equation how \
+                    much time should pass: $t = [A_0_]/k$ ➝ $15/0.667 = 22.5 h$.
                     """
                 ),
                 otherAnswers: [
@@ -692,7 +730,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "20,000 seconds",
                         explanation: """
-                        After 20 000 seconds, there would still be around 11.3 M of A left.
+                        After 20,000 seconds, there would still be around 11.3 M of A left.
                         """
                     ),
                     QuizAnswerData(
@@ -722,6 +760,17 @@ extension QuizQuestionsList {
 
                     Replacing in the equation: $0.9[A_0_] = [A_0_] - t$. Solving for t: \
                     $t = 0.10[A_0_] = 0.10(100) = 10 months$.
+                    """,
+                    explanationLabel: """
+                    Using the equation for a zero order reaction: $[A] = [A_0_] - kt$. We want to \
+                    know the time at which 10% of [A] has been consumed, or in other words: \
+                    $[A] = 0.9 times [A_0_]$. We also need to adjust the k units for them to be aligned \
+                    with the other variables:
+
+                    0.001 g mL^-1^ month^-1^ \\* 1000mg/gram, = 1 g mL^-1^ month^-1^.
+
+                    Replacing in the equation: $0.9 times [A_0_] = [A_0_] - t$. Solving for t: \
+                    $t = 0.1 times [A_0_], = 0.1 times 100, = 10 months$.
                     """
                 ),
                 otherAnswers: [
@@ -755,9 +804,17 @@ extension QuizQuestionsList {
                         The rate of degradation is independent of the concentration of the \
                         reactant(s)
                         """,
+                        answerLabel: """
+                        The rate of degradation is independent of the concentration of the \
+                        reactant (or reactants)
+                        """,
                         explanation: """
                         It's true, the rate of the reaction is constant regardless of the \
                         concentration of the reactant(s).
+                        """,
+                        explanationLabel: """
+                        It's true, the rate of the reaction is constant regardless of the \
+                        concentration of the reactant (or reactants).
                         """
                     ),
                     QuizAnswerData(
@@ -781,7 +838,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
-                question: "Which one of the following is the half equation for zero order reactions?",
+                question: "Which one of the following is the half-life equation for zero order reactions?",
                 correctAnswer: QuizAnswerData(
                     answer: "t_1/2_ = [A_0_]/2k",
                     explanation: """
@@ -801,13 +858,13 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "t_1/2_ = 0.69/k",
                         explanation: """
-                        For first order reactions, half-life equation is t1/2 = 0.69/k.
+                        For first order reactions, half-life equation is t_1/2_ = 0.69/k.
                         """
                     ),
                     QuizAnswerData(
                         answer: "t_1/2_ = 1/[A_0_] \\* 2k",
                         explanation: """
-                        For second order reactions, half-life equation is 1/[A_0_]\\*k.
+                        For second order reactions, half-life equation is $1/[A_0_] \\* k$.
                         """
                     ),
                     QuizAnswerData(
@@ -827,7 +884,7 @@ extension QuizQuestionsList {
                     explanation: """
                     The rate (or speed) of reaction is related to the change in concentration \
                     (molarity) of either a reactant or product over time (seconds). The rate then \
-                    represents the speed of consumption of the reactants or which is the same, the \
+                    represents the speed of consumption of the reactants, which is the same as the \
                     speed of formation of the products. The standard units for rate are \
                     $molarity/seconds$ ($M/s$).
                     """

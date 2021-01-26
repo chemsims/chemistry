@@ -116,7 +116,7 @@ fileprivate struct QuestionReviewCard: View {
     private var label: String {
         let correct = isCorrect ? "correct" : "incorrect"
         let prefix = "Question \(questionNumber) of \(totalQuestions), \(correct)"
-        return "\(prefix). \(question.question.asString)"
+        return "\(prefix). \(question.question.label)"
     }
 
     private func optionLine(

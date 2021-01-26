@@ -61,6 +61,7 @@ struct TextLinesView: View {
 
     var body: some View {
         content
+            .accessibilityElement(children: .ignore)
             .accessibility(label: Text(label))
     }
 

@@ -86,8 +86,8 @@ class QuizQuestionTests: XCTestCase {
 
     private func newAnswer(_ str: String, position: QuizOption? = nil) -> QuizAnswerData {
         QuizAnswerData(
-            answer: TextLine(stringLiteral: str),
-            explanation: TextLine(stringLiteral: str),
+            answer: str,
+            explanation: str,
             position: position
         )
     }

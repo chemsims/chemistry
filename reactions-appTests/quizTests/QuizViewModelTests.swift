@@ -205,14 +205,14 @@ class QuizViewModelTests: XCTestCase {
 
         func answer(_ suffix: String, _ position: QuizOption) -> QuizAnswerData {
             QuizAnswerData(
-                answer: TextLine(stringLiteral: "\(i) - \(suffix)"),
-                explanation: TextLine(stringLiteral: "\(i)"),
+                answer: "\(i) - \(suffix)",
+                explanation: "\(i)",
                 position: position
             )
         }
 
         return QuizQuestionData(
-            question: TextLine(stringLiteral: "\(i)"),
+            question: "\(i)",
             correctAnswer: answer("A", .A),
             otherAnswers: [
                 answer("B", .B),

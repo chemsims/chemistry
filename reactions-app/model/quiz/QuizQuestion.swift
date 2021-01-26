@@ -84,14 +84,14 @@ struct QuizQuestionData {
     let table: QuizTable?
 
     init(
-        question: TextLine,
+        question: String,
         correctAnswer: QuizAnswerData,
         otherAnswers: [QuizAnswerData],
         difficulty: QuizDifficulty,
         image: String? = nil,
         table: QuizTable? = nil
     ) {
-        self.question = question
+        self.question = TextLine(question, label: Labelling.stringToLabel(question))
         self.correctAnswer = correctAnswer
         self.otherAnswers = otherAnswers
         self.difficulty = difficulty
@@ -143,9 +143,21 @@ struct QuizAnswerData: Equatable {
     let explanation: TextLine
     let position: QuizOption?
 
-    init(answer: TextLine, explanation: TextLine, position: QuizOption? = nil) {
-        self.answer = answer
-        self.explanation = explanation
+    init(
+        answer: String,
+        answerLabel: String? = nil,
+        explanation: String,
+        position: QuizOption? = nil,
+        explanationLabel: String? = nil
+    ) {
+        self.answer = TextLine(
+            answer,
+            label: Labelling.stringToLabel(answerLabel ?? answer)
+        )
+        self.explanation = TextLine(
+            explanation,
+            label: Labelling.stringToLabel(explanationLabel ?? explanation)
+        )
         self.position = position
     }
 }
