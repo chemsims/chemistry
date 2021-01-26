@@ -435,6 +435,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     statement: reaction.statement,
                     next: reaction.next,
                     back: reaction.back,
+                    nextIsDisabled: reaction.canClickNext,
                     verticalSpacing: settings.ordered.beakyVSpacing,
                     bubbleWidth: settings.ordered.bubbleWidth,
                     bubbleHeight: settings.ordered.bubbleHeight,

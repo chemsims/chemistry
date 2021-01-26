@@ -49,6 +49,7 @@ struct EnergyProfileScreen: View {
             statement: model.statement,
             next: model.next,
             back: model.back,
+            nextIsDisabled: model.canClickNext,
             settings: settings.orderLayoutSettings
         )
         .padding(.trailing, settings.orderLayoutSettings.beakyRightPadding)

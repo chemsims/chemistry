@@ -10,6 +10,7 @@ struct BeakyBox: View {
     let statement: [TextLine]
     let next: () -> Void
     let back: () -> Void
+    let nextIsDisabled: Bool
     let verticalSpacing: CGFloat
     let bubbleWidth: CGFloat
     let bubbleHeight: CGFloat
@@ -22,19 +23,29 @@ struct BeakyBox: View {
         VStack(alignment: .leading, spacing: verticalSpacing) {
             HStack(alignment: .bottom, spacing: 0) {
                 SpeechBubble(lines: statement, fontSize: fontSize)
-                    .accessibility(sortPriority: 1)
                     .frame(width: bubbleWidth, height: bubbleHeight)
+                    .accessibility(addTraits: .isHeader)
+                    .accessibility(sortPriority: 1)
+                    .accessibility(hint: Text("Goes to the next content"))
+                    .accessibility(addTraits: .isButton)
+                    .disabled(nextIsDisabled)
+                    .accessibilityAction {
+                        next()
+                    }
 
                 Beaky()
                     .frame(height: beakyHeight)
             }
 
+
             HStack {
                 PreviousButton(action: back)
                     .frame(width: navButtonSize, height: navButtonSize)
+                    .accessibility(sortPriority: 0.8)
                 Spacer()
                 NextButton(action: next)
                     .frame(width: navButtonSize, height: navButtonSize)
+                    .accessibility(sortPriority: 0.9)
             }.frame(width: bubbleWidth - bubbleStemWidth)
         }
     }

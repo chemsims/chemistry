@@ -43,8 +43,12 @@ class ZeroOrderReactionViewModel: ObservableObject {
         usedReactions.last!
     }
 
+    var canClickNext: Bool {
+        !canSelectReaction
+    }
+
     func next() {
-        guard !canSelectReaction else {
+        guard canClickNext else {
             showReactionSelection = true
             return
         }

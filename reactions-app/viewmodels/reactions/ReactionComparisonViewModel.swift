@@ -46,10 +46,7 @@ class ReactionComparisonViewModel: ObservableObject {
     }
 
     func next() {
-        let hasIdentifiedOrders = persistence.hasIdentifiedReactionOrders()
-        let reactionIsRunning = currentTime0 != nil && reactionHasEnded == false
-        let ordersHaveBeenSelected = correctOrderSelections.count == ReactionOrder.allCases.count
-        if (reactionIsRunning && !hasIdentifiedOrders && !ordersHaveBeenSelected) {
+        if (!canClickNext) {
             statement = ReactionComparisonStatements.blockClickingNextBeforeChoosingReactions
         } else {
             navigation?.next()
@@ -57,6 +54,14 @@ class ReactionComparisonViewModel: ObservableObject {
                 persistence.setHasIdentifiedReactionOrders()
             }
         }
+    }
+
+    var canClickNext: Bool {
+        let reactionIsRunning = currentTime0 != nil && reactionHasEnded == false
+        let hasIdentifiedOrders = persistence.hasIdentifiedReactionOrders()
+        let ordersHaveBeenSelected = correctOrderSelections.count == ReactionOrder.allCases.count
+        let nextIsBlocked = reactionIsRunning && !hasIdentifiedOrders && !ordersHaveBeenSelected
+        return !nextIsBlocked
     }
 
     func back() {

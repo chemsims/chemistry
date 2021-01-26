@@ -37,6 +37,7 @@ struct OrderedReactionScreen<Content: View>: View {
             statement: reaction.statement,
             next: reaction.next,
             back: reaction.back,
+            nextIsDisabled: reaction.canSelectReaction,
             settings: settings
         )
     }

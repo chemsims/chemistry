@@ -10,6 +10,7 @@ struct BeakyOverlay: View {
     let statement: [TextLine]
     let next: () -> Void
     let back: () -> Void
+    let nextIsDisabled: Bool
     let settings: OrderedReactionLayoutSettings
 
     var body: some View {
@@ -21,6 +22,7 @@ struct BeakyOverlay: View {
                     statement: statement,
                     next: next,
                     back: back,
+                    nextIsDisabled: nextIsDisabled,
                     verticalSpacing: settings.beakyVSpacing,
                     bubbleWidth: settings.bubbleWidth,
                     bubbleHeight: settings.bubbleHeight,

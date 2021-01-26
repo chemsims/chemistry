@@ -253,6 +253,7 @@ struct GeneralTimeChartView: View {
         .font(.system(size: settings.labelFontSize))
         .frame(width: settings.yLabelWidth)
         .minimumScaleFactor(1)
+        .accessibility(addTraits: .isHeader)
     }
 
     private var timeLabel: some View {
