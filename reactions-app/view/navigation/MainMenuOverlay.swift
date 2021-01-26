@@ -90,6 +90,9 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                     .padding(.bottom, settings.totalBottomPadding)
                     .transition(AnyTransition.move(edge: .leading))
                     .zIndex(1)
+                    .accessibilityElement(children: .contain)
+                    .accessibility(sortPriority: 10)
+                    .accessibility(addTraits: .isModal)
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -97,12 +100,14 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 
     private var icon: some View {
-        HStack(spacing: 0) {
+        let action = navigation.showMenu ? "close" : "open"
+        return HStack(spacing: 0) {
             VStack(spacing: 0) {
                 MenuButton(action: toggleMenu)
                     .frame(width: settings.menuSize, height: settings.menuSize)
                     .padding(.top, settings.topPadding)
                     .padding(.horizontal, settings.hPadding)
+                    .accessibility(label: Text("\(action) menu"))
                 Spacer()
             }
             Spacer()
@@ -114,6 +119,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             Spacer()
                 .frame(width: settings.leadingPanelSpace)
             settingsButtons
+                .accessibility(sortPriority: -1)
             panelContent
             grabHandle
         }
@@ -131,6 +137,11 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         .frame(width: settings.menuSize, height: settings.menuSize)
         .padding(settings.hPadding)
         .foregroundColor(.black)
+        .accessibility(label: Text("Close menu"))
+        .accessibilityAction {
+            navigation.showMenu = false
+        }
+        .accessibility(sortPriority: 1)
     }
 
     private var grabLine: some View {
@@ -160,6 +171,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 .foregroundColor(Styling.navIcon)
                 .font(.system(size: 10, weight: .ultraLight))
         }
+        .accessibility(label: Text("Open mail composer"))
     }
 
     private var shareButton: some View {
@@ -169,6 +181,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 .aspectRatio(contentMode: .fit)
                 .colorMultiply(Styling.navIcon)
         }
+        .accessibility(label: Text("Open share sheet"))
     }
 
     private var panelContent: some View {
@@ -188,7 +201,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 image: screen.navImage,
                 selectedImage: screen.navImagePressed,
                 isSystem: false,
-                screen: screen.appScreen
+                screen: screen.appScreen,
+                label: screen.label
             )
             .frame(height: settings.navIconHeight)
 
@@ -196,7 +210,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 image: "text-book-closed",
                 selectedImage: "text-book-closed",
                 isSystem: false,
-                screen: screen.quizScreen
+                screen: screen.quizScreen,
+                label: "\(screen.label) quiz"
             )
             .frame(height: settings.secondaryIconHeight)
 
@@ -205,7 +220,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                     image: "archivebox-thinner",
                     selectedImage: "archivebox-thinner",
                     isSystem: false,
-                    screen: screen.filingScreen!
+                    screen: screen.filingScreen!,
+                    label: "\(screen.label) saved snapshots"
                 )
                 .frame(height: settings.secondaryIconHeight)
             }
@@ -235,7 +251,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         image: String,
         selectedImage: String,
         isSystem: Bool,
-        screen: AppScreen
+        screen: AppScreen,
+        label: String
     ) -> some View {
         let isSelected = navigation.currentScreen == screen
         let canSelect = navigation.canSelect(screen: screen)
@@ -256,6 +273,8 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             .foregroundColor(color)
         }
         .disabled(!canSelect)
+        .accessibility(label: Text(label))
+        .accessibility(addTraits: isSelected ? .isSelected : [])
     }
 
     private func makeImage(name: String, isSystem: Bool) -> Image {
@@ -346,6 +365,16 @@ fileprivate enum TopLevelScreen {
         case .secondOrderReaction: return .secondOrderFiling
         case .energyProfile: return .energyProfileFiling
         default: return nil
+        }
+    }
+
+    var label: String {
+        switch (self) {
+        case .zeroOrderReaction: return "Zero order reaction"
+        case .firstOrderReaction: return "First order reaction"
+        case .secondOrderReaction: return "Second order reaction"
+        case .reactionComparison: return "Reaction comparison"
+        case .energyProfile: return "Energy profile"
         }
     }
 }

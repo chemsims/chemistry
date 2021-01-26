@@ -9,7 +9,13 @@ import StoreKit
 class RootNavigationViewModel: ObservableObject {
 
     @Published var view: AnyView
-    @Published var showMenu = false
+    @Published var showMenu = false {
+        didSet {
+            if (showMenu) {
+                UIAccessibility.post(notification: .screenChanged, argument: nil)
+            }
+        }
+    }
     private(set) var navigationDirection = NavigationDirection.forward
 
     var focusScreen: AppScreen? {

@@ -32,6 +32,32 @@ struct FilledBeaker: View {
                 using: BeakerSettings(width: geometry.size.width)
             )
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(
+            label: Text(
+                "Beaker showing a grid of molecules of \(reactant) and \(product) in liquid"
+            )
+        )
+        .updatingAccessibilityValue(
+            x: currentTime ?? 0,
+            format: valueForTime
+        )
+    }
+
+    private var reactant: String {
+        reactionPair.reactant.name
+    }
+
+    private var product: String {
+        reactionPair.product.name
+    }
+
+    private func valueForTime(_ time: CGFloat) -> String {
+        let total = moleculesA.count
+        let bFraction = concentrationB?.getY(at: time) ?? 0
+        let countOfB = Int(CGFloat(total) * bFraction)
+        let countOfA = total - countOfB
+        return "\(countOfA) \(reactant) molecules, \(countOfB) \(product) molecules"
     }
 
     private func makeView(using settings: BeakerSettings) -> some View {
