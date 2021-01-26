@@ -60,12 +60,23 @@ struct TextLinesView: View {
     }
 
     var body: some View {
+        content
+            .accessibility(label: Text(label))
+    }
+
+    private var content: some View {
         if let firstLine = lines.first {
             return lines.dropFirst().reduce(lineView(firstLine)) { acc, next in
                 acc + Text("\n\n") + lineView(next)
             }
         }
         return Text("")
+    }
+
+    private var label: String {
+        lines.reduce("") { (acc, next) in
+            acc + "\n" + next.label
+        }
     }
 
     private func lineView(_ line: TextLine) -> Text {

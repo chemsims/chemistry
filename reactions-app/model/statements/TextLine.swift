@@ -17,14 +17,23 @@ struct TextLine: ExpressibleByStringLiteral, Equatable {
     /// - Note: The content will be concatenated as is, without adding
     ///         any whitespace between segments.
     let content: [TextSegment]
+    let customLabel: String?
 
-    init(content: [TextSegment]) {
+    init(content: [TextSegment], customLabel: String? = nil) {
         self.content = content
+        self.customLabel = customLabel
     }
 
     /// Creates a new `TextLine` from the literal String `value`, after parsing the String.
     init(stringLiteral value: String) {
-        self.init(content: TextLineGenerator.makeLine(value).content)
+        self.init(value, label: nil)
+    }
+
+    init(_ rawString: String, label: String?) {
+        self.init(
+            content: TextLineGenerator.makeLine(rawString).content,
+            customLabel: label
+        )
     }
 
     static func +(lhs: TextLine, rhs: TextLine) -> TextLine {
@@ -43,6 +52,10 @@ extension TextLine {
         content.reduce("") { (acc, next) in
             acc + next.content
         }
+    }
+
+    var label: String {
+        customLabel ?? asString
     }
 }
 

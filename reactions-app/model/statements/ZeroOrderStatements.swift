@@ -9,7 +9,7 @@ struct ZeroOrderStatements {
 
     static let initial = [
         TextLineGenerator.makeLine(
-            "This is a Zero Order Reaction in which a reactant A turns into the product B. But what does it mean? Let's find out!"
+            "This is a zero order reaction in which a reactant A turns into the product B. But what does it mean? Let's find out!"
         ),
         TextLineGenerator.makeLine(
             "*Set the initial concentration of A (c_1_) and the initial time at which it'll start (t_1_)*."
@@ -19,7 +19,11 @@ struct ZeroOrderStatements {
     static func rateExplainer(k: CGFloat) -> [TextLine] {
         [
             TextLineGenerator.makeLine(
-                "The Order of a reaction has to do with the Rate of it. *Rate* is the rate of change in the concentration per unit time. The Rate Constant *k* is a value on which the *Rate* depends. For this reaction, \(Strings.withNoBreaks(str: "*k=\(k.str(decimals: 3))M/s*"))."
+                """
+                The order of a reaction has to do with the rate of it. *Rate* is the rate of \
+                change in the concentration per unit time. The rate constant *k* is a value on \
+                which the *rate* depends. For this reaction, $k=\(k.str(decimals: 3))M/s$.
+                """
             )
         ]
     }
@@ -51,15 +55,21 @@ struct ZeroOrderStatements {
                 """
             ),
             TextLineGenerator.makeLine(
-                "This happens at a constant *Rate (in units of M/s),* which is dependent on *k*."
+                "This happens at a constant *rate (in units of M/s),* which is dependent on *k*."
             )
         ]
     }
 
     static let endAnimation = [
-        TextLineGenerator.makeLine("For this Zero Order Reaction, *Rate* is constant and it's equal to *k*, that's why a graph plotting \(Strings.aVsT) is a straight line."),
-        TextLineGenerator.makeLine("[A]*(y)*=-kt*(mx)*+[A0]*(b)*"),
-        TextLineGenerator.makeLine("*Where -k is the slope*.")
+        TextLineGenerator.makeLine("For this zero order reaction, *rate* is constant and it's equal to *k*, that's why a graph plotting \(Strings.aVsT) is a straight line."),
+        TextLine(
+            "[A]*(y)*=-kt*(mx)*+[A0]*(b)*",
+            label: "Concentration of A equals minus K T plus A0. Y equals M X plus B"
+        ),
+        TextLine(
+            "*Where -k is the slope*.",
+            label: "where minus k is the slope"
+        )
     ]
 
     static let showConcentrationTable = [
