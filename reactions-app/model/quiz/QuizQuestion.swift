@@ -80,18 +80,19 @@ struct QuizQuestionData {
     let correctAnswer: QuizAnswerData
     let otherAnswers: [QuizAnswerData]
     let difficulty: QuizDifficulty
-    let image: String?
+    let image: LabelledImage?
     let table: QuizTable?
 
     init(
         question: String,
+        questionLabel: String? = nil,
         correctAnswer: QuizAnswerData,
         otherAnswers: [QuizAnswerData],
         difficulty: QuizDifficulty,
-        image: String? = nil,
+        image: LabelledImage? = nil,
         table: QuizTable? = nil
     ) {
-        self.question = TextLine(question, label: Labelling.stringToLabel(question))
+        self.question = TextLine(question, label: Labelling.stringToLabel(questionLabel ?? question))
         self.correctAnswer = correctAnswer
         self.otherAnswers = otherAnswers
         self.difficulty = difficulty
@@ -169,7 +170,7 @@ struct QuizQuestion: Equatable {
     let options: [QuizOption:QuizAnswer]
     let correctOption: QuizOption
     let difficulty: QuizDifficulty
-    let image: String?
+    let image: LabelledImage?
     let table: QuizTable?
 
 }

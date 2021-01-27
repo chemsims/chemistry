@@ -35,7 +35,7 @@ class RootNavigationViewModel: ObservableObject {
         reviewPersistence: ReviewPromptPersistence,
         energyPersistence: EnergyProfilePersistence
     ) {
-        let firstScreen = AppScreen.firstOrderReaction
+        let firstScreen = AppScreen.firstOrderReactionQuiz
         self.currentScreen = firstScreen
         self.persistence = persistence
         self.quizPersistence = quizPersistence

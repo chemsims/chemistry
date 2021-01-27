@@ -128,6 +128,7 @@
 		5790AC2F25B375FC00B25776 /* ReactionComparisonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
+		5797567F25C1C5CB005C484E /* LabelledImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797567E25C1C5CB005C484E /* LabelledImage.swift */; };
 		57A119A825B86A1E00A7810B /* EnergyProfileFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */; };
 		57A119AC25B86B5500A7810B /* EnergyProfileFilingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */; };
 		57A119B025B86B9800A7810B /* EnergyProfilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */; };
@@ -335,6 +336,7 @@
 		5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViewModelTests.swift; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
+		5797567E25C1C5CB005C484E /* LabelledImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelledImage.swift; sourceTree = "<group>"; };
 		57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingScreen.swift; sourceTree = "<group>"; };
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
 		57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistence.swift; sourceTree = "<group>"; };
@@ -654,6 +656,7 @@
 		571D6A6C255AB23D00F4E635 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5797567D25C1C5BE005C484E /* image */,
 				574F14B625B488D400EB316C /* axis */,
 				578031FF25B0670300A0F610 /* persistence */,
 				57064BA025A77774008102CE /* reaction-input */,
@@ -913,6 +916,14 @@
 				5780320625B0888300A0F610 /* QuizPersistenceTests.swift */,
 			);
 			path = quizTests;
+			sourceTree = "<group>";
+		};
+		5797567D25C1C5BE005C484E /* image */ = {
+			isa = PBXGroup;
+			children = (
+				5797567E25C1C5CB005C484E /* LabelledImage.swift */,
+			);
+			path = image;
 			sourceTree = "<group>";
 		};
 		57976928255EBFE300CD7FD3 /* shapes */ = {
@@ -1295,6 +1306,7 @@
 				57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */,
 				57DE4DA525A502EE00644790 /* QuizQuestionBody.swift in Sources */,
 				577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */,
+				5797567F25C1C5CB005C484E /* LabelledImage.swift in Sources */,
 				576D5AAC2566CA900062F722 /* SecondOrderEquationView.swift in Sources */,
 				570E4F01256D10CD001EADCB /* EnergyProfileChart.swift in Sources */,
 				574F14BC25B4898700EB316C /* InputLimits.swift in Sources */,

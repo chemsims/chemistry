@@ -96,7 +96,6 @@ fileprivate struct QuestionReviewCard: View {
                     tableWidth: settings.tableWidthReviewCard
                 )
                 .accessibility(label: Text(label))
-                .accessibility(addTraits: .isHeader)
 
                 ForEach(answer.allAnswers, id: \.self) { option in
                     optionLine(

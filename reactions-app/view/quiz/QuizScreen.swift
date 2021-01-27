@@ -160,8 +160,7 @@ fileprivate struct QuizScreenWithSettings: View {
     }
 
     private var nextIsDisabled: Bool {
-        return false
-//        model.quizState == .running && !model.hasSelectedCorrectOption
+        model.quizState == .running && !model.hasSelectedCorrectOption
     }
 
     private var progressBar: some View {

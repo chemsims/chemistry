@@ -18,12 +18,14 @@ struct QuizQuestionView: View {
                 fontSize: settings.questionFontSize
             )
             .minimumScaleFactor(1)
+            .accessibility(addTraits: .isHeader)
 
             if (question.image != nil) {
-                Image(question.image!)
+                Image(question.image!.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxHeight: settings.maxImageHeight)
+                    .accessibility(label: Text(question.image!.label))
             }
 
             if (question.table != nil) {

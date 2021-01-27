@@ -66,6 +66,8 @@ fileprivate struct QuizTableViewWithGeometry: View {
         )
         .border(Styling.tableCellBorder, width: 0.5)
         .lineLimit(rowIndex == 0 ? 1 : nil)
+        .accessibility(label: Text("Cell, column \(colIndex + 1), row \(rowIndex + 1)"))
+        .accessibility(value: Text(line.label))
     }
 }
 

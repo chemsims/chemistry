@@ -20,7 +20,6 @@ struct QuizQuestionsBody: View {
                     settings: settings,
                     tableWidth: settings.tableWidthQuestionCard
                 )
-                .accessibility(addTraits: .isHeader)
 
                 answers
             }
