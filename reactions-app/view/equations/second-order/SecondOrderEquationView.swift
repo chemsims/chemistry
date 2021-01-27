@@ -43,6 +43,7 @@ struct SecondOrderEquationView: View {
             )
         }
         .frame(width: maxWidth, height: maxHeight)
+        .accessibilityElement(children: .contain)
     }
 }
 
@@ -137,6 +138,12 @@ fileprivate struct SecondOrderRateFilled: View {
                     .fixedSize()
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(
+            label: Text(
+                "k equals, inverse A T minus inverse A0, divide by T"
+            )
+        )
     }
 
     private func inverse<Content: View>(aTerm: () -> Content) -> some View {
@@ -161,26 +168,40 @@ fileprivate struct SecondOrderRateBlank: View {
     var body: some View {
         HStack(spacing: 5) {
             Placeholder(value: rateConstant, emphasise: emphasise)
+                .accessibility(sortPriority: 10)
+                .accessibility(label: Text("k"))
 
             FixedText("=")
+                .accessibility(sortPriority: 9)
 
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     Placeholder(value: invAt, emphasise: emphasise)
                         .frame(width: 100)
+                        .accessibility(sortPriority: 8)
+                        .accessibility(label: Text("inverse A T"))
 
                     FixedText("-")
+                        .accessibility(sortPriority: 7)
+                        .accessibility(label: Text("minus"))
 
                     Placeholder(value: invA0, emphasise: invAt == nil)
                         .frame(width: 100)
+                        .accessibility(sortPriority: 6)
+                        .accessibility(label: Text("inverse A0"))
                 }
 
                 Rectangle()
                     .frame(width: 225, height: 2)
+                    .accessibility(sortPriority: 5)
+                    .accessibility(label: Text("divide by"))
 
                 Placeholder(value: time, emphasise: emphasise)
+                    .accessibility(sortPriority: 4)
+                    .accessibility(label: Text("'T'"))
             }
         }
+        .accessibilityElement(children: .contain)
     }
 }
 
@@ -199,6 +220,8 @@ fileprivate struct SecondOrderHalfLifeFilled: View {
             BracketSubscript(mainValue: reactant, subscriptValue: "0")
             FixedText(")")
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("'T' 1/2 equals 1, divide by k times A0"))
     }
 }
 
@@ -212,6 +235,7 @@ fileprivate struct SecondOrderHalfLifeBlank: View {
     var body: some View {
         HStack(spacing: 5) {
             Placeholder(value: halfLife, emphasise: emphasise)
+                .accessibility(label: Text("'T' 1/2"))
 
             FixedText("=")
 
@@ -219,13 +243,20 @@ fileprivate struct SecondOrderHalfLifeBlank: View {
 
             HStack(spacing: 1) {
                 FixedText("/")
+                    .accessibility(label: Text("divide by"))
+
                 Placeholder(value: rateConstant, emphasise: emphasise)
+                    .accessibility(label: Text("k"))
                 FixedText("(")
+                    .accessibility(label: Text(Labels.openParen))
                 Text(a0)
                     .frame(width: EquationSettings.boxWidth * 0.8)
                     .minimumScaleFactor(0.5)
                     .foregroundColor(rateConstant == nil ? .orangeAccent : .black)
+                    .accessibility(label: Text("A0"))
+                    .accessibility(value: Text(a0))
                 FixedText(")")
+                    .accessibility(label: Text(Labels.closedParen))
             }
         }
     }
