@@ -5,7 +5,6 @@
 
 import SwiftUI
 
-// TODO remove values which can be obtained from reactionInput
 struct ConcentrationTimeChartView: View {
     @Binding var initialConcentration: CGFloat
     @Binding var initialTime: CGFloat
@@ -44,6 +43,7 @@ struct ConcentrationTimeChartView: View {
             includeSliders: true,
             yLabel: "[\(display.reactant.name)]",
             yAccessibilityLabel: yAccessibilityLabel,
+            chartLabelYDescription: yDescription,
             xAccessibilityLabel: xAccessibilityLabel,
             includeValuesInLabel: true,
             canSetCurrentTime: canSetCurrentTime,
@@ -56,6 +56,20 @@ struct ConcentrationTimeChartView: View {
             input: input,
             display: display
         )
+        .accessibilityElement(children: .contain)
+    }
+
+    private var yDescription: String {
+        let suffix = currentTime == nil ? "" : ", with a \(curveShape) line for \(display.reactant.name) and the same line flipped horizontally for \(display.product.name)"
+        return "concentration in molar\(suffix)"
+    }
+
+    private var curveShape: String {
+        switch (input.order) {
+        case .Zero: return "linear"
+        case .First: return "slightly curved"
+        case .Second: return "heavily curved"
+        }
     }
 
     private var yAccessibilityLabel: String {
@@ -101,6 +115,9 @@ struct SingleConcentrationPlot: View {
     let input: ReactionInputModel
     let display: ReactionPairDisplay
 
+    let yAccessibilityLabel: String
+    let chartLabelYDescription: String
+
     var body: some View {
         GeneralTimeChartView(
             initialConcentration: .constant(initialConcentration),
@@ -114,8 +131,9 @@ struct SingleConcentrationPlot: View {
             canSetInitialTime: false,
             includeSliders: false,
             yLabel: yLabel,
-            yAccessibilityLabel: "todo",
-            xAccessibilityLabel: "todo",
+            yAccessibilityLabel: yAccessibilityLabel,
+            chartLabelYDescription: description,
+            xAccessibilityLabel: "time in seconds",
             includeValuesInLabel: false,
             canSetCurrentTime: canSetCurrentTime,
             highlightChart: highlightChart,
@@ -127,6 +145,12 @@ struct SingleConcentrationPlot: View {
             input: input,
             display: display
         )
+        .accessibilityElement(children: .contain)
+    }
+
+    private var description: String {
+        let suffix = currentTime == nil ? "" : ", with a linear line for \(display.reactant.name)"
+        return "\(chartLabelYDescription)\(suffix)"
     }
 }
 
@@ -146,6 +170,7 @@ struct GeneralTimeChartView: View {
     let includeSliders: Bool
     let yLabel: String
     let yAccessibilityLabel: String
+    let chartLabelYDescription: String
     let xAccessibilityLabel: String
     let includeValuesInLabel: Bool
     let canSetCurrentTime: Bool
@@ -215,7 +240,7 @@ struct GeneralTimeChartView: View {
     }
 
     private var label: String {
-        "Chart showing time in seconds vs concentration in molar"
+        "Chart showing time in seconds vs \(chartLabelYDescription)"
     }
 
     private var showIndicatorLines: Bool {
@@ -506,7 +531,9 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                 highlightChart: true,
                 showDataAtT2: false,
                 input: ReactionInputAllProperties(order: .Zero),
-                display: ReactionType.A.display
+                display: ReactionType.A.display,
+                yAccessibilityLabel: "foo",
+                chartLabelYDescription: "foo"
             ).previewLayout(.fixed(width: 500, height: 300))
     }
 

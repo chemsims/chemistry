@@ -66,7 +66,9 @@ struct FirstOrderReactionScreen: View {
             highlightChart: reaction.highlight(element: .secondaryChart),
             showDataAtT2: reaction.showDataAtT2,
             input: reaction.input,
-            display: reaction.selectedReaction.display
+            display: reaction.selectedReaction.display,
+            yAccessibilityLabel: "natural log of concentration of \(reaction.selectedReaction.display.reactant.name)",
+            chartLabelYDescription: "natural log of concentration"
         )
         .colorMultiply(reaction.color(for: .secondaryChart))
     }

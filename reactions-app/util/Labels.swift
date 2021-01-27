@@ -52,7 +52,7 @@ struct Labelling {
         ("Half-life", " half life "),
         ("-", " minus "),
         ("k[A]", "K times 'A'"),
-        ("0.5[A", "0.5 times 'A'"),
+        ("5[A", "5 times 'A'"),
         ("[A]", "'A'"),
         ("[", ""),
         ("]", ""),

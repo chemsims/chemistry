@@ -308,7 +308,7 @@ fileprivate struct FilledHalfLife: View {
         .accessibilityElement()
         .accessibility(label:
             Text(
-                "Half-life equals A0, divided by 2 times k"
+                "'T' 1/2 equals A0, divided by 2 times k"
             )
         )
     }
@@ -353,7 +353,7 @@ fileprivate struct BlankHalfLife: View {
     var body: some View {
         HStack(spacing: 4) {
             Placeholder(value: halfLife, emphasise: emphasise)
-                .accessibility(label: Text("half-life"))
+                .accessibility(label: Text("'T' 1/2"))
             FixedText("=")
             Placeholder(value: a0, emphasise: emphasise)
                 .accessibility(label: Text("A0"))

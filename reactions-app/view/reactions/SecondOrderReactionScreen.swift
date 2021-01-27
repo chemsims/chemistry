@@ -65,7 +65,9 @@ struct SecondOrderReactionScreen: View {
             highlightChart: reaction.highlight(element: .secondaryChart),
             showDataAtT2: reaction.showDataAtT2,
             input: reaction.input,
-            display: reaction.selectedReaction.display
+            display: reaction.selectedReaction.display,
+            yAccessibilityLabel: "inverse concentration of \(reaction.selectedReaction.display.reactant.name)",
+            chartLabelYDescription: "inverse concentration"
         )
         .colorMultiply(reaction.color(for: .secondaryChart))
     }

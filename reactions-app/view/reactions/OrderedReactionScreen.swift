@@ -89,7 +89,7 @@ struct OrderedReactionScreen<Content: View>: View {
             .padding(.horizontal, settings.chartHPadding)
             .colorMultiply(reaction.color(for: [.concentrationChart, .rateCurveLhs, .rateCurveRhs]))
             .disabled(reaction.inputsAreDisabled)
-            .accessibilityElement(children: .contain)
+            .accessibility(sortPriority: 3)
 
             ConcentrationBarChart(
                 initialA: reaction.input.inputC1,
@@ -107,10 +107,13 @@ struct OrderedReactionScreen<Content: View>: View {
             .padding(.horizontal, settings.chartHPadding)
             .colorMultiply(reaction.color(for: []))
             .accessibilityElement(children: .contain)
+            .accessibility(sortPriority: 2)
 
             topRightControls
                 .padding(.trailing, settings.tableTrailingPadding)
+                .accessibility(sortPriority: 1)
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var topRightControls: some View {

@@ -43,6 +43,7 @@ struct FirstOrderEquationView: View {
                 reactant: reactant
             ).frame(width: maxWidth, height: maxHeight)
         }
+        .accessibilityElement(children: .contain)
     }
 }
 
@@ -69,7 +70,8 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
                     rate: concentration?.rateConstant.str(decimals: 2),
                     lnA0: lnStr(c1),
                     lnAt: c2.map(lnStr),
-                    t: t?.str(decimals: 2)
+                    t: t?.str(decimals: 2),
+                    reactant: reactant
                 )
             }
             .background(
@@ -142,6 +144,8 @@ fileprivate struct FirstOrderRateFilled: View {
 
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("K = natural log of A0 minus natural log of A at time T, divide by T"))
     }
 
     private func lnA<Content: View>(aTerm: () -> Content) -> some View {
@@ -160,26 +164,48 @@ fileprivate struct FirstOrderRateBlank: View {
     let lnA0: String?
     let lnAt: String?
     let t: String?
+    let reactant: String
 
     var body: some View {
         HStack(spacing: 12) {
             Placeholder(value: rate, emphasise: emphasise)
+                .accessibility(label: Text("k"))
+                .accessibility(sortPriority: 10)
+
             FixedText("=")
+                .accessibility(sortPriority: 9)
+
             VStack(spacing: 1) {
                 HStack(spacing: 1) {
                     FixedText("(")
+                        .accessibility(hidden: true)
                     Placeholder(value: lnA0, emphasise: lnAt == nil)
+                        .accessibility(label: Text("natural log of \(reactant)0"))
+                        .accessibility(sortPriority: 8)
                     FixedText(")")
+                        .accessibility(hidden: true)
                     FixedText("-")
+                        .accessibility(sortPriority: 7)
+                        .accessibility(label: Text("minus"))
                     FixedText("(")
+                        .accessibility(hidden: true)
                     Placeholder(value: lnAt, emphasise: emphasise)
+                        .accessibility(sortPriority: 6)
+                        .accessibility(label: Text("natural log of \(reactant) at T"))
                     FixedText(")")
+                        .accessibility(hidden: true)
                 }
                 Rectangle()
                     .frame(width: 200, height: 2)
+                    .accessibility(sortPriority: 5)
+                    .accessibility(label: Text("divide by"))
+
                 Placeholder(value: t, emphasise: emphasise)
+                    .accessibility(sortPriority: 4)
+                    .accessibility(label: Text("'T'"))
             }
         }
+        .accessibilityElement(children: .contain)
     }
 }
 
@@ -197,6 +223,8 @@ fileprivate struct FirstOrderHalfLimeFilled: View {
                     .frame(width: EquationSettings.boxWidth)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("'T' 1/2 equals natural log of 2, divide by k"))
     }
 }
 
@@ -209,11 +237,16 @@ fileprivate struct FirstOrderHalfLifeBlank: View {
     var body: some View {
         HStack(spacing: 12) {
             Placeholder(value: halfLife, emphasise: emphasise)
+                .accessibility(label: Text("'T' 1/2"))
             FixedText("=")
             HStack(spacing: 12) {
                 FixedText("0.69")
+                    .accessibility(label: Text("natural log of 2"))
+                    .accessibility(value: Text("0.69"))
                 FixedText("/")
+                    .accessibility(label: Text("divide by"))
                 Placeholder(value: rate, emphasise: emphasise)
+                    .accessibility(label: Text("rate"))
             }
         }
     }
