@@ -20,7 +20,7 @@ class QuizViewModel: ObservableObject {
         self.allQuestions = displayQuestions
         self.persistence = persistence
         self.questionSet = questions.questionSet
-        self.currentQuestion = displayQuestions.first!
+        self.currentQuestion = displayQuestions[19]
         let previousQuiz = persistence.getAnswers(
             questionSet: questions.questionSet,
             questions: displayQuestions
@@ -42,8 +42,8 @@ class QuizViewModel: ObservableObject {
     @Published var currentQuestion: QuizQuestion
     @Published var answers = [Int:QuizAnswerInput]()
     @Published var progress: CGFloat = 0
-    @Published var quizState = QuizState.pending
-    @Published var quizDifficulty = QuizDifficulty.medium
+    @Published var quizState = QuizState.running
+    @Published var quizDifficulty = QuizDifficulty.hard
 
     // MARK: Public computed properties
     var selectedAnswer: QuizAnswerInput? {
@@ -117,6 +117,7 @@ class QuizViewModel: ObservableObject {
     }
 
     func showExplanation(option: QuizOption) -> Bool {
+        return true
         guard let answer = selectedAnswer?.allAnswers else {
             return false
         }

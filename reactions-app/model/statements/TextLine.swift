@@ -11,7 +11,7 @@ import Foundation
 /// line. If the text is too long for the available width, it will wrap on to the next line.
 /// However, each line will be separated from each other.
 ///
-struct TextLine: ExpressibleByStringLiteral, Equatable {
+struct TextLine: ExpressibleByStringLiteral, ExpressibleByStringInterpolation, Equatable {
 
     /// The content of the line
     /// - Note: The content will be concatenated as is, without adding
@@ -24,12 +24,13 @@ struct TextLine: ExpressibleByStringLiteral, Equatable {
         self.customLabel = customLabel
     }
 
-    /// Creates a new `TextLine` from the literal String `value`, after parsing the String.
+    /// Creates a new `TextLine` from the literal String `value`, after parsing the String, and applying mapping the string to a
+    /// more accessible label
     init(stringLiteral value: String) {
-        self.init(value, label: nil)
+        self.init(value, label: Labelling.stringToLabel(value))
     }
 
-    init(_ rawString: String, label: String?) {
+    init(_ rawString: String, label: String) {
         self.init(
             content: TextLineGenerator.makeLine(rawString).content,
             customLabel: label

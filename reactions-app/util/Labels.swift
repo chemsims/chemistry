@@ -19,7 +19,7 @@ struct Labelling {
     /// returned as a more common string, such as `squared` for powers of 2.
     static func stringToLabel(_ content: String) -> String {
         let preParsing = content.replacingOccurrences(of: preParseReplacements)
-        let parsed = TextLine(stringLiteral: preParsing)
+        let parsed = TextLine(preParsing, label: "")
         return parsed.content.reduce("") { (acc, next) in
             acc + labelSegment(next)
         }
@@ -37,6 +37,7 @@ struct Labelling {
     private static func labelSuperscript(_ segment: TextSegment) -> String {
         switch (segment.content) {
         case "2": return " squared"
+        case "3": return " cubed"
         default:
             return " to the power of \(labelContent(segment.content)),"
         }
@@ -56,12 +57,16 @@ struct Labelling {
     }
 
     private static let replacements: [(String, String)] = [
+        ("A ➝ B", "A to B"),
+        ("D ➝ E", "D, to E"),
         ("➝", ";"),
         ("half-life", "half life"),
         ("Half-life", " half life "),
+        ("rate-determining", "rate determining"),
         ("vice-versa", "vice versa"),
         ("Sodium-24", "Sodium 24"), 
         ("-", " minus "),
+        ("k[A][B][C]", "k times 'A' times B times C"),
         ("k[A][B]", "k[A], [B]"),
         ("k[A]", "K times 'A'"),
         ("k[B]", "K times 'B'"),
@@ -87,16 +92,33 @@ struct Labelling {
         ("0.034667", "0 point 034667"),
         ("0.02", "0 dot 0 2"),
         (" which is the same as", ", which is the same as"),
-        (" where n is the order", ", where n is the order")
+        (" where n is the order", ", where n is the order"),
+        ("⇌", "double sided arrow,"),
+        ("0.5X", "0.5 x")
     ]
 
     private static let preParseReplacements: [(String, String)] = [
+        ("➝ 2NO", "yields, 2NO"),
+        ("2C ➝ AC", "2C, yields, AC"),
         ("CaCl_2_", "C 'A' 'C' 'L' TWO"),
         ("(aq)", "(AQ)"),
         ("2AgNO_3_", "TWO 'A' G N O THREE"),
         ("AgNO_3_", "'A' G N O THREE"),
         ("Ca(NO_3_)_2_", "C 'A' N O THREE, TWO"),
         ("2AgCl", "TWO 'A' G C L"),
+        ("N_2_O_2_", "N2O2"),
+        ("2NO", "2 N O"),
+        ("NO_2_", "N O '2'"),
+        ("NO", "N O"),
+        ("O_2_", "O '2'"),
+        ("k[AB]^m^[C]^n^", "k, times A B ^m^, times C ^n^"),
+        ("k[AB]^m^", "k, times A B ^m^"),
+        ("k[AB][C]", "k, times A B, times C"),
+        ("S_2_O_8_^-2^", "S2O8 (charge -2) "),
+        ("I^-^", "I (charge minus 1)"),
+        ("SO", "S O"),
+        ("I_3_^-^", "I3 (charge minus 1)"),
+        ("ClO", "C L O")
     ]
 }
 
