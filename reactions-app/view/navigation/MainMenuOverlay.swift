@@ -73,6 +73,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             icon
                 .padding(.leading, settings.geometry.safeAreaInsets.leading)
                 .padding(.vertical, settings.geometry.safeAreaInsets.top)
+                .accessibility(sortPriority: 0.7)
 
             if (navigation.showMenu) {
                 panel

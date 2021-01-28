@@ -127,21 +127,30 @@ fileprivate struct UnscaledZeroOrderEquation: View {
             FixedText("-")
             FixedText("kt")
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Concentration of A at T, equals A0 minus K times T"))
     }
 
     private var aFilled: some View {
         HStack(spacing: 4) {
-            VaryingText(time: time, equation: concentration)
+            VaryingText(time: time, equation: concentration, label: "concentration of A at T")
             FixedText("=")
             FixedText(a0)
+                .accessibility(label: Text("A0"))
+                .accessibility(value: Text(a0))
             FixedText("-")
+                .accessibility(label: Text("minus"))
             FixedText(k)
+                .accessibility(label: Text("k"))
+                .accessibility(value: Text(k))
+
             VaryingText(
                 time: time,
                 equation: IdentityEquation(),
                 withParens: true,
                 widthFactor: 0.8,
-                decimals: 1
+                decimals: 1,
+                label: "time"
             )
         }
     }
@@ -182,23 +191,35 @@ fileprivate struct UnscaledFirstOrderEquation: View {
                 .font(.system(size: EquationSettings.subscriptFontSize))
                 .offset(y: -12)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Concentration of A at T, equals A0, times E to the power of minus KT"))
     }
 
     private var aFilled: some View {
         HStack(spacing: 4) {
-            VaryingText(time: time, equation: concentration)
+            VaryingText(time: time, equation: concentration, label: "Concentration of A at T")
             FixedText("=")
             FixedText(a0)
+                .accessibility(label: Text("A0"))
+                .accessibility(value: Text(a0))
+
             FixedText("e")
+
             HStack(spacing: 0) {
                 FixedText("-")
+                    .accessibility(label: Text("minus"))
+
                 FixedText(k)
+                    .accessibility(label: Text("k"))
+                    .accessibility(value: Text(k))
+
                 VaryingText(
                     time: time,
                     equation: IdentityEquation(),
                     withParens: true,
                     widthFactor: 0.55,
-                    decimals: 1
+                    decimals: 1,
+                    label: "time"
                 )
             }
             .font(.system(size: EquationSettings.subscriptFontSize))
@@ -249,25 +270,43 @@ fileprivate struct UnscaledSecondOrderEquation: View {
                 }
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Concentration of A at T, equals A0 divide by, A0 times KT, plus 1"))
     }
 
     private var aFilled: some View {
         HStack(spacing: 10) {
             HStack(spacing: 2) {
-                VaryingText(time: time, equation: concentration)
+                VaryingText(time: time, equation: concentration, label: "Concentration of A at T")
                 FixedText("=")
                 FixedText(a0)
+                    .accessibility(label: Text("A0"))
+                    .accessibility(value: Text(a0))
+
                 FixedText("/")
+                    .accessibility(label: Text("divide by"))
+
                 HStack(spacing: 1) {
                     FixedText("(")
                     FixedText(a0)
-                    FixedText("(\(k))")
+                        .accessibility(label: Text("A0"))
+                        .accessibility(value: Text(a0))
+
+                    HStack(spacing: 0) {
+                        FixedText("(")
+                        FixedText(k)
+                            .accessibility(label: Text("k"))
+                            .accessibility(value: Text(k))
+                        FixedText(")")
+                    }
+
                     VaryingText(
                         time: time,
                         equation: IdentityEquation(),
                         withParens: true,
                         widthFactor: 0.65,
-                        decimals: 1
+                        decimals: 1,
+                        label: "time"
                     )
                     FixedText("+")
                     FixedText("1")
@@ -293,8 +332,12 @@ fileprivate struct GeneralEquation<Content: View>: View {
         VStack(alignment: .leading, spacing: 5) {
             FixedText("Order: \(order)")
                 .font(.system(size: EquationSettings.fontSize, weight: .bold))
+                .accessibility(sortPriority: 1)
+
             HStack {
                 lhs()
+                    .accessibility(sortPriority: 0.5)
+
                 Spacer()
                     .frame(width: spacerWidth)
                 VStack(alignment: .leading, spacing: 5) {
@@ -302,7 +345,8 @@ fileprivate struct GeneralEquation<Content: View>: View {
                     blankRate
                 }
             }
-        }.font(.system(size: EquationSettings.fontSize))
+        }
+        .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
         .minimumScaleFactor(1)
     }
@@ -318,17 +362,41 @@ fileprivate struct GeneralEquation<Content: View>: View {
                 .font(.system(size: EquationSettings.subscriptFontSize))
                 .offset(y: -10)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(
+            label: Text(
+                "Rate equals k, times concentration of A to the power of \(order)"
+            )
+        )
+
     }
 
     private var blankRate: some View {
         HStack(spacing: 4) {
-            VaryingText(time: time, equation: rate, widthFactor: 1.2, decimals: 3)
+            VaryingText(
+                time: time,
+                equation: rate,
+                widthFactor: 1.2,
+                decimals: 3,
+                label: "rate"
+            )
+
             FixedText("=")
             FixedText(k)
-            VaryingText(time: time, equation: concentration, withParens: true)
+                .accessibility(label: Text("k"))
+                .accessibility(value: Text(k))
+
+            VaryingText(
+                time: time,
+                equation: concentration,
+                withParens: true,
+                label: "concentration of A"
+            )
+
             FixedText("\(order)")
                 .font(.system(size: EquationSettings.subscriptFontSize))
                 .offset(y: -10)
+                .accessibility(label: Text("to the power of \(order)"))
         }
     }
 }
@@ -341,6 +409,7 @@ fileprivate struct VaryingText: View {
     let withParens: Bool
     let widthFactor: CGFloat
     let decimals: Int
+    let label: String
 
     init(
         time: CGFloat?,
@@ -348,7 +417,8 @@ fileprivate struct VaryingText: View {
         alignment: Alignment = .center,
         withParens: Bool = false,
         widthFactor: CGFloat = 1,
-        decimals: Int = 2
+        decimals: Int = 2,
+        label: String
     ) {
         self.time = time
         self.equation = equation
@@ -356,6 +426,7 @@ fileprivate struct VaryingText: View {
         self.withParens = withParens
         self.widthFactor = widthFactor
         self.decimals = decimals
+        self.label = label
     }
 
     var body: some View {
@@ -366,6 +437,8 @@ fileprivate struct VaryingText: View {
             Group {
                 if (time == nil) {
                     FixedText(equation.getY(at: 0).str(decimals: decimals))
+                        .accessibility(label: Text(label))
+                        .accessibility(value: Text(equation.getY(at: 0).str(decimals: decimals)))
                 }
                 if (time != nil) {
                     AnimatingNumber(
@@ -374,6 +447,7 @@ fileprivate struct VaryingText: View {
                         formatter: { d in d.str(decimals: decimals) },
                         alignment: .leading
                     )
+                    .accessibility(label: Text(label))
                 }
 
             }

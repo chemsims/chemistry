@@ -117,7 +117,6 @@ class QuizViewModel: ObservableObject {
     }
 
     func showExplanation(option: QuizOption) -> Bool {
-        return true
         guard let answer = selectedAnswer?.allAnswers else {
             return false
         }

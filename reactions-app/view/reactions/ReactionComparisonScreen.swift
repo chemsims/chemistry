@@ -71,13 +71,29 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     }
 
     private var beakers: some View {
-        HStack(spacing: 0) {
+        func orderMsg(_ order: ReactionOrder) -> String {
+            let selected = reaction.correctOrderSelections.contains(order)
+            return selected ? ". Correctly identified as \(order) order. " : ""
+        }
+
+        return HStack(spacing: 0) {
             Spacer()
                 .frame(width: settings.ordered.menuTotalWidth)
             VStack {
                 beaker(order: settings.ordering[0])
+                    .accessibilityElement(children: .contain)
+                    .accessibility(label: Text("Top beaker\(orderMsg(settings.ordering[0]))"))
+                    .accessibility(sortPriority: 0.5)
+
                 beaker(order: settings.ordering[1])
+                    .accessibilityElement(children: .contain)
+                    .accessibility(label: Text("Middle beaker\(orderMsg(settings.ordering[1]))"))
+                    .accessibility(sortPriority: 0.4)
+
                 beaker(order: settings.ordering[2])
+                    .accessibilityElement(children: .contain)
+                    .accessibility(label: Text("Bottom beaker\(orderMsg(settings.ordering[2]))"))
+                    .accessibility(sortPriority: 0.3)
             }.padding(settings.beakerPadding)
             Spacer()
         }
@@ -235,11 +251,12 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         }
     }
 
+    @ViewBuilder
     private func equation<Content: View>(
         order: ReactionOrder,
         content: @escaping (GeometryProxy) -> Content
     ) -> some View {
-        GeometryReader { geometry in
+        let view = GeometryReader { geometry in
             content(geometry)
                 .gesture(dragEquationGesture(geometry: geometry, order: order))
         }
@@ -251,6 +268,33 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             )
         )
         .rotationEffect(shakingOrder == order ? .degrees(3) : .zero)
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text("Equation box"))
+        .disabled(!canDragOrder(order))
+
+        if (!canDragOrder(order)) {
+            view
+        } else {
+            view
+                .accessibilityAction(named: Text("Drag over top chart")) {
+                    accessibilityDrag(order: order, chartIndex: 0)
+                }
+                .accessibilityAction(named: Text("Drag over middle chart")) {
+                    accessibilityDrag(order: order, chartIndex: 1)
+                }
+                .accessibilityAction(named: Text("Drag over bottom chart")) {
+                    accessibilityDrag(order: order, chartIndex: 2)
+                }
+        }
+    }
+
+    private func accessibilityDrag(order: ReactionOrder, chartIndex: Int) {
+        if (settings.ordering[chartIndex] == order) {
+            UIAccessibility.post(notification: .announcement, argument: "Correct selection")
+            handleCorrectSelection(order: order)
+        } else {
+            UIAccessibility.post(notification: .announcement, argument: "Incorrect selection")
+        }
     }
 
     private func equationBorderColor(order: ReactionOrder) -> Color {
@@ -334,12 +378,17 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         finalTime: CGFloat,
         currentTime: Binding<CGFloat>
     ) -> some View {
-        HStack(alignment: .top, spacing: settings.chartHorizontalLabelSpacing) {
+        let hasSelected = reaction.correctOrderSelections.contains(order)
+        let orderMsg = hasSelected ? " Correctly selected as \(order) order. " : ""
+        let label = "Chart showing time vs concentration.\(orderMsg) \(shape(order))"
+        return HStack(alignment: .top, spacing: settings.chartHorizontalLabelSpacing) {
             Text("[A]")
                 .font(.system(size: settings.chartFontSize))
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
                 .frame(width: settings.chartYLabelWidth, height: settings.chartSize)
+                .accessibility(hidden: true)
+
             VStack(spacing: settings.chartVerticalLabelSpacing) {
                 chart(
                     chartSettings: chartSettings,
@@ -354,9 +403,24 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .frame(width: settings.chartSize, height: settings.chartXLabelHeight)
+                    .accessibility(hidden: true)
             }
         }
         .frame(width: settings.chartTotalWidth, height: settings.chartTotalHeight)
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text(label))
+        .accessibility(sortPriority: settings.chartSortPriority(order: order))
+    }
+
+    private func shape(_ order: ReactionOrder) -> String {
+        if reaction.currentTime0 == nil {
+            return "Reaction has not started yet"
+        }
+        switch (order) {
+        case .Zero: return "Concentration of A reduces in a straight line, while B increases in a straight line"
+        case .First: return "Concentration of A reduces in a curved line which is steeper at the start, and B increases with the same curve, flipped horizontally"
+        case .Second: return "Concentration of A reduces in a heavily curved line which is stepper at the start, and B increases with the same curve, flipped horizontally"
+        }
     }
 
     private func chart(
@@ -376,6 +440,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     border: .black,
                     foreground: reaction.canStartAnimation ? .orangeAccent : .gray
                 )
+                .accessibility(label: Text("Start reaction"))
                 .disabled(!reaction.canStartAnimation)
                 .frame(width: settings.chartSize * 0.5)
             }
@@ -396,6 +461,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     display: ReactionType.A.display,
                     includeAxis: false
                 )
+                .disabled(!reaction.reactionHasEnded)
             }
         }
         .frame(
@@ -435,7 +501,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     statement: reaction.statement,
                     next: reaction.next,
                     back: reaction.back,
-                    nextIsDisabled: reaction.canClickNext,
+                    nextIsDisabled: !reaction.canClickNext,
                     verticalSpacing: settings.ordered.beakyVSpacing,
                     bubbleWidth: settings.ordered.bubbleWidth,
                     bubbleHeight: settings.ordered.bubbleHeight,
@@ -499,7 +565,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         order: ReactionOrder
     ) -> some Gesture {
         DragGesture(minimumDistance: 0, coordinateSpace: .global).onChanged { gesture in
-            guard reaction.canDragOrders && !reaction.correctOrderSelections.contains(order) else {
+            guard canDragOrder(order) else {
                 return
             }
             self.draggingOrder = order
@@ -515,15 +581,23 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             }
             if let dragOverOrder = dragOverOrder {
                 if (dragOverOrder == order) {
-                    reaction.addToCorrectSelection(order: order)
-                    if (reaction.correctOrderSelections.count == 3 && !reaction.reactionHasEnded) {
-                        reaction.next()
-                    }
+                    handleCorrectSelection(order: order)
                 } else if (!reaction.correctOrderSelections.contains(dragOverOrder)) {
                     runShakeAnimation(order: order)
                 }
             }
             endDrag()
+        }
+    }
+
+    private func canDragOrder(_ order: ReactionOrder) -> Bool {
+        reaction.canDragOrders && !reaction.correctOrderSelections.contains(order)
+    }
+
+    private func handleCorrectSelection(order: ReactionOrder) {
+        reaction.addToCorrectSelection(order: order)
+        if (reaction.correctOrderSelections.count == 3 && !reaction.reactionHasEnded) {
+            reaction.next()
         }
     }
 
@@ -715,6 +789,15 @@ struct ReactionComparisonLayoutSettings {
             return height / 2
         }
         return height - topPosition
+    }
+
+    func chartSortPriority(order: ReactionOrder) -> Double {
+        if (ordering[0] == order) {
+            return 0.49
+        } else if (ordering[1] == order) {
+            return 0.39
+        }
+        return 0.29
     }
 
 
