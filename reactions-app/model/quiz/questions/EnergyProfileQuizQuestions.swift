@@ -12,162 +12,189 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 question: "What is the concept of Activation Energy (E_a_)?",
                 correctAnswer: QuizAnswerData(
-                    answer:  "The energy required to form the transition state in a chemical reaction",
+                    answer:  "Activation Energy is the one required to form the transition state in a chemical reaction",
                     explanation: """
-                This is the definition of Activation Energy. It's the one that's required for a chemical \
-                reaction to take place
-                """
+                    This is the definition of Activation Energy. It's the one that's required for a chemical \
+                    reaction to take place.
+                    """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: """
-                    The energy required to convert a ground-state atom in the gas phase to a gaseous \
-                    positive ion
-                    """,
-                        explanation: "This is the definition of Ionization Energy"
+                        answer: "Activation Energy is the one that a molecule possesses due to its motion",
+                        explanation: "That would be closer to the concept of Kinetics Energy."
                     ),
                     QuizAnswerData(
-                        answer: """
-                    The energy change that occurs in the conversion of an ionic solid to widely separated \
-                    gaseous ions
-                    """,
-                        explanation: "This is the definition of Lattice Energy"
+                        answer: "Activation Energy is the one released or consumed when one mole of a substance is created under standard conditions from its pure elements",
+                        explanation: "That would be closer to the concept of Standard Enthalpy of Formation."
                     ),
                     QuizAnswerData(
-                        answer: "The energy in a chemical or physical change that is available to do useful work",
-                        explanation: "This is the definition of Gibbs Free Energy"
+                        answer: "Activation Energy is the one stored in the bonds of chemical compounds (atoms and molecules)",
+                        explanation: "That would be closer to the concept of Chemical Energy."
                     )
                 ],
                 difficulty: .easy
             ),
             QuizQuestionData(
                 question: """
-            Consider the energy diagram below. By adding the catalyst, this one has created a new pathways \
+            Consider the energy diagram below. By adding the catalyst, it has created a new pathway \
             that's being represented by the red line (line 2) in the diagram. How exactly does this make the \
             reaction faster?
             """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    The catalyst lowers the activation energy required for the reaction to take place, making the \
-                    transition state more stabilized
+                    By the addition of the catalyst, another pathway is created which requires \
+                    much less energy for A and B to finally produce C
                     """,
                     explanation: """
-                    The red line represents the new pathway created, and it has a much lower \
-                    activation energy making it easier for the reactants to meet the energy \
-                    requirements to react.
+                    The red line (line 2) represents a pathway that the catalyst created which requires a \
+                    lot less energy for the reactants A and B to follow and become C.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        Adding the catalyst creates two different pathways for the reactants to form products
+                        By the addition of the catalyst, two pathways have been created for A and \
+                        B to follow to produce C.
                         """,
                         explanation: """
-                        Although a new pathway is created by adding the catalyst, the grey pathway \
-                        requires much more activation energy, which would make it less likely to \
-                        be used, making this answer not so accurate.
+                        Even though another pathways has been indeed created by the addition of \
+                        the catalyst, A and B reactants wouldn't follow both pathways, but only \
+                        the one with much less energy.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "The catalyst increases the heat, leading to a less stabilized transition state",
+                        answer: "Adding the catalyst results in an increment of the temperature of the system, making the heat to increase as well.",
                         explanation: """
-                        Notice how the products and reactants stay in the same place in the \
-                        diagram for both lines or pathways, so that makes this answer incorrect \
-                        since the heat (difference in energy between reactants and products) \
-                        remains the same.
+                        The heat difference between reactants (A and B) and product (C) remains \
+                        the same even when the hump is lowered.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "The catalyst alters the reactants, leading to an alternate energy pathway",
+                        answer: "Adding the catalyst makes the products to be at a lower state of energy, so it's easier for the reaction to reach.",
                         explanation: """
-                        Notice how the products and reactants stay in the same place in the \
-                        diagram for both lines or pathways, so that makes this answer incorrect \
-                        because the reactants stay the same.
+                        The product state of energy stays the same, the only thing that was \
+                        lowered is the activation energy represented by the hump of the diagram.
                         """
                     )
                 ],
                 difficulty: .easy,
-                image: "energy-profile-reaction-profile"
+                image: LabelledImage(
+                    image: "energy-profile-reaction-profile",
+                    label: """
+                    A reaction profile for an endothermic reaction (A + B to C), \
+                    where the hump for line 2 is much below the hump of line 1. Line 2 starts and ends at the same energy level as line 1.
+                    """
+                )
             ),
             QuizQuestionData(
                 question: """
-                The energy profile of a reaction shows the successful collision of molecules. Which is the right \
-                order for an energy profile when reading it from left or right?
+                Take a look at the energy diagram below that represents the pathway of a reaction. \
+                The steps of the pathway are numbered:
+
+                1: reactants, and 7: products. Fill the rest of the numbers accordingly.
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    Reactants, Activated Complex, Intermediate, Activated Complex, Products
+                    1: Reactants, 2: Activated Complex, 3: Intermediate, 4: Activated Complex, \
+                    5: Intermediate, 6: Activated Complex, 7: Products
                     """,
                     explanation: """
-                    All energy profiles follow this order: Reactants, Activated Complex, Products. \
-                    In this case there is an intermediate, so there would be two activated complex.
+                    All energy profiles follow this order: reactants, activated complex, products. \
+                    In this case there is an intermediate, so there would be two activated complexes.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Reactants, Intermediate, Activated Complex, Products",
+                        answer: """
+                        1: Reactants, 2: Reactants, 3: Intermediate, 4: Activated Complex, \
+                        5: Intermediate, 6: Products, 7: Products
+                        """,
                         explanation: """
-                        The reaction mechanism has at least two activated complex which are \
-                        represented by the peaks of the diagram.
+                        The reaction mechanism has at least three activated complexes which are \
+                        represented by the peaks of the diagram. Also, nothing formed along the \
+                        pathway are reactants or products.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Reactants, Intermediate, Activated Complex, Intermediate, Products",
+                        answer: """
+                        1: Reactants, 2: Intermediate, 3: Activated Complex, 4: Intermediate, \
+                        5: Activated Complex, 6: Intermediate, 7: Products
+                        """,
                         explanation: """
-                        The diagram starts with reactants, but the peak represents an activated \
-                        complex and not an intermediate.
+                        The peaks represent the activated complex and not the intermediate.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Reactants, Activated Complex, Intermediate, Products",
+                        answer: """
+                        1: Reactants, 2: Activated Complex, 3: Intermediate, 4: Intermediate, \
+                        5: Intermediate, 6: Activated Complex, 7: Products
+                        """,
                         explanation: """
-                        The intermediate (represented by the valley) is always followed by another \
-                        activated complex which is in this case the second peak. Not every \
-                        reaction has intermediates.
+                        The intermediates (represented by the valleys) are always followed by \
+                        another activated complex. Not every reaction has intermediates.
                         """
                     )
                 ],
                 difficulty: .hard,
-                image: "energy-profile-reaction-pathway"
+                image: LabelledImage(
+                    image: "energy-profile-reaction-pathway",
+                    label: """
+                    Reaction profile diagram with 3 peaks and 2 valleys, which are labelled from 1 to 7.
+
+                    1: Start of reaction
+                    2: First peak
+                    3: First valley
+                    4: Second peak
+                    5: Second valley
+                    6: Third peak
+                    7: End of reaction, at a low energy
+                    """
+                )
             ),
             QuizQuestionData(
                 question: """
-                Which of the following has the lowest Activation Energy?
+                Consider the following reactions and scenarios, and choose the one that would most \
+                likely have the lowest activation energy to overcome:
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "H_2_O + CO_2_ ⇌ H_2_CO_3_ (In the presence of a catalyst)",
+                    answer: "A reaction like H^+^ + OH^-^ ➝ H_2_O in the presence of a catalyst",
+                    answerLabel: "A reaction like H^+^, + OH^-^, yields H_2_O, in the presence of a catalyst",
                     explanation: """
-                    Correct answer is A, because in general, comparing both reactions, the formation of carbonic \
-                    acid $(H2O + CO2 ⇌ H2CO3)$ is spontaneous while the decomposition of water $(2H2O ⇌ 2H2 + O2)$ \
-                    is non-spontaneous, so from the get-go, the spontaneous reaction would have a lower activation \
-                    energy.
-
-                    An inhibitor is meant to slow down a reaction while a catalyst is meant to speed the reaction \
-                    up, so that's why the formation of carbonic acid with a catalyst would have the lowest \
-                    activation energy.
+                    Correct, because in general, comparing both reactions, the formation of water \
+                    by its ions $(H^+^ + OH^-^ ➝ H_2_O_3_)$ is spontaneous while the formation of \
+                    nitrogen monoxide $(N_2_ + O_2_ ➝ 2NO)$ is non-spontaneous, so from the get-go, \
+                    the spontaneous reaction would have a lower activation energy. Also, adding a \
+                    catalyst lowers the activation energy of the reaction.
                     """,
-                    position: .A
+                    explanationLabel: """
+                    Correct, because in general, comparing both reactions, the formation of water \
+                    by its ions $(H^+^ + OH^-^, yields H_2_O_3_)$ is spontaneous while the formation of \
+                    nitrogen monoxide $(N_2_ + O_2_ ➝ 2NO)$ is non-spontaneous, so from the get-go, \
+                    the spontaneous reaction would have a lower activation energy. Also, adding a \
+                    catalyst lowers the activation energy of the reaction.
+                    """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "2H_2_O ⇌ 2H_2_ + O_2_ (In an open system)",
+                        answer: "A reaction like N_2_ + O_2_ ➝ 2NO without any catalyst",
                         explanation: """
-                        The decomposition of water (2H_2_O ⇌ 2H_2_ + O_2_) is a non-spontaneous reaction.
+                        The formation of nitrogen monoxide $(N_2_ + O_2_ ➝ 2NO)$ is a \
+                        non-spontaneous reaction.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "H_2_O + CO_2_ ⇌ H_2_CO_3_ (In an open system)",
+                        answer: "A reaction like H6^+^ + OH^-^ ➝ H_2_O without any catalyst",
                         explanation: """
-                        The formation of carbonic acid (H_2_O + CO_2_ ⇌ H_2_CO_3_) but being in \
-                        the presence of a catalyst would make the reaction faster.
+                        The formation of water by its ions $(H^+^ + OH^-^ ➝ H_2_O)$ is spontaneous \
+                        but being in the presence of a catalyst would make the reaction faster.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "2H_2_O ⇌ 2H_2_ + O_2_ (In the presence of an inhibitor)",
+                        answer: " A reaction like N_2_ + O_2_ ➝ 2NO in the presence of a catalyst",
                         explanation: """
-                        The decomposition of water (2H_2_O <==> 2H_2_ + O_2_) is a \
-                        non-spontaneous reaction, besides, an inhibitor would actually slow down \
-                        the reaction even more.
+                        The decomposition of water $(N_2_ + O_2_ ➝ 2NO)$ is a non-spontaneous \
+                        reaction, so even with the addition of a catalyst, its activation energy \
+                        would most likely still be higher than other choices.
                         """
                     )
                 ],
@@ -175,34 +202,54 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-                A student puts 100 mg of a piece of metal to a hydrochloric acid solution, which triggers a \
-                reaction. Which conditions would make the reaction go at a faster rate?
+                Consider a first order reaction as: $R ➝ Products$.
+
+                In which scenario is it most likely for the reaction to have a higher rate of reaction?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "[HCl] = 0.200M @70°C",
+                    answer: "[R] = 0.200M @70°C",
                     explanation: """
-                    This option has the highest concentration of HCl and also the highest \
+                    This option has the highest concentration of R and also the highest \
                     temperature, those conditions would boost the rate of the reaction.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "[HCl] = 0.030M @5°C",
+                        answer: "[R] = 0.030M @5°C",
                         explanation: """
-                        Low concentrations of [HCl] and low temperatures would make the reaction \
-                        very slow.
+                        Take into account the rate law equation for a first order reaction, \
+                        $rate = k[R]$, the lower the concentration of R, then the lower the rate \
+                        of the reaction too. Also, take into account the Arrhenius equation, \
+                        $k = Ae^(-Ea/RT)^$. The lower the temperature, then the lower the rate \
+                        constant, which ultimately results in a lower rate of reaction.
+                        """,
+                        explanationLabel: """
+                        Take into account the rate law equation for a first order reaction, \
+                        rate = k[R], the lower the concentration of R, then the lower the rate \
+                        of the reaction too. Also, take into account the Arrhenius equation, \
+                        k = A, times e^(-EA/RT)^. The lower the temperature, then the lower the rate \
+                        constant, which ultimately results in a lower rate of reaction.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "[HCl] = 0.030M @70°C",
+                        answer: "[R] = 0.030M @70°C",
                         explanation: """
-                        Low concentrations of [HCl] would make the reaction slow.
+                        Take into account the rate law equation for a first order reaction, \
+                        $rate = k[R]$. The lower the concentration of R, then the lower the rate of \
+                        the reaction too.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "[HCl] = 0.200M @5°C",
+                        answer: "[R] = 0.200M @5°C",
                         explanation: """
-                        Low temperatures would make the reaction slow.
+                        Take into account the Arrhenius equation, $k = Ae^(-Ea/RT)^$. The lower \
+                        the temperature, then the lower the rate constant, which ultimately results \
+                        in a lower rate of reaction.
+                        """,
+                        explanationLabel: """
+                        Take into account the Arrhenius equation, k = A, times e^(-EA/RT)^. The lower \
+                        the temperature, then the lower the rate constant, which ultimately results \
+                        in a lower rate of reaction.
                         """
                     )
                 ],
@@ -248,47 +295,62 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-            Determine what are the reactants of the overall reaction that has the following mechanism
+                Determine what are the reactants of the overall reaction that has the following mechanism
 
-            Step 1: A + B ➝ AB
-            Step 2: AB + C ➝ CB + A
-            Step 3: CB + D_2_ ➝ DB + CD
-            Step 4: DB + C ➝ CD + B
-            """,
+                Step 1: A_2_ + B ➝ A + AB
+                Step 2: AB + 2C ➝ A + BC_2_
+                Step 3: A + D ➝ AD
+                Step 4: A + AD ➝ A_2_ + D
+                """,
+                questionLabel: """
+                Determine what are the reactants of the overall reaction that has the following mechanism:
+
+                Step 1: A_2_ + B, yields A + AB.
+                Step 2: AB + 2C, yields A + BC2.
+                Step 3: A + D, yields AD.
+                Step 4: A + AD, yields A_2_ + D.
+                """,
                 correctAnswer: QuizAnswerData(
                     answer: "C, D_2_",
                     explanation: """
-                    The easies way to determine the overall reaction is by summing up all steps and cancel out all \
-                    of those species that repeat themselves in both reactant and product sides:
+                    The easiest way to determine the overall reaction is by summing up all steps \
+                    and canceling out all of those species that repeat themselves in both reactant and product sides:
 
-                    A + B + AB +CB + D_2_ + DB + 2C ➝ AB + CB + A + DB + 2CD + B
+                    A_2_ + A + A + AB + B + 2C + AD + D ➝ A_2_ + A + A + AB + BC_2_ + AD + D
 
                     Canceling, we get:
 
-                    D_2_ + 2C ➝ 2CD.
+                    B + 2C ➝ BC_2_
+                    """,
+                    explanationLabel: """
+                    The easiest way to determine the overall reaction is by summing up all steps \
+                    and canceling out all of those species that repeat themselves in both reactant and product sides:
+
+                    A_2_ + A + A + AB + B + 2C + AD + D, yields, A_2_ + A + A + AB + BC_2_ + AD + D
+
+                    Canceling, we get:
+
+                    B + 2C yields BC_2_
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "A, B, C, D_2_",
+                        answer: "B, BC_2_",
                         explanation: """
-                        Even though D_2_ is a product of the reaction, there are A + B in both \
-                        sides of the overall reaction, making them actually not being part of the \
-                        overall reaction.
+                        Even though BC_2_ is a product of the overall reaction, not a reactant.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "A, B, C",
+                        answer: "A_2_, B",
                         explanation: """
-                        Even though C is a reactant of the reaction, there are A + B in both sides \
-                        of the overall reaction, making them actually not being part of the \
-                        overall reaction.
+                        Even though B is a reactant of the reaction, there is A_2_ in both sides \
+                        of the overall reaction, making it actually not a part of the overall reaction.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "A, C, D_2_",
+                        answer: "A, B, BC_2_",
                         explanation: """
-                        Even though C and D_2_ are present in the overall reaction, A is not \
+                        Even though B and BC_2_ are present in the overall reaction, A is not \
                         because it's being consumed as it's produced.
                         """
                     )
@@ -297,37 +359,38 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-                How does a catalyst affects a reaction without taking a part in it?
+                A catalyst is a substance that is used to boost the rate of reactions to \
+                ultimately produce the desirable products faster. Knowing this, does the catalyst \
+                take part in the reactions?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    It participates in the reaction, but is then recovered in the later steps of \
-                    the reaction
+                    Yes, it takes part in the reaction. After the catalyst has served its \
+                    function, it's recovered for its recycling.
                     """,
                     explanation: """
-                    The catalyst, even though is not a reactant or a product, it participates in \
-                    the reaction and can react in the mechanism steps, but in the later steps the \
-                    catalyst is entirely recovered.
+                    The catalyst can participate in the reaction as an intermediate that generates \
+                    a "faster" pathway for the reaction to take. In some cases, it participates in \
+                    other ways, like physically serving as a surface to increase the surface area \
+                    where the reaction takes place.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        It doesn't participate in the reaction. Just by being near the reactants it \
-                        makes the reaction faster
+                        Yes, it takes part in the reaction. It acts as a reactant of the reaction and increases the speed of it
                         """,
                         explanation: """
-                        The catalyst does take part of the reaction. For it to lower the activation \
-                        energy, it can participate in smaller steps to create a mechanism pathway that \
-                        requires less energy, and it's then regenerated. Even in the case the catalyst \
-                        doesn't directly participate in the reaction chemically, it can participate \
-                        physically by serving as a surface in which the reactants can interact easier.
+                        The catalyst can participate in the reaction, but not as a reactant of the \
+                        overall reaction, but as an intermediate that generates another pathway \
+                        for the reaction to follow for faster production.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        It encourages collisions because it reduces the space the reactants have to \
-                        move around
+                        No, it doesn't take part in the reaction. By being added in the reaction, \
+                        it makes the space in which the reactants interact smaller, pushing the \
+                        molecules closer together
                         """,
                         explanation: """
                         The catalyst doesn't reduce the space of the reactants, on the contrary, \
@@ -337,8 +400,9 @@ extension QuizQuestionsList {
                     ),
                     QuizAnswerData(
                         answer: """
-                        It transfers its energy to the reactants, adding energy to the overall \
-                        reaction and lowering the energy needed for it to occur
+                        No, it transfers its energy to the reactants, adding kinetic energy to the \
+                        overall reaction, making the molecules go faster so when they collide, a \
+                        successful collision would be more probable
                         """,
                         explanation: """
                         The catalyst doesn't transfer energy to the reactants or to the reaction. \
@@ -351,41 +415,57 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-            Consider two reactions (reaction A and reaction B). The black line (A) in the energy diagram \
-            below represents reaction A and the red line (B) represents reaction B. What is a true statement?
-            """,
+                Consider two reactions (reaction 1 and reaction 2). The black line (A) in the energy diagram \
+                below represents reaction 2 and the red line (B) represents reaction 2. What is a true statement?
+                """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    The reverse reaction of B has the same relative activation energy as the \
-                    reverse reaction of A
+                    The activation energy of reaction 1 is the same one as the activation energy \
+                    of reaction 2.
                     """,
                     explanation: """
-                    The reverse reaction of B has the same relative activation energy as the \
-                    reverse reaction of A because the difference in energy between the line when \
-                    the reaction is starting and the peak of the activation energy is the same for \
-                    both reactions.
+                    The activation energy in the diagram is represented by the difference between \
+                    the energy state at which the reactants are and the energy state at which an \
+                    activated complex is formed to later become the products. In this diagram, \
+                    that difference is the same for both reactions, so they have the same \
+                    activation energy.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer:
-                            "Both reactions are the same one but a catalyst was used for reaction B",
+                        answer: """
+                        Reaction 1 was the original pathway for a reaction, which after a catalyst \
+                        was added, became inefficient because reaction 2 is a pathway that results \
+                        in a faster formation of the products.
+                        """,
                         explanation: """
-                        Cannot be true as a catalyst only lowers the activation energy, it doesn't lower the \
-                        final energy of the reaction
+                        Cannot be true as a catalyst only lowers the activation energy, it doesn't \
+                        lower the final energy of the reaction. Practically speaking, if a \
+                        catalyst was added to a reaction, it would lower the hump in the diagram \
+                        and not the products too.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        The forward reaction of B has a higher activation energy than the forward reaction of A
+                        The heat released in the reaction 1 is the same one as the heat in reaction 2.
                         """,
-                        explanation: "Reaction A actually has a higher activation energy than reaction B"
+                        explanation: """
+                        Even though both reactions are in fact exothermic, and do release heat \
+                        when taking place, this heat is the difference between the energy state of \
+                        the reactants and the energy state of the products, which is higher for \
+                        the Reaction 1, because the reactants start at a higher point of energy.
+                        """
                     ),
                     QuizAnswerData(
-                        answer: "The rate of reaction B is half of the rate of reaction A",
+                        answer: """
+                        Reaction 1 and reaction 2 have different reactants but end up with the \
+                        same products.
+                        """,
                         explanation: """
-                        The rate of reaction A, since it has a higher activation energy, should \
-                        actually be slower too
+                        The reactions in the diagram might very well be different reactions \
+                        entirely. This is an energy diagram, so it only represents the energy in \
+                        every step of the pathway for both reactions. However, they do end up \
+                        with products that are in the same energy state.
                         """
                     )
                 ],
@@ -394,60 +474,95 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-                A reaction $(2A + B ➝ A_2_B)$ has the proposed mechanism:
+                A reaction $(2AB + C_2_ ➝ 2C_2_B)$ has the proposed mechanism:
 
-                Step 1: A + B ➝ M (slow)
-                Step 2: M + A ➝ A_2_B (fast)
+                Step 1: AB + AB ➝ A_2_B_2_ (fast)
+                Step 2: A_2_B_2_ + C_2_ ➝ A_2_B + C_2_B (slow)
+                Step 3: A_2_B + C_2_ ➝ A_2_ + C_2_B (fast)
 
-                What is a true statement about this mechanism?
+                What is the rate law of the overall equation and which one would be the \
+                rate-determining step?
+                """,
+                questionLabel: """
+                A reaction 2 AB, + C_2_, yields 2C_2_B,  has the proposed mechanism:
+
+                Step 1: AB + AB, yields A_2_B_2_ (fast).
+                Step 2: A_2_B_2_, + C_2_, yields A_2_B, + C_2_B (slow).
+                Step 3: A_2_B, + C_2_, yields A_2_, + C_2_B (fast).
+
+                What is the rate law of the overall equation and which one would be the \
+                rate-determining step?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    The rate law of the reaction is $rate = k[A][B]$ and the rate-determining step \
-                    is bimolecular
+                    The rate law of the reaction is $rate=k[AB]^2^[C_2_]$ and the \
+                    rate-determining step is step 2.
+                    """,
+                    answerLabel: """
+                    The rate law of the reaction is rate = k, times [AB]^2^, times [C_2_], and the \
+                    rate-determining step is step 2.
                     """,
                     explanation: """
-                    The rate determining step would be the slowest step, which in this case is Step 1 $(A + B ➝ M)$. \
-                    A termolecular step would be the one with three reactants, since this one only has two \
-                    (A and B), it is said that it's bimolecular.
-
-                    On the other hand, the rate law equation is determined by the rate determining step, and since \
-                    the slowest reaction is $A + B ➝ M$, then it's safe to say that the rate law equation is \
-                    $Rate = k[A][B]$.
-
-                    Since A and B are in fact reactants of the overall reaction, then the equation stays that way.
+                    The rate-determining step would be the slowest step, which in this case is \
+                    step 2 $(A_2_B_2_ + C_2_ ➝ A_2_B + C_2_B)$. The rate law equation would be \
+                    determined by this step, being $rate = k[A_2_B_2_][C_2_]$. However, A_2_B_2_ \
+                    is neither a reactant nor a product of the overall reaction, so it has to be \
+                    substituted by the reactants from which it comes $(AB + AB ➝ A_2_B_2_)$. \
+                    $Rate = k[AB]^2^[C_2_]$.
+                    """,
+                    explanationLabel: """
+                    The rate-determining step would be the slowest step, which in this case is \
+                    step 2 (A_2_B_2_ + C_2_, yields A_2_B + C_2_B). The rate law equation would be \
+                    determined by this step, being rate = k, times [A_2_B_2_], times [C_2_]. \
+                    However, A_2_B_2_ is neither a reactant nor a product of the overall reaction, so it has to be \
+                    substituted by the reactants from which it comes (AB + AB, yields A_2_B_2_). \
+                    Rate = k, times [AB]^2^, times [C_2_].
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        The rate law of the reaction is $rate=k[A][B]$ and the rate-determining \
-                        step is termolecular
+                        The rate law of the reaction is $rate=k[A_2_B_2_][C_2_]$ and the \
+                        rate-determining step is step 2.
+                        """,
+                        answerLabel: """
+                        The rate law of the reaction is rate = k, times [A_2_B_2_], times [C_2_] and the \
+                        rate-determining step is step 2.
                         """,
                         explanation: """
-                        A termolecular step would be the one with three reactants, and in this one \
-                        there are only two (A and B).
+                        Step 2 is indeed the rate-determining step, but A_2_B_2_ is not a reactant \
+                        of the overall reaction but rather an intermediate, so it cannot be part \
+                        of the rate law equation.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        The rate law of the reaction is $rate=k[A]^2^[B]$ and the rate-determining \
-                        step is bimolecular
+                        The rate law of the reaction is $rate=k[AB]^2^$ and the rate-determining \
+                        step is step 1.
+                        """,
+                        answerLabel: """
+                        The rate law of the reaction is rate = k, times [AB]^2^, and the rate-determining \
+                        step is step 1.
                         """,
                         explanation: """
-                        Even though it is a bimolecular step, $rate = k[A]^2^[B]$ would not be the \
-                        rate law equation of the overall reaction. Only the collision between A \
-                        and B counts since it's the slowest step, so that would be the \
-                        rate-determining step.
+                        The rate-determining step would be the slowest of the steps, because the \
+                        reaction cannot go faster than the slowest of the steps. Since step 1 is a \
+                        fast one, then it cannot be the rate determining step.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        The rate law of the reaction is $rate=k[A]^2^[B]$ and the rate determining step is termolecular
+                        The rate law of the reaction is $rate=k[A_2_B][C_2_]$ and the \
+                        rate-determining step is step 3
+                        """,
+                        answerLabel: """
+                        The rate law of the reaction is rate = k, times [A_2_B], times [C_2_], and the \
+                        rate-determining step is step 3
                         """,
                         explanation: """
-                        Not only it's not only a termolecular step, but $rate = k[A]^2^[B]$ is not \
-                        the rate law equation of the overall reaction.
+                        Since step 3 is not the slowest of the steps, then it isn't the \
+                        rate-determining step. Besides that, A_2_B is not part of the overall \
+                        reaction, so it can't be part of the rate law equation.
                         """
                     )
                 ],
@@ -455,91 +570,129 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-            A student conducted an experiment that consisted in testing 4 different catalyst in the same \
-            reaction and monitor the temperature at which the reaction occurred to its completion. Which of \
-            the four catalyst would be the most effective one?
-            """,
+                An experiment was conducted to test two different catalysts: catalyst A and \
+                catalyst B. Both were tested for the same reaction at different temperatures. \
+                Wether the reactants completely transformed into the products was also registered \
+                in the table below:
+                """,
                 correctAnswer: QuizAnswerData(
-                    answer: "4",
+                    answer: """
+                    Catalyst B is the most effective one because it takes less energy for the \
+                    reaction to go to completion when the catalyst is present.
+                    """,
                     explanation: """
-                    The reaction in the 4th experiment occurred at a temperature of 360K which is \
-                    the lowest of them all, meaning that the catalyst lowered the activation \
-                    energy to the point at which that temperature was enough to make the reaction \
-                    happen. That catalyst would be the most effective for that reaction in particular.
+                    Raising the temperature is one way to make energy enter the reaction for it to \
+                    take place. Catalysts are supposed to lower the energy required by the reaction \
+                    (activation energy) so if the reaction went to completion at 400K in the \
+                    presence of the catalyst B, it means that it needed less energy than when the \
+                    reaction was in presence of the catalyst A.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "1",
+                        answer: """
+                        Catalyst A is the most effective one because it resulted in a higher temperature for the reaction
+                        """,
                         explanation: """
-                        Compared to the rest of the experiments, this catalyst could only lower \
-                        the activation energy to a point in which the reaction takes place at 400K.
+                        Catalyst A didn't "result in a higher temperature". The temperature had to \
+                        be increased to 420K for the reaction to go to completion when adding catalyst A.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "2",
+                        answer: """
+                        Catalyst B is the most effective one because it made the reaction go to \
+                        completion in both temperature points 420K and 400K.
+                        """,
                         explanation: """
-                        Compared to the rest of the experiments, this catalyst could only lower \
-                        the activation energy to a point in which the reaction takes place at 410K.
+                        Catalyst B isn't the most effective one because of that, the important \
+                        thing is the actual temperature at which the reaction takes place in the \
+                        presence of the catalyst.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "3",
+                        answer: """
+                        There's no way to know in these few experiments which one of the catalysts \
+                        is the most effective one.
+                        """,
                         explanation: """
-                        Compared to the rest of the experiments, this catalyst could only lower \
-                        the activation energy to a point in which the reaction takes place at 380K.
+                        It's totally possible to determine which catalyst is the most effective \
+                        one by comparing the energy required for it to go to completion in the \
+                        presence of the catalysts.
                         """
                     )
                 ],
                 difficulty: .medium,
                 table: QuizTable(
                     rows: [
-                        ["Catalyst", "Temperature at which the reaction took place"],
-                        ["1", "400K"],
-                        ["2", "410K"],
-                        ["3", "380K"],
-                        ["4", "360K"]
+                        ["Catalyst", "Reaction temperature", "Reaction completed?"],
+                        ["A", "400K", "No"],
+                        ["A", "420K", "Yes"],
+                        ["B", "400K", "Yes"],
+                        ["B", "420K", "Yes"]
                     ]
                 )
             ),
             QuizQuestionData(
                 question: """
-                Consider the following energy diagram and determine, which reverse reaction has \
-                the highest activation energy?
+                Consider the following reaction diagram. Which of the elementary steps requires \
+                more energy to take place?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "E to C",
+                    answer: "Section 5-6-7",
                     explanation: """
-                    In the diagram, the difference between where the reaction starts with reactants (in this case, \
-                    on the right for the reverse reactions) and the peak of the hump is the activation energy.
+                    In the diagram, the difference between where the reaction starts with reactants \
+                    (in this case, on the right for the reverse reactions) and the peak of the hump \
+                    is the activation energy, or what is the same, the energy barrier to overcome.
 
-                    For G (reactants) to get to E, the activation energy is the difference between G and F, which since it \
-                    is very small, it means it has a low activation energy.
+                    For 1 (reactants) to get to 3, the activation energy is the difference between \
+                    1 and 2. Since it is very small, it means it has a low activation energy.
 
-                    For C to get to A (products), the activation energy is the difference between C and B, which \
-                    since it is a little bit bigger, it means it has a higher activation energy than from G to E.
+                    For 3 to get to 5 (products), the activation energy is the difference between 3 \
+                    and 4. Since it is a little bit bigger, it means it has a higher activation \
+                    energy than from 1 to 3.
 
-                    Finally, for E to get to C, the activation energy is the difference between E and D, which is \
-                    the highest of all the reverse reactions. We get then that: E to C > C to A > G to E.
+                    Finally, for 5 to get to 7, the activation energy is the difference between 5 \
+                    and 6, which is the highest of all the elementary steps.
 
-                    Notice how the activation energy doesn't depend on the product side of the hump, but only on the \
-                    reactants side.
+                    We get then that: section 5-6-7 > section 3-4-5 > section 1-2-3. Notice how the \
+                    activation energy doesn't depend on the product side of the hump, \
+                    but only on the reactants side.
+                    """,
+                    explanationLabel: """
+                    In the diagram, the difference between where the reaction starts with reactants \
+                    (in this case, on the right for the reverse reactions) and the peak of the hump \
+                    is the activation energy, or what is the same, the energy barrier to overcome.
+
+                    For 1 (reactants) to get to 3, the activation energy is the difference between \
+                    1 and 2. Since it is very small, it means it has a low activation energy.
+
+                    For 3 to get to 5 (products), the activation energy is the difference between 3 \
+                    and 4. Since it is a little bit bigger, it means it has a higher activation \
+                    energy than from 1 to 3.
+
+                    Finally, for 5 to get to 7, the activation energy is the difference between 5 \
+                    and 6, which is the highest of all the elementary steps.
+
+                    We get then that: section 5 6 7 is bigger than section 3 4 5, which is bigger than \
+                    section 1 2 3. Notice how the  activation energy doesn't depend on the product side of the hump, \
+                    but only on the reactants side.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "C to A",
+                        answer: "Section 3-4-5",
+                        answerLabel: "Section 3 4 5",
                         explanation: """
-                        For C to get to A (products), the activation energy is the difference \
-                        between C and B, which since it is a little bit bigger, it means it has a \
-                        higher activation energy than from G to E.
+                        For 3 to get to 5 (products), the activation energy is the difference \
+                        between 3 and 4, which is not large enough compared to other steps.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "G to E",
+                        answer: "Section 1-2-3",
+                        answerLabel: "Section 1 2 3",
                         explanation: """
-                        For G (reactants) to get to E, the activation energy is the difference \
-                        between G and F, which since it is very small, it means it has a low \
+                        For 1 (reactants) to get to 3, the activation energy is the difference \
+                        between 1 and 2. Since it is very small, it means it has a very low \
                         activation energy.
                         """
                     ),
@@ -547,52 +700,61 @@ extension QuizQuestionsList {
                         answer: "Cannot be determined",
                         explanation: """
                         The energy profile or diagram of a reaction mechanism would be enough to \
-                        determine at least the activation energy of each step both forward or reverse.
+                        determine at least the activation energy of each step.
                         """
                     )
                 ],
                 difficulty: .medium,
-                image: "energy-profile-reaction-coordinate"
+                image: LabelledImage(
+                    image: "energy-profile-reaction-coordinate",
+                    label: """
+                    Energy profile of an exothermic reaction, with 3 peaks and two valleys, and 7 points labelled from 1 to 7.
+                    1: Start of reaction, at a high energy.
+                    2: First peak, very small increase from point 1.
+                    3: First valley, very large drop from point 2.
+                    4: Second peak, moderate increase from point 3.
+                    5: Second peak, very small drop from point 4.
+                    6: Third peak, very large increase from point 5.
+                    7: End of reaction, very large drop from point 6.
+                    """
+                )
             ),
             QuizQuestionData(
                 question: """
-            In the reaction A + B ➝ C, that a molecule of A collides with a molecule B doesn't 100% mean \
-            that a molecule of C will be produced. What are some factors that help to determine if a \
-            collision of two molecules will be successful?
-            """,
+                Reactants molecules can collide without resulting in the formation of the products \
+                of the reaction. What has to happen in order for the collision to be successful?
+                """,
                 correctAnswer:
                     QuizAnswerData(
                         answer: """
-                        Molecules of A and B have to be properly oriented and to have enough energy that's \
-                        enough to surpass the activation energy when the collision takes place.
+                        The molecules colliding have to be specifically oriented while also having \
+                        enough energy to overcome the activation energy.
                         """,
                         explanation: """
-                        Would be the correct answer because both the orientation and the kinetic energy of the \
-                        molecules are factors that are required for a successful collision to take place
+                        Both the orientation and the kinetic energy of the molecules are factors \
+                        that are required for a successful collision to take place.
                         """
                     ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer:
-                            "Molecules of A and B have to be properly oriented when the collision takes place",
+                        answer: "The molecules colliding have to be in a specific orientation",
                         explanation: """
-                        Is true, but only the orientation won't be enough to guarantee a successful collision
+                        Is true, but only the orientation won't be enough to guarantee a successful collision.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        Molecules of A and B have to have enough energy that's enough to surpass the activation \
-                        energy
+                        The molecules colliding have to have enough kinetic energy
                         """,
                         explanation: """
-                        Is true, but the molecules having enough energy won't guarantee a successful collision
+                        Is true, but the molecules having enough energy won't guarantee a successful collision.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Molecules of A and B have to be gaseous when the collision takes place",
+                        answer: "The molecules colliding have to be in the same state of matter",
                         explanation: """
-                        Is not true, the molecules don't have to be in any particular state of matter for a \
-                        successful collision to occur
+                        Is not true, the molecules don't have to be in any particular state of \
+                        matter for a successful collision to occur.
                         """
                     )
                 ],
@@ -604,81 +766,80 @@ extension QuizQuestionsList {
                 reaction?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "It has a three-step mechanism and it's an endothermic reaction",
+                    answer: "The reaction has three activated complex and the overall reaction is exothermic",
                     explanation: """
-                    At a first glance is noticeable that the reaction has three humps representing the activated \
-                    complexes, meaning that it has three step (three elementary reactions that compose the overall \
-                    reaction).
-
-                    Reactants started at a lower energy in comparison to the energy of the final products, meaning \
-                    that energy was consumed by the overall reaction to occur.
-
-                    In other words, the reaction is endothermic because it absorbed energy instead of releasing it. \
-                    Considering these things, this is the correct answer.
+                    At a first glance it's noticeable that the reaction has three humps that \
+                    represent the activated complex, meaning that it has three steps (three \
+                    elementary reactions that compose the overall reaction). Reactants started at \
+                    a higher energy state in comparison to the energy of the final products, \
+                    meaning that energy was released, making the reaction exothermic.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "It has a two-step mechanism and it's an endothermic reaction",
+                        answer: "The reaction has three intermediates and the overall reaction is exothermic",
                         explanation: """
-                        The three humps represent the activated complex, which means that it has a \
-                        three step mechanism.
+                        The three humps represent the activated complex, not the intermediates
                         """
                     ),
                     QuizAnswerData(
-                        answer: "It has a three-step mechanism and it's an exothermic reaction",
+                        answer: "The reaction has three activated complex and the overall reaction is endothermic",
                         explanation: """
-                        The reactants start at a lower point of energy, so energy is actually \
-                        absorbed when the reaction takes place.
+                        The reactants start at a higher energy state than the products, so the \
+                        difference is negative, making the reaction release energy when it takes place.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "It has a two-step mechanism and it's an exothermic reaction",
+                        answer: "The reaction has three intermediates and the overall reaction is endothermic.",
                         explanation: """
                         Try comparing the points of energy at which the diagram starts and end, \
-                        and count how many activated complexes are in the overall reaction.
+                        and take into account the humps represent the activated complex.
                         """
                     )
                 ],
                 difficulty: .easy,
-                image: "energy-profile-reaction-profile-3"
+                image: LabelledImage(
+                    image: "energy-profile-reaction-profile-3",
+                    label: """
+                    Energy profile diagram with three humps, where the products energy state is \
+                    less than the reactants energy state
+                    """
+                )
             ),
             QuizQuestionData(
                 question: """
-                A student is decomposing hydrogen peroxide (as shown in the reaction below) and wants to speed \
-                up the rate of decomposition. What should he do?
-
-                H_2_O_2(g)_ ➝ H_2(g)_ + O_2(g)_
+                Consider a first order reaction (A ➝ B). What is an action you can take to increase \
+                the speed of the reaction?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Increase the temperature",
+                    answer: "All of the above",
                     explanation: """
-                    A way to increase the kinetic energy of the molecules, creating a higher frequency of collisions \
-                    and increasing the changes that the collisions meet the energy requirements to be successful is \
-                    by increasing the temperature.
-                    """
+                    All these actions may lead to an improvement on the rate of the reaction, \
+                    forming products at a much higher rate in most cases.
+                    """,
+                    position: .D
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Decrease the temperature",
+                        answer: "Increase the temperature of the reaction",
                         explanation: """
-                        Decreasing the temperature might actually lower the speed of the reaction.
+                        A way to increase the kinetic energy of the molecules, creating a higher \
+                        frequency of collisions and increasing the changes that the collisions \
+                        meet the energy requirements to be successful is by increasing the temperature.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Decrease the surface area of the particles in solution",
+                        answer: "Add a catalyst that creates another more efficient pathway to follow",
                         explanation: """
-                        Actually, increasing the surface area of the particles to increase the \
-                        likelihood that resulting collisions would fulfil the requirement of \
-                        proper orientation.
+                        Adding a catalyst would ultimately decrease the activation energy, making \
+                        the reaction go faster.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Decrease the stirring on the mixture",
+                        answer: "Add more of A to the mixture to increase its concentration.",
                         explanation: """
-                        Stirring the mixture always helps a reaction to keep going but it would \
-                        not necessarily help speeding up the reaction or at least not \
-                        significantly in this case.
+                        Adding more of A, since it's a first order reaction $(rate = k[A])$, the \
+                        higher the concentration is, the faster the reaction will go.
                         """
                     )
                 ],
@@ -686,12 +847,13 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-                How are temperature and activation energy related to each other?
+                How does the temperature affect the rate of a reaction?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    The higher the temperature, the more molecules with a higher kinetic energy that meet or exceed \
-                    the amount of energy that's required for the reaction to take place
+                    Increasing the temperature would charge the molecules with a higher kinetic \
+                    energy so the potential energy when collision happens would be enough, or more \
+                    than enough, to overcome the activation energy
                     """,
                     explanation: """
                     A high temperature will result in molecules with higher kinetic energy that \
@@ -701,8 +863,8 @@ extension QuizQuestionsList {
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        The higher the temperature, the higher the number of collisions is, which leads to a lower \
-                        amount of energy that's required for the reaction to take place
+                        Increasing the temperature would lead to a lowering of the energy required \
+                        for the reaction to take place
                         """,
                         explanation: """
                         Increasing the temperature will not lower the energy required for the \
@@ -711,22 +873,23 @@ extension QuizQuestionsList {
                     ),
                     QuizAnswerData(
                         answer: """
-                        The higher the temperature, the lower is the overall amount of energy required for the \
-                        reaction to take place, allowing more reactants to turn into products
+                        Increasing the temperature would fix the orientation of the molecules so \
+                        when they collide they are properly oriented and form products
                         """,
                         explanation: """
-                        Lowering the energy required would actually help more reactants to turn \
-                        into products, but this would not be accomplished by increasing the \
-                        temperature.
+                        Increasing the temperature would only increase the kinetic energy of the \
+                        molecules.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        A high temperature results in the creation of a new pathway that has lower \
-                        energy requirements
+                        Increasing the temperature would make the liquid evaporate thus provoking \
+                        a gaseous mixture in which collisions are more often than not successful
                         """,
                         explanation: """
-                        High temperatures don't create new pathways.
+                        Increasing the temperature can ultimately in some cases lead to a change \
+                        in the state of matter of the compounds, but this is not the fundamental \
+                        relationship between temperature and the rate of a reaction.
                         """
                     ),
                 ],
@@ -734,40 +897,44 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-                Which one of these elementary reactions is probably the rate-determining one in the mechanism \
-                for the overall reaction?
+                Which one of these elementary reactions would probably be the slowest one within a mechanism?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "J + K + L ➝ M",
+                    answer: "A + B + C + D ➝ E + F",
+                    answerLabel: "'A' + B + C + D ➝ E + F",
                     explanation: """
-                    The rate-determining step would probably be $J + K + L ➝ M$. Of all the elementary reactions, \
-                    this one is termolecular and has three reactants, which implies that a successful collision of 3 \
-                    molecules has to take place for the reaction to occur.
+                    This would probably be the slowest reaction because in comparison to the rest \
+                    of the reactions, this one has four reactants, which implies that a successful \
+                    collision of 4 molecules has to take place for the reaction to occur.
 
-                    Since the probabilities of this happening are lower, the chances of this reaction to be slower \
-                    than the other ones is greater. Being the slowest of all the steps, this would be the \
-                    rate-determining step.
+                    Since the probability of this happening is lower, the chance of this \
+                    reaction to be slower than the other ones is greater. Being the slowest of \
+                    all the steps, this would be the rate-determining step.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "A + B ➝ C + D",
+                        answer: "G + H + I ➝ J",
+                        answerLabel: "G + H + I, to J",
                         explanation: """
-                        A + B, two reactants colliding successfully is more likely to happen than \
-                        some of these other scenarios.
+                        G + H + I, three reactants (termolecular reaction), colliding successfully \
+                        is a little more likely to happen than some of these other scenarios.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "D ➝ E + F",
+                        answer: "K ➝ L + M + N",
+                        answerLabel: "K to L + M + N",
                         explanation: """
-                        D, being only one reactant, should most likely be the fastest of the steps.
+                        K, being only one reactant, doesn't even need a collision for it to take \
+                        place, so it should be the fastest one.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "G + H ➝ I",
+                        answer: " O + P ➝ Q",
+                        answerLabel: " O + P, to Q",
                         explanation: """
-                        G + H, two reactants colliding successfully is more likely to happen than \
-                        some of these other scenarios.
+                        O + P, two reactants (bimolecular reaction), colliding successfully is more \
+                        likely to happen than some of these other scenarios.
                         """
                     )
                 ],
@@ -780,95 +947,93 @@ extension QuizQuestionsList {
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    It has a two-step mechanism that involves the formation of an intermediate and it's an \
-                    endothermic reaction
+                    This is an exothermic reaction with a mechanism with an intermediate
                     """,
                     explanation: """
                     At a first glance it's noticeable that the reaction starts with the reactants \
-                    being at a lower energy point than the products, meaning that the reaction is \
-                    endothermic since it's going to absorb energy. For each step an activated \
+                    being at a higher energy state than the products, meaning that the reaction is \
+                    exothermic since it's going to release energy. For each step an activated \
                     complex is formed, but between both steps an intermediate is produced.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        It has a two-step mechanism that involves the formation of an intermediate \
-                        and it's an exothermic reaction
+                        This is an endothermic reaction with a mechanism with an intermediate
                         """,
                         explanation: """
-                        The reactants start at a lower point of energy than the products, so \
-                        energy is being absorbed when the reaction takes place.
+                        The reactants start at a higher point of energy than the products, so \
+                        energy is being released when the reaction takes place.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        It has a two-step mechanism that involves the formation of an activated complex and it's an \
-                        endothermic reaction
+                        This is an exothermic reaction with a mechanism with an activated complex
                         """,
                         explanation: """
-                        Not one, but two activated complex are formed in this mechanism \
-                        (represented by the peaks).
+                        Not one, but two activated complexes are formed in this mechanism \
+                        (represented by the humps or peaks).
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        It has a two-step mechanism that involves the formation of an activated complex and it's an \
-                        exothermic reaction
+                        This is an endothermic reaction with a mechanism with an activated complex
                         """,
                         explanation: """
-                        Not only two activated complex are formed but the reaction absorbs energy \
-                        instead of releasing it.
+                        Not only are two activated complexes formed, but the reaction releases \
+                        energy instead of absorbing it.
                         """
                     )
                 ],
                 difficulty: .medium,
-                image: "energy-profile-energy-diagram"
+                image: LabelledImage(
+                    image: "energy-profile-energy-diagram",
+                    label: """
+                    Energy profile diagram with two humps, where the products are at a lower \
+                    energy state than the reactants.
+                    """
+                )
             ),
             QuizQuestionData(
                 question: """
-                The rate law equation can help determine the number of collisions and the success rate of the \
-                collisions. What parts of the equation are related to these factors?
+                What is a false statement about catalysts?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    The number of collisions is related to the order of the reaction, while the \
-                    success relates to the rate constant
+                    Catalysts are called heterogeneous when they are in a different state of matter \
+                    compared to the reactants
                     """,
                     explanation: """
-                    For elementary reactions the number of collisions is being represented in the \
-                    rate law equation by the overall order of the reaction. The orders are related \
-                    to the collisions, while the success rate of them is related to the rate \
-                    constant k. The higher the success rate is, then the higher is the rate constant.
+                    Catalysts can be classified in heterogeneous (when they're in different state \
+                    of matter) and homogeneous (when they're the same).
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        The number of collisions is related to the rate constant, while the success depends on the \
-                        concentration of the reactants only
+                        Catalysts do not change the mechanism of a reaction.
                         """,
                         explanation: """
-                        The success is actually related to the rate constant.
+                        Catalysts do change the mechanism. They create another pathway for the \
+                        reaction to follow that is more efficient.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        The number of collisions depends on the concentration of the most active \
-                        reactant only, while the success relates to the rate constant
+                        Catalysts lower the energy required for the reaction to take place.
                         """,
                         explanation: """
-                        The number of collisions is actually related to the order of the reaction.
+                        Catalysts lower the activation energy, making it easier for the kinetic \
+                        energy of the molecules to overcome it.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        The number of collisions is related and the success of the reaction can \
-                        only be determined using a catalyst at high temperature
+                        Catalysts can be recycled after the reaction takes place.
                         """,
                         explanation: """
-                        Using a catalyst might affect the number and success of collision, but it \
-                        is not required to for a rate law.
+                        Catalysts are often recycled in the later steps of the reaction to use it \
+                        once more.
                         """
                     )
                 ],
@@ -876,34 +1041,39 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-                The position of a reaction is right now being represented by the point in the \
-                energy diagram below. At that point, what could be happening?
+                The position of a reaction $(A + B ➝ C)$ is right now being represented by the \
+                red vertical line in the energy diagram below. At that point, what could be happening?
+                """,
+                questionLabel: """
+                The position of a reaction $(A + B, to C)$, is right now being represented by the \
+                red vertical line in the energy diagram below. At that point, what could be happening?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    Molecules of reactants colliding unsuccessfully because of their lack of kinetic energy, \
-                    making them unable to form any complex
+                    Molecules of A and B colliding unsuccessfully because of their lack of kinetic \
+                    energy, making them unable to form an activated complex.
                     """,
                     explanation: """
-                    This is the right answer, because at this point molecules colliding are lacking the energy \
-                    to meet the energy  requirements
+                    At this point, molecules of A and B colliding are lacking the energy to meet \
+                    the energy requirements.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        Molecules of reactants barely colliding successfully, just starting to form an activated \
-                        complex
+                        Molecules of A and B barely colliding successfully, just starting to form \
+                        an activated complex.
                         """,
-                        explanation:
-                            "Molecules won't collide successfully at this point because of the lack of energy"
+                        explanation: """
+                        Molecules of A and B won't collide successfully at this point because of \
+                        the lack of energy.
+                        """
                     ),
                     QuizAnswerData(
-                        answer: "An intermediate in stable conditions",
+                        answer: "An activated complex has been formed but it still hasn't transformed into C",
                         explanation: """
-                        An intermediate is only stable within a reaction, and in an energy \
-                        diagram, this ones is represented by a valley between two steps and \
-                        activated complex, and this is a single step reaction with no intermediates.
+                        The activated complex is represented by the hump, so since the reaction is \
+                        not yet at that point, no activated complex has been formed just yet.
                         """
                     ),
                     QuizAnswerData(
@@ -918,7 +1088,15 @@ extension QuizQuestionsList {
                     )
                 ],
                 difficulty: .medium,
-                image: "energy-profile-reaction-progress"
+                image: LabelledImage(
+                    image: "energy-profile-reaction-progress",
+                    label: """
+                    Energy profile diagram with a single hump, where the product is at a higher \
+                    energy state than the reactants. There is a red vertical line on the left side \
+                    of the diagram where the energy state is the same as at the start of the reaction, \
+                    before the hump.
+                    """
+                )
             ),
         ]
     )

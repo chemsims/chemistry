@@ -71,6 +71,8 @@ struct Labelling {
         ("sodium-24", "sodium 24"),
         ("bismuth-212", "bismuth 212"),
         ("cobalt-60", "cobalt 60"),
+        ("non-spontaneous", "non spontaneous"),
+        ("get-go", "get go"),
         ("-", " minus "),
         ("k[A][B][C]", "k times 'A' times B times C"),
         ("k[A][B]", "k[A], [B]"),
@@ -108,6 +110,8 @@ struct Labelling {
 
     private static let preParseReplacements: [(String, String)] = [
         ("➝ 2NO", "yields, 2NO"),
+        ("➝ H_2_O", "yields H_2_O"),
+        ("➝ Products", "yields products"),
         ("2C ➝ AC", "2C, yields, AC"),
         ("CaCl_2_", "C 'A' 'C' 'L' TWO"),
         ("(aq)", "(AQ)"),
@@ -130,7 +134,13 @@ struct Labelling {
         ("ClO", "C L O"),
         ("k[X][Y][Z]", "k, times X, times Y, times Z"),
         ("k[XY][Z]", "k, times XY, times Z"),
-        ("k[X][Y][XY]", "k, times X, times Y, times XY")
+        ("k[X][Y][XY]", "k, times X, times Y, times XY"),
+        ("E_a_", "EA"),
+        ("H^+^", "H (charge plus 1)"),
+        ("H^-^", "H (charge minus 1)"),
+        ("OH", "O H"),
+        ("H6^+^", "H6 (charge plus 1)"),
+        ("A_2_", "'A'2")
     ]
 }
 
