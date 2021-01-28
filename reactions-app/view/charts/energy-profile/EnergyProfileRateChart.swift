@@ -25,6 +25,24 @@ struct EnergyProfileRateChart: View {
         .font(.system(size: settings.fontSize * 0.9))
         .lineLimit(1)
         .minimumScaleFactor(1)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+        .accessibility(value: Text(value))
+    }
+
+    private var label: String {
+        let msg = "Chart showing inverse T vs natural log of K"
+        let suffix = equation != nil ? ", with a straight line which has a slope of minus EA divide by R" : ""
+        return "\(msg) \(suffix)"
+    }
+
+    private var value: String {
+        if let invT = currentTempInverse, let equation = equation {
+            let lnK = equation.getY(at: invT)
+            let regularT = (1 / invT).str(decimals: 0)
+            return "Inverse T 1 divide by \(regularT), ln K \(lnK.str(decimals: 2))"
+        }
+        return "No data"
     }
 
     private var chart: some View  {

@@ -162,6 +162,8 @@ fileprivate struct EnergyProfileRateK1: View {
         .font(.system(size: EquationSettings.fontSize))
         .lineLimit(1)
         .minimumScaleFactor(1)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("K = A, times E to the power of minus EA divide by RT"))
     }
 }
 
@@ -189,6 +191,8 @@ fileprivate struct EnergyProfileRateLn: View {
         }
         .font(.system(size: EquationSettings.fontSize))
         .minimumScaleFactor(1)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("ln k, equals ln a, minus EA divide by RT"))
     }
 
     private func ln<Content: View>(_ value: () -> Content) -> some View {
@@ -246,6 +250,8 @@ fileprivate struct RateK1K2: View {
         }
         .font(.system(size: EquationSettings.fontSize))
         .minimumScaleFactor(1)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("ln(k1 divide by k2), equals EA divide by R, times T1 minus T2, divide by T1 times T2"))
     }
 }
 
@@ -262,42 +268,87 @@ fileprivate struct BlankRates: View {
             HStack(spacing: 0) {
                 FixedText("ln")
                     .minimumScaleFactor(1)
+                    .accessibility(sortPriority: 5)
+
                 LargeOpenParen()
+                    .accessibility(sortPriority: 4.9)
+
                 VStack(spacing: 1) {
                     Placeholder(value: k1)
+                        .accessibility(label: Text("k1"))
+                        .accessibility(sortPriority: 4.8)
+
                     Rectangle()
                         .frame(width: 55, height: 2)
+                        .accessibility(label: Text("divide by"))
+                        .accessibility(sortPriority: 4.7)
+
                     Placeholder(value: k2)
+                        .accessibility(label: Text("k2"))
+                        .accessibility(sortPriority: 4.6)
                 }
                 LargeCloseParen()
+                    .accessibility(sortPriority: 4.5)
             }
             FixedText("=")
+                .accessibility(sortPriority: 4.4)
+
             VStack(spacing: 1) {
                 Placeholder(value: ea)
+                    .accessibility(label: Text("EA"))
+                    .accessibility(sortPriority: 4.3)
+
+
                 Rectangle()
                     .frame(width: 55, height: 2)
+                    .accessibility(label: Text("divide by"))
+                    .accessibility(sortPriority: 4.3)
+
                 FixedText("8.31")
                     .frame(height: EquationSettings.boxHeight)
+                    .accessibility(label: Text("R"))
+                    .accessibility(value: Text("8.31"))
+                    .accessibility(sortPriority: 4.2)
             }
             HStack(spacing: 0) {
                 LargeOpenParen()
+                    .accessibility(sortPriority: 4.1)
                 VStack(spacing: 1) {
                     HStack(spacing: 2) {
                         Placeholder(value: t1)
+                            .accessibility(label: Text("T1"))
+                            .accessibility(sortPriority: 4)
+
                         FixedText("-")
+                            .accessibility(label: Text("minus"))
+                            .accessibility(sortPriority: 3.9)
+
                         Placeholder(value: t2)
+                            .accessibility(label: Text("T2"))
+                            .accessibility(sortPriority: 3.8)
                     }
                     Rectangle()
                         .frame(width: 140, height: 2)
+                        .accessibility(label: Text("divide by"))
+                        .accessibility(sortPriority: 3.7)
+
                     HStack(spacing: 2) {
                         Placeholder(value: t1)
+                            .accessibility(label: Text("t1"))
+                            .accessibility(sortPriority: 3.6)
                         FixedText("x")
+                            .accessibility(label: Text("multiplied by"))
+                            .accessibility(sortPriority: 3.5)
                         Placeholder(value: t2)
+                            .accessibility(label: Text("t2"))
+                            .accessibility(sortPriority: 3.4)
                     }
                 }
                 LargeCloseParen()
             }
-        }.font(.system(size: EquationSettings.fontSize))
+        }
+        .font(.system(size: EquationSettings.fontSize))
+        .accessibilityElement(children: .contain)
     }
 }
 

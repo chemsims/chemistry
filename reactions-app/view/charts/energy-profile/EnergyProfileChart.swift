@@ -36,6 +36,40 @@ struct EnergyProfileChart: View {
         .font(.system(size: settings.fontSize * 0.8))
         .lineLimit(1)
         .minimumScaleFactor(1)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+        .accessibility(value: Text(value))
+    }
+
+    private var label: String {
+        let a = input.moleculeA.name
+        let b = input.moleculeB.name
+        let c = input.moleculeC.name
+
+        let leftIsHigh = chartInput.leftAsymptote > chartInput.rightAsymptote
+        let leftIsHighMsg = "The reactants start at a higher energy state than the product"
+        let leftIsLowMsg = "The reactants start at a lower energy state than the product"
+        let leftMsg = leftIsHigh ? leftIsHighMsg : leftIsLowMsg
+
+        let isReduced = chartInput.reducedPeak < chartInput.initialPeak
+
+        let initialEa = ". The EA hump is \(chartInput.initialPeak.percentage) up the Y axis"
+        let reducedEa = ". The EA hump is \(chartInput.reducedPeak.percentage) up the Y axis, reduced from \(chartInput.initialPeak.percentage) before the catalyst was added"
+
+        let eaMsg = isReduced ? reducedEa : initialEa
+
+        let lineMsg = showTemperature ? ". A horizontal line shows the average kinetic energy of the molecules" : ""
+
+        return "Energy profile for the reaction \(a) + \(b) to \(c). \(leftMsg)\(eaMsg)\(lineMsg)"
+    }
+
+    private var value: String {
+        let position = chartInput.canReactToC ? "above" : "below"
+        let suffix = "which is \(position) the EA hump"
+        if (showTemperature) {
+            return "The energy line is \(chartInput.currentEnergy.percentage) up the Y axis, \(suffix)"
+        }
+        return ""
     }
 
     private var annotatedChart: some View {
@@ -216,6 +250,12 @@ struct EnergyProfileChart: View {
         let padding = settings.annotationMoleculeSize * 0.4
         let curve = makeCurve(peak: chartInput.reducedPeak)
         return curve.absoluteY(absoluteX: x) + padding
+    }
+}
+
+fileprivate extension CGFloat {
+    var percentage: String {
+        "\((self * 100).str(decimals: 0))%"
     }
 }
 

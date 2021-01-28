@@ -31,6 +31,10 @@ struct EnergyProfileBeaker: View {
     let reactionInput: EnergyProfileReactionInput
 
     let catalystColor: UIColor
+    let order: ReactionOrder
+    let concentrationC: CGFloat
+
+    let chartInput: EnergyProfileChartInput
 
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
@@ -60,6 +64,7 @@ struct EnergyProfileBeaker: View {
                 .opacity(isPending ? 1 : 0)
                 .animation(.easeOut(duration: 0.75))
         }
+        .accessibilityElement(children: .contain)
     }
 
     private func shakeText(settings: EnergyBeakerSettings) -> some View {
@@ -75,6 +80,7 @@ struct EnergyProfileBeaker: View {
             .font(.system(size: settings.shakeFontSize))
             .foregroundColor(.darkGray)
         }
+        .accessibility(hidden: true)
     }
 
     private func stackView(settings: EnergyBeakerSettings) -> some View {
@@ -95,7 +101,21 @@ struct EnergyProfileBeaker: View {
     private func beakerView(
         settings: EnergyBeakerSettings
     ) -> some View {
-        ZStack(alignment: .bottom) {
+
+        let input = order.energyProfileReactionInput
+        let a = input.moleculeA.name
+        let b = input.moleculeB.name
+        let c = input.moleculeC.name
+
+        let perc = (concentrationC * 100).str(decimals: 0)
+        let value = "Concentration of \(c) is \(perc)%"
+
+        let catalyst = catalystState.selected?.rawValue
+        let catalystMsg = catalyst.map { ", with catalyst \($0) particles also in the beaker" } ?? ""
+        let label = "Beaker with molecules of \(a) and \(b) colliding which occasionally produces a molecule of \(c)\(catalystMsg)"
+
+
+        return ZStack(alignment: .bottom) {
             Color.white.mask(
                 BeakerShape(
                     lipHeight: settings.beaker.lipRadius,
@@ -116,6 +136,10 @@ struct EnergyProfileBeaker: View {
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
 
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+        .accessibility(value: Text(value))
+        .accessibility(addTraits: .updatesFrequently)
     }
 
     private func beakerFill(settings: EnergyBeakerSettings) -> some View {
@@ -196,6 +220,9 @@ struct EnergyProfileBeaker: View {
         let yOffset = (isInProgress && catalystIsShaking)  ? settings.catHeight * 0.1 : 0
         let shouldHighlight = highlightCatalyst && availableCatalysts.contains(catalyst)
 
+        let labelSuffix = isInProgress ? ". Rotated above beaker, preparing to drop catalyst particles" : ""
+        let label = "Catalyst container \(catalyst.rawValue)\(labelSuffix)"
+
         return Image(catalystState == .disabled ? "catdeact" : catalyst.imageName)
             .resizable()
             .aspectRatio(contentMode: .fit)
@@ -228,6 +255,13 @@ struct EnergyProfileBeaker: View {
             ) { _ in
                 doSelectCatalyst(catalyst: catalyst)
             }
+            .accessibility(label: Text(label))
+            .accessibility(addTraits: .isButton)
+            .disabled(catalystIsDisabled(catalyst))
+    }
+
+    private func catalystIsDisabled(_ catalyst: Catalyst) -> Bool {
+        catalystState != .active && catalystState != .pending(catalyst: catalyst)
     }
 
     private func doSelectCatalyst(
@@ -252,6 +286,8 @@ struct EnergyProfileBeaker: View {
 
             flame(settings: settings)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Beaker stand with flame"))
     }
 
     private func flame(settings: EnergyBeakerSettings) -> some View {
@@ -306,7 +342,15 @@ struct EnergyProfileBeaker: View {
         settings: EnergyBeakerSettings,
         temp: Binding<CGFloat>?
     ) -> some View {
-        CustomSlider(
+        let currentValue = temp?.wrappedValue ?? settings.axis.minValue
+        let fraction = (currentValue - settings.axis.minValue) / (settings.axis.maxValue - settings.axis.minValue)
+        let percent = (fraction * 100).str(decimals: 0)
+
+        let position = chartInput.canReactToC ? "above" : "below"
+        let positionMsg = temp == nil ? "" : ", current energy is \(position) EA hump"
+        let value = "\(currentValue.str(decimals: 0)), \(percent)%\(positionMsg)"
+
+        return CustomSlider(
             value: temp ?? .constant(settings.axis.minValue),
             axis: settings.axis,
             handleThickness: settings.handleThickness,
@@ -320,6 +364,8 @@ struct EnergyProfileBeaker: View {
         )
         .frame(height: settings.handleHeight)
         .disabled(tempIsDisabled)
+        .accessibility(label: Text("Input for temperature in Kelvin"))
+        .accessibility(value: Text(value))
     }
 
     private var tempIsDisabled: Bool {
@@ -500,7 +546,14 @@ struct EnergyProfileBeaker_Previews: PreviewProvider {
             availableCatalysts: Catalyst.allCases,
             usedCatalysts: [],
             reactionInput: ReactionOrder.Zero.energyProfileReactionInput,
-            catalystColor: .blue
+            catalystColor: .blue,
+            order: .Zero,
+            concentrationC: 0.4,
+            chartInput: .init(
+                shape: ReactionOrder.Zero.energyProfileShapeSettings,
+                temperature: 400,
+                catalyst: .A
+            )
         )
         .background(Styling.inactiveScreenElement)
         .previewLayout(.fixed(width: 200, height: 320))

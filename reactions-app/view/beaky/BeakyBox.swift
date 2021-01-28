@@ -46,6 +46,7 @@ struct BeakyBox: View {
                 NextButton(action: next)
                     .frame(width: navButtonSize, height: navButtonSize)
                     .accessibility(sortPriority: 0.9)
+                    .disabled(nextIsDisabled)
             }.frame(width: bubbleWidth - bubbleStemWidth)
         }
     }

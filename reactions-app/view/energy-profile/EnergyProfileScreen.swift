@@ -49,7 +49,7 @@ struct EnergyProfileScreen: View {
             statement: model.statement,
             next: model.next,
             back: model.back,
-            nextIsDisabled: model.canClickNext,
+            nextIsDisabled: !model.canClickNext,
             settings: settings.orderLayoutSettings
         )
         .padding(.trailing, settings.orderLayoutSettings.beakyRightPadding)
@@ -115,6 +115,7 @@ struct EnergyProfileScreen: View {
                     highlights: model.highlightedElements
                 )
                 .padding(.leading, settings.equationLeadingPadding)
+                .accessibilityElement(children: .contain)
                 Spacer()
             }
         }
@@ -142,7 +143,10 @@ struct EnergyProfileScreen: View {
                 availableCatalysts: model.availableCatalysts,
                 usedCatalysts: model.usedCatalysts,
                 reactionInput: model.selectedReaction.energyProfileReactionInput,
-                catalystColor: model.catalystColor
+                catalystColor: model.catalystColor,
+                order: model.selectedReaction,
+                concentrationC: model.concentrationC,
+                chartInput: model.chartInput
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .padding(.leading, settings.beakerLeadingPadding)

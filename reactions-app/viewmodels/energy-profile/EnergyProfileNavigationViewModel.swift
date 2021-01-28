@@ -18,49 +18,49 @@ struct EnergyProfileNavigationViewModel {
 
     private static func states(persistence: EnergyProfilePersistence) -> [EnergyProfileState] {
         [
-            ExplanationState(
-                EnergyProfileStatements.intro,
-                [.reactionToggle]
-            ),
-            IntroToCollisionTheory(),
-            ExplanationState(
-                EnergyProfileStatements.explainCollisionTheory,
-                []
-            ),
-            ExplanationState(
-                EnergyProfileStatements.explainActivationEnergy,
-                [.eaTerms]
-            ),
-            ExplanationState(
-                EnergyProfileStatements.explainArrhenius,
-                [.rateEquation]
-            ),
-            ExplanationState(
-                EnergyProfileStatements.explainTerms,
-                [.rateEquation]
-            ),
-            ExplanationState(
-                EnergyProfileStatements.explainRateTempRelation,
-                [.rateEquation]
-            ),
-            ExplanationState(
-                EnergyProfileStatements.explainLinearKEquation,
-                [.rateAndLinearRateEquation]
-            ),
-            ExplanationState(
-                EnergyProfileStatements.explainArrheniusTwoPoints,
-                [.rateAndLinearAndRatioEquation]
-            ),
-            ShowInitialEaValues(),
-            ExplanationState(
-                EnergyProfileStatements.explainEnergyDiagram,
-                [.reactionProfileTop, .reactionProfileBottom]
-            ),
-            ExplainExoOrEndoThermic(),
-            ExplanationState(
-                EnergyProfileStatements.explainEaHump,
-                [.reactionProfileTop]
-            ),
+//            ExplanationState(
+//                EnergyProfileStatements.intro,
+//                [.reactionToggle]
+//            ),
+//            IntroToCollisionTheory(),
+//            ExplanationState(
+//                EnergyProfileStatements.explainCollisionTheory,
+//                []
+//            ),
+//            ExplanationState(
+//                EnergyProfileStatements.explainActivationEnergy,
+//                [.eaTerms]
+//            ),
+//            ExplanationState(
+//                EnergyProfileStatements.explainArrhenius,
+//                [.rateEquation]
+//            ),
+//            ExplanationState(
+//                EnergyProfileStatements.explainTerms,
+//                [.rateEquation]
+//            ),
+//            ExplanationState(
+//                EnergyProfileStatements.explainRateTempRelation,
+//                [.rateEquation]
+//            ),
+//            ExplanationState(
+//                EnergyProfileStatements.explainLinearKEquation,
+//                [.rateAndLinearRateEquation]
+//            ),
+//            ExplanationState(
+//                EnergyProfileStatements.explainArrheniusTwoPoints,
+//                [.rateAndLinearAndRatioEquation]
+//            ),
+//            ShowInitialEaValues(),
+//            ExplanationState(
+//                EnergyProfileStatements.explainEnergyDiagram,
+//                [.reactionProfileTop, .reactionProfileBottom]
+//            ),
+//            ExplainExoOrEndoThermic(),
+//            ExplanationState(
+//                EnergyProfileStatements.explainEaHump,
+//                [.reactionProfileTop]
+//            ),
             ExplainCatalyst(),
             InstructToChooseCatalyst(),
             PrepareChosenCatalyst(),
