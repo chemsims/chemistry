@@ -20,7 +20,7 @@ class QuizViewModel: ObservableObject {
         self.allQuestions = displayQuestions
         self.persistence = persistence
         self.questionSet = questions.questionSet
-        self.currentQuestion = displayQuestions[19]
+        self.currentQuestion = displayQuestions[16]
         let previousQuiz = persistence.getAnswers(
             questionSet: questions.questionSet,
             questions: displayQuestions

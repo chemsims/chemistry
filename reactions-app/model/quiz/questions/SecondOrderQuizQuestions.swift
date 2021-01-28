@@ -899,31 +899,32 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-                Consider a reaction that's $(A ➝ B)$ when [A] and [B] are doubled, the rate goes \
-                up by a factor of eight. The rate law is $rate = k[A]^x^[B]^2^$. What's the rate \
-                order with respect to [A]?
+                Consider a reaction that's $2A + 3B ➝ C + D + E$. When the concentrations of both \
+                A and B are doubled, the rate increases to 16 times what it was initially. All the \
+                information we have is that the rate law is $rate = k[A]^2^[B]^n^$, where n is the \
+                specific order for B. What is the order of B?
                 """,
                 questionLabel: """
-                Consider a reaction that's $(A ➝ B)$ when [A] and [B] are doubled, the rate goes \
-                up by a factor of eight. The rate law is rate = k, times [A]^x^, times [B]^2^. What's the rate \
-                order with respect to [A]?
+                Consider a reaction that's 2A + 3B, to C + D + E. When the concentrations of both \
+                A and B are doubled, the rate increases to 16 times what it was initially. All the \
+                information we have is that the rate law is $rate = k, times [A]^2^, times [B]^n^$, \
+                where n is the specific order for B. What is the order of B?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "First order",
+                    answer: "Second order",
                     explanation: """
-                    Knowing that the reaction is second order with respect to [B], we know that if \
-                    it was doubled while [A] remained constant, the rate would have to go up by a \
-                    factor of 4. When [A] was doubled at the same time, the rate went up by a \
-                    factor of 8. $X \\* 4 = 8$, where $X = 2$. In other words, doubling [A] made \
-                    the rate go up by a factor of 2. $2^x^ = 2$ where $x = 1$; the reaction is \
-                    first order for [A].
+                    Knowing that the reaction is second order with respect to [A], we know that if \
+                    it was doubled while [B] remained constant, the rate would go up by a factor of \
+                    4. When [B] was doubled at the same time, the rate went up by a factor of 16. \
+                    X \\* 4 = 16, where X = 4. In other words, doubling [A] made the rate go up by a \
+                    factor of 4. 2^n^ = 4 where n = 2; the reaction is second order for [A].
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Second order",
+                        answer: "First order",
                         explanation: """
-                        If this was the case, the rate would have gone up by a factor of 16.
+                        If this was the case, the rate would have gone up by a factor of 8.
                         """
                     ),
                     QuizAnswerData(
@@ -936,7 +937,7 @@ extension QuizQuestionsList {
                         answer: "Cannot be determined with the given information",
                         explanation: """
                         It can be determined. Consider that according to the equation, the \
-                        reaction is second order with respect to [B].
+                        reaction is second order with respect to [A].
                         """
                     )
                 ],
