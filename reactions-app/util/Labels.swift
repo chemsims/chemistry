@@ -62,14 +62,21 @@ struct Labelling {
         ("➝", ";"),
         ("half-life", "half life"),
         ("Half-life", " half life "),
+        ("multi-step", "multi step"),
         ("rate-determining", "rate determining"),
         ("vice-versa", "vice versa"),
-        ("Sodium-24", "Sodium 24"), 
+        ("Sodium-24", "Sodium 24"),
+        ("Bismuth-212", "Bismuth 212"),
+        ("Cobalt-60", "Cobalt 60"),
+        ("sodium-24", "sodium 24"),
+        ("bismuth-212", "bismuth 212"),
+        ("cobalt-60", "cobalt 60"),
         ("-", " minus "),
         ("k[A][B][C]", "k times 'A' times B times C"),
         ("k[A][B]", "k[A], [B]"),
         ("k[A]", "K times 'A'"),
         ("k[B]", "K times 'B'"),
+        ("k[C]", "K times 'C'"),
         ("5[A", "5 times 'A'"),
         ("6[A", "6 times 'A'"),
         ("]e", "] times e"),
@@ -87,6 +94,7 @@ struct Labelling {
         ("A is", "'A' is"),
         ("to: ", "to "),
         ("*", "times"),
+        ("reactants/products", "reactants slash products"),
         ("/", " divide by "),
         ("ln(2)", "ln 2,"),
         ("0.034667", "0 point 034667"),
@@ -94,7 +102,8 @@ struct Labelling {
         (" which is the same as", ", which is the same as"),
         (" where n is the order", ", where n is the order"),
         ("⇌", "double sided arrow,"),
-        ("0.5X", "0.5 x")
+        ("0.5X", "0.5 x"),
+        (")(", " times ")
     ]
 
     private static let preParseReplacements: [(String, String)] = [
@@ -118,7 +127,10 @@ struct Labelling {
         ("I^-^", "I (charge minus 1)"),
         ("SO", "S O"),
         ("I_3_^-^", "I3 (charge minus 1)"),
-        ("ClO", "C L O")
+        ("ClO", "C L O"),
+        ("k[X][Y][Z]", "k, times X, times Y, times Z"),
+        ("k[XY][Z]", "k, times XY, times Z"),
+        ("k[X][Y][XY]", "k, times X, times Y, times XY")
     ]
 }
 
