@@ -186,6 +186,7 @@ fileprivate struct QuizScreenWithSettings: View {
                 )
                 .foregroundColor(.white)
                 .shadow(radius: 3, y: 0)
+                .edgesIgnoringSafeArea(.horizontal)
 
             ProgressBar(
                 progress: model.progress,

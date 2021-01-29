@@ -51,7 +51,7 @@ struct QuizLayoutSettings {
     }
 
     var rightNavPadding: CGFloat {
-        0.1 * rightNavSize
+        0.12 * rightNavSize
     }
 
     var navTotalWidth: CGFloat {
