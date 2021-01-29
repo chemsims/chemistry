@@ -18,9 +18,9 @@ class ProductionInjector: Injector {
 
     let quizPersistence: QuizPersistence = UserDefaultsQuizPersistence()
 
-    let reviewPersistence: ReviewPromptPersistence = InMemoryReviewPromptPersistence()
+    let reviewPersistence: ReviewPromptPersistence = UserDefaultsReviewPromptPersistence()
 
-    let energyPersistence: EnergyProfilePersistence = InMemoryEnergyProfilePersistence()
+    let energyPersistence: EnergyProfilePersistence = UserDefaultsEnergyProfilePersistence()
 }
 
 class InMemoryInjector: Injector {

@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum ReactionOrder: Int, CaseIterable {
+enum ReactionOrder: Int, CaseIterable, Codable {
     case Zero, First, Second
 }
 
