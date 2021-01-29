@@ -199,7 +199,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     private var equations: some View {
         HStack {
             Spacer()
-            VStack {
+            VStack(spacing: settings.ordered.beakyBottomPadding) {
                 equation(
                     order: .Zero
                 ) { geometry in
@@ -509,7 +509,9 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                     fontSize: settings.ordered.bubbleFontSize,
                     navButtonSize: settings.ordered.navButtonSize,
                     bubbleStemWidth: settings.ordered.bubbleStemWidth
-                ).padding(.trailing, settings.ordered.beakyRightPadding)
+                )
+                .padding(.trailing, settings.ordered.beakyRightPadding)
+                .padding(.bottom, settings.ordered.beakyBottomPadding)
             }
         }
     }

@@ -9,11 +9,18 @@ struct QuizScreen: View {
 
     @ObservedObject var model: QuizViewModel
 
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+
     var body: some View {
         GeometryReader { geometry in
             QuizScreenWithSettings(
                 model: model,
-                settings: QuizLayoutSettings(geometry: geometry)
+                settings: QuizLayoutSettings(
+                    geometry: geometry,
+                    horizontalSizeClass: horizontalSizeClass,
+                    verticalSizeClass: verticalSizeClass
+                )
             )
         }
     }
@@ -29,6 +36,14 @@ fileprivate struct QuizScreenWithSettings: View {
 
     var body: some View {
         ZStack(alignment: .top) {
+            if (model.quizState != .completed) {
+                Rectangle()
+                    .frame(height: settings.geometry.safeAreaInsets.top)
+                    .edgesIgnoringSafeArea(.all)
+                    .foregroundColor(.white)
+                    .zIndex(3)
+            }
+
             VStack(spacing: 0) {
                 if (model.quizState != .completed) {
                     progressBar
@@ -112,7 +127,6 @@ fileprivate struct QuizScreenWithSettings: View {
     private var nextButton: some View {
         ZStack {
             NextButton(action: { navigate(next: true)} )
-                .frame(width: settings.rightNavSize, height: settings.rightNavSize)
                 .disabled(nextIsDisabled)
                 .opacity(nextIsDisabled ? 0.3 : 1)
                 .padding(settings.rightNavPadding)
@@ -166,10 +180,12 @@ fileprivate struct QuizScreenWithSettings: View {
     private var progressBar: some View {
         ZStack {
             Rectangle()
-                .frame(height: settings.progressHeight + (2 * settings.progressBarPadding))
+                .frame(
+                    height:
+                        settings.progressHeight + (2 * settings.progressBarPadding)
+                )
                 .foregroundColor(.white)
                 .shadow(radius: 3, y: 0)
-                .edgesIgnoringSafeArea(.all)
 
             ProgressBar(
                 progress: model.progress,
@@ -190,6 +206,7 @@ fileprivate struct QuizScreenWithSettings: View {
         .accessibilityElement()
         .accessibility(label: Text("Quiz progress"))
         .accessibility(value: Text(accessibilityValue))
+        
     }
 
     private var accessibilityValue: String {
@@ -320,6 +337,6 @@ struct QuizScreen_Previews: PreviewProvider {
                 analytics: NoOpAnalytics()
             )
         )
-        .previewLayout(.fixed(width: 568, height: 320))
+        .previewLayout(.fixed(width: 1366, height: 1024))
     }
 }

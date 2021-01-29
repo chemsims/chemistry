@@ -7,6 +7,8 @@ import SwiftUI
 
 struct QuizLayoutSettings {
     let geometry: GeometryProxy
+    let horizontalSizeClass: UserInterfaceSizeClass?
+    let verticalSizeClass: UserInterfaceSizeClass?
 
     var width: CGFloat {
         geometry.size.width
@@ -41,7 +43,7 @@ struct QuizLayoutSettings {
     }
 
     var rightNavSize: CGFloat {
-        0.7 * navTotalWidth
+        leftNavSize + (2 * leftNavPadding)
     }
 
     var leftNavPadding: CGFloat {
@@ -49,7 +51,7 @@ struct QuizLayoutSettings {
     }
 
     var rightNavPadding: CGFloat {
-        0.5 * (navTotalWidth - rightNavSize)
+        0.1 * rightNavSize
     }
 
     var navTotalWidth: CGFloat {
@@ -57,7 +59,7 @@ struct QuizLayoutSettings {
     }
 
     var questionFontSize: CGFloat {
-        0.05 * geometry.size.height
+        min(0.05 * geometry.size.height, 30)
     }
 
     var answerFontSize: CGFloat {
@@ -65,7 +67,7 @@ struct QuizLayoutSettings {
     }
 
     var fontSize: CGFloat {
-        0.04 * geometry.size.width
+        min(0.04 * geometry.size.width, 44)
     }
 
     var h2FontSize: CGFloat {
@@ -79,8 +81,6 @@ struct QuizLayoutSettings {
     var progressLabelWidth: CGFloat {
         6 * progressHeight
     }
-
-
 
     var progressBarPadding: CGFloat {
         0.4 * navSize
