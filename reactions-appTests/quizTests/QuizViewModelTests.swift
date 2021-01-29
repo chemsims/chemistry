@@ -8,7 +8,7 @@ import XCTest
 class QuizViewModelTests: XCTestCase {
 
     func testNavigatingBackAndThenForwardFromUnansweredQuestion() {
-        let model = newModel(.zeroOrderQuestions)
+        let model = newModel(makeQuestions(n: 5))
         XCTAssertEqual(QuizState.pending, model.quizState)
         model.next()
 
@@ -72,9 +72,13 @@ class QuizViewModelTests: XCTestCase {
         model.next()
         XCTAssertTrue(model.hasSelectedCorrectOption)
 
-        // Skip 4 & 5 End the quiz
+        // Question 4 & 5 then the end the quiz
+        XCTAssertNil(model.selectedAnswer(id: questions.createQuestions()[3].id))
+        XCTAssertNil(model.selectedAnswer(id: questions.createQuestions()[4].id))
         model.next()
+        model.answer(option: .A)
         model.next()
+        model.answer(option: .A)
         model.next()
 
         XCTAssertEqual(model.quizState, .completed)
@@ -89,8 +93,8 @@ class QuizViewModelTests: XCTestCase {
         let answer3 = model.selectedAnswer(id: qs[2].id)
         XCTAssertEqual(answer3, QuizAnswerInput(firstAnswer: .A))
 
-        XCTAssertNil(model.selectedAnswer(id: qs[3].id))
-        XCTAssertNil(model.selectedAnswer(id: qs[4].id))
+        XCTAssertEqual(model.selectedAnswer(id: qs[3].id), QuizAnswerInput(firstAnswer: .A))
+        XCTAssertEqual(model.selectedAnswer(id: qs[4].id), QuizAnswerInput(firstAnswer: .A))
     }
 
     func testThatTheQuizIsSavedWhenItEnds() {
@@ -120,7 +124,7 @@ class QuizViewModelTests: XCTestCase {
         let answer1 = [
             "0": QuizAnswerInput(firstAnswer: .B, otherAnswers: [.C, .D])
         ]
-        model.next()
+        model.next(force: true)
 
         XCTAssertEqual(model.quizState, .completed)
         XCTAssertEqual(getAnswers(), answer1)
@@ -146,9 +150,9 @@ class QuizViewModelTests: XCTestCase {
         model.answer(option: .A)
         model.next()
         model.answer(option: .B)
-        model.next()
+        model.next(force: true)
         model.answer(option: .C)
-        model.next()
+        model.next(force: true)
 
         XCTAssertEqual(model.quizState, .completed)
 
@@ -186,13 +190,13 @@ class QuizViewModelTests: XCTestCase {
         shown([.D])
         notShown([.B, .C])
 
-        model.next()
+        model.next(force: true)
         notShown(QuizOption.allCases)
         model.back()
         shown([.D])
         notShown([.B, .C])
 
-        model.next()
+        model.next(force: true)
         model.answer(option: .A)
         notShown(QuizOption.allCases)
     }

@@ -168,8 +168,8 @@ class QuizViewModel: ObservableObject {
 // MARK: Quiz Navigation
 extension QuizViewModel {
 
-    func next() {
-        guard !nextIsDisabled else {
+    func next(force: Bool = false) {
+        guard !nextIsDisabled || force else {
             return
         }
         switch (quizState) {
