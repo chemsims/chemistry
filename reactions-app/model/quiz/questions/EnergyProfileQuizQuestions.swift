@@ -438,8 +438,8 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "ENERGYPROFILE-9",
                 question: """
-                Consider two reactions (reaction 1 and reaction 2). The black line (A) in the energy diagram \
-                below represents reaction 2 and the red line (B) represents reaction 2. What is a true statement?
+                Consider two reactions (reaction 1 and reaction 2). The black line (1) in the energy diagram \
+                below represents reaction 1 and the red line (2) represents reaction 2. What is a true statement?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
@@ -493,7 +493,15 @@ extension QuizQuestionsList {
                     )
                 ],
                 difficulty: .hard,
-                image: "energy-profile-reaction-profile-2"
+                image: LabelledImage(
+                    image: "energy-profile-reaction-profile-2",
+                    label: """
+                    Energy profile chart with two lines, 1 and 2, each with a single hump.
+                    Reactants of line 1 have a higher energy than line 2, and the hump for line 1 \
+                    is higher than line 2 by the same amount. Both lines have the same energy level for \
+                    the products, which is lower than the reactant energy levels.
+                    """
+                )
             ),
             QuizQuestionData(
                 id: "ENERGYPROFILE-10",

@@ -81,7 +81,15 @@ extension QuizQuestionsList {
                     )
                 ],
                 difficulty: .easy,
-                image: "reaction-comparison"
+                image: LabelledImage(
+                    image: "reaction-comparison",
+                    label: """
+                    Three charts showing time in seconds on the x axis.
+                    Chart 1 shows concentration of A, with a curved line that reduces as time increases.
+                    Chart 2 shows ln a, with a straight line that reduces as time increases.
+                    Chart 3 shows inverse A, with a curved line that increases as time increases.
+                    """
+                )
             ),
             QuizQuestionData(
                 id: "COMPARISON-3",

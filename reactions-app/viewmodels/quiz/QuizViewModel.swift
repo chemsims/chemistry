@@ -102,6 +102,10 @@ class QuizViewModel: ObservableObject {
         }.count
     }
 
+    var nextIsDisabled: Bool {
+        quizState == .running && !hasSelectedCorrectOption
+    }
+
     // MARK: Private variables
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
@@ -165,6 +169,9 @@ class QuizViewModel: ObservableObject {
 extension QuizViewModel {
 
     func next() {
+        guard !nextIsDisabled else {
+            return
+        }
         switch (quizState) {
         case .pending:
             quizState = .running

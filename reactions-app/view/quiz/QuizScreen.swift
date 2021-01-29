@@ -127,14 +127,14 @@ fileprivate struct QuizScreenWithSettings: View {
     private var nextButton: some View {
         ZStack {
             NextButton(action: { navigate(next: true)} )
-                .disabled(nextIsDisabled)
-                .opacity(nextIsDisabled ? 0.3 : 1)
+                .disabled(model.nextIsDisabled)
+                .opacity(model.nextIsDisabled ? 0.3 : 1)
                 .padding(settings.rightNavPadding)
-                .ifTrue(nextIsDisabled) {
+                .ifTrue(model.nextIsDisabled) {
                     $0.accessibility(hint: Text("Select correct answer to enable next button"))
                 }
 
-            if (nextIsDisabled) {
+            if (model.nextIsDisabled) {
                 Button(action: { showNotification = true }) {
                     Circle()
                         .opacity(0)
@@ -171,10 +171,6 @@ fileprivate struct QuizScreenWithSettings: View {
             .accessibility(label: Text("Restart quiz"))
         }
         .buttonStyle(NavButtonButtonStyle())
-    }
-
-    private var nextIsDisabled: Bool {
-        model.quizState == .running && !model.hasSelectedCorrectOption
     }
 
     private var progressBar: some View {
