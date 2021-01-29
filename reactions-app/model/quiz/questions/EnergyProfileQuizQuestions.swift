@@ -257,37 +257,51 @@ extension QuizQuestionsList {
             ),
             QuizQuestionData(
                 question: """
-                Catalyst can be of different shapes and different states of matter, but which kind of catalyst \
-                is being added to the reaction below to increase the rate of the reaction?
+                There are different types of catalysts and they are often classified according to \
+                their state of matter in relation with the reactants/products, and according to \
+                what type of substance it is, etc. They all boost the rate of a reaction, but for \
+                the following reaction:
 
-                CH_3_CH_2_OH_(g)_ + HCl_(g)_ ➝ CH_3_CH_2_Cl + H_2_O_(l)_
+                CH_2_=CH_2_(g) + H_2_O(g)===H_3_PO_4_ ➝ CH_3_CH_2_OH
+
+                What type of catalyst is being used?
+                """,
+                questionLabel: """
+                There are different types of catalysts and they are often classified according to \
+                their state of matter in relation with the reactants/products, and according to \
+                what type of substance it is, etc. They all boost the rate of a reaction, but for \
+                the following reaction:
+
+                CH_2_=CH_2_(g) + H_2_O(g)===H_3_PO_4_, yields CH_3_CH_2_OH
+
+                What type of catalyst is being used?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "A heterogeneous acid-base catalyst",
+                    answer: "Heterogeneous acid-base catalyst",
                     explanation: """
-                    Being the catalyst H_2_SO_4_, is an acid that allows the transfer of hydroxide between \
-                    reactants. Since it's an acid, it's liquid, meaning that its state of matter is different from \
-                    the reactants that are gaseous, so it's also heterogeneous.
+                    The catalyst is H_3_PO_4_, which is an acid. At the same time, it's a liquid \
+                    while the reactants and products of this particular reaction are gaseous. \
+                    Given that they're in different states of matter, the catalyst is considered heterogeneous.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "A homogeneous acid-base catalyst",
+                        answer: "Homogeneous acid-base catalyst",
                         explanation: """
-                        Even though H_2_SO_4_ is in fact an acid, it's liquid while the reactants \
+                        Even though H_3_PO_4_ is in fact an acid, it's liquid while the reactants \
                         are gaseous, so it's not homogeneous.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "A heterogeneous solid surface catalyst",
+                        answer: "Heterogeneous solid surface catalyst",
                         explanation: """
-                        H_2_SO_4_ is a liquid catalyst and not a solid surface catalyst.
+                        H_3_PO_4_ is a liquid catalyst and not a solid surface catalyst.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "A homogeneous redox catalyst",
+                        answer: "Homogeneous enzymatic catalyst",
                         explanation: """
-                        H_2_SO_4_ is not a redox catalyst but an acid-base one.
+                        H_3_PO_4_ is not an enzymatic catalyst but an acid-base one.
                         """
                     )
                 ],
