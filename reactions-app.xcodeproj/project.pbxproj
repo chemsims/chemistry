@@ -463,7 +463,6 @@
 				57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */,
 				57631771259B814100D7CE2C /* SizeAdjusterTests.swift */,
 				5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */,
-				57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */,
 				57AA012325A8C635001131A0 /* EnergyProfileViewModelTests.swift */,
 				5783965825A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift */,
 				572CF3A325AA6E2100B49E34 /* ReactionInputTests.swift */,
@@ -813,6 +812,8 @@
 		5743D9C425C45D7B000C0397 /* persistence */ = {
 			isa = PBXGroup;
 			children = (
+				5780320625B0888300A0F610 /* QuizPersistenceTests.swift */,
+				57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */,
 				5743D9C525C45D9D000C0397 /* ReviewPromptPersistenceTests.swift */,
 				5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */,
 			);
@@ -936,7 +937,6 @@
 				5736B668258A79BD002CEF5E /* QuizViewModelTests.swift */,
 				57778B8925937D8C00254262 /* QuizQuestionTests.swift */,
 				57A26854259A011600919E48 /* QuizDifficultyTests.swift */,
-				5780320625B0888300A0F610 /* QuizPersistenceTests.swift */,
 			);
 			path = quizTests;
 			sourceTree = "<group>";
