@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>355047378558-j9nkhn6k83pc42m81rdrnu1es2tpa307.apps.googleusercontent.com</string>
+	<string>742756572347-ia45021uhi2gtubavm2imj8pmv8jhqpf.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.355047378558-j9nkhn6k83pc42m81rdrnu1es2tpa307</string>
+	<string>com.googleusercontent.apps.742756572347-ia45021uhi2gtubavm2imj8pmv8jhqpf</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCfc91al8VxS5KFYIS9NraVWOrj4AZN88c</string>
+	<string>AIzaSyBFQdRdHVBYlnkYYGctcDeRpZRxs5Q4n0I</string>
 	<key>GCM_SENDER_ID</key>
-	<string>355047378558</string>
+	<string>742756572347</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.reaction.rate</string>
 	<key>PROJECT_ID</key>
-	<string>reactions-rate</string>
+	<string>int-chem-app---reaction-rates</string>
 	<key>STORAGE_BUCKET</key>
-	<string>reactions-rate.appspot.com</string>
+	<string>int-chem-app---reaction-rates.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:355047378558:ios:65ac432329e3cc6324122f</string>
+	<string>1:742756572347:ios:9f14282360ccb79e5b9d9e</string>
 </dict>
 </plist>
