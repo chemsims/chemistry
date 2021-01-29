@@ -7,7 +7,7 @@ import CoreGraphics
 
 struct ZeroOrderStatements {
 
-    static let initial = [
+    static let initial: [TextLine] = [
         "This is a zero order reaction in which a reactant A turns into the product B. But what does it mean? Let's find out!",
         "*Set the initial concentration of A (c_1_) and the initial time at which it'll start (t_1_)*."
     ]
@@ -32,7 +32,7 @@ struct ZeroOrderStatements {
         ]
     }
     
-    static let setFinalValues = [
+    static let setFinalValues: [TextLine] = [
         "Great! Now you can set the *concentration of A at the end of the reaction (c_2_)* and the *time the reaction will end (t_2_)*."
     ]
 
@@ -46,7 +46,7 @@ struct ZeroOrderStatements {
         ]
     }
 
-    static let endAnimation = [
+    static let endAnimation: [TextLine] = [
         "For this zero order reaction, *rate* is constant and it's equal to *k*, that's why a graph plotting \(Strings.aVsT) is a straight line.",
         TextLine(
             "[A]*(y)*=-kt*(mx)*+[A0]*(b)*",
@@ -58,12 +58,12 @@ struct ZeroOrderStatements {
         )
     ]
 
-    static let showConcentrationTable = [
+    static let showConcentrationTable: [TextLine] = [
         "You can click the button in the top right corner to see the initial and final concentration and time for this reaction.",
         "*Try clicking the toggle to see your results*.",
     ]
 
-    static let end = [
+    static let end: [TextLine] = [
         "Amazing! Let's take a snapshot!",
         "Try *dragging the time indicator* to scrub through the reaction time."
     ]

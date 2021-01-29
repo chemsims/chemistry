@@ -6,12 +6,12 @@
 import CoreGraphics
 
 struct FirstOrderStatements {
-    static let intro = [
+    static let intro: [TextLine] = [
         "This is a first order reaction.",
         "Why don't you set the *initial concentration of A [A_0_]*, the reactant?"
     ]
 
-    static let setC2 = [
+    static let setC2: [TextLine] = [
         "Great! Now you can set the *concentration of A at the end of the reaction [A_t_]* and the *time the reaction will last (t)*.",
     ]
 
@@ -29,7 +29,7 @@ struct FirstOrderStatements {
         ]
     }
 
-    static let explainRate = [
+    static let explainRate: [TextLine] = [
             "For a reaction with one reactant it's usually written as $*rate=k[A]^order^*$.",
             "For this reaction then, $*rate=k[A]^1^*$.",
     ]
@@ -46,14 +46,14 @@ struct FirstOrderStatements {
 
     static let inProgress = ReactionStatements.inProgress
 
-    static let explainRatePostReaction1 = [
+    static let explainRatePostReaction1: [TextLine] = [
         """
         For the previous zero order reaction, *rate* was constant because it was independent \
         of *[A]*, since $*rate=k[A]^0^*$ is equivalent to $*rate=k*$, which is the rate constant.
         """
     ]
 
-    static let explainRatePostReaction2 = [
+    static let explainRatePostReaction2: [TextLine] = [
         """
         For this first order reaction, $*rate=k[A]^1^*$. That's why a graph plotting \
         \(Strings.aVsT) is a curve, given how the *rate* is proportional to the concentration \
