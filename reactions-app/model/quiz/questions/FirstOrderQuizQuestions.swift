@@ -59,8 +59,8 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "Zero order",
                         explanation: """
-                        The rate law for second order reactions is $rate = k[A]^2^$ or \
-                        $rate = k[A][B]$ where A and B are the reactants.
+                        The rate law for second order reactions is $rate = k[A]$ because the rate \
+                        remains constant no matter the concentration of A.
                         """
                     ),
                     QuizAnswerData(
@@ -666,7 +666,7 @@ extension QuizQuestionsList {
                         explanation: "1.088 M is too high."
                     ),
                     QuizAnswerData(
-                        answer: "0.322 M",
+                        answer: "0.444 M",
                         explanation: """
                         The equation for half-life for a first order reaction is \
                         $t_1/2_ = ln(2)/k$. Try replacing the known values to calculate the rate \

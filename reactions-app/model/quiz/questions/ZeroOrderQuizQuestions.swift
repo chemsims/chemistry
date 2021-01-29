@@ -40,6 +40,7 @@ extension QuizQuestionsList {
                     ),
                     QuizAnswerData(
                         answer: "M/min",
+                        answerLabel: "M/minutes",
                         explanation: """
                         The rate (or speed) of reaction is related to the change in concentration \
                         (molarity or moles over liter) of either a reactant or product over time. \
@@ -418,7 +419,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "Zero order reactions",
                         explanation: """
-                        It doesn't apply for Zero Order reactions, because the speed or rate of \
+                        It doesn't apply for zero order reactions, because the speed or rate of \
                         the reaction doesn't depend on the concentration of the reactants, and it \
                         stays constant.
                         """
@@ -426,7 +427,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "First order reactions",
                         explanation: """
-                        It does apply for First Order reactions, because for these $rate = k[A]$. \
+                        It does apply for first order reactions, because for these $rate = k[A]$. \
                         But it doesn't apply only for these types of reactions.
                         """
                     ),

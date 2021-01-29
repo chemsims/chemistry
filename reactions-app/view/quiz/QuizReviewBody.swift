@@ -177,6 +177,8 @@ fileprivate struct QuizReviewSingleOption: View {
         let answer = question.options[option]?.answer ?? ""
         let fullLine = answer.prepending(TextSegment(content: "\(topLine): "))
 
+        let correctLabel = isCorrect ? "Correct" : "Incorrect"
+        let label = "\(topLine), \(correctLabel). \(answer.label). Explanation: \(explanationString.label)"
 
         return VStack(alignment: .leading, spacing: 0) {
             TextLinesView(
@@ -185,6 +187,7 @@ fileprivate struct QuizReviewSingleOption: View {
                 color: isCorrect ?
                     Styling.Quiz.reviewCorrectAnswerFont : Styling.Quiz.reviewWrongAnswerFont
             )
+            .accessibility(label: Text(label))
 
             Button(action: handleExplanationPress) {
                 Text(explanationIsExpanded ? "Hide Explanation" : "Show Explanation")
