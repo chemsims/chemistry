@@ -39,6 +39,8 @@ struct EnergyProfileBeaker: View {
     @State private var flameScale: CGFloat = 0
     private let tripleFlameThreshold: CGFloat = 500
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         GeometryReader { geometry in
             makeView(settings: EnergyBeakerSettings(geometry: geometry))
@@ -217,7 +219,7 @@ struct EnergyProfileBeaker: View {
         let rotation: Angle = hasMoved ? .degrees(135) : .zero
         let scale: CGFloat = hasMoved ? 1.2 : 1
         let shadow = hasMoved ? settings.catHeight * 0.05 : 0
-        let yOffset = (isInProgress && catalystIsShaking)  ? settings.catHeight * 0.1 : 0
+        let yOffset = (isInProgress && catalystIsShaking && !reduceMotion)  ? settings.catHeight * 0.1 : 0
         let shouldHighlight = highlightCatalyst && availableCatalysts.contains(catalyst)
 
         let labelSuffix = isInProgress ? ". Rotated above beaker, preparing to drop catalyst particles" : ""

@@ -10,6 +10,8 @@ struct PageViewController<Page: View>: UIViewControllerRepresentable {
     var pages: [Page]
     @Binding var currentPage: Int
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -31,7 +33,7 @@ struct PageViewController<Page: View>: UIViewControllerRepresentable {
         pageViewController.setViewControllers(
             [context.coordinator.controllers[currentPage]],
             direction: direction,
-            animated: true
+            animated: !reduceMotion
         )
     }
 

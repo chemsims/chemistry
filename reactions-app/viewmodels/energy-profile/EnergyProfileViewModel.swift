@@ -229,6 +229,10 @@ class EnergyProfileViewModel: ObservableObject {
         }
         return false
     }
+
+    private var reduceMotion: Bool {
+        UIAccessibility.isReduceMotionEnabled
+    }
 }
 
 extension Catalyst {

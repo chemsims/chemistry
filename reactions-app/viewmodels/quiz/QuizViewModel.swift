@@ -107,7 +107,7 @@ class QuizViewModel: ObservableObject {
         let prevAnswer = answers[currentQuestion.id]?.appending(option)
         let newAnswer = prevAnswer ?? QuizAnswerInput(firstAnswer: option)
         let duration = QuizViewModel.explanationExpansionDuration(currentQuestion, option: option)
-        withAnimation(.easeOut(duration: duration)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: duration)) {
             answers[currentQuestion.id] = newAnswer
         }
     }

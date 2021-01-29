@@ -245,6 +245,8 @@ fileprivate struct NotificationView: View {
 
     let fontSize: CGFloat
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         Text(message)
             .font(.system(size: fontSize))
@@ -258,7 +260,7 @@ fileprivate struct NotificationView: View {
             .offset(y: offset)
             .gesture(gesture)
             .transition(.move(edge: .top))
-            .animation(.easeOut(duration: 0.5))
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.5))
             .onAppear(perform: scheduleRemoval)
             .onReceive(
                 NotificationCenter.default.publisher(

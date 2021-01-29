@@ -105,7 +105,7 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
                         .animation(.linear)
                         .font(.system(size: height * 0.6))
                         .rotationEffect(isToggled ? .degrees(180) : .zero)
-                        .animation(.spring(response: 0.3))
+                        .animation(reduceMotion ? nil : .spring(response: 0.3))
                 }
                 .accessibilityElement()
                 .accessibility(label: Text(label))
