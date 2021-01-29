@@ -46,21 +46,20 @@ struct EnergyProfileChart: View {
         let b = input.moleculeB.name
         let c = input.moleculeC.name
 
-        let leftIsHigh = chartInput.leftAsymptote > chartInput.rightAsymptote
-        let leftIsHighMsg = "The reactants start at a higher energy state than the product"
-        let leftIsLowMsg = "The reactants start at a lower energy state than the product"
-        let leftMsg = leftIsHigh ? leftIsHighMsg : leftIsLowMsg
+        let reactantMsg = "Reactants are \(chartInput.leftAsymptote.percentage) up the y axis"
+        let productMsg = "Product is \(chartInput.rightAsymptote.percentage) up the y axis"
 
         let isReduced = chartInput.reducedPeak < chartInput.initialPeak
 
-        let initialEa = ". The EA hump is \(chartInput.initialPeak.percentage) up the Y axis"
-        let reducedEa = ". The EA hump is \(chartInput.reducedPeak.percentage) up the Y axis, reduced from \(chartInput.initialPeak.percentage) before the catalyst was added"
+        let initialEa = "The EA hump is \(chartInput.initialPeak.percentage) up the Y axis"
+        let reducedEa = "The EA hump is \(chartInput.reducedPeak.percentage) up the Y axis, reduced from \(chartInput.initialPeak.percentage) before the catalyst was added"
+
 
         let eaMsg = isReduced ? reducedEa : initialEa
 
         let lineMsg = showTemperature ? ". A horizontal line shows the average kinetic energy of the molecules" : ""
 
-        return "Energy profile for the reaction \(a) + \(b) to \(c). \(leftMsg)\(eaMsg)\(lineMsg)"
+        return "Energy profile for the reaction \(a) + \(b) to \(c). \(reactantMsg). \(productMsg). \(eaMsg)\(lineMsg)"
     }
 
     private var value: String {

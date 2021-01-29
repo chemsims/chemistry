@@ -455,7 +455,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         cMolecules += 2
     }
 
-    override func didFinishUpdate() {
+    override func update(_ currentTime: TimeInterval) {
         for (i, catalyst) in fallingCatalysts.enumerated().reversed() {
             if let body = catalyst.physicsBody, catalyst.position.y < waterHeight {
                 body.collisionBitMask = allCollisions
@@ -463,6 +463,11 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
                 catalyst.run(impulse)
                 fallingCatalysts.remove(at: i)
                 catalystsInLiquid.append(catalyst)
+
+                let xConstraint = SKConstraint.positionX(SKRange(lowerLimit: 0, upperLimit: size.width))
+                let yConstraint = SKConstraint.positionY(SKRange(lowerLimit: 0, upperLimit: waterHeight))
+
+                catalyst.constraints = [xConstraint, yConstraint]
             }
         }
     }
@@ -477,8 +482,14 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     ) {
         let radius = settings.moleculeRadius
         let molecule = SKShapeNode(circleOfRadius: radius)
-        let x = CGFloat.random(in: 0...size.width)
-        let y = CGFloat.random(in: 0...waterHeight)
+
+        let minX = radius
+        let maxX = size.width - radius
+        let minY = radius
+        let maxY = waterHeight - radius
+
+        let x = CGFloat.random(in: minX...maxX)
+        let y = CGFloat.random(in: minY...maxY)
 
         molecule.position = CGPoint(x: x, y: y)
         molecule.fillColor = color
@@ -505,6 +516,11 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         let dx = velocity * sin(angle) * direction
         let dy = velocity * cos(angle) * direction
         moleculePhysics.velocity = CGVector(dx: dx, dy: dy)
+
+        let xConstraint = SKConstraint.positionX(SKRange(lowerLimit: minX, upperLimit: maxX))
+        let yConstraint = SKConstraint.positionY(SKRange(lowerLimit: minY, upperLimit: maxY))
+
+        molecule.constraints = [xConstraint, yConstraint]
     }
 
     /// The wedges are added to prevent molecules becoming 'stuck' in the corners, or along edges.
