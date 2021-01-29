@@ -24,7 +24,7 @@ extension QuizOption: Comparable {
     }
 }
 
-enum QuizDifficulty: Int, CaseIterable, Comparable {
+enum QuizDifficulty: Int, CaseIterable, Comparable, Codable {
 
     case easy, medium, hard
 

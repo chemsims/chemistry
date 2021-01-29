@@ -9,6 +9,9 @@ import XCTest
 
 class QuizPersistenceTests: XCTestCase {
 
+    override func setUp() {
+        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+    }
 
     func testSavingAndGettingASingleOption() {
         let model = newModel()
@@ -76,7 +79,7 @@ class QuizPersistenceTests: XCTestCase {
     }
 
     private func newModel() -> QuizPersistence {
-        InMemoryQuizPersistence()
+        UserDefaultsQuizPersistence()
     }
 
     private func questionWithOptions(

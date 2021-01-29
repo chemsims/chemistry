@@ -24,18 +24,17 @@ struct SavedQuiz {
     let answers: [String:QuizAnswerInput]
 }
 
-fileprivate struct SavedPersistedQuiz {
+fileprivate struct SavedPersistedQuiz: Codable {
     let difficulty: QuizDifficulty
     let answers: [String: QuizAnswerPersistedInput]
 }
 
-fileprivate struct QuizAnswerPersistedInput {
+fileprivate struct QuizAnswerPersistedInput: Codable {
     let firstAnswerId: Int
     let otherAnswersId: [Int]
 }
 
-
-enum QuestionSet: CaseIterable {
+enum QuestionSet: String, CaseIterable {
     case zeroOrder,
          firstOrder,
          secondOrder,
@@ -65,9 +64,39 @@ class InMemoryQuizPersistence: QuizPersistence {
     }
 }
 
+class UserDefaultsQuizPersistence: QuizPersistence {
+
+    private let userDefaults = UserDefaults.standard
+
+    private let keyBase = "quiz-results"
+
+    func saveAnswers(quiz: SavedQuiz, questions: [QuizQuestion]) {
+        let serialized = serialiseAnswers(quiz, questions: questions)
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(serialized) {
+            userDefaults.set(encoded, forKey: key(for: quiz.questionSet))
+        }
+    }
+
+    func getAnswers(questionSet: QuestionSet, questions: [QuizQuestion]) -> SavedQuiz? {
+        let decoder = JSONDecoder()
+        if let data = userDefaults.object(forKey: key(for: questionSet)) as? Data {
+            if let decoded = try? decoder.decode(SavedPersistedQuiz.self, from: data) {
+                return deserialiseAnswers(decoded, questionSet: questionSet, questions: questions)
+            }
+        }
+        return nil
+    }
+
+    private func key(for questionSet: QuestionSet) -> String {
+        "\(keyBase)-\(questionSet.rawValue)"
+    }
+}
+
+
 // MARK: Serialize
-fileprivate extension InMemoryQuizPersistence {
-    private func serialiseAnswers(
+fileprivate extension QuizPersistence {
+    func serialiseAnswers(
         _ quiz: SavedQuiz,
         questions: [QuizQuestion]
     ) -> SavedPersistedQuiz {
@@ -88,7 +117,7 @@ fileprivate extension InMemoryQuizPersistence {
         return SavedPersistedQuiz(difficulty: quiz.difficulty, answers: serializedAnswers)
     }
 
-    private func serializeAnswer(
+    func serializeAnswer(
         questions: [QuizQuestion],
         questionId: String,
         answer: QuizAnswerInput
@@ -107,9 +136,9 @@ fileprivate extension InMemoryQuizPersistence {
 }
 
 // MARK: Deserialize
-fileprivate extension InMemoryQuizPersistence {
+fileprivate extension QuizPersistence {
 
-    private func deserialiseAnswers(
+    func deserialiseAnswers(
         _ quiz: SavedPersistedQuiz,
         questionSet: QuestionSet,
         questions: [QuizQuestion]
@@ -130,7 +159,7 @@ fileprivate extension InMemoryQuizPersistence {
         )
     }
 
-    private func deserializeAnswer(
+    func deserializeAnswer(
         _ answer: QuizAnswerPersistedInput,
         questionId: String,
         questions: [QuizQuestion]
@@ -152,10 +181,3 @@ fileprivate extension InMemoryQuizPersistence {
         }
     }
 }
-
-fileprivate struct QuizResultsKey: Hashable {
-    let difficulty: QuizDifficulty
-    let questionSet: QuestionSet
-}
-
-
