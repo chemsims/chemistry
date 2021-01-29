@@ -94,5 +94,6 @@ fileprivate class EnergyProfileEndState: EnergyProfileState {
         model.concentrationC = 1
         model.reactionState = .completed
         model.temp2 = 425
+        model.canSetReaction = false
     }
 }

@@ -178,7 +178,7 @@ struct ReactionInputWithoutC2: ReactionInputModel {
     func limits(cAbsoluteSpacing: CGFloat, tAbsoluteSpacing: CGFloat) -> ReactionInputLimits {
         if let concentration = concentrationA {
             return ReactionInputLimitsWithoutC2(
-                cRange: cRange(spacing: cAbsoluteSpacing),
+                cRange: adjustedCRange(spacing: cAbsoluteSpacing),
                 tRange: tRange(spacing: tAbsoluteSpacing),
                 t1: inputT1,
                 c1: inputC1,
@@ -186,6 +186,17 @@ struct ReactionInputWithoutC2: ReactionInputModel {
             )
         }
         return allValuesInput(cSpacing: cAbsoluteSpacing, tSpacing: tAbsoluteSpacing)
+    }
+
+    private func adjustedCRange(spacing: CGFloat) -> InputRange {
+        let minCFor2ndOrder = ReactionSettings.Input.minCForSecondOrderReactionB
+        let underlying = cRange(spacing: spacing)
+        return InputRange(
+            min: order == .Second ? minCFor2ndOrder : underlying.min,
+            max: underlying.max,
+            minInputRange: underlying.minInputRange,
+            valueSpacing: underlying.valueSpacing
+        )
     }
 }
 

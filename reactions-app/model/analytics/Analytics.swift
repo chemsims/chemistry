@@ -79,7 +79,6 @@ struct GoogleAnalytics: AnalyticsService {
     private struct Events {
         static let answeredQuestion = "answeredQuestion"
         static let startedQuiz = "startedQuiz"
-        static let skippedQuiz = "skippedQuiz"
         static let completedQuiz = "completedQuiz"
     }
 

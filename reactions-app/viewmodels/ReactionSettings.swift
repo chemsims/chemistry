@@ -24,6 +24,9 @@ struct ReactionSettings {
         static let minC: CGFloat = 0.1
         static let maxC: CGFloat = 1
 
+        /// The minimum C for second order reaction B
+        static let minCForSecondOrderReactionB: CGFloat = 0.4
+
         /// The smallest input range the user should be given to adjust C by.
         /// This in turn will impact limits of other coupled limits (such as the other concentration value being set), to ensure
         /// this range is provided
