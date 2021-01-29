@@ -40,7 +40,7 @@ class QuizViewModel: ObservableObject {
 
     // MARK: Published properties
     @Published var currentQuestion: QuizQuestion
-    @Published var answers = [Int:QuizAnswerInput]()
+    @Published var answers = [String:QuizAnswerInput]()
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
@@ -92,14 +92,12 @@ class QuizViewModel: ObservableObject {
         UIAccessibility.isReduceMotionEnabled
     }
 
-    private var hidePopupTimer: Timer?
-
     // MARK: Public methods
-    func question(with id: Int) -> QuizQuestion {
+    func question(with id: String) -> QuizQuestion {
         availableQuestions.first { $0.id == id }!
     }
 
-    func selectedAnswer(id: Int) -> QuizAnswerInput? {
+    func selectedAnswer(id: String) -> QuizAnswerInput? {
         answers[id]
     }
 
@@ -151,7 +149,7 @@ extension QuizViewModel {
         switch (quizState) {
         case .pending:
             quizState = .running
-            answers = [Int:QuizAnswerInput]()
+            answers = [String:QuizAnswerInput]()
             setProgress()
         case .running:
             if (currentIndex == quizLength - 1) {

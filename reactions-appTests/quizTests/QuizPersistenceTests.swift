@@ -16,7 +16,7 @@ class QuizPersistenceTests: XCTestCase {
         XCTAssertNil(model.getAnswers(questions))
 
         let answers = [
-            0: QuizAnswerInput(firstAnswer: .A)
+            questions[0].id : QuizAnswerInput(firstAnswer: .A)
         ]
         model.saveAnswers(questions, answers)
         XCTAssertEqual(model.getAnswers(questions), answers)
@@ -30,11 +30,11 @@ class QuizPersistenceTests: XCTestCase {
         }
 
         let firstQuestion = questionWithCorrectOption(.A)
-        let answer = [ 0 : QuizAnswerInput(firstAnswer: .A)]
+        let answer = [ "0" : QuizAnswerInput(firstAnswer: .A)]
         model.saveAnswers([firstQuestion], answer)
 
         let firstQuestionDifferentOrder = questionWithCorrectOption(.B)
-        let expected = [0: QuizAnswerInput(firstAnswer: .B)]
+        let expected = ["0": QuizAnswerInput(firstAnswer: .B)]
         XCTAssertEqual(model.getAnswers([firstQuestionDifferentOrder]), expected)
     }
 
@@ -43,9 +43,9 @@ class QuizPersistenceTests: XCTestCase {
         let questions = zeroOrderQuestions()
 
         let answers = [
-            0: QuizAnswerInput(firstAnswer: .A, otherAnswers: [.B, .C, .D]),
-            1: QuizAnswerInput(firstAnswer: .B, otherAnswers: [.A, .C, .D]),
-            2: QuizAnswerInput(firstAnswer: .C, otherAnswers: [.B, .D, .A])
+            questions[0].id : QuizAnswerInput(firstAnswer: .A, otherAnswers: [.B, .C, .D]),
+            questions[1].id : QuizAnswerInput(firstAnswer: .B, otherAnswers: [.A, .C, .D]),
+            questions[2].id : QuizAnswerInput(firstAnswer: .C, otherAnswers: [.B, .D, .A])
         ]
 
         model.saveAnswers(questions, answers)
@@ -57,7 +57,7 @@ class QuizPersistenceTests: XCTestCase {
         let model = newModel()
         let q1 = questionWithOptions([.A, .B, .C, .D], correctOption: .A)
         let answers = [
-            0 : QuizAnswerInput(firstAnswer: .B, otherAnswers: [.A, .C, .D])
+            "0" : QuizAnswerInput(firstAnswer: .B, otherAnswers: [.A, .C, .D])
         ]
 
         model.saveAnswers([q1], answers)
@@ -66,7 +66,7 @@ class QuizPersistenceTests: XCTestCase {
 
         let shuffledQ1 = questionWithOptions([.D, .C, .B, .A], correctOption: .D)
         let expected = [
-            0: QuizAnswerInput(firstAnswer: .C, otherAnswers: [.D, .B, .A])
+            "0": QuizAnswerInput(firstAnswer: .C, otherAnswers: [.D, .B, .A])
         ]
         XCTAssertEqual(model.getAnswers([shuffledQ1]), expected)
     }
@@ -91,7 +91,7 @@ class QuizPersistenceTests: XCTestCase {
         }
 
         return QuizQuestion(
-            id: 0,
+            id: "0",
             question: "",
             options: mappedOptions,
             correctOption: correctOption,
@@ -103,14 +103,14 @@ class QuizPersistenceTests: XCTestCase {
 }
 
 fileprivate extension QuizPersistence {
-    func getAnswers(_ questions: [QuizQuestion]) -> [Int: QuizAnswerInput]? {
+    func getAnswers(_ questions: [QuizQuestion]) -> [String: QuizAnswerInput]? {
         getAnswers(
             questionSet: .zeroOrder,
             questions: questions
         )?.answers
     }
 
-    func saveAnswers(_ questions: [QuizQuestion], _ answers:[Int: QuizAnswerInput]) {
+    func saveAnswers(_ questions: [QuizQuestion], _ answers:[String: QuizAnswerInput]) {
         saveAnswers(
             quiz: SavedQuiz(
                 questionSet: .zeroOrder,

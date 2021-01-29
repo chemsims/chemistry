@@ -10,6 +10,7 @@ extension QuizQuestionsList {
         questionSet: .energyProfile,
         [
             QuizQuestionData(
+                id: "ENERGYPROFILE-1",
                 question: "What is the concept of Activation Energy (E_a_)?",
                 correctAnswer: QuizAnswerData(
                     answer:  "Activation Energy is the one required to form the transition state in a chemical reaction",
@@ -35,6 +36,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-2",
                 question: """
             Consider the energy diagram below. By adding the catalyst, it has created a new pathway \
             that's being represented by the red line (line 2) in the diagram. How exactly does this make the \
@@ -87,6 +89,7 @@ extension QuizQuestionsList {
                 )
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-3",
                 question: """
                 Take a look at the energy diagram below that represents the pathway of a reaction. \
                 The steps of the pathway are numbered:
@@ -152,6 +155,7 @@ extension QuizQuestionsList {
                 )
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-4",
                 question: """
                 Consider the following reactions and scenarios, and choose the one that would most \
                 likely have the lowest activation energy to overcome:
@@ -201,6 +205,7 @@ extension QuizQuestionsList {
                 difficulty: .hard
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-5",
                 question: """
                 Consider a first order reaction as: $R ➝ Products$.
 
@@ -256,6 +261,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-6",
                 question: """
                 There are different types of catalysts and they are often classified according to \
                 their state of matter in relation with the reactants/products, and according to \
@@ -308,6 +314,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-7",
                 question: """
                 Determine what are the reactants of the overall reaction that has the following mechanism
 
@@ -372,6 +379,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-8",
                 question: """
                 A catalyst is a substance that is used to boost the rate of reactions to \
                 ultimately produce the desirable products faster. Knowing this, does the catalyst \
@@ -428,6 +436,7 @@ extension QuizQuestionsList {
                 difficulty: .medium
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-9",
                 question: """
                 Consider two reactions (reaction 1 and reaction 2). The black line (A) in the energy diagram \
                 below represents reaction 2 and the red line (B) represents reaction 2. What is a true statement?
@@ -487,6 +496,7 @@ extension QuizQuestionsList {
                 image: "energy-profile-reaction-profile-2"
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-10",
                 question: """
                 A reaction $(2AB + C_2_ ➝ 2C_2_B)$ has the proposed mechanism:
 
@@ -583,6 +593,7 @@ extension QuizQuestionsList {
                 difficulty: .hard
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-11",
                 question: """
                 An experiment was conducted to test two different catalysts: catalyst A and \
                 catalyst B. Both were tested for the same reaction at different temperatures. \
@@ -647,6 +658,7 @@ extension QuizQuestionsList {
                 )
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-12",
                 question: """
                 Consider the following reaction diagram. Which of the elementary steps requires \
                 more energy to take place?
@@ -734,6 +746,7 @@ extension QuizQuestionsList {
                 )
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-13",
                 question: """
                 Reactants molecules can collide without resulting in the formation of the products \
                 of the reaction. What has to happen in order for the collision to be successful?
@@ -775,6 +788,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-14",
                 question: """
                 Consider a reaction represented by the energy diagram below. What is a true statement about this \
                 reaction?
@@ -821,6 +835,7 @@ extension QuizQuestionsList {
                 )
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-15",
                 question: """
                 Consider a first order reaction (A ➝ B). What is an action you can take to increase \
                 the speed of the reaction?
@@ -860,6 +875,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-16",
                 question: """
                 How does the temperature affect the rate of a reaction?
                 """,
@@ -910,6 +926,7 @@ extension QuizQuestionsList {
                 difficulty: .medium
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-17",
                 question: """
                 Which one of these elementary reactions would probably be the slowest one within a mechanism?
                 """,
@@ -955,6 +972,7 @@ extension QuizQuestionsList {
                 difficulty: .medium
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-18",
                 question: """
                 Consider a reaction represented by the energy diagram below. What is a true statement about this \
                 reaction?
@@ -1009,6 +1027,7 @@ extension QuizQuestionsList {
                 )
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-19",
                 question: """
                 What is a false statement about catalysts?
                 """,
@@ -1054,6 +1073,7 @@ extension QuizQuestionsList {
                 difficulty: .hard
             ),
             QuizQuestionData(
+                id: "ENERGYPROFILE-20",
                 question: """
                 The position of a reaction $(A + B ➝ C)$ is right now being represented by the \
                 red vertical line in the energy diagram below. At that point, what could be happening?

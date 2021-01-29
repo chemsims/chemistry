@@ -76,6 +76,7 @@ import Foundation
 /// )
 /// ```
 struct QuizQuestionData {
+    let id: String
     let question: TextLine
     let correctAnswer: QuizAnswerData
     let otherAnswers: [QuizAnswerData]
@@ -84,6 +85,7 @@ struct QuizQuestionData {
     let table: QuizTable?
 
     init(
+        id: String,
         question: String,
         questionLabel: String? = nil,
         correctAnswer: QuizAnswerData,
@@ -92,6 +94,7 @@ struct QuizQuestionData {
         image: LabelledImage? = nil,
         table: QuizTable? = nil
     ) {
+        self.id = id
         self.question = TextLine(question, label: Labelling.stringToLabel(questionLabel ?? question))
         self.correctAnswer = correctAnswer
         self.otherAnswers = otherAnswers
@@ -101,7 +104,7 @@ struct QuizQuestionData {
     }
 
     /// Creates a quiz question
-    func createQuestion(questionId: Int) -> QuizQuestion {
+    func createQuestion() -> QuizQuestion {
         assert(otherAnswers.count < QuizOption.allCases.count)
         let protectedOptions = Set(([correctAnswer] + otherAnswers).compactMap(\.position))
         var options = QuizOption.allCases.filter { !protectedOptions.contains($0) }
@@ -127,7 +130,7 @@ struct QuizQuestionData {
         }
 
         return QuizQuestion(
-            id: questionId,
+            id: id,
             question: question,
             options: answers,
             correctOption: correctOption,
@@ -165,14 +168,13 @@ struct QuizAnswerData: Equatable {
 
 /// Internal representation of a quiz question
 struct QuizQuestion: Equatable {
-    let id: Int
+    let id: String
     let question: TextLine
     let options: [QuizOption:QuizAnswer]
     let correctOption: QuizOption
     let difficulty: QuizDifficulty
     let image: LabelledImage?
     let table: QuizTable?
-
 }
 
 /// Internal representation of a quiz answer
@@ -193,8 +195,6 @@ struct QuizQuestionsList {
     private let questions: [QuizQuestionData]
 
     func createQuestions() -> [QuizQuestion] {
-        (0..<questions.count).map { i in
-            questions[i].createQuestion(questionId: i)
-        }
+        questions.map { $0.createQuestion() }
     }
 }

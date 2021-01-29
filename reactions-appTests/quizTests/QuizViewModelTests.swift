@@ -98,7 +98,7 @@ class QuizViewModelTests: XCTestCase {
         let questionList = QuizQuestionsList(questionSet: .zeroOrder, [makeQuestion(i: 0)])
         let model = newModel(questionList, persistence: persistence)
 
-        func getAnswers() -> [Int:QuizAnswerInput]? {
+        func getAnswers() -> [String:QuizAnswerInput]? {
             persistence.getAnswers(
                 questionSet: .zeroOrder,
                 questions: questionList.createQuestions()
@@ -118,7 +118,7 @@ class QuizViewModelTests: XCTestCase {
         model.answer(option: .D)
 
         let answer1 = [
-            0: QuizAnswerInput(firstAnswer: .B, otherAnswers: [.C, .D])
+            "0": QuizAnswerInput(firstAnswer: .B, otherAnswers: [.C, .D])
         ]
         model.next()
 
@@ -132,7 +132,7 @@ class QuizViewModelTests: XCTestCase {
         model.answer(option: .A)
         model.next()
         let answer2 = [
-            0: QuizAnswerInput(firstAnswer: .A)
+            "0": QuizAnswerInput(firstAnswer: .A)
         ]
         XCTAssertEqual(getAnswers(), answer2)
     }
@@ -154,11 +154,11 @@ class QuizViewModelTests: XCTestCase {
 
         let model2 = newModel(questions, persistence: persistence)
         XCTAssertEqual(model2.quizState, .completed)
-        XCTAssertEqual(model.currentQuestion.id, 2)
+        XCTAssertEqual(model.currentQuestion.id, "2")
         let expectedAnswers = [
-            0: QuizAnswerInput(firstAnswer: .A),
-            1: QuizAnswerInput(firstAnswer: .B),
-            2: QuizAnswerInput(firstAnswer: .C)
+            "0": QuizAnswerInput(firstAnswer: .A),
+            "1": QuizAnswerInput(firstAnswer: .B),
+            "2": QuizAnswerInput(firstAnswer: .C)
         ]
         XCTAssertEqual(model.answers, expectedAnswers)
     }
@@ -212,6 +212,7 @@ class QuizViewModelTests: XCTestCase {
         }
 
         return QuizQuestionData(
+            id: "\(i)",
             question: "\(i)",
             correctAnswer: answer("A", .A),
             otherAnswers: [

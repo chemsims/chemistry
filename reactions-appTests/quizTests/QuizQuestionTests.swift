@@ -10,8 +10,8 @@ import XCTest
 class QuizQuestionTests: XCTestCase {
 
     func testCorrectOption() {
-        let quizData = QuizQuestionData(question: "foo", correctAnswer: newAnswer("answer"), otherAnswers: [], difficulty: .easy)
-        let quiz = quizData.createQuestion(questionId: 0)
+        let quizData = QuizQuestionData(id: "1", question: "foo", correctAnswer: newAnswer("answer"), otherAnswers: [], difficulty: .easy)
+        let quiz = quizData.createQuestion()
         XCTAssertEqual(quiz.options.count, 1)
         XCTAssertEqual(quiz.question, quizData.question)
         XCTAssertEqual(quiz.options[quiz.correctOption], quizData.correctAnswer.toAnswer(i: -1))
@@ -19,12 +19,13 @@ class QuizQuestionTests: XCTestCase {
 
     func testCorrectOptionWithPosition() {
         let quizData = QuizQuestionData(
+            id: "1",
             question: "foo",
             correctAnswer: newAnswer("answer", position: .D),
             otherAnswers: [],
             difficulty: .easy
         )
-        let quiz = quizData.createQuestion(questionId: 0)
+        let quiz = quizData.createQuestion()
         XCTAssertEqual(quiz.options.count, 1)
         XCTAssertEqual(quiz.options.keys.first, .D)
         XCTAssertEqual(quiz.correctOption, .D)
@@ -33,6 +34,7 @@ class QuizQuestionTests: XCTestCase {
 
     func testCorrectionOptionNoPositionAndSingleOtherOptionWithPosition() {
         let quizData = QuizQuestionData(
+            id: "1",
             question: "foo",
             correctAnswer: newAnswer("answer"),
             otherAnswers: [
@@ -40,7 +42,7 @@ class QuizQuestionTests: XCTestCase {
             ],
             difficulty: .easy
         )
-        let quiz = quizData.createQuestion(questionId: 0)
+        let quiz = quizData.createQuestion()
         XCTAssertEqual(quiz.options.count, 2)
         XCTAssertEqual(quiz.options[.D], quizData.otherAnswers.first!.toAnswer(i: 0))
         XCTAssertNotEqual(quiz.correctOption, .D)
@@ -49,6 +51,7 @@ class QuizQuestionTests: XCTestCase {
 
     func testCorrectionOptionWithPositionAndOtherOptionsWithMixedPositions() {
         let quizData = QuizQuestionData(
+            id: "1",
             question: "foo",
             correctAnswer: newAnswer("answer", position: .D),
             otherAnswers: [
@@ -58,7 +61,7 @@ class QuizQuestionTests: XCTestCase {
             ],
             difficulty: .easy
         )
-        let quiz = quizData.createQuestion(questionId: 0)
+        let quiz = quizData.createQuestion()
         let expected = [
             QuizOption.A: quizData.otherAnswers[0].toAnswer(i: 0),
             QuizOption.B: quizData.otherAnswers[2].toAnswer(i: 2),
@@ -71,6 +74,7 @@ class QuizQuestionTests: XCTestCase {
 
     func testOtherOptionsWhereOnlyTheLastHasAPosition() {
         let quizData = QuizQuestionData(
+            id: "1",
             question: "foo",
             correctAnswer: newAnswer("answer"),
             otherAnswers: [
@@ -80,7 +84,7 @@ class QuizQuestionTests: XCTestCase {
             ],
             difficulty: .easy
         )
-        let quiz = quizData.createQuestion(questionId: 0)
+        let quiz = quizData.createQuestion()
         XCTAssertEqual(quiz.options[.A], quizData.otherAnswers.last!.toAnswer(i: 2))
     }
 

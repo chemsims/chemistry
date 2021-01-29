@@ -21,12 +21,12 @@ protocol QuizPersistence {
 struct SavedQuiz {
     let questionSet: QuestionSet
     let difficulty: QuizDifficulty
-    let answers: [Int:QuizAnswerInput]
+    let answers: [String:QuizAnswerInput]
 }
 
 fileprivate struct SavedPersistedQuiz {
     let difficulty: QuizDifficulty
-    let answers: [Int: QuizAnswerPersistedInput]
+    let answers: [String: QuizAnswerPersistedInput]
 }
 
 fileprivate struct QuizAnswerPersistedInput {
@@ -71,11 +71,15 @@ fileprivate extension InMemoryQuizPersistence {
         _ quiz: SavedQuiz,
         questions: [QuizQuestion]
     ) -> SavedPersistedQuiz {
-        var serializedAnswers = [Int:QuizAnswerPersistedInput]()
+        var serializedAnswers = [String:QuizAnswerPersistedInput]()
 
         quiz.answers.forEach { (questionId, answer) in
             if let serialized =
-                serializeAnswer(questions: questions, questionId: questionId, answer: answer) {
+                serializeAnswer(
+                    questions: questions,
+                    questionId: questionId,
+                    answer: answer
+                ) {
                 serializedAnswers[questionId] = serialized
             }
         }
@@ -86,7 +90,7 @@ fileprivate extension InMemoryQuizPersistence {
 
     private func serializeAnswer(
         questions: [QuizQuestion],
-        questionId: Int,
+        questionId: String,
         answer: QuizAnswerInput
     ) -> QuizAnswerPersistedInput? {
         let question = questions.first { $0.id == questionId }
@@ -111,7 +115,7 @@ fileprivate extension InMemoryQuizPersistence {
         questions: [QuizQuestion]
     ) -> SavedQuiz {
 
-        var deserializedAnswers = [Int: QuizAnswerInput]()
+        var deserializedAnswers = [String: QuizAnswerInput]()
         quiz.answers.forEach { (questionId, answer) in
             if let deserialized =
                 deserializeAnswer(answer, questionId: questionId, questions: questions) {
@@ -128,7 +132,7 @@ fileprivate extension InMemoryQuizPersistence {
 
     private func deserializeAnswer(
         _ answer: QuizAnswerPersistedInput,
-        questionId: Int,
+        questionId: String,
         questions: [QuizQuestion]
     ) -> QuizAnswerInput? {
         let question = questions.first { $0.id == questionId }

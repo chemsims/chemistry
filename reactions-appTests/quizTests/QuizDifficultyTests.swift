@@ -120,7 +120,7 @@ class QuizDifficultyTests: XCTestCase {
 
     private func makeQuestion(_ difficulty: QuizDifficulty) -> QuizQuestion {
         QuizQuestion(
-            id: 0,
+            id: "0",
             question: "",
             options: [QuizOption:QuizAnswer](),
             correctOption: .A,

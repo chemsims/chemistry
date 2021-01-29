@@ -10,6 +10,7 @@ extension QuizQuestionsList {
         questionSet: .zeroOrder,
         [
             QuizQuestionData(
+                id: "ZEROORDER-1",
                 question: "In which unit is the rate of a reaction written in?",
                 correctAnswer:
                     QuizAnswerData(
@@ -50,6 +51,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-2",
                 question: """
                 A zero order reaction $(A to B)$ has a rate of 1 $M/s$. It starts with a \
                 concentration of A of 10 M, and after 5 seconds, there are 5 M of A left, and 5 M \
@@ -93,6 +95,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-3",
                 question: """
                 A zero order reaction $(2A to B)$, has A disappearing at a rate of 1.5 $M/s$. What \
                 is the rate of appearance of B?
@@ -159,6 +162,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-4",
                 question: """
                 There is a reaction $(4A to B + C)$. The rate of disappearance of A can be written \
                 as $rate=-[ΔA]/Δt$. This is equivalent to:
@@ -220,6 +224,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-5",
                 question: """
                 A zero order reaction $(A to B)$ started 1 minute ago. A currently has a \
                 concentration of 5 M in the solution. After 30 seconds, there are 4 M of A left. \
@@ -283,6 +288,7 @@ extension QuizQuestionsList {
                 difficulty: .medium
             ),
             QuizQuestionData(
+                id: "ZEROORDER-6",
                 question: "Rate has the same value as k when:",
                 correctAnswer:
                     QuizAnswerData(
@@ -322,6 +328,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-7",
                 question: "Half-life is the time at which:",
                 correctAnswer: QuizAnswerData(
                     answer: "The reactant has halved its concentration",
@@ -359,6 +366,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-8",
                 question: """
                 Rate always has the same value regardless of the concentration of the reactants \
                 for a particular reaction if:
@@ -394,6 +402,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-9",
                 question: """
                 'The speed of a reaction is dependent on the concentration of the reactants' \
                 applies for:
@@ -433,6 +442,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-10",
                 question: """
                 A reaction $(A to B)$ started 1 day ago. A currently has a concentration of 10 M \
                 in the solution. After 5 hours, there are 8 M of A left. Which of the following is \
@@ -517,6 +527,7 @@ extension QuizQuestionsList {
                 difficulty: .medium
             ),
             QuizQuestionData(
+                id: "ZEROORDER-11",
                 question: """
                 A reaction $(A to 3B)$ took place. It started with only A, and it ended up being \
                 8 M. Which of the following was the initial concentration of A?
@@ -557,6 +568,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-12",
                 question: """
                 There is a reaction $(2A to 5B + C)$. The rate of appearance of B can be written \
                 as $rate=[ΔB]/Δt$. This is equivalent to:
@@ -600,6 +612,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-13",
                 question: "What's another way to write the unit for the rate?",
                 correctAnswer:
                     QuizAnswerData(
@@ -618,6 +631,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-14",
                 question: "The rate constant k has the units of",
                 correctAnswer: QuizAnswerData(
                     answer: "It can vary",
@@ -646,6 +660,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-15",
                 question: "If the rate of a reaction varies, it definitely:",
                 correctAnswer: QuizAnswerData(
                     answer: "Is not a zero order reaction",
@@ -680,6 +695,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-16",
                 question: """
                 A reaction $(A to B)$ has started 12 hours ago. A currently has a concentration of \
                 7 M in the solution. After 3 hours, A has been reduced to 5 M. Which of the \
@@ -743,6 +759,7 @@ extension QuizQuestionsList {
                 difficulty: .medium
             ),
             QuizQuestionData(
+                id: "ZEROORDER-17",
                 question: """
                 A drug's decomposition follow a zero order kinetics with a rate constant of \
                 $0.001 g mL^-1^ month^-1^$. The initial concentration is $100 mg mL^-1^$. Which of \
@@ -790,6 +807,7 @@ extension QuizQuestionsList {
                 difficulty: .medium
             ),
             QuizQuestionData(
+                id: "ZEROORDER-18",
                 question: "For a zero order reaction, which of the following is false?",
                 correctAnswer: QuizAnswerData(
                     answer: "The half-life may be represented by the expression $t_1/2_ = 0.69 / k$",
@@ -838,6 +856,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-19",
                 question: "Which one of the following is the half-life equation for zero order reactions?",
                 correctAnswer: QuizAnswerData(
                     answer: "t_1/2_ = [A_0_]/2k",
@@ -878,6 +897,7 @@ extension QuizQuestionsList {
                 difficulty: .easy
             ),
             QuizQuestionData(
+                id: "ZEROORDER-20",
                 question: "Rate always has the units of:",
                 correctAnswer: QuizAnswerData(
                     answer: "Concentration / time",
