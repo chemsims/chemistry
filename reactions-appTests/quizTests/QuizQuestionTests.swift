@@ -110,7 +110,7 @@ fileprivate extension QuizAnswerData {
         QuizAnswer(
             answer: answer,
             explanation: explanation,
-            id: i
+            id: i == -1 ? "CORRECT-ANSWER" : "INCORRECT-ANSWER-\(i + 1)"
         )
     }
 }

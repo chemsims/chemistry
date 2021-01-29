@@ -12,8 +12,9 @@ protocol AnalyticsService {
     func answeredQuestion(
         questionSet: QuestionSet,
         questionId: String,
-        answerId: Int,
-        answerAttempt: Int
+        answerId: String,
+        answerAttempt: Int,
+        isCorrect: Bool
     )
 
     func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty)
@@ -28,7 +29,7 @@ protocol AnalyticsService {
 class NoOpAnalytics: AnalyticsService {
     func openedScreen(_ screen: AppScreen) { }
     func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) { }
-    func answeredQuestion(questionSet: QuestionSet, questionId: String, answerId: Int, answerAttempt: Int) { }
+    func answeredQuestion(questionSet: QuestionSet, questionId: String, answerId: String, answerAttempt: Int, isCorrect: Bool) { }
     func completedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty, percentCorrect: Double) { }
 }
 
@@ -43,15 +44,16 @@ struct GoogleAnalytics: AnalyticsService {
     func answeredQuestion(
         questionSet: QuestionSet,
         questionId: String,
-        answerId: Int,
-        answerAttempt: Int
+        answerId: String,
+        answerAttempt: Int,
+        isCorrect: Bool
     ) {
         Analytics.logEvent(Events.answeredQuestion, parameters: [
             Params.questionSet: questionSet.rawValue,
             Params.questionId: questionId,
             Params.answerId: answerId,
             Params.answerAttempt: answerAttempt,
-            Params.isCorrect: answerId == 0
+            Params.isCorrect: isCorrect
         ])
     }
 

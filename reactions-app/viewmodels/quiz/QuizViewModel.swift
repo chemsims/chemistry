@@ -256,11 +256,13 @@ fileprivate extension QuizViewModel {
     }
 
     func logAnswered(option: QuizOption, answerAttempt: Int) {
+        let answerId = currentQuestion.options[option]?.id ?? "UNKNOWN-ANSWER-ID"
         analytics.answeredQuestion(
             questionSet: questionSet,
             questionId: currentQuestion.id,
-            answerId: currentQuestion.options[option]?.id ?? -1,
-            answerAttempt: answerAttempt
+            answerId: answerId,
+            answerAttempt: answerAttempt,
+            isCorrect: currentQuestion.correctOption == option
         )
     }
 }

@@ -89,7 +89,7 @@ class QuizPersistenceTests: XCTestCase {
 
         var mappedOptions = [QuizOption:QuizAnswer]()
         options.enumerated().forEach { (i, option) in
-            let answer = QuizAnswer(answer: "", explanation: "", id: i)
+            let answer = QuizAnswer(answer: "", explanation: "", id: "\(i)")
             mappedOptions[option] = answer
         }
 

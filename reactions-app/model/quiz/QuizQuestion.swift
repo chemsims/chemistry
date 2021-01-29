@@ -110,7 +110,7 @@ struct QuizQuestionData {
         var options = QuizOption.allCases.filter { !protectedOptions.contains($0) }
         var answers = [QuizOption: QuizAnswer]()
 
-        func add(_ answer: QuizAnswerData, _ option: QuizOption, id: Int) {
+        func add(_ answer: QuizAnswerData, _ option: QuizOption, id: String) {
             assert(answers[option] == nil)
             options = options.filter { $0 != option }
             let a2 = QuizAnswer(
@@ -122,11 +122,11 @@ struct QuizQuestionData {
         }
 
         let correctOption = correctAnswer.position ?? options.randomElement()!
-        add(correctAnswer, correctOption, id: -1)
+        add(correctAnswer, correctOption, id: correctAnswerId)
 
         otherAnswers.enumerated().forEach { (index, answer) in
             let option = answer.position ?? options.randomElement()!
-            add(answer, option, id: index)
+            add(answer, option, id: "\(incorrectAnswerId)-\(index + 1)")
         }
 
         return QuizQuestion(
@@ -181,7 +181,7 @@ struct QuizQuestion: Equatable {
 struct QuizAnswer: Equatable {
     let answer: TextLine
     let explanation: TextLine
-    let id: Int
+    let id: String
 }
 
 struct QuizQuestionsList {
@@ -198,3 +198,6 @@ struct QuizQuestionsList {
         questions.map { $0.createQuestion() }
     }
 }
+
+private let correctAnswerId = "CORRECT-ANSWER"
+private let incorrectAnswerId = "INCORRECT-ANSWER"

@@ -30,8 +30,8 @@ fileprivate struct SavedPersistedQuiz: Codable {
 }
 
 fileprivate struct QuizAnswerPersistedInput: Codable {
-    let firstAnswerId: Int
-    let otherAnswersId: [Int]
+    let firstAnswerId: String
+    let otherAnswersId: [String]
 }
 
 enum QuestionSet: String, CaseIterable {
@@ -166,7 +166,7 @@ fileprivate extension QuizPersistence {
     ) -> QuizAnswerInput? {
         let question = questions.first { $0.id == questionId }
 
-        func getOption(_ id: Int) -> QuizOption? {
+        func getOption(_ id: String) -> QuizOption? {
             question?.options.first { $1.id == id }?.key
         }
 
