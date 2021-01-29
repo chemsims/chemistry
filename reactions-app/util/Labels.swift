@@ -10,6 +10,23 @@ struct Labels {
     static let closedParen = "closed parenthesis"
 }
 
+struct SpeechLabelling {
+
+    static func labelledLine(_ line: String) -> TextLine {
+        TextLine(line, label: stringToLabel(line))
+    }
+
+    static func stringToLabel(_ content: String) -> String {
+        let replaced = content.replacingOccurrences(of: replacements)
+        return Labelling.stringToLabel(replaced)
+    }
+
+    private static let replacements: [(String, String)] = [
+        ("[A_0_]", "(A0)"),
+        ("[A_t_]", "(A T)"),
+    ]
+}
+
 
 struct Labelling {
 

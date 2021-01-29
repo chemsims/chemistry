@@ -64,7 +64,7 @@ struct ZeroOrderStatements {
         TextLineGenerator.makeLine("For this zero order reaction, *rate* is constant and it's equal to *k*, that's why a graph plotting \(Strings.aVsT) is a straight line."),
         TextLine(
             "[A]*(y)*=-kt*(mx)*+[A0]*(b)*",
-            label: "Concentration of A equals minus K T plus A0. Y equals M X plus B"
+            label: "Concentration of A (y), equals minus kt (mx) + A0 (b)"
         ),
         TextLine(
             "*Where -k is the slope*.",
