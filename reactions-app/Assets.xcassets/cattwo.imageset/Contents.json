@@ -1,15 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "cattwo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "cattwo@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "cattwo@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
