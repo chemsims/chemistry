@@ -163,7 +163,7 @@ fileprivate struct EnergyProfileRateK1: View {
         .lineLimit(1)
         .minimumScaleFactor(1)
         .accessibilityElement(children: .ignore)
-        .accessibility(label: Text("K = A, times E to the power of minus EA divide by RT"))
+        .accessibility(label: Text("Arrhenius equation. K = A, times E to the power of minus EA divide by RT"))
     }
 }
 
