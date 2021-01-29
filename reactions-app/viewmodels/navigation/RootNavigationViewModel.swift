@@ -22,31 +22,26 @@ class RootNavigationViewModel: ObservableObject {
         currentScreen == .finalAppScreen ? .zeroOrderFiling : nil
     }
 
-    private let persistence: ReactionInputPersistence
-    private let quizPersistence: QuizPersistence
-    private let reviewPersistence: ReviewPromptPersistence
-    private let energyPersistence: EnergyProfilePersistence
+    private let injector: Injector
     private var models = [AppScreen:ScreenProvider]()
     private(set) var currentScreen: AppScreen
 
     init(
-        persistence: ReactionInputPersistence,
-        quizPersistence: QuizPersistence,
-        reviewPersistence: ReviewPromptPersistence,
-        energyPersistence: EnergyProfilePersistence
+        injector: Injector
     ) {
         let firstScreen = AppScreen.zeroOrderReaction
         self.currentScreen = firstScreen
-        self.persistence = persistence
-        self.quizPersistence = quizPersistence
-        self.reviewPersistence = reviewPersistence
-        self.energyPersistence = energyPersistence
+        self.injector = injector
         self.view = AnyView(EmptyView())
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
     }
 
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
+    }
+
+    private var persistence: ReactionInputPersistence {
+        injector.reactionPersistence
     }
 
     func canSelect(screen: AppScreen) -> Bool {
@@ -109,7 +104,7 @@ class RootNavigationViewModel: ObservableObject {
         }
         if (screen == .finalAppScreen) {
             showMenu = true
-            ReviewPrompter.requestReview(persistence: reviewPersistence)
+            ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
         }
     }
 
@@ -124,8 +119,8 @@ class RootNavigationViewModel: ObservableObject {
     private func getProvider(for screen: AppScreen) -> ScreenProvider {
         screen.screenProvider(
             persistence: persistence,
-            quizPersistence: quizPersistence,
-            energyPersistence: energyPersistence,
+            quizPersistence: injector.quizPersistence,
+            energyPersistence: injector.energyPersistence,
             next: next,
             prev: prev,
             hideMenu: { self.showMenu = false }
