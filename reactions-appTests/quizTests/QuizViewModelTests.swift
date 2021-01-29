@@ -228,7 +228,7 @@ class QuizViewModelTests: XCTestCase {
         _ questions: QuizQuestionsList,
         persistence: QuizPersistence = InMemoryQuizPersistence()
     ) -> QuizViewModel {
-        QuizViewModel(questions: questions, persistence: persistence )
+        QuizViewModel(questions: questions, persistence: persistence, analytics: NoOpAnalytics())
     }
 
 }

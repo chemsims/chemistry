@@ -89,7 +89,7 @@ struct QuizIntroBody: View {
     }
 }
 
-fileprivate extension QuizDifficulty {
+extension QuizDifficulty {
     var displayName: String {
         switch (self) {
         case .easy: return "Easy"

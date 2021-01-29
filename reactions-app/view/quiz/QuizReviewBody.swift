@@ -16,7 +16,7 @@ struct QuizReviewBody: View {
                     heading
                         .fixedSize(horizontal: false, vertical: true)
 
-                    ForEach(0..<filteredQuestions.count) { index in
+                    ForEach(0..<model.answeredQuestions.count) { index in
                         reviewCard(index: index)
                     }
                 }
@@ -27,20 +27,8 @@ struct QuizReviewBody: View {
         }
     }
 
-    private var filteredQuestions: [QuizQuestion] {
-        model.availableQuestions.filter {
-            model.selectedAnswer(id: $0.id) != nil
-        }
-    }
-
-    private var correctCount: Int {
-        filteredQuestions.filter {  q in
-            model.selectedAnswer(id: q.id)!.firstAnswer == q.correctOption
-        }.count
-    }
-
     private var heading: some View {
-        let header = "You got \(correctCount) correct out of \(filteredQuestions.count)"
+        let header = "You got \(model.correctCount) correct out of \(model.answeredQuestions.count)"
         let subHeader = "Let's review the questions!"
 
         return HStack(spacing: 0) {
@@ -60,13 +48,13 @@ struct QuizReviewBody: View {
     private func reviewCard(
         index: Int
     ) -> some View {
-        let question = filteredQuestions[index]
+        let question = model.answeredQuestions[index]
         return QuestionReviewCard(
             question: question,
             answer: model.selectedAnswer(id: question.id)!,
             settings: settings,
             questionNumber: index + 1,
-            totalQuestions: filteredQuestions.count
+            totalQuestions: model.answeredQuestions.count
         )
         .fixedSize(horizontal: false, vertical: true)
     }

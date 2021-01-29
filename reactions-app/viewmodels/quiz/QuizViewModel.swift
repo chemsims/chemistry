@@ -10,10 +10,12 @@ class QuizViewModel: ObservableObject {
     private let allQuestions: [QuizQuestion]
     private let questionSet: QuestionSet
     private let persistence: QuizPersistence
+    private let analytics: AnalyticsService
 
     init(
         questions: QuizQuestionsList,
         persistence: QuizPersistence,
+        analytics: AnalyticsService,
         restoreLastPersistedQuiz: Bool = true
     ) {
         let displayQuestions = questions.createQuestions()
@@ -21,6 +23,7 @@ class QuizViewModel: ObservableObject {
         self.persistence = persistence
         self.questionSet = questions.questionSet
         self.currentQuestion = displayQuestions.first!
+        self.analytics = analytics
         let previousQuiz = persistence.getAnswers(
             questionSet: questions.questionSet,
             questions: displayQuestions
@@ -87,10 +90,24 @@ class QuizViewModel: ObservableObject {
         answers[currentQuestion.id]?.allAnswers.contains(correctOption) ?? false
     }
 
+    var answeredQuestions: [QuizQuestion] {
+        availableQuestions.filter {
+            selectedAnswer(id: $0.id) != nil
+        }
+    }
+
+    var correctCount: Int {
+        answeredQuestions.filter {  q in
+            selectedAnswer(id: q.id)!.firstAnswer == q.correctOption
+        }.count
+    }
+
     // MARK: Private variables
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
     }
+
+    private var hasLoggedQuizCompletion = false
 
     // MARK: Public methods
     func question(with id: String) -> QuizQuestion {
@@ -108,6 +125,7 @@ class QuizViewModel: ObservableObject {
         withAnimation(reduceMotion ? nil : .easeOut(duration: duration)) {
             answers[currentQuestion.id] = newAnswer
         }
+        logAnswered(option: option, answerAttempt: newAnswer.allAnswers.count)
     }
 
     func optionText(_ option: QuizOption) -> TextLine {
@@ -142,6 +160,7 @@ class QuizViewModel: ObservableObject {
     }
 }
 
+
 // MARK: Quiz Navigation
 extension QuizViewModel {
 
@@ -151,11 +170,13 @@ extension QuizViewModel {
             quizState = .running
             answers = [String:QuizAnswerInput]()
             setProgress()
+            logStarted()
         case .running:
             if (currentIndex == quizLength - 1) {
                 quizState = .completed
                 setProgress()
                 saveQuiz()
+                logEnded()
             } else {
                 setQuestion(newIndex: currentIndex + 1)
             }
@@ -211,6 +232,36 @@ extension QuizViewModel {
             let pending = quizState == .pending
             progress = pending ? 0 : CGFloat(currentIndex + 1) / CGFloat(quizLength)
         }
+    }
+}
+
+// MARK: Analytics methods
+fileprivate extension QuizViewModel {
+
+    func logStarted() {
+        analytics.startedQuiz(questionSet: questionSet, difficulty: quizDifficulty)
+        hasLoggedQuizCompletion = false
+    }
+
+    func logEnded() {
+        guard !hasLoggedQuizCompletion else {
+            return
+        }
+        analytics.completedQuiz(
+            questionSet: questionSet,
+            difficulty: quizDifficulty,
+            percentCorrect: (Double(correctCount) / Double(quizDifficulty.quizLength)) * 100
+        )
+        hasLoggedQuizCompletion = true
+    }
+
+    func logAnswered(option: QuizOption, answerAttempt: Int) {
+        analytics.answeredQuestion(
+            questionSet: questionSet,
+            questionId: currentQuestion.id,
+            answerId: currentQuestion.options[option]?.id ?? -1,
+            answerAttempt: answerAttempt
+        )
     }
 }
 
