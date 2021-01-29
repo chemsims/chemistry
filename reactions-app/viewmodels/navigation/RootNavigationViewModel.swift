@@ -106,6 +106,7 @@ class RootNavigationViewModel: ObservableObject {
             showMenu = true
             ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
         }
+        injector.analytics.openedScreen(screen)
     }
 
     private func screenIsAfterCurrent(nextScreen: AppScreen) -> Bool {
@@ -121,6 +122,7 @@ class RootNavigationViewModel: ObservableObject {
             persistence: persistence,
             quizPersistence: injector.quizPersistence,
             energyPersistence: injector.energyPersistence,
+            analytics: injector.analytics,
             next: next,
             prev: prev,
             hideMenu: { self.showMenu = false }
@@ -166,6 +168,7 @@ fileprivate extension AppScreen {
         persistence: ReactionInputPersistence,
         quizPersistence: QuizPersistence,
         energyPersistence: EnergyProfilePersistence,
+        analytics: AnalyticsService,
         next: @escaping () -> Void,
         prev: @escaping () -> Void,
         hideMenu: @escaping () -> Void
@@ -177,6 +180,7 @@ fileprivate extension AppScreen {
             return QuizScreenProvider(
                 questions: .zeroOrderQuestions,
                 persistence: quizPersistence,
+                analytics: analytics,
                 next: next,
                 prev: prev
             )
@@ -186,6 +190,7 @@ fileprivate extension AppScreen {
             return QuizScreenProvider(
                 questions: .firstOrderQuestions,
                 persistence: quizPersistence,
+                analytics: analytics,
                 next: next,
                 prev: prev
             )
@@ -195,6 +200,7 @@ fileprivate extension AppScreen {
             return QuizScreenProvider(
                 questions: .secondOrderQuestions,
                 persistence: quizPersistence,
+                analytics: analytics,
                 next: next,
                 prev: prev
             )
@@ -204,6 +210,7 @@ fileprivate extension AppScreen {
             return QuizScreenProvider(
                 questions: .reactionComparisonQuizQuestions,
                 persistence: quizPersistence,
+                analytics: analytics,
                 next: next,
                 prev: prev
             )
@@ -215,6 +222,7 @@ fileprivate extension AppScreen {
             return QuizScreenProvider(
                 questions: .energyProfileQuizQuestions,
                 persistence: quizPersistence,
+                analytics: analytics,
                 next: next,
                 prev: prev
             )
@@ -297,10 +305,11 @@ fileprivate class QuizScreenProvider: ScreenProvider {
     init(
         questions: QuizQuestionsList,
         persistence: QuizPersistence,
+        analytics: AnalyticsService,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) {
-        self.viewModel = QuizViewModel(questions: questions, persistence: persistence)
+        self.viewModel = QuizViewModel(questions: questions, persistence: persistence, analytics: analytics)
         viewModel.nextScreen = next
         viewModel.prevScreen = prev
     }

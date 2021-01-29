@@ -316,7 +316,8 @@ struct QuizScreen_Previews: PreviewProvider {
         QuizScreen(
             model: QuizViewModel(
                 questions: .zeroOrderQuestions,
-                persistence: InMemoryQuizPersistence()
+                persistence: InMemoryQuizPersistence(),
+                analytics: NoOpAnalytics()
             )
         )
         .previewLayout(.fixed(width: 568, height: 320))

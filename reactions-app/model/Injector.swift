@@ -10,6 +10,7 @@ protocol Injector {
     var quizPersistence: QuizPersistence { get }
     var reviewPersistence: ReviewPromptPersistence { get }
     var energyPersistence: EnergyProfilePersistence { get }
+    var analytics: AnalyticsService { get }
 }
 
 class ProductionInjector: Injector {
@@ -21,6 +22,8 @@ class ProductionInjector: Injector {
     let reviewPersistence: ReviewPromptPersistence = UserDefaultsReviewPromptPersistence()
 
     let energyPersistence: EnergyProfilePersistence = UserDefaultsEnergyProfilePersistence()
+
+    let analytics: AnalyticsService = GoogleAnalytics()
 }
 
 class InMemoryInjector: Injector {
@@ -34,4 +37,6 @@ class InMemoryInjector: Injector {
     let reviewPersistence: ReviewPromptPersistence = InMemoryReviewPromptPersistence()
 
     let energyPersistence: EnergyProfilePersistence = InMemoryEnergyProfilePersistence()
+
+    let analytics: AnalyticsService = NoOpAnalytics()
 }
