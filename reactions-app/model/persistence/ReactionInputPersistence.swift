@@ -23,6 +23,53 @@ extension ReactionInputPersistence {
     }
 }
 
+class UserDefaultsReactionInputPersistence: ReactionInputPersistence {
+
+    private let defaults = UserDefaults.standard
+
+    func save(input: ReactionInput, order: ReactionOrder, reaction: ReactionType) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(input) {
+            defaults.set(encoded, forKey: inputKey(order: order, type: reaction))
+        }
+    }
+
+    func get(order: ReactionOrder, reaction: ReactionType) -> ReactionInput? {
+        let decoder = JSONDecoder()
+        if let data = defaults.data(forKey: inputKey(order: order, type: reaction)) {
+            return try? decoder.decode(ReactionInput.self, from: data)
+        }
+        return nil
+    }
+
+    func setCompleted(screen: AppScreen) {
+        defaults.set(true, forKey: screenKey(screen))
+    }
+
+    func hasCompleted(screen: AppScreen) -> Bool {
+        defaults.bool(forKey: screenKey(screen))
+    }
+
+    func hasIdentifiedReactionOrders() -> Bool {
+        defaults.bool(forKey: identifiedOrdersKey)
+    }
+
+    func setHasIdentifiedReactionOrders() {
+        defaults.set(true, forKey: identifiedOrdersKey)
+    }
+
+    private func inputKey(order: ReactionOrder, type: ReactionType) -> String {
+        "\(order.rawValue)-\(type.rawValue)"
+    }
+
+    private func screenKey(_ screen: AppScreen) -> String {
+        "completed-screen-\(screen.rawValue)"
+    }
+
+    private let identifiedOrdersKey = "identified-reaction-orders"
+
+}
+
 class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
     private var underlying = [ReactionInputKey:ReactionInput]()

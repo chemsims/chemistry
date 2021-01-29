@@ -14,7 +14,7 @@ protocol Injector {
 
 class ProductionInjector: Injector {
 
-    let reactionPersistence: ReactionInputPersistence = InMemoryReactionInputPersistence()
+    let reactionPersistence: ReactionInputPersistence = UserDefaultsReactionInputPersistence()
 
     let quizPersistence: QuizPersistence = UserDefaultsQuizPersistence()
 

@@ -10,7 +10,7 @@ import XCTest
 class QuizPersistenceTests: XCTestCase {
 
     override func setUp() {
-        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        UserDefaults.standard.clearAll()
     }
 
     func testSavingAndGettingASingleOption() {

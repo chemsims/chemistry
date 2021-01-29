@@ -8,8 +8,12 @@ import XCTest
 
 class ReactionInputPersistenceTests: XCTestCase {
 
+    override func setUp() {
+        UserDefaults.standard.clearAll()
+    }
+
     private func newModel() -> ReactionInputPersistence {
-        InMemoryReactionInputPersistence()
+        UserDefaultsReactionInputPersistence()
     }
 
     func testCompletingScreens() {
@@ -32,9 +36,29 @@ class ReactionInputPersistenceTests: XCTestCase {
                 let newInput = randomReactionInput()
                 model.save(input: newInput, order: order, reaction: type)
                 let getInput = model.get(order: order, reaction: type)
-                XCTAssertEqual(getInput, newInput, msg)
+                compareReactionInput(getInput, newInput, msg)
             }
         }
+    }
+
+    func testHasIdentifiedReactionOrder() {
+        let model = newModel()
+        XCTAssertFalse(model.hasIdentifiedReactionOrders())
+        model.setHasIdentifiedReactionOrders()
+        XCTAssertTrue(model.hasIdentifiedReactionOrders())
+    }
+
+    private func compareReactionInput(
+        _ lhs: ReactionInput?,
+        _ rhs: ReactionInput,
+        _ msg: String
+    ) {
+        let accuracy: CGFloat = 0.00001
+        XCTAssertNotNil(lhs)
+        XCTAssertEqual(lhs!.c1, rhs.c1, accuracy: accuracy, msg)
+        XCTAssertEqual(lhs!.c2, rhs.c2, accuracy: accuracy, msg)
+        XCTAssertEqual(lhs!.t1, rhs.t1, accuracy: accuracy, msg)
+        XCTAssertEqual(lhs!.t2, rhs.t2, accuracy: accuracy, msg)
     }
 
     private func randomReactionInput() -> ReactionInput {

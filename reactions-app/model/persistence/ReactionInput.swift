@@ -5,7 +5,7 @@
 
 import CoreGraphics
 
-struct ReactionInput: Equatable {
+struct ReactionInput: Equatable, Codable {
     let c1: CGFloat
     let c2: CGFloat
     let t1: CGFloat
