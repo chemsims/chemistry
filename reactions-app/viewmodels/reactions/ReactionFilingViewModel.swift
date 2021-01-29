@@ -44,7 +44,7 @@ class ReactionFilingViewModel: ObservableObject {
         persistence.get(order: order, reaction: reactionType) != nil
     }
 
-    private func navigation(
+    func navigation(
         model: ZeroOrderReactionViewModel,
         reactionType: ReactionType
     ) -> NavigationViewModel<ReactionState> {
@@ -99,6 +99,7 @@ fileprivate class ReactionFilingState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.input = ReactionInputAllProperties(order: order)
+        model.usedReactions = [reactionType]
         if let input = input {
             model.input.inputC1 = input.c1
             model.input.inputC2 = input.c2

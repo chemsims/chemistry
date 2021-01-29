@@ -66,7 +66,7 @@ class SecondOrderNavigationModelTests: XCTestCase {
         checkStartOfLine("Half-life")
         checkElements([.halfLifeEquation])
 
-        nextUntil("For this Second Order Reaction, Rate")
+        nextUntil("For this second order reaction, rate")
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()
@@ -86,7 +86,7 @@ class SecondOrderNavigationModelTests: XCTestCase {
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()
-        checkStartOfLine("For this Second Order Reaction")
+        checkStartOfLine("For this second order reaction")
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()

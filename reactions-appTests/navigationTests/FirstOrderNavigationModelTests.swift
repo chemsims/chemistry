@@ -41,7 +41,7 @@ class FirstOrderNavigationModelTests: XCTestCase {
         let model = FirstOrderReactionViewModel()
         let nav = navModel(model)
 
-        nav.nextUntil { $0.firstLine.starts(with: "For the previous Zero Order") }
+        nav.nextUntil { $0.firstLine.starts(with: "For the previous zero order") }
 
         XCTAssertEqual(
             model.highlightedElements.sorted(),
@@ -68,7 +68,7 @@ class FirstOrderNavigationModelTests: XCTestCase {
             nav.nextUntil { $0.firstLine.starts(with: startOfLine) }
         }
 
-        nextUntil("The Rate Constant k")
+        nextUntil("The rate constant k")
         checkElements([.rateConstantEquation])
 
         nav.next()
@@ -85,11 +85,11 @@ class FirstOrderNavigationModelTests: XCTestCase {
         nav.next()
         checkElements([])
 
-        nextUntil("For the previous Zero Order")
+        nextUntil("For the previous zero order")
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()
-        checkStartOfLine("For this First Order Reaction, Rate")
+        checkStartOfLine("For this first order reaction, rate")
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()
@@ -101,7 +101,7 @@ class FirstOrderNavigationModelTests: XCTestCase {
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()
-        checkStartOfLine("For this First Order Reaction, the resultant")
+        checkStartOfLine("For this first order reaction, the resultant")
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()

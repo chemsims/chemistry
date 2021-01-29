@@ -7,7 +7,7 @@ import CoreGraphics
 
 struct FirstOrderStatements {
     static let intro = [
-        TextLineGenerator.makeLine("This is a First Order Reaction."),
+        TextLineGenerator.makeLine("This is a first order reaction."),
         SpeechLabelling.labelledLine("Why don't you set the *initial concentration of A [A_0_]*, the reactant?")
     ]
 
@@ -15,10 +15,8 @@ struct FirstOrderStatements {
         SpeechLabelling.labelledLine("Great! Now you can set the *concentration of A at the end of the reaction [A_t_]* and the *time the reaction will last (t)*."),
     ]
 
-    static let explainRateConstant1 = [
-        TextLineGenerator.makeLine(
-            "The Rate Constant *k* is a value on which the *Rate* depends. This dependency is often represented with the Rate Law or the Rate Equation."
-        ),
+    static let explainRateConstant1: [TextLine] = [
+        "The rate constant *k* is a value on which the *rate* depends. This dependency is often represented with the rate law or the rate equation."
     ]
 
     static func explainRateConstant2(rate: CGFloat) -> [TextLine] {
