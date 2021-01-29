@@ -35,15 +35,11 @@ struct ReactionStatements {
     static func inProgress(display: ReactionPairDisplay) -> [TextLine] {
         [
             "Let's watch all the molecules changing!",
-            TextLineGenerator.makeLine(
-                "As \(display.reactant.name) disappears, \(display.product.name) is being produced."
-            ),
-            TextLineGenerator.makeLine(
-                """
-                This happens at a variable *rate (in units of M/s)*, which is dependant on *k* \
-                and *[\(display.reactant.name)]*.
-                """
-            )
+            "As \(display.reactant.name) disappears, \(display.product.name) is being produced.",
+            """
+            This happens at a variable *rate (in units of $M/s$)*, which is dependant on *k* \
+            and *[\(display.reactant.name)]*.
+            """
         ]
     }
 
@@ -53,7 +49,7 @@ struct ReactionStatements {
     ]
 
     static let end: [TextLine] = [
-        "Amazing, let's take another shapshot!",
+        "Amazing, let's take another snapshot!",
         "Try *dragging the time indicator* to scrub through the reaction time.",
         "Then, let's take a quiz to review what we've learnt."
     ]

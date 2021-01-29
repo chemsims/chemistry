@@ -13,7 +13,7 @@ struct SecondOrderStatements {
 
     static func explainRateConstant(rateConstant: CGFloat) -> [TextLine] {
         [
-            "For this reaction, \(Strings.withNoBreaks(str: "*k=\(rateConstant.str(decimals: 3))*"))."
+            "For this reaction, $*k=\(rateConstant.str(decimals: 3))*$."
         ]
     }
 

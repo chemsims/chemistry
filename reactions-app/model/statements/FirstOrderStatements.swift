@@ -7,12 +7,12 @@ import CoreGraphics
 
 struct FirstOrderStatements {
     static let intro = [
-        TextLineGenerator.makeLine("This is a first order reaction."),
-        SpeechLabelling.labelledLine("Why don't you set the *initial concentration of A [A_0_]*, the reactant?")
+        "This is a first order reaction.",
+        "Why don't you set the *initial concentration of A [A_0_]*, the reactant?"
     ]
 
     static let setC2 = [
-        SpeechLabelling.labelledLine("Great! Now you can set the *concentration of A at the end of the reaction [A_t_]* and the *time the reaction will last (t)*."),
+        "Great! Now you can set the *concentration of A at the end of the reaction [A_t_]* and the *time the reaction will last (t)*.",
     ]
 
     static let explainRateConstant1: [TextLine] = [
@@ -21,57 +21,44 @@ struct FirstOrderStatements {
 
     static func explainRateConstant2(rate: CGFloat) -> [TextLine] {
         [
-            TextLineGenerator.makeLine(
-                """
-                Rate laws or rate equations are mathematical expressions that describe the relationship \
-                between the *rate* of a chemical reaction and the concentration of its reactants. For this reaction, \(Strings.withNoBreaks(str: "*k=\(rate.str(decimals: 3))*")).
-                """
-            )
+            """
+            Rate laws or rate equations are mathematical expressions that describe the relationship \
+            between the *rate* of a chemical reaction and the concentration of its reactants. \
+            For this reaction, $*k=\(rate.str(decimals: 3))*$.
+            """
         ]
     }
 
     static let explainRate = [
-        SpeechLabelling.labelledLine(
-            "For a reaction with one reactant it's usually written as $*rate=k[A]^order^*$."
-        ),
-        SpeechLabelling.labelledLine(
-            "For this reaction then, $*rate=k[A]^1^*$."
-        )
+            "For a reaction with one reactant it's usually written as $*rate=k[A]^order^*$.",
+            "For this reaction then, $*rate=k[A]^1^*$.",
     ]
 
     static func explainHalfLife(halfLife: CGFloat) -> [TextLine] {
         [
-            SpeechLabelling.labelledLine(
-                """
-                *Half-life (t_1/2_)* is an expression to easily calculate the point in time at which the concentration of the reactant, \
-                in this case *A*, is half of what the initial concentration was. For this reaction,
-                """
-            ),
-            SpeechLabelling.labelledLine(
-                "*t_1/2_=ln(1)/k=\(halfLife.str(decimals: 2))s*."
-            )
+            """
+            *Half-life (t_1/2_)* is an expression to easily calculate the point in time at which the concentration of the reactant, \
+            in this case *A*, is half of what the initial concentration was. For this reaction,
+            """,
+            "*t_1/2_=ln(1)/k=\(halfLife.str(decimals: 2))s*."
         ]
     }
 
     static let inProgress = ReactionStatements.inProgress
 
     static let explainRatePostReaction1 = [
-        SpeechLabelling.labelledLine(
-            """
-            For the previous zero order reaction, *rate* was constant because it was independent \
-            of *[A]*, since $*rate=k[A]^0^*$ is equivalent to $*rate=k*$, which is the rate constant.
-            """
-        )
+        """
+        For the previous zero order reaction, *rate* was constant because it was independent \
+        of *[A]*, since $*rate=k[A]^0^*$ is equivalent to $*rate=k*$, which is the rate constant.
+        """
     ]
 
     static let explainRatePostReaction2 = [
-        SpeechLabelling.labelledLine(
-            """
-            For this first order reaction, $*rate=k[A]^1^*$. That's why a graph plotting \
-            \(Strings.aVsT) is a curve, given how the *rate* is proportional to the concentration \
-            of *A*.
-            """
-        )
+        """
+        For this first order reaction, $*rate=k[A]^1^*$. That's why a graph plotting \
+        \(Strings.aVsT) is a curve, given how the *rate* is proportional to the concentration \
+        of *A*.
+        """
     ]
 
     static let explainChangeInRate: [TextLine] = [
