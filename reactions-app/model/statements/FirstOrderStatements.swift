@@ -23,8 +23,8 @@ struct FirstOrderStatements {
         [
             TextLineGenerator.makeLine(
                 """
-                Rate Laws or Rate Equations are mathematical expressions that describe the relationship \
-                between the *Rate* of a chemical reaction and the concentration of its reactants. For this reaction, \(Strings.withNoBreaks(str: "*k=\(rate.str(decimals: 3))*")).
+                Rate laws or rate equations are mathematical expressions that describe the relationship \
+                between the *rate* of a chemical reaction and the concentration of its reactants. For this reaction, \(Strings.withNoBreaks(str: "*k=\(rate.str(decimals: 3))*")).
                 """
             )
         ]

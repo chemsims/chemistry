@@ -7,7 +7,7 @@ import CoreGraphics
 
 struct SecondOrderStatements {
     static let intro: [TextLine] = [
-        "This is a Second Order Reaction.",
+        "This is a second order reaction.",
         "Why don't you set the *initial concentration of A (c_1_)*, the reactant?"
     ]
 

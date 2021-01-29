@@ -40,7 +40,7 @@ struct ReactionStatements {
             ),
             TextLineGenerator.makeLine(
                 """
-                This happens at a variable *Rate (in units of M/s)*, which is dependant on *k* \
+                This happens at a variable *rate (in units of M/s)*, which is dependant on *k* \
                 and *[\(display.reactant.name)]*.
                 """
             )

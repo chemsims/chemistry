@@ -16,7 +16,7 @@ struct ReactionFilingStatements {
             ", which has a fixed rate constant of \(k)."
         }
         let msgSuffix = rateConstantMsg ?? "."
-        let firstLine = "This is the \(order.name) Order Reaction you created earlier\(msgSuffix)"
+        let firstLine = "This is the \(order.name.lowercased()) order reaction you created earlier\(msgSuffix)"
 
         let hasNext = reactionType != .C
 
