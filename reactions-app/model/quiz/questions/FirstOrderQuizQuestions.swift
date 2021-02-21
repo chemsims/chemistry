@@ -13,26 +13,27 @@ extension QuizQuestionsList {
                 id: "FIRSTORDER-1",
                 question: "If a reaction is of first order, it means the rate is dependent on:",
                 correctAnswer: QuizAnswerData(
-                    answer: "The concentration of one reactant",
+                    answer: "It depends",
                     explanation: """
-                    If the overall order of the reaction is 1, that means that the rate of the \
-                    reaction depends on the concentration of one reactant, given its rate law: \
-                    $rate = k[A]$.
+                    It depends, because there could be cases in which the reaction is, for example, \
+                    of order 0.5 with respect with 2 different reactants, making the sum $0.5$ \\+ $0.5$ = 1, \
+                    a first order reaction overall.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: "The concentration of two or more reactants",
                         explanation: """
-                        If the overall order of the reaction is 1, there cannot be two or more \
+                        If the overall order of the reaction is 1, normally there wouldn't be two or more \
                         reactants affecting the rate of the reaction.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "It depends",
+                        answer: "The concentration of one reactant",
                         explanation: """
-                        For first order reactions there is a predetermined number of reactants \
-                        that will affect the rate.
+                        If the overall order of the reaction is 1, normally that means that the rate of the reaction \
+                        depends on the concentration of one reactant, given its rate law: $Rate = k[A]$, but it's not \
+                        true for all cases.
                         """
                     ),
                     QuizAnswerData(
@@ -892,50 +893,53 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "FIRSTORDER-19",
                 question: """
-                The graph below shows the results of a study of the reaction with reactants A (in \
-                excess), and B. The concentrations of A and B were measured periodically over time \
-                for a few hours. According to the results, which of the following can be concluded \
-                about the rate law for the reaction under the conditions studied?
+                Take into account a reaction were the species of A and B are involved. The reaction \
+                is being represented by the graph below. The concentrations of A and B were measured \
+                periodically over time for a few hours. According to the results, which of the following \
+                can be concluded about the reaction?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "It is first order in [B]",
+                    answer: "It's a first order reaction where A is the reactant",
                     explanation: """
-                    B can be inferred to be of first order by looking at how the concentration of \
-                    it changed from 0.40 to 0.20 in 2 hours ($0.10 M/h$) and then from 0.20 to \
-                    0.10 in 2 hours ($0.05 M/h$). That means that on average the rate was halved \
-                    when the concentration of B was halved too.
-
-                    To confirm this, you can apply first order equations of \
-                    $k = (ln[A_0_] - ln[A]) / t$ to calculate k using the data for each point, which \
-                    will result in the same k value, making it linear when plotting $ln[A] vs t$.
+                    Of the two species, A is the one that's being consumed, which means that it \
+                    is the reactant, and usually the reaction kinetics are studied based on the \
+                    reactants. The reaction can be inferred to be of first order by looking at how \
+                    the concentration of A changes but to confirm this, you can apply first order \
+                    equation of $k = (ln[A_0_], - ln[A]) / t$ \
+                    to calculate k using the data for each point, which will result in the same k value, \
+                    making it linear when plotting $ln[A] vs t$.
                     """,
                     explanationLabel: """
-                    B can be inferred to be of first order by looking at how the concentration of \
-                    it changed from 0.4 to 0.2 in 2 hours ($0.1 M/h$) and then from 0.2 to \
-                    0.1 in 2 hours ($0.05 M/h$). That means that on average the rate was halved \
-                    when the concentration of B was halved too.
-
-                    To confirm this, you can apply first order equations of \
-                    $k =, \(Labels.openParen), ln[A_0_], - ln[A], \(Labels.closedParen), / t$, to calculate k using the data for each point, which \
-                    will result in the same k value, making it linear when plotting $ln[A] vs t$.
+                    Of the two species, A is the one that's being consumed, which means that it \
+                    is the reactant, and usually the reaction kinetics are studied based on the \
+                    reactants. The reaction can be inferred to be of first order by looking at how \
+                    the concentration of A changes but to confirm this, you can apply first order \
+                    equation of $k =, \(Labels.openParen), ln[A_0_], - ln[A], \(Labels.closedParen), / t$ \
+                    to calculate k using the data for each point, which will result in the same k value, \
+                    making it linear when plotting $ln[A] vs t$.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "It is zero order in [B]",
+                        answer: "It's a zero order reaction where A is the reactant",
                         explanation: """
-                        B cannot be of zero order because the concentration changes at a variable rate.
+                        The reaction cannot be of zero order because the concentrations change at a \
+                        variable rate.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "It is second order in [B]",
-                        explanation: "B data doesn't align with second order equations."
+                        answer: "It's a second order reaction where B is the reactant",
+                        explanation: """
+                        The reaction cannot be of second order because the concentration doesn't affect \
+                        the rate as much. Try using the equations and see which one fits better with the \
+                        data provided.
+                        """
                     ),
                     QuizAnswerData(
-                        answer: "It is first order in [A]",
+                        answer: "It's a first order reaction where B is the product",
                         explanation: """
-                        A is in so much excess that it's concentration within the graph is \
-                        apparently unchanged, so this would be false.
+                        Of the two species, B is being produced, because the concentration of it is getting \
+                        higher through time. A would be the reactant.
                         """
                     )
                 ],
@@ -943,80 +947,82 @@ extension QuizQuestionsList {
                 image: LabelledImage(
                     image: "first-order-a-b-concentration",
                     label: """
-                    Chart showing time in hours vs concentration in molar. Line 'A' is constant at \
-                    a concentration of 5.0. Line B is a curved line which tends to 0 as time increases.  \
-                    There are three shown data points for line B: Concentration 0.4 at time 0 hours, \
-                    concentration 0.2 at time 2 hours, concentration 0.1 at time 4 hours.
+                    Chart showing time in hours vs concentration in molar. Line 'A' is a curved line which \
+                    tends to 0 as time increases. Line 'B' is a curved line which increases with time. \
+                    There are three shown data points for line A: Concentration 0.4 at time 0 hours, \
+                    concentration 0.2 at time 2 hours, concentration 0.1 at time 4 hours. There are three \
+                    shown data points for line B: Concentration 0 at time 0 hours, concentration 0.2 at time \
+                    2 hours, concentration 0.3 at time 4 hours.
                     """
                 )
             ),
             QuizQuestionData(
                 id: "FIRSTORDER-20",
                 question: """
-                The table below shows experimental kinetics data extracted from this reaction:
+                The table below experimental kinetics data extracted from this reaction at 25°C:
 
-                CaCl_2_(aq) + 2AgNO_3_(aq) ➝ Ca(NO_3_)_2_(aq) + 2AgCl(s)
+                ClNO_2_(g) + NO(g) ➝ NO_2_(g) + ClNO(g)
 
                 What is the rate law equation?
                 """,
                 questionLabel: """
-                The table below shows experimental kinetics data extracted from this reaction:
+                The table below experimental kinetics data extracted from this reaction at 25°C:
 
-                CaCl_2_(aq), +, 2AgNO_3_(aq), yields, Ca(NO_3_)_2_(aq), +, 2AgCl(s)
+                ClNO_2_(g) + NO(g) ➝ NO_2_(g) + ClNO(g)
 
                 What is the rate law equation?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Rate = k[CaCl_2_][AgNO_3_]",
-                    answerLabel: "Rate = k, [CaCl_2_], [AgNO_3_]",
+                    answer: "Rate = k[ClNO_2_][NO]",
+                    answerLabel: "Rate = k, [ClNO_2_], [NO]",
                     explanation: """
-                    When $[CaCl_2_]$ goes from 0.025 to 0.05 (it's doubled, it goes up by a factor \
+                    When $[ClNO_2_]$ goes from 0.025 to 0.05 (it's doubled, it goes up by a factor \
                     of 2), the rate goes from $8.33x10^-4^$ to $1.66x10^-3^$ (it's doubled, it goes \
                     up by a factor of 2). $2^x^ = 2$ where $x = 1$; the reaction is first order \
-                    for $[CaCl_2_]$.
+                    for $[ClNO_2_]$.
 
-                    When $[AgNO_3_]$ goes from 0.025 to 0.05 (it's doubled, it goes up by a \
+                    When $[NO]$ goes from 0.025 to 0.05 (it's doubled, it goes up by a \
                     factor of 2), the rate goes from $1.66x10^-3^$ to $3.33x10^-3^$ (it's doubled, \
                     it goes up by a factor of 2). $2^x^ = 2$ where $x = 1$; the reaction is first \
-                    order for $[AgNO_3_]$.
+                    order for $[NO]$.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Rate = k[CaCl_2_]^2^[AgNO_3_]^0^",
-                        answerLabel: "Rate = k, [CaCl_2_]^2^, [AgNO_3_]^0^",
+                        answer: "Rate = k[ClNO_2_]^2^[NO]^0^",
+                        answerLabel: "Rate = k, [ClNO_2_]^2^, [NO]^0^",
                         explanation: """
-                        When $[CaCl_2_]$ goes from 0.025 to 0.05 (it's doubled, it goes up by a \
+                        When $[ClNO_2_]$ goes from 0.025 to 0.05 (it's doubled, it goes up by a \
                         factor of 2) the rate goes from $8.33x10^-4^$ to $1.66x10^-3^$ (it's \
                         doubled, it goes up by a factor of 2). $2^x^ = 2$ where x = 1; the reaction \
-                        is first order for $[CaCl_2_]$.
+                        is first order for $[ClNO_2_]$.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[CaCl_2_]^1^[AgNO_3_]^0^",
-                        answerLabel: "Rate = k, [CaCl_2_]^1^, [AgNO_3_]^0^",
+                        answer: "Rate = k[ClNO_2_]^1^[NO]^0^",
+                        answerLabel: "Rate = k, [ClNO_2_]^1^, [NO]^0^",
                         explanation: """
-                        When the concentration of $[AgNO_3_]$ changes from 0.025 M to 0.05 M, \
+                        When the concentration of $[NO]$ changes from 0.025 M to 0.05 M, \
                         the rate also changes, so the reaction cannot be zero order for \
-                        $[AgNO_3_]$.
+                        $[NO]$.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[CaCl_2_]^2^[AgNO_3_]^2^",
-                        answerLabel: "Rate = k, [CaCl_2_]^2^, [AgNO_3_]^2^",
+                        answer: "Rate = k[ClNO_2_]^2^[NO]^2^",
+                        answerLabel: "Rate = k, [ClNO_2_]^2^, [NO]^2^",
                         explanation: """
-                        When $[AgNO_3_]$ goes from 0.025 to 0.05 (it's doubled, it goes up by a \
+                        When $[NO]$ goes from 0.025 to 0.05 (it's doubled, it goes up by a \
                         factor of 2) the rate goes from $1.66x10^-3^$ to $3.33x10^-3^$ (it's \
                         doubled, it goes up by a factor of 2). $2^x^ = 2$ where x = 1; the \
-                        reaction is first order for $[AgNO_3_]$.
+                        reaction is first order for $[NO]$.
                         """
                     )
                 ],
                 difficulty: .easy,
                 table: QuizTable(
                     rows: [
-                        ["[CaCl_2_] (M)", "[AgNO_3_] (M)", "Rate M/s"],
-                        [ "0.025", "0.025", "8.33x10^-4^"],
+                        ["[ClNO_2_] (M)", "[NO] (M)", "Rate (M/s)"],
+                        ["0.025", "0.025", "8.33x10^-4^"],
                         ["0.050", "0.025", "1.66x10^-3^"],
                         ["0.050", "0.050", "3.33x10^-3^"]
                     ]

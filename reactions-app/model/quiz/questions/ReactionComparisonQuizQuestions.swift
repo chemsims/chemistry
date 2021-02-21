@@ -45,10 +45,9 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "COMPARISON-2",
                 question: """
-            A student conducts an experiment that consists on making 10 mL of a 0.20 M violet solution react \
-            with 10 mL of a 0.20 M base solution. After this, the student takes a sample of the resulting \
-            solution and places it in a UV-Vis spectrophotometer, records the absorbance and plots some \
-            graphs. What is the order of the reaction?
+            An experiment is conducted where the absorbance of a substance X is measured through time \
+            using a spectrophotometer. The data is then plotted into the three graphs that are shown \
+            below. What would be the order of the reaction?
             """,
                 correctAnswer: QuizAnswerData(
                     answer: "First order",
@@ -169,39 +168,38 @@ extension QuizQuestionsList {
                 the rate law of this reaction?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Rate = k[A]^2^",
+                    answer: "Rate = k[A]^3^",
                     explanation: """
-                    When [A] goes from 0.230 to 0.460 (it's doubled, goes up by a factor of 2) \
-                    while B remains constant, the rate goes from 0.0042 to 0.0168 (it goes up by a \
-                    factor of 4). $2^x^ = 4$ where $x = 2$; the reaction is second order for [A].
+                    When [A] goes from 0.230 to 0.690 (it's tripled, goes up by a factor of 3) \
+                    while B remains constant, the rate goes from 0.0042 to 0.1134 (it goes up by a \
+                    factor of 27). $3^x^ = 27$ where $x = 3$; the reaction is third order for [A].
 
                     When [B] goes from 0.230 to 0.460 (it goes up by a factor of 2) while A \
                     remains constant, the rate remains constant. If the rate doesn't vary with the \
                     concentration of B, it means the reaction is zero order for [B]. Writing the \
-                    complete rate law equation: $rate = k[A]^2^$.
+                    complete rate law equation: $rate = k[A]^3^$.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Rate = k[A][B]",
+                        answer: "Rate = k[A]^2^",
                         explanation: """
-                        When [A] goes from 0.230 to 0.460 (it's doubled, goes up by a factor of 2) \
-                        while B remains constant, the rate goes from 0.0042 to 0.0168 (it goes up \
-                        by a factor of 4). $2^x^ = 4$ where $x = 2$; the reaction is second order \
+                        When [A] goes from 0.230 to 0.690 (it's tripled, goes up by a factor of 3) \
+                        while B remains constant, the rate goes from 0.0042 to 0.1134 (it goes up \
+                        by a factor of 27). $3^x^ = 27$ where $x = 3$; the reaction is third order \
                         for [A].
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[A][B]^2^",
+                        answer: "Rate = k[A]^2^[B]",
                         explanation: """
                         When [B] goes from 0.230 to 0.460 (it goes up by a factor of 2) while A \
                         remains constant, the rate remains constant. If the rate doesn't vary with \
-                        the concentration of B, it means the reaction is zero order for [B]. \
-                        Writing the complete rate law equation: $rate = k[A]^2^$.
+                        the concentration of B, it means the reaction is zero order for [B].
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[B]^2^",
+                        answer: "Rate = k[B]",
                         explanation: """
                         When the concentration of B changes, the rate doesn't vary, so [B] is not \
                         affecting the rate.
@@ -213,7 +211,7 @@ extension QuizQuestionsList {
                     rows: [
                         ["[A] (M)", "[B] (M)", "Rate M/s"],
                         ["0.230", "0.230", "0.0042"],
-                        ["0.460", "0.230", "0.0168"],
+                        ["0.690", "0.230", "0.1134"],
                         ["0.230", "0.460", "0.0042"]
                     ]
                 )
@@ -222,64 +220,64 @@ extension QuizQuestionsList {
                 id: "COMPARISON-5",
                 question: """
             Consider a multi-step reaction. The rate laws for the elementary reactions that are part of the \
-            proposed mechanism are given. Which one would probably be the rate-determining step of the \
-            overall reaction?
+            proposed mechanism are given. Which one would probably never be the rate-determining step?
             """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Rate = k[E][F]^2^",
-                    answerLabel: "Rate = k times E, times F^2^",
+                    answer: "Rate = k[U]",
+                    answerLabel: "Rate = k times U",
                     explanation: """
-                    The rate-determining step would probably be $rate = k[E][F]^2^$. Of all the \
-                    rate laws, this one is of the highest order (third overall) and implies that a \
-                    successful collision of 3 molecules has to take place for the reaction to \
-                    occur. Since the probabilities of this happening are lower, the chances of \
-                    this reaction to be slower than the other ones is greater. Being the slowest \
-                    of all the steps, this would be the rate-determining step.
-                    """,
-                    explanationLabel: """
-                    The rate-determining step would probably be $rate = k times E, times F^2^$. Of all the \
-                    rate laws, this one is of the highest order (third overall) and implies that a \
-                    successful collision of 3 molecules has to take place for the reaction to \
-                    occur. Since the probabilities of this happening are lower, the chances of \
-                    this reaction to be slower than the other ones is greater. Being the slowest \
-                    of all the steps, this would be the rate-determining step.
+                    Out of all the rate law equations, $rate = k[U]$ would probably never be the rate-determining \
+                    step of the mechanism. Being an elementary step, the equation suggests that there's no \
+                    need for a collision to happen for the reaction to take place. Compared to the rest, this \
+                    would most likely be the fastest reaction.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Rate = k[C]",
+                        answer: "Rate = k[V][W]^2^",
                         explanation: """
-                        A rate law equation as $rate = k[C]$ for an elementary step suggests that \
-                        there's no need for a collision to happen for the reaction to take place. \
-                        Compared to the rest, this would most likely be the fastest reaction.
-                        """
-                    ),
-                    QuizAnswerData(
-                        answer: "Rate = k[A][B]",
-                        answerLabel: "Rate = k times A, times B",
-                        explanation: """
-                        A rate law equation as $rate = k[A][B]$ for an elementary step suggests \
-                        that a successful collision between A and B has to take place. Compared to \
-                        the rest, this would not be the slowest reaction or step.
+                        A rate law equation as $rate = k[V][W]2$ for an elementary step suggests that a \
+                        successful collision between a molecule of V and two molecules of W has to take place. \
+                        Compared to the rest, this would not be the fastest reaction or step.
                         """,
                         explanationLabel: """
-                        A rate law equation as rate = k times A, times B, for an elementary step suggests \
-                        that a successful collision between A and B has to take place. Compared to \
-                        the rest, this would not be the slowest reaction or step.
+                        A rate law equation as $rate = k times [V], times [W]^2^$ for an elementary step suggests that a \
+                        successful collision between a molecule of V and two molecules of W has to take place. \
+                        Compared to the rest, this would not be the fastest reaction or step.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[D]^2^",
+                        answer: "Rate = k[X]^2^[Y]^2^",
+                        answerLabel: "Rate = k times [X]^2^, times [Y]^2^",
+                        explanation: """
+                        Out of all the rate laws, the rate-determining step would probably be $rate = k[X]^2^[Y]^2^$. \
+                        This one is of the highest order (fourth overall) and implies that a successful collision \
+                        of 4 molecules has to take place for the reaction to occur. Since the probabilities of this \
+                        happening are lower, the chances of this reaction to be slower than the other ones is \
+                        greater. Being the slowest of all the steps, this would probably be the rate-determining \
+                        step.
+                        """,
+                        explanationLabel: """
+                        Out of all the rate laws, the rate-determining step would probably be \
+                        $rate = k times X^2^, times Y^2^$. This one is of the highest order (fourth overall) and implies \
+                        that a successful collision of 4 molecules has to take place for the reaction to occur. \
+                        Since the probabilities of this happening are lower, the chances of this reaction to be \
+                        slower than the other ones is greater. Being the slowest of all the steps, this would \
+                        probably be the rate-determining step.
+                        """
+                    ),
+                    QuizAnswerData(
+                        answer: "Rate = k[Z]^2^",
                         answerLabel: "Rate = k, times [D]^2^",
                         explanation: """
-                        A rate law equation as $rate = k[D]^2^$ for an elementary step suggests \
-                        that a successful collision between two molecules of D has to take place. \
-                        Compared to the rest, this would not be the slowest reaction or step.
+                        A rate law equation as $rate = k[Z]^2^$ for an elementary step suggests \
+                        that a successful collision between two molecules of Z has to take place. \
+                        Compared to the rest, this would not be the fastest reaction or step.
                         """,
                         explanationLabel: """
-                        A rate law equation as rate = k, times [D]^2^, for an elementary step suggests \
-                        that a successful collision between two molecules of D has to take place. \
-                        Compared to the rest, this would not be the slowest reaction or step.
+                        A rate law equation as rate = k, times [Z]^2^, for an elementary step suggests \
+                        that a successful collision between two molecules of Z has to take place. \
+                        Compared to the rest, this would not be the fastest reaction or step.
                         """
                     )
                 ],
@@ -402,8 +400,8 @@ extension QuizQuestionsList {
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[NO][O_2_]^2^",
-                        answerLabel: "Rate = k times [NO], times [O_2_]^2^",
+                        answer: "Rate = k[NO][NO_2_]^2^",
+                        answerLabel: "Rate = k times [NO], times [NO_2_]^2^",
                         explanation: """
                         This has a product as an element for the equation, \
                         which is incorrect.
@@ -427,55 +425,54 @@ extension QuizQuestionsList {
                 Based on the information below, what is the constant rate for the reaction?
 
                 The table below shows recorded concentration data for the following reaction:
+                A + B ➝ Products
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Rate = k[NH_3_]^2^[HCl]",
+                    answer: "Rate = k[A]^2^[B]^3^",
                     explanation: """
-                    When [HCl] goes from 0.0132 to 0.0264 (it's doubled, goes up by a factor of 2) \
-                    the rate goes from $4.30x10^-4^$ to $8.55x10^-44^$ (approximately double, it \
-                    goes up by a factor of 2). $2^x^ = 2$ where $x = 1$; the reaction is first \
-                    order for [HCl].
-
-                    When [HCl] drops to 0.0066, if [NH_3_] were maintained at 0.0176, then we could \
-                    determine that the rate would have been $2.15x10^-4^$ (half of $4.30x10^-4^$) \
-                    since we know it's of first order for [HCl]. In order for the rate to be \
-                    $8.60x10^-4^$ when [NH_3_] goes from 0.0176 to 0.0352 (it's doubled, goes up \
-                    by a factor of 2), it had to be quadrupled (go up by a factor of 4). \
-                    $2^x^ = 4$. where $x = 2$; the reaction is of second order for [NH_3_].
+                    When [B] goes from 0.0132 to 0.0264 (it's doubled, goes up by a factor of 2) \
+                    the rate goes from 4.30 to 34.4 (it goes up by a factor of 8). $2^x =  8$ \
+                    where $x = 3$; the reaction is third order for [B]. 
+                    
+                    When [B] drops to 0.0066, if [A] was maintained at 0.0176, then the Rate would \
+                    have been 0.53 since we know it's of third order for [B]. In order for the \
+                    Rate to be 2.15 when [A] goes from 0.0176 to 0.0704 (it goes up by a factor \
+                    of 4), it had to go up by a factor of 4. $4^x = 4$. where $x = 1$; the reaction \
+                    is of third order for [A].
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer:  "Rate = k[NH_3_][HCl]",
+                        answer:  "Rate = k[A][B]",
                         explanation: """
-                        Try comparing how the reactants concentrations affect the rate of \
-                        appearance of NH_4_Cl.
+                        Try comparing how the reactants concentrations affect the rate.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[NH_3_][HCl]^2^",
+                        answer: "Rate = k[A]^3^[B]^2^",
                         explanation: """
                         Given the data, the concentrations affect the rate but not in this \
                         proportions.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[NH_3_]^2^[HCl]^2^",
+                        answer: "Rate = k[A]^2^[B]",
                         explanation: """
-                        When [HCl] goes from 0.0132 to 0.0264 (it's doubled, goes up by a factor \
-                        of 2) the rate goes from 4.30x10^-4^ to 8.55x10^-44^ (approximately \
-                        double, it goes up by a factor of 2). $2^x^ = 2$ where $x = 1$; the \
-                        reaction is first order for [BHCl].
+                        When [B] drops to 0.0066, if [A] was maintained at 0.0176, then the Rate would \
+                        have been 0.53 since we know it's of third order for [B]. In order for the \
+                        Rate to be 2.15 when [A] goes from 0.0176 to 0.0704 (it goes up by a factor \
+                        of 4), it had to go up by a factor of 4. $4^x = 4$. where $x = 1$; the reaction \
+                        is of third order for [A].
                         """
                     )
                 ],
                 difficulty: .medium,
                 table: QuizTable(
                     rows: [
-                        ["[NH_3_] (M)", "[HCl]", "NH_4_CI rate of appearance M/s"],
-                        ["0.0176", "0.0132", "4.30x10^-4^"],
-                        ["0.0176", "0.0264", "8.55x10^-4^"],
-                        ["0.0352", "0.0066", "8.60x10^-4^"]
+                        ["[A] (M)", "[B] (M)", "Rate (M/s)"],
+                        ["0.0176", "0.0132", "4.30"],
+                        ["0.0176", "0.0264", "34.4"],
+                        ["0.0704", "0.0066", "2.15"]
                     ]
                 )
             ),
@@ -576,7 +573,7 @@ extension QuizQuestionsList {
 
                     Now we just replace the values to determine k, but take into account that \
                     rate of reaction = 2 \\* rate of appearance of C, because $rate = [ΔD]/2Δt$, \
-                    where $-[ΔD]/Δt$ is the rate of appearance of D.
+                    where $[ΔD]/Δt$ is the rate of appearance of D.
 
                     Replacing, we get:
 
@@ -600,7 +597,7 @@ extension QuizQuestionsList {
 
                     Now we just replace the values to determine k, but take into account that \
                     rate of reaction = 2 \\* rate of appearance of C, because $rate = [ΔD]/2Δt$, \
-                    where $-[ΔD]/Δt$ is the rate of appearance of D.
+                    where $[ΔD]/Δt$ is the rate of appearance of D.
 
                     Replacing, we get:
 
@@ -652,43 +649,43 @@ extension QuizQuestionsList {
                 id: "COMPARISON-12",
                 question: """
                 Consider this reaction: $A + 5B + 2C + 3D ➝ Products$. The rate law equation has \
-                been determined to be, $rate = k[A][B]^2^[D]$. Knowing this, what would the \
+                been determined to be, $rate = k[A][B]^2^[D]^0^$. Knowing this, what would the \
                 overall order of the reaction be?
                 """,
                 questionLabel: """
                 Consider this reaction: A + 5B, + 2C, + 3D, to Products. The rate law equation has \
-                been determined to be, rate = k times [A], times [B]^2^, times [D]. Knowing this, what would the \
+                been determined to be, rate = k times [A], times [B]^2^, times [D]^0^. Knowing this, what would the \
                 overall order of the reaction be?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Fourth overall",
+                    answer: "Third order",
                     explanation: """
                     The reaction is first order with respect to A, second order with respect to B, \
-                    zero order with respect to C and first order with respect to D. The sum of the \
-                    individual orders go as: $1 + 2 + 0 + 1 = 4$, so the reaction is of fourth \
+                    zero order with respect to C and zero order with respect to D. The sum of the \
+                    individual orders go as: $1 + 2 + 0 + 0 = 3$, so the reaction is of third \
                     order overall.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Second overall",
+                        answer: "Zero order",
                         explanation: """
-                        The reaction is second order with respect to B so it would be impossible \
-                        for the overall reaction order to be 2 since A and D are also affecting the rate.
+                        The reaction is zero order with respect to D, but that doesn't mean the \
+                        overall order is zero since A and B are affecting the rate.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Third overall",
+                        answer: "First order",
                         explanation: """
-                        Remember the sum of the exponents (individual orders) in the rate law \
-                        equation is the overall order of the reaction
+                        The reaction is already first order with respect to A, so since B is also \
+                        affecting the rate of the reaction, it couldn't possibly be first order overall.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Fifth overall",
+                        answer: "Second order",
                         explanation: """
-                        Remember that since C doesn't appear in the rate law equation, it means \
-                        it's zero order with respect to it.
+                        The reaction is already second order with respect to B, so since A is also \
+                        affecting the rate of the reaction, it couldn't possibly be second order overall.
                         """
                     )
                 ],
@@ -821,36 +818,42 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "COMPARISON-15",
                 question: """
-            What would be true about the order of a reaction?
+            What would be false about the order of a reaction?
             """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Only conducting an experiment can the reaction order be determined for a given reaction",
+                    answer: "The temperature affects the order of a reaction",
                     explanation: """
-                    For a given reaction, the order can only be determined experimentally.
+                    The temperature doesn't affect the order of a reaction but can affect the rate of a reaction \
+                    indirectly. Analyzing the rate law equation $rate = k[A][B][C]...$ The rate is dependent of \
+                    concentrations and the rate constant, but the rate constant itself is dependent of the \
+                    temperature.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "When knowing the balanced equation, it's possible to determine the reaction order by replacing the exponents of the equation with the coefficient values.",
+                        answer: "Only conducting an experiment can the reaction order be determined for a given reaction",
                         explanation: """
-                        Reaction order can be determined by the coefficients of the balanced equations only in the case of elementary single step reactions.
+                        For a given reaction, the order can only be determined experimentally.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        When the temperature increases within a chemical system, the order of the reaction increases as well.
+                        The overall order of a reaction is the sum of all exponents
                         """,
                         explanation: """
-                        Increasing the temperature does result in an increase of the rate of the \
-                        reaction, but it doesn't affect the order of the reaction.
+                        For a reaction with a rate law: $Rate = k[A][B]^2^[C]^3^...[X]^n^$, the overall order of the reaction would be $1 + 2 + 3... + n$.
+                        """,
+                        explanationLabel: """
+                        For a reaction with a rate law: $Rate = k times [A], times [B]^2^, times [C]^3^... times [X]^n^$, the overall order of the reaction would \
+                        be $1 + 2 + 3... + n$.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "The reaction orders (exponents in the rate law equation) can only be whole numbers.",
+                        answer: "The order of a reaction is not necessarily an integer",
                         explanation: """
-                        For high school chemistry, most common reactions studied are of second \
-                        order, first order, half order and zero order; that already means that is \
-                        not mandatory for the order of a reaction to be a whole number.
+                        For high school chemistry, most common reactions studied are of second order, first order, half order and zero order; \
+                        that already means that is not mandatory for the order of a reaction to be a whole number. Orders could possibly \
+                        be non-integer numbers both positive or negative. 
                         """
                     )
                 ],
@@ -859,10 +862,10 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "COMPARISON-16",
                 question: """
-            The rate of which type of reaction would remain the same if it was taking place within a closed \
-            container at standard conditions and the concentrations of all reactants were doubled at the \
-            same time?
-            """,
+                Consider a reaction A + B ➝ C. The reaction is taking place under standard conditions in a controlled \
+                environment, but when the concentrations of both A and B are doubled, there is no real increment in \
+                the rate of the reaction. Which type of reaction would this be?
+                """,
                 correctAnswer: QuizAnswerData(
                     answer: "Zero order",
                     explanation: """
@@ -881,14 +884,14 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "Second order",
                         explanation: """
-                        The rate of first order reactions is affected by the concentration of one \
+                        The rate of second order reactions is normally affected by the concentration of one \
                         or two reactants.
                         """
                     ),
                     QuizAnswerData(
                         answer: "Third order",
                         explanation: """
-                        The rate of first order reactions is affected by the concentration of one \
+                        The rate of third order reactions is affected by the concentration of one \
                         or more reactants.
                         """
                     )
@@ -898,35 +901,34 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "COMPARISON-17",
                 question: """
-            Calculating the rate constant only knowing the half-life of a reaction, is only possible for \
-            which type of reaction?
-            """,
+                For first order reactions, what data is needed to calculate the half-life of the reaction?
+                """,
                 correctAnswer: QuizAnswerData(
-                    answer: "First order",
+                    answer: "Only the rate constant k",
                     explanation: """
-                    The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$, \
-                    meaning that we only need to know the rate constant to calculate the half-life and vice-versa.
+                    The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$, meaning that we \
+                    only need to know the rate constant to calculate the half-life and vice-versa.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Zero order",
+                        answer: "Initial concentration [A_0_] and rate constant k",
                         explanation: """
-                        For zero order reactions, the equation for half-life is \
-                        $t_1/2_ = [A_0_]/(2 \\* k)$.
+                        To calculate the half-life of other types of orders, usually [A_0_] and k are used. In \
+                        the case of first order reactions, only the rate constant is needed.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Second order",
+                        answer: "Only the initial concentration [A_0_]",
                         explanation: """
-                        For second order reactions, the equation for half-life is \
-                        $t_1/2_ = 1/([A_0_] \\* k)$.
+                        Knowing the initial concentration is not very useful to calculate the half-life of first \
+                        order reactions.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Third order",
+                        answer: "Initial concentration [A_0_] and the current concentration [A]",
                         explanation: """
-                        Try considering what are the equations of half-life for the different orders.
+                        Current concentration [A] is not often part of the direct equation of half life for any order.
                         """
                     )
                 ],
@@ -1075,54 +1077,54 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "COMPARISON-20",
                 question: """
-                Considering that radioactive decay is a first order process: half-life for the \
-                decay of bismuth-212 is 60 seconds, while for cobalt-60 it's 5.3 years. Which of \
-                the following statements would be correct?
+                Considering that radioactive decay is a first order process: Rate constant for the decay of \
+                bismuth-212 is 0.01155 s^-1^, while for cobalt-60 is 0.13 years^-1^. The decay of which \
+                radioactive compound would be the fastest?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    The rate constant for the decay of bismuth-212 is greater to the rate constant \
-                    for the decay of cobalt-60
+                    The decomposition of bismuth-212 would take much less time than the decomposition of \
+                    cobalt-60 to reach half of its initial amount
                     """,
                     explanation: """
-                    The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$. \
-                    Solving for k, we get: $k = ln(2) / t_1/2_$. The higher the half-life is, the \
-                    smaller the rate constant k is.
-
-                    For cobalt-60, its massive half-life of 5.3 years is much greater than the 60 \
-                    second half-life of bismuth-212 decay, making the cobalt-60 rate constant much \
-                    smaller.
+                    The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$. The smaller \
+                    the rate constant is, the higher the half-life is. For cobalt-60, $t_1/2_ = ln(2)/0.13 years^-1^$; \
+                    t_1/2_ = 5.33 years, while for bismuth-212, $t_1/2_ = ln(2)/0.01155 s^-1^$; $t_1/2_ = 60 seconds$. \
+                    It would take 60 seconds for bismuth-212 to reach half its initial amount while for cobalt-60, it \
+                    would take approximately 5.33 years.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        The rate constant for the decay of bismuth-212 is equal to the rate \
-                        constant for the decay of cobalt-60.
+                        The decomposition of bismuth-212 would take the same time as the decomposition of cobalt-60 to \
+                        reach half of its initial amount
                         """,
                         explanation: """
-                        The decay of bismuth-212 and cobalt-60 don't have the same constant given \
-                        that their half-lifes are different
+                        The decay of bismuth-212 and cobalt-60 don't have the same half-life given that their rate \
+                        constants are different.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        The rate constant for the decay of bismuth-212 is lower to the rate \
-                        constant for the decay of cobalt-60.
+                        The decomposition of bismuth-212 would take slightly more time than the decomposition of \
+                        cobalt-60 to reach half of its initial amount
                         """,
                         explanation: """
-                        The rate constant is directly proportional to the rate of the reaction \
-                        itself. Since half-life is the time the reaction takes to make the \
-                        reactant half of its initial concentration, the higher it is the slower \
-                        the reaction is too. Given the data provided, the half-life of bismuth-212 \
-                        is smaller than the one of cobalt-60 by a lot.
+                        The half-life is inversely proportional to the rate constant of the reaction. Considering \
+                        half-life is the time the reaction takes to make the reactant half of its initial concentration, \
+                        given the data provided, the half life of bismuth-212 is smaller than the one of cobalt-60 by \
+                        a lot.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "It's not possible to compare both rate constants with the given information",
+                        answer: """
+                        It depends on the initial amount of each compound, since the rate depends on the \
+                        concentration
+                        """,
                         explanation: """
-                        Only for first order reactions, half-life is sufficient data to determine \
-                        the rate constant of a reaction.
+                        Only for first order reactions, half-life is independent of the initial amount of \
+                        the reactants or in this case, the radioactive compounds.
                         """
                     )
                 ],

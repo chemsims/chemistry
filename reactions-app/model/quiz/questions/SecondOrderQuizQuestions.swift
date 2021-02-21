@@ -125,7 +125,7 @@ extension QuizQuestionsList {
                     k, [A_0_], and the time, we just solve for [A]:
 
                     [A] = [A_0_]/, \(Labels.openParen), [A_0_] times kt, + 1 \(Labels.closedParen) ➝
-                    $[A] =, 0.44/, \(Labels.openParen), (0.44 \\* 0.09 \\* 25, + 1, \(Labels.closedParen), = 0.22 M$
+                    $[A] =, 0.44/, \(Labels.openParen), 0.44 \\* 0.09 \\* 25, + 1, \(Labels.closedParen), = 0.22 M$
                     """
                 ),
                 otherAnswers: [
@@ -263,48 +263,64 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "SECONDORDER-6",
                 question: """
-                Rate for radioactive decay remains unchanged regardless of environmental factors. \
-                The nuclear waste from large nuclear plants leads to problems worldwide because of \
-                this characteristic. What would be an accurate statement regarding radioactive \
-                rate laws?
+                Radioactive decay is a first-order process. As a general rule, after 10 half-lives, \
+                the sample is considered to be safe. Half-lives can be very short (milliseconds) or very \
+                long (thousands of years). The long half-lives of some waste products is a major problem \
+                with nuclear fission reactors. Considering that, the rate constants for $Po-213$ and $U-238$ \
+                are $1.65x10^5^ s^-1^$ and $1.54x10^-10^ y^-1^$ respectively. Which would be the most dangerous \
+                isotope as a waste?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    Radioactive rate laws are first order reactions because the rate depends only \
-                    on the material
+                    The radioactive isotope $U-238$ would be the most dangerous
                     """,
                     explanation: """
-                    Radioactive decay is always a first order process. This is why the half-life \
-                    of it is only dependent on the nature of the substance, creating a problem in \
-                    which the rate of its decay cannot be sped up.
+                    For $U-238$, substituting the rate constant $1.54x10^-10^ y^-1^$ in the half-life equation we \
+                    get: $t_1/2_ = ln(2) / 1.54x10^-10^ = 4.5x10^9^ years$. A half-life like that is huge. Remember, \
+                    only after 10 half-lives have passed is the isotope considered safe, which means that $U-238$ as \
+                    a waste is extremely dangerous.
+                    """,
+                    explanationLabel: """
+                    For $U-238$, substituting the rate constant $1.54x10^-10^ y^-1^$ in the half-life equation we \
+                    get: t_1/2_ =, ln (2), / 1.54x10^-10^, = 4.5x10^9^ years. A half-life like that is huge. Remember, \
+                    only after 10 half lives have passed is the isotope considered safe, which means that $U-238$ as \
+                    a waste is extremely dangerous.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        Radioactive rate laws are zero order reactions because the rate doesn't \
-                        depend on the material
+                        The radioactive isotope $Po-213$ would be the most dangerous
                         """,
                         explanation: """
-                        Radioactive rate laws are not of zero order reactions.
+                        For $Po-213$, substituting the rate constant $1.65x10^5^ s^-1^$ in the half-life equation we get: \
+                        $t_1/2_ = ln(2)/1.65x10^5^ = 4.2x10^-6^ seconds$. A half-life that small means that the decay of \
+                        the isotope is a very fast one, meaning that $Po-213$ wouldn't stick around as much as a waste.
+                        """,
+                        explanationLabel: """
+                        For $Po-213$, substituting the rate constant $1.65x10^5^ s^-1^$ in the half-life equation we get: \
+                        t_1/2_ =, ln(2), / 1.65x10^5^, = 4.2x10^-6^ seconds. A half-life that small means that the decay of \
+                        the isotope is a very fast one, meaning that $Po-213$ wouldn't stick around as much as a waste.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        Radioactive rate laws are second order reactions because the half-life of \
-                        the substance depends on the interactions of it with other components
+                        They are both equally dangerous because both are radioactive
                         """,
                         explanation: """
-                        Radioactive rate laws are not of second order reactions.
+                        Even though they are both radioactive, one of them decays much faster than the other one, \
+                        making it an easier to handle waste. Remember, only after 10 half lives have passed is the \
+                        isotope considered safe, so the higher is the half-life, the more dangerous it is.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        For radioactive material, the overall rate order cannot be determined for \
-                        decaying material because it changes when this is bonded to other compounds
+                        It cannot be determined which of the isotopes would be more dangerous
                         """,
                         explanation: """
-                        Radioactive decay is always of a predetermined order.
+                        Radioactive decay is a first order process, meaning that only knowing the rate constant is \
+                        enough to calculate or estimate the half-life, which itself would be sufficient to determine \
+                        how dangerous of a waste the isotope could be.
                         """
                     )
                 ],
@@ -313,78 +329,57 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "SECONDORDER-7",
                 question: """
-                According to the steady state approximation, what has to be true to determine the \
-                rate law for the reaction that has the following reaction mechanism:
+                Consider the following proposed mechanism. Which compound would not be considered neither a reactant \
+                nor a product?
 
-                $(Step 1) 2NO_(g)_ ⇌ N_2_O_2__(g)_$
-                $(Step 2) N_2_O_2_ + O_2__(g)_ ➝ 2NO_2__(g)_$
-                $Overall 2NO_(g)_ + O_2__(g)_ ➝ 2NO_2__(g)_$
-
-                Take into account that it is not evident that the first elementary step is the \
-                rate determining step.
+                $(Step 1) NO_2_ + NO_2_ ⇌ NO_3_ + NO$
+                $(Step 2) NO_3_ + CO ➝ NO_2_ + CO_2_$
+                $(Overall) NO_2_ + CO ➝ NO_2 + CO_2_$
                 """,
                 questionLabel: """
-                According to the steady state approximation, what has to be true to determine the \
-                rate law for the reaction that has the following reaction mechanism:
+                Consider the following proposed mechanism. Which compound would not be considered neither a reactant \
+                nor a product?
 
-                (Step 1) 2NO_(g)_, ⇌ N_2_O_2__(g)_
-                (Step 2) N_2_O_2_, +, O_2__(g)_, yields, 2NO_2__(g)_
-                Overall, 2NO_(g)_, +, O_2__(g)_, yields, 2NO_2__(g)_
-
-                Take into account that it is not evident that the first elementary step is the \
-                rate determining step.
+                (Step 1), NO_2_ + NO_2_, ⇌, NO_3_ + NO
+                (Step 2), NO_3_ + CO, yields, NO_2_ + CO_2_
+                Overall, NO_2_ + CO, yields, NO_2_ + CO_2_
                 """,
                 correctAnswer:
                     QuizAnswerData(
                         answer: """
-                        The rate of formation of N_2_O_2_ is equal to the rate of disappearance of \
-                        N_2_O_2_.
+                        NO_3_
                         """,
                         explanation: """
-                        By the steady state approximation, it is assumed that the concentration of \
-                        the reaction intermediate stays constant. A reaction intermediate is a \
-                        species that is formed from the reactants (or preceding intermediates) and \
-                        reacts further to give the directly observed products of a chemical \
-                        reaction.
-
-                        This intermediate is immediately consumed after its production, which is \
-                        why it doesn't appear in the overall chemical equation. The reaction \
-                        intermediate for this reaction is N_2_O_2_, and if its concentration \
-                        remains constant, that means that the rate of formation of N_2_O_2_ is the \
-                        same as the rate of disappearance of N_2_O_2_.
+                        A reaction intermediate is a species that is formed from the reactants (or preceding intermediates) \
+                        and reacts further to give the directly observed products of a chemical reaction. This intermediate \
+                        is immediately consumed after its production, which is why it doesn't appear in the overall chemical \
+                        equation. The reaction intermediate for this reaction is $NO_3_$, and its concentration remains constant.
                         """
                     ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        The rate of formation of N_2_O_2_ is equal to the rate of disappearance \
-                        of NO
+                        NO_2_
                         """,
                         explanation: """
-                        If the rate of formation of N_2_O_2_ was equal to the rate of \
-                        disappearance of NO, that would not assure that concentration of the \
-                        intermediate N_2_O_2_ to stay constant.
+                        NO_2_ appears in Step 1 as a reactant and in Step 2 as a product, but there is one more mole (molecule) \
+                        of NO_2_ in the overall reactants side, making it a true reactant of the whole reaction.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        The rate of formation of N_2_O_2_ is equal to the rate of formation of NO_2_
+                        NO
                         """,
                         explanation: """
-                        If the rate of formation of N_2_O_2_ was equal to the rate of formation of \
-                        NO_2_, that would not assure that concentration of the intermediate \
-                        N_2_O_2_ to stay constant.
+                        NO only appears once in Step 1 as a product, making it a true product of the overall reaction.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        The rate of formation of N_2_O_2_ is equal to the rate of disappearance of \
-                        O_2_
+                        CO
                         """,
                         explanation: """
-                        If the rate of formation of N_2_O_2_ was equal to the rate of \
-                        disappearance of O_2_, that would not assure that concentration of the \
-                        intermediate N_2_O_2_ to stay constant.
+                        CO only appears once in Step 2 as a reactant, making it a true reactant of the overall reaction.
                         """
                     )
                 ],
@@ -393,11 +388,8 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "SECONDORDER-8",
                 question: """
-                A patient receives medications to treat his allergies. He takes 25 mg of this drug \
-                twice a day, with a span of 12 hours in between in order for the drug to be \
-                effective. This particular drug is metabolized as a first order process, whose \
-                half-life is 8 hours. What would be the rate constant k for the process of \
-                metabolization of this drug?
+                The decomposition of a substance X follows a first order process. It takes around 8 hours for the substance \
+                X to be half of its initial amount. What would be the rate constant k for this decomposition process?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: "0.058 h^-1^",
@@ -405,21 +397,21 @@ extension QuizQuestionsList {
                     The equation for half-life for a first order reaction is $t_1/2_ = ln(2)/k$. \
                     If $t_1/2_$ is 12 hours, we only need to replace it:
 
-                    $k = ln(2)/t_1/2_$ ➝ $k = ln(2)/12 = 0.039 h^-1^$.
+                    $k = ln(2)/t_1/2_$ ➝ $k = ln(2)/8 = 0.058 h^-1^$.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "0.039 h^-1^",
+                        answer: "0.041 h^-1^",
                         explanation: """
-                        A rate constant value of 0.039 h^-1^ would imply a half life of around \
-                        18 hours.
+                        A rate constant value of 0.041 h^-1^ would imply a half life of around \
+                        17 hours.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "1.0 mg/h",
+                        answer: "1.0 g/h",
                         explanation: """
-                        1.0 mg/h is not even the units expected for a rate constant of a first \
+                        1.0 g/h is not even the units expected for a rate constant of a first \
                         order reaction.
                         """
                     ),
@@ -436,54 +428,71 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "SECONDORDER-9",
                 question: """
-                Consider a reaction: $B + 2C + D ➝ E + F$. Based on the table below, what would be the \
-                rate law of this reaction?
+                Consider a reaction: $B + 2C + D ➝ E + F$. Based on the table below, and knowing \
+                that the rate constant k is $1.2x10^11^$, what would be the value of X?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Rate = k[B]^2^[C][D]^3^",
-                    answerLabel: "Rate = k, times B^2^, times C, times D^3^",
+                    answer: "2.3x10^-6^",
                     explanation: """
-                    When [B] goes from 0.002 to 0.004 (it's doubled, it goes up by a factor of 2) \
-                    while C and D remain constant, the rate goes from 0.5X to 2X (it goes up by a \
-                    factor of 4). $2^x^ = 4$ where $x = 2$; the reaction is second order for [B].
+                    When [B] goes from 0.002 to 0.008 (it goes up by a factor of 4) while C and D \
+                    remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
+                    $4^x = 4$ where $x = 1$; the reaction is first order for [B].
 
-                    When [C] goes from 0.008 to 0.002 (it goes down by a factor of 4) while B and \
-                    D remain constant, the rate goes from 8X to 2X (it goes down by a factor of \
-                    4). $4^x^ = 4$ where x = 1; the reaction is first order for [C].
+                    When [C] goes from 0.001 to 0.006 (it goes up by a factor of 4) while B and D \
+                    remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
+                    $4^x = 4$ where $x = 1$; the reaction is first order for [C].
 
-                    When [D] goes from 0.002 to 0.004 (it's doubled, goes up by a factor of 2) \
-                    while B and C remain constant, the rate goes from 2X to 16X (it goes up by a \
-                    factor of 8). $2^x^ = 8$ where $x = 3$; the reaction is third order for [D].
+                    When [D] goes from 0.002 to 0.004 (it's doubled, goes up by a factor of 2) while \
+                    B and C remain constant, the rate goes from 10X to 160X (it goes up by a factor of \
+                    16). $2^x = 16$ where $x = 4$; the reaction is fourth order for [D].
+
+                    Replacing in the rate law equation and solving for X we get: \
+                    X = $(1.2x10^11^ \\* 0.002 \\* 0.006 \\* 0.002^4^) / 10 =$ $2.3x10^-6^$.
+                    """,
+                    explanationLabel: """
+                    When [B] goes from 0.002 to 0.008 (it goes up by a factor of 4) while C and D \
+                    remain constant, the Rate goes from 27X to 160X (it goes up by a factor of 4). \
+                    4^x = 4 where x = 1; the reaction is first order for [B].
+
+                    When [C] goes from 0.001 to 0.006 (it goes up by a factor of 4) while B and D \
+                    remain constant, the Rate goes from 27X to 160X (it goes up by a factor of 4). \
+                    4^x = 4 where x = 1; the reaction is first order for [C].
+
+                    When [D] goes from 0.002 to 0.004 (it's doubled, goes up by a factor of 2) while \
+                    B and C remain constant, the Rate goes from 10X to 160X (it goes up by a factor of \
+                    16). 2^x = 16 where x = 4; the reaction is fourth order for [D].
+
+                    Replacing in the rate law equation and solving for X we get: \
+                    $X =, \(Labels.openParen), 1.2x10^11^ \\* 0.002 \\* 0.006 \\* 0.002^4^, \(Labels.closedParen), / 10, = 2.3x10^-6^$.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Rate = k[B][C][D]",
-                        answerLabel: "Rate = k times B times C times D",
+                        answer: "288",
                         explanation: """
-                        When [B] goes from 0.002 to 0.004 (it's doubled, it goes up by a factor of 2) \
-                        while C and D remain constant, the rate goes from 0.5X to 2X (it goes up \
-                        by a factor of 4). $2^x^ = 4$ where $x = 2$; the reaction is second order \
-                        for [B].
+                        You might have used the rate law equation as if D is of first order. When [D] goes \
+                        from 0.002 to 0.004 (it goes up by a factor of 4) while B and C remain constant, \
+                        the rate goes from 10X to 160X (it goes up by a factor of 16). \
+                        $2^x = 16$ where $x = 4$; the reaction is forth order for [D].
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[B][C]^2^[D]^3^",
-                        answerLabel: "Rate = k times B, times C^2^, times D^3^",
+                        answer: "1.92x10^-17^",
                         explanation: """
-                        When [C] goes from 0.008 to 0.002 (it goes down by a factor of 4) while B \
-                        and D remain constant, the rate goes from 8X to 2X (it goes down by a \
-                        factor of 4). $4^x^ = 4$ where $x = 1$; the reaction is first order for [C].
+                        You might have forgotten the rate constant k in the rate law equation when calculating \
+                        X. Try determining the rate law equation first with the provided data.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[B]^2^[C]^2^[D]",
+                        answer: "8.3x10^-11^",
                         answerLabel: "Rate = k, times B^2^, times C^2^, times D",
                         explanation: """
-                        When [D] goes from 0.002 to 0.004 (it's doubled, it goes up by a factor of 2) \
-                        while B and C remain constant, the rate goes from 2X to 16X (it goes up by \
-                        a factor of 8). $2^x^ = 8$ where $x = 3$; the reaction is third order for \
-                        [D].
+                        You might have used the rate law equation as if it was $rate = k[B][C]^3^[D]^4^$. When [C] \
+                        goes from 0.001 to 0.006 (it goes up by a factor of 4) while B and D remain constant, \
+                        the rate goes from 27X to 160X (it goes up by a factor of 4). $4^x = 4$ where $x = 1$; the \
+                        reaction is first order for [C]. When [D] goes from 0.002 to 0.004 (it's doubled, goes \
+                        up by a factor of 2) while B and C remain constant, the rate goes from 10X to 160X (it \
+                        goes up by a factor of 16). $2^x = 16$ where $x = 4$; the reaction is fourth order for [D]. 
                         """
                     )
                 ],
@@ -491,84 +500,86 @@ extension QuizQuestionsList {
                 table: QuizTable(
                     rows: [
                         ["[B] (M)", "[C] (M)", "[D] (M)", "Rate M/s"],
-                        ["0.001", "0.002", "0.002", "0.5X"],
-                        ["0.004", "0.008", "0.002", "8X"],
-                        ["0.004", "0.002", "0.002", "2X"],
-                        ["0.004", "0.002", "0.004", "16X"]
+                        ["0.002", "0.006", "0.002", "10X"],
+                        ["0.002", "0.001", "0.004", "27X"],
+                        ["0.002", "0.006", "0.004", "160X"],
+                        ["0.008", "0.001", "0.004", "108X"]
                     ]
                 )
             ),
             QuizQuestionData(
                 id: "SECONDORDER-10",
                 question: """
-                What would be the rate law equation for a reaction that follows this reaction \
-                mechanism?
+                What would be the rate law equation for a reaction that follows this reaction mechanism?
 
-                $Step 1 (fast) 2NO_(g)_ ⇌ N_2_O_2__(g)_$
-                $Step 2 (slow) N_2_O_2__(g)_ + O_2_ ➝ 2NO_2__(g)_$
+                $Step 1 (fast) 2NO_(g)_ ➝ N_2_O_2__(g)_$
+                $Step 2 (slow) N_2_O_2__(g)_ + H_2__(g)_ ➝ N_2_O_(g)_ + H_2_O_(g)_$
+                $Step 3 (fast) N_2_O_(g)_ + H_2__(g)_ ➝ N_2__(g)_ + H_2_O_(g)_$
                 """,
                 questionLabel: """
-                What would be the rate law equation for a reaction that follows this reaction \
-                mechanism?
+                What would be the rate law equation for a reaction that follows this reaction mechanism?
 
-                $Step 1 (fast) 2NO_(g)_ ⇌ N_2_O_2__(g)_$
-                $Step 2 (slow) N_2_O_2__(g)_, + O_2_, ➝ 2NO_2__(g)_$
+                $Step 1 (fast) 2NO_(g)_, yields, N_2_O_2__(g)_$,
+                $Step 2 (slow) N_2_O_2__(g)_, + H_2__(g)_, yields, N_2_O_(g)_, + H_2_O_(g)_$,
+                $Step 3 (fast) N_2_O_(g)_, + H_2__(g)_, yields, N_2__(g)_, + H_2_O_(g)_$,
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Rate = k[NO]^2^[O_2_]",
-                    answerLabel: "Rate = k, times [NO]^2^, times O_2_",
+                    answer: "Rate = k[NO]^2^[H_2_]",
+                    answerLabel: "Rate = k, times [NO]^2^, times H_2_",
                     explanation: """
-                    Many reactions proceed from reactants to products through a sequence of \
-                    reactions (elementary reactions, or steps). This sequence of reactions is \
-                    called the reaction mechanism. The reaction mechanism for elementary steps or \
-                    reactions is very simple to write since it's determined by the stoichiometry.
-
-                    For example, if we were going to write step 1's rate law, it would be: \
-                    $rate = k[NO]^2^$. Furthermore, the slowest step, in this case step 2, is also \
-                    called the rate-determining step, because the overall reaction cannot go \
-                    faster than the slowest of the steps.
-
-                    In other words, the rate for this reaction would be \
-                    $rate = k[N_2_O_2_][O_2_]$ but since N_2_O_2_ is only the intermediate, then \
-                    the actual rate law is: $rate = k[NO]^2^[O^2^]$.
+                    Many reactions proceed from reactants to products through a sequence of reactions \
+                    (elementary reactions, or steps). This sequence of reactions is called the \
+                    reaction mechanism. The reaction mechanism for elementary steps or reactions is \
+                    very simple to write since it's determined by the stoichiometry.
+                    
+                    For example, if we were going to write Step 1's rate law, it would be: \
+                    $Rate = k[NO]^2^$. Furthermore, the slowest step, in this case Step 2, is also called \
+                    the rate-determining step, because the overall reaction cannot go faster than \
+                    the slowest of the steps.
+                    
+                    In other words, the rate for this reaction would be $rate = k[N_2_O_2_][H_2_]$ but \
+                    since N_2_O_2_ is only the intermediate, then the actual rate law is: \
+                    $rate = k[NO]^2^[H_2_]$.
                     """,
                     explanationLabel: """
-                    Many reactions proceed from reactants to products through a sequence of \
-                    reactions (elementary reactions, or steps). This sequence of reactions is \
-                    called the reaction mechanism. The reaction mechanism for elementary steps or \
-                    reactions is very simple to write since it's determined by the stoichiometry.
-
-                    For example, if we were going to write step 1's rate law, it would be: \
-                    $rate = k, times [NO]^2^$. Furthermore, the slowest step, in this case step 2, is also \
-                    called the rate-determining step, because the overall reaction cannot go \
-                    faster than the slowest of the steps.
-
-                    In other words, the rate for this reaction would be \
-                    rate = k times [N_2_O_2_] times [O_2_], but since N_2_O_2_ is only the intermediate, then \
-                    the actual rate law is: rate = k, times [NO]^2^, times [O^2^].
+                    Many reactions proceed from reactants to products through a sequence of reactions \
+                    (elementary reactions, or steps). This sequence of reactions is called the \
+                    reaction mechanism. The reaction mechanism for elementary steps or reactions is \
+                    very simple to write since it's determined by the stoichiometry.
+                    
+                    For example, if we were going to write Step 1's rate law, it would be: \
+                    $rate = k, times [NO]^2^$. Furthermore, the slowest step, in this case Step 2, is also called \
+                    the rate-determining step, because the overall reaction cannot go faster than \
+                    the slowest of the steps.
+                    
+                    In other words, the rate for this reaction would be rate = k, times [N_2_O_2_], times [H_2_], but \
+                    since N_2_O_2_ is only the intermediate, then the actual rate law is: \
+                    rate = k, times [NO]^2^, times [H_2_].
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Rate = k[NO]^2^/[O_2_]",
-                        answerLabel: "Rate = k, times NO^2^, / O_2_",
+                        answer: "Rate = k[NO]^2^/[H_2_]",
+                        answerLabel: "Rate = k, times NO^2^, / H_2_",
                         explanation: """
                         Rate laws only have reactants in the form of $rate = k[A][B][C]...$ \
                         without denominator.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[NO_2_]",
-                        answerLabel: "Rate = k times NO_2_",
+                        answer: "Rate = k[NO]^2^[H_2_]^2^",
+                        answerLabel: "Rate = k, times NO^2^, times H_2_^2^",
                         explanation: """
-                        $Rate = k[NO]^2^$ would be the rate law for the step 1 reaction.
+                        $Rate = k[NO]^2^[H_2_]^2^$ would be the rate law if you took the overall reaction \
+                        reactants and use their coefficients as the exponents in the rate law \
+                        equation, which is incorrect.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[N_2_O_2_]",
-                        answerLabel: "Rate = k times N_2_O_2_",
+                        answer: "Rate = k[N_2_O]",
+                        answerLabel: "Rate = k times N_2_O",
                         explanation: """
-                        N_2_O_2_ is not a reactant but a product of the overall reaction.
+                        N_2_O is not a reactant but an intermediate of the overall reaction.
                         """
                     )
                 ],
@@ -577,45 +588,50 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "SECONDORDER-11",
                 question: """
-                Which type of elementary reaction steps would have a higher rate of reaction?
+                Which type of elementary reaction would probably not be the rate-determining step \
+                of the mechanism?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "A reaction with only one reactant",
+                    answer: "An elementary step with one reactant and three products",
                     explanation: """
                     For elementary reactions, the rate is deeply related to the probability of \
                     collision of the molecules involved. The more molecules are needed to collide \
-                    to form products, then the lower the probability is for a successful \
+                    to form products, then the lower would be the probability for a successful \
                     collision to take place.
-
+                    
                     That's why the reaction with the highest rate would be the one with only one \
-                    reactant, since it doesn't even need a collision to happen, making it much \
-                    more probable to occur.
+                    reactant, since it doesn't even need a collision to happen, making it much more \
+                    probable to occur. The products are irrelevant to the rate of the reaction.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "A reaction that occurs with three reactants",
+                        answer: "An elementary step with three reactants and two products",
                         explanation: """
                         Three reactants for an elementary reaction would imply that a successful \
-                        collision of those would have to take place, and given the very low \
-                        chances for it to happen, this results in a slow rate of reaction.
+                        collision of those would have to take place, and given the very low chances \
+                        for it to happen, this results in a slower rate of reaction compared ot the \
+                        rest of the scenarios. The products are irrelevant to the rate of the \
+                        reaction.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "A reaction where two reactants combine",
+                        answer: "An elementary step with two reactants and two products",
                         explanation: """
-                        Two reactants for an elementary reaction would imply that a successful \
-                        collision of those would have to take place, and given the low chances for \
-                        it to happen, this results in a slow rate of reaction.
+                        Two reactants for an elementary reaction would imply that a successful collision \
+                        of those would have to take place, and given the low chances for it to happen, \
+                        this results in a slow rate of reaction. The products are irrelevant to the \
+                        rate of the reaction.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "A reaction where two reactants undergo double displacement",
+                        answer: "An elementary step with four reactants and one product",
                         explanation: """
-                        For elementary reactions, the rate is deeply related to the probability of \
-                        collision of the molecules involved. The more molecules are needed to \
-                        collide to form products, then the lower the probability is for a \
-                        successful collision to take place.
+                        For elementary reactions, the rate is deeply related to the probability of collision \
+                        of the molecules involved. The more molecules are needed to collide to form products, \
+                        then the lower would be the probability for a successful collision to take place. Four \
+                        reactants for an elementary reaction would probably be the slowest of the proposed \
+                        scenarios. 
                         """
                     )
                 ],
@@ -624,12 +640,12 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "SECONDORDER-12",
                 question: """
-                The rate of disappearance of bromine is -0.021 $M/s$ in this reaction: \
-                $H_2(g)_ + Br_2(g)_ ➝ 2HBr_(aq)_$. What would be rate of formation for HBr?
+                The rate of disappearance of chlorine is -0.021 $M/s$ in this reaction: \
+                $2NO_(g)_ + Cl_2(g)_ ➝ 2NOCl_(aq)_$. What would be rate of formation for NOCl?
                 """,
                 questionLabel: """
-                The rate of disappearance of bromine is -0.021 $M/s$ in this reaction: \
-                $H_2(g)_ + Br_2(g)_, yields, 2HBr_(aq)_$. What would be rate of formation for HBr?
+                The rate of disappearance of chlorine is -0.021 $M/s$ in this reaction: \
+                $2NO_(g)_ + Cl_2(g)_, yields, 2NOCl_(aq)_$. What would be rate of formation for NOCl?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: "0.042 M/s",
@@ -637,25 +653,25 @@ extension QuizQuestionsList {
                     The rates of disappearance of reactants and appearance of products can be \
                     related to each other based on the stoichiometry of the reaction.
 
-                    $Rate = -[ΔH_2_]/Δt = -[ΔBr_2_]/Δt = [ΔHbr]/2Δt$.
+                    $Rate = -[ΔNO]/2Δt = -[ΔCl_2_]/Δt =$ [ΔNOCl]/2Δt.
 
-                    If $[ΔBr_2_]/Δt = -0.021 M/s$, we only have to replace:
+                    If $[ΔCl_2_]/Δt = -0.021 M/s$, we only have to replace:
 
-                    -[ΔBr_2_]/Δt = [ΔHbr]/2Δt ➝
-                    -2(-0.021) = [ΔHbr]/Δt ➝
-                    0.042 M/s = [ΔHbr]/Δt.
+                    -[ΔCl_2_]/Δt = [ΔNOCl]/2Δt ➝
+                    -2(-0.021) = [ΔNOCl]/Δt ➝
+                    0.042 M/s = [ΔNOCl]/Δt.
                     """,
                     explanationLabel: """
                     The rates of disappearance of reactants and appearance of products can be \
                     related to each other based on the stoichiometry of the reaction.
 
-                    $Rate =, -[ΔH_2_]/Δt, = -[ΔBr_2_]/Δt, = [ΔHbr]/2Δt$.
+                    Rate =, -[ΔNO]/Δt, = -[ΔCl_2_]/Δt, = [ΔNOCl]/2Δt.
 
-                    If $[ΔBr_2_]/Δt = -0.021 M/s$, we only have to replace:
+                    If $[ΔCl_2_]/Δt = -0.021 M/s$, we only have to replace:
 
-                    -[ΔBr_2_]/Δt, = [ΔHbr]/2Δt ➝
-                    -2 times -0.021 = [ΔHbr]/Δt ➝
-                    0.042 M/s = [ΔHbr]/Δt.
+                    -[ΔCl_2_]/Δt, = [ΔNOCl]/2Δt ➝
+                    -2 times -0.021 = [ΔNOCl]/Δt ➝
+                    0.042 M/s = [ΔNOCl]/Δt.
                     """
                 ),
                 otherAnswers: [
@@ -664,8 +680,8 @@ extension QuizQuestionsList {
                         explanation: """
                         The rate of appearance is given in positive values. Besides that, \
                         0.021 M/s would imply that the stoichiometry of the reaction is one to \
-                        one, which is not the case since for each mole of Br_2_ that's consumed, \
-                        there are 2 moles of HBr that are produced, so its formation should be \
+                        one, which is not the case since for each mole of Cl_2_ that's consumed, \
+                        there are 2 moles of NOCl that are produced, so its formation should be \
                         going at a higher rate.
                         """
                     ),
@@ -673,8 +689,8 @@ extension QuizQuestionsList {
                         answer: "0.021 M/s",
                         explanation: """
                         0.021 M/s would imply that the stoichiometry of the reaction is one to \
-                        one, which is not the case since for each mole of Br_2_ that's consumed, \
-                        there are 2 moles of HBr that are produced, so its formation should be \
+                        one, which is not the case since for each mole of Cl_2_ that's consumed, \
+                        there are 2 moles of NOCl that are produced, so its formation should be \
                         going at twice the rate.
                         """
                     ),
@@ -739,45 +755,45 @@ extension QuizQuestionsList {
                 what is the rate law for the reaction?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Rate = k[S_2_O_8_^-2^][3I^-^]^2^",
-                    answerLabel: "Rate = k times [S_2_O_8_^-2^], times [3I^-^]^2^",
+                    answer: "Rate = k[S_2_O_8_^-2^][I^-^]^2^",
+                    answerLabel: "Rate = k times [S_2_O_8_^-2^], times [I^-^]^2^",
                     explanation: """
                     When [S_2_O_8_^-2^] goes from 0.15 to 0.3 (it's doubled, it goes up by a factor of 2) \
-                    while 3I^-^ remains constant, the rate goes from $8.44x10^-4^$ to $1.69x10^-3^$ \
+                    while I^-^ remains constant, the rate goes from $8.44x10^-4^$ to $1.69x10^-3^$ \
                     (it goes up by a factor of 2). $2^x^ = 2$ where $x = 1$; the reaction is first \
                     order for [S_2_O_8_^-2^].
 
 
-                    When [3I^-^] goes from 0.15 to 0.6 (it goes up by a factor \
+                    When [I^-^] goes from 0.15 to 0.6 (it goes up by a factor \
                     of 4) while S_2_O_8_^-2^ remains constant, the rate goes from $1.69x10^-3^$ to \
                     $2.7x10^-2^$ (it goes up by a factor of 16). $4^x^ = 16$ where $x = 2$; the \
-                    reaction is second order for [3I^-^].
+                    reaction is second order for [I^-^].
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "Rate = k[S_2_O_8_^-2^][3I^-^]",
-                        answerLabel: "Rate = k times [S_2_O_8_^-2^] times [3I^-^]",
+                        answer: "Rate = k[S_2_O_8_^-2^][I^-^]",
+                        answerLabel: "Rate = k times [S_2_O_8_^-2^] times [I^-^]",
                         explanation: """
-                        When [3I^-^] goes from 0.15 to 0.6 (it goes up by a factor of 4) while \
+                        When [I^-^] goes from 0.15 to 0.6 (it goes up by a factor of 4) while \
                         S_2_O_8_^-2^ remains constant, the rate goes from to $1.69x10^-3^$ to \
                         $2.7x10^-2^$ (it goes up by a factor of 16). $4^x^ = 16$ where $x = 2$; \
-                        the reaction is second order for [3I^-^].
+                        the reaction is second order for [I^-^].
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[S_2_O_8_^-2^]^2^[3I^-^]^1^",
-                        answerLabel: "Rate = k, times [S_2_O_8_^-2^]^2^, times [3I^-^]^1^",
+                        answer: "Rate = k[S_2_O_8_^-2^]^2^[I^-^]^1^",
+                        answerLabel: "Rate = k, times [S_2_O_8_^-2^]^2^, times [I^-^]^1^",
                         explanation: """
                         When [S_2_O_8_^-2^] goes from 0.15 to 0.3 (it's doubled, goes up by a factor of \
-                        2) while 3I^-^ remains constant, the rate goes from $8.44x10^-4^$ to \
+                        2) while I^-^ remains constant, the rate goes from $8.44x10^-4^$ to \
                         $1.69x10^-3^$ (it goes up by a factor of 2). $2^x^ = 2$ where $x = 1$; the \
                         reaction is first order for [S_2_O_8_^-2^].
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[S_2_O_8_^-2^]^2^[3I^-^]^2^",
-                        answerLabel: "Rate = k, times [S_2_O_8_^-2^]^2^, times [3I^-^]^2^",
+                        answer: "Rate = k[S_2_O_8_^-2^]^2^[I^-^]^2^",
+                        answerLabel: "Rate = k, times [S_2_O_8_^-2^]^2^, times [I^-^]^2^",
                         explanation: """
                         Try comparing how much the change of concentration of both reactants \
                         affect the rate of the reaction.
@@ -787,7 +803,7 @@ extension QuizQuestionsList {
                 difficulty: .medium,
                 table: QuizTable(
                     rows: [
-                        ["E", "[S_2_O_8_^-2^](M)", "[3I^-^](M)", "Rate M/s"],
+                        ["E", "[S_2_O_8_^-2^](M)", "[I^-^](M)", "Rate M/s"],
                         ["1", "0.15", "0.15", "8.44x10^-4^"],
                         ["2", "0.30", "0.15", "1.69x10^-3^"],
                         ["3", "0.30", "0.60", "2.7x10^-2^"],
@@ -800,66 +816,61 @@ extension QuizQuestionsList {
                 question: """
                 Consider the reaction below:
 
-                $F_2__(g)_ + 2ClO_2__(g)_ ➝ 2FClO_2__(g)_$
+                $3A + 2B ➝ C + D$
 
                 Experiments were performed to determine that its rate law is: \
-                $rate = k[F_2_][ClO_2_]$. Which of the following would be expected?
+                $rate = k[A][B]^2^$. Which of the following would be expected?
                 """,
                 questionLabel: """
                 Consider the reaction below:
 
-                $F_2__(g)_ + 2ClO_2__(g)_, yields, 2FClO_2__(g)_$
+                $3A + 2B, yields, C + D
 
                 Experiments were performed to determine that its rate law is: \
-                $rate = k times [F_2_] times [ClO_2_]$. Which of the following would be expected?
+                $rate = k times [A] times [B]^2^$. Which of the following would be expected?
                 """,
                 correctAnswer:
                     QuizAnswerData(
                         answer: """
-                        As the concentration of fluorine gas is doubled, the rate of the reaction \
-                        would be doubled
+                        If [A] is halved and [B] is doubled, the rate of the reaction goes up by a factor of 2
                         """,
                         explanation: """
-                        According to the rate law equation, the reaction is first order with \
-                        respect to F_2_, which means that the rate is directly proportional to it. \
-                        If the concentration of F_2_ is doubled, the rate of the reaction would be \
-                        doubled too.
+                        According to the rate law equation, the reaction is first order with respect to A and \
+                        second order with respect to B. If the concentration of A is halved, the rate of the \
+                        reaction is halved too. If the concentration of B is doubled, the rate of the reaction \
+                        goes up by a factor of 4. If both things happen at the same time, the rate would \
+                        ultimately be doubled.
                         """
                     ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        As the concentration of fluorine gas is doubled, the rate of the reaction \
-                        would be quadrupled
+                        If [A] is doubled and [B] is halved, the rate of the reaction goes up by a factor of 4
                         """,
                         explanation: """
-                        If this was the case, the reaction would be second order with respect to \
-                        F_2_.
+                        If [A] is doubled, the rate is doubled too. If [B] is halved, the rate goes down by a \
+                        factor of 4. If both things happen at the same time, the rate would ultimately \
+                        be halved.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        As the concentration of fluorine gas is doubled, the rate of the reaction \
-                        would be halved
+                        If [A] is doubled and [B] is doubled too, the rate of the reaction goes down by a factor of 2
                         """,
                         explanation: """
-                        Given the nature of the rate law equation $rate = k[A][B][C]...$ notice \
-                        that if any concentration increases, the rate would increase also and in \
-                        no case it would decrease.
-                        """,
-                        explanationLabel: """
-                        Given the nature of the rate law equation rate = k, times 'A', times B, times C ... notice \
-                        that if any concentration increases, the rate would increase also and in \
-                        no case it would decrease.
+                        If [A] is doubled, the rate is doubled too. If [B] is doubled, the rate goes up by a \
+                        factor of 4. If both things happen at the same time, the rate would ultimately go \
+                        up by a factor of 8.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        As the concentration of fluorine gas is doubled, the rate of the reaction \
-                        would not change
+                        If [A] is halved and [B] is halved, the rate of the reaction goes down by a factor of 2.
                         """,
                         explanation: """
-                        If this was the case, the reaction would be zero order with respect to F_2_.
+                        If [A] is halved, the rate is halved too. If [B] is halved, the rate goes down by a \
+                        factor of 4. If both things happen at the same time, the rate would ultimately go \
+                        down by a factor of 8.
                         """
                     )
                 ],
@@ -963,50 +974,50 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "SECONDORDER-18",
                 question: """
-                Kinetic data was collected experimentally of the decomposition of A. The \
-                concentration of A was measured through time while the reaction was taking place. \
-                Based on the data in the table, what would be the order of the reaction?
+                Consider a reaction $A ➝ B$. The concentration of A was measured through time \
+                while the reaction was taking place. Based on the data in the table, what \
+                would be the order of the reaction?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "The decomposition of A is a first order reaction",
+                    answer: "The reaction is a first order reaction",
                     explanation: """
                     We can give these tables the same treatment as we give to the graphs. Making 3 \
                     graphs with the provided data might be a way to find the answer, but to \
                     quickly determine the order of the reaction, we can look at the increment in \
                     each experiment.
 
-                    From 0 to 30 seconds, [A] goes from 10.0 to 7.05 (difference of 2.95), ln[A] \
-                    goes from 2.30 to 1.95 (difference of 0.35) and $1/[A]$ goes from 0.10 to \
-                    0.14 (difference of 0.04).
+                    From 0 to 10 seconds, [A] goes from 1.00 to 0.90 (difference of 0.10), ln[A] \
+                    goes from 0.00 to -0.10 (difference of 0.10) and $1/[A]$ goes from 1.00 to \
+                    1.11 (difference of 0.11).
 
-                    From 30 to 60 seconds, [A] goes from 7.05 to 4.97 (difference of 2.38), ln[A] \
-                    goes from 1.95 to 1.60 (difference of 0.35) and 1/[A] goes from 0.14 to 0.20 \
-                    (difference of 0.06).
+                    From 10 to 20 seconds, [A] goes from 0.90 to 0.81 (difference of 0.09), ln[A] \
+                    goes from -0.10 to -0.20 (difference of 0.10) and $1/[A]$ goes from 1.11 to 1.23 \
+                    (difference of 0.12).
 
-                    The only increment that remained the same in these last 30 seconds as in the \
-                    first 30 seconds of the reaction is the value for $ln[A]$, which means that \
-                    the increment is linear, so it's a first order reaction.
+                    The only increment that remained the same in these 30 seconds of the reaction \
+                    is the value for $ln[A]$, which means that the increment is linear, so it's a \
+                    first order reaction.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "The decomposition of A is a zero order reaction",
+                        answer: "The reaction is a zero order reaction",
                         explanation: """
-                        If the decomposition of A was a zero order reaction, the increase of A \
-                        would be linear, for example: For 0 seconds, 10 M. For 30 seconds, 7.05 M. \
-                        For 60 seconds, 4.1 M (instead of 4.97).
+                        If the reaction was a zero order reaction, the increase of $[A]$ would be \
+                        linear, for example: For 0 seconds, 1.00 M. For 10 seconds, 0.90 M. For 20 \
+                        seconds, 0.80 M (instead of 0.81 M).
                         """
                     ),
                     QuizAnswerData(
-                        answer: "The decomposition of A is a second order reaction",
+                        answer: "The reaction is a second order reaction",
                         explanation: """
-                        If the decomposition of A was a second order reaction, the increase of \
-                        $1/[A]$ would be linear, for example: For 0 seconds, 0.10. For 30 seconds, \
-                        0.14. For 60 seconds, 0.18 (instead of 0.20).
+                        If the reaction was a second order reaction, the increase of $1/[A]$ would be \
+                        linear, for example: For 0 seconds, 1.00 M. For 10 seconds, 1.11 M. For 20 \
+                        seconds, 1.22 M (instead of 1.23 M).
                         """
                     ),
                     QuizAnswerData(
-                        answer: "The decomposition of A is a third order reaction",
+                        answer: "The reaction is a third order reaction",
                         explanation: """
                         Try finding which expression between [A], $ln[A]$ and $1/[A]$ changes \
                         linearly with time to determine the order.
@@ -1017,11 +1028,11 @@ extension QuizQuestionsList {
                 table: QuizTable(
                     rows: [
                         ["Time (s)", "[A]", "ln[A]", "1/[A]"],
-                        ["0", "10.0", "2.30", "0.10"],
-                        ["30", "7.05", "1.95", "0.14"],
-                        ["60", "4.97", "1.60", "0.20"],
-                        ["90", "3.50", "1.25", "0.29"],
-                        ["120", "2.47", "0.90",  "0.40"]
+                        ["0", "1.00", "0.00", "1.00"],
+                        ["10", "0.90", "-0.10", "1.11"],
+                        ["20", "0.81", "-0.20", "1.23"],
+                        ["30", "0.74", "-0.30", "1.35"],
+                        ["40", "0.67", "-0.40",  "1.49"]
                     ]
                 )
             ),
