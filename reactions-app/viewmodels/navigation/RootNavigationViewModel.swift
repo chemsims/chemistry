@@ -29,7 +29,8 @@ class RootNavigationViewModel: ObservableObject {
     init(
         injector: Injector
     ) {
-        let firstScreen = AppScreen.zeroOrderReaction
+        let lastOpenedScreen = injector.lastOpenedScreenPersistence.get()
+        let firstScreen = lastOpenedScreen ?? AppScreen.zeroOrderReaction
         self.currentScreen = firstScreen
         self.injector = injector
         self.view = AnyView(EmptyView())
@@ -107,6 +108,7 @@ class RootNavigationViewModel: ObservableObject {
             ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
         }
         injector.analytics.openedScreen(screen)
+        injector.lastOpenedScreenPersistence.set(screen)
     }
 
     private func screenIsAfterCurrent(nextScreen: AppScreen) -> Bool {

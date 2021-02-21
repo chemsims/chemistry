@@ -161,6 +161,8 @@
 		57CDFE4125E270C5005D699A /* SecondOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE4025E270C5005D699A /* SecondOrderQuizQuestions.swift */; };
 		57CDFE4725E2731D005D699A /* ReactionComparisonQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE4625E2731D005D699A /* ReactionComparisonQuizQuestions.swift */; };
 		57CDFE4D25E27A95005D699A /* EnergyProfileQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE4C25E27A95005D699A /* EnergyProfileQuizQuestions.swift */; };
+		57CDFE5125E29968005D699A /* LastOpenedScreenPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE5025E29968005D699A /* LastOpenedScreenPersistence.swift */; };
+		57CDFE5725E29B0F005D699A /* LastOpenedScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */; };
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
 		57D8BA17257B6ABF006B3C8B /* ReactionComparisonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */; };
@@ -377,6 +379,8 @@
 		57CDFE4025E270C5005D699A /* SecondOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CDFE4625E2731D005D699A /* ReactionComparisonQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionComparisonQuizQuestions.swift; sourceTree = "<group>"; };
 		57CDFE4C25E27A95005D699A /* EnergyProfileQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyProfileQuizQuestions.swift; sourceTree = "<group>"; };
+		57CDFE5025E29968005D699A /* LastOpenedScreenPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastOpenedScreenPersistence.swift; sourceTree = "<group>"; };
+		57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastOpenedScreenTests.swift; sourceTree = "<group>"; };
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
 		57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreen.swift; sourceTree = "<group>"; };
@@ -834,6 +838,7 @@
 				57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */,
 				5743D9C525C45D9D000C0397 /* ReviewPromptPersistenceTests.swift */,
 				5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */,
+				57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -945,6 +950,7 @@
 				5780320225B0677F00A0F610 /* SavedQuizInput.swift */,
 				57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */,
 				57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */,
+				57CDFE5025E29968005D699A /* LastOpenedScreenPersistence.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -1217,6 +1223,7 @@
 				5738ADAF25AF2907002D4EB7 /* ReactionModelExtensions.swift in Sources */,
 				5738ADA325AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift in Sources */,
 				5738ADA725AF2713002D4EB7 /* EnumExtensions.swift in Sources */,
+				57CDFE5725E29B0F005D699A /* LastOpenedScreenTests.swift in Sources */,
 				5738AD9925AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift in Sources */,
 				5711DFCB25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift in Sources */,
 				5783965925A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift in Sources */,
@@ -1387,6 +1394,7 @@
 				57E7FF6A2582307A00A30582 /* StatementUtil.swift in Sources */,
 				571B3CAF25658ACC0075358B /* CircleIconButton.swift in Sources */,
 				5780320325B0677F00A0F610 /* SavedQuizInput.swift in Sources */,
+				57CDFE5125E29968005D699A /* LastOpenedScreenPersistence.swift in Sources */,
 				57035EC8255BDB6B00DB3A19 /* GridCoordinate.swift in Sources */,
 				57035EFD255C1A7000DB3A19 /* ReactionSettings.swift in Sources */,
 				571B3C4F256555460075358B /* ZeroOrderReactionViewModel.swift in Sources */,

@@ -11,6 +11,7 @@ protocol Injector {
     var reviewPersistence: ReviewPromptPersistence { get }
     var energyPersistence: EnergyProfilePersistence { get }
     var analytics: AnalyticsService { get }
+    var lastOpenedScreenPersistence: LastOpenedScreenPersistence { get }
 }
 
 class ProductionInjector: Injector {
@@ -24,6 +25,8 @@ class ProductionInjector: Injector {
     let energyPersistence: EnergyProfilePersistence = UserDefaultsEnergyProfilePersistence()
 
     let analytics: AnalyticsService = GoogleAnalytics()
+
+    let lastOpenedScreenPersistence: LastOpenedScreenPersistence = UserDefaultsLastOpenedScreenPersistence()
 }
 
 class InMemoryInjector: Injector {
@@ -39,4 +42,6 @@ class InMemoryInjector: Injector {
     let energyPersistence: EnergyProfilePersistence = InMemoryEnergyProfilePersistence()
 
     let analytics: AnalyticsService = NoOpAnalytics()
+
+    let lastOpenedScreenPersistence: LastOpenedScreenPersistence = UserDefaultsLastOpenedScreenPersistence()
 }
