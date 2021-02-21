@@ -461,7 +461,7 @@ extension QuizQuestionsList {
                         When [B] drops to 0.0066, if [A] was maintained at 0.0176, then the Rate would \
                         have been 0.53 since we know it's of third order for [B]. In order for the \
                         Rate to be 2.15 when [A] goes from 0.0176 to 0.0704 (it goes up by a factor \
-                        of 4), it had to go up by a factor of 4. $4^x = 4$. where $x = 1$; the reaction \
+                        of 4), it had to go up by a factor of 4. $4^x^ = 4$. where $x = 1$; the reaction \
                         is of third order for [A].
                         """
                     )

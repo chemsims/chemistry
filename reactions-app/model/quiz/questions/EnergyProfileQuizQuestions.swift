@@ -399,12 +399,14 @@ extension QuizQuestionsList {
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        Yes, it takes part in the reaction. It acts as a reactant of the reaction and increases the speed of it
+                        Yes, it takes part in the reaction. It reacts in steps reaction, without \
+                        actually being neither a reactant nor a product of the overall reaction.
                         """,
                         explanation: """
-                        The catalyst can participate in the reaction, but not as a reactant of the \
-                        overall reaction, but as an intermediate that generates another pathway \
-                        for the reaction to follow for faster production.
+                        The catalyst can participate in the reaction as an intermediate that \
+                        generates a "faster" pathway for the reaction to take. In some cases, it \
+                        participates in other ways, like physically serving as a surface to \
+                        increase the surface area where the reaction takes place.
                         """
                     ),
                     QuizAnswerData(

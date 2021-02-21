@@ -332,9 +332,9 @@ extension QuizQuestionsList {
                 Consider the following proposed mechanism. Which compound would not be considered neither a reactant \
                 nor a product?
 
-                $(Step 1) NO_2_ + NO_2_ ⇌ NO_3_ + NO$
-                $(Step 2) NO_3_ + CO ➝ NO_2_ + CO_2_$
-                $(Overall) NO_2_ + CO ➝ NO_2 + CO_2_$
+                (Step 1) NO_2_ + NO_2_ ⇌ NO_3_ + NO
+                (Step 2) NO_3_ + CO ➝ NO_2_ + CO_2_
+                (Overall) NO_2_ + CO ➝ NO_2_ + CO_2_
                 """,
                 questionLabel: """
                 Consider the following proposed mechanism. Which compound would not be considered neither a reactant \
@@ -436,31 +436,31 @@ extension QuizQuestionsList {
                     explanation: """
                     When [B] goes from 0.002 to 0.008 (it goes up by a factor of 4) while C and D \
                     remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
-                    $4^x = 4$ where $x = 1$; the reaction is first order for [B].
+                    $4^x^ = 4$ where $x = 1$; the reaction is first order for [B].
 
                     When [C] goes from 0.001 to 0.006 (it goes up by a factor of 4) while B and D \
                     remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
-                    $4^x = 4$ where $x = 1$; the reaction is first order for [C].
+                    $4^x^ = 4$ where $x = 1$; the reaction is first order for [C].
 
                     When [D] goes from 0.002 to 0.004 (it's doubled, goes up by a factor of 2) while \
                     B and C remain constant, the rate goes from 10X to 160X (it goes up by a factor of \
-                    16). $2^x = 16$ where $x = 4$; the reaction is fourth order for [D].
+                    16). $2^x^ = 16$ where $x = 4$; the reaction is fourth order for [D].
 
                     Replacing in the rate law equation and solving for X we get: \
                     X = $(1.2x10^11^ \\* 0.002 \\* 0.006 \\* 0.002^4^) / 10 =$ $2.3x10^-6^$.
                     """,
                     explanationLabel: """
                     When [B] goes from 0.002 to 0.008 (it goes up by a factor of 4) while C and D \
-                    remain constant, the Rate goes from 27X to 160X (it goes up by a factor of 4). \
-                    4^x = 4 where x = 1; the reaction is first order for [B].
+                    remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
+                    4^x^ = 4 where x = 1; the reaction is first order for [B].
 
                     When [C] goes from 0.001 to 0.006 (it goes up by a factor of 4) while B and D \
-                    remain constant, the Rate goes from 27X to 160X (it goes up by a factor of 4). \
-                    4^x = 4 where x = 1; the reaction is first order for [C].
+                    remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
+                    4^x^ = 4 where x = 1; the reaction is first order for [C].
 
                     When [D] goes from 0.002 to 0.004 (it's doubled, goes up by a factor of 2) while \
-                    B and C remain constant, the Rate goes from 10X to 160X (it goes up by a factor of \
-                    16). 2^x = 16 where x = 4; the reaction is fourth order for [D].
+                    B and C remain constant, the rate goes from 10X to 160X (it goes up by a factor of \
+                    16). 2^x^ = 16 where x = 4; the reaction is fourth order for [D].
 
                     Replacing in the rate law equation and solving for X we get: \
                     $X =, \(Labels.openParen), 1.2x10^11^ \\* 0.002 \\* 0.006 \\* 0.002^4^, \(Labels.closedParen), / 10, = 2.3x10^-6^$.
@@ -473,7 +473,7 @@ extension QuizQuestionsList {
                         You might have used the rate law equation as if D is of first order. When [D] goes \
                         from 0.002 to 0.004 (it goes up by a factor of 4) while B and C remain constant, \
                         the rate goes from 10X to 160X (it goes up by a factor of 16). \
-                        $2^x = 16$ where $x = 4$; the reaction is forth order for [D].
+                        $2^x^ = 16$ where $x = 4$; the reaction is forth order for [D].
                         """
                     ),
                     QuizAnswerData(
@@ -489,10 +489,10 @@ extension QuizQuestionsList {
                         explanation: """
                         You might have used the rate law equation as if it was $rate = k[B][C]^3^[D]^4^$. When [C] \
                         goes from 0.001 to 0.006 (it goes up by a factor of 4) while B and D remain constant, \
-                        the rate goes from 27X to 160X (it goes up by a factor of 4). $4^x = 4$ where $x = 1$; the \
+                        the rate goes from 27X to 160X (it goes up by a factor of 4). $4^x^ = 4$ where $x = 1$; the \
                         reaction is first order for [C]. When [D] goes from 0.002 to 0.004 (it's doubled, goes \
                         up by a factor of 2) while B and C remain constant, the rate goes from 10X to 160X (it \
-                        goes up by a factor of 16). $2^x = 16$ where $x = 4$; the reaction is fourth order for [D]. 
+                        goes up by a factor of 16). $2^x^ = 16$ where $x = 4$; the reaction is fourth order for [D]. 
                         """
                     )
                 ],
@@ -824,10 +824,10 @@ extension QuizQuestionsList {
                 questionLabel: """
                 Consider the reaction below:
 
-                $3A + 2B, yields, C + D
+                3A + 2B, yields, C + D
 
                 Experiments were performed to determine that its rate law is: \
-                $rate = k times [A] times [B]^2^$. Which of the following would be expected?
+                rate = k times [A] times [B]^2^. Which of the following would be expected?
                 """,
                 correctAnswer:
                     QuizAnswerData(
