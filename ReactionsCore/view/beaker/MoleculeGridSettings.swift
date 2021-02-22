@@ -18,8 +18,8 @@ public struct MoleculeGridSettings {
         totalWidth / CGFloat(MoleculeGridSettings.cols)
     }
 
-    public var height: CGFloat {
-        CGFloat(MoleculeGridSettings.rows) * cellSize
+    func height(for rows: CGFloat) -> CGFloat {
+        rows * cellSize
     }
 
     public static func moleculeRadius(width: CGFloat) -> CGFloat {

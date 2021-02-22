@@ -11,19 +11,22 @@ public struct FilledBeaker: View {
     let currentTime: CGFloat?
     let reactionPair: ReactionPairDisplay
     let outlineColor: Color
+    let rows: CGFloat
 
     public init(
         moleculesA: [GridCoordinate],
         concentrationB: Equation?,
         currentTime: CGFloat?,
         reactionPair: ReactionPairDisplay,
-        outlineColor: Color = Styling.beakerOutline
+        outlineColor: Color = Styling.beakerOutline,
+        rows: CGFloat = CGFloat(MoleculeGridSettings.rows)
     ) {
         self.moleculesA = moleculesA
         self.concentrationB = concentrationB
         self.currentTime = currentTime
         self.reactionPair = reactionPair
         self.outlineColor = outlineColor
+        self.rows = rows
     }
 
     public var body: some View {
@@ -105,7 +108,7 @@ public struct FilledBeaker: View {
     private func drawFill(_ settings: MoleculeGridSettings, beaker: BeakerSettings) -> some View {
         ZStack {
             Styling.beakerLiquid
-                .frame(height: settings.height)
+                .frame(height: settings.height(for: rows))
 
             moleculeGrid(
                 settings,
@@ -127,7 +130,7 @@ public struct FilledBeaker: View {
                     fractionOfCoordsToDraw: concentrationB!,
                     currentTime: currentTime!
                 )
-                .frame(height: settings.height)
+                .frame(height: settings.height(for: rows))
             }
         }
     }
@@ -141,7 +144,7 @@ public struct FilledBeaker: View {
             settings: settings,
             coords: coordinates,
             color: color
-        ).frame(height: settings.height)
+        ).frame(height: settings.height(for: rows))
     }
 }
 
