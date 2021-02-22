@@ -4,6 +4,7 @@
 
 import SwiftUI
 import MessageUI
+import ReactionsCore
 
 struct MainMenuOverlay: View {
 

@@ -3,6 +3,7 @@
 //
 
 import CoreGraphics
+import ReactionsCore
 
 protocol ReactionInputModel {
     var inputC1: CGFloat { get set }

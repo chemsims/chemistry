@@ -3,6 +3,7 @@
 //
 
 import SpriteKit
+import ReactionsCore
 
 class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 

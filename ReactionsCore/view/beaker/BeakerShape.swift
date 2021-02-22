@@ -1,34 +1,62 @@
 //
-// Reactions App
+// ReactionsCore
 //
 
 import SwiftUI
 
 /// Base shape of a beaker
-struct BeakerShape: Shape {
+public struct BeakerShape: Shape {
 
     /// Height of the lip. This is also used for the radius of the lip curve at either edge
-    let lipHeight: CGFloat
+    public let lipHeight: CGFloat
 
     /// The width of the lip on the left of the beaker. This is added after the lip curve, and can be zero.
-    let lipWidthLeft: CGFloat
+    public let lipWidthLeft: CGFloat
 
     /// The width of the lip on the right of the beaker. This is added after the lip curve, and can be zero.
-    let lipWidthRight: CGFloat
+    public let lipWidthRight: CGFloat
 
     /// Bottom left corner radius
-    let leftCornerRadius: CGFloat
+    public let leftCornerRadius: CGFloat
 
     /// Bottom right corner radius
-    let rightCornerRadius: CGFloat
+    public let rightCornerRadius: CGFloat
 
     /// Gap at the bottom of the beaker
-    let bottomGap: CGFloat
+    public let bottomGap: CGFloat
 
     /// Gap at the right of the beaker
-    let rightGap: CGFloat
+    public let rightGap: CGFloat
 
-    func path(in rect: CGRect) -> Path {
+    /// Initialises a beaker shape object
+    ///
+    /// - Parameters:
+    ///     - lipHeight: Height of the lip. This is also used for the radius of the lip curve at either edge
+    ///     - lipWidthLeft: The width of the lip on the left of the beaker. This is added after the lip curve, and can be zero.
+    ///     - lipWidthRight: The width of the lip on the right of the beaker. This is added after the lip curve, and can be zero.
+    ///     - leftCornerRadius: Bottom left corner radius
+    ///     - rightCornerRadius: Bottom right corner radius
+    ///     - bottomGap: Gap at the bottom of the beaker
+    ///     - rightGap: Gap at the right of the beaker
+    public init(
+        lipHeight: CGFloat,
+        lipWidthLeft: CGFloat,
+        lipWidthRight: CGFloat,
+        leftCornerRadius: CGFloat,
+        rightCornerRadius: CGFloat,
+        bottomGap: CGFloat,
+        rightGap: CGFloat
+    ) {
+        self.lipHeight = lipHeight
+        self.lipWidthLeft = lipWidthLeft
+        self.lipWidthRight = lipWidthRight
+        self.leftCornerRadius = leftCornerRadius
+        self.rightCornerRadius = rightCornerRadius
+        self.bottomGap = bottomGap
+        self.rightGap = rightGap
+    }
+
+    public func path(in rect: CGRect) -> Path {
         var path = Path()
 
         // Left lip curve

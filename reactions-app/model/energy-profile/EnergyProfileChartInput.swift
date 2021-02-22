@@ -3,6 +3,7 @@
 //
 
 import CoreGraphics
+import ReactionsCore
 
 struct EnergyProfileChartInput {
     let initialPeak: CGFloat

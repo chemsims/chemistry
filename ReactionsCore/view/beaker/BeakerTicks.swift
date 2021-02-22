@@ -1,10 +1,10 @@
 //
-// Reactions App
+// ReactionsCore
 //
 
 import SwiftUI
 
-struct BeakerTicks: Shape {
+public struct BeakerTicks: Shape {
 
     /// The total number of ticks
     let numTicks: Int
@@ -24,7 +24,23 @@ struct BeakerTicks: Shape {
     /// Width of major ticks
     let majorWidth: CGFloat
 
-    func path(in rect: CGRect) -> Path {
+    public init(
+        numTicks: Int,
+        rightGap: CGFloat,
+        bottomGap: CGFloat,
+        topGap: CGFloat,
+        minorWidth: CGFloat,
+        majorWidth: CGFloat
+    ) {
+        self.numTicks = numTicks
+        self.rightGap = rightGap
+        self.bottomGap = bottomGap
+        self.topGap = topGap
+        self.minorWidth = minorWidth
+        self.majorWidth = majorWidth
+    }
+
+    public func path(in rect: CGRect) -> Path {
         var path = Path()
         let dy = (rect.height - topGap - bottomGap) / CGFloat(numTicks - 1)
         let rightX = rect.width - rightGap

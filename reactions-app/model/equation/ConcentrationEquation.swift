@@ -4,6 +4,7 @@
 
 import CoreGraphics
 import Darwin
+import ReactionsCore
 
 protocol ConcentrationEquation: Equation {
 
@@ -204,5 +205,28 @@ struct InverseEquation: Equation {
         let value = underlying.getConcentration(at: x)
         assert(value != 0)
         return 1 / value
+    }
+}
+
+struct LogEquation: Equation {
+    let underlying: ConcentrationEquation
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let value = underlying.getConcentration(at: x)
+        if value == 0 {
+            return 0
+        }
+        return log(value)
+    }
+}
+
+struct RateEquation: Equation {
+    let concentration: ConcentrationEquation
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let k = concentration.rateConstant
+        let order = CGFloat(concentration.order)
+        let value = concentration.getConcentration(at: x)
+        return k * pow(value, order)
     }
 }

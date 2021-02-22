@@ -1,17 +1,17 @@
 //
-// Reactions App
+// ReactionsCore
 //
 
 import SwiftUI
 
-struct AnimatingNumber: View {
+public struct AnimatingNumber: View {
 
     let x: CGFloat
     let equation: Equation
     let formatter: (CGFloat) -> String
     let alignment: Alignment
 
-    init(
+    public init(
         x: CGFloat,
         equation: Equation,
         formatter: @escaping (CGFloat) -> String,
@@ -23,7 +23,7 @@ struct AnimatingNumber: View {
         self.alignment = alignment
     }
 
-    var body: some View {
+    public var body: some View {
         Rectangle()
             .foregroundColor(.clear)
             .modifier(
@@ -37,19 +37,19 @@ struct AnimatingNumber: View {
     }
 }
 
-struct AnimatingNumberModifier: AnimatableModifier {
+public struct AnimatingNumberModifier: AnimatableModifier {
 
     var x: CGFloat
     let equation: Equation
     let formatter: (CGFloat) -> String
     let alignment: Alignment
 
-    var animatableData: CGFloat {
+    public var animatableData: CGFloat {
         get { x }
         set { x = newValue }
     }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .modifier(
                 AnimatingValueModifier(
@@ -61,21 +61,20 @@ struct AnimatingNumberModifier: AnimatableModifier {
                 )
             )
     }
-
 }
 
-struct AnimatingValueModifier: AnimatableModifier {
+public struct AnimatingValueModifier: AnimatableModifier {
 
     var x: CGFloat
     let alignment: Alignment
     var format: (CGFloat) -> String
 
-    var animatableData: CGFloat {
+    public var animatableData: CGFloat {
         get { x }
         set { x = newValue }
     }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         let value = Text(format(x))
         return content
             .overlay(value, alignment: alignment)
@@ -86,16 +85,21 @@ struct AnimatingValueModifier: AnimatableModifier {
 }
 
 /// An animatable modifier which also hides the view, for example to use in accessibility values
-struct AccessibleValueModifier: AnimatableModifier {
-    var x: CGFloat
-    let format: (CGFloat) -> String
+public struct AccessibleValueModifier: AnimatableModifier {
+    private var x: CGFloat
+    private let format: (CGFloat) -> String
 
-    var animatableData: CGFloat {
+    public init(x: CGFloat, format: @escaping (CGFloat) -> String) {
+        self.x = x
+        self.format = format
+    }
+
+    public var animatableData: CGFloat {
         get { x }
         set { x = newValue }
     }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         let value = Text(format(x))
         return content
             .overlay(value.opacity(0))
@@ -105,7 +109,7 @@ struct AccessibleValueModifier: AnimatableModifier {
 }
 
 extension View {
-    func updatingAccessibilityValue(x: CGFloat, format: @escaping (CGFloat) -> String) -> some View {
+    public func updatingAccessibilityValue(x: CGFloat, format: @escaping (CGFloat) -> String) -> some View {
         self.modifier(AccessibleValueModifier(x: x, format: format))
     }
 }

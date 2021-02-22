@@ -3,6 +3,7 @@
 //
 
 import CoreGraphics
+import ReactionsCore
 
 class SecondOrderReactionViewModel: ZeroOrderReactionViewModel {
 

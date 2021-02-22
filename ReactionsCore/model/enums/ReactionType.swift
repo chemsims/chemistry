@@ -1,30 +1,30 @@
 //
-// Reactions App
+// ReactionsCore
 //
 
 import Foundation
 
-enum ReactionType: Int, CaseIterable {
+public enum ReactionType: Int, CaseIterable {
     case A, B, C
 }
 
 extension ReactionType: Identifiable {
-    var id: Int {
+    public var id: Int {
         self.rawValue
     }
 }
 
 extension ReactionType {
-    var name: String {
+    public var name: String {
         "\(reactant) to \(product)"
     }
 
     // Accessibility label
-    var label: String {
+    public var label: String {
         "'\(reactant)' to '\(product)'"
     }
 
-    var display: ReactionPairDisplay {
+    public var display: ReactionPairDisplay {
         ReactionPairDisplay(
             reactant: ReactionMoleculeDisplay(
                 name: reactant,
@@ -37,7 +37,7 @@ extension ReactionType {
         )
     }
 
-    var reactant: String {
+    public var reactant: String {
         switch self {
         case .A: return "A"
         case .B: return "C"
@@ -45,7 +45,7 @@ extension ReactionType {
         }
     }
 
-    var product: String {
+    public var product: String {
         switch self {
         case .A: return "B"
         case .B: return "D"
@@ -53,7 +53,7 @@ extension ReactionType {
         }
     }
 
-    var reactantColor: RGB {
+    public var reactantColor: RGB {
         switch self {
         case .A: return RGB.moleculeA
         case .B: return RGB.moleculeD
@@ -61,7 +61,7 @@ extension ReactionType {
         }
     }
 
-    var productColor: RGB {
+    public var productColor: RGB {
         switch self {
         case .A: return RGB.moleculeB
         case .B: return RGB.moleculeE

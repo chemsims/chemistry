@@ -1,17 +1,18 @@
 //
-// Reactions App
+// ReactionsCore
 //
 
 import SwiftUI
 
-struct FilledBeaker: View {
+public struct FilledBeaker: View {
 
     let moleculesA: [GridCoordinate]
     let concentrationB: Equation?
     let currentTime: CGFloat?
     let reactionPair: ReactionPairDisplay
     let outlineColor: Color
-    init(
+
+    public init(
         moleculesA: [GridCoordinate],
         concentrationB: Equation?,
         currentTime: CGFloat?,
@@ -25,7 +26,7 @@ struct FilledBeaker: View {
         self.outlineColor = outlineColor
     }
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             makeView(
                 using: BeakerSettings(width: geometry.size.width)

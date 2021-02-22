@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 struct ConcentrationTimeChartView: View {
     @Binding var initialConcentration: CGFloat

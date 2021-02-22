@@ -1,5 +1,5 @@
 //
-// Reactions App
+// ReactionsCore
 //
 
 import SwiftUI

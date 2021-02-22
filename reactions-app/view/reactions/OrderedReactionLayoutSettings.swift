@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 struct OrderedReactionLayoutSettings {
     let geometry: GeometryProxy

@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 class EnergyProfileViewModel: ObservableObject {
 

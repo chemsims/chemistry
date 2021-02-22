@@ -1,15 +1,15 @@
 //
-// Reactions App
+// ReactionsCore
 //
 
 import SwiftUI
 
-struct EmptyBeaker: View {
+public struct EmptyBeaker: View {
 
     let settings: BeakerSettings
     let color: Color
 
-    init(
+    public init(
         settings: BeakerSettings,
         color: Color = Styling.beakerOutline
     ) {
@@ -17,7 +17,7 @@ struct EmptyBeaker: View {
         self.color = color
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack(alignment: .topLeading) {
             largeBeaker(settings)
                 .stroke(lineWidth: 2)
@@ -107,81 +107,85 @@ struct LargeBeaker: View {
     }
 }
 
-struct BeakerSettings {
+public struct BeakerSettings {
 
-    static let heightToWidth: CGFloat = 1.1
+    public static let heightToWidth: CGFloat = 1.1
 
     let width: CGFloat
 
-    var lipRadius: CGFloat {
+    public init(width: CGFloat) {
+        self.width = width
+    }
+
+    public var lipRadius: CGFloat {
         width * 0.03
     }
 
-    var lipWidthLeft: CGFloat {
+    public var lipWidthLeft: CGFloat {
         width * 0.01
     }
 
-    var mediumBeakerRightLipWidth: CGFloat {
+    public var mediumBeakerRightLipWidth: CGFloat {
         lipWidthLeft * 9
     }
 
-    var smallBeakerRightLipWidth: CGFloat {
+    public var smallBeakerRightLipWidth: CGFloat {
         mediumBeakerRightLipWidth
     }
 
-    var outerBottomCornerRadius: CGFloat {
+    public var outerBottomCornerRadius: CGFloat {
         width * 0.1
     }
 
-    var mediumBeakerRightGap: CGFloat {
+    public var mediumBeakerRightGap: CGFloat {
         lipWidthLeft * 5
     }
 
-    var smallBeakerRightGap: CGFloat {
+    public var smallBeakerRightGap: CGFloat {
         mediumBeakerRightGap * 2
     }
 
-    var innerLeftBottomCornerRadius: CGFloat {
+    public var innerLeftBottomCornerRadius: CGFloat {
         outerBottomCornerRadius
     }
 
-    var mediumBeakerRightCornerRadius: CGFloat {
+    public var mediumBeakerRightCornerRadius: CGFloat {
         outerBottomCornerRadius * 1.5
     }
 
-    var smallBeakerRightCornerRadius: CGFloat {
+    public var smallBeakerRightCornerRadius: CGFloat {
         mediumBeakerRightCornerRadius * 1.2
     }
 
-    var innerBeakersBottomGap: CGFloat {
+    public var innerBeakersBottomGap: CGFloat {
         width * 0.055
     }
 
-    var numTicks: Int {
+    public var numTicks: Int {
         13
     }
 
-    var ticksBottomGap: CGFloat {
+    public var ticksBottomGap: CGFloat {
         innerBeakersBottomGap * 1.5
     }
 
-    var ticksMinorWidth: CGFloat {
+    public var ticksMinorWidth: CGFloat {
         width * 0.075
     }
 
-    var ticksMajorWidth: CGFloat {
+    public var ticksMajorWidth: CGFloat {
         ticksMinorWidth * 2
     }
 
-    var ticksTopGap: CGFloat {
+    public var ticksTopGap: CGFloat {
         lipRadius * 4
     }
 
-    var ticksRightGap: CGFloat {
+    public var ticksRightGap: CGFloat {
         lipRadius + mediumBeakerRightGap + mediumBeakerRightLipWidth
     }
 
-    var innerBeakerWidth: CGFloat {
+    public var innerBeakerWidth: CGFloat {
         width - (2 * lipRadius) - (2 * lipWidthLeft)
     }
 }

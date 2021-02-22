@@ -1,15 +1,19 @@
 //
-// Reactions App
+// ReactionsCore
 //
 
 import SwiftUI
 
-struct BeakerBottomShape: Shape {
+public struct BeakerBottomShape: Shape {
 
     /// Radius of the bottom corners
     let cornerRadius: CGFloat
 
-    func path(in rect: CGRect) -> Path {
+    public init(cornerRadius: CGFloat) {
+        self.cornerRadius = cornerRadius
+    }
+
+    public func path(in rect: CGRect) -> Path {
         var path = Path()
         path.move(to: CGPoint(x: 0, y: 0))
         path.addLine(
