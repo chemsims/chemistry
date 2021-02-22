@@ -5,55 +5,67 @@
 import Foundation
 
 /// Encapsulates a linear axis, which moves from two positions and two values
-struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
-    let minValuePosition: Value
-    let maxValuePosition: Value
-    let minValue: Value
-    let maxValue: Value
+public struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
+    public let minValuePosition: Value
+    public let maxValuePosition: Value
+    public let minValue: Value
+    public let maxValue: Value
 
-    func getPosition(at value: Value) -> Value {
+    public init(
+        minValuePosition: Value,
+        maxValuePosition: Value,
+        minValue: Value,
+        maxValue: Value
+    ) {
+        self.minValuePosition = minValuePosition
+        self.maxValuePosition = maxValuePosition
+        self.minValue = minValue
+        self.maxValue = maxValue
+    }
+
+    public func getPosition(at value: Value) -> Value {
         return (m * value) + c
     }
 
-    func getValue(at position: Value) -> Value {
+    public func getValue(at position: Value) -> Value {
         return (position - c) / m
     }
 
     /// Returns the increment to use for accessibility
-    var accessibilityIncrement: Value {
+    public var accessibilityIncrement: Value {
         (maxValue - minValue) / 10
     }
 
     /// Returns a new axis with the minimum value updated to the provided value.
     /// The minimum value position is updated to keep the same axis scale
-    func updateMin(value: Value) -> AxisPositionCalculations<Value> {
+    public func updateMin(value: Value) -> AxisPositionCalculations<Value> {
         let valuePosition = getPosition(at: value)
         return withNewMin(position: valuePosition, value: value)
     }
 
     /// Returns a new axis with the minimum value position updated to the provided value.
     /// The minimum value is updated to keep the same axis scale
-    func updateMin(position: Value) -> AxisPositionCalculations<Value> {
+    public func updateMin(position: Value) -> AxisPositionCalculations<Value> {
         let valueForPosition = getValue(at: position)
         return withNewMin(position: position, value: valueForPosition)
     }
 
     /// Returns a new axis with the maximum value updated to the provided value.
     /// The maximum value position is updated to keep the same axis scale
-    func updateMax(value: Value) -> AxisPositionCalculations<Value> {
+    public func updateMax(value: Value) -> AxisPositionCalculations<Value> {
         let valuePosition = getPosition(at: value)
         return withNewMax(position: valuePosition, value: value)
     }
 
     /// Returns a new axis with the maximum value position updated to the provided value.
     /// The maximum value is updated to keep the same axis scale
-    func updateMax(position: Value) -> AxisPositionCalculations<Value> {
+    public func updateMax(position: Value) -> AxisPositionCalculations<Value> {
         let valueForPosition = getValue(at: position)
         return withNewMax(position: position, value: valueForPosition)
     }
 
     /// Returns a value which corresponds to the distance `distance`
-    func valueForDistance(_ distance: Value) -> Value {
+    public func valueForDistance(_ distance: Value) -> Value {
         let scaledDistance = abs(distance / (maxValuePosition - minValuePosition))
         let dValue = maxValue - minValue
         return minValue + (scaledDistance * dValue)

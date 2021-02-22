@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 struct SliderIndicator: View {
     let value1: CGFloat

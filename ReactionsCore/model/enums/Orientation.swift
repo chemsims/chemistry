@@ -4,6 +4,6 @@
 
 import Foundation
 
-enum Orientation {
+public enum Orientation {
     case landscape, portrait
 }

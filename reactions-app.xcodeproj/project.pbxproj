@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
-		57035EDC255BFDB400DB3A19 /* AxisPositionCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EDB255BFDB400DB3A19 /* AxisPositionCalculations.swift */; };
 		57035EE5255BFE5200DB3A19 /* sliderCalculationsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */; };
-		57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
 		57035EF6255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF5255C1A0A00DB3A19 /* ZeroOrderReactionScreen.swift */; };
 		57035EFD255C1A7000DB3A19 /* ReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EFC255C1A7000DB3A19 /* ReactionSettings.swift */; };
 		57035F0C255C26D000DB3A19 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
@@ -146,6 +143,10 @@
 		5797A4DB25E40AD400991BD9 /* ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727487325A61BDD000CFA1E /* ReactionType.swift */; };
 		5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */; };
 		5797A51725E41C1400991BD9 /* LiquidAdjustableBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A51625E41C1400991BD9 /* LiquidAdjustableBeaker.swift */; };
+		5797A53E25E41E0100991BD9 /* AxisPositionCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EDB255BFDB400DB3A19 /* AxisPositionCalculations.swift */; };
+		5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
+		5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
+		5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
 		57A119A825B86A1E00A7810B /* EnergyProfileFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */; };
 		57A119AC25B86B5500A7810B /* EnergyProfileFilingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */; };
 		57A119B025B86B9800A7810B /* EnergyProfilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */; };
@@ -216,7 +217,6 @@
 		57F4776025617B240041D406 /* BoundedSliderPositioningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775F25617B240041D406 /* BoundedSliderPositioningTests.swift */; };
 		57F56220258D4F64008B2602 /* CatalystState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5621F258D4F64008B2602 /* CatalystState.swift */; };
 		57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */; };
-		57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
 		57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */; };
 		57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */; };
@@ -530,7 +530,6 @@
 		57035ED6255BF03300DB3A19 /* slider */ = {
 			isa = PBXGroup;
 			children = (
-				57035ED7255BF05100DB3A19 /* CustomSlider.swift */,
 				57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */,
 				57AA05E62562F3750080C538 /* SliderIndicator.swift */,
 				57AA05EA2562F3910080C538 /* SpecificSliders.swift */,
@@ -785,8 +784,6 @@
 				57D8BA2A257BF168006B3C8B /* screen-element-enums */,
 				57F4774E256105430041D406 /* statements */,
 				571D6A6D255AB24300F4E635 /* styling */,
-				57035EDB255BFDB400DB3A19 /* AxisPositionCalculations.swift */,
-				57FDA138255D6C5000CB8804 /* Extensions.swift */,
 				57F4775925616F400041D406 /* BoundedSliderPositioning.swift */,
 				5743D9BC25C454F8000C0397 /* Injector.swift */,
 			);
@@ -830,7 +827,6 @@
 			children = (
 				57517F3225739E5200EB79C7 /* ReactionOrder.swift */,
 				573F16A625852D5D001CE039 /* BeakerReactionState.swift */,
-				57035EF0255C09B500DB3A19 /* Orientation.swift */,
 			);
 			path = enums;
 			sourceTree = "<group>";
@@ -1118,6 +1114,8 @@
 		5797A45E25E406FC00991BD9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57FDA138255D6C5000CB8804 /* Extensions.swift */,
+				5797A53D25E41DF500991BD9 /* axis */,
 				5797A4DA25E40ACD00991BD9 /* enums */,
 				5797A47325E4087800991BD9 /* display */,
 				5797A46625E407D400991BD9 /* equation */,
@@ -1154,6 +1152,7 @@
 		5797A47A25E4092600991BD9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				5797A53C25E41DCB00991BD9 /* slider */,
 				5797A4E225E40AF600991BD9 /* util */,
 				571D6A7A255AC75000F4E635 /* beaker */,
 			);
@@ -1163,6 +1162,7 @@
 		5797A4DA25E40ACD00991BD9 /* enums */ = {
 			isa = PBXGroup;
 			children = (
+				57035EF0255C09B500DB3A19 /* Orientation.swift */,
 				5727487325A61BDD000CFA1E /* ReactionType.swift */,
 			);
 			path = enums;
@@ -1174,6 +1174,22 @@
 				57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */,
 			);
 			path = util;
+			sourceTree = "<group>";
+		};
+		5797A53C25E41DCB00991BD9 /* slider */ = {
+			isa = PBXGroup;
+			children = (
+				57035ED7255BF05100DB3A19 /* CustomSlider.swift */,
+			);
+			path = slider;
+			sourceTree = "<group>";
+		};
+		5797A53D25E41DF500991BD9 /* axis */ = {
+			isa = PBXGroup;
+			children = (
+				57035EDB255BFDB400DB3A19 /* AxisPositionCalculations.swift */,
+			);
+			path = axis;
 			sourceTree = "<group>";
 		};
 		57B0FBC82565D44500BB6ACC /* fonts */ = {
@@ -1587,7 +1603,6 @@
 				57A119B425B8715300A7810B /* EnergyProfileFilingStatements.swift in Sources */,
 				57E7FF832582954C00A30582 /* MainMenuPanel.swift in Sources */,
 				57E7FF7F25828E0500A30582 /* MainMenuOverlay.swift in Sources */,
-				57035ED8255BF05100DB3A19 /* CustomSlider.swift in Sources */,
 				57517F3325739E5200EB79C7 /* ReactionOrder.swift in Sources */,
 				57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */,
 				57DE4DB125A5035700644790 /* QuizAnswerIconOverlay.swift in Sources */,
@@ -1615,11 +1630,9 @@
 				57E7FF8825829DE400A30582 /* QuizScreen.swift in Sources */,
 				5773B5F425B84EF600889A2E /* Version.swift in Sources */,
 				57D8BA1B257B6AD5006B3C8B /* ReactionComparisonViewModel.swift in Sources */,
-				57FDA139255D6C5000CB8804 /* Extensions.swift in Sources */,
 				5783965525A9DB1D009CC8FC /* EnergyProfileChartInput.swift in Sources */,
 				571D6A6A255AADDB00F4E635 /* SpeechBubble.swift in Sources */,
 				571B3C55256555600075358B /* FirstOrderReactionViewModel.swift in Sources */,
-				57035EDC255BFDB400DB3A19 /* AxisPositionCalculations.swift in Sources */,
 				571B3C602565562C0075358B /* FirstOrderReactionNavigationViewModel.swift in Sources */,
 				573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */,
 				5712155E258103A600E92A99 /* Rates.swift in Sources */,
@@ -1697,7 +1710,6 @@
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */,
 				571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */,
-				57035EF1255C09B500DB3A19 /* Orientation.swift in Sources */,
 				57035F0C255C26D000DB3A19 /* ChartAxisShape.swift in Sources */,
 				573F16982584B277001CE039 /* QuizOption.swift in Sources */,
 				5711DFF725C4704500B28E45 /* Analytics.swift in Sources */,
@@ -1747,6 +1759,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5797A4AA25E40A5400991BD9 /* MoleculeGridSettings.swift in Sources */,
+				5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */,
 				5797A4C625E40A6900991BD9 /* GridCoordinate.swift in Sources */,
 				5797A48125E40A3600991BD9 /* BeakerShape.swift in Sources */,
 				5797A4BF25E40A6400991BD9 /* Equation.swift in Sources */,
@@ -1754,9 +1767,12 @@
 				5797A48825E40A3E00991BD9 /* EmptyBeaker.swift in Sources */,
 				5797A51725E41C1400991BD9 /* LiquidAdjustableBeaker.swift in Sources */,
 				5797A4B825E40A6000991BD9 /* ReactionPairDisplay.swift in Sources */,
+				5797A53E25E41E0100991BD9 /* AxisPositionCalculations.swift in Sources */,
 				5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */,
 				5797A49C25E40A4C00991BD9 /* BeakerBottomShape.swift in Sources */,
+				5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */,
 				5797A49525E40A4500991BD9 /* BeakerTicks.swift in Sources */,
+				5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */,
 				5797A4A325E40A5100991BD9 /* MoleculeGridShape.swift in Sources */,
 				5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */,
 				5797A4D325E40A8E00991BD9 /* Styling.swift in Sources */,

@@ -3,6 +3,7 @@
 //
 
 import CoreGraphics
+import ReactionsCore
 
 struct TimeChartGeometrySettings {
     let chartSize: CGFloat

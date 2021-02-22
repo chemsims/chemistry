@@ -5,11 +5,11 @@
 import CoreGraphics
 
 extension CGFloat {
-    func str(decimals: Int) -> String {
+    public func str(decimals: Int) -> String {
         String(format: "%.\(decimals)f", self)
     }
 
-    func rounded(decimals: Int) -> CGFloat {
+    public func rounded(decimals: Int) -> CGFloat {
         let power = pow(10, CGFloat(decimals))
         let multiplied = self * power
         let rounded = multiplied.rounded()
@@ -18,18 +18,18 @@ extension CGFloat {
 }
 
 extension BinaryFloatingPoint {
-    func str(decimals: Int) -> String {
+    public func str(decimals: Int) -> String {
         String(format: "%.\(decimals)f", Double(self))
     }
 }
 
 extension Array where Self.Element: Equatable {
 
-    func element(after element: Element) -> Element? {
+    public func element(after element: Element) -> Element? {
         self.element(after: element, distance: 1)
     }
 
-    func element(before element: Element) -> Element? {
+    public func element(before element: Element) -> Element? {
         self.element(after: element, distance: -1)
     }
 
@@ -39,7 +39,7 @@ extension Array where Self.Element: Equatable {
         return nextIndex.flatMap { self[safe: $0] }
     }
 
-    subscript (safe index: Index) -> Element? {
+    public subscript (safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
     }
 }

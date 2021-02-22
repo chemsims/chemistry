@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
+public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     @Binding var value: Value
     let axis: AxisPositionCalculations<Value>
@@ -21,7 +21,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     let includeFill: Bool
     let useHaptics: Bool
 
-    init(
+    public init(
         value: Binding<Value>,
         axis: AxisPositionCalculations<Value>,
         handleThickness: CGFloat,
@@ -49,7 +49,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     @State private var scaleFactor: CGFloat = 0
     @State private var scaleAnchor: UnitPoint = .center
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
                 Rectangle()
@@ -57,16 +57,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     .frame(width: barWidth(geometry), height: barHeight(geometry))
 
                 if includeFill {
-                    Rectangle()
-                        .foregroundColor(handleColor)
-                        .frame(
-                            width: handleXPosition(geometry, calculations: axis),
-                            height: barHeight(geometry),
-                            alignment: .leading
-                        ).position(
-                            x: handleXPosition(geometry, calculations: axis) / 2,
-                            y: geometry.size.height / 2
-                        )
+                   fill(geometry: geometry)
                 }
 
                 handle(
@@ -119,6 +110,30 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                             scaleFactor = 0
                         }
                     }
+            )
+    }
+
+    private func fill(geometry: GeometryProxy) -> some View {
+        let handleXPos = handleXPosition(geometry, calculations: axis)
+        let handleYPos = handleYPosition(geometry, calculations: axis)
+
+        let geoHeight = geometry.size.height
+
+        let width = isPortrait ? barThickness : handleXPos
+        let height = isPortrait ? geoHeight - handleYPos : barHeight(geometry)
+
+        let x = isPortrait ? geometry.size.width / 2 : handleXPos / 2
+        let y = isPortrait ? geoHeight - (height / 2) : geoHeight / 2
+        return Rectangle()
+            .foregroundColor(handleColor)
+            .frame(
+                width: width,
+                height: height,
+                alignment: .leading
+            )
+            .position(
+                x: x,
+                y: y
             )
     }
 
@@ -264,6 +279,23 @@ struct CustomSlider_Previews: PreviewProvider {
                     orientation: .landscape,
                     includeFill: true
                 ).frame(height: 80)
+
+                CustomSlider(
+                    value: $value,
+                    axis: AxisPositionCalculations(
+                        minValuePosition: 250,
+                        maxValuePosition: 0,
+                        minValue: 1,
+                        maxValue: 2
+                    ),
+                    handleThickness: 40,
+                    handleColor: Color.orangeAccent,
+                    handleCornerRadius: 15,
+                    barThickness: 5,
+                    barColor: Color.darkGray,
+                    orientation: .portrait,
+                    includeFill: true
+                ).frame(width: 80)
             }
         }
     }

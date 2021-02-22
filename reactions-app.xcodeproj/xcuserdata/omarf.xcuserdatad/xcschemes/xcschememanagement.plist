@@ -28,12 +28,12 @@
 		<key>Reactions Equilibrium.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>23</integer>
+			<integer>1</integer>
 		</dict>
 		<key>ReactionsCore.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>27</integer>
+			<integer>2</integer>
 		</dict>
 		<key>reactions-app.xcscheme_^#shared#^_</key>
 		<dict>
