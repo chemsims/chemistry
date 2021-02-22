@@ -1,9 +1,7 @@
 //
-//  AppDelegate.swift
-//  Reactions Equilibrium
+// Reactions App
 //
-//  Created by Omar Fahmy on 22/02/2021.
-//
+
 
 import UIKit
 

@@ -1,14 +1,12 @@
 //
-//  Reactions_EquilibriumTests.swift
-//  Reactions EquilibriumTests
+// Reactions App
 //
-//  Created by Omar Fahmy on 22/02/2021.
-//
+
 
 import XCTest
-@testable import Reactions_Equilibrium
+@testable import reactions_equilibrium
 
-class Reactions_EquilibriumTests: XCTestCase {
+class reactions_equilibriumTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

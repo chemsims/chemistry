@@ -96,6 +96,13 @@
 		575A887D25E4366900AEE448 /* CircleIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3CAE25658ACC0075358B /* CircleIconButton.swift */; };
 		575A888525E436A600AEE448 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 575A888425E436A600AEE448 /* Assets.xcassets */; };
 		575A889525E438CD00AEE448 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A889425E438CD00AEE448 /* BundleExtension.swift */; };
+		575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A88B525E43CD500AEE448 /* AppDelegate.swift */; };
+		575A88B825E43CD500AEE448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A88B725E43CD500AEE448 /* SceneDelegate.swift */; };
+		575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A88B925E43CD500AEE448 /* ContentView.swift */; };
+		575A88BC25E43CD700AEE448 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 575A88BB25E43CD700AEE448 /* Assets.xcassets */; };
+		575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 575A88BE25E43CD700AEE448 /* Preview Assets.xcassets */; };
+		575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 575A88C025E43CD700AEE448 /* LaunchScreen.storyboard */; };
+		575A88CD25E43CD700AEE448 /* reactions_equilibriumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A88CC25E43CD700AEE448 /* reactions_equilibriumTests.swift */; };
 		5760536B25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */; };
 		5760537025AE519B0068B533 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
 		57631768259B68EC00D7CE2C /* QuizTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57631767259B68EC00D7CE2C /* QuizTableView.swift */; };
@@ -126,13 +133,6 @@
 		5790AC2F25B375FC00B25776 /* ReactionComparisonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
-		5797A3E125E4039E00991BD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A3E025E4039E00991BD9 /* AppDelegate.swift */; };
-		5797A3E325E4039E00991BD9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A3E225E4039E00991BD9 /* SceneDelegate.swift */; };
-		5797A3E525E4039E00991BD9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A3E425E4039E00991BD9 /* ContentView.swift */; };
-		5797A3E725E4039F00991BD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5797A3E625E4039F00991BD9 /* Assets.xcassets */; };
-		5797A3EA25E4039F00991BD9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5797A3E925E4039F00991BD9 /* Preview Assets.xcassets */; };
-		5797A3ED25E4039F00991BD9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797A3EB25E4039F00991BD9 /* LaunchScreen.storyboard */; };
-		5797A3F825E403A000991BD9 /* Reactions_EquilibriumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A3F725E403A000991BD9 /* Reactions_EquilibriumTests.swift */; };
 		5797A44A25E4069F00991BD9 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
 		5797A44F25E4069F00991BD9 /* ReactionsCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A44E25E4069F00991BD9 /* ReactionsCoreTests.swift */; };
 		5797A45125E4069F00991BD9 /* ReactionsCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797A44325E4069F00991BD9 /* ReactionsCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -240,6 +240,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5797A44025E4069F00991BD9;
 			remoteInfo = ReactionsCore;
+		};
+		575A88C925E43CD700AEE448 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 575A88B225E43CD500AEE448;
+			remoteInfo = "reactions-equilibrium";
 		};
 		5797A3F425E403A000991BD9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -364,6 +371,17 @@
 		575A885E25E435F600AEE448 /* BeakyGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyGeometrySettings.swift; sourceTree = "<group>"; };
 		575A888425E436A600AEE448 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		575A889425E438CD00AEE448 /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = "<group>"; };
+		575A88B325E43CD500AEE448 /* reactions-equilibrium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-equilibrium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		575A88B525E43CD500AEE448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		575A88B725E43CD500AEE448 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		575A88B925E43CD500AEE448 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		575A88BB25E43CD700AEE448 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		575A88BE25E43CD700AEE448 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		575A88C125E43CD700AEE448 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		575A88C325E43CD700AEE448 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		575A88C825E43CD700AEE448 /* reactions-equilibriumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "reactions-equilibriumTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		575A88CC25E43CD700AEE448 /* reactions_equilibriumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reactions_equilibriumTests.swift; sourceTree = "<group>"; };
+		575A88CE25E43CD700AEE448 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionNavigationTests.swift; sourceTree = "<group>"; };
 		5760536F25AE519B0068B533 /* NavigationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationExtensions.swift; sourceTree = "<group>"; };
 		57631763259B66CF00D7CE2C /* QuizTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTable.swift; sourceTree = "<group>"; };
@@ -400,16 +418,7 @@
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		5797567E25C1C5CB005C484E /* LabelledImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelledImage.swift; sourceTree = "<group>"; };
 		5797A3DE25E4039E00991BD9 /* Reactions Equilibrium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reactions Equilibrium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5797A3E025E4039E00991BD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5797A3E225E4039E00991BD9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5797A3E425E4039E00991BD9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		5797A3E625E4039F00991BD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5797A3E925E4039F00991BD9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		5797A3EC25E4039F00991BD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		5797A3EE25E4039F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5797A3F325E403A000991BD9 /* Reactions EquilibriumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Reactions EquilibriumTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5797A3F725E403A000991BD9 /* Reactions_EquilibriumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactions_EquilibriumTests.swift; sourceTree = "<group>"; };
-		5797A3F925E403A000991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5797A44125E4069F00991BD9 /* ReactionsCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactionsCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797A44325E4069F00991BD9 /* ReactionsCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactionsCore.h; sourceTree = "<group>"; };
 		5797A44425E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -507,6 +516,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				5711DFDA25C46DD100B28E45 /* FirebaseAnalytics in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		575A88B025E43CD500AEE448 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		575A88C525E43CD700AEE448 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -704,10 +727,10 @@
 			children = (
 				571D6A3E255A780700F4E635 /* reactions-app */,
 				57035EE3255BFE5200DB3A19 /* reactions-appTests */,
-				5797A3DF25E4039E00991BD9 /* Reactions Equilibrium */,
-				5797A3F625E403A000991BD9 /* Reactions EquilibriumTests */,
 				5797A44225E4069F00991BD9 /* ReactionsCore */,
 				5797A44D25E4069F00991BD9 /* ReactionsCoreTests */,
+				575A88B425E43CD500AEE448 /* reactions-equilibrium */,
+				575A88CB25E43CD700AEE448 /* reactions-equilibriumTests */,
 				571D6A3D255A780700F4E635 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -721,6 +744,8 @@
 				5797A3F325E403A000991BD9 /* Reactions EquilibriumTests.xctest */,
 				5797A44125E4069F00991BD9 /* ReactionsCore.framework */,
 				5797A44925E4069F00991BD9 /* ReactionsCoreTests.xctest */,
+				575A88B325E43CD500AEE448 /* reactions-equilibrium.app */,
+				575A88C825E43CD700AEE448 /* reactions-equilibriumTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -983,6 +1008,37 @@
 			path = "layout-settings";
 			sourceTree = "<group>";
 		};
+		575A88B425E43CD500AEE448 /* reactions-equilibrium */ = {
+			isa = PBXGroup;
+			children = (
+				575A88B525E43CD500AEE448 /* AppDelegate.swift */,
+				575A88B725E43CD500AEE448 /* SceneDelegate.swift */,
+				575A88B925E43CD500AEE448 /* ContentView.swift */,
+				575A88BB25E43CD700AEE448 /* Assets.xcassets */,
+				575A88C025E43CD700AEE448 /* LaunchScreen.storyboard */,
+				575A88C325E43CD700AEE448 /* Info.plist */,
+				575A88BD25E43CD700AEE448 /* Preview Content */,
+			);
+			path = "reactions-equilibrium";
+			sourceTree = "<group>";
+		};
+		575A88BD25E43CD700AEE448 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				575A88BE25E43CD700AEE448 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		575A88CB25E43CD700AEE448 /* reactions-equilibriumTests */ = {
+			isa = PBXGroup;
+			children = (
+				575A88CC25E43CD700AEE448 /* reactions_equilibriumTests.swift */,
+				575A88CE25E43CD700AEE448 /* Info.plist */,
+			);
+			path = "reactions-equilibriumTests";
+			sourceTree = "<group>";
+		};
 		5760536E25AE518E0068B533 /* util */ = {
 			isa = PBXGroup;
 			children = (
@@ -1109,37 +1165,6 @@
 				57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */,
 			);
 			path = shapes;
-			sourceTree = "<group>";
-		};
-		5797A3DF25E4039E00991BD9 /* Reactions Equilibrium */ = {
-			isa = PBXGroup;
-			children = (
-				5797A3E025E4039E00991BD9 /* AppDelegate.swift */,
-				5797A3E225E4039E00991BD9 /* SceneDelegate.swift */,
-				5797A3E425E4039E00991BD9 /* ContentView.swift */,
-				5797A3E625E4039F00991BD9 /* Assets.xcassets */,
-				5797A3EB25E4039F00991BD9 /* LaunchScreen.storyboard */,
-				5797A3EE25E4039F00991BD9 /* Info.plist */,
-				5797A3E825E4039F00991BD9 /* Preview Content */,
-			);
-			path = "Reactions Equilibrium";
-			sourceTree = "<group>";
-		};
-		5797A3E825E4039F00991BD9 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				5797A3E925E4039F00991BD9 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		5797A3F625E403A000991BD9 /* Reactions EquilibriumTests */ = {
-			isa = PBXGroup;
-			children = (
-				5797A3F725E403A000991BD9 /* Reactions_EquilibriumTests.swift */,
-				5797A3F925E403A000991BD9 /* Info.plist */,
-			);
-			path = "Reactions EquilibriumTests";
 			sourceTree = "<group>";
 		};
 		5797A44225E4069F00991BD9 /* ReactionsCore */ = {
@@ -1420,6 +1445,41 @@
 			productReference = 571D6A3C255A780700F4E635 /* reactions-app.app */;
 			productType = "com.apple.product-type.application";
 		};
+		575A88B225E43CD500AEE448 /* reactions-equilibrium */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 575A88DA25E43CD700AEE448 /* Build configuration list for PBXNativeTarget "reactions-equilibrium" */;
+			buildPhases = (
+				575A88AF25E43CD500AEE448 /* Sources */,
+				575A88B025E43CD500AEE448 /* Frameworks */,
+				575A88B125E43CD500AEE448 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "reactions-equilibrium";
+			productName = "reactions-equilibrium";
+			productReference = 575A88B325E43CD500AEE448 /* reactions-equilibrium.app */;
+			productType = "com.apple.product-type.application";
+		};
+		575A88C725E43CD700AEE448 /* reactions-equilibriumTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 575A88DD25E43CD700AEE448 /* Build configuration list for PBXNativeTarget "reactions-equilibriumTests" */;
+			buildPhases = (
+				575A88C425E43CD700AEE448 /* Sources */,
+				575A88C525E43CD700AEE448 /* Frameworks */,
+				575A88C625E43CD700AEE448 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				575A88CA25E43CD700AEE448 /* PBXTargetDependency */,
+			);
+			name = "reactions-equilibriumTests";
+			productName = "reactions-equilibriumTests";
+			productReference = 575A88C825E43CD700AEE448 /* reactions-equilibriumTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5797A3DD25E4039E00991BD9 /* Reactions Equilibrium */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5797A40B25E403A000991BD9 /* Build configuration list for PBXNativeTarget "Reactions Equilibrium" */;
@@ -1508,6 +1568,13 @@
 					571D6A3B255A780700F4E635 = {
 						CreatedOnToolsVersion = 12.1;
 					};
+					575A88B225E43CD500AEE448 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					575A88C725E43CD700AEE448 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 575A88B225E43CD500AEE448;
+					};
 					5797A3DD25E4039E00991BD9 = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -1545,6 +1612,8 @@
 				5797A3F225E403A000991BD9 /* Reactions EquilibriumTests */,
 				5797A44025E4069F00991BD9 /* ReactionsCore */,
 				5797A44825E4069F00991BD9 /* ReactionsCoreTests */,
+				575A88B225E43CD500AEE448 /* reactions-equilibrium */,
+				575A88C725E43CD700AEE448 /* reactions-equilibriumTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1569,13 +1638,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		575A88B125E43CD500AEE448 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */,
+				575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */,
+				575A88BC25E43CD700AEE448 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		575A88C625E43CD700AEE448 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5797A3DC25E4039E00991BD9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5797A3ED25E4039F00991BD9 /* LaunchScreen.storyboard in Resources */,
-				5797A3EA25E4039F00991BD9 /* Preview Assets.xcassets in Resources */,
-				5797A3E725E4039F00991BD9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1782,13 +1865,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		575A88AF25E43CD500AEE448 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */,
+				575A88B825E43CD500AEE448 /* SceneDelegate.swift in Sources */,
+				575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		575A88C425E43CD700AEE448 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				575A88CD25E43CD700AEE448 /* reactions_equilibriumTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5797A3DA25E4039E00991BD9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5797A3E125E4039E00991BD9 /* AppDelegate.swift in Sources */,
-				5797A3E325E4039E00991BD9 /* SceneDelegate.swift in Sources */,
-				5797A3E525E4039E00991BD9 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1796,7 +1894,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5797A3F825E403A000991BD9 /* Reactions_EquilibriumTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1864,6 +1961,11 @@
 			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
 			targetProxy = 575A888C25E4381400AEE448 /* PBXContainerItemProxy */;
 		};
+		575A88CA25E43CD700AEE448 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 575A88B225E43CD500AEE448 /* reactions-equilibrium */;
+			targetProxy = 575A88C925E43CD700AEE448 /* PBXContainerItemProxy */;
+		};
 		5797A3F525E403A000991BD9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5797A3DD25E4039E00991BD9 /* Reactions Equilibrium */;
@@ -1890,10 +1992,10 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		5797A3EB25E4039F00991BD9 /* LaunchScreen.storyboard */ = {
+		575A88C025E43CD700AEE448 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5797A3EC25E4039F00991BD9 /* Base */,
+				575A88C125E43CD700AEE448 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -2111,6 +2213,94 @@
 			};
 			name = Release;
 		};
+		575A88DB25E43CD700AEE448 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"reactions-equilibrium/Preview Content\"";
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "reactions-equilibrium/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.equilibrium;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		575A88DC25E43CD700AEE448 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"reactions-equilibrium/Preview Content\"";
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "reactions-equilibrium/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.equilibrium;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		575A88DE25E43CD700AEE448 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				INFOPLIST_FILE = "reactions-equilibriumTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.reactions-equilibriumTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/reactions-equilibrium.app/reactions-equilibrium";
+			};
+			name = Debug;
+		};
+		575A88DF25E43CD700AEE448 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				INFOPLIST_FILE = "reactions-equilibriumTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.reactions-equilibriumTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/reactions-equilibrium.app/reactions-equilibrium";
+			};
+			name = Release;
+		};
 		5797A40525E403A000991BD9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2158,7 +2348,6 @@
 		5797A40725E403A000991BD9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7H845U3D2J;
@@ -2180,7 +2369,6 @@
 		5797A40825E403A000991BD9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7H845U3D2J;
@@ -2323,6 +2511,24 @@
 			buildConfigurations = (
 				571D6A51255A780900F4E635 /* Debug */,
 				571D6A52255A780900F4E635 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		575A88DA25E43CD700AEE448 /* Build configuration list for PBXNativeTarget "reactions-equilibrium" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				575A88DB25E43CD700AEE448 /* Debug */,
+				575A88DC25E43CD700AEE448 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		575A88DD25E43CD700AEE448 /* Build configuration list for PBXNativeTarget "reactions-equilibriumTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				575A88DE25E43CD700AEE448 /* Debug */,
+				575A88DF25E43CD700AEE448 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

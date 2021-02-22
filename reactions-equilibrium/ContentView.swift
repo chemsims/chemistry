@@ -1,16 +1,14 @@
 //
-//  ContentView.swift
-//  Reactions Equilibrium
-//
-//  Created by Omar Fahmy on 22/02/2021.
+// Reactions App
 //
 
+
 import SwiftUI
-import ReactionsCore
 
 struct ContentView: View {
     var body: some View {
-        Beaky()
+        Text("Hello, world!")
+            .padding()
     }
 }
 
