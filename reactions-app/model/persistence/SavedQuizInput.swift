@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ReactionsCore
 
 protocol QuizPersistence {
 
@@ -31,14 +32,6 @@ private struct SavedPersistedQuiz: Codable {
 private struct QuizAnswerPersistedInput: Codable {
     let firstAnswerId: String
     let otherAnswersId: [String]
-}
-
-enum QuestionSet: String, CaseIterable {
-    case zeroOrder,
-         firstOrder,
-         secondOrder,
-         reactionComparison,
-         energyProfile
 }
 
 class InMemoryQuizPersistence: QuizPersistence {

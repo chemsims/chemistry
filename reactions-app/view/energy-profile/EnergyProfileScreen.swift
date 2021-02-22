@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 struct EnergyProfileScreen: View {
 
@@ -49,7 +50,7 @@ struct EnergyProfileScreen: View {
             next: model.next,
             back: model.back,
             nextIsDisabled: !model.canClickNext,
-            settings: settings.orderLayoutSettings
+            settings: settings.orderLayoutSettings.beakyGeometrySettings
         )
         .padding(.trailing, settings.orderLayoutSettings.beakyRightPadding)
         .padding(.bottom, settings.orderLayoutSettings.beakyBottomPadding)

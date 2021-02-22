@@ -3,14 +3,18 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-struct SpeechBubble: View {
+public struct SpeechBubble: View {
 
     let lines: [TextLine]
     let fontSize: CGFloat
 
-    var body: some View {
+    public init(lines: [TextLine], fontSize: CGFloat) {
+        self.lines = lines
+        self.fontSize = fontSize
+    }
+
+    public var body: some View {
         GeometryReader { geometry in
             SpeechBubbleWithSettings(
                 lines: lines,
@@ -77,11 +81,11 @@ struct SpeechBubbleStem: Shape {
     }
 }
 
-struct SpeechBubbleSettings {
+public struct SpeechBubbleSettings {
     let geometry: GeometryProxy
     let fontSize: CGFloat
 
-    static func getStemWidth(width: CGFloat) -> CGFloat {
+    public static func getStemWidth(width: CGFloat) -> CGFloat {
         width * 0.15
     }
 

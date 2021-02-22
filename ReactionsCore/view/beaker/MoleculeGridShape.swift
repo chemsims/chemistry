@@ -109,7 +109,7 @@ struct MoleculeGrid_Previews: PreviewProvider {
         GeometryReader { geometry in
             MoleculeGrid(
                 settings: MoleculeGridSettings(totalWidth: geometry.size.width),
-                coords: MoleculeGridSettings.fullGrid(rows: 10),
+                coords: MoleculeGridSettings.fullGrid,
                 color: Color.black
             )
         }

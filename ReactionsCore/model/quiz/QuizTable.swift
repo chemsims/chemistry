@@ -4,15 +4,15 @@
 
 import Foundation
 
-struct QuizTable: Equatable {
-    let rows: [[TextLine]]
+public struct QuizTable: Equatable {
+    public let rows: [[TextLine]]
 
-    init(rows: [[TextLine]]) {
+    public init(rows: [[TextLine]]) {
         assert(rows.count != 0 && rows.allSatisfy { $0.count == rows.first!.count })
         self.rows = rows
     }
 
-    var cols: Int {
+    public var cols: Int {
         rows.first!.count
     }
 }

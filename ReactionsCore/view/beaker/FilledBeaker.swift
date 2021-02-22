@@ -113,7 +113,7 @@ public struct FilledBeaker: View {
             moleculeGrid(
                 settings,
                 color: Styling.moleculePlaceholder,
-                coordinates: MoleculeGridSettings.fullGrid(rows: Int(ceil(rows)))
+                coordinates: MoleculeGridSettings.grid(rows: Int(ceil(rows)))
             )
 
             moleculeGrid(

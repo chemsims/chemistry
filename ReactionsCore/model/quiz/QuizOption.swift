@@ -4,16 +4,16 @@
 
 import Foundation
 
-enum QuizOption: String, CaseIterable, Equatable {
+public enum QuizOption: String, CaseIterable, Equatable {
     case A, B, C, D
 }
 
 extension QuizOption: Comparable {
-    static func < (lhs: QuizOption, rhs: QuizOption) -> Bool {
+    public static func < (lhs: QuizOption, rhs: QuizOption) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
 
-    var label: String {
+    public var label: String {
         switch self {
         case .A: return "1"
         case .B: return "2"
@@ -23,11 +23,11 @@ extension QuizOption: Comparable {
     }
 }
 
-enum QuizDifficulty: Int, CaseIterable, Comparable, Codable {
+public enum QuizDifficulty: Int, CaseIterable, Comparable, Codable {
 
     case easy, medium, hard
 
-    var quizLength: Int {
+    public var quizLength: Int {
         switch self {
         case .easy: return 5
         case .medium: return 10
@@ -35,14 +35,14 @@ enum QuizDifficulty: Int, CaseIterable, Comparable, Codable {
         }
     }
 
-    static func < (lhs: QuizDifficulty, rhs: QuizDifficulty) -> Bool {
+    public static func < (lhs: QuizDifficulty, rhs: QuizDifficulty) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
 }
 
 extension QuizDifficulty {
 
-    static func availableQuestions(
+    public static func availableQuestions(
         at difficulty: QuizDifficulty,
         questions: [QuizQuestion]
     ) -> [QuizQuestion] {

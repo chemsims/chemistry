@@ -14,9 +14,7 @@ struct ReactionStatements {
 
     static func setInitialInputs(rateConstant: CGFloat) -> [TextLine] {
         [
-            TextLineGenerator.makeLine(
-                "Great! You picked a reaction with a rate constant \(rateConstant.str(decimals: 2))."
-            ),
+            "Great! You picked a reaction with a rate constant \(rateConstant.str(decimals: 2)).",
             "Why don't you *set the initial concentration and initial time*?"
         ]
     }

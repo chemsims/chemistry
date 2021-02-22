@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct TextLinesView: View {
+public struct TextLinesView: View {
 
     let lines: [TextLine]
     let fontSize: CGFloat
@@ -14,7 +14,7 @@ struct TextLinesView: View {
     let weight: Font.Weight
     let color: Color
 
-    init(
+    public init(
         lines: [TextLine],
         fontSize: CGFloat,
         subscriptFontSize: CGFloat,
@@ -32,7 +32,7 @@ struct TextLinesView: View {
         self.color = color
     }
 
-    init(
+    public init(
         lines: [TextLine],
         fontSize: CGFloat,
         weight: Font.Weight = .regular,
@@ -49,7 +49,7 @@ struct TextLinesView: View {
         )
     }
 
-    init(
+    public init(
         line: TextLine,
         fontSize: CGFloat,
         weight: Font.Weight = .regular,
@@ -58,7 +58,7 @@ struct TextLinesView: View {
         self.init(lines: [line], fontSize: fontSize, weight: weight, color: color)
     }
 
-    var body: some View {
+    public var body: some View {
         content
             .accessibilityElement(children: .ignore)
             .accessibility(label: Text(label))

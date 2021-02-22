@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
 

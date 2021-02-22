@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct BeakyBox: View {
+public struct BeakyBox: View {
 
     let statement: [TextLine]
     let next: () -> Void
@@ -18,7 +18,33 @@ struct BeakyBox: View {
     let navButtonSize: CGFloat
     let bubbleStemWidth: CGFloat
 
-    var body: some View {
+    public init(
+        statement: [TextLine],
+        next: @escaping () -> Void,
+        back: @escaping () -> Void,
+        nextIsDisabled: Bool,
+        verticalSpacing: CGFloat,
+        bubbleWidth: CGFloat,
+        bubbleHeight: CGFloat,
+        beakyHeight: CGFloat,
+        fontSize: CGFloat,
+        navButtonSize: CGFloat,
+        bubbleStemWidth: CGFloat
+    ) {
+        self.statement = statement
+        self.next = next
+        self.back = back
+        self.nextIsDisabled = nextIsDisabled
+        self.verticalSpacing = verticalSpacing
+        self.bubbleWidth = bubbleWidth
+        self.bubbleHeight = bubbleHeight
+        self.beakyHeight = beakyHeight
+        self.fontSize = fontSize
+        self.navButtonSize = navButtonSize
+        self.bubbleStemWidth = bubbleStemWidth
+    }
+
+    public var body: some View {
         VStack(alignment: .leading, spacing: verticalSpacing) {
             HStack(alignment: .bottom, spacing: 0) {
                 SpeechBubble(lines: statement, fontSize: fontSize)

@@ -3,13 +3,16 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-struct NextButton: View {
+public struct NextButton: View {
 
     let action: () -> Void
 
-    var body: some View {
+    public init(action: @escaping () -> Void) {
+        self.action = action
+    }
+
+    public var body: some View {
         GeneralDirectionButton(
             action: action,
             systemImage: "arrowtriangle.right.fill"
@@ -18,10 +21,14 @@ struct NextButton: View {
     }
 }
 
-struct PreviousButton: View {
+public struct PreviousButton: View {
     let action: () -> Void
 
-    var body: some View {
+    public init(action: @escaping () -> Void) {
+        self.action = action
+    }
+
+    public var body: some View {
         GeneralDirectionButton(
             action: action,
             systemImage: "arrowtriangle.left.fill"
@@ -68,9 +75,11 @@ private struct GeneralDirectionButton: View {
     }
 }
 
-struct NavButtonButtonStyle: ButtonStyle {
+public struct NavButtonButtonStyle: ButtonStyle {
 
-    func makeBody(configuration: Configuration) -> some View {
+    public init() { }
+
+    public func makeBody(configuration: Configuration) -> some View {
         let delta: CGFloat = 0.1
         let xScale = configuration.isPressed ? 1 + delta : 1
         let yScale = configuration.isPressed ? 1 - delta : 1

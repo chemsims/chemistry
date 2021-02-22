@@ -3,6 +3,7 @@
 //
 
 import CoreGraphics
+import ReactionsCore
 
 struct FirstOrderStatements {
     static let intro: [TextLine] = [

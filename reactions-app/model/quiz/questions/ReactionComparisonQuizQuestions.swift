@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ReactionsCore
 
 extension QuizQuestionsList {
     static let reactionComparisonQuizQuestions = QuizQuestionsList(

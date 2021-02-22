@@ -4,9 +4,9 @@
 
 import Foundation
 
-struct Labels {
-    static let openParen = "open parenthesis"
-    static let closedParen = "closed parenthesis"
+public struct Labels {
+    public static let openParen = "open parenthesis"
+    public static let closedParen = "closed parenthesis"
 }
 
 struct SpeechLabelling {
@@ -26,13 +26,13 @@ struct SpeechLabelling {
     ]
 }
 
-struct Labelling {
+public struct Labelling {
 
     /// Returns a string where parts of the string are mapped to a more accessible format
     ///
     /// For example, the symbol `Δ` is mapped to `delta`, and superscripts may be prefixed with `to the power of`, or
     /// returned as a more common string, such as `squared` for powers of 2.
-    static func stringToLabel(_ content: String) -> String {
+    public static func stringToLabel(_ content: String) -> String {
         let preParsing = content.replacingOccurrences(of: preParseReplacements)
         let parsed = TextLine(preParsing, label: "")
         return parsed.content.reduce("") { (acc, next) in

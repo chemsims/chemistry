@@ -4,6 +4,7 @@
 
 import SwiftUI
 import StoreKit
+import ReactionsCore
 
 class RootNavigationViewModel: ObservableObject {
 

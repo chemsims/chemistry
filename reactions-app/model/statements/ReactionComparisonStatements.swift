@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ReactionsCore
 
 struct ReactionComparisonStatements {
     static let intro: [TextLine] = [

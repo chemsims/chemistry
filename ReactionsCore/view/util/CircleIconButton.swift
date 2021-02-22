@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct CircleIconButton: View {
+public struct CircleIconButton: View {
 
     let action: () -> Void
     let systemImage: String
@@ -12,7 +12,21 @@ struct CircleIconButton: View {
     let border: Color
     let foreground: Color
 
-    var body: some View {
+    public init(
+        action: @escaping () -> Void,
+        systemImage: String,
+        background: Color,
+        border: Color,
+        foreground: Color
+    ) {
+        self.action = action
+        self.systemImage = systemImage
+        self.background = background
+        self.border = border
+        self.foreground = foreground
+    }
+
+    public var body: some View {
         Button(action: action) {
             ZStack {
                 GeometryReader { geo in

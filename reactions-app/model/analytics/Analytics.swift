@@ -4,6 +4,7 @@
 
 import Foundation
 import FirebaseAnalytics
+import ReactionsCore
 
 protocol AnalyticsService {
     func openedScreen(_ screen: AppScreen)

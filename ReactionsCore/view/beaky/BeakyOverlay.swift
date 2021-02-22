@@ -4,15 +4,29 @@
 
 import SwiftUI
 
-struct BeakyOverlay: View {
+public struct BeakyOverlay: View {
 
     let statement: [TextLine]
     let next: () -> Void
     let back: () -> Void
     let nextIsDisabled: Bool
-    let settings: OrderedReactionLayoutSettings
+    let settings: BeakyGeometrySettings
 
-    var body: some View {
+    public init(
+        statement: [TextLine],
+        next: @escaping () -> Void,
+        back: @escaping () -> Void,
+        nextIsDisabled: Bool,
+        settings: BeakyGeometrySettings
+    ) {
+        self.statement = statement
+        self.next = next
+        self.back = back
+        self.nextIsDisabled = nextIsDisabled
+        self.settings = settings
+    }
+
+    public var body: some View {
         HStack(spacing: 0) {
             Spacer()
             VStack(alignment: .leading, spacing: 0) {
@@ -34,3 +48,6 @@ struct BeakyOverlay: View {
         }
     }
 }
+
+
+

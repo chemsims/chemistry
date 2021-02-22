@@ -165,6 +165,20 @@ struct OrderedReactionLayoutSettings {
     static let chartHPaddingFactor: CGFloat = 0.05
 }
 
+extension OrderedReactionLayoutSettings {
+    var beakyGeometrySettings: BeakyGeometrySettings {
+        BeakyGeometrySettings(
+            beakyVSpacing: beakyVSpacing,
+            bubbleWidth: bubbleWidth,
+            bubbleHeight: bubbleHeight,
+            beakyHeight: beakyHeight,
+            bubbleFontSize: bubbleFontSize,
+            navButtonSize: navButtonSize,
+            bubbleStemWidth: bubbleStemWidth
+        )
+    }
+}
+
 private struct TopStackLayoutUtil {
 
     let totalWidth: CGFloat

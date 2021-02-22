@@ -4,9 +4,12 @@
 
 import SwiftUI
 
-struct Beaky: View {
-    var body: some View {
-        Image("beaky", label: Text("test tube with a smiling face"))
+public struct Beaky: View {
+
+    public init() { }
+
+    public var body: some View {
+        Image("beaky", bundle: Bundle.reactionsCore, label: Text("test tube with a smiling face"))
             .resizable()
             .aspectRatio(contentMode: .fit)
     }

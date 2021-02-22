@@ -4,6 +4,6 @@
 
 import Foundation
 
-enum QuizState {
+public enum QuizState {
     case pending, running, completed
 }

@@ -10,68 +10,68 @@ import Foundation
 /// line. If the text is too long for the available width, it will wrap on to the next line.
 /// However, each line will be separated from each other.
 ///
-struct TextLine: ExpressibleByStringLiteral, ExpressibleByStringInterpolation, Equatable {
+public struct TextLine: ExpressibleByStringLiteral, ExpressibleByStringInterpolation, Equatable {
 
     /// The content of the line
     /// - Note: The content will be concatenated as is, without adding
     ///         any whitespace between segments.
-    let content: [TextSegment]
-    let customLabel: String?
+    public let content: [TextSegment]
+    public let customLabel: String?
 
-    init(content: [TextSegment], customLabel: String? = nil) {
+    public init(content: [TextSegment], customLabel: String? = nil) {
         self.content = content
         self.customLabel = customLabel
     }
 
     /// Creates a new `TextLine` from the literal String `value`, after parsing the String, and applying mapping the string to a
     /// more accessible label
-    init(stringLiteral value: String) {
+    public init(stringLiteral value: String) {
         self.init(value, label: Labelling.stringToLabel(value))
     }
 
-    init(_ rawString: String, label: String) {
+    public init(_ rawString: String, label: String) {
         self.init(
             content: TextLineGenerator.makeLine(rawString).content,
             customLabel: label
         )
     }
 
-    static func +(lhs: TextLine, rhs: TextLine) -> TextLine {
+    public static func +(lhs: TextLine, rhs: TextLine) -> TextLine {
         TextLine(content: lhs.content + rhs.content)
     }
 }
 
 extension TextLine {
     /// Character count, based on the semantics of `String.count`
-    var length: Int {
+    public var length: Int {
         content.reduce(0) { (acc, next) in
             acc + next.content.count
         }
     }
 
     /// Content as a String
-    var asString: String {
+    public var asString: String {
         content.reduce("") { (acc, next) in
             acc + next.content
         }
     }
 
     /// Accessibility label for the content
-    var label: String {
+    public var label: String {
         customLabel ?? asString
     }
 }
 
 extension TextLine {
-    func italic() -> TextLine {
+    public func italic() -> TextLine {
         TextLine(content: content.map { c in c.setItalic(true) })
     }
 
-    func emphasised() -> TextLine {
+    public func emphasised() -> TextLine {
         TextLine(content: content.map { $0.setEmphasised(true) })
     }
 
-    func prepending(_ other: TextSegment) -> TextLine {
+    public func prepending(_ other: TextSegment) -> TextLine {
         TextLine(content: [other] + content)
     }
 
@@ -79,14 +79,14 @@ extension TextLine {
 
 /// An individual segment of a line, including whether the content should
 /// appear emphasised.
-struct TextSegment: Equatable {
-    let content: String
-    let emphasised: Bool
-    let scriptType: ScriptType?
-    let allowBreaks: Bool
-    let italic: Bool
+public struct TextSegment: Equatable {
+    public let content: String
+    public let emphasised: Bool
+    public let scriptType: ScriptType?
+    public let allowBreaks: Bool
+    public let italic: Bool
 
-    init(
+    public init(
         content: String,
         emphasised: Bool = false,
         scriptType: ScriptType? = nil,
@@ -123,11 +123,11 @@ extension TextSegment {
     }
 }
 
-enum ScriptType {
+public enum ScriptType {
     case superScript, subScript
 }
 
-struct TextLineGenerator {
+public struct TextLineGenerator {
 
     private static let emphasis = Character("*")
     private static let sub = Character("_")
@@ -158,7 +158,7 @@ struct TextLineGenerator {
     ///
     /// Note that it is possible to nest control characters - with the exception of subscript and superscript.
     /// It is generally a good idea to wrap mathematical expressions with the `$` to avoid the term wrapping over multiple line.
-    static func makeLine(_ str: String) -> TextLine {
+    public static func makeLine(_ str: String) -> TextLine {
         var segments = [TextSegment]()
         var builder: String = ""
         var buildingEmphasis: Bool = false

@@ -74,7 +74,7 @@ import Foundation
 ///     difficulty: .hard
 /// )
 /// ```
-struct QuizQuestionData {
+public struct QuizQuestionData {
     let id: String
     let question: TextLine
     let correctAnswer: QuizAnswerData
@@ -83,7 +83,7 @@ struct QuizQuestionData {
     let image: LabelledImage?
     let table: QuizTable?
 
-    init(
+    public init(
         id: String,
         question: String,
         questionLabel: String? = nil,
@@ -141,12 +141,12 @@ struct QuizQuestionData {
 }
 
 /// Definition of a quiz answer
-struct QuizAnswerData: Equatable {
-    let answer: TextLine
-    let explanation: TextLine
-    let position: QuizOption?
+public struct QuizAnswerData: Equatable {
+    public let answer: TextLine
+    public let explanation: TextLine
+    public let position: QuizOption?
 
-    init(
+    public init(
         answer: String,
         answerLabel: String? = nil,
         explanation: String,
@@ -166,34 +166,34 @@ struct QuizAnswerData: Equatable {
 }
 
 /// Internal representation of a quiz question
-struct QuizQuestion: Equatable {
-    let id: String
-    let question: TextLine
-    let options: [QuizOption: QuizAnswer]
-    let correctOption: QuizOption
-    let difficulty: QuizDifficulty
-    let image: LabelledImage?
-    let table: QuizTable?
+public struct QuizQuestion: Equatable {
+    public let id: String
+    public let question: TextLine
+    public let options: [QuizOption: QuizAnswer]
+    public let correctOption: QuizOption
+    public let difficulty: QuizDifficulty
+    public let image: LabelledImage?
+    public let table: QuizTable?
 }
 
 /// Internal representation of a quiz answer
-struct QuizAnswer: Equatable {
-    let answer: TextLine
-    let explanation: TextLine
-    let id: String
+public struct QuizAnswer: Equatable {
+    public let answer: TextLine
+    public let explanation: TextLine
+    public let id: String
 }
 
-struct QuizQuestionsList {
+public struct QuizQuestionsList {
 
-    let questionSet: QuestionSet
-    init(questionSet: QuestionSet, _ questions: [QuizQuestionData]) {
+    public let questionSet: QuestionSet
+    public init(questionSet: QuestionSet, _ questions: [QuizQuestionData]) {
         self.questionSet = questionSet
         self.questions = questions
     }
 
     private let questions: [QuizQuestionData]
 
-    func createQuestions() -> [QuizQuestion] {
+    public func createQuestions() -> [QuizQuestion] {
         questions.map { $0.createQuestion() }
     }
 }

@@ -38,7 +38,7 @@ struct OrderedReactionScreen<Content: View>: View {
             next: reaction.next,
             back: reaction.back,
             nextIsDisabled: reaction.canSelectReaction,
-            settings: settings
+            settings: settings.beakyGeometrySettings
         )
     }
 
