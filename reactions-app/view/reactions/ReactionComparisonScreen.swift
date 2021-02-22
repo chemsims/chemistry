@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -31,7 +30,7 @@ struct ReactionComparisonScreen: View {
     }
 }
 
-fileprivate struct ReactionComparisonViewWithSettings: View {
+private struct ReactionComparisonViewWithSettings: View {
 
     @ObservedObject var reaction: ReactionComparisonViewModel
 
@@ -60,11 +59,11 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             equations
                 .colorMultiply(overlayFor(element: .equations))
 
-            if (reaction.showDragTutorial) {
+            if reaction.showDragTutorial {
                 dragViewWithHand
             }
-            
-            if (draggingOrder != nil) {
+
+            if draggingOrder != nil {
                 dragView(position: dragLocation)
             }
         }
@@ -108,7 +107,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         let position = reaction.dragTutorialHandIsComplete ? finalPosition : settings.topEquationMidPoint
 
         return ZStack {
-            if (reaction.dragTutorialHandIsMoving) {
+            if reaction.dragTutorialHandIsMoving {
                 dragView(position: position)
             }
             handImage
@@ -272,7 +271,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         .accessibility(label: Text("Equation box"))
         .disabled(!canDragOrder(order))
 
-        if (!canDragOrder(order)) {
+        if !canDragOrder(order) {
             view
         } else {
             view
@@ -289,7 +288,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     }
 
     private func accessibilityDrag(order: ReactionOrder, chartIndex: Int) {
-        if (settings.ordering[chartIndex] == order) {
+        if settings.ordering[chartIndex] == order {
             UIAccessibility.post(notification: .announcement, argument: "Correct selection")
             handleCorrectSelection(order: order)
         } else {
@@ -298,14 +297,14 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     }
 
     private func equationBorderColor(order: ReactionOrder) -> Color {
-        if (reaction.correctOrderSelections.contains(order)) {
+        if reaction.correctOrderSelections.contains(order) {
             return Styling.comparisonEquationDisabledBorder
         }
         return order.border
     }
 
     private func equationColor(order: ReactionOrder) -> Color {
-        if (reaction.correctOrderSelections.contains(order)) {
+        if reaction.correctOrderSelections.contains(order) {
             return Styling.comparisonEquationDisabled
         }
         return order.color
@@ -339,7 +338,6 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                 .foregroundColor(color)
         }
     }
-    
 
     private func beaker(
         order: ReactionOrder
@@ -355,7 +353,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     }
 
     private func concentration(order: ReactionOrder) -> Equation {
-        switch (order) {
+        switch order {
         case .Zero: return reaction.zeroOrderB
         case .First: return reaction.firstOrderB
         case .Second: return reaction.secondOrderB
@@ -363,7 +361,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     }
 
     private func time(order: ReactionOrder) -> CGFloat? {
-        switch (order) {
+        switch order {
         case .Zero: return reaction.currentTime0
         case .First: return reaction.currentTime1
         case .Second: return reaction.currentTime2
@@ -416,7 +414,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         if reaction.currentTime0 == nil {
             return "Reaction has not started yet"
         }
-        switch (order) {
+        switch order {
         case .Zero: return "Concentration of A reduces in a straight line, while B increases in a straight line"
         case .First: return "Concentration of A reduces in a curved line which is steeper at the start, and B increases with the same curve, flipped horizontally"
         case .Second: return "Concentration of A reduces in a heavily curved line which is stepper at the start, and B increases with the same curve, flipped horizontally"
@@ -432,7 +430,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
         currentTime: Binding<CGFloat>
     ) -> some View {
         ZStack {
-            if (reaction.currentTime0 == nil) {
+            if reaction.currentTime0 == nil {
                 CircleIconButton(
                     action: reaction.next,
                     systemImage: Icons.rightArrow,
@@ -444,7 +442,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                 .disabled(!reaction.canStartAnimation)
                 .frame(width: settings.chartSize * 0.5)
             }
-            if (reaction.currentTime0 != nil) {
+            if reaction.currentTime0 != nil {
                 ConcentrationPlotView(
                     settings: chartSettings,
                     concentrationA: concentrationA,
@@ -477,16 +475,16 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     }
 
     private func chartBorderColor(order: ReactionOrder) -> Color {
-        if (reaction.correctOrderSelections.contains(order)) {
+        if reaction.correctOrderSelections.contains(order) {
             return order.border
-        } else if (dragOverOrder == order) {
+        } else if dragOverOrder == order {
             return dragBorder
         }
         return Styling.beakerOutline
     }
 
-    private func chartBorderWidth(order: ReactionOrder) -> CGFloat{
-        if (reaction.correctOrderSelections.contains(order) || dragOverOrder == order) {
+    private func chartBorderWidth(order: ReactionOrder) -> CGFloat {
+        if reaction.correctOrderSelections.contains(order) || dragOverOrder == order {
             return settings.chartBorderWidth
         }
         return settings.chartBorderWidth * 0.5
@@ -539,7 +537,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
 
     private func overlayFor(element: ReactionComparisonScreenElement) -> Color {
         let highlights = reaction.highlightedElements
-        if (highlights.isEmpty || highlights.contains(element)) {
+        if highlights.isEmpty || highlights.contains(element) {
             return .white
         }
         return Styling.inactiveScreenElement
@@ -556,7 +554,6 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
     private var dragString: String {
         (draggingOrder ?? .Zero).string
     }
-    
 
     private var a0: String {
         "1.0"
@@ -573,7 +570,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
             self.draggingOrder = order
             self.dragLocation = gesture.location
             self.dragOverOrder = settings.overlappingOrder(point: gesture.location)
-        }.onEnded { gesture in
+        }.onEnded { _ in
             guard reaction.canDragOrders else {
                 // Always set these to nil in case canDragOrders changes
                 // while drag is in progress
@@ -582,9 +579,9 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
                 return
             }
             if let dragOverOrder = dragOverOrder {
-                if (dragOverOrder == order) {
+                if dragOverOrder == order {
                     handleCorrectSelection(order: order)
-                } else if (!reaction.correctOrderSelections.contains(dragOverOrder)) {
+                } else if !reaction.correctOrderSelections.contains(dragOverOrder) {
                     runShakeAnimation(order: order)
                 }
             }
@@ -598,7 +595,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
 
     private func handleCorrectSelection(order: ReactionOrder) {
         reaction.addToCorrectSelection(order: order)
-        if (reaction.correctOrderSelections.count == 3 && !reaction.reactionHasEnded) {
+        if reaction.correctOrderSelections.count == 3 && !reaction.reactionHasEnded {
             reaction.next()
         }
     }
@@ -611,7 +608,7 @@ fileprivate struct ReactionComparisonViewWithSettings: View {
 
 fileprivate extension ReactionOrder {
     var border: Color {
-        switch (self) {
+        switch self {
         case .Zero: return Styling.comparisonOrder0Border
         case .First: return Styling.comparisonOrder1Border
         case .Second: return Styling.comparisonOrder2Border
@@ -619,7 +616,7 @@ fileprivate extension ReactionOrder {
     }
 
     var color: Color {
-        switch (self) {
+        switch self {
         case .Zero: return Styling.comparisonOrder0Background
         case .First: return Styling.comparisonOrder1Background
         case .Second: return Styling.comparisonOrder2Background
@@ -628,7 +625,7 @@ fileprivate extension ReactionOrder {
 
     var string: String {
         var num: String
-        switch (self) {
+        switch self {
         case .Zero: num = "0"
         case .First: num = "1"
         case .Second: num = "2"
@@ -636,7 +633,6 @@ fileprivate extension ReactionOrder {
         return "Order: \(num)"
     }
 }
-
 
 struct ReactionComparisonLayoutSettings {
 
@@ -785,23 +781,22 @@ struct ReactionComparisonLayoutSettings {
         let heightForTop = (height - chartTotalHeight) / 2
         let topPosition = heightForTop / 2
 
-        if (ordering[0] == order) {
+        if ordering[0] == order {
             return topPosition
-        } else if (ordering[1] == order) {
+        } else if ordering[1] == order {
             return height / 2
         }
         return height - topPosition
     }
 
     func chartSortPriority(order: ReactionOrder) -> Double {
-        if (ordering[0] == order) {
+        if ordering[0] == order {
             return 0.49
-        } else if (ordering[1] == order) {
+        } else if ordering[1] == order {
             return 0.39
         }
         return 0.29
     }
-
 
     func overlappingOrder(point: CGPoint) -> ReactionOrder? {
         let dragRect = CGRect(

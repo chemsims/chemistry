@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import Foundation
 
 extension QuizQuestionsList {
@@ -76,7 +75,7 @@ extension QuizQuestionsList {
                         explanation: """
                         The rate law is a way to identify the order of the reaction and vice-versa.
                         """
-                    ),
+                    )
                 ],
                 difficulty: .easy
             ),
@@ -597,7 +596,7 @@ extension QuizQuestionsList {
                 write the rate law for the reaction?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer:  "Rate = k[A]^0^[B]^1^",
+                    answer: "Rate = k[A]^0^[B]^1^",
                     explanation: """
                     If the reaction is zero order for A, that means that its exponent is 0 in the \
                     rate law equation. If the reaction is first order for B, that means that its \

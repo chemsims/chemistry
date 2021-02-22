@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -92,7 +91,6 @@ struct BeakerShape: Shape {
         // Right lip
         path.addLine(to: CGPoint(x: rect.width - lipHeight - rightGap, y: lipHeight * 2))
 
-
         // Right lip curve
         path.addArc(
             center: CGPoint(
@@ -125,4 +123,3 @@ struct BeakerShape_Previews: PreviewProvider {
         ).stroke()
     }
 }
-

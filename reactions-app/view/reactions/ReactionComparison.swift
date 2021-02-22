@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -47,7 +46,7 @@ struct ReactionComparisonScreen: View {
     ) -> some View {
         VStack {
             ZStack {
-                if (reaction.currentTime == nil) {
+                if reaction.currentTime == nil {
                     ChartAxisShape(
                        verticalTicks: settings.verticalTicks,
                        horizontalTicks: settings.horizontalTicks,
@@ -67,7 +66,7 @@ struct ReactionComparisonScreen: View {
                     .frame(width: settings.chartSize * 0.5)
                 }
 
-                if (reaction.currentTime != nil) {
+                if reaction.currentTime != nil {
                     ConcentrationPlotView(
                         settings: settings,
                         concentrationA: zeroOrder,
@@ -174,8 +173,7 @@ struct ReactionComparisonScreen: View {
         }
     }
 
-
-    private var zeroOrder: ConcentrationEquation  {
+    private var zeroOrder: ConcentrationEquation {
         LinearConcentration(
             t1: 0,
             c1: c1,
@@ -204,7 +202,7 @@ struct ReactionComparisonScreen: View {
         let availableWidth = settings.width - settings.beakerWidth - settings.beakerLeadingPadding - settings.beakyBoxTotalWidth
         let heightAboveBeaky = settings.height - settings.beakyBoxTotalHeight
 
-        if (heightAboveBeaky > availableWidth) {
+        if heightAboveBeaky > availableWidth {
             return heightAboveBeaky * 0.8
         }
         return availableWidth * 0.7
@@ -215,7 +213,6 @@ struct ReactionComparisonScreen: View {
     ) -> CGFloat {
         settings.chartsTopPadding * 0.5
     }
-
 
     private var c1: CGFloat { ReactionComparisonNavigation.c1 }
     private var c2: CGFloat { ReactionComparisonNavigation.c2 }

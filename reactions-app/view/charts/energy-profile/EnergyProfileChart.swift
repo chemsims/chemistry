@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -54,7 +53,6 @@ struct EnergyProfileChart: View {
         let initialEa = "The EA hump is \(chartInput.initialPeak.percentage) up the Y axis"
         let reducedEa = "The EA hump is \(chartInput.reducedPeak.percentage) up the Y axis, reduced from \(chartInput.initialPeak.percentage) before the catalyst was added"
 
-
         let eaMsg = isReduced ? reducedEa : initialEa
 
         let lineMsg = showTemperature ? ". A horizontal line shows the average kinetic energy of the molecules" : ""
@@ -65,7 +63,7 @@ struct EnergyProfileChart: View {
     private var value: String {
         let position = chartInput.canReactToC ? "above" : "below"
         let suffix = "which is \(position) the EA hump"
-        if (showTemperature) {
+        if showTemperature {
             return "The energy line is \(chartInput.currentEnergy.percentage) up the Y axis, \(suffix)"
         }
         return ""
@@ -105,7 +103,7 @@ struct EnergyProfileChart: View {
     private var chart: some View {
         ZStack {
             ZStack {
-                if (showTemperature) {
+                if showTemperature {
                     tempLine
                 }
 
@@ -258,7 +256,7 @@ fileprivate extension CGFloat {
     }
 }
 
-fileprivate struct EnergyProfileChartShape: Shape {
+private struct EnergyProfileChartShape: Shape {
 
     var peak: CGFloat
     var leftAsymptote: CGFloat
@@ -297,7 +295,7 @@ fileprivate struct EnergyProfileChartShape: Shape {
     }
 }
 
-fileprivate struct BellCurve {
+private struct BellCurve {
 
     let peak: CGFloat
     let leftAsymptote: CGFloat

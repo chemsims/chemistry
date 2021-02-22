@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -72,7 +71,7 @@ class UserDefaultsReactionInputPersistence: ReactionInputPersistence {
 
 class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
-    private var underlying = [ReactionInputKey:ReactionInput]()
+    private var underlying = [ReactionInputKey: ReactionInput]()
 
     private var underlyingScreenCompletions = Set<AppScreen>()
 

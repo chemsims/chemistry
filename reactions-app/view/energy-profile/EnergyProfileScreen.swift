@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -43,7 +42,7 @@ struct EnergyProfileScreen: View {
                 .disabled(!model.interactionEnabled)
         }
     }
-    
+
     private func beakyView(settings: EnergyProfileLayoutSettings) -> some View {
         BeakyOverlay(
             statement: model.statement,
@@ -155,7 +154,7 @@ struct EnergyProfileScreen: View {
     }
 }
 
-fileprivate struct EnergyProfileLayoutSettings {
+private struct EnergyProfileLayoutSettings {
     let geometry: GeometryProxy
     let horizontalSize: UserInterfaceSizeClass?
     let verticalSize: UserInterfaceSizeClass?
@@ -220,7 +219,6 @@ struct EnergyProfileScreen_Previews: PreviewProvider {
             )
         )
         .previewLayout(.fixed(width: 568, height: 320))
-
 
         // iPad Mini
         EnergyProfileScreen(

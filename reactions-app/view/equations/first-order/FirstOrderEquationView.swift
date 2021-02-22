@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -20,7 +19,6 @@ struct FirstOrderEquationView: View {
     let maxWidth: CGFloat
     let maxHeight: CGFloat
     let reactant: String
-
 
     var body: some View {
         ScaledView(
@@ -47,7 +45,7 @@ struct FirstOrderEquationView: View {
     }
 }
 
-fileprivate struct UnscaledFirstOrderReactionEquationView: View {
+private struct UnscaledFirstOrderReactionEquationView: View {
 
     let emphasise: Bool
     let c1: CGFloat
@@ -118,7 +116,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
     }
 }
 
-fileprivate struct FirstOrderRateFilled: View {
+private struct FirstOrderRateFilled: View {
 
     let reactant: String
 
@@ -157,7 +155,7 @@ fileprivate struct FirstOrderRateFilled: View {
     }
 }
 
-fileprivate struct FirstOrderRateBlank: View {
+private struct FirstOrderRateBlank: View {
 
     let emphasise: Bool
     let rate: String?
@@ -209,7 +207,7 @@ fileprivate struct FirstOrderRateBlank: View {
     }
 }
 
-fileprivate struct FirstOrderHalfLimeFilled: View {
+private struct FirstOrderHalfLimeFilled: View {
     var body: some View {
         HStack(spacing: 12) {
             HalfLife()
@@ -228,7 +226,7 @@ fileprivate struct FirstOrderHalfLimeFilled: View {
     }
 }
 
-fileprivate struct FirstOrderHalfLifeBlank: View {
+private struct FirstOrderHalfLifeBlank: View {
 
     let emphasise: Bool
     let halfLife: String?
@@ -252,7 +250,7 @@ fileprivate struct FirstOrderHalfLifeBlank: View {
     }
 }
 
-fileprivate struct EquationSizes {
+private struct EquationSizes {
     static let width: CGFloat = 350
     static let height: CGFloat = 450
 

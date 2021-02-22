@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -31,7 +30,6 @@ struct ReactionStatements {
         "Notice how the final time varies as you adjust the final concentration."
     ]
 
-
     static func inProgress(display: ReactionPairDisplay) -> [TextLine] {
         [
             "Let's watch all the molecules changing!",
@@ -53,5 +51,5 @@ struct ReactionStatements {
         "Try *dragging the time indicator* to scrub through the reaction time.",
         "Then, let's take a quiz to review what we've learnt."
     ]
-    
+
 }

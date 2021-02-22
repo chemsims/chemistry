@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SpriteKit
 
@@ -9,7 +8,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 
     var allowReactionsToC: Bool = false {
         willSet {
-            if (allowReactionsToC && !newValue && cMolecules > 0) {
+            if allowReactionsToC && !newValue && cMolecules > 0 {
                 resetCollisions()
             }
         }
@@ -54,13 +53,11 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-
     private let moleculeACategory: UInt32 = 0x1 << 0
     private let moleculeBCategory: UInt32 = 0x1 << 1
     private let moleculeCCategory: UInt32 = 0x1 << 2
     private let wallCategory: UInt32 = 0x1 << 3
     private let collisionBitMask: UInt32 = 0x1 << 0
-
 
     private var velocity: CGFloat = MoleculeEnergySettings.minVelocity
 
@@ -100,7 +97,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         collisionsSinceLastCMolecule += 1
         let catA = contact.bodyA.categoryBitMask
         let catB = contact.bodyB.categoryBitMask
-        if (catA == moleculeACategory && catB == moleculeBCategory) {
+        if catA == moleculeACategory && catB == moleculeBCategory {
             if let nodeA = contact.bodyA.node as? SKShapeNode,
                let nodeB = contact.bodyB.node as? SKShapeNode,
                shouldCollide() {
@@ -198,7 +195,6 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         addWedge(leftXEdge: false, bottomYEdge: false)
     }
 }
-
 
 struct MoleculeEnergySettings {
 

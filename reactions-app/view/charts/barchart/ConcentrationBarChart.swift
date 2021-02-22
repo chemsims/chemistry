@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -73,8 +72,6 @@ struct ConcentrationBarChart: View {
         )
     }
 
-
-
     private var barA: some View {
         return ZStack {
             drawBar(
@@ -83,7 +80,7 @@ struct ConcentrationBarChart: View {
                 barCenterX: settings.barACenterX
             ).foregroundColor(currentTime == nil ? display.reactant.color : Styling.barChartEmpty)
 
-            if (currentTime != nil && concentrationA != nil) {
+            if currentTime != nil && concentrationA != nil {
                 drawBar(
                     concentration: concentrationA!,
                     currentTime: currentTime!,
@@ -95,14 +92,14 @@ struct ConcentrationBarChart: View {
 
     private var barB: some View {
         ZStack {
-            if (currentTime == nil) {
+            if currentTime == nil {
                 drawBar(
                     concentration: ConstantEquation(value: 0),
                     currentTime: 0,
                     barCenterX: settings.barBCenterX
                 )
             }
-            if (currentTime != nil && concentrationB != nil) {
+            if currentTime != nil && concentrationB != nil {
                 drawBar(
                     concentration: concentrationB!,
                     currentTime: currentTime!,
@@ -139,7 +136,6 @@ struct ConcentrationBarChart: View {
         }.offset(x: barX - (settings.chartWidth / 2))
     }
 }
-
 
 struct BarChartAxisShape_Previews: PreviewProvider {
     static var previews: some View {

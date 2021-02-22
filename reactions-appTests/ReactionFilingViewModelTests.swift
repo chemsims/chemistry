@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
@@ -17,7 +16,7 @@ class ReactionFilingViewModelTests: XCTestCase {
             let reaction = ZeroOrderReactionViewModel()
 
             // Just need to get navigation model to apply the initial state
-            let _ = filingModel.navigation(model: reaction, reactionType: reactionType)
+            _ = filingModel.navigation(model: reaction, reactionType: reactionType)
             XCTAssertEqual(reaction.selectedReaction, reactionType)
         }
 

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -19,7 +18,6 @@ class DeferScreenEdgesHostingController<Content: View>: UIHostingController<Cont
     }
 }
 
-
 class DeferScreenEdgesState {
 
     private init() { }
@@ -28,7 +26,7 @@ class DeferScreenEdgesState {
 
     var deferEdges: UIRectEdge = [] {
         didSet {
-            if (deferEdges != oldValue) {
+            if deferEdges != oldValue {
                 didSetEdgesDelegate?()
             }
         }

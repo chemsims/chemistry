@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -32,7 +31,7 @@ fileprivate extension Array where Element: BinaryFloatingPoint {
         minSize: Element
     ) -> [Element] {
         let surplus = sum - limit
-        if (surplus <= 0) {
+        if surplus <= 0 {
             return self
         }
 

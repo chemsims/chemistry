@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -37,4 +36,3 @@ struct ShareSettings {
     Hey, check out the Reactions Rate app! Download it at \(url).
     """
 }
-

@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct EnergyProfileBeaker: View {
@@ -116,7 +115,6 @@ struct EnergyProfileBeaker: View {
         let catalystMsg = catalyst.map { ", with catalyst \($0) particles also in the beaker" } ?? ""
         let label = "Beaker with molecules of \(a) and \(b) colliding which occasionally produces a molecule of \(c)\(catalystMsg)"
 
-
         return ZStack(alignment: .bottom) {
             Color.white.mask(
                 BeakerShape(
@@ -194,7 +192,6 @@ struct EnergyProfileBeaker: View {
         )
     }
 
-
     private func catalystView(
         settings: EnergyBeakerSettings
     ) -> some View {
@@ -241,9 +238,9 @@ struct EnergyProfileBeaker: View {
             .offset(y: yOffset)
             .opacity(availableCatalysts.contains(catalyst) ? 1 : 0.2)
             .onTapGesture {
-                if (catalystState == .active) {
+                if catalystState == .active {
                     setCatalystInProgress(catalyst)
-                } else if (catalystState == .pending(catalyst: catalyst)) {
+                } else if catalystState == .pending(catalyst: catalyst) {
                     doSelectCatalyst(catalyst: catalyst)
                 } else {
                     return
@@ -270,7 +267,7 @@ struct EnergyProfileBeaker: View {
         catalyst: Catalyst
     ) {
         let inProgress = catalystState.pending == catalyst
-        if (canSelectCatalyst && inProgress && particleState == .none) {
+        if canSelectCatalyst && inProgress && particleState == .none {
             selectCatalyst(catalyst)
         }
     }
@@ -509,10 +506,9 @@ struct EnergyBeakerSettings {
 
 }
 
-
 extension Catalyst {
     var imageName: String {
-        switch(self) {
+        switch self {
         case .A: return "catone"
         case .B: return "cattwo"
         case .C: return "catthree"
@@ -520,7 +516,7 @@ extension Catalyst {
     }
 
     var color: UIColor {
-        switch(self) {
+        switch self {
         case .A: return .catalystA
         case .B: return .catalystB
         case .C: return .catalystC

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -45,11 +44,11 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
         if let previousNode = currentNode.prev(model: model) {
             let currentState = currentNode.state
             let previousState = previousNode.state
-            if (!currentState.ignoreOnBack) {
+            if !currentState.ignoreOnBack {
                 currentState.unapply(on: model)
             }
             currentNode = previousNode
-            if (previousState.ignoreOnBack) {
+            if previousState.ignoreOnBack {
                 back()
             } else {
                 previousState.reapply(on: model)
@@ -89,7 +88,6 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
         state.delayedStates[index].state.apply(on: model)
         scheduleSubState(indexToRun: index + 1)
     }
-
 
     private func scheduleNextState(for state: State) {
         if let timer = nextTimer {

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -15,7 +14,7 @@ extension QuizOption: Comparable {
     }
 
     var label: String {
-        switch (self) {
+        switch self {
         case .A: return "1"
         case .B: return "2"
         case .C: return "3"
@@ -29,7 +28,7 @@ enum QuizDifficulty: Int, CaseIterable, Comparable, Codable {
     case easy, medium, hard
 
     var quizLength: Int {
-        switch (self) {
+        switch self {
         case .easy: return 5
         case .medium: return 10
         case .hard: return 20
@@ -40,7 +39,6 @@ enum QuizDifficulty: Int, CaseIterable, Comparable, Codable {
         lhs.rawValue < rhs.rawValue
     }
 }
-
 
 extension QuizDifficulty {
 
@@ -64,17 +62,17 @@ extension QuizDifficulty {
         return loop(difficulty)
     }
 
-    static func counts(questions: [QuizQuestion]) -> [QuizDifficulty:Int] {
+    static func counts(questions: [QuizQuestion]) -> [QuizDifficulty: Int] {
         let allCounts = QuizDifficulty.allCases.map { difficulty in
             (difficulty, questions.filter { $0.difficulty == difficulty }.count)
         }
 
-        var result = [QuizDifficulty:Int]()
+        var result = [QuizDifficulty: Int]()
         result[QuizDifficulty.easy] = allCounts.first!.1
         (1..<QuizDifficulty.allCases.count).forEach { i in
             let difficulty = QuizDifficulty.allCases[i]
             let difficultyCount = allCounts[i].1
-            if (difficultyCount == 0) {
+            if difficultyCount == 0 {
                 result[difficulty] = 0
             } else {
                 let previousNonZeroDifficultyIndex = stride(from: i - 1, through: 0, by: -1).first { i in

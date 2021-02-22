@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -61,26 +60,25 @@ struct ConcentrationPlotView: View {
 
     var body: some View {
         ZStack {
-            if (highlightChart) {
+            if highlightChart {
                 Rectangle()
                     .fill(Color.white)
             }
-            if (highlightLhsCurve) {
+            if highlightLhsCurve {
                 rectangleHighlight(t1: initialTime, t2: (initialTime + finalTime) / 2)
             }
-            if (highlightRhsCurve) {
+            if highlightRhsCurve {
                 rectangleHighlight(t1: (initialTime + finalTime) / 2, t2: finalTime)
             }
 
-
-            if (includeAxis) {
+            if includeAxis {
                 verticalIndicator(at: initialTime)
                 verticalIndicator(at: finalTime)
                 horizontalIndicator(at: concentrationA.getY(at: initialTime))
                 horizontalIndicator(at: concentrationA.getY(at: finalTime))
             }
 
-            if (includeAxis) {
+            if includeAxis {
                 ChartAxisShape(
                     verticalTicks: settings.verticalTicks,
                     horizontalTicks: settings.horizontalTicks,
@@ -91,7 +89,7 @@ struct ConcentrationPlotView: View {
                 .stroke()
             }
 
-            if (concentrationB != nil) {
+            if concentrationB != nil {
                 ChartPlotWithHead(
                     settings: settings,
                     equation: concentrationB!,
@@ -235,14 +233,14 @@ struct ChartPlotWithHead: View {
         ZStack {
             dataLine(time: finalTime, color: filledBarColor)
             dataLine(time: currentTime, color: headColor)
-            if (highlightLhs) {
+            if highlightLhs {
                 highlightLine(startTime: initialTime, endTime: (initialTime + finalTime) / 2)
             }
-            if (highlightRhs) {
+            if highlightRhs {
                 highlightLine(startTime: (initialTime + finalTime) / 2, endTime: finalTime)
             }
 
-            if (haloColor != nil) {
+            if haloColor != nil {
                 head(
                     radius: settings.chartHeadPrimaryHaloSize,
                     color: haloColor!
@@ -345,4 +343,3 @@ struct TimeChartPlotView_Previews: PreviewProvider {
     static var equation = ZeroOrderConcentration(t1: 0, c1: 0.8, t2: 10, c2: 0.2)
     static var equation2 = ZeroOrderConcentration(t1: 0, c1: 0.2, t2: 10, c2: 0.8)
 }
-

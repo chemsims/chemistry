@@ -1,11 +1,9 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 import MessageUI
-
 
 struct MailComposerView: UIViewControllerRepresentable {
 

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -65,7 +64,7 @@ struct ConcentrationTimeChartView: View {
     }
 
     private var curveShape: String {
-        switch (input.order) {
+        switch input.order {
         case .Zero: return "linear"
         case .First: return "slightly curved"
         case .Second: return "heavily curved"
@@ -77,9 +76,9 @@ struct ConcentrationTimeChartView: View {
     }
 
     private var yAccessibilityLabelSuffix: String {
-        if (currentTime == nil && finalConcentration == nil) {
+        if currentTime == nil && finalConcentration == nil {
             return ", c1"
-        } else if (currentTime == nil && finalConcentration != nil) {
+        } else if currentTime == nil && finalConcentration != nil {
             return ", c2"
         }
         return ""
@@ -90,9 +89,9 @@ struct ConcentrationTimeChartView: View {
     }
 
     private var xAccessibilityLabelSuffix: String {
-        if (currentTime == nil && finalTime == nil) {
+        if currentTime == nil && finalTime == nil {
             return ", t1"
-        } else if (currentTime == nil) {
+        } else if currentTime == nil {
             return ", t2"
         }
         return ""
@@ -192,23 +191,22 @@ struct GeneralTimeChartView: View {
             concentrationLabel
 
             HStack(alignment: .top, spacing: settings.chartHStackSpacing) {
-                if (includeSliders) {
+                if includeSliders {
                     concentrationSlider
                 }
 
                 VStack(spacing: settings.chartVStackSpacing) {
-                    if (showIndicatorLines) {
+                    if showIndicatorLines {
                         chartWithIndicator
                             .accessibilityElement(children: .ignore)
                             .accessibility(label: Text(label))
                             .accessibility(value: Text("no data"))
-                    } else if (
+                    } else if
                         finalTime != nil &&
                             finalConcentration != nil &&
-                            concentrationA != nil
-                    ) {
+                            concentrationA != nil {
                         ZStack {
-                            if (showDataAtT2) {
+                            if showDataAtT2 {
                                 chartWithData(
                                     concentrationA: concentrationA!,
                                     currentTime: unsafeT2Binding,
@@ -217,7 +215,7 @@ struct GeneralTimeChartView: View {
                                 )
                             }
 
-                            if (currentTime != nil) {
+                            if currentTime != nil {
                                 chartWithData(
                                     concentrationA: concentrationA!,
                                     currentTime: unsafeCurrentTimeBinding,
@@ -228,7 +226,7 @@ struct GeneralTimeChartView: View {
                         }
                         .accessibility(label: Text(label))
                     }
-                    if (includeSliders) {
+                    if includeSliders {
                         timeSlider
                     }
                     timeLabel
@@ -244,7 +242,7 @@ struct GeneralTimeChartView: View {
     }
 
     private var showIndicatorLines: Bool {
-        if (showDataAtT2) {
+        if showDataAtT2 {
             return finalTime == nil
         }
         return currentTime == nil
@@ -258,7 +256,7 @@ struct GeneralTimeChartView: View {
                 .accessibility(label: Text(label))
                 .accessibility(hidden: includeValuesInLabel)
 
-            if (includeValuesInLabel) {
+            if includeValuesInLabel {
                 HStack(spacing: 1) {
                     animatingConcentration
                         .frame(
@@ -266,7 +264,6 @@ struct GeneralTimeChartView: View {
                             height: settings.chartSize * 0.18, alignment: .leading
                         )
                         .accessibility(label: Text(label))
-
 
                     Text("M")
                         .fixedSize()
@@ -288,7 +285,7 @@ struct GeneralTimeChartView: View {
                 .fixedSize()
                 .accessibility(label: Text(accessibilityLabel))
                 .accessibility(hidden: includeValuesInLabel)
-            if (includeValuesInLabel) {
+            if includeValuesInLabel {
                 HStack(spacing: 1) {
                     animatingTime
                         .frame(width: settings.chartSize * 0.25, alignment: .leading)
@@ -361,7 +358,7 @@ struct GeneralTimeChartView: View {
         defaultValue: CGFloat,
         decimals: Int
     ) -> some View {
-        if (currentTime == nil || equation == nil) {
+        if currentTime == nil || equation == nil {
             Text(defaultValue.str(decimals: decimals))
                 .minimumScaleFactor(0.5)
                 .accessibility(value: Text(defaultValue.str(decimals: decimals)))
@@ -429,7 +426,7 @@ struct GeneralTimeChartView: View {
             ).stroke()
         }.frame(width: settings.chartSize, height: settings.chartSize)
 
-        if (!includeSliders) {
+        if !includeSliders {
             return AnyView(axis)
         }
         return AnyView(

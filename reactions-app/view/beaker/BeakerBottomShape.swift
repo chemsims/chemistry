@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -9,7 +8,6 @@ struct BeakerBottomShape: Shape {
 
     /// Radius of the bottom corners
     let cornerRadius: CGFloat
-
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -32,7 +30,7 @@ struct BeakerBottomShape: Shape {
             control: CGPoint(x: rect.width, y: rect.height)
         )
 
-        path.addLine(to: CGPoint(x: rect.width , y: 0))
+        path.addLine(to: CGPoint(x: rect.width, y: 0))
 
         return path
     }

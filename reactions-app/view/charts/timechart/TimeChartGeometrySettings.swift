@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import CoreGraphics
 
 struct TimeChartGeometrySettings {

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -56,7 +55,6 @@ extension TextLine {
             acc + next.content
         }
     }
-
 
     /// Accessibility label for the content
     var label: String {
@@ -164,11 +162,11 @@ struct TextLineGenerator {
         var segments = [TextSegment]()
         var builder: String = ""
         var buildingEmphasis: Bool = false
-        var scriptType: ScriptType? = nil
+        var scriptType: ScriptType?
         var allowBreaks: Bool = true
 
         func addIfNonEmpty() {
-            if (!builder.isEmpty) {
+            if !builder.isEmpty {
                 segments.append(
                     TextSegment(
                         content: builder,
@@ -181,7 +179,6 @@ struct TextLineGenerator {
             }
         }
 
-
         for index in str.indices {
             let char = str[index]
             if char == escape {
@@ -191,15 +188,15 @@ struct TextLineGenerator {
             let charScript = charToScript(char)
             let hasPrev = str.indices.first! < index
             let prevIsEscape = hasPrev && str[str.index(before: index)] == escape
-            if (char == emphasis && !prevIsEscape) {
+            if char == emphasis && !prevIsEscape {
                 addIfNonEmpty()
                 builder = ""
                 buildingEmphasis.toggle()
-            } else if (charScript != nil && !prevIsEscape) {
+            } else if charScript != nil && !prevIsEscape {
                 addIfNonEmpty()
                 builder = ""
                 scriptType = scriptType == nil ? charScript : nil
-            } else if (char == noBreaks && !prevIsEscape) {
+            } else if char == noBreaks && !prevIsEscape {
                 addIfNonEmpty()
                 builder = ""
                 allowBreaks.toggle()
@@ -214,11 +211,10 @@ struct TextLineGenerator {
         return TextLine(content: segments)
     }
 
-
     private static func charToScript(_ c: Character) -> ScriptType? {
-        if (c == sub) {
+        if c == sub {
             return .subScript
-        } else if (c == superScript) {
+        } else if c == superScript {
             return .superScript
         }
         return nil

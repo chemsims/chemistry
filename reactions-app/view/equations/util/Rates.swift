@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -35,7 +34,7 @@ struct BlankRate: View {
     }
 
     private func aligned<Content: View>(width: CGFloat, v: () -> Content) -> some View {
-        if (alignWithFilled) {
+        if alignWithFilled {
             return AnyView(v()
                             .frame(width: width)
             )
@@ -68,7 +67,6 @@ struct FilledRate: View {
             )
             .accessibility(label: Text("k"))
 
-
             HStack(spacing: 0) {
                 FixedText("(")
                     .accessibility(label: Text(Labels.openParen))
@@ -90,7 +88,7 @@ struct FilledRate: View {
     }
 
     private func value(equation: Equation?) -> some View {
-        if (currentTime == nil || equation == nil) {
+        if currentTime == nil || equation == nil {
             return AnyView(Placeholder(value: nil))
         }
         return AnyView(

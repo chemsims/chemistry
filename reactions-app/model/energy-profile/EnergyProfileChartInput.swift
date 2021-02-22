@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -43,7 +42,7 @@ extension EnergyProfileChartInput {
     }
 
     private static func getReducedPeak(shape: EnergyProfileShapeSettings, catalyst: Catalyst) -> CGFloat {
-        switch (catalyst) {
+        switch catalyst {
         case .A: return shape.maxReducedPeak
         case .B: return (shape.minReducedPeak + shape.maxReducedPeak) / 2
         case .C: return shape.minReducedPeak

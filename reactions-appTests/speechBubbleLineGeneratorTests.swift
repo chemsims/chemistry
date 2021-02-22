@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
@@ -115,5 +114,5 @@ class TextLineGeneratorTests: XCTestCase {
     private func generate(_ str: String) -> [TextSegment] {
         TextLineGenerator.makeLine(str).content
     }
-    
+
 }

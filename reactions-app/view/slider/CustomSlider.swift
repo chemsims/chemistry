@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -57,7 +56,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     .foregroundColor(barColor)
                     .frame(width: barWidth(geometry), height: barHeight(geometry))
 
-                if (includeFill) {
+                if includeFill {
                     Rectangle()
                         .foregroundColor(handleColor)
                         .frame(
@@ -77,9 +76,9 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             }
             .accessibility(value: Text(value.str(decimals: 2)))
             .accessibilityAdjustableAction { direction in
-                if (direction == .increment) {
+                if direction == .increment {
                     setNewValue(newValue: value + axis.accessibilityIncrement)
-                } else if (direction == .decrement) {
+                } else if direction == .decrement {
                     setNewValue(newValue: value - axis.accessibilityIncrement)
                 }
             }
@@ -125,12 +124,12 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     private func setNewValue(newValue value: Value) {
         var newValue = value
-        if (newValue > axis.maxValue) {
+        if newValue > axis.maxValue {
             newValue = axis.maxValue
-        } else if (newValue < axis.minValue) {
+        } else if newValue < axis.minValue {
             newValue = axis.minValue
         }
-        if (useHaptics) {
+        if useHaptics {
             handleHaptics(newValue: newValue, oldValue: self.value)
         }
 
@@ -146,7 +145,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         value: Value,
         location: CGFloat
     ) {
-        if (value > axis.maxValue || value < axis.minValue) {
+        if value > axis.maxValue || value < axis.minValue {
             let axisLength = isPortrait ? geometry.size.height : geometry.size.width
             let bounds = value > axis.maxValue ? axis.maxValuePosition : axis.minValuePosition
             let delta = abs(location - CGFloat(bounds))
@@ -158,7 +157,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             let scale = maxScale - (maxScale * pow(CGFloat(Darwin.M_E), -deltaFactor * delta))
 
             self.scaleFactor = scale
-            if (value > axis.maxValue) {
+            if value > axis.maxValue {
                 self.scaleAnchor = isPortrait ? .top : .trailing
             } else {
                 self.scaleAnchor = isPortrait ? .bottom : .leading
@@ -172,17 +171,16 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         newValue: Value,
         oldValue: Value
     ) {
-        if (newValue > oldValue) {
-            if (newValue >= axis.maxValue) {
+        if newValue > oldValue {
+            if newValue >= axis.maxValue {
                 impactGenerator.impactOccurred()
-            }
-            else if (newValue >= 0.75 * axis.maxValue) {
+            } else if newValue >= 0.75 * axis.maxValue {
                 impactGenerator.prepare()
             }
-        } else if (newValue < oldValue) {
-            if (newValue <= axis.minValue) {
+        } else if newValue < oldValue {
+            if newValue <= axis.minValue {
                 impactGenerator.impactOccurred()
-            } else if (newValue <= 1.25 * axis.minValue) {
+            } else if newValue <= 1.25 * axis.minValue {
                 impactGenerator.prepare()
             }
         }
@@ -190,7 +188,7 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     /// Return the x position of the center of the slider handle
     private func handleXPosition(_ geometry: GeometryProxy, calculations: AxisPositionCalculations<Value>) -> CGFloat {
-        if (isPortrait) {
+        if isPortrait {
             return geometry.size.width / 2
         }
         return CGFloat(calculations.getPosition(at: value))
@@ -198,35 +196,35 @@ struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     /// Return the y position of the center of the slider handle
     private func handleYPosition(_ geometry: GeometryProxy, calculations: AxisPositionCalculations<Value>) -> CGFloat {
-        if (isPortrait) {
+        if isPortrait {
             return CGFloat(calculations.getPosition(at: value))
         }
         return geometry.size.height / 2
     }
 
     private func barHeight(_ geometry: GeometryProxy) -> CGFloat {
-        if (isPortrait) {
+        if isPortrait {
             return geometry.size.height
         }
         return barThickness
     }
 
     private func barWidth(_ geometry: GeometryProxy) -> CGFloat {
-        if (isPortrait) {
+        if isPortrait {
             return barThickness
         }
         return geometry.size.width
     }
 
     private func handleWidth(_ geometry: GeometryProxy) -> CGFloat {
-        if (isPortrait) {
+        if isPortrait {
             return geometry.size.width
         }
         return handleThickness
     }
 
     private func handleHeight(_ geometry: GeometryProxy) -> CGFloat {
-        if (isPortrait) {
+        if isPortrait {
             return handleThickness
         }
         return geometry.size.height
@@ -243,7 +241,7 @@ struct CustomSlider_Previews: PreviewProvider {
         ViewWrapper()
     }
 
-    struct ViewWrapper: View  {
+    struct ViewWrapper: View {
         @State var value: CGFloat = 1.5
 
         var body: some View {

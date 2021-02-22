@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -23,10 +22,9 @@ struct SpeechLabelling {
 
     private static let replacements: [(String, String)] = [
         ("[A_0_]", "(A0)"),
-        ("[A_t_]", "(A T)"),
+        ("[A_t_]", "(A T)")
     ]
 }
-
 
 struct Labelling {
 
@@ -43,16 +41,16 @@ struct Labelling {
     }
 
     private static func labelSegment(_ segment: TextSegment) -> String {
-        if (segment.scriptType == .superScript) {
+        if segment.scriptType == .superScript {
             return labelSuperscript(segment)
-        } else if (segment.scriptType == .subScript) {
+        } else if segment.scriptType == .subScript {
             return labelSubscript(segment)
         }
         return labelContent(segment.content)
     }
 
     private static func labelSuperscript(_ segment: TextSegment) -> String {
-        switch (segment.content) {
+        switch segment.content {
         case "2": return " squared"
         case "3": return " cubed"
         default:
@@ -61,7 +59,7 @@ struct Labelling {
     }
 
     private static func labelSubscript(_ segment: TextSegment) -> String {
-        switch (segment.content) {
+        switch segment.content {
         case "1/2": return " one half"
         case "t": return "'T'"
         default:

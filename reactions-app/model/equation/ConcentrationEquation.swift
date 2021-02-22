@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 import Darwin
@@ -125,7 +124,6 @@ struct FirstOrderConcentration: ConcentrationEquation {
         FirstOrderConcentration(c1: c, t1: t, rateConstant: rateConstant)
     }
 
-
     static func rateConstant(c1: CGFloat, c2: CGFloat, t1: CGFloat, t2: CGFloat) -> CGFloat {
         assert(c1 != 0)
         assert(c2 != 0)
@@ -145,8 +143,6 @@ struct ConcentrationBEquation: Equation {
     }
 
 }
-
-
 
 struct SecondOrderConcentration: ConcentrationEquation {
 

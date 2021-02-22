@@ -1,13 +1,11 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
 
 class SizeAdjusterTests: XCTestCase {
-
 
     func testIncreasingSmallElement() {
         let adjusted1 = SizeAdjuster.adjust(
@@ -62,7 +60,7 @@ class SizeAdjusterTests: XCTestCase {
         assertArrayEquals(adjusted, [50, 50, 50, 50, expectedPenultimate, expectedFinal])
     }
 
-    private func assertArrayEquals<T: BinaryFloatingPoint>(_ lhs: Array<T>, _ rhs: Array<T>, _ accuracy: T = 0.0001) {
+    private func assertArrayEquals<T: BinaryFloatingPoint>(_ lhs: [T], _ rhs: [T], _ accuracy: T = 0.0001) {
         XCTAssertEqual(lhs.count, rhs.count)
         (0..<lhs.count).forEach { i in
             XCTAssertEqual(lhs[i], rhs[i], accuracy: accuracy)

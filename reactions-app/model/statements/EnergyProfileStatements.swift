@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -10,7 +9,7 @@ struct EnergyProfileStatements {
     static let intro: [TextLine] = [
         "Not so fast!",
         "Choose a reaction to work with for this experiment.",
-        "*Tap the right corner button to show the dropdown list.*",
+        "*Tap the right corner button to show the dropdown list.*"
     ]
 
     static let introCollisionTheory: [TextLine] = [

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -21,13 +20,13 @@ protocol ScreenState {
     var delayedStates: [DelayedState<NestedState>] { get }
 
     /// Applies the reaction state to the model
-    func apply(on model: Model) -> Void
+    func apply(on model: Model)
 
     /// Unapplies the reaction state to the model. i.e., reversing the effect of `apply`
-    func unapply(on model: Model) -> Void
+    func unapply(on model: Model)
 
     /// Reapplies the state, when returning from a subsequent state.
-    func reapply(on model: Model) -> Void
+    func reapply(on model: Model)
 
     /// TimeInterval (i.e. time in seconds) to wait before automatically progressing to the next state
     func nextStateAutoDispatchDelay(model: Model) -> Double?

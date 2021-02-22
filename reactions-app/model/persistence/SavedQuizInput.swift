@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -21,15 +20,15 @@ protocol QuizPersistence {
 struct SavedQuiz {
     let questionSet: QuestionSet
     let difficulty: QuizDifficulty
-    let answers: [String:QuizAnswerInput]
+    let answers: [String: QuizAnswerInput]
 }
 
-fileprivate struct SavedPersistedQuiz: Codable {
+private struct SavedPersistedQuiz: Codable {
     let difficulty: QuizDifficulty
     let answers: [String: QuizAnswerPersistedInput]
 }
 
-fileprivate struct QuizAnswerPersistedInput: Codable {
+private struct QuizAnswerPersistedInput: Codable {
     let firstAnswerId: String
     let otherAnswersId: [String]
 }
@@ -44,7 +43,7 @@ enum QuestionSet: String, CaseIterable {
 
 class InMemoryQuizPersistence: QuizPersistence {
 
-    private var underlyingResults = [QuestionSet:SavedPersistedQuiz]()
+    private var underlyingResults = [QuestionSet: SavedPersistedQuiz]()
 
     func saveAnswers(
         quiz: SavedQuiz,
@@ -93,14 +92,13 @@ class UserDefaultsQuizPersistence: QuizPersistence {
     }
 }
 
-
 // MARK: Serialize
 fileprivate extension QuizPersistence {
     func serialiseAnswers(
         _ quiz: SavedQuiz,
         questions: [QuizQuestion]
     ) -> SavedPersistedQuiz {
-        var serializedAnswers = [String:QuizAnswerPersistedInput]()
+        var serializedAnswers = [String: QuizAnswerPersistedInput]()
 
         quiz.answers.forEach { (questionId, answer) in
             if let serialized =

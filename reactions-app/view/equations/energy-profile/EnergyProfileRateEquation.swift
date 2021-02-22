@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct EnergyProfileRateEquation: View {
@@ -36,7 +35,7 @@ struct EnergyProfileRateEquation: View {
     }
 }
 
-fileprivate struct UnscaledEnergyProfileRateEquation: View {
+private struct UnscaledEnergyProfileRateEquation: View {
 
     let k1: CGFloat?
     let k2: CGFloat?
@@ -134,7 +133,7 @@ fileprivate struct UnscaledEnergyProfileRateEquation: View {
 
 }
 
-fileprivate struct EnergyProfileRateK1: View {
+private struct EnergyProfileRateK1: View {
 
     let highlightEa: Bool
 
@@ -167,7 +166,7 @@ fileprivate struct EnergyProfileRateK1: View {
     }
 }
 
-fileprivate struct EnergyProfileRateLn: View {
+private struct EnergyProfileRateLn: View {
 
     let highlightEa: Bool
 
@@ -205,7 +204,7 @@ fileprivate struct EnergyProfileRateLn: View {
     }
 }
 
-fileprivate struct RateK1K2: View {
+private struct RateK1K2: View {
 
     let highlightEa: Bool
 
@@ -255,7 +254,7 @@ fileprivate struct RateK1K2: View {
     }
 }
 
-fileprivate struct BlankRates: View {
+private struct BlankRates: View {
 
     let k1: String?
     let k2: String?
@@ -297,7 +296,6 @@ fileprivate struct BlankRates: View {
                 Placeholder(value: ea)
                     .accessibility(label: Text("EA"))
                     .accessibility(sortPriority: 4.3)
-
 
                 Rectangle()
                     .frame(width: 55, height: 2)
@@ -352,7 +350,7 @@ fileprivate struct BlankRates: View {
     }
 }
 
-fileprivate struct LargeOpenParen: View {
+private struct LargeOpenParen: View {
     var body: some View {
         FixedText("(")
             .scaleEffect(y: 2.5)
@@ -360,7 +358,7 @@ fileprivate struct LargeOpenParen: View {
     }
 }
 
-fileprivate struct LargeCloseParen: View {
+private struct LargeCloseParen: View {
     var body: some View {
         FixedText(")")
             .scaleEffect(y: 2.5)
@@ -368,12 +366,12 @@ fileprivate struct LargeCloseParen: View {
     }
 }
 
-fileprivate struct EquationSize {
+private struct EquationSize {
     static let width: CGFloat = 425
     static let height: CGFloat = 388
 }
 
-fileprivate struct TermBG: View {
+private struct TermBG: View {
 
     let highlight: Bool
 

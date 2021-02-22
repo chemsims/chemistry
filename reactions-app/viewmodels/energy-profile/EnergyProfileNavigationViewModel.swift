@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -121,7 +120,7 @@ class EnergyProfileState: ScreenState, SubState {
     }
 }
 
-fileprivate class IntroToCollisionTheory: EnergyProfileState {
+private class IntroToCollisionTheory: EnergyProfileState {
     init() {
         super.init(statement: EnergyProfileStatements.introCollisionTheory)
     }
@@ -141,7 +140,7 @@ fileprivate class IntroToCollisionTheory: EnergyProfileState {
     }
 }
 
-fileprivate class ExplanationState: EnergyProfileState {
+private class ExplanationState: EnergyProfileState {
     init(
         _ statement: [TextLine],
         _ highlightedElements: [EnergyProfileScreenElement]
@@ -166,7 +165,7 @@ fileprivate class ExplanationState: EnergyProfileState {
     }
 }
 
-fileprivate class ShowInitialEaValues: EnergyProfileState {
+private class ShowInitialEaValues: EnergyProfileState {
     override func statement(model: EnergyProfileViewModel) -> [TextLine] {
         EnergyProfileStatements.showCurrentValues(
             ea: model.activationEnergy,
@@ -190,7 +189,7 @@ fileprivate class ShowInitialEaValues: EnergyProfileState {
     }
 }
 
-fileprivate class ExplainExoOrEndoThermic: EnergyProfileState {
+private class ExplainExoOrEndoThermic: EnergyProfileState {
     override func apply(on model: EnergyProfileViewModel) {
         let isExoThermic = model.selectedReaction.energyProfileShapeSettings.isExoThermic
         let statement = isExoThermic ?
@@ -205,7 +204,7 @@ fileprivate class ExplainExoOrEndoThermic: EnergyProfileState {
     }
 }
 
-fileprivate class ExplainCatalyst: EnergyProfileState {
+private class ExplainCatalyst: EnergyProfileState {
     init() {
         super.init(statement: EnergyProfileStatements.explainCatalyst)
     }
@@ -226,7 +225,7 @@ fileprivate class ExplainCatalyst: EnergyProfileState {
     }
 }
 
-fileprivate class InstructToChooseCatalyst: EnergyProfileState {
+private class InstructToChooseCatalyst: EnergyProfileState {
     init() {
         super.init(statement: EnergyProfileStatements.instructToChooseCatalyst)
     }
@@ -252,7 +251,7 @@ fileprivate class InstructToChooseCatalyst: EnergyProfileState {
 }
 
 /// Moves the chosen catalyst into the prepared state
-fileprivate class PrepareChosenCatalyst: EnergyProfileState {
+private class PrepareChosenCatalyst: EnergyProfileState {
     init() {
         super.init(statement: EnergyProfileStatements.instructToShakeCatalyst)
     }
@@ -270,7 +269,7 @@ fileprivate class PrepareChosenCatalyst: EnergyProfileState {
     }
 }
 
-fileprivate class StartShakingCatalyst: EnergyProfileState {
+private class StartShakingCatalyst: EnergyProfileState {
     init() {
         super.init(statement: EnergyProfileStatements.instructToShakeCatalyst)
     }
@@ -290,7 +289,7 @@ fileprivate class StartShakingCatalyst: EnergyProfileState {
     }
 }
 
-fileprivate class StopShakingCatalyst: EnergyProfileState {
+private class StopShakingCatalyst: EnergyProfileState {
     override func statement(model: EnergyProfileViewModel) -> [TextLine] {
         EnergyProfileStatements.showEaReduction(newEa: model.activationEnergy)
     }
@@ -308,7 +307,7 @@ fileprivate class StopShakingCatalyst: EnergyProfileState {
         }
         model.temp2 = model.temp1
         model.statement = statement(model: model)
-        if (saveCatalyst) {
+        if saveCatalyst {
             model.saveCatalyst()
         }
     }
@@ -326,7 +325,7 @@ fileprivate class StopShakingCatalyst: EnergyProfileState {
     }
 }
 
-fileprivate class ShowLinearChart: EnergyProfileState {
+private class ShowLinearChart: EnergyProfileState {
     override func statement(model: EnergyProfileViewModel) -> [TextLine] {
         EnergyProfileStatements.showLinearChart(slope: model.slope)
     }
@@ -345,7 +344,7 @@ fileprivate class ShowLinearChart: EnergyProfileState {
     }
 }
 
-fileprivate class ShowKRatio: EnergyProfileState {
+private class ShowKRatio: EnergyProfileState {
     override func statement(model: EnergyProfileViewModel) -> [TextLine] {
         EnergyProfileStatements.showKRatio(newK: model.k1, temp: model.temp1)
     }
@@ -366,7 +365,7 @@ fileprivate class ShowKRatio: EnergyProfileState {
     }
 }
 
-fileprivate class InstructToSetTemp: EnergyProfileState {
+private class InstructToSetTemp: EnergyProfileState {
     init() {
         super.init(statement: EnergyProfileStatements.instructToSetTemp)
     }
@@ -395,7 +394,7 @@ fileprivate class InstructToSetTemp: EnergyProfileState {
     }
 }
 
-fileprivate class ReactionHasEndedSoInstructToChooseAnotherCatalyst: EnergyProfileState {
+private class ReactionHasEndedSoInstructToChooseAnotherCatalyst: EnergyProfileState {
     init() {
         super.init(statement: EnergyProfileStatements.finishedFirstCatalyst)
     }
@@ -426,7 +425,7 @@ fileprivate class ReactionHasEndedSoInstructToChooseAnotherCatalyst: EnergyProfi
     }
 }
 
-fileprivate class PrepareAnotherCatalystState: EnergyProfileState {
+private class PrepareAnotherCatalystState: EnergyProfileState {
     init() {
         super.init(statement: EnergyProfileStatements.instructToChooseCatalyst)
     }
@@ -447,7 +446,7 @@ fileprivate class PrepareAnotherCatalystState: EnergyProfileState {
     }
 }
 
-fileprivate class ReactionEndedState: EnergyProfileState {
+private class ReactionEndedState: EnergyProfileState {
     init(persistence: EnergyProfilePersistence) {
         self.persistence = persistence
         super.init(statement: EnergyProfileStatements.finished)
@@ -471,4 +470,4 @@ fileprivate class ReactionEndedState: EnergyProfileState {
     }
 }
 
-fileprivate let setCatalystToActive = Animation.easeOut(duration: 0.75)
+private let setCatalystToActive = Animation.easeOut(duration: 0.75)

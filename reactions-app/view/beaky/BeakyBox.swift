@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -37,7 +36,6 @@ struct BeakyBox: View {
                     .frame(height: beakyHeight)
             }
 
-
             HStack {
                 PreviousButton(action: back)
                     .frame(width: navButtonSize, height: navButtonSize)
@@ -51,5 +49,3 @@ struct BeakyBox: View {
         }
     }
 }
-
-

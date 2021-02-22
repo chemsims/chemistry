@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -28,7 +27,7 @@ struct ConcentrationEquationShape: Shape {
             let concentration = equation.getConcentration(at: t)
             let x = xAxis.getPosition(at: t)
             let y = yAxis.getPosition(at: concentration)
-            if (didStart) {
+            if didStart {
                 path.addLine(to: CGPoint(x: x, y: y))
             } else {
                 path.move(to: CGPoint(x: x, y: y))
@@ -56,7 +55,6 @@ struct ConcentrationEquationHead: Shape {
 
     var time: CGFloat
 
-
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let concentration = equation.getConcentration(at: time)
@@ -77,9 +75,7 @@ struct ConcentrationEquationHead: Shape {
         set { time = newValue }
     }
 
-
 }
-
 
 struct TimeChartPlot_Previews: PreviewProvider {
 
@@ -120,7 +116,7 @@ struct TimeChartPlot_Previews: PreviewProvider {
 
                 Button(action: {
                     withAnimation(.linear(duration: 1)) {
-                        if (self.t2 == 50) {
+                        if self.t2 == 50 {
                             self.t2 = 0
                         } else {
                             self.t2 = 50

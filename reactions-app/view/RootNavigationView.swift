@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -49,8 +48,6 @@ struct RootNavigationView: View {
         }
     }
 }
-
-
 
 struct RootNavigationView_Previews: PreviewProvider {
     static var previews: some View {

@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import Foundation
 
 extension QuizQuestionsList {
@@ -120,7 +119,7 @@ extension QuizQuestionsList {
                     $[A] = [A_0_]/([A_0_]kt + 1)$ ➝
                     $[A] = 0.44/(0.44 \\* 0.09 \\* 25 + 1) = 0.22 M$
                     """,
-                    explanationLabel:  """
+                    explanationLabel: """
                     The equation for a second order reaction is, inverse A = inverse A0 + kt. Knowing \
                     k, [A_0_], and the time, we just solve for [A]:
 
@@ -238,7 +237,7 @@ extension QuizQuestionsList {
                         $M/s$ which is too low compared to the rest. \
                         $Rate = (0.4)(0.4)^2^ = 0.064 M/s$.
                         """,
-                        explanationLabel:  """
+                        explanationLabel: """
                         Those reactant concentrations would result in a reaction rate of 0.064 \
                         $M/s$, which is too low compared to the rest. \
                         $Rate =, 0.4, times 0.4^2^, = 0.064 M/s$.
@@ -492,7 +491,7 @@ extension QuizQuestionsList {
                         the rate goes from 27X to 160X (it goes up by a factor of 4). $4^x^ = 4$ where $x = 1$; the \
                         reaction is first order for [C]. When [D] goes from 0.002 to 0.004 (it's doubled, goes \
                         up by a factor of 2) while B and C remain constant, the rate goes from 10X to 160X (it \
-                        goes up by a factor of 16). $2^x^ = 16$ where $x = 4$; the reaction is fourth order for [D]. 
+                        goes up by a factor of 16). $2^x^ = 16$ where $x = 4$; the reaction is fourth order for [D].
                         """
                     )
                 ],
@@ -531,12 +530,12 @@ extension QuizQuestionsList {
                     (elementary reactions, or steps). This sequence of reactions is called the \
                     reaction mechanism. The reaction mechanism for elementary steps or reactions is \
                     very simple to write since it's determined by the stoichiometry.
-                    
+
                     For example, if we were going to write Step 1's rate law, it would be: \
                     $Rate = k[NO]^2^$. Furthermore, the slowest step, in this case Step 2, is also called \
                     the rate-determining step, because the overall reaction cannot go faster than \
                     the slowest of the steps.
-                    
+
                     In other words, the rate for this reaction would be $rate = k[N_2_O_2_][H_2_]$ but \
                     since N_2_O_2_ is only the intermediate, then the actual rate law is: \
                     $rate = k[NO]^2^[H_2_]$.
@@ -546,12 +545,12 @@ extension QuizQuestionsList {
                     (elementary reactions, or steps). This sequence of reactions is called the \
                     reaction mechanism. The reaction mechanism for elementary steps or reactions is \
                     very simple to write since it's determined by the stoichiometry.
-                    
+
                     For example, if we were going to write Step 1's rate law, it would be: \
                     $rate = k, times [NO]^2^$. Furthermore, the slowest step, in this case Step 2, is also called \
                     the rate-determining step, because the overall reaction cannot go faster than \
                     the slowest of the steps.
-                    
+
                     In other words, the rate for this reaction would be rate = k, times [N_2_O_2_], times [H_2_], but \
                     since N_2_O_2_ is only the intermediate, then the actual rate law is: \
                     rate = k, times [NO]^2^, times [H_2_].
@@ -598,7 +597,7 @@ extension QuizQuestionsList {
                     collision of the molecules involved. The more molecules are needed to collide \
                     to form products, then the lower would be the probability for a successful \
                     collision to take place.
-                    
+
                     That's why the reaction with the highest rate would be the one with only one \
                     reactant, since it doesn't even need a collision to happen, making it much more \
                     probable to occur. The products are irrelevant to the rate of the reaction.
@@ -631,7 +630,7 @@ extension QuizQuestionsList {
                         of the molecules involved. The more molecules are needed to collide to form products, \
                         then the lower would be the probability for a successful collision to take place. Four \
                         reactants for an elementary reaction would probably be the slowest of the proposed \
-                        scenarios. 
+                        scenarios.
                         """
                     )
                 ],
@@ -888,7 +887,7 @@ extension QuizQuestionsList {
                     $k = (1/[A] - 1/[A_0_])/t$, that’s why a graph plotting $(1/[A] vs t)$ is a \
                     straight line $(1/[A](y) = kt(mx) + 1/[A_0_](b))$ with a slope of k.
                     """,
-                    explanationLabel:  """
+                    explanationLabel: """
                     For this second order reaction, the resultant integrated rate law is \
                     k = inverse A - inverse A0, /t, that’s why a graph plotting inverse A vs t is a \
                     straight line. Inverse A (y), = kt (mx), + inverse A0 (b), with a slope of k.
@@ -1032,7 +1031,7 @@ extension QuizQuestionsList {
                         ["10", "0.90", "-0.10", "1.11"],
                         ["20", "0.81", "-0.20", "1.23"],
                         ["30", "0.74", "-0.30", "1.35"],
-                        ["40", "0.67", "-0.40",  "1.49"]
+                        ["40", "0.67", "-0.40", "1.49"]
                     ]
                 )
             ),

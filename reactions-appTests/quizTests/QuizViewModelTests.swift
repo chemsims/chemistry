@@ -102,7 +102,7 @@ class QuizViewModelTests: XCTestCase {
         let questionList = QuizQuestionsList(questionSet: .zeroOrder, [makeQuestion(i: 0)])
         let model = newModel(questionList, persistence: persistence)
 
-        func getAnswers() -> [String:QuizAnswerInput]? {
+        func getAnswers() -> [String: QuizAnswerInput]? {
             persistence.getAnswers(
                 questionSet: .zeroOrder,
                 questions: questionList.createQuestions()

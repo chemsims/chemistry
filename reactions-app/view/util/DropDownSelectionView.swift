@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -57,7 +56,7 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         let background = selected ? Color.gray : Color.white
 
         return Button(action: {
-            if (selected) {
+            if selected {
                 isToggled = false
             } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(75)) {
@@ -124,7 +123,7 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     private func fontColor(_ option: Data) -> Color {
         let disabled = disabledOptions.contains(option)
         let selected = selection == option
-        if (selected) {
+        if selected {
             return .white
         }
         return disabled ? Color.gray : Color.black
@@ -150,4 +149,3 @@ struct DropDownSelectionView_Previews: PreviewProvider {
         .previewLayout(.fixed(width: 700, height: 200))
     }
 }
-

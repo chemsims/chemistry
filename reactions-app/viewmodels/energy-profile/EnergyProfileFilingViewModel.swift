@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -53,7 +52,7 @@ class EnergyProfileFilingViewModel: ObservableObject {
     }
 
     private func validate(input: EnergyProfileInput) -> EnergyProfileInput {
-        if (input.catalysts.count < 3) {
+        if input.catalysts.count < 3 {
             let missing = Catalyst.allCases.filter { !input.catalysts.contains($0) }
             assert(missing.count + input.catalysts.count == 3)
             return EnergyProfileInput(
@@ -69,8 +68,7 @@ class EnergyProfileFilingViewModel: ObservableObject {
     }
 }
 
-
-fileprivate class EnergyProfileEndState: EnergyProfileState {
+private class EnergyProfileEndState: EnergyProfileState {
 
     let catalyst: Catalyst
     let order: ReactionOrder

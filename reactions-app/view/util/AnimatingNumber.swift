@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct AnimatingNumber: View {
@@ -37,7 +36,6 @@ struct AnimatingNumber: View {
             )
     }
 }
-
 
 struct AnimatingNumberModifier: AnimatableModifier {
 

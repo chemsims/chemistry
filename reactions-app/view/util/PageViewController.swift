@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 import UIKit
@@ -64,7 +63,6 @@ struct PageViewController<Page: View>: UIViewControllerRepresentable {
             return controllers[index + 1]
         }
 
-
         func pageViewController(
             _ pageViewController: UIPageViewController,
             didFinishAnimating finished: Bool,
@@ -78,4 +76,3 @@ struct PageViewController<Page: View>: UIViewControllerRepresentable {
         }
     }
 }
-

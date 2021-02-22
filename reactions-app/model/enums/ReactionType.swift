@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -39,7 +38,7 @@ extension ReactionType {
     }
 
     var reactant: String {
-        switch (self) {
+        switch self {
         case .A: return "A"
         case .B: return "C"
         case .C: return "E"
@@ -47,7 +46,7 @@ extension ReactionType {
     }
 
     var product: String {
-        switch (self) {
+        switch self {
         case .A: return "B"
         case .B: return "D"
         case .C: return "F"
@@ -55,7 +54,7 @@ extension ReactionType {
     }
 
     var reactantColor: RGB {
-        switch (self) {
+        switch self {
         case .A: return RGB.moleculeA
         case .B: return RGB.moleculeD
         case .C: return RGB.moleculeG
@@ -63,7 +62,7 @@ extension ReactionType {
     }
 
     var productColor: RGB {
-        switch (self) {
+        switch self {
         case .A: return RGB.moleculeB
         case .B: return RGB.moleculeE
         case .C: return RGB.moleculeH

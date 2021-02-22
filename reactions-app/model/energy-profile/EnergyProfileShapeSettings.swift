@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -29,7 +28,7 @@ struct EnergyProfileShapeSettings {
 
 extension ReactionOrder {
     var energyProfileShapeSettings: EnergyProfileShapeSettings {
-        switch (self) {
+        switch self {
         case .Zero:
             return EnergyProfileShapeSettings(
                 peak: 0.9,

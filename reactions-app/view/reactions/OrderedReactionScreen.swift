@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -22,7 +21,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 .foregroundColor(Color.white)
                 .colorMultiply(reaction.color(for: nil))
                 .edgesIgnoringSafeArea(.all)
-            
+
             topStack(settings: settings)
 
             beaky(settings: settings)

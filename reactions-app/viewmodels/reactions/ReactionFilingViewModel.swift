@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -22,7 +21,7 @@ class ReactionFilingViewModel: ObservableObject {
     func makeView(
         reactionType: ReactionType
     ) -> AnyView {
-        switch (order) {
+        switch order {
         case .Zero:
             let model = ZeroOrderReactionViewModel()
             model.navigation = navigation(model: model, reactionType: reactionType)
@@ -65,13 +64,13 @@ class ReactionFilingViewModel: ObservableObject {
     }
 
     private func next() {
-        if (currentPage < 2) {
+        if currentPage < 2 {
             currentPage += 1
         }
     }
 
     private func prev() {
-        if (currentPage > 0) {
+        if currentPage > 0 {
             currentPage -= 1
         }
     }
@@ -81,7 +80,7 @@ class ReactionFilingViewModel: ObservableObject {
     }
 }
 
-fileprivate class ReactionFilingState: ReactionState {
+private class ReactionFilingState: ReactionState {
 
     init(
         order: ReactionOrder,
@@ -114,4 +113,3 @@ fileprivate class ReactionFilingState: ReactionState {
         }
     }
 }
-

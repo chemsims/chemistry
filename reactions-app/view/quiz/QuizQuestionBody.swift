@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -62,7 +61,7 @@ struct QuizQuestionsBody: View {
     }
 }
 
-fileprivate struct QuizAnswerOption: View {
+private struct QuizAnswerOption: View {
 
     @ObservedObject var model: QuizViewModel
     let settings: QuizLayoutSettings
@@ -74,7 +73,7 @@ fileprivate struct QuizAnswerOption: View {
     var body: some View {
         VStack(spacing: 0) {
             answer
-            if (model.showExplanation(option: option)) {
+            if model.showExplanation(option: option) {
                 explanation
             }
         }
@@ -114,9 +113,9 @@ fileprivate struct QuizAnswerOption: View {
     private var label: String {
         let optionLabel = model.optionText(option).label
         var prefix = ""
-        if (styleCorrect) {
+        if styleCorrect {
             prefix = "Correct. "
-        } else if (styleIncorrect) {
+        } else if styleIncorrect {
             prefix = "Incorrect. "
         }
         return "\(prefix)\(optionLabel). Option \(option.label) out of four"
@@ -137,7 +136,7 @@ fileprivate struct QuizAnswerOption: View {
 
     private var overlay: some View {
         ZStack {
-            if (styleCorrect || styleIncorrect) {
+            if styleCorrect || styleIncorrect {
                 QuizAnswerIconOverlay(isCorrect: styleCorrect)
                     .scaleEffect(badgeScale)
                     .onAppear(perform: runBadgeAnimation)
@@ -152,7 +151,7 @@ fileprivate struct QuizAnswerOption: View {
         guard !reduceMotion, hasSelectedOption else {
             return
         }
-        if (option == model.correctOption) {
+        if option == model.correctOption {
             badgeScale = 1
             withAnimation(.easeOut(duration: 0.35)) {
                 badgeScale = 1.2
@@ -186,20 +185,20 @@ fileprivate struct QuizAnswerOption: View {
     }
 
     private var answerBackground: Color {
-        if (styleCorrect) {
+        if styleCorrect {
             return Styling.Quiz.correctAnswerBackground
-        } else if (styleIncorrect) {
+        } else if styleIncorrect {
             return Styling.Quiz.wrongAnswerBackground
-        } else if (model.hasSelectedCorrectOption) {
+        } else if model.hasSelectedCorrectOption {
             return Styling.Quiz.disabledAnswerBackground
         }
         return Styling.Quiz.answerBackground
     }
 
     private var answerBorder: Color {
-        if (styleCorrect) {
+        if styleCorrect {
             return Styling.Quiz.correctAnswerBorder
-        } else if (styleIncorrect) {
+        } else if styleIncorrect {
             return Styling.Quiz.wrongAnswerBorder
         }
         return Styling.Quiz.answerBackground

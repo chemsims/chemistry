@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
@@ -19,6 +18,5 @@ class LastOpenedScreenTests: XCTestCase {
         model.set(.reactionComparison)
         XCTAssertEqual(model.get(), .reactionComparison)
     }
-
 
 }

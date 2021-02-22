@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -22,7 +21,7 @@ struct QuizTableView: View {
     }
 }
 
-fileprivate struct QuizTableViewWithGeometry: View {
+private struct QuizTableViewWithGeometry: View {
 
     let settings: QuizTableSettings
 
@@ -71,7 +70,7 @@ fileprivate struct QuizTableViewWithGeometry: View {
     }
 }
 
-fileprivate struct QuizTableSettings {
+private struct QuizTableSettings {
     let table: QuizTable
     let availableWidth: CGFloat
     let fontSize: CGFloat

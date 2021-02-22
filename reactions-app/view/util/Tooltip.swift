@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -30,7 +29,7 @@ struct Tooltip: View {
     }
 }
 
-fileprivate struct TooltipShape: Shape {
+private struct TooltipShape: Shape {
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -72,7 +71,7 @@ fileprivate struct TooltipShape: Shape {
                 CGPoint(x: (w/2) + arrowWidth, y: h - arrowHeight),
                 CGPoint(x: w/2, y: h),
                 CGPoint(x: (w/2) - arrowWidth, y: h - arrowHeight),
-                CGPoint(x: cornerRadius, y: h-arrowHeight),
+                CGPoint(x: cornerRadius, y: h-arrowHeight)
             ]
         )
 

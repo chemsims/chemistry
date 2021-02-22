@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -48,7 +47,7 @@ struct CompletedReactionScreen<Content: View>: View {
             content()
                 .blur(radius: enabled ? 0 : 8)
                 .disabled(!enabled)
-            if (!enabled) {
+            if !enabled {
                 Text(disabledStatement)
                     .font(.headline)
             }

@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import XCTest
 @testable import reactions_app
 
@@ -31,8 +30,8 @@ class ScreenStateTreeNodeTests: XCTestCase {
     }
 }
 
-fileprivate class TesterClass { var value = 0 }
-fileprivate class TesterState: ScreenState, SubState {
+private class TesterClass { var value = 0 }
+private class TesterState: ScreenState, SubState {
 
     let value: Int
     init(value: Int) {
@@ -57,4 +56,3 @@ fileprivate class TesterState: ScreenState, SubState {
     typealias NestedState = TesterState
     typealias Model = TesterClass
 }
-

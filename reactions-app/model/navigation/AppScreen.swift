@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -25,7 +24,7 @@ enum AppScreen: String, CaseIterable {
 
 extension AppScreen {
     var isQuiz: Bool {
-        switch (self) {
+        switch self {
         case .zeroOrderReactionQuiz, .firstOrderReactionQuiz, .secondOrderReactionQuiz,
              .reactionComparisonQuiz, .energyProfileQuiz:
             return true

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
@@ -22,12 +21,12 @@ extension NavigationViewModel {
             didReachEnd = true
             XCTFail("Reached limit of navigation state before condition was met")
         }
-        if (isNext) {
+        if isNext {
             nextScreen = end
         } else {
             prevScreen = end
         }
-        while (condition(model) && !didReachEnd) {
+        while condition(model) && !didReachEnd {
             isNext ? next() : back()
         }
     }
@@ -60,4 +59,3 @@ extension NavigationViewModel {
     }
 
 }
-

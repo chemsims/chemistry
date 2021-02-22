@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -15,7 +14,7 @@ extension ReactionOrder: Identifiable {
 
 extension ReactionOrder {
     var name: String {
-        switch (self) {
+        switch self {
         case .Zero: return "Zero"
         case .First: return "First"
         case .Second: return "Second"

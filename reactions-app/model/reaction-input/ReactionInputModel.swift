@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -23,7 +22,7 @@ protocol ReactionInputModel {
     ) -> ReactionInputLimits
 }
 
-fileprivate func cRange(spacing: CGFloat) -> InputRange {
+private func cRange(spacing: CGFloat) -> InputRange {
     InputRange(
         min: ReactionSettings.Input.minC,
         max: ReactionSettings.Input.maxC,
@@ -32,7 +31,7 @@ fileprivate func cRange(spacing: CGFloat) -> InputRange {
     )
 }
 
-fileprivate func tRange(spacing: CGFloat) -> InputRange {
+private func tRange(spacing: CGFloat) -> InputRange {
     InputRange(
         min: ReactionSettings.Input.minT1,
         max: ReactionSettings.Input.maxT,
@@ -87,7 +86,7 @@ extension ReactionInputModel {
 
     var concentrationA: ConcentrationEquation? {
         rateConstant.map { k in
-            switch (order) {
+            switch order {
             case .Zero:
                 return ZeroOrderConcentration(c1: inputC1, t1: inputT1, rateConstant: k)
             case .First:
@@ -112,7 +111,7 @@ extension ReactionInputModel {
     }
 
     fileprivate func getTRangeForOrder(spacing: CGFloat) -> InputRange {
-        if (order == .Zero) {
+        if order == .Zero {
             return tRange(spacing: spacing)
         }
         return InputRange(
@@ -135,7 +134,7 @@ struct ReactionInputAllProperties: ReactionInputModel {
 
     var rateConstant: CGFloat? {
         if let c2 = inputC2, let t2 = inputT2 {
-            switch (order) {
+            switch order {
             case .Zero:
                 return ZeroOrderConcentration.getRate(t1: inputT1, c1: inputC1, t2: t2, c2: c2)
             case .First:

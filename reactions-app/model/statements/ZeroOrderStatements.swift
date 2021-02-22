@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -31,7 +30,7 @@ struct ZeroOrderStatements {
             """
         ]
     }
-    
+
     static let setFinalValues: [TextLine] = [
         "Great! Now you can set the *concentration of A at the end of the reaction (c_2_)* and the *time the reaction will end (t_2_)*."
     ]
@@ -60,7 +59,7 @@ struct ZeroOrderStatements {
 
     static let showConcentrationTable: [TextLine] = [
         "You can click the button in the top right corner to see the initial and final concentration and time for this reaction.",
-        "*Try clicking the toggle to see your results*.",
+        "*Try clicking the toggle to see your results*."
     ]
 
     static let end: [TextLine] = [

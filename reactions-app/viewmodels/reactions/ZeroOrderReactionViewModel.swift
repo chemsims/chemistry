@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -64,7 +63,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
     }
 
     func color(for element: OrderedReactionScreenElement?) -> Color {
-        if (highlightedElements.isEmpty || highlight(element: element)) {
+        if highlightedElements.isEmpty || highlight(element: element) {
             return .white
         }
         return Styling.inactiveScreenElement
@@ -72,7 +71,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
 
     func color(for elements: [OrderedReactionScreenElement]) -> Color {
         let index = elements.firstIndex { highlight(element: $0) }
-        if (highlightedElements.isEmpty || index != nil) {
+        if highlightedElements.isEmpty || index != nil {
             return .white
         }
         return Styling.inactiveScreenElement
@@ -127,7 +126,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
         let desiredMolecues = Int(input.inputC1 * CGFloat(cols * rows))
 
         let surplus = desiredMolecues - moleculesA.count
-        if (surplus < 0) {
+        if surplus < 0 {
             let toRemove = min(moleculesA.count, -1 * surplus)
             moleculesA.removeFirst(toRemove)
         } else {
@@ -141,12 +140,12 @@ class ZeroOrderReactionViewModel: ObservableObject {
         cols: Int,
         rows: Int
     ) {
-        if (toAdd == 0 || moleculesA.count == (cols * rows)) {
+        if toAdd == 0 || moleculesA.count == (cols * rows) {
             return
         }
         let grid = GridCoordinate.random(maxCol: cols - 1, maxRow: rows - 1)
         let moleculeExists = moleculesA.contains { $0.col == grid.col && $0.row == grid.row }
-        if (moleculeExists) {
+        if moleculeExists {
             addMoleculesA(toAdd, cols: cols, rows: rows)
         } else {
             moleculesA.append(grid)

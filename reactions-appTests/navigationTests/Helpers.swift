@@ -1,11 +1,9 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
-
 
 func doTestStatementsAreReappliedOnBack(
     model: ZeroOrderReactionViewModel,
@@ -40,13 +38,13 @@ private func checkPreviousValueIsReapplied<T: Equatable>(
     func checkCurrentStatementIsReapplied() {
         let previousValue = model[keyPath: prevValueKeyPath]
         navigation.next()
-        if (!hasEnded) {
+        if !hasEnded {
             navigation.back()
             XCTAssertEqual(model[keyPath: prevValueKeyPath], previousValue, model.firstLine)
         }
     }
 
-    while(!hasEnded) {
+    while !hasEnded {
         checkCurrentStatementIsReapplied()
         navigation.next()
     }

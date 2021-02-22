@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -11,12 +10,10 @@ struct EnergyProfileReactionInput {
     let moleculeC: EnergyProfileMoleculeSettings
 }
 
-
-
 extension ReactionOrder {
 
     var energyProfileReactionInput: EnergyProfileReactionInput {
-        switch (self) {
+        switch self {
         case .Zero: return zeroOrderInput
         case .First: return firstOrderInput
         case .Second: return secondOrderInput

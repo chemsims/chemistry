@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -40,7 +39,7 @@ struct ConcentrationTable: View {
                         .accessibility(label: Text("c2"))
                         .accessibility(value: Text(c2 ?? "no value"))
                 }
-                if (showTime) {
+                if showTime {
                     HStack(spacing: 0) {
                         cell(value: "t")
                             .accessibility(hidden: true)
@@ -53,7 +52,7 @@ struct ConcentrationTable: View {
                     }
                 }
 
-                if (showRate) {
+                if showRate {
                     HStack(spacing: 0) {
                         cell(value: "Rate")
                             .accessibility(hidden: true)
@@ -100,7 +99,7 @@ struct ConcentrationTable: View {
 
     private var rectWithStroke: some View {
         ZStack {
-            if (highlighted) {
+            if highlighted {
                 Rectangle()
                     .foregroundColor(.white)
             }

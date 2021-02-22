@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -26,7 +25,7 @@ struct QuizScreen: View {
     }
 }
 
-fileprivate struct QuizScreenWithSettings: View {
+private struct QuizScreenWithSettings: View {
     @ObservedObject var model: QuizViewModel
     let settings: QuizLayoutSettings
 
@@ -36,7 +35,7 @@ fileprivate struct QuizScreenWithSettings: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            if (model.quizState != .completed) {
+            if model.quizState != .completed {
                 Rectangle()
                     .frame(height: settings.geometry.safeAreaInsets.top)
                     .edgesIgnoringSafeArea(.all)
@@ -45,25 +44,25 @@ fileprivate struct QuizScreenWithSettings: View {
             }
 
             VStack(spacing: 0) {
-                if (model.quizState != .completed) {
+                if model.quizState != .completed {
                     progressBar
                         .zIndex(2)
                         .accessibility(sortPriority: 0.5)
                 }
 
-                if (model.quizState == .running) {
+                if model.quizState == .running {
                     QuizQuestionsBody(
                         settings: settings,
                         model: model
                     )
                     .accessibility(sortPriority: 2)
                 }
-                if (model.quizState == .completed) {
+                if model.quizState == .completed {
                     QuizReviewBody(settings: settings, model: model)
                         .accessibility(sortPriority: 2)
                 }
 
-                if (model.quizState == .pending) {
+                if model.quizState == .pending {
                     HStack(spacing: 0) {
                         Spacer()
                             .frame(width: settings.navTotalWidth)
@@ -84,7 +83,7 @@ fileprivate struct QuizScreenWithSettings: View {
 
             navButtons
 
-            if (showNotification) {
+            if showNotification {
                 notificationView
 
             }
@@ -105,7 +104,7 @@ fileprivate struct QuizScreenWithSettings: View {
         HStack(spacing: 0) {
             VStack(spacing: 0) {
                 Spacer()
-                PreviousButton(action: { navigate(next: false)} )
+                PreviousButton(action: { navigate(next: false)})
                     .frame(width: settings.leftNavSize, height: settings.leftNavSize)
                     .padding(settings.leftNavPadding)
                     .accessibility(sortPriority: 0.7)
@@ -113,7 +112,7 @@ fileprivate struct QuizScreenWithSettings: View {
             Spacer()
             VStack(spacing: 5) {
                 Spacer()
-                if (model.quizState == .completed) {
+                if model.quizState == .completed {
                     retryButton
                         .accessibility(sortPriority: 0.8)
                 }
@@ -126,7 +125,7 @@ fileprivate struct QuizScreenWithSettings: View {
 
     private var nextButton: some View {
         ZStack {
-            NextButton(action: { navigate(next: true)} )
+            NextButton(action: { navigate(next: true)})
                 .disabled(model.nextIsDisabled)
                 .opacity(model.nextIsDisabled ? 0.3 : 1)
                 .padding(settings.rightNavPadding)
@@ -134,7 +133,7 @@ fileprivate struct QuizScreenWithSettings: View {
                     $0.accessibility(hint: Text("Select correct answer to enable next button"))
                 }
 
-            if (model.nextIsDisabled) {
+            if model.nextIsDisabled {
                 Button(action: { showNotification = true }) {
                     Circle()
                         .opacity(0)
@@ -146,7 +145,7 @@ fileprivate struct QuizScreenWithSettings: View {
 
     private func navigate(next: Bool) {
         UIAccessibility.post(notification: .screenChanged, argument: NSString(""))
-        if (next) {
+        if next {
             model.next()
         } else {
             model.back()
@@ -196,18 +195,18 @@ fileprivate struct QuizScreenWithSettings: View {
             )
             .padding(.horizontal, settings.progressBarPadding)
 
-            if (model.quizState != .pending) {
+            if model.quizState != .pending {
                 progressLabel
             }
         }
         .accessibilityElement()
         .accessibility(label: Text("Quiz progress"))
         .accessibility(value: Text(accessibilityValue))
-        
+
     }
 
     private var accessibilityValue: String {
-        if (model.quizState == .pending) {
+        if model.quizState == .pending {
             return "0 out of \(model.quizLength)"
         }
         return "\(labelLhs) out of \(model.quizLength)"
@@ -244,7 +243,7 @@ fileprivate struct QuizScreenWithSettings: View {
 fileprivate extension View {
     @ViewBuilder
     func ifTrue<T: View>(_ condition: Bool, apply: (Self) -> T) -> some View {
-        if (condition) {
+        if condition {
             apply(self)
         } else {
             self
@@ -252,7 +251,7 @@ fileprivate extension View {
     }
 }
 
-fileprivate struct NotificationView: View {
+private struct NotificationView: View {
 
     @Binding var isShowing: Bool
     @State private var offset: CGFloat = 0
@@ -292,18 +291,18 @@ fileprivate struct NotificationView: View {
     }
 
     private func doHide() {
-        if (offset == 0) {
+        if offset == 0 {
             isShowing = false
         } else {
             scheduleRemoval()
         }
     }
 
-    private var gesture: some Gesture  {
+    private var gesture: some Gesture {
         DragGesture()
             .onChanged { gesture in
                 let dy = gesture.translation.height
-                if (dy > 0) {
+                if dy > 0 {
                     self.offset = dy * 0.33
                 } else {
                     self.offset = dy
@@ -311,7 +310,7 @@ fileprivate struct NotificationView: View {
             }.onEnded { gesture in
                 withAnimation(.easeOut(duration: 0.35)) {
                     let dy = gesture.translation.height
-                    if (dy < 10) {
+                    if dy < 10 {
                         isShowing = false
                     } else {
                         self.offset = 0

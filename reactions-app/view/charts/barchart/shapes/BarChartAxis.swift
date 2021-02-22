@@ -1,10 +1,8 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
-
 
 struct BarChartAxisShape: Shape {
 
@@ -17,7 +15,7 @@ struct BarChartAxisShape: Shape {
             CGPoint(x: 0, y: 0),
             CGPoint(x: 0, y: rect.height),
             CGPoint(x: rect.width, y: rect.height),
-            CGPoint(x: rect.width, y: 0),
+            CGPoint(x: rect.width, y: 0)
         ])
 
         let dy = rect.height / CGFloat(ticks + 1) // +1 to leave a gap at the top

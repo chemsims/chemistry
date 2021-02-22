@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct EnergyProfileRateEquationView: View {
@@ -37,7 +36,7 @@ struct EnergyProfileRateEquationView: View {
     }
 }
 
-fileprivate struct UnscaledEnergyProfileRateEquationView: View {
+private struct UnscaledEnergyProfileRateEquationView: View {
 
     let k1: CGFloat?
     let k2: CGFloat?
@@ -69,7 +68,7 @@ fileprivate struct UnscaledEnergyProfileRateEquationView: View {
     }
 }
 
-fileprivate struct EnergyProfileRateK1: View {
+private struct EnergyProfileRateK1: View {
     var body: some View {
         HStack(spacing: 5) {
             FixedText("k")
@@ -92,7 +91,7 @@ fileprivate struct EnergyProfileRateK1: View {
     }
 }
 
-fileprivate struct EnergyProfileRateLn: View {
+private struct EnergyProfileRateLn: View {
     var body: some View {
         HStack(spacing: 5) {
             ln {
@@ -124,7 +123,7 @@ fileprivate struct EnergyProfileRateLn: View {
     }
 }
 
-fileprivate struct RateK1K2: View {
+private struct RateK1K2: View {
     var body: some View {
         HStack(spacing: 5) {
             HStack(spacing: 0) {
@@ -161,7 +160,7 @@ fileprivate struct RateK1K2: View {
     }
 }
 
-fileprivate struct BlankRates: View {
+private struct BlankRates: View {
 
     let k1: String?
     let k2: String?
@@ -227,11 +226,11 @@ fileprivate struct BlankRates: View {
     }
 }
 
-fileprivate struct EqSettings {
+private struct EqSettings {
     static let largeBoxWidth: CGFloat = 100
 }
 
-fileprivate struct LargeOpenParen: View {
+private struct LargeOpenParen: View {
     var body: some View {
         FixedText("(")
             .scaleEffect(y: 2.5)
@@ -239,7 +238,7 @@ fileprivate struct LargeOpenParen: View {
     }
 }
 
-fileprivate struct LargeCloseParen: View {
+private struct LargeCloseParen: View {
     var body: some View {
         FixedText(")")
             .scaleEffect(y: 2.5)

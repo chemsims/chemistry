@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct NextButton: View {
@@ -53,7 +52,7 @@ fileprivate extension View {
     }
 }
 
-fileprivate struct GeneralDirectionButton: View {
+private struct GeneralDirectionButton: View {
     let action: () -> Void
     let systemImage: String
 
@@ -78,7 +77,7 @@ struct NavButtonButtonStyle: ButtonStyle {
             .label
             .scaleEffect(x: xScale, y: yScale)
     }
-    
+
 }
 
 struct NextButton_Previews: PreviewProvider {

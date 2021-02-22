@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -20,7 +19,7 @@ struct QuizQuestionView: View {
             .minimumScaleFactor(1)
             .accessibility(addTraits: .isHeader)
 
-            if (question.image != nil) {
+            if question.image != nil {
                 Image(question.image!.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -28,7 +27,7 @@ struct QuizQuestionView: View {
                     .accessibility(label: Text(question.image!.label))
             }
 
-            if (question.table != nil) {
+            if question.table != nil {
                 QuizTableView(
                     table: question.table!,
                     fontSize: settings.questionFontSize,

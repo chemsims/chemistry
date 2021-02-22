@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -99,7 +98,7 @@ struct TextLinesView: View {
     }
 
     private func fontOffset(line: TextSegment) -> CGFloat {
-        switch (line.scriptType) {
+        switch line.scriptType {
         case .some(.superScript): return superscriptOffset
         case .some(.subScript): return subscriptOffset
         case .none: return 0
@@ -109,7 +108,7 @@ struct TextLinesView: View {
 
 extension Text {
     func italic(enabled: Bool) -> Text {
-        if (enabled) {
+        if enabled {
             return self.italic()
         }
         return self

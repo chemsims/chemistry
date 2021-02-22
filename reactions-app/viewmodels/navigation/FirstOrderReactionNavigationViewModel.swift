@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -71,7 +70,7 @@ struct FirstOrderReactionNavigation {
     }
 }
 
-fileprivate class ExplainRateConstant1: ReactionState {
+private class ExplainRateConstant1: ReactionState {
     init() {
         super.init(statement: FirstOrderStatements.explainRateConstant1)
     }
@@ -92,7 +91,7 @@ fileprivate class ExplainRateConstant1: ReactionState {
     }
 }
 
-fileprivate class ExplainRateConstant2: ReactionState {
+private class ExplainRateConstant2: ReactionState {
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.highlightedElements = [.rateConstantEquation]
         model.statement = FirstOrderStatements.explainRateConstant2(
@@ -106,7 +105,7 @@ fileprivate class ExplainRateConstant2: ReactionState {
 
 }
 
-fileprivate class ExplainHalfLife: PreReactionAnimation {
+private class ExplainHalfLife: PreReactionAnimation {
 
     init() {
         super.init(highlightedElements: [.halfLifeEquation])

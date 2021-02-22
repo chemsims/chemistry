@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -31,8 +30,7 @@ struct LimitConstraints {
     }
 }
 
-
-fileprivate struct BoundedSliderPositioning {
+private struct BoundedSliderPositioning {
 
     let axis: AxisPositionCalculations<CGFloat>
     let absoluteMin: CGFloat
@@ -47,7 +45,6 @@ fileprivate struct BoundedSliderPositioning {
     /// The  spacing to place between value bounds. .ie., the value1Min must be > value2 min, plus the spacing
     let spacing: CGFloat
 
-
     /// An axis with updated upper and lower bounds
     var boundedAxis: AxisPositionCalculations<CGFloat> {
         let absoluteBounds = axis.updateMin(value: absoluteMin).updateMax(value: absoluteMax)
@@ -61,7 +58,7 @@ fileprivate struct BoundedSliderPositioning {
             let minPositionPreSpacing = axis.getPosition(at: minWithSpacing)
             let newMinPosition = minPositionPreSpacing + (spacing * CGFloat(direction))
             let updated = axis.updateMin(position: newMinPosition)
-            if (updated.minValue < absoluteMin) {
+            if updated.minValue < absoluteMin {
                 return axis
             }
             return updated
@@ -75,7 +72,7 @@ fileprivate struct BoundedSliderPositioning {
             let maxPositionPreSpacing = axis.getPosition(at: maxWithSpacing)
             let newMaxPosition = maxPositionPreSpacing - (spacing * CGFloat(direction))
             let updated = axis.updateMax(position: newMaxPosition)
-            if (updated.maxValue > absoluteMax) {
+            if updated.maxValue > absoluteMax {
                 return axis
             }
             return updated

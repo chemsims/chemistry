@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -61,7 +60,7 @@ struct ZeroOrderEquationView: View {
     }
 }
 
-fileprivate struct UnscaledZeroOrderEquationView: View {
+private struct UnscaledZeroOrderEquationView: View {
 
     let emphasise: Bool
     let reactionHasStarted: Bool
@@ -135,7 +134,7 @@ fileprivate struct UnscaledZeroOrderEquationView: View {
     }
 }
 
-fileprivate struct FilledRateConstant: View {
+private struct FilledRateConstant: View {
     var body: some View {
         HStack(spacing: EquationSettings.hSpacing) {
             Rate()
@@ -180,23 +179,23 @@ fileprivate struct FilledRateConstant: View {
                         .frame(width: EquationSettings.boxWidth)
                     FixedText("-")
                     C_1()
-                        .frame(width:  EquationSettings.boxWidth)
+                        .frame(width: EquationSettings.boxWidth)
                 }
                 Rectangle()
                     .frame(width: 155, height: 2)
                 HStack(spacing: 1) {
                     T_2()
-                        .frame(width:  EquationSettings.boxWidth)
+                        .frame(width: EquationSettings.boxWidth)
                     FixedText("-")
                     T_1()
-                        .frame(width:  EquationSettings.boxWidth)
+                        .frame(width: EquationSettings.boxWidth)
                 }
             }
         }
     }
 }
 
-fileprivate struct EmptyRateConstant: View {
+private struct EmptyRateConstant: View {
 
     let deltaC: String?
     let deltaT: String?
@@ -286,7 +285,7 @@ fileprivate struct EmptyRateConstant: View {
     }
 }
 
-fileprivate struct FilledHalfLife: View {
+private struct FilledHalfLife: View {
 
     let reactant: String
     @Binding var isShowingToolip: Bool
@@ -314,7 +313,7 @@ fileprivate struct FilledHalfLife: View {
     }
 }
 
-fileprivate struct A0WithTooltip: View {
+private struct A0WithTooltip: View {
 
     let reactant: String
     @Binding var isShowingTooltip: Bool
@@ -329,7 +328,7 @@ fileprivate struct A0WithTooltip: View {
     }
 
     private var overlay: some View {
-        if (isShowingTooltip) {
+        if isShowingTooltip {
             return AnyView(
                 Tooltip(text: "Concentration of \(reactant) at t=0")
                     .font(.system(size: EquationSettings.fontSize * 0.73))
@@ -343,7 +342,7 @@ fileprivate struct A0WithTooltip: View {
     }
 }
 
-fileprivate struct BlankHalfLife: View {
+private struct BlankHalfLife: View {
 
     let a0: String?
     let halfLife: String?
@@ -379,8 +378,7 @@ fileprivate struct BlankHalfLife: View {
     }
 }
 
-
-fileprivate struct Rate: View {
+private struct Rate: View {
     var body: some View {
         HStack(spacing: 3) {
             Text("Rate")
@@ -390,8 +388,7 @@ fileprivate struct Rate: View {
     }
 }
 
-
-fileprivate struct EquationSizes {
+private struct EquationSizes {
     static let width: CGFloat = 580
     static let height: CGFloat = 365
 
@@ -420,4 +417,3 @@ struct ZeroOrderEquationView_Previews: PreviewProvider {
         .previewLayout(.fixed(width: EquationSizes.width, height: EquationSizes.height))
     }
 }
-

@@ -1,10 +1,8 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
-
 
 struct DualValueSlider: View {
 
@@ -27,7 +25,7 @@ struct DualValueSlider: View {
 
     var body: some View {
         ZStack {
-            if (canSetInitialValue) {
+            if canSetInitialValue {
                 slider(
                     binding: $value1,
                     axis: axis(limits: value1Limits),
@@ -38,7 +36,7 @@ struct DualValueSlider: View {
                 .accessibility(hidden: value2 != nil)
             }
 
-            if (value2 != nil) {
+            if value2 != nil {
                 slider(
                     binding: value2UnsafeBinding,
                     axis: axis(limits: value2Limits),

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -186,7 +185,6 @@ struct BeakerSettings {
         width - (2 * lipRadius) - (2 * lipWidthLeft)
     }
 }
-
 
 struct EmptyBeaker_Previews: PreviewProvider {
     static var previews: some View {

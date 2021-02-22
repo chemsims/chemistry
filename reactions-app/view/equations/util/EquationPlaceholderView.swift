@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct Placeholder: View {
@@ -16,7 +15,7 @@ struct Placeholder: View {
     }
 
     var body: some View {
-        if (value != nil) {
+        if value != nil {
             Text(value!)
                 .modifier(PlaceholderFraming())
                 .animation(.none)
@@ -30,7 +29,7 @@ struct Placeholder: View {
     }
 }
 
-fileprivate struct PlaceholderFraming: ViewModifier {
+private struct PlaceholderFraming: ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(
@@ -95,7 +94,6 @@ struct EquationPlaceholderView: View {
         geometry.size.width / 6
     }
 }
-
 
 struct EquationPlaceholderView_Previews: PreviewProvider {
     static var previews: some View {

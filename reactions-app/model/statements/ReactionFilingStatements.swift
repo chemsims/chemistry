@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -42,7 +41,7 @@ struct ReactionFilingStatements {
     }
 
     private static func rateConstant(reactionType: ReactionType) -> String? {
-        switch (reactionType) {
+        switch reactionType {
         case .A: return nil
         case .B: return ReactionSettings.reactionBRateConstant.str(decimals: 2)
         case .C: return ReactionSettings.reactionCRateConstant.str(decimals: 2)

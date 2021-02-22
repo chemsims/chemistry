@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -19,7 +18,7 @@ struct CircleIconButton: View {
                 GeometryReader { geo in
                     Circle()
                         .fill(background)
-                    
+
                     Circle()
                         .stroke(border)
                         .foregroundColor(foreground)

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -45,7 +44,6 @@ struct ConcentrationEquationPlotter: Shape {
         set { finalTime = newValue }
     }
 
-    
 }
 
 struct TimeChartPlot_Previews: PreviewProvider {
@@ -87,7 +85,7 @@ struct TimeChartPlot_Previews: PreviewProvider {
 
                 Button(action: {
                     withAnimation(.linear(duration: 1)) {
-                        if (self.t2 == 50) {
+                        if self.t2 == 50 {
                             self.t2 = 0
                         } else {
                             self.t2 = 50

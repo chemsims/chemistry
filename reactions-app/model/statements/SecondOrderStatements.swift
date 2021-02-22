@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -21,7 +20,6 @@ struct SecondOrderStatements {
         "For a reaction with one reactant it's usually written as $*rate=k[A]^order^*$.",
         "For this reaction then, $*rate=k[A]^2^*$."
     ]
-
 
     static func explainHalfLife(halfLife: CGFloat) -> [TextLine] {
         [
@@ -81,6 +79,6 @@ struct SecondOrderStatements {
 
     static let end: [TextLine] = [
         "Amazing! Let's take a snapshot!",
-        "Try *dragging the time indicator* to scrub through the reaction time.",
+        "Try *dragging the time indicator* to scrub through the reaction time."
     ]
 }

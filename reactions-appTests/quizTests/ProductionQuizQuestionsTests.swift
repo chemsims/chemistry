@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
@@ -41,7 +40,7 @@ class ProductionQuizQuestionsTests: XCTestCase {
         QuizQuestionsList.firstOrderQuestions,
         QuizQuestionsList.secondOrderQuestions,
         QuizQuestionsList.reactionComparisonQuizQuestions,
-        QuizQuestionsList.energyProfileQuizQuestions,
+        QuizQuestionsList.energyProfileQuizQuestions
     ]
 
 }

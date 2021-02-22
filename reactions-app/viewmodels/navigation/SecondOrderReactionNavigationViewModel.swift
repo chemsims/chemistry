@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -74,7 +73,7 @@ struct SecondOrderReactionNavigation {
     }
 }
 
-fileprivate class ExplainRateConstant: ReactionState {
+private class ExplainRateConstant: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.statement = SecondOrderStatements.explainRateConstant(
@@ -94,7 +93,7 @@ fileprivate class ExplainRateConstant: ReactionState {
     }
 }
 
-fileprivate class ExplainHalfLife: PreReactionAnimation {
+private class ExplainHalfLife: PreReactionAnimation {
 
     init() {
         super.init(highlightedElements: [.halfLifeEquation])

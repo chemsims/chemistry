@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -42,7 +41,7 @@ class ConditionalScreenStateNode<State: ScreenState>: ScreenStateTreeNode<State>
     }
 
     override func next(model: State.Model) -> ScreenStateTreeNode<State>? {
-        if (applyAlternativeNode(model)) {
+        if applyAlternativeNode(model) {
             return staticNextAlternative
         }
         return staticNext

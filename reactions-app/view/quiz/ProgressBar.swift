@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -17,7 +16,7 @@ struct ProgressBar: View {
             ZStack(alignment: .leading) {
                 pill
                     .foregroundColor(backgroundColor)
-                
+
                 pill
                     .foregroundColor(progressColor)
                     .mask(progressMask(geometry: geometry))
@@ -38,7 +37,6 @@ struct ProgressBar: View {
         RoundedRectangle(cornerRadius: cornerRadius)
     }
 }
-
 
 struct ProgressBar_Previews: PreviewProvider {
     static var previews: some View {

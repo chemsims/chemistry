@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import StoreKit
 
@@ -11,7 +10,7 @@ struct ReviewPrompter {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             let previousVersion = persistence.lastPromptedVersion()
             let currentVersion = getCurrentVersion()
-            if (previousVersion != currentVersion) {
+            if previousVersion != currentVersion {
                 SKStoreReviewController.requestReview()
                 persistence.setPromptedVersion(version: currentVersion)
             }

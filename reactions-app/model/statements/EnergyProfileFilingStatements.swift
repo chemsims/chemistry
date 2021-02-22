@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -31,4 +30,3 @@ struct EnergyProfileFilingStatements {
         return lines
     }
 }
-

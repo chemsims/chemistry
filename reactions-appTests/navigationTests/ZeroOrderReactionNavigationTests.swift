@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
@@ -238,4 +237,3 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
         return nav
     }
 }
-

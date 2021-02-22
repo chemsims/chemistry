@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -66,14 +65,13 @@ class ReactionComparisonSubstate: SubState {
     }
 }
 
-
-fileprivate class InitialComparisonState: ReactionComparisonState {
+private class InitialComparisonState: ReactionComparisonState {
     init() {
         super.init(statement: ReactionComparisonStatements.intro)
     }
 }
 
-fileprivate class ExplainEquationState: ReactionComparisonState {
+private class ExplainEquationState: ReactionComparisonState {
     init() {
         super.init(statement: ReactionComparisonStatements.equationExplainer)
     }
@@ -94,7 +92,7 @@ fileprivate class ExplainEquationState: ReactionComparisonState {
     }
 }
 
-fileprivate class ChartExplainerState: ReactionComparisonState {
+private class ChartExplainerState: ReactionComparisonState {
     init() {
         super.init(statement: ReactionComparisonStatements.chartExplainer)
     }
@@ -117,7 +115,7 @@ fileprivate class ChartExplainerState: ReactionComparisonState {
     }
 }
 
-fileprivate class DragAndDropExplainerState: ReactionComparisonState {
+private class DragAndDropExplainerState: ReactionComparisonState {
     init() {
         super.init(statement: ReactionComparisonStatements.dragAndDropExplainer)
     }
@@ -150,7 +148,7 @@ fileprivate class DragAndDropExplainerState: ReactionComparisonState {
     }
 }
 
-fileprivate class DragAndDropExplainerSubstate: ReactionComparisonSubstate {
+private class DragAndDropExplainerSubstate: ReactionComparisonSubstate {
 
     override func apply(on model: ReactionComparisonViewModel) {
         withAnimation(.linear(duration: 0.25)) {
@@ -163,7 +161,7 @@ fileprivate class DragAndDropExplainerSubstate: ReactionComparisonSubstate {
 
 }
 
-fileprivate class PreAnimationState: ReactionComparisonState {
+private class PreAnimationState: ReactionComparisonState {
 
     init() {
         super.init(statement: ReactionComparisonStatements.preReaction)
@@ -190,7 +188,7 @@ fileprivate class PreAnimationState: ReactionComparisonState {
     }
 }
 
-fileprivate class RunComparisonAnimation: ReactionComparisonState {
+private class RunComparisonAnimation: ReactionComparisonState {
     init() {
         super.init(statement: ReactionComparisonStatements.reactionRunning)
     }
@@ -233,7 +231,7 @@ fileprivate class RunComparisonAnimation: ReactionComparisonState {
     }
 }
 
-fileprivate class EndComparisonAnimation: ReactionComparisonState {
+private class EndComparisonAnimation: ReactionComparisonState {
 
     init() {
         super.init(statement: ReactionComparisonStatements.instructToScrubReaction)
@@ -254,7 +252,7 @@ fileprivate class EndComparisonAnimation: ReactionComparisonState {
     }
 }
 
-fileprivate class FinalComparisonState: ReactionComparisonState {
+private class FinalComparisonState: ReactionComparisonState {
     init() {
         super.init(statement: ReactionComparisonStatements.end)
     }

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 import FirebaseAnalytics
@@ -37,7 +36,7 @@ struct GoogleAnalytics: AnalyticsService {
 
     func openedScreen(_ screen: AppScreen) {
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-            AnalyticsParameterScreenName: screen.rawValue,
+            AnalyticsParameterScreenName: screen.rawValue
         ])
     }
 

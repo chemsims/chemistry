@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -21,7 +20,6 @@ class ReactionInputTests: XCTestCase {
     func testMakingSecondOrderReactionInputFromAFixedRateReaction() {
         testMakingSecondOrderReactionInputFromAFixedRateReaction(.Second)
     }
-
 
     private func testMakingSecondOrderReactionInputFromAFixedRateReaction(_ order: ReactionOrder) {
         var fixedReaction = ReactionInputWithoutC2(order: order)

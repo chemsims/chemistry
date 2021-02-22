@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import Foundation
 
 extension QuizQuestionsList {
@@ -432,8 +431,8 @@ extension QuizQuestionsList {
                     explanation: """
                     When [B] goes from 0.0132 to 0.0264 (it's doubled, goes up by a factor of 2) \
                     the rate goes from 4.30 to 34.4 (it goes up by a factor of 8). $2^x =  8$ \
-                    where $x = 3$; the reaction is third order for [B]. 
-                    
+                    where $x = 3$; the reaction is third order for [B].
+
                     When [B] drops to 0.0066, if [A] was maintained at 0.0176, then the Rate would \
                     have been 0.53 since we know it's of third order for [B]. In order for the \
                     Rate to be 2.15 when [A] goes from 0.0176 to 0.0704 (it goes up by a factor \
@@ -443,7 +442,7 @@ extension QuizQuestionsList {
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer:  "Rate = k[A][B]",
+                        answer: "Rate = k[A][B]",
                         explanation: """
                         Try comparing how the reactants concentrations affect the rate.
                         """
@@ -549,7 +548,7 @@ extension QuizQuestionsList {
                 Take into account that the reaction is order 2 with respect to C, and the \
                 concentration of it remains as 0.0125 M throughout all the experiments conducted.
                 """,
-                questionLabel:  """
+                questionLabel: """
                 Consider a reaction that's: 3A + 2B + 5C, to, 2D + E + F.
 
                 Determine what the rate constant would be for the reaction given the data shown in \
@@ -633,15 +632,15 @@ extension QuizQuestionsList {
                         reaction = $[ΔD]/2Δt$, where [ΔD]/Δt is rate of appearance of D, the \
                         measured value in the tables.
                         """
-                    ),
+                    )
                 ],
                 difficulty: .medium,
                 table: QuizTable(
                     rows: [
                         ["[A] (M)", "[B] (M)", "Rate of appearance of D"],
-                        ["0.0125", "0.0096",  "3.9x10^-13^"],
+                        ["0.0125", "0.0096", "3.9x10^-13^"],
                         ["0.0375", "0.0096", "3.51x10^-12^"],
-                        ["0.0375", "0.0048",  "1.76x10^-12^"]
+                        ["0.0375", "0.0048", "1.76x10^-12^"]
                     ]
                 )
             ),
@@ -853,7 +852,7 @@ extension QuizQuestionsList {
                         explanation: """
                         For high school chemistry, most common reactions studied are of second order, first order, half order and zero order; \
                         that already means that is not mandatory for the order of a reaction to be a whole number. Orders could possibly \
-                        be non-integer numbers both positive or negative. 
+                        be non-integer numbers both positive or negative.
                         """
                     )
                 ],
@@ -1129,7 +1128,7 @@ extension QuizQuestionsList {
                     )
                 ],
                 difficulty: .medium
-            ),
+            )
         ]
     )
 }

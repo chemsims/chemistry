@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -24,7 +23,7 @@ extension BinaryFloatingPoint {
     }
 }
 
-extension Array where Self.Element : Equatable {
+extension Array where Self.Element: Equatable {
 
     func element(after element: Element) -> Element? {
         self.element(after: element, distance: 1)

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
@@ -70,7 +69,7 @@ class QuizDifficultyTests: XCTestCase {
             makeQuestion(.easy),
             makeQuestion(.medium),
             makeQuestion(.easy),
-            makeQuestion(.medium),
+            makeQuestion(.medium)
         ]
 
         let expectedEasy = questions.filter { $0.difficulty == .easy }
@@ -122,7 +121,7 @@ class QuizDifficultyTests: XCTestCase {
         QuizQuestion(
             id: "0",
             question: "",
-            options: [QuizOption:QuizAnswer](),
+            options: [QuizOption: QuizAnswer](),
             correctOption: .A,
             difficulty: difficulty,
             image: nil,

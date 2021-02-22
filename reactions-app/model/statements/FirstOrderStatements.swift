@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -12,7 +11,7 @@ struct FirstOrderStatements {
     ]
 
     static let setC2: [TextLine] = [
-        "Great! Now you can set the *concentration of A at the end of the reaction [A_t_]* and the *time the reaction will last (t)*.",
+        "Great! Now you can set the *concentration of A at the end of the reaction [A_t_]* and the *time the reaction will last (t)*."
     ]
 
     static let explainRateConstant1: [TextLine] = [
@@ -31,7 +30,7 @@ struct FirstOrderStatements {
 
     static let explainRate: [TextLine] = [
             "For a reaction with one reactant it's usually written as $*rate=k[A]^order^*$.",
-            "For this reaction then, $*rate=k[A]^1^*$.",
+            "For this reaction then, $*rate=k[A]^1^*$."
     ]
 
     static func explainHalfLife(halfLife: CGFloat) -> [TextLine] {

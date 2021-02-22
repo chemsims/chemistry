@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -22,4 +21,3 @@ struct GridCoordinate: Identifiable {
         GridCoordinate(col: Int.random(in: 0...maxCol), row: Int.random(in: 0...maxRow))
     }
 }
-

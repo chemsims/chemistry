@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -75,7 +74,7 @@ struct OrderedReactionInitialNodes {
     private static func reactionInProgressStatement(
         order: ReactionOrder
     ) -> (ZeroOrderReactionViewModel) -> [TextLine] {
-        switch (order) {
+        switch order {
         case .Zero: return {
             ZeroOrderStatements.reactionInProgress(display: $0.selectedReaction.display)
         }
@@ -88,7 +87,7 @@ struct OrderedReactionInitialNodes {
 }
 
 class SelectReactionState: ReactionState {
-    
+
     init() {
         super.init(statement: ReactionStatements.chooseReaction)
     }
@@ -239,7 +238,6 @@ class StaticStatementWithHighlight: ReactionState {
     }
 }
 
-
 class PreReactionAnimation: ReactionState {
 
     let highlightedElements: [OrderedReactionScreenElement]
@@ -309,7 +307,7 @@ class RunAnimation: ReactionState {
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        if (initialiseCurrentTime) {
+        if initialiseCurrentTime {
             model.currentTime = nil
         }
         model.reactionHasStarted = false
@@ -334,7 +332,7 @@ class EndAnimation: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        if (highlightChart) {
+        if highlightChart {
             model.highlightedElements = [.concentrationChart, .secondaryChart]
         }
         // For the current time to 'sprint' to the end, it must animate to a value
@@ -343,26 +341,25 @@ class EndAnimation: ReactionState {
             if let finalTime = model.input.inputT2 {
                 model.currentTime = reactionEndTime(t2: finalTime)
             }
-            if (!highlightChart) {
+            if !highlightChart {
                 model.reactionHasEnded = true
             }
         }
     }
 
     override func unapply(on model: ZeroOrderReactionViewModel) {
-        if (highlightChart) {
+        if highlightChart {
             model.highlightedElements = []
         }
     }
 
     override func reapply(on model: ZeroOrderReactionViewModel) {
         super.apply(on: model)
-        if (highlightChart) {
+        if highlightChart {
             model.highlightedElements = .charts
         }
     }
 }
-
 
 // MARK: Common states for first/second order reactions
 
@@ -404,7 +401,6 @@ class SetFinalConcentrationToNonNil: ReactionState {
     }
 }
 
-
 class FinalReactionState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
@@ -419,6 +415,6 @@ class FinalReactionState: ReactionState {
     }
 }
 
-fileprivate func reactionEndTime(t2: CGFloat) -> CGFloat {
+private func reactionEndTime(t2: CGFloat) -> CGFloat {
     t2 * 1.00001
 }

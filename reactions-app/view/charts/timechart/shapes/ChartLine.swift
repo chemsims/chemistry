@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -28,7 +27,7 @@ struct ChartLine: Shape {
             let y = equation.getY(at: x)
             let xPosition = xAxis.getPosition(at: x)
             let yPosition = yAxis.getPosition(at: y)
-            if (didStart) {
+            if didStart {
                 path.addLine(to: CGPoint(x: xPosition, y: yPosition))
             } else {
                 path.move(to: CGPoint(x: xPosition, y: yPosition))
@@ -77,16 +76,13 @@ struct ChartIndicatorHead: Shape {
         set { x = newValue }
     }
 
-
 }
-
 
 struct TimeChartPlot_Previews: PreviewProvider {
 
     static var previews: some View {
         ViewStateWrapper()
     }
-
 
     struct ViewStateWrapper: View {
         @State var t2: CGFloat = 0
@@ -115,7 +111,7 @@ struct TimeChartPlot_Previews: PreviewProvider {
 
                 Button(action: {
                     withAnimation(.linear(duration: 1)) {
-                        if (self.t2 == 50) {
+                        if self.t2 == 50 {
                             self.t2 = 0
                         } else {
                             self.t2 = 50

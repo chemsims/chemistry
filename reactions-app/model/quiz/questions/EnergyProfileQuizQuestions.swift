@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import Foundation
 
 extension QuizQuestionsList {
@@ -13,7 +12,7 @@ extension QuizQuestionsList {
                 id: "ENERGYPROFILE-1",
                 question: "What is the concept of Activation Energy (E_a_)?",
                 correctAnswer: QuizAnswerData(
-                    answer:  "Activation Energy is the one that must be provided to compounds to result in a chemical reaction",
+                    answer: "Activation Energy is the one that must be provided to compounds to result in a chemical reaction",
                     explanation: """
                     This is the definition of Activation Energy. It's the one that's required for a chemical reaction \
                     to take place.
@@ -264,25 +263,25 @@ extension QuizQuestionsList {
                 question: """
                 There are different types of catalysts and are often classified according to their state \
                 of matter in relation with the reactants/products. The ozone layer is getting destroyed \
-                following this reaction: 
-                
+                following this reaction:
+
                 $O_3(g)_ → O_(g)_ + O_2(g)_$
-                
+
                 One of the main catalysts that makes this reaction much faster than usual is \
-                the CFC gas that's used extensively in aerosols, air conditioners, refrigerators, etc. 
-                
+                the CFC gas that's used extensively in aerosols, air conditioners, refrigerators, etc.
+
                 What type of catalyst would this be?
                 """,
                 questionLabel: """
                 There are different types of catalysts and are often classified according to their state \
                 of matter in relation with the reactants/products. The ozone layer is getting destroyed \
-                following this reaction: 
-                
-                $O_3(g)_, yields O_(g)_ + O_2(g)_$. 
-                
+                following this reaction:
+
+                $O_3(g)_, yields O_(g)_ + O_2(g)_$.
+
                 One of the main catalysts that makes this reaction much faster than usual is \
-                the CFC gas that's used extensively in aerosols, air conditioners, refrigerators, etc. 
-                
+                the CFC gas that's used extensively in aerosols, air conditioners, refrigerators, etc.
+
                 What type of catalyst would this be?
                 """,
                 correctAnswer: QuizAnswerData(
@@ -417,7 +416,7 @@ extension QuizQuestionsList {
                         explanation: """
                         The catalyst energy state has little to do with its function. Catalysts provide \
                         an alternative pathway that's more efficient for the reactants because it requires \
-                        less energy. 
+                        less energy.
                         """
                     ),
                     QuizAnswerData(
@@ -676,18 +675,18 @@ extension QuizQuestionsList {
                     is the activation energy, or what is the same, the energy barrier to overcome.
 
                     For 5 to get to 7, the activation energy is the difference between 5 and 6, \
-                    which is the highest of all the elementary steps. 
-                    
+                    which is the highest of all the elementary steps.
+
                     For 3 to get to 5 (products), the activation energy is the difference between 3 \
-                    and 4, which is not large enough compared to other steps. 
-                    
+                    and 4, which is not large enough compared to other steps.
+
                     Finally, for 1 (reactants) to get to 3, the activation energy is the difference \
                     between 1 and 2, which since it is the smallest, it means it has a very low \
-                    activation energy. 
-                    
+                    activation energy.
+
                     We get then that: Section 5-6-7 > Section 3-4-5 > Section 1-2-3. Notice how the \
                     activation energy doesn't depend on the product side of the hump, but only on \
-                    the reactants side. 
+                    the reactants side.
                     """,
                     explanationLabel: """
                     In the diagram, the difference between where the reaction starts with reactants \
@@ -695,11 +694,11 @@ extension QuizQuestionsList {
                     is the activation energy, or what is the same, the energy barrier to overcome.
 
                     For 5 to get to 7, the activation energy is the difference between 5 and 6, \
-                    which is the highest of all the elementary steps. 
-                    
+                    which is the highest of all the elementary steps.
+
                     For 3 to get to 5 (products), the activation energy is the difference between 3 \
-                    and 4, which is not large enough compared to other steps. 
-                    
+                    and 4, which is not large enough compared to other steps.
+
                     Finally, for 1 (reactants) to get to 3, the activation energy is the difference \
                     between 1 and 2, which since it is the smallest, it means it has a very low \
                     activation energy.
@@ -723,7 +722,7 @@ extension QuizQuestionsList {
                         answerLabel: "Section 5 6 7",
                         explanation: """
                         For 5 to get to 7, the activation energy is the difference between 5 and 6, which is the \
-                        highest of all the elementary steps. 
+                        highest of all the elementary steps.
                         """
                     ),
                     QuizAnswerData(
@@ -928,7 +927,7 @@ extension QuizQuestionsList {
                         the state of matter of the compounds, but this is not the fundamental \
                         relationship between temperature and the rate of a reaction.
                         """
-                    ),
+                    )
                 ],
                 difficulty: .medium
             ),
@@ -1150,7 +1149,7 @@ extension QuizQuestionsList {
                     before the hump.
                     """
                 )
-            ),
+            )
         ]
     )
 }

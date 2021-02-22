@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
@@ -11,7 +10,6 @@ struct EquationSettings {
     static let boxWidth: CGFloat = 70
 
     static let boxPadding: CGFloat = 10
-
 
     static let fontSize: CGFloat = 30
     static let subscriptFontSize: CGFloat = 22
@@ -25,7 +23,6 @@ struct EquationSettings {
 
     static let zeroOrderTotalWidth = totalWidth(equationWidth: zeroOrderWidth)
     static let zeroOrderTotalHeight = totalHeight(equationHeight: zeroOrderHeight)
-
 
     static func totalWidth(equationWidth: CGFloat) -> CGFloat {
         orderStringWidth + orderStringSpacing + equationWidth

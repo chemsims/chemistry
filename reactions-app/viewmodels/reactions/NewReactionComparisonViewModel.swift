@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -112,7 +111,7 @@ class ReactionComparisonViewModel: ObservableObject {
 
 }
 
-fileprivate struct RateEquation: Equation {
+private struct RateEquation: Equation {
     let k: CGFloat
     let concentration: ConcentrationEquation
 

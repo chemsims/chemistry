@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -46,11 +45,11 @@ class ReactionComparisonViewModel: ObservableObject {
     }
 
     func next() {
-        if (!canClickNext) {
+        if !canClickNext {
             statement = ReactionComparisonStatements.blockClickingNextBeforeChoosingReactions
         } else {
             navigation?.next()
-            if (reactionHasEnded) {
+            if reactionHasEnded {
                 persistence.setHasIdentifiedReactionOrders()
             }
         }
@@ -129,7 +128,6 @@ class ReactionComparisonViewModel: ObservableObject {
     }
 
 }
-
 
 struct ReactionComparisonDefaults {
     static let c1: CGFloat = 1

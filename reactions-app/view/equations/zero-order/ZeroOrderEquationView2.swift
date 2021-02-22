@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -19,7 +18,6 @@ struct ZeroOrderEquationView: View {
 
     let maxWidth: CGFloat
     let maxHeight: CGFloat
-    
 
     private let naturalWidth: CGFloat = 567
     private let naturalHeight: CGFloat = 237
@@ -57,7 +55,7 @@ struct ZeroOrderEquationView: View {
     }
 }
 
-fileprivate struct FilledRateView: View {
+private struct FilledRateView: View {
     var body: some View {
         HStack(spacing: Settings.hSpacing) {
             Rate()
@@ -92,23 +90,23 @@ fileprivate struct FilledRateView: View {
                         .frame(width: Settings.boxWidth)
                     Minus()
                     Text("c1")
-                        .frame(width:  Settings.boxWidth)
+                        .frame(width: Settings.boxWidth)
                 }
                 Rectangle()
                     .frame(width: 155, height: 2)
                 HStack(spacing: 1) {
                     Text("t2")
-                        .frame(width:  Settings.boxWidth)
+                        .frame(width: Settings.boxWidth)
                     Minus()
                     Text("t1")
-                        .frame(width:  Settings.boxWidth)
+                        .frame(width: Settings.boxWidth)
                 }
             }
         }
     }
 }
 
-fileprivate struct EmptyRateView: View {
+private struct EmptyRateView: View {
 
     let deltaC: String?
     let deltaT: String?
@@ -168,7 +166,7 @@ fileprivate struct EmptyRateView: View {
     }
 }
 
-fileprivate struct FilledHalftime: View {
+private struct FilledHalftime: View {
     var body: some View {
         HStack(spacing: 4) {
             HalfTime()
@@ -183,7 +181,7 @@ fileprivate struct FilledHalftime: View {
     }
 }
 
-fileprivate struct BlankHalftime: View {
+private struct BlankHalftime: View {
 
     let c1: String
     let halftime: String?
@@ -218,11 +216,11 @@ struct Divide: View {
     }
 }
 
-fileprivate struct Rate: View {
+private struct Rate: View {
     var body: some View {
         HStack(spacing: 0) {
             Text("Rate")
-                .frame(width:65)
+                .frame(width: 65)
             Equals()
         }
     }
@@ -261,7 +259,7 @@ struct Placeholder: View {
     let value: String?
 
     var body: some View {
-        if (value != nil) {
+        if value != nil {
             Text(value!)
         } else {
             Box()
@@ -284,7 +282,6 @@ struct Settings {
     static let boxHeight: CGFloat = 50
     static let boxWidth: CGFloat = 70
 }
-
 
 struct ZeroOrderEquationView2_Previews: PreviewProvider {
     static var previews: some View {

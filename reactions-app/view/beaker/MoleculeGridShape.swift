@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -61,7 +60,7 @@ struct AnimatingMoleculeGridShape: Shape {
     func path(in rect: CGRect) -> Path {
         let fraction = fractionOfCoordsToDraw.getY(at: currentTime)
         var coordsToDraw = Int(fraction * CGFloat(coords.count))
-        if (coordsToDraw < 0) {
+        if coordsToDraw < 0 {
             coordsToDraw = 0
         }
 
@@ -104,7 +103,6 @@ struct MoleculeGridShape: Shape {
     }
 
 }
-
 
 struct MoleculeGrid_Previews: PreviewProvider {
     static var previews: some View {

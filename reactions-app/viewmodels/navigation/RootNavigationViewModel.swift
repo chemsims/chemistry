@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 import StoreKit
@@ -11,7 +10,7 @@ class RootNavigationViewModel: ObservableObject {
     @Published var view: AnyView
     @Published var showMenu = false {
         didSet {
-            if (showMenu) {
+            if showMenu {
                 UIAccessibility.post(notification: .screenChanged, argument: nil)
             }
         }
@@ -23,7 +22,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     private let injector: Injector
-    private var models = [AppScreen:ScreenProvider]()
+    private var models = [AppScreen: ScreenProvider]()
     private(set) var currentScreen: AppScreen
 
     init(
@@ -46,7 +45,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func canSelect(screen: AppScreen) -> Bool {
-        switch (screen) {
+        switch screen {
         case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
         case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)
         case .secondOrderFiling: return canSelect(screen: .reactionComparison)
@@ -64,7 +63,7 @@ class RootNavigationViewModel: ObservableObject {
     }
 
     func jumpTo(screen: AppScreen) {
-        if (screen.isQuiz) {
+        if screen.isQuiz {
             goToExisting(screen: screen)
         } else {
             goToFresh(screen: screen)
@@ -103,7 +102,7 @@ class RootNavigationViewModel: ObservableObject {
         withAnimation(navigationAnimation) {
             self.view = provider.screen
         }
-        if (screen == .finalAppScreen) {
+        if screen == .finalAppScreen {
             showMenu = true
             ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
         }
@@ -157,7 +156,7 @@ class RootNavigationViewModel: ObservableObject {
 
 extension ReactionOrder {
     var reactionScreen: AppScreen {
-        switch (self) {
+        switch self {
         case .Zero: return .zeroOrderReaction
         case .First: return .firstOrderReaction
         case .Second: return .secondOrderReaction
@@ -175,7 +174,7 @@ fileprivate extension AppScreen {
         prev: @escaping () -> Void,
         hideMenu: @escaping () -> Void
     ) -> ScreenProvider {
-        switch (self) {
+        switch self {
         case .zeroOrderReaction:
             return ZeroOrderReactionScreenProvider(persistence: persistence, next: next, prev: prev)
         case .zeroOrderReactionQuiz:
@@ -246,7 +245,7 @@ fileprivate extension AppScreen {
     }
 }
 
-fileprivate class ZeroOrderReactionScreenProvider: ScreenProvider {
+private class ZeroOrderReactionScreenProvider: ScreenProvider {
     init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
         self.persistence = persistence
         self.viewModel = ZeroOrderReactionViewModel()
@@ -265,7 +264,7 @@ fileprivate class ZeroOrderReactionScreenProvider: ScreenProvider {
     }
 }
 
-fileprivate class FirstOrderReactionScreenProvider: ScreenProvider {
+private class FirstOrderReactionScreenProvider: ScreenProvider {
     init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
         self.persistence = persistence
         self.viewModel = FirstOrderReactionViewModel()
@@ -284,7 +283,7 @@ fileprivate class FirstOrderReactionScreenProvider: ScreenProvider {
     }
 }
 
-fileprivate class SecondOrderReactionScreenProvider: ScreenProvider {
+private class SecondOrderReactionScreenProvider: ScreenProvider {
     init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
         self.persistence = persistence
         self.viewModel = SecondOrderReactionViewModel()
@@ -303,7 +302,7 @@ fileprivate class SecondOrderReactionScreenProvider: ScreenProvider {
     }
 }
 
-fileprivate class QuizScreenProvider: ScreenProvider {
+private class QuizScreenProvider: ScreenProvider {
     init(
         questions: QuizQuestionsList,
         persistence: QuizPersistence,
@@ -323,7 +322,7 @@ fileprivate class QuizScreenProvider: ScreenProvider {
     }
 }
 
-fileprivate class ReactionComparisonScreenProvider: ScreenProvider {
+private class ReactionComparisonScreenProvider: ScreenProvider {
     init(persistence: ReactionInputPersistence, next: @escaping () -> Void, prev: @escaping () -> Void) {
         let viewModel = ReactionComparisonViewModel(persistence: persistence)
         let navigation = ReactionComparisonNavigationViewModel.model(reaction: viewModel)
@@ -340,7 +339,7 @@ fileprivate class ReactionComparisonScreenProvider: ScreenProvider {
     }
 }
 
-fileprivate class EnergyProfileScreenProvider: ScreenProvider {
+private class EnergyProfileScreenProvider: ScreenProvider {
 
     init(
         persistence: EnergyProfilePersistence,
@@ -362,7 +361,7 @@ fileprivate class EnergyProfileScreenProvider: ScreenProvider {
     }
 }
 
-fileprivate class EnergyProfileFilingScreenProvider: ScreenProvider {
+private class EnergyProfileFilingScreenProvider: ScreenProvider {
 
     init(persistence: EnergyProfilePersistence) {
         self.persistence = persistence
@@ -381,7 +380,7 @@ fileprivate class EnergyProfileFilingScreenProvider: ScreenProvider {
     }
 }
 
-fileprivate class ReactionFilingScreenProvider: ScreenProvider {
+private class ReactionFilingScreenProvider: ScreenProvider {
     init(persistence: ReactionInputPersistence, order: ReactionOrder) {
         self.viewModel = ReactionFilingViewModel(persistence: persistence, order: order)
     }
@@ -393,7 +392,7 @@ fileprivate class ReactionFilingScreenProvider: ScreenProvider {
     }
 }
 
-fileprivate class FinalAppScreenProvider: ScreenProvider {
+private class FinalAppScreenProvider: ScreenProvider {
 
     init(
         persistence: EnergyProfilePersistence,
@@ -415,7 +414,7 @@ fileprivate class FinalAppScreenProvider: ScreenProvider {
     }
 }
 
-fileprivate class FinalEnergyProfileState: EnergyProfileState {
+private class FinalEnergyProfileState: EnergyProfileState {
 
     init(persistence: EnergyProfilePersistence) {
         self.persistence = persistence

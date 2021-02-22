@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -75,7 +74,7 @@ class EnergyProfileViewModel: ObservableObject {
     var usedCatalysts = [Catalyst]()
 
     func next() {
-        if (canClickNext) {
+        if canClickNext {
             navigation?.next()
         }
     }
@@ -121,13 +120,13 @@ class EnergyProfileViewModel: ObservableObject {
     var slope: CGFloat {
         -activationEnergy / .gasConstant
     }
-    
+
     var canReactToC: Bool {
         chartInput.canReactToC
     }
 
-    func setCatalystInProgress(catalyst: Catalyst) -> Void {
-        if (availableCatalysts.contains(catalyst)) {
+    func setCatalystInProgress(catalyst: Catalyst) {
+        if availableCatalysts.contains(catalyst) {
             catalystToSelect = catalyst
             navigation?.next()
         } else {
@@ -154,7 +153,7 @@ class EnergyProfileViewModel: ObservableObject {
         }
     }
 
-    func selectCatalyst(catalyst: Catalyst) -> Void {
+    func selectCatalyst(catalyst: Catalyst) {
         next()
     }
 
@@ -166,7 +165,7 @@ class EnergyProfileViewModel: ObservableObject {
         let id = UUID()
         dispatchId = id
         runCatalystShakingAnimation()
-        if (withDelay) {
+        if withDelay {
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [self] in
                 guard self.dispatchId == id else {
                     return
@@ -186,9 +185,9 @@ class EnergyProfileViewModel: ObservableObject {
 
     func setConcentrationC(concentration: CGFloat) {
         self.concentrationC = concentration
-        if (concentration == 1) {
+        if concentration == 1 {
             next()
-        } else if (concentration >= 0.25) {
+        } else if concentration >= 0.25 {
             statement = EnergyProfileStatements.reactionInProgress
             highlightedElements = []
         }
@@ -214,14 +213,14 @@ class EnergyProfileViewModel: ObservableObject {
 
     func color(for elements: [EnergyProfileScreenElement?]) -> Color {
         let highlightIndex = elements.first { highlight(element: $0) }
-        if (highlightIndex != nil) {
+        if highlightIndex != nil {
             return .white
         }
         return Styling.inactiveScreenElement
     }
 
     func highlight(element: EnergyProfileScreenElement?) -> Bool {
-        if (highlightedElements.isEmpty) {
+        if highlightedElements.isEmpty {
             return true
         }
         if let element = element, highlightedElements.contains(element) {
@@ -237,7 +236,7 @@ class EnergyProfileViewModel: ObservableObject {
 
 extension Catalyst {
     var energyReduction: CGFloat {
-        switch (self) {
+        switch self {
         case .A: return 3000
         case .B: return 4000
         case .C: return 6000
@@ -247,7 +246,7 @@ extension Catalyst {
 
 extension ReactionOrder {
     var preExponentFactor: CGFloat {
-        switch (self) {
+        switch self {
         case .Zero: return 20
         case .First: return 10
         case .Second: return 5
@@ -255,7 +254,7 @@ extension ReactionOrder {
     }
 
     var activationEnergy: CGFloat {
-        switch (self) {
+        switch self {
         case .Zero: return 12000
         case .First: return 10000
         case .Second: return 8000
@@ -263,7 +262,7 @@ extension ReactionOrder {
     }
 
     var minEnergyFactor: CGFloat {
-        switch (self) {
+        switch self {
         case .Zero: return 0
         case .First: return 0.1
         case .Second: return 0.2
@@ -271,7 +270,7 @@ extension ReactionOrder {
     }
 
     var maxEnergyFactor: CGFloat {
-        switch(self) {
+        switch self {
         case .Zero: return 0.4
         case .First: return 0.7
         case .Second: return 1
@@ -279,7 +278,7 @@ extension ReactionOrder {
     }
 
     var eaHeightFactor: CGFloat {
-        switch (self) {
+        switch self {
         case .Zero: return 1
         case .First: return 0.9
         case .Second: return 0.8
@@ -293,14 +292,14 @@ extension CGFloat {
 
 extension CatalystState {
     var pending: Catalyst? {
-        switch (self) {
+        switch self {
         case let .pending(catalyst): return catalyst
         default: return nil
         }
     }
 
     var selected: Catalyst? {
-        switch (self) {
+        switch self {
         case let .selected(catalyst): return catalyst
         default: return nil
         }

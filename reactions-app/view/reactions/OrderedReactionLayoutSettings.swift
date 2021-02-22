@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -62,7 +61,7 @@ struct OrderedReactionLayoutSettings {
         0.8 * beakyTotalHeight
     }
     var bubbleWidth: CGFloat {
-        if (vIsRegular && hIsRegular) {
+        if vIsRegular && hIsRegular {
             return 0.3 * width
         }
         return 0.3 * width
@@ -165,7 +164,7 @@ struct OrderedReactionLayoutSettings {
     static let chartHPaddingFactor: CGFloat = 0.05
 }
 
-fileprivate struct TopStackLayoutUtil {
+private struct TopStackLayoutUtil {
 
     let totalWidth: CGFloat
     let totalHeight: CGFloat

@@ -1,14 +1,13 @@
 //
 // Reactions App
 //
-  
 
 import CoreGraphics
 
-fileprivate let settings = ReactionSettings.Input.self
-fileprivate let minC = ReactionSettings.Input.minC
-fileprivate let maxC = ReactionSettings.Input.maxC
-fileprivate let maxT = ReactionSettings.Input.maxT
+private let settings = ReactionSettings.Input.self
+private let minC = ReactionSettings.Input.minC
+private let maxC = ReactionSettings.Input.maxC
+private let maxT = ReactionSettings.Input.maxT
 
 protocol ReactionInputLimits {
     var c1Limits: InputLimits { get }
@@ -175,4 +174,3 @@ struct ReactionInputLimitsWithoutT2: ReactionInputLimits {
         )
     }
 }
-

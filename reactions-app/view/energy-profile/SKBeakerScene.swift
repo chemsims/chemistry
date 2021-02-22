@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SpriteKit
 
@@ -38,7 +37,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
                 return
             }
             resetCatalysts()
-            switch (particleState) {
+            switch particleState {
             case .none: break
             case .appearInBeaker: addCatalystsInWater()
             case .fallFromContainer: emitCatalysts()
@@ -48,10 +47,10 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     var canReactToC: Bool = false
     var reactionState: EnergyReactionState {
         didSet {
-            if (reactionState != oldValue) {
-                if (reactionState == .completed) {
+            if reactionState != oldValue {
+                if reactionState == .completed {
                     endReaction(duration: settings.endReactionDuration)
-                } else if (reactionState == .pending || oldValue == .completed && reactionState == .running) {
+                } else if reactionState == .pending || oldValue == .completed && reactionState == .running {
                     removeAllActions()
                     resetCollisions()
                 }
@@ -92,11 +91,11 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     private func updateMoleculeColors() {
         children.forEach { node in
             if let shape = node as? SKShapeNode, let physics = node.physicsBody {
-                if (physics.categoryBitMask == moleculeACategory) {
+                if physics.categoryBitMask == moleculeACategory {
                     shape.fillColor = moleculeAColor
-                } else if (physics.categoryBitMask == moleculeBCategory) {
+                } else if physics.categoryBitMask == moleculeBCategory {
                     shape.fillColor = moleculeBColor
-                } else if (physics.categoryBitMask == moleculeCCategory) {
+                } else if physics.categoryBitMask == moleculeCCategory {
                     shape.fillColor = moleculeCColor
                 }
             }
@@ -106,7 +105,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     private func updateCatalystColor() {
         children.forEach { node in
             if let shape = node as? SKShapeNode, let physics = node.physicsBody {
-                if (physics.categoryBitMask == catalystCategory) {
+                if physics.categoryBitMask == catalystCategory {
                     shape.fillColor = catalystColor
                 }
             }
@@ -267,7 +266,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         initialiseCatalysts()
         self.physicsWorld.contactDelegate = self
 
-        if (reactionState == .completed) {
+        if reactionState == .completed {
             endReaction(duration: nil)
         }
 
@@ -281,9 +280,9 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         let reactionIsComplete = reactionState == .completed
         let isFalling = particleState == .fallFromContainer
         let isInBeaker = particleState == .appearInBeaker
-        if (isFalling && !reactionIsComplete) {
+        if isFalling && !reactionIsComplete {
             emitCatalyst()
-        } else if (isInBeaker || (isFalling && reactionIsComplete)) {
+        } else if isInBeaker || (isFalling && reactionIsComplete) {
             addCatalystsInWater()
         }
     }
@@ -406,7 +405,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         collisionsSinceLastCMolecule += 1
         let catA = contact.bodyA.categoryBitMask
         let catB = contact.bodyB.categoryBitMask
-        if (catA == moleculeACategory && catB == moleculeBCategory) {
+        if catA == moleculeACategory && catB == moleculeBCategory {
             if let nodeA = contact.bodyA.node as? SKShapeNode,
                let nodeB = contact.bodyB.node as? SKShapeNode,
                shouldCollide() {
@@ -561,8 +560,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
     }
 }
 
-
-fileprivate struct SKBeakerSceneSettings {
+private struct SKBeakerSceneSettings {
 
     let width: CGFloat
     let height: CGFloat

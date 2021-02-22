@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct SpeechBubble: View {
@@ -23,7 +22,7 @@ struct SpeechBubble: View {
     }
 }
 
-fileprivate struct SpeechBubbleWithSettings: View {
+private struct SpeechBubbleWithSettings: View {
 
     let lines: [TextLine]
     let settings: SpeechBubbleSettings
@@ -140,7 +139,7 @@ struct SpeechBubble_Previews: PreviewProvider {
             .init(content: "too elor it!A", emphasised: false),
             .init(content: "0", emphasised: false, scriptType: .superScript),
             .init(content: " != A", emphasised: false),
-            .init(content: "123", emphasised: false, scriptType: .subScript),
+            .init(content: "123", emphasised: false, scriptType: .subScript)
         ])
     ]
 

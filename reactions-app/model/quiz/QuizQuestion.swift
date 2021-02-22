@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import Foundation
 
 /// Definition of a quiz question.
@@ -170,7 +169,7 @@ struct QuizAnswerData: Equatable {
 struct QuizQuestion: Equatable {
     let id: String
     let question: TextLine
-    let options: [QuizOption:QuizAnswer]
+    let options: [QuizOption: QuizAnswer]
     let correctOption: QuizOption
     let difficulty: QuizDifficulty
     let image: LabelledImage?

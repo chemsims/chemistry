@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -33,7 +32,7 @@ struct ReactionOrderSelection: View {
 
 fileprivate extension ReactionOrder {
     var string: String {
-        switch (self) {
+        switch self {
         case .Zero: return "Zero"
         case .First: return "First"
         case .Second: return "Second"

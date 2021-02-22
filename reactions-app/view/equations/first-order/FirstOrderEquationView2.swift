@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -36,7 +35,7 @@ struct FirstOrderEquationView: View {
     }
 }
 
-fileprivate struct UnscaledFirstOrderReactionEquationView: View {
+private struct UnscaledFirstOrderReactionEquationView: View {
 
     let c1: CGFloat
     let c2: CGFloat?
@@ -64,7 +63,7 @@ fileprivate struct UnscaledFirstOrderReactionEquationView: View {
     }
 }
 
-fileprivate struct FirstOrderRateFilled: View {
+private struct FirstOrderRateFilled: View {
 
     var body: some View {
         HStack(spacing: 12) {
@@ -99,7 +98,7 @@ fileprivate struct FirstOrderRateFilled: View {
     }
 }
 
-fileprivate struct FirstOrderRateBlank: View {
+private struct FirstOrderRateBlank: View {
 
     let rate: String?
     let a0: String?
@@ -132,7 +131,7 @@ fileprivate struct FirstOrderRateBlank: View {
     }
 }
 
-fileprivate struct FirstOrderHalftimeFilled: View {
+private struct FirstOrderHalftimeFilled: View {
     var body: some View {
         HStack(spacing: 12) {
             HalfTime()
@@ -149,7 +148,7 @@ fileprivate struct FirstOrderHalftimeFilled: View {
     }
 }
 
-fileprivate struct FirstOrderHalftimeBlank: View {
+private struct FirstOrderHalftimeBlank: View {
 
     let halftime: String?
     let rate: String?

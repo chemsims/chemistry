@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 @testable import reactions_app
 

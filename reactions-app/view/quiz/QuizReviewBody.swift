@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -60,7 +59,7 @@ struct QuizReviewBody: View {
     }
 }
 
-fileprivate struct QuestionReviewCard: View {
+private struct QuestionReviewCard: View {
 
     let question: QuizQuestion
     let answer: QuizAnswerInput
@@ -150,8 +149,7 @@ fileprivate struct QuestionReviewCard: View {
     }
 }
 
-
-fileprivate struct QuizReviewSingleOption: View {
+private struct QuizReviewSingleOption: View {
 
     let question: QuizQuestion
     let topLine: String
@@ -182,7 +180,7 @@ fileprivate struct QuizReviewSingleOption: View {
                     .font(.system(size: settings.questionFontSize))
             }
 
-            if (explanationIsExpanded) {
+            if explanationIsExpanded {
                 TextLinesView(
                     lines: [explanationString],
                     fontSize: settings.questionFontSize

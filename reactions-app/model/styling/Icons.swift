@@ -1,10 +1,8 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
-
 
 struct Icons {
     static let leftArrow = "arrowtriangle.left.fill"

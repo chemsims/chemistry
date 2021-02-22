@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -38,7 +37,6 @@ struct BeakerTicks: Shape {
 
         return path
     }
-
 
 }
 

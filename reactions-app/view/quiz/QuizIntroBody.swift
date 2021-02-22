@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -52,7 +51,7 @@ struct QuizIntroBody: View {
                 .foregroundColor(isSelected ? Styling.Quiz.selectedDifficultyBackground : .white)
                 .shadow(radius: 2)
 
-            if (isSelected) {
+            if isSelected {
                 RoundedRectangle(cornerRadius: settings.progressCornerRadius)
                     .strokeBorder(lineWidth: settings.activeLineWidth)
                     .foregroundColor(Styling.Quiz.selectedDifficultyBorder)
@@ -91,11 +90,10 @@ struct QuizIntroBody: View {
 
 extension QuizDifficulty {
     var displayName: String {
-        switch (self) {
+        switch self {
         case .easy: return "Easy"
         case .medium: return "Medium"
         case .hard: return "Hard"
         }
     }
 }
-

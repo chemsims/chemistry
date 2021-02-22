@@ -1,13 +1,12 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
 
 class ReactionInputLimitsWithoutT2Test: XCTestCase {
-    
+
     func testC1LimitsWithNoT2() {
         let cRange = InputRange(min: 0, max: 10, minInputRange: 1, valueSpacing: 1)
         let tRange = InputRange(min: 0, max: 10, minInputRange: 1, valueSpacing: 1)

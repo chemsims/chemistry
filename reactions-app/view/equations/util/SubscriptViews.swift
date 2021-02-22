@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -33,13 +32,13 @@ struct BracketSubscript: View {
     }
 }
 
-fileprivate struct BracketA: View {
+private struct BracketA: View {
     var body: some View {
         FixedText("[A")
     }
 
 }
-fileprivate struct EndBracket: View {
+private struct EndBracket: View {
     var body: some View {
         FixedText("]")
     }
@@ -95,7 +94,7 @@ struct T_2: View {
     }
 }
 
-fileprivate struct SubscriptView: View {
+private struct SubscriptView: View {
     let mainValue: String
     let subscriptValue: String
 

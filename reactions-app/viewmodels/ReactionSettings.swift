@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import CoreGraphics
 
 struct ReactionSettings {
@@ -35,7 +34,6 @@ struct ReactionSettings {
         /// The smallest C2 input the user can be given. i.e., the range of C2 the user can select will be at least `minC` to `minC2Input`
         static let minC2Input: CGFloat = minC + minCRange
 
-
         static let minT1: CGFloat = 0
         static let minT2: CGFloat = 3
         static let maxT: CGFloat = 20
@@ -45,7 +43,6 @@ struct ReactionSettings {
 
     static let initialC: CGFloat = 0.7
     static let initialT: CGFloat = 10
-
 
     /// Fixed rate constant for B reactions (i.e., the second reaction type which can be chosen on parts 1-3)
     static let reactionBRateConstant: CGFloat = 0.04

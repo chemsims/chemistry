@@ -1,11 +1,9 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
-
 
 class QuizQuestionTests: XCTestCase {
 
@@ -57,7 +55,7 @@ class QuizQuestionTests: XCTestCase {
             otherAnswers: [
                 newAnswer("wrong 1", position: .A),
                 newAnswer("wrong 2", position: .C),
-                newAnswer("wrong 3", position: nil),
+                newAnswer("wrong 3", position: nil)
             ],
             difficulty: .easy
         )

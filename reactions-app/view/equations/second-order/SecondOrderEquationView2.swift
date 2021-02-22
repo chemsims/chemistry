@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct SecondOrderEquationView: View {
@@ -36,7 +35,7 @@ struct SecondOrderEquationView: View {
     }
 }
 
-fileprivate struct UnscaledSecondOrderEquationView: View {
+private struct UnscaledSecondOrderEquationView: View {
 
     let c1: CGFloat
     let c2: CGFloat?
@@ -70,7 +69,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
     }
 }
 
-fileprivate struct SecondOrderRateFilled: View {
+private struct SecondOrderRateFilled: View {
     var body: some View {
         HStack(spacing: 5) {
             Text("k")
@@ -106,7 +105,7 @@ fileprivate struct SecondOrderRateFilled: View {
     }
 }
 
-fileprivate struct SecondOrderRateBlank: View {
+private struct SecondOrderRateBlank: View {
 
     let rate: String?
     let invA0: String?
@@ -145,7 +144,7 @@ fileprivate struct SecondOrderRateBlank: View {
     }
 }
 
-fileprivate struct SecondOrderHalftimeFilled: View {
+private struct SecondOrderHalftimeFilled: View {
     var body: some View {
         HStack(spacing: 5) {
             HalfTime()
@@ -163,7 +162,7 @@ fileprivate struct SecondOrderHalftimeFilled: View {
     }
 }
 
-fileprivate struct SecondOrderHalftimeBlank: View {
+private struct SecondOrderHalftimeBlank: View {
 
     let halfTime: String?
     let rate: String?
@@ -185,7 +184,7 @@ fileprivate struct SecondOrderHalftimeBlank: View {
                 .frame(width: Settings.boxWidth, height: Settings.boxHeight)
                 .minimumScaleFactor(0.5)
 
-            if (a0 != nil) {
+            if a0 != nil {
                 Text("(")
                     .fixedSize()
 
@@ -201,7 +200,6 @@ fileprivate struct SecondOrderHalftimeBlank: View {
         }
     }
 }
-
 
 struct SecondOrderEquationView2_Previews: PreviewProvider {
     static var previews: some View {

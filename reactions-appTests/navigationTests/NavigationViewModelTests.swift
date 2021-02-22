@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
@@ -107,7 +106,6 @@ class NavigationViewModelTests: XCTestCase {
         let s3 = SetValueState(value: 3)
         let s3Alternative = SetValueState(value: 4)
 
-
         let s1Node = ScreenStateTreeNode(state: s1)
         let s2Node = ConditionalScreenStateNode(state: s2, applyAlternativeNode: { $0.value == 2 })
         let s3Node = ScreenStateTreeNode(state: s3)
@@ -136,9 +134,9 @@ class NavigationViewModelTests: XCTestCase {
     }
 }
 
-fileprivate class TesterClass { var value = 0 }
+private class TesterClass { var value = 0 }
 
-fileprivate class TesterState: ScreenState, SubState {
+private class TesterState: ScreenState, SubState {
     var delayedStates: [DelayedState<TesterState>] = []
     func apply(on model: TesterClass) { }
 
@@ -158,7 +156,7 @@ fileprivate class TesterState: ScreenState, SubState {
     typealias Model = TesterClass
 }
 
-fileprivate class SetValueState: TesterState {
+private class SetValueState: TesterState {
     init(
         value: Int,
         shouldReapply: Bool = true,
@@ -184,7 +182,7 @@ fileprivate class SetValueState: TesterState {
     }
 
     override func reapply(on model: TesterClass) {
-        if (shouldReapply) {
+        if shouldReapply {
             apply(on: model)
         }
     }
@@ -195,7 +193,7 @@ fileprivate class SetValueState: TesterState {
 
 }
 
-fileprivate class StateWithAutoDispatch: SetValueState {
+private class StateWithAutoDispatch: SetValueState {
     init(value: Int, nextStateDelay: Double) {
         self.nextStateDelay = nextStateDelay
         super.init(value: value)

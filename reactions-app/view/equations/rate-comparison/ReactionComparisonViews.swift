@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -91,8 +90,7 @@ struct ReactionComparisonSecondOrderEquation: View {
     }
 }
 
-
-fileprivate struct UnscaledZeroOrderEquation: View {
+private struct UnscaledZeroOrderEquation: View {
 
     let time: CGFloat?
     let concentration: Equation
@@ -156,7 +154,7 @@ fileprivate struct UnscaledZeroOrderEquation: View {
     }
 }
 
-fileprivate struct UnscaledFirstOrderEquation: View {
+private struct UnscaledFirstOrderEquation: View {
 
     let time: CGFloat?
     let concentration: Equation
@@ -228,7 +226,7 @@ fileprivate struct UnscaledFirstOrderEquation: View {
     }
 }
 
-fileprivate struct UnscaledSecondOrderEquation: View {
+private struct UnscaledSecondOrderEquation: View {
 
     let time: CGFloat?
     let concentration: Equation
@@ -318,7 +316,7 @@ fileprivate struct UnscaledSecondOrderEquation: View {
     }
 }
 
-fileprivate struct GeneralEquation<Content: View>: View {
+private struct GeneralEquation<Content: View>: View {
 
     let order: Int
     let time: CGFloat?
@@ -401,7 +399,7 @@ fileprivate struct GeneralEquation<Content: View>: View {
     }
 }
 
-fileprivate struct VaryingText: View {
+private struct VaryingText: View {
 
     let time: CGFloat?
     let equation: Equation
@@ -431,16 +429,16 @@ fileprivate struct VaryingText: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            if (withParens) {
+            if withParens {
                 FixedText("(")
             }
             Group {
-                if (time == nil) {
+                if time == nil {
                     FixedText(equation.getY(at: 0).str(decimals: decimals))
                         .accessibility(label: Text(label))
                         .accessibility(value: Text(equation.getY(at: 0).str(decimals: decimals)))
                 }
-                if (time != nil) {
+                if time != nil {
                     AnimatingNumber(
                         x: time!,
                         equation: equation,
@@ -454,7 +452,7 @@ fileprivate struct VaryingText: View {
             .frame(width: EquationSettings.boxWidth * widthFactor, alignment: alignment)
             .foregroundColor(.orangeAccent)
             .minimumScaleFactor(0.5)
-            if (withParens) {
+            if withParens {
                 FixedText(")")
             }
 
@@ -462,11 +460,10 @@ fileprivate struct VaryingText: View {
     }
 }
 
-fileprivate struct EquationSizes {
+private struct EquationSizes {
     static let width: CGFloat = 700
     static let height: CGFloat = 120
 }
-
 
 struct NewRateComparisonEquationView_Previews: PreviewProvider {
 

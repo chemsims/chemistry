@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -113,14 +112,13 @@ struct FilledBeaker: View {
                 coordinates: MoleculeGridSettings.fullGrid
             )
 
-
             moleculeGrid(
                 settings,
                 color: reactionPair.reactant.color,
                 coordinates: moleculesA
             )
 
-            if (currentTime != nil && concentrationB != nil) {
+            if currentTime != nil && concentrationB != nil {
                 AnimatingMoleculeGrid(
                     settings: settings,
                     coords: moleculesA,

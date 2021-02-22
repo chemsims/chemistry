@@ -1,10 +1,8 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
-
 
 struct ChartAxisShape: Shape {
     let verticalTicks: Int
@@ -37,7 +35,6 @@ struct ChartAxisShape: Shape {
     }
 
 }
-
 
 struct ChartAxisShape_Previews: PreviewProvider {
     static var previews: some View {

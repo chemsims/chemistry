@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -94,9 +93,8 @@ struct FirstOrderReactionScreen: View {
     }
 }
 
-
 struct FirstOrderReaction_Previews: PreviewProvider {
-    
+
     static var previews: some View {
 
         // iPhone SE landscape

@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct SecondOrderEquationView: View {
@@ -47,7 +46,7 @@ struct SecondOrderEquationView: View {
     }
 }
 
-fileprivate struct UnscaledSecondOrderEquationView: View {
+private struct UnscaledSecondOrderEquationView: View {
 
     let emphasise: Bool
     let c1: CGFloat
@@ -112,7 +111,7 @@ fileprivate struct UnscaledSecondOrderEquationView: View {
     }
 }
 
-fileprivate struct SecondOrderRateFilled: View {
+private struct SecondOrderRateFilled: View {
 
     let reactant: String
 
@@ -157,7 +156,7 @@ fileprivate struct SecondOrderRateFilled: View {
     }
 }
 
-fileprivate struct SecondOrderRateBlank: View {
+private struct SecondOrderRateBlank: View {
 
     let emphasise: Bool
     let rateConstant: String?
@@ -205,7 +204,7 @@ fileprivate struct SecondOrderRateBlank: View {
     }
 }
 
-fileprivate struct SecondOrderHalfLifeFilled: View {
+private struct SecondOrderHalfLifeFilled: View {
 
     let reactant: String
 
@@ -225,7 +224,7 @@ fileprivate struct SecondOrderHalfLifeFilled: View {
     }
 }
 
-fileprivate struct SecondOrderHalfLifeBlank: View {
+private struct SecondOrderHalfLifeBlank: View {
 
     let emphasise: Bool
     let halfLife: String?
@@ -262,7 +261,7 @@ fileprivate struct SecondOrderHalfLifeBlank: View {
     }
 }
 
-fileprivate struct EquationSize {
+private struct EquationSize {
     static let width: CGFloat = 360
     static let height: CGFloat = 446
     static let padding: CGFloat = 15

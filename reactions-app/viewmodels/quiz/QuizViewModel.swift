@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -37,13 +36,12 @@ class QuizViewModel: ObservableObject {
         }
     }
 
-
     var nextScreen: (() -> Void)?
     var prevScreen: (() -> Void)?
 
     // MARK: Published properties
     @Published var currentQuestion: QuizQuestion
-    @Published var answers = [String:QuizAnswerInput]()
+    @Published var answers = [String: QuizAnswerInput]()
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
@@ -164,7 +162,6 @@ class QuizViewModel: ObservableObject {
     }
 }
 
-
 // MARK: Quiz Navigation
 extension QuizViewModel {
 
@@ -172,14 +169,14 @@ extension QuizViewModel {
         guard !nextIsDisabled || force else {
             return
         }
-        switch (quizState) {
+        switch quizState {
         case .pending:
             quizState = .running
-            answers = [String:QuizAnswerInput]()
+            answers = [String: QuizAnswerInput]()
             setProgress()
             logStarted()
         case .running:
-            if (currentIndex == quizLength - 1) {
+            if currentIndex == quizLength - 1 {
                 quizState = .completed
                 setProgress()
                 saveQuiz()
@@ -193,7 +190,7 @@ extension QuizViewModel {
     }
 
     func back() {
-        switch (quizState) {
+        switch quizState {
         case .pending:
             prevScreen?()
         case .running where currentIndex == 0:

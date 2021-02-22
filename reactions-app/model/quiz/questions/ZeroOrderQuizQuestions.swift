@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import Foundation
 
 extension QuizQuestionsList {
@@ -130,7 +129,7 @@ extension QuizQuestionsList {
                         """
                     ),
                     QuizAnswerData(
-                        answer:  "1.5 M/s",
+                        answer: "1.5 M/s",
                         explanation: """
                         The rates of disappearance of reactants and appearance of products can be related \
                         to each other based on the stoichiometry of the reaction. \

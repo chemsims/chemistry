@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import XCTest
 @testable import reactions_app
@@ -19,11 +18,10 @@ class RootNavigationModelTest: XCTestCase {
             XCTAssertFalse(model.canSelect(screen: screen), "\(screen)")
         }
     }
-    
+
     private func newModel() -> RootNavigationViewModel {
         RootNavigationViewModel(
             injector: InMemoryInjector.shared
         )
     }
 }
-

@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 @testable import reactions_app
@@ -33,7 +32,7 @@ extension TextSegment: CustomDebugStringConvertible {
     }
 
     private var sc: String {
-        switch (scriptType) {
+        switch scriptType {
         case .superScript: return "^"
         case .subScript: return "_"
         case nil: return ""

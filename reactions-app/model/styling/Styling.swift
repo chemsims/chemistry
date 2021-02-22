@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 import SpriteKit
@@ -89,7 +88,6 @@ struct Styling {
     static let tableCellBorder = RGB(r: 190, g: 190, b: 190).color
 }
 
-
 extension UIColor {
     static let catalystA = UIColor(red: 246 / 255, green: 83  / 255, blue: 166 / 255, alpha: 1)
     static let catalystB = UIColor(red: 227 / 255, green: 215  / 255, blue: 89 / 255, alpha: 1)
@@ -103,7 +101,6 @@ extension Color {
     static let orangeAccent = Color(red: 220 / 255, green: 84 / 255, blue: 59 / 255)
 
 }
-
 
 extension Styling {
     struct Quiz {

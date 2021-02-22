@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -42,7 +41,7 @@ struct BarChartGeometrySettings {
     var barBCenterX: CGFloat {
         barACenterX * 3
     }
-    
+
     var barMinHeight: CGFloat {
         tickDy / 5
     }

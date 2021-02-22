@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -15,10 +14,10 @@ struct SliderIndicator: View {
 
     var body: some View {
         ZStack {
-            if (showInitialValue) {
+            if showInitialValue {
                 makeIndicator(value: value1, disabled: value2 != nil)
             }
-            if (value2 != nil) {
+            if value2 != nil {
                 makeIndicator(value: value2!, disabled: false)
             }
         }

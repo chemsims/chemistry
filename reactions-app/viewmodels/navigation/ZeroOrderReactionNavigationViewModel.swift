@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -54,7 +53,7 @@ struct ZeroOrderReactionNavigation {
     }
 }
 
-fileprivate class InitialStep: ReactionState {
+private class InitialStep: ReactionState {
     init() {
         super.init(statement: ZeroOrderStatements.initial)
     }
@@ -69,7 +68,7 @@ fileprivate class InitialStep: ReactionState {
     }
 }
 
-fileprivate class SetFinalValuesToNonNil: ReactionState {
+private class SetFinalValuesToNonNil: ReactionState {
 
     init() {
         super.init(statement: ZeroOrderStatements.setFinalValues)
@@ -93,7 +92,7 @@ fileprivate class SetFinalValuesToNonNil: ReactionState {
     }
 }
 
-fileprivate class ExplainRateState: ReactionState {
+private class ExplainRateState: ReactionState {
 
     override func apply(on model: ZeroOrderReactionViewModel) {
         model.statement = ZeroOrderStatements.rateExplainer(
@@ -114,7 +113,7 @@ fileprivate class ExplainRateState: ReactionState {
 
 }
 
-fileprivate class ExplainHalfLifeState: PreReactionAnimation {
+private class ExplainHalfLifeState: PreReactionAnimation {
 
     init() {
         super.init(highlightedElements: [.halfLifeEquation])

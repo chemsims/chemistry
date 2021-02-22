@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct ZeroOrderReactionScreen: View {
@@ -23,7 +22,7 @@ struct ZeroOrderReactionScreen: View {
                     verticalSize: verticalSizeClass
                 )
             ).onTapGesture {
-                if (isShowingTooltip) {
+                if isShowingTooltip {
                     isShowingTooltip = false
                 }
             }
@@ -89,7 +88,6 @@ struct ZeroOrderReaction_Previews: PreviewProvider {
         ZeroOrderReactionScreen(
             reaction: model
         ).previewLayout(.fixed(width: 812, height: 375))
-
 
         /// iPad mini 4 landscape
         ZeroOrderReactionScreen(

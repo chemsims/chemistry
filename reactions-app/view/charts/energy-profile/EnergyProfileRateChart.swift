@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 
@@ -45,13 +44,13 @@ struct EnergyProfileRateChart: View {
         return "No data"
     }
 
-    private var chart: some View  {
+    private var chart: some View {
         ZStack {
             Rectangle()
                 .foregroundColor(.white)
                 .opacity(highlightChart ? 1 : 0)
 
-            if (equation != nil) {
+            if equation != nil {
                 ChartLine(
                     equation: equation!,
                     yAxis: settings.yAxis,
@@ -63,7 +62,7 @@ struct EnergyProfileRateChart: View {
                 .foregroundColor(.orangeAccent)
             }
 
-            if (equation != nil && currentTempInverse != nil) {
+            if equation != nil && currentTempInverse != nil {
                 ZStack {
                     Circle()
                         .frame(
@@ -84,7 +83,7 @@ struct EnergyProfileRateChart: View {
                 )
             }
 
-            if (equation != nil) {
+            if equation != nil {
                 annotation
             }
 

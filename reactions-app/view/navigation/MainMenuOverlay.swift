@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import SwiftUI
 import MessageUI
@@ -50,7 +49,7 @@ struct MainMenuOverlay: View {
     }
 }
 
-fileprivate enum ActiveSheet: Int, Identifiable {
+private enum ActiveSheet: Int, Identifiable {
     case mail, share
 
     var id: Int {
@@ -58,7 +57,7 @@ fileprivate enum ActiveSheet: Int, Identifiable {
     }
 }
 
-fileprivate struct MainMenuOverlayWithSettings: View {
+private struct MainMenuOverlayWithSettings: View {
 
     @ObservedObject var navigation: RootNavigationViewModel
     @Binding var activeSheet: ActiveSheet?
@@ -75,7 +74,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
                 .padding(.vertical, settings.geometry.safeAreaInsets.top)
                 .accessibility(sortPriority: 0.7)
 
-            if (navigation.showMenu) {
+            if navigation.showMenu {
                 panel
                     .gesture(
                         DragGesture(minimumDistance: 0, coordinateSpace: .global)
@@ -216,7 +215,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
             )
             .frame(height: settings.secondaryIconHeight)
 
-            if (screen.filingScreen != nil) {
+            if screen.filingScreen != nil {
                 navIcon(
                     image: "archivebox-thinner",
                     selectedImage: "archivebox-thinner",
@@ -262,7 +261,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
         let mainColor = shouldFocus ? Color.orangeAccent : Styling.navIcon
         let color = canSelect ? mainColor : Styling.inactiveScreenElement
 
-        return Button(action: { goTo(screen: screen) } ) {
+        return Button(action: { goTo(screen: screen) }) {
             makeImage(
                 name: isSelected ? selectedImage : image,
                 isSystem: isSystem
@@ -279,13 +278,13 @@ fileprivate struct MainMenuOverlayWithSettings: View {
     }
 
     private func makeImage(name: String, isSystem: Bool) -> Image {
-        if (isSystem) {
+        if isSystem {
             return Image(systemName: name)
         }
         return Image(name)
     }
 
-    private func goTo(screen: AppScreen) -> Void {
+    private func goTo(screen: AppScreen) {
         navigation.jumpTo(screen: screen)
         toggleMenu()
     }
@@ -297,7 +296,7 @@ fileprivate struct MainMenuOverlayWithSettings: View {
 
 extension MainMenuOverlayWithSettings {
     private func openMailComposer() {
-        if (MailComposerView.canSendMail()) {
+        if MailComposerView.canSendMail() {
             activeSheet = .mail
             return
         }
@@ -318,15 +317,15 @@ extension MainMenuOverlayWithSettings {
     }
 }
 
-fileprivate enum TopLevelScreen {
+private enum TopLevelScreen {
     case zeroOrderReaction,
           firstOrderReaction,
           secondOrderReaction,
           reactionComparison,
           energyProfile
 
-    var navImage: String  {
-        switch (self) {
+    var navImage: String {
+        switch self {
         case .zeroOrderReaction: return "zeroordericon"
         case .firstOrderReaction: return "firstordericon"
         case .secondOrderReaction: return "secondordericon"
@@ -340,7 +339,7 @@ fileprivate enum TopLevelScreen {
     }
 
     var appScreen: AppScreen {
-        switch (self) {
+        switch self {
         case .zeroOrderReaction: return .zeroOrderReaction
         case .firstOrderReaction: return .firstOrderReaction
         case .secondOrderReaction: return .secondOrderReaction
@@ -350,7 +349,7 @@ fileprivate enum TopLevelScreen {
     }
 
     var quizScreen: AppScreen {
-        switch (self) {
+        switch self {
         case .zeroOrderReaction: return .zeroOrderReactionQuiz
         case .firstOrderReaction: return .firstOrderReactionQuiz
         case .secondOrderReaction: return .secondOrderReactionQuiz
@@ -360,7 +359,7 @@ fileprivate enum TopLevelScreen {
     }
 
     var filingScreen: AppScreen? {
-        switch (self) {
+        switch self {
         case .zeroOrderReaction: return .zeroOrderFiling
         case .firstOrderReaction: return .firstOrderFiling
         case .secondOrderReaction: return .secondOrderFiling
@@ -370,7 +369,7 @@ fileprivate enum TopLevelScreen {
     }
 
     var label: String {
-        switch (self) {
+        switch self {
         case .zeroOrderReaction: return "Zero order reaction"
         case .firstOrderReaction: return "First order reaction"
         case .secondOrderReaction: return "Second order reaction"
@@ -380,7 +379,7 @@ fileprivate enum TopLevelScreen {
     }
 }
 
-fileprivate struct MainMenuLayoutSettings {
+private struct MainMenuLayoutSettings {
 
     let geometry: GeometryProxy
     let menuSize: CGFloat
@@ -448,7 +447,7 @@ fileprivate struct MainMenuLayoutSettings {
 
     var leadingPanelSpace: CGFloat {
         let leading = geometry.safeAreaInsets.leading
-        if (UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft) {
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft {
             return leading
         }
         return leading / 2

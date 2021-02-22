@@ -1,7 +1,6 @@
 //
 // Reactions App
 //
-  
 
 import Foundation
 
@@ -41,12 +40,11 @@ struct ReactionComparisonStatements {
 
     static let end: [TextLine] = [
         "Took you a while didn't it?",
-        "Let's see how to make things faster.",
+        "Let's see how to make things faster."
     ]
 
     static let blockClickingNextBeforeChoosingReactions: [TextLine] = [
         "Try to identify the correct orders for each graph first!",
-        "*Drag and drop the equations to the graph of the corresponding order*.",
+        "*Drag and drop the equations to the graph of the corresponding order*."
     ]
 }
-
