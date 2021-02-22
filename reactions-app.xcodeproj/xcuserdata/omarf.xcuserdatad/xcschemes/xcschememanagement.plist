@@ -25,6 +25,11 @@
 			<key>orderHint</key>
 			<integer>23</integer>
 		</dict>
+		<key>Reactions Equilibrium.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>26</integer>
+		</dict>
 		<key>reactions-app.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>

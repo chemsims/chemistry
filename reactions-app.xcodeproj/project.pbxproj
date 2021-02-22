@@ -134,6 +134,13 @@
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
 		5797567F25C1C5CB005C484E /* LabelledImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797567E25C1C5CB005C484E /* LabelledImage.swift */; };
+		5797A3E125E4039E00991BD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A3E025E4039E00991BD9 /* AppDelegate.swift */; };
+		5797A3E325E4039E00991BD9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A3E225E4039E00991BD9 /* SceneDelegate.swift */; };
+		5797A3E525E4039E00991BD9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A3E425E4039E00991BD9 /* ContentView.swift */; };
+		5797A3E725E4039F00991BD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5797A3E625E4039F00991BD9 /* Assets.xcassets */; };
+		5797A3EA25E4039F00991BD9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5797A3E925E4039F00991BD9 /* Preview Assets.xcassets */; };
+		5797A3ED25E4039F00991BD9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5797A3EB25E4039F00991BD9 /* LaunchScreen.storyboard */; };
+		5797A3F825E403A000991BD9 /* Reactions_EquilibriumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A3F725E403A000991BD9 /* Reactions_EquilibriumTests.swift */; };
 		57A119A825B86A1E00A7810B /* EnergyProfileFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */; };
 		57A119AC25B86B5500A7810B /* EnergyProfileFilingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */; };
 		57A119B025B86B9800A7810B /* EnergyProfilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */; };
@@ -218,6 +225,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 571D6A3B255A780700F4E635;
 			remoteInfo = "reactions-app";
+		};
+		5797A3F425E403A000991BD9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5797A3DD25E4039E00991BD9;
+			remoteInfo = "Reactions Equilibrium";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -352,6 +366,17 @@
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		5797567E25C1C5CB005C484E /* LabelledImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelledImage.swift; sourceTree = "<group>"; };
+		5797A3DE25E4039E00991BD9 /* Reactions Equilibrium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reactions Equilibrium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5797A3E025E4039E00991BD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5797A3E225E4039E00991BD9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		5797A3E425E4039E00991BD9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5797A3E625E4039F00991BD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5797A3E925E4039F00991BD9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5797A3EC25E4039F00991BD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5797A3EE25E4039F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5797A3F325E403A000991BD9 /* Reactions EquilibriumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Reactions EquilibriumTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5797A3F725E403A000991BD9 /* Reactions_EquilibriumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactions_EquilibriumTests.swift; sourceTree = "<group>"; };
+		5797A3F925E403A000991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingScreen.swift; sourceTree = "<group>"; };
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
 		57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistence.swift; sourceTree = "<group>"; };
@@ -442,6 +467,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				5711DFDA25C46DD100B28E45 /* FirebaseAnalytics in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5797A3DB25E4039E00991BD9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5797A3F025E403A000991BD9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,6 +654,8 @@
 			children = (
 				571D6A3E255A780700F4E635 /* reactions-app */,
 				57035EE3255BFE5200DB3A19 /* reactions-appTests */,
+				5797A3DF25E4039E00991BD9 /* Reactions Equilibrium */,
+				5797A3F625E403A000991BD9 /* Reactions EquilibriumTests */,
 				571D6A3D255A780700F4E635 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -624,6 +665,8 @@
 			children = (
 				571D6A3C255A780700F4E635 /* reactions-app.app */,
 				57035EE2255BFE5200DB3A19 /* reactions-appTests.xctest */,
+				5797A3DE25E4039E00991BD9 /* Reactions Equilibrium.app */,
+				5797A3F325E403A000991BD9 /* Reactions EquilibriumTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -983,6 +1026,37 @@
 			path = shapes;
 			sourceTree = "<group>";
 		};
+		5797A3DF25E4039E00991BD9 /* Reactions Equilibrium */ = {
+			isa = PBXGroup;
+			children = (
+				5797A3E025E4039E00991BD9 /* AppDelegate.swift */,
+				5797A3E225E4039E00991BD9 /* SceneDelegate.swift */,
+				5797A3E425E4039E00991BD9 /* ContentView.swift */,
+				5797A3E625E4039F00991BD9 /* Assets.xcassets */,
+				5797A3EB25E4039F00991BD9 /* LaunchScreen.storyboard */,
+				5797A3EE25E4039F00991BD9 /* Info.plist */,
+				5797A3E825E4039F00991BD9 /* Preview Content */,
+			);
+			path = "Reactions Equilibrium";
+			sourceTree = "<group>";
+		};
+		5797A3E825E4039F00991BD9 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				5797A3E925E4039F00991BD9 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		5797A3F625E403A000991BD9 /* Reactions EquilibriumTests */ = {
+			isa = PBXGroup;
+			children = (
+				5797A3F725E403A000991BD9 /* Reactions_EquilibriumTests.swift */,
+				5797A3F925E403A000991BD9 /* Info.plist */,
+			);
+			path = "Reactions EquilibriumTests";
+			sourceTree = "<group>";
+		};
 		57B0FBC82565D44500BB6ACC /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1140,13 +1214,48 @@
 			productReference = 571D6A3C255A780700F4E635 /* reactions-app.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5797A3DD25E4039E00991BD9 /* Reactions Equilibrium */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5797A40B25E403A000991BD9 /* Build configuration list for PBXNativeTarget "Reactions Equilibrium" */;
+			buildPhases = (
+				5797A3DA25E4039E00991BD9 /* Sources */,
+				5797A3DB25E4039E00991BD9 /* Frameworks */,
+				5797A3DC25E4039E00991BD9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Reactions Equilibrium";
+			productName = "Reactions Equilibrium";
+			productReference = 5797A3DE25E4039E00991BD9 /* Reactions Equilibrium.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5797A3F225E403A000991BD9 /* Reactions EquilibriumTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5797A40C25E403A000991BD9 /* Build configuration list for PBXNativeTarget "Reactions EquilibriumTests" */;
+			buildPhases = (
+				5797A3EF25E403A000991BD9 /* Sources */,
+				5797A3F025E403A000991BD9 /* Frameworks */,
+				5797A3F125E403A000991BD9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5797A3F525E403A000991BD9 /* PBXTargetDependency */,
+			);
+			name = "Reactions EquilibriumTests";
+			productName = "Reactions EquilibriumTests";
+			productReference = 5797A3F325E403A000991BD9 /* Reactions EquilibriumTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		571D6A34255A780700F4E635 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1210;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					57035EE1255BFE5200DB3A19 = {
@@ -1155,6 +1264,13 @@
 					};
 					571D6A3B255A780700F4E635 = {
 						CreatedOnToolsVersion = 12.1;
+					};
+					5797A3DD25E4039E00991BD9 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					5797A3F225E403A000991BD9 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 5797A3DD25E4039E00991BD9;
 					};
 				};
 			};
@@ -1176,6 +1292,8 @@
 			targets = (
 				571D6A3B255A780700F4E635 /* reactions-app */,
 				57035EE1255BFE5200DB3A19 /* reactions-appTests */,
+				5797A3DD25E4039E00991BD9 /* Reactions Equilibrium */,
+				5797A3F225E403A000991BD9 /* Reactions EquilibriumTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1197,6 +1315,23 @@
 				5711E00325C4840D00B28E45 /* GoogleService-Info.plist in Resources */,
 				571D6A49255A780900F4E635 /* Preview Assets.xcassets in Resources */,
 				571D6A46255A780900F4E635 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5797A3DC25E4039E00991BD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5797A3ED25E4039F00991BD9 /* LaunchScreen.storyboard in Resources */,
+				5797A3EA25E4039F00991BD9 /* Preview Assets.xcassets in Resources */,
+				5797A3E725E4039F00991BD9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5797A3F125E403A000991BD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1413,6 +1548,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5797A3DA25E4039E00991BD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5797A3E125E4039E00991BD9 /* AppDelegate.swift in Sources */,
+				5797A3E325E4039E00991BD9 /* SceneDelegate.swift in Sources */,
+				5797A3E525E4039E00991BD9 /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5797A3EF25E403A000991BD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5797A3F825E403A000991BD9 /* Reactions_EquilibriumTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1421,6 +1574,11 @@
 			target = 571D6A3B255A780700F4E635 /* reactions-app */;
 			targetProxy = 57035EE7255BFE5200DB3A19 /* PBXContainerItemProxy */;
 		};
+		5797A3F525E403A000991BD9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5797A3DD25E4039E00991BD9 /* Reactions Equilibrium */;
+			targetProxy = 5797A3F425E403A000991BD9 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1428,6 +1586,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				571D6A4B255A780900F4E635 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		5797A3EB25E4039F00991BD9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5797A3EC25E4039F00991BD9 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1645,6 +1811,94 @@
 			};
 			name = Release;
 		};
+		5797A40525E403A000991BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Reactions Equilibrium/Preview Content\"";
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Reactions Equilibrium/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.equilibrium.Reactions-Equilibrium";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5797A40625E403A000991BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Reactions Equilibrium/Preview Content\"";
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Reactions Equilibrium/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.equilibrium.Reactions-Equilibrium";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5797A40725E403A000991BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				INFOPLIST_FILE = "Reactions EquilibriumTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.equilibrium.Reactions-EquilibriumTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reactions Equilibrium.app/Reactions Equilibrium";
+			};
+			name = Debug;
+		};
+		5797A40825E403A000991BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				INFOPLIST_FILE = "Reactions EquilibriumTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.equilibrium.Reactions-EquilibriumTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reactions Equilibrium.app/Reactions Equilibrium";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1671,6 +1925,24 @@
 			buildConfigurations = (
 				571D6A51255A780900F4E635 /* Debug */,
 				571D6A52255A780900F4E635 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5797A40B25E403A000991BD9 /* Build configuration list for PBXNativeTarget "Reactions Equilibrium" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5797A40525E403A000991BD9 /* Debug */,
+				5797A40625E403A000991BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5797A40C25E403A000991BD9 /* Build configuration list for PBXNativeTarget "Reactions EquilibriumTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5797A40725E403A000991BD9 /* Debug */,
+				5797A40825E403A000991BD9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
