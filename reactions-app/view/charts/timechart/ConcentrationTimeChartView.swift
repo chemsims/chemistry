@@ -384,8 +384,6 @@ struct GeneralTimeChartView: View {
             settings: settings,
             concentrationA: concentrationA,
             concentrationB: concentrationB,
-            initialConcentration: initialConcentration,
-            finalConcentration: finalConcentration,
             initialTime: initialTime,
             currentTime: currentTime,
             finalTime: finalTime,

@@ -54,21 +54,21 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPhone SE
         RootNavigationView(
             model: RootNavigationViewModel(
-                injector: InMemoryInjector.shared
+                injector: InMemoryInjector()
             )
         ).previewLayout(.fixed(width: 568, height: 320))
 
         // iPad mini
         RootNavigationView(
             model: RootNavigationViewModel(
-                injector: InMemoryInjector.shared
+                injector: InMemoryInjector()
             )
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro 11
         RootNavigationView(
             model: RootNavigationViewModel(
-                injector: InMemoryInjector.shared
+                injector: InMemoryInjector()
             )
         ).previewLayout(.fixed(width: 1194, height: 834))
     }

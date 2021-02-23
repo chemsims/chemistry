@@ -448,8 +448,6 @@ private struct ReactionComparisonViewWithSettings: View {
                     settings: chartSettings,
                     concentrationA: concentrationA,
                     concentrationB: concentrationB,
-                    initialConcentration: 1,
-                    finalConcentration: 0,
                     initialTime: reaction.initialTime,
                     currentTime: currentTime,
                     finalTime: finalTime,

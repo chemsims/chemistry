@@ -11,9 +11,6 @@ struct ConcentrationPlotView: View {
     let concentrationA: Equation
     let concentrationB: Equation?
 
-    let initialConcentration: CGFloat
-    let finalConcentration: CGFloat
-
     let initialTime: CGFloat
     @Binding var currentTime: CGFloat
     let finalTime: CGFloat
@@ -31,8 +28,6 @@ struct ConcentrationPlotView: View {
         settings: TimeChartGeometrySettings,
         concentrationA: Equation,
         concentrationB: Equation?,
-        initialConcentration: CGFloat,
-        finalConcentration: CGFloat,
         initialTime: CGFloat,
         currentTime: Binding<CGFloat>,
         finalTime: CGFloat,
@@ -46,8 +41,6 @@ struct ConcentrationPlotView: View {
         self.settings = settings
         self.concentrationA = concentrationA
         self.concentrationB = concentrationB
-        self.initialConcentration = initialConcentration
-        self.finalConcentration = finalConcentration
         self.initialTime = initialTime
         self._currentTime = currentTime
         self.finalTime = finalTime
@@ -328,8 +321,6 @@ struct TimeChartPlotView_Previews: PreviewProvider {
             ),
             concentrationA: equation,
             concentrationB: equation2,
-            initialConcentration: 0.8,
-            finalConcentration: 0.2,
             initialTime: 0,
             currentTime: .constant(10),
             finalTime: 10,

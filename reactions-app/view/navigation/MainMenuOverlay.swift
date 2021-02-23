@@ -466,7 +466,7 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             topPadding: 10,
             menuHPadding: 10,
             navigation: RootNavigationViewModel(
-                injector: InMemoryInjector.shared
+                injector: InMemoryInjector()
             )
         ).previewLayout(.fixed(width: 1300, height: 600))
     }

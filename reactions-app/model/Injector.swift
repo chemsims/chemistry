@@ -29,8 +29,7 @@ class ProductionInjector: Injector {
 }
 
 class InMemoryInjector: Injector {
-    private init() { }
-    static let shared = InMemoryInjector()
+    init() { }
 
     let reactionPersistence: ReactionInputPersistence = InMemoryReactionInputPersistence()
 
