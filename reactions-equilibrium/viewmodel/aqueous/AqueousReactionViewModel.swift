@@ -17,6 +17,22 @@ class AqueousReactionViewModel: ObservableObject {
         CGFloat(moleculesA.count) / CGFloat((availableRows * availableCols))
     }
 
+    var equationA: Equation {
+        EquilibriumReactionEquation(t1: 0, c1: 0.8, t2: 15, c2: 1)
+    }
+
+    var equationB: Equation {
+        EquilibriumReactionEquation(t1: 0, c1: 0.6, t2: 15, c2: 0.3)
+    }
+
+    var equationC: Equation {
+        EquilibriumReactionEquation(t1: 0, c1: 0, t2: 15, c2: 0.4)
+    }
+
+    var equationD: Equation {
+        EquilibriumReactionEquation(t1: 0, c1: 0, t2: 15, c2: 0.5)
+    }
+
     func incrementAMolecules() {
         moleculesA = addingMolecules(to: moleculesA, avoiding: moleculesB)
     }

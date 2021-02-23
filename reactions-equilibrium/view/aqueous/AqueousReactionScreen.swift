@@ -32,8 +32,11 @@ private struct AqueousReactionScreenWithSettings: View {
                 Spacer()
                 beaker
             }
-            Text("Concentration is \(model.concentrationA.str(decimals: 3))")
+
             Spacer()
+            charts
+            Spacer()
+
             BeakyBox(
                 statement: [],
                 next: {},
@@ -98,6 +101,34 @@ private struct AqueousReactionScreenWithSettings: View {
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
         }
     }
+
+    private var charts: some View {
+        TimeChartMultiDataLineView(
+            data: [
+                data(equation: model.equationA, color: .from(.aqMoleculeA)),
+                data(equation: model.equationB, color: .from(.aqMoleculeB)),
+                data(equation: model.equationC, color: .from(.aqMoleculeC)),
+                data(equation: model.equationD, color: .from(.aqMoleculeD)),
+            ],
+            settings: settings.chartSettings.layout,
+            initialTime: 0,
+            currentTime: .constant(5),
+            finalTime: 20,
+            filledBarColor: .black,
+            canSetCurrentTime: false
+        )
+        .frame(width: settings.chartSettings.size, height: settings.chartSettings.size)
+        .border(Color.black)
+    }
+
+    private func data(equation: Equation, color: Color) -> TimeChartDataline {
+        TimeChartDataline(
+            equation: equation,
+            headColor: color,
+            haloColor: color.opacity(0.3),
+            headRadius: settings.chartSettings.headRadius
+        )
+    }
 }
 
 struct AqueousScreenLayoutSettings {
@@ -120,6 +151,10 @@ struct AqueousScreenLayoutSettings {
 
     var sliderSettings: SliderGeometrySettings {
         SliderGeometrySettings(handleWidth: 0.13 * beakerWidth)
+    }
+
+    var chartSettings: ReactionEquilibriumChartsLayoutSettings {
+        ReactionEquilibriumChartsLayoutSettings(size: 0.2 * width)
     }
 }
 
@@ -150,6 +185,33 @@ extension AqueousScreenLayoutSettings {
             maxValuePosition: posForRows(maxRow),
             minValue: minRow,
             maxValue: maxRow
+        )
+    }
+}
+
+struct ReactionEquilibriumChartsLayoutSettings {
+    let size: CGFloat
+
+    var headRadius: CGFloat {
+        0.018 * size
+    }
+
+    var layout: TimeChartLayoutSettings {
+        TimeChartLayoutSettings(
+            xAxis: AxisPositionCalculations<CGFloat>(
+                minValuePosition: 0,
+                maxValuePosition: size,
+                minValue: 0,
+                maxValue: 20
+            ),
+            yAxis: AxisPositionCalculations<CGFloat>(
+                minValuePosition: size,
+                maxValuePosition: 0.2 * size,
+                minValue: 0,
+                maxValue: 1
+            ),
+            haloRadius: 2 * headRadius,
+            lineWidth: 0.4 * headRadius
         )
     }
 }

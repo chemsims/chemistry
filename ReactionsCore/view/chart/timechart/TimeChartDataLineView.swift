@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct TimeChartMultiDataLineView: View {
+public struct TimeChartMultiDataLineView: View {
 
     let data: [TimeChartDataline]
     let settings: TimeChartLayoutSettings
@@ -20,7 +20,29 @@ struct TimeChartMultiDataLineView: View {
     let highlightLhs: Bool
     let highlightRhs: Bool
 
-    var body: some View {
+    public init(
+        data: [TimeChartDataline],
+        settings: TimeChartLayoutSettings,
+        initialTime: CGFloat,
+        currentTime: Binding<CGFloat>,
+        finalTime: CGFloat,
+        filledBarColor: Color,
+        canSetCurrentTime: Bool,
+        highlightLhs: Bool = false,
+        highlightRhs: Bool = false
+    ) {
+        self.data = data
+        self.settings = settings
+        self.initialTime = initialTime
+        self._currentTime = currentTime
+        self.finalTime = finalTime
+        self.filledBarColor = filledBarColor
+        self.canSetCurrentTime = canSetCurrentTime
+        self.highlightLhs = highlightLhs
+        self.highlightRhs = highlightRhs
+    }
+
+    public var body: some View {
         ZStack {
             ForEach(0..<data.count, id: \.self) { i in
                 TimeChartDataLineView(
@@ -245,8 +267,7 @@ struct TimeChartDataLineView_Previews: PreviewProvider {
             equation: equation,
             headColor: color,
             haloColor: color.opacity(0.3),
-            headRadius: 6,
-            haloSize: 15
+            headRadius: 6
         )
     }
 }
