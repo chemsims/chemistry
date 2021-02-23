@@ -11,17 +11,27 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows)
 
     @Published var moleculesA = [GridCoordinate]()
+    @Published var moleculesB = [GridCoordinate]()
 
     var concentrationA: CGFloat {
         CGFloat(moleculesA.count) / CGFloat((availableRows * availableCols))
     }
 
     func incrementAMolecules() {
-        moleculesA = GridCoordinateList.addingRandomElementsTo(
-            grid: moleculesA,
+        moleculesA = addingMolecules(to: moleculesA, avoiding: moleculesB)
+    }
+
+    func incrementBMolecules() {
+        moleculesB = addingMolecules(to: moleculesB, avoiding: moleculesA)
+    }
+
+    private func addingMolecules(to molecules: [GridCoordinate], avoiding: [GridCoordinate]) -> [GridCoordinate] {
+        GridCoordinateList.addingRandomElementsTo(
+            grid: molecules,
             count: AqueousReactionSettings.moleculesToIncrement,
             cols: availableCols,
-            rows: availableRows
+            rows: availableRows,
+            avoiding: avoiding
         )
     }
 

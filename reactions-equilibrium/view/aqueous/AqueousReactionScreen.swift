@@ -61,7 +61,11 @@ private struct AqueousReactionScreenWithSettings: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: settings.moleculeWidth)
                         .onTapGesture {
-                            model.incrementAMolecules()
+                            if molecule == .A {
+                                model.incrementAMolecules()
+                            } else {
+                                model.incrementBMolecules()
+                            }
                         }
 
                 }
@@ -81,10 +85,14 @@ private struct AqueousReactionScreenWithSettings: View {
             .frame(width: settings.sliderSettings.handleWidth, height: settings.sliderHeight)
 
             FilledBeaker(
-                moleculesA: model.moleculesA,
-                concentrationB: nil,
-                currentTime: nil,
-                reactionPair: ReactionType.A.display,
+                molecules: [
+                    BeakerMolecules(
+                        coords: model.moleculesA, color: .from(.moleculeA)
+                    ),
+                    BeakerMolecules(
+                        coords: model.moleculesB, color: .from(.moleculeB)
+                    )
+                ],
                 rows: model.rows
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)

@@ -66,4 +66,35 @@ class GridCoordinateListTests: XCTestCase {
         }
     }
 
+    func testAddingAnElementToAGridWhileAvoidingAnotherGrid() {
+        let result = GridCoordinateList.addingRandomElementsTo(
+            grid: [],
+            count: 1,
+            cols: 2,
+            rows: 1,
+            avoiding: [GridCoordinate(col: 0, row: 0)]
+        )
+        XCTAssertEqual(result, [GridCoordinate(col: 1, row: 0)])
+    }
+
+    func testTheFunctionReturningWhenThereAreTooManyElementsInAvoidingAndGrid() {
+        let grid = [GridCoordinate(col: 0, row: 0)]
+        let avoiding = [GridCoordinate(col: 1, row: 0)]
+        let result = GridCoordinateList.addingRandomElementsTo(
+            grid: grid,
+            count: 1,
+            cols: 2,
+            rows: 1,
+            avoiding: avoiding
+        )
+        XCTAssertEqual(result, grid)
+    }
+
+    /// Since new elements are generated randomly, all tests are run multiple times to avoid flaky tests
+    override func invokeTest() {
+        (0...5).forEach { _ in
+            super.invokeTest()
+        }
+    }
+
 }

@@ -6,7 +6,7 @@ import SwiftUI
 
 public struct FilledBeaker: View {
 
-    let moleculesA: [GridCoordinate]
+    let molecules: [BeakerMolecules]
     let concentrationB: Equation?
     let currentTime: CGFloat?
     let reactionPair: ReactionPairDisplay
@@ -21,11 +21,28 @@ public struct FilledBeaker: View {
         outlineColor: Color = Styling.beakerOutline,
         rows: CGFloat = CGFloat(MoleculeGridSettings.rows)
     ) {
-        self.moleculesA = moleculesA
+        self.molecules = [
+            BeakerMolecules(
+                coords: moleculesA,
+                color: reactionPair.reactant.color
+            )
+        ]
         self.concentrationB = concentrationB
         self.currentTime = currentTime
         self.reactionPair = reactionPair
         self.outlineColor = outlineColor
+        self.rows = rows
+    }
+
+    public init(
+        molecules: [BeakerMolecules],
+        rows: CGFloat = CGFloat(MoleculeGridSettings.rows)
+    ) {
+        self.molecules = molecules
+        self.concentrationB = nil
+        self.currentTime = nil
+        self.reactionPair = ReactionType.A.display
+        self.outlineColor = Styling.beakerOutline
         self.rows = rows
     }
 
@@ -41,10 +58,10 @@ public struct FilledBeaker: View {
                 "Beaker showing a grid of molecules of \(reactant) and \(product) in liquid"
             )
         )
-        .updatingAccessibilityValue(
-            x: currentTime ?? 0,
-            format: valueForTime
-        )
+//        .updatingAccessibilityValue(
+//            x: currentTime ?? 0,
+//            format: valueForTime
+//        )
     }
 
     private var reactant: String {
@@ -55,13 +72,13 @@ public struct FilledBeaker: View {
         reactionPair.product.name
     }
 
-    private func valueForTime(_ time: CGFloat) -> String {
-        let total = moleculesA.count
-        let bFraction = concentrationB?.getY(at: time) ?? 0
-        let countOfB = Int(CGFloat(total) * bFraction)
-        let countOfA = total - countOfB
-        return "\(countOfA) \(reactant) molecules, \(countOfB) \(product) molecules"
-    }
+//    private func valueForTime(_ time: CGFloat) -> String {
+//        let total = moleculesA.count
+//        let bFraction = concentrationB?.getY(at: time) ?? 0
+//        let countOfB = Int(CGFloat(total) * bFraction)
+//        let countOfA = total - countOfB
+//        return "\(countOfA) \(reactant) molecules, \(countOfB) \(product) molecules"
+//    }
 
     private func makeView(using settings: BeakerSettings) -> some View {
         ZStack(alignment: .bottom) {
@@ -116,16 +133,32 @@ public struct FilledBeaker: View {
                 coordinates: MoleculeGridSettings.grid(rows: Int(ceil(rows)))
             )
 
+            ForEach(0..<molecules.count, id: \.self) { i in
+                fillMolecule(
+                    molecule: molecules[i],
+                    settings: settings,
+                    beaker: beaker
+                )
+            }
+        }
+    }
+
+    private func fillMolecule(
+        molecule: BeakerMolecules,
+        settings: MoleculeGridSettings,
+        beaker: BeakerSettings
+    ) -> some View {
+        ZStack {
             moleculeGrid(
                 settings,
-                color: reactionPair.reactant.color,
-                coordinates: moleculesA
+                color: molecule.color,
+                coordinates: molecule.coords
             )
 
             if currentTime != nil && concentrationB != nil {
                 AnimatingMoleculeGrid(
                     settings: settings,
-                    coords: moleculesA,
+                    coords: molecule.coords,
                     color: reactionPair.product.color,
                     fractionOfCoordsToDraw: concentrationB!,
                     currentTime: currentTime!
@@ -159,6 +192,28 @@ struct FilledBeaker_Previews: PreviewProvider {
             concentrationB: ConstantEquation(value: 0),
             currentTime: 0,
             reactionPair: ReactionType.A.display
+        )
+
+        FilledBeaker(
+            molecules: [
+                BeakerMolecules(
+                    coords: [
+                        GridCoordinate(col: 0, row: 0),
+                        GridCoordinate(col: 1, row: 1),
+                        GridCoordinate(col: 2, row: 2)
+                    ],
+                    color: .orangeAccent
+                ),
+                BeakerMolecules(
+                    coords: [
+                        GridCoordinate(col: 0, row: 1),
+                        GridCoordinate(col: 1, row: 2),
+                        GridCoordinate(col: 2, row: 3)
+                    ],
+                    color: .black
+                )
+            ],
+            rows: 10
         )
     }
 }

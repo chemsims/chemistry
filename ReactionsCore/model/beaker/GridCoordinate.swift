@@ -5,7 +5,7 @@
 import Foundation
 
 /// Represents a position in a grid
-public struct GridCoordinate: Identifiable, Equatable {
+public struct GridCoordinate: Identifiable, Equatable, Hashable {
 
     /// Column index - starts at zero
     public let col: Int
@@ -29,16 +29,18 @@ public struct GridCoordinateList {
         grid: [GridCoordinate],
         count: Int,
         cols: Int,
-        rows: Int
+        rows: Int,
+        avoiding: [GridCoordinate] = []
     ) -> [GridCoordinate] {
+
         var builder = grid
 
         func add(_ remaining: Int) {
-            if (remaining == 0 || builder.count >= (cols * rows)) {
+            if (remaining == 0 || Set(builder + avoiding).count >= (cols * rows)) {
                 return
             }
             let coord = GridCoordinate.random(maxCol: cols - 1, maxRow: rows - 1)
-            if builder.contains(coord) {
+            if builder.contains(coord) || avoiding.contains(coord) {
                 add(remaining)
             } else {
                 builder.append(coord)
