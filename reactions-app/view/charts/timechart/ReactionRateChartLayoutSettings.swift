@@ -5,7 +5,7 @@
 import CoreGraphics
 import ReactionsCore
 
-struct TimeChartGeometrySettings {
+struct ReactionRateChartLayoutSettings {
     let chartSize: CGFloat
 
     init(
@@ -41,7 +41,7 @@ struct TimeChartGeometrySettings {
         0.24 * chartSize
     }
     var sliderHandleWidth: CGFloat {
-        TimeChartGeometrySettings.sliderHandleWidthFactor * chartSize
+        ReactionRateChartLayoutSettings.sliderHandleWidthFactor * chartSize
     }
     var sliderHandleThickness: CGFloat {
         0.16 * chartSize
@@ -50,10 +50,10 @@ struct TimeChartGeometrySettings {
         0.28 * chartSize
     }
     var yLabelWidth: CGFloat {
-        TimeChartGeometrySettings.yLabelWidthFactor * chartSize
+        ReactionRateChartLayoutSettings.yLabelWidthFactor * chartSize
     }
     var xLabelHeight: CGFloat {
-        TimeChartGeometrySettings.xLabelHeightFactor * chartSize
+        ReactionRateChartLayoutSettings.xLabelHeightFactor * chartSize
     }
     var handleThickness: CGFloat {
         0.08 * chartSize
@@ -87,7 +87,7 @@ struct TimeChartGeometrySettings {
     }
 
     var chartHStackSpacing: CGFloat {
-        TimeChartGeometrySettings.chartHStackFactor * chartSize
+        ReactionRateChartLayoutSettings.chartHStackFactor * chartSize
     }
     var chartVStackSpacing: CGFloat {
         chartHStackSpacing

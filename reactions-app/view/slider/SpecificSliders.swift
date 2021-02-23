@@ -14,7 +14,7 @@ struct ConcentrationValueSlider: View {
     let c2Limits: InputLimits
 
     let reactant: String
-    let settings: TimeChartGeometrySettings
+    let settings: ReactionRateChartLayoutSettings
 
     var body: some View {
         DualValueSlider(
@@ -48,7 +48,7 @@ struct TimeValueSlider: View {
     let t2Limits: InputLimits
 
     /// Layout settings
-    let settings: TimeChartGeometrySettings
+    let settings: ReactionRateChartLayoutSettings
 
     var body: some View {
         DualValueSlider(

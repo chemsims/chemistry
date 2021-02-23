@@ -53,7 +53,7 @@ struct FirstOrderReactionScreen: View {
             initialTime: reaction.input.inputT1,
             finalConcentration: reaction.input.inputC2,
             finalTime: reaction.input.inputT2,
-            settings: TimeChartGeometrySettings(
+            settings: ReactionRateChartLayoutSettings(
                 chartSize: settings.chartSize,
                 minConcentration: ReactionSettings.Axis.minLogC,
                 maxConcentration: ReactionSettings.Axis.maxLogC

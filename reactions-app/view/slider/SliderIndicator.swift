@@ -9,7 +9,7 @@ struct SliderIndicator: View {
     let value1: CGFloat
     let value2: CGFloat?
     let showInitialValue: Bool
-    let settings: TimeChartGeometrySettings
+    let settings: ReactionRateChartLayoutSettings
     let axis: AxisPositionCalculations<CGFloat>
     let orientation: Orientation
 

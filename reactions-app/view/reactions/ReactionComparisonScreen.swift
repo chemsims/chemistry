@@ -152,8 +152,8 @@ private struct ReactionComparisonViewWithSettings: View {
 
         func chartSettings(
             time: CGFloat
-        ) -> TimeChartGeometrySettings {
-            TimeChartGeometrySettings(
+        ) -> ReactionRateChartLayoutSettings {
+            ReactionRateChartLayoutSettings(
                 chartSize: settings.chartSize,
                 minConcentration: 0,
                 maxConcentration: 1,
@@ -370,7 +370,7 @@ private struct ReactionComparisonViewWithSettings: View {
     }
 
     private func labelledChart(
-        chartSettings: TimeChartGeometrySettings,
+        chartSettings: ReactionRateChartLayoutSettings,
         concentrationA: Equation,
         concentrationB: Equation,
         order: ReactionOrder,
@@ -423,7 +423,7 @@ private struct ReactionComparisonViewWithSettings: View {
     }
 
     private func chart(
-        chartSettings: TimeChartGeometrySettings,
+        chartSettings: ReactionRateChartLayoutSettings,
         concentrationA: Equation,
         concentrationB: Equation,
         order: ReactionOrder,

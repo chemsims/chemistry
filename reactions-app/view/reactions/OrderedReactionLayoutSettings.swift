@@ -39,8 +39,8 @@ struct OrderedReactionLayoutSettings {
     var chartHPadding: CGFloat {
         OrderedReactionLayoutSettings.chartHPaddingFactor * chartSize
     }
-    var chartSettings: TimeChartGeometrySettings {
-        TimeChartGeometrySettings(chartSize: chartSize)
+    var chartSettings: ReactionRateChartLayoutSettings {
+        ReactionRateChartLayoutSettings(chartSize: chartSize)
     }
     var secondaryChartPadding: CGFloat {
         0.1 * chartSize
@@ -202,12 +202,12 @@ private struct TopStackLayoutUtil {
 
     private var chartMaxWidth: CGFloat {
         let totalWidthForBothCharts = totalWidth / 2
-        let wFactor = (TimeChartGeometrySettings.totalWidthFactor + 1) + (4 * OrderedReactionLayoutSettings.chartHPaddingFactor)
+        let wFactor = (ReactionRateChartLayoutSettings.totalWidthFactor + 1) + (4 * OrderedReactionLayoutSettings.chartHPaddingFactor)
         return totalWidthForBothCharts / wFactor
     }
 
     private var maxChartSizeForHeight: CGFloat {
-        let chartToWidth = TimeChartGeometrySettings.totalHeightFactor
+        let chartToWidth = ReactionRateChartLayoutSettings.totalHeightFactor
         return (totalHeight / chartToWidth)
     }
 

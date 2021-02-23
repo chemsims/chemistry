@@ -215,6 +215,8 @@
 		57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD0825E5608700B535A7 /* BeakerMolecules.swift */; };
 		57DDAD1D25E5700400B535A7 /* QuadraticEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD0F25E567C300B535A7 /* QuadraticEquation.swift */; };
 		57DDAD2425E5706A00B535A7 /* MultiConcentrationPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD2325E5706A00B535A7 /* MultiConcentrationPlot.swift */; };
+		57DDAD2E25E576C000B535A7 /* ChartPlotWithHead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD2D25E576C000B535A7 /* ChartPlotWithHead.swift */; };
+		57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */; };
 		57DE4DA125A502BF00644790 /* QuizIntroBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA025A502BF00644790 /* QuizIntroBody.swift */; };
 		57DE4DA525A502EE00644790 /* QuizQuestionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA425A502EE00644790 /* QuizQuestionBody.swift */; };
 		57DE4DA925A5031800644790 /* QuizReviewBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA825A5031800644790 /* QuizReviewBody.swift */; };
@@ -236,7 +238,7 @@
 		57F56220258D4F64008B2602 /* CatalystState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5621F258D4F64008B2602 /* CatalystState.swift */; };
 		57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */; };
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
-		57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */; };
+		57FDA141255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */; };
 		57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -526,6 +528,8 @@
 		57DDAD0825E5608700B535A7 /* BeakerMolecules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerMolecules.swift; sourceTree = "<group>"; };
 		57DDAD0F25E567C300B535A7 /* QuadraticEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadraticEquation.swift; sourceTree = "<group>"; };
 		57DDAD2325E5706A00B535A7 /* MultiConcentrationPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiConcentrationPlot.swift; sourceTree = "<group>"; };
+		57DDAD2D25E576C000B535A7 /* ChartPlotWithHead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPlotWithHead.swift; sourceTree = "<group>"; };
+		57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartLayoutSettings.swift; sourceTree = "<group>"; };
 		57DE4DA025A502BF00644790 /* QuizIntroBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizIntroBody.swift; sourceTree = "<group>"; };
 		57DE4DA425A502EE00644790 /* QuizQuestionBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionBody.swift; sourceTree = "<group>"; };
 		57DE4DA825A5031800644790 /* QuizReviewBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizReviewBody.swift; sourceTree = "<group>"; };
@@ -552,7 +556,7 @@
 		57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationPlaceholderView.swift; sourceTree = "<group>"; };
 		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
-		57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartGeometrySettings.swift; sourceTree = "<group>"; };
+		57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionRateChartLayoutSettings.swift; sourceTree = "<group>"; };
 		57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = speechBubbleLineGeneratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -675,6 +679,7 @@
 				570E4EFF256D10B8001EADCB /* energy-profile */,
 				572CB93C255C36BA0071C600 /* barchart */,
 				572CB93B255C36B00071C600 /* timechart */,
+				57DDAD2D25E576C000B535A7 /* ChartPlotWithHead.swift */,
 			);
 			path = charts;
 			sourceTree = "<group>";
@@ -910,7 +915,7 @@
 			children = (
 				57976928255EBFE300CD7FD3 /* shapes */,
 				57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */,
-				57FDA140255D81A200CB8804 /* TimeChartGeometrySettings.swift */,
+				57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */,
 				57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */,
 			);
 			path = timechart;
@@ -1044,6 +1049,7 @@
 			children = (
 				575A885E25E435F600AEE448 /* BeakyGeometrySettings.swift */,
 				57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */,
+				57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */,
 			);
 			path = "layout-settings";
 			sourceTree = "<group>";
@@ -1877,6 +1883,7 @@
 				5773B5F025B84E4100889A2E /* FeedbackSettings.swift in Sources */,
 				57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */,
 				5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */,
+				57DDAD2E25E576C000B535A7 /* ChartPlotWithHead.swift in Sources */,
 				571B3C5A256555C40075358B /* NavigationViewModel.swift in Sources */,
 				57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */,
 				573F16922584ACEC001CE039 /* QuizViewModel.swift in Sources */,
@@ -1885,7 +1892,7 @@
 				57E7FF72258289B200A30582 /* MenuButton.swift in Sources */,
 				57631768259B68EC00D7CE2C /* QuizTableView.swift in Sources */,
 				57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */,
-				57FDA141255D81A200CB8804 /* TimeChartGeometrySettings.swift in Sources */,
+				57FDA141255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift in Sources */,
 				57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */,
 				57A119B025B86B9800A7810B /* EnergyProfilePersistence.swift in Sources */,
 				57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */,
@@ -1983,6 +1990,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */,
 				575A886625E435FB00AEE448 /* Beaky.swift in Sources */,
 				5797A4AA25E40A5400991BD9 /* MoleculeGridSettings.swift in Sources */,
 				575A881D25E4310E00AEE448 /* QuizState.swift in Sources */,

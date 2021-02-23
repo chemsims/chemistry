@@ -18,7 +18,7 @@ struct DualValueSlider: View {
 
     let axis: AxisPositionCalculations<CGFloat>
     let orientation: Orientation
-    let settings: TimeChartGeometrySettings
+    let settings: ReactionRateChartLayoutSettings
     let canSetInitialValue: Bool
 
     let value1Disabled: Bool

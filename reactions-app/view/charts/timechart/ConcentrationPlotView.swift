@@ -7,7 +7,7 @@ import ReactionsCore
 
 struct ConcentrationPlotView: View {
 
-    let settings: TimeChartGeometrySettings
+    let settings: ReactionRateChartLayoutSettings
     let concentrationA: Equation
     let concentrationB: Equation?
 
@@ -25,7 +25,7 @@ struct ConcentrationPlotView: View {
     let display: ReactionPairDisplay
 
     init(
-        settings: TimeChartGeometrySettings,
+        settings: ReactionRateChartLayoutSettings,
         concentrationA: Equation,
         concentrationB: Equation?,
         initialTime: CGFloat,
@@ -85,15 +85,18 @@ struct ConcentrationPlotView: View {
 
             if concentrationB != nil {
                 ChartPlotWithHead(
-                    settings: settings,
-                    equation: concentrationB!,
+                    data: TimeChartDataline(
+                        equation: concentrationB!,
+                        headColor: display.product.color,
+                        haloColor: nil,
+                        headRadius: settings.chartHeadSecondarySize,
+                        haloSize: 0
+                    ),
+                    settings: settings.timeChartLayoutSettings,
                     initialTime: initialTime,
                     currentTime: .constant(currentTime),
                     finalTime: finalTime,
                     filledBarColor: Styling.timeAxisCompleteBar,
-                    headColor: display.product.color,
-                    headRadius: settings.chartHeadSecondarySize,
-                    haloColor: nil,
                     canSetCurrentTime: canSetCurrentTime,
                     highlightLhs: false,
                     highlightRhs: false
@@ -101,15 +104,18 @@ struct ConcentrationPlotView: View {
             }
 
             ChartPlotWithHead(
-                settings: settings,
-                equation: concentrationA,
+                data: TimeChartDataline(
+                    equation: concentrationA,
+                    headColor: display.reactant.color,
+                    haloColor: display.reactant.color.opacity(0.3),
+                    headRadius: settings.chartHeadPrimarySize,
+                    haloSize: settings.chartHeadPrimaryHaloSize
+                ),
+                settings: settings.timeChartLayoutSettings,
                 initialTime: initialTime,
                 currentTime: $currentTime,
                 finalTime: finalTime,
                 filledBarColor: Styling.timeAxisCompleteBar,
-                headColor: display.reactant.color,
-                headRadius: settings.chartHeadPrimarySize,
-                haloColor: display.reactant.color.opacity(0.3),
                 canSetCurrentTime: canSetCurrentTime,
                 highlightLhs: highlightLhsCurve,
                 highlightRhs: highlightRhsCurve
@@ -206,117 +212,10 @@ struct ConcentrationPlotView: View {
 
 }
 
-struct ChartPlotWithHead: View {
-
-    let settings: TimeChartGeometrySettings
-    let equation: Equation
-    let initialTime: CGFloat
-    @Binding var currentTime: CGFloat
-    let finalTime: CGFloat
-
-    let filledBarColor: Color
-    let headColor: Color
-    let headRadius: CGFloat
-    let haloColor: Color?
-    let canSetCurrentTime: Bool
-
-    let highlightLhs: Bool
-    let highlightRhs: Bool
-
-    var body: some View {
-        ZStack {
-            dataLine(time: finalTime, color: filledBarColor)
-            dataLine(time: currentTime, color: headColor)
-            if highlightLhs {
-                highlightLine(startTime: initialTime, endTime: (initialTime + finalTime) / 2)
-            }
-            if highlightRhs {
-                highlightLine(startTime: (initialTime + finalTime) / 2, endTime: finalTime)
-            }
-
-            if haloColor != nil {
-                head(
-                    radius: settings.chartHeadPrimaryHaloSize,
-                    color: haloColor!
-                )
-                .contentShape(Rectangle())
-                .gesture(DragGesture(minimumDistance: 0).onChanged { gesture in
-                    guard canSetCurrentTime else {
-                        return
-                    }
-                    let xLocation = gesture.location.x
-                    let newTime = settings.xAxis.getValue(at: xLocation)
-                    currentTime = max(initialTime, min(finalTime, newTime))
-                })
-            }
-            head(
-                radius: headRadius,
-                color: headColor
-            )
-        }
-    }
-
-    private func head(
-        radius: CGFloat,
-        color: Color
-    ) -> some View {
-        ChartIndicatorHead(
-            radius: radius,
-            equation: equation,
-            yAxis: settings.yAxis,
-            xAxis: settings.xAxis,
-            x: currentTime
-        )
-        .fill()
-        .foregroundColor(color)
-    }
-
-    private func dataLine(
-        time: CGFloat,
-        color: Color
-    ) -> some View {
-        line(
-            startTime: initialTime,
-            time: time,
-            color: color,
-            lineWidth: settings.timePlotLineWidth
-        )
-    }
-
-    private func highlightLine(
-        startTime: CGFloat,
-        endTime: CGFloat
-    ) -> some View {
-        line(
-            startTime: startTime,
-            time: endTime,
-            color: headColor,
-            lineWidth: 2.5 * settings.timePlotLineWidth
-        )
-    }
-
-    private func line(
-        startTime: CGFloat,
-        time: CGFloat,
-        color: Color,
-        lineWidth: CGFloat
-    ) -> some View {
-        ChartLine(
-            equation: equation,
-            yAxis: settings.yAxis,
-            xAxis: settings.xAxis,
-            startX: startTime,
-            endX: time
-        )
-        .stroke(lineWidth: lineWidth)
-        .foregroundColor(color)
-    }
-}
-
 struct TimeChartPlotView_Previews: PreviewProvider {
     static var previews: some View {
         ConcentrationPlotView(
-            settings: TimeChartGeometrySettings(
+            settings: ReactionRateChartLayoutSettings(
                 chartSize: 300
             ),
             concentrationA: equation,

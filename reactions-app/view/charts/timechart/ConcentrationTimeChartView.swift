@@ -12,7 +12,7 @@ struct ConcentrationTimeChartView: View {
     @Binding var finalConcentration: CGFloat?
     @Binding var finalTime: CGFloat?
 
-    let settings: TimeChartGeometrySettings
+    let settings: ReactionRateChartLayoutSettings
     let concentrationA: Equation?
     let concentrationB: Equation?
     @Binding var currentTime: CGFloat?
@@ -105,7 +105,7 @@ struct SingleConcentrationPlot: View {
     let initialTime: CGFloat
     let finalConcentration: CGFloat?
     let finalTime: CGFloat?
-    let settings: TimeChartGeometrySettings
+    let settings: ReactionRateChartLayoutSettings
     let concentrationA: Equation?
     @Binding var currentTime: CGFloat?
     let yLabel: String
@@ -162,7 +162,7 @@ struct GeneralTimeChartView: View {
     @Binding var finalConcentration: CGFloat?
     @Binding var finalTime: CGFloat?
 
-    let settings: TimeChartGeometrySettings
+    let settings: ReactionRateChartLayoutSettings
     let concentrationA: Equation?
     let concentrationB: Equation?
     @Binding var currentTime: CGFloat?
@@ -493,7 +493,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
             initialTime: .constant(1),
             finalConcentration: .constant(nil),
             finalTime: .constant(nil),
-            settings: TimeChartGeometrySettings(
+            settings: ReactionRateChartLayoutSettings(
                 chartSize: 300
             ),
             concentrationA: ConstantEquation(value: 1),
@@ -517,7 +517,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                 initialTime: 1,
                 finalConcentration: 1,
                 finalTime: 1,
-                settings: TimeChartGeometrySettings(
+                settings: ReactionRateChartLayoutSettings(
                     chartSize: 300
                 ),
                 concentrationA: ConstantEquation(value: 1),
@@ -546,7 +546,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     initialTime: $t1,
                     finalConcentration: .constant(nil),
                     finalTime: .constant(nil),
-                    settings: TimeChartGeometrySettings(
+                    settings: ReactionRateChartLayoutSettings(
                         chartSize: 300
                     ),
                     concentrationA: equation,
@@ -569,7 +569,7 @@ struct TimeChartAxisView_Previews: PreviewProvider {
                     initialTime: $t1,
                     finalConcentration: $c2,
                     finalTime: $t2,
-                    settings: TimeChartGeometrySettings(
+                    settings: ReactionRateChartLayoutSettings(
                         chartSize: 300
                     ),
                     concentrationA: equation,

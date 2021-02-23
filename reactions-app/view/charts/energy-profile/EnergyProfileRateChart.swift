@@ -118,10 +118,10 @@ struct EnergyRateChartSettings {
     let chartSize: CGFloat
     init(chartSize: CGFloat) {
         self.chartSize = chartSize
-        self.timeChartSettings = TimeChartGeometrySettings(chartSize: chartSize)
+        self.timeChartSettings = ReactionRateChartLayoutSettings(chartSize: chartSize)
     }
 
-    private let timeChartSettings: TimeChartGeometrySettings
+    private let timeChartSettings: ReactionRateChartLayoutSettings
 
     var verticalTicks: Int {
         timeChartSettings.verticalTicks
