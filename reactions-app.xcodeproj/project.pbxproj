@@ -149,7 +149,6 @@
 		5797A4D325E40A8E00991BD9 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A6E255AB25400F4E635 /* Styling.swift */; };
 		5797A4DB25E40AD400991BD9 /* ReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727487325A61BDD000CFA1E /* ReactionType.swift */; };
 		5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */; };
-		5797A51725E41C1400991BD9 /* LiquidAdjustableBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A51625E41C1400991BD9 /* LiquidAdjustableBeaker.swift */; };
 		5797A53E25E41E0100991BD9 /* AxisPositionCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EDB255BFDB400DB3A19 /* AxisPositionCalculations.swift */; };
 		5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
 		5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
@@ -202,6 +201,9 @@
 		57DD22A725B7721C003E6842 /* ReactionInputLimitsWithoutT2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DD22A625B7721C003E6842 /* ReactionInputLimitsWithoutT2Tests.swift */; };
 		57DD22AD25B780DC003E6842 /* EnergyProfileNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DD22AC25B780DC003E6842 /* EnergyProfileNavigationTests.swift */; };
 		57DDAC1A25E4FD8100B535A7 /* AqueousReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC1925E4FD8100B535A7 /* AqueousReactionScreen.swift */; };
+		57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */; };
+		57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */; };
+		57DDAC7E25E5260400B535A7 /* AqueousReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC7D25E5260400B535A7 /* AqueousReactionSettings.swift */; };
 		57DE4DA125A502BF00644790 /* QuizIntroBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA025A502BF00644790 /* QuizIntroBody.swift */; };
 		57DE4DA525A502EE00644790 /* QuizQuestionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA425A502EE00644790 /* QuizQuestionBody.swift */; };
 		57DE4DA925A5031800644790 /* QuizReviewBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA825A5031800644790 /* QuizReviewBody.swift */; };
@@ -235,26 +237,12 @@
 			remoteGlobalIDString = 571D6A3B255A780700F4E635;
 			remoteInfo = "reactions-app";
 		};
-		575A888C25E4381400AEE448 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5797A44025E4069F00991BD9;
-			remoteInfo = ReactionsCore;
-		};
 		575A88C925E43CD700AEE448 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 575A88B225E43CD500AEE448;
 			remoteInfo = "reactions-equilibrium";
-		};
-		5797A3F425E403A000991BD9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5797A3DD25E4039E00991BD9;
-			remoteInfo = "Reactions Equilibrium";
 		};
 		5797A44B25E4069F00991BD9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -264,6 +252,13 @@
 			remoteInfo = ReactionsCore;
 		};
 		5797A4F025E40C6A00991BD9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5797A44025E4069F00991BD9;
+			remoteInfo = ReactionsCore;
+		};
+		57DDAC6625E51BF600B535A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
 			proxyType = 1;
@@ -418,15 +413,12 @@
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		5797567E25C1C5CB005C484E /* LabelledImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelledImage.swift; sourceTree = "<group>"; };
-		5797A3DE25E4039E00991BD9 /* Reactions Equilibrium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reactions Equilibrium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5797A3F325E403A000991BD9 /* Reactions EquilibriumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Reactions EquilibriumTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797A44125E4069F00991BD9 /* ReactionsCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactionsCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797A44325E4069F00991BD9 /* ReactionsCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactionsCore.h; sourceTree = "<group>"; };
 		5797A44425E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5797A44925E4069F00991BD9 /* ReactionsCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactionsCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797A44E25E4069F00991BD9 /* ReactionsCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsCoreTests.swift; sourceTree = "<group>"; };
 		5797A45025E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5797A51625E41C1400991BD9 /* LiquidAdjustableBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidAdjustableBeaker.swift; sourceTree = "<group>"; };
 		57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingScreen.swift; sourceTree = "<group>"; };
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
 		57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistence.swift; sourceTree = "<group>"; };
@@ -475,6 +467,9 @@
 		57DD22A625B7721C003E6842 /* ReactionInputLimitsWithoutT2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputLimitsWithoutT2Tests.swift; sourceTree = "<group>"; };
 		57DD22AC25B780DC003E6842 /* EnergyProfileNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileNavigationTests.swift; sourceTree = "<group>"; };
 		57DDAC1925E4FD8100B535A7 /* AqueousReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionScreen.swift; sourceTree = "<group>"; };
+		57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewLayoutExtensions.swift; sourceTree = "<group>"; };
+		57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderGeometrySettings.swift; sourceTree = "<group>"; };
+		57DDAC7D25E5260400B535A7 /* AqueousReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionSettings.swift; sourceTree = "<group>"; };
 		57DE4DA025A502BF00644790 /* QuizIntroBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizIntroBody.swift; sourceTree = "<group>"; };
 		57DE4DA425A502EE00644790 /* QuizQuestionBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionBody.swift; sourceTree = "<group>"; };
 		57DE4DA825A5031800644790 /* QuizReviewBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizReviewBody.swift; sourceTree = "<group>"; };
@@ -529,20 +524,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		575A88C525E43CD700AEE448 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5797A3DB25E4039E00991BD9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5797A3F025E403A000991BD9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -742,8 +723,6 @@
 			children = (
 				571D6A3C255A780700F4E635 /* reactions-app.app */,
 				57035EE2255BFE5200DB3A19 /* reactions-appTests.xctest */,
-				5797A3DE25E4039E00991BD9 /* Reactions Equilibrium.app */,
-				5797A3F325E403A000991BD9 /* Reactions EquilibriumTests.xctest */,
 				5797A44125E4069F00991BD9 /* ReactionsCore.framework */,
 				5797A44925E4069F00991BD9 /* ReactionsCoreTests.xctest */,
 				575A88B325E43CD500AEE448 /* reactions-equilibrium.app */,
@@ -845,7 +824,6 @@
 				57035EC2255BD33A00DB3A19 /* MoleculeGridShape.swift */,
 				57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */,
 				57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */,
-				5797A51625E41C1400991BD9 /* LiquidAdjustableBeaker.swift */,
 			);
 			path = beaker;
 			sourceTree = "<group>";
@@ -1006,6 +984,7 @@
 			isa = PBXGroup;
 			children = (
 				575A885E25E435F600AEE448 /* BeakyGeometrySettings.swift */,
+				57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */,
 			);
 			path = "layout-settings";
 			sourceTree = "<group>";
@@ -1174,6 +1153,7 @@
 		5797A44225E4069F00991BD9 /* ReactionsCore */ = {
 			isa = PBXGroup;
 			children = (
+				57DDAC5725E51AB500B535A7 /* util */,
 				5797A47A25E4092600991BD9 /* view */,
 				5797A45E25E406FC00991BD9 /* model */,
 				5797A44325E4069F00991BD9 /* ReactionsCore.h */,
@@ -1348,8 +1328,25 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57DDAC7C25E525F900B535A7 /* settings */,
 			);
 			path = model;
+			sourceTree = "<group>";
+		};
+		57DDAC5725E51AB500B535A7 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		57DDAC7C25E525F900B535A7 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				57DDAC7D25E5260400B535A7 /* AqueousReactionSettings.swift */,
+			);
+			path = settings;
 			sourceTree = "<group>";
 		};
 		57E7FF7525828BED00A30582 /* navigation */ = {
@@ -1483,6 +1480,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				57DDAC6725E51BF600B535A7 /* PBXTargetDependency */,
 			);
 			name = "reactions-equilibrium";
 			productName = "reactions-equilibrium";
@@ -1505,42 +1503,6 @@
 			name = "reactions-equilibriumTests";
 			productName = "reactions-equilibriumTests";
 			productReference = 575A88C825E43CD700AEE448 /* reactions-equilibriumTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		5797A3DD25E4039E00991BD9 /* Reactions Equilibrium */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5797A40B25E403A000991BD9 /* Build configuration list for PBXNativeTarget "Reactions Equilibrium" */;
-			buildPhases = (
-				5797A3DA25E4039E00991BD9 /* Sources */,
-				5797A3DB25E4039E00991BD9 /* Frameworks */,
-				5797A3DC25E4039E00991BD9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				575A888D25E4381400AEE448 /* PBXTargetDependency */,
-			);
-			name = "Reactions Equilibrium";
-			productName = "Reactions Equilibrium";
-			productReference = 5797A3DE25E4039E00991BD9 /* Reactions Equilibrium.app */;
-			productType = "com.apple.product-type.application";
-		};
-		5797A3F225E403A000991BD9 /* Reactions EquilibriumTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5797A40C25E403A000991BD9 /* Build configuration list for PBXNativeTarget "Reactions EquilibriumTests" */;
-			buildPhases = (
-				5797A3EF25E403A000991BD9 /* Sources */,
-				5797A3F025E403A000991BD9 /* Frameworks */,
-				5797A3F125E403A000991BD9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5797A3F525E403A000991BD9 /* PBXTargetDependency */,
-			);
-			name = "Reactions EquilibriumTests";
-			productName = "Reactions EquilibriumTests";
-			productReference = 5797A3F325E403A000991BD9 /* Reactions EquilibriumTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		5797A44025E4069F00991BD9 /* ReactionsCore */ = {
@@ -1602,13 +1564,6 @@
 						CreatedOnToolsVersion = 12.4;
 						TestTargetID = 575A88B225E43CD500AEE448;
 					};
-					5797A3DD25E4039E00991BD9 = {
-						CreatedOnToolsVersion = 12.4;
-					};
-					5797A3F225E403A000991BD9 = {
-						CreatedOnToolsVersion = 12.4;
-						TestTargetID = 5797A3DD25E4039E00991BD9;
-					};
 					5797A44025E4069F00991BD9 = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -1635,8 +1590,6 @@
 			targets = (
 				571D6A3B255A780700F4E635 /* reactions-app */,
 				57035EE1255BFE5200DB3A19 /* reactions-appTests */,
-				5797A3DD25E4039E00991BD9 /* Reactions Equilibrium */,
-				5797A3F225E403A000991BD9 /* Reactions EquilibriumTests */,
 				5797A44025E4069F00991BD9 /* ReactionsCore */,
 				5797A44825E4069F00991BD9 /* ReactionsCoreTests */,
 				575A88B225E43CD500AEE448 /* reactions-equilibrium */,
@@ -1676,20 +1629,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		575A88C625E43CD700AEE448 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5797A3DC25E4039E00991BD9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5797A3F125E403A000991BD9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1896,6 +1835,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57DDAC7E25E5260400B535A7 /* AqueousReactionSettings.swift in Sources */,
 				575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */,
 				575A88B825E43CD500AEE448 /* SceneDelegate.swift in Sources */,
 				57DDAC1A25E4FD8100B535A7 /* AqueousReactionScreen.swift in Sources */,
@@ -1908,20 +1848,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				575A88CD25E43CD700AEE448 /* reactions_equilibriumTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5797A3DA25E4039E00991BD9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5797A3EF25E403A000991BD9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1945,7 +1871,6 @@
 				575A885F25E435F600AEE448 /* BeakyGeometrySettings.swift in Sources */,
 				5797A4DB25E40AD400991BD9 /* ReactionType.swift in Sources */,
 				5797A48825E40A3E00991BD9 /* EmptyBeaker.swift in Sources */,
-				5797A51725E41C1400991BD9 /* LiquidAdjustableBeaker.swift in Sources */,
 				5797A4B825E40A6000991BD9 /* ReactionPairDisplay.swift in Sources */,
 				5797A53E25E41E0100991BD9 /* AxisPositionCalculations.swift in Sources */,
 				575A884F25E4327800AEE448 /* QuestionSet.swift in Sources */,
@@ -1963,6 +1888,8 @@
 				575A887525E4364500AEE448 /* NavButton.swift in Sources */,
 				5797A4A325E40A5100991BD9 /* MoleculeGridShape.swift in Sources */,
 				5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */,
+				57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */,
+				57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */,
 				575A884125E431FF00AEE448 /* LabelledImage.swift in Sources */,
 				5797A4D325E40A8E00991BD9 /* Styling.swift in Sources */,
 			);
@@ -1984,20 +1911,10 @@
 			target = 571D6A3B255A780700F4E635 /* reactions-app */;
 			targetProxy = 57035EE7255BFE5200DB3A19 /* PBXContainerItemProxy */;
 		};
-		575A888D25E4381400AEE448 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
-			targetProxy = 575A888C25E4381400AEE448 /* PBXContainerItemProxy */;
-		};
 		575A88CA25E43CD700AEE448 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 575A88B225E43CD500AEE448 /* reactions-equilibrium */;
 			targetProxy = 575A88C925E43CD700AEE448 /* PBXContainerItemProxy */;
-		};
-		5797A3F525E403A000991BD9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5797A3DD25E4039E00991BD9 /* Reactions Equilibrium */;
-			targetProxy = 5797A3F425E403A000991BD9 /* PBXContainerItemProxy */;
 		};
 		5797A44C25E4069F00991BD9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2008,6 +1925,11 @@
 			isa = PBXTargetDependency;
 			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
 			targetProxy = 5797A4F025E40C6A00991BD9 /* PBXContainerItemProxy */;
+		};
+		57DDAC6725E51BF600B535A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
+			targetProxy = 57DDAC6625E51BF600B535A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2256,7 +2178,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.equilibrium;
+				PRODUCT_BUNDLE_IDENTIFIER = com.reaction.equilibrium;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2278,7 +2200,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.equilibrium;
+				PRODUCT_BUNDLE_IDENTIFIER = com.reaction.equilibrium;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2329,92 +2251,6 @@
 			};
 			name = Release;
 		};
-		5797A40525E403A000991BD9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Reactions Equilibrium/Preview Content\"";
-				DEVELOPMENT_TEAM = 7H845U3D2J;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Reactions Equilibrium/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.equilibrium.Reactions-Equilibrium";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		5797A40625E403A000991BD9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Reactions Equilibrium/Preview Content\"";
-				DEVELOPMENT_TEAM = 7H845U3D2J;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "Reactions Equilibrium/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.equilibrium.Reactions-Equilibrium";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		5797A40725E403A000991BD9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7H845U3D2J;
-				INFOPLIST_FILE = "Reactions EquilibriumTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.equilibrium.Reactions-EquilibriumTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reactions Equilibrium.app/Reactions Equilibrium";
-			};
-			name = Debug;
-		};
-		5797A40825E403A000991BD9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7H845U3D2J;
-				INFOPLIST_FILE = "Reactions EquilibriumTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.equilibrium.Reactions-EquilibriumTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reactions Equilibrium.app/Reactions Equilibrium";
-			};
-			name = Release;
-		};
 		5797A45225E4069F00991BD9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2433,7 +2269,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.reactionsCore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.reaction.reactionsCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -2462,7 +2298,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.reactionsCore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.reaction.reactionsCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -2557,24 +2393,6 @@
 			buildConfigurations = (
 				575A88DE25E43CD700AEE448 /* Debug */,
 				575A88DF25E43CD700AEE448 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5797A40B25E403A000991BD9 /* Build configuration list for PBXNativeTarget "Reactions Equilibrium" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5797A40525E403A000991BD9 /* Debug */,
-				5797A40625E403A000991BD9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5797A40C25E403A000991BD9 /* Build configuration list for PBXNativeTarget "Reactions EquilibriumTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5797A40725E403A000991BD9 /* Debug */,
-				5797A40825E403A000991BD9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -7,6 +7,10 @@ import SwiftUI
 public struct MoleculeGridSettings {
     public let totalWidth: CGFloat
 
+    public init(totalWidth: CGFloat) {
+        self.totalWidth = totalWidth
+    }
+
     public static let rows = 10
     public static let cols = 19
 
@@ -18,7 +22,7 @@ public struct MoleculeGridSettings {
         totalWidth / CGFloat(MoleculeGridSettings.cols)
     }
 
-    func height(for rows: CGFloat) -> CGFloat {
+    public func height(for rows: CGFloat) -> CGFloat {
         rows * cellSize
     }
 

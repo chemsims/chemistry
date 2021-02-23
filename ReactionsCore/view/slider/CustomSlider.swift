@@ -21,6 +21,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     let includeFill: Bool
     let useHaptics: Bool
 
+    @available(*, deprecated, message: "Use other initialiser")
     public init(
         value: Binding<Value>,
         axis: AxisPositionCalculations<Value>,
@@ -39,6 +40,28 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         self.handleColor = handleColor
         self.handleCornerRadius = handleCornerRadius
         self.barThickness = barThickness
+        self.barColor = barColor
+        self.orientation = orientation
+        self.includeFill = includeFill
+        self.useHaptics = useHaptics
+    }
+
+    public init(
+        value: Binding<Value>,
+        axis: AxisPositionCalculations<Value>,
+        orientation: Orientation,
+        includeFill: Bool,
+        settings: SliderGeometrySettings,
+        handleColor: Color = .orangeAccent,
+        barColor: Color = .black,
+        useHaptics: Bool = true
+    ) {
+        self._value = value
+        self.axis = axis
+        self.handleThickness = settings.handleThickness
+        self.handleColor = handleColor
+        self.handleCornerRadius = settings.handleCornerRadius
+        self.barThickness = settings.barThickness
         self.barColor = barColor
         self.orientation = orientation
         self.includeFill = includeFill
@@ -259,6 +282,8 @@ struct CustomSlider_Previews: PreviewProvider {
     struct ViewWrapper: View {
         @State var value: CGFloat = 1.5
 
+        let width: CGFloat = 80
+
         var body: some View {
             VStack {
                 Text("\(value)")
@@ -271,14 +296,10 @@ struct CustomSlider_Previews: PreviewProvider {
                         minValue: 1,
                         maxValue: 2
                     ),
-                    handleThickness: 40,
-                    handleColor: Color.orangeAccent,
-                    handleCornerRadius: 15,
-                    barThickness: 5,
-                    barColor: Color.darkGray,
                     orientation: .landscape,
-                    includeFill: true
-                ).frame(height: 80)
+                    includeFill: true,
+                    settings: SliderGeometrySettings(handleWidth: width)
+                ).frame(height: width)
 
                 CustomSlider(
                     value: $value,
@@ -288,14 +309,10 @@ struct CustomSlider_Previews: PreviewProvider {
                         minValue: 1,
                         maxValue: 2
                     ),
-                    handleThickness: 40,
-                    handleColor: Color.orangeAccent,
-                    handleCornerRadius: 15,
-                    barThickness: 5,
-                    barColor: Color.darkGray,
                     orientation: .portrait,
-                    includeFill: true
-                ).frame(width: 80)
+                    includeFill: true,
+                    settings: SliderGeometrySettings(handleWidth: width)
+                ).frame(width: width)
             }
         }
     }
