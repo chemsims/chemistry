@@ -6,9 +6,15 @@ import SwiftUI
 import SpriteKit
 
 public struct RGB {
-    let r: Double
-    let g: Double
-    let b: Double
+    public let r: Double
+    public let g: Double
+    public let b: Double
+
+    public init(r: Double, g: Double, b: Double) {
+        self.r = r
+        self.g = g
+        self.b = b
+    }
 
     public var color: Color {
         Color(red: r / 255, green: g / 255, blue: b / 255)
@@ -99,6 +105,10 @@ extension UIColor {
 extension Color {
     public static let darkGray = Color(red: 0.25, green: 0.25, blue: 0.25)
     public static let orangeAccent = Color(red: 220 / 255, green: 84 / 255, blue: 59 / 255)
+
+    public static func from(_ rgb: RGB) -> Color {
+        rgb.color
+    }
 }
 
 extension Styling {

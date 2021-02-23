@@ -7,9 +7,13 @@ import SwiftUI
 import ReactionsCore
 
 struct AqueousReactionScreen: View {
+
+    let model: AqueousReactionViewModel
+
     var body: some View {
         GeometryReader { geometry in
             AqueousReactionScreenWithSettings(
+                model: model,
                 settings: AqueousScreenLayoutSettings(geometry: geometry)
             )
         }
@@ -18,9 +22,8 @@ struct AqueousReactionScreen: View {
 
 private struct AqueousReactionScreenWithSettings: View {
 
+    @ObservedObject var model: AqueousReactionViewModel
     let settings: AqueousScreenLayoutSettings
-
-    @State private var rows: CGFloat = CGFloat(AqueousReactionSettings.minRows)
 
     var body: some View {
         HStack(spacing: 0) {
@@ -29,7 +32,7 @@ private struct AqueousReactionScreenWithSettings: View {
                 Spacer()
                 beaker
             }
-
+            Text("Concentration is \(model.concentrationA.str(decimals: 3))")
             Spacer()
             BeakyBox(
                 statement: [],
@@ -57,6 +60,9 @@ private struct AqueousReactionScreenWithSettings: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: settings.moleculeWidth)
+                        .onTapGesture {
+                            model.incrementAMolecules()
+                        }
 
                 }
             }
@@ -66,7 +72,7 @@ private struct AqueousReactionScreenWithSettings: View {
     private var beaker: some View {
         HStack(alignment: .bottom, spacing: 0) {
             CustomSlider(
-                value: $rows,
+                value: $model.rows,
                 axis: settings.sliderAxis,
                 orientation: .portrait,
                 includeFill: true,
@@ -75,11 +81,11 @@ private struct AqueousReactionScreenWithSettings: View {
             .frame(width: settings.sliderSettings.handleWidth, height: settings.sliderHeight)
 
             FilledBeaker(
-                moleculesA: [],
+                moleculesA: model.moleculesA,
                 concentrationB: nil,
                 currentTime: nil,
                 reactionPair: ReactionType.A.display,
-                rows: rows
+                rows: model.rows
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
         }
@@ -142,7 +148,7 @@ extension AqueousScreenLayoutSettings {
 
 struct AqueousReactionScreen_Previews: PreviewProvider {
     static var previews: some View {
-        AqueousReactionScreen()
+        AqueousReactionScreen(model: AqueousReactionViewModel())
             .previewLayout(.iPhoneSELandscape)
     }
 }

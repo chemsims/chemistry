@@ -141,16 +141,11 @@ class ZeroOrderReactionViewModel: ObservableObject {
         cols: Int,
         rows: Int
     ) {
-        if toAdd == 0 || moleculesA.count == (cols * rows) {
-            return
-        }
-        let grid = GridCoordinate.random(maxCol: cols - 1, maxRow: rows - 1)
-        let moleculeExists = moleculesA.contains { $0.col == grid.col && $0.row == grid.row }
-        if moleculeExists {
-            addMoleculesA(toAdd, cols: cols, rows: rows)
-        } else {
-            moleculesA.append(grid)
-            addMoleculesA(toAdd - 1, cols: cols, rows: rows)
-        }
+        moleculesA = GridCoordinateList.addingRandomElementsTo(
+            grid: moleculesA,
+            count: toAdd,
+            cols: cols,
+            rows: rows
+        )
     }
 }
