@@ -40,6 +40,13 @@ struct GoogleAnalytics: AnalyticsService {
         ])
     }
 
+    func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) {
+        let eventName = "\(Events.startedQuiz)\(questionSet.eventNameSuffix)"
+        Analytics.logEvent(eventName, parameters: [
+            Params.quizDifficulty: difficulty.displayName.lowercased()
+        ])
+    }
+
     func answeredQuestion(
         questionSet: QuestionSet,
         questionId: String,
@@ -47,19 +54,15 @@ struct GoogleAnalytics: AnalyticsService {
         answerAttempt: Int,
         isCorrect: Bool
     ) {
-        Analytics.logEvent(Events.answeredQuestion, parameters: [
+        let sanitisedId = questionId.replacingOccurrences(of: "-", with: "_")
+        let eventName = "\(Events.answeredQuestion)_\(sanitisedId)"
+        Analytics.logEvent(eventName, parameters: [
             Params.questionSet: questionSet.rawValue,
-            Params.questionId: questionId,
             Params.answerId: answerId,
             Params.answerAttempt: answerAttempt,
-            Params.isCorrect: isCorrect
-        ])
-    }
-
-    func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) {
-        Analytics.logEvent(Events.startedQuiz, parameters: [
-            Params.questionSet: questionSet.rawValue,
-            Params.quizDifficulty: difficulty.displayName.lowercased()
+            Params.answerAttemptDimension: "_\(answerAttempt)",
+            Params.isCorrect: isCorrect,
+            Params.isCorrectDimension: isCorrect ? "YES" : "NO"
         ])
     }
 
@@ -68,10 +71,11 @@ struct GoogleAnalytics: AnalyticsService {
         difficulty: QuizDifficulty,
         percentCorrect: Double
     ) {
-        Analytics.logEvent(Events.completedQuiz, parameters: [
-            Params.questionSet: questionSet.rawValue,
+        let eventName = "\(Events.completedQuiz)\(questionSet.eventNameSuffix)"
+        Analytics.logEvent(eventName, parameters: [
             Params.quizDifficulty: difficulty.displayName.lowercased(),
-            Params.percentCorrect: percentCorrect
+            Params.percentCorrect: percentCorrect,
+            Params.percentCorrectDimension: "_\(percentCorrect.str(decimals: 0))"
         ])
     }
 
@@ -87,11 +91,21 @@ struct GoogleAnalytics: AnalyticsService {
         static let questionId = "questionId"
         static let answerId = "answerId"
         static let answerAttempt = "answerAttempt"
+        static let answerAttemptDimension = "answerAttemptDimension"
+
         static let isCorrect = "isCorrect"
+        static let isCorrectDimension = "isCorrectDimension"
 
         static let quizScreen = "quizScreen"
         static let quizDifficulty = "quizDifficulty"
 
         static let percentCorrect = "percentCorrect"
+        static let percentCorrectDimension = "percentCorrectDimension"
+    }
+}
+
+extension QuestionSet {
+    var eventNameSuffix: String {
+        self.rawValue.prefix(1).capitalized + self.rawValue.dropFirst()
     }
 }
