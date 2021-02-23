@@ -20,11 +20,16 @@ private struct AqueousReactionScreenWithSettings: View {
 
     let settings: AqueousScreenLayoutSettings
 
-    @State private var rows: CGFloat = 2
+    @State private var rows: CGFloat = CGFloat(AqueousReactionSettings.minRows)
 
     var body: some View {
         HStack(spacing: 0) {
-            beaker
+            VStack(spacing: 0) {
+                molecules
+                Spacer()
+                beaker
+            }
+
             Spacer()
             BeakyBox(
                 statement: [],
@@ -39,6 +44,22 @@ private struct AqueousReactionScreenWithSettings: View {
                 navButtonSize: 20,
                 bubbleStemWidth: 10
             )
+        }
+    }
+
+    private var molecules: some View {
+        HStack(spacing: 0) {
+            Spacer()
+                .frame(width: settings.sliderSettings.handleWidth)
+            HStack(spacing: settings.moleculeSpacing) {
+                ForEach(AqueousMolecule.allCases, id: \.rawValue) { molecule in
+                    Image(molecule.imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: settings.moleculeWidth)
+
+                }
+            }
         }
     }
 
@@ -86,8 +107,16 @@ struct AqueousScreenLayoutSettings {
     var sliderSettings: SliderGeometrySettings {
         SliderGeometrySettings(handleWidth: 0.13 * beakerWidth)
     }
+}
 
+extension AqueousScreenLayoutSettings {
+    var moleculeWidth: CGFloat {
+        0.15 * beakerWidth
+    }
 
+    var moleculeSpacing: CGFloat {
+        0.1 * beakerWidth
+    }
 }
 
 extension AqueousScreenLayoutSettings {
@@ -101,7 +130,7 @@ extension AqueousScreenLayoutSettings {
 
         let minRow = CGFloat(AqueousReactionSettings.minRows)
         let maxRow = CGFloat(AqueousReactionSettings.maxRows)
-        
+
         return AxisPositionCalculations(
             minValuePosition: posForRows(minRow),
             maxValuePosition: posForRows(maxRow),

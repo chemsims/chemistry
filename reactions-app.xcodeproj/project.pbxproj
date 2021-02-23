@@ -204,6 +204,11 @@
 		57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */; };
 		57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */; };
 		57DDAC7E25E5260400B535A7 /* AqueousReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC7D25E5260400B535A7 /* AqueousReactionSettings.swift */; };
+		57DDACC825E5448000B535A7 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
+		57DDACC925E5448000B535A7 /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57DDACD225E5458100B535A7 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
+		57DDACD325E5458100B535A7 /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACDC25E54EF100B535A7 /* AqueousMolecule.swift */; };
 		57DE4DA125A502BF00644790 /* QuizIntroBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA025A502BF00644790 /* QuizIntroBody.swift */; };
 		57DE4DA525A502EE00644790 /* QuizQuestionBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA425A502EE00644790 /* QuizQuestionBody.swift */; };
 		57DE4DA925A5031800644790 /* QuizReviewBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA825A5031800644790 /* QuizReviewBody.swift */; };
@@ -265,7 +270,46 @@
 			remoteGlobalIDString = 5797A44025E4069F00991BD9;
 			remoteInfo = ReactionsCore;
 		};
+		57DDACCA25E5448000B535A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5797A44025E4069F00991BD9;
+			remoteInfo = ReactionsCore;
+		};
+		57DDACD425E5458100B535A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5797A44025E4069F00991BD9;
+			remoteInfo = ReactionsCore;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		57DDACCC25E5448000B535A7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57DDACC925E5448000B535A7 /* ReactionsCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57DDACD625E5458100B535A7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57DDACD325E5458100B535A7 /* ReactionsCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		57035EB9255BBF1200DB3A19 /* BeakerTicks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerTicks.swift; sourceTree = "<group>"; };
@@ -470,6 +514,7 @@
 		57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewLayoutExtensions.swift; sourceTree = "<group>"; };
 		57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderGeometrySettings.swift; sourceTree = "<group>"; };
 		57DDAC7D25E5260400B535A7 /* AqueousReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionSettings.swift; sourceTree = "<group>"; };
+		57DDACDC25E54EF100B535A7 /* AqueousMolecule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousMolecule.swift; sourceTree = "<group>"; };
 		57DE4DA025A502BF00644790 /* QuizIntroBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizIntroBody.swift; sourceTree = "<group>"; };
 		57DE4DA425A502EE00644790 /* QuizQuestionBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionBody.swift; sourceTree = "<group>"; };
 		57DE4DA825A5031800644790 /* QuizReviewBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizReviewBody.swift; sourceTree = "<group>"; };
@@ -512,6 +557,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57DDACC825E5448000B535A7 /* ReactionsCore.framework in Frameworks */,
 				5711DFDA25C46DD100B28E45 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -520,6 +566,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57DDACD225E5458100B535A7 /* ReactionsCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +762,7 @@
 				575A88B425E43CD500AEE448 /* reactions-equilibrium */,
 				575A88CB25E43CD700AEE448 /* reactions-equilibriumTests */,
 				571D6A3D255A780700F4E635 /* Products */,
+				57DDACC725E5448000B535A7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1328,6 +1376,7 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57DDACDB25E54EE200B535A7 /* enums */,
 				57DDAC7C25E525F900B535A7 /* settings */,
 			);
 			path = model;
@@ -1347,6 +1396,21 @@
 				57DDAC7D25E5260400B535A7 /* AqueousReactionSettings.swift */,
 			);
 			path = settings;
+			sourceTree = "<group>";
+		};
+		57DDACC725E5448000B535A7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		57DDACDB25E54EE200B535A7 /* enums */ = {
+			isa = PBXGroup;
+			children = (
+				57DDACDC25E54EF100B535A7 /* AqueousMolecule.swift */,
+			);
+			path = enums;
 			sourceTree = "<group>";
 		};
 		57E7FF7525828BED00A30582 /* navigation */ = {
@@ -1455,11 +1519,13 @@
 				571D6A38255A780700F4E635 /* Sources */,
 				571D6A39255A780700F4E635 /* Frameworks */,
 				571D6A3A255A780700F4E635 /* Resources */,
+				57DDACCC25E5448000B535A7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				5797A4F125E40C6A00991BD9 /* PBXTargetDependency */,
+				57DDACCB25E5448000B535A7 /* PBXTargetDependency */,
 			);
 			name = "reactions-app";
 			packageProductDependencies = (
@@ -1476,11 +1542,13 @@
 				575A88AF25E43CD500AEE448 /* Sources */,
 				575A88B025E43CD500AEE448 /* Frameworks */,
 				575A88B125E43CD500AEE448 /* Resources */,
+				57DDACD625E5458100B535A7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				57DDAC6725E51BF600B535A7 /* PBXTargetDependency */,
+				57DDACD525E5458100B535A7 /* PBXTargetDependency */,
 			);
 			name = "reactions-equilibrium";
 			productName = "reactions-equilibrium";
@@ -1840,6 +1908,7 @@
 				575A88B825E43CD500AEE448 /* SceneDelegate.swift in Sources */,
 				57DDAC1A25E4FD8100B535A7 /* AqueousReactionScreen.swift in Sources */,
 				575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */,
+				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1930,6 +1999,16 @@
 			isa = PBXTargetDependency;
 			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
 			targetProxy = 57DDAC6625E51BF600B535A7 /* PBXContainerItemProxy */;
+		};
+		57DDACCB25E5448000B535A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
+			targetProxy = 57DDACCA25E5448000B535A7 /* PBXContainerItemProxy */;
+		};
+		57DDACD525E5458100B535A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
+			targetProxy = 57DDACD425E5458100B535A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
