@@ -84,7 +84,7 @@ struct ConcentrationPlotView: View {
             }
 
             if concentrationB != nil {
-                ChartPlotWithHead(
+                TimeChartDataLineView(
                     data: TimeChartDataline(
                         equation: concentrationB!,
                         headColor: display.product.color,
@@ -103,7 +103,7 @@ struct ConcentrationPlotView: View {
                 )
             }
 
-            ChartPlotWithHead(
+            TimeChartDataLineView(
                 data: TimeChartDataline(
                     equation: concentrationA,
                     headColor: display.reactant.color,

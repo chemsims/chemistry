@@ -4,41 +4,17 @@
 
 
 import SwiftUI
-import ReactionsCore
 
+struct TimeChartMultiDataLineView: View {
 
-struct TimeChartDataline {
-    let equation: Equation
-    let headColor: Color
-    let haloColor: Color?
-    let headRadius: CGFloat
-    let haloSize: CGFloat
-}
-
-extension ReactionRateChartLayoutSettings {
-    var timeChartLayoutSettings: TimeChartLayoutSettings {
-        TimeChartLayoutSettings(
-            xAxis: xAxis,
-            yAxis: yAxis,
-            haloRadius: chartHeadPrimaryHaloSize,
-            lineWidth: timePlotLineWidth
-        )
-    }
-}
-
-struct TimeChartMultiPlot: View {
-
-    let settings: TimeChartLayoutSettings
     let data: [TimeChartDataline]
+    let settings: TimeChartLayoutSettings
 
     let initialTime: CGFloat
     @Binding var currentTime: CGFloat
     let finalTime: CGFloat
 
     let filledBarColor: Color
-    let headColor: Color
-    let headRadius: CGFloat
-    let haloColor: Color?
     let canSetCurrentTime: Bool
 
     let highlightLhs: Bool
@@ -47,7 +23,7 @@ struct TimeChartMultiPlot: View {
     var body: some View {
         ZStack {
             ForEach(0..<data.count, id: \.self) { i in
-                ChartPlotWithHead(
+                TimeChartDataLineView(
                     data: data[i],
                     settings: settings,
                     initialTime: initialTime,
@@ -63,7 +39,7 @@ struct TimeChartMultiPlot: View {
     }
 }
 
-struct ChartPlotWithHead: View {
+public struct TimeChartDataLineView: View {
 
     let data: TimeChartDataline
     let settings: TimeChartLayoutSettings
@@ -78,7 +54,29 @@ struct ChartPlotWithHead: View {
     let highlightLhs: Bool
     let highlightRhs: Bool
 
-    var body: some View {
+    public init(
+        data: TimeChartDataline,
+        settings: TimeChartLayoutSettings,
+        initialTime: CGFloat,
+        currentTime: Binding<CGFloat>,
+        finalTime: CGFloat,
+        filledBarColor: Color,
+        canSetCurrentTime: Bool,
+        highlightLhs: Bool,
+        highlightRhs: Bool
+    ) {
+        self.data = data
+        self.settings = settings
+        self.initialTime = initialTime
+        self._currentTime = currentTime
+        self.finalTime = finalTime
+        self.filledBarColor = filledBarColor
+        self.canSetCurrentTime = canSetCurrentTime
+        self.highlightLhs = highlightLhs
+        self.highlightRhs = highlightRhs
+    }
+
+    public var body: some View {
         ZStack {
             dataLine(time: finalTime, color: filledBarColor)
             dataLine(time: currentTime, color: data.headColor)
@@ -165,5 +163,90 @@ struct ChartPlotWithHead: View {
         )
         .stroke(lineWidth: lineWidth)
         .foregroundColor(color)
+    }
+}
+
+
+struct TimeChartDataLineView_Previews: PreviewProvider {
+    static var previews: some View {
+        TimeChartMultiDataLineView(
+            data: allData,
+            settings: settings,
+            initialTime: 0,
+            currentTime: .constant(5),
+            finalTime: 10,
+            filledBarColor: .black,
+            canSetCurrentTime: false,
+            highlightLhs: false,
+            highlightRhs: false
+        )
+        .frame(width: 300, height: 300)
+        .border(Color.black)
+    }
+
+    private static var settings: TimeChartLayoutSettings {
+        TimeChartLayoutSettings(
+            xAxis: AxisPositionCalculations<CGFloat>(
+                minValuePosition: 0,
+                maxValuePosition: 300,
+                minValue: 0,
+                maxValue: 10
+            ),
+            yAxis: AxisPositionCalculations<CGFloat>(
+                minValuePosition: 300,
+                maxValuePosition: 0,
+                minValue: 0,
+                maxValue: 10
+            ),
+            haloRadius: 18,
+            lineWidth: 3
+        )
+    }
+
+    private static var allData: [TimeChartDataline] {
+        [
+            data(
+                makeEquation(
+                    parabola: CGPoint(x: 5, y: 0),
+                    through: CGPoint(x: 0, y: 5)
+                ),
+                .from(.moleculeA)
+            ),
+            data(
+                makeEquation(
+                    parabola: CGPoint(x: 4, y: 6),
+                    through: CGPoint(x: 0, y: 2)
+                ),
+                .from(.moleculeB)
+            ),
+            data(
+                makeEquation(
+                    parabola: CGPoint(x: 4, y: 8),
+                    through: CGPoint(x: 0, y: 4)
+                ),
+                .from(.moleculeC)
+            )
+        ]
+    }
+
+    private static func makeEquation(
+        parabola: CGPoint,
+        through: CGPoint
+    ) -> Equation {
+        SwitchingEquation(
+            thresholdX: parabola.x,
+            underlyingLeft: QuadraticEquation(parabola: parabola, through: through),
+            underlyingRight: ConstantEquation(value: parabola.y)
+        )
+    }
+
+    private static func data(_ equation: Equation, _ color: Color) -> TimeChartDataline {
+        TimeChartDataline(
+            equation: equation,
+            headColor: color,
+            haloColor: color.opacity(0.3),
+            headRadius: 6,
+            haloSize: 15
+        )
     }
 }

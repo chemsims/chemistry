@@ -3,9 +3,8 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-struct ChartLine: Shape {
+public struct ChartLine: Shape {
 
     let equation: Equation
 
@@ -15,9 +14,23 @@ struct ChartLine: Shape {
     let startX: CGFloat
     var endX: CGFloat
 
+    public init(
+        equation: Equation,
+        yAxis: AxisPositionCalculations<CGFloat>,
+        xAxis: AxisPositionCalculations<CGFloat>,
+        startX: CGFloat,
+        endX: CGFloat
+    ) {
+        self.equation = equation
+        self.yAxis = yAxis
+        self.xAxis = xAxis
+        self.startX = startX
+        self.endX = endX
+    }
+
     private let maxWidthSteps = 100
 
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         var path = Path()
 
         let dxPos = rect.width / CGFloat(maxWidthSteps)
@@ -39,7 +52,7 @@ struct ChartLine: Shape {
         return path
     }
 
-    var animatableData: CGFloat {
+    public var animatableData: CGFloat {
         get { endX }
         set { endX = newValue }
     }
@@ -79,7 +92,7 @@ struct ChartIndicatorHead: Shape {
 
 }
 
-struct TimeChartPlot_Previews: PreviewProvider {
+struct ChartLine_Previews: PreviewProvider {
 
     static var previews: some View {
         ViewStateWrapper()

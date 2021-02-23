@@ -4,6 +4,38 @@
 
 import CoreGraphics
 
+/// An equation which switches between two underlying equations at some cutoff
+public struct SwitchingEquation: Equation {
+
+    public let thresholdX: CGFloat
+    public let underlyingLeft: Equation
+    public let underlyingRight: Equation
+
+    /// Creates a new equation which switches between two underlying equations at the given X threshold
+    ///
+    /// - Parameters:
+    ///     - thresholdX: The X value at which to switch to the right equation
+    ///     - underlyingLeft: Equation to use for values less than `thresholdX`
+    ///     - underlyingRight: Equation to use for values greater than or equal to `thresholdX`
+    ///     -
+    public init(
+        thresholdX: CGFloat,
+        underlyingLeft: Equation,
+        underlyingRight: Equation
+    ) {
+        self.thresholdX = thresholdX
+        self.underlyingLeft = underlyingLeft
+        self.underlyingRight = underlyingRight
+    }
+
+    public func getY(at x: CGFloat) -> CGFloat {
+        if x < thresholdX {
+            return underlyingLeft.getY(at: x)
+        }
+        return underlyingRight.getY(at: x)
+    }
+}
+
 public struct QuadraticEquation: Equation {
 
     // coefficient for x^2
