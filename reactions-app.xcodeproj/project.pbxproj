@@ -131,9 +131,10 @@
 		5787039825B88E14002A4487 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787039725B88E14002A4487 /* ShareSheetView.swift */; };
 		5790AC2F25B375FC00B25776 /* ReactionComparisonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
+		57952A2125E63F7F006AB876 /* BalancedReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A2025E63F7F006AB876 /* BalancedReaction.swift */; };
+		57952A3325E66FBD006AB876 /* BalancedReactionEquationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
 		5797A44A25E4069F00991BD9 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
-		5797A44F25E4069F00991BD9 /* ReactionsCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797A44E25E4069F00991BD9 /* ReactionsCoreTests.swift */; };
 		5797A45125E4069F00991BD9 /* ReactionsCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797A44325E4069F00991BD9 /* ReactionsCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5797A48125E40A3600991BD9 /* BeakerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A7B255AC75C00F4E635 /* BeakerShape.swift */; };
 		5797A48825E40A3E00991BD9 /* EmptyBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A80255AD40900F4E635 /* EmptyBeaker.swift */; };
@@ -212,7 +213,6 @@
 		57DDACE925E552F700B535A7 /* AqueousReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACE825E552F700B535A7 /* AqueousReactionViewModel.swift */; };
 		57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACF325E554AD00B535A7 /* AqueousStyling.swift */; };
 		57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */; };
-		57DDACFF25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */; };
 		57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD0825E5608700B535A7 /* BeakerMolecules.swift */; };
 		57DDAD1D25E5700400B535A7 /* QuadraticEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD0F25E567C300B535A7 /* QuadraticEquation.swift */; };
 		57DDAD2425E5706A00B535A7 /* MultiConcentrationPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD2325E5706A00B535A7 /* MultiConcentrationPlot.swift */; };
@@ -465,13 +465,14 @@
 		5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPairDisplay.swift; sourceTree = "<group>"; };
 		5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViewModelTests.swift; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
+		57952A2025E63F7F006AB876 /* BalancedReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReaction.swift; sourceTree = "<group>"; };
+		57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionEquationTests.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		5797567E25C1C5CB005C484E /* LabelledImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelledImage.swift; sourceTree = "<group>"; };
 		5797A44125E4069F00991BD9 /* ReactionsCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactionsCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797A44325E4069F00991BD9 /* ReactionsCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactionsCore.h; sourceTree = "<group>"; };
 		5797A44425E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5797A44925E4069F00991BD9 /* ReactionsCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactionsCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5797A44E25E4069F00991BD9 /* ReactionsCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsCoreTests.swift; sourceTree = "<group>"; };
 		5797A45025E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingScreen.swift; sourceTree = "<group>"; };
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
@@ -1089,7 +1090,7 @@
 			isa = PBXGroup;
 			children = (
 				575A88CE25E43CD700AEE448 /* Info.plist */,
-				57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */,
+				57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */,
 			);
 			path = "reactions-equilibriumTests";
 			sourceTree = "<group>";
@@ -1238,7 +1239,7 @@
 		5797A44D25E4069F00991BD9 /* ReactionsCoreTests */ = {
 			isa = PBXGroup;
 			children = (
-				5797A44E25E4069F00991BD9 /* ReactionsCoreTests.swift */,
+				57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */,
 				5797A45025E4069F00991BD9 /* Info.plist */,
 			);
 			path = ReactionsCoreTests;
@@ -1471,6 +1472,7 @@
 			isa = PBXGroup;
 			children = (
 				57A666D025E5874200F51FDC /* EquilibriumReactionEquation.swift */,
+				57952A2025E63F7F006AB876 /* BalancedReaction.swift */,
 			);
 			path = "reaction-equations";
 			sourceTree = "<group>";
@@ -1733,6 +1735,7 @@
 					};
 					575A88C725E43CD700AEE448 = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 						TestTargetID = 575A88B225E43CD500AEE448;
 					};
 					5797A44025E4069F00991BD9 = {
@@ -2010,6 +2013,7 @@
 				57DDAD2425E5706A00B535A7 /* MultiConcentrationPlot.swift in Sources */,
 				575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */,
 				57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */,
+				57952A2125E63F7F006AB876 /* BalancedReaction.swift in Sources */,
 				575A88B825E43CD500AEE448 /* SceneDelegate.swift in Sources */,
 				57DDAC1A25E4FD8100B535A7 /* AqueousReactionScreen.swift in Sources */,
 				57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */,
@@ -2023,7 +2027,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57DDACFF25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */,
+				57952A3325E66FBD006AB876 /* BalancedReactionEquationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2081,7 +2085,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5797A44F25E4069F00991BD9 /* ReactionsCoreTests.swift in Sources */,
 				57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2405,6 +2408,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7H845U3D2J;
 				INFOPLIST_FILE = "reactions-equilibriumTests/Info.plist";
@@ -2416,6 +2420,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reactions.reactions-equilibriumTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/reactions-equilibrium.app/reactions-equilibrium";
@@ -2427,6 +2432,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7H845U3D2J;
 				INFOPLIST_FILE = "reactions-equilibriumTests/Info.plist";

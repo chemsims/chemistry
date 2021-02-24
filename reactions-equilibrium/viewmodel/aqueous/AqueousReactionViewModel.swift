@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 import ReactionsCore
 
@@ -13,24 +12,21 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var moleculesA = [GridCoordinate]()
     @Published var moleculesB = [GridCoordinate]()
 
-    var concentrationA: CGFloat {
-        CGFloat(moleculesA.count) / CGFloat((availableRows * availableCols))
-    }
+    let finalTime: CGFloat = 15
 
-    var equationA: Equation {
-        EquilibriumReactionEquation(t1: 0, c1: 0.8, t2: 15, c2: 1)
-    }
-
-    var equationB: Equation {
-        EquilibriumReactionEquation(t1: 0, c1: 0.6, t2: 15, c2: 0.3)
-    }
-
-    var equationC: Equation {
-        EquilibriumReactionEquation(t1: 0, c1: 0, t2: 15, c2: 0.4)
-    }
-
-    var equationD: Equation {
-        EquilibriumReactionEquation(t1: 0, c1: 0, t2: 15, c2: 0.5)
+    var equations: BalancedReactionEquations {
+        let coeffs = BalancedReactionCoefficients(
+            reactantACoefficient: 2,
+            reactantBCoefficient: 2,
+            productCCoefficient: 1,
+            productDCoefficient: 4
+        )
+        return BalancedReactionEquations(
+            coefficients: coeffs,
+            a0: initialConcentrationA,
+            b0: initialConcentrationB,
+            finalTime: finalTime
+        )
     }
 
     func incrementAMolecules() {
@@ -41,6 +37,10 @@ class AqueousReactionViewModel: ObservableObject {
         moleculesB = addingMolecules(to: moleculesB, avoiding: moleculesA)
     }
 
+    private func initialConcentration(of molecules: [GridCoordinate]) -> CGFloat {
+        CGFloat(molecules.count) / CGFloat((availableRows * availableCols))
+    }
+
     private func addingMolecules(to molecules: [GridCoordinate], avoiding: [GridCoordinate]) -> [GridCoordinate] {
         GridCoordinateList.addingRandomElementsTo(
             grid: molecules,
@@ -49,6 +49,15 @@ class AqueousReactionViewModel: ObservableObject {
             rows: availableRows,
             avoiding: avoiding
         )
+    }
+
+
+    private var initialConcentrationA: CGFloat {
+        initialConcentration(of: moleculesA)
+    }
+
+    private var initialConcentrationB: CGFloat {
+        initialConcentration(of: moleculesB)
     }
 
     /// Returns the number of rows available for molecules

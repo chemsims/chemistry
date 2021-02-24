@@ -105,10 +105,10 @@ private struct AqueousReactionScreenWithSettings: View {
     private var charts: some View {
         TimeChartMultiDataLineView(
             data: [
-                data(equation: model.equationA, color: .from(.aqMoleculeA)),
-                data(equation: model.equationB, color: .from(.aqMoleculeB)),
-                data(equation: model.equationC, color: .from(.aqMoleculeC)),
-                data(equation: model.equationD, color: .from(.aqMoleculeD)),
+                data(equation: model.equations.reactantA, color: .from(.aqMoleculeA)),
+                data(equation: model.equations.reactantB, color: .from(.aqMoleculeB)),
+                data(equation: model.equations.productC, color: .from(.aqMoleculeC)),
+                data(equation: model.equations.productD, color: .from(.aqMoleculeD)),
             ],
             settings: settings.chartSettings.layout,
             initialTime: 0,
@@ -211,7 +211,7 @@ struct ReactionEquilibriumChartsLayoutSettings {
                 maxValue: 1
             ),
             haloRadius: 2 * headRadius,
-            lineWidth: 0.4 * headRadius
+            lineWidth: 0.3 * headRadius
         )
     }
 }
