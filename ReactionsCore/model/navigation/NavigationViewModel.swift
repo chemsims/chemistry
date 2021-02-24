@@ -4,31 +4,31 @@
 
 import SwiftUI
 
-class NavigationViewModel<State: ScreenState>: ObservableObject {
+public class NavigationViewModel<State: ScreenState> {
 
-    var nextScreen: (() -> Void)?
-    var prevScreen: (() -> Void)?
+    public var nextScreen: (() -> Void)?
+    public var prevScreen: (() -> Void)?
 
-    let model: State.Model
+    public let model: State.Model
 
     private var currentNode: ScreenStateTreeNode<State>
 
     private var nextTimer: Timer?
     private var subTimer: Timer?
 
-    convenience init(model: State.Model, states: [State]) {
+    public convenience init(model: State.Model, states: [State]) {
         let rootNode = ScreenStateTreeNode<State>.build(states: states)
         assert(rootNode != nil)
         self.init(model: model, rootNode: rootNode!)
     }
 
-    init(model: State.Model, rootNode: ScreenStateTreeNode<State>) {
+    public init(model: State.Model, rootNode: ScreenStateTreeNode<State>) {
         self.currentNode = rootNode
         self.model = model
         currentNode.state.apply(on: self.model)
     }
 
-    @objc func next() {
+    @objc public func next() {
         if let nextNode = currentNode.next(model: model) {
             let state = nextNode.state
             state.apply(on: model)
@@ -40,7 +40,7 @@ class NavigationViewModel<State: ScreenState>: ObservableObject {
         }
     }
 
-    func back() {
+    public func back() {
         if let previousNode = currentNode.prev(model: model) {
             let currentState = currentNode.state
             let previousState = previousNode.state

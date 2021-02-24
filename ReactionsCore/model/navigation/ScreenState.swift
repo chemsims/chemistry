@@ -4,7 +4,7 @@
 
 import Foundation
 
-protocol ScreenState {
+public protocol ScreenState {
     associatedtype Model
     associatedtype NestedState: SubState where NestedState.Model == Model
 
@@ -36,17 +36,22 @@ protocol ScreenState {
 }
 
 extension ScreenState {
-    var ignoreOnBack: Bool {
+    public var ignoreOnBack: Bool {
         false
     }
 }
 
-protocol SubState {
+public protocol SubState {
     associatedtype Model
     func apply(on model: Model)
 }
 
-struct DelayedState<State: SubState> {
+public struct DelayedState<State: SubState> {
     let state: State
     let delay: Double
+
+    public init(state: State, delay: Double) {
+        self.state = state
+        self.delay = delay
+    }
 }

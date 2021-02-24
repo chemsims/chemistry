@@ -12,6 +12,9 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var moleculesA = [GridCoordinate]()
     @Published var moleculesB = [GridCoordinate]()
 
+    @Published var canSetLiquidLevel = true
+    @Published var canAddReactants = false
+
     let finalTime: CGFloat = 15
 
     var equations: BalancedReactionEquations {

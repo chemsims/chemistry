@@ -89,8 +89,7 @@ struct ConcentrationPlotView: View {
                         equation: concentrationB!,
                         headColor: display.product.color,
                         haloColor: nil,
-                        headRadius: settings.chartHeadSecondarySize,
-                        haloSize: 0
+                        headRadius: settings.chartHeadSecondarySize
                     ),
                     settings: settings.timeChartLayoutSettings,
                     initialTime: initialTime,
@@ -108,8 +107,7 @@ struct ConcentrationPlotView: View {
                     equation: concentrationA,
                     headColor: display.reactant.color,
                     haloColor: display.reactant.color.opacity(0.3),
-                    headRadius: settings.chartHeadPrimarySize,
-                    haloSize: settings.chartHeadPrimaryHaloSize
+                    headRadius: settings.chartHeadPrimarySize
                 ),
                 settings: settings.timeChartLayoutSettings,
                 initialTime: initialTime,
