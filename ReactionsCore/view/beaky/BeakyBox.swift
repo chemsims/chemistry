@@ -44,6 +44,28 @@ public struct BeakyBox: View {
         self.bubbleStemWidth = bubbleStemWidth
     }
 
+    public init(
+        statement: [TextLine],
+        next: @escaping () -> Void,
+        back: @escaping () -> Void,
+        nextIsDisabled: Bool,
+        settings: BeakyGeometrySettings
+    ) {
+        self.init(
+            statement: statement,
+            next: next,
+            back: back,
+            nextIsDisabled: nextIsDisabled,
+            verticalSpacing: settings.beakyVSpacing,
+            bubbleWidth: settings.bubbleWidth,
+            bubbleHeight: settings.bubbleHeight,
+            beakyHeight: settings.beakyHeight,
+            fontSize: settings.bubbleFontSize,
+            navButtonSize: settings.navButtonSize,
+            bubbleStemWidth: settings.bubbleStemWidth
+        )
+    }
+
     public var body: some View {
         VStack(alignment: .leading, spacing: verticalSpacing) {
             HStack(alignment: .bottom, spacing: 0) {

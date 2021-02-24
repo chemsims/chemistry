@@ -62,9 +62,6 @@ struct OrderedReactionLayoutSettings {
         0.8 * beakyTotalHeight
     }
     var bubbleWidth: CGFloat {
-        if vIsRegular && hIsRegular {
-            return 0.3 * width
-        }
         return 0.3 * width
     }
     var bubbleFontSize: CGFloat {

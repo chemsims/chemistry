@@ -42,15 +42,11 @@ private struct AqueousReactionScreenWithSettings: View {
                 next: model.next,
                 back: model.back,
                 nextIsDisabled: false,
-                verticalSpacing: 1,
-                bubbleWidth: 100,
-                bubbleHeight: 100,
-                beakyHeight: 100,
-                fontSize: 20,
-                navButtonSize: 20,
-                bubbleStemWidth: 10
+                settings: settings.beakySettings
             )
         }
+        .padding(.bottom, settings.bottomPadding)
+        .padding(.top, settings.topPadding)
     }
 
     private var molecules: some View {
@@ -160,8 +156,20 @@ struct AqueousScreenLayoutSettings {
         geometry.size.width
     }
 
+    var height: CGFloat {
+        geometry.size.height
+    }
+
     var beakerWidth: CGFloat {
-        0.25 * width
+        0.22 * width
+    }
+
+    var bottomPadding: CGFloat {
+        0.02 * geometry.size.height
+    }
+
+    var topPadding: CGFloat {
+        bottomPadding
     }
 
     var beakerHeight: CGFloat {
@@ -183,11 +191,20 @@ struct AqueousScreenLayoutSettings {
 
 extension AqueousScreenLayoutSettings {
     var moleculeWidth: CGFloat {
-        0.15 * beakerWidth
+        0.12 * beakerWidth
     }
 
     var moleculeSpacing: CGFloat {
         0.1 * beakerWidth
+    }
+}
+
+extension AqueousScreenLayoutSettings {
+    var beakySettings: BeakyGeometrySettings {
+        BeakyGeometrySettings(
+            screenWidth: width,
+            screenHeight: height
+        )
     }
 }
 
@@ -243,5 +260,8 @@ struct AqueousReactionScreen_Previews: PreviewProvider {
     static var previews: some View {
         AqueousReactionScreen(model: AqueousReactionViewModel())
             .previewLayout(.iPhoneSELandscape)
+
+        AqueousReactionScreen(model: AqueousReactionViewModel())
+            .previewLayout(.iPhone12ProMaxLandscape)
     }
 }

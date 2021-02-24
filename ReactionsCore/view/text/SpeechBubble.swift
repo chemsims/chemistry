@@ -85,12 +85,12 @@ public struct SpeechBubbleSettings {
     let geometry: GeometryProxy
     let fontSize: CGFloat
 
-    public static func getStemWidth(width: CGFloat) -> CGFloat {
-        width * 0.15
+    public static func getStemWidth(bubbleWidth: CGFloat) -> CGFloat {
+        bubbleWidth * 0.15
     }
 
     var stemWidth: CGFloat {
-        SpeechBubbleSettings.getStemWidth(width: geometry.size.width)
+        SpeechBubbleSettings.getStemWidth(bubbleWidth: geometry.size.width)
     }
 
     var stemHeight: CGFloat {
