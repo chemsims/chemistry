@@ -15,12 +15,12 @@ class EnergyProfileFilingViewModel: ObservableObject {
 
     private let persistence: EnergyProfilePersistence
 
-    func navigation(index: Int) -> NavigationViewModel<EnergyProfileState> {
+    func navigation(index: Int) -> NavigationModel<EnergyProfileState> {
         let model = EnergyProfileViewModel()
         let input = getInput(index: index)
         let nextCatalyst = index == input.catalysts.count - 1 ? nil : input.catalysts[index + 1]
 
-        let nav = NavigationViewModel(
+        let nav = NavigationModel(
             model: model,
             rootNode: ScreenStateTreeNode<EnergyProfileState>(
                 state: EnergyProfileEndState(

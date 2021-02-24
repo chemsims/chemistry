@@ -47,7 +47,7 @@ class ReactionFilingViewModel: ObservableObject {
     func navigation(
         model: ZeroOrderReactionViewModel,
         reactionType: ReactionType
-    ) -> NavigationViewModel<ReactionState> {
+    ) -> NavigationModel<ReactionState> {
         let input = persistence.get(order: order, reaction: reactionType)
         let state: ReactionState =
             ReactionFilingState(
@@ -55,7 +55,7 @@ class ReactionFilingViewModel: ObservableObject {
                 reactionType: reactionType,
                 input: input
             )
-        let nav = NavigationViewModel(
+        let nav = NavigationModel(
             model: model,
             rootNode: ScreenStateTreeNode<ReactionState>.build(states: [state])!
         )

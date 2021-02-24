@@ -19,7 +19,7 @@ class ReactionComparisonViewModel: ObservableObject {
     private let firstOrderInput: ReactionInput
     private let secondOrderInput: ReactionInput
 
-    var navigation: NavigationViewModel<ReactionComparisonState>?
+    var navigation: NavigationModel<ReactionComparisonState>?
 
     @Published var statement = [TextLine]()
     @Published var currentTime0: CGFloat?

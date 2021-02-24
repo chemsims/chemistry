@@ -9,8 +9,8 @@ struct EnergyProfileNavigationViewModel {
     static func model(
         _ energyViewModel: EnergyProfileViewModel,
         persistence: EnergyProfilePersistence
-    ) -> NavigationViewModel<EnergyProfileState> {
-        NavigationViewModel(
+    ) -> NavigationModel<EnergyProfileState> {
+        NavigationModel(
             model: energyViewModel,
             states: states(persistence: persistence)
         )

@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-public class NavigationViewModel<State: ScreenState> {
+public class NavigationModel<State: ScreenState> {
 
     public var nextScreen: (() -> Void)?
     public var prevScreen: (() -> Void)?

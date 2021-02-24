@@ -47,7 +47,7 @@ class EnergyProfileViewModel: ObservableObject {
 
     var catalystToSelect: Catalyst?
 
-    var navigation: NavigationViewModel<EnergyProfileState>?
+    var navigation: NavigationModel<EnergyProfileState>?
 
     var activationEnergy: CGFloat {
         let reduction = catalystState.selected?.energyReduction ?? 0

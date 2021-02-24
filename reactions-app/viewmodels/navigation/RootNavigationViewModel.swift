@@ -258,7 +258,7 @@ private class ZeroOrderReactionScreenProvider: ScreenProvider {
 
     let persistence: ReactionInputPersistence
     let viewModel: ZeroOrderReactionViewModel
-    let navigation: NavigationViewModel<ReactionState>
+    let navigation: NavigationModel<ReactionState>
 
     var screen: AnyView {
         AnyView(ZeroOrderReactionScreen(reaction: viewModel))
@@ -277,7 +277,7 @@ private class FirstOrderReactionScreenProvider: ScreenProvider {
 
     let persistence: ReactionInputPersistence
     let viewModel: FirstOrderReactionViewModel
-    let navigation: NavigationViewModel<ReactionState>
+    let navigation: NavigationModel<ReactionState>
 
     var screen: AnyView {
         AnyView(FirstOrderReactionScreen(reaction: viewModel))
@@ -296,7 +296,7 @@ private class SecondOrderReactionScreenProvider: ScreenProvider {
 
     let persistence: ReactionInputPersistence
     let viewModel: SecondOrderReactionViewModel
-    let navigation: NavigationViewModel<ReactionState>
+    let navigation: NavigationModel<ReactionState>
 
     var screen: AnyView {
         AnyView(SecondOrderReactionScreen(reaction: viewModel))
@@ -354,7 +354,7 @@ private class EnergyProfileScreenProvider: ScreenProvider {
         navigation.prevScreen = prev
     }
 
-    let navigation: NavigationViewModel<EnergyProfileState>
+    let navigation: NavigationModel<EnergyProfileState>
     let viewModel: EnergyProfileViewModel
 
     var screen: AnyView {
@@ -400,7 +400,7 @@ private class FinalAppScreenProvider: ScreenProvider {
         prev: @escaping () -> Void
     ) {
         let viewModel = EnergyProfileViewModel()
-        self.navigation = NavigationViewModel(
+        self.navigation = NavigationModel(
             model: viewModel,
             states: [FinalEnergyProfileState(persistence: persistence)]
         )
@@ -408,7 +408,7 @@ private class FinalAppScreenProvider: ScreenProvider {
         viewModel.navigation = navigation
     }
 
-    let navigation: NavigationViewModel<EnergyProfileState>
+    let navigation: NavigationModel<EnergyProfileState>
 
     var screen: AnyView {
         return AnyView(EnergyProfileScreen(navigation: navigation))

@@ -14,7 +14,7 @@ class ZeroOrderReactionViewModel: ObservableObject {
         )
     }
 
-    var navigation: NavigationViewModel<ReactionState>?
+    var navigation: NavigationModel<ReactionState>?
 
     @Published var statement = [TextLine]()
     @Published var input: ReactionInputModel = ReactionInputAllProperties(order: .Zero) {

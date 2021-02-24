@@ -7,7 +7,7 @@ import ReactionsCore
 
 struct EnergyProfileScreen: View {
 
-    init(navigation: NavigationViewModel<EnergyProfileState>) {
+    init(navigation: NavigationModel<EnergyProfileState>) {
         self.model = navigation.model
     }
 
