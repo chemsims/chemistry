@@ -73,14 +73,8 @@ struct ConcentrationPlotView: View {
             }
 
             if includeAxis {
-                ChartAxisShape(
-                    verticalTicks: settings.verticalTicks,
-                    horizontalTicks: settings.horizontalTicks,
-                    tickSize: settings.tickSize,
-                    gapToTop: settings.gapFromMaxTickToChart,
-                    gapToSide: settings.gapFromMaxTickToChart
-                )
-                .stroke()
+                ChartAxisShape(settings: settings.chartAxisShapeSettings)
+                    .stroke()
             }
 
             if concentrationB != nil {

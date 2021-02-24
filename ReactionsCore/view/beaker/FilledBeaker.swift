@@ -76,7 +76,7 @@ public struct FilledBeaker: View {
 //        )
     }
 
-    // TODO 
+    // TODO
     private var reactant: String {
         reactionPair.reactant.name
     }
@@ -186,17 +186,6 @@ public struct FilledBeaker: View {
 
 struct FilledBeaker_Previews: PreviewProvider {
     static var previews: some View {
-        FilledBeaker(
-            moleculesA: [
-                GridCoordinate(col: 0, row: 0),
-                GridCoordinate(col: 1, row: 1),
-                GridCoordinate(col: 2, row: 2)
-            ],
-            concentrationB: ConstantEquation(value: 0),
-            currentTime: 0,
-            reactionPair: ReactionType.A.display
-        )
-
         FilledBeaker(
             molecules: [
                 BeakerMolecules(

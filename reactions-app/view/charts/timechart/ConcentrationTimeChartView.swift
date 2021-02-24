@@ -417,11 +417,7 @@ struct GeneralTimeChartView: View {
             Rectangle()
                 .fill(Color.white)
             ChartAxisShape(
-                verticalTicks: settings.verticalTicks,
-                horizontalTicks: settings.horizontalTicks,
-                tickSize: settings.tickSize,
-                gapToTop: settings.gapFromMaxTickToChart,
-                gapToSide: settings.gapFromMaxTickToChart
+                settings: settings.chartAxisShapeSettings
             ).stroke()
         }.frame(width: settings.chartSize, height: settings.chartSize)
 

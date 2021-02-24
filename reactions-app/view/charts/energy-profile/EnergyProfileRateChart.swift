@@ -89,11 +89,7 @@ struct EnergyProfileRateChart: View {
             }
 
             ChartAxisShape(
-                verticalTicks: settings.verticalTicks,
-                horizontalTicks: settings.horizontalTicks,
-                tickSize: settings.tickSize,
-                gapToTop: settings.gapFromMaxTickToChart,
-                gapToSide: settings.gapFromMaxTickToChart
+                settings: settings.timeChartSettings.chartAxisShapeSettings
             )
             .stroke()
         }.frame(width: settings.chartSize, height: settings.chartSize)
@@ -121,23 +117,7 @@ struct EnergyRateChartSettings {
         self.timeChartSettings = ReactionRateChartLayoutSettings(chartSize: chartSize)
     }
 
-    private let timeChartSettings: ReactionRateChartLayoutSettings
-
-    var verticalTicks: Int {
-        timeChartSettings.verticalTicks
-    }
-
-    var horizontalTicks: Int {
-        timeChartSettings.horizontalTicks
-    }
-
-    var tickSize: CGFloat {
-        timeChartSettings.tickSize
-    }
-
-    var gapFromMaxTickToChart: CGFloat {
-        timeChartSettings.gapFromMaxTickToChart
-    }
+    let timeChartSettings: ReactionRateChartLayoutSettings
 
     var chartHeadSize: CGFloat {
         timeChartSettings.chartHeadPrimarySize

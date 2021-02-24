@@ -32,14 +32,6 @@ struct ReactionRateChartLayoutSettings {
 
     private let includeAxisPadding: Bool
 
-    let verticalTicks = 10
-    let horizontalTicks = 10
-    var tickSize: CGFloat {
-        0.04 * chartSize
-    }
-    var gapFromMaxTickToChart: CGFloat {
-        0.24 * chartSize
-    }
     var sliderHandleWidth: CGFloat {
         ReactionRateChartLayoutSettings.sliderHandleWidthFactor * chartSize
     }
@@ -129,4 +121,10 @@ struct ReactionRateChartLayoutSettings {
     static let totalWidthFactor = 1 + (2 * chartHStackFactor) + sliderHandleWidthFactor + yLabelWidthFactor
 
     static let totalHeightFactor = 1 + (2 * chartHStackFactor) + sliderHandleWidthFactor + xLabelHeightFactor
+}
+
+extension ReactionRateChartLayoutSettings {
+    var chartAxisShapeSettings: ChartAxisShapeSettings {
+        ChartAxisShapeSettings(chartSize: chartSize)
+    }
 }

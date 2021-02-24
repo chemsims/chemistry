@@ -74,7 +74,7 @@ struct OrderedReactionLayoutSettings {
         bubbleHeight * 0.2
     }
     var bubbleStemWidth: CGFloat {
-        SpeechBubbleSettings.getStemWidth(width: bubbleWidth)
+        SpeechBubbleSettings.getStemWidth(bubbleWidth: bubbleWidth)
     }
     var beakyBottomPadding: CGFloat {
         beakyRightPadding

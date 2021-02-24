@@ -122,19 +122,19 @@ private struct AqueousReactionScreenWithSettings: View {
     }
 
     private var charts: some View {
-        TimeChartMultiDataLineView(
+        TimeChartView(
             data: [
                 data(equation: model.equations.reactantA, color: .from(.aqMoleculeA)),
                 data(equation: model.equations.reactantB, color: .from(.aqMoleculeB)),
                 data(equation: model.equations.productC, color: .from(.aqMoleculeC)),
                 data(equation: model.equations.productD, color: .from(.aqMoleculeD)),
             ],
-            settings: settings.chartSettings.layout,
             initialTime: 0,
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.totalReactionTime,
-            filledBarColor: .black,
-            canSetCurrentTime: model.canSetCurrentTime
+            canSetCurrentTime: model.canSetCurrentTime,
+            settings: settings.chartSettings.layout,
+            axisSettings: settings.chartSettings.axisShapeSettings
         )
         .frame(width: settings.chartSettings.size, height: settings.chartSettings.size)
         .border(Color.black)
@@ -253,6 +253,10 @@ struct ReactionEquilibriumChartsLayoutSettings {
             haloRadius: 2 * headRadius,
             lineWidth: 0.3 * headRadius
         )
+    }
+
+    var axisShapeSettings: ChartAxisShapeSettings {
+        ChartAxisShapeSettings(chartSize: size)
     }
 }
 
