@@ -343,12 +343,12 @@ private struct ReactionComparisonViewWithSettings: View {
     private func beaker(
         order: ReactionOrder
     ) -> some View {
-        return FilledBeaker(
+        return ReactionsRateBeaker(
             moleculesA: reaction.moleculesA,
             concentrationB: concentration(order: order),
             currentTime: time(order: order) ?? 0,
             reactionPair: ReactionType.A.display,
-            outlineColor: chartBorderColor(order: order)
+            finalTime: finalTime(order: order)
         )
         .frame(width: settings.beakerWidth)
     }
@@ -366,6 +366,14 @@ private struct ReactionComparisonViewWithSettings: View {
         case .Zero: return reaction.currentTime0
         case .First: return reaction.currentTime1
         case .Second: return reaction.currentTime2
+        }
+    }
+
+    private func finalTime(order: ReactionOrder) -> CGFloat {
+        switch (order) {
+        case .Zero: return reaction.finalTime0
+        case .First: return reaction.finalTime1
+        case .Second: return reaction.finalTime2
         }
     }
 

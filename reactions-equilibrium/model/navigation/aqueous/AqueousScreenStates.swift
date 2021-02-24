@@ -66,4 +66,8 @@ class AqueousEndAnimationState: AqueousScreenState {
         }
         model.canSetCurrentTime = true
     }
+
+    override func unapply(on model: AqueousReactionViewModel) {
+        model.canSetCurrentTime = false
+    }
 }

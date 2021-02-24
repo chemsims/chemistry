@@ -7,12 +7,13 @@ import SwiftUI
 public struct FilledBeaker: View {
 
     let molecules: [BeakerMolecules]
-    let concentrationB: Equation?
+    let animatingMolecules: [AnimatingBeakerMolecules]
     let currentTime: CGFloat?
     let reactionPair: ReactionPairDisplay
     let outlineColor: Color
     let rows: CGFloat
 
+    @available(*, deprecated, message: "Use other initializer")
     public init(
         moleculesA: [GridCoordinate],
         concentrationB: Equation?,
@@ -21,13 +22,22 @@ public struct FilledBeaker: View {
         outlineColor: Color = Styling.beakerOutline,
         rows: CGFloat = CGFloat(MoleculeGridSettings.rows)
     ) {
-        self.molecules = [
-            BeakerMolecules(
-                coords: moleculesA,
-                color: reactionPair.reactant.color
-            )
-        ]
-        self.concentrationB = concentrationB
+        let molecule = BeakerMolecules(
+            coords: moleculesA,
+            color: reactionPair.reactant.color
+        )
+        self.molecules = [molecule]
+
+        let animating = concentrationB.map { cB in
+            [
+                AnimatingBeakerMolecules(
+                    molecules: molecule,
+                    fractionToDraw: concentrationB!
+                )
+            ]
+        }
+
+        self.animatingMolecules = animating ?? []
         self.currentTime = currentTime
         self.reactionPair = reactionPair
         self.outlineColor = outlineColor
@@ -36,11 +46,13 @@ public struct FilledBeaker: View {
 
     public init(
         molecules: [BeakerMolecules],
+        animatingMolecules: [AnimatingBeakerMolecules],
+        currentTime: CGFloat,
         rows: CGFloat = CGFloat(MoleculeGridSettings.rows)
     ) {
         self.molecules = molecules
-        self.concentrationB = nil
-        self.currentTime = nil
+        self.animatingMolecules = animatingMolecules
+        self.currentTime = currentTime
         self.reactionPair = ReactionType.A.display
         self.outlineColor = Styling.beakerOutline
         self.rows = rows
@@ -64,6 +76,7 @@ public struct FilledBeaker: View {
 //        )
     }
 
+    // TODO 
     private var reactant: String {
         reactionPair.reactant.name
     }
@@ -135,36 +148,24 @@ public struct FilledBeaker: View {
             )
 
             ForEach(0..<molecules.count, id: \.self) { i in
-                fillMolecule(
-                    molecule: molecules[i],
-                    settings: settings,
-                    beaker: beaker
+                moleculeGrid(
+                    settings,
+                    color: molecules[i].color,
+                    coordinates: molecules[i].coords
                 )
             }
-        }
-    }
 
-    private func fillMolecule(
-        molecule: BeakerMolecules,
-        settings: MoleculeGridSettings,
-        beaker: BeakerSettings
-    ) -> some View {
-        ZStack {
-            moleculeGrid(
-                settings,
-                color: molecule.color,
-                coordinates: molecule.coords
-            )
-
-            if currentTime != nil && concentrationB != nil {
-                AnimatingMoleculeGrid(
-                    settings: settings,
-                    coords: molecule.coords,
-                    color: reactionPair.product.color,
-                    fractionOfCoordsToDraw: concentrationB!,
-                    currentTime: currentTime!
-                )
-                .frame(height: settings.height(for: rows))
+            if currentTime != nil {
+                ForEach(0..<animatingMolecules.count, id: \.self) { i in
+                    AnimatingMoleculeGrid(
+                        settings: settings,
+                        coords: animatingMolecules[i].molecules.coords,
+                        color: animatingMolecules[i].molecules.color,
+                        fractionOfCoordsToDraw: animatingMolecules[i].fractionToDraw,
+                        currentTime: currentTime!
+                    )
+                    .frame(height: settings.height(for: rows))
+                }
             }
         }
     }
@@ -178,7 +179,8 @@ public struct FilledBeaker: View {
             settings: settings,
             coords: coordinates,
             color: color
-        ).frame(height: settings.height(for: rows))
+        )
+        .frame(height: settings.height(for: rows))
     }
 }
 
@@ -214,6 +216,8 @@ struct FilledBeaker_Previews: PreviewProvider {
                     color: .black
                 )
             ],
+            animatingMolecules: [],
+            currentTime: 0,
             rows: 10
         )
     }

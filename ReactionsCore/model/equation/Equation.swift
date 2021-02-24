@@ -49,3 +49,18 @@ public struct ConstantEquation: Equation {
     }
 }
 
+public struct ScaledEquation: Equation {
+
+    public let scaleFactor: CGFloat
+    public let underlying: Equation
+
+    public init(targetY: CGFloat, targetX: CGFloat, underlying: Equation) {
+        let currentY = underlying.getY(at: targetX)
+        self.scaleFactor = currentY == 0 ? 1 : targetY / currentY
+        self.underlying = underlying
+    }
+
+    public func getY(at x: CGFloat) -> CGFloat {
+        scaleFactor * underlying.getY(at: x)
+    }
+}

@@ -44,6 +44,24 @@ class AqueousReactionViewModel: ObservableObject {
         )
     }
 
+    var productMolecules: BeakerMoleculesSetter {
+        BeakerMoleculesSetter(
+            totalMolecules: availableMolecules,
+            endOfReactionTime: AqueousReactionSettings.timeForConvergence,
+            moleculesA: moleculesA,
+            moleculesB: moleculesB,
+            reactionEquation: equations
+        )
+    }
+
+    func productMoleculeFractionToDraw(underlying: Equation) -> Equation {
+        ScaledEquation(
+            targetY: 1,
+            targetX: AqueousReactionSettings.timeForConvergence,
+            underlying: underlying
+        )
+    }
+
     func incrementAMolecules() {
         moleculesA = addingMolecules(to: moleculesA, avoiding: moleculesB)
     }
@@ -61,7 +79,7 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     private func initialConcentration(of molecules: [GridCoordinate]) -> CGFloat {
-        CGFloat(molecules.count) / CGFloat((availableRows * availableCols))
+        CGFloat(molecules.count) / CGFloat(availableMolecules)
     }
 
     private func addingMolecules(to molecules: [GridCoordinate], avoiding: [GridCoordinate]) -> [GridCoordinate] {
@@ -80,6 +98,10 @@ class AqueousReactionViewModel: ObservableObject {
 
     private var initialConcentrationB: CGFloat {
         initialConcentration(of: moleculesB)
+    }
+
+    private var availableMolecules: Int {
+        availableRows * availableCols
     }
 
     /// Returns the number of rows available for molecules

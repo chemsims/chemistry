@@ -47,11 +47,12 @@ struct OrderedReactionScreen<Content: View>: View {
             HStack(alignment: .top, spacing: 0) {
                 Spacer()
                     .frame(width: settings.menuTotalWidth)
-                FilledBeaker(
+                ReactionsRateBeaker(
                     moleculesA: reaction.moleculesA,
                     concentrationB: reaction.input.concentrationB,
                     currentTime: reaction.currentTime,
-                    reactionPair: reaction.selectedReaction.display
+                    reactionPair: reaction.selectedReaction.display,
+                    finalTime: reaction.input.inputT2
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
                 .colorMultiply(reaction.color(for: nil))
