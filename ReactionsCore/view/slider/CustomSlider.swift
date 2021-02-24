@@ -20,6 +20,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     let includeFill: Bool
     let useHaptics: Bool
+    let disabled: Bool
 
     @available(*, deprecated, message: "Use other initialiser")
     public init(
@@ -44,6 +45,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         self.orientation = orientation
         self.includeFill = includeFill
         self.useHaptics = useHaptics
+        self.disabled = false
     }
 
     public init(
@@ -52,6 +54,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         orientation: Orientation,
         includeFill: Bool,
         settings: SliderGeometrySettings,
+        disabled: Bool = false,
         handleColor: Color = .orangeAccent,
         barColor: Color = .black,
         useHaptics: Bool = true
@@ -66,6 +69,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         self.orientation = orientation
         self.includeFill = includeFill
         self.useHaptics = useHaptics
+        self.disabled = disabled
     }
 
     @State private var impactGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -96,7 +100,9 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     setNewValue(newValue: value - axis.accessibilityIncrement)
                 }
             }
-        }
+        }.modifier(
+            DisabledSliderModifier(disabled: disabled)
+        )
     }
 
     private func handle(geometry: GeometryProxy, axis: AxisPositionCalculations<Value>) -> some View {

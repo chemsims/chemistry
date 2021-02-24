@@ -126,6 +126,8 @@
 		5783964B25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783964A25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift */; };
 		5783965525A9DB1D009CC8FC /* EnergyProfileChartInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783965425A9DB1D009CC8FC /* EnergyProfileChartInput.swift */; };
 		5783965925A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783965825A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift */; };
+		5786FAAB25E6908D00AAD8A6 /* DisabledSliderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */; };
+		5786FAB525E692D800AAD8A6 /* RunnableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAB425E692D800AAD8A6 /* RunnableState.swift */; };
 		5787039825B88E14002A4487 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787039725B88E14002A4487 /* ShareSheetView.swift */; };
 		5790AC2F25B375FC00B25776 /* ReactionComparisonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
@@ -134,6 +136,8 @@
 		57952A3925E67F6E006AB876 /* ScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B168BF25A7C09200F6668E /* ScreenState.swift */; };
 		57952A4225E67F83006AB876 /* ScreenStateTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486225A5FB49000CFA1E /* ScreenStateTree.swift */; };
 		57952A4725E67F96006AB876 /* NavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C59256555C40075358B /* NavigationModel.swift */; };
+		57952A5225E68184006AB876 /* AqueousNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A5125E68184006AB876 /* AqueousNavigationModel.swift */; };
+		57952A5D25E6819C006AB876 /* AqueousScreenStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A5C25E6819C006AB876 /* AqueousScreenStates.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
 		5797A44A25E4069F00991BD9 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
 		5797A45125E4069F00991BD9 /* ReactionsCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797A44325E4069F00991BD9 /* ReactionsCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -461,12 +465,16 @@
 		5783964A25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileShapeSettings.swift; sourceTree = "<group>"; };
 		5783965425A9DB1D009CC8FC /* EnergyProfileChartInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChartInput.swift; sourceTree = "<group>"; };
 		5783965825A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChartInputTests.swift; sourceTree = "<group>"; };
+		5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledSliderModifier.swift; sourceTree = "<group>"; };
+		5786FAB425E692D800AAD8A6 /* RunnableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnableState.swift; sourceTree = "<group>"; };
 		5787039725B88E14002A4487 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPairDisplay.swift; sourceTree = "<group>"; };
 		5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViewModelTests.swift; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		57952A2025E63F7F006AB876 /* BalancedReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReaction.swift; sourceTree = "<group>"; };
 		57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionEquationTests.swift; sourceTree = "<group>"; };
+		57952A5125E68184006AB876 /* AqueousNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousNavigationModel.swift; sourceTree = "<group>"; };
+		57952A5C25E6819C006AB876 /* AqueousScreenStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenStates.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
 		5797567E25C1C5CB005C484E /* LabelledImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelledImage.swift; sourceTree = "<group>"; };
 		5797A44125E4069F00991BD9 /* ReactionsCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactionsCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1215,6 +1223,23 @@
 			path = navigation;
 			sourceTree = "<group>";
 		};
+		57952A5025E68175006AB876 /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				57952A5B25E68189006AB876 /* aqueous */,
+			);
+			path = navigation;
+			sourceTree = "<group>";
+		};
+		57952A5B25E68189006AB876 /* aqueous */ = {
+			isa = PBXGroup;
+			children = (
+				57952A5125E68184006AB876 /* AqueousNavigationModel.swift */,
+				57952A5C25E6819C006AB876 /* AqueousScreenStates.swift */,
+			);
+			path = aqueous;
+			sourceTree = "<group>";
+		};
 		5797567D25C1C5BE005C484E /* image */ = {
 			isa = PBXGroup;
 			children = (
@@ -1319,6 +1344,7 @@
 				57035EF0255C09B500DB3A19 /* Orientation.swift */,
 				5727487325A61BDD000CFA1E /* ReactionType.swift */,
 				575A884E25E4327800AEE448 /* QuestionSet.swift */,
+				5786FAB425E692D800AAD8A6 /* RunnableState.swift */,
 			);
 			path = enums;
 			sourceTree = "<group>";
@@ -1336,6 +1362,7 @@
 			isa = PBXGroup;
 			children = (
 				57035ED7255BF05100DB3A19 /* CustomSlider.swift */,
+				5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */,
 			);
 			path = slider;
 			sourceTree = "<group>";
@@ -1413,6 +1440,7 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57952A5025E68175006AB876 /* navigation */,
 				57DDAD0E25E567B100B535A7 /* reaction-equations */,
 				57DDACF225E5549F00B535A7 /* styling */,
 				57DDACDB25E54EE200B535A7 /* enums */,
@@ -2021,6 +2049,8 @@
 				57952A2125E63F7F006AB876 /* BalancedReaction.swift in Sources */,
 				575A88B825E43CD500AEE448 /* SceneDelegate.swift in Sources */,
 				57DDAC1A25E4FD8100B535A7 /* AqueousReactionScreen.swift in Sources */,
+				57952A5D25E6819C006AB876 /* AqueousScreenStates.swift in Sources */,
+				57952A5225E68184006AB876 /* AqueousNavigationModel.swift in Sources */,
 				57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */,
 				575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */,
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
@@ -2042,6 +2072,7 @@
 			files = (
 				57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */,
 				575A886625E435FB00AEE448 /* Beaky.swift in Sources */,
+				5786FAAB25E6908D00AAD8A6 /* DisabledSliderModifier.swift in Sources */,
 				5797A4AA25E40A5400991BD9 /* MoleculeGridSettings.swift in Sources */,
 				575A881D25E4310E00AEE448 /* QuizState.swift in Sources */,
 				5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */,
@@ -2077,6 +2108,7 @@
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
 				575A887525E4364500AEE448 /* NavButton.swift in Sources */,
 				5797A4A325E40A5100991BD9 /* MoleculeGridShape.swift in Sources */,
+				5786FAB525E692D800AAD8A6 /* RunnableState.swift in Sources */,
 				5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */,
 				57952A4225E67F83006AB876 /* ScreenStateTree.swift in Sources */,
 				57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */,

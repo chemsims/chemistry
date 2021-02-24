@@ -474,17 +474,7 @@ struct GeneralTimeChartView: View {
     }
 }
 
-struct DisabledSliderModifier: ViewModifier {
-    let disabled: Bool
 
-    func body(content: Content) -> some View {
-        content
-            .disabled(disabled)
-            .compositingGroup()
-            .colorMultiply(disabled ? .gray : .white)
-            .opacity(disabled ? 0.3 : 1)
-    }
-}
 
 struct TimeChartAxisView_Previews: PreviewProvider {
     static var previews: some View {

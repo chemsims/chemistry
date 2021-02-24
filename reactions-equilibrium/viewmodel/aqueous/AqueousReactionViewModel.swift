@@ -7,6 +7,12 @@ import ReactionsCore
 
 class AqueousReactionViewModel: ObservableObject {
 
+    private var navigation: NavigationModel<AqueousScreenState>?
+
+    init() {
+        self.navigation = AqueousNavigationModel.model(model: self)
+    }
+
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows)
 
     @Published var moleculesA = [GridCoordinate]()
@@ -14,6 +20,12 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var canSetLiquidLevel = true
     @Published var canAddReactants = false
+
+    @Published var currentTime: CGFloat = 0
+
+    @Published var reactionState = TriProcessState.notStarted
+
+    @Published var canSetCurrentTime = false
 
     let finalTime: CGFloat = 15
 
@@ -40,6 +52,14 @@ class AqueousReactionViewModel: ObservableObject {
         moleculesB = addingMolecules(to: moleculesB, avoiding: moleculesA)
     }
 
+    func next() {
+        navigation?.next()
+    }
+
+    func back() {
+        navigation?.back()
+    }
+
     private func initialConcentration(of molecules: [GridCoordinate]) -> CGFloat {
         CGFloat(molecules.count) / CGFloat((availableRows * availableCols))
     }
@@ -53,7 +73,6 @@ class AqueousReactionViewModel: ObservableObject {
             avoiding: avoiding
         )
     }
-
 
     private var initialConcentrationA: CGFloat {
         initialConcentration(of: moleculesA)

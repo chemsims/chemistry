@@ -39,8 +39,8 @@ private struct AqueousReactionScreenWithSettings: View {
 
             BeakyBox(
                 statement: [],
-                next: {},
-                back: {},
+                next: model.next,
+                back: model.back,
                 nextIsDisabled: false,
                 verticalSpacing: 1,
                 bubbleWidth: 100,
@@ -64,6 +64,9 @@ private struct AqueousReactionScreenWithSettings: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: settings.moleculeWidth)
                         .onTapGesture {
+                            guard model.canAddReactants else {
+                                return
+                            }
                             if molecule == .A {
                                 model.incrementAMolecules()
                             } else {
@@ -83,7 +86,8 @@ private struct AqueousReactionScreenWithSettings: View {
                 axis: settings.sliderAxis,
                 orientation: .portrait,
                 includeFill: true,
-                settings: settings.sliderSettings
+                settings: settings.sliderSettings,
+                disabled: !model.canSetLiquidLevel
             )
             .frame(width: settings.sliderSettings.handleWidth, height: settings.sliderHeight)
 
@@ -112,10 +116,10 @@ private struct AqueousReactionScreenWithSettings: View {
             ],
             settings: settings.chartSettings.layout,
             initialTime: 0,
-            currentTime: .constant(5),
-            finalTime: 20,
+            currentTime: $model.currentTime,
+            finalTime: AqueousReactionSettings.totalReactionTime,
             filledBarColor: .black,
-            canSetCurrentTime: false
+            canSetCurrentTime: model.canSetCurrentTime
         )
         .frame(width: settings.chartSettings.size, height: settings.chartSettings.size)
         .border(Color.black)
@@ -202,7 +206,7 @@ struct ReactionEquilibriumChartsLayoutSettings {
                 minValuePosition: 0,
                 maxValuePosition: size,
                 minValue: 0,
-                maxValue: 20
+                maxValue: AqueousReactionSettings.totalReactionTime
             ),
             yAxis: AxisPositionCalculations<CGFloat>(
                 minValuePosition: size,
