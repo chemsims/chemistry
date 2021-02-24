@@ -122,30 +122,13 @@ private struct AqueousReactionScreenWithSettings: View {
     }
 
     private var charts: some View {
-        TimeChartView(
-            data: [
-                data(equation: model.equations.reactantA, color: .from(.aqMoleculeA)),
-                data(equation: model.equations.reactantB, color: .from(.aqMoleculeB)),
-                data(equation: model.equations.productC, color: .from(.aqMoleculeC)),
-                data(equation: model.equations.productD, color: .from(.aqMoleculeD)),
-            ],
+        MultiConcentrationPlot(
+            equations: model.equations,
             initialTime: 0,
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.totalReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
-            settings: settings.chartSettings.layout,
-            axisSettings: settings.chartSettings.axisShapeSettings
-        )
-        .frame(width: settings.chartSettings.size, height: settings.chartSettings.size)
-        .border(Color.black)
-    }
-
-    private func data(equation: Equation, color: Color) -> TimeChartDataline {
-        TimeChartDataline(
-            equation: equation,
-            headColor: color,
-            haloColor: color.opacity(0.3),
-            headRadius: settings.chartSettings.headRadius
+            settings: settings.chartSettings
         )
     }
 }
@@ -257,6 +240,38 @@ struct ReactionEquilibriumChartsLayoutSettings {
 
     var axisShapeSettings: ChartAxisShapeSettings {
         ChartAxisShapeSettings(chartSize: size)
+    }
+
+    var axisLabelFontSize: CGFloat {
+        0.06 * size
+    }
+}
+
+extension ReactionEquilibriumChartsLayoutSettings {
+    var legendCircleSize: CGFloat {
+        0.09 * size
+    }
+
+    var legendSpacing: CGFloat {
+        0.8 * legendCircleSize
+    }
+
+    var legendFontSize: CGFloat {
+        0.6 * legendCircleSize
+    }
+
+    var legendPadding: CGFloat {
+        0.35 * legendCircleSize
+    }
+}
+
+extension ReactionEquilibriumChartsLayoutSettings {
+    var yAxisWidthLabelWidth: CGFloat {
+        0.1 * size
+    }
+
+    var axisLabelGapFromAxis: CGFloat {
+        headRadius
     }
 }
 
