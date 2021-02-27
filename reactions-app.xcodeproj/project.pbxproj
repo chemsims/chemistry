@@ -106,7 +106,6 @@
 		5763177E259B8EAF00D7CE2C /* SizeAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5763177D259B8EAF00D7CE2C /* SizeAdjuster.swift */; };
 		57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */; };
 		5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766B71E256EC20200569CB9 /* ShakeExtension.swift */; };
-		576D5A7825665E170062F722 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
 		576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */; };
 		576D5AA52566BAB50062F722 /* FirstOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */; };
 		576D5AAC2566CA900062F722 /* SecondOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */; };
@@ -199,6 +198,7 @@
 		57D2F2FE25EA308000AEE0D8 /* EquationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2FD25EA308000AEE0D8 /* EquationSettings.swift */; };
 		57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D32577C2FD006D945B /* FixedText.swift */; };
 		57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */; };
+		57D2F31225EA389C00AEE0D8 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
 		57D8BA17257B6ABF006B3C8B /* ReactionComparisonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */; };
@@ -966,7 +966,6 @@
 				576D5A89256674D50062F722 /* zero-order */,
 				572D39AB256656270039D37D /* rate-comparison */,
 				57FDA133255D5ED700CB8804 /* util */,
-				576D5A7725665E170062F722 /* ScaledView.swift */,
 			);
 			path = equations;
 			sourceTree = "<group>";
@@ -1444,6 +1443,7 @@
 		57D2F2ED25EA2CC900AEE0D8 /* equation */ = {
 			isa = PBXGroup;
 			children = (
+				576D5A7725665E170062F722 /* ScaledView.swift */,
 				57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */,
 				57DAE4D32577C2FD006D945B /* FixedText.swift */,
 			);
@@ -2035,7 +2035,6 @@
 				57B528EA25B38A4E00381550 /* ReviewPromptPersistence.swift in Sources */,
 				577077D325698DF2003E750E /* SkBeakerSceneRepresentable.swift in Sources */,
 				57CDFE4725E2731D005D699A /* ReactionComparisonQuizQuestions.swift in Sources */,
-				576D5A7825665E170062F722 /* ScaledView.swift in Sources */,
 				5743D9BD25C454F8000C0397 /* Injector.swift in Sources */,
 				57AA012E25A90172001131A0 /* EnergyProfileReactionType.swift in Sources */,
 				571B3C80256560F90075358B /* SecondOrderStatements.swift in Sources */,
@@ -2132,6 +2131,7 @@
 				575A886625E435FB00AEE448 /* Beaky.swift in Sources */,
 				5786FAAB25E6908D00AAD8A6 /* DisabledSliderModifier.swift in Sources */,
 				5797A4AA25E40A5400991BD9 /* MoleculeGridSettings.swift in Sources */,
+				57D2F31225EA389C00AEE0D8 /* ScaledView.swift in Sources */,
 				5786FAED25E6D66C00AAD8A6 /* ChartAxisShape.swift in Sources */,
 				575A881D25E4310E00AEE448 /* QuizState.swift in Sources */,
 				5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */,

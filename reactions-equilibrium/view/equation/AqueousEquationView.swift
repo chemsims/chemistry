@@ -11,6 +11,31 @@ struct AqueousEquationView: View {
     let quotient: Equation
     let currentTime: CGFloat
 
+    let maxWidth: CGFloat
+    let maxHeight: CGFloat
+
+    var body: some View {
+        ScaledView(
+            naturalWidth: NaturalWidth,
+            naturalHeight: NaturalHeight,
+            maxWidth: maxWidth,
+            maxHeight: maxHeight
+        ) {
+            UnscaledAqueousEquationView(
+                equations: equations,
+                quotient: quotient,
+                currentTime: currentTime
+            )
+        }
+        .frame(width: maxWidth, height: maxHeight)
+    }
+}
+
+private struct UnscaledAqueousEquationView: View {
+    let equations: BalancedReactionEquations
+    let quotient: Equation
+    let currentTime: CGFloat
+
     var body: some View {
         VStack {
             HStack(spacing: 40) {
@@ -93,7 +118,7 @@ private struct FilledQuotientDefinitionView: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            term(quotient, 3, withParens: false)
+            term(quotient, 2, withParens: false)
             FixedText("=")
             fraction
         }
@@ -152,7 +177,7 @@ private struct FilledQuotientKView: View {
             AnimatingNumber(
                 x: currentTime,
                 equation: quotient,
-                formatter: { $0.str(decimals: 3)}
+                formatter: { $0.str(decimals: 2)}
             )
             .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
             .minimumScaleFactor(0.5)
@@ -162,7 +187,7 @@ private struct FilledQuotientKView: View {
             AnimatingNumber(
                 x: currentTime,
                 equation: quotient,
-                formatter: { $0.str(decimals: 3)}
+                formatter: { $0.str(decimals: 2)}
             )
             .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
             .minimumScaleFactor(0.5)
@@ -175,7 +200,7 @@ private let NaturalWidth: CGFloat = 480
 
 struct AqueousEquationView_Previews: PreviewProvider {
     static var previews: some View {
-        AqueousEquationView(
+        UnscaledAqueousEquationView(
             equations: equations,
             quotient: ReactionQuotientEquation(equations: equations),
             currentTime: 10

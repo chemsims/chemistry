@@ -37,6 +37,22 @@ private struct AqueousReactionScreenWithSettings: View {
             charts
             Spacer()
 
+            rhs
+        }
+        .padding(.bottom, settings.bottomPadding)
+        .padding(.top, settings.topPadding)
+    }
+
+    private var rhs: some View {
+        VStack(spacing: 2) {
+            AqueousEquationView(
+                equations: model.equations,
+                quotient: model.quotientEquation,
+                currentTime: model.currentTime,
+                maxWidth: settings.width / 3,
+                maxHeight: settings.height / 3
+            )
+
             BeakyBox(
                 statement: [],
                 next: model.next,
@@ -45,8 +61,6 @@ private struct AqueousReactionScreenWithSettings: View {
                 settings: settings.beakySettings
             )
         }
-        .padding(.bottom, settings.bottomPadding)
-        .padding(.top, settings.topPadding)
     }
 
     private var molecules: some View {
