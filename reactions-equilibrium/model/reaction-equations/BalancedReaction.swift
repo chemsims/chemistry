@@ -26,6 +26,7 @@ struct BalancedReactionEquations {
     let reactantB: Equation
     let productC: Equation
     let productD: Equation
+    let coefficients: BalancedReactionCoefficients
 
     init(
         coefficients: BalancedReactionCoefficients,
@@ -33,6 +34,8 @@ struct BalancedReactionEquations {
         b0: CGFloat,
         finalTime: CGFloat
     ) {
+        self.coefficients = coefficients
+        
         let unitChange = (a0 + b0) / CGFloat(coefficients.sum)
 
         func reactantEquation(initC: CGFloat, coeff: Int) -> Equation {

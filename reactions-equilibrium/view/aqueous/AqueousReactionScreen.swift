@@ -122,8 +122,26 @@ private struct AqueousReactionScreenWithSettings: View {
     }
 
     private var charts: some View {
+        VStack(alignment: .leading) {
+            concentrationChart
+            quotientChart
+        }
+    }
+
+    private var concentrationChart: some View {
         MultiConcentrationPlot(
             equations: model.equations,
+            initialTime: 0,
+            currentTime: $model.currentTime,
+            finalTime: AqueousReactionSettings.totalReactionTime,
+            canSetCurrentTime: model.canSetCurrentTime,
+            settings: settings.chartSettings
+        )
+    }
+
+    private var quotientChart: some View {
+        QuotientPlot(
+            equation: model.quotientEquation,
             initialTime: 0,
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.totalReactionTime,

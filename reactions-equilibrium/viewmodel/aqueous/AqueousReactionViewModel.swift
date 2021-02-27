@@ -44,6 +44,10 @@ class AqueousReactionViewModel: ObservableObject {
         )
     }
 
+    var quotientEquation: Equation {
+        ReactionQuotientEquation(equations: equations)
+    }
+
     var productMolecules: BeakerMoleculesSetter {
         BeakerMoleculesSetter(
             totalMolecules: availableMolecules,
