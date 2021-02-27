@@ -36,10 +36,6 @@ public struct MoleculeGridSettings {
     }
 
     public static func grid(rows: Int) -> [GridCoordinate] {
-        (0..<cols).flatMap { c in
-            (0..<rows).map { r in
-                GridCoordinate(col: c, row: r)
-            }
-        }
+        GridCoordinate.grid(cols: cols, rows: rows)
     }
 }

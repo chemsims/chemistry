@@ -38,7 +38,7 @@ struct MoleculeGrid: View {
 
 }
 
-struct AnimatingMoleculeGridShape: Shape {
+public struct AnimatingMoleculeGridShape: Shape {
     /// Dimension of a single cell
     let cellSize: CGFloat
 
@@ -52,12 +52,26 @@ struct AnimatingMoleculeGridShape: Shape {
 
     var currentTime: CGFloat
 
-    var animatableData: CGFloat {
+    public init(
+        cellSize: CGFloat,
+        cellPadding: CGFloat,
+        coords: [GridCoordinate],
+        fractionOfCoordsToDraw: Equation,
+        currentTime: CGFloat
+    ) {
+        self.cellSize = cellSize
+        self.cellPadding = cellPadding
+        self.coords = coords
+        self.fractionOfCoordsToDraw = fractionOfCoordsToDraw
+        self.currentTime = currentTime
+    }
+
+    public var animatableData: CGFloat {
         get { currentTime }
         set { currentTime = newValue }
     }
 
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         let fraction = fractionOfCoordsToDraw.getY(at: currentTime)
         var coordsToDraw = Int(fraction * CGFloat(coords.count))
         if coordsToDraw < 0 {
@@ -76,7 +90,7 @@ struct AnimatingMoleculeGridShape: Shape {
 /// The shape does not attempt to force the circles into the entire frame.
 /// Instead, the molecules are simply based based on the provided size properties
 /// The frame itself should be sized correctly to fit all the molecules.
-struct MoleculeGridShape: Shape {
+public struct MoleculeGridShape: Shape {
 
     /// Dimension of a single cell
     let cellSize: CGFloat
@@ -87,7 +101,17 @@ struct MoleculeGridShape: Shape {
     /// The coordinates to draw
     let coords: [GridCoordinate]
 
-    func path(in rect: CGRect) -> Path {
+    public init(
+        cellSize: CGFloat,
+        cellPadding: CGFloat,
+        coords: [GridCoordinate]
+    ) {
+        self.cellSize = cellSize
+        self.cellPadding = cellPadding
+        self.coords = coords
+    }
+
+    public func path(in rect: CGRect) -> Path {
         var path = Path()
         for coord in coords {
             let x = cellSize * CGFloat(coord.col)

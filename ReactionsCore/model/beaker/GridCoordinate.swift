@@ -13,12 +13,25 @@ public struct GridCoordinate: Identifiable, Equatable, Hashable {
     /// Row index - starts at zero
     public let row: Int
 
+    public init(col: Int, row: Int) {
+        self.col = col
+        self.row = row
+    }
+
     public var id: String {
         "\(col),\(row)"
     }
 
     public static func random(maxCol: Int, maxRow: Int) -> GridCoordinate {
         GridCoordinate(col: Int.random(in: 0...maxCol), row: Int.random(in: 0...maxRow))
+    }
+
+    public static func grid(cols: Int, rows: Int) -> [GridCoordinate] {
+        (0..<cols).flatMap { c in
+            (0..<rows).map { r in
+                GridCoordinate(col: c, row: r)
+            }
+        }
     }
 }
 
