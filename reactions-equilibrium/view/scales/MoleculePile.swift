@@ -67,9 +67,9 @@ struct MoleculePile: Shape {
     }
 }
 
-private struct MoleculePileSettings {
-    static let cols = 3
-    static let rows = 3
+struct MoleculePileSettings {
+    static let cols = 4
+    static let rows = 4
 
     static var grid: [GridCoordinate] {
         (0..<rows).flatMap { row in
