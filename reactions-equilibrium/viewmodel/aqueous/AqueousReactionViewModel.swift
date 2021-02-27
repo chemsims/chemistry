@@ -17,6 +17,8 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var moleculesA = [GridCoordinate]()
     @Published var moleculesB = [GridCoordinate]()
+    @Published var gridMoleculesA = [GridCoordinate]()
+    @Published var gridMoleculesB = [GridCoordinate]()
 
     @Published var canSetLiquidLevel = true
     @Published var canAddReactants = false
@@ -28,6 +30,8 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var canSetCurrentTime = false
 
     let finalTime: CGFloat = 15
+
+    private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
 
     var equations: BalancedReactionEquations {
         let coeffs = BalancedReactionCoefficients(
@@ -58,20 +62,35 @@ class AqueousReactionViewModel: ObservableObject {
         )
     }
 
-    func productMoleculeFractionToDraw(underlying: Equation) -> Equation {
-        ScaledEquation(
-            targetY: 1,
-            targetX: AqueousReactionSettings.timeForConvergence,
-            underlying: underlying
-        )
+    var gridMoleculesC: [GridCoordinate] {
+        let concentration = equations.productC.getY(at: finalTime)
+        let num = equilibriumGridCount(for: concentration)
+        return Array(shuffledEquilibriumGrid.prefix(num))
+    }
+
+    var gridMoleculesD: [GridCoordinate] {
+        let concentration = equations.productD.getY(at: finalTime)
+        let num = equilibriumGridCount(for: concentration)
+        let suffixedCoords = shuffledEquilibriumGrid.dropFirst(gridMoleculesC.count)
+        return Array(suffixedCoords.prefix(num))
+    }
+
+    var gridMoleculesAToDraw: Equation {
+        reactantMoleculesToDraw(equation: equations.reactantA)
+    }
+
+    var gridMoleculesBToDraw: Equation {
+        reactantMoleculesToDraw(equation: equations.reactantB)
     }
 
     func incrementAMolecules() {
         moleculesA = addingMolecules(to: moleculesA, avoiding: moleculesB)
+        gridMoleculesA = addingGridMolecules(molecules: gridMoleculesA, concentration: initialConcentrationA, avoiding: gridMoleculesB)
     }
 
     func incrementBMolecules() {
         moleculesB = addingMolecules(to: moleculesB, avoiding: moleculesA)
+        gridMoleculesB = addingGridMolecules(molecules: gridMoleculesB, concentration: initialConcentrationB, avoiding: gridMoleculesA)
     }
 
     func next() {
@@ -80,6 +99,16 @@ class AqueousReactionViewModel: ObservableObject {
 
     func back() {
         navigation?.back()
+    }
+
+    private func reactantMoleculesToDraw(
+        equation: Equation
+    ) -> Equation {
+        ScaledEquation(
+            targetY: 1,
+            targetX: 0,
+            underlying: equation
+        )
     }
 
     private func initialConcentration(of molecules: [GridCoordinate]) -> CGFloat {
@@ -94,6 +123,30 @@ class AqueousReactionViewModel: ObservableObject {
             rows: availableRows,
             avoiding: avoiding
         )
+    }
+
+    private func addingGridMolecules(
+        molecules: [GridCoordinate],
+        concentration: CGFloat,
+        avoiding: [GridCoordinate]
+    ) -> [GridCoordinate] {
+        let totalNum = equilibriumGridCount(for: concentration)
+        let toAdd = totalNum - molecules.count
+        guard toAdd > 0 else {
+            return molecules
+        }
+
+        return GridCoordinateList.addingRandomElementsTo(
+            grid: molecules,
+            count: toAdd,
+            cols: EquilibriumGridSettings.cols,
+            rows: EquilibriumGridSettings.rows,
+            avoiding: avoiding
+        )
+    }
+
+    private func equilibriumGridCount(for concentration: CGFloat) -> Int {
+        Int(concentration.rounded(decimals: 2) * CGFloat(EquilibriumGridSettings.grid.count))
     }
 
     private var initialConcentrationA: CGFloat {

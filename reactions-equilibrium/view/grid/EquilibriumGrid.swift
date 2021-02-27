@@ -7,8 +7,10 @@ import ReactionsCore
 
 struct EquilibriumGrid: View {
 
+    let currentTime: CGFloat
     let reactants: [AnimatingBeakerMolecules]
     let products: [AnimatingBeakerMolecules]
+
 
     var body: some View {
         GeometryReader { geo in
@@ -26,6 +28,7 @@ struct EquilibriumGrid: View {
         HStack(spacing: 2) {
             Spacer()
             SizedEquilibriumGrid(
+                currentTime: currentTime,
                 molecules: reactants,
                 settings: settings
             )
@@ -34,6 +37,7 @@ struct EquilibriumGrid: View {
                 .frame(width: 1)
             Spacer()
             SizedEquilibriumGrid(
+                currentTime: currentTime,
                 molecules: products,
                 settings: settings
             )
@@ -44,8 +48,10 @@ struct EquilibriumGrid: View {
 
 private struct SizedEquilibriumGrid: View {
 
+    let currentTime: CGFloat
     let molecules: [AnimatingBeakerMolecules]
     let settings: EquilibriumGridGeometry
+
 
     var body: some View {
         ZStack {
@@ -65,7 +71,7 @@ private struct SizedEquilibriumGrid: View {
         MoleculeGridShape(
             cellSize: settings.cellSize,
             cellPadding: settings.cellPadding,
-            coords: EquilibriumGridGeometry.fullGrid
+            coords: EquilibriumGridSettings.grid
         )
         .foregroundColor(Styling.timeAxisCompleteBar)
     }
@@ -76,24 +82,30 @@ private struct SizedEquilibriumGrid: View {
             cellPadding: settings.cellPadding,
             coords: coords,
             fractionOfCoordsToDraw: equation,
-            currentTime: 0
+            currentTime: currentTime
         )
     }
+}
+
+struct EquilibriumGridSettings {
+    static var grid: [GridCoordinate] {
+        GridCoordinate.grid(cols: cols, rows: rows)
+    }
+
+    static let rows = 5
+    static let cols = 6
 }
 
 private struct EquilibriumGridGeometry {
     let width: CGFloat
     let height: CGFloat
-    private static let rows: Int = 5
-    private static let cols: Int = 6
 
-    static var fullGrid: [GridCoordinate] {
-        GridCoordinate.grid(cols: Self.cols, rows: Self.rows)
-    }
+    private let rows = EquilibriumGridSettings.rows
+    private let cols = EquilibriumGridSettings.cols
 
     var cellSize: CGFloat {
-        let maxForHeight = maxGridHeight / CGFloat(Self.rows)
-        let maxForWidth = maxGridWidth / CGFloat(Self.cols)
+        let maxForHeight = maxGridHeight / CGFloat(rows)
+        let maxForWidth = maxGridWidth / CGFloat(cols)
         return min(maxForHeight, maxForWidth)
     }
 
@@ -102,11 +114,11 @@ private struct EquilibriumGridGeometry {
     }
 
     var gridHeight: CGFloat {
-        cellSize * CGFloat(Self.rows)
+        cellSize * CGFloat(rows)
     }
 
     var gridWidth: CGFloat {
-        cellSize * CGFloat(Self.cols)
+        cellSize * CGFloat(cols)
     }
 
     var maxGridHeight: CGFloat {
@@ -121,6 +133,7 @@ private struct EquilibriumGridGeometry {
 struct EquilibriumGrid_Previews: PreviewProvider {
     static var previews: some View {
         EquilibriumGrid(
+            currentTime: 0,
             reactants: [
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(

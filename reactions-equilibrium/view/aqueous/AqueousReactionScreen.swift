@@ -39,21 +39,58 @@ private struct AqueousReactionScreenWithSettings: View {
             middleStack
             Spacer()
 
-            rhs
+            rightStack
         }
         .padding(.bottom, settings.bottomPadding)
         .padding(.top, settings.topPadding)
     }
 
-    private var rhs: some View {
+    private var rightStack: some View {
         VStack(spacing: 2) {
             AqueousEquationView(
                 equations: model.equations,
                 quotient: model.quotientEquation,
                 currentTime: model.currentTime,
-                maxWidth: settings.width / 3,
-                maxHeight: settings.height / 3
+                maxWidth: settings.width / 4,
+                maxHeight: settings.height / 4
             )
+
+            EquilibriumGrid(
+                currentTime: model.currentTime,
+                reactants: [
+                    AnimatingBeakerMolecules(
+                        molecules: BeakerMolecules(
+                            coords: model.gridMoleculesA,
+                            color: .from(.aqMoleculeA)
+                        ),
+                        fractionToDraw: model.gridMoleculesAToDraw
+                    ),
+                    AnimatingBeakerMolecules(
+                        molecules: BeakerMolecules(
+                            coords: model.gridMoleculesB,
+                            color: .from(.aqMoleculeB)
+                        ),
+                        fractionToDraw: model.gridMoleculesBToDraw
+                    )
+                ],
+                products: [
+                    AnimatingBeakerMolecules(
+                        molecules: BeakerMolecules(
+                            coords: model.gridMoleculesC,
+                            color: .from(.aqMoleculeC)
+                        ),
+                        fractionToDraw: model.productMolecules.cFractionToDraw
+                    ),
+                    AnimatingBeakerMolecules(
+                        molecules: BeakerMolecules(
+                            coords: model.gridMoleculesD,
+                            color: .from(.aqMoleculeD)
+                        ),
+                        fractionToDraw: model.productMolecules.dFractionToDraw
+                    )
+                ]
+            )
+            .frame(width: 0.25 * settings.width, height: 0.2 * settings.height)
 
             BeakyBox(
                 statement: [],
@@ -240,9 +277,15 @@ extension AqueousScreenLayoutSettings {
 
 extension AqueousScreenLayoutSettings {
     var beakySettings: BeakyGeometrySettings {
-        BeakyGeometrySettings(
-            screenWidth: width,
-            screenHeight: height
+        let bubbleWidth = 0.3 * width
+        return BeakyGeometrySettings(
+            beakyVSpacing: 2,
+            bubbleWidth: bubbleWidth,
+            bubbleHeight: 0.34 * height,
+            beakyHeight: 0.1 * width,
+            bubbleFontSize: 0.018 * width,
+            navButtonSize: 0.076 * height,
+            bubbleStemWidth: SpeechBubbleSettings.getStemWidth(bubbleWidth: bubbleWidth)
         )
     }
 }
