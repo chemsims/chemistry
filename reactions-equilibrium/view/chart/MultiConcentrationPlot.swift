@@ -28,6 +28,7 @@ struct MultiConcentrationPlot: View {
                 labelledChart
                 Text("Time")
                     .font(.system(size: settings.axisLabelFontSize))
+                    .frame(height: settings.xAxisLabelHeight)
             }
         }
     }

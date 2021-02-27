@@ -26,6 +26,7 @@ struct BalancedReactionEquations {
     let productC: Equation
     let productD: Equation
     let coefficients: BalancedReactionCoefficients
+    let convergenceTime: CGFloat
 
     init(
         coefficients: BalancedReactionCoefficients,
@@ -34,6 +35,7 @@ struct BalancedReactionEquations {
         finalTime: CGFloat
     ) {
         self.coefficients = coefficients
+        self.convergenceTime = finalTime
         
         let unitChange = (a0 + b0) / CGFloat(coefficients.sum)
 

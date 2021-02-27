@@ -25,6 +25,8 @@ private struct AqueousReactionScreenWithSettings: View {
     @ObservedObject var model: AqueousReactionViewModel
     let settings: AqueousScreenLayoutSettings
 
+    @State private var showGraph = false
+
     var body: some View {
         HStack(spacing: 0) {
             VStack(spacing: 0) {
@@ -34,7 +36,7 @@ private struct AqueousReactionScreenWithSettings: View {
             }
 
             Spacer()
-            charts
+            middleStack
             Spacer()
 
             rhs
@@ -135,11 +137,33 @@ private struct AqueousReactionScreenWithSettings: View {
         }
     }
 
-    private var charts: some View {
-        VStack(alignment: .leading) {
-            concentrationChart
+    private var middleStack: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 2) {
+                Button(action: { showGraph = true }) {
+                    Text("Graph")
+                }
+                Button(action: { showGraph = false }) {
+                    Text("Table")
+                }
+            }
+
+            chartOrTable
             quotientChart
         }
+    }
+
+    // Must use opacity to hide chart rather than remove from view, otherwise the animation doesn't resume
+    private var chartOrTable: some View {
+        ZStack {
+            concentrationChart.opacity(showGraph ? 1 : 0)
+            if (!showGraph) {
+                ICETable(equations: model.equations)
+            }
+        }.frame(
+            width: settings.chartSettings.totalChartWidth,
+            height: settings.chartSettings.totalChartHeight
+        )
     }
 
     private var concentrationChart: some View {
@@ -280,6 +304,16 @@ struct ReactionEquilibriumChartsLayoutSettings {
 }
 
 extension ReactionEquilibriumChartsLayoutSettings {
+    var totalChartWidth: CGFloat {
+        size + (2 * (yAxisWidthLabelWidth + axisLabelGapFromAxis))
+    }
+
+    var totalChartHeight: CGFloat {
+        size + axisLabelGapFromAxis + xAxisLabelHeight
+    }
+}
+
+extension ReactionEquilibriumChartsLayoutSettings {
     var legendCircleSize: CGFloat {
         0.09 * size
     }
@@ -304,6 +338,10 @@ extension ReactionEquilibriumChartsLayoutSettings {
 
     var axisLabelGapFromAxis: CGFloat {
         headRadius
+    }
+
+    var xAxisLabelHeight: CGFloat {
+        0.1 * size
     }
 }
 

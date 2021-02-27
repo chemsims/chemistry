@@ -64,3 +64,13 @@ public struct ScaledEquation: Equation {
         scaleFactor * underlying.getY(at: x)
     }
 }
+
+public struct OperatorEquation: Equation {
+    public let lhs: Equation
+    public let rhs: Equation
+    public let op: (CGFloat, CGFloat) -> CGFloat
+
+    public func getY(at x: CGFloat) -> CGFloat {
+        op(lhs.getY(at: x), rhs.getY(at: x))
+    }
+}
