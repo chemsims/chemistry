@@ -95,10 +95,10 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
         MultiConcentrationPlot(
             equations: BalancedReactionEquations(
                 coefficients: BalancedReactionCoefficients(
-                    reactantACoefficient: 2,
-                    reactantBCoefficient: 2,
-                    productCCoefficient: 1,
-                    productDCoefficient: 4
+                    reactantA: 2,
+                    reactantB: 2,
+                    productC: 1,
+                    productD: 4
                 ),
                 a0: 0.4,
                 b0: 0.5,

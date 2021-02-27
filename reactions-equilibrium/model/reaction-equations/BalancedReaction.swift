@@ -7,16 +7,15 @@ import ReactionsCore
 import CoreGraphics
 
 struct BalancedReactionCoefficients {
-    let reactantACoefficient: Int
-    let reactantBCoefficient: Int
-
-    let productCCoefficient: Int
-    let productDCoefficient: Int
+    let reactantA: Int
+    let reactantB: Int
+    let productC: Int
+    let productD: Int
 }
 
 private extension BalancedReactionCoefficients {
     var sum: Int {
-        reactantACoefficient + reactantBCoefficient + productCCoefficient + productDCoefficient
+        reactantA + reactantB + productC + productD
     }
 }
 
@@ -46,10 +45,10 @@ struct BalancedReactionEquations {
             BalancedReactionEquations.productEquation(0, coefficient: coeff, unitChange: unitChange, finalTime: finalTime)
         }
 
-        self.reactantA = reactantEquation(initC: a0, coeff: coefficients.reactantACoefficient)
-        self.reactantB = reactantEquation(initC: b0, coeff: coefficients.reactantBCoefficient)
-        self.productC = productEquation(coeff: coefficients.productCCoefficient)
-        self.productD = productEquation(coeff: coefficients.productDCoefficient)
+        self.reactantA = reactantEquation(initC: a0, coeff: coefficients.reactantA)
+        self.reactantB = reactantEquation(initC: b0, coeff: coefficients.reactantB)
+        self.productC = productEquation(coeff: coefficients.productC)
+        self.productD = productEquation(coeff: coefficients.productD)
     }
 
     private static func reactantEquation(

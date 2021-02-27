@@ -30,10 +30,10 @@ struct ReactionQuotientEquation: Equation {
             return pow(rounded, CGFloat(coeff))
         }
 
-        let aTerm = getTerm(equations.reactantA, equations.coefficients.reactantACoefficient)
-        let bTerm = getTerm(equations.reactantB, equations.coefficients.reactantBCoefficient)
-        let cTerm = getTerm(equations.productC, equations.coefficients.productCCoefficient)
-        let dTerm = getTerm(equations.productD, equations.coefficients.productDCoefficient)
+        let aTerm = getTerm(equations.reactantA, equations.coefficients.reactantA)
+        let bTerm = getTerm(equations.reactantB, equations.coefficients.reactantB)
+        let cTerm = getTerm(equations.productC, equations.coefficients.productC)
+        let dTerm = getTerm(equations.productD, equations.coefficients.productD)
 
         let numer = cTerm * dTerm
         let denom = aTerm * bTerm

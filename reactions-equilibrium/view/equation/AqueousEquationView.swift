@@ -76,14 +76,14 @@ private struct QuotientDefinitionView: View {
     private var fraction: some View {
         VStack(spacing: 2) {
             HStack(spacing: 8) {
-                term("C", coefficient: coefficients.productCCoefficient)
-                term("D", coefficient: coefficients.productDCoefficient)
+                term("C", coefficient: coefficients.productC)
+                term("D", coefficient: coefficients.productD)
             }
             Rectangle()
                 .frame(width: 130, height: 1)
             HStack(spacing: 8) {
-                term("A", coefficient: coefficients.reactantACoefficient)
-                term("B", coefficient: coefficients.reactantBCoefficient)
+                term("A", coefficient: coefficients.reactantA)
+                term("B", coefficient: coefficients.reactantB)
             }
         }
     }
@@ -127,14 +127,14 @@ private struct FilledQuotientDefinitionView: View {
     private var fraction: some View {
         VStack(spacing: 0) {
             HStack(spacing: 3) {
-                term(equations.productC, 2, coefficient: equations.coefficients.productCCoefficient)
-                term(equations.productD, 2, coefficient: equations.coefficients.productDCoefficient)
+                term(equations.productC, 2, coefficient: equations.coefficients.productC)
+                term(equations.productD, 2, coefficient: equations.coefficients.productD)
             }
             Rectangle()
                 .frame(width:  180, height: 1)
             HStack(spacing: 3) {
-                term(equations.reactantA, 2, coefficient: equations.coefficients.reactantACoefficient)
-                term(equations.reactantB, 2, coefficient: equations.coefficients.reactantBCoefficient)
+                term(equations.reactantA, 2, coefficient: equations.coefficients.reactantA)
+                term(equations.reactantB, 2, coefficient: equations.coefficients.reactantB)
             }
         }
     }
@@ -211,10 +211,10 @@ struct AqueousEquationView_Previews: PreviewProvider {
 
     private static let equations = BalancedReactionEquations(
         coefficients: BalancedReactionCoefficients(
-            reactantACoefficient: 2,
-            reactantBCoefficient: 2,
-            productCCoefficient: 1,
-            productDCoefficient: 4
+            reactantA: 2,
+            reactantB: 2,
+            productC: 1,
+            productD: 4
         ),
         a0: 0.5,
         b0: 0.4,

@@ -31,10 +31,10 @@ class AqueousReactionViewModel: ObservableObject {
 
     var equations: BalancedReactionEquations {
         let coeffs = BalancedReactionCoefficients(
-            reactantACoefficient: 2,
-            reactantBCoefficient: 2,
-            productCCoefficient: 1,
-            productDCoefficient: 4
+            reactantA: 2,
+            reactantB: 2,
+            productC: 1,
+            productD: 4
         )
         return BalancedReactionEquations(
             coefficients: coeffs,
