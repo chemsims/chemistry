@@ -196,6 +196,9 @@
 		57D2F2E425EA2C4300AEE0D8 /* AqueousEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2E325EA2C4300AEE0D8 /* AqueousEquationView.swift */; };
 		57D2F2EE25EA2D7400AEE0D8 /* EquationPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */; };
 		57D2F2F825EA2E4000AEE0D8 /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2F725EA2E4000AEE0D8 /* Placeholder.swift */; };
+		57D2F2FE25EA308000AEE0D8 /* EquationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2FD25EA308000AEE0D8 /* EquationSettings.swift */; };
+		57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D32577C2FD006D945B /* FixedText.swift */; };
+		57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */; };
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
 		57D8BA17257B6ABF006B3C8B /* ReactionComparisonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */; };
@@ -205,7 +208,6 @@
 		57D8BA27257BBCE9006B3C8B /* ReactionComparisonViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA26257BBCE9006B3C8B /* ReactionComparisonViews.swift */; };
 		57D8BA2C257BF17E006B3C8B /* ReactionComparisonScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA2B257BF17E006B3C8B /* ReactionComparisonScreenElement.swift */; };
 		57DAE4C62577A299006D945B /* CGFloatRoundingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */; };
-		57DAE4D42577C2FD006D945B /* FixedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D32577C2FD006D945B /* FixedText.swift */; };
 		57DAE4D82577C4F1006D945B /* HalfLife.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D72577C4F1006D945B /* HalfLife.swift */; };
 		57DAE4E42577C53B006D945B /* EquationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4E32577C53B006D945B /* EquationSettings.swift */; };
 		57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4ED2577C942006D945B /* SubscriptViews.swift */; };
@@ -528,6 +530,8 @@
 		57D2F2D325EA27DA00AEE0D8 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		57D2F2E325EA2C4300AEE0D8 /* AqueousEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousEquationView.swift; sourceTree = "<group>"; };
 		57D2F2F725EA2E4000AEE0D8 /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
+		57D2F2FD25EA308000AEE0D8 /* EquationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationSettings.swift; sourceTree = "<group>"; };
+		57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationSizing.swift; sourceTree = "<group>"; };
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
 		57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreen.swift; sourceTree = "<group>"; };
@@ -1328,6 +1332,7 @@
 			children = (
 				57DDAD0F25E567C300B535A7 /* QuadraticEquation.swift */,
 				571215552580DCD000E92A99 /* Equation.swift */,
+				57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */,
 			);
 			path = equation;
 			sourceTree = "<group>";
@@ -1431,6 +1436,7 @@
 			isa = PBXGroup;
 			children = (
 				57D2F2E325EA2C4300AEE0D8 /* AqueousEquationView.swift */,
+				57D2F2FD25EA308000AEE0D8 /* EquationSettings.swift */,
 			);
 			path = equation;
 			sourceTree = "<group>";
@@ -2060,7 +2066,6 @@
 				574F14BC25B4898700EB316C /* InputLimits.swift in Sources */,
 				571B3CBB25658D300075358B /* RootNavigationViewModel.swift in Sources */,
 				574F14C825B4E2C300EB316C /* ReactionInputLimits.swift in Sources */,
-				57DAE4D42577C2FD006D945B /* FixedText.swift in Sources */,
 				57CDFE3525E26F87005D699A /* ZeroOrderQuizQuestions.swift in Sources */,
 				572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */,
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
@@ -2102,6 +2107,7 @@
 				57D2F2C325EA227D00AEE0D8 /* ReactionQuotientEquation.swift in Sources */,
 				57D2F2E425EA2C4300AEE0D8 /* AqueousEquationView.swift in Sources */,
 				57952A5225E68184006AB876 /* AqueousNavigationModel.swift in Sources */,
+				57D2F2FE25EA308000AEE0D8 /* EquationSettings.swift in Sources */,
 				5786FACB25E6B06600AAD8A6 /* BeakerMoleculesSetter.swift in Sources */,
 				57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */,
 				575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */,
@@ -2131,6 +2137,7 @@
 				5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */,
 				575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */,
 				5797A4C625E40A6900991BD9 /* GridCoordinate.swift in Sources */,
+				57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */,
 				575A880F25E4310700AEE448 /* QuizOption.swift in Sources */,
 				57DDAD5B25E57E9300B535A7 /* ChartLine.swift in Sources */,
 				575A889525E438CD00AEE448 /* BundleExtension.swift in Sources */,
@@ -2152,6 +2159,7 @@
 				575A887D25E4366900AEE448 /* CircleIconButton.swift in Sources */,
 				5797A49C25E40A4C00991BD9 /* BeakerBottomShape.swift in Sources */,
 				5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */,
+				57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */,
 				575A886825E435FB00AEE448 /* BeakyBox.swift in Sources */,
 				5797A49525E40A4500991BD9 /* BeakerTicks.swift in Sources */,
 				575A882425E4311100AEE448 /* QuizTable.swift in Sources */,

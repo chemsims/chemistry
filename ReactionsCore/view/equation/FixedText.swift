@@ -4,14 +4,14 @@
 
 import SwiftUI
 
-struct FixedText: View {
+public struct FixedText: View {
 
     let value: String
-    init(_ value: String) {
+    public init(_ value: String) {
         self.value = value
     }
 
-    var body: some View {
+    public var body: some View {
         Text(value)
             .fixedSize()
     }

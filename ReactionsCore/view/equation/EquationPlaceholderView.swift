@@ -16,9 +16,9 @@ public struct PlaceholderTerm: View {
     public init(
         value: String?,
         emphasise: Bool = false,
-        boxWidth: CGFloat = 70,
-        boxHeight: CGFloat = 50,
-        boxPadding: CGFloat = 10
+        boxWidth: CGFloat = EquationSizing.boxWidth,
+        boxHeight: CGFloat = EquationSizing.boxHeight,
+        boxPadding: CGFloat = EquationSizing.boxPadding
     ) {
         self.value = value
         self.emphasise = emphasise

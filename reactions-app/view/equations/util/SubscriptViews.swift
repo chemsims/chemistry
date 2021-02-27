@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 struct A_0: View {
     var body: some View {
@@ -109,7 +110,6 @@ private struct SubscriptView: View {
                 .fixedSize()
         }.minimumScaleFactor(1)
     }
-
 }
 
 struct SubscriptViews_Previews: PreviewProvider {
