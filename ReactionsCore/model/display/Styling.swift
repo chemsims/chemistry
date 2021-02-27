@@ -44,6 +44,9 @@ extension RGB {
 }
 
 public struct Styling {
+
+    public static let scalesBody = RGB(r: 130, g: 130, b: 130).color
+
     public static let beakerOuterTone = Color.black.opacity(0.15)
     public static let beakerInnerTone = Color.black.opacity(0.075)
 
