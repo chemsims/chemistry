@@ -4,46 +4,66 @@
 
 import SwiftUI
 
-struct Placeholder: View {
+public struct PlaceholderTerm: View {
 
     let value: String?
     let emphasise: Bool
 
-    init(value: String?, emphasise: Bool = false) {
+    let boxWidth: CGFloat
+    let boxHeight: CGFloat
+    let boxPadding: CGFloat
+
+    public init(
+        value: String?,
+        emphasise: Bool = false,
+        boxWidth: CGFloat = 70,
+        boxHeight: CGFloat = 50,
+        boxPadding: CGFloat = 10
+    ) {
         self.value = value
         self.emphasise = emphasise
+        self.boxWidth = boxWidth
+        self.boxHeight = boxHeight
+        self.boxPadding = boxPadding
     }
 
-    var body: some View {
+    public var body: some View {
         if value != nil {
             Text(value!)
-                .modifier(PlaceholderFraming())
+                .modifier(PlaceholderFraming(boxWidth: boxWidth, boxHeight: boxHeight))
                 .animation(.none)
                 .foregroundColor(emphasise ? .orangeAccent : .black)
                 .accessibility(value: Text(value!))
         } else {
-            Box()
-                .modifier(PlaceholderFraming())
+            Box(padding: boxPadding)
+                .modifier(PlaceholderFraming(boxWidth: boxWidth, boxHeight: boxHeight))
                 .accessibility(value: Text("Place-holder"))
         }
     }
 }
 
 private struct PlaceholderFraming: ViewModifier {
+
+    let boxWidth: CGFloat
+    let boxHeight: CGFloat
+
     func body(content: Content) -> some View {
         content
             .frame(
-                width: EquationSettings.boxWidth,
-                height: EquationSettings.boxHeight
+                width: boxWidth,
+                height: boxHeight
             )
             .minimumScaleFactor(0.5)
     }
 }
 
-struct Box: View {
+private struct Box: View {
+
+    let padding: CGFloat
+
     var body: some View {
         EquationPlaceholderView()
-            .padding(EquationSettings.boxPadding)
+            .padding(padding)
     }
 }
 

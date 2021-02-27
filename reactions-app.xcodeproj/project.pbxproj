@@ -193,6 +193,9 @@
 		57D2F2C325EA227D00AEE0D8 /* ReactionQuotientEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2C225EA227D00AEE0D8 /* ReactionQuotientEquation.swift */; };
 		57D2F2C925EA265900AEE0D8 /* QuotientPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2C825EA265900AEE0D8 /* QuotientPlot.swift */; };
 		57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2D325EA27DA00AEE0D8 /* Line.swift */; };
+		57D2F2E425EA2C4300AEE0D8 /* AqueousEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2E325EA2C4300AEE0D8 /* AqueousEquationView.swift */; };
+		57D2F2EE25EA2D7400AEE0D8 /* EquationPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */; };
+		57D2F2F825EA2E4000AEE0D8 /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2F725EA2E4000AEE0D8 /* Placeholder.swift */; };
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
 		57D8BA17257B6ABF006B3C8B /* ReactionComparisonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */; };
@@ -249,7 +252,6 @@
 		57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775925616F400041D406 /* BoundedSliderPositioning.swift */; };
 		57F4776025617B240041D406 /* BoundedSliderPositioningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775F25617B240041D406 /* BoundedSliderPositioningTests.swift */; };
 		57F56220258D4F64008B2602 /* CatalystState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5621F258D4F64008B2602 /* CatalystState.swift */; };
-		57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */; };
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
 		57FDA141255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */; };
 		57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */; };
@@ -524,6 +526,8 @@
 		57D2F2C225EA227D00AEE0D8 /* ReactionQuotientEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionQuotientEquation.swift; sourceTree = "<group>"; };
 		57D2F2C825EA265900AEE0D8 /* QuotientPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotientPlot.swift; sourceTree = "<group>"; };
 		57D2F2D325EA27DA00AEE0D8 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		57D2F2E325EA2C4300AEE0D8 /* AqueousEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousEquationView.swift; sourceTree = "<group>"; };
+		57D2F2F725EA2E4000AEE0D8 /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
 		57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreen.swift; sourceTree = "<group>"; };
@@ -1340,6 +1344,7 @@
 		5797A47A25E4092600991BD9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57D2F2ED25EA2CC900AEE0D8 /* equation */,
 				57DDAD4C25E57E2100B535A7 /* chart */,
 				575A885625E435A800AEE448 /* beaky */,
 				575A882B25E4317800AEE448 /* text */,
@@ -1422,6 +1427,23 @@
 			path = shapes;
 			sourceTree = "<group>";
 		};
+		57D2F2DD25EA2C2000AEE0D8 /* equation */ = {
+			isa = PBXGroup;
+			children = (
+				57D2F2E325EA2C4300AEE0D8 /* AqueousEquationView.swift */,
+			);
+			path = equation;
+			sourceTree = "<group>";
+		};
+		57D2F2ED25EA2CC900AEE0D8 /* equation */ = {
+			isa = PBXGroup;
+			children = (
+				57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */,
+				57DAE4D32577C2FD006D945B /* FixedText.swift */,
+			);
+			path = equation;
+			sourceTree = "<group>";
+		};
 		57D8BA2A257BF168006B3C8B /* screen-element-enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -1444,7 +1466,8 @@
 		57DDAC0725E4FD6500B535A7 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				57DDAD2225E5705700B535A7 /* charts */,
+				57D2F2DD25EA2C2000AEE0D8 /* equation */,
+				57DDAD2225E5705700B535A7 /* chart */,
 				57DDAC1825E4FD7200B535A7 /* aqueous */,
 			);
 			path = view;
@@ -1536,13 +1559,13 @@
 			path = "reaction-equations";
 			sourceTree = "<group>";
 		};
-		57DDAD2225E5705700B535A7 /* charts */ = {
+		57DDAD2225E5705700B535A7 /* chart */ = {
 			isa = PBXGroup;
 			children = (
 				57DDAD2325E5706A00B535A7 /* MultiConcentrationPlot.swift */,
 				57D2F2C825EA265900AEE0D8 /* QuotientPlot.swift */,
 			);
-			path = charts;
+			path = chart;
 			sourceTree = "<group>";
 		};
 		57DDAD4125E57DDF00B535A7 /* chart */ = {
@@ -1637,12 +1660,11 @@
 		57FDA133255D5ED700CB8804 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */,
-				57DAE4D32577C2FD006D945B /* FixedText.swift */,
 				57DAE4D72577C4F1006D945B /* HalfLife.swift */,
 				57DAE4E32577C53B006D945B /* EquationSettings.swift */,
 				57DAE4ED2577C942006D945B /* SubscriptViews.swift */,
 				5712155D258103A600E92A99 /* Rates.swift */,
+				57D2F2F725EA2E4000AEE0D8 /* Placeholder.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -1982,11 +2004,11 @@
 				57B23314258E8BCB00128760 /* AppScreen.swift in Sources */,
 				57A119AC25B86B5500A7810B /* EnergyProfileFilingViewModel.swift in Sources */,
 				57DE4DB725A5036E00644790 /* QuizLayoutSettings.swift in Sources */,
+				57D2F2F825EA2E4000AEE0D8 /* Placeholder.swift in Sources */,
 				571B3CB525658BA70075358B /* Icons.swift in Sources */,
 				5783964B25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift in Sources */,
 				57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */,
 				5773B5F025B84E4100889A2E /* FeedbackSettings.swift in Sources */,
-				57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */,
 				5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */,
 				57DDAD2E25E576C000B535A7 /* TimeChartDatalineView.swift in Sources */,
 				57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */,
@@ -2078,6 +2100,7 @@
 				57DDAC1A25E4FD8100B535A7 /* AqueousReactionScreen.swift in Sources */,
 				57952A5D25E6819C006AB876 /* AqueousScreenStates.swift in Sources */,
 				57D2F2C325EA227D00AEE0D8 /* ReactionQuotientEquation.swift in Sources */,
+				57D2F2E425EA2C4300AEE0D8 /* AqueousEquationView.swift in Sources */,
 				57952A5225E68184006AB876 /* AqueousNavigationModel.swift in Sources */,
 				5786FACB25E6B06600AAD8A6 /* BeakerMoleculesSetter.swift in Sources */,
 				57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */,
@@ -2143,6 +2166,7 @@
 				5786FAB525E692D800AAD8A6 /* RunnableState.swift in Sources */,
 				5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */,
 				57952A4225E67F83006AB876 /* ScreenStateTree.swift in Sources */,
+				57D2F2EE25EA2D7400AEE0D8 /* EquationPlaceholderView.swift in Sources */,
 				57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */,
 				57DDAD1D25E5700400B535A7 /* QuadraticEquation.swift in Sources */,
 				57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */,
