@@ -178,6 +178,7 @@
 		57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */; };
 		57ABDC3925EBF9300078A82B /* AqueousReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */; };
 		57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3E25EBFA230078A82B /* AqueousReactionDropDownSelection.swift */; };
+		57ABDC4625EC03E10078A82B /* AqueousStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC4525EC03E10078A82B /* AqueousStatements.swift */; };
 		57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */; };
 		57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */; };
 		57B23314258E8BCB00128760 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23313258E8BCB00128760 /* AppScreen.swift */; };
@@ -522,6 +523,7 @@
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
 		57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionType.swift; sourceTree = "<group>"; };
 		57ABDC3E25EBFA230078A82B /* AqueousReactionDropDownSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionDropDownSelection.swift; sourceTree = "<group>"; };
+		57ABDC4525EC03E10078A82B /* AqueousStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousStatements.swift; sourceTree = "<group>"; };
 		57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		57B168BF25A7C09200F6668E /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
@@ -1442,6 +1444,14 @@
 			path = scales;
 			sourceTree = "<group>";
 		};
+		57ABDC4425EC03BC0078A82B /* statements */ = {
+			isa = PBXGroup;
+			children = (
+				57ABDC4525EC03E10078A82B /* AqueousStatements.swift */,
+			);
+			path = statements;
+			sourceTree = "<group>";
+		};
 		57B0FBC82565D44500BB6ACC /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1555,6 +1565,7 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57ABDC4425EC03BC0078A82B /* statements */,
 				57A1B7A725EAB4C200878B52 /* scales */,
 				5786FAC925E6B02400AAD8A6 /* beaker */,
 				57952A5025E68175006AB876 /* navigation */,
@@ -2167,6 +2178,7 @@
 				575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */,
 				57A1B79825EAA65800878B52 /* MoleculeScaleBasket.swift in Sources */,
 				57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */,
+				57ABDC4625EC03E10078A82B /* AqueousStatements.swift in Sources */,
 				57ABDC3925EBF9300078A82B /* AqueousReactionType.swift in Sources */,
 				57952A2125E63F7F006AB876 /* BalancedReaction.swift in Sources */,
 				575A88B825E43CD500AEE448 /* SceneDelegate.swift in Sources */,

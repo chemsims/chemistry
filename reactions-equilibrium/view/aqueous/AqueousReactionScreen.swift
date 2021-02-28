@@ -314,7 +314,7 @@ private struct RightStackView: View {
 
     private var beaky: some View {
         BeakyBox(
-            statement: [],
+            statement: model.statement,
             next: model.next,
             back: model.back,
             nextIsDisabled: false,

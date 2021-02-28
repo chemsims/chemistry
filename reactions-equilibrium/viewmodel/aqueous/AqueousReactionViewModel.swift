@@ -13,6 +13,7 @@ class AqueousReactionViewModel: ObservableObject {
         self.navigation = AqueousNavigationModel.model(model: self)
     }
 
+    @Published var statement = [TextLine]()
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows)
 
     @Published var moleculesA = [GridCoordinate]()
@@ -20,7 +21,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var gridMoleculesA = [GridCoordinate]()
     @Published var gridMoleculesB = [GridCoordinate]()
 
-    @Published var canSetLiquidLevel = true
+    @Published var canSetLiquidLevel = false
     @Published var canAddReactants = false
     @Published var canChooseReaction = false
     @Published var canSetCurrentTime = false
