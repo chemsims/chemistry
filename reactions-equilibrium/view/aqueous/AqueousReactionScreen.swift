@@ -34,78 +34,13 @@ private struct AqueousReactionScreenWithSettings: View {
                 Spacer()
                 beaker
             }
-
             Spacer()
             MiddleStackView(model: model, settings: settings)
             Spacer()
-
-//            rightStack
+            RightStackView(model: model, settings: setting)
         }
         .padding(.bottom, settings.bottomPadding)
         .padding(.top, settings.topPadding)
-    }
-
-    private var rightStack: some View {
-        VStack(spacing: 2) {
-//            AqueousEquationView(
-//                equations: model.equations,
-//                quotient: model.quotientEquation,
-//                currentTime: model.currentTime,
-//                maxWidth: settings.width / 4,
-//                maxHeight: settings.height / 4
-//            )
-
-            MoleculeScales(
-                equations: model.equations,
-                currentTime: model.currentTime
-            )
-            .frame(width: 0.2 * settings.width, height: 0.2 * settings.height)
-
-            EquilibriumGrid(
-                currentTime: model.currentTime,
-                reactants: [
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.gridMoleculesA,
-                            color: .from(.aqMoleculeA)
-                        ),
-                        fractionToDraw: model.gridMoleculesAToDraw
-                    ),
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.gridMoleculesB,
-                            color: .from(.aqMoleculeB)
-                        ),
-                        fractionToDraw: model.gridMoleculesBToDraw
-                    )
-                ],
-                products: [
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.gridMoleculesC,
-                            color: .from(.aqMoleculeC)
-                        ),
-                        fractionToDraw: model.productMolecules.cFractionToDraw
-                    ),
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.gridMoleculesD,
-                            color: .from(.aqMoleculeD)
-                        ),
-                        fractionToDraw: model.productMolecules.dFractionToDraw
-                    )
-                ]
-            )
-            .frame(width: 0.25 * settings.width, height: 0.2 * settings.height)
-
-            BeakyBox(
-                statement: [],
-                next: model.next,
-                back: model.back,
-                nextIsDisabled: false,
-                settings: settings.beakySettings
-            )
-        }
     }
 
     private var molecules: some View {
@@ -254,6 +189,75 @@ private struct MiddleStackView: View {
             .onTapGesture {
                 showGraph = isGraph
             }
+    }
+}
+
+private struct RightStackView: View {
+
+    @ObservedObject var model: AqueousReactionViewModel
+    let settings: AqueousScreenLayoutSettings
+
+    var body: some View {
+        VStack(spacing: 2) {
+//            AqueousEquationView(
+//                equations: model.equations,
+//                quotient: model.quotientEquation,
+//                currentTime: model.currentTime,
+//                maxWidth: settings.width / 4,
+//                maxHeight: settings.height / 4
+//            )
+
+            MoleculeScales(
+                equations: model.equations,
+                currentTime: model.currentTime
+            )
+            .frame(width: 0.2 * settings.width, height: 0.2 * settings.height)
+
+            EquilibriumGrid(
+                currentTime: model.currentTime,
+                reactants: [
+                    AnimatingBeakerMolecules(
+                        molecules: BeakerMolecules(
+                            coords: model.gridMoleculesA,
+                            color: .from(.aqMoleculeA)
+                        ),
+                        fractionToDraw: model.gridMoleculesAToDraw
+                    ),
+                    AnimatingBeakerMolecules(
+                        molecules: BeakerMolecules(
+                            coords: model.gridMoleculesB,
+                            color: .from(.aqMoleculeB)
+                        ),
+                        fractionToDraw: model.gridMoleculesBToDraw
+                    )
+                ],
+                products: [
+                    AnimatingBeakerMolecules(
+                        molecules: BeakerMolecules(
+                            coords: model.gridMoleculesC,
+                            color: .from(.aqMoleculeC)
+                        ),
+                        fractionToDraw: model.productMolecules.cFractionToDraw
+                    ),
+                    AnimatingBeakerMolecules(
+                        molecules: BeakerMolecules(
+                            coords: model.gridMoleculesD,
+                            color: .from(.aqMoleculeD)
+                        ),
+                        fractionToDraw: model.productMolecules.dFractionToDraw
+                    )
+                ]
+            )
+            .frame(width: 0.25 * settings.width, height: 0.2 * settings.height)
+
+            BeakyBox(
+                statement: [],
+                next: model.next,
+                back: model.back,
+                nextIsDisabled: false,
+                settings: settings.beakySettings
+            )
+        }
     }
 }
 
