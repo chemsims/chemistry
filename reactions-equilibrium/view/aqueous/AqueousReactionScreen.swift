@@ -47,13 +47,19 @@ private struct AqueousReactionScreenWithSettings: View {
 
     private var rightStack: some View {
         VStack(spacing: 2) {
-            AqueousEquationView(
+//            AqueousEquationView(
+//                equations: model.equations,
+//                quotient: model.quotientEquation,
+//                currentTime: model.currentTime,
+//                maxWidth: settings.width / 4,
+//                maxHeight: settings.height / 4
+//            )
+
+            MoleculeScales(
                 equations: model.equations,
-                quotient: model.quotientEquation,
-                currentTime: model.currentTime,
-                maxWidth: settings.width / 4,
-                maxHeight: settings.height / 4
+                currentTime: model.currentTime
             )
+            .frame(width: 0.2 * settings.width, height: 0.2 * settings.height)
 
             EquilibriumGrid(
                 currentTime: model.currentTime,

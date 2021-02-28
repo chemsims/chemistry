@@ -5,10 +5,17 @@
 import SwiftUI
 import ReactionsCore
 
-private struct MoleculeScales: View {
+struct MoleculeScales: View {
+
+    let equations: BalancedReactionEquations
+    let currentTime: CGFloat
+
     var body: some View {
         GeometryReader { geo in
             SizedMoleculeScales(
+                reaction: equations,
+                rotationDegrees: RotationEquation(reaction: equations),
+                currentTime: currentTime,
                 settings: MoleculeScalesGeometry(
                     width: geo.size.width,
                     height: geo.size.height
@@ -18,12 +25,24 @@ private struct MoleculeScales: View {
     }
 }
 
+private struct RotationEquation: Equation {
+
+    let reaction: BalancedReactionEquations
+    let maxAngle: CGFloat = 25
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let reactantSum = reaction.reactantA.getY(at: x) + reaction.reactantB.getY(at: x)
+        let productSum = reaction.productC.getY(at: x) + reaction.productD.getY(at: x)
+        return maxAngle * (productSum - reactantSum)
+    }
+}
+
 private struct SizedMoleculeScales: View {
 
+    let reaction: BalancedReactionEquations
+    let rotationDegrees: Equation
+    let currentTime: CGFloat
     let settings: MoleculeScalesGeometry
-
-    private let rotationDegrees: Equation = ConstantEquation(value: 20)
-    private let currentTime: CGFloat = 0
 
     var body: some View {
         ZStack {
@@ -50,24 +69,36 @@ private struct SizedMoleculeScales: View {
     }
 
     private var leftBasket: some View {
-        basketView(isLeft: true)
+        basketView(
+            isLeft: true,
+            left: MoleculeConcentration(concentration: reaction.reactantA, color: .from(.aqMoleculeA)),
+            right: MoleculeConcentration(concentration: reaction.reactantB, color: .from(.aqMoleculeB))
+        )
     }
 
     private var rightBasket: some View {
-        basketView(isLeft: false)
+        basketView(
+            isLeft: false,
+            left: MoleculeConcentration(
+                concentration: reaction.productC,
+                color: .from(.aqMoleculeC)
+            ),
+            right: MoleculeConcentration(
+                concentration: reaction.productD,
+                color: .from(.aqMoleculeD)
+            )
+        )
     }
 
-    private func basketView(isLeft: Bool) -> some View {
+    private func basketView(
+        isLeft: Bool,
+        left: MoleculeConcentration,
+        right: MoleculeConcentration
+    ) -> some View {
         MoleculeScaleBasket(
-            moleculeLeft: MoleculeConcentration(
-                concentration: ConstantEquation(value: 1),
-                color: .from(.aqMoleculeB)
-            ),
-            moleculeRight: MoleculeConcentration(
-                concentration: ConstantEquation(value: 0.5),
-                color: .from(.aqMoleculeA)
-            ),
-            currentTime: 0
+            moleculeLeft: left,
+            moleculeRight: right,
+            currentTime: currentTime
         )
         .frame(width: settings.basketWidth, height: settings.basketHeight)
         .offset(y: settings.basketYOffset)
@@ -151,7 +182,20 @@ private struct MoleculeScalesGeometry {
 
 struct MoleculeScales_Previews: PreviewProvider {
     static var previews: some View {
-        MoleculeScales()
-            .previewLayout(.fixed(width: 400, height: 300))
+        MoleculeScales(
+            equations: BalancedReactionEquations(
+                coefficients: BalancedReactionCoefficients(
+                    reactantA: 2,
+                    reactantB: 2,
+                    productC: 1,
+                    productD: 4
+                ),
+                a0: 0.4,
+                b0: 0.5,
+                finalTime: 10
+            ),
+            currentTime: 2
+        )
+        .previewLayout(.fixed(width: 400, height: 300))
     }
 }
