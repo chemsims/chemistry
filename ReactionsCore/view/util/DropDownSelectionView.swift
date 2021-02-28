@@ -3,9 +3,8 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
+public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
 
     let title: String
     let options: [Data]
@@ -20,7 +19,31 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion: Bool
 
-    var body: some View {
+    public init(
+        title: String,
+        options: [Data],
+        isToggled: Binding<Bool>,
+        selection: Binding<Data>,
+        height: CGFloat,
+        animation: Animation?,
+        displayString: @escaping (Data) -> String,
+        label: @escaping (Data) -> String,
+        disabledOptions: [Data],
+        onSelection: (() -> Void)?
+    ) {
+        self.title = title
+        self.options = options
+        self._isToggled = isToggled
+        self._selection = selection
+        self.height = height
+        self.animation = animation
+        self.displayString = displayString
+        self.label = label
+        self.disabledOptions = disabledOptions
+        self.onSelection = onSelection
+    }
+
+    public var body: some View {
         HStack(alignment: .top, spacing: 0) {
             selectionView
                 .opacity(isToggled ? 1 : 0)
@@ -136,17 +159,25 @@ struct DropDownSelectionView_Previews: PreviewProvider {
         ZStack {
             DropDownSelectionView(
                 title: "foo",
-                options: ReactionOrder.allCases,
+                options: TempEnum.allCases,
                 isToggled: .constant(true),
-                selection: .constant(.Zero),
+                selection: .constant(.A),
                 height: 30,
                 animation: nil,
                 displayString: { "\($0)"},
                 label: { "\($0)"},
-                disabledOptions: [.First],
+                disabledOptions: [.B],
                 onSelection: nil
             )
         }
         .previewLayout(.fixed(width: 700, height: 200))
+    }
+
+    private enum TempEnum: String, CaseIterable, Identifiable {
+        case A, B, C, D
+
+        var id: String {
+            rawValue
+        }
     }
 }

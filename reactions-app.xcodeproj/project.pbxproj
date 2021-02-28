@@ -49,7 +49,6 @@
 		571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
 		5727485F25A5F489000CFA1E /* NavigationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */; };
 		5727486725A60445000CFA1E /* ScreenStateTreeNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */; };
-		5727486B25A60D30000CFA1E /* DropDownSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */; };
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
 		572CBEB025C0AECD00CE6007 /* LabellingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CBEAF25C0AECD00CE6007 /* LabellingTests.swift */; };
 		572CF3A425AA6E2100B49E34 /* ReactionInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CF3A325AA6E2100B49E34 /* ReactionInputTests.swift */; };
@@ -176,6 +175,7 @@
 		57AA012E25A90172001131A0 /* EnergyProfileReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA012D25A90172001131A0 /* EnergyProfileReactionType.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
+		57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */; };
 		57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */; };
 		57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */; };
 		57B23314258E8BCB00128760 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23313258E8BCB00128760 /* AppScreen.swift */; };
@@ -809,7 +809,6 @@
 				57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */,
 				57F337F82578CE7E00EF90A1 /* Tooltip.swift */,
 				57E7FF6D2582831000A30582 /* ConcentrationTable.swift */,
-				5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */,
 				5773B5EB25B84A9100889A2E /* MailComposerView.swift */,
 				5787039725B88E14002A4487 /* ShareSheetView.swift */,
 			);
@@ -1398,6 +1397,7 @@
 			children = (
 				57D2F2D225EA27D100AEE0D8 /* shapes */,
 				571B3CAE25658ACC0075358B /* CircleIconButton.swift */,
+				5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */,
 				57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */,
 			);
 			path = util;
@@ -2066,7 +2066,6 @@
 				571B3C602565562C0075358B /* FirstOrderReactionNavigationViewModel.swift in Sources */,
 				573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */,
 				5712155E258103A600E92A99 /* Rates.swift in Sources */,
-				5727486B25A60D30000CFA1E /* DropDownSelectionView.swift in Sources */,
 				571B3C7425655AA60075358B /* SecondOrderReactionScreen.swift in Sources */,
 				57B23314258E8BCB00128760 /* AppScreen.swift in Sources */,
 				57A119AC25B86B5500A7810B /* EnergyProfileFilingViewModel.swift in Sources */,
@@ -2194,6 +2193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */,
 				57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */,
 				575A886625E435FB00AEE448 /* Beaky.swift in Sources */,
 				5786FAAB25E6908D00AAD8A6 /* DisabledSliderModifier.swift in Sources */,
