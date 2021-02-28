@@ -25,7 +25,7 @@ struct EquilibriumGrid: View {
     }
 
     private func makeView(settings: EquilibriumGridGeometry) -> some View {
-        HStack(spacing: 2) {
+        HStack(spacing: 0) {
             Spacer()
             SizedEquilibriumGrid(
                 currentTime: currentTime,
@@ -126,7 +126,7 @@ private struct EquilibriumGridGeometry {
     }
 
     var maxGridWidth: CGFloat {
-        0.4 * width
+        0.39 * width
     }
 }
 

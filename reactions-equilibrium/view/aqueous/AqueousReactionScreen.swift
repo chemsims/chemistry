@@ -37,7 +37,7 @@ private struct AqueousReactionScreenWithSettings: View {
             Spacer()
             MiddleStackView(model: model, settings: settings)
             Spacer()
-            RightStackView(model: model, settings: setting)
+            RightStackView(model: model, settings: settings)
         }
         .padding(.bottom, settings.bottomPadding)
         .padding(.top, settings.topPadding)
@@ -184,11 +184,12 @@ private struct MiddleStackView: View {
     }
 
     private func selectionToggleText(isGraph: Bool) -> some View {
-        Text(isGraph ? "Chart" : "Table")
-            .foregroundColor(showGraph == isGraph ? .orangeAccent : Styling.inactiveScreenElement)
-            .onTapGesture {
-                showGraph = isGraph
-            }
+        SelectionToggleText(
+            text: isGraph ? "Graph" : "Table",
+            isSelected: showGraph == isGraph,
+            action: { showGraph = isGraph }
+        )
+        .font(.system(size: settings.chartSelectionFontSize))
     }
 }
 
@@ -197,71 +198,140 @@ private struct RightStackView: View {
     @ObservedObject var model: AqueousReactionViewModel
     let settings: AqueousScreenLayoutSettings
 
+    @State private var showGrid = true
+
     var body: some View {
-        VStack(spacing: 2) {
-//            AqueousEquationView(
-//                equations: model.equations,
-//                quotient: model.quotientEquation,
-//                currentTime: model.currentTime,
-//                maxWidth: settings.width / 4,
-//                maxHeight: settings.height / 4
-//            )
-
-            MoleculeScales(
-                equations: model.equations,
-                currentTime: model.currentTime
-            )
-            .frame(width: 0.2 * settings.width, height: 0.2 * settings.height)
-
-            EquilibriumGrid(
-                currentTime: model.currentTime,
-                reactants: [
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.gridMoleculesA,
-                            color: .from(.aqMoleculeA)
-                        ),
-                        fractionToDraw: model.gridMoleculesAToDraw
-                    ),
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.gridMoleculesB,
-                            color: .from(.aqMoleculeB)
-                        ),
-                        fractionToDraw: model.gridMoleculesBToDraw
-                    )
-                ],
-                products: [
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.gridMoleculesC,
-                            color: .from(.aqMoleculeC)
-                        ),
-                        fractionToDraw: model.productMolecules.cFractionToDraw
-                    ),
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.gridMoleculesD,
-                            color: .from(.aqMoleculeD)
-                        ),
-                        fractionToDraw: model.productMolecules.dFractionToDraw
-                    )
-                ]
-            )
-            .frame(width: 0.25 * settings.width, height: 0.2 * settings.height)
-
-            BeakyBox(
-                statement: [],
-                next: model.next,
-                back: model.back,
-                nextIsDisabled: false,
-                settings: settings.beakySettings
-            )
+        VStack(spacing: 0) {
+            equation
+            Spacer()
+            gridOrScales
+            Spacer()
+            beaky
         }
+    }
+
+    private var equation: some View {
+        AqueousEquationView(
+            equations: model.equations,
+            quotient: model.quotientEquation,
+            currentTime: model.currentTime,
+            maxWidth: settings.equationWidth,
+            maxHeight: settings.equationHeight
+        )
+    }
+
+    // Must use opacity to control visibility instead of removing from stack, otherwise animation stops
+    private var gridOrScales: some View {
+        VStack(spacing: 0) {
+            ZStack {
+                grid
+                    .opacity(showGrid ? 1 : 0)
+                scales
+                    .opacity(showGrid ? 0 : 1)
+            }
+            .frame(width: settings.scalesWidth, height: settings.scalesHeight)
+
+            gridToggleSelection
+                .frame(
+                    width: settings.gridWidth,
+                    height: settings.chartSelectionHeight
+                )
+        }
+    }
+
+    private var gridToggleSelection: some View {
+        HStack(spacing: 0) {
+            selectionToggleText(isGrid: true)
+            Spacer()
+            selectionToggleText(isGrid: false)
+            Spacer()
+        }
+    }
+
+    private var scales: some View {
+        MoleculeScales(
+            equations: model.equations,
+            currentTime: model.currentTime
+        )
+        .frame(width: settings.scalesWidth, height: settings.scalesHeight)
+    }
+
+    private var grid: some View {
+        EquilibriumGrid(
+            currentTime: model.currentTime,
+            reactants: [
+                AnimatingBeakerMolecules(
+                    molecules: BeakerMolecules(
+                        coords: model.gridMoleculesA,
+                        color: .from(.aqMoleculeA)
+                    ),
+                    fractionToDraw: model.gridMoleculesAToDraw
+                ),
+                AnimatingBeakerMolecules(
+                    molecules: BeakerMolecules(
+                        coords: model.gridMoleculesB,
+                        color: .from(.aqMoleculeB)
+                    ),
+                    fractionToDraw: model.gridMoleculesBToDraw
+                )
+            ],
+            products: [
+                AnimatingBeakerMolecules(
+                    molecules: BeakerMolecules(
+                        coords: model.gridMoleculesC,
+                        color: .from(.aqMoleculeC)
+                    ),
+                    fractionToDraw: model.productMolecules.cFractionToDraw
+                ),
+                AnimatingBeakerMolecules(
+                    molecules: BeakerMolecules(
+                        coords: model.gridMoleculesD,
+                        color: .from(.aqMoleculeD)
+                    ),
+                    fractionToDraw: model.productMolecules.dFractionToDraw
+                )
+            ]
+        )
+        .frame(width: settings.gridWidth, height: settings.gridHeight)
+    }
+
+    private var beaky: some View {
+        BeakyBox(
+            statement: [],
+            next: model.next,
+            back: model.back,
+            nextIsDisabled: false,
+            settings: settings.beakySettings
+        )
+    }
+
+    private func selectionToggleText(isGrid: Bool) -> some View {
+        SelectionToggleText(
+            text: isGrid ? "Dynamic Equilibrium" : "Pair of Scales",
+            isSelected: showGrid == isGrid,
+            action: { showGrid = isGrid }
+        )
+        .font(.system(size: settings.gridSelectionFontSize))
     }
 }
 
-struct AqueousScreenLayoutSettings {
+private struct SelectionToggleText: View {
+
+    let text: String
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Text(text)
+            .foregroundColor(
+                isSelected ? .orangeAccent : Styling.inactiveScreenElement
+            )
+            .onTapGesture(perform: action)
+            .lineLimit(1)
+    }
+}
+
+private struct AqueousScreenLayoutSettings {
     let geometry: GeometryProxy
     var width: CGFloat {
         geometry.size.width
@@ -325,9 +395,43 @@ extension AqueousScreenLayoutSettings {
     }
 }
 
+// Right stack
 extension AqueousScreenLayoutSettings {
+
+    var rightStackWidth: CGFloat {
+        0.8 * (width - beakerWidth - chartSettings.size)
+    }
+
+    var scalesWidth: CGFloat {
+        0.23 * width
+    }
+
+    var scalesHeight: CGFloat {
+        0.2 * height
+    }
+
+    var gridWidth: CGFloat {
+        0.28 * width
+    }
+
+    var gridHeight: CGFloat {
+        0.2 * height
+    }
+
+    var equationHeight: CGFloat {
+        0.2 * height
+    }
+
+    var equationWidth: CGFloat {
+        0.3 * width
+    }
+
+    var gridSelectionFontSize: CGFloat {
+        0.6 * chartSelectionFontSize
+    }
+
     var beakySettings: BeakyGeometrySettings {
-        let bubbleWidth = 0.3 * width
+        let bubbleWidth = 0.27 * width
         return BeakyGeometrySettings(
             beakyVSpacing: 2,
             bubbleWidth: bubbleWidth,
