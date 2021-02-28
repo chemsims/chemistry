@@ -61,13 +61,14 @@ private struct SizedMoleculeScaleBasket: View {
     }
 }
 
-private struct MoleculeScaleBasketGeometry {
+struct MoleculeScaleBasketGeometry {
 
-    let width: CGFloat
+    static let heightToWidth: CGFloat = 1.11
 
-    static let basketHeightToTotalWidth: CGFloat = 0.21
+    fileprivate let width: CGFloat
+    fileprivate static let basketHeightToTotalWidth: CGFloat = 0.21
 
-    var moleculesBottomPadding: CGFloat {
+    fileprivate var moleculesBottomPadding: CGFloat {
         0.9 * basketHeight
     }
 

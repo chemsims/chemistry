@@ -5,52 +5,59 @@
 import SwiftUI
 import ReactionsCore
 
-struct MoleculeScales: View {
-
-    @State private var currentTime: CGFloat = 0
-    private var equation = QuadraticEquation(
-        parabola: CGPoint(x: 5, y: 45),
-        through: .zero
-    )
-
+private struct MoleculeScales: View {
     var body: some View {
         GeometryReader { geo in
-            ZStack {
-                button
-                Rectangle()
-                    .foregroundColor(Styling.scalesBody)
-                 .frame(width: 200, height: 2)
-                    .animatableRotation(
-                        degreesRotation: equation,
-                        currentTime: currentTime
-                    )
-
-                basket(lhs: true, geo: geo)
-                basket(lhs: false, geo: geo)
-            }
-        }
-        .padding(.leading, 50)
-    }
-
-    private func basket(lhs: Bool, geo: GeometryProxy) -> some View {
-        circle
-            .modifier(
-                AnimatablePositionModifier(
-                    equation: TrackingEquation(
-                        rotationCenter: CGPoint(
-                            x: geo.size.width / 2,
-                            y: geo.size.height / 2
-                        ),
-                        armWidth: lhs ? 100 : -100
-                    ),
-                    rotation: equation,
-                    currentTime: currentTime
+            SizedMoleculeScales(
+                settings: MoleculeScalesGeometry(
+                    width: geo.size.width,
+                    height: geo.size.height
                 )
             )
-            .offset(y: 30)
+        }
+    }
+}
+
+private struct SizedMoleculeScales: View {
+
+    let settings: MoleculeScalesGeometry
+
+    private let rotationDegrees: Equation = ConstantEquation(value: 20)
+    private let currentTime: CGFloat = 0
+
+    var body: some View {
+        ZStack {
+            arm
+            stand
+            leftBasket
+            rightBasket
+        }
+        .frame(width: settings.width)
     }
 
-    private var circle: some View {
+    private var stand: some View {
+        Image("scales-stand")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+    }
+
+    private var arm: some View {
+        Rectangle()
+            .frame(width: settings.armWidth, height: 1.52)
+            .animatableRotation(degreesRotation: rotationDegrees, currentTime: currentTime)
+            .position(settings.rotationCenter)
+            .foregroundColor(Styling.scalesBody)
+    }
+
+    private var leftBasket: some View {
+        basketView(isLeft: true)
+    }
+
+    private var rightBasket: some View {
+        basketView(isLeft: false)
+    }
+
+    private func basketView(isLeft: Bool) -> some View {
         MoleculeScaleBasket(
             moleculeLeft: MoleculeConcentration(
                 concentration: ConstantEquation(value: 1),
@@ -62,24 +69,18 @@ struct MoleculeScales: View {
             ),
             currentTime: 0
         )
-        .frame(width: 60, height: 60)
-    }
-
-    private var button: some View {
-        VStack {
-            Button(action: {
-                withAnimation(.linear(duration: 5)) {
-                    if currentTime == 5 {
-                        currentTime = 0
-                    } else {
-                        currentTime = 5
-                    }
-                }
-            }) {
-                Text("click me")
-            }
-            Spacer()
-        }
+        .frame(width: settings.basketWidth, height: settings.basketHeight)
+        .offset(y: settings.basketYOffset)
+        .modifier(
+            AnimatablePositionModifier(
+                equation: TrackingEquation(
+                    rotationCenter: settings.rotationCenter,
+                    armWidth: isLeft ? settings.armWidth / 2 : -settings.armWidth / 2
+                ),
+                rotation: rotationDegrees,
+                currentTime: currentTime
+            )
+        )
     }
 }
 
@@ -118,8 +119,39 @@ private struct TrackingEquation {
     }
 }
 
+private struct MoleculeScalesGeometry {
+    let width: CGFloat
+    let height: CGFloat
+
+    var rotationCenter: CGPoint {
+        CGPoint(x: width / 2, y: rotationY)
+    }
+
+    private var rotationY: CGFloat {
+        0.247 * height
+    }
+
+    var basketWidth: CGFloat {
+        0.391 * height
+    }
+
+    var armWidth: CGFloat {
+        width - basketWidth
+    }
+
+    var basketHeight: CGFloat {
+        MoleculeScaleBasketGeometry.heightToWidth * basketWidth
+    }
+
+    var basketYOffset: CGFloat {
+        basketHeight / 2
+    }
+
+}
+
 struct MoleculeScales_Previews: PreviewProvider {
     static var previews: some View {
         MoleculeScales()
+            .previewLayout(.fixed(width: 400, height: 300))
     }
 }
