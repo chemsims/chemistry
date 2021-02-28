@@ -17,7 +17,10 @@ struct MoleculeScaleBasket: View {
                 moleculeLeft: moleculeLeft,
                 moleculeRight: moleculeRight,
                 currentTime: currentTime,
-                settings: MoleculeScaleBasketGeometry(width: geo.size.width)
+                settings: MoleculeScaleBasketGeometry(
+                    width: geo.size.width,
+                    height: geo.size.height
+                )
             )
         }
     }
@@ -55,9 +58,30 @@ private struct SizedMoleculeScaleBasket: View {
     }
 
     private var image: some View {
-        Image("single-scale")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
+        ZStack(alignment: .bottom) {
+            Image("single-scale-basket")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: settings.width)
+
+            basketHolder(isLeft: true)
+            basketHolder(isLeft: false)
+        }
+        .frame(width: settings.width)
+    }
+
+    private func basketHolder(isLeft: Bool) -> some View {
+        Path { p in
+            p.move(to: CGPoint(x: settings.width / 2, y: 0))
+            p.addLine(
+                to: CGPoint(
+                    x: isLeft ? 0 : settings.width,
+                    y: settings.height - settings.basketHeight
+                )
+            )
+        }
+        .stroke(lineWidth: MoleculeScalesGeometry.lineWidth)
+        .foregroundColor(Styling.scalesBody)
     }
 }
 
@@ -66,13 +90,15 @@ struct MoleculeScaleBasketGeometry {
     static let heightToWidth: CGFloat = 1.11
 
     fileprivate let width: CGFloat
+    fileprivate let height: CGFloat
+
     fileprivate static let basketHeightToTotalWidth: CGFloat = 0.21
 
     fileprivate var moleculesBottomPadding: CGFloat {
         0.9 * basketHeight
     }
 
-    private var basketHeight: CGFloat {
+    fileprivate var basketHeight: CGFloat {
         Self.basketHeightToTotalWidth * width
     }
 }

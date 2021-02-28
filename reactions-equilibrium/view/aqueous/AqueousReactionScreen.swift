@@ -25,7 +25,7 @@ private struct AqueousReactionScreenWithSettings: View {
     @ObservedObject var model: AqueousReactionViewModel
     let settings: AqueousScreenLayoutSettings
 
-    @State private var showGraph = false
+    @State private var showGraph = true
 
     var body: some View {
         HStack(spacing: 0) {

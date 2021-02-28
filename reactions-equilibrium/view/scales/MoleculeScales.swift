@@ -62,7 +62,7 @@ private struct SizedMoleculeScales: View {
 
     private var arm: some View {
         Rectangle()
-            .frame(width: settings.armWidth, height: 1.52)
+            .frame(width: settings.armWidth, height: MoleculeScalesGeometry.lineWidth)
             .animatableRotation(degreesRotation: rotationDegrees, currentTime: currentTime)
             .position(settings.rotationCenter)
             .foregroundColor(Styling.scalesBody)
@@ -150,11 +150,13 @@ private struct TrackingEquation {
     }
 }
 
-private struct MoleculeScalesGeometry {
-    let width: CGFloat
-    let height: CGFloat
+struct MoleculeScalesGeometry {
+    fileprivate let width: CGFloat
+    fileprivate let height: CGFloat
 
-    var rotationCenter: CGPoint {
+    static let lineWidth: CGFloat = 0.8
+
+    fileprivate var rotationCenter: CGPoint {
         CGPoint(x: width / 2, y: rotationY)
     }
 
@@ -162,19 +164,19 @@ private struct MoleculeScalesGeometry {
         0.247 * height
     }
 
-    var basketWidth: CGFloat {
+    fileprivate var basketWidth: CGFloat {
         0.391 * height
     }
 
-    var armWidth: CGFloat {
+    fileprivate var armWidth: CGFloat {
         width - basketWidth
     }
 
-    var basketHeight: CGFloat {
+    fileprivate var basketHeight: CGFloat {
         MoleculeScaleBasketGeometry.heightToWidth * basketWidth
     }
 
-    var basketYOffset: CGFloat {
+    fileprivate var basketYOffset: CGFloat {
         basketHeight / 2
     }
 
