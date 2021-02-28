@@ -36,10 +36,10 @@ private struct AqueousReactionScreenWithSettings: View {
             }
 
             Spacer()
-            middleStack
+            MiddleStackView(model: model, settings: settings)
             Spacer()
 
-            rightStack
+//            rightStack
         }
         .padding(.bottom, settings.bottomPadding)
         .padding(.top, settings.topPadding)
@@ -179,33 +179,34 @@ private struct AqueousReactionScreenWithSettings: View {
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
         }
     }
+}
 
-    private var middleStack: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            HStack(spacing: 2) {
-                Button(action: { showGraph = true }) {
-                    Text("Graph")
-                }
-                Button(action: { showGraph = false }) {
-                    Text("Table")
-                }
-            }
+private struct MiddleStackView: View {
+    @ObservedObject var model: AqueousReactionViewModel
+    let settings: AqueousScreenLayoutSettings
 
+    @State private var showGraph = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            chartSelectionToggle
             chartOrTable
+            Spacer()
             quotientChart
         }
     }
 
     // Must use opacity to hide chart rather than remove from view, otherwise the animation doesn't resume
     private var chartOrTable: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             concentrationChart.opacity(showGraph ? 1 : 0)
             if (!showGraph) {
                 ICETable(equations: model.equations)
             }
         }.frame(
             width: settings.chartSettings.totalChartWidth,
-            height: settings.chartSettings.totalChartHeight
+            height: settings.chartSettings.totalChartHeight,
+            alignment: .leading
         )
     }
 
@@ -229,6 +230,30 @@ private struct AqueousReactionScreenWithSettings: View {
             canSetCurrentTime: model.canSetCurrentTime,
             settings: settings.chartSettings
         )
+    }
+
+    private var chartSelectionToggle: some View {
+        HStack {
+            selectionToggleText(isGraph: true)
+            Spacer()
+            selectionToggleText(isGraph: false)
+            Spacer()
+        }
+        .frame(
+            width: settings.chartSettings.size,
+            height: settings.chartSelectionHeight
+        )
+        .padding(.leading, settings.chartSettings.yAxisWidthLabelWidth)
+        .padding(.bottom, settings.chartSelectionBottomPadding)
+        .font(.system(size: settings.chartSelectionFontSize))
+    }
+
+    private func selectionToggleText(isGraph: Bool) -> some View {
+        Text(isGraph ? "Chart" : "Table")
+            .foregroundColor(showGraph == isGraph ? .orangeAccent : Styling.inactiveScreenElement)
+            .onTapGesture {
+                showGraph = isGraph
+            }
     }
 }
 
@@ -267,7 +292,22 @@ struct AqueousScreenLayoutSettings {
     }
 
     var chartSettings: ReactionEquilibriumChartsLayoutSettings {
-        ReactionEquilibriumChartsLayoutSettings(size: 0.2 * width)
+        let maxSizeForHeight = 0.4 * height
+        let maxSizeForWidth = 0.2 * width
+        let size = min(maxSizeForWidth, maxSizeForHeight)
+        return ReactionEquilibriumChartsLayoutSettings(size: size)
+    }
+
+    var chartSelectionHeight: CGFloat {
+        0.048 * height
+    }
+
+    var chartSelectionFontSize: CGFloat {
+        0.8 * chartSelectionHeight
+    }
+
+    var chartSelectionBottomPadding: CGFloat {
+        0.1 * chartSelectionHeight
     }
 }
 
