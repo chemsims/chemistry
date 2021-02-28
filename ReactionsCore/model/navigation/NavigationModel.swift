@@ -16,6 +16,10 @@ public class NavigationModel<State: ScreenState> {
     private var nextTimer: Timer?
     private var subTimer: Timer?
 
+    deinit {
+        print("deinit")
+    }
+
     public convenience init(model: State.Model, states: [State]) {
         let rootNode = ScreenStateTreeNode<State>.build(states: states)
         assert(rootNode != nil)
@@ -26,10 +30,12 @@ public class NavigationModel<State: ScreenState> {
         self.currentNode = rootNode
         self.model = model
         currentNode.state.apply(on: self.model)
+        print("init")
     }
 
     @objc public func next() {
         if let nextNode = currentNode.next(model: model) {
+            print("a")
             let state = nextNode.state
             state.apply(on: model)
             currentNode = nextNode
@@ -63,7 +69,7 @@ public class NavigationModel<State: ScreenState> {
     private func scheduleSubState(indexToRun: Int) {
         if let timer = subTimer {
             timer.invalidate()
-            nextTimer = nil
+            subTimer = nil
         }
         let state = currentNode.state
         guard state.delayedStates.count > indexToRun else {
@@ -90,12 +96,15 @@ public class NavigationModel<State: ScreenState> {
     }
 
     private func scheduleNextState(for state: State) {
+        print("scheduling next state. Timer is nil? \(nextTimer == nil)")
         if let timer = nextTimer {
             timer.invalidate()
             nextTimer = nil
+            print("has invalidated next timer")
         }
         if let delay = state.nextStateAutoDispatchDelay(model: model) {
             nextTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(next), userInfo: nil, repeats: false)
+            print("has set next timer")
         }
     }
 }
