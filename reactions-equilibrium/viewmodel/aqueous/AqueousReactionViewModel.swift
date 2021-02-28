@@ -22,24 +22,22 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var canSetLiquidLevel = true
     @Published var canAddReactants = false
+    @Published var canChooseReaction = false
+    @Published var canSetCurrentTime = false
 
     @Published var currentTime: CGFloat = 0
 
     @Published var reactionState = TriProcessState.notStarted
 
-    @Published var canSetCurrentTime = false
+    @Published var reactionSelectionIsToggled = false
+    @Published var selectedReaction = AqueousReactionType.A
 
     let finalTime: CGFloat = 15
 
     private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
 
     var equations: BalancedReactionEquations {
-        let coeffs = BalancedReactionCoefficients(
-            reactantA: 2,
-            reactantB: 2,
-            productC: 1,
-            productD: 4
-        )
+        let coeffs = selectedReaction.coefficients
         return BalancedReactionEquations(
             coefficients: coeffs,
             a0: initialConcentrationA,

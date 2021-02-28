@@ -25,8 +25,6 @@ private struct AqueousReactionScreenWithSettings: View {
     @ObservedObject var model: AqueousReactionViewModel
     let settings: AqueousScreenLayoutSettings
 
-    @State private var showGraph = true
-
     var body: some View {
         HStack(spacing: 0) {
             VStack(spacing: 0) {
@@ -120,7 +118,7 @@ private struct MiddleStackView: View {
     @ObservedObject var model: AqueousReactionViewModel
     let settings: AqueousScreenLayoutSettings
 
-    @State private var showGraph = false
+    @State private var showGraph = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -202,12 +200,31 @@ private struct RightStackView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            reactionToggle
+                .zIndex(1)
+            Spacer()
             equation
             Spacer()
             gridOrScales
             Spacer()
             beaky
         }
+    }
+
+    private var reactionToggle: some View {
+        HStack(spacing: 0) {
+            Spacer()
+            AqueousReactionDropDownSelection(
+                isToggled: $model.reactionSelectionIsToggled,
+                selection: $model.selectedReaction,
+                height: settings.reactionToggleHeight
+            ).frame(
+                width: settings.reactionToggleHeight,
+                height: settings.reactionToggleHeight,
+                alignment: .topTrailing
+            )
+        }
+        .frame(width: settings.gridWidth)
     }
 
     private var equation: some View {
@@ -407,7 +424,7 @@ extension AqueousScreenLayoutSettings {
     }
 
     var scalesHeight: CGFloat {
-        0.2 * height
+        0.29 * topRightStackHeight
     }
 
     var gridWidth: CGFloat {
@@ -415,11 +432,11 @@ extension AqueousScreenLayoutSettings {
     }
 
     var gridHeight: CGFloat {
-        0.2 * height
+        0.29 * topRightStackHeight
     }
 
     var equationHeight: CGFloat {
-        0.2 * height
+        0.3 * topRightStackHeight
     }
 
     var equationWidth: CGFloat {
@@ -428,6 +445,18 @@ extension AqueousScreenLayoutSettings {
 
     var gridSelectionFontSize: CGFloat {
         0.6 * chartSelectionFontSize
+    }
+
+    var reactionToggleHeight: CGFloat {
+        0.09 * topRightStackHeight
+    }
+
+    var topRightStackHeight: CGFloat {
+        height - beakyTotalHeight
+    }
+
+    var beakyTotalHeight: CGFloat {
+        beakySettings.bubbleHeight + beakySettings.beakyVSpacing + beakySettings.navButtonSize
     }
 
     var beakySettings: BeakyGeometrySettings {

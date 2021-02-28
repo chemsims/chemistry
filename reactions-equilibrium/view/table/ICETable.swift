@@ -46,7 +46,7 @@ private struct SizedICETable: View {
 
     private func column(equation: Equation, name: String) -> some View {
         let change = equation.delta(t2: equations.convergenceTime)
-        let changeSign = change < 0 ? "" : "+"
+        let changeSign = change > 0 ? "+" : ""
         let changeString = "\(changeSign)\(change.str(decimals: 2))"
 
         return VStack(spacing: 0) {

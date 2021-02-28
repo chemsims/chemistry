@@ -5,13 +5,13 @@
 import CoreGraphics
 
 public struct BeakyGeometrySettings {
-    let beakyVSpacing: CGFloat
-    let bubbleWidth: CGFloat
-    let bubbleHeight: CGFloat
-    let beakyHeight: CGFloat
-    let bubbleFontSize: CGFloat
-    let navButtonSize: CGFloat
-    let bubbleStemWidth: CGFloat
+    public let beakyVSpacing: CGFloat
+    public let bubbleWidth: CGFloat
+    public let bubbleHeight: CGFloat
+    public let beakyHeight: CGFloat
+    public let bubbleFontSize: CGFloat
+    public let navButtonSize: CGFloat
+    public let bubbleStemWidth: CGFloat
 
     public init(
         beakyVSpacing: CGFloat,
