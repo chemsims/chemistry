@@ -30,6 +30,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var selectedReaction = AqueousReactionType.A
 
     private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
+    private let inputSettings = AqueousReactionSettings.ConcentrationInput.self
 
     var equations: BalancedReactionEquations {
         let coeffs = selectedReaction.coefficients
@@ -91,7 +92,7 @@ class AqueousReactionViewModel: ObservableObject {
         moleculesB.removeAll()
         gridMoleculesA.removeAll()
         gridMoleculesB.removeAll()
-        instructToAddMoreReactantCount = (.A, 0)
+        instructToAddMoreReactantCount = instructToAddMoreReactantCount.reset()
     }
 
     func next() {
@@ -108,29 +109,28 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     private func informUserOfMissing(reactant: AqueousMoleculeReactant) {
+        let minConvergence = inputSettings.minInitial
+        let minInput = equations.a0ForConvergence(of: inputSettings.minFinal)
+        let minConcentration = max(minConvergence, minInput)
+        instructToAddMoreReactantCount = instructToAddMoreReactantCount.increment(value: reactant)
         statement = AqueousStatements.addMore(
             reactant: reactant,
-            count: instructToAddMoreReactantCount.1,
-            minConcentration: "TODO"
+            count: instructToAddMoreReactantCount.count,
+            minConcentration: minConcentration.str(decimals: 2)
         )
-        if instructToAddMoreReactantCount.0 == reactant {
-            instructToAddMoreReactantCount = (reactant, instructToAddMoreReactantCount.1 + 1)
-        } else {
-            instructToAddMoreReactantCount = (reactant, 0)
-        }
     }
 
     // Returns the first reactant which does not have enough molecules in the beaker
     private func getMissingReactant() -> AqueousMoleculeReactant? {
-        let aTooLow = initialConcentrationA < AqueousReactionSettings.ConcentrationInput.minInitial
-        let bTooLow = initialConcentrationB < AqueousReactionSettings.ConcentrationInput.minInitial
+        let aTooLow = initialConcentrationA < inputSettings.minInitial
+        let bTooLow = initialConcentrationB < inputSettings.minInitial
 
         if aTooLow {
             return .A
         } else if bTooLow {
             return .B
         }
-        return equations.reactantToAddForValidReaction
+        return equations.reactantToAddForMinConvergence(convergence: AqueousReactionSettings.ConcentrationInput.minFinal)
     }
 
     private func reactantMoleculesToDraw(
@@ -202,7 +202,7 @@ class AqueousReactionViewModel: ObservableObject {
         availableRows * availableCols
     }
 
-    private var instructToAddMoreReactantCount: (AqueousMoleculeReactant, Int) = (.A, 0)
+    private(set) var instructToAddMoreReactantCount = EquatableCounter<AqueousMoleculeReactant>()
 
     /// Returns the number of rows available for molecules
     private var availableRows: Int {
@@ -217,7 +217,6 @@ class AqueousReactionViewModel: ObservableObject {
     private var availableCols: Int {
         MoleculeGridSettings.cols
     }
-
 }
 
 // MARK: Computed vars for input state

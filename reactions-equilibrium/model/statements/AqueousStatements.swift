@@ -144,8 +144,8 @@ extension AqueousStatements {
         minConcentration: String
     ) -> [TextLine] {
         switch count {
-        case 0: return addMore1(reactant.rawValue)
-        case 1: return addMore2(reactant.rawValue)
+        case 1: return addMore1(reactant.rawValue)
+        case 2: return addMore2(reactant.rawValue)
         default: return addMore3(reactant.rawValue, minConcentration: minConcentration)
         }
     }

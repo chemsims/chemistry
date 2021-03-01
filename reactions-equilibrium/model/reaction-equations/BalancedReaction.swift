@@ -114,22 +114,10 @@ extension BalancedReactionEquations {
 
 extension BalancedReactionEquations {
 
-    /// Returns whether the equation has a valid convergence
-    ///
-    /// For a reaction to be valid, all concentrations must be between 0 and 1 (exclusive) at the convergence time
-    var isValid: Bool {
-        equationArray.allSatisfy { isValid(reaction: $0) }
-    }
-
-    private func isValid(reaction: Equation) -> Bool {
-        let c = reaction.getY(at: convergenceTime)
-        return c > 0 && c < 1
-    }
-
-    var reactantToAddForValidReaction: AqueousMoleculeReactant? {
-        if reactantA.getY(at: convergenceTime) <= 0 {
+    func reactantToAddForMinConvergence(convergence: CGFloat) -> AqueousMoleculeReactant? {
+        if reactantA.getY(at: convergenceTime) < convergence {
             return .A
-        } else if reactantB.getY(at: convergenceTime) <= 0 {
+        } else if reactantB.getY(at: convergenceTime) < convergence {
             return .B
         }
         return nil

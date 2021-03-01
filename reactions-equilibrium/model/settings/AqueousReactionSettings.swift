@@ -21,6 +21,8 @@ struct AqueousReactionSettings {
         static let minInitial: CGFloat = 0.15
         static let maxInitial: CGFloat = 0.3
 
+        static let minFinal: CGFloat = 0.05
+
         static let cToIncrement: CGFloat = 0.05
 
         static let maxAxis: CGFloat = 0.5
