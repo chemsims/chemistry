@@ -100,3 +100,33 @@ struct BalancedReactionEquations {
         )
     }
 }
+
+extension BalancedReactionEquations {
+    var equationArray: [Equation] {
+        [reactantA, reactantB, productC, productD]
+    }
+}
+
+extension BalancedReactionEquations {
+
+    /// Returns whether the equation has a valid convergence
+    ///
+    /// For a reaction to be valid, all concentrations must be between 0 and 1 (exclusive) at the convergence time
+    var isValid: Bool {
+        equationArray.allSatisfy { isValid(reaction: $0) }
+    }
+
+    var reactantToAddForValidReaction: AqueousMoleculeReactant? {
+        if reactantA.getY(at: convergenceTime) <= 0 {
+            return .A
+        } else if reactantB.getY(at: convergenceTime) <= 0 {
+            return .B
+        }
+        return nil
+    }
+
+    private func isValid(reaction: Equation) -> Bool {
+        let c = reaction.getY(at: convergenceTime)
+        return c > 0 && c < 1
+    }
+}
