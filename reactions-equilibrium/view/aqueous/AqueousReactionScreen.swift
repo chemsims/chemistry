@@ -150,6 +150,7 @@ private struct MiddleStackView: View {
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.totalReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
+            showData: model.showConcentrationLines,
             settings: settings.chartSettings
         )
     }

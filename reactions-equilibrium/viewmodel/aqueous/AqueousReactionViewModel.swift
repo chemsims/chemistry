@@ -30,6 +30,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var selectedReaction = AqueousReactionType.A
 
     @Published var showQuotientLine = false
+    @Published var showConcentrationLines = false
 
     private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
     private let inputSettings = AqueousReactionSettings.ConcentrationInput.self

@@ -50,7 +50,14 @@ struct QuotientPlot: View {
 
     private var chart: some View {
         TimeChartView(
-            data: data,
+            data: !showData ? [] : [
+                TimeChartDataline(
+                    equation: equation,
+                    headColor: .orangeAccent,
+                    haloColor: Color.orangeAccent.opacity(0.3),
+                    headRadius: settings.headRadius
+                )
+            ],
             initialTime: 0,
             currentTime: $currentTime,
             finalTime: AqueousReactionSettings.totalReactionTime,
@@ -77,20 +84,6 @@ struct QuotientPlot: View {
 
     private var asymptoteYPosition: CGFloat {
         settings.layout.yAxis.getPosition(at: equation.getY(at: finalTime))
-    }
-
-    private var data: [TimeChartDataline] {
-        guard showData else {
-            return []
-        }
-        return [
-            TimeChartDataline(
-                equation: equation,
-                headColor: .orangeAccent,
-                haloColor: Color.orangeAccent.opacity(0.3),
-                headRadius: settings.headRadius
-            )
-        ]
     }
 }
 

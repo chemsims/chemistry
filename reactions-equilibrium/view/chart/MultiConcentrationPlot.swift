@@ -14,6 +14,8 @@ struct MultiConcentrationPlot: View {
     let finalTime: CGFloat
     let canSetCurrentTime: Bool
 
+    let showData: Bool
+
     let settings: ReactionEquilibriumChartsLayoutSettings
 
     var body: some View {
@@ -43,7 +45,7 @@ struct MultiConcentrationPlot: View {
 
     private var chart: some View {
         TimeChartView(
-            data: [
+            data: !showData ? [] : [
                 data(equation: equations.reactantA, color: .from(.aqMoleculeA)),
                 data(equation: equations.reactantB, color: .from(.aqMoleculeB)),
                 data(equation: equations.productC, color: .from(.aqMoleculeC)),
@@ -110,6 +112,7 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
             currentTime: .constant(10),
             finalTime: 20,
             canSetCurrentTime: false,
+            showData: true,
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis

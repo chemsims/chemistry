@@ -59,6 +59,11 @@ class AqueousAddReactantState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.instructToAddReactant(selected: model.selectedReaction)
         model.inputState = .addReactants
+        model.showConcentrationLines = true
+    }
+
+    override func unapply(on model: AqueousReactionViewModel) {
+        model.showConcentrationLines = false
     }
 }
 
