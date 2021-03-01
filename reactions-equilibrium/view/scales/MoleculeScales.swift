@@ -29,10 +29,21 @@ private struct RotationEquation: Equation {
     let reaction: BalancedReactionEquations
     let maxAngle: CGFloat
 
+    let concentrationSumAtMaxAngle: CGFloat = 1
+
     func getY(at x: CGFloat) -> CGFloat {
         let reactantSum = reaction.reactantA.getY(at: x) + reaction.reactantB.getY(at: x)
         let productSum = reaction.productC.getY(at: x) + reaction.productD.getY(at: x)
-        return maxAngle * (productSum - reactantSum)
+
+        let underlying = LinearEquation(
+            x1: -AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation,
+            y1: -maxAngle,
+            x2: AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation,
+            y2: maxAngle
+        )
+
+        let result = underlying.getY(at: productSum - reactantSum)
+        return min(max(-maxAngle, result), maxAngle)
     }
 }
 
@@ -195,7 +206,6 @@ struct MoleculeScalesGeometry {
     fileprivate var basketYOffset: CGFloat {
         basketHeight / 2
     }
-
 }
 
 extension MoleculeScalesGeometry {
@@ -227,11 +237,11 @@ struct MoleculeScales_Previews: PreviewProvider {
                     productC: 1,
                     productD: 4
                 ),
-                a0: 0.4,
-                b0: 0.5,
+                a0: 0.3,
+                b0: 0.3,
                 finalTime: 10
             ),
-            currentTime: 2
+            currentTime: 0
         )
         .previewLayout(.fixed(width: 400, height: 300))
     }

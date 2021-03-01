@@ -27,4 +27,12 @@ struct AqueousReactionSettings {
 
         static let maxAxis: CGFloat = 0.5
     }
+
+    struct Scales {
+        /// The concentration sum at which the scales are at their maximum rotation
+        /// The concentration sum is A + B - C - D
+        ///
+        /// So, if A + B equals this value, and C + D is zero, then the scales are at their maximum rotation to the left
+        static let concentrationSumAtMaxScaleRotation: CGFloat = 2 * AqueousReactionSettings.ConcentrationInput.maxInitial
+    }
 }
