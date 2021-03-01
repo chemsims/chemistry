@@ -45,6 +45,11 @@ class AqueousSetWaterLevelState: AqueousScreenState {
         model.statement = AqueousStatements.instructToSetWaterLevel
     }
 
+    override func reapply(on model: AqueousReactionViewModel) {
+        model.resetMolecules()
+        super.reapply(on: model)
+    }
+
     override func unapply(on model: AqueousReactionViewModel) {
         model.canSetLiquidLevel = false
     }

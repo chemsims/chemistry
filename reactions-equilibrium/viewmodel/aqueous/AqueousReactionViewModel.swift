@@ -92,6 +92,13 @@ class AqueousReactionViewModel: ObservableObject {
         gridMoleculesB = addingGridMolecules(molecules: gridMoleculesB, concentration: initialConcentrationB, avoiding: gridMoleculesA)
     }
 
+    func resetMolecules() {
+        moleculesA.removeAll()
+        moleculesB.removeAll()
+        gridMoleculesA.removeAll()
+        gridMoleculesB.removeAll()
+    }
+
     func next() {
         navigation?.next()
     }
