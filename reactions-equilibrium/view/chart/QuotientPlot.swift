@@ -92,7 +92,10 @@ struct QuotientPlot_Previews: PreviewProvider {
             currentTime: .constant(10),
             finalTime: 20,
             canSetCurrentTime: false,
-            settings: ReactionEquilibriumChartsLayoutSettings(size: 300)
+            settings: ReactionEquilibriumChartsLayoutSettings(
+                size: 300,
+                maxYAxisValue: 1
+            )
         )
     }
 }

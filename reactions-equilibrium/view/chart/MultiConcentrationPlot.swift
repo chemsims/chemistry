@@ -110,7 +110,10 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
             currentTime: .constant(10),
             finalTime: 20,
             canSetCurrentTime: false,
-            settings: ReactionEquilibriumChartsLayoutSettings(size: 300)
+            settings: ReactionEquilibriumChartsLayoutSettings(
+                size: 300,
+                maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis
+            )
         )
     }
 }

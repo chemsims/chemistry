@@ -77,6 +77,10 @@ class AqueousReactionViewModel: ObservableObject {
         reactantMoleculesToDraw(equation: equations.reactantB)
     }
 
+    var convergenceQuotient: CGFloat {
+        quotientEquation.getY(at: AqueousReactionSettings.timeForConvergence)
+    }
+
     func incrementAMolecules() {
         moleculesA = addingMolecules(to: moleculesA, avoiding: moleculesB)
         gridMoleculesA = addingGridMolecules(molecules: gridMoleculesA, concentration: initialConcentrationA, avoiding: gridMoleculesB)

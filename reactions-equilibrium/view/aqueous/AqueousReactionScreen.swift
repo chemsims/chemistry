@@ -161,7 +161,7 @@ private struct MiddleStackView: View {
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.totalReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
-            settings: settings.chartSettings
+            settings: settings.quotientChartSettings(convergenceQ: model.convergenceQuotient)
         )
     }
 
@@ -173,7 +173,7 @@ private struct MiddleStackView: View {
             Spacer()
         }
         .frame(
-            width: settings.chartSettings.size,
+            width: settings.chartSize,
             height: settings.chartSelectionHeight
         )
         .padding(.leading, settings.chartSettings.yAxisWidthLabelWidth)
@@ -382,11 +382,28 @@ private struct AqueousScreenLayoutSettings {
         SliderGeometrySettings(handleWidth: 0.13 * beakerWidth)
     }
 
+    // Chart settings for concentration chart
     var chartSettings: ReactionEquilibriumChartsLayoutSettings {
+        ReactionEquilibriumChartsLayoutSettings(
+            size: chartSize,
+            maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis
+        )
+    }
+
+    func quotientChartSettings(
+        convergenceQ: CGFloat
+    ) -> ReactionEquilibriumChartsLayoutSettings {
+        let safeConvergence = convergenceQ == 0 ? 1 : convergenceQ
+        return ReactionEquilibriumChartsLayoutSettings(
+            size: chartSize,
+            maxYAxisValue: safeConvergence / 0.8
+        )
+    }
+
+    var chartSize: CGFloat {
         let maxSizeForHeight = 0.4 * height
         let maxSizeForWidth = 0.2 * width
-        let size = min(maxSizeForWidth, maxSizeForHeight)
-        return ReactionEquilibriumChartsLayoutSettings(size: size)
+        return min(maxSizeForWidth, maxSizeForHeight)
     }
 
     var chartSelectionHeight: CGFloat {
@@ -416,7 +433,7 @@ extension AqueousScreenLayoutSettings {
 extension AqueousScreenLayoutSettings {
 
     var rightStackWidth: CGFloat {
-        0.8 * (width - beakerWidth - chartSettings.size)
+        0.8 * (width - beakerWidth - chartSize)
     }
 
     var scalesWidth: CGFloat {
@@ -495,7 +512,9 @@ extension AqueousScreenLayoutSettings {
 }
 
 struct ReactionEquilibriumChartsLayoutSettings {
+
     let size: CGFloat
+    let maxYAxisValue: CGFloat
 
     var headRadius: CGFloat {
         0.018 * size
@@ -513,7 +532,7 @@ struct ReactionEquilibriumChartsLayoutSettings {
                 minValuePosition: size,
                 maxValuePosition: 0.2 * size,
                 minValue: 0,
-                maxValue: AqueousReactionSettings.ConcentrationInput.maxAxis
+                maxValue: maxYAxisValue
             ),
             haloRadius: 2 * headRadius,
             lineWidth: 0.3 * headRadius
