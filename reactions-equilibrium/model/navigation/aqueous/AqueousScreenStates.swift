@@ -41,7 +41,7 @@ class AqueousSetStatementState: AqueousScreenState {
 
 class AqueousSetWaterLevelState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
-        model.canSetLiquidLevel = true
+        model.inputState = .setLiquidLevel
         model.statement = AqueousStatements.instructToSetWaterLevel
     }
 
@@ -51,26 +51,21 @@ class AqueousSetWaterLevelState: AqueousScreenState {
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
-        model.canSetLiquidLevel = false
+        model.inputState = .none
     }
 }
 
 class AqueousAddReactantState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.instructToAddReactant(selected: model.selectedReaction)
-        model.canAddReactants = true
-        model.canSetLiquidLevel = false
-    }
-
-    override func unapply(on model: AqueousReactionViewModel) {
-        model.canAddReactants = false
+        model.inputState = .addReactants
     }
 }
 
 class AqueousPreRunAnimationState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.preAnimation
-        model.canAddReactants = false
+        model.inputState = .none
     }
 }
 
@@ -79,7 +74,6 @@ class AqueousRunAnimationState: AqueousScreenState {
         model.statement = AqueousStatements.runAnimation
         let time = AqueousReactionSettings.totalReactionTime
         model.currentTime = 0
-        model.canAddReactants = false
         withAnimation(.linear(duration: Double(time))) {
             model.currentTime = time
         }
@@ -89,7 +83,6 @@ class AqueousRunAnimationState: AqueousScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
         }
-        model.reactionState = .notStarted
     }
 
     override func nextStateAutoDispatchDelay(model: AqueousReactionViewModel) -> Double? {

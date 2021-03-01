@@ -11,9 +11,6 @@ struct AqueousReactionSettings {
 
     static let initialRows = (minRows + maxRows) / 2
 
-//    /// The number of molecules to increment when user is adding molecules
-//    static let moleculesToIncrement = 10
-
     /// The time at which the concentrations should converge
     static let timeForConvergence: CGFloat = 15
 

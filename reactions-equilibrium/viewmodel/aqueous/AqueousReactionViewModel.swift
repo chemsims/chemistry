@@ -21,19 +21,13 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var gridMoleculesA = [GridCoordinate]()
     @Published var gridMoleculesB = [GridCoordinate]()
 
-    @Published var canSetLiquidLevel = false
-    @Published var canAddReactants = false
-    @Published var canChooseReaction = false
+    @Published var inputState = AqueousReactionInputState.none
+
     @Published var canSetCurrentTime = false
-
     @Published var currentTime: CGFloat = 0
-
-    @Published var reactionState = TriProcessState.notStarted
 
     @Published var reactionSelectionIsToggled = false
     @Published var selectedReaction = AqueousReactionType.A
-
-    let finalTime: CGFloat = 15
 
     private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
 
@@ -43,7 +37,7 @@ class AqueousReactionViewModel: ObservableObject {
             coefficients: coeffs,
             a0: initialConcentrationA,
             b0: initialConcentrationB,
-            finalTime: finalTime
+            finalTime: AqueousReactionSettings.timeForConvergence
         )
     }
 
@@ -62,13 +56,13 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     var gridMoleculesC: [GridCoordinate] {
-        let concentration = equations.productC.getY(at: finalTime)
+        let concentration = equations.productC.getY(at: AqueousReactionSettings.timeForConvergence)
         let num = equilibriumGridCount(for: concentration)
         return Array(shuffledEquilibriumGrid.prefix(num))
     }
 
     var gridMoleculesD: [GridCoordinate] {
-        let concentration = equations.productD.getY(at: finalTime)
+        let concentration = equations.productD.getY(at: AqueousReactionSettings.timeForConvergence)
         let num = equilibriumGridCount(for: concentration)
         let suffixedCoords = shuffledEquilibriumGrid.dropFirst(gridMoleculesC.count)
         return Array(suffixedCoords.prefix(num))
@@ -190,4 +184,20 @@ class AqueousReactionViewModel: ObservableObject {
         MoleculeGridSettings.cols
     }
 
+}
+
+// MARK: Computed vars for input state
+extension AqueousReactionViewModel {
+
+    var canSetLiquidLevel: Bool {
+        inputState == .setLiquidLevel
+    }
+
+    var canAddReactants: Bool {
+        inputState == .addReactants
+    }
+
+    var canChooseReactants: Bool {
+        inputState == .selectReactionType
+    }
 }
