@@ -28,6 +28,9 @@ struct BalancedReactionEquations {
     let coefficients: BalancedReactionCoefficients
     let convergenceTime: CGFloat
 
+    let a0: CGFloat
+    let b0: CGFloat
+
     init(
         coefficients: BalancedReactionCoefficients,
         a0: CGFloat,
@@ -36,6 +39,8 @@ struct BalancedReactionEquations {
     ) {
         self.coefficients = coefficients
         self.convergenceTime = finalTime
+        self.a0 = a0
+        self.b0 = b0
         
         let unitChange = (a0 + b0) / CGFloat(coefficients.sum)
 
@@ -116,6 +121,11 @@ extension BalancedReactionEquations {
         equationArray.allSatisfy { isValid(reaction: $0) }
     }
 
+    private func isValid(reaction: Equation) -> Bool {
+        let c = reaction.getY(at: convergenceTime)
+        return c > 0 && c < 1
+    }
+
     var reactantToAddForValidReaction: AqueousMoleculeReactant? {
         if reactantA.getY(at: convergenceTime) <= 0 {
             return .A
@@ -125,8 +135,25 @@ extension BalancedReactionEquations {
         return nil
     }
 
-    private func isValid(reaction: Equation) -> Bool {
-        let c = reaction.getY(at: convergenceTime)
-        return c > 0 && c < 1
+    func a0ForConvergence(of finalConcentration: CGFloat) -> CGFloat {
+        reactant0ForConvergence(of: finalConcentration, coeff: coefficients.reactantA, otherReactant0: b0)
     }
+
+    func b0ForConvergence(of finalConcentration: CGFloat) -> CGFloat {
+        reactant0ForConvergence(of: finalConcentration, coeff: coefficients.reactantB, otherReactant0: a0)
+    }
+
+    private func reactant0ForConvergence(
+        of finalConcentration: CGFloat,
+        coeff: Int,
+        otherReactant0: CGFloat
+    ) -> CGFloat {
+        let coeffSum = coefficients.sum
+        let numer = (CGFloat(coeffSum) * finalConcentration) + (CGFloat(coeff) * otherReactant0)
+        let denom = coeffSum - coeff
+        assert(denom != 0)
+        return numer / CGFloat(denom)
+    }
+
+
 }
