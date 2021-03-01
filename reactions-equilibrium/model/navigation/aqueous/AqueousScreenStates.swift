@@ -66,6 +66,11 @@ class AqueousPreRunAnimationState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.preAnimation
         model.inputState = .none
+        model.showQuotientLine = true
+    }
+
+    override func unapply(on model: AqueousReactionViewModel) {
+        model.showQuotientLine = false
     }
 }
 

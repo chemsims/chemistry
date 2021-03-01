@@ -14,6 +14,7 @@ struct QuotientPlot: View {
     let finalTime: CGFloat
     let canSetCurrentTime: Bool
 
+    let showData: Bool
     let settings: ReactionEquilibriumChartsLayoutSettings
 
     var body: some View {
@@ -32,13 +33,16 @@ struct QuotientPlot: View {
                 .fixedSize()
                 .minimumScaleFactor(0.8)
                 .offset(y: asymptoteYLabelOffset)
+                .opacity(showData ? 1 : 0)
         }
         .font(.system(size: settings.axisLabelFontSize))
     }
 
     private var annotatedChart: some View {
         ZStack {
-            indicatorLine
+            if showData {
+                indicatorLine
+            }
             chart
         }
         .frame(width: settings.size, height: settings.size)
@@ -46,14 +50,7 @@ struct QuotientPlot: View {
 
     private var chart: some View {
         TimeChartView(
-            data: [
-                TimeChartDataline(
-                    equation: equation,
-                    headColor: .orangeAccent,
-                    haloColor: Color.orangeAccent.opacity(0.3),
-                    headRadius: settings.headRadius
-                )
-            ],
+            data: data,
             initialTime: 0,
             currentTime: $currentTime,
             finalTime: AqueousReactionSettings.totalReactionTime,
@@ -81,6 +78,20 @@ struct QuotientPlot: View {
     private var asymptoteYPosition: CGFloat {
         settings.layout.yAxis.getPosition(at: equation.getY(at: finalTime))
     }
+
+    private var data: [TimeChartDataline] {
+        guard showData else {
+            return []
+        }
+        return [
+            TimeChartDataline(
+                equation: equation,
+                headColor: .orangeAccent,
+                haloColor: Color.orangeAccent.opacity(0.3),
+                headRadius: settings.headRadius
+            )
+        ]
+    }
 }
 
 
@@ -92,6 +103,7 @@ struct QuotientPlot_Previews: PreviewProvider {
             currentTime: .constant(10),
             finalTime: 20,
             canSetCurrentTime: false,
+            showData: true,
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: 1
