@@ -198,7 +198,7 @@ private struct RightStackView: View {
     @ObservedObject var model: AqueousReactionViewModel
     let settings: AqueousScreenLayoutSettings
 
-    @State private var showGrid = true
+    @State private var showGrid = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -439,7 +439,9 @@ extension AqueousScreenLayoutSettings {
     }
 
     var scalesWidth: CGFloat {
-        0.23 * width
+        let maxWidthForGeometry = 0.23 * width
+        let maxWidthForImage = MoleculeScalesGeometry.widthToHeight * scalesHeight
+        return min(maxWidthForImage, maxWidthForGeometry)
     }
 
     var scalesHeight: CGFloat {

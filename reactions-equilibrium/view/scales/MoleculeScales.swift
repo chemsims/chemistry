@@ -155,6 +155,7 @@ struct MoleculeScalesGeometry {
     fileprivate let height: CGFloat
 
     static let lineWidth: CGFloat = 0.8
+    static let widthToHeight: CGFloat = 1.657
 
     fileprivate var rotationCenter: CGPoint {
         CGPoint(x: width / 2, y: rotationY)
