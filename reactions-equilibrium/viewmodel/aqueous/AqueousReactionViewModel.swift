@@ -91,14 +91,46 @@ class AqueousReactionViewModel: ObservableObject {
         moleculesB.removeAll()
         gridMoleculesA.removeAll()
         gridMoleculesB.removeAll()
+        instructToAddMoreReactantCount = (.A, 0)
     }
 
     func next() {
-        navigation?.next()
+        if inputState == .addReactants,
+           let missingReactant = getMissingReactant() {
+            informUserOfMissing(reactant: missingReactant)
+        } else {
+            navigation?.next()
+        }
     }
 
     func back() {
         navigation?.back()
+    }
+
+    private func informUserOfMissing(reactant: AqueousMoleculeReactant) {
+        statement = AqueousStatements.addMore(
+            reactant: reactant,
+            count: instructToAddMoreReactantCount.1,
+            minConcentration: "TODO"
+        )
+        if instructToAddMoreReactantCount.0 == reactant {
+            instructToAddMoreReactantCount = (reactant, instructToAddMoreReactantCount.1 + 1)
+        } else {
+            instructToAddMoreReactantCount = (reactant, 0)
+        }
+    }
+
+    // Returns the first reactant which does not have enough molecules in the beaker
+    private func getMissingReactant() -> AqueousMoleculeReactant? {
+        let aTooLow = initialConcentrationA < AqueousReactionSettings.ConcentrationInput.minInitial
+        let bTooLow = initialConcentrationB < AqueousReactionSettings.ConcentrationInput.minInitial
+
+        if aTooLow {
+            return .A
+        } else if bTooLow {
+            return .B
+        }
+        return equations.reactantToAddForValidReaction
     }
 
     private func reactantMoleculesToDraw(
@@ -169,6 +201,8 @@ class AqueousReactionViewModel: ObservableObject {
     private var availableMolecules: Int {
         availableRows * availableCols
     }
+
+    private var instructToAddMoreReactantCount: (AqueousMoleculeReactant, Int) = (.A, 0)
 
     /// Returns the number of rows available for molecules
     private var availableRows: Int {

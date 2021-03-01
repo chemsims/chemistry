@@ -134,6 +134,39 @@ struct AqueousStatements {
         This is called the *Le Chatelier's principle*.
         """
     ]
+}
 
+// MARK: Statements to instruct to add more A/B molecules
+extension AqueousStatements {
+    static func addMore(
+        reactant: AqueousMoleculeReactant,
+        count: Int,
+        minConcentration: String
+    ) -> [TextLine] {
+        switch count {
+        case 0: return addMore1(reactant.rawValue)
+        case 1: return addMore2(reactant.rawValue)
+        default: return addMore3(reactant.rawValue, minConcentration: minConcentration)
+        }
+    }
 
+    private static func addMore1(_ name: String) -> [TextLine] {
+        [
+            "Add a bit more of *\(name)* to the beaker."
+        ]
+    }
+
+    private static func addMore2(_ name: String) -> [TextLine] {
+        [
+            "Try adding a bit more of *\(name)* to the beaker. There isn't enough yet!"
+        ]
+    }
+
+    private static func addMore3(_ name: String, minConcentration: String) -> [TextLine] {
+        [
+            """
+            Add more of *\(name)* to the beaker. Make sure it's concentration is at least \(minConcentration).
+            """
+        ]
+    }
 }

@@ -10,7 +10,7 @@ enum AqueousMolecule: String, CaseIterable {
 }
 
 
-enum AqueousMoleculeReactant {
+enum AqueousMoleculeReactant: String {
     case A, B
 }
 
