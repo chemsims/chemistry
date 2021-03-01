@@ -29,31 +29,6 @@ class BalancedReactionEquationTests: XCTestCase {
         XCTAssertEqual(equations.productD.getY(at: 10), 0.4)
     }
 
-    func testReactionIsValid() {
-        let coeffs = makeCoeffs(A: 1, B: 1, C: 1, D: 1)
-        let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0.5, b0: 0.5, finalTime: 10)
-        XCTAssert(equation.isValid)
-        XCTAssertNil(equation.reactantToAddForValidReaction)
-    }
-
-    func testReactionIsInvalid() {
-        let coeffs = makeCoeffs(A: 1, B: 1, C: 1, D: 1)
-        let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0.5, b0: 0, finalTime: 10)
-        XCTAssertFalse(equation.isValid)
-    }
-
-    func testBIsNeededToMakeEquationValid() {
-        let coeffs = makeCoeffs(A: 1, B: 1, C: 1, D: 1)
-        let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0.5, b0: 0, finalTime: 10)
-        XCTAssertEqual(equation.reactantToAddForValidReaction, .B)
-    }
-
-    func testAIsNeededToMakeEquationValid() {
-        let coeffs = makeCoeffs(A: 1, B: 1, C: 1, D: 1)
-        let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0, b0: 0.5, finalTime: 10)
-        XCTAssertEqual(equation.reactantToAddForValidReaction, .A)
-    }
-
     func testB0ForGivenConvergence() {
         let coeffs = makeCoeffs(A: 1, B: 1, C: 1, D: 1)
         let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0.5, b0: 0, finalTime: 10)

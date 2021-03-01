@@ -14,7 +14,6 @@ struct MoleculeScales: View {
         GeometryReader { geo in
             SizedMoleculeScales(
                 reaction: equations,
-                rotationDegrees: RotationEquation(reaction: equations),
                 currentTime: currentTime,
                 settings: MoleculeScalesGeometry(
                     width: geo.size.width,
@@ -28,7 +27,7 @@ struct MoleculeScales: View {
 private struct RotationEquation: Equation {
 
     let reaction: BalancedReactionEquations
-    let maxAngle: CGFloat = 25
+    let maxAngle: CGFloat
 
     func getY(at x: CGFloat) -> CGFloat {
         let reactantSum = reaction.reactantA.getY(at: x) + reaction.reactantB.getY(at: x)
@@ -40,7 +39,6 @@ private struct RotationEquation: Equation {
 private struct SizedMoleculeScales: View {
 
     let reaction: BalancedReactionEquations
-    let rotationDegrees: Equation
     let currentTime: CGFloat
     let settings: MoleculeScalesGeometry
 
@@ -52,6 +50,10 @@ private struct SizedMoleculeScales: View {
             rightBasket
         }
         .frame(width: settings.width)
+    }
+
+    private var rotationDegrees: RotationEquation {
+        RotationEquation(reaction: reaction, maxAngle: settings.maxRotationAngle)
     }
 
     private var stand: some View {
@@ -157,6 +159,19 @@ struct MoleculeScalesGeometry {
     static let lineWidth: CGFloat = 0.8
     static let widthToHeight: CGFloat = 1.657
 
+    var maxRotationAngle: CGFloat {
+        let maxForRight = Self.maxRotationForRightHand(
+            rotationY: rotationY,
+            singleArmWidth: armWidth / 2
+        ).degrees
+        let maxForLeft = Self.maxRotationForLeftHand(
+            maxHeight: height - rotationY,
+            singleArmWidth: armWidth / 2,
+            basketHeight: basketHeight
+        ).degrees
+        return CGFloat(min(maxForLeft, maxForRight))
+    }
+
     fileprivate var rotationCenter: CGPoint {
         CGPoint(x: width / 2, y: rotationY)
     }
@@ -181,6 +196,25 @@ struct MoleculeScalesGeometry {
         basketHeight / 2
     }
 
+}
+
+extension MoleculeScalesGeometry {
+    static func maxRotationForRightHand(
+        rotationY: CGFloat,
+        singleArmWidth: CGFloat
+    ) -> Angle {
+        Angle(radians: Double(asin(rotationY / singleArmWidth)))
+    }
+
+
+    static func maxRotationForLeftHand(
+        maxHeight: CGFloat,
+        singleArmWidth: CGFloat,
+        basketHeight: CGFloat
+    ) -> Angle {
+        let sinTheta = (maxHeight - basketHeight) / singleArmWidth
+        return Angle(radians: Double(asin(sinTheta)))
+    }
 }
 
 struct MoleculeScales_Previews: PreviewProvider {
