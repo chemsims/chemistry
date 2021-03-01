@@ -513,7 +513,7 @@ struct ReactionEquilibriumChartsLayoutSettings {
                 minValuePosition: size,
                 maxValuePosition: 0.2 * size,
                 minValue: 0,
-                maxValue: 1
+                maxValue: AqueousReactionSettings.ConcentrationInput.maxAxis
             ),
             haloRadius: 2 * headRadius,
             lineWidth: 0.3 * headRadius

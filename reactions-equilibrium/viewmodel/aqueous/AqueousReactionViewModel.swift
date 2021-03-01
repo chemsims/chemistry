@@ -122,9 +122,18 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     private func addingMolecules(to molecules: [GridCoordinate], avoiding: [GridCoordinate]) -> [GridCoordinate] {
-        GridCoordinateList.addingRandomElementsTo(
+        let cInput = AqueousReactionSettings.ConcentrationInput.self
+
+        let availableAsFloat = CGFloat(availableMolecules)
+        let numToAdd = Int(cInput.cToIncrement * availableAsFloat)
+        let maxCount = Int(cInput.maxInitial * availableAsFloat)
+        let maxToAdd = maxCount - molecules.count
+
+        let toAdd = max(min(maxToAdd, numToAdd), 0)
+
+        return GridCoordinateList.addingRandomElementsTo(
             grid: molecules,
-            count: AqueousReactionSettings.moleculesToIncrement,
+            count: toAdd,
             cols: availableCols,
             rows: availableRows,
             avoiding: avoiding
