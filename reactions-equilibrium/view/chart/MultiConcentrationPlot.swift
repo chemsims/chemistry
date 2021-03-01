@@ -38,6 +38,7 @@ struct MultiConcentrationPlot: View {
             chart
             legend
         }
+        .clipped()
         .frame(width: settings.size, height: settings.size)
     }
 
@@ -102,7 +103,7 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
                     productD: 4
                 ),
                 a0: 0.4,
-                b0: 0.5,
+                b0: 0.8,
                 finalTime: 15
             ),
             initialTime: 0,
