@@ -8,6 +8,10 @@ public protocol Equation {
     func getY(at x: CGFloat) -> CGFloat
 }
 
+public func *(lhs: Equation, rhs: Equation) -> Equation {
+    OperatorEquation(lhs: lhs, rhs: rhs, op: { $0 * $1 })
+}
+
 public struct LinearEquation: Equation {
     public let m: CGFloat
     public let c: CGFloat
@@ -69,6 +73,12 @@ public struct OperatorEquation: Equation {
     public let lhs: Equation
     public let rhs: Equation
     public let op: (CGFloat, CGFloat) -> CGFloat
+
+    public init(lhs: Equation, rhs: Equation, op: @escaping (CGFloat, CGFloat) -> CGFloat) {
+        self.lhs = lhs
+        self.rhs = rhs
+        self.op = op
+    }
 
     public func getY(at x: CGFloat) -> CGFloat {
         op(lhs.getY(at: x), rhs.getY(at: x))

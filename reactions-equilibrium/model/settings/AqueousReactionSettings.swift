@@ -34,5 +34,8 @@ struct AqueousReactionSettings {
         ///
         /// So, if A + B equals this value, and C + D is zero, then the scales are at their maximum rotation to the left
         static let concentrationSumAtMaxScaleRotation: CGFloat = 2 * AqueousReactionSettings.ConcentrationInput.maxInitial
+
+        /// The concentration at which the pile of molecules is at its max
+        static let concentrationForMaxBasketPile: CGFloat = 0.4
     }
 }

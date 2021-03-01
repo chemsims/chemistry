@@ -40,6 +40,12 @@ private struct SizedMoleculeScaleBasket: View {
         }
     }
 
+    private func fractionToDraw(concentration: Equation) -> Equation {
+        let factor = 1 / AqueousReactionSettings.Scales.concentrationForMaxBasketPile
+        let constantEquation: Equation = ConstantEquation(value: factor)
+        return concentration * constantEquation
+    }
+
     private var moleculePiles: some View {
         HStack(spacing: 0) {
             moleculeView(moleculeLeft)
@@ -49,7 +55,7 @@ private struct SizedMoleculeScaleBasket: View {
 
     private func moleculeView(_ molecule: MoleculeConcentration) -> some View {
         AnimatingMoleculePile(
-            fractionToDraw: molecule.concentration,
+            fractionToDraw: fractionToDraw(concentration: molecule.concentration),
             currentTime: currentTime
         )
         .frame(width: settings.width / 2, height: settings.width / 2)

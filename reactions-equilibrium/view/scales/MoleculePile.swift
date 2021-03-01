@@ -23,7 +23,9 @@ struct AnimatingMoleculePile: Shape {
 
     private var numToTake: Int {
         let numAsFloat = fractionToDraw.getY(at: currentTime) * CGFloat(MoleculePileSettings.grid.count)
-        return Int(numAsFloat.rounded())
+
+        // NB: SwiftUI may pass in a negative value for currentTime
+        return max(0, Int(numAsFloat.rounded()))
     }
 }
 
