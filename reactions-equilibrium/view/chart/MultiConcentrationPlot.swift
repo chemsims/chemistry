@@ -38,7 +38,6 @@ struct MultiConcentrationPlot: View {
             chart
             legend
         }
-        .clipped()
         .frame(width: settings.size, height: settings.size)
     }
 
@@ -55,7 +54,8 @@ struct MultiConcentrationPlot: View {
             finalTime: finalTime,
             canSetCurrentTime: canSetCurrentTime,
             settings: settings.layout,
-            axisSettings: settings.axisShapeSettings
+            axisSettings: settings.axisShapeSettings,
+            clipData: true
         )
     }
 

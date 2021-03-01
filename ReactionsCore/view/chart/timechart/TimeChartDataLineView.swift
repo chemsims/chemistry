@@ -20,6 +20,8 @@ public struct TimeChartMultiDataLineView: View {
     let highlightLhs: Bool
     let highlightRhs: Bool
 
+    let clipData: Bool
+
     public init(
         data: [TimeChartDataline],
         settings: TimeChartLayoutSettings,
@@ -29,7 +31,8 @@ public struct TimeChartMultiDataLineView: View {
         filledBarColor: Color,
         canSetCurrentTime: Bool,
         highlightLhs: Bool = false,
-        highlightRhs: Bool = false
+        highlightRhs: Bool = false,
+        clipData: Bool = false
     ) {
         self.data = data
         self.settings = settings
@@ -40,6 +43,7 @@ public struct TimeChartMultiDataLineView: View {
         self.canSetCurrentTime = canSetCurrentTime
         self.highlightLhs = highlightLhs
         self.highlightRhs = highlightRhs
+        self.clipData = clipData
     }
 
     public var body: some View {
@@ -54,7 +58,8 @@ public struct TimeChartMultiDataLineView: View {
                     filledBarColor: filledBarColor,
                     canSetCurrentTime: canSetCurrentTime,
                     highlightLhs: highlightLhs,
-                    highlightRhs: highlightRhs
+                    highlightRhs: highlightRhs,
+                    clipData: clipData
                 )
             }
         }
@@ -75,6 +80,7 @@ public struct TimeChartDataLineView: View {
 
     let highlightLhs: Bool
     let highlightRhs: Bool
+    let clipData: Bool
 
     public init(
         data: TimeChartDataline,
@@ -85,7 +91,8 @@ public struct TimeChartDataLineView: View {
         filledBarColor: Color,
         canSetCurrentTime: Bool,
         highlightLhs: Bool,
-        highlightRhs: Bool
+        highlightRhs: Bool,
+        clipData: Bool = false
     ) {
         self.data = data
         self.settings = settings
@@ -96,6 +103,7 @@ public struct TimeChartDataLineView: View {
         self.canSetCurrentTime = canSetCurrentTime
         self.highlightLhs = highlightLhs
         self.highlightRhs = highlightRhs
+        self.clipData = clipData
     }
 
     public var body: some View {
@@ -170,13 +178,14 @@ public struct TimeChartDataLineView: View {
         )
     }
 
+    @ViewBuilder
     private func line(
         startTime: CGFloat,
         time: CGFloat,
         color: Color,
         lineWidth: CGFloat
     ) -> some View {
-        ChartLine(
+        let view = ChartLine(
             equation: data.equation,
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
@@ -185,6 +194,13 @@ public struct TimeChartDataLineView: View {
         )
         .stroke(lineWidth: lineWidth)
         .foregroundColor(color)
+
+        if clipData {
+            view
+                .clipped()
+        } else {
+            view
+        }
     }
 }
 
@@ -195,7 +211,7 @@ struct TimeChartDataLineView_Previews: PreviewProvider {
             data: allData,
             settings: settings,
             initialTime: 0,
-            currentTime: .constant(5),
+            currentTime: .constant(10),
             finalTime: 10,
             filledBarColor: .black,
             canSetCurrentTime: false,
@@ -247,6 +263,10 @@ struct TimeChartDataLineView_Previews: PreviewProvider {
                     through: CGPoint(x: 0, y: 4)
                 ),
                 .from(.moleculeC)
+            ),
+            data(
+                LinearEquation(m: 2, x1: 0, y1: 0),
+                .red
             )
         ]
     }
