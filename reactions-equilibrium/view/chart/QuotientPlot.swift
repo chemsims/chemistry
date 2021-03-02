@@ -86,7 +86,7 @@ struct QuotientPlot: View {
     }
 
     private var asymptoteYPosition: CGFloat {
-        settings.layout.yAxis.getPosition(at: equation.getY(at: finalTime))
+        settings.layout.yAxis.getPosition(at: equation.getY(at: finalTime + offset))
     }
 }
 

@@ -60,8 +60,12 @@ class AqueousReactionViewModel: ObservableObject {
         ReactionQuotientEquation(equations: components.equations)
     }
 
+    var maxQuotient: CGFloat {
+        quotientEquation.getY(at: components.tForMaxQuotient)
+    }
+
     var convergenceQuotient: CGFloat {
-        quotientEquation.getY(at: AqueousReactionSettings.timeForConvergence)
+        quotientEquation.getY(at: AqueousReactionSettings.endOfReverseReaction)
     }
 
     func incrementAMolecules() {

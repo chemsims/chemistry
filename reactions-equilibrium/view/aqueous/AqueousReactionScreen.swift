@@ -167,7 +167,10 @@ private struct MiddleStackView: View {
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showQuotientLine,
             offset: model.chartOffset,
-            settings: settings.quotientChartSettings(convergenceQ: model.convergenceQuotient)
+            settings: settings.quotientChartSettings(
+                convergenceQ: model.convergenceQuotient,
+                maxQ: model.maxQuotient
+            )
         )
     }
 
@@ -397,12 +400,15 @@ private struct AqueousScreenLayoutSettings {
     }
 
     func quotientChartSettings(
-        convergenceQ: CGFloat
+        convergenceQ: CGFloat,
+        maxQ: CGFloat
     ) -> ReactionEquilibriumChartsLayoutSettings {
         let safeConvergence = convergenceQ == 0 ? 1 : convergenceQ
+        let convergenceWithPadding = safeConvergence / 0.8
+        let maxValue = max(maxQ, convergenceWithPadding)
         return ReactionEquilibriumChartsLayoutSettings(
             size: chartSize,
-            maxYAxisValue: safeConvergence / 0.8
+            maxYAxisValue: maxValue
         )
     }
 
