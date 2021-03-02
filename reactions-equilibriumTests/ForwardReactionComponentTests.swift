@@ -168,11 +168,14 @@ class ForwardReactionComponentTests: XCTestCase {
         let expectedCount = (maxMolecules / 2) + incMolecules
         let expectedConcentration = CGFloat(expectedCount) / 100
 
-        let equation = model.equations.productC
         let tAddProd = AqueousReactionSettings.timeToAddProduct
 
-        XCTAssertEqual(equation.getY(at: 0), 0)
-//        XCTAssertEqual(equation.getY(at: tAddProd), expectedConcentration)
+        XCTAssertEqual(model.equations.productC.getY(at: 0), 0)
+        XCTAssertEqual(model.equations.productC.getY(at: tAddProd), expectedConcentration, accuracy: 0.00001)
+
+        model.incrementD()
+        XCTAssertEqual(model.equations.productD.getY(at: 0), 0)
+        XCTAssertEqual(model.equations.productD.getY(at: tAddProd), expectedConcentration, accuracy: 0.00001)
     }
 
     private func newReverseModel() -> ReverseAqueousReactionComponents {

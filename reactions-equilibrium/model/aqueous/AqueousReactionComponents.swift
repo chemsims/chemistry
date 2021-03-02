@@ -199,10 +199,13 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
 
     var equations: BalancedReactionEquations {
         BalancedReactionEquations(
-            coefficients: forwardReaction.coefficients,
-            a0: 0.2,
-            b0: 0.4,
-            convergenceTime: AqueousReactionSettings.timeForConvergence
+            forwardReaction: forwardReaction.equations,
+            reverseInput: ReverseReactionInput(
+                c0: initialConcentration(of: cMolecules),
+                d0: initialConcentration(of: dMolecules),
+                startTime: AqueousReactionSettings.timeToAddProduct,
+                convergenceTime: AqueousReactionSettings.endOfReverseReaction
+            )
         )
     }
 }
