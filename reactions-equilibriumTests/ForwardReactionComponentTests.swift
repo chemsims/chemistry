@@ -239,7 +239,7 @@ private extension ReverseAqueousReactionComponents {
 }
 
 private extension AqueousReactionComponents {
-    fileprivate func doIncrement(_ count: Int, _ action: () -> Void) {
+    func doIncrement(_ count: Int, _ action: () -> Void) {
         (0..<count).forEach { _ in action() }
     }
 }

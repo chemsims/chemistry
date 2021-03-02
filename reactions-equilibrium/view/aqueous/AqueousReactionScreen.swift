@@ -227,12 +227,14 @@ private struct RightStackView: View {
             AqueousReactionDropDownSelection(
                 isToggled: $model.reactionSelectionIsToggled,
                 selection: $model.selectedReaction,
+                onSelection: model.next,
                 height: settings.reactionToggleHeight
             ).frame(
                 width: settings.reactionToggleHeight,
                 height: settings.reactionToggleHeight,
                 alignment: .topTrailing
             )
+            .disabled(model.inputState != .selectReactionType)
         }
         .frame(width: settings.gridWidth)
     }

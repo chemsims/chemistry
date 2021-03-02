@@ -39,6 +39,20 @@ class AqueousSetStatementState: AqueousScreenState {
     }
 }
 
+class AqueousHasSelectedReactionState: AqueousScreenState {
+    override func apply(on model: AqueousReactionViewModel) {
+        model.statement = AqueousStatements.explainEquilibrium
+        model.inputState = .none
+        model.reactionSelectionIsToggled = false
+    }
+
+    override func unapply(on model: AqueousReactionViewModel) {
+        model.reactionSelectionIsToggled = true
+        model.inputState = .selectReactionType
+    }
+
+}
+
 class AqueousSetWaterLevelState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.inputState = .setLiquidLevel

@@ -31,12 +31,12 @@ class AqueousReactionViewModel: ObservableObject {
         }
     }
 
-    @Published var inputState = AqueousReactionInputState.none
+    @Published var inputState = AqueousReactionInputState.selectReactionType
 
     @Published var canSetCurrentTime = false
     @Published var currentTime: CGFloat = 0
 
-    @Published var reactionSelectionIsToggled = false
+    @Published var reactionSelectionIsToggled = true
     @Published var selectedReaction: AqueousReactionType {
         didSet {
             components.coefficients = selectedReaction.coefficients

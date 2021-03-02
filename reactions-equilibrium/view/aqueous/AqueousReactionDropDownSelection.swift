@@ -9,6 +9,7 @@ struct AqueousReactionDropDownSelection: View {
 
     @Binding var isToggled: Bool
     @Binding var selection: AqueousReactionType
+    let onSelection: (() -> Void)?
     let height: CGFloat
 
     var body: some View {
@@ -22,7 +23,7 @@ struct AqueousReactionDropDownSelection: View {
             displayString: { $0.displayName },
             label: { $0.label },
             disabledOptions: [],
-            onSelection: nil
+            onSelection: onSelection
         )
     }
 }
@@ -32,6 +33,7 @@ struct AqueousReactionDropDownSelection_Previews: PreviewProvider {
         AqueousReactionDropDownSelection(
             isToggled: .constant(true),
             selection: .constant(.A),
+            onSelection: nil,
             height: 50
         )
     }
