@@ -45,7 +45,7 @@ class AqueousReactionViewModel: ObservableObject {
             coefficients: coeffs,
             a0: initialConcentrationA,
             b0: initialConcentrationB,
-            finalTime: AqueousReactionSettings.timeForConvergence
+            convergenceTime: AqueousReactionSettings.timeForConvergence
         )
     }
 

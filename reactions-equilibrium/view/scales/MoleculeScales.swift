@@ -239,7 +239,7 @@ struct MoleculeScales_Previews: PreviewProvider {
                 ),
                 a0: 0.3,
                 b0: 0.3,
-                finalTime: 10
+                convergenceTime: 10
             ),
             currentTime: 0
         )

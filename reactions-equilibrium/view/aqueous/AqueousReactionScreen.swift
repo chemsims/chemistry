@@ -52,13 +52,15 @@ private struct AqueousReactionScreenWithSettings: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: settings.moleculeWidth)
                         .onTapGesture {
-                            guard model.canAddReactants else {
-                                return
-                            }
+//                            guard model.canAddReactants else {
+//                                return
+//                            }
                             if molecule == .A {
                                 model.incrementAMolecules()
-                            } else {
+                            } else if molecule == .B {
                                 model.incrementBMolecules()
+                            } else if molecule == .C {
+                                model.incrementCMolecules()
                             }
                         }
 
@@ -93,7 +95,7 @@ private struct AqueousReactionScreenWithSettings: View {
                 animatingMolecules: [
                     AnimatingBeakerMolecules(
                         molecules: BeakerMolecules(
-                            coords: model.productMolecules.cMolecules,
+                            coords: model.productMolecules.cMolecules + model.extraC,
                             color: .from(.aqMoleculeC)
                         ),
                         fractionToDraw: model.productMolecules.cFractionToDraw

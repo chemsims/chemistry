@@ -90,7 +90,7 @@ struct ICETable_Previews: PreviewProvider {
                 ),
                 a0: 0.4,
                 b0: 0.5,
-                finalTime: 15
+                convergenceTime: 15
             )
         )
         .padding()

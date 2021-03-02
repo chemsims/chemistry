@@ -25,6 +25,7 @@ struct BalancedReactionEquations {
     let reactantB: Equation
     let productC: Equation
     let productD: Equation
+
     let coefficients: BalancedReactionCoefficients
     let convergenceTime: CGFloat
 
@@ -35,21 +36,21 @@ struct BalancedReactionEquations {
         coefficients: BalancedReactionCoefficients,
         a0: CGFloat,
         b0: CGFloat,
-        finalTime: CGFloat
+        convergenceTime: CGFloat
     ) {
         self.coefficients = coefficients
-        self.convergenceTime = finalTime
+        self.convergenceTime = convergenceTime
         self.a0 = a0
         self.b0 = b0
         
         let unitChange = (a0 + b0) / CGFloat(coefficients.sum)
 
         func reactantEquation(initC: CGFloat, coeff: Int) -> Equation {
-            BalancedReactionEquations.reactantEquation(initC, coefficient: coeff, unitChange: unitChange, finalTime: finalTime)
+            BalancedReactionEquations.reactantEquation(initC, coefficient: coeff, unitChange: unitChange, convergenceTime: convergenceTime)
         }
 
         func productEquation(coeff: Int) -> Equation {
-            BalancedReactionEquations.productEquation(0, coefficient: coeff, unitChange: unitChange, finalTime: finalTime)
+            BalancedReactionEquations.productEquation(0, coefficient: coeff, unitChange: unitChange, convergenceTime: convergenceTime)
         }
 
         self.reactantA = reactantEquation(initC: a0, coeff: coefficients.reactantA)
@@ -62,14 +63,14 @@ struct BalancedReactionEquations {
         _ initialConcentration: CGFloat,
         coefficient: Int,
         unitChange: CGFloat,
-        finalTime: CGFloat
+        convergenceTime: CGFloat
     ) -> Equation {
         elementEquation(
             initialConcentration,
             coefficient: coefficient,
             increases: false,
             unitChange: unitChange,
-            finalTime: finalTime
+            convergenceTime: convergenceTime
         )
     }
 
@@ -77,14 +78,14 @@ struct BalancedReactionEquations {
         _ initialConcentration: CGFloat,
         coefficient: Int,
         unitChange: CGFloat,
-        finalTime: CGFloat
+        convergenceTime: CGFloat
     ) -> Equation {
         elementEquation(
             initialConcentration,
             coefficient: coefficient,
             increases: true,
             unitChange: unitChange,
-            finalTime: finalTime
+            convergenceTime: convergenceTime
         )
     }
 
@@ -93,14 +94,14 @@ struct BalancedReactionEquations {
         coefficient: Int,
         increases: Bool,
         unitChange: CGFloat,
-        finalTime: CGFloat
+        convergenceTime: CGFloat
     ) -> Equation {
         let unitChangeDirection = increases ? unitChange : -unitChange
         let finalConcentration = initialConcentration + (CGFloat(coefficient) * unitChangeDirection)
         return EquilibriumReactionEquation(
             t1: 0,
             c1: initialConcentration,
-            t2: finalTime,
+            t2: convergenceTime,
             c2: finalConcentration
         )
     }

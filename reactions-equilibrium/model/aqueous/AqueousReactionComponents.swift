@@ -89,7 +89,7 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
             coefficients: coefficients,
             a0: initialA,
             b0: initialB,
-            finalTime: AqueousReactionSettings.timeForConvergence
+            convergenceTime: AqueousReactionSettings.timeForConvergence
         )
     }
 
@@ -202,7 +202,7 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
             coefficients: forwardReaction.coefficients,
             a0: 0.2,
             b0: 0.4,
-            finalTime: AqueousReactionSettings.timeForConvergence
+            convergenceTime: AqueousReactionSettings.timeForConvergence
         )
     }
 }

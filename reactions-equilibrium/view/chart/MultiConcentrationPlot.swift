@@ -108,7 +108,7 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
                 ),
                 a0: 0.4,
                 b0: 0.8,
-                finalTime: 15
+                convergenceTime: 15
             ),
             initialTime: 0,
             currentTime: .constant(10),

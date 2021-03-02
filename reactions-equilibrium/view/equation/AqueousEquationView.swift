@@ -218,6 +218,6 @@ struct AqueousEquationView_Previews: PreviewProvider {
         ),
         a0: 0.5,
         b0: 0.4,
-        finalTime: 20
+        convergenceTime: 20
     )
 }

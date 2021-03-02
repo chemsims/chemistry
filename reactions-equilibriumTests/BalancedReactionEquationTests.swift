@@ -13,7 +13,7 @@ class BalancedReactionEquationTests: XCTestCase {
             coefficients: coeffs,
             a0: 0.4,
             b0: 0.5,
-            finalTime: 10
+            convergenceTime: 10
         )
 
         XCTAssertEqual(equations.reactantA.getY(at: 0), 0.4)
@@ -31,13 +31,13 @@ class BalancedReactionEquationTests: XCTestCase {
 
     func testB0ForGivenConvergence() {
         let coeffs = makeCoeffs(A: 1, B: 1, C: 1, D: 1)
-        let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0.5, b0: 0, finalTime: 10)
+        let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0.5, b0: 0, convergenceTime: 10)
         XCTAssertEqual(equation.b0ForConvergence(of: 0.25), 0.5)
     }
 
     func testA0ForGivenConvergence() {
         let coeffs = makeCoeffs(A: 2, B: 1, C: 1, D: 1)
-        let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0.5, b0: 0.5, finalTime: 10)
+        let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0.5, b0: 0.5, convergenceTime: 10)
         XCTAssertEqual(equation.a0ForConvergence(of: 0.25), 0.75)
         testCorrectA0ForConvergence(of: 0.25, equation: equation)
     }
@@ -48,7 +48,7 @@ class BalancedReactionEquationTests: XCTestCase {
             input: Input
         ) {
             let coeffs = makeCoeffs(A: input.A, B: input.B, C: input.C, D: input.D)
-            let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0, b0: input.b0, finalTime: 10)
+            let equation = BalancedReactionEquations(coefficients: coeffs, a0: 0, b0: input.b0, convergenceTime: 10)
             testCorrectA0ForConvergence(of: input.target, equation: equation)
         }
 
@@ -87,7 +87,7 @@ private extension BalancedReactionEquations {
             coefficients: coefficients,
             a0: newValue,
             b0: b0,
-            finalTime: convergenceTime
+            convergenceTime: convergenceTime
         )
     }
 }
