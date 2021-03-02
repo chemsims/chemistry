@@ -21,6 +21,7 @@ public struct TimeChartMultiDataLineView: View {
     let highlightRhs: Bool
 
     let clipData: Bool
+    let offset: CGFloat
 
     public init(
         data: [TimeChartDataline],
@@ -32,7 +33,8 @@ public struct TimeChartMultiDataLineView: View {
         canSetCurrentTime: Bool,
         highlightLhs: Bool = false,
         highlightRhs: Bool = false,
-        clipData: Bool = false
+        clipData: Bool = false,
+        offset: CGFloat = 0
     ) {
         self.data = data
         self.settings = settings
@@ -44,6 +46,7 @@ public struct TimeChartMultiDataLineView: View {
         self.highlightLhs = highlightLhs
         self.highlightRhs = highlightRhs
         self.clipData = clipData
+        self.offset = offset
     }
 
     public var body: some View {
@@ -59,7 +62,8 @@ public struct TimeChartMultiDataLineView: View {
                     canSetCurrentTime: canSetCurrentTime,
                     highlightLhs: highlightLhs,
                     highlightRhs: highlightRhs,
-                    clipData: clipData
+                    clipData: clipData,
+                    offset: offset
                 )
             }
         }
@@ -82,6 +86,8 @@ public struct TimeChartDataLineView: View {
     let highlightRhs: Bool
     let clipData: Bool
 
+    let offset: CGFloat
+
     public init(
         data: TimeChartDataline,
         settings: TimeChartLayoutSettings,
@@ -92,7 +98,8 @@ public struct TimeChartDataLineView: View {
         canSetCurrentTime: Bool,
         highlightLhs: Bool,
         highlightRhs: Bool,
-        clipData: Bool = false
+        clipData: Bool = false,
+        offset: CGFloat = 0
     ) {
         self.data = data
         self.settings = settings
@@ -104,11 +111,12 @@ public struct TimeChartDataLineView: View {
         self.highlightLhs = highlightLhs
         self.highlightRhs = highlightRhs
         self.clipData = clipData
+        self.offset = offset
     }
 
     public var body: some View {
         ZStack {
-            dataLine(time: finalTime, color: filledBarColor)
+            dataLine(time: finalTime + offset, color: filledBarColor)
             dataLine(time: currentTime, color: data.headColor)
             if highlightLhs {
                 highlightLine(startTime: initialTime, endTime: (initialTime + finalTime) / 2)
@@ -148,7 +156,8 @@ public struct TimeChartDataLineView: View {
             equation: data.equation,
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
-            x: currentTime
+            x: currentTime,
+            offset: offset
         )
         .fill()
         .foregroundColor(color)
@@ -190,14 +199,14 @@ public struct TimeChartDataLineView: View {
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
             startX: startTime,
-            endX: time
+            endX: time,
+            offset: offset
         )
         .stroke(lineWidth: lineWidth)
         .foregroundColor(color)
 
         if clipData {
-            view
-                .clipped()
+            view.clipped()
         } else {
             view
         }
@@ -216,7 +225,8 @@ struct TimeChartDataLineView_Previews: PreviewProvider {
             filledBarColor: .black,
             canSetCurrentTime: false,
             highlightLhs: false,
-            highlightRhs: false
+            highlightRhs: false,
+            offset: 5
         )
         .frame(width: 300, height: 300)
         .border(Color.black)
@@ -237,7 +247,7 @@ struct TimeChartDataLineView_Previews: PreviewProvider {
                 maxValue: 10
             ),
             haloRadius: 18,
-            lineWidth: 3
+            lineWidth: 2
         )
     }
 
@@ -265,8 +275,8 @@ struct TimeChartDataLineView_Previews: PreviewProvider {
                 .from(.moleculeC)
             ),
             data(
-                LinearEquation(m: 2, x1: 0, y1: 0),
-                .red
+                LinearEquation(m: 0.5, x1: 0, y1: 0),
+                .black
             )
         ]
     }

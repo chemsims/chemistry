@@ -14,32 +14,40 @@ public struct ChartLine: Shape {
     let startX: CGFloat
     var endX: CGFloat
 
+    var offset: CGFloat
+
     public init(
         equation: Equation,
         yAxis: AxisPositionCalculations<CGFloat>,
         xAxis: AxisPositionCalculations<CGFloat>,
         startX: CGFloat,
-        endX: CGFloat
+        endX: CGFloat,
+        offset: CGFloat = 0
     ) {
         self.equation = equation
         self.yAxis = yAxis
         self.xAxis = xAxis
         self.startX = startX
         self.endX = endX
+        self.offset = offset
     }
 
     private let maxWidthSteps = 100
+
+    private var shiftedXAxis: AxisPositionCalculations<CGFloat> {
+        xAxis.shift(by: offset)
+    }
 
     public func path(in rect: CGRect) -> Path {
         var path = Path()
 
         let dxPos = rect.width / CGFloat(maxWidthSteps)
-        let dx = xAxis.getValue(at: dxPos) - xAxis.getValue(at: 0)
+        let dx = shiftedXAxis.getValue(at: dxPos) - shiftedXAxis.getValue(at: 0)
 
         var didStart = false
-        for x in stride(from: startX, to: endX, by: dx) {
+        for x in stride(from: startX + offset, to: endX, by: dx) {
             let y = equation.getY(at: x)
-            let xPosition = xAxis.getPosition(at: x)
+            let xPosition = shiftedXAxis.getPosition(at: x)
             let yPosition = yAxis.getPosition(at: y)
             if didStart {
                 path.addLine(to: CGPoint(x: xPosition, y: yPosition))
@@ -52,9 +60,12 @@ public struct ChartLine: Shape {
         return path
     }
 
-    public var animatableData: CGFloat {
-        get { endX }
-        set { endX = newValue }
+    public var animatableData: AnimatablePair<CGFloat, CGFloat> {
+        get { AnimatablePair(offset, endX)  }
+        set {
+            offset = newValue.first
+            endX = newValue.second
+        }
     }
 
 }
@@ -68,12 +79,17 @@ struct ChartIndicatorHead: Shape {
     let xAxis: AxisPositionCalculations<CGFloat>
 
     var x: CGFloat
+    var offset: CGFloat
+
+    private var shiftedXAxis: AxisPositionCalculations<CGFloat> {
+        xAxis.shift(by: offset)
+    }
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let y = equation.getY(at: x)
 
-        let xPosition = xAxis.getPosition(at: x)
+        let xPosition = shiftedXAxis.getPosition(at: x)
         let yPosition = yAxis.getPosition(at: y)
 
         let containerRect = CGRect(
@@ -85,9 +101,12 @@ struct ChartIndicatorHead: Shape {
         return path
     }
 
-    var animatableData: CGFloat {
-        get { x }
-        set { x = newValue }
+    var animatableData: AnimatablePair<CGFloat, CGFloat> {
+        get { AnimatablePair(offset, x) }
+        set {
+            offset = newValue.first
+            x = newValue.second
+        }
     }
 
 }
@@ -117,7 +136,8 @@ struct ChartLine_Previews: PreviewProvider {
                         equation: IdentityEquation(),
                         yAxis: yAxis,
                         xAxis: xAxis,
-                        x: t2
+                        x: t2,
+                        offset: 0
                     )
                 }
                 .frame(width: 250, height: 250)

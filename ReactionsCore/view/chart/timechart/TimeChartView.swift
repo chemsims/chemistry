@@ -19,6 +19,8 @@ public struct TimeChartView: View {
 
     let clipData: Bool
 
+    let offset: CGFloat
+
     public init(
         data: [TimeChartDataline],
         initialTime: CGFloat,
@@ -27,7 +29,8 @@ public struct TimeChartView: View {
         canSetCurrentTime: Bool,
         settings: TimeChartLayoutSettings,
         axisSettings: ChartAxisShapeSettings,
-        clipData: Bool = false
+        clipData: Bool = false,
+        offset: CGFloat = 0
     ) {
         self.data = data
         self.initialTime = initialTime
@@ -37,6 +40,7 @@ public struct TimeChartView: View {
         self.settings = settings
         self.axisSettings = axisSettings
         self.clipData = clipData
+        self.offset = offset
     }
 
     public var body: some View {
@@ -52,7 +56,8 @@ public struct TimeChartView: View {
                 finalTime: finalTime,
                 filledBarColor: Styling.timeAxisCompleteBar,
                 canSetCurrentTime: canSetCurrentTime,
-                clipData: clipData
+                clipData: clipData,
+                offset: offset
             )
         }
     }

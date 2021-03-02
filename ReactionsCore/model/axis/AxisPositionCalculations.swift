@@ -97,3 +97,14 @@ public struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
         minValuePosition - (m * minValue)
     }
 }
+
+extension AxisPositionCalculations {
+    public func shift(by delta: Value) -> AxisPositionCalculations<Value> {
+        AxisPositionCalculations(
+            minValuePosition: minValuePosition,
+            maxValuePosition: maxValuePosition,
+            minValue: minValue + delta,
+            maxValue: maxValue + delta
+        )
+    }
+}
