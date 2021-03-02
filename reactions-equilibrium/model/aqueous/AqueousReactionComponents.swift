@@ -27,10 +27,11 @@ protocol AqueousReactionComponents {
     var cGridMolecules: FractionedCoordinates { get }
     var dGridMolecules: FractionedCoordinates { get }
 
+    var coefficients: BalancedReactionCoefficients { get set }
     var equations: BalancedReactionEquations { get }
 
     var availableCols: Int { get }
-    var availableRows: Int { get }
+    var availableRows: Int { get set }
 
     mutating func increment(molecule: AqueousMolecule)
 
@@ -100,9 +101,9 @@ extension AqueousReactionComponents {
 
 struct ForwardAqueousReactionComponents: AqueousReactionComponents {
 
-    let coefficients: BalancedReactionCoefficients
+    var coefficients: BalancedReactionCoefficients
     let availableCols: Int
-    let availableRows: Int
+    var availableRows: Int
 
     let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
 
@@ -267,9 +268,18 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
 
 struct ReverseAqueousReactionComponents: AqueousReactionComponents {
 
-    private let forwardReaction: ForwardAqueousReactionComponents
+    private var forwardReaction: ForwardAqueousReactionComponents
     let availableCols: Int
-    let availableRows: Int
+    var availableRows: Int
+
+    var coefficients: BalancedReactionCoefficients {
+        get {
+            forwardReaction.coefficients
+        }
+        set {
+            forwardReaction.coefficients = newValue
+        }
+    }
 
     init(forwardReaction: ForwardAqueousReactionComponents) {
         self.forwardReaction = forwardReaction

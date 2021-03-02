@@ -25,7 +25,11 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     @Published var statement = [TextLine]()
-    @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows)
+    @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows) {
+        didSet {
+            components.availableRows = availableRows
+        }
+    }
 
     @Published var inputState = AqueousReactionInputState.none
 
@@ -33,7 +37,11 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var currentTime: CGFloat = 0
 
     @Published var reactionSelectionIsToggled = false
-    @Published var selectedReaction: AqueousReactionType
+    @Published var selectedReaction: AqueousReactionType {
+        didSet {
+            components.coefficients = selectedReaction.coefficients
+        }
+    }
 
     @Published var showQuotientLine = false
     @Published var showConcentrationLines = false
