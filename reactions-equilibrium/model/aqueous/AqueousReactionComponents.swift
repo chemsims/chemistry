@@ -150,7 +150,6 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
     let availableCols: Int
     let availableRows: Int
 
-
     init(forwardReaction: ForwardAqueousReactionComponents) {
         self.forwardReaction = forwardReaction
         self.aMolecules = forwardReaction.aMolecules
@@ -186,6 +185,14 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         cMolecules = addingMolecules(
             to: cMolecules,
             avoiding: aMolecules + bMolecules + dMolecules,
+            maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
+        )
+    }
+
+    mutating func incrementD() {
+        dMolecules = addingMolecules(
+            to: dMolecules,
+            avoiding: aMolecules + bMolecules + cMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
     }

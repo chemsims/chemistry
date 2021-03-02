@@ -6,7 +6,7 @@ import XCTest
 @testable import reactions_equilibrium
 @testable import ReactionsCore
 
-class BalancedReactionComponentTests: XCTestCase {
+class ForwardReactionComponentTests: XCTestCase {
 
     func testIncrementingAMolecules() {
         var model = newModel()
@@ -140,12 +140,60 @@ class BalancedReactionComponentTests: XCTestCase {
         testProducts()
     }
 
-    private func newModel(coeffs: BalancedReactionCoefficients = .unit) -> ForwardAqueousReactionComponents {
-        ForwardAqueousReactionComponents(
+    func testReverseReactionAddingC() {
+        var model = newReverseModel()
+        XCTAssertEqual(model.aMolecules.count, maxMolecules)
+        XCTAssertEqual(model.bMolecules.count, maxMolecules)
+        XCTAssertEqual(model.cMolecules.count, maxMolecules / 2)
+        XCTAssertEqual(model.dMolecules.count, maxMolecules / 2)
+
+        let originalCMolecules = model.cMolecules
+        let originalOtherMolecules = model.aMolecules + model.bMolecules + model.dMolecules
+
+        model.incrementC()
+        XCTAssertEqual(model.cMolecules.count, (maxMolecules / 2) + incMolecules)
+
+        let newMolecules = Set(model.cMolecules).subtracting(Set(originalCMolecules))
+        XCTAssertEqual(newMolecules.count, incMolecules)
+
+        newMolecules.forEach { molecule in
+            XCTAssertFalse(originalOtherMolecules.contains(molecule))
+        }
+    }
+
+    func testReverseReactionCAndDIsIncreasedWhenAddingProduct() {
+        var model = newReverseModel()
+
+        model.incrementC()
+        let expectedCount = (maxMolecules / 2) + incMolecules
+        let expectedConcentration = CGFloat(expectedCount) / 100
+
+        let equation = model.equations.productC
+        let tAddProd = AqueousReactionSettings.timeToAddProduct
+
+        XCTAssertEqual(equation.getY(at: 0), 0)
+        XCTAssertEqual(equation.getY(at: tAddProd), expectedConcentration)
+    }
+
+    private func newReverseModel() -> ReverseAqueousReactionComponents {
+        ReverseAqueousReactionComponents(forwardReaction: newModel(maxC: true))
+    }
+
+
+    private func newModel(
+        coeffs: BalancedReactionCoefficients = .unit,
+        maxC: Bool = false
+    ) -> ForwardAqueousReactionComponents {
+        var model = ForwardAqueousReactionComponents(
             coefficients: coeffs,
             availableCols: 10,
             availableRows: 10
         )
+        if maxC {
+            model.incrementA(count: maxIncrementCount)
+            model.incrementB(count: maxIncrementCount)
+        }
+        return model
     }
 
     // Returns number of times to increment reactants to get max concentration. Assumes grid has 100 elements
@@ -169,11 +217,27 @@ class BalancedReactionComponentTests: XCTestCase {
 
 private extension ForwardAqueousReactionComponents {
     mutating func incrementA(count: Int) {
-        (0..<count).forEach { _ in incrementA() }
+        doIncrement(count, { incrementA() })
     }
 
     mutating func incrementB(count: Int) {
-        (0..<count).forEach { _ in incrementB() }
+        doIncrement(count, { incrementB() })
+    }
+}
+
+private extension ReverseAqueousReactionComponents {
+    mutating func incrementC(count: Int) {
+        doIncrement(count, { incrementC() })
+    }
+
+    mutating func incrementD(count: Int) {
+        doIncrement(count, { incrementD() })
+    }
+}
+
+private extension AqueousReactionComponents {
+    fileprivate func doIncrement(_ count: Int, _ action: () -> Void) {
+        (0..<count).forEach { _ in action() }
     }
 }
 
