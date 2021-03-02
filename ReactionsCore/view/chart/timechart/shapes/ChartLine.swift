@@ -16,13 +16,16 @@ public struct ChartLine: Shape {
 
     var offset: CGFloat
 
+    let discontinuity: CGFloat?
+
     public init(
         equation: Equation,
         yAxis: AxisPositionCalculations<CGFloat>,
         xAxis: AxisPositionCalculations<CGFloat>,
         startX: CGFloat,
         endX: CGFloat,
-        offset: CGFloat = 0
+        offset: CGFloat = 0,
+        discontinuity: CGFloat? = nil
     ) {
         self.equation = equation
         self.yAxis = yAxis
@@ -30,6 +33,7 @@ public struct ChartLine: Shape {
         self.startX = startX
         self.endX = endX
         self.offset = offset
+        self.discontinuity = discontinuity
     }
 
     private let maxWidthSteps = 100
@@ -45,7 +49,8 @@ public struct ChartLine: Shape {
         let dx = shiftedXAxis.getValue(at: dxPos) - shiftedXAxis.getValue(at: 0)
 
         var didStart = false
-        for x in stride(from: startX + offset, to: endX, by: dx) {
+
+        for x in getStride(dx: dx) {
             let y = equation.getY(at: x)
             let xPosition = shiftedXAxis.getPosition(at: x)
             let yPosition = yAxis.getPosition(at: y)
@@ -58,6 +63,22 @@ public struct ChartLine: Shape {
         }
 
         return path
+    }
+
+    private func getStride(
+        dx: CGFloat
+    ) -> [CGFloat] {
+        if let discontinuity = discontinuity, discontinuity > startX && discontinuity < endX {
+            var lhs = Array(stride(from: startX + offset, through : discontinuity, by: dx))
+            if lhs.last != discontinuity {
+                lhs.append(discontinuity)
+            }
+            let rhs = Array(stride(from: discontinuity + dx, through: endX, by: dx))
+            return (lhs + rhs)
+
+        } else {
+            return Array(stride(from: startX + offset, through : endX, by: dx))
+        }
     }
 
     public var animatableData: AnimatablePair<CGFloat, CGFloat> {
@@ -118,22 +139,23 @@ struct ChartLine_Previews: PreviewProvider {
     }
 
     struct ViewStateWrapper: View {
-        @State var t2: CGFloat = 0
+        @State var t2: CGFloat = 34.01
 
         var body: some View {
             VStack {
                 ZStack {
                     ChartLine(
-                        equation: IdentityEquation(),
+                        equation: discontinuousEquation(),
                         yAxis: yAxis,
                         xAxis: xAxis,
                         startX: 0,
-                        endX: t2
+                        endX: t2,
+                        discontinuity: 34
                     ).stroke(lineWidth: 2)
 
                     ChartIndicatorHead(
                         radius: 10,
-                        equation: IdentityEquation(),
+                        equation: discontinuousEquation(),
                         yAxis: yAxis,
                         xAxis: xAxis,
                         x: t2,
@@ -174,4 +196,15 @@ struct ChartLine_Previews: PreviewProvider {
             )
         }
     }
+
+    private static func discontinuousEquation() -> Equation {
+        SwitchingEquation(
+            thresholdX: 34,
+            underlyingLeft: LinearEquation(m: 1, x1: 0, y1: 0),
+            underlyingRight: ConstantEquation(value: 20
+            )
+        )
+    }
 }
+
+

@@ -35,6 +35,8 @@ protocol AqueousReactionComponents {
 
     var tForMaxQuotient: CGFloat { get }
 
+    var chartDiscontinuity: CGFloat? { get }
+
     mutating func increment(molecule: AqueousMolecule)
 
     mutating func reset()
@@ -108,6 +110,7 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     var availableRows: Int
 
     let tForMaxQuotient: CGFloat = AqueousReactionSettings.timeForConvergence
+    let chartDiscontinuity: CGFloat? = nil
     private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
 
     init(
@@ -276,6 +279,7 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
     var availableRows: Int
 
     let tForMaxQuotient: CGFloat = AqueousReactionSettings.timeToAddProduct
+    let chartDiscontinuity: CGFloat? = AqueousReactionSettings.timeToAddProduct
 
     var coefficients: BalancedReactionCoefficients {
         get {

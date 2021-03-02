@@ -139,7 +139,7 @@ class AqueousShiftChartState: AqueousScreenState {
         model.statement = AqueousStatements.introToReverse
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = AqueousReactionSettings.forwardReactionTime
-            model.currentTime = AqueousReactionSettings.timeToAddProduct
+            model.currentTime = TAddProduct
         }
     }
 
@@ -187,7 +187,7 @@ class AqueousRunReverseAnimation: AqueousScreenState {
     }
 
     override func reapply(on model: AqueousReactionViewModel) {
-        model.currentTime = tAddProduct
+        model.currentTime = TAddProduct
         super.reapply(on: model)
     }
 
@@ -220,3 +220,6 @@ class AqueousRunReverseAnimation: AqueousScreenState {
         Double(AqueousReactionSettings.endOfReverseReaction - AqueousReactionSettings.timeToAddProduct)
     }
 }
+
+/// Add a little bit to t add product when animating there, to make sure the discontinuity in the graph is correctly captured
+private let TAddProduct = AqueousReactionSettings.timeToAddProduct + 0.01

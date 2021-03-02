@@ -20,6 +20,7 @@ public struct TimeChartView: View {
     let clipData: Bool
 
     let offset: CGFloat
+    let discontinuity: CGFloat?
 
     public init(
         data: [TimeChartDataline],
@@ -30,7 +31,8 @@ public struct TimeChartView: View {
         settings: TimeChartLayoutSettings,
         axisSettings: ChartAxisShapeSettings,
         clipData: Bool = false,
-        offset: CGFloat = 0
+        offset: CGFloat = 0,
+        discontinuity: CGFloat? = nil
     ) {
         self.data = data
         self.initialTime = initialTime
@@ -41,6 +43,7 @@ public struct TimeChartView: View {
         self.axisSettings = axisSettings
         self.clipData = clipData
         self.offset = offset
+        self.discontinuity = discontinuity
     }
 
     public var body: some View {
@@ -57,7 +60,8 @@ public struct TimeChartView: View {
                 filledBarColor: Styling.timeAxisCompleteBar,
                 canSetCurrentTime: canSetCurrentTime,
                 clipData: clipData,
-                offset: offset
+                offset: offset,
+                discontinuity: discontinuity
             )
         }
     }

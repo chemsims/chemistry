@@ -138,7 +138,7 @@ struct AqueousStatements {
     static let introToReverse: [TextLine] = [
         "Let's see how that applies in this reaction.",
         """
-        Equilibrium is fine and all, but let's disturbb the system by adding any product \
+        Equilibrium is fine and all, but let's disturb the system by adding any product \
         *(C or D)*. This will increase their concentration.
         """
     ]

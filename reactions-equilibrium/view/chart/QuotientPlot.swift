@@ -16,6 +16,7 @@ struct QuotientPlot: View {
 
     let showData: Bool
     let offset: CGFloat
+    let discontinuity: CGFloat?
 
     let settings: ReactionEquilibriumChartsLayoutSettings
 
@@ -66,7 +67,8 @@ struct QuotientPlot: View {
             canSetCurrentTime: canSetCurrentTime,
             settings: settings.layout,
             axisSettings: settings.axisShapeSettings,
-            offset: offset
+            offset: offset,
+            discontinuity: discontinuity
         )
     }
 
@@ -101,6 +103,7 @@ struct QuotientPlot_Previews: PreviewProvider {
             canSetCurrentTime: false,
             showData: true,
             offset: 0,
+            discontinuity: nil,
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: 1

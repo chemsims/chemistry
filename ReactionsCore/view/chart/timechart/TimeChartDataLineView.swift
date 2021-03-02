@@ -22,6 +22,7 @@ public struct TimeChartMultiDataLineView: View {
 
     let clipData: Bool
     let offset: CGFloat
+    let discontinuity: CGFloat?
 
     public init(
         data: [TimeChartDataline],
@@ -34,7 +35,8 @@ public struct TimeChartMultiDataLineView: View {
         highlightLhs: Bool = false,
         highlightRhs: Bool = false,
         clipData: Bool = false,
-        offset: CGFloat = 0
+        offset: CGFloat = 0,
+        discontinuity: CGFloat? = nil
     ) {
         self.data = data
         self.settings = settings
@@ -47,6 +49,7 @@ public struct TimeChartMultiDataLineView: View {
         self.highlightRhs = highlightRhs
         self.clipData = clipData
         self.offset = offset
+        self.discontinuity = discontinuity
     }
 
     public var body: some View {
@@ -63,7 +66,8 @@ public struct TimeChartMultiDataLineView: View {
                     highlightLhs: highlightLhs,
                     highlightRhs: highlightRhs,
                     clipData: clipData,
-                    offset: offset
+                    offset: offset,
+                    discontinuity: discontinuity
                 )
             }
         }
@@ -87,6 +91,7 @@ public struct TimeChartDataLineView: View {
     let clipData: Bool
 
     let offset: CGFloat
+    let discontinuity: CGFloat?
 
     public init(
         data: TimeChartDataline,
@@ -99,7 +104,8 @@ public struct TimeChartDataLineView: View {
         highlightLhs: Bool,
         highlightRhs: Bool,
         clipData: Bool = false,
-        offset: CGFloat = 0
+        offset: CGFloat = 0,
+        discontinuity: CGFloat? = nil
     ) {
         self.data = data
         self.settings = settings
@@ -112,6 +118,7 @@ public struct TimeChartDataLineView: View {
         self.highlightRhs = highlightRhs
         self.clipData = clipData
         self.offset = offset
+        self.discontinuity = discontinuity
     }
 
     public var body: some View {
