@@ -150,7 +150,7 @@ private struct MiddleStackView: View {
             equations: model.components.equations,
             initialTime: 0,
             currentTime: $model.currentTime,
-            finalTime: AqueousReactionSettings.totalReactionTime,
+            finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showConcentrationLines,
             offset: model.chartOffset,
@@ -163,7 +163,7 @@ private struct MiddleStackView: View {
             equation: model.quotientEquation,
             initialTime: 0,
             currentTime: $model.currentTime,
-            finalTime: AqueousReactionSettings.totalReactionTime,
+            finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showQuotientLine,
             offset: model.chartOffset,
@@ -540,7 +540,7 @@ struct ReactionEquilibriumChartsLayoutSettings {
                 minValuePosition: 0,
                 maxValuePosition: size,
                 minValue: 0,
-                maxValue: AqueousReactionSettings.totalReactionTime
+                maxValue: AqueousReactionSettings.forwardReactionTime
             ),
             yAxis: AxisPositionCalculations<CGFloat>(
                 minValuePosition: size,

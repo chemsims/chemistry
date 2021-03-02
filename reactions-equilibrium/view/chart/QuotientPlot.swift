@@ -62,7 +62,7 @@ struct QuotientPlot: View {
             ],
             initialTime: 0,
             currentTime: $currentTime,
-            finalTime: AqueousReactionSettings.totalReactionTime,
+            finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: canSetCurrentTime,
             settings: settings.layout,
             axisSettings: settings.axisShapeSettings,

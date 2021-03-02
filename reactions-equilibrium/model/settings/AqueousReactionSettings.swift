@@ -15,10 +15,13 @@ struct AqueousReactionSettings {
     static let timeForConvergence: CGFloat = 15
 
     /// The total reaction time
-    static let totalReactionTime: CGFloat = 20
+    static let forwardReactionTime: CGFloat = 20
 
     /// Time when the product is added
-    static let timeToAddProduct: CGFloat = 24
+    static let timeToAddProduct: CGFloat = 23
+
+    /// The time convergence is reached in the reverse reaction
+    static let timeForReverseConvergence: CGFloat = 35
 
     /// The time for the reverse reaction, including the time before product is added
     static let endOfReverseReaction: CGFloat = 40

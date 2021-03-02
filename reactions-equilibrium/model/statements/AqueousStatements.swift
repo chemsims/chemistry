@@ -134,6 +134,70 @@ struct AqueousStatements {
         This is called the *Le Chatelier's principle*.
         """
     ]
+
+    static let introToReverse: [TextLine] = [
+        "Let's see how that applies in this reaction.",
+        """
+        Equilibrium is fine and all, but let's disturbb the system by adding any product \
+        *(C or D)*. This will increase their concentration.
+        """
+    ]
+
+    static func instructToAddProduct(selected: AqueousReactionType) -> [TextLine] {
+        [
+            """
+            The reverse reaction is *\(selected.coefficients.productD)* moles of \
+            *\(AqueousMolecule.D.rawValue)* and *\(selected.coefficients.productC)* moles of \
+            *\(AqueousMolecule.C.rawValue)* transform into *\(selected.coefficients.reactantA)* \
+            moles of *\(AqueousMolecule.A.rawValue)* and *\(selected.coefficients.reactantB)* \
+            moles of *\(AqueousMolecule.B.rawValue)*.
+            """,
+            "*Shake it into it.*"
+        ]
+    }
+
+    static let preReverseReaction: [TextLine] = [
+            """
+            *Awesome!* Now the reverse reaction will take place. It is said that the reverse \
+            reaction is being *favored*, this is because in order for the reaction to reach the \
+            equilibrium state, reactants must be produced.
+            """
+        ]
+
+    static let reverseReactionStarted: [TextLine] = [
+        """
+        Watch how products are being transformed into reactants. This will continue until the \
+        equilibrium state is reached, meaning, *until $Q=K$, as the products to reactants ratio \
+        is still higher than it would be at equilibrium*.
+        """
+    ]
+
+    static let midReverseReaction: [TextLine] = [
+        """
+        Products are being converted to reactants, because Q is still higher than K *(Q > K)*.
+        """,
+        "But you can see in the graphs we're almost there!"
+    ]
+
+
+    static let reverseEquilibriumReached: [TextLine] = [
+        """
+        Great! Concentrations of all species will be constant now that we've reached *equilibrium*.
+        """,
+        """
+        Notice that this doesn't mean necessarily that their concentrations are equal. In fact, \
+        they are not equal, just *constant*
+        """
+    ]
+
+
+    static let endStatement: [TextLine] = [
+        """
+        That's how variations in concentration of a species involved in a reversible reaction in \
+        *chemical equilibrium* can disturb it.
+        """,
+        "*Let's see how else equilibrium can be disturbed.*"
+    ]
 }
 
 // MARK: Statements to instruct to add more A/B molecules

@@ -82,7 +82,7 @@ class AqueousPreRunAnimationState: AqueousScreenState {
 class AqueousRunAnimationState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.runAnimation
-        let time = AqueousReactionSettings.totalReactionTime
+        let time = AqueousReactionSettings.forwardReactionTime
         model.currentTime = 0
         withAnimation(.linear(duration: Double(time))) {
             model.currentTime = time
@@ -96,7 +96,7 @@ class AqueousRunAnimationState: AqueousScreenState {
     }
 
     override func nextStateAutoDispatchDelay(model: AqueousReactionViewModel) -> Double? {
-        Double(AqueousReactionSettings.totalReactionTime)
+        Double(AqueousReactionSettings.forwardReactionTime)
     }
 
     override var delayedStates: [DelayedState<AqueousScreenState>] {
@@ -112,10 +112,19 @@ class AqueousRunAnimationState: AqueousScreenState {
 }
 
 class AqueousEndAnimationState: AqueousScreenState {
+
+    let statement: [TextLine]
+    let endTime: CGFloat
+
+    init(statement: [TextLine], endTime: CGFloat) {
+        self.statement = statement
+        self.endTime = endTime
+    }
+
     override func apply(on model: AqueousReactionViewModel) {
-        model.statement = AqueousStatements.reachedEquilibrium
+        model.statement = statement
         withAnimation(.easeOut(duration: 0.5)) {
-            model.currentTime = AqueousReactionSettings.totalReactionTime * 1.0001
+            model.currentTime = endTime * 1.0001
         }
         model.canSetCurrentTime = true
     }
@@ -127,20 +136,87 @@ class AqueousEndAnimationState: AqueousScreenState {
 
 class AqueousShiftChartState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
-        model.statement = ["Moved the chart"]
+        model.statement = AqueousStatements.introToReverse
         withAnimation(.easeOut(duration: 1)) {
-            model.chartOffset = AqueousReactionSettings.totalReactionTime
+            model.chartOffset = AqueousReactionSettings.forwardReactionTime
             model.currentTime = AqueousReactionSettings.timeToAddProduct
-        }
-        if let fwd = model.components as? ForwardAqueousReactionComponents {
-            model.components = ReverseAqueousReactionComponents(forwardReaction: fwd)
         }
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = 0
-            model.currentTime = AqueousReactionSettings.totalReactionTime
+            model.currentTime = AqueousReactionSettings.forwardReactionTime
         }
+    }
+}
+
+class InstructToAddProductState: AqueousScreenState {
+    override func apply(on model: AqueousReactionViewModel) {
+        model.statement = AqueousStatements.instructToAddProduct(selected: model.selectedReaction)
+        if let fwd = model.components as? ForwardAqueousReactionComponents {
+            model.components = ReverseAqueousReactionComponents(forwardReaction: fwd)
+        }
+    }
+
+    override func unapply(on model: AqueousReactionViewModel) {
+        if let rev = model.components as? ReverseAqueousReactionComponents {
+            model.components = rev.forwardReaction
+        }
+    }
+}
+
+class AqueousPreReverseAnimation: AqueousScreenState {
+    override func apply(on model: AqueousReactionViewModel) {
+        model.statement = AqueousStatements.preReverseReaction
+        model.inputState = .none
+    }
+}
+
+class AqueousRunReverseAnimation: AqueousScreenState {
+
+    private let tAddProduct = AqueousReactionSettings.timeToAddProduct
+    private let tConvergence = AqueousReactionSettings.timeForReverseConvergence
+    private let tEnd = AqueousReactionSettings.endOfReverseReaction
+    
+    override func apply(on model: AqueousReactionViewModel) {
+        model.statement = AqueousStatements.reverseReactionStarted
+        withAnimation(.linear(duration: Double(tEnd - tAddProduct))) {
+            model.currentTime = tEnd
+        }
+    }
+
+    override func reapply(on model: AqueousReactionViewModel) {
+        model.currentTime = tAddProduct
+        super.reapply(on: model)
+    }
+
+    override func unapply(on model: AqueousReactionViewModel) {
+        withAnimation(.easeOut(duration: Double(0.5))) {
+            model.currentTime = tAddProduct
+        }
+    }
+
+    override var delayedStates: [DelayedState<AqueousScreenState>] {
+        let tToConvergence = tConvergence - tAddProduct
+        let delay = Double(tToConvergence / 2)
+        return [
+            DelayedState(
+                state: AqueousSetStatementState(
+                    statement: AqueousStatements.midReverseReaction
+                ),
+                delay: delay
+            ),
+            DelayedState(
+                state: AqueousSetStatementState(
+                    statement: AqueousStatements.reverseEquilibriumReached
+                ),
+                delay: delay
+            )
+        ]
+    }
+
+    override func nextStateAutoDispatchDelay(model: AqueousReactionViewModel) -> Double? {
+        Double(AqueousReactionSettings.endOfReverseReaction - AqueousReactionSettings.timeToAddProduct)
     }
 }

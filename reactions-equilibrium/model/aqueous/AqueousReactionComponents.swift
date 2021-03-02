@@ -377,7 +377,7 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
                     currentMolecules: dMolecules
                 ),
                 startTime: AqueousReactionSettings.timeToAddProduct,
-                convergenceTime: AqueousReactionSettings.endOfReverseReaction
+                convergenceTime: AqueousReactionSettings.timeForReverseConvergence
             )
         )
     }
