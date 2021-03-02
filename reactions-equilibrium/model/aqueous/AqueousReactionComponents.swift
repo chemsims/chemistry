@@ -268,7 +268,7 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
 
 struct ReverseAqueousReactionComponents: AqueousReactionComponents {
 
-    private var forwardReaction: ForwardAqueousReactionComponents
+    private(set) var forwardReaction: ForwardAqueousReactionComponents
     let availableCols: Int
     var availableRows: Int
 
@@ -361,11 +361,34 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         BalancedReactionEquations(
             forwardReaction: forwardReaction.equations,
             reverseInput: ReverseReactionInput(
-                c0: initialConcentration(of: cMolecules),
-                d0: initialConcentration(of: dMolecules),
+                c0: initialProductConcentration(
+                    forwardConvergedCount: forwardReaction.cMolecules.count,
+                    forwardConvergedConcentration: forwardReaction.equations.productC.getY(at: AqueousReactionSettings.timeForConvergence),
+                    currentMolecules: cMolecules
+                ),
+                d0: initialProductConcentration(
+                    forwardConvergedCount: forwardReaction.dMolecules.count,
+                    forwardConvergedConcentration: forwardReaction.equations.productD.getY(at: AqueousReactionSettings.timeForConvergence),
+                    currentMolecules: dMolecules
+                ),
                 startTime: AqueousReactionSettings.timeToAddProduct,
                 convergenceTime: AqueousReactionSettings.endOfReverseReaction
             )
         )
+    }
+
+    /// Finding concentration based on molecule count will differ from the previously converged value
+    ///
+    /// So, if no molecules added, use the previously converged value instead
+    private func initialProductConcentration(
+        forwardConvergedCount: Int,
+        forwardConvergedConcentration: CGFloat,
+        currentMolecules: [GridCoordinate]
+    ) -> CGFloat {
+        if currentMolecules.count == forwardConvergedCount {
+            return forwardConvergedConcentration
+        }
+
+        return initialConcentration(of: currentMolecules)
     }
 }
