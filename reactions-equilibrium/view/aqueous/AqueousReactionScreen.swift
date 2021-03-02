@@ -52,15 +52,14 @@ private struct AqueousReactionScreenWithSettings: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: settings.moleculeWidth)
                         .onTapGesture {
-//                            guard model.canAddReactants else {
-//                                return
-//                            }
                             if molecule == .A {
                                 model.incrementAMolecules()
                             } else if molecule == .B {
                                 model.incrementBMolecules()
                             } else if molecule == .C {
                                 model.incrementCMolecules()
+                            } else if molecule == .D {
+                                model.incrementDMolecules()
                             }
                         }
 

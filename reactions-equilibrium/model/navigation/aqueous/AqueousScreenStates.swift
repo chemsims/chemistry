@@ -154,12 +154,14 @@ class AqueousShiftChartState: AqueousScreenState {
 class InstructToAddProductState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.instructToAddProduct(selected: model.selectedReaction)
+        model.inputState = .addProducts
         if let fwd = model.components as? ForwardAqueousReactionComponents {
             model.components = ReverseAqueousReactionComponents(forwardReaction: fwd)
         }
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
+        model.inputState = .none
         if let rev = model.components as? ReverseAqueousReactionComponents {
             model.components = rev.forwardReaction
         }
