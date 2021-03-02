@@ -5,6 +5,11 @@
 import ReactionsCore
 import CoreGraphics
 
+struct FractionedCoordinates {
+    let coordinates: [GridCoordinate]
+    let fractionToDraw: Equation
+}
+
 protocol AqueousReactionComponents {
 
     var aMolecules: [GridCoordinate] { get }
@@ -17,10 +22,19 @@ protocol AqueousReactionComponents {
     var cBeakerFractionToDraw: Equation { get }
     var dBeakerFractionToDraw: Equation { get }
 
+    var aGridMolecules: FractionedCoordinates { get }
+    var bGridMolecules: FractionedCoordinates { get }
+    var cGridMolecules: FractionedCoordinates { get }
+    var dGridMolecules: FractionedCoordinates { get }
+
     var equations: BalancedReactionEquations { get }
 
     var availableCols: Int { get }
     var availableRows: Int { get }
+
+    mutating func increment(molecule: AqueousMolecule)
+
+    mutating func reset()
 }
 
 extension AqueousReactionComponents {
@@ -56,6 +70,31 @@ extension AqueousReactionComponents {
     fileprivate var availableMolecules: Int {
         availableCols * availableRows
     }
+
+    fileprivate func addingGridMolecules(
+        molecules: [GridCoordinate],
+        concentration: CGFloat,
+        avoiding: [GridCoordinate]
+    ) -> [GridCoordinate] {
+        let totalNum = equilibriumGridCount(for: concentration)
+        let toAdd = totalNum - molecules.count
+        guard toAdd > 0 else {
+            return molecules
+        }
+
+        return GridCoordinateList.addingRandomElementsTo(
+            grid: molecules,
+            count: toAdd,
+            cols: EquilibriumGridSettings.cols,
+            rows: EquilibriumGridSettings.rows,
+            avoiding: avoiding
+        )
+    }
+
+    fileprivate func equilibriumGridCount(for concentration: CGFloat) -> Int {
+        (concentration * CGFloat(EquilibriumGridSettings.grid.count)).roundedInt()
+    }
+
 }
 
 
@@ -64,6 +103,8 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     let coefficients: BalancedReactionCoefficients
     let availableCols: Int
     let availableRows: Int
+
+    let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
 
     init(
         coefficients: BalancedReactionCoefficients,
@@ -75,8 +116,18 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         self.availableRows = availableRows
     }
 
+    mutating func reset() {
+        aMolecules.removeAll()
+        bMolecules.removeAll()
+        underlyingAGrid.removeAll()
+        underlyingBGrid.removeAll()
+    }
+
     private(set) var aMolecules = [GridCoordinate]()
     private(set) var bMolecules = [GridCoordinate]()
+    private var underlyingAGrid = [GridCoordinate]()
+    private var underlyingBGrid = [GridCoordinate]()
+
     var cMolecules: [GridCoordinate] {
         productMoleculeSetter.cMolecules
     }
@@ -109,11 +160,53 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         productMoleculeSetter.dFractionToDraw
     }
 
+    var aGridMolecules: FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: underlyingAGrid,
+            fractionToDraw: reactantMoleculesToDraw(equation: equations.reactantA)
+        )
+    }
+
+    var bGridMolecules: FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: underlyingBGrid,
+            fractionToDraw: reactantMoleculesToDraw(equation: equations.reactantB
+            )
+        )
+    }
+
+    var cGridMolecules: FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: underlyingCGrid,
+            fractionToDraw: productMoleculeSetter.cFractionToDraw
+        )
+    }
+
+    var dGridMolecules: FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: underlyingDGrid,
+            fractionToDraw: productMoleculeSetter.dFractionToDraw
+        )
+    }
+
+    mutating func increment(molecule: AqueousMolecule) {
+        if molecule == .A {
+            incrementA()
+        } else if molecule == .B {
+            incrementB()
+        }
+    }
+
     mutating func incrementA() {
         aMolecules = addingMolecules(
             to: aMolecules,
             avoiding: bMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
+        )
+        underlyingAGrid = addingGridMolecules(
+            molecules: underlyingAGrid,
+            concentration: initialA,
+            avoiding: underlyingBGrid
         )
     }
 
@@ -122,6 +215,11 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
             to: bMolecules,
             avoiding: aMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
+        )
+        underlyingBGrid = addingGridMolecules(
+            molecules: underlyingBGrid,
+            concentration: initialB,
+            avoiding: underlyingAGrid
         )
     }
 
@@ -133,6 +231,19 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         initialConcentration(of: bMolecules)
     }
 
+    private var underlyingCGrid: [GridCoordinate] {
+        let concentration = equations.productC.getY(at: AqueousReactionSettings.timeForConvergence)
+        let num = equilibriumGridCount(for: concentration)
+        return Array(shuffledEquilibriumGrid.prefix(num))
+    }
+
+    private var underlyingDGrid: [GridCoordinate] {
+        let concentration = equations.productD.getY(at: AqueousReactionSettings.timeForConvergence)
+        let num = equilibriumGridCount(for: concentration)
+        let suffixedCoords = shuffledEquilibriumGrid.dropFirst(underlyingCGrid.count)
+        return Array(suffixedCoords.prefix(num))
+    }
+
     private var productMoleculeSetter: BeakerMoleculesSetter {
         BeakerMoleculesSetter(
             totalMolecules: availableMolecules,
@@ -140,6 +251,16 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
             moleculesA: aMolecules,
             moleculesB: bMolecules,
             reactionEquation: equations
+        )
+    }
+
+    private func reactantMoleculesToDraw(
+        equation: Equation
+    ) -> Equation {
+        ScaledEquation(
+            targetY: 1,
+            targetX: 0,
+            underlying: equation
         )
     }
 }
@@ -179,6 +300,35 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
 
     var dBeakerFractionToDraw: Equation {
         ConstantEquation(value: 1)
+    }
+
+    var aGridMolecules: FractionedCoordinates {
+        FractionedCoordinates(coordinates: [], fractionToDraw: ConstantEquation(value: 0))
+    }
+
+    var bGridMolecules: FractionedCoordinates {
+        FractionedCoordinates(coordinates: [], fractionToDraw: ConstantEquation(value: 0))
+    }
+
+    var cGridMolecules: FractionedCoordinates {
+        FractionedCoordinates(coordinates: [], fractionToDraw: ConstantEquation(value: 0))
+    }
+
+    var dGridMolecules: FractionedCoordinates {
+        FractionedCoordinates(coordinates: [], fractionToDraw: ConstantEquation(value: 0))
+    }
+
+    mutating func reset() {
+        aMolecules.removeAll()
+        bMolecules.removeAll()
+    }
+
+    mutating func increment(molecule: AqueousMolecule) {
+        if molecule == .C {
+            incrementC()
+        } else if molecule == .D {
+            incrementD()
+        }
     }
 
     mutating func incrementC() {

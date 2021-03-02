@@ -132,6 +132,9 @@ class AqueousShiftChartState: AqueousScreenState {
             model.chartOffset = AqueousReactionSettings.totalReactionTime
             model.currentTime = AqueousReactionSettings.timeToAddProduct
         }
+        if let fwd = model.components as? ForwardAqueousReactionComponents {
+            model.components = ReverseAqueousReactionComponents(forwardReaction: fwd)
+        }
     }
 
     override func unapply(on model: AqueousReactionViewModel) {

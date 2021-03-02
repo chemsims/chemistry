@@ -84,28 +84,28 @@ private struct AqueousReactionScreenWithSettings: View {
             FilledBeaker(
                 molecules: [
                     BeakerMolecules(
-                        coords: model.moleculesA,
+                        coords: model.components.aMolecules,
                         color: .from(.aqMoleculeA)
                     ),
                     BeakerMolecules(
-                        coords: model.moleculesB,
+                        coords: model.components.bMolecules,
                         color: .from(.aqMoleculeB)
                     )
                 ],
                 animatingMolecules: [
                     AnimatingBeakerMolecules(
                         molecules: BeakerMolecules(
-                            coords: model.productMolecules.cMolecules + model.extraC,
+                            coords: model.components.cMolecules,
                             color: .from(.aqMoleculeC)
                         ),
-                        fractionToDraw: model.productMolecules.cFractionToDraw
+                        fractionToDraw: model.components.cBeakerFractionToDraw
                     ),
                     AnimatingBeakerMolecules(
                         molecules: BeakerMolecules(
-                            coords: model.productMolecules.dMolecules,
+                            coords: model.components.dMolecules,
                             color: .from(.aqMoleculeD)
                         ),
-                        fractionToDraw: model.productMolecules.dFractionToDraw
+                        fractionToDraw: model.components.dBeakerFractionToDraw
                     )
                 ],
                 currentTime: model.currentTime,
@@ -147,7 +147,7 @@ private struct MiddleStackView: View {
 
     private var concentrationChart: some View {
         MultiConcentrationPlot(
-            equations: model.equations,
+            equations: model.components.equations,
             initialTime: 0,
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.totalReactionTime,
@@ -285,33 +285,33 @@ private struct RightStackView: View {
             reactants: [
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.gridMoleculesA,
+                        coords: model.components.aGridMolecules.coordinates,
                         color: .from(.aqMoleculeA)
                     ),
-                    fractionToDraw: model.gridMoleculesAToDraw
+                    fractionToDraw: model.components.aGridMolecules.fractionToDraw
                 ),
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.gridMoleculesB,
+                        coords: model.components.bGridMolecules.coordinates,
                         color: .from(.aqMoleculeB)
                     ),
-                    fractionToDraw: model.gridMoleculesBToDraw
+                    fractionToDraw: model.components.bGridMolecules.fractionToDraw
                 )
             ],
             products: [
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.gridMoleculesC,
+                        coords: model.components.cGridMolecules.coordinates,
                         color: .from(.aqMoleculeC)
                     ),
-                    fractionToDraw: model.productMolecules.cFractionToDraw
+                    fractionToDraw: model.components.cGridMolecules.fractionToDraw
                 ),
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.gridMoleculesD,
+                        coords: model.components.dGridMolecules.coordinates,
                         color: .from(.aqMoleculeD)
                     ),
-                    fractionToDraw: model.productMolecules.dFractionToDraw
+                    fractionToDraw: model.components.dGridMolecules.fractionToDraw
                 )
             ]
         )
