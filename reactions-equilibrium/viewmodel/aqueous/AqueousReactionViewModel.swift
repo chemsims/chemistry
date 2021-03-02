@@ -18,6 +18,8 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var moleculesA = [GridCoordinate]()
     @Published var moleculesB = [GridCoordinate]()
+    @Published var extraC = [GridCoordinate]()
+
     @Published var gridMoleculesA = [GridCoordinate]()
     @Published var gridMoleculesB = [GridCoordinate]()
 
@@ -87,13 +89,23 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     func incrementAMolecules() {
+        guard inputState == .addReactants else {
+            return
+        }
         moleculesA = addingMolecules(to: moleculesA, avoiding: moleculesB)
         gridMoleculesA = addingGridMolecules(molecules: gridMoleculesA, concentration: initialConcentrationA, avoiding: gridMoleculesB)
     }
 
     func incrementBMolecules() {
+        guard inputState == .addReactants else {
+            return
+        }
         moleculesB = addingMolecules(to: moleculesB, avoiding: moleculesA)
         gridMoleculesB = addingGridMolecules(molecules: gridMoleculesB, concentration: initialConcentrationB, avoiding: gridMoleculesA)
+    }
+
+    func incrementCMolecules() {
+        extraC = addingMolecules(to: extraC, avoiding: moleculesA + moleculesB)
     }
 
     func resetMolecules() {
@@ -165,7 +177,6 @@ class AqueousReactionViewModel: ObservableObject {
         let maxToAdd = maxCount - molecules.count
 
         let toAdd = max(min(maxToAdd, numToAdd), 0)
-
         return GridCoordinateList.addingRandomElementsTo(
             grid: molecules,
             count: toAdd,

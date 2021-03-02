@@ -47,6 +47,9 @@
 		571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */; };
 		571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E802560483A00A1C45E /* BarChartBar.swift */; };
 		571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
+		5725971925EE3A2A00D87964 /* AqueousReactionComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725971825EE3A2A00D87964 /* AqueousReactionComponents.swift */; };
+		5725972325EE3E9400D87964 /* BalancedReactionComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972225EE3E9400D87964 /* BalancedReactionComponentTests.swift */; };
+		5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972925EE3ECE00D87964 /* Extensions.swift */; };
 		5727485F25A5F489000CFA1E /* NavigationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */; };
 		5727486725A60445000CFA1E /* ScreenStateTreeNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */; };
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
@@ -413,6 +416,9 @@
 		571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGeometrySettings.swift; sourceTree = "<group>"; };
 		571F6E802560483A00A1C45E /* BarChartBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartBar.swift; sourceTree = "<group>"; };
 		571F6E862560486400A1C45E /* BarChartAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartAxis.swift; sourceTree = "<group>"; };
+		5725971825EE3A2A00D87964 /* AqueousReactionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionComponents.swift; sourceTree = "<group>"; };
+		5725972225EE3E9400D87964 /* BalancedReactionComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionComponentTests.swift; sourceTree = "<group>"; };
+		5725972925EE3ECE00D87964 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModelTests.swift; sourceTree = "<group>"; };
 		5727486225A5FB49000CFA1E /* ScreenStateTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenStateTree.swift; sourceTree = "<group>"; };
 		5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenStateTreeNodeTests.swift; sourceTree = "<group>"; };
@@ -954,6 +960,22 @@
 			path = shapes;
 			sourceTree = "<group>";
 		};
+		5725972825EE3EC000D87964 /* test_util */ = {
+			isa = PBXGroup;
+			children = (
+				5725972925EE3ECE00D87964 /* Extensions.swift */,
+			);
+			path = test_util;
+			sourceTree = "<group>";
+		};
+		5725973725EE4AED00D87964 /* aqueous */ = {
+			isa = PBXGroup;
+			children = (
+				5725971825EE3A2A00D87964 /* AqueousReactionComponents.swift */,
+			);
+			path = aqueous;
+			sourceTree = "<group>";
+		};
 		5727487225A61B9C000CFA1E /* enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -1134,9 +1156,11 @@
 		575A88CB25E43CD700AEE448 /* reactions-equilibriumTests */ = {
 			isa = PBXGroup;
 			children = (
+				5725972825EE3EC000D87964 /* test_util */,
 				575A88CE25E43CD700AEE448 /* Info.plist */,
 				57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */,
 				57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */,
+				5725972225EE3E9400D87964 /* BalancedReactionComponentTests.swift */,
 			);
 			path = "reactions-equilibriumTests";
 			sourceTree = "<group>";
@@ -1344,7 +1368,6 @@
 				5797567D25C1C5BE005C484E /* image */,
 				575A880825E430D800AEE448 /* quiz */,
 				575A87F325E4308000AEE448 /* text */,
-				57FDA138255D6C5000CB8804 /* Extensions.swift */,
 				5797A53D25E41DF500991BD9 /* axis */,
 				5797A4DA25E40ACD00991BD9 /* enums */,
 				5797A47325E4087800991BD9 /* display */,
@@ -1575,6 +1598,7 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5725973725EE4AED00D87964 /* aqueous */,
 				57ABDC4425EC03BC0078A82B /* statements */,
 				57A1B7A725EAB4C200878B52 /* scales */,
 				5786FAC925E6B02400AAD8A6 /* beaker */,
@@ -1592,6 +1616,7 @@
 			children = (
 				57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */,
 				57E902B925ED561200758300 /* EquatableCounter.swift */,
+				57FDA138255D6C5000CB8804 /* Extensions.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -2210,6 +2235,7 @@
 				57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */,
 				575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */,
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
+				5725971925EE3A2A00D87964 /* AqueousReactionComponents.swift in Sources */,
 				57DDACE925E552F700B535A7 /* AqueousReactionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2220,6 +2246,8 @@
 			files = (
 				57E902CA25ED6A7800758300 /* MoleculeScalesGeometryTests.swift in Sources */,
 				57952A3325E66FBD006AB876 /* BalancedReactionEquationTests.swift in Sources */,
+				5725972325EE3E9400D87964 /* BalancedReactionComponentTests.swift in Sources */,
+				5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

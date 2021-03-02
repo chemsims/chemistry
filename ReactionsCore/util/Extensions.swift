@@ -21,6 +21,10 @@ extension BinaryFloatingPoint {
     public func str(decimals: Int) -> String {
         String(format: "%.\(decimals)f", Double(self))
     }
+
+    public func roundedInt() -> Int {
+        Int(rounded())
+    }
 }
 
 extension Array where Self.Element: Equatable {
