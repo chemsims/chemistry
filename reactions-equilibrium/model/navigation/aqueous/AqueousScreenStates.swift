@@ -124,3 +124,20 @@ class AqueousEndAnimationState: AqueousScreenState {
         model.canSetCurrentTime = false
     }
 }
+
+class AqueousShiftChartState: AqueousScreenState {
+    override func apply(on model: AqueousReactionViewModel) {
+        model.statement = ["Moved the chart"]
+        withAnimation(.easeOut(duration: 1)) {
+            model.chartOffset = AqueousReactionSettings.totalReactionTime
+            model.currentTime = AqueousReactionSettings.timeToAddProduct
+        }
+    }
+
+    override func unapply(on model: AqueousReactionViewModel) {
+        withAnimation(.easeOut(duration: 1)) {
+            model.chartOffset = 0
+            model.currentTime = AqueousReactionSettings.totalReactionTime
+        }
+    }
+}

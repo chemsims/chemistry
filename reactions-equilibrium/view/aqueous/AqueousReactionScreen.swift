@@ -151,6 +151,7 @@ private struct MiddleStackView: View {
             finalTime: AqueousReactionSettings.totalReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showConcentrationLines,
+            offset: model.chartOffset,
             settings: settings.chartSettings
         )
     }
@@ -163,6 +164,7 @@ private struct MiddleStackView: View {
             finalTime: AqueousReactionSettings.totalReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showQuotientLine,
+            offset: model.chartOffset,
             settings: settings.quotientChartSettings(convergenceQ: model.convergenceQuotient)
         )
     }

@@ -136,8 +136,9 @@ public struct TimeChartDataLineView: View {
                         return
                     }
                     let xLocation = gesture.location.x
-                    let newTime = settings.xAxis.getValue(at: xLocation)
-                    currentTime = max(initialTime, min(finalTime, newTime))
+                    let shiftedAxis = settings.xAxis.shift(by: offset)
+                    let newTime = shiftedAxis.getValue(at: xLocation)
+                    currentTime = max(initialTime + offset, min(finalTime + offset, newTime))
                 })
             }
             head(

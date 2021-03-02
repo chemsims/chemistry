@@ -29,6 +29,7 @@ struct AqueousNavigationModel {
         AqueousPreRunAnimationState(),
         AqueousRunAnimationState(),
         AqueousEndAnimationState(),
-        AqueousSetStatementState(statement: AqueousStatements.leChatelier)
+        AqueousSetStatementState(statement: AqueousStatements.leChatelier),
+        AqueousShiftChartState()
     ]
 }

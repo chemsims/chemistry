@@ -15,6 +15,7 @@ struct MultiConcentrationPlot: View {
     let canSetCurrentTime: Bool
 
     let showData: Bool
+    let offset: CGFloat
 
     let settings: ReactionEquilibriumChartsLayoutSettings
 
@@ -57,7 +58,8 @@ struct MultiConcentrationPlot: View {
             canSetCurrentTime: canSetCurrentTime,
             settings: settings.layout,
             axisSettings: settings.axisShapeSettings,
-            clipData: true
+            clipData: true,
+            offset: offset
         )
     }
 
@@ -113,6 +115,7 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
             finalTime: 20,
             canSetCurrentTime: false,
             showData: true,
+            offset: 0,
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis

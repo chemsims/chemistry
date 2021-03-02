@@ -17,6 +17,12 @@ struct AqueousReactionSettings {
     /// The total reaction time
     static let totalReactionTime: CGFloat = 20
 
+    /// Time when the product is added
+    static let timeToAddProduct: CGFloat = 24
+
+    /// The time for the reverse reaction, including the time before product is added
+    static let reverseReactionDuration: CGFloat = 20
+
     struct ConcentrationInput {
         static let minInitial: CGFloat = 0.15
         static let maxInitial: CGFloat = 0.3
