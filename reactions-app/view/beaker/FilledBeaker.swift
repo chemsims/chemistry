@@ -4,22 +4,98 @@
 
 import SwiftUI
 
-struct FilledBeaker: View {
+struct BeakerOfReactantToProduct: View {
 
     let moleculesA: [GridCoordinate]
+    let gridSize: Int
     let concentrationB: Equation?
     let currentTime: CGFloat?
+    let finalTime: CGFloat?
     let reactionPair: ReactionPairDisplay
     let outlineColor: Color
     init(
         moleculesA: [GridCoordinate],
         concentrationB: Equation?,
         currentTime: CGFloat?,
+        finalTime: CGFloat?,
+        reactionPair: ReactionPairDisplay,
+        gridSize: Int = MoleculeGridSettings.fullGrid.count,
+        outlineColor: Color = Styling.beakerOutline
+    ) {
+        self.moleculesA = moleculesA
+        self.gridSize = gridSize
+        self.concentrationB = concentrationB
+        self.currentTime = currentTime
+        self.finalTime = finalTime
+        self.reactionPair = reactionPair
+        self.outlineColor = outlineColor
+    }
+
+    var body: some View {
+        FilledBeaker(
+            moleculesA: moleculesA,
+            fractionOfAToConvertToProduct: conBToDraw,
+            currentTime: currentTime,
+            reactionPair: reactionPair
+        )
+    }
+
+    private var conBToDraw: Equation? {
+        if let eqB = concentrationB, let t2 = finalTime, moleculesA.count != 0 {
+            return ScaledConcentrationBEquation(
+                underlying: eqB,
+                gridSize: gridSize,
+                aCount: moleculesA.count,
+                bEndConcentration: eqB.getY(at: t2)
+            )
+        } else {
+            return nil
+        }
+    }
+}
+
+private struct ScaledConcentrationBEquation: Equation {
+
+    let factor: CGFloat
+    let underlying: Equation
+
+    init(
+        underlying: Equation,
+        gridSize: Int,
+        aCount: Int,
+        bEndConcentration: CGFloat
+    ) {
+        self.underlying = underlying
+        let numer = bEndConcentration * CGFloat(gridSize)
+        let updatedFinalConcentration = numer / CGFloat(aCount)
+        if bEndConcentration == 0 {
+            self.factor = 0
+        } else {
+            self.factor = updatedFinalConcentration / bEndConcentration
+        }
+    }
+
+    func getY(at x: CGFloat) -> CGFloat {
+        underlying.getY(at: x) * factor
+    }
+}
+
+private struct FilledBeaker: View {
+
+    let moleculesA: [GridCoordinate]
+    let fractionOfAToConvertToProduct: Equation?
+    let currentTime: CGFloat?
+    let reactionPair: ReactionPairDisplay
+    let outlineColor: Color
+    init(
+        moleculesA: [GridCoordinate],
+        fractionOfAToConvertToProduct: Equation?,
+        currentTime: CGFloat?,
         reactionPair: ReactionPairDisplay,
         outlineColor: Color = Styling.beakerOutline
     ) {
         self.moleculesA = moleculesA
-        self.concentrationB = concentrationB
+        self.fractionOfAToConvertToProduct = fractionOfAToConvertToProduct
         self.currentTime = currentTime
         self.reactionPair = reactionPair
         self.outlineColor = outlineColor
@@ -53,7 +129,7 @@ struct FilledBeaker: View {
 
     private func valueForTime(_ time: CGFloat) -> String {
         let total = moleculesA.count
-        let bFraction = concentrationB?.getY(at: time) ?? 0
+        let bFraction = fractionOfAToConvertToProduct?.getY(at: time) ?? 0
         let countOfB = Int(CGFloat(total) * bFraction)
         let countOfA = total - countOfB
         return "\(countOfA) \(reactant) molecules, \(countOfB) \(product) molecules"
@@ -118,12 +194,12 @@ struct FilledBeaker: View {
                 coordinates: moleculesA
             )
 
-            if currentTime != nil && concentrationB != nil {
+            if currentTime != nil && fractionOfAToConvertToProduct != nil {
                 AnimatingMoleculeGrid(
                     settings: settings,
                     coords: moleculesA,
                     color: reactionPair.product.color,
-                    fractionOfCoordsToDraw: concentrationB!,
+                    fractionOfCoordsToDraw: fractionOfAToConvertToProduct!,
                     currentTime: currentTime!
                 )
                 .frame(height: settings.height)
@@ -152,7 +228,7 @@ struct FilledBeaker_Previews: PreviewProvider {
                 GridCoordinate(col: 1, row: 1),
                 GridCoordinate(col: 2, row: 2)
             ],
-            concentrationB: ConstantEquation(value: 0),
+            fractionOfAToConvertToProduct: ConstantEquation(value: 0),
             currentTime: 0,
             reactionPair: ReactionType.A.display
         )

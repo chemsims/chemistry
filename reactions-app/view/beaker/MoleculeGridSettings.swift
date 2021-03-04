@@ -27,11 +27,11 @@ struct MoleculeGridSettings {
         return (settings.cellSize - settings.cellPadding) / 2
     }
 
-    static var fullGrid: [GridCoordinate] {
+    static let fullGrid: [GridCoordinate] = {
         (0..<cols).flatMap { c in
             (0..<rows).map { r in
                 GridCoordinate(col: c, row: r)
             }
         }
-    }
+    }()
 }

@@ -46,10 +46,11 @@ struct OrderedReactionScreen<Content: View>: View {
             HStack(alignment: .top, spacing: 0) {
                 Spacer()
                     .frame(width: settings.menuTotalWidth)
-                FilledBeaker(
+                BeakerOfReactantToProduct(
                     moleculesA: reaction.moleculesA,
                     concentrationB: reaction.input.concentrationB,
                     currentTime: reaction.currentTime,
+                    finalTime: reaction.input.inputT2,
                     reactionPair: reaction.selectedReaction.display
                 )
                 .frame(width: settings.beakerWidth, height: settings.beakerHeight)
