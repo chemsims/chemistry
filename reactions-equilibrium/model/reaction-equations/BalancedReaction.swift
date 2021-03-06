@@ -13,6 +13,13 @@ struct BalancedReactionCoefficients {
     let productD: Int
 }
 
+struct BalancedReactionInitialConcentrations {
+    let reactantA: CGFloat
+    let reactantB: CGFloat
+    let productC: CGFloat
+    let productD: CGFloat
+}
+
 private extension BalancedReactionCoefficients {
     var sum: Int {
         reactantA + reactantB + productC + productD

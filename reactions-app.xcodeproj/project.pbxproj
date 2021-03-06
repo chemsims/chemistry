@@ -192,6 +192,9 @@
 		57B528E625B38A2300381550 /* ReviewPrompter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B528E525B38A2300381550 /* ReviewPrompter.swift */; };
 		57B528EA25B38A4E00381550 /* ReviewPromptPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
+		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
+		57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */; };
+		57BCB4C425F3752800E50923 /* ReactionConvergenceSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */; };
 		57C3A8272563248F00EE753E /* FirstOrderReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */; };
 		57CDFE3525E26F87005D699A /* ZeroOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE3425E26F87005D699A /* ZeroOrderQuizQuestions.swift */; };
 		57CDFE3B25E26FA1005D699A /* FirstOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE3A25E26FA1005D699A /* FirstOrderQuizQuestions.swift */; };
@@ -545,6 +548,9 @@
 		57B528E525B38A2300381550 /* ReviewPrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompter.swift; sourceTree = "<group>"; };
 		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
+		57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonLinearEquationSolver.swift; sourceTree = "<group>"; };
+		57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolver.swift; sourceTree = "<group>"; };
+		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
 		57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionScreen.swift; sourceTree = "<group>"; };
 		57CDFE3425E26F87005D699A /* ZeroOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZeroOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CDFE3A25E26FA1005D699A /* FirstOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstOrderQuizQuestions.swift; sourceTree = "<group>"; };
@@ -1161,6 +1167,7 @@
 				57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */,
 				57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */,
 				5725972225EE3E9400D87964 /* ForwardReactionComponentTests.swift */,
+				57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */,
 			);
 			path = "reactions-equilibriumTests";
 			sourceTree = "<group>";
@@ -1392,6 +1399,7 @@
 				57DDAD0F25E567C300B535A7 /* QuadraticEquation.swift */,
 				571215552580DCD000E92A99 /* Equation.swift */,
 				57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */,
+				57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */,
 			);
 			path = equation;
 			sourceTree = "<group>";
@@ -1676,6 +1684,7 @@
 				57A666D025E5874200F51FDC /* EquilibriumReactionEquation.swift */,
 				57952A2025E63F7F006AB876 /* BalancedReaction.swift */,
 				57D2F2C225EA227D00AEE0D8 /* ReactionQuotientEquation.swift */,
+				57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */,
 			);
 			path = "reaction-equations";
 			sourceTree = "<group>";
@@ -2235,6 +2244,7 @@
 				57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */,
 				575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */,
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
+				57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */,
 				5725971925EE3A2A00D87964 /* AqueousReactionComponents.swift in Sources */,
 				57DDACE925E552F700B535A7 /* AqueousReactionViewModel.swift in Sources */,
 			);
@@ -2245,6 +2255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57E902CA25ED6A7800758300 /* MoleculeScalesGeometryTests.swift in Sources */,
+				57BCB4C425F3752800E50923 /* ReactionConvergenceSolverTests.swift in Sources */,
 				57952A3325E66FBD006AB876 /* BalancedReactionEquationTests.swift in Sources */,
 				5725972325EE3E9400D87964 /* ForwardReactionComponentTests.swift in Sources */,
 				5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */,
@@ -2273,6 +2284,7 @@
 				5797A48125E40A3600991BD9 /* BeakerShape.swift in Sources */,
 				575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */,
 				5797A4BF25E40A6400991BD9 /* Equation.swift in Sources */,
+				57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */,
 				57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */,
 				575A880125E430C200AEE448 /* Labels.swift in Sources */,
 				575A883A25E431E500AEE448 /* Strings.swift in Sources */,
