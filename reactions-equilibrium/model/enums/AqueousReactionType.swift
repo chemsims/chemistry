@@ -15,7 +15,7 @@ enum AqueousReactionType: Int, CaseIterable, Identifiable {
 extension AqueousReactionType {
     var equilibriumConstant: CGFloat {
         switch self {
-        case .A: return 1
+        case .A: return 0.75
         case .B: return 10
         case .C: return 2
         }

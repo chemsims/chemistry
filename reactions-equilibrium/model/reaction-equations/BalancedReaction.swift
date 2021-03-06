@@ -41,6 +41,8 @@ struct BalancedReactionEquations {
 
     let equilibriumConstant: CGFloat
 
+    private let hasNonNilUnitChange: Bool
+
     init(
         coefficients: BalancedReactionCoefficients,
         equilibriumConstant: CGFloat,
@@ -63,7 +65,7 @@ struct BalancedReactionEquations {
             d: MoleculeTerms(initC: 0, coeff: coefficients.productD, increases: true),
             startTime: 0,
             convergenceTime: convergenceTime,
-            unitChange: unitChange
+            unitChange: unitChange ?? 0
         )
 
         self.coefficients = coefficients
@@ -71,6 +73,7 @@ struct BalancedReactionEquations {
         self.a0 = a0
         self.b0 = b0
         self.equilibriumConstant = equilibriumConstant
+        self.hasNonNilUnitChange = unitChange != nil
 
         self.reactantA = forwardReaction.reactantA
         self.reactantB = forwardReaction.reactantB
@@ -101,7 +104,7 @@ struct BalancedReactionEquations {
             d: MoleculeTerms(initC: reverseInput.d0, coeff: forwardReaction.coefficients.productD, increases: false),
             startTime: reverseInput.startTime,
             convergenceTime: reverseInput.convergenceTime,
-            unitChange: unitChange
+            unitChange: unitChange ?? 0
         )
 
         func getEquation(lhs: Equation, rhs: Equation) -> Equation {
@@ -121,6 +124,7 @@ struct BalancedReactionEquations {
         self.b0 = forwardReaction.b0
         self.equilibriumConstant = forwardReaction.equilibriumConstant
         self.coefficients = forwardReaction.coefficients
+        self.hasNonNilUnitChange = unitChange != nil
 
         self.convergenceTime = reverseInput.convergenceTime
     }
@@ -141,26 +145,6 @@ extension BalancedReactionEquations {
             return .B
         }
         return nil
-    }
-
-    func a0ForConvergence(of finalConcentration: CGFloat) -> CGFloat {
-        reactant0ForConvergence(of: finalConcentration, coeff: coefficients.reactantA, otherReactant0: b0)
-    }
-
-    func b0ForConvergence(of finalConcentration: CGFloat) -> CGFloat {
-        reactant0ForConvergence(of: finalConcentration, coeff: coefficients.reactantB, otherReactant0: a0)
-    }
-
-    private func reactant0ForConvergence(
-        of finalConcentration: CGFloat,
-        coeff: Int,
-        otherReactant0: CGFloat
-    ) -> CGFloat {
-        let coeffSum = coefficients.sum
-        let numer = (CGFloat(coeffSum) * finalConcentration) + (CGFloat(coeff) * otherReactant0)
-        let denom = coeffSum - coeff
-        assert(denom != 0)
-        return numer / CGFloat(denom)
     }
 }
 

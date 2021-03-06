@@ -16,7 +16,7 @@ struct ReactionConvergenceSolver {
         coeffs: BalancedReactionCoefficients,
         initialConcentrations: BalancedReactionInitialConcentrations,
         isForward: Bool
-    ) -> CGFloat {
+    ) -> CGFloat? {
 
         let equation = ConvergingReactionQuotientEquation(coeffs: coeffs, initialConcentrations: initialConcentrations, isForward: isForward)
 
@@ -27,11 +27,8 @@ struct ReactionConvergenceSolver {
             maxX: maxConcentrationDrop(equation: equation),
             qIncreasesWithX: isForward
         )
-//        assert(result != nil)
-        if result == nil {
-            print("result was nil")
-        }
-        return result ?? 0
+
+        return result
     }
 
     private static func findSolution(

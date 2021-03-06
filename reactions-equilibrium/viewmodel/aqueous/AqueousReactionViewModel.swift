@@ -117,14 +117,11 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     private func informUserOfMissing(reactant: AqueousMoleculeReactant) {
-        let minConvergence = inputSettings.minInitial
-        let minInput = equations.a0ForConvergence(of: inputSettings.minFinal)
-        let minConcentration = max(minConvergence, minInput)
         instructToAddMoreReactantCount = instructToAddMoreReactantCount.increment(value: reactant)
         statement = AqueousStatements.addMore(
             reactant: reactant,
             count: instructToAddMoreReactantCount.count,
-            minConcentration: minConcentration.str(decimals: 2)
+            minConcentration: inputSettings.minInitial.str(decimals: 2)
         )
     }
 
