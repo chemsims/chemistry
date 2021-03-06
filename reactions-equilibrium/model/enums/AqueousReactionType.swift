@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-import Foundation
+import CoreGraphics
 
 enum AqueousReactionType: Int, CaseIterable, Identifiable {
     case A, B, C
@@ -13,8 +13,12 @@ enum AqueousReactionType: Int, CaseIterable, Identifiable {
 }
 
 extension AqueousReactionType {
-    var equilibriumConstant: Double {
-        return 0.8
+    var equilibriumConstant: CGFloat {
+        switch self {
+        case .A: return 1
+        case .B: return 10
+        case .C: return 2
+        }
     }
 }
 

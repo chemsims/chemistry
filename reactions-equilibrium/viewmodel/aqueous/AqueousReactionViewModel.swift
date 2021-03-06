@@ -17,7 +17,7 @@ class AqueousReactionViewModel: ObservableObject {
         self.rows = CGFloat(initialRows)
         self.components = ForwardAqueousReactionComponents(
             coefficients: initialType.coefficients,
-            equilibriumConstant: CGFloat(initialType.equilibriumConstant),
+            equilibriumConstant: initialType.equilibriumConstant,
             availableCols: MoleculeGridSettings.cols,
             availableRows: initialRows
         )
@@ -41,6 +41,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var selectedReaction: AqueousReactionType {
         didSet {
             components.coefficients = selectedReaction.coefficients
+            components.equilibriumConstant = selectedReaction.equilibriumConstant
         }
     }
 

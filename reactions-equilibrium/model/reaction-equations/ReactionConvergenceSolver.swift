@@ -5,10 +5,10 @@
 import CoreGraphics
 import ReactionsCore
 
-private let solutionTolerance: CGFloat = 0.001
-private let maxIters = 30
-
 struct ReactionConvergenceSolver {
+
+    static let tolerance: CGFloat = 0.0001
+    private static let maxIterations = 30
 
     /// Returns the unit change for which the equilibrium quotient will equal the equilibrium constant at the end of the reaction
     static func findUnitChangeFor(
@@ -50,11 +50,11 @@ struct ReactionConvergenceSolver {
             let midPoint = (maxX + minX) / 2
             let result = equation.getY(at: midPoint)
 
-            if abs(result - k) <= solutionTolerance {
+            if abs(result - k) <= Self.tolerance {
                 return midPoint
             }
 
-            if iterations >= maxIters {
+            if iterations >= Self.maxIterations {
                 return nil
             }
 
@@ -75,11 +75,17 @@ struct ReactionConvergenceSolver {
         return loop(minX: minX, maxX: maxX, iterations: 0)
     }
 
-    private static func maxConcentrationDrop(equation: ConvergingReactionQuotientEquation) -> CGFloat {
+    private static func maxConcentrationDrop(
+        equation: ConvergingReactionQuotientEquation
+    ) -> CGFloat {
         if equation.isForward {
-            return min(equation.initialConcentrations.reactantA, equation.initialConcentrations.reactantB)
+            let aDelta = equation.initialConcentrations.reactantA / CGFloat(equation.coeffs.reactantA)
+            let bDelta = equation.initialConcentrations.reactantB / CGFloat(equation.coeffs.reactantB)
+            return min(aDelta, bDelta)
         }
-        return min(equation.initialConcentrations.productC, equation.initialConcentrations.productD)
+        let cDelta = equation.initialConcentrations.productC / CGFloat(equation.coeffs.productC)
+        let dDelta = equation.initialConcentrations.productD / CGFloat(equation.coeffs.productD)
+        return min(cDelta, dDelta)
     }
 }
 
@@ -105,7 +111,8 @@ private struct ConvergingReactionQuotientEquation: Equation {
 
         let numer = cTerm * dTerm
         let denom = aTerm * bTerm
-        return denom == 0 ? 0 : numer / denom
+
+        return numer / denom
     }
 
     private func reactantTerm(

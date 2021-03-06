@@ -189,6 +189,7 @@ class ForwardReactionComponentTests: XCTestCase {
     ) -> ForwardAqueousReactionComponents {
         var model = ForwardAqueousReactionComponents(
             coefficients: coeffs,
+            equilibriumConstant: 1,
             availableCols: 10,
             availableRows: 10
         )
