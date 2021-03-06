@@ -237,6 +237,7 @@ struct MoleculeScales_Previews: PreviewProvider {
                     productC: 1,
                     productD: 4
                 ),
+                equilibriumConstant: 1,
                 a0: 0.3,
                 b0: 0.3,
                 convergenceTime: 10

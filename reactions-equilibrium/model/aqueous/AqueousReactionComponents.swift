@@ -28,6 +28,7 @@ protocol AqueousReactionComponents {
     var dGridMolecules: FractionedCoordinates { get }
 
     var coefficients: BalancedReactionCoefficients { get set }
+    var equilibriumConstant: CGFloat { get set }
     var equations: BalancedReactionEquations { get }
 
     var availableCols: Int { get }
@@ -106,6 +107,7 @@ extension AqueousReactionComponents {
 struct ForwardAqueousReactionComponents: AqueousReactionComponents {
 
     var coefficients: BalancedReactionCoefficients
+    var equilibriumConstant: CGFloat
     let availableCols: Int
     var availableRows: Int
 
@@ -115,10 +117,12 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
 
     init(
         coefficients: BalancedReactionCoefficients,
+        equilibriumConstant: CGFloat,
         availableCols: Int,
         availableRows: Int
     ) {
         self.coefficients = coefficients
+        self.equilibriumConstant = equilibriumConstant
         self.availableCols = availableCols
         self.availableRows = availableRows
     }
@@ -145,6 +149,7 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     var equations: BalancedReactionEquations {
         BalancedReactionEquations(
             coefficients: coefficients,
+            equilibriumConstant: equilibriumConstant,
             a0: initialA,
             b0: initialB,
             convergenceTime: AqueousReactionSettings.timeForConvergence
@@ -287,6 +292,15 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         }
         set {
             forwardReaction.coefficients = newValue
+        }
+    }
+
+    var equilibriumConstant: CGFloat {
+        get {
+            forwardReaction.equilibriumConstant
+        }
+        set {
+            forwardReaction.equilibriumConstant = newValue
         }
     }
 

@@ -13,6 +13,12 @@ enum AqueousReactionType: Int, CaseIterable, Identifiable {
 }
 
 extension AqueousReactionType {
+    var equilibriumConstant: Double {
+        return 0.8
+    }
+}
+
+extension AqueousReactionType {
 
     var displayName: String {
         func str(_ name: String, _ coeffs: Int) -> String {

@@ -216,6 +216,7 @@ struct AqueousEquationView_Previews: PreviewProvider {
             productC: 1,
             productD: 4
         ),
+        equilibriumConstant: 1,
         a0: 0.5,
         b0: 0.4,
         convergenceTime: 20

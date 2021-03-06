@@ -27,8 +27,11 @@ struct ReactionConvergenceSolver {
             maxX: maxConcentrationDrop(equation: equation),
             qIncreasesWithX: isForward
         )
-        assert(result != nil)
-        return result!
+//        assert(result != nil)
+        if result == nil {
+            print("result was nil")
+        }
+        return result ?? 0
     }
 
     private static func findSolution(

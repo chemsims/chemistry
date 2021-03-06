@@ -88,6 +88,7 @@ struct ICETable_Previews: PreviewProvider {
                     productC: 1,
                     productD: 4
                 ),
+                equilibriumConstant: 1,
                 a0: 0.4,
                 b0: 0.5,
                 convergenceTime: 15

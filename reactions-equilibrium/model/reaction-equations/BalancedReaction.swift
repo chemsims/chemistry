@@ -39,26 +39,38 @@ struct BalancedReactionEquations {
     let a0: CGFloat
     let b0: CGFloat
 
+    let equilibriumConstant: CGFloat
+
     init(
         coefficients: BalancedReactionCoefficients,
+        equilibriumConstant: CGFloat,
         a0: CGFloat,
         b0: CGFloat,
         convergenceTime: CGFloat
     ) {
-
+        let unitChange = ReactionConvergenceSolver.findUnitChangeFor(
+            equilibriumConstant: equilibriumConstant,
+            coeffs: coefficients,
+            initialConcentrations: BalancedReactionInitialConcentrations(
+                reactantA: a0, reactantB: b0, productC: 0, productD: 0
+            ),
+            isForward: true
+        )
         let forwardReaction = BalancedEquationBuilder.getEquations(
             a: MoleculeTerms(initC: a0, coeff: coefficients.reactantA, increases: false),
             b: MoleculeTerms(initC: b0, coeff: coefficients.reactantB, increases: false),
             c: MoleculeTerms(initC: 0, coeff: coefficients.productC, increases: true),
             d: MoleculeTerms(initC: 0, coeff: coefficients.productD, increases: true),
             startTime: 0,
-            convergenceTime: convergenceTime
+            convergenceTime: convergenceTime,
+            unitChange: unitChange
         )
 
         self.coefficients = coefficients
         self.convergenceTime = convergenceTime
         self.a0 = a0
         self.b0 = b0
+        self.equilibriumConstant = equilibriumConstant
 
         self.reactantA = forwardReaction.reactantA
         self.reactantB = forwardReaction.reactantB
@@ -72,13 +84,24 @@ struct BalancedReactionEquations {
     ) {
         let initA = forwardReaction.reactantA.getY(at: forwardReaction.convergenceTime)
         let initB = forwardReaction.reactantB.getY(at: forwardReaction.convergenceTime)
+
+        let unitChange = ReactionConvergenceSolver.findUnitChangeFor(
+            equilibriumConstant: forwardReaction.equilibriumConstant,
+            coeffs: forwardReaction.coefficients,
+            initialConcentrations: BalancedReactionInitialConcentrations(
+                reactantA: initA, reactantB: initB, productC: reverseInput.c0, productD: reverseInput.d0
+            ),
+            isForward: false
+        )
+
         let reverseReaction = BalancedEquationBuilder.getEquations(
             a: MoleculeTerms(initC: initA, coeff: forwardReaction.coefficients.reactantA, increases: true),
             b: MoleculeTerms(initC: initB, coeff: forwardReaction.coefficients.reactantB, increases: true),
             c: MoleculeTerms(initC: reverseInput.c0, coeff: forwardReaction.coefficients.productC, increases: false),
             d: MoleculeTerms(initC: reverseInput.d0, coeff: forwardReaction.coefficients.productD, increases: false),
             startTime: reverseInput.startTime,
-            convergenceTime: reverseInput.convergenceTime
+            convergenceTime: reverseInput.convergenceTime,
+            unitChange: unitChange
         )
 
         func getEquation(lhs: Equation, rhs: Equation) -> Equation {
@@ -96,6 +119,7 @@ struct BalancedReactionEquations {
 
         self.a0 = forwardReaction.a0
         self.b0 = forwardReaction.b0
+        self.equilibriumConstant = forwardReaction.equilibriumConstant
         self.coefficients = forwardReaction.coefficients
 
         self.convergenceTime = reverseInput.convergenceTime
@@ -149,9 +173,10 @@ private struct BalancedEquationBuilder {
         c: MoleculeTerms,
         d: MoleculeTerms,
         startTime: CGFloat,
-        convergenceTime: CGFloat
+        convergenceTime: CGFloat,
+        unitChange: CGFloat
     ) -> SetOfEquations {
-        let unitChange = getUnitChange(a: a, b: b, c: c, d: d)
+        
         func getEquation(for terms: MoleculeTerms) -> Equation {
             elementEquation(
                 terms: terms,
@@ -167,18 +192,6 @@ private struct BalancedEquationBuilder {
             productC: getEquation(for: c),
             productD: getEquation(for: d)
         )
-    }
-
-    static func getUnitChange(
-        a: MoleculeTerms,
-        b: MoleculeTerms,
-        c: MoleculeTerms,
-        d: MoleculeTerms
-    ) -> CGFloat {
-        let numer = a.initC + b.initC - c.initC - d.initC
-        let denom = c.denomTerm + d.denomTerm - a.denomTerm - b.denomTerm
-        assert(denom != 0)
-        return numer / denom
     }
 
     private static func elementEquation(
