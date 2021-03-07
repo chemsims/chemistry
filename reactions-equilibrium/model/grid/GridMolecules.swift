@@ -42,28 +42,48 @@ struct ForwardGridMolecules {
     func aGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
         FractionedCoordinates(
             coordinates: underlyingAGrid,
-            fractionToDraw: fractionAToDraw(reaction: reaction)
+            fractionToDraw: MoleculeGridFractionToDraw(
+                underlyingConcentration: reaction.reactantA,
+                initialConcentration: reaction.a0,
+                finalConcentration: reaction.reactantA.getY(at: reaction.convergenceTime),
+                gridCount: underlyingAGrid.count
+            )
         )
     }
 
     func bGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
         FractionedCoordinates(
             coordinates: underlyingBGrid,
-            fractionToDraw: fractionBToDraw(reaction: reaction)
+            fractionToDraw: MoleculeGridFractionToDraw(
+                underlyingConcentration: reaction.reactantB,
+                initialConcentration: reaction.b0,
+                finalConcentration: reaction.reactantB.getY(at: reaction.convergenceTime),
+                gridCount: underlyingBGrid.count
+            )
         )
     }
 
     func cGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
         FractionedCoordinates(
             coordinates: underlyingCGrid(reaction: reaction),
-            fractionToDraw: fractionCToDraw(reaction: reaction)
+            fractionToDraw: MoleculeGridFractionToDraw(
+                underlyingConcentration: reaction.productC,
+                initialConcentration: 0,
+                finalConcentration: reaction.productC.getY(at: reaction.convergenceTime),
+                gridCount: underlyingCGrid(reaction: reaction).count
+            )
         )
     }
 
     func dGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
         FractionedCoordinates(
             coordinates: underlyingDGrid(reaction: reaction),
-            fractionToDraw: fractionDToDraw(reaction: reaction)
+            fractionToDraw: MoleculeGridFractionToDraw(
+                underlyingConcentration: reaction.productD,
+                initialConcentration: 0,
+                finalConcentration: reaction.productD.getY(at: reaction.convergenceTime),
+                gridCount: underlyingDGrid(reaction: reaction).count
+            )
         )
     }
 
@@ -99,88 +119,12 @@ struct ForwardGridMolecules {
             underlyingBGrid = newMolecules
         }
     }
-
-    private func fractionAToDraw(reaction: BalancedReactionEquations) -> Equation {
-        reactantEquation(underlying: reaction.reactantA)
-    }
-
-    private func fractionBToDraw(reaction: BalancedReactionEquations) -> Equation {
-        reactantEquation(underlying: reaction.reactantB)
-    }
-
-    private func fractionCToDraw(reaction: BalancedReactionEquations) -> Equation {
-        productEquation(underlying: reaction.productC, reaction: reaction)
-    }
-
-    private func fractionDToDraw(reaction: BalancedReactionEquations) -> Equation {
-        productEquation(underlying: reaction.productD, reaction: reaction)
-    }
-
-    private func reactantEquation(underlying: Equation) -> Equation {
-        ScaledEquation(
-            targetY: 1,
-            targetX: 0,
-            underlying: underlying
-        )
-    }
-
-    private func productEquation(underlying: Equation, reaction: BalancedReactionEquations) -> Equation {
-        ScaledEquation(
-            targetY: 1,
-            targetX: reaction.convergenceTime,
-            underlying: underlying
-        )
-    }
-
 }
 
 struct ReverseGridMolecules {
 
     let forwardGrid: ForwardGridMolecules
     let forwardReaction: BalancedReactionEquations
-
-    func aGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: finalAGrid(reaction: reaction),
-            fractionToDraw: reactantFractionToDraw(
-                underlying: reaction.reactantA,
-                forwardUnderlying: forwardReaction.reactantA,
-                gridCount: finalAGrid(reaction: reaction).count
-            )
-        )
-    }
-
-    func bGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: finalBGrid(reaction: reaction),
-            fractionToDraw: reactantFractionToDraw(
-                underlying: reaction.reactantB,
-                forwardUnderlying: forwardReaction.reactantB,
-                gridCount: finalBGrid(reaction: reaction).count
-            )
-        )
-    }
-
-    func cGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingCGrid,
-            fractionToDraw: productFractionToDraw(
-                underlying: reaction.productC,
-                tAddProduct: AqueousReactionSettings.timeToAddProduct
-            )
-        )
-    }
-
-    func dGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingDGrid,
-            fractionToDraw: productFractionToDraw(
-                underlying: reaction.productD,
-                tAddProduct: AqueousReactionSettings.timeToAddProduct
-            )
-        )
-    }
-
 
     init(forwardGrid: ForwardGridMolecules, forwardReaction: BalancedReactionEquations) {
         self.forwardGrid = forwardGrid
@@ -203,6 +147,54 @@ struct ReverseGridMolecules {
         self.initialBGrid = initB
         self.underlyingCGrid = forwardGrid.cGrid(reaction: forwardReaction).coordinates
         self.underlyingDGrid = forwardGrid.dGrid(reaction: forwardReaction).coordinates
+    }
+
+    func aGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: finalAGrid(reaction: reaction),
+            fractionToDraw: MoleculeGridFractionToDraw(
+                underlyingConcentration: reaction.reactantA,
+                initialConcentration: reaction.reactantA.getY(at: AqueousReactionSettings.timeToAddProduct),
+                finalConcentration: reaction.reactantA.getY(at: reaction.convergenceTime),
+                gridCount: finalAGrid(reaction: reaction).count
+            )
+        )
+    }
+
+    func bGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: finalBGrid(reaction: reaction),
+            fractionToDraw: MoleculeGridFractionToDraw(
+                underlyingConcentration: reaction.reactantB,
+                initialConcentration: reaction.reactantB.getY(at: AqueousReactionSettings.timeToAddProduct),
+                finalConcentration: reaction.reactantB.getY(at: reaction.convergenceTime),
+                gridCount: finalBGrid(reaction: reaction).count
+            )
+        )
+    }
+
+    func cGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: underlyingCGrid,
+            fractionToDraw: MoleculeGridFractionToDraw(
+                underlyingConcentration: reaction.productC,
+                initialConcentration: reaction.productC.getY(at: AqueousReactionSettings.timeToAddProduct),
+                finalConcentration: reaction.productC.getY(at: reaction.convergenceTime),
+                gridCount: underlyingCGrid.count
+            )
+        )
+    }
+
+    func dGrid(reaction: BalancedReactionEquations) -> FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: underlyingDGrid,
+            fractionToDraw: MoleculeGridFractionToDraw(
+                underlyingConcentration: reaction.productD,
+                initialConcentration: reaction.productD.getY(at: AqueousReactionSettings.timeToAddProduct),
+                finalConcentration: reaction.productD.getY(at: reaction.convergenceTime),
+                gridCount: underlyingDGrid.count
+            )
+        )
     }
 
     private let shuffledAvailableReactantCoords: [GridCoordinate]
@@ -258,31 +250,6 @@ struct ReverseGridMolecules {
         return finalNum - gridCount
     }
 
-    private func aFractionToDraw(underlying: Equation, reaction: BalancedReactionEquations) -> Equation {
-        let startConcentration = forwardReaction.reactantA.getY(at: forwardReaction.convergenceTime)
-        let startNum = GridMoleculesUtil.equilibriumGridCount(for: startConcentration)
-        let startFraction = CGFloat(startNum) / CGFloat(finalAGrid(reaction: reaction).count)
-        return ScaledEquation(
-            targetY: startFraction,
-            targetX: AqueousReactionSettings.timeToAddProduct,
-            underlying: underlying
-        )
-    }
-
-    private func reactantFractionToDraw(
-        underlying: Equation,
-        forwardUnderlying: Equation,
-        gridCount: Int
-    ) -> Equation {
-        let startConcentration = forwardUnderlying.getY(at: forwardReaction.convergenceTime)
-        let startNum = GridMoleculesUtil.equilibriumGridCount(for: startConcentration)
-        let startFraction = CGFloat(startNum) / CGFloat(gridCount)
-        return ScaledEquation(
-            targetY: startFraction,
-            targetX: AqueousReactionSettings.timeToAddProduct,
-            underlying: underlying
-        )
-    }
 
     private static func initReactantGrid(
         forwardGrid: FractionedCoordinates,
@@ -292,13 +259,40 @@ struct ReverseGridMolecules {
         let initCount = (initFraction * CGFloat(forwardGrid.coordinates.count)).roundedInt()
         return Array(forwardGrid.coordinates.prefix(initCount))
     }
+}
 
-    private func productFractionToDraw(underlying: Equation, tAddProduct: CGFloat) -> Equation {
-        ScaledEquation(
-            targetY: 1,
-            targetX: tAddProduct,
-            underlying: underlying
-        )
+private struct MoleculeGridFractionToDraw: Equation {
+
+    let underlyingConcentration: Equation
+    let initialNumToDraw: Int
+    let initialFraction: CGFloat
+    let finalNumToDraw: Int
+    let finalFraction: CGFloat
+
+    init(
+        underlyingConcentration: Equation,
+        initialConcentration: CGFloat,
+        finalConcentration: CGFloat,
+        gridCount: Int
+    ) {
+        self.underlyingConcentration = underlyingConcentration
+
+        let initialNumToDraw = GridMoleculesUtil.equilibriumGridCount(for: initialConcentration.rounded(decimals: 4))
+        self.initialNumToDraw = initialNumToDraw
+        self.initialFraction = CGFloat(initialNumToDraw) / CGFloat(gridCount)
+
+        let finalNumToDraw = GridMoleculesUtil.equilibriumGridCount(for: finalConcentration.rounded(decimals: 4))
+        self.finalNumToDraw = finalNumToDraw
+        self.finalFraction = CGFloat(finalNumToDraw) / CGFloat(gridCount)
     }
 
+    func getY(at x: CGFloat) -> CGFloat {
+        let concentration = underlyingConcentration.getY(at: x)
+        let numToDraw = GridMoleculesUtil.equilibriumGridCount(for: concentration)
+        let numer = (finalFraction - initialFraction) * CGFloat(numToDraw - initialNumToDraw)
+        let denom = CGFloat(finalNumToDraw - initialNumToDraw)
+
+        let addTerm = denom == 0 ? 0 : numer / denom
+        return (initialFraction + addTerm)
+    }
 }
