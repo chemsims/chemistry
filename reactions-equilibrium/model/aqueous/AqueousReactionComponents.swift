@@ -5,11 +5,6 @@
 import ReactionsCore
 import CoreGraphics
 
-struct FractionedCoordinates {
-    let coordinates: [GridCoordinate]
-    let fractionToDraw: Equation
-}
-
 protocol AqueousReactionComponents {
 
     var aMolecules: [GridCoordinate] { get }
@@ -366,5 +361,4 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
 
         return initialConcentration(of: currentMolecules)
     }
-
 }

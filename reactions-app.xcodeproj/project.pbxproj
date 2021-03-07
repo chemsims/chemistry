@@ -62,6 +62,7 @@
 		5736DC1E25F4B059003FD2B4 /* ScalesRotationEquationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC1D25F4B059003FD2B4 /* ScalesRotationEquationTests.swift */; };
 		5736DC3025F5007D003FD2B4 /* GridMolecules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC2F25F5007C003FD2B4 /* GridMolecules.swift */; };
 		5736DC3A25F50D1A003FD2B4 /* GridMoleculesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3925F50D1A003FD2B4 /* GridMoleculesTests.swift */; };
+		5736DC4025F5478F003FD2B4 /* FractionedCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */; };
 		5738AD9025AF131B002D4EB7 /* TextLineExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD8F25AF131B002D4EB7 /* TextLineExtensions.swift */; };
 		5738AD9925AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD9825AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift */; };
 		5738AD9F25AF1611002D4EB7 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD9E25AF1611002D4EB7 /* Helpers.swift */; };
@@ -444,6 +445,7 @@
 		5736DC1D25F4B059003FD2B4 /* ScalesRotationEquationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalesRotationEquationTests.swift; sourceTree = "<group>"; };
 		5736DC2F25F5007C003FD2B4 /* GridMolecules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridMolecules.swift; sourceTree = "<group>"; };
 		5736DC3925F50D1A003FD2B4 /* GridMoleculesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridMoleculesTests.swift; sourceTree = "<group>"; };
+		5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FractionedCoordinates.swift; sourceTree = "<group>"; };
 		5738AD8F25AF131B002D4EB7 /* TextLineExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineExtensions.swift; sourceTree = "<group>"; };
 		5738AD9825AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderNavigationModelTests.swift; sourceTree = "<group>"; };
 		5738AD9E25AF1611002D4EB7 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -1047,6 +1049,7 @@
 			isa = PBXGroup;
 			children = (
 				5736DC2F25F5007C003FD2B4 /* GridMolecules.swift */,
+				5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */,
 			);
 			path = grid;
 			sourceTree = "<group>";
@@ -2248,6 +2251,7 @@
 				575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */,
 				57A1B79825EAA65800878B52 /* MoleculeScaleBasket.swift in Sources */,
 				57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */,
+				5736DC4025F5478F003FD2B4 /* FractionedCoordinates.swift in Sources */,
 				5736DC1825F4B036003FD2B4 /* ScalesRotationEquation.swift in Sources */,
 				57ABDC4625EC03E10078A82B /* AqueousStatements.swift in Sources */,
 				57ABDC3925EBF9300078A82B /* AqueousReactionType.swift in Sources */,
