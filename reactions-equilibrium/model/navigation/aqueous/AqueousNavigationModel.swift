@@ -24,7 +24,7 @@ struct AqueousNavigationModel {
 //        AqueousSetStatementState(statement: AqueousStatements.explainQuotient4),
 //        AqueousSetStatementState(statement: AqueousStatements.explainQuotient5),
 //        AqueousSetStatementState(statement: AqueousStatements.explainK),
-//        AqueousSetWaterLevelState(),
+        AqueousSetWaterLevelState(),
         AqueousAddReactantState(),
         AqueousPreRunAnimationState(),
         AqueousRunAnimationState(),

@@ -24,28 +24,7 @@ struct MoleculeScales: View {
     }
 }
 
-private struct RotationEquation: Equation {
 
-    let reaction: BalancedReactionEquations
-    let maxAngle: CGFloat
-
-    let concentrationSumAtMaxAngle: CGFloat = 1
-
-    func getY(at x: CGFloat) -> CGFloat {
-        let reactantSum = reaction.reactantA.getY(at: x) + reaction.reactantB.getY(at: x)
-        let productSum = reaction.productC.getY(at: x) + reaction.productD.getY(at: x)
-
-        let underlying = LinearEquation(
-            x1: -AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation,
-            y1: -maxAngle,
-            x2: AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation,
-            y2: maxAngle
-        )
-
-        let result = underlying.getY(at: productSum - reactantSum)
-        return min(max(-maxAngle, result), maxAngle)
-    }
-}
 
 private struct SizedMoleculeScales: View {
 
@@ -63,8 +42,8 @@ private struct SizedMoleculeScales: View {
         .frame(width: settings.width)
     }
 
-    private var rotationDegrees: RotationEquation {
-        RotationEquation(reaction: reaction, maxAngle: settings.maxRotationAngle)
+    private var rotationDegrees: ScalesRotationEquation {
+        ScalesRotationEquation(reaction: reaction, maxAngle: settings.maxRotationAngle)
     }
 
     private var stand: some View {

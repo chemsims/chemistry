@@ -86,14 +86,3 @@ class BalancedReactionEquationTests: XCTestCase {
 
 }
 
-private extension BalancedReactionEquations {
-    func withA0(_ newValue: CGFloat) -> BalancedReactionEquations {
-        BalancedReactionEquations(
-            coefficients: coefficients,
-            equilibriumConstant: equilibriumConstant,
-            a0: newValue,
-            b0: b0,
-            convergenceTime: convergenceTime
-        )
-    }
-}

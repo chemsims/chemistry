@@ -39,6 +39,8 @@ struct BalancedReactionEquations {
     let a0: CGFloat
     let b0: CGFloat
 
+    let direction: ReactionDirection
+
     let equilibriumConstant: CGFloat
 
     private let hasNonNilUnitChange: Bool
@@ -74,6 +76,7 @@ struct BalancedReactionEquations {
         self.b0 = b0
         self.equilibriumConstant = equilibriumConstant
         self.hasNonNilUnitChange = unitChange != nil
+        self.direction = .forward
 
         self.reactantA = forwardReaction.reactantA
         self.reactantB = forwardReaction.reactantB
@@ -125,6 +128,7 @@ struct BalancedReactionEquations {
         self.equilibriumConstant = forwardReaction.equilibriumConstant
         self.coefficients = forwardReaction.coefficients
         self.hasNonNilUnitChange = unitChange != nil
+        self.direction = .reverse
 
         self.convergenceTime = reverseInput.convergenceTime
     }

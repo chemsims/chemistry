@@ -16,7 +16,7 @@ class ReactionConvergenceSolverTests: XCTestCase {
             ),
             isForward: true
         )
-        XCTAssertEqual(unitChange, 0.25, accuracy: tolerance)
+        XCTAssertEqual(unitChange!, 0.25, accuracy: tolerance)
     }
 
     func testReverseReactionWithUnitCoefficientsAndEqualProducts() {
@@ -28,7 +28,7 @@ class ReactionConvergenceSolverTests: XCTestCase {
             ),
             isForward: false
         )
-        XCTAssertEqual(unitChange, 0.15, accuracy: tolerance)
+        XCTAssertEqual(unitChange!, 0.15, accuracy: tolerance)
     }
 
     func testForwardReactionWithUnitCoefficientsAndNonEqualReactants() {
@@ -40,7 +40,7 @@ class ReactionConvergenceSolverTests: XCTestCase {
             ),
             isForward: true
         )
-        XCTAssertEqual(unitChange, 0.1, accuracy: tolerance)
+        XCTAssertEqual(unitChange!, 0.1, accuracy: tolerance)
     }
 
     func testReverseReactionWithUnitCoefficientsAndNonEqualProductsAndReactants() {
@@ -52,7 +52,7 @@ class ReactionConvergenceSolverTests: XCTestCase {
             ),
             isForward: false
         )
-        XCTAssertEqual(unitChange, 0.1692, accuracy: tolerance)
+        XCTAssertEqual(unitChange!, 0.1692, accuracy: tolerance)
     }
 
     func testForwardReactionConvergenceWithMultipleNonUnitCoefficients() {
