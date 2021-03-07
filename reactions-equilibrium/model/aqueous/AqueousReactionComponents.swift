@@ -77,32 +77,7 @@ extension AqueousReactionComponents {
         availableCols * availableRows
     }
 
-    fileprivate func addingGridMolecules(
-        molecules: [GridCoordinate],
-        concentration: CGFloat,
-        avoiding: [GridCoordinate]
-    ) -> [GridCoordinate] {
-        let totalNum = equilibriumGridCount(for: concentration)
-        let toAdd = totalNum - molecules.count
-        guard toAdd > 0 else {
-            return molecules
-        }
-
-        return GridCoordinateList.addingRandomElementsTo(
-            grid: molecules,
-            count: toAdd,
-            cols: EquilibriumGridSettings.cols,
-            rows: EquilibriumGridSettings.rows,
-            avoiding: avoiding
-        )
-    }
-
-    fileprivate func equilibriumGridCount(for concentration: CGFloat) -> Int {
-        (concentration * CGFloat(EquilibriumGridSettings.grid.count)).roundedInt()
-    }
-
 }
-
 
 struct ForwardAqueousReactionComponents: AqueousReactionComponents {
 
@@ -114,6 +89,8 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     let tForMaxQuotient: CGFloat = AqueousReactionSettings.timeForConvergence
     let chartDiscontinuity: CGFloat? = nil
     private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
+
+    private(set) var grid = ForwardGridMolecules()
 
     init(
         coefficients: BalancedReactionCoefficients,
@@ -130,14 +107,11 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     mutating func reset() {
         aMolecules.removeAll()
         bMolecules.removeAll()
-        underlyingAGrid.removeAll()
-        underlyingBGrid.removeAll()
+        grid = ForwardGridMolecules()
     }
 
     private(set) var aMolecules = [GridCoordinate]()
     private(set) var bMolecules = [GridCoordinate]()
-    private var underlyingAGrid = [GridCoordinate]()
-    private var underlyingBGrid = [GridCoordinate]()
 
     var cMolecules: [GridCoordinate] {
         productMoleculeSetter.cMolecules
@@ -173,32 +147,19 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     }
 
     var aGridMolecules: FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingAGrid,
-            fractionToDraw: reactantMoleculesToDraw(equation: equations.reactantA)
-        )
+        grid.aGrid(reaction: equations)
     }
 
     var bGridMolecules: FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingBGrid,
-            fractionToDraw: reactantMoleculesToDraw(equation: equations.reactantB
-            )
-        )
+        grid.bGrid(reaction: equations)
     }
 
     var cGridMolecules: FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingCGrid,
-            fractionToDraw: productMoleculeSetter.cFractionToDraw
-        )
+        grid.cGrid(reaction: equations)
     }
 
     var dGridMolecules: FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingDGrid,
-            fractionToDraw: productMoleculeSetter.dFractionToDraw
-        )
+        grid.dGrid(reaction: equations)
     }
 
     mutating func increment(molecule: AqueousMolecule) {
@@ -215,11 +176,7 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
             avoiding: bMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
-        underlyingAGrid = addingGridMolecules(
-            molecules: underlyingAGrid,
-            concentration: initialA,
-            avoiding: underlyingBGrid
-        )
+        grid.setConcentration(of: .A, concentration: initialA)
     }
 
     mutating func incrementB() {
@@ -228,11 +185,7 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
             avoiding: aMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
-        underlyingBGrid = addingGridMolecules(
-            molecules: underlyingBGrid,
-            concentration: initialB,
-            avoiding: underlyingAGrid
-        )
+        grid.setConcentration(of: .B, concentration: initialB)
     }
 
     private var initialA: CGFloat {
@@ -241,19 +194,6 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
 
     private var initialB: CGFloat {
         initialConcentration(of: bMolecules)
-    }
-
-    private var underlyingCGrid: [GridCoordinate] {
-        let concentration = equations.productC.getY(at: AqueousReactionSettings.timeForConvergence)
-        let num = equilibriumGridCount(for: concentration)
-        return Array(shuffledEquilibriumGrid.prefix(num))
-    }
-
-    private var underlyingDGrid: [GridCoordinate] {
-        let concentration = equations.productD.getY(at: AqueousReactionSettings.timeForConvergence)
-        let num = equilibriumGridCount(for: concentration)
-        let suffixedCoords = shuffledEquilibriumGrid.dropFirst(underlyingCGrid.count)
-        return Array(suffixedCoords.prefix(num))
     }
 
     private var productMoleculeSetter: BeakerMoleculesSetter {
@@ -304,6 +244,8 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         }
     }
 
+    private var grid: ReverseGridMolecules
+
     init(forwardReaction: ForwardAqueousReactionComponents) {
         self.forwardReaction = forwardReaction
         self.aMolecules = forwardReaction.aMolecules
@@ -314,24 +256,13 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         self.availableRows = forwardReaction.availableRows
 
 
-        self.underlyingAGrid = []
-        self.underlyingBGrid = []
-        self.underlyingCGrid = forwardReaction.cGridMolecules.coordinates
-        self.underlyingDGrid = forwardReaction.dGridMolecules.coordinates
-
-        self.underlyingAGrid = Array(forwardReaction.aGridMolecules.coordinates.prefix(equilibriumGridCount(for: forwardReaction.equations.reactantA.getY(at: forwardReaction.equations.convergenceTime))))
-        self.underlyingBGrid = Array(forwardReaction.bGridMolecules.coordinates.prefix(equilibriumGridCount(for: forwardReaction.equations.reactantB.getY(at: forwardReaction.equations.convergenceTime))))
+        self.grid = ReverseGridMolecules(forwardGrid: forwardReaction.grid, forwardReaction: forwardReaction.equations)
     }
 
     private(set) var aMolecules = [GridCoordinate]()
     private(set) var bMolecules = [GridCoordinate]()
     private(set) var cMolecules = [GridCoordinate]()
     private(set) var dMolecules = [GridCoordinate]()
-
-    private var underlyingAGrid: [GridCoordinate]
-    private var underlyingBGrid: [GridCoordinate]
-    private var underlyingCGrid: [GridCoordinate]
-    private var underlyingDGrid: [GridCoordinate]
 
     private let convergenceTime = AqueousReactionSettings.timeForReverseConvergence
 
@@ -352,47 +283,19 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
     }
 
     var aGridMolecules: FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingAGrid,
-            fractionToDraw: fractionAGridToDraw
-        )
+        grid.aGrid(reaction: equations)
     }
 
     var bGridMolecules: FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingBGrid,
-            fractionToDraw: fractionBGridToDraw
-        )
+        grid.bGrid(reaction: equations)
     }
 
     var cGridMolecules: FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingCGrid,
-            fractionToDraw: productGridMoleculesToDraw(equation: equations.productC)
-        )
+        grid.cGrid(reaction: equations)
     }
 
     var dGridMolecules: FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: underlyingDGrid,
-            fractionToDraw: productGridMoleculesToDraw(equation: equations.productD)
-        )
-    }
-
-    private var fractionAGridToDraw: Equation {
-        let numAtStart = equilibriumGridCount(for: forwardReaction.equations.reactantA.getY(at: forwardReaction.equations.convergenceTime))
-        let cAtStart = CGFloat(numAtStart) / CGFloat(underlyingAGrid.count)
-        return ScaledEquation(
-            targetY: cAtStart, targetX: AqueousReactionSettings.timeToAddProduct, underlying: equations.reactantA
-        )
-    }
-
-    private var fractionBGridToDraw: Equation {
-        let numAtStart = equilibriumGridCount(for: forwardReaction.equations.reactantB.getY(at: forwardReaction.equations.convergenceTime))
-        let cAtStart = CGFloat(numAtStart) / CGFloat(underlyingBGrid.count)
-        return ScaledEquation(
-            targetY: cAtStart, targetX: AqueousReactionSettings.timeToAddProduct, underlying: equations.reactantB
-        )
+        grid.dGrid(reaction: equations)
     }
 
     mutating func reset() {
@@ -400,8 +303,7 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         bMolecules = forwardReaction.bMolecules
         cMolecules = forwardReaction.cMolecules
         dMolecules = forwardReaction.dMolecules
-        underlyingCGrid = forwardReaction.cGridMolecules.coordinates
-        underlyingDGrid = forwardReaction.dGridMolecules.coordinates
+        grid = ReverseGridMolecules(forwardGrid: forwardReaction.grid, forwardReaction: forwardReaction.equations)
     }
 
     mutating func increment(molecule: AqueousMolecule) {
@@ -410,8 +312,6 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         } else if molecule == .D {
             incrementD()
         }
-        setAGridMolecules()
-        setBGridMolecules()
     }
 
     private mutating func incrementC() {
@@ -420,11 +320,7 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
             avoiding: aMolecules + bMolecules + dMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
-        underlyingCGrid = addingGridMolecules(
-            molecules: underlyingCGrid,
-            concentration: initialConcentration(of: cMolecules),
-            avoiding: underlyingDGrid
-        )
+        grid.setConcentration(of: .C, concentration: initialConcentration(of: cMolecules))
     }
 
     private mutating func incrementD() {
@@ -433,27 +329,7 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
             avoiding: aMolecules + bMolecules + cMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
-        underlyingDGrid = addingGridMolecules(
-            molecules: underlyingDGrid,
-            concentration: initialConcentration(of: dMolecules),
-            avoiding: underlyingCGrid
-        )
-    }
-
-    private mutating func setAGridMolecules() {
-        underlyingAGrid = addingGridMolecules(
-            molecules: underlyingAGrid,
-            concentration: equations.reactantA.getY(at: convergenceTime),
-            avoiding: underlyingBGrid
-        )
-    }
-
-    private mutating func setBGridMolecules() {
-        underlyingBGrid = addingGridMolecules(
-            molecules: underlyingBGrid,
-            concentration: equations.reactantB.getY(at: convergenceTime),
-            avoiding: underlyingAGrid
-        )
+        grid.setConcentration(of: .D, concentration: initialConcentration(of: dMolecules))
     }
 
     var equations: BalancedReactionEquations {
@@ -491,13 +367,4 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         return initialConcentration(of: currentMolecules)
     }
 
-    private func productGridMoleculesToDraw(
-        equation: Equation
-    ) -> Equation {
-        ScaledEquation(
-            targetY: 1,
-            targetX: AqueousReactionSettings.timeToAddProduct,
-            underlying: equation
-        )
-    }
 }

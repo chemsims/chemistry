@@ -279,11 +279,11 @@ private struct MoleculeGridFractionToDraw: Equation {
 
         let initialNumToDraw = GridMoleculesUtil.equilibriumGridCount(for: initialConcentration.rounded(decimals: 4))
         self.initialNumToDraw = initialNumToDraw
-        self.initialFraction = CGFloat(initialNumToDraw) / CGFloat(gridCount)
+        self.initialFraction = gridCount == 0 ? 0 : CGFloat(initialNumToDraw) / CGFloat(gridCount)
 
         let finalNumToDraw = GridMoleculesUtil.equilibriumGridCount(for: finalConcentration.rounded(decimals: 4))
         self.finalNumToDraw = finalNumToDraw
-        self.finalFraction = CGFloat(finalNumToDraw) / CGFloat(gridCount)
+        self.finalFraction = gridCount == 0 ? 0 : CGFloat(finalNumToDraw) / CGFloat(gridCount)
     }
 
     func getY(at x: CGFloat) -> CGFloat {
