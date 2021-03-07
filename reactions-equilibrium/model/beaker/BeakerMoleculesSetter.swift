@@ -27,8 +27,8 @@ struct BeakerMoleculesSetter {
         let takeFromA = Int(fractionFromA * CGFloat(numDToAdd))
         let takeFromB = numDToAdd - takeFromA
 
-        let fromA = moleculesA.suffix(from: cToTakeFromA + 1).prefix(takeFromA)
-        let fromB = moleculesB.suffix(from: cToTakeFromB + 1).prefix(takeFromB)
+        let fromA = moleculesA.dropFirst(cToTakeFromA).prefix(takeFromA)
+        let fromB = moleculesB.dropFirst(cToTakeFromB).prefix(takeFromB)
         return Array(fromA + fromB)
     }
 
@@ -65,7 +65,7 @@ struct BeakerMoleculesSetter {
     }
 
     private var cToTakeFromA: Int {
-        Int(fractionFromA * CGFloat(numCToAdd))
+        (fractionFromA * CGFloat(numCToAdd)).roundedInt()
     }
 
     private var cToTakeFromB: Int {

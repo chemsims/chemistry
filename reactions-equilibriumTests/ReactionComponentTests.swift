@@ -6,7 +6,7 @@ import XCTest
 @testable import reactions_equilibrium
 @testable import ReactionsCore
 
-class ForwardReactionComponentTests: XCTestCase {
+class ReactionComponentTests: XCTestCase {
 
     func testIncrementingAMolecules() {
         var model = newModel()
@@ -47,7 +47,7 @@ class ForwardReactionComponentTests: XCTestCase {
         }
     }
 
-    func testA0AndB0AreCorrect(){
+    func testA0AndB0AreCorrect() {
         var model = newModel()
         model.incrementA(count: maxIncrementCount)
         model.incrementB(count: maxIncrementCount)
@@ -204,7 +204,6 @@ class ForwardReactionComponentTests: XCTestCase {
     private var maxIncrementCount: Int {
         Int(ceil(Double(maxMolecules) / Double(incMolecules)))
     }
-
 
     private let maxC = AqueousReactionSettings.ConcentrationInput.maxInitial
     private let incC = AqueousReactionSettings.ConcentrationInput.cToIncrement

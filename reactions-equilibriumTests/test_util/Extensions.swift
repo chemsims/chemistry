@@ -4,6 +4,7 @@
 
 import Foundation
 import CoreGraphics
+import ReactionsCore
 @testable import reactions_equilibrium
 
 extension BalancedReactionCoefficients {
@@ -27,5 +28,12 @@ extension BalancedReactionEquations {
             b0: b0,
             convergenceTime: convergenceTime
         )
+    }
+}
+
+extension FractionedCoordinates {
+    func coords(at x: CGFloat) -> [GridCoordinate] {
+        let num = (fractionToDraw.getY(at: x) * CGFloat(coordinates.count)).roundedInt()
+        return Array(coordinates.prefix(num))
     }
 }

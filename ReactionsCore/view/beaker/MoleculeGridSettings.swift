@@ -31,9 +31,7 @@ public struct MoleculeGridSettings {
         return (settings.cellSize - settings.cellPadding) / 2
     }
 
-    public static var fullGrid: [GridCoordinate] {
-        grid(rows: rows)
-    }
+    public static let fullGrid = grid(rows: rows)
 
     public static func grid(rows: Int) -> [GridCoordinate] {
         GridCoordinate.grid(cols: cols, rows: rows)
