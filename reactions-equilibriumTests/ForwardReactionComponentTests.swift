@@ -150,7 +150,7 @@ class ForwardReactionComponentTests: XCTestCase {
         let originalCMolecules = model.cMolecules
         let originalOtherMolecules = model.aMolecules + model.bMolecules + model.dMolecules
 
-        model.incrementC()
+        model.increment(molecule: .C)
         XCTAssertEqual(model.cMolecules.count, (maxMolecules / 2) + incMolecules)
 
         let newMolecules = Set(model.cMolecules).subtracting(Set(originalCMolecules))
@@ -164,7 +164,7 @@ class ForwardReactionComponentTests: XCTestCase {
     func testReverseReactionCAndDIsIncreasedWhenAddingProduct() {
         var model = newReverseModel()
 
-        model.incrementC()
+        model.increment(molecule: .C)
         let expectedCount = (maxMolecules / 2) + incMolecules
         let expectedConcentration = CGFloat(expectedCount) / 100
 
@@ -173,7 +173,7 @@ class ForwardReactionComponentTests: XCTestCase {
         XCTAssertEqual(model.equations.productC.getY(at: 0), 0)
         XCTAssertEqual(model.equations.productC.getY(at: tAddProd), expectedConcentration, accuracy: 0.00001)
 
-        model.incrementD()
+        model.increment(molecule: .D)
         XCTAssertEqual(model.equations.productD.getY(at: 0), 0)
         XCTAssertEqual(model.equations.productD.getY(at: tAddProd), expectedConcentration, accuracy: 0.00001)
     }
@@ -231,11 +231,11 @@ private extension ForwardAqueousReactionComponents {
 
 private extension ReverseAqueousReactionComponents {
     mutating func incrementC(count: Int) {
-        doIncrement(count, { incrementC() })
+        doIncrement(count, { increment(molecule: .C) })
     }
 
     mutating func incrementD(count: Int) {
-        doIncrement(count, { incrementD() })
+        doIncrement(count, { increment(molecule: .D) })
     }
 }
 

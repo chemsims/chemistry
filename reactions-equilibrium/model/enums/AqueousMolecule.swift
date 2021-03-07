@@ -14,6 +14,10 @@ enum AqueousMoleculeReactant: String {
     case A, B
 }
 
+enum AqueousMoleculeProduct {
+    case C, D
+}
+
 extension AqueousMolecule {
     var imageName: String {
         "molecule\(self.rawValue)"

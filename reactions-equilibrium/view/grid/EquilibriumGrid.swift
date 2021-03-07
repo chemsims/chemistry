@@ -88,10 +88,7 @@ private struct SizedEquilibriumGrid: View {
 }
 
 struct EquilibriumGridSettings {
-    static var grid: [GridCoordinate] {
-        GridCoordinate.grid(cols: cols, rows: rows)
-    }
-
+    static let grid = GridCoordinate.grid(cols: cols, rows: rows)
     static let rows = 5
     static let cols = 6
 }
