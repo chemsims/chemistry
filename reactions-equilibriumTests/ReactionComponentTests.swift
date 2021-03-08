@@ -142,8 +142,8 @@ class ReactionComponentTests: XCTestCase {
 
     func testReverseReactionAddingC() {
         var model = newReverseModel()
-        XCTAssertEqual(model.aMolecules.count, maxMolecules)
-        XCTAssertEqual(model.bMolecules.count, maxMolecules)
+        XCTAssertEqual(model.aMolecules.count, maxMolecules / 2)
+        XCTAssertEqual(model.bMolecules.count, maxMolecules / 2)
         XCTAssertEqual(model.cMolecules.count, maxMolecules / 2)
         XCTAssertEqual(model.dMolecules.count, maxMolecules / 2)
 

@@ -31,7 +31,11 @@ struct GridMoleculesUtil {
     }
 
     static func equilibriumGridCount(for concentration: CGFloat) -> Int {
-        (concentration * CGFloat(EquilibriumGridSettings.grid.count)).roundedInt()
+        gridCount(for: concentration, gridSize: EquilibriumGridSettings.grid.count)
+    }
+
+    static func gridCount(for concentration: CGFloat, gridSize: Int) -> Int {
+        (concentration * CGFloat(gridSize)).roundedInt()
     }
 }
 
@@ -46,7 +50,8 @@ struct ForwardGridMolecules {
                 underlyingConcentration: reaction.reactantA,
                 initialConcentration: reaction.a0,
                 finalConcentration: reaction.reactantA.getY(at: reaction.convergenceTime),
-                gridCount: underlyingAGrid.count
+                gridCount: underlyingAGrid.count,
+                totalGridCount: EquilibriumGridSettings.grid.count
             )
         )
     }
@@ -58,7 +63,8 @@ struct ForwardGridMolecules {
                 underlyingConcentration: reaction.reactantB,
                 initialConcentration: reaction.b0,
                 finalConcentration: reaction.reactantB.getY(at: reaction.convergenceTime),
-                gridCount: underlyingBGrid.count
+                gridCount: underlyingBGrid.count,
+                totalGridCount: EquilibriumGridSettings.grid.count
             )
         )
     }
@@ -70,7 +76,8 @@ struct ForwardGridMolecules {
                 underlyingConcentration: reaction.productC,
                 initialConcentration: 0,
                 finalConcentration: reaction.productC.getY(at: reaction.convergenceTime),
-                gridCount: underlyingCGrid(reaction: reaction).count
+                gridCount: underlyingCGrid(reaction: reaction).count,
+                totalGridCount: EquilibriumGridSettings.grid.count
             )
         )
     }
@@ -82,7 +89,8 @@ struct ForwardGridMolecules {
                 underlyingConcentration: reaction.productD,
                 initialConcentration: 0,
                 finalConcentration: reaction.productD.getY(at: reaction.convergenceTime),
-                gridCount: underlyingDGrid(reaction: reaction).count
+                gridCount: underlyingDGrid(reaction: reaction).count,
+                totalGridCount: EquilibriumGridSettings.grid.count
             )
         )
     }
@@ -156,7 +164,8 @@ struct ReverseGridMolecules {
                 underlyingConcentration: reaction.reactantA,
                 initialConcentration: reaction.reactantA.getY(at: AqueousReactionSettings.timeToAddProduct),
                 finalConcentration: reaction.reactantA.getY(at: reaction.convergenceTime),
-                gridCount: finalAGrid(reaction: reaction).count
+                gridCount: finalAGrid(reaction: reaction).count,
+                totalGridCount: EquilibriumGridSettings.grid.count
             )
         )
     }
@@ -168,7 +177,8 @@ struct ReverseGridMolecules {
                 underlyingConcentration: reaction.reactantB,
                 initialConcentration: reaction.reactantB.getY(at: AqueousReactionSettings.timeToAddProduct),
                 finalConcentration: reaction.reactantB.getY(at: reaction.convergenceTime),
-                gridCount: finalBGrid(reaction: reaction).count
+                gridCount: finalBGrid(reaction: reaction).count,
+                totalGridCount: EquilibriumGridSettings.grid.count
             )
         )
     }
@@ -180,7 +190,8 @@ struct ReverseGridMolecules {
                 underlyingConcentration: reaction.productC,
                 initialConcentration: reaction.productC.getY(at: AqueousReactionSettings.timeToAddProduct),
                 finalConcentration: reaction.productC.getY(at: reaction.convergenceTime),
-                gridCount: underlyingCGrid.count
+                gridCount: underlyingCGrid.count,
+                totalGridCount: EquilibriumGridSettings.grid.count
             )
         )
     }
@@ -192,7 +203,8 @@ struct ReverseGridMolecules {
                 underlyingConcentration: reaction.productD,
                 initialConcentration: reaction.productD.getY(at: AqueousReactionSettings.timeToAddProduct),
                 finalConcentration: reaction.productD.getY(at: reaction.convergenceTime),
-                gridCount: underlyingDGrid.count
+                gridCount: underlyingDGrid.count,
+                totalGridCount: EquilibriumGridSettings.grid.count
             )
         )
     }
@@ -261,34 +273,37 @@ struct ReverseGridMolecules {
     }
 }
 
-private struct MoleculeGridFractionToDraw: Equation {
+struct MoleculeGridFractionToDraw: Equation {
 
     let underlyingConcentration: Equation
     let initialNumToDraw: Int
     let initialFraction: CGFloat
     let finalNumToDraw: Int
     let finalFraction: CGFloat
+    let totalGridCount: Int
 
     init(
         underlyingConcentration: Equation,
         initialConcentration: CGFloat,
         finalConcentration: CGFloat,
-        gridCount: Int
+        gridCount: Int,
+        totalGridCount: Int
     ) {
         self.underlyingConcentration = underlyingConcentration
+        self.totalGridCount = totalGridCount
 
-        let initialNumToDraw = GridMoleculesUtil.equilibriumGridCount(for: initialConcentration.rounded(decimals: 4))
+        let initialNumToDraw = GridMoleculesUtil.gridCount(for: initialConcentration.rounded(decimals: 4), gridSize: totalGridCount)
         self.initialNumToDraw = initialNumToDraw
         self.initialFraction = gridCount == 0 ? 0 : CGFloat(initialNumToDraw) / CGFloat(gridCount)
 
-        let finalNumToDraw = GridMoleculesUtil.equilibriumGridCount(for: finalConcentration.rounded(decimals: 4))
+        let finalNumToDraw = GridMoleculesUtil.gridCount(for: finalConcentration.rounded(decimals: 4), gridSize: totalGridCount)
         self.finalNumToDraw = finalNumToDraw
         self.finalFraction = gridCount == 0 ? 0 : CGFloat(finalNumToDraw) / CGFloat(gridCount)
     }
 
     func getY(at x: CGFloat) -> CGFloat {
         let concentration = underlyingConcentration.getY(at: x)
-        let numToDraw = GridMoleculesUtil.equilibriumGridCount(for: concentration)
+        let numToDraw = GridMoleculesUtil.gridCount(for: concentration, gridSize: totalGridCount)
         let numer = (finalFraction - initialFraction) * CGFloat(numToDraw - initialNumToDraw)
         let denom = CGFloat(finalNumToDraw - initialNumToDraw)
 

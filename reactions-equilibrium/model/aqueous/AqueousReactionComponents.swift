@@ -191,7 +191,7 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         initialConcentration(of: bMolecules)
     }
 
-    private var productMoleculeSetter: BeakerMoleculesSetter {
+    fileprivate var productMoleculeSetter: BeakerMoleculesSetter {
         BeakerMoleculesSetter(
             totalMolecules: availableMolecules,
             endOfReactionTime: AqueousReactionSettings.timeForConvergence,
@@ -243,8 +243,6 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
 
     init(forwardReaction: ForwardAqueousReactionComponents) {
         self.forwardReaction = forwardReaction
-        self.aMolecules = forwardReaction.aMolecules
-        self.bMolecules = forwardReaction.bMolecules
         self.cMolecules = forwardReaction.cMolecules
         self.dMolecules = forwardReaction.dMolecules
         self.availableCols = forwardReaction.availableCols
@@ -254,19 +252,23 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         self.grid = ReverseGridMolecules(forwardGrid: forwardReaction.grid, forwardReaction: forwardReaction.equations)
     }
 
-    private(set) var aMolecules = [GridCoordinate]()
-    private(set) var bMolecules = [GridCoordinate]()
+    var aMolecules: [GridCoordinate] {
+        beakerSetter.aMolecules.coordinates
+    }
+    var bMolecules: [GridCoordinate] {
+        beakerSetter.bMolecules.coordinates
+    }
     private(set) var cMolecules = [GridCoordinate]()
     private(set) var dMolecules = [GridCoordinate]()
 
     private let convergenceTime = AqueousReactionSettings.timeForReverseConvergence
 
     var aBeakerFractionToDraw: Equation {
-        ConstantEquation(value: 1)
+        beakerSetter.aMolecules.fractionToDraw
     }
 
     var bBeakerFractionToDraw: Equation {
-        ConstantEquation(value: 1)
+        beakerSetter.bMolecules.fractionToDraw
     }
 
     var cBeakerFractionToDraw: Equation {
@@ -294,8 +296,6 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
     }
 
     mutating func reset() {
-        aMolecules = forwardReaction.aMolecules
-        bMolecules = forwardReaction.bMolecules
         cMolecules = forwardReaction.cMolecules
         dMolecules = forwardReaction.dMolecules
         grid = ReverseGridMolecules(forwardGrid: forwardReaction.grid, forwardReaction: forwardReaction.equations)
@@ -312,7 +312,7 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
     private mutating func incrementC() {
         cMolecules = addingMolecules(
             to: cMolecules,
-            avoiding: aMolecules + bMolecules + dMolecules,
+            avoiding: beakerSetter.originalAMolecules + beakerSetter.originalBMolecules + dMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
         grid.setConcentration(of: .C, concentration: initialConcentration(of: cMolecules))
@@ -321,7 +321,7 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
     private mutating func incrementD() {
         dMolecules = addingMolecules(
             to: dMolecules,
-            avoiding: aMolecules + bMolecules + cMolecules,
+            avoiding: beakerSetter.originalAMolecules + beakerSetter.originalBMolecules + cMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
         grid.setConcentration(of: .D, concentration: initialConcentration(of: dMolecules))
@@ -360,5 +360,15 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         }
 
         return initialConcentration(of: currentMolecules)
+    }
+
+    private var beakerSetter: ReverseBeakerMoleculeSetter {
+        ReverseBeakerMoleculeSetter(
+            reverseReaction: equations,
+            startTime: AqueousReactionSettings.timeToAddProduct,
+            forwardBeaker: forwardReaction.productMoleculeSetter,
+            cMolecules: cMolecules,
+            dMolecules: dMolecules
+        )
     }
 }
