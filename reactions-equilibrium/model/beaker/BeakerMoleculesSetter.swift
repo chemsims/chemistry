@@ -62,11 +62,11 @@ struct BeakerMoleculesSetter {
     }
 
     private var cToTakeFromA: Int {
-        Int(ceil(Double(numAToDrop) / 2))
+        min(0, Int(ceil(Double(numAToDrop) / 2)))
     }
 
     private var dToTakeFromA: Int {
-        Int(floor((Double(numAToDrop) / 2)))
+        min(0, Int(floor((Double(numAToDrop) / 2))))
     }
 
     private var cToTakeFromB: Int {
