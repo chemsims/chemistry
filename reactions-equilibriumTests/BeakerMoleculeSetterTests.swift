@@ -70,7 +70,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         XCTAssertEqual(model.getEffectiveReactants(at: 10).b.count, 10)
     }
 
-    func testReverseMoleculesSetterWithUnitCoefficientsAndEquilibriumConstant() {
+    func testReverseSetterWithUnitCoefficientsAndEquilibriumConstant() {
         let forwardReaction = BalancedReactionEquations(coefficients: .unit, equilibriumConstant: 1, a0: 0.3, b0: 0.3, convergenceTime: 10)
 
         let grid = GridCoordinate.grid(cols: 10, rows: 10)
@@ -105,6 +105,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
         XCTAssertEqual(model.aMolecules.coords(at: 11).count, 15)
         XCTAssertEqual(model.bMolecules.coords(at: 11).count, 15)
 
+        assertSameElements(model.bMolecules.coords(at: 11), forwardGrid.getEffectiveReactants(at: 10).b)
+
         XCTAssertEqual(model.aMolecules.coords(at: 20).count, 23, accuracy: 1)
         XCTAssertEqual(model.bMolecules.coords(at: 20).count, 23, accuracy: 1)
 
@@ -122,7 +124,6 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         let initA = Array(grid.prefix(30))
         let initB = Array(grid.dropFirst(30).prefix(30))
-
         let forwardGrid = BeakerMoleculesSetter(
             totalMolecules: 100,
             endOfReactionTime: 10,
@@ -147,24 +148,50 @@ class BeakerMoleculeSetterTests: XCTestCase {
             dMolecules: forwardGrid.d.coordinates
         )
 
-        let convergedFwdReactant = forwardReaction.reactantB.getY(at: 10)
-        let expectedInitReactant = GridMoleculesUtil.gridCount(for: convergedFwdReactant, gridSize: 100)
+        assertSameElements(forwardGrid.getEffectiveReactants(at: 11).a, reverseGrid.aMolecules.coords(at: 11))
+        assertSameElements(forwardGrid.getEffectiveReactants(at: 11).b, reverseGrid.bMolecules.coords(at: 11))
+    }
 
-//        XCTAssertEqual(forwardGrid.getEffectiveReactants(at: 10).a.count, expectedInitReactant)
-//        XCTAssertEqual(forwardGrid.getEffectiveReactants(at: 10).b.count, expectedInitReactant)
-//        XCTAssertEqual(reverseGrid.aMolecules.coordinates.count, expectedInitReactant)
-//        XCTAssertEqual(reverseGrid.bMolecules.coordinates.count, expectedInitReactant)
+    func testReverseSetterWithNonUnitCoefficientWhereProductsAreAdded() {
+        let forwardReaction = BalancedReactionEquations(coefficients: .unit, equilibriumConstant: 0.75, a0: 0.3, b0: 0.3, convergenceTime: 10)
 
+        let grid = GridCoordinate.grid(cols: 10, rows: 10)
 
-        func assertSameElements(_ l: [GridCoordinate], _ r: [GridCoordinate]) {
-            XCTAssertEqual(l.count, r.count)
-            l.forEach {
-                XCTAssertTrue(r.contains($0))
-            }
+        let initA = Array(grid.prefix(30))
+        let initB = Array(grid.dropFirst(30).prefix(30))
+        let forwardGrid = BeakerMoleculesSetter(
+            totalMolecules: 100,
+            endOfReactionTime: 10,
+            moleculesA: initA,
+            moleculesB: initB,
+            reactionEquation: forwardReaction
+        )
+
+        let reverseReaction = BalancedReactionEquations(
+            forwardReaction: forwardReaction,
+            reverseInput: ReverseReactionInput(c0: 0.3, d0: 0.3, startTime: 11, convergenceTime: 20)
+        )
+        let finalProductGridCount = GridMoleculesUtil.gridCount(for: 0.3, gridSize: 100)
+        let extraCCount = finalProductGridCount - forwardGrid.cMolecules.count
+        let extraDCount = finalProductGridCount - forwardGrid.dMolecules.count
+
+        let reverseGrid = ReverseBeakerMoleculeSetter(
+            reverseReaction: reverseReaction,
+            startTime: 11,
+            forwardBeaker: forwardGrid,
+            cMolecules: forwardGrid.c.coordinates + Array(grid.suffix(extraCCount)),
+            dMolecules: forwardGrid.d.coordinates + Array(grid.dropLast(extraCCount).suffix(extraDCount))
+        )
+
+        assertSameElements(forwardGrid.getEffectiveReactants(at: 11).a, reverseGrid.aMolecules.coords(at: 11))
+        assertSameElements(forwardGrid.getEffectiveReactants(at: 11).b, reverseGrid.bMolecules.coords(at: 11))
+    }
+
+    private func assertSameElements(_ l: [GridCoordinate], _ r: [GridCoordinate]) {
+        XCTAssertEqual(l.count, r.count)
+        l.forEach {
+            XCTAssertTrue(r.contains($0))
         }
-
-        assertSameElements(forwardGrid.getEffectiveReactants(at: 10).a, reverseGrid.aMolecules.coordinates)
-        assertSameElements(forwardGrid.getEffectiveReactants(at: 10).b, reverseGrid.bMolecules.coordinates)
     }
 }
 

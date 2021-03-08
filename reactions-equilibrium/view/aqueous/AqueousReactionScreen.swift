@@ -81,32 +81,8 @@ private struct AqueousReactionScreenWithSettings: View {
             .frame(width: settings.sliderSettings.handleWidth, height: settings.sliderHeight)
 
             FilledBeaker(
-                molecules: [
-                    BeakerMolecules(
-                        coords: model.components.aMolecules,
-                        color: .from(.aqMoleculeA)
-                    ),
-                    BeakerMolecules(
-                        coords: model.components.bMolecules,
-                        color: .from(.aqMoleculeB)
-                    )
-                ],
-                animatingMolecules: [
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.components.cMolecules,
-                            color: .from(.aqMoleculeC)
-                        ),
-                        fractionToDraw: model.components.cBeakerFractionToDraw
-                    ),
-                    AnimatingBeakerMolecules(
-                        molecules: BeakerMolecules(
-                            coords: model.components.dMolecules,
-                            color: .from(.aqMoleculeD)
-                        ),
-                        fractionToDraw: model.components.dBeakerFractionToDraw
-                    )
-                ],
+                molecules: model.components.nonAnimatingMolecules,
+                animatingMolecules: model.components.animatingMolecules,
                 currentTime: model.currentTime,
                 rows: model.rows
             )

@@ -120,14 +120,22 @@ struct ReverseBeakerMoleculeSetter {
     var aMolecules: FractionedCoordinates {
         FractionedCoordinates(
             coordinates: aCoords,
-            fractionToDraw: reactantFractionToDraw(equation: reaction.reactantA, coordCount: aCoords.count)
+            fractionToDraw: reactantFractionToDraw(
+                equation: reaction.reactantA,
+                originalCoordCount: originalAMolecules.count,
+                coordCount: aCoords.count
+            )
         )
     }
 
     var bMolecules: FractionedCoordinates {
         FractionedCoordinates(
             coordinates: bCoords, 
-            fractionToDraw: reactantFractionToDraw(equation: reaction.reactantB, coordCount: bCoords.count)
+            fractionToDraw: reactantFractionToDraw(
+                equation: reaction.reactantB,
+                originalCoordCount: originalBMolecules.count,
+                coordCount: bCoords.count
+            )
         )
     }
 
@@ -143,11 +151,25 @@ struct ReverseBeakerMoleculeSetter {
         return originalBMolecules + fromC + fromD
     }
 
-    private func reactantFractionToDraw(equation: Equation, coordCount: Int) -> Equation {
-        MoleculeGridFractionToDraw(
-            underlyingConcentration: equation,
-            initialConcentration: equation.getY(at: startTime),
-            finalConcentration: equation.getY(at: reaction.convergenceTime),
+    /// Returns reactant fraction to draw
+    ///
+    /// - Note: The actual concentration of molecules in the beaker may differ slightly from the underlying equation, as we
+    /// effectively lose some precision when converting to an int (num molecules in the beaker). So, rather than use equation
+    /// directly, we instead compute the effective initial and create a new concentration equation using that. We can still use the
+    /// underlying final concentration, but just need to ensure it's not smaller than the initial - which could happen before products
+    /// have been added for example.
+    private func reactantFractionToDraw(
+        equation: Equation,
+        originalCoordCount: Int,
+        coordCount: Int
+    ) -> Equation {
+        let initC = CGFloat(originalCoordCount) / CGFloat(totalMolecules)
+        let finalC = max(initC, equation.getY(at: reaction.convergenceTime))
+        let newEquation = EquilibriumReactionEquation(t1: startTime, c1: initC, t2: reaction.convergenceTime, c2: finalC)
+        return MoleculeGridFractionToDraw(
+            underlyingConcentration: newEquation,
+            initialConcentration: initC,
+            finalConcentration: finalC,
             gridCount: coordCount,
             totalGridCount: totalMolecules
         )
@@ -215,5 +237,14 @@ struct ReverseBeakerMoleculeSetter {
         return forwardCoords.filter { coord in
             !products.contains(coord)
         }
+    }
+}
+
+private struct LowerBoundedEquation: Equation {
+    let underlying: Equation
+    let min: CGFloat
+
+    func getY(at x: CGFloat) -> CGFloat {
+        max(min, underlying.getY(at: x))
     }
 }

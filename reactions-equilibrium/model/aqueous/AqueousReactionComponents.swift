@@ -7,15 +7,18 @@ import CoreGraphics
 
 protocol AqueousReactionComponents {
 
-    var aMolecules: [GridCoordinate] { get }
-    var bMolecules: [GridCoordinate] { get }
-    var cMolecules: [GridCoordinate] { get }
-    var dMolecules: [GridCoordinate] { get }
+    var nonAnimatingMolecules: [BeakerMolecules] { get }
+    var animatingMolecules: [AnimatingBeakerMolecules] { get }
 
-    var aBeakerFractionToDraw: Equation { get }
-    var bBeakerFractionToDraw: Equation { get }
-    var cBeakerFractionToDraw: Equation { get }
-    var dBeakerFractionToDraw: Equation { get }
+//    var aMolecules: [GridCoordinate] { get }
+//    var bMolecules: [GridCoordinate] { get }
+//    var cMolecules: [GridCoordinate] { get }
+//    var dMolecules: [GridCoordinate] { get }
+
+//    var aBeakerFractionToDraw: Equation { get }
+//    var bBeakerFractionToDraw: Equation { get }
+//    var cBeakerFractionToDraw: Equation { get }
+//    var dBeakerFractionToDraw: Equation { get }
 
     var aGridMolecules: FractionedCoordinates { get }
     var bGridMolecules: FractionedCoordinates { get }
@@ -105,6 +108,27 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         grid = ForwardGridMolecules()
     }
 
+    var nonAnimatingMolecules: [BeakerMolecules] {
+        [
+            BeakerMolecules(coords: aMolecules, color: .from(.aqMoleculeA)),
+            BeakerMolecules(coords: bMolecules, color: .from(.aqMoleculeB))
+        ]
+
+    }
+
+    var animatingMolecules: [AnimatingBeakerMolecules] {
+        [
+            AnimatingBeakerMolecules(
+                molecules: BeakerMolecules(coords: cMolecules, color: .from(.aqMoleculeC)),
+                fractionToDraw: productMoleculeSetter.cFractionToDraw
+            ),
+            AnimatingBeakerMolecules(
+                molecules: BeakerMolecules(coords: dMolecules, color: .from(.aqMoleculeD)),
+                fractionToDraw: productMoleculeSetter.dFractionToDraw
+            )
+        ]
+    }
+
     private(set) var aMolecules = [GridCoordinate]()
     private(set) var bMolecules = [GridCoordinate]()
 
@@ -123,22 +147,6 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
             b0: initialB,
             convergenceTime: AqueousReactionSettings.timeForConvergence
         )
-    }
-
-    var aBeakerFractionToDraw: Equation {
-         ConstantEquation(value: 1)
-    }
-
-    var bBeakerFractionToDraw: Equation {
-        ConstantEquation(value: 1)
-    }
-
-    var cBeakerFractionToDraw: Equation {
-        productMoleculeSetter.cFractionToDraw
-    }
-
-    var dBeakerFractionToDraw: Equation {
-        productMoleculeSetter.dFractionToDraw
     }
 
     var aGridMolecules: FractionedCoordinates {
@@ -252,6 +260,26 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         self.grid = ReverseGridMolecules(forwardGrid: forwardReaction.grid, forwardReaction: forwardReaction.equations)
     }
 
+    var nonAnimatingMolecules: [BeakerMolecules] {
+        [
+            BeakerMolecules(coords: cMolecules, color: .from(.aqMoleculeC)),
+            BeakerMolecules(coords: dMolecules, color: .from(.aqMoleculeD))
+        ]
+    }
+
+    var animatingMolecules: [AnimatingBeakerMolecules] {
+        [
+            AnimatingBeakerMolecules(
+                molecules: BeakerMolecules(coords: aMolecules, color: .from(.aqMoleculeA)),
+                fractionToDraw: beakerSetter.aMolecules.fractionToDraw
+            ),
+            AnimatingBeakerMolecules(
+                molecules: BeakerMolecules(coords: bMolecules, color: .from(.aqMoleculeB)),
+                fractionToDraw: beakerSetter.bMolecules.fractionToDraw
+            )
+        ]
+    }
+
     var aMolecules: [GridCoordinate] {
         beakerSetter.aMolecules.coordinates
     }
@@ -262,22 +290,6 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
     private(set) var dMolecules = [GridCoordinate]()
 
     private let convergenceTime = AqueousReactionSettings.timeForReverseConvergence
-
-    var aBeakerFractionToDraw: Equation {
-        beakerSetter.aMolecules.fractionToDraw
-    }
-
-    var bBeakerFractionToDraw: Equation {
-        beakerSetter.bMolecules.fractionToDraw
-    }
-
-    var cBeakerFractionToDraw: Equation {
-        ConstantEquation(value: 1)
-    }
-
-    var dBeakerFractionToDraw: Equation {
-        ConstantEquation(value: 1)
-    }
 
     var aGridMolecules: FractionedCoordinates {
         grid.aGrid(reaction: equations)

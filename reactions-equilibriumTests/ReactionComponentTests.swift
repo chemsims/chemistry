@@ -87,19 +87,6 @@ class ReactionComponentTests: XCTestCase {
         XCTAssertEqual(Set(allCoords).count, reactantCoords.count)
     }
 
-    func testReactantMoleculesDrawingFraction() {
-        var model = newModel()
-        model.incrementA(count: maxIncrementCount)
-        model.incrementB(count: maxIncrementCount)
-        let t = AqueousReactionSettings.timeForConvergence
-
-        XCTAssertEqual(model.aBeakerFractionToDraw.getY(at: 0), 1)
-        XCTAssertEqual(model.aBeakerFractionToDraw.getY(at: t), 1)
-
-        XCTAssertEqual(model.bBeakerFractionToDraw.getY(at: 0), 1)
-        XCTAssertEqual(model.bBeakerFractionToDraw.getY(at: t), 1)
-    }
-
     func testProductMoleculesDrawingFraction() {
         var model = newModel()
         model.incrementA(count: maxIncrementCount)
@@ -115,18 +102,18 @@ class ReactionComponentTests: XCTestCase {
             XCTAssertEqual(fractionToDraw.getY(at: t), 1)
             let midConcentration = concentration.getY(at: t / 2)
             let midAsRatio = midConcentration / convergence
-            XCTAssertEqual(model.cBeakerFractionToDraw.getY(at: t / 2), midAsRatio)
+            XCTAssertEqual(model.animatingMolecules[0].fractionToDraw.getY(at: t / 2), midAsRatio)
         }
 
         func testProducts() {
             doTest(
                 concentration: model.equations.productC,
-                fractionToDraw: model.cBeakerFractionToDraw,
+                fractionToDraw: model.animatingMolecules[0].fractionToDraw,
                 convergence: model.equations.convergenceC
             )
             doTest(
                 concentration: model.equations.productD,
-                fractionToDraw: model.dBeakerFractionToDraw,
+                fractionToDraw: model.animatingMolecules[1].fractionToDraw,
                 convergence: model.equations.convergenceD
             )
         }
