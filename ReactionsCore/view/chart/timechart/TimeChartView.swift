@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct TimeChartView: View {
 
-    let data: [TimeChartDataline]
+    let data: [TimeChartDataLine]
 
     let initialTime: CGFloat
     @Binding var currentTime: CGFloat
@@ -20,10 +20,9 @@ public struct TimeChartView: View {
     let clipData: Bool
 
     let offset: CGFloat
-    let discontinuity: CGFloat?
 
     public init(
-        data: [TimeChartDataline],
+        data: [TimeChartDataLine],
         initialTime: CGFloat,
         currentTime: Binding<CGFloat>,
         finalTime: CGFloat,
@@ -31,8 +30,7 @@ public struct TimeChartView: View {
         settings: TimeChartLayoutSettings,
         axisSettings: ChartAxisShapeSettings,
         clipData: Bool = false,
-        offset: CGFloat = 0,
-        discontinuity: CGFloat? = nil
+        offset: CGFloat = 0
     ) {
         self.data = data
         self.initialTime = initialTime
@@ -43,7 +41,6 @@ public struct TimeChartView: View {
         self.axisSettings = axisSettings
         self.clipData = clipData
         self.offset = offset
-        self.discontinuity = discontinuity
     }
 
     public var body: some View {
@@ -60,8 +57,7 @@ public struct TimeChartView: View {
                 filledBarColor: Styling.timeAxisCompleteBar,
                 canSetCurrentTime: canSetCurrentTime,
                 clipData: clipData,
-                offset: offset,
-                discontinuity: discontinuity
+                offset: offset
             )
         }
     }

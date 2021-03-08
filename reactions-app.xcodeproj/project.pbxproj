@@ -256,7 +256,7 @@
 		57DDAD2425E5706A00B535A7 /* MultiConcentrationPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD2325E5706A00B535A7 /* MultiConcentrationPlot.swift */; };
 		57DDAD2E25E576C000B535A7 /* TimeChartDatalineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD2D25E576C000B535A7 /* TimeChartDatalineView.swift */; };
 		57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */; };
-		57DDAD4325E57DEB00B535A7 /* TimeChartDataline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD4225E57DEB00B535A7 /* TimeChartDataline.swift */; };
+		57DDAD4325E57DEB00B535A7 /* TimeChartDataLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD4225E57DEB00B535A7 /* TimeChartDataLine.swift */; };
 		57DDAD4E25E57E2A00B535A7 /* TimeChartDataLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD4D25E57E2A00B535A7 /* TimeChartDataLineView.swift */; };
 		57DDAD5B25E57E9300B535A7 /* ChartLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ChartLine.swift */; };
 		57DE4DA125A502BF00644790 /* QuizIntroBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DA025A502BF00644790 /* QuizIntroBody.swift */; };
@@ -613,7 +613,7 @@
 		57DDAD2325E5706A00B535A7 /* MultiConcentrationPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiConcentrationPlot.swift; sourceTree = "<group>"; };
 		57DDAD2D25E576C000B535A7 /* TimeChartDatalineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartDatalineView.swift; sourceTree = "<group>"; };
 		57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartLayoutSettings.swift; sourceTree = "<group>"; };
-		57DDAD4225E57DEB00B535A7 /* TimeChartDataline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartDataline.swift; sourceTree = "<group>"; };
+		57DDAD4225E57DEB00B535A7 /* TimeChartDataLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartDataLine.swift; sourceTree = "<group>"; };
 		57DDAD4D25E57E2A00B535A7 /* TimeChartDataLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartDataLineView.swift; sourceTree = "<group>"; };
 		57DE4DA025A502BF00644790 /* QuizIntroBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizIntroBody.swift; sourceTree = "<group>"; };
 		57DE4DA425A502EE00644790 /* QuizQuestionBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionBody.swift; sourceTree = "<group>"; };
@@ -1730,7 +1730,7 @@
 		57DDAD4125E57DDF00B535A7 /* chart */ = {
 			isa = PBXGroup;
 			children = (
-				57DDAD4225E57DEB00B535A7 /* TimeChartDataline.swift */,
+				57DDAD4225E57DEB00B535A7 /* TimeChartDataLine.swift */,
 			);
 			path = chart;
 			sourceTree = "<group>";
@@ -2359,7 +2359,7 @@
 				57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */,
 				575A884125E431FF00AEE448 /* LabelledImage.swift in Sources */,
 				57952A3925E67F6E006AB876 /* ScreenState.swift in Sources */,
-				57DDAD4325E57DEB00B535A7 /* TimeChartDataline.swift in Sources */,
+				57DDAD4325E57DEB00B535A7 /* TimeChartDataLine.swift in Sources */,
 				5797A4D325E40A8E00991BD9 /* Styling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

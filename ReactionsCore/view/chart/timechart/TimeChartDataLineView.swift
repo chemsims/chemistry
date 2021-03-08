@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct TimeChartMultiDataLineView: View {
 
-    let data: [TimeChartDataline]
+    let data: [TimeChartDataLine]
     let settings: TimeChartLayoutSettings
 
     let initialTime: CGFloat
@@ -22,10 +22,9 @@ public struct TimeChartMultiDataLineView: View {
 
     let clipData: Bool
     let offset: CGFloat
-    let discontinuity: CGFloat?
 
     public init(
-        data: [TimeChartDataline],
+        data: [TimeChartDataLine],
         settings: TimeChartLayoutSettings,
         initialTime: CGFloat,
         currentTime: Binding<CGFloat>,
@@ -35,8 +34,7 @@ public struct TimeChartMultiDataLineView: View {
         highlightLhs: Bool = false,
         highlightRhs: Bool = false,
         clipData: Bool = false,
-        offset: CGFloat = 0,
-        discontinuity: CGFloat? = nil
+        offset: CGFloat = 0
     ) {
         self.data = data
         self.settings = settings
@@ -49,7 +47,6 @@ public struct TimeChartMultiDataLineView: View {
         self.highlightRhs = highlightRhs
         self.clipData = clipData
         self.offset = offset
-        self.discontinuity = discontinuity
     }
 
     public var body: some View {
@@ -66,8 +63,7 @@ public struct TimeChartMultiDataLineView: View {
                     highlightLhs: highlightLhs,
                     highlightRhs: highlightRhs,
                     clipData: clipData,
-                    offset: offset,
-                    discontinuity: discontinuity
+                    offset: offset
                 )
             }
         }
@@ -76,7 +72,7 @@ public struct TimeChartMultiDataLineView: View {
 
 public struct TimeChartDataLineView: View {
 
-    let data: TimeChartDataline
+    let data: TimeChartDataLine
     let settings: TimeChartLayoutSettings
 
     let initialTime: CGFloat
@@ -91,10 +87,9 @@ public struct TimeChartDataLineView: View {
     let clipData: Bool
 
     let offset: CGFloat
-    let discontinuity: CGFloat?
 
     public init(
-        data: TimeChartDataline,
+        data: TimeChartDataLine,
         settings: TimeChartLayoutSettings,
         initialTime: CGFloat,
         currentTime: Binding<CGFloat>,
@@ -104,8 +99,7 @@ public struct TimeChartDataLineView: View {
         highlightLhs: Bool,
         highlightRhs: Bool,
         clipData: Bool = false,
-        offset: CGFloat = 0,
-        discontinuity: CGFloat? = nil
+        offset: CGFloat = 0
     ) {
         self.data = data
         self.settings = settings
@@ -118,7 +112,6 @@ public struct TimeChartDataLineView: View {
         self.highlightRhs = highlightRhs
         self.clipData = clipData
         self.offset = offset
-        self.discontinuity = discontinuity
     }
 
     public var body: some View {
@@ -208,7 +201,8 @@ public struct TimeChartDataLineView: View {
             xAxis: settings.xAxis,
             startX: startTime,
             endX: time,
-            offset: offset
+            offset: offset,
+            discontinuity: data.discontinuity
         )
         .stroke(lineWidth: lineWidth)
         .foregroundColor(color)
@@ -259,7 +253,7 @@ struct TimeChartDataLineView_Previews: PreviewProvider {
         )
     }
 
-    private static var allData: [TimeChartDataline] {
+    private static var allData: [TimeChartDataLine] {
         [
             data(
                 makeEquation(
@@ -300,8 +294,8 @@ struct TimeChartDataLineView_Previews: PreviewProvider {
         )
     }
 
-    private static func data(_ equation: Equation, _ color: Color) -> TimeChartDataline {
-        TimeChartDataline(
+    private static func data(_ equation: Equation, _ color: Color) -> TimeChartDataLine {
+        TimeChartDataLine(
             equation: equation,
             headColor: color,
             haloColor: color.opacity(0.3),

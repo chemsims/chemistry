@@ -10,16 +10,6 @@ protocol AqueousReactionComponents {
     var nonAnimatingMolecules: [BeakerMolecules] { get }
     var animatingMolecules: [AnimatingBeakerMolecules] { get }
 
-//    var aMolecules: [GridCoordinate] { get }
-//    var bMolecules: [GridCoordinate] { get }
-//    var cMolecules: [GridCoordinate] { get }
-//    var dMolecules: [GridCoordinate] { get }
-
-//    var aBeakerFractionToDraw: Equation { get }
-//    var bBeakerFractionToDraw: Equation { get }
-//    var cBeakerFractionToDraw: Equation { get }
-//    var dBeakerFractionToDraw: Equation { get }
-
     var aGridMolecules: FractionedCoordinates { get }
     var bGridMolecules: FractionedCoordinates { get }
     var cGridMolecules: FractionedCoordinates { get }
@@ -34,7 +24,7 @@ protocol AqueousReactionComponents {
 
     var tForMaxQuotient: CGFloat { get }
 
-    var chartDiscontinuity: CGFloat? { get }
+    var quotientChartDiscontinuity: CGPoint? { get }
 
     mutating func increment(molecule: AqueousMolecule)
 
@@ -85,7 +75,7 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     var availableRows: Int
 
     let tForMaxQuotient: CGFloat = AqueousReactionSettings.timeForConvergence
-    let chartDiscontinuity: CGFloat? = nil
+    let quotientChartDiscontinuity: CGPoint? = nil
     private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
 
     private(set) var grid = ForwardGridMolecules()
@@ -227,7 +217,12 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
     var availableRows: Int
 
     let tForMaxQuotient: CGFloat = AqueousReactionSettings.timeToAddProduct
-    let chartDiscontinuity: CGFloat? = AqueousReactionSettings.timeToAddProduct
+    var quotientChartDiscontinuity: CGPoint? {
+        CGPoint(
+            x: AqueousReactionSettings.timeToAddProduct,
+            y: ReactionQuotientEquation(equations: forwardReaction.equations).getY(at: AqueousReactionSettings.timeToAddProduct)
+        )
+    }
 
     var coefficients: BalancedReactionCoefficients {
         get {

@@ -129,7 +129,6 @@ private struct MiddleStackView: View {
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showConcentrationLines,
             offset: model.chartOffset,
-            discontinuity: model.components.chartDiscontinuity,
             settings: settings.chartSettings
         )
     }
@@ -143,7 +142,7 @@ private struct MiddleStackView: View {
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showQuotientLine,
             offset: model.chartOffset,
-            discontinuity: model.components.chartDiscontinuity,
+            discontinuity: model.components.quotientChartDiscontinuity,
             settings: settings.quotientChartSettings(
                 convergenceQ: model.convergenceQuotient,
                 maxQ: model.maxQuotient

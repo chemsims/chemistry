@@ -16,7 +16,7 @@ struct QuotientPlot: View {
 
     let showData: Bool
     let offset: CGFloat
-    let discontinuity: CGFloat?
+    let discontinuity: CGPoint?
 
     let settings: ReactionEquilibriumChartsLayoutSettings
 
@@ -54,11 +54,12 @@ struct QuotientPlot: View {
     private var chart: some View {
         TimeChartView(
             data: !showData ? [] : [
-                TimeChartDataline(
+                TimeChartDataLine(
                     equation: equation,
                     headColor: .orangeAccent,
                     haloColor: Color.orangeAccent.opacity(0.3),
-                    headRadius: settings.headRadius
+                    headRadius: settings.headRadius,
+                    discontinuity: discontinuity
                 )
             ],
             initialTime: 0,
@@ -67,8 +68,7 @@ struct QuotientPlot: View {
             canSetCurrentTime: canSetCurrentTime,
             settings: settings.layout,
             axisSettings: settings.axisShapeSettings,
-            offset: offset,
-            discontinuity: discontinuity
+            offset: offset
         )
     }
 

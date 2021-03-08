@@ -16,7 +16,7 @@ public struct ChartLine: Shape {
 
     var offset: CGFloat
 
-    let discontinuity: CGFloat?
+    let discontinuity: CGPoint?
 
     public init(
         equation: Equation,
@@ -25,7 +25,7 @@ public struct ChartLine: Shape {
         startX: CGFloat,
         endX: CGFloat,
         offset: CGFloat = 0,
-        discontinuity: CGFloat? = nil
+        discontinuity: CGPoint? = nil
     ) {
         self.equation = equation
         self.yAxis = yAxis
@@ -50,8 +50,7 @@ public struct ChartLine: Shape {
 
         var didStart = false
 
-        for x in getStride(dx: dx) {
-            let y = equation.getY(at: x)
+        func addLine(x: CGFloat, y: CGFloat) {
             let xPosition = shiftedXAxis.getPosition(at: x)
             let yPosition = yAxis.getPosition(at: y)
             if didStart {
@@ -62,22 +61,32 @@ public struct ChartLine: Shape {
             }
         }
 
+        if let dc = discontinuity {
+            for x in strideLhs(dx: dx, discontinuityX: dc.x) {
+                let y = equation.getY(at: x)
+                addLine(x: x, y: y)
+            }
+            addLine(x: dc.x - (dx / 100), y: equation.getY(at: dc.x - (dx / 100)))
+        }
+
+        for x in strideRhs(dx: dx) {
+            let y = equation.getY(at: x)
+            addLine(x: x, y: y)
+        }
+        addLine(x: endX, y: equation.getY(at: endX))
+
         return path
     }
 
-    private func getStride(
-        dx: CGFloat
-    ) -> [CGFloat] {
-        if let discontinuity = discontinuity, discontinuity > startX && discontinuity < endX {
-            var lhs = Array(stride(from: startX + offset, through : discontinuity, by: dx))
-            if lhs.last != discontinuity {
-                lhs.append(discontinuity)
-            }
-            let rhs = Array(stride(from: discontinuity + dx, through: endX, by: dx))
-            return (lhs + rhs)
+    private func strideLhs(dx: CGFloat, discontinuityX: CGFloat) -> StrideTo<CGFloat> {
+        stride(from: startX + offset, to: discontinuityX, by: dx)
+    }
 
+    private func strideRhs(dx: CGFloat) -> StrideTo<CGFloat> {
+        if let dc = discontinuity {
+            return stride(from: dc.x, to: endX, by: dx)
         } else {
-            return Array(stride(from: startX + offset, through : endX, by: dx))
+            return stride(from: startX + offset, to: endX, by: dx)
         }
     }
 
@@ -139,7 +148,7 @@ struct ChartLine_Previews: PreviewProvider {
     }
 
     struct ViewStateWrapper: View {
-        @State var t2: CGFloat = 34.01
+        @State var t2: CGFloat = 34
 
         var body: some View {
             VStack {
@@ -150,7 +159,7 @@ struct ChartLine_Previews: PreviewProvider {
                         xAxis: xAxis,
                         startX: 0,
                         endX: t2,
-                        discontinuity: 34
+                        discontinuity: CGPoint(x: 34, y: 34)
                     ).stroke(lineWidth: 2)
 
                     ChartIndicatorHead(
@@ -206,5 +215,3 @@ struct ChartLine_Previews: PreviewProvider {
         )
     }
 }
-
-

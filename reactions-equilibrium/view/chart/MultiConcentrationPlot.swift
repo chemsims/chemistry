@@ -16,7 +16,6 @@ struct MultiConcentrationPlot: View {
 
     let showData: Bool
     let offset: CGFloat
-    let discontinuity: CGFloat?
 
     let settings: ReactionEquilibriumChartsLayoutSettings
 
@@ -60,13 +59,12 @@ struct MultiConcentrationPlot: View {
             settings: settings.layout,
             axisSettings: settings.axisShapeSettings,
             clipData: true,
-            offset: offset,
-            discontinuity: discontinuity
+            offset: offset
         )
     }
 
-    private func data(equation: Equation, color: Color) -> TimeChartDataline {
-        TimeChartDataline(
+    private func data(equation: Equation, color: Color) -> TimeChartDataLine {
+        TimeChartDataLine(
             equation: equation,
             headColor: color,
             haloColor: color.opacity(0.3),
@@ -119,7 +117,6 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
             canSetCurrentTime: false,
             showData: true,
             offset: 0,
-            discontinuity: nil,
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis

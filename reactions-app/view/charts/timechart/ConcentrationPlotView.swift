@@ -79,7 +79,7 @@ struct ConcentrationPlotView: View {
 
             if concentrationB != nil {
                 TimeChartDataLineView(
-                    data: TimeChartDataline(
+                    data: TimeChartDataLine(
                         equation: concentrationB!,
                         headColor: display.product.color,
                         haloColor: nil,
@@ -97,7 +97,7 @@ struct ConcentrationPlotView: View {
             }
 
             TimeChartDataLineView(
-                data: TimeChartDataline(
+                data: TimeChartDataLine(
                     equation: concentrationA,
                     headColor: display.reactant.color,
                     haloColor: display.reactant.color.opacity(0.3),
