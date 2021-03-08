@@ -24,11 +24,8 @@ struct BeakerMoleculesSetter {
         guard moleculesA.count > 0 && moleculesB.count > 0 else {
             return []
         }
-        let takeFromA = Int(fractionFromA * CGFloat(numDToAdd))
-        let takeFromB = numDToAdd - takeFromA
-
-        let fromA = moleculesA.dropFirst(cToTakeFromA).prefix(takeFromA)
-        let fromB = moleculesB.dropFirst(cToTakeFromB).prefix(takeFromB)
+        let fromA = moleculesA.dropFirst(cToTakeFromA).prefix(dToTakeFromA)
+        let fromB = moleculesB.dropFirst(cToTakeFromB).prefix(dToTakeFromB)
         return Array(fromA + fromB)
     }
 
@@ -50,12 +47,12 @@ struct BeakerMoleculesSetter {
 
     private var numDToAdd: Int {
         let finalConcentration = reactionEquation.productD.getY(at: endOfReactionTime)
-        return Int(finalConcentration * CGFloat(totalMolecules))
+        return (finalConcentration * CGFloat(totalMolecules)).roundedInt()
     }
 
     private var numCToAdd: Int {
         let finalConcentration = reactionEquation.productC.getY(at: endOfReactionTime)
-        return Int(finalConcentration * CGFloat(totalMolecules))
+        return (finalConcentration * CGFloat(totalMolecules)).roundedInt()
     }
 
     private var fractionFromA: CGFloat {
@@ -65,10 +62,23 @@ struct BeakerMoleculesSetter {
     }
 
     private var cToTakeFromA: Int {
-        (fractionFromA * CGFloat(numCToAdd)).roundedInt()
+        Int(ceil(Double(numAToDrop) / 2))
+    }
+
+    private var dToTakeFromA: Int {
+        Int(floor((Double(numAToDrop) / 2)))
     }
 
     private var cToTakeFromB: Int {
         numCToAdd - cToTakeFromA
+    }
+
+    private var dToTakeFromB: Int {
+        numDToAdd - dToTakeFromA
+    }
+
+    private var numAToDrop: Int {
+        let finalConcentration = reactionEquation.reactantA.getY(at: endOfReactionTime)
+        return (finalConcentration * CGFloat(totalMolecules)).roundedInt()
     }
 }
