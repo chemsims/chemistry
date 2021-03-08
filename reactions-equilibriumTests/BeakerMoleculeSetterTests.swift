@@ -115,6 +115,20 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         XCTAssertEqual(model.getEffectiveProducts(at: 20).c.count, 23, accuracy: 2)
         XCTAssertEqual(model.getEffectiveProducts(at: 20).d.count, 23, accuracy: 2)
+
+        let products = model.cMolecules + model.dMolecules
+        func checkFinalReactants(finalCoords: [GridCoordinate], original: [GridCoordinate]) {
+            original.forEach {
+                XCTAssert(finalCoords.contains($0))
+            }
+            let newCoords = finalCoords.filter { !original.contains($0) }
+            newCoords.forEach {
+                XCTAssert(products.contains($0))
+            }
+        }
+
+        checkFinalReactants(finalCoords: model.aMolecules.coords(at: 20), original: model.originalAMolecules)
+        checkFinalReactants(finalCoords: model.bMolecules.coords(at: 20), original: model.originalBMolecules)
     }
 
     func testReverseSetterWithNonUnitCoefficientAndNoProductsAdded() {
@@ -150,6 +164,20 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         assertSameElements(forwardGrid.getEffectiveReactants(at: 11).a, reverseGrid.aMolecules.coords(at: 11))
         assertSameElements(forwardGrid.getEffectiveReactants(at: 11).b, reverseGrid.bMolecules.coords(at: 11))
+
+        let products = reverseGrid.cMolecules + reverseGrid.dMolecules
+        func checkFinalReactants(finalCoords: [GridCoordinate], original: [GridCoordinate]) {
+            original.forEach {
+                XCTAssert(finalCoords.contains($0))
+            }
+            let newCoords = finalCoords.filter { !original.contains($0) }
+            newCoords.forEach {
+                XCTAssert(products.contains($0))
+            }
+        }
+
+        checkFinalReactants(finalCoords: reverseGrid.aMolecules.coords(at: 20), original: reverseGrid.originalAMolecules)
+        checkFinalReactants(finalCoords: reverseGrid.bMolecules.coords(at: 20), original: reverseGrid.originalBMolecules)
     }
 
     func testReverseSetterWithNonUnitCoefficientWhereProductsAreAdded() {
@@ -185,6 +213,20 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         assertSameElements(forwardGrid.getEffectiveReactants(at: 11).a, reverseGrid.aMolecules.coords(at: 11))
         assertSameElements(forwardGrid.getEffectiveReactants(at: 11).b, reverseGrid.bMolecules.coords(at: 11))
+
+        let products = reverseGrid.cMolecules + reverseGrid.dMolecules
+        func checkFinalReactants(finalCoords: [GridCoordinate], original: [GridCoordinate]) {
+            original.forEach {
+                XCTAssert(finalCoords.contains($0))
+            }
+            let newCoords = finalCoords.filter { !original.contains($0) }
+            newCoords.forEach {
+                XCTAssert(products.contains($0))
+            }
+        }
+
+        checkFinalReactants(finalCoords: reverseGrid.aMolecules.coords(at: 20), original: reverseGrid.originalAMolecules)
+        checkFinalReactants(finalCoords: reverseGrid.bMolecules.coords(at: 20), original: reverseGrid.originalBMolecules)
     }
 
     private func assertSameElements(_ l: [GridCoordinate], _ r: [GridCoordinate]) {
