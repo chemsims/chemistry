@@ -8,6 +8,7 @@ import ReactionsCore
 struct MultiConcentrationPlot: View {
 
     let equations: BalancedReactionEquations
+    let discontinuities: MoleculeValue<CGPoint>?
 
     let initialTime: CGFloat
     @Binding var currentTime: CGFloat
@@ -47,10 +48,26 @@ struct MultiConcentrationPlot: View {
     private var chart: some View {
         TimeChartView(
             data: !showData ? [] : [
-                data(equation: equations.reactantA, color: .from(.aqMoleculeA)),
-                data(equation: equations.reactantB, color: .from(.aqMoleculeB)),
-                data(equation: equations.productC, color: .from(.aqMoleculeC)),
-                data(equation: equations.productD, color: .from(.aqMoleculeD)),
+                data(
+                    equation: equations.reactantA,
+                    color: .from(.aqMoleculeA),
+                    discontinuity: discontinuities?.reactantA
+                ),
+                data(
+                    equation: equations.reactantB,
+                    color: .from(.aqMoleculeB),
+                    discontinuity: discontinuities?.reactantB
+                ),
+                data(
+                    equation: equations.productC,
+                    color: .from(.aqMoleculeC),
+                    discontinuity: discontinuities?.productC
+                ),
+                data(
+                    equation: equations.productD,
+                    color: .from(.aqMoleculeD),
+                    discontinuity: discontinuities?.productD
+                ),
             ],
             initialTime: initialTime,
             currentTime: $currentTime,
@@ -63,12 +80,17 @@ struct MultiConcentrationPlot: View {
         )
     }
 
-    private func data(equation: Equation, color: Color) -> TimeChartDataLine {
+    private func data(
+        equation: Equation,
+        color: Color,
+        discontinuity: CGPoint?
+    ) -> TimeChartDataLine {
         TimeChartDataLine(
             equation: equation,
             headColor: color,
             haloColor: color.opacity(0.3),
-            headRadius: settings.headRadius
+            headRadius: settings.headRadius,
+            discontinuity: discontinuity
         )
     }
 }
@@ -111,6 +133,7 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
                 b0: 0.8,
                 convergenceTime: 15
             ),
+            discontinuities: nil,
             initialTime: 0,
             currentTime: .constant(10),
             finalTime: 20,

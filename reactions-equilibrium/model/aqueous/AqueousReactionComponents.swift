@@ -25,6 +25,7 @@ protocol AqueousReactionComponents {
     var tForMaxQuotient: CGFloat { get }
 
     var quotientChartDiscontinuity: CGPoint? { get }
+    var moleculeChartDiscontinuities: MoleculeValue<CGPoint>? { get }
 
     mutating func increment(molecule: AqueousMolecule)
 
@@ -76,6 +77,7 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
 
     let tForMaxQuotient: CGFloat = AqueousReactionSettings.timeForConvergence
     let quotientChartDiscontinuity: CGPoint? = nil
+    let moleculeChartDiscontinuities: MoleculeValue<CGPoint>? = nil
     private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
 
     private(set) var grid = ForwardGridMolecules()
@@ -221,6 +223,16 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         CGPoint(
             x: AqueousReactionSettings.timeToAddProduct,
             y: ReactionQuotientEquation(equations: forwardReaction.equations).getY(at: AqueousReactionSettings.timeToAddProduct)
+        )
+    }
+
+    var moleculeChartDiscontinuities: MoleculeValue<CGPoint>? {
+        let x = AqueousReactionSettings.timeToAddProduct
+        return MoleculeValue(
+            reactantA: CGPoint(x: x, y: forwardReaction.equations.reactantA.getY(at: x)),
+            reactantB: CGPoint(x: x, y: forwardReaction.equations.reactantB.getY(at: x)),
+            productC: CGPoint(x: x, y: forwardReaction.equations.productC.getY(at: x)),
+            productD: CGPoint(x: x, y: forwardReaction.equations.productD.getY(at: x))
         )
     }
 

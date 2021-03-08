@@ -123,6 +123,7 @@ private struct MiddleStackView: View {
     private var concentrationChart: some View {
         MultiConcentrationPlot(
             equations: model.components.equations,
+            discontinuities: model.components.moleculeChartDiscontinuities,
             initialTime: 0,
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
