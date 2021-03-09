@@ -15,6 +15,10 @@ struct AqueousScreenLayoutSettings {
         geometry.size.height
     }
 
+    var beakerSettings: BeakerSettings {
+        BeakerSettings(width: beakerWidth)
+    }
+
     var beakerWidth: CGFloat {
         0.22 * width
     }
@@ -80,12 +84,20 @@ struct AqueousScreenLayoutSettings {
 }
 
 extension AqueousScreenLayoutSettings {
-    var moleculeWidth: CGFloat {
+    var moleculeContainerWidth: CGFloat {
         0.12 * beakerWidth
     }
 
-    var moleculeSpacing: CGFloat {
-        0.1 * beakerWidth
+    var moleculeContainerHeight: CGFloat {
+        2.3 * moleculeContainerWidth
+    }
+
+    var moleculeContainerYPos: CGFloat {
+        0.75 * moleculeContainerHeight
+    }
+
+    var moleculeSize: CGFloat {
+        beakerSettings.innerBeakerWidth / CGFloat(MoleculeGridSettings.cols)
     }
 }
 

@@ -5,6 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
+// TODO - refactor this to just take the energy view model as input, rather than so many variables 
 struct EnergyProfileBeaker: View {
 
     let reactionState: EnergyReactionState

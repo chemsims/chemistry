@@ -5,17 +5,17 @@
 import SwiftUI
 import ReactionsCore
 
-struct AddMoleculeWithLiquidBeaker: View {
+struct AqueousBeakerView: View {
 
     @ObservedObject var model: AqueousReactionViewModel
     let settings: AqueousScreenLayoutSettings
 
     var body: some View {
-        VStack {
-            molecules
-            Spacer()
+        ZStack(alignment: .bottom) {
             beaker
+            molecules
         }
+        .frame(height: settings.height)
     }
 
     private var molecules: some View {
@@ -24,12 +24,26 @@ struct AddMoleculeWithLiquidBeaker: View {
                 .frame(width: settings.sliderSettings.handleWidth)
             AddMoleculesView(
                 model: model.addingMoleculesModel,
-                containerWidth: settings.moleculeWidth,
-                startOfWater: 280,
-                maxContainerY: 200,
-                moleculeSize: 20
+                topRowHeight: settings.moleculeContainerYPos,
+                containerWidth: settings.moleculeContainerWidth,
+                startOfWater: topOfWaterPosition,
+                maxContainerY: maxContainerY,
+                moleculeSize: settings.moleculeSize
             )
-            .frame(width: settings.beakerWidth)
+            .frame(
+                width: settings.beakerSettings.innerBeakerWidth - settings.moleculeSize
+            )
+            .mask(
+                VStack(spacing: 0) {
+                    Rectangle()
+                        .frame(
+                            width: settings.beakerWidth + (2 * settings.moleculeContainerHeight),
+                            height: topOfWaterPosition
+                        )
+                    Spacer()
+                }
+
+            )
         }.zIndex(1)
     }
 
@@ -54,12 +68,21 @@ struct AddMoleculeWithLiquidBeaker: View {
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
         }
     }
+
+    private var topOfWaterPosition: CGFloat {
+        let topFromSlider = settings.sliderAxis.getPosition(at: model.rows)
+        return settings.height - settings.sliderHeight + topFromSlider
+    }
+
+    private var maxContainerY: CGFloat {
+        (settings.height - settings.beakerHeight) - settings.moleculeContainerHeight
+    }
 }
 
 struct AddMoleculeWithLiquidBeaker_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
-            AddMoleculeWithLiquidBeaker(
+            AqueousBeakerView(
                 model: AqueousReactionViewModel(),
                 settings: AqueousScreenLayoutSettings(geometry: geo)
             )

@@ -8,6 +8,7 @@ import SwiftUI
 struct AddMoleculesView: View {
 
     let model: AddingMoleculesViewModel
+    let topRowHeight: CGFloat
     let containerWidth: CGFloat
     let startOfWater: CGFloat
     let maxContainerY: CGFloat
@@ -33,9 +34,11 @@ struct AddMoleculesView: View {
         AddMoleculeContainerView(
             model: model.models.value(for: molecule),
             isActive: activeMoleculeBinding(molecule: molecule),
+            width: width,
+            height: height,
             initialLocation: CGPoint(
                 x: containerX(width: width, index: index),
-                y: height / 5
+                y: topRowHeight
             ),
             containerWidth: containerWidth,
             startOfWater: startOfWater,
@@ -70,6 +73,8 @@ private struct AddMoleculeContainerView: View {
 
     @ObservedObject var model: AddingSingleMoleculeViewModel
     @Binding var isActive: Bool
+    let width: CGFloat
+    let height: CGFloat
     let initialLocation: CGPoint
     let containerWidth: CGFloat
     let startOfWater: CGFloat
@@ -106,10 +111,9 @@ private struct AddMoleculeContainerView: View {
                 withAnimation(.easeOut(duration: 0.25)) {
                     rotation = .degrees(135)
                 }
-                let dy = drag.location.y - initialLocation.y
                 offset = CGSize(
-                    width: drag.location.x - initialLocation.x,
-                    height: min(dy, maxYOffset)
+                    width: constrainedXOffset(offset: drag.location.x - initialLocation.x),
+                    height: constrainedYOffset(offset: drag.location.y - initialLocation.y)
                 )
                 let effectivePosition = CGPoint(
                     x: initialLocation.x + offset.width,
@@ -125,7 +129,19 @@ private struct AddMoleculeContainerView: View {
     }
 
     private var maxYOffset: CGFloat {
-        maxContainerY - initialLocation.y
+        min(maxContainerY, height) - initialLocation.y
+    }
+
+    private func constrainedYOffset(offset: CGFloat) -> CGFloat {
+        let maxDy = min(maxContainerY, height) - initialLocation.y
+        let minDy = -initialLocation.y
+        return min(maxDy, max(minDy, offset))
+    }
+
+    private func constrainedXOffset(offset: CGFloat) -> CGFloat {
+        let maxDx = width - initialLocation.x
+        let minDx = -initialLocation.x
+        return min(maxDx, max(minDx, offset))
     }
 }
 
@@ -167,7 +183,7 @@ class AddingSingleMoleculeViewModel: ObservableObject {
 
     private var lastDrop: Date?
     private let timeBetweenDrops = 0.15
-    private let velocity = 4.0 // pts per second
+    private let velocity = 200.0 // pts per second
 
     /// Adds a molecule at the start position, and animates the Y value to endY
     func add(
@@ -185,7 +201,7 @@ class AddingSingleMoleculeViewModel: ObservableObject {
         let molecule = FallingMolecule(position: startPosition)
         molecules.append(molecule)
 
-        let dy = endY / startPosition.y
+        let dy = endY - startPosition.y
         let duration = Double(dy) / velocity
 
         withAnimation(.linear(duration: duration)) {
@@ -225,6 +241,7 @@ struct AddMoleculeView_Previews: PreviewProvider {
                         canAddMolecule: { true },
                         addMolecules: { (_, _) in }
                     ),
+                    topRowHeight: 50,
                     containerWidth: 50,
                     startOfWater: geo.size.height - 150,
                     maxContainerY: geo.size.height - 300,

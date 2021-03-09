@@ -26,11 +26,7 @@ private struct AqueousReactionScreenWithSettings: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            VStack(spacing: 0) {
-                molecules
-                Spacer()
-                beaker
-            }
+            AqueousBeakerView(model: model, settings: settings)
             Spacer()
             MiddleStackView(model: model, settings: settings)
             Spacer()
@@ -38,46 +34,6 @@ private struct AqueousReactionScreenWithSettings: View {
         }
         .padding(.bottom, settings.bottomPadding)
         .padding(.top, settings.topPadding)
-    }
-
-    private var molecules: some View {
-        HStack(spacing: 0) {
-            Spacer()
-                .frame(width: settings.sliderSettings.handleWidth)
-            AddMoleculesView(
-                model: model.addingMoleculesModel,
-                containerWidth: settings.moleculeWidth,
-                startOfWater: 280,
-                maxContainerY: 200,
-                moleculeSize: 20
-            )
-            .frame(width: settings.beakerWidth)
-        }.zIndex(1)
-    }
-
-    private var beaker: some View {
-        HStack(alignment: .bottom, spacing: 0) {
-            CustomSlider(
-                value: $model.rows,
-                axis: settings.sliderAxis,
-                orientation: .portrait,
-                includeFill: true,
-                settings: settings.sliderSettings,
-                disabled: !model.canSetLiquidLevel
-            )
-            .frame(
-                width: settings.sliderSettings.handleWidth,
-                height: settings.sliderHeight
-            )
-
-            FilledBeaker(
-                molecules: model.components.nonAnimatingMolecules,
-                animatingMolecules: model.components.animatingMolecules,
-                currentTime: model.currentTime,
-                rows: model.rows
-            )
-            .frame(width: settings.beakerWidth, height: settings.beakerHeight)
-        }
     }
 }
 
