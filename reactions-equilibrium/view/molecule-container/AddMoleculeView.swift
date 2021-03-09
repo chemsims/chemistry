@@ -127,11 +127,22 @@ private struct AddMoleculeContainerView: View {
                 )
                 model.add(at: effectivePosition, to: startOfWater + (moleculeSize / 2), time: drag.time)
             }.onEnded { _ in
-                withAnimation(.spring()) {
-                    offset = .zero
-                    rotation = .zero
-                }
-            })
+                endDrag()
+            }).onReceive(
+                NotificationCenter.default.publisher(
+                    for: UIApplication.willResignActiveNotification
+                )
+            ) { _ in
+                endDrag()
+            }
+    }
+
+    private func endDrag() {
+        withAnimation(.spring()) {
+            offset = .zero
+            rotation = .zero
+        }
+        model.endDrag()
     }
 
     private var maxYOffset: CGFloat {

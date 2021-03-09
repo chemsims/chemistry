@@ -76,13 +76,10 @@ class AddingSingleMoleculeViewModel: ObservableObject {
         }
     }
 
-    /// Removes all falling molecules, and calls the molecule was added function
-    func removeAllMolecules() {
-        let count = molecules.count
-        molecules.removeAll()
-        addMolecules(count)
+    func endDrag() {
+        lastDrop = nil
+        lastAddAttempt = nil
     }
-
 
     private func handleVelocityCheck(position: CGPoint) {
         let now = Date()
