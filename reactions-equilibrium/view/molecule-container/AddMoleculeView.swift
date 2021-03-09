@@ -2,12 +2,12 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct AddMoleculesView: View {
 
     let model: AddingMoleculesViewModel
+    let inputState: AqueousReactionInputState
     let topRowHeight: CGFloat
     let containerWidth: CGFloat
     let startOfWater: CGFloat
@@ -31,7 +31,10 @@ struct AddMoleculesView: View {
         height: CGFloat,
         index: Int
     ) -> some View {
-        AddMoleculeContainerView(
+        let activeProduct = molecule.isProduct && inputState == .addProducts
+        let activeReactant = molecule.isReactant && inputState == .addReactants
+        let isActive = activeProduct || activeReactant
+        return AddMoleculeContainerView(
             model: model.models.value(for: molecule),
             isActive: activeMoleculeBinding(molecule: molecule),
             width: width,
@@ -48,6 +51,8 @@ struct AddMoleculesView: View {
             imageName: molecule.imageName
         )
         .zIndex(activeMolecule == molecule ? 1 : 0)
+        .disabled(!isActive)
+        .colorMultiply(isActive ? .white : Color.gray.opacity(0.5))
     }
 
     private func containerX(width: CGFloat, index: Int) -> CGFloat {
@@ -147,16 +152,16 @@ private struct AddMoleculeContainerView: View {
 
 class AddingMoleculesViewModel {
 
-    let canAddMolecule: () -> Bool
+    let canAddMolecule: (AqueousMolecule) -> Bool
     let addMolecules: (AqueousMolecule, Int) -> Void
 
-    init(canAddMolecule: @escaping () -> Bool, addMolecules: @escaping (AqueousMolecule, Int) -> Void) {
+    init(canAddMolecule: @escaping (AqueousMolecule) -> Bool, addMolecules: @escaping (AqueousMolecule, Int) -> Void) {
         self.canAddMolecule = canAddMolecule
         self.addMolecules = addMolecules
 
         func model(_ molecule: AqueousMolecule) -> AddingSingleMoleculeViewModel{
             AddingSingleMoleculeViewModel(
-                canAddMolecule: canAddMolecule,
+                canAddMolecule: { canAddMolecule(molecule) },
                 addMolecules: { addMolecules(molecule, $0) }
             )
         }
@@ -190,6 +195,7 @@ class AddingSingleMoleculeViewModel: ObservableObject {
         at startPosition: CGPoint,
         to endY: CGFloat
     ) {
+        print("can add? \(canAddMolecule())")
         guard canAddMolecule() else {
             return
         }
@@ -238,9 +244,10 @@ struct AddMoleculeView_Previews: PreviewProvider {
             ZStack(alignment: .bottom) {
                 AddMoleculesView(
                     model: AddingMoleculesViewModel(
-                        canAddMolecule: { true },
+                        canAddMolecule: { _ in true },
                         addMolecules: { (_, _) in }
                     ),
+                    inputState: .addProducts,
                     topRowHeight: 50,
                     containerWidth: 50,
                     startOfWater: geo.size.height - 150,

@@ -24,6 +24,7 @@ struct AqueousBeakerView: View {
                 .frame(width: settings.sliderSettings.handleWidth)
             AddMoleculesView(
                 model: model.addingMoleculesModel,
+                inputState: model.inputState,
                 topRowHeight: settings.moleculeContainerYPos,
                 containerWidth: settings.moleculeContainerWidth,
                 startOfWater: topOfWaterPosition,

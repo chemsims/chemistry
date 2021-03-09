@@ -24,7 +24,7 @@ class AqueousReactionViewModel: ObservableObject {
 
         self.navigation = AqueousNavigationModel.model(model: self)
         self.addingMoleculesModel = AddingMoleculesViewModel(
-            canAddMolecule: { true },
+            canAddMolecule: { self.components.canIncrement(molecule: $0) },
             addMolecules: { (molecule, num) in self.increment(molecule: molecule, count: num) }
         )
     }
@@ -77,9 +77,9 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     func increment(molecule: AqueousMolecule, count: Int) {
-        if inputState == .addProducts && molecule.isReactant {
+        if inputState == .addReactants && molecule.isReactant {
             components.increment(molecule: molecule, count: count)
-        } else if inputState == .addReactants && molecule.isProduct {
+        } else if inputState == .addProducts && molecule.isProduct {
             components.increment(molecule: molecule, count: count)
         }
     }
