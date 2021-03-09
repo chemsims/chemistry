@@ -6,6 +6,14 @@ import SwiftUI
 
 enum AqueousMolecule: String, CaseIterable {
     case A, B, C, D
+
+    var isReactant: Bool {
+        self == .A || self == .B
+    }
+
+    var isProduct: Bool {
+        self == .C || self == .D
+    }
 }
 
 

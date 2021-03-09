@@ -77,35 +77,11 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     func increment(molecule: AqueousMolecule, count: Int) {
-        components.increment(molecule: molecule)
-    }
-
-    func incrementAMolecules() {
-        guard inputState == .addReactants else {
-            return
+        if inputState == .addProducts && molecule.isReactant {
+            components.increment(molecule: molecule, count: count)
+        } else if inputState == .addReactants && molecule.isProduct {
+            components.increment(molecule: molecule, count: count)
         }
-        components.increment(molecule: .A)
-    }
-
-    func incrementBMolecules() {
-        guard inputState == .addReactants else {
-            return
-        }
-        components.increment(molecule: .B)
-    }
-
-    func incrementCMolecules() {
-        guard inputState == .addProducts else {
-            return
-        }
-        components.increment(molecule: .C)
-    }
-
-    func incrementDMolecules() {
-        guard inputState == .addProducts else {
-            return
-        }
-        components.increment(molecule: .D)
     }
 
     func resetMolecules() {

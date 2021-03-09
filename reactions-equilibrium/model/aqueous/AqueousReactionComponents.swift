@@ -27,7 +27,9 @@ protocol AqueousReactionComponents {
     var quotientChartDiscontinuity: CGPoint? { get }
     var moleculeChartDiscontinuities: MoleculeValue<CGPoint>? { get }
 
-    mutating func increment(molecule: AqueousMolecule)
+    mutating func increment(molecule: AqueousMolecule, count: Int)
+
+    func canIncrement(molecule: AqueousMolecule) -> Bool
 
     mutating func reset()
 }
@@ -37,16 +39,12 @@ extension AqueousReactionComponents {
     fileprivate func addingMolecules(
         to existing: [GridCoordinate],
         avoiding: [GridCoordinate],
-        maxConcentration: CGFloat
+        maxConcentration: CGFloat,
+        count: Int
     ) -> [GridCoordinate] {
-        let settings = AqueousReactionSettings.ConcentrationInput.self
-        let available = CGFloat(availableCols * availableRows)
+        let maxToAdd = maximumToAdd(to: existing, maxConcentration: maxConcentration)
 
-        let numToIncrement = 1 // (settings.cToIncrement * available).roundedInt()
-        let maxCount = (maxConcentration * available).roundedInt()
-        let maxToAdd = maxCount - existing.count
-
-        let toAdd = max(min(maxToAdd, numToIncrement), 0)
+        let toAdd = max(min(maxToAdd, count), 0)
         return GridCoordinateList.addingRandomElementsTo(
             grid: existing,
             count: toAdd,
@@ -54,6 +52,12 @@ extension AqueousReactionComponents {
             rows: availableRows,
             avoiding: avoiding
         )
+    }
+
+    fileprivate func maximumToAdd(to existing: [GridCoordinate], maxConcentration: CGFloat) -> Int {
+        let available = CGFloat(availableMolecules)
+        let maxCount = (maxConcentration * available).roundedInt()
+        return maxCount - existing.count
     }
 
     fileprivate func initialConcentration(
@@ -157,30 +161,41 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         grid.dGrid(reaction: equations)
     }
 
-    mutating func increment(molecule: AqueousMolecule) {
+    mutating func increment(molecule: AqueousMolecule, count: Int) {
         if molecule == .A {
-            incrementA()
+            incrementA(count: count)
         } else if molecule == .B {
-            incrementB()
+            incrementB(count: count)
         }
     }
 
-    mutating func incrementA() {
+    mutating func incrementA(count: Int) {
         aMolecules = addingMolecules(
             to: aMolecules,
             avoiding: bMolecules,
-            maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
+            maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial,
+            count: count
         )
         grid.setConcentration(of: .A, concentration: initialA)
     }
 
-    mutating func incrementB() {
+    mutating func incrementB(count: Int) {
         bMolecules = addingMolecules(
             to: bMolecules,
             avoiding: aMolecules,
-            maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
+            maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial,
+            count: count
         )
         grid.setConcentration(of: .B, concentration: initialB)
+    }
+
+    func canIncrement(molecule: AqueousMolecule) -> Bool {
+        let maxC = AqueousReactionSettings.ConcentrationInput.maxInitial
+        switch molecule {
+        case .A: return maximumToAdd(to: aMolecules, maxConcentration: maxC) > 0
+        case .B: return maximumToAdd(to: bMolecules, maxConcentration: maxC) > 0
+        default: return false
+        }
     }
 
     private var initialA: CGFloat {
@@ -320,28 +335,39 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         grid = ReverseGridMolecules(forwardGrid: forwardReaction.grid, forwardReaction: forwardReaction.equations)
     }
 
-    mutating func increment(molecule: AqueousMolecule) {
+    mutating func increment(molecule: AqueousMolecule, count: Int) {
         if molecule == .C {
-            incrementC()
+            incrementC(count: count)
         } else if molecule == .D {
-            incrementD()
+            incrementD(count: count)
         }
     }
 
-    private mutating func incrementC() {
+    func canIncrement(molecule: AqueousMolecule) -> Bool {
+        let maxC = AqueousReactionSettings.ConcentrationInput.maxInitial
+        switch molecule {
+        case .C: return maximumToAdd(to: cMolecules, maxConcentration: maxC) > 0
+        case .D: return maximumToAdd(to: dMolecules, maxConcentration: maxC) > 0
+        default: return false
+        }
+    }
+
+    private mutating func incrementC(count: Int) {
         cMolecules = addingMolecules(
             to: cMolecules,
             avoiding: beakerSetter.originalAMolecules + beakerSetter.originalBMolecules + dMolecules,
-            maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
+            maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial,
+            count: count
         )
         grid.setConcentration(of: .C, concentration: initialConcentration(of: cMolecules))
     }
 
-    private mutating func incrementD() {
+    private mutating func incrementD(count: Int) {
         dMolecules = addingMolecules(
             to: dMolecules,
             avoiding: beakerSetter.originalAMolecules + beakerSetter.originalBMolecules + cMolecules,
-            maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial
+            maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial,
+            count: count
         )
         grid.setConcentration(of: .D, concentration: initialConcentration(of: dMolecules))
     }

@@ -16,21 +16,23 @@ class ReactionComponentTests: XCTestCase {
         XCTAssert(model.cMolecules.isEmpty)
         XCTAssert(model.dMolecules.isEmpty)
 
-        model.incrementA()
+        model.incrementA(count: 1)
 
-        let incMolecule = (incC * 100).roundedInt()
-
-        XCTAssertEqual(model.aMolecules.count, incMolecule)
-        model.incrementA()
-        XCTAssertEqual(model.aMolecules.count, 2 * incMolecule)
+        XCTAssertEqual(model.aMolecules.count, 1)
+        model.incrementA(count: 1)
+        XCTAssertEqual(model.aMolecules.count, 2)
     }
 
     func testIncrementingAMoleculesToMaxCount() {
         var model = newModel()
+
+        XCTAssert(model.canIncrement(molecule: .A))
         model.incrementA(count: maxIncrementCount)
 
         XCTAssertEqual(model.aMolecules.count, maxMolecules)
-        model.incrementA()
+        XCTAssertFalse(model.canIncrement(molecule: .A))
+
+        model.incrementA(count: 1)
         XCTAssertEqual(model.aMolecules.count, maxMolecules)
     }
 
@@ -137,8 +139,8 @@ class ReactionComponentTests: XCTestCase {
         let originalCMolecules = model.cMolecules
         let originalOtherMolecules = model.aMolecules + model.bMolecules + model.dMolecules
 
-        model.increment(molecule: .C)
-        XCTAssertEqual(model.cMolecules.count, (maxMolecules / 2) + incMolecules)
+        model.increment(molecule: .C, count: 1)
+        XCTAssertEqual(model.cMolecules.count, (maxMolecules / 2) + 1)
 
         let newMolecules = Set(model.cMolecules).subtracting(Set(originalCMolecules))
         XCTAssertEqual(newMolecules.count, incMolecules)
@@ -151,8 +153,8 @@ class ReactionComponentTests: XCTestCase {
     func testReverseReactionCAndDIsIncreasedWhenAddingProduct() {
         var model = newReverseModel()
 
-        model.increment(molecule: .C)
-        let expectedCount = (maxMolecules / 2) + incMolecules
+        model.increment(molecule: .C, count: 1)
+        let expectedCount = (maxMolecules / 2) + 1
         let expectedConcentration = CGFloat(expectedCount) / 100
 
         let tAddProd = AqueousReactionSettings.timeToAddProduct
@@ -160,7 +162,7 @@ class ReactionComponentTests: XCTestCase {
         XCTAssertEqual(model.equations.productC.getY(at: 0), 0)
         XCTAssertEqual(model.equations.productC.getY(at: tAddProd), expectedConcentration, accuracy: 0.00001)
 
-        model.increment(molecule: .D)
+        model.increment(molecule: .D, count: 1)
         XCTAssertEqual(model.equations.productD.getY(at: 0), 0)
         XCTAssertEqual(model.equations.productD.getY(at: tAddProd), expectedConcentration, accuracy: 0.00001)
     }
@@ -189,45 +191,32 @@ class ReactionComponentTests: XCTestCase {
 
     // Returns number of times to increment reactants to get max concentration. Assumes grid has 100 elements
     private var maxIncrementCount: Int {
-        Int(ceil(Double(maxMolecules) / Double(incMolecules)))
+        30
     }
 
     private let maxC = AqueousReactionSettings.ConcentrationInput.maxInitial
-    private let incC = AqueousReactionSettings.ConcentrationInput.cToIncrement
-    private var incMolecules: Int {
-        (incC * 100).roundedInt()
-    }
-    private var maxMolecules: Int {
-        (maxC * 100).roundedInt()
-    }
-    private var maxConcentration: CGFloat {
-        CGFloat(maxMolecules) / 100
-    }
+    private let incMolecules: Int = 1
+    private var maxMolecules: Int = 30
+    private var maxConcentration: CGFloat = 0.3
 }
 
 private extension ForwardAqueousReactionComponents {
     mutating func incrementA(count: Int) {
-        doIncrement(count, { incrementA() })
+        increment(molecule: .A, count: count)
     }
 
     mutating func incrementB(count: Int) {
-        doIncrement(count, { incrementB() })
+        increment(molecule: .B, count: count)
     }
 }
 
 private extension ReverseAqueousReactionComponents {
     mutating func incrementC(count: Int) {
-        doIncrement(count, { increment(molecule: .C) })
+        increment(molecule: .C, count: count)
     }
 
     mutating func incrementD(count: Int) {
-        doIncrement(count, { increment(molecule: .D) })
-    }
-}
-
-private extension AqueousReactionComponents {
-    func doIncrement(_ count: Int, _ action: () -> Void) {
-        (0..<count).forEach { _ in action() }
+        increment(molecule: .D, count: count)
     }
 }
 
