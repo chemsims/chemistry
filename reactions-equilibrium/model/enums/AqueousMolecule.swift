@@ -2,8 +2,7 @@
 // Reactions App
 //
 
-
-import Foundation
+import SwiftUI
 
 enum AqueousMolecule: String, CaseIterable {
     case A, B, C, D
@@ -16,6 +15,17 @@ enum AqueousMoleculeReactant: String {
 
 enum AqueousMoleculeProduct {
     case C, D
+}
+
+extension AqueousMolecule {
+    var color: Color {
+        switch self {
+        case .A: return .from(.aqMoleculeA)
+        case .B: return .from(.aqMoleculeB)
+        case .C: return .from(.aqMoleculeC)
+        case .D: return .from(.aqMoleculeD)
+        }
+    }
 }
 
 extension AqueousMolecule {
