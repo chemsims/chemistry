@@ -14,9 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let controller = DeferScreenEdgesHostingController(rootView: contentView)
         DeferScreenEdgesState.shared.didSetEdgesDelegate = controller.didSetEdges
 
-        // TODO - only enable this when catalyst is being shaked
-        DeferScreenEdgesState.shared.deferEdges = [.top]
-
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

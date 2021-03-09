@@ -74,10 +74,12 @@ class AqueousAddReactantState: AqueousScreenState {
         model.statement = AqueousStatements.instructToAddReactant(selected: model.selectedReaction)
         model.inputState = .addReactants
         model.showConcentrationLines = true
+        DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
         model.showConcentrationLines = false
+        DeferScreenEdgesState.shared.deferEdges = []
     }
 }
 
@@ -86,6 +88,7 @@ class AqueousPreRunAnimationState: AqueousScreenState {
         model.statement = AqueousStatements.preAnimation
         model.inputState = .none
         model.showQuotientLine = true
+        DeferScreenEdgesState.shared.deferEdges = []
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
@@ -174,6 +177,7 @@ class InstructToAddProductState: AqueousScreenState {
         if let fwd = model.components as? ForwardAqueousReactionComponents {
             model.components = ReverseAqueousReactionComponents(forwardReaction: fwd)
         }
+        DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
@@ -181,6 +185,7 @@ class InstructToAddProductState: AqueousScreenState {
         if let rev = model.components as? ReverseAqueousReactionComponents {
             model.components = rev.forwardReaction
         }
+        DeferScreenEdgesState.shared.deferEdges = []
     }
 }
 
@@ -188,6 +193,7 @@ class AqueousPreReverseAnimation: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.preReverseReaction
         model.inputState = .none
+        DeferScreenEdgesState.shared.deferEdges = []
     }
 }
 
