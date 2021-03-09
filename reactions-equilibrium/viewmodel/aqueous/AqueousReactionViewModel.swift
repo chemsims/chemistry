@@ -77,10 +77,14 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     func increment(molecule: AqueousMolecule, count: Int) {
-        if inputState == .addReactants && molecule.isReactant {
+        guard components.canIncrement(molecule: molecule) else {
+            return
+        }
+        let canAddReactant = inputState == .addReactants && molecule.isReactant
+        let canAddProduct = inputState == .addProducts && molecule.isProduct
+        if canAddProduct || canAddReactant {
             components.increment(molecule: molecule, count: count)
-        } else if inputState == .addProducts && molecule.isProduct {
-            components.increment(molecule: molecule, count: count)
+            handlePostIncrementSaturation(of: molecule)
         }
     }
 
@@ -100,6 +104,21 @@ class AqueousReactionViewModel: ObservableObject {
 
     func back() {
         navigation?.back()
+    }
+
+    /// Informs the user if they've added the maximum allowed amount of `molecule`
+    private func handlePostIncrementSaturation(of molecule: AqueousMolecule) {
+        guard !components.canIncrement(molecule: molecule) else {
+            return
+        }
+        let canAddComplement = components.canIncrement(molecule: molecule.complement)
+        var msg: [TextLine] = ["That's plenty of \(molecule) for now!"]
+        if canAddComplement {
+            msg.append("Why don't you try adding some of \(molecule.complement)?")
+        } else {
+            msg.append("Why don't you press next to start the reaction?")
+        }
+        statement = msg
     }
 
     private func informUserOfMissing(reactant: AqueousMoleculeReactant) {

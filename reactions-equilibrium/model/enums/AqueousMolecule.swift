@@ -14,6 +14,16 @@ enum AqueousMolecule: String, CaseIterable {
     var isProduct: Bool {
         self == .C || self == .D
     }
+
+    /// Returns the complementing molecule. For example, a reactant would return the other reactant
+    var complement: AqueousMolecule {
+        switch self {
+        case .A: return .B
+        case .B: return .A
+        case .C: return .D
+        case .D: return .C
+        }
+    }
 }
 
 

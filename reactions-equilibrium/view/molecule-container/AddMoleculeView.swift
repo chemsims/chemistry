@@ -206,7 +206,6 @@ class AddingSingleMoleculeViewModel: ObservableObject {
         guard lastDrop == nil || Date().timeIntervalSince(lastDrop!) >= Double(timeBetweenDrops) else {
             return
         }
-        print(timeBetweenDrops)
         lastDrop = Date()
 
         let molecule = FallingMolecule(position: startPosition)
