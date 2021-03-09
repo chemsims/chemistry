@@ -2,9 +2,8 @@
 // Reactions App
 //
 
-
-import UIKit
 import SwiftUI
+import ReactionsCore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -12,11 +11,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let contentView = AqueousReactionScreen(model: AqueousReactionViewModel())
+        let controller = DeferScreenEdgesHostingController(rootView: contentView)
+        DeferScreenEdgesState.shared.didSetEdgesDelegate = controller.didSetEdges
+
+        // TODO - only enable this when catalyst is being shaked
+        DeferScreenEdgesState.shared.deferEdges = [.top]
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
+            window.rootViewController = controller
             self.window = window
             window.makeKeyAndVisible()
         }

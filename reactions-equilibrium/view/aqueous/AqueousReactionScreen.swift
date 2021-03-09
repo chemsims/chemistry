@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 import ReactionsCore
 
@@ -45,27 +44,15 @@ private struct AqueousReactionScreenWithSettings: View {
         HStack(spacing: 0) {
             Spacer()
                 .frame(width: settings.sliderSettings.handleWidth)
-            HStack(spacing: settings.moleculeSpacing) {
-                ForEach(AqueousMolecule.allCases, id: \.rawValue) { molecule in
-                    Image(molecule.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: settings.moleculeWidth)
-                        .onTapGesture {
-                            if molecule == .A {
-                                model.incrementAMolecules()
-                            } else if molecule == .B {
-                                model.incrementBMolecules()
-                            } else if molecule == .C {
-                                model.incrementCMolecules()
-                            } else if molecule == .D {
-                                model.incrementDMolecules()
-                            }
-                        }
-
-                }
-            }
-        }
+            AddMoleculesView(
+                model: model.addingMoleculesModel,
+                containerWidth: settings.moleculeWidth,
+                startOfWater: 280,
+                maxContainerY: 200,
+                moleculeSize: 20
+            )
+            .frame(width: settings.beakerWidth)
+        }.zIndex(1)
     }
 
     private var beaker: some View {
@@ -78,7 +65,10 @@ private struct AqueousReactionScreenWithSettings: View {
                 settings: settings.sliderSettings,
                 disabled: !model.canSetLiquidLevel
             )
-            .frame(width: settings.sliderSettings.handleWidth, height: settings.sliderHeight)
+            .frame(
+                width: settings.sliderSettings.handleWidth,
+                height: settings.sliderHeight
+            )
 
             FilledBeaker(
                 molecules: model.components.nonAnimatingMolecules,
@@ -333,253 +323,6 @@ private struct SelectionToggleText: View {
             )
             .onTapGesture(perform: action)
             .lineLimit(1)
-    }
-}
-
-private struct AqueousScreenLayoutSettings {
-    let geometry: GeometryProxy
-    var width: CGFloat {
-        geometry.size.width
-    }
-
-    var height: CGFloat {
-        geometry.size.height
-    }
-
-    var beakerWidth: CGFloat {
-        0.22 * width
-    }
-
-    var bottomPadding: CGFloat {
-        0.02 * geometry.size.height
-    }
-
-    var topPadding: CGFloat {
-        bottomPadding
-    }
-
-    var beakerHeight: CGFloat {
-        beakerWidth * BeakerSettings.heightToWidth
-    }
-
-    var sliderHeight: CGFloat {
-        0.8 * beakerHeight
-    }
-
-    var sliderSettings: SliderGeometrySettings {
-        SliderGeometrySettings(handleWidth: 0.13 * beakerWidth)
-    }
-
-    // Chart settings for concentration chart
-    var chartSettings: ReactionEquilibriumChartsLayoutSettings {
-        ReactionEquilibriumChartsLayoutSettings(
-            size: chartSize,
-            maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis
-        )
-    }
-
-    func quotientChartSettings(
-        convergenceQ: CGFloat,
-        maxQ: CGFloat
-    ) -> ReactionEquilibriumChartsLayoutSettings {
-        let safeConvergence = convergenceQ == 0 ? 1 : convergenceQ
-        let convergenceWithPadding = safeConvergence / 0.8
-        let maxValue = max(maxQ, convergenceWithPadding)
-        return ReactionEquilibriumChartsLayoutSettings(
-            size: chartSize,
-            maxYAxisValue: maxValue
-        )
-    }
-
-    var chartSize: CGFloat {
-        let maxSizeForHeight = 0.4 * height
-        let maxSizeForWidth = 0.2 * width
-        return min(maxSizeForWidth, maxSizeForHeight)
-    }
-
-    var chartSelectionHeight: CGFloat {
-        0.048 * height
-    }
-
-    var chartSelectionFontSize: CGFloat {
-        0.8 * chartSelectionHeight
-    }
-
-    var chartSelectionBottomPadding: CGFloat {
-        0.1 * chartSelectionHeight
-    }
-}
-
-extension AqueousScreenLayoutSettings {
-    var moleculeWidth: CGFloat {
-        0.12 * beakerWidth
-    }
-
-    var moleculeSpacing: CGFloat {
-        0.1 * beakerWidth
-    }
-}
-
-// Right stack
-extension AqueousScreenLayoutSettings {
-
-    var rightStackWidth: CGFloat {
-        0.8 * (width - beakerWidth - chartSize)
-    }
-
-    var scalesWidth: CGFloat {
-        let maxWidthForGeometry = 0.23 * width
-        let maxWidthForImage = MoleculeScalesGeometry.widthToHeight * scalesHeight
-        return min(maxWidthForImage, maxWidthForGeometry)
-    }
-
-    var scalesHeight: CGFloat {
-        0.29 * topRightStackHeight
-    }
-
-    var gridWidth: CGFloat {
-        0.28 * width
-    }
-
-    var gridHeight: CGFloat {
-        0.29 * topRightStackHeight
-    }
-
-    var equationHeight: CGFloat {
-        0.3 * topRightStackHeight
-    }
-
-    var equationWidth: CGFloat {
-        0.3 * width
-    }
-
-    var gridSelectionFontSize: CGFloat {
-        0.6 * chartSelectionFontSize
-    }
-
-    var reactionToggleHeight: CGFloat {
-        0.09 * topRightStackHeight
-    }
-
-    var topRightStackHeight: CGFloat {
-        height - beakyTotalHeight
-    }
-
-    var beakyTotalHeight: CGFloat {
-        beakySettings.bubbleHeight + beakySettings.beakyVSpacing + beakySettings.navButtonSize
-    }
-
-    var beakySettings: BeakyGeometrySettings {
-        let bubbleWidth = 0.27 * width
-        return BeakyGeometrySettings(
-            beakyVSpacing: 2,
-            bubbleWidth: bubbleWidth,
-            bubbleHeight: 0.34 * height,
-            beakyHeight: 0.1 * width,
-            bubbleFontSize: 0.018 * width,
-            navButtonSize: 0.076 * height,
-            bubbleStemWidth: SpeechBubbleSettings.getStemWidth(bubbleWidth: bubbleWidth)
-        )
-    }
-}
-
-extension AqueousScreenLayoutSettings {
-    var sliderAxis: AxisPositionCalculations<CGFloat> {
-        let innerBeakerWidth = BeakerSettings(width: beakerWidth).innerBeakerWidth
-        let grid = MoleculeGridSettings(totalWidth: innerBeakerWidth)
-
-        func posForRows(_ rows: CGFloat) -> CGFloat {
-            sliderHeight - grid.height(for: CGFloat(rows))
-        }
-
-        let minRow = CGFloat(AqueousReactionSettings.minRows)
-        let maxRow = CGFloat(AqueousReactionSettings.maxRows)
-
-        return AxisPositionCalculations(
-            minValuePosition: posForRows(minRow),
-            maxValuePosition: posForRows(maxRow),
-            minValue: minRow,
-            maxValue: maxRow
-        )
-    }
-}
-
-struct ReactionEquilibriumChartsLayoutSettings {
-
-    let size: CGFloat
-    let maxYAxisValue: CGFloat
-
-    var headRadius: CGFloat {
-        0.018 * size
-    }
-
-    var layout: TimeChartLayoutSettings {
-        TimeChartLayoutSettings(
-            xAxis: AxisPositionCalculations<CGFloat>(
-                minValuePosition: 0,
-                maxValuePosition: size,
-                minValue: 0,
-                maxValue: AqueousReactionSettings.forwardReactionTime
-            ),
-            yAxis: AxisPositionCalculations<CGFloat>(
-                minValuePosition: size,
-                maxValuePosition: 0.2 * size,
-                minValue: 0,
-                maxValue: maxYAxisValue
-            ),
-            haloRadius: 2 * headRadius,
-            lineWidth: 0.3 * headRadius
-        )
-    }
-
-    var axisShapeSettings: ChartAxisShapeSettings {
-        ChartAxisShapeSettings(chartSize: size)
-    }
-
-    var axisLabelFontSize: CGFloat {
-        0.06 * size
-    }
-}
-
-extension ReactionEquilibriumChartsLayoutSettings {
-    var totalChartWidth: CGFloat {
-        size + (2 * (yAxisWidthLabelWidth + axisLabelGapFromAxis))
-    }
-
-    var totalChartHeight: CGFloat {
-        size + axisLabelGapFromAxis + xAxisLabelHeight
-    }
-}
-
-extension ReactionEquilibriumChartsLayoutSettings {
-    var legendCircleSize: CGFloat {
-        0.09 * size
-    }
-
-    var legendSpacing: CGFloat {
-        0.8 * legendCircleSize
-    }
-
-    var legendFontSize: CGFloat {
-        0.6 * legendCircleSize
-    }
-
-    var legendPadding: CGFloat {
-        0.35 * legendCircleSize
-    }
-}
-
-extension ReactionEquilibriumChartsLayoutSettings {
-    var yAxisWidthLabelWidth: CGFloat {
-        0.1 * size
-    }
-
-    var axisLabelGapFromAxis: CGFloat {
-        headRadius
-    }
-
-    var xAxisLabelHeight: CGFloat {
-        0.1 * size
     }
 }
 

@@ -115,10 +115,13 @@
 		5763177E259B8EAF00D7CE2C /* SizeAdjuster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5763177D259B8EAF00D7CE2C /* SizeAdjuster.swift */; };
 		57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */; };
 		5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766B71E256EC20200569CB9 /* ShakeExtension.swift */; };
+		576A41DB25F773D900047618 /* AddMoleculeWithLiquidBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41DA25F773D900047618 /* AddMoleculeWithLiquidBeaker.swift */; };
+		576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
+		576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */; };
+		576A420725F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A420625F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift */; };
 		576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */; };
 		576D5AA52566BAB50062F722 /* FirstOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */; };
 		576D5AAC2566CA900062F722 /* SecondOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */; };
-		576EBF9F25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
 		577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077B42568E318003E750E /* EnergyProfileScreen.swift */; };
 		577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */; };
 		577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* SKBeakerScene.swift */; };
@@ -493,6 +496,9 @@
 		5763177D259B8EAF00D7CE2C /* SizeAdjuster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeAdjuster.swift; sourceTree = "<group>"; };
 		57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateEquation.swift; sourceTree = "<group>"; };
 		5766B71E256EC20200569CB9 /* ShakeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeExtension.swift; sourceTree = "<group>"; };
+		576A41DA25F773D900047618 /* AddMoleculeWithLiquidBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoleculeWithLiquidBeaker.swift; sourceTree = "<group>"; };
+		576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenLayoutSettings.swift; sourceTree = "<group>"; };
+		576A420625F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEquilibriumChartsLayoutSettings.swift; sourceTree = "<group>"; };
 		576D5A7725665E170062F722 /* ScaledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledView.swift; sourceTree = "<group>"; };
 		576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderEquationView.swift; sourceTree = "<group>"; };
 		576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderEquationView.swift; sourceTree = "<group>"; };
@@ -902,7 +908,6 @@
 				571D6A4D255A780900F4E635 /* Info.plist */,
 				571D6A47255A780900F4E635 /* Preview Content */,
 				5766B71E256EC20200569CB9 /* ShakeExtension.swift */,
-				576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */,
 			);
 			path = "reactions-app";
 			sourceTree = "<group>";
@@ -1233,6 +1238,15 @@
 			path = "energy-profile";
 			sourceTree = "<group>";
 		};
+		576A41FB25F77B6C00047618 /* layout */ = {
+			isa = PBXGroup;
+			children = (
+				576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */,
+				576A420625F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift */,
+			);
+			path = layout;
+			sourceTree = "<group>";
+		};
 		576D5A89256674D50062F722 /* zero-order */ = {
 			isa = PBXGroup;
 			children = (
@@ -1472,6 +1486,7 @@
 		5797A4E225E40AF600991BD9 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */,
 				57D2F2D225EA27D100AEE0D8 /* shapes */,
 				571B3CAE25658ACC0075358B /* CircleIconButton.swift */,
 				5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */,
@@ -1606,6 +1621,7 @@
 			isa = PBXGroup;
 			children = (
 				57DB304325F74D050070E96F /* AddMoleculeView.swift */,
+				576A41DA25F773D900047618 /* AddMoleculeWithLiquidBeaker.swift */,
 			);
 			path = "molecule-container";
 			sourceTree = "<group>";
@@ -1645,6 +1661,7 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				576A41FB25F77B6C00047618 /* layout */,
 				5736DC2E25F5006B003FD2B4 /* grid */,
 				5725973725EE4AED00D87964 /* aqueous */,
 				57ABDC4425EC03BC0078A82B /* statements */,
@@ -2157,7 +2174,6 @@
 				57B23325258E94A500128760 /* ReactionFilingScreen.swift in Sources */,
 				577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */,
 				57CDFE4125E270C5005D699A /* SecondOrderQuizQuestions.swift in Sources */,
-				576EBF9F25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
 				576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */,
 				571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */,
@@ -2264,6 +2280,7 @@
 				57DDAC7E25E5260400B535A7 /* AqueousReactionSettings.swift in Sources */,
 				5736DC1225F4A91F003FD2B4 /* ReactionDirection.swift in Sources */,
 				57DDAD2425E5706A00B535A7 /* MultiConcentrationPlot.swift in Sources */,
+				576A41DB25F773D900047618 /* AddMoleculeWithLiquidBeaker.swift in Sources */,
 				57D2F2C925EA265900AEE0D8 /* QuotientPlot.swift in Sources */,
 				575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */,
 				57A1B79825EAA65800878B52 /* MoleculeScaleBasket.swift in Sources */,
@@ -2291,8 +2308,10 @@
 				5736DC3025F5007D003FD2B4 /* GridMolecules.swift in Sources */,
 				57E902B425ED40B500758300 /* AqueousReactionInputState.swift in Sources */,
 				57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */,
+				576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */,
 				575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */,
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
+				576A420725F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift in Sources */,
 				57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */,
 				5725971925EE3A2A00D87964 /* AqueousReactionComponents.swift in Sources */,
 				57DDACE925E552F700B535A7 /* AqueousReactionViewModel.swift in Sources */,
@@ -2346,6 +2365,7 @@
 				5797A4DB25E40AD400991BD9 /* ReactionType.swift in Sources */,
 				5797A48825E40A3E00991BD9 /* EmptyBeaker.swift in Sources */,
 				5797A4B825E40A6000991BD9 /* ReactionPairDisplay.swift in Sources */,
+				576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */,
 				5797A53E25E41E0100991BD9 /* AxisPositionCalculations.swift in Sources */,
 				575A884F25E4327800AEE448 /* QuestionSet.swift in Sources */,
 				57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */,

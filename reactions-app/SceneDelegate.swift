@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import ReactionsCore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

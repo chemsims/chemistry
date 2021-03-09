@@ -42,7 +42,7 @@ extension AqueousReactionComponents {
         let settings = AqueousReactionSettings.ConcentrationInput.self
         let available = CGFloat(availableCols * availableRows)
 
-        let numToIncrement = (settings.cToIncrement * available).roundedInt()
+        let numToIncrement = 1 // (settings.cToIncrement * available).roundedInt()
         let maxCount = (maxConcentration * available).roundedInt()
         let maxToAdd = maxCount - existing.count
 

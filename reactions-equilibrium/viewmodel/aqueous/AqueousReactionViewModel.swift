@@ -23,7 +23,13 @@ class AqueousReactionViewModel: ObservableObject {
         )
 
         self.navigation = AqueousNavigationModel.model(model: self)
+        self.addingMoleculesModel = AddingMoleculesViewModel(
+            canAddMolecule: { true },
+            addMolecules: { (molecule, num) in self.increment(molecule: molecule, count: num) }
+        )
     }
+
+    private(set) var addingMoleculesModel: AddingMoleculesViewModel! = nil
 
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows) {
@@ -68,6 +74,10 @@ class AqueousReactionViewModel: ObservableObject {
 
     var convergenceQuotient: CGFloat {
         quotientEquation.getY(at: AqueousReactionSettings.endOfReverseReaction)
+    }
+
+    func increment(molecule: AqueousMolecule, count: Int) {
+        components.increment(molecule: molecule)
     }
 
     func incrementAMolecules() {
