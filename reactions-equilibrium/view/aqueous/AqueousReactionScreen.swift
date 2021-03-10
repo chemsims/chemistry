@@ -76,6 +76,7 @@ private struct MiddleStackView: View {
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showConcentrationLines,
             offset: model.chartOffset,
+            minDragTime: model.components.quotientChartDiscontinuity?.x,
             settings: settings.chartSettings
         )
     }

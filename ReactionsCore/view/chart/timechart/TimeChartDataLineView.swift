@@ -22,6 +22,7 @@ public struct TimeChartMultiDataLineView: View {
 
     let clipData: Bool
     let offset: CGFloat
+    let minDragTime: CGFloat?
 
     public init(
         data: [TimeChartDataLine],
@@ -34,7 +35,8 @@ public struct TimeChartMultiDataLineView: View {
         highlightLhs: Bool = false,
         highlightRhs: Bool = false,
         clipData: Bool = false,
-        offset: CGFloat = 0
+        offset: CGFloat = 0,
+        minDragTime: CGFloat? = nil
     ) {
         self.data = data
         self.settings = settings
@@ -47,6 +49,7 @@ public struct TimeChartMultiDataLineView: View {
         self.highlightRhs = highlightRhs
         self.clipData = clipData
         self.offset = offset
+        self.minDragTime = minDragTime
     }
 
     public var body: some View {
@@ -63,7 +66,8 @@ public struct TimeChartMultiDataLineView: View {
                     highlightLhs: highlightLhs,
                     highlightRhs: highlightRhs,
                     clipData: clipData,
-                    offset: offset
+                    offset: offset,
+                    minDragTime: minDragTime
                 )
             }
         }
@@ -87,6 +91,7 @@ public struct TimeChartDataLineView: View {
     let clipData: Bool
 
     let offset: CGFloat
+    let minDragTime: CGFloat?
 
     public init(
         data: TimeChartDataLine,
@@ -99,7 +104,8 @@ public struct TimeChartDataLineView: View {
         highlightLhs: Bool,
         highlightRhs: Bool,
         clipData: Bool = false,
-        offset: CGFloat = 0
+        offset: CGFloat = 0,
+        minDragTime: CGFloat? = nil
     ) {
         self.data = data
         self.settings = settings
@@ -112,6 +118,7 @@ public struct TimeChartDataLineView: View {
         self.highlightRhs = highlightRhs
         self.clipData = clipData
         self.offset = offset
+        self.minDragTime = minDragTime
     }
 
     public var body: some View {
@@ -138,7 +145,10 @@ public struct TimeChartDataLineView: View {
                     let xLocation = gesture.location.x
                     let shiftedAxis = settings.xAxis.shift(by: offset)
                     let newTime = shiftedAxis.getValue(at: xLocation)
-                    currentTime = max(initialTime + offset, min(finalTime + offset, newTime))
+
+                    let minTime = minDragTime ?? initialTime + offset
+                    let maxTime = finalTime + offset
+                    currentTime = max(minTime, min(maxTime, newTime))
                 })
             }
             head(

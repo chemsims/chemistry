@@ -68,7 +68,8 @@ struct QuotientPlot: View {
             canSetCurrentTime: canSetCurrentTime,
             settings: settings.layout,
             axisSettings: settings.axisShapeSettings,
-            offset: offset
+            offset: offset,
+            minDragTime: discontinuity?.x
         )
     }
 
