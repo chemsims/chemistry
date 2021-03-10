@@ -9,6 +9,7 @@ struct AqueousEquationView: View {
 
     let equations: BalancedReactionEquations
     let quotient: Equation
+    let convergedQuotient: CGFloat
     let currentTime: CGFloat
 
     let maxWidth: CGFloat
@@ -24,6 +25,7 @@ struct AqueousEquationView: View {
             UnscaledAqueousEquationView(
                 equations: equations,
                 quotient: quotient,
+                convergedQuotient: convergedQuotient,
                 currentTime: currentTime
             )
         }
@@ -34,6 +36,7 @@ struct AqueousEquationView: View {
 private struct UnscaledAqueousEquationView: View {
     let equations: BalancedReactionEquations
     let quotient: Equation
+    let convergedQuotient: CGFloat
     let currentTime: CGFloat
 
     var body: some View {
@@ -50,7 +53,11 @@ private struct UnscaledAqueousEquationView: View {
                     currentTime: currentTime
                 )
 
-                FilledQuotientKView(quotient: quotient, currentTime: currentTime)
+                FilledQuotientKView(
+                    quotient: quotient,
+                    convergedQuotient: convergedQuotient,
+                    currentTime: currentTime
+                )
             }
 
         }
@@ -106,6 +113,7 @@ private struct QuotientEqualsKView: View {
             FixedText("Q")
                 .frame(width: EquationSizing.boxWidth)
             FixedText("=")
+                .frame(width: 22)
             FixedText("K")
                 .frame(width: EquationSizing.boxWidth)
         }
@@ -120,10 +128,11 @@ private struct FilledQuotientDefinitionView: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            term(quotient, 2, withParens: false)
+            animatingTerm(equation: quotient, formatter: formatQuotient)
             FixedText("=")
             fraction
         }
+        .minimumScaleFactor(0.5)
     }
 
     private var fraction: some View {
@@ -144,36 +153,39 @@ private struct FilledQuotientDefinitionView: View {
     private func term(
         _ equation: Equation,
         _ decimals: Int,
-        withParens: Bool = true,
-        coefficient: Int? = nil
+        coefficient: Int
     ) -> some View {
         HStack(spacing: 2) {
-            AnimatingNumber(
-                x: currentTime,
-                equation: equation,
-                formatter: {
-                    let asString = $0.str(decimals: decimals)
-                    return withParens ? "(\(asString))" : asString
-                }
-            )
-            .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
-
-            if (coefficient != nil) {
-                FixedText("\(coefficient!)")
-                    .offset(y: -10)
-                    .font(.system(size: EquationSizing.subscriptFontSize))
-                    .opacity(coefficient == 1 ? 0 : 1)
-                    .animation(nil)
-                    .frame(width: 15)
+            animatingTerm(equation: equation) {
+                "(\($0.str(decimals: decimals)))"
             }
+
+            FixedText("\(coefficient)")
+                .offset(y: -10)
+                .font(.system(size: EquationSizing.subscriptFontSize))
+                .opacity(coefficient == 1 ? 0 : 1)
+                .animation(nil)
+                .frame(width: 15)
         }
-        .minimumScaleFactor(0.5)
+    }
+
+    private func animatingTerm(
+        equation: Equation,
+        formatter: @escaping (CGFloat) -> String
+    ) -> some View {
+        AnimatingNumber(
+            x: currentTime,
+            equation: equation,
+            formatter: formatter
+        )
+        .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
     }
 }
 
 private struct FilledQuotientKView: View {
 
     let quotient: Equation
+    let convergedQuotient: CGFloat
     let currentTime: CGFloat
 
     var body: some View {
@@ -181,21 +193,34 @@ private struct FilledQuotientKView: View {
             AnimatingNumber(
                 x: currentTime,
                 equation: quotient,
-                formatter: { $0.str(decimals: 2)}
+                formatter: formatQuotient
             )
             .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
             .minimumScaleFactor(0.5)
-
-            FixedText("=")
 
             AnimatingNumber(
                 x: currentTime,
                 equation: quotient,
-                formatter: { $0.str(decimals: 2)}
+                formatter: formatEquals
             )
-            .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
-            .minimumScaleFactor(0.5)
+            .frame(width: 22, height: 30)
+
+            FixedText("\(convergedQuotient.str(decimals: 2))")
+                .frame(width: EquationSizing.boxWidth)
+                .minimumScaleFactor(0.8)
         }
+    }
+
+    private func formatEquals(at quotient: CGFloat) -> String {
+        let roundedQuotient = quotient.rounded(decimals: 2)
+        let roundedConverged = convergedQuotient.rounded(decimals: 2)
+
+        if roundedQuotient > roundedConverged {
+            return ">"
+        } else if roundedQuotient < roundedConverged {
+            return "<"
+        }
+        return "="
     }
 }
 
@@ -205,13 +230,19 @@ private let NaturalWidth: CGFloat = 480
 struct AqueousEquationView_Previews: PreviewProvider {
     static var previews: some View {
         UnscaledAqueousEquationView(
-            equations: equations,
-            quotient: ReactionQuotientEquation(equations: equations),
-            currentTime: 10
+            equations: reverse,
+            quotient: ReactionQuotientEquation(equations: reverse),
+            convergedQuotient: 0.14,
+            currentTime: 14
         )
         .previewLayout(.fixed(width: NaturalWidth, height: NaturalHeight))
         .border(Color.black)
     }
+
+    private static let reverse = BalancedReactionEquations(
+        forwardReaction: equations,
+        reverseInput: ReverseReactionInput(c0: 0.4, d0: 0.4, startTime: 21, convergenceTime: 30)
+    )
 
     private static let equations = BalancedReactionEquations(
         coefficients: BalancedReactionCoefficients(
@@ -220,9 +251,17 @@ struct AqueousEquationView_Previews: PreviewProvider {
             productC: 1,
             productD: 4
         ),
-        equilibriumConstant: 1,
-        a0: 0.5,
-        b0: 0.4,
+        equilibriumConstant: 2,
+        a0: 0.3,
+        b0: 0.3,
         convergenceTime: 20
     )
+}
+
+private func formatQuotient(_ quotient: CGFloat) -> String {
+    if (quotient >= 100) {
+        return quotient.str(decimals: 0)
+    } else {
+        return quotient.str(decimals: 2)
+    }
 }
