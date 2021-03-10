@@ -275,6 +275,7 @@
 		57E59A4625F925F60087F760 /* AqueousReactionTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A4525F925F60087F760 /* AqueousReactionTypeView.swift */; };
 		57E59A5425F92BFE0087F760 /* AqueousScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */; };
 		57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5D25F92E260087F760 /* HighlightedElements.swift */; };
+		57E59A6425F93D5D0087F760 /* ConvergenceHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A6325F93D5D0087F760 /* ConvergenceHighlight.swift */; };
 		57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF6D2582831000A30582 /* ConcentrationTable.swift */; };
 		57E7FF72258289B200A30582 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF71258289B200A30582 /* MenuButton.swift */; };
 		57E7FF7F25828E0500A30582 /* MainMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF7E25828E0500A30582 /* MainMenuOverlay.swift */; };
@@ -641,6 +642,7 @@
 		57E59A4525F925F60087F760 /* AqueousReactionTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionTypeView.swift; sourceTree = "<group>"; };
 		57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenElement.swift; sourceTree = "<group>"; };
 		57E59A5D25F92E260087F760 /* HighlightedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedElements.swift; sourceTree = "<group>"; };
+		57E59A6325F93D5D0087F760 /* ConvergenceHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvergenceHighlight.swift; sourceTree = "<group>"; };
 		57E7FF692582307A00A30582 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		57E7FF6D2582831000A30582 /* ConcentrationTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTable.swift; sourceTree = "<group>"; };
 		57E7FF71258289B200A30582 /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
@@ -1784,6 +1786,7 @@
 			children = (
 				57DDAD2325E5706A00B535A7 /* MultiConcentrationPlot.swift */,
 				57D2F2C825EA265900AEE0D8 /* QuotientPlot.swift */,
+				57E59A6325F93D5D0087F760 /* ConvergenceHighlight.swift */,
 			);
 			path = chart;
 			sourceTree = "<group>";
@@ -2323,6 +2326,7 @@
 				57D2F2C925EA265900AEE0D8 /* QuotientPlot.swift in Sources */,
 				575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */,
 				57A1B79825EAA65800878B52 /* MoleculeScaleBasket.swift in Sources */,
+				57E59A6425F93D5D0087F760 /* ConvergenceHighlight.swift in Sources */,
 				57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */,
 				5736DC4025F5478F003FD2B4 /* FractionedCoordinates.swift in Sources */,
 				5736DC1825F4B036003FD2B4 /* ScalesRotationEquation.swift in Sources */,

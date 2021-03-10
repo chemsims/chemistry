@@ -133,13 +133,23 @@ class AqueousRunAnimationState: AqueousScreenState {
     }
 
     override var delayedStates: [DelayedState<AqueousScreenState>] {
-        func delayedState(_ statement: [TextLine], _ delay: Double) -> DelayedState<AqueousScreenState> {
-            DelayedState(state: AqueousSetStatementState(statement: statement), delay: delay)
+        func delayedState(
+            _ statement: [TextLine],
+            _ delay: Double,
+            _ elements: [AqueousScreenElement] = []
+        ) -> DelayedState<AqueousScreenState> {
+            DelayedState(
+                state: AqueousSetStatementState(
+                    statement: statement,
+                    highlights: elements
+                ),
+                delay: delay
+            )
         }
         let delay = Double(AqueousReactionSettings.timeForConvergence / 2)
         return [
             delayedState(AqueousStatements.midAnimation, delay),
-            delayedState(AqueousStatements.reachedEquilibrium, delay),
+            delayedState(AqueousStatements.reachedEquilibrium, delay, [.chartEquilibrium]),
         ]
     }
 }
@@ -158,6 +168,7 @@ class AqueousEndAnimationState: AqueousScreenState {
         model.statement = statement
         model.highlightForwardReactionArrow = false
         model.highlightReverseReactionArrow = false
+        model.highlightedElements.elements = [.chartEquilibrium]
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = endTime * endOfReactionFactor
         }
@@ -166,6 +177,7 @@ class AqueousEndAnimationState: AqueousScreenState {
 
     override func unapply(on model: AqueousReactionViewModel) {
         model.canSetCurrentTime = false
+        model.highlightedElements.clear()
     }
 }
 
@@ -255,7 +267,8 @@ class AqueousRunReverseAnimation: AqueousScreenState {
             ),
             DelayedState(
                 state: AqueousSetStatementState(
-                    statement: AqueousStatements.reverseEquilibriumReached
+                    statement: AqueousStatements.reverseEquilibriumReached,
+                    highlights: [.chartEquilibrium]
                 ),
                 delay: delay
             )
@@ -271,6 +284,7 @@ class FinalAqueousState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.endStatement
         model.canSetCurrentTime = false
+        model.highlightedElements.clear()
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = AqueousReactionSettings.endOfReverseReaction * endOfReactionFactor
         }
@@ -284,4 +298,4 @@ class FinalAqueousState: AqueousScreenState {
 private let endOfReactionFactor: CGFloat = 1.0001
 
 /// Add a little bit to t add product when animating there, to make sure the discontinuity in the graph is correctly captured
-private let TAddProduct = AqueousReactionSettings.timeToAddProduct + 0.05
+private let TAddProduct = AqueousReactionSettings.timeToAddProduct

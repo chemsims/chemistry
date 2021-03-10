@@ -57,6 +57,9 @@ private struct MiddleStackView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             chartSelectionToggle
+                .colorMultiply(
+                    model.highlightedElements.colorMultiply(for: nil)
+                )
             chartOrTable
             Spacer()
             quotientChart
@@ -69,6 +72,9 @@ private struct MiddleStackView: View {
             concentrationChart.opacity(showGraph ? 1 : 0)
             if (!showGraph) {
                 ICETable(equations: model.equations)
+                    .colorMultiply(
+                        model.highlightedElements.colorMultiply(for: nil)
+                    )
             }
         }.frame(
             width: settings.chartSettings.totalChartWidth,
@@ -90,6 +96,7 @@ private struct MiddleStackView: View {
             minDragTime: model.components.quotientChartDiscontinuity?.x,
             settings: settings.chartSettings
         )
+        .colorMultiply(model.highlightedElements.colorMultiply(for: .chartEquilibrium))
     }
 
     private var quotientChart: some View {
@@ -99,6 +106,7 @@ private struct MiddleStackView: View {
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
+            equilibriumTime: model.equations.convergenceTime,
             showData: model.showQuotientLine,
             offset: model.chartOffset,
             discontinuity: model.components.quotientChartDiscontinuity,
@@ -107,6 +115,7 @@ private struct MiddleStackView: View {
                 maxQ: model.maxQuotient
             )
         )
+        .colorMultiply(model.highlightedElements.colorMultiply(for: .chartEquilibrium))
     }
 
     private var chartSelectionToggle: some View {
@@ -212,6 +221,7 @@ private struct RightStackView: View {
                     height: settings.chartSelectionHeight
                 )
         }
+        .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
     }
 
     private var gridToggleSelection: some View {

@@ -51,26 +51,36 @@ private struct UnscaledAqueousEquationView: View {
         VStack(spacing: 20) {
             HStack(spacing: 40) {
                 QuotientDefinitionView(coefficients: equations.coefficients)
+                    .colorMultiply(
+                        highlightedElements.colorMultiply(for: .quotientToConcentrationDefinition)
+                    )
                     .background(
                         Color.white
                             .padding(.trailing, -15)
                             .padding(.leading, -10)
                             .padding(.vertical, -10)
-                            .colorMultiply(highlightedElements.colorMultiply(for: .quotientToConcentrationDefinition)
+                            .colorMultiply(
+                                highlightedElements.colorMultiply(for: .quotientToConcentrationDefinition)
                             )
                     )
+
                 Spacer()
                 QuotientEqualsKView(
                     currentTime: currentTime,
                     quotient: quotient,
                     convergedQuotient: convergedQuotient
                 )
+                .colorMultiply(
+                    highlightedElements.colorMultiply(for: .quotientToConcentrationDefinition)
+                )
                 .background(
                     Color.white
                         .padding(-20)
-                        .colorMultiply(highlightedElements.colorMultiply(for: .quotientToEquilibriumConstantDefinition)
+                        .colorMultiply(
+                            highlightedElements.colorMultiply(for: .quotientToEquilibriumConstantDefinition)
                         )
                 )
+
             }
             HStack(spacing: 30) {
                 FilledQuotientDefinitionView(
@@ -79,6 +89,7 @@ private struct UnscaledAqueousEquationView: View {
                     quotient: quotient,
                     currentTime: currentTime
                 )
+                .colorMultiply(highlightedElements.colorMultiply(for: nil))
                 Spacer()
                 FilledQuotientKView(
                     showTerms: showTerms,
@@ -86,8 +97,8 @@ private struct UnscaledAqueousEquationView: View {
                     convergedQuotient: convergedQuotient,
                     currentTime: currentTime
                 )
+                .colorMultiply(highlightedElements.colorMultiply(for: nil))
             }
-
         }
         .font(.system(size: EquationSizing.fontSize))
         .lineLimit(1)

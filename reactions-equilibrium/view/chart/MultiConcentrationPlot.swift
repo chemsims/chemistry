@@ -40,10 +40,20 @@ struct MultiConcentrationPlot: View {
 
     private var labelledChart: some View {
         ZStack(alignment: .topLeading) {
+            equilibriumHighlight
             chart
             legend
         }
         .frame(width: settings.size, height: settings.size)
+    }
+
+    private var equilibriumHighlight: some View {
+        EquilibriumHighlight(
+            equilibriumTime: equations.convergenceTime,
+            chartSize: settings.size,
+            xAxis: settings.layout.xAxis,
+            offset: offset
+        )
     }
 
     private var chart: some View {
@@ -148,5 +158,6 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
                 maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis
             )
         )
+        .background(Styling.inactiveScreenElement)
     }
 }

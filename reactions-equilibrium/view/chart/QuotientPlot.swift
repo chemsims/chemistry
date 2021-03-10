@@ -13,6 +13,7 @@ struct QuotientPlot: View {
     @Binding var currentTime: CGFloat
     let finalTime: CGFloat
     let canSetCurrentTime: Bool
+    let equilibriumTime: CGFloat
 
     let showData: Bool
     let offset: CGFloat
@@ -43,12 +44,23 @@ struct QuotientPlot: View {
 
     private var annotatedChart: some View {
         ZStack {
+            equilibriumHighlight
             if showData {
                 indicatorLine
             }
+            equilibriumHighlight
             chart
         }
         .frame(width: settings.size, height: settings.size)
+    }
+
+    private var equilibriumHighlight: some View {
+        EquilibriumHighlight(
+            equilibriumTime: equilibriumTime,
+            chartSize: settings.size,
+            xAxis: settings.layout.xAxis,
+            offset: offset
+        )
     }
 
     private var chart: some View {
@@ -102,6 +114,7 @@ struct QuotientPlot_Previews: PreviewProvider {
             currentTime: .constant(10),
             finalTime: 20,
             canSetCurrentTime: false,
+            equilibriumTime: 10,
             showData: true,
             offset: 0,
             discontinuity: nil,
