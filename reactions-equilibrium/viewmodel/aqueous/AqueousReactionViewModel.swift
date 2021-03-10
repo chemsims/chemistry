@@ -35,6 +35,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows) {
         didSet {
             components.availableRows = availableRows
+            highlightedElements.clear()
         }
     }
 
@@ -62,6 +63,7 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var highlightReverseReactionArrow = false
     @Published var highlightForwardReactionArrow = false
+    @Published var highlightedElements = HighlightedElements<AqueousScreenElement>()
 
     private let inputSettings = AqueousReactionSettings.ConcentrationInput.self
 

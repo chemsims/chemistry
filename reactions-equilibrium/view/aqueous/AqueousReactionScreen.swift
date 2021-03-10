@@ -25,6 +25,17 @@ private struct AqueousReactionScreenWithSettings: View {
     let settings: AqueousScreenLayoutSettings
 
     var body: some View {
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color.white)
+                .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
+                .edgesIgnoringSafeArea(.all)
+
+            mainContent
+        }
+    }
+
+    private var mainContent: some View {
         HStack(spacing: 0) {
             AqueousBeakerView(model: model, settings: settings)
             Spacer()
@@ -178,6 +189,7 @@ private struct RightStackView: View {
             quotient: model.quotientEquation,
             convergedQuotient: model.convergenceQuotient,
             currentTime: model.currentTime,
+            highlightedElements: model.highlightedElements,
             maxWidth: settings.equationWidth,
             maxHeight: settings.equationHeight
         )

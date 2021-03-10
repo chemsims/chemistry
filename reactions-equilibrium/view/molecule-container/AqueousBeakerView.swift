@@ -27,9 +27,12 @@ struct AqueousBeakerView: View {
                 inputState: model.inputState,
                 topRowHeight: settings.moleculeContainerYPos,
                 containerWidth: settings.moleculeContainerWidth,
+                containerHeight: settings.moleculeContainerHeight,
                 startOfWater: topOfWaterPosition,
                 maxContainerY: maxContainerY,
-                moleculeSize: settings.moleculeSize
+                moleculeSize: settings.moleculeSize,
+                topRowColorMultiply: model.highlightedElements.colorMultiply(for: .moleculeContainers),
+                onDrag: { model.highlightedElements.clear() }
             )
             .frame(
                 width: settings.beakerSettings.innerBeakerWidth - settings.moleculeSize
@@ -59,6 +62,12 @@ struct AqueousBeakerView: View {
                 disabled: !model.canSetLiquidLevel
             )
             .frame(width: settings.sliderSettings.handleWidth, height: settings.sliderHeight)
+            .background(
+                Color.white
+                    .padding(.horizontal, -0.2 * settings.sliderSettings.handleWidth)
+                    .padding(.top, -0.2 * settings.sliderSettings.handleWidth)
+            )
+            .colorMultiply(model.highlightedElements.colorMultiply(for: .waterSlider))
 
             FilledBeaker(
                 molecules: model.components.nonAnimatingMolecules,
@@ -67,6 +76,7 @@ struct AqueousBeakerView: View {
                 rows: model.rows
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
+            .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
         }
     }
 
@@ -87,6 +97,8 @@ struct AddMoleculeWithLiquidBeaker_Previews: PreviewProvider {
                 model: AqueousReactionViewModel(),
                 settings: AqueousScreenLayoutSettings(geometry: geo)
             )
-        }.previewLayout(.iPhone12ProMaxLandscape)
+        }
+        .previewLayout(.iPhone12ProMaxLandscape)
+        .background(Color.gray.opacity(0.4))
     }
 }

@@ -11,14 +11,24 @@ struct AddMoleculesView: View {
     let inputState: AqueousReactionInputState
     let topRowHeight: CGFloat
     let containerWidth: CGFloat
+    let containerHeight: CGFloat
     let startOfWater: CGFloat
     let maxContainerY: CGFloat
     let moleculeSize: CGFloat
+    let topRowColorMultiply: Color?
+    let onDrag: () -> Void
 
     @State private var activeMolecule = AqueousMolecule.A
 
     var body: some View {
         GeometryReader { geometry in
+
+            Rectangle()
+                .foregroundColor(.white)
+                .frame(height: 1.1 * containerHeight)
+                .position(x: geometry.size.width / 2, y: topRowHeight)
+                .colorMultiply(topRowColorMultiply ?? .white)
+
             container(molecule: .A, width: geometry.size.width, height: geometry.size.height, index: 0)
             container(molecule: .B, width: geometry.size.width, height: geometry.size.height, index: 1)
             container(molecule: .C, width: geometry.size.width, height: geometry.size.height, index: 2)
@@ -37,7 +47,7 @@ struct AddMoleculesView: View {
         let isActive = activeProduct || activeReactant
         return AddMoleculeContainerView(
             model: model.models.value(for: molecule),
-            isActive: activeMoleculeBinding(molecule: molecule),
+            onDrag: { didDrag(molecule: molecule) },
             width: width,
             height: height,
             initialLocation: CGPoint(
@@ -63,22 +73,16 @@ struct AddMoleculesView: View {
         return initial + extra
     }
 
-    private func activeMoleculeBinding(molecule: AqueousMolecule) -> Binding<Bool> {
-        Binding(
-            get: { activeMolecule == molecule },
-            set: {
-                if $0 {
-                    activeMolecule = molecule
-                }
-            }
-        )
+    private func didDrag(molecule: AqueousMolecule) {
+        activeMolecule = molecule
+        onDrag()
     }
 }
 
 private struct AddMoleculeContainerView: View {
 
     @ObservedObject var model: AddingSingleMoleculeViewModel
-    @Binding var isActive: Bool
+    let onDrag: () -> Void
     let width: CGFloat
     let height: CGFloat
     let initialLocation: CGPoint
@@ -113,7 +117,7 @@ private struct AddMoleculeContainerView: View {
             .position(initialLocation)
             .offset(offset)
             .gesture(DragGesture().onChanged { drag in
-                isActive = true
+                onDrag()
                 withAnimation(.easeOut(duration: 0.25)) {
                     rotation = .degrees(135)
                 }
@@ -175,9 +179,12 @@ struct AddMoleculeView_Previews: PreviewProvider {
                     inputState: .addProducts,
                     topRowHeight: 50,
                     containerWidth: 50,
+                    containerHeight: 115,
                     startOfWater: geo.size.height - 150,
                     maxContainerY: geo.size.height - 300,
-                    moleculeSize: 25
+                    moleculeSize: 25,
+                    topRowColorMultiply: nil,
+                    onDrag: {}
                 )
 
                 Rectangle()

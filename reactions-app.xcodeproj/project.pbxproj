@@ -273,6 +273,8 @@
 		57DE4DB725A5036E00644790 /* QuizLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DB625A5036E00644790 /* QuizLayoutSettings.swift */; };
 		57E59A3F25F91D510087F760 /* DoubleSidedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */; };
 		57E59A4625F925F60087F760 /* AqueousReactionTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A4525F925F60087F760 /* AqueousReactionTypeView.swift */; };
+		57E59A5425F92BFE0087F760 /* AqueousScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */; };
+		57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5D25F92E260087F760 /* HighlightedElements.swift */; };
 		57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF6D2582831000A30582 /* ConcentrationTable.swift */; };
 		57E7FF72258289B200A30582 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF71258289B200A30582 /* MenuButton.swift */; };
 		57E7FF7F25828E0500A30582 /* MainMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF7E25828E0500A30582 /* MainMenuOverlay.swift */; };
@@ -637,6 +639,8 @@
 		57DE4DB625A5036E00644790 /* QuizLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLayoutSettings.swift; sourceTree = "<group>"; };
 		57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSidedArrow.swift; sourceTree = "<group>"; };
 		57E59A4525F925F60087F760 /* AqueousReactionTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionTypeView.swift; sourceTree = "<group>"; };
+		57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenElement.swift; sourceTree = "<group>"; };
+		57E59A5D25F92E260087F760 /* HighlightedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedElements.swift; sourceTree = "<group>"; };
 		57E7FF692582307A00A30582 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		57E7FF6D2582831000A30582 /* ConcentrationTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTable.swift; sourceTree = "<group>"; };
 		57E7FF71258289B200A30582 /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
@@ -1475,6 +1479,7 @@
 			children = (
 				571D6A6E255AB25400F4E635 /* Styling.swift */,
 				5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */,
+				57E59A5D25F92E260087F760 /* HighlightedElements.swift */,
 			);
 			path = display;
 			sourceTree = "<group>";
@@ -1732,6 +1737,7 @@
 				57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */,
 				57E902B325ED40B500758300 /* AqueousReactionInputState.swift */,
 				5736DC1125F4A91F003FD2B4 /* ReactionDirection.swift */,
+				57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */,
 			);
 			path = enums;
 			sourceTree = "<group>";
@@ -2320,6 +2326,7 @@
 				57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */,
 				5736DC4025F5478F003FD2B4 /* FractionedCoordinates.swift in Sources */,
 				5736DC1825F4B036003FD2B4 /* ScalesRotationEquation.swift in Sources */,
+				57E59A5425F92BFE0087F760 /* AqueousScreenElement.swift in Sources */,
 				57ABDC4625EC03E10078A82B /* AqueousStatements.swift in Sources */,
 				57ABDC3925EBF9300078A82B /* AqueousReactionType.swift in Sources */,
 				57952A2125E63F7F006AB876 /* BalancedReaction.swift in Sources */,
@@ -2402,6 +2409,7 @@
 				5797A48825E40A3E00991BD9 /* EmptyBeaker.swift in Sources */,
 				5797A4B825E40A6000991BD9 /* ReactionPairDisplay.swift in Sources */,
 				576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */,
+				57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */,
 				5797A53E25E41E0100991BD9 /* AxisPositionCalculations.swift in Sources */,
 				575A884F25E4327800AEE448 /* QuestionSet.swift in Sources */,
 				57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */,

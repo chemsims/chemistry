@@ -30,12 +30,22 @@ class AqueousScreenState: ScreenState, SubState {
 class AqueousSetStatementState: AqueousScreenState {
 
     let statement: [TextLine]
-    init(statement: [TextLine]) {
+    let highlights: [AqueousScreenElement]
+    init(statement: [TextLine], highlights: [AqueousScreenElement] = []) {
         self.statement = statement
+        self.highlights = highlights
     }
+
+    private var initialElements = [AqueousScreenElement]()
 
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = statement
+        initialElements = model.highlightedElements.elements
+        model.highlightedElements.elements = highlights
+    }
+
+    override func unapply(on model: AqueousReactionViewModel) {
+        model.highlightedElements.elements = initialElements
     }
 }
 
@@ -57,6 +67,7 @@ class AqueousSetWaterLevelState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.inputState = .setLiquidLevel
         model.statement = AqueousStatements.instructToSetWaterLevel
+        model.highlightedElements.elements = [.waterSlider]
     }
 
     override func reapply(on model: AqueousReactionViewModel) {
@@ -75,6 +86,7 @@ class AqueousAddReactantState: AqueousScreenState {
         model.inputState = .addReactants
         model.showConcentrationLines = true
         model.showEquationTerms = true
+        model.highlightedElements.elements = [.moleculeContainers]
         DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 
@@ -180,6 +192,7 @@ class InstructToAddProductState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.instructToAddProduct(selected: model.selectedReaction)
         model.inputState = .addProducts
+        model.highlightedElements.elements = [.moleculeContainers]
         if let fwd = model.components as? ForwardAqueousReactionComponents {
             model.components = ReverseAqueousReactionComponents(forwardReaction: fwd)
         }
@@ -188,6 +201,7 @@ class InstructToAddProductState: AqueousScreenState {
 
     override func unapply(on model: AqueousReactionViewModel) {
         model.inputState = .none
+        model.highlightedElements.clear()
         if let rev = model.components as? ReverseAqueousReactionComponents {
             model.components = rev.forwardReaction
         }
