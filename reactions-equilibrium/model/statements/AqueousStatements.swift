@@ -125,6 +125,10 @@ struct AqueousStatements {
         """
     ]
 
+    static let instructToChangeCurrentTime: [TextLine] = [
+        "Try to *drag* either of the charts to *scrub through the reaction*."
+    ]
+
     static let leChatelier: [TextLine] = [
         """
         Le Chatelier made an observation that within chemical reactions, any variation done to a \

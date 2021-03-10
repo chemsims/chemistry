@@ -29,6 +29,7 @@ struct AqueousNavigationModel {
         AqueousPreRunAnimationState(),
         AqueousRunAnimationState(),
         AqueousEndAnimationState(statement: AqueousStatements.reachedEquilibrium, endTime: AqueousReactionSettings.forwardReactionTime),
+        AqueousCanSetCurrentTimeState(),
         AqueousSetStatementState(statement: AqueousStatements.leChatelier),
         AqueousShiftChartState(),
         InstructToAddProductState(),
@@ -38,6 +39,7 @@ struct AqueousNavigationModel {
             statement: AqueousStatements.reverseEquilibriumReached,
             endTime: AqueousReactionSettings.endOfReverseReaction
         ),
+        AqueousCanSetCurrentTimeState(),
         FinalAqueousState()
     ]
 }
