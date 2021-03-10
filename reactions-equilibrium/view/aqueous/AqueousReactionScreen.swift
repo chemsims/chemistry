@@ -189,6 +189,7 @@ private struct RightStackView: View {
             .disabled(model.inputState != .selectReactionType)
         }
         .frame(width: settings.gridWidth, height: settings.reactionToggleHeight)
+        .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
     }
 
     private var equation: some View {
