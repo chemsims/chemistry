@@ -58,7 +58,10 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var components: AqueousReactionComponents
 
-    @Published var showEquationTerms: Bool = false
+    @Published var showEquationTerms = false
+
+    @Published var highlightReverseReactionArrow = false
+    @Published var highlightForwardReactionArrow = false
 
     private let inputSettings = AqueousReactionSettings.ConcentrationInput.self
 

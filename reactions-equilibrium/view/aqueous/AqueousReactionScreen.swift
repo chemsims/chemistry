@@ -146,6 +146,15 @@ private struct RightStackView: View {
 
     private var reactionToggle: some View {
         HStack(spacing: 0) {
+            if model.inputState != .selectReactionType {
+                AqueousReactionTypeView(
+                    type: model.selectedReaction,
+                    highlightTopArrow: model.highlightForwardReactionArrow,
+                    highlightReverseArrow: model.highlightReverseReactionArrow
+                )
+                .minimumScaleFactor(0.5)
+            }
+
             Spacer()
             AqueousReactionDropDownSelection(
                 isToggled: $model.reactionSelectionIsToggled,
@@ -159,7 +168,7 @@ private struct RightStackView: View {
             )
             .disabled(model.inputState != .selectReactionType)
         }
-        .frame(width: settings.gridWidth)
+        .frame(width: settings.gridWidth, height: settings.reactionToggleHeight)
     }
 
     private var equation: some View {

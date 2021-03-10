@@ -186,7 +186,7 @@ struct AqueousStatements {
         """,
         """
         Notice that this doesn't mean necessarily that their concentrations are equal. In fact, \
-        they are not equal, just *constant*
+        they are not equal, just *constant*.
         """
     ]
 

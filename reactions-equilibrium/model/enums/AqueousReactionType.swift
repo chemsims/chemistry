@@ -25,18 +25,25 @@ extension AqueousReactionType {
 extension AqueousReactionType {
 
     var displayName: String {
-        func str(_ name: String, _ coeffs: Int) -> String {
-            let coeffString = coeffs == 1 ? "" : "\(coeffs)"
-            return "\(coeffString)\(name)"
-        }
+        "\(reactantDisplay) ⇌ \(productDisplay)"
+    }
 
-        let coeffs = coefficients
-        let a = str("A", coeffs.reactantA)
-        let b = str("B", coeffs.reactantB)
-        let c = str("C", coeffs.productC)
-        let d = str("D", coeffs.productD)
 
-        return "\(a) + \(b) ⇌ \(c) + \(d)"
+    var reactantDisplay: String {
+        let a = moleculeString("A", coeff: coefficients.reactantA)
+        let b = moleculeString("B", coeff: coefficients.reactantB)
+        return "\(a) + \(b)"
+    }
+
+    var productDisplay: String {
+        let a = moleculeString("C", coeff: coefficients.productC)
+        let b = moleculeString("D", coeff: coefficients.productD)
+        return "\(a) + \(b)"
+    }
+
+    private func moleculeString(_ name: String, coeff: Int) -> String {
+        let coeffString = coeff == 1 ? "" : "\(coeff)"
+        return "\(coeffString)\(name)"
     }
 
     // TODO

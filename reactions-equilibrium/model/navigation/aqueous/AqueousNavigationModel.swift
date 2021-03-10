@@ -38,6 +38,6 @@ struct AqueousNavigationModel {
             statement: AqueousStatements.reverseEquilibriumReached,
             endTime: AqueousReactionSettings.endOfReverseReaction
         ),
-        AqueousSetStatementState(statement: AqueousStatements.endStatement)
+        FinalAqueousState()
     ]
 }

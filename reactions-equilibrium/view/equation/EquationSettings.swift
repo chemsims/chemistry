@@ -1,7 +1,0 @@
-//
-// Reactions App
-//
-
-import CoreGraphics
-
-
