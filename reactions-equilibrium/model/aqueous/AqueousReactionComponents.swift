@@ -31,6 +31,8 @@ protocol AqueousReactionComponents {
 
     func canIncrement(molecule: AqueousMolecule) -> Bool
 
+    func concentrationIncremented(of molecule: AqueousMolecule) -> CGFloat
+
     mutating func reset()
 }
 
@@ -102,6 +104,14 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         aMolecules.removeAll()
         bMolecules.removeAll()
         grid = ForwardGridMolecules()
+    }
+
+    func concentrationIncremented(of molecule: AqueousMolecule) -> CGFloat {
+        switch molecule {
+        case .A: return initialConcentration(of: aMolecules)
+        case .B: return initialConcentration(of: bMolecules)
+        default: return 0
+        }
     }
 
     var nonAnimatingMolecules: [BeakerMolecules] {
@@ -370,6 +380,26 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
             count: count
         )
         grid.setConcentration(of: .D, concentration: initialConcentration(of: dMolecules))
+    }
+
+    var productConcentrationIncremented: CGFloat {
+        let initC = forwardReaction.equations.productC.getY(at: forwardReaction.equations.convergenceTime)
+        let initD = forwardReaction.equations.productD.getY(at: forwardReaction.equations.convergenceTime)
+        let incC = initialConcentration(of: cMolecules) - initC
+        let incD = initialConcentration(of: dMolecules) - initD
+        return incC + incD
+    }
+
+    func concentrationIncremented(of molecule: AqueousMolecule) -> CGFloat {
+        func getProduct(_ molecules: [GridCoordinate], _ equation: Equation) -> CGFloat {
+            initialConcentration(of: molecules) - equation.getY(at: forwardReaction.equations.convergenceTime)
+        }
+
+        switch molecule {
+        case .C: return getProduct(cMolecules, forwardReaction.equations.productC)
+        case .D: return getProduct(dMolecules, forwardReaction.equations.productD)
+        default: return 0
+        }
     }
 
     var equations: BalancedReactionEquations {

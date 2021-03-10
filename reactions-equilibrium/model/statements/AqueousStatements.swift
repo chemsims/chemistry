@@ -198,6 +198,11 @@ struct AqueousStatements {
         """,
         "*Let's see how else equilibrium can be disturbed.*"
     ]
+
+    static let addMoreProduct: [TextLine] = [
+        "Try to add some more of C or D before continuing!",
+        "*Shake them into the beaker*."
+    ]
 }
 
 // MARK: Statements to instruct to add more A/B molecules
@@ -216,7 +221,8 @@ extension AqueousStatements {
 
     private static func addMore1(_ name: String) -> [TextLine] {
         [
-            "Add a bit more of *\(name)* to the beaker."
+            "Add a bit more of *\(name)* to the beaker.",
+            "*Shake \(name) into the beaker*."
         ]
     }
 
@@ -230,7 +236,8 @@ extension AqueousStatements {
         [
             """
             Add more of *\(name)* to the beaker. Make sure it's concentration is at least \(minConcentration).
-            """
+            """,
+            "Shake *\(name)* into the beaker."
         ]
     }
 }

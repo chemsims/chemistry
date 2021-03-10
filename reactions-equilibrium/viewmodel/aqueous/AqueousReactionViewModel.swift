@@ -97,6 +97,8 @@ class AqueousReactionViewModel: ObservableObject {
         if inputState == .addReactants,
            let missingReactant = getMissingReactant() {
             informUserOfMissing(reactant: missingReactant)
+        } else if inputState == .addProducts && !hasAddedEnoughProduct {
+            informUserOfMissingProduct()
         } else {
             navigation?.next()
         }
@@ -121,6 +123,20 @@ class AqueousReactionViewModel: ObservableObject {
         statement = msg
     }
 
+    private var hasAddedEnoughProduct: Bool {
+        let minIncrement = AqueousReactionSettings.ConcentrationInput.minProductIncrement
+        func hasEnough(_ molecule: AqueousMolecule) -> Bool {
+            let didIncrementEnough = components.concentrationIncremented(of: molecule).rounded(decimals: 2) >= minIncrement
+            return didIncrementEnough || !components.canIncrement(molecule: molecule)
+        }
+
+        return hasEnough(.C) || hasEnough(.D)
+    }
+
+    private func informUserOfMissingProduct() {
+        statement = AqueousStatements.addMoreProduct
+    }
+
     private func informUserOfMissing(reactant: AqueousMoleculeReactant) {
         instructToAddMoreReactantCount = instructToAddMoreReactantCount.increment(value: reactant)
         statement = AqueousStatements.addMore(
@@ -140,7 +156,7 @@ class AqueousReactionViewModel: ObservableObject {
         } else if bTooLow {
             return .B
         }
-        return equations.reactantToAddForMinConvergence(convergence: AqueousReactionSettings.ConcentrationInput.minFinal)
+        return nil
     }
 
     private func reactantMoleculesToDraw(
