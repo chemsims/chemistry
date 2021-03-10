@@ -7,6 +7,7 @@ import ReactionsCore
 
 struct AqueousEquationView: View {
 
+    let showTerms: Bool
     let equations: BalancedReactionEquations
     let quotient: Equation
     let convergedQuotient: CGFloat
@@ -23,6 +24,7 @@ struct AqueousEquationView: View {
             maxHeight: maxHeight
         ) {
             UnscaledAqueousEquationView(
+                showTerms: showTerms,
                 equations: equations,
                 quotient: quotient,
                 convergedQuotient: convergedQuotient,
@@ -34,13 +36,15 @@ struct AqueousEquationView: View {
 }
 
 private struct UnscaledAqueousEquationView: View {
+
+    let showTerms: Bool
     let equations: BalancedReactionEquations
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
 
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             HStack(spacing: 40) {
                 QuotientDefinitionView(coefficients: equations.coefficients)
                 Spacer()
@@ -48,12 +52,14 @@ private struct UnscaledAqueousEquationView: View {
             }
             HStack(spacing: 30) {
                 FilledQuotientDefinitionView(
+                    showTerms: showTerms,
                     equations: equations,
                     quotient: quotient,
                     currentTime: currentTime
                 )
-
+                Spacer()
                 FilledQuotientKView(
+                    showTerms: showTerms,
                     quotient: quotient,
                     convergedQuotient: convergedQuotient,
                     currentTime: currentTime
@@ -122,13 +128,19 @@ private struct QuotientEqualsKView: View {
 
 private struct FilledQuotientDefinitionView: View {
 
+    let showTerms: Bool
     let equations: BalancedReactionEquations
     let quotient: Equation
     let currentTime: CGFloat
 
     var body: some View {
         HStack(spacing: 4) {
-            animatingTerm(equation: quotient, formatter: formatQuotient)
+            AnimatingNumberOrPlaceholder(
+                showTerm: showTerms,
+                currentTime: currentTime,
+                equation: quotient,
+                formatter: formatQuotient
+            )
             FixedText("=")
             fraction
         }
@@ -138,27 +150,29 @@ private struct FilledQuotientDefinitionView: View {
     private var fraction: some View {
         VStack(spacing: 0) {
             HStack(spacing: 3) {
-                term(equations.productC, 2, coefficient: equations.coefficients.productC)
-                term(equations.productD, 2, coefficient: equations.coefficients.productD)
+                concentration(equations.productC, coefficient: equations.coefficients.productC)
+                concentration(equations.productD, coefficient: equations.coefficients.productD)
             }
             Rectangle()
                 .frame(width:  180, height: 1)
             HStack(spacing: 3) {
-                term(equations.reactantA, 2, coefficient: equations.coefficients.reactantA)
-                term(equations.reactantB, 2, coefficient: equations.coefficients.reactantB)
+                concentration(equations.reactantA, coefficient: equations.coefficients.reactantA)
+                concentration(equations.reactantB, coefficient: equations.coefficients.reactantB)
             }
         }
     }
 
-    private func term(
+    private func concentration(
         _ equation: Equation,
-        _ decimals: Int,
         coefficient: Int
     ) -> some View {
         HStack(spacing: 2) {
-            animatingTerm(equation: equation) {
-                "(\($0.str(decimals: decimals)))"
-            }
+            AnimatingNumberOrPlaceholder(
+                showTerm: showTerms,
+                currentTime: currentTime,
+                equation: equation,
+                formatter: { "(\($0.str(decimals: 2)))" }
+            )
 
             FixedText("\(coefficient)")
                 .offset(y: -10)
@@ -169,34 +183,23 @@ private struct FilledQuotientDefinitionView: View {
         }
     }
 
-    private func animatingTerm(
-        equation: Equation,
-        formatter: @escaping (CGFloat) -> String
-    ) -> some View {
-        AnimatingNumber(
-            x: currentTime,
-            equation: equation,
-            formatter: formatter
-        )
-        .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
-    }
 }
 
 private struct FilledQuotientKView: View {
 
+    let showTerms: Bool
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
 
     var body: some View {
         HStack(spacing: 2) {
-            AnimatingNumber(
-                x: currentTime,
+            AnimatingNumberOrPlaceholder(
+                showTerm: showTerms,
+                currentTime: currentTime,
                 equation: quotient,
                 formatter: formatQuotient
             )
-            .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
-            .minimumScaleFactor(0.5)
 
             AnimatingNumber(
                 x: currentTime,
@@ -205,9 +208,12 @@ private struct FilledQuotientKView: View {
             )
             .frame(width: 22, height: 30)
 
-            FixedText("\(convergedQuotient.str(decimals: 2))")
-                .frame(width: EquationSizing.boxWidth)
-                .minimumScaleFactor(0.8)
+            AnimatingNumberOrPlaceholder(
+                showTerm: showTerms,
+                currentTime: currentTime,
+                equation: ConstantEquation(value: convergedQuotient),
+                formatter: { $0.str(decimals: 2) }
+            )
         }
     }
 
@@ -224,19 +230,60 @@ private struct FilledQuotientKView: View {
     }
 }
 
+private struct AnimatingNumberOrPlaceholder: View {
+
+    let showTerm: Bool
+    let currentTime: CGFloat
+    let equation: Equation
+    let formatter: (CGFloat) -> String
+
+    var body: some View {
+        if showTerm {
+            AnimatingNumber(
+                x: currentTime,
+                equation: equation,
+                formatter: formatter
+            )
+            .frame(
+                width: EquationSizing.boxWidth,
+                height: EquationSizing.boxHeight
+            )
+            .minimumScaleFactor(0.5)
+            .foregroundColor(.orangeAccent)
+        } else {
+            PlaceholderTerm(value: nil)
+                .frame(
+                    width: EquationSizing.boxWidth,
+                    height: EquationSizing.boxHeight
+                )
+        }
+    }
+}
+
 private let NaturalHeight: CGFloat = 200
-private let NaturalWidth: CGFloat = 480
+private let NaturalWidth: CGFloat = 500
+
+private func formatQuotient(_ quotient: CGFloat) -> String {
+    if (quotient >= 100) {
+        return quotient.str(decimals: 0)
+    } else {
+        return quotient.str(decimals: 2)
+    }
+}
+
 
 struct AqueousEquationView_Previews: PreviewProvider {
     static var previews: some View {
         UnscaledAqueousEquationView(
+            showTerms: true,
             equations: reverse,
             quotient: ReactionQuotientEquation(equations: reverse),
             convergedQuotient: 0.14,
             currentTime: 14
         )
-        .previewLayout(.fixed(width: NaturalWidth, height: NaturalHeight))
         .border(Color.black)
+        .previewLayout(.fixed(width: NaturalWidth, height: NaturalHeight))
+
     }
 
     private static let reverse = BalancedReactionEquations(
@@ -256,12 +303,4 @@ struct AqueousEquationView_Previews: PreviewProvider {
         b0: 0.3,
         convergenceTime: 20
     )
-}
-
-private func formatQuotient(_ quotient: CGFloat) -> String {
-    if (quotient >= 100) {
-        return quotient.str(decimals: 0)
-    } else {
-        return quotient.str(decimals: 2)
-    }
 }

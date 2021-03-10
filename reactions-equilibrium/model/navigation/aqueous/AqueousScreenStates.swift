@@ -74,11 +74,13 @@ class AqueousAddReactantState: AqueousScreenState {
         model.statement = AqueousStatements.instructToAddReactant(selected: model.selectedReaction)
         model.inputState = .addReactants
         model.showConcentrationLines = true
+        model.showEquationTerms = true
         DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
         model.showConcentrationLines = false
+        model.showEquationTerms = false
         DeferScreenEdgesState.shared.deferEdges = []
     }
 }

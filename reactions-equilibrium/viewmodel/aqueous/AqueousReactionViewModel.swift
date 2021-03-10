@@ -58,6 +58,8 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var components: AqueousReactionComponents
 
+    @Published var showEquationTerms: Bool = false
+
     private let inputSettings = AqueousReactionSettings.ConcentrationInput.self
 
     var equations: BalancedReactionEquations {
