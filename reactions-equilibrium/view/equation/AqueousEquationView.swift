@@ -95,6 +95,8 @@ private struct QuotientDefinitionView: View {
                 .offset(y: -10)
                 .font(.system(size: EquationSizing.subscriptFontSize))
                 .opacity(coefficient == 1 ? 0 : 1)
+                .frame(width: 15)
+                .animation(nil)
         }
     }
 }
@@ -161,6 +163,8 @@ private struct FilledQuotientDefinitionView: View {
                     .offset(y: -10)
                     .font(.system(size: EquationSizing.subscriptFontSize))
                     .opacity(coefficient == 1 ? 0 : 1)
+                    .animation(nil)
+                    .frame(width: 15)
             }
         }
         .minimumScaleFactor(0.5)
