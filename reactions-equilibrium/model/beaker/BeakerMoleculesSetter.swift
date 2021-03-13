@@ -8,24 +8,49 @@ import ReactionsCore
 struct BeakerMoleculesSetter {
 
     let totalMolecules: Int
-    let endOfReactionTime: CGFloat
-    let moleculesA: [GridCoordinate]
-    let moleculesB: [GridCoordinate]
+    let underlyingAMolecules: [GridCoordinate]
+    let underlyingBMolecules: [GridCoordinate]
     let reactionEquation: BalancedReactionEquations
 
+    init(
+        totalMolecules: Int,
+        moleculesA: [GridCoordinate],
+        moleculesB: [GridCoordinate],
+        reactionEquation: BalancedReactionEquations
+    ) {
+        self.totalMolecules = totalMolecules
+        self.underlyingAMolecules = moleculesA
+        self.underlyingBMolecules = moleculesB
+        self.reactionEquation = reactionEquation
+    }
+
+    var moleculesA: FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: underlyingAMolecules,
+            fractionToDraw: reactantFractionToDraw(underlying: underlyingAMolecules, extraToDrop: extraAToDrop)
+        )
+    }
+
+    var moleculesB: FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: underlyingBMolecules,
+            fractionToDraw: reactantFractionToDraw(underlying: underlyingBMolecules, extraToDrop: extraBToDrop)
+        )
+    }
+
     var cMolecules: [GridCoordinate] {
-        guard moleculesA.count > 0 && moleculesB.count > 0 else {
+        guard underlyingAMolecules.count > 0 && underlyingBMolecules.count > 0 else {
             return []
         }
-        return Array(moleculesA.prefix(cToTakeFromA) + moleculesB.prefix(cToTakeFromB))
+        return Array(underlyingAMolecules.prefix(cToTakeFromA) + underlyingBMolecules.prefix(cToTakeFromB))
     }
 
     var dMolecules: [GridCoordinate] {
-        guard moleculesA.count > 0 && moleculesB.count > 0 else {
+        guard underlyingAMolecules.count > 0 && underlyingBMolecules.count > 0 else {
             return []
         }
-        let fromA = moleculesA.dropFirst(cToTakeFromA).prefix(dToTakeFromA)
-        let fromB = moleculesB.dropFirst(cToTakeFromB).prefix(dToTakeFromB)
+        let fromA = underlyingAMolecules.dropFirst(cToTakeFromA).prefix(dToTakeFromA)
+        let fromB = underlyingBMolecules.dropFirst(cToTakeFromB).prefix(dToTakeFromB)
         return Array(fromA + fromB)
     }
 
@@ -37,36 +62,53 @@ struct BeakerMoleculesSetter {
         fractionToDrawEquation(reactionEquation.productD)
     }
 
+    private func reactantFractionToDraw(
+        underlying: [GridCoordinate],
+        extraToDrop: Int
+    ) -> Equation {
+        if extraToDrop == 0 {
+            return ConstantEquation(value: 1)
+        }
+
+        let endFraction = CGFloat(underlying.count - extraToDrop) / CGFloat(underlying.count)
+        return EquilibriumReactionEquation(
+            t1: 0,
+            c1: 1,
+            t2: reactionEquation.convergenceTime,
+            c2: endFraction
+        )
+    }
+
     private func fractionToDrawEquation(_ underlying: Equation) -> Equation {
         ScaledEquation(
             targetY: 1,
-            targetX: endOfReactionTime,
+            targetX: reactionEquation.convergenceTime,
             underlying: underlying
         )
     }
 
     private var numDToAdd: Int {
-        let finalConcentration = reactionEquation.productD.getY(at: endOfReactionTime)
+        let finalConcentration = reactionEquation.productD.getY(at: reactionEquation.convergenceTime)
         return (finalConcentration * CGFloat(totalMolecules)).roundedInt()
     }
 
     private var numCToAdd: Int {
-        let finalConcentration = reactionEquation.productC.getY(at: endOfReactionTime)
+        let finalConcentration = reactionEquation.productC.getY(at: reactionEquation.convergenceTime)
         return (finalConcentration * CGFloat(totalMolecules)).roundedInt()
     }
 
     private var fractionFromA: CGFloat {
-        let aBSum = moleculesA.count + moleculesB.count
+        let aBSum = underlyingAMolecules.count + underlyingBMolecules.count
         assert(aBSum != 0)
-        return CGFloat(moleculesA.count) / CGFloat(aBSum)
+        return CGFloat(underlyingAMolecules.count) / CGFloat(aBSum)
     }
 
     private var cToTakeFromA: Int {
-        max(0, Int(ceil(Double(numAToDrop) / 2)))
+        max(0, Int(floor(CGFloat(numCToAdd) * aToB)))
     }
 
     private var dToTakeFromA: Int {
-        max(0, Int(floor((Double(numAToDrop) / 2))))
+        max(0, Int(ceil(CGFloat(numDToAdd) * aToB)))
     }
 
     private var cToTakeFromB: Int {
@@ -78,8 +120,32 @@ struct BeakerMoleculesSetter {
     }
 
     private var numAToDrop: Int {
-        let finalConcentration = reactionEquation.reactantA.getY(at: endOfReactionTime)
-        return (finalConcentration * CGFloat(totalMolecules)).roundedInt()
+        let finalConcentration = reactionEquation.reactantA.getY(at: reactionEquation.convergenceTime)
+        return moleculeCount(for: reactionEquation.a0 - finalConcentration)
+    }
+
+    private var numBToDrop: Int {
+        let finalConcentration = reactionEquation.reactantB.getY(at: reactionEquation.convergenceTime)
+        return moleculeCount(for: reactionEquation.b0 - finalConcentration)
+    }
+
+    private var extraAToDrop: Int {
+        numAToDrop - cToTakeFromA - dToTakeFromA
+    }
+
+    private var extraBToDrop: Int {
+        numBToDrop - cToTakeFromB - dToTakeFromB
+    }
+
+    private var aToB: CGFloat {
+        guard numAToDrop + numBToDrop > 0 else {
+            return 0
+        }
+        return CGFloat(numAToDrop) / CGFloat(numAToDrop + numBToDrop)
+    }
+
+    private func moleculeCount(for concentration: CGFloat) -> Int {
+        (concentration * CGFloat(totalMolecules)).roundedInt()
     }
 }
 
@@ -230,11 +296,13 @@ struct ReverseBeakerMoleculeSetter {
     }
 
     private static func initialReactantGrid(
-        forwardCoords: [GridCoordinate],
+        forwardCoords: FractionedCoordinates,
         forwardMolecules: BeakerMoleculesSetter
     ) -> [GridCoordinate] {
+        let convergenceTime = forwardMolecules.reactionEquation.convergenceTime
+        let convergedForwardCoords = forwardCoords.coords(at: convergenceTime)
         let products = forwardMolecules.cMolecules + forwardMolecules.dMolecules
-        return forwardCoords.filter { coord in
+        return convergedForwardCoords.filter { coord in
             !products.contains(coord)
         }
     }

@@ -31,9 +31,24 @@ extension BalancedReactionEquations {
     }
 }
 
-extension FractionedCoordinates {
-    func coords(at x: CGFloat) -> [GridCoordinate] {
-        let num = (fractionToDraw.getY(at: x) * CGFloat(coordinates.count)).roundedInt()
-        return Array(coordinates.prefix(num))
+extension BalancedReactionEquations {
+    var convergenceA: CGFloat {
+        convergence(of: reactantA)
+    }
+
+    var convergenceB: CGFloat {
+        convergence(of: reactantB)
+    }
+
+    var convergenceC: CGFloat {
+        convergence(of: productC)
+    }
+
+    var convergenceD: CGFloat {
+        convergence(of: productD)
+    }
+
+    private func convergence(of equation: Equation) -> CGFloat {
+        equation.getY(at: convergenceTime)
     }
 }

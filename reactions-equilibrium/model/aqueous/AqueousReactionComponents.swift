@@ -101,29 +101,37 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     }
 
     mutating func reset() {
-        aMolecules.removeAll()
-        bMolecules.removeAll()
+        underlyingAMolecules.removeAll()
+        underlyingBMolecules.removeAll()
         grid = ForwardGridMolecules()
     }
 
     func concentrationIncremented(of molecule: AqueousMolecule) -> CGFloat {
         switch molecule {
-        case .A: return initialConcentration(of: aMolecules)
-        case .B: return initialConcentration(of: bMolecules)
+        case .A: return initialConcentration(of: underlyingAMolecules)
+        case .B: return initialConcentration(of: underlyingBMolecules)
         default: return 0
         }
     }
 
-    var nonAnimatingMolecules: [BeakerMolecules] {
-        [
-            BeakerMolecules(coords: aMolecules, color: .from(.aqMoleculeA)),
-            BeakerMolecules(coords: bMolecules, color: .from(.aqMoleculeB))
-        ]
-
-    }
+    let nonAnimatingMolecules: [BeakerMolecules] = []
 
     var animatingMolecules: [AnimatingBeakerMolecules] {
         [
+            AnimatingBeakerMolecules(
+                molecules: BeakerMolecules(
+                    coords: productMoleculeSetter.moleculesA.coordinates,
+                    color: .from(.aqMoleculeA)
+                ),
+                fractionToDraw: productMoleculeSetter.moleculesA.fractionToDraw
+            ),
+            AnimatingBeakerMolecules(
+                molecules: BeakerMolecules(
+                    coords: productMoleculeSetter.moleculesB.coordinates,
+                    color: .from(.aqMoleculeB)
+                ),
+                fractionToDraw: productMoleculeSetter.moleculesB.fractionToDraw
+            ),
             AnimatingBeakerMolecules(
                 molecules: BeakerMolecules(coords: cMolecules, color: .from(.aqMoleculeC)),
                 fractionToDraw: productMoleculeSetter.cFractionToDraw
@@ -135,8 +143,16 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         ]
     }
 
-    private(set) var aMolecules = [GridCoordinate]()
-    private(set) var bMolecules = [GridCoordinate]()
+    private var underlyingAMolecules = [GridCoordinate]()
+    private var underlyingBMolecules = [GridCoordinate]()
+
+    var aMolecules: FractionedCoordinates {
+        productMoleculeSetter.moleculesA
+    }
+
+    var bMolecules: FractionedCoordinates {
+        productMoleculeSetter.moleculesB
+    }
 
     var cMolecules: [GridCoordinate] {
         productMoleculeSetter.cMolecules
@@ -180,9 +196,9 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     }
 
     mutating func incrementA(count: Int) {
-        aMolecules = addingMolecules(
-            to: aMolecules,
-            avoiding: bMolecules,
+        underlyingAMolecules = addingMolecules(
+            to: underlyingAMolecules,
+            avoiding: underlyingBMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial,
             count: count
         )
@@ -190,9 +206,9 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     }
 
     mutating func incrementB(count: Int) {
-        bMolecules = addingMolecules(
-            to: bMolecules,
-            avoiding: aMolecules,
+        underlyingBMolecules = addingMolecules(
+            to: underlyingBMolecules,
+            avoiding: underlyingAMolecules,
             maxConcentration: AqueousReactionSettings.ConcentrationInput.maxInitial,
             count: count
         )
@@ -202,26 +218,25 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     func canIncrement(molecule: AqueousMolecule) -> Bool {
         let maxC = AqueousReactionSettings.ConcentrationInput.maxInitial
         switch molecule {
-        case .A: return maximumToAdd(to: aMolecules, maxConcentration: maxC) > 0
-        case .B: return maximumToAdd(to: bMolecules, maxConcentration: maxC) > 0
+        case .A: return maximumToAdd(to: underlyingAMolecules, maxConcentration: maxC) > 0
+        case .B: return maximumToAdd(to: underlyingBMolecules, maxConcentration: maxC) > 0
         default: return false
         }
     }
 
     private var initialA: CGFloat {
-        initialConcentration(of: aMolecules)
+        initialConcentration(of: underlyingAMolecules)
     }
 
     private var initialB: CGFloat {
-        initialConcentration(of: bMolecules)
+        initialConcentration(of: underlyingBMolecules)
     }
 
-    fileprivate var productMoleculeSetter: BeakerMoleculesSetter {
+    var productMoleculeSetter: BeakerMoleculesSetter {
         BeakerMoleculesSetter(
             totalMolecules: availableMolecules,
-            endOfReactionTime: AqueousReactionSettings.timeForConvergence,
-            moleculesA: aMolecules,
-            moleculesB: bMolecules,
+            moleculesA: underlyingAMolecules,
+            moleculesB: underlyingBMolecules,
             reactionEquation: equations
         )
     }

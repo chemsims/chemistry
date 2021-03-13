@@ -11,16 +11,16 @@ class ReactionComponentTests: XCTestCase {
     func testIncrementingAMolecules() {
         var model = newModel()
 
-        XCTAssert(model.aMolecules.isEmpty)
-        XCTAssert(model.bMolecules.isEmpty)
+        XCTAssert(model.aMolecules.coordinates.isEmpty)
+        XCTAssert(model.bMolecules.coordinates.isEmpty)
         XCTAssert(model.cMolecules.isEmpty)
         XCTAssert(model.dMolecules.isEmpty)
 
         model.incrementA(count: 1)
 
-        XCTAssertEqual(model.aMolecules.count, 1)
+        XCTAssertEqual(model.aMolecules.coordinates.count, 1)
         model.incrementA(count: 1)
-        XCTAssertEqual(model.aMolecules.count, 2)
+        XCTAssertEqual(model.aMolecules.coordinates.count, 2)
     }
 
     func testIncrementingAMoleculesToMaxCount() {
@@ -29,11 +29,11 @@ class ReactionComponentTests: XCTestCase {
         XCTAssert(model.canIncrement(molecule: .A))
         model.incrementA(count: maxIncrementCount)
 
-        XCTAssertEqual(model.aMolecules.count, maxMolecules)
+        XCTAssertEqual(model.aMolecules.coordinates.count, maxMolecules)
         XCTAssertFalse(model.canIncrement(molecule: .A))
 
         model.incrementA(count: 1)
-        XCTAssertEqual(model.aMolecules.count, maxMolecules)
+        XCTAssertEqual(model.aMolecules.coordinates.count, maxMolecules)
     }
 
     func testIncrementingBMolecules() {
@@ -41,11 +41,11 @@ class ReactionComponentTests: XCTestCase {
         model.incrementA(count: maxIncrementCount)
         model.incrementB(count: maxIncrementCount)
 
-        XCTAssertEqual(model.aMolecules.count, maxMolecules)
-        XCTAssertEqual(model.bMolecules.count, maxMolecules)
+        XCTAssertEqual(model.aMolecules.coordinates.count, maxMolecules)
+        XCTAssertEqual(model.bMolecules.coordinates.count, maxMolecules)
 
-        model.bMolecules.forEach { molecule in
-            XCTAssertFalse(model.aMolecules.contains(molecule))
+        model.bMolecules.coordinates.forEach { molecule in
+            XCTAssertFalse(model.aMolecules.coordinates.contains(molecule))
         }
     }
 
@@ -83,8 +83,8 @@ class ReactionComponentTests: XCTestCase {
         let productCoords = model.cMolecules + model.dMolecules
         XCTAssertEqual(Set(productCoords).count, productCoords.count)
 
-        let allCoords = model.aMolecules + model.bMolecules + model.cMolecules + model.dMolecules
-        let reactantCoords = model.aMolecules + model.bMolecules
+        let allCoords = model.aMolecules.coordinates + model.bMolecules.coordinates + model.cMolecules + model.dMolecules
+        let reactantCoords = model.aMolecules.coordinates + model.bMolecules.coordinates
 
         XCTAssertEqual(Set(allCoords).count, reactantCoords.count)
     }
@@ -104,18 +104,18 @@ class ReactionComponentTests: XCTestCase {
             XCTAssertEqual(fractionToDraw.getY(at: t), 1)
             let midConcentration = concentration.getY(at: t / 2)
             let midAsRatio = midConcentration / convergence
-            XCTAssertEqual(model.animatingMolecules[0].fractionToDraw.getY(at: t / 2), midAsRatio)
+            XCTAssertEqual(fractionToDraw.getY(at: t / 2), midAsRatio)
         }
 
         func testProducts() {
             doTest(
                 concentration: model.equations.productC,
-                fractionToDraw: model.animatingMolecules[0].fractionToDraw,
+                fractionToDraw: model.animatingMolecules[2].fractionToDraw,
                 convergence: model.equations.convergenceC
             )
             doTest(
                 concentration: model.equations.productD,
-                fractionToDraw: model.animatingMolecules[1].fractionToDraw,
+                fractionToDraw: model.animatingMolecules[3].fractionToDraw,
                 convergence: model.equations.convergenceD
             )
         }
@@ -220,24 +220,3 @@ private extension ReverseAqueousReactionComponents {
     }
 }
 
-private extension BalancedReactionEquations {
-    var convergenceA: CGFloat {
-        convergence(of: reactantA)
-    }
-
-    var convergenceB: CGFloat {
-        convergence(of: reactantB)
-    }
-
-    var convergenceC: CGFloat {
-        convergence(of: productC)
-    }
-
-    var convergenceD: CGFloat {
-        convergence(of: productD)
-    }
-
-    private func convergence(of equation: Equation) -> CGFloat {
-        equation.getY(at: convergenceTime)
-    }
-}
