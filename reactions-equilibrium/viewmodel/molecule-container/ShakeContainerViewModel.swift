@@ -63,6 +63,22 @@ class ShakeContainerViewModel: ObservableObject {
         }
     }
 
+
+    func manualAdd() {
+        doManualAdd(remaining: 5)
+    }
+
+    private func doManualAdd(remaining: Int) {
+        guard isUpdating && remaining > 0 else {
+            return
+        }
+        doAdd()
+        let nextDelay = Double.random(in: 0.05...0.1)
+        DispatchQueue.main.asyncAfter(deadline: .now() + nextDelay) {
+            self.doManualAdd(remaining: remaining - 1)
+        }
+    }
+
     private func handleMotionUpdate(motion: CMDeviceMotion) {
         guard isUpdating else {
             return

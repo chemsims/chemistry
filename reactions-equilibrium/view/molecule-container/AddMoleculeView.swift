@@ -45,8 +45,8 @@ struct AddMoleculesView: View {
         let isActive = activeProduct || activeReactant
         return AddMoleculeContainerView(
             model: model.models.value(for: molecule),
-            onDrag: {
-                didDrag(
+            onTap: {
+                didTap(
                     molecule: molecule,
                     width: width,
                     height: height,
@@ -87,13 +87,18 @@ struct AddMoleculesView: View {
         return initial + extra
     }
 
-    private func didDrag(
+    private func didTap(
         molecule: AqueousMolecule,
         width: CGFloat,
         height: CGFloat,
         index: Int,
         bottomY: CGFloat
     ) {
+        guard model.activeMolecule != molecule else {
+            model.models.value(for: molecule).manualAdd()
+            return
+        }
+        
         withAnimation(.easeOut(duration: 0.25)) {
             model.activeMolecule = molecule
         }
@@ -116,7 +121,7 @@ private struct AddMoleculeContainerView: View {
 
     @ObservedObject var model: ShakeContainerViewModel
 
-    let onDrag: () -> Void
+    let onTap: () -> Void
     let width: CGFloat
     let height: CGFloat
     let initialLocation: CGPoint
@@ -149,7 +154,7 @@ private struct AddMoleculeContainerView: View {
             .position(initialLocation)
             .offset(CGSize(width: model.xOffset, height: model.yOffset))
             .onTapGesture {
-                onDrag()
+                onTap()
             }
     }
 
