@@ -276,6 +276,8 @@
 		57E59A5425F92BFE0087F760 /* AqueousScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */; };
 		57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5D25F92E260087F760 /* HighlightedElements.swift */; };
 		57E59A6425F93D5D0087F760 /* ConvergenceHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A6325F93D5D0087F760 /* ConvergenceHighlight.swift */; };
+		57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */; };
+		57E6A52A25FDFA5C00CC3B17 /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6A52925FDFA5C00CC3B17 /* ShakeContainerViewModel.swift */; };
 		57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF6D2582831000A30582 /* ConcentrationTable.swift */; };
 		57E7FF72258289B200A30582 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF71258289B200A30582 /* MenuButton.swift */; };
 		57E7FF7F25828E0500A30582 /* MainMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF7E25828E0500A30582 /* MainMenuOverlay.swift */; };
@@ -643,6 +645,8 @@
 		57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenElement.swift; sourceTree = "<group>"; };
 		57E59A5D25F92E260087F760 /* HighlightedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedElements.swift; sourceTree = "<group>"; };
 		57E59A6325F93D5D0087F760 /* ConvergenceHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvergenceHighlight.swift; sourceTree = "<group>"; };
+		57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
+		57E6A52925FDFA5C00CC3B17 /* ShakeContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeContainerViewModel.swift; sourceTree = "<group>"; };
 		57E7FF692582307A00A30582 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		57E7FF6D2582831000A30582 /* ConcentrationTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTable.swift; sourceTree = "<group>"; };
 		57E7FF71258289B200A30582 /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
@@ -1263,6 +1267,7 @@
 			isa = PBXGroup;
 			children = (
 				576A421925F7A81100047618 /* AddMoleculesViewmodel.swift */,
+				57E6A52925FDFA5C00CC3B17 /* ShakeContainerViewModel.swift */,
 			);
 			path = "molecule-container";
 			sourceTree = "<group>";
@@ -1713,6 +1718,7 @@
 				57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */,
 				57E902B925ED561200758300 /* EquatableCounter.swift */,
 				57FDA138255D6C5000CB8804 /* Extensions.swift */,
+				57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -2354,6 +2360,7 @@
 				57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */,
 				5736DC3025F5007D003FD2B4 /* GridMolecules.swift in Sources */,
 				57E902B425ED40B500758300 /* AqueousReactionInputState.swift in Sources */,
+				57E6A52A25FDFA5C00CC3B17 /* ShakeContainerViewModel.swift in Sources */,
 				57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */,
 				576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */,
 				575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */,
@@ -2400,6 +2407,7 @@
 				57DDAD5B25E57E9300B535A7 /* ChartLine.swift in Sources */,
 				575A889525E438CD00AEE448 /* BundleExtension.swift in Sources */,
 				5797A48125E40A3600991BD9 /* BeakerShape.swift in Sources */,
+				57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */,
 				575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */,
 				5797A4BF25E40A6400991BD9 /* Equation.swift in Sources */,
 				57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */,

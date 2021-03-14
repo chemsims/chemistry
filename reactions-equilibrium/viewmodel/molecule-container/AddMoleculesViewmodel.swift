@@ -4,6 +4,7 @@
 
 import SwiftUI
 import ReactionsCore
+import CoreMotion
 
 class AddingMoleculesViewModel {
 
@@ -14,7 +15,7 @@ class AddingMoleculesViewModel {
         self.canAddMolecule = canAddMolecule
         self.addMolecules = addMolecules
 
-        func model(_ molecule: AqueousMolecule) -> AddingSingleMoleculeViewModel{
+        func model(_ molecule: AqueousMolecule) -> AddingSingleMoleculeViewModel {
             AddingSingleMoleculeViewModel(
                 canAddMolecule: { canAddMolecule(molecule) },
                 addMolecules: { addMolecules(molecule, $0) }
@@ -22,12 +23,36 @@ class AddingMoleculesViewModel {
         }
 
         self.models = MoleculeValue(builder: model)
+
+        self.newModel = NewAddingSingleMoleculeViewModel()
     }
 
 
     let models: MoleculeValue<AddingSingleMoleculeViewModel>
 
+    let newModel: NewAddingSingleMoleculeViewModel
+
+    func start(
+        for molecule: AqueousMolecule,
+        at location: CGPoint,
+        bottomY: CGFloat,
+        halfXRange: CGFloat,
+        halfYRange: CGFloat
+    ) {
+        newModel.initialLocation = location
+        newModel.bottomY = bottomY
+        newModel.canAddMolecule = { self.canAddMolecule(molecule) }
+        newModel.addMolecules = { self.addMolecules(molecule, $0) }
+        newModel.halfXRange = halfXRange
+        newModel.halfYRange = halfYRange
+        newModel.startMoleculeShake()
+    }
+
+    func stop() {
+        newModel.stopMoleculeShake()
+    }
 }
+
 
 class AddingSingleMoleculeViewModel: ObservableObject {
 
@@ -128,7 +153,24 @@ class AddingSingleMoleculeViewModel: ObservableObject {
     }
 }
 
-private struct AddingMoleculesSettings {
+struct AddingMoleculesSettings {
+
+    static func getTimeInterval(rotationRate: CGFloat) -> CGFloat? {
+        guard rotationRate >= minThreshold else {
+            return nil
+        }
+        return rotationTimeIntervalEquation.getY(at: rotationRate).within(min: minTimeInterval, max: maxTimeInterval)
+    }
+
+    private static let minThreshold: CGFloat = 1.5
+    private static let maxRotationRate: CGFloat = 10
+    private static let rotationTimeIntervalEquation = LinearEquation(
+        x1: minThreshold,
+        y1: minTimeInterval,
+        x2: maxRotationRate,
+        y2: maxTimeInterval
+    )
+
 
     static func getTimeInterval(velocity: CGFloat?) -> CGFloat {
         velocity.map { v in
@@ -136,8 +178,8 @@ private struct AddingMoleculesSettings {
         } ?? maxTimeInterval
     }
 
-    private static let minTimeInterval: CGFloat = 0.02
-    private static let maxTimeInterval: CGFloat = 0.2
+    private static let minTimeInterval: CGFloat = 0.05
+    private static let maxTimeInterval: CGFloat = 0.25
     private static let minVelocity: CGFloat = 100
     private static let maxVelocity: CGFloat = 500
 
@@ -147,5 +189,4 @@ private struct AddingMoleculesSettings {
         x2: maxVelocity,
         y2: minTimeInterval
     )
-
 }

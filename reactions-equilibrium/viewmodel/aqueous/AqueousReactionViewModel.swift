@@ -83,6 +83,10 @@ class AqueousReactionViewModel: ObservableObject {
         quotientEquation.getY(at: AqueousReactionSettings.endOfReverseReaction)
     }
 
+    func stopShaking() {
+        addingMoleculesModel.stop()
+    }
+
     func increment(molecule: AqueousMolecule, count: Int) {
         guard components.canIncrement(molecule: molecule) else {
             return

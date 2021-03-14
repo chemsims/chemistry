@@ -7,6 +7,7 @@ import ReactionsCore
 
 struct AddMoleculesView: View {
 
+    @ObservedObject var shakeModel: NewAddingSingleMoleculeViewModel
     let model: AddingMoleculesViewModel
     let inputState: AqueousReactionInputState
     let topRowHeight: CGFloat
@@ -18,7 +19,33 @@ struct AddMoleculesView: View {
     let topRowColorMultiply: Color?
     let onDrag: () -> Void
 
-    @State private var activeMolecule = AqueousMolecule.A
+    init(
+        model: AddingMoleculesViewModel,
+        inputState: AqueousReactionInputState,
+        topRowHeight: CGFloat,
+        containerWidth: CGFloat,
+        containerHeight: CGFloat,
+        startOfWater: CGFloat,
+        maxContainerY: CGFloat,
+        moleculeSize: CGFloat,
+        topRowColorMultiply: Color?,
+        onDrag: @escaping () -> Void
+    ) {
+        self.model = model
+        self.shakeModel = model.newModel
+        self.inputState = inputState
+        self.topRowHeight = topRowHeight
+        self.containerWidth = containerWidth
+        self.containerHeight = containerHeight
+        self.startOfWater = startOfWater
+        self.maxContainerY = maxContainerY
+        self.moleculeSize = moleculeSize
+        self.topRowColorMultiply = topRowColorMultiply
+        self.onDrag = onDrag
+    }
+
+
+    @State private var activeMolecule: AqueousMolecule?
 
     var body: some View {
         GeometryReader { geometry in
@@ -47,23 +74,40 @@ struct AddMoleculesView: View {
         let isActive = activeProduct || activeReactant
         return AddMoleculeContainerView(
             model: model.models.value(for: molecule),
-            onDrag: { didDrag(molecule: molecule) },
+            newModel: shakeModel,
+            onDrag: {
+                didDrag(
+                    molecule: molecule,
+                    width: width,
+                    height: height,
+                    index: index,
+                    bottomY: startOfWater + (moleculeSize / 2)
+                )
+            },
             width: width,
             height: height,
-            initialLocation: CGPoint(
-                x: containerX(width: width, index: index),
-                y: topRowHeight
-            ),
+            initialLocation: getLocation(for: molecule, width: width, index: index),
             containerWidth: containerWidth,
             startOfWater: startOfWater,
             maxContainerY: maxContainerY,
             moleculeSize: moleculeSize,
             moleculeColor: molecule.color,
-            imageName: molecule.imageName
+            imageName: molecule.imageName,
+            rotation: activeMolecule == molecule ? .degrees(135) : .zero
         )
         .zIndex(activeMolecule == molecule ? 1 : 0)
         .disabled(!isActive)
         .colorMultiply(isActive ? .white : Color.gray.opacity(0.5))
+    }
+
+    private func getLocation(for molecule: AqueousMolecule, width: CGFloat, index: Int) -> CGPoint {
+        if activeMolecule == molecule {
+            return CGPoint(
+                x: width / 2 + shakeModel.xOffset,
+                y: topRowHeight + (1.5 * containerHeight) + shakeModel.yOffset
+            )
+        }
+        return CGPoint(x: containerX(width: width, index: index), y: topRowHeight)
     }
 
     private func containerX(width: CGFloat, index: Int) -> CGFloat {
@@ -73,8 +117,27 @@ struct AddMoleculesView: View {
         return initial + extra
     }
 
-    private func didDrag(molecule: AqueousMolecule) {
-        activeMolecule = molecule
+    private func didDrag(
+        molecule: AqueousMolecule,
+        width: CGFloat,
+        height: CGFloat,
+        index: Int,
+        bottomY: CGFloat
+    ) {
+        withAnimation(.easeOut(duration: 0.25)) {
+            activeMolecule = molecule
+        }
+        model.start(
+            for: molecule,
+            at: getLocation(
+                for: molecule,
+                width: width, 
+                index: index
+            ),
+            bottomY: startOfWater + (moleculeSize / 2),
+            halfXRange: width / 2,
+            halfYRange: containerHeight
+        )
         onDrag()
     }
 }
@@ -82,6 +145,8 @@ struct AddMoleculesView: View {
 private struct AddMoleculeContainerView: View {
 
     @ObservedObject var model: AddingSingleMoleculeViewModel
+    @ObservedObject var newModel: NewAddingSingleMoleculeViewModel
+
     let onDrag: () -> Void
     let width: CGFloat
     let height: CGFloat
@@ -92,13 +157,14 @@ private struct AddMoleculeContainerView: View {
     let moleculeSize: CGFloat
     let moleculeColor: Color
     let imageName: String
+    let rotation: Angle
 
     @State private var offset = CGSize.zero
-    @State private var rotation = Angle.zero
+//    @State private var rotation = Angle.zero
 
     var body: some View {
         ZStack {
-            ForEach(model.molecules) { molecule in
+            ForEach(newModel.molecules) { molecule in
                 Circle()
                     .foregroundColor(moleculeColor)
                     .frame(width: moleculeSize, height: moleculeSize)
@@ -116,23 +182,28 @@ private struct AddMoleculeContainerView: View {
             .frame(width: containerWidth)
             .position(initialLocation)
             .offset(offset)
-            .gesture(DragGesture().onChanged { drag in
+            .onTapGesture {
                 onDrag()
-                withAnimation(.easeOut(duration: 0.25)) {
-                    rotation = .degrees(135)
-                }
-                offset = CGSize(
-                    width: constrainedXOffset(offset: drag.location.x - initialLocation.x),
-                    height: constrainedYOffset(offset: drag.location.y - initialLocation.y)
-                )
-                let effectivePosition = CGPoint(
-                    x: initialLocation.x + offset.width,
-                    y: initialLocation.y + offset.height
-                )
-                model.add(at: effectivePosition, to: startOfWater + (moleculeSize / 2), time: drag.time)
-            }.onEnded { _ in
-                endDrag()
-            }).onReceive(
+            }
+//            .gesture(DragGesture().onChanged { drag in
+//                onDrag()
+//                withAnimation(.easeOut(duration: 0.25)) {
+//                    rotation = .degrees(135)
+//                }
+//                offset = CGSize(
+//                    width: constrainedXOffset(offset: drag.location.x - initialLocation.x),
+//                    height: constrainedYOffset(offset: drag.location.y - initialLocation.y)
+//                )
+//                let effectivePosition = CGPoint(
+//                    x: initialLocation.x + offset.width,
+//                    y: initialLocation.y + offset.height
+//                )
+////                model.add(at: effectivePosition, to: startOfWater + (moleculeSize / 2), time: drag.time)
+//                newModel.moved(to: effectivePosition, endY: startOfWater + (moleculeSize / 2))
+//            }.onEnded { _ in
+//                endDrag()
+//            })
+            .onReceive(
                 NotificationCenter.default.publisher(
                     for: UIApplication.willResignActiveNotification
                 )
@@ -144,7 +215,7 @@ private struct AddMoleculeContainerView: View {
     private func endDrag() {
         withAnimation(.spring()) {
             offset = .zero
-            rotation = .zero
+//            rotation = .zero
         }
         model.endDrag()
     }

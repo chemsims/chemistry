@@ -264,7 +264,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         let reverseReaction = BalancedReactionEquations(
             forwardReaction: forwardReaction,
-            reverseInput: ReverseRe  actionInput(
+            reverseInput: ReverseReactionInput(
                 c0: unitChange,
                 d0: 2 * unitChange,
                 startTime: 11,

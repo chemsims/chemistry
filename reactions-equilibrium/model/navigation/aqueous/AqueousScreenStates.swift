@@ -92,6 +92,7 @@ class AqueousAddReactantState: AqueousScreenState {
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
+        model.stopShaking()
         model.showConcentrationLines = false
         model.showEquationTerms = false
         DeferScreenEdgesState.shared.deferEdges = []

@@ -27,6 +27,12 @@ extension BinaryFloatingPoint {
     }
 }
 
+extension Comparable {
+    public func within(min: Self, max: Self) -> Self {
+        Swift.min(max, Swift.max(min, self))
+    }
+}
+
 extension Array where Self.Element: Equatable {
 
     public func element(after element: Element) -> Element? {

@@ -41,3 +41,9 @@ struct MoleculeValue<Value> {
         }
     }
 }
+
+extension MoleculeValue {
+    var all: [Value] {
+        [reactantA, reactantB, productC, productD]
+    }
+}

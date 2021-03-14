@@ -4,6 +4,7 @@
 
 import SwiftUI
 import ReactionsCore
+import CoreMotion
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -23,4 +24,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 }
-
