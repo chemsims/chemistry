@@ -6,8 +6,9 @@ import SwiftUI
 import ReactionsCore
 import CoreMotion
 
-class AddingMoleculesViewModel {
+class AddingMoleculesViewModel: ObservableObject {
 
+    @Published var activeMolecule: AqueousMolecule?
     let canAddMolecule: (AqueousMolecule) -> Bool
     let addMolecules: (AqueousMolecule, Int) -> Void
 
@@ -34,7 +35,7 @@ class AddingMoleculesViewModel {
         halfXRange: CGFloat,
         halfYRange: CGFloat
     ) {
-        stopAll()
+        stopShaking()
         let model = models.value(for: molecule)
         model.initialLocation = location
         model.bottomY = bottomY
@@ -44,6 +45,13 @@ class AddingMoleculesViewModel {
     }
 
     func stopAll() {
+        stopShaking()
+        withAnimation(.spring()) {
+            activeMolecule = nil
+        }
+    }
+
+    private func stopShaking() {
         models.all.forEach { $0.stopMoleculeShake() }
     }
 }
@@ -57,7 +65,7 @@ struct AddingMoleculesSettings {
         return rotationTimeIntervalEquation.getY(at: rotationRate).within(min: minTimeInterval, max: maxTimeInterval)
     }
 
-    private static let minTimeInterval: CGFloat = 0.05
+    private static let minTimeInterval: CGFloat = 0.035
     private static let maxTimeInterval: CGFloat = 0.25
     private static let minThreshold: CGFloat = 1.5
     private static let maxRotationRate: CGFloat = 10

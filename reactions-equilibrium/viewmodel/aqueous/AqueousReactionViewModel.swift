@@ -121,7 +121,7 @@ class AqueousReactionViewModel: ObservableObject {
 
     /// Informs the user if they've added the maximum allowed amount of `molecule`
     private func handlePostIncrementSaturation(of molecule: AqueousMolecule) {
-        guard !components.canIncrement(molecule: molecule) else {
+        guard !components.canIncrement(molecule: molecule) && (inputState == .addProducts || inputState == .addReactants) else {
             return
         }
         let canAddComplement = components.canIncrement(molecule: molecule.complement)

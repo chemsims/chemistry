@@ -7,7 +7,7 @@ import ReactionsCore
 
 struct AddMoleculesView: View {
 
-    let model: AddingMoleculesViewModel
+    @ObservedObject var model: AddingMoleculesViewModel
     let inputState: AqueousReactionInputState
     let topRowHeight: CGFloat
     let containerWidth: CGFloat
@@ -17,33 +17,6 @@ struct AddMoleculesView: View {
     let moleculeSize: CGFloat
     let topRowColorMultiply: Color?
     let onDrag: () -> Void
-
-    init(
-        model: AddingMoleculesViewModel,
-        inputState: AqueousReactionInputState,
-        topRowHeight: CGFloat,
-        containerWidth: CGFloat,
-        containerHeight: CGFloat,
-        startOfWater: CGFloat,
-        maxContainerY: CGFloat,
-        moleculeSize: CGFloat,
-        topRowColorMultiply: Color?,
-        onDrag: @escaping () -> Void
-    ) {
-        self.model = model
-        self.inputState = inputState
-        self.topRowHeight = topRowHeight
-        self.containerWidth = containerWidth
-        self.containerHeight = containerHeight
-        self.startOfWater = startOfWater
-        self.maxContainerY = maxContainerY
-        self.moleculeSize = moleculeSize
-        self.topRowColorMultiply = topRowColorMultiply
-        self.onDrag = onDrag
-    }
-
-
-    @State private var activeMolecule: AqueousMolecule?
 
     var body: some View {
         GeometryReader { geometry in
@@ -90,15 +63,15 @@ struct AddMoleculesView: View {
             moleculeSize: moleculeSize,
             moleculeColor: molecule.color,
             imageName: molecule.imageName,
-            rotation: activeMolecule == molecule ? .degrees(135) : .zero
+            rotation: model.activeMolecule == molecule ? .degrees(135) : .zero
         )
-        .zIndex(activeMolecule == molecule ? 1 : 0)
+        .zIndex(model.activeMolecule == molecule ? 1 : 0)
         .disabled(!isActive)
         .colorMultiply(isActive ? .white : Color.gray.opacity(0.5))
     }
 
     private func getLocation(for molecule: AqueousMolecule, width: CGFloat, index: Int) -> CGPoint {
-        if activeMolecule == molecule {
+        if model.activeMolecule == molecule {
             return CGPoint(
                 x: width / 2,
                 y: topRowHeight + (1.5 * containerHeight)
@@ -122,7 +95,7 @@ struct AddMoleculesView: View {
         bottomY: CGFloat
     ) {
         withAnimation(.easeOut(duration: 0.25)) {
-            activeMolecule = molecule
+            model.activeMolecule = molecule
         }
         model.start(
             for: molecule,
