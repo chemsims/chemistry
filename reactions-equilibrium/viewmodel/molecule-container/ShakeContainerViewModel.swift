@@ -7,14 +7,14 @@ import CoreMotion
 import ReactionsCore
 import SwiftUI
 
-class NewAddingSingleMoleculeViewModel: ObservableObject {
+class ShakeContainerViewModel: ObservableObject {
 
     @Published var xOffset: CGFloat = 0
     @Published var yOffset: CGFloat = 0
     @Published var molecules = [FallingMolecule]()
 
-    var canAddMolecule: (() -> Bool)?
-    var addMolecules: ((Int) -> Void)?
+    let canAddMolecule: () -> Bool
+    let addMolecules: (Int) -> Void
 
     var initialLocation: CGPoint?
     var halfXRange: CGFloat?
@@ -25,10 +25,20 @@ class NewAddingSingleMoleculeViewModel: ObservableObject {
     private let motion = CMMotionManager()
     private let velocity = 200.0 // pts per second
 
-    private var initialAcceleration: CMAcceleration?
     private var initialAttitude: CMAttitude?
 
+    private var isUpdating = false
+
+    init(
+        canAddMolecule: @escaping () -> Bool,
+        addMolecules: @escaping (Int) -> Void
+    ) {
+        self.canAddMolecule = canAddMolecule
+        self.addMolecules = addMolecules
+    }
+
     func startMoleculeShake() {
+        isUpdating = true
         if motion.isDeviceMotionAvailable {
             motion.deviceMotionUpdateInterval = 1 / 120
             motion.showsDeviceMovementDisplay = true
@@ -43,15 +53,27 @@ class NewAddingSingleMoleculeViewModel: ObservableObject {
         }
     }
 
+    func stopMoleculeShake() {
+        isUpdating = false
+        motion.stopDeviceMotionUpdates()
+        initialAttitude = nil
+        withAnimation(.easeOut(duration: 0.25)) {
+            xOffset = 0
+            yOffset = 0
+        }
+    }
+
     private func handleMotionUpdate(motion: CMDeviceMotion) {
+        guard isUpdating else {
+            return
+        }
         if let initialAttitude = initialAttitude {
             handlePitch(newValue: motion.attitude.pitch - initialAttitude.pitch)
             handleRoll(newValue: motion.attitude.roll - initialAttitude.roll)
         }
 
         let rotationRateMag = motion.rotationRate.magnitude
-
-        if let timeInterval = AddingMoleculesSettings.getTimeInterval(rotationRate: CGFloat(rotationRateMag)) {
+        if let timeInterval = AddingMoleculesSettings.getTimeInterval(for: CGFloat(rotationRateMag)) {
             let enoughTimeHasPassed = lastDrop.map { Date().timeIntervalSince($0) >= Double(timeInterval) }
             if enoughTimeHasPassed ?? true {
                 lastDrop = Date()
@@ -62,26 +84,24 @@ class NewAddingSingleMoleculeViewModel: ObservableObject {
 
     private let pitchEquation = LinearEquation(x1: 0.5, y1: -1, x2: -0.5, y2: 1)
     private func handlePitch(newValue: Double) {
-        let pitchFactor = within(min: -1, max: 1, value: pitchEquation.getY(at: CGFloat(newValue)))
-        self.xOffset = self.halfXRange.map { $0 * pitchFactor } ?? 0
+        self.xOffset = getOffset(equation: pitchEquation, value: newValue, halfRange: halfXRange)
     }
 
 
     private let rollEquation = LinearEquation(x1: -0.5, y1: -1, x2: 0.5, y2: 1)
     private func handleRoll(newValue: Double) {
-        let rollFactor = within(min: -1, max: 1, value: rollEquation.getY(at: CGFloat(newValue)))
-        self.yOffset = self.halfYRange.map { $0 * rollFactor } ?? 0
+        self.yOffset = getOffset(equation: rollEquation, value: newValue, halfRange: halfYRange)
     }
 
-    func stopMoleculeShake() {
-        motion.stopDeviceMotionUpdates()
+    private func getOffset(equation: Equation, value: Double, halfRange: CGFloat?) -> CGFloat {
+        let factor = within(min: -1, max: 1, value: equation.getY(at: CGFloat(value)))
+        return halfRange.map { $0 * factor } ?? 0
     }
 
     private func doAdd() {
-        guard canAddMolecule?() ?? false else {
+        guard canAddMolecule() else {
             return
         }
-
         if let location = initialLocation, let bottomY = bottomY {
             let molecule = FallingMolecule(
                 position: CGPoint(x: location.x + xOffset, y: location.y + yOffset)
@@ -104,9 +124,7 @@ class NewAddingSingleMoleculeViewModel: ObservableObject {
         if let index = molecules.firstIndex(where: { $0.id == id }) {
             molecules.remove(at: index)
         }
-        if let doAddMolecules = addMolecules {
-            doAddMolecules(1)
-        }
+        addMolecules(1)
     }
 }
 

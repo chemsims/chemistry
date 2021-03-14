@@ -15,22 +15,17 @@ class AddingMoleculesViewModel {
         self.canAddMolecule = canAddMolecule
         self.addMolecules = addMolecules
 
-        func model(_ molecule: AqueousMolecule) -> AddingSingleMoleculeViewModel {
-            AddingSingleMoleculeViewModel(
+        func model(_ molecule: AqueousMolecule) -> ShakeContainerViewModel {
+            ShakeContainerViewModel(
                 canAddMolecule: { canAddMolecule(molecule) },
                 addMolecules: { addMolecules(molecule, $0) }
             )
         }
 
         self.models = MoleculeValue(builder: model)
-
-        self.newModel = NewAddingSingleMoleculeViewModel()
     }
 
-
-    let models: MoleculeValue<AddingSingleMoleculeViewModel>
-
-    let newModel: NewAddingSingleMoleculeViewModel
+    let models: MoleculeValue<ShakeContainerViewModel>
 
     func start(
         for molecule: AqueousMolecule,
@@ -39,129 +34,31 @@ class AddingMoleculesViewModel {
         halfXRange: CGFloat,
         halfYRange: CGFloat
     ) {
-        newModel.initialLocation = location
-        newModel.bottomY = bottomY
-        newModel.canAddMolecule = { self.canAddMolecule(molecule) }
-        newModel.addMolecules = { self.addMolecules(molecule, $0) }
-        newModel.halfXRange = halfXRange
-        newModel.halfYRange = halfYRange
-        newModel.startMoleculeShake()
+        stopAll()
+        let model = models.value(for: molecule)
+        model.initialLocation = location
+        model.bottomY = bottomY
+        model.halfXRange = halfXRange
+        model.halfYRange = halfYRange
+        model.startMoleculeShake()
     }
 
-    func stop() {
-        newModel.stopMoleculeShake()
-    }
-}
-
-
-class AddingSingleMoleculeViewModel: ObservableObject {
-
-    let canAddMolecule: () -> Bool
-    let addMolecules: (Int) -> Void
-
-    init(canAddMolecule: @escaping () -> Bool, addMolecules: @escaping (Int) -> Void) {
-        self.canAddMolecule = canAddMolecule
-        self.addMolecules = addMolecules
-    }
-
-    @Published var molecules = [FallingMolecule]()
-
-    private var lastDrop: Date?
-    private let velocity = 200.0 // pts per second
-
-    @Published var lastAddAttempt: (CGPoint, Date)?
-
-    /// Adds a molecule at the start position, and animates the Y value to endY
-    func add(
-        at startPosition: CGPoint,
-        to endY: CGFloat,
-        time: Date
-    ) {
-
-        let timeBetweenDrops = getTimeIntervalBetweenDrops(startPosition: startPosition, currentTime: time)
-        guard canAddMolecule() else {
-            return
-        }
-        guard lastDrop == nil || Date().timeIntervalSince(lastDrop!) >= Double(timeBetweenDrops) else {
-            return
-        }
-        lastDrop = Date()
-
-        let molecule = FallingMolecule(position: startPosition)
-        molecules.append(molecule)
-
-        let dy = endY - startPosition.y
-        let duration = Double(dy) / velocity
-
-        withAnimation(.linear(duration: duration)) {
-            molecules[molecules.count - 1].position = CGPoint(x: startPosition.x, y: endY)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            self.moleculeHasHitWater(id: molecule.id)
-        }
-    }
-
-    func endDrag() {
-        lastDrop = nil
-        lastAddAttempt = nil
-    }
-
-    private func handleVelocityCheck(position: CGPoint) {
-        let now = Date()
-        if let lastAttempt = lastAddAttempt {
-            let dx = abs(position.x - lastAttempt.0.x)
-            let dy = abs(position.y - lastAttempt.0.y)
-            let magChange = sqrt(pow(dx, 2) + pow(dy, 2))
-            let dt = now.timeIntervalSince(lastAttempt.1)
-
-            let vSquared = magChange / CGFloat(dt)
-            print(vSquared)
-        }
-        lastAddAttempt = (position, now)
-    }
-
-    private func getTimeIntervalBetweenDrops(
-        startPosition: CGPoint,
-        currentTime: Date
-    ) -> CGFloat {
-        let velocity = getVelocity(currentPosition: startPosition, currentTime: currentTime)
-        self.lastAddAttempt = (startPosition, currentTime)
-        return AddingMoleculesSettings.getTimeInterval(velocity: velocity)
-    }
-
-    private func getVelocity(
-        currentPosition: CGPoint,
-        currentTime: Date
-    ) -> CGFloat? {
-        lastAddAttempt.map { lastAttempt in
-            let dx = currentPosition.x - lastAttempt.0.x
-            let dy = currentPosition.y - lastAttempt.0.y
-
-            let distance = sqrt(pow(dx, 2) + pow(dy, 2))
-            let dt = currentTime.timeIntervalSince(lastAttempt.1)
-
-            return distance / CGFloat(dt)
-        }
-    }
-
-
-    private func moleculeHasHitWater(id: UUID) {
-        if let index = molecules.firstIndex(where: { $0.id == id }) {
-            molecules.remove(at: index)
-        }
-        addMolecules(1)
+    func stopAll() {
+        models.all.forEach { $0.stopMoleculeShake() }
     }
 }
 
 struct AddingMoleculesSettings {
 
-    static func getTimeInterval(rotationRate: CGFloat) -> CGFloat? {
+    static func getTimeInterval(for rotationRate: CGFloat) -> CGFloat? {
         guard rotationRate >= minThreshold else {
             return nil
         }
         return rotationTimeIntervalEquation.getY(at: rotationRate).within(min: minTimeInterval, max: maxTimeInterval)
     }
 
+    private static let minTimeInterval: CGFloat = 0.05
+    private static let maxTimeInterval: CGFloat = 0.25
     private static let minThreshold: CGFloat = 1.5
     private static let maxRotationRate: CGFloat = 10
     private static let rotationTimeIntervalEquation = LinearEquation(
@@ -169,24 +66,5 @@ struct AddingMoleculesSettings {
         y1: minTimeInterval,
         x2: maxRotationRate,
         y2: maxTimeInterval
-    )
-
-
-    static func getTimeInterval(velocity: CGFloat?) -> CGFloat {
-        velocity.map { v in
-            min(maxTimeInterval, max(minTimeInterval, equation.getY(at: v)))
-        } ?? maxTimeInterval
-    }
-
-    private static let minTimeInterval: CGFloat = 0.05
-    private static let maxTimeInterval: CGFloat = 0.25
-    private static let minVelocity: CGFloat = 100
-    private static let maxVelocity: CGFloat = 500
-
-    private static let equation = LinearEquation(
-        x1: minVelocity,
-        y1: maxTimeInterval,
-        x2: maxVelocity,
-        y2: minTimeInterval
     )
 }

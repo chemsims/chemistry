@@ -7,7 +7,6 @@ import ReactionsCore
 
 struct AddMoleculesView: View {
 
-    @ObservedObject var shakeModel: NewAddingSingleMoleculeViewModel
     let model: AddingMoleculesViewModel
     let inputState: AqueousReactionInputState
     let topRowHeight: CGFloat
@@ -32,7 +31,6 @@ struct AddMoleculesView: View {
         onDrag: @escaping () -> Void
     ) {
         self.model = model
-        self.shakeModel = model.newModel
         self.inputState = inputState
         self.topRowHeight = topRowHeight
         self.containerWidth = containerWidth
@@ -74,7 +72,6 @@ struct AddMoleculesView: View {
         let isActive = activeProduct || activeReactant
         return AddMoleculeContainerView(
             model: model.models.value(for: molecule),
-            newModel: shakeModel,
             onDrag: {
                 didDrag(
                     molecule: molecule,
@@ -103,8 +100,8 @@ struct AddMoleculesView: View {
     private func getLocation(for molecule: AqueousMolecule, width: CGFloat, index: Int) -> CGPoint {
         if activeMolecule == molecule {
             return CGPoint(
-                x: width / 2 + shakeModel.xOffset,
-                y: topRowHeight + (1.5 * containerHeight) + shakeModel.yOffset
+                x: width / 2,
+                y: topRowHeight + (1.5 * containerHeight)
             )
         }
         return CGPoint(x: containerX(width: width, index: index), y: topRowHeight)
@@ -144,8 +141,7 @@ struct AddMoleculesView: View {
 
 private struct AddMoleculeContainerView: View {
 
-    @ObservedObject var model: AddingSingleMoleculeViewModel
-    @ObservedObject var newModel: NewAddingSingleMoleculeViewModel
+    @ObservedObject var model: ShakeContainerViewModel
 
     let onDrag: () -> Void
     let width: CGFloat
@@ -159,12 +155,9 @@ private struct AddMoleculeContainerView: View {
     let imageName: String
     let rotation: Angle
 
-    @State private var offset = CGSize.zero
-//    @State private var rotation = Angle.zero
-
     var body: some View {
         ZStack {
-            ForEach(newModel.molecules) { molecule in
+            ForEach(model.molecules) { molecule in
                 Circle()
                     .foregroundColor(moleculeColor)
                     .frame(width: moleculeSize, height: moleculeSize)
@@ -181,60 +174,12 @@ private struct AddMoleculeContainerView: View {
             .rotationEffect(rotation)
             .frame(width: containerWidth)
             .position(initialLocation)
-            .offset(offset)
+            .offset(CGSize(width: model.xOffset, height: model.yOffset))
             .onTapGesture {
                 onDrag()
             }
-//            .gesture(DragGesture().onChanged { drag in
-//                onDrag()
-//                withAnimation(.easeOut(duration: 0.25)) {
-//                    rotation = .degrees(135)
-//                }
-//                offset = CGSize(
-//                    width: constrainedXOffset(offset: drag.location.x - initialLocation.x),
-//                    height: constrainedYOffset(offset: drag.location.y - initialLocation.y)
-//                )
-//                let effectivePosition = CGPoint(
-//                    x: initialLocation.x + offset.width,
-//                    y: initialLocation.y + offset.height
-//                )
-////                model.add(at: effectivePosition, to: startOfWater + (moleculeSize / 2), time: drag.time)
-//                newModel.moved(to: effectivePosition, endY: startOfWater + (moleculeSize / 2))
-//            }.onEnded { _ in
-//                endDrag()
-//            })
-            .onReceive(
-                NotificationCenter.default.publisher(
-                    for: UIApplication.willResignActiveNotification
-                )
-            ) { _ in
-                endDrag()
-            }
     }
 
-    private func endDrag() {
-        withAnimation(.spring()) {
-            offset = .zero
-//            rotation = .zero
-        }
-        model.endDrag()
-    }
-
-    private var maxYOffset: CGFloat {
-        min(maxContainerY, height) - initialLocation.y
-    }
-
-    private func constrainedYOffset(offset: CGFloat) -> CGFloat {
-        let maxDy = min(maxContainerY, height) - initialLocation.y
-        let minDy = -initialLocation.y
-        return min(maxDy, max(minDy, offset))
-    }
-
-    private func constrainedXOffset(offset: CGFloat) -> CGFloat {
-        let maxDx = width - initialLocation.x
-        let minDx = -initialLocation.x
-        return min(maxDx, max(minDx, offset))
-    }
 }
 
 

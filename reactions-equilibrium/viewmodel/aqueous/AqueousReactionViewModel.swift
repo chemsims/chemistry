@@ -84,7 +84,7 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     func stopShaking() {
-        addingMoleculesModel.stop()
+        addingMoleculesModel.stopAll()
     }
 
     func increment(molecule: AqueousMolecule, count: Int) {
