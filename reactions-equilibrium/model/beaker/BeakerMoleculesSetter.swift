@@ -60,20 +60,18 @@ struct BeakerMoleculesSetter {
         )
     }
 
-    var cMolecules: [GridCoordinate] {
-        balancer?.increasingBalanced.first.coords ?? []
+    var moleculesC: FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates:  balancer?.increasingBalanced.first.coords ?? [],
+            fractionToDraw: fractionToDraw(for: balancer?.increasingBalanced.first)
+        )
     }
 
-    var dMolecules: [GridCoordinate] {
-        balancer?.increasingBalanced.second.coords ?? []
-    }
-
-    var cFractionToDraw: Equation {
-        fractionToDraw(for: balancer?.increasingBalanced.first)
-    }
-
-    var dFractionToDraw: Equation {
-        fractionToDraw(for: balancer?.increasingBalanced.second)
+    var moleculesD: FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates:  balancer?.increasingBalanced.second.coords ?? [],
+            fractionToDraw: fractionToDraw(for: balancer?.increasingBalanced.second)
+        )
     }
 
     private func fractionToDraw(
@@ -186,7 +184,7 @@ struct ReverseBeakerMoleculeSetter {
     ) -> [GridCoordinate] {
         let convergenceTime = forwardMolecules.reactionEquation.convergenceTime
         let convergedForwardCoords = forwardCoords.coords(at: convergenceTime)
-        let products = forwardMolecules.cMolecules + forwardMolecules.dMolecules
+        let products = forwardMolecules.moleculesC.coords(at: convergenceTime) + forwardMolecules.moleculesD.coords(at: convergenceTime)
         return convergedForwardCoords.filter { coord in
             !products.contains(coord)
         }

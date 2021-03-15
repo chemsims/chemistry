@@ -138,11 +138,11 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
             ),
             AnimatingBeakerMolecules(
                 molecules: BeakerMolecules(coords: cMolecules, color: .from(.aqMoleculeC)),
-                fractionToDraw: productMoleculeSetter.cFractionToDraw
+                fractionToDraw: productMoleculeSetter.moleculesC.fractionToDraw
             ),
             AnimatingBeakerMolecules(
                 molecules: BeakerMolecules(coords: dMolecules, color: .from(.aqMoleculeD)),
-                fractionToDraw: productMoleculeSetter.dFractionToDraw
+                fractionToDraw: productMoleculeSetter.moleculesD.fractionToDraw
             )
         ]
     }
@@ -159,10 +159,10 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     }
 
     var cMolecules: [GridCoordinate] {
-        productMoleculeSetter.cMolecules
+        productMoleculeSetter.moleculesC.coordinates
     }
     var dMolecules: [GridCoordinate] {
-        productMoleculeSetter.dMolecules
+        productMoleculeSetter.moleculesD.coordinates
     }
 
     var equations: BalancedReactionEquations {

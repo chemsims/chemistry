@@ -18,14 +18,14 @@ class BeakerMoleculeSetterTests: XCTestCase {
             reactionEquation: reaction
         )
 
-        XCTAssertEqual(model.c.coords(at: 0).count, 0)
-        XCTAssertEqual(model.d.coords(at: 0).count, 0)
+        XCTAssertEqual(model.moleculesC.coords(at: 0).count, 0)
+        XCTAssertEqual(model.moleculesD.coords(at: 0).count, 0)
 
-        XCTAssertEqual(model.c.coords(at: 10).count, 15)
-        XCTAssertEqual(model.d.coords(at: 10).count, 15)
+        XCTAssertEqual(model.moleculesC.coords(at: 10).count, 15)
+        XCTAssertEqual(model.moleculesD.coords(at: 10).count, 15)
 
-        XCTAssertEqual(model.c.coords(at: 7).count, (15 * reaction.productC.getY(at: 7) / 0.15).roundedInt())
-        XCTAssertEqual(model.d.coords(at: 7).count, (15 * reaction.productD.getY(at: 7) / 0.15).roundedInt())
+        XCTAssertEqual(model.moleculesC.coords(at: 7).count, (15 * reaction.productC.getY(at: 7) / 0.15).roundedInt())
+        XCTAssertEqual(model.moleculesD.coords(at: 7).count, (15 * reaction.productD.getY(at: 7) / 0.15).roundedInt())
 
         XCTAssertEqual(model.getEffectiveReactants(at: 0).a.count, 30)
         XCTAssertEqual(model.getEffectiveReactants(at: 0).b.count, 30)
@@ -55,11 +55,11 @@ class BeakerMoleculeSetterTests: XCTestCase {
             reactionEquation: reaction
         )
 
-        XCTAssertEqual(model.c.coords(at: 0).count, 0)
-        XCTAssertEqual(model.d.coords(at: 0).count, 0)
+        XCTAssertEqual(model.moleculesC.coords(at: 0).count, 0)
+        XCTAssertEqual(model.moleculesD.coords(at: 0).count, 0)
 
-        XCTAssertEqual(model.c.coords(at: 10).count, 20)
-        XCTAssertEqual(model.d.coords(at: 10).count, 20)
+        XCTAssertEqual(model.moleculesC.coords(at: 10).count, 20)
+        XCTAssertEqual(model.moleculesD.coords(at: 10).count, 20)
 
         XCTAssertEqual(model.getEffectiveReactants(at: 0).a.count, 40)
         XCTAssertEqual(model.getEffectiveReactants(at: 0).b.count, 30)
@@ -154,8 +154,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             reverseReaction: reverseReaction,
             startTime: 11,
             forwardBeaker: forwardGrid,
-            cMolecules: forwardGrid.c.coordinates,
-            dMolecules: forwardGrid.d.coordinates
+            cMolecules: forwardGrid.moleculesC.coordinates,
+            dMolecules: forwardGrid.moleculesD.coordinates
         )
 
         assertSameElements(forwardGrid.getEffectiveReactants(at: 11).a, reverseGrid.aMolecules.coords(at: 11))
@@ -195,15 +195,15 @@ class BeakerMoleculeSetterTests: XCTestCase {
             reverseInput: ReverseReactionInput(c0: 0.3, d0: 0.3, startTime: 11, convergenceTime: 20)
         )
         let finalProductGridCount = GridMoleculesUtil.gridCount(for: 0.3, gridSize: 100)
-        let extraCCount = finalProductGridCount - forwardGrid.cMolecules.count
-        let extraDCount = finalProductGridCount - forwardGrid.dMolecules.count
+        let extraCCount = finalProductGridCount - forwardGrid.moleculesC.coordinates.count
+        let extraDCount = finalProductGridCount - forwardGrid.moleculesD.coordinates.count
 
         let reverseGrid = ReverseBeakerMoleculeSetter(
             reverseReaction: reverseReaction,
             startTime: 11,
             forwardBeaker: forwardGrid,
-            cMolecules: forwardGrid.c.coordinates + Array(grid.suffix(extraCCount)),
-            dMolecules: forwardGrid.d.coordinates + Array(grid.dropLast(extraCCount).suffix(extraDCount))
+            cMolecules: forwardGrid.moleculesC.coordinates + Array(grid.suffix(extraCCount)),
+            dMolecules: forwardGrid.moleculesD.coordinates + Array(grid.dropLast(extraCCount).suffix(extraDCount))
         )
 
         assertSameElements(forwardGrid.getEffectiveReactants(at: 11).a, reverseGrid.aMolecules.coords(at: 11))
@@ -258,9 +258,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
         XCTAssertEqual(convergedReactants.a.count, expectedConvergedAMolecules)
         XCTAssertEqual(convergedReactants.b.count, expectedConvergedBMolecules)
 
-        XCTAssertEqual(model.c.coords(at: 10).count, expectedCMolecules)
-        XCTAssertEqual(model.d.coords(at: 10).count, expectedDMolecules)
-
+        XCTAssertEqual(model.moleculesC.coords(at: 10).count, expectedCMolecules)
+        XCTAssertEqual(model.moleculesD.coords(at: 10).count, expectedDMolecules)
 
         let reverseReaction = BalancedReactionEquations(
             forwardReaction: forwardReaction,
@@ -275,8 +274,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             reverseReaction: reverseReaction,
             startTime: 11,
             forwardBeaker: model,
-            cMolecules: model.cMolecules,
-            dMolecules: model.dMolecules
+            cMolecules: model.moleculesC.coordinates,
+            dMolecules: model.moleculesD.coordinates
         )
 
 
@@ -316,8 +315,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
         XCTAssertEqual(forwardModel.getEffectiveReactants(at: 10).b.count, forwardReactantCount)
         XCTAssertEqual(forwardModel.moleculesA.coords(at: 10).count, 30 - dropInReactant)
         XCTAssertEqual(forwardModel.moleculesB.coords(at: 10).count, 30 - dropInReactant)
-        XCTAssertEqual(forwardModel.c.coords(at: 10).count, forwardProductCount)
-        XCTAssertEqual(forwardModel.d.coords(at: 10).count, forwardProductCount)
+        XCTAssertEqual(forwardModel.moleculesC.coords(at: 10).count, forwardProductCount)
+        XCTAssertEqual(forwardModel.moleculesD.coords(at: 10).count, forwardProductCount)
 
         let reverseReaction = BalancedReactionEquations(
             forwardReaction: forwardReaction,
@@ -333,8 +332,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             reverseReaction: reverseReaction,
             startTime: 11,
             forwardBeaker: forwardModel,
-            cMolecules: forwardModel.cMolecules + grid.suffix(30 - forwardModel.cMolecules.count),
-            dMolecules: forwardModel.dMolecules + grid.dropLast(30 - forwardModel.cMolecules.count).suffix(30 - forwardModel.dMolecules.count)
+            cMolecules: forwardModel.moleculesC.coordinates + grid.suffix(30 - forwardModel.moleculesC.coordinates.count),
+            dMolecules: forwardModel.moleculesD.coordinates + grid.dropLast(30 - forwardModel.moleculesC.coordinates.count).suffix(30 - forwardModel.moleculesD.coordinates.count)
         )
 
         XCTAssertEqual(
@@ -363,18 +362,10 @@ class BeakerMoleculeSetterTests: XCTestCase {
     }
 }
 
-// TODO - remove this extension when the model exposes FractionCoordinates
 extension BeakerMoleculesSetter {
-    var c: FractionedCoordinates {
-        FractionedCoordinates(coordinates: cMolecules, fractionToDraw: cFractionToDraw)
-    }
-
-    var d: FractionedCoordinates {
-        FractionedCoordinates(coordinates: dMolecules, fractionToDraw: dFractionToDraw)
-    }
 
     func getEffectiveReactants(at x: CGFloat) -> (a: [GridCoordinate], b: [GridCoordinate]) {
-        let products = c.coords(at: x) + d.coords(at: x)
+        let products = moleculesC.coords(at: x) + moleculesD.coords(at: x)
         let effectiveA = moleculesA.coords(at: x).filter { !products.contains($0) }
         let effectiveB = moleculesB.coords(at: x).filter { !products.contains($0) }
         return (a: effectiveA, b: effectiveB)
