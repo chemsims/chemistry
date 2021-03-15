@@ -84,7 +84,9 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     let tForMaxQuotient: CGFloat = AqueousReactionSettings.timeForConvergence
     let quotientChartDiscontinuity: CGPoint? = nil
     let moleculeChartDiscontinuities: MoleculeValue<CGPoint>? = nil
+
     private let shuffledEquilibriumGrid = EquilibriumGridSettings.grid.shuffled()
+    private let shuffledMoleculeGrid: [GridCoordinate]
 
     private(set) var grid = ForwardGridMolecules()
 
@@ -92,12 +94,14 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         coefficients: BalancedReactionCoefficients,
         equilibriumConstant: CGFloat,
         availableCols: Int,
-        availableRows: Int
+        availableRows: Int,
+        maxRows: Int
     ) {
         self.coefficients = coefficients
         self.equilibriumConstant = equilibriumConstant
         self.availableCols = availableCols
         self.availableRows = availableRows
+        self.shuffledMoleculeGrid = GridCoordinate.grid(cols: availableCols, rows: maxRows).shuffled()
     }
 
     mutating func reset() {
@@ -234,11 +238,17 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
 
     var productMoleculeSetter: BeakerMoleculesSetter {
         BeakerMoleculesSetter(
-            totalMolecules: availableMolecules,
+            shuffledCoords: availableShuffledGrid,
             moleculesA: underlyingAMolecules,
             moleculesB: underlyingBMolecules,
             reactionEquation: equations
         )
+    }
+
+    private var availableShuffledGrid: [GridCoordinate] {
+        shuffledMoleculeGrid.filter {
+            $0.row < availableRows
+        }
     }
 
     private func reactantMoleculesToDraw(

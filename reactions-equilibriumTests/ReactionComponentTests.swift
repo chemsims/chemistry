@@ -104,7 +104,7 @@ class ReactionComponentTests: XCTestCase {
             XCTAssertEqual(fractionToDraw.getY(at: t), 1)
             let midConcentration = concentration.getY(at: t / 2)
             let midAsRatio = midConcentration / convergence
-            XCTAssertEqual(fractionToDraw.getY(at: t / 2), midAsRatio)
+            XCTAssertEqual(fractionToDraw.getY(at: t / 2), midAsRatio, accuracy: 0.0001)
         }
 
         func testProducts() {
@@ -180,7 +180,8 @@ class ReactionComponentTests: XCTestCase {
             coefficients: coeffs,
             equilibriumConstant: 1,
             availableCols: 10,
-            availableRows: 10
+            availableRows: 10,
+            maxRows: 10
         )
         if maxC {
             model.incrementA(count: maxIncrementCount)

@@ -19,7 +19,8 @@ class AqueousReactionViewModel: ObservableObject {
             coefficients: initialType.coefficients,
             equilibriumConstant: initialType.equilibriumConstant,
             availableCols: MoleculeGridSettings.cols,
-            availableRows: initialRows
+            availableRows: initialRows,
+            maxRows: AqueousReactionSettings.maxRows
         )
 
         self.navigation = AqueousNavigationModel.model(model: self)

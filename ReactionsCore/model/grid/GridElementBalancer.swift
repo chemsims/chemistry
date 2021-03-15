@@ -7,23 +7,24 @@ import Foundation
 
 public struct GridElementBalancer {
 
-    let initialIncreasingA: GridElementToBalance
-    let initialIncreasingB: GridElementToBalance
-    let initialReducingC: GridElementToBalance
-    let initialReducingD: GridElementToBalance
-    let grid: [GridCoordinate]
+    public let initialIncreasingA: GridElementToBalance
+    public let initialIncreasingB: GridElementToBalance
+    public let initialReducingC: GridElementToBalance
+    public let initialReducingD: GridElementToBalance
+    public let grid: [GridCoordinate]
 
-    public init(
+    public init?(
         initialIncreasingA: GridElementToBalance,
         initialIncreasingB: GridElementToBalance,
         initialReducingC: GridElementToBalance,
         initialReducingD: GridElementToBalance,
         grid: [GridCoordinate]
     ) {
-        assert(initialIncreasingA.delta >= 0)
-        assert(initialIncreasingB.delta >= 0)
-        assert(initialReducingC.delta <= 0)
-        assert(initialReducingD.delta <= 0)
+        guard initialIncreasingA.delta >= 0 else { return nil }
+        guard initialIncreasingB.delta >= 0 else { return nil }
+        guard initialReducingC.delta <= 0 else { return nil }
+        guard initialReducingC.delta <= 0 else { return nil }
+
         self.initialIncreasingA = initialIncreasingA
         self.initialIncreasingB = initialIncreasingB
         self.initialReducingC = initialReducingC
@@ -35,20 +36,22 @@ public struct GridElementBalancer {
         }
     }
 
-    var balancedA: BalancedGridElement {
-        initialIncreasingA.balancedElement(with: aCoords)
+    public var balancedA: BalancedGridElement {
+        initialIncreasingA.increasingElement(with: aCoords)
     }
 
-    var balancedB: BalancedGridElement {
-        initialIncreasingB.balancedElement(with: bCoords)
+    public var balancedB: BalancedGridElement {
+        initialIncreasingB.increasingElement(with: bCoords)
     }
 
-    var balancedC: BalancedGridElement {
-        initialReducingC.balancedElement(with: cCoords)
+    public var balancedC: BalancedGridElement {
+        initialReducingC.decreasingElement(
+            with: cCoords, extraDrop: extraCToDrop
+        )
     }
 
-    var balancedD: BalancedGridElement {
-        initialReducingD.balancedElement(with: dCoords)
+    public var balancedD: BalancedGridElement {
+        initialReducingC.decreasingElement(with: dCoords, extraDrop: extraDToDrop)
     }
 
     private var aCoords: [GridCoordinate] {
@@ -132,6 +135,14 @@ private extension GridElementBalancer {
         initialIncreasingB.delta - bToTransfer
     }
 
+    private var extraCToDrop: Int {
+        abs(initialReducingC.delta) - cToTransfer
+    }
+
+    private var extraDToDrop: Int {
+        abs(initialReducingD.delta) - dToTransfer
+    }
+
     private func ratio(_ l: Int, _ r: Int) -> Double {
         let sum = l + r
         return sum == 0 ? 0 : Double(l) / Double(sum)
@@ -155,8 +166,22 @@ public struct GridElementToBalance {
         finalCount - initialCoords.count
     }
 
-    fileprivate func balancedElement(
+    fileprivate func increasingElement(
         with coords: [GridCoordinate]
+    ) -> BalancedGridElement {
+        balancedElement(coords: coords, finalNumerator: finalCount)
+    }
+
+    fileprivate func decreasingElement(
+        with coords: [GridCoordinate],
+        extraDrop: Int
+    ) -> BalancedGridElement {
+        balancedElement(coords: coords, finalNumerator: initialCoords.count - extraDrop)
+    }
+
+    private func balancedElement(
+        coords: [GridCoordinate],
+        finalNumerator: Int
     ) -> BalancedGridElement {
         guard !coords.isEmpty else {
             return BalancedGridElement(coords: [], initialFraction: 0, finalFraction: 0)
@@ -164,15 +189,26 @@ public struct GridElementToBalance {
         return BalancedGridElement(
             coords: coords,
             initialFraction: Double(initialCoords.count) / Double(coords.count),
-            finalFraction: Double(finalCount) / Double(coords.count)
+            finalFraction: Double(finalNumerator) / Double(coords.count)
         )
     }
 }
 
 /// - Note: Any fraction to draw must be drawn from the start of the coordinates
 ///         For example, given 10 elements and a fraction to draw of 0.3, then the indices 0, 1 and 2 should be drawn
-struct BalancedGridElement {
-    let coords: [GridCoordinate]
-    let initialFraction: Double
-    let finalFraction: Double
+public struct BalancedGridElement {
+
+    public let coords: [GridCoordinate]
+    public let initialFraction: Double
+    public let finalFraction: Double
+
+    public init(
+        coords: [GridCoordinate],
+        initialFraction: Double,
+        finalFraction: Double
+    ) {
+        self.coords = coords
+        self.initialFraction = initialFraction
+        self.finalFraction = finalFraction
+    }
 }

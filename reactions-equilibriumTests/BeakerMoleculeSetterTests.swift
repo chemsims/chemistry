@@ -12,7 +12,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         let reaction = BalancedReactionEquations(coefficients: .unit, equilibriumConstant: 1, a0: 0.3, b0: 0.3, convergenceTime: 10)
         let grid = GridCoordinate.grid(cols: 10, rows: 10)
         let model = BeakerMoleculesSetter(
-            totalMolecules: 100,
+            shuffledCoords: grid,
             moleculesA: Array(grid.prefix(30)),
             moleculesB: Array(grid.dropFirst(30).prefix(30)),
             reactionEquation: reaction
@@ -49,7 +49,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         )
         let grid = GridCoordinate.grid(cols: 10, rows: 10)
         let model = BeakerMoleculesSetter(
-            totalMolecules: 100,
+            shuffledCoords: grid,
             moleculesA: Array(grid.prefix(40)),
             moleculesB: Array(grid.dropFirst(40).prefix(30)),
             reactionEquation: reaction
@@ -76,7 +76,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         let initB = Array(grid.dropFirst(30).prefix(30))
 
         let forwardGrid = BeakerMoleculesSetter(
-            totalMolecules: 100,
+            shuffledCoords: grid,
             moleculesA: initA,
             moleculesB: initB,
             reactionEquation: forwardReaction
@@ -136,7 +136,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         let initA = Array(grid.prefix(30))
         let initB = Array(grid.dropFirst(30).prefix(30))
         let forwardGrid = BeakerMoleculesSetter(
-            totalMolecules: 100,
+            shuffledCoords: grid,
             moleculesA: initA,
             moleculesB: initB,
             reactionEquation: forwardReaction
@@ -184,7 +184,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         let initA = Array(grid.prefix(30))
         let initB = Array(grid.dropFirst(30).prefix(30))
         let forwardGrid = BeakerMoleculesSetter(
-            totalMolecules: 100,
+            shuffledCoords: grid,
             moleculesA: initA,
             moleculesB: initB,
             reactionEquation: forwardReaction
@@ -230,7 +230,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         let grid = GridCoordinate.grid(cols: 10, rows: 10)
         let model = BeakerMoleculesSetter(
-            totalMolecules: 100,
+            shuffledCoords: grid,
             moleculesA: Array(grid.prefix(30)),
             moleculesB: Array(grid.dropFirst(30).prefix(30)),
             reactionEquation: forwardReaction
@@ -282,6 +282,77 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         XCTAssertEqual(reverseModel.aMolecules.coordinates, model.getEffectiveReactants(at: 10).a)
         XCTAssertEqual(reverseModel.bMolecules.coordinates, model.getEffectiveReactants(at: 10).b)
+    }
+
+    func testReverseReactionWhereThereIsANetIncreaseInConcentration() {
+        let forwardReaction = BalancedReactionEquations(
+            coefficients: BalancedReactionCoefficients(reactantA: 2, reactantB: 2, productC: 1, productD: 1),
+            equilibriumConstant: 20,
+            a0: 0.3,
+            b0: 0.3,
+            convergenceTime: 10
+        )
+        let grid = GridCoordinate.grid(cols: 1, rows: 100)
+        let forwardModel = BeakerMoleculesSetter(
+            shuffledCoords: grid,
+            moleculesA: Array(grid.prefix(30)),
+            moleculesB: Array(grid.dropFirst(30).prefix(30)),
+            reactionEquation: forwardReaction
+        )
+
+        let forwardUnitChange: CGFloat = 0.0822
+        let finalReactant = 0.3 - (2 * forwardUnitChange)
+
+        XCTAssertEqual(forwardReaction.convergenceA, finalReactant, accuracy: 0.001)
+        XCTAssertEqual(forwardReaction.convergenceB, finalReactant, accuracy: 0.001)
+        XCTAssertEqual(forwardReaction.convergenceC, forwardUnitChange, accuracy: 0.001)
+        XCTAssertEqual(forwardReaction.convergenceD, forwardUnitChange, accuracy: 0.001)
+
+        let forwardReactantCount = (finalReactant * 100).roundedInt()
+        let forwardProductCount = (forwardUnitChange * 100).roundedInt()
+        let dropInReactant = 30 - forwardReactantCount - forwardProductCount
+
+        XCTAssertEqual(forwardModel.getEffectiveReactants(at: 10).a.count, forwardReactantCount)
+        XCTAssertEqual(forwardModel.getEffectiveReactants(at: 10).b.count, forwardReactantCount)
+        XCTAssertEqual(forwardModel.moleculesA.coords(at: 10).count, 30 - dropInReactant)
+        XCTAssertEqual(forwardModel.moleculesB.coords(at: 10).count, 30 - dropInReactant)
+        XCTAssertEqual(forwardModel.c.coords(at: 10).count, forwardProductCount)
+        XCTAssertEqual(forwardModel.d.coords(at: 10).count, forwardProductCount)
+
+        let reverseReaction = BalancedReactionEquations(
+            forwardReaction: forwardReaction,
+            reverseInput: ReverseReactionInput(
+                c0: 0.3,
+                d0: 0.3,
+                startTime: 11,
+                convergenceTime: 20
+            )
+        )
+
+        let reverseModel = ReverseBeakerMoleculeSetter(
+            reverseReaction: reverseReaction,
+            startTime: 11,
+            forwardBeaker: forwardModel,
+            cMolecules: forwardModel.cMolecules + grid.suffix(30 - forwardModel.cMolecules.count),
+            dMolecules: forwardModel.dMolecules + grid.dropLast(30 - forwardModel.cMolecules.count).suffix(30 - forwardModel.dMolecules.count)
+        )
+
+        XCTAssertEqual(
+            reverseModel.aMolecules.coords(at: 20).count,
+            (reverseReaction.convergenceA * 100).roundedInt()
+        )
+        XCTAssertEqual(
+            reverseModel.bMolecules.coords(at: 20).count,
+            (reverseReaction.convergenceB * 100).roundedInt()
+        )
+        XCTAssertEqual(
+            reverseModel.getEffectiveProducts(at: 20).c.count,
+            (reverseReaction.convergenceC * 100).roundedInt()
+        )
+        XCTAssertEqual(
+            reverseModel.getEffectiveProducts(at: 20).d.count,
+            (reverseReaction.convergenceD * 100).roundedInt()
+        )
     }
 
     private func assertSameElements(_ l: [GridCoordinate], _ r: [GridCoordinate]) {

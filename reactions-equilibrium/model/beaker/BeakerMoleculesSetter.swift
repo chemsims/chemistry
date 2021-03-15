@@ -11,141 +11,79 @@ struct BeakerMoleculesSetter {
     let underlyingAMolecules: [GridCoordinate]
     let underlyingBMolecules: [GridCoordinate]
     let reactionEquation: BalancedReactionEquations
+    let shuffledCoords: [GridCoordinate]
+
+    private let balancer: GridElementBalancer?
 
     init(
-        totalMolecules: Int,
+        shuffledCoords: [GridCoordinate],
         moleculesA: [GridCoordinate],
         moleculesB: [GridCoordinate],
         reactionEquation: BalancedReactionEquations
     ) {
-        self.totalMolecules = totalMolecules
+        self.totalMolecules = shuffledCoords.count
+        self.shuffledCoords = shuffledCoords
         self.underlyingAMolecules = moleculesA
         self.underlyingBMolecules = moleculesB
         self.reactionEquation = reactionEquation
+
+        func count(_ equation: Equation) -> Int {
+            GridMoleculesUtil.gridCount(for: equation.getY(at: reactionEquation.convergenceTime), gridSize: shuffledCoords.count)
+        }
+        func element(_ coords: [GridCoordinate], _ equation: Equation) -> GridElementToBalance {
+            GridElementToBalance(initialCoords: coords, finalCount: count(equation))
+        }
+        self.balancer = GridElementBalancer(
+            initialIncreasingA: element([], reactionEquation.productC),
+            initialIncreasingB: element([], reactionEquation.productD),
+            initialReducingC: element(moleculesA, reactionEquation.reactantA),
+            initialReducingD: element(moleculesB, reactionEquation.reactantB),
+            grid: shuffledCoords
+        )
     }
 
     var moleculesA: FractionedCoordinates {
         FractionedCoordinates(
-            coordinates: underlyingAMolecules,
-            fractionToDraw: reactantFractionToDraw(underlying: underlyingAMolecules, extraToDrop: extraAToDrop)
+            coordinates: balancer?.balancedC.coords ?? underlyingAMolecules,
+            fractionToDraw: fractionToDraw(for: balancer?.balancedC)
         )
     }
 
     var moleculesB: FractionedCoordinates {
         FractionedCoordinates(
-            coordinates: underlyingBMolecules,
-            fractionToDraw: reactantFractionToDraw(underlying: underlyingBMolecules, extraToDrop: extraBToDrop)
+            coordinates:  balancer?.balancedD.coords ?? underlyingAMolecules,
+            fractionToDraw: fractionToDraw(for: balancer?.balancedD)
         )
     }
 
     var cMolecules: [GridCoordinate] {
-        guard underlyingAMolecules.count > 0 && underlyingBMolecules.count > 0 else {
-            return []
-        }
-        return Array(underlyingAMolecules.prefix(cToTakeFromA) + underlyingBMolecules.prefix(cToTakeFromB))
+        balancer?.balancedA.coords ?? []
     }
 
     var dMolecules: [GridCoordinate] {
-        guard underlyingAMolecules.count > 0 && underlyingBMolecules.count > 0 else {
-            return []
-        }
-        let fromA = underlyingAMolecules.dropFirst(cToTakeFromA).prefix(dToTakeFromA)
-        let fromB = underlyingBMolecules.dropFirst(cToTakeFromB).prefix(dToTakeFromB)
-        return Array(fromA + fromB)
+        balancer?.balancedB.coords ?? []
     }
 
     var cFractionToDraw: Equation {
-        fractionToDrawEquation(reactionEquation.productC)
+        fractionToDraw(for: balancer?.balancedA)
     }
 
     var dFractionToDraw: Equation {
-        fractionToDrawEquation(reactionEquation.productD)
+        fractionToDraw(for: balancer?.balancedB)
     }
 
-    private func reactantFractionToDraw(
-        underlying: [GridCoordinate],
-        extraToDrop: Int
+    private func fractionToDraw(
+        for element: BalancedGridElement?
     ) -> Equation {
-        if extraToDrop == 0 {
-            return ConstantEquation(value: 1)
+        if let element = element {
+            return EquilibriumReactionEquation(
+                t1: 0,
+                c1: CGFloat(element.initialFraction),
+                t2: CGFloat(reactionEquation.convergenceTime),
+                c2: CGFloat(element.finalFraction)
+            )
         }
-
-        let endFraction = CGFloat(underlying.count - extraToDrop) / CGFloat(underlying.count)
-        return EquilibriumReactionEquation(
-            t1: 0,
-            c1: 1,
-            t2: reactionEquation.convergenceTime,
-            c2: endFraction
-        )
-    }
-
-    private func fractionToDrawEquation(_ underlying: Equation) -> Equation {
-        ScaledEquation(
-            targetY: 1,
-            targetX: reactionEquation.convergenceTime,
-            underlying: underlying
-        )
-    }
-
-    private var numDToAdd: Int {
-        let finalConcentration = reactionEquation.productD.getY(at: reactionEquation.convergenceTime)
-        return (finalConcentration * CGFloat(totalMolecules)).roundedInt()
-    }
-
-    private var numCToAdd: Int {
-        let finalConcentration = reactionEquation.productC.getY(at: reactionEquation.convergenceTime)
-        return (finalConcentration * CGFloat(totalMolecules)).roundedInt()
-    }
-
-    private var fractionFromA: CGFloat {
-        let aBSum = underlyingAMolecules.count + underlyingBMolecules.count
-        assert(aBSum != 0)
-        return CGFloat(underlyingAMolecules.count) / CGFloat(aBSum)
-    }
-
-    private var cToTakeFromA: Int {
-        max(0, Int(floor(CGFloat(numCToAdd) * aToB)))
-    }
-
-    private var dToTakeFromA: Int {
-        max(0, Int(ceil(CGFloat(numDToAdd) * aToB)))
-    }
-
-    private var cToTakeFromB: Int {
-        max(0, numCToAdd - cToTakeFromA)
-    }
-
-    private var dToTakeFromB: Int {
-        max(0, numDToAdd - dToTakeFromA)
-    }
-
-    private var numAToDrop: Int {
-        let finalConcentration = reactionEquation.reactantA.getY(at: reactionEquation.convergenceTime)
-        return moleculeCount(for: reactionEquation.a0 - finalConcentration)
-    }
-
-    private var numBToDrop: Int {
-        let finalConcentration = reactionEquation.reactantB.getY(at: reactionEquation.convergenceTime)
-        return moleculeCount(for: reactionEquation.b0 - finalConcentration)
-    }
-
-    private var extraAToDrop: Int {
-        numAToDrop - cToTakeFromA - dToTakeFromA
-    }
-
-    private var extraBToDrop: Int {
-        numBToDrop - cToTakeFromB - dToTakeFromB
-    }
-
-    private var aToB: CGFloat {
-        guard numAToDrop + numBToDrop > 0 else {
-            return 0
-        }
-        return CGFloat(numAToDrop) / CGFloat(numAToDrop + numBToDrop)
-    }
-
-    private func moleculeCount(for concentration: CGFloat) -> Int {
-        (concentration * CGFloat(totalMolecules)).roundedInt()
+        return ConstantEquation(value: 1)
     }
 }
 
@@ -158,6 +96,8 @@ struct ReverseBeakerMoleculeSetter {
     let dMolecules: [GridCoordinate]
     let originalAMolecules: [GridCoordinate]
     let originalBMolecules: [GridCoordinate]
+
+    let balancer: GridElementBalancer?
 
     init(
         reverseReaction: BalancedReactionEquations,
@@ -172,127 +112,64 @@ struct ReverseBeakerMoleculeSetter {
         self.cMolecules = cMolecules
         self.dMolecules = dMolecules
 
-        self.originalAMolecules = Self.initialReactantGrid(
+        let originalA = Self.initialReactantGrid(
             forwardCoords: forwardBeaker.moleculesA,
             forwardMolecules: forwardBeaker
         )
+        self.originalAMolecules = originalA
 
-        self.originalBMolecules = Self.initialReactantGrid(
+        let originalB = Self.initialReactantGrid(
             forwardCoords: forwardBeaker.moleculesB,
             forwardMolecules: forwardBeaker
+        )
+        self.originalBMolecules = originalB
+
+        assert(Set(cMolecules).intersection(Set(originalB + originalA)).isEmpty)
+        assert(Set(dMolecules).intersection(Set(originalB + originalA)).isEmpty)
+
+        func count(_ equation: Equation) -> Int {
+            GridMoleculesUtil.gridCount(
+                for: equation.getY(at: reverseReaction.convergenceTime),
+                gridSize: forwardBeaker.totalMolecules
+            )
+        }
+        func element(_ coords: [GridCoordinate], _ equation: Equation) -> GridElementToBalance {
+            GridElementToBalance(initialCoords: coords, finalCount: count(equation))
+        }
+
+        self.balancer = GridElementBalancer(
+            initialIncreasingA: element(originalA, reverseReaction.reactantA),
+            initialIncreasingB: element(originalB, reverseReaction.reactantB),
+            initialReducingC: element(cMolecules, reverseReaction.productC),
+            initialReducingD: element(dMolecules, reverseReaction.productD),
+            grid: forwardBeaker.shuffledCoords
         )
     }
 
     var aMolecules: FractionedCoordinates {
         FractionedCoordinates(
-            coordinates: aCoords,
-            fractionToDraw: reactantFractionToDraw(
-                equation: reaction.reactantA,
-                originalCoordCount: originalAMolecules.count,
-                coordCount: aCoords.count
-            )
+            coordinates: balancer?.balancedA.coords ?? originalAMolecules,
+            fractionToDraw: fraction(for: balancer?.balancedA)
         )
     }
 
     var bMolecules: FractionedCoordinates {
         FractionedCoordinates(
-            coordinates: bCoords, 
-            fractionToDraw: reactantFractionToDraw(
-                equation: reaction.reactantB,
-                originalCoordCount: originalBMolecules.count,
-                coordCount: bCoords.count
+            coordinates: balancer?.balancedB.coords ?? originalBMolecules,
+            fractionToDraw: fraction(for: balancer?.balancedB)
+        )
+    }
+
+    private func fraction(for element: BalancedGridElement?) -> Equation {
+        if let element = element {
+            return EquilibriumReactionEquation(
+                t1: startTime,
+                c1: CGFloat(element.initialFraction),
+                t2: reaction.convergenceTime,
+                c2: CGFloat(element.finalFraction)
             )
-        )
-    }
-
-    private var aCoords: [GridCoordinate] {
-        let fromC = Array(cMolecules.prefix(aToTakeFromC))
-        let fromD = Array(dMolecules.prefix(aToTakeFromD))
-        return originalAMolecules + fromC + fromD
-    }
-
-    private var bCoords: [GridCoordinate] {
-        let fromC = Array(cMolecules.dropFirst(aToTakeFromC).prefix(bToTakeFromC))
-        let fromD = Array(dMolecules.dropFirst(aToTakeFromD).prefix(bToTakeFromD))
-        return originalBMolecules + fromC + fromD
-    }
-
-    /// Returns reactant fraction to draw
-    ///
-    /// - Note: The actual concentration of molecules in the beaker may differ slightly from the underlying equation, as we
-    /// effectively lose some precision when converting to an int (num molecules in the beaker). So, rather than use equation
-    /// directly, we instead compute the effective initial and create a new concentration equation using that. We can still use the
-    /// underlying final concentration, but just need to ensure it's not smaller than the initial - which could happen before products
-    /// have been added for example.
-    private func reactantFractionToDraw(
-        equation: Equation,
-        originalCoordCount: Int,
-        coordCount: Int
-    ) -> Equation {
-        let initC = CGFloat(originalCoordCount) / CGFloat(totalMolecules)
-        let finalC = max(initC, equation.getY(at: reaction.convergenceTime))
-        let newEquation = EquilibriumReactionEquation(t1: startTime, c1: initC, t2: reaction.convergenceTime, c2: finalC)
-        return MoleculeGridFractionToDraw(
-            underlyingConcentration: newEquation,
-            initialConcentration: initC,
-            finalConcentration: finalC,
-            gridCount: coordCount,
-            totalGridCount: totalMolecules
-        )
-    }
-
-    private var aToTakeFromC: Int {
-        let result = Int(ceil(Double(numCToDrop) / 2))
-        return max(0, min(result, numAToAdd))
-    }
-
-    private var aToTakeFromD: Int {
-        numAToAdd - aToTakeFromC
-    }
-
-    private var bToTakeFromC: Int {
-        let result = Int(floor(Double(numCToDrop) / 2))
-        return max(0, min(result, numBToAdd))
-    }
-
-    private var bToTakeFromD: Int {
-        numBToAdd - bToTakeFromC
-    }
-
-    private var numAToAdd: Int {
-        productToAdd(equation: reaction.reactantA)
-    }
-
-    private var numBToAdd: Int {
-        productToAdd(equation: reaction.reactantB)
-    }
-
-    private var numCToDrop: Int {
-        reactantToDrop(equation: reaction.productC)
-    }
-
-    private func productToAdd(equation: Equation) -> Int {
-        let final = finalCount(equation: equation)
-        let initial = initialCount(equation: equation)
-        assert(final >= initial)
-        return final - initial
-    }
-
-    private func reactantToDrop(equation: Equation) -> Int {
-        let final = finalCount(equation: equation)
-        let initial = initialCount(equation: equation)
-        assert(initial >= final)
-        return initial - final
-    }
-
-    private func finalCount(equation: Equation) -> Int {
-        let finalConcentration = equation.getY(at: reaction.convergenceTime)
-        return GridMoleculesUtil.gridCount(for: finalConcentration, gridSize: totalMolecules)
-    }
-
-    private func initialCount(equation: Equation) -> Int {
-        let startingConcentration = equation.getY(at: startTime)
-        return GridMoleculesUtil.gridCount(for: startingConcentration, gridSize: totalMolecules)
+        }
+        return ConstantEquation(value: 1)
     }
 
     private static func initialReactantGrid(
@@ -305,14 +182,5 @@ struct ReverseBeakerMoleculeSetter {
         return convergedForwardCoords.filter { coord in
             !products.contains(coord)
         }
-    }
-}
-
-private struct LowerBoundedEquation: Equation {
-    let underlying: Equation
-    let min: CGFloat
-
-    func getY(at x: CGFloat) -> CGFloat {
-        max(min, underlying.getY(at: x))
     }
 }
