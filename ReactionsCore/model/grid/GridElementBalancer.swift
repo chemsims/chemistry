@@ -13,45 +13,38 @@ public struct GridElementBalancer {
     public let initialReducingD: GridElementToBalance
     public let grid: [GridCoordinate]
 
+
     public init?(
-        initialIncreasingA: GridElementToBalance,
-        initialIncreasingB: GridElementToBalance,
-        initialReducingC: GridElementToBalance,
-        initialReducingD: GridElementToBalance,
+        increasingElements: GridElementPair<GridElementToBalance>,
+        decreasingElements: GridElementPair<GridElementToBalance>,
         grid: [GridCoordinate]
     ) {
-        guard initialIncreasingA.delta >= 0 else { return nil }
-        guard initialIncreasingB.delta >= 0 else { return nil }
-        guard initialReducingC.delta <= 0 else { return nil }
-        guard initialReducingC.delta <= 0 else { return nil }
+        guard increasingElements.both.allSatisfy({$0.delta >= 0}) else { return nil }
+        guard decreasingElements.both.allSatisfy({$0.delta <= 0}) else { return nil }
 
-        self.initialIncreasingA = initialIncreasingA
-        self.initialIncreasingB = initialIncreasingB
-        self.initialReducingC = initialReducingC
-        self.initialReducingD = initialReducingD
+        self.initialIncreasingA = increasingElements.first
+        self.initialIncreasingB = increasingElements.second
+        self.initialReducingC = decreasingElements.first
+        self.initialReducingD = decreasingElements.second
 
-        let all = initialIncreasingA.initialCoords + initialIncreasingB.initialCoords + initialReducingC.initialCoords + initialReducingD.initialCoords
+        let all = (increasingElements.both + decreasingElements.both).flatMap(\.initialCoords)
         self.grid = grid.filter { coord in
             !all.contains(coord)
         }
     }
 
-    public var balancedA: BalancedGridElement {
-        initialIncreasingA.increasingElement(with: aCoords)
-    }
-
-    public var balancedB: BalancedGridElement {
-        initialIncreasingB.increasingElement(with: bCoords)
-    }
-
-    public var balancedC: BalancedGridElement {
-        initialReducingC.decreasingElement(
-            with: cCoords, extraDrop: extraCToDrop
+    public var increasingBalanced: GridElementPair<BalancedGridElement> {
+        GridElementPair(
+            first: initialIncreasingA.increasingElement(with: aCoords),
+            second: initialIncreasingB.increasingElement(with: bCoords)
         )
     }
 
-    public var balancedD: BalancedGridElement {
-        initialReducingC.decreasingElement(with: dCoords, extraDrop: extraDToDrop)
+    public var decreasingBalanced: GridElementPair<BalancedGridElement> {
+        GridElementPair(
+            first: initialReducingC.decreasingElement(with: cCoords, extraDrop: extraCToDrop),
+            second: initialReducingC.decreasingElement(with: dCoords, extraDrop: extraDToDrop)
+        )
     }
 
     private var aCoords: [GridCoordinate] {
@@ -146,6 +139,20 @@ private extension GridElementBalancer {
     private func ratio(_ l: Int, _ r: Int) -> Double {
         let sum = l + r
         return sum == 0 ? 0 : Double(l) / Double(sum)
+    }
+}
+
+public struct GridElementPair<Value> {
+    public let first: Value
+    public let second: Value
+
+    public init(first: Value, second: Value) {
+        self.first = first
+        self.second = second
+    }
+
+    fileprivate var both: [Value] {
+        [first, second]
     }
 }
 

@@ -34,42 +34,46 @@ struct BeakerMoleculesSetter {
             GridElementToBalance(initialCoords: coords, finalCount: count(equation))
         }
         self.balancer = GridElementBalancer(
-            initialIncreasingA: element([], reactionEquation.productC),
-            initialIncreasingB: element([], reactionEquation.productD),
-            initialReducingC: element(moleculesA, reactionEquation.reactantA),
-            initialReducingD: element(moleculesB, reactionEquation.reactantB),
+            increasingElements: GridElementPair(
+                first: element([], reactionEquation.productC),
+                second: element([], reactionEquation.productD)
+            ),
+            decreasingElements: GridElementPair(
+                first: element(moleculesA, reactionEquation.reactantA),
+                second: element(moleculesB, reactionEquation.reactantB)
+            ),
             grid: shuffledCoords
         )
     }
 
     var moleculesA: FractionedCoordinates {
         FractionedCoordinates(
-            coordinates: balancer?.balancedC.coords ?? underlyingAMolecules,
-            fractionToDraw: fractionToDraw(for: balancer?.balancedC)
+            coordinates: balancer?.decreasingBalanced.first.coords ?? underlyingAMolecules,
+            fractionToDraw: fractionToDraw(for: balancer?.decreasingBalanced.first)
         )
     }
 
     var moleculesB: FractionedCoordinates {
         FractionedCoordinates(
-            coordinates:  balancer?.balancedD.coords ?? underlyingAMolecules,
-            fractionToDraw: fractionToDraw(for: balancer?.balancedD)
+            coordinates:  balancer?.decreasingBalanced.second.coords ?? underlyingAMolecules,
+            fractionToDraw: fractionToDraw(for: balancer?.decreasingBalanced.second)
         )
     }
 
     var cMolecules: [GridCoordinate] {
-        balancer?.balancedA.coords ?? []
+        balancer?.increasingBalanced.first.coords ?? []
     }
 
     var dMolecules: [GridCoordinate] {
-        balancer?.balancedB.coords ?? []
+        balancer?.increasingBalanced.second.coords ?? []
     }
 
     var cFractionToDraw: Equation {
-        fractionToDraw(for: balancer?.balancedA)
+        fractionToDraw(for: balancer?.increasingBalanced.first)
     }
 
     var dFractionToDraw: Equation {
-        fractionToDraw(for: balancer?.balancedB)
+        fractionToDraw(for: balancer?.increasingBalanced.second)
     }
 
     private func fractionToDraw(
@@ -138,25 +142,29 @@ struct ReverseBeakerMoleculeSetter {
         }
 
         self.balancer = GridElementBalancer(
-            initialIncreasingA: element(originalA, reverseReaction.reactantA),
-            initialIncreasingB: element(originalB, reverseReaction.reactantB),
-            initialReducingC: element(cMolecules, reverseReaction.productC),
-            initialReducingD: element(dMolecules, reverseReaction.productD),
+            increasingElements: GridElementPair(
+                first: element(originalA, reverseReaction.reactantA),
+                second: element(originalB, reverseReaction.reactantB)
+            ),
+            decreasingElements: GridElementPair(
+                first: element(cMolecules, reverseReaction.productC),
+                second: element(dMolecules, reverseReaction.productD)
+            ),
             grid: forwardBeaker.shuffledCoords
         )
     }
 
     var aMolecules: FractionedCoordinates {
         FractionedCoordinates(
-            coordinates: balancer?.balancedA.coords ?? originalAMolecules,
-            fractionToDraw: fraction(for: balancer?.balancedA)
+            coordinates: balancer?.increasingBalanced.first.coords ?? originalAMolecules,
+            fractionToDraw: fraction(for: balancer?.increasingBalanced.first)
         )
     }
 
     var bMolecules: FractionedCoordinates {
         FractionedCoordinates(
-            coordinates: balancer?.balancedB.coords ?? originalBMolecules,
-            fractionToDraw: fraction(for: balancer?.balancedB)
+            coordinates: balancer?.increasingBalanced.second.coords ?? originalBMolecules,
+            fractionToDraw: fraction(for: balancer?.increasingBalanced.second)
         )
     }
 

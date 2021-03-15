@@ -10,21 +10,25 @@ class GridElementBalancerTests: XCTestCase {
     func testReducingElementsAreTransferredToIncreasingElementsProportionally() throws {
         let grid = GridCoordinate.grid(cols: 1, rows: 100)
         let model = GridElementBalancer(
-            initialIncreasingA: GridElementToBalance(
-                initialCoords: [],
-                finalCount: 10
+            increasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: [],
+                    finalCount: 10
+                ),
+                second: GridElementToBalance(
+                    initialCoords: [],
+                    finalCount: 10
+                )
             ),
-            initialIncreasingB: GridElementToBalance(
-                initialCoords: [],
-                finalCount: 10
-            ),
-            initialReducingC: GridElementToBalance(
-                initialCoords: Array(grid[0..<20]),
-                finalCount: 10
-            ),
-            initialReducingD: GridElementToBalance(
-                initialCoords: Array(grid[20..<40]),
-                finalCount: 10
+            decreasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: Array(grid[0..<20]),
+                    finalCount: 10
+                ),
+                second: GridElementToBalance(
+                    initialCoords: Array(grid[20..<40]),
+                    finalCount: 10
+                )
             ),
             grid: grid
         )!
@@ -49,21 +53,25 @@ class GridElementBalancerTests: XCTestCase {
     func testReducingElementsAreTransferredToIncreasedElementsWithDifferentProportions() {
         let grid = GridCoordinate.grid(cols: 1, rows: 100)
         let model = GridElementBalancer(
-            initialIncreasingA: GridElementToBalance(
-                initialCoords: [],
-                finalCount: 10
+            increasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: [],
+                    finalCount: 10
+                ),
+                second: GridElementToBalance(
+                    initialCoords: [],
+                    finalCount: 10
+                )
             ),
-            initialIncreasingB: GridElementToBalance(
-                initialCoords: [],
-                finalCount: 10
-            ),
-            initialReducingC: GridElementToBalance(
-                initialCoords: Array(grid[0..<30]),
-                finalCount: 15
-            ),
-            initialReducingD: GridElementToBalance(
-                initialCoords: Array(grid[30..<60]),
-                finalCount: 25
+            decreasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: Array(grid[0..<30]),
+                    finalCount: 15
+                ),
+                second: GridElementToBalance(
+                    initialCoords: Array(grid[30..<60]),
+                    finalCount: 25
+                )
             ),
             grid: grid
         )!
@@ -88,21 +96,25 @@ class GridElementBalancerTests: XCTestCase {
     func testOverallReductionInNumberOfElements() {
         let grid = GridCoordinate.grid(cols: 1, rows: 100)
         let model = GridElementBalancer(
-            initialIncreasingA: GridElementToBalance(
-                initialCoords: [],
-                finalCount: 10
+            increasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: [],
+                    finalCount: 10
+                ),
+                second: GridElementToBalance(
+                    initialCoords: [],
+                    finalCount: 10
+                )
             ),
-            initialIncreasingB: GridElementToBalance(
-                initialCoords: [],
-                finalCount: 10
-            ),
-            initialReducingC: GridElementToBalance(
-                initialCoords: Array(grid[0..<30]),
-                finalCount: 15
-            ),
-            initialReducingD: GridElementToBalance(
-                initialCoords: Array(grid[30..<60]),
-                finalCount: 15
+            decreasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: Array(grid[0..<30]),
+                    finalCount: 15
+                ),
+                second: GridElementToBalance(
+                    initialCoords: Array(grid[30..<60]),
+                    finalCount: 15
+                )
             ),
             grid: grid
         )!
@@ -127,21 +139,25 @@ class GridElementBalancerTests: XCTestCase {
     func testOverallIncreaseInElements() {
         let grid = GridCoordinate.grid(cols: 1, rows: 100)
         let model = GridElementBalancer(
-            initialIncreasingA: GridElementToBalance(
-                initialCoords: [],
-                finalCount: 10
+            increasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: [],
+                    finalCount: 10
+                ),
+                second: GridElementToBalance(
+                    initialCoords: [],
+                    finalCount: 10
+                )
             ),
-            initialIncreasingB: GridElementToBalance(
-                initialCoords: [],
-                finalCount: 10
-            ),
-            initialReducingC: GridElementToBalance(
-                initialCoords: Array(grid[0..<10]),
-                finalCount: 5
-            ),
-            initialReducingD: GridElementToBalance(
-                initialCoords: Array(grid[10..<20]),
-                finalCount: 5
+            decreasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: Array(grid[0..<10]),
+                    finalCount: 5
+                ),
+                second: GridElementToBalance(
+                    initialCoords: Array(grid[10..<20]),
+                    finalCount: 5
+                )
             ),
             grid: grid
         )!
@@ -166,21 +182,25 @@ class GridElementBalancerTests: XCTestCase {
     func testIncreasesElementsWhereStartingCoordsAreNonEmpty() {
         let grid = GridCoordinate.grid(cols: 1, rows: 100)
         let model = GridElementBalancer(
-            initialIncreasingA: GridElementToBalance(
-                initialCoords: Array(grid[0..<10]),
-                finalCount: 20
+            increasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: Array(grid[0..<10]),
+                    finalCount: 20
+                ),
+                second: GridElementToBalance(
+                    initialCoords: Array(grid[10..<20]),
+                    finalCount: 20
+                )
             ),
-            initialIncreasingB: GridElementToBalance(
-                initialCoords: Array(grid[10..<20]),
-                finalCount: 20
-            ),
-            initialReducingC: GridElementToBalance(
-                initialCoords: Array(grid[20..<40]),
-                finalCount: 10
-            ),
-            initialReducingD: GridElementToBalance(
-                initialCoords: Array(grid[40..<60]),
-                finalCount: 10
+            decreasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: Array(grid[20..<40]),
+                    finalCount: 10
+                ),
+                second: GridElementToBalance(
+                    initialCoords: Array(grid[40..<60]),
+                    finalCount: 10
+                )
             ),
             grid: grid
         )!
@@ -197,21 +217,25 @@ class GridElementBalancerTests: XCTestCase {
     func testIncreasingElementsWhereThereAreAlsoInitialElementsOfAAndB() {
         let grid = GridCoordinate.grid(cols: 1, rows: 100)
         let model = GridElementBalancer(
-            initialIncreasingA: GridElementToBalance(
-                initialCoords: Array(grid[10..<20]),
-                finalCount: 30
+            increasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: Array(grid[10..<20]),
+                    finalCount: 30
+                ),
+                second: GridElementToBalance(
+                    initialCoords: Array(grid[20..<30]),
+                    finalCount: 30
+                )
             ),
-            initialIncreasingB: GridElementToBalance(
-                initialCoords: Array(grid[20..<30]),
-                finalCount: 30
-            ),
-            initialReducingC: GridElementToBalance(
-                initialCoords: Array(grid[30..<50]),
-                finalCount: 10
-            ),
-            initialReducingD: GridElementToBalance(
-                initialCoords: Array(grid[50..<70]),
-                finalCount: 10
+            decreasingElements: GridElementPair(
+                first: GridElementToBalance(
+                    initialCoords: Array(grid[30..<50]),
+                    finalCount: 10
+                ),
+                second: GridElementToBalance(
+                    initialCoords: Array(grid[50..<70]),
+                    finalCount: 10
+                )
             ),
             grid: grid
         )!
@@ -238,31 +262,23 @@ class GridElementBalancerTests: XCTestCase {
         XCTAssertEqual(model.balancedD.initialFraction, 1)
         XCTAssertEqual(model.balancedD.finalFraction, 1)
     }
+}
 
-    func testThisFailingCase() {
-        let grid = GridCoordinate.grid(cols: 1, rows: 100)
-        let initA = Array(grid[7..<22])
-        let initB = Array(grid[37..<52])
-        let initC = Array(grid[0..<4] + grid[30..<33] + grid[77..<100])
-        let initD = Array(grid[4..<7] + grid[33..<37] + grid[54..<77])
-
-        let model = GridElementBalancer(
-            initialIncreasingA: GridElementToBalance(initialCoords: initA, finalCount: 27),
-            initialIncreasingB: GridElementToBalance(initialCoords: initB, finalCount: 27),
-            initialReducingC: GridElementToBalance(initialCoords: initC, finalCount: 24),
-            initialReducingD: GridElementToBalance(initialCoords: initD, finalCount: 24),
-            grid: grid
-        )!
-
-        print("\(initA.count)")
-        print("\(initB.count)")
-
-        XCTAssertEqual(model.balancedA.coords.count, 27)
-        XCTAssertEqual(model.balancedB.coords.count, 27)
-
-        XCTAssertEqual(model.balancedC.coords.count, 30)
-        XCTAssertEqual(model.balancedD.coords.count, 30)
-        XCTAssertEqual(model.balancedC.finalFraction, 1)
-        XCTAssertEqual(model.balancedD.finalFraction, 1)
+private extension GridElementBalancer {
+    var balancedA: BalancedGridElement {
+        increasingBalanced.first
     }
+
+    var balancedB: BalancedGridElement {
+        increasingBalanced.second
+    }
+
+    var balancedC: BalancedGridElement {
+        decreasingBalanced.first
+    }
+
+    var balancedD: BalancedGridElement {
+        decreasingBalanced.second
+    }
+
 }
