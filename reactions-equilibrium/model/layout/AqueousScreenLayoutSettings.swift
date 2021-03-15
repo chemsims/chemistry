@@ -12,7 +12,7 @@ struct AqueousScreenLayoutSettings {
     }
 
     var height: CGFloat {
-        geometry.size.height
+        geometry.size.height - 20
     }
 
     var beakerSettings: BeakerSettings {

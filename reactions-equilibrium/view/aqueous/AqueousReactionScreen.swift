@@ -16,7 +16,6 @@ struct AqueousReactionScreen: View {
                 settings: AqueousScreenLayoutSettings(geometry: geometry)
             )
         }
-        .padding(10)
     }
 }
 
@@ -28,12 +27,12 @@ private struct AqueousReactionScreenWithSettings: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .padding(-10)
                 .foregroundColor(Color.white)
                 .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
                 .edgesIgnoringSafeArea(.all)
 
             mainContent
+                .padding(.vertical, 10)
         }
     }
 
