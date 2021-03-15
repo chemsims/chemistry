@@ -297,6 +297,8 @@
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
 		57FDA141255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */; };
 		57FDA14F255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */; };
+		57FF9EDE25FF6EA800C1C27F /* GridElementBalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FF9EDD25FF6EA800C1C27F /* GridElementBalancer.swift */; };
+		57FF9EE425FF6EC100C1C27F /* GridElementBalancerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FF9EE325FF6EC100C1C27F /* GridElementBalancerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -673,6 +675,8 @@
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
 		57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionRateChartLayoutSettings.swift; sourceTree = "<group>"; };
 		57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = speechBubbleLineGeneratorTests.swift; sourceTree = "<group>"; };
+		57FF9EDD25FF6EA800C1C27F /* GridElementBalancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementBalancer.swift; sourceTree = "<group>"; };
+		57FF9EE325FF6EC100C1C27F /* GridElementBalancerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementBalancerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1439,6 +1443,7 @@
 				57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */,
 				5797A45025E4069F00991BD9 /* Info.plist */,
 				57E902C325ED585800758300 /* EquatableCounterTests.swift */,
+				57FF9EE325FF6EC100C1C27F /* GridElementBalancerTests.swift */,
 			);
 			path = ReactionsCoreTests;
 			sourceTree = "<group>";
@@ -1446,6 +1451,7 @@
 		5797A45E25E406FC00991BD9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57FF9EDC25FF6E7E00C1C27F /* grid */,
 				57952A3825E67F61006AB876 /* navigation */,
 				57DDAD4125E57DDF00B535A7 /* chart */,
 				575A885725E435C000AEE448 /* layout-settings */,
@@ -1905,6 +1911,14 @@
 				57D2F2F725EA2E4000AEE0D8 /* Placeholder.swift */,
 			);
 			path = util;
+			sourceTree = "<group>";
+		};
+		57FF9EDC25FF6E7E00C1C27F /* grid */ = {
+			isa = PBXGroup;
+			children = (
+				57FF9EDD25FF6EA800C1C27F /* GridElementBalancer.swift */,
+			);
+			path = grid;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2412,6 +2426,7 @@
 				5797A4BF25E40A6400991BD9 /* Equation.swift in Sources */,
 				57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */,
 				57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */,
+				57FF9EDE25FF6EA800C1C27F /* GridElementBalancer.swift in Sources */,
 				575A880125E430C200AEE448 /* Labels.swift in Sources */,
 				575A883A25E431E500AEE448 /* Strings.swift in Sources */,
 				57DDAD4E25E57E2A00B535A7 /* TimeChartDataLineView.swift in Sources */,
@@ -2461,6 +2476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */,
+				57FF9EE425FF6EC100C1C27F /* GridElementBalancerTests.swift in Sources */,
 				57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
