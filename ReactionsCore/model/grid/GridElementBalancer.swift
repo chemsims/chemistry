@@ -5,6 +5,16 @@
 
 import Foundation
 
+/// GridElementBalancer provides a balance between increasing and decreasing pairs of elements
+///
+/// In the simplest case, the decrease in elements is equal to the increase in elements, so the net change is zero, and the decreasing
+/// elements transfer directly to the increasing elements.
+///
+/// It is also possible that there is a net increase or decrease in elements. For example, if the overall increase is greater than the decrease,
+/// then additional grid coordinates are added to the increasing elements.
+///
+/// Similarly, if the overall reduction is greater than the increase, then the final fraction to be drawn of the decreasing elements will be
+/// lower than would otherwise have been the case
 public struct GridElementBalancer {
 
     public let initialIncreasingA: GridElementToBalance
@@ -13,7 +23,12 @@ public struct GridElementBalancer {
     public let initialReducingD: GridElementToBalance
     public let grid: [GridCoordinate]
 
-
+    /// Creates a new balancer
+    /// - Parameters:
+    ///     - increasingElements: The elements which are increasing
+    ///     - decreasingElements: The elements which are decreasing
+    ///     - grid: Available grid coordinates that new coordinates can be taken from if necessary. Note that these will be filtered to ensure
+    ///             existing coordinates are not chosen. This grid will be consumed in the same order as provided.
     public init?(
         increasingElements: GridElementPair<GridElementToBalance>,
         decreasingElements: GridElementPair<GridElementToBalance>,
