@@ -6,14 +6,16 @@ import SwiftUI
 import ReactionsCore
 
 struct AqueousScreenLayoutSettings {
-    let geometry: GeometryProxy
-    var width: CGFloat {
-        geometry.size.width
+
+    static let padding: CGFloat = 10
+
+    init(geometry: GeometryProxy) {
+        self.width = geometry.size.width - 20
+        self.height = geometry.size.height - 20
     }
 
-    var height: CGFloat {
-        geometry.size.height - 20
-    }
+    let width: CGFloat
+    let height: CGFloat
 
     var beakerSettings: BeakerSettings {
         BeakerSettings(width: beakerWidth)
@@ -58,7 +60,7 @@ struct AqueousScreenLayoutSettings {
 
     var chartSize: CGFloat {
         let maxSizeForHeight = 0.4 * height
-        let maxSizeForWidth = 0.2 * width
+        let maxSizeForWidth = 0.25 * width
         return min(maxSizeForWidth, maxSizeForHeight)
     }
 
@@ -67,7 +69,7 @@ struct AqueousScreenLayoutSettings {
     }
 
     var chartSelectionFontSize: CGFloat {
-        0.8 * chartSelectionHeight
+        0.6 * chartSelectionHeight
     }
 
     var chartSelectionBottomPadding: CGFloat {

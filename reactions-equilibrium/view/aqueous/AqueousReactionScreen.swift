@@ -32,7 +32,7 @@ private struct AqueousReactionScreenWithSettings: View {
                 .edgesIgnoringSafeArea(.all)
 
             mainContent
-                .padding(.vertical, 10)
+                .padding(AqueousScreenLayoutSettings.padding)
         }
     }
 
