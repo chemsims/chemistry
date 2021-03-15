@@ -23,14 +23,6 @@ struct AqueousScreenLayoutSettings {
         0.22 * width
     }
 
-    var bottomPadding: CGFloat {
-        0.02 * geometry.size.height
-    }
-
-    var topPadding: CGFloat {
-        bottomPadding
-    }
-
     var beakerHeight: CGFloat {
         beakerWidth * BeakerSettings.heightToWidth
     }

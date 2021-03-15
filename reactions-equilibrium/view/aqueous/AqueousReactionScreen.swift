@@ -16,6 +16,7 @@ struct AqueousReactionScreen: View {
                 settings: AqueousScreenLayoutSettings(geometry: geometry)
             )
         }
+        .padding(10)
     }
 }
 
@@ -43,8 +44,6 @@ private struct AqueousReactionScreenWithSettings: View {
             Spacer()
             RightStackView(model: model, settings: settings)
         }
-        .padding(.bottom, settings.bottomPadding)
-        .padding(.top, settings.topPadding)
     }
 }
 
