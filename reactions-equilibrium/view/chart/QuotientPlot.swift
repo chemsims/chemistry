@@ -27,6 +27,8 @@ struct QuotientPlot: View {
                 .frame(width: settings.yAxisWidthLabelWidth, height: settings.size)
                 .fixedSize()
                 .minimumScaleFactor(0.8)
+                .zIndex(1)
+
             VStack(spacing: settings.axisLabelGapFromAxis) {
                 annotatedChart
                 Text("Time")

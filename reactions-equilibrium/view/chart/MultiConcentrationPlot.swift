@@ -31,6 +31,7 @@ struct MultiConcentrationPlot: View {
                 .rotationEffect(.degrees(-90))
                 .fixedSize()
                 .frame(width: settings.yAxisWidthLabelWidth)
+                .zIndex(1)
 
             VStack(spacing: settings.axisLabelGapFromAxis) {
                 labelledChart
