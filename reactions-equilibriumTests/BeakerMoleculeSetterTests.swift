@@ -11,7 +11,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
     func testSetterWithUnitCoefficientsAndEquilibriumConstant() {
         let reaction = BalancedReactionEquations(coefficients: .unit, equilibriumConstant: 1, a0: 0.3, b0: 0.3, convergenceTime: 10)
         let grid = GridCoordinate.grid(cols: 10, rows: 10)
-        let model = BeakerMoleculesSetter(
+        let model = ForwardEquilibriumBeakerGridBalancer(
             shuffledCoords: grid,
             moleculesA: Array(grid.prefix(30)),
             moleculesB: Array(grid.dropFirst(30).prefix(30)),
@@ -48,7 +48,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
             convergenceTime: 10
         )
         let grid = GridCoordinate.grid(cols: 10, rows: 10)
-        let model = BeakerMoleculesSetter(
+        let model = ForwardEquilibriumBeakerGridBalancer(
             shuffledCoords: grid,
             moleculesA: Array(grid.prefix(40)),
             moleculesB: Array(grid.dropFirst(40).prefix(30)),
@@ -75,7 +75,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         let initA = Array(grid.prefix(30))
         let initB = Array(grid.dropFirst(30).prefix(30))
 
-        let forwardGrid = BeakerMoleculesSetter(
+        let forwardGrid = ForwardEquilibriumBeakerGridBalancer(
             shuffledCoords: grid,
             moleculesA: initA,
             moleculesB: initB,
@@ -91,7 +91,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         let initC = Array(initA.prefix(8) + initB.prefix(7) + grid.suffix(15))
         let initD = Array(initA.dropFirst(8).prefix(7) + initB.dropFirst(7).prefix(8) + grid.dropLast(15).suffix(15))
-        let model = ReverseBeakerMoleculeSetter(
+        let model = ReverseEquilibriumBeakerGridBalancer(
             reverseReaction: reaction,
             startTime: 11,
             forwardBeaker: forwardGrid,
@@ -135,7 +135,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         let initA = Array(grid.prefix(30))
         let initB = Array(grid.dropFirst(30).prefix(30))
-        let forwardGrid = BeakerMoleculesSetter(
+        let forwardGrid = ForwardEquilibriumBeakerGridBalancer(
             shuffledCoords: grid,
             moleculesA: initA,
             moleculesB: initB,
@@ -150,7 +150,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
             forwardReaction: forwardReaction,
             reverseInput: ReverseReactionInput(c0: c0, d0: d0, startTime: 11, convergenceTime: 20)
         )
-        let reverseGrid = ReverseBeakerMoleculeSetter(
+        let reverseGrid = ReverseEquilibriumBeakerGridBalancer(
             reverseReaction: reverseReaction,
             startTime: 11,
             forwardBeaker: forwardGrid,
@@ -183,7 +183,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
         let initA = Array(grid.prefix(30))
         let initB = Array(grid.dropFirst(30).prefix(30))
-        let forwardGrid = BeakerMoleculesSetter(
+        let forwardGrid = ForwardEquilibriumBeakerGridBalancer(
             shuffledCoords: grid,
             moleculesA: initA,
             moleculesB: initB,
@@ -198,7 +198,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         let extraCCount = finalProductGridCount - forwardGrid.moleculesC.coordinates.count
         let extraDCount = finalProductGridCount - forwardGrid.moleculesD.coordinates.count
 
-        let reverseGrid = ReverseBeakerMoleculeSetter(
+        let reverseGrid = ReverseEquilibriumBeakerGridBalancer(
             reverseReaction: reverseReaction,
             startTime: 11,
             forwardBeaker: forwardGrid,
@@ -229,7 +229,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         let forwardReaction = BalancedReactionEquations(coefficients: coeffs, equilibriumConstant: 10, a0: 0.3, b0: 0.3, convergenceTime: 10)
 
         let grid = GridCoordinate.grid(cols: 10, rows: 10)
-        let model = BeakerMoleculesSetter(
+        let model = ForwardEquilibriumBeakerGridBalancer(
             shuffledCoords: grid,
             moleculesA: Array(grid.prefix(30)),
             moleculesB: Array(grid.dropFirst(30).prefix(30)),
@@ -270,7 +270,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
                 convergenceTime: 20
             )
         )
-        let reverseModel = ReverseBeakerMoleculeSetter(
+        let reverseModel = ReverseEquilibriumBeakerGridBalancer(
             reverseReaction: reverseReaction,
             startTime: 11,
             forwardBeaker: model,
@@ -292,7 +292,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
             convergenceTime: 10
         )
         let grid = GridCoordinate.grid(cols: 1, rows: 100)
-        let forwardModel = BeakerMoleculesSetter(
+        let forwardModel = ForwardEquilibriumBeakerGridBalancer(
             shuffledCoords: grid,
             moleculesA: Array(grid.prefix(30)),
             moleculesB: Array(grid.dropFirst(30).prefix(30)),
@@ -328,7 +328,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
             )
         )
 
-        let reverseModel = ReverseBeakerMoleculeSetter(
+        let reverseModel = ReverseEquilibriumBeakerGridBalancer(
             reverseReaction: reverseReaction,
             startTime: 11,
             forwardBeaker: forwardModel,
@@ -362,7 +362,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
     }
 }
 
-extension BeakerMoleculesSetter {
+extension ForwardEquilibriumBeakerGridBalancer {
 
     func getEffectiveReactants(at x: CGFloat) -> (a: [GridCoordinate], b: [GridCoordinate]) {
         let products = moleculesC.coords(at: x) + moleculesD.coords(at: x)
@@ -372,7 +372,7 @@ extension BeakerMoleculesSetter {
     }
 }
 
-extension ReverseBeakerMoleculeSetter {
+extension ReverseEquilibriumBeakerGridBalancer {
     func getEffectiveProducts(at x: CGFloat) -> (c: [GridCoordinate], d: [GridCoordinate]) {
         let reactants = aMolecules.coords(at: x) + bMolecules.coords(at: x)
         let effectiveC = cMolecules.filter { !reactants.contains($0) }

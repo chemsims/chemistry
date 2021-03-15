@@ -236,8 +236,8 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         initialConcentration(of: underlyingBMolecules)
     }
 
-    var productMoleculeSetter: BeakerMoleculesSetter {
-        BeakerMoleculesSetter(
+    var productMoleculeSetter: ForwardEquilibriumBeakerGridBalancer {
+        ForwardEquilibriumBeakerGridBalancer(
             shuffledCoords: availableShuffledGrid,
             moleculesA: underlyingAMolecules,
             moleculesB: underlyingBMolecules,
@@ -462,8 +462,8 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
         return initialConcentration(of: currentMolecules)
     }
 
-    private var beakerSetter: ReverseBeakerMoleculeSetter {
-        ReverseBeakerMoleculeSetter(
+    private var beakerSetter: ReverseEquilibriumBeakerGridBalancer {
+        ReverseEquilibriumBeakerGridBalancer(
             reverseReaction: equations,
             startTime: AqueousReactionSettings.timeToAddProduct,
             forwardBeaker: forwardReaction.productMoleculeSetter,

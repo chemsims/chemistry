@@ -5,7 +5,7 @@
 import CoreGraphics
 import ReactionsCore
 
-struct BeakerMoleculesSetter {
+struct ForwardEquilibriumBeakerGridBalancer {
 
     let totalMolecules: Int
     let underlyingAMolecules: [GridCoordinate]
@@ -89,7 +89,7 @@ struct BeakerMoleculesSetter {
     }
 }
 
-struct ReverseBeakerMoleculeSetter {
+struct ReverseEquilibriumBeakerGridBalancer {
 
     let totalMolecules: Int
     let reaction: BalancedReactionEquations
@@ -104,7 +104,7 @@ struct ReverseBeakerMoleculeSetter {
     init(
         reverseReaction: BalancedReactionEquations,
         startTime: CGFloat,
-        forwardBeaker: BeakerMoleculesSetter,
+        forwardBeaker: ForwardEquilibriumBeakerGridBalancer,
         cMolecules: [GridCoordinate],
         dMolecules: [GridCoordinate]
     ) {
@@ -180,7 +180,7 @@ struct ReverseBeakerMoleculeSetter {
 
     private static func initialReactantGrid(
         forwardCoords: FractionedCoordinates,
-        forwardMolecules: BeakerMoleculesSetter
+        forwardMolecules: ForwardEquilibriumBeakerGridBalancer
     ) -> [GridCoordinate] {
         let convergenceTime = forwardMolecules.reactionEquation.convergenceTime
         let convergedForwardCoords = forwardCoords.coords(at: convergenceTime)
