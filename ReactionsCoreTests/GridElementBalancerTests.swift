@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import XCTest
 @testable import ReactionsCore
 
@@ -162,5 +161,36 @@ class GridElementBalancerTests: XCTestCase {
         XCTAssertEqual(model.balancedD.coords, model.initialReducingD.initialCoords)
         XCTAssertEqual(model.balancedD.initialFraction, 1)
         XCTAssertEqual(model.balancedD.finalFraction, 0.5)
+    }
+
+    func testIncreasesElementsWhereStartingCoordsAreNonEmpty() {
+        let grid = GridCoordinate.grid(cols: 1, rows: 100)
+        let model = GridElementBalancer(
+            initialIncreasingA: GridElementToBalance(
+                initialCoords: Array(grid[0..<10]),
+                finalCount: 20
+            ),
+            initialIncreasingB: GridElementToBalance(
+                initialCoords: Array(grid[10..<20]),
+                finalCount: 20
+            ),
+            initialReducingC: GridElementToBalance(
+                initialCoords: Array(grid[20..<40]),
+                finalCount: 10
+            ),
+            initialReducingD: GridElementToBalance(
+                initialCoords: Array(grid[40..<60]),
+                finalCount: 10
+            ),
+            grid: grid
+        )
+
+        XCTAssertEqual(model.balancedA.coords, Array(grid[0..<10] + grid[20..<25] + grid[40..<45]))
+        XCTAssertEqual(model.balancedA.initialFraction, 0.5)
+        XCTAssertEqual(model.balancedA.finalFraction, 1)
+
+        XCTAssertEqual(model.balancedB.coords, Array(grid[10..<20] + grid[25..<30] + grid[45..<50]))
+        XCTAssertEqual(model.balancedB.initialFraction, 0.5)
+        XCTAssertEqual(model.balancedB.finalFraction, 1)
     }
 }

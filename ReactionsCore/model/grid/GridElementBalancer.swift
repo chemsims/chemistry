@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct GridElementBalancer {
+public struct GridElementBalancer {
 
     let initialIncreasingA: GridElementToBalance
     let initialIncreasingB: GridElementToBalance
@@ -13,7 +13,7 @@ struct GridElementBalancer {
     let initialReducingD: GridElementToBalance
     let grid: [GridCoordinate]
 
-    init(
+    public init(
         initialIncreasingA: GridElementToBalance,
         initialIncreasingB: GridElementToBalance,
         initialReducingC: GridElementToBalance,
@@ -75,7 +75,9 @@ struct GridElementBalancer {
     private var dCoords: [GridCoordinate] {
         initialReducingD.initialCoords
     }
+}
 
+private extension GridElementBalancer {
     private var numAToTakeFromC: Int {
         (Double(aToTransfer) * cToD).roundedInt()
     }
@@ -92,16 +94,12 @@ struct GridElementBalancer {
         bToTransfer - numBToTakeFromC
     }
 
-    private var numCDToDrop: Int {
-        abs(initialReducingC.delta) + abs(initialReducingD.delta)
-    }
-
     private var aToTransfer: Int {
         (Double(directTransfer) * aToB).roundedInt()
     }
 
     private var bToTransfer: Int {
-        (Double(directTransfer) * aToB).roundedInt()
+        directTransfer - aToTransfer
     }
 
     private var cToTransfer: Int {
@@ -113,15 +111,9 @@ struct GridElementBalancer {
     }
 
     private var directTransfer: Int {
-        min(increase, decrease)
-    }
-
-    private var increase: Int {
-        initialIncreasingA.delta + initialIncreasingB.delta
-    }
-
-    private var decrease: Int {
-        abs(initialReducingC.delta) + abs(initialReducingD.delta)
+        let increase = initialIncreasingA.delta + initialIncreasingB.delta
+        let decrease = abs(initialReducingC.delta) + abs(initialReducingD.delta)
+        return min(increase, decrease)
     }
 
     private var aToB: Double {
@@ -147,9 +139,17 @@ struct GridElementBalancer {
 }
 
 
-struct GridElementToBalance {
+public struct GridElementToBalance {
     let initialCoords: [GridCoordinate]
     let finalCount: Int
+
+    public init(
+        initialCoords: [GridCoordinate],
+        finalCount: Int
+    ) {
+        self.initialCoords = initialCoords
+        self.finalCount = finalCount
+    }
 
     fileprivate var delta: Int {
         finalCount - initialCoords.count
