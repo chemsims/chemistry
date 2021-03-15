@@ -28,6 +28,7 @@ private struct AqueousReactionScreenWithSettings: View {
     var body: some View {
         ZStack {
             Rectangle()
+                .padding(-10)
                 .foregroundColor(Color.white)
                 .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
                 .edgesIgnoringSafeArea(.all)

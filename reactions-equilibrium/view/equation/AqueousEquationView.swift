@@ -48,7 +48,7 @@ private struct UnscaledAqueousEquationView: View {
     let highlightedElements: HighlightedElements<AqueousScreenElement>
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
             HStack(spacing: 40) {
                 QuotientDefinitionView(coefficients: equations.coefficients)
                     .colorMultiply(
@@ -65,6 +65,8 @@ private struct UnscaledAqueousEquationView: View {
                     )
 
                 Spacer()
+                    .frame(height: 10)
+
                 QuotientEqualsKView(
                     currentTime: currentTime,
                     quotient: quotient,
@@ -320,7 +322,7 @@ private struct AnimatingNumberOrPlaceholder: View {
     }
 }
 
-private let NaturalHeight: CGFloat = 250
+private let NaturalHeight: CGFloat = 190
 private let NaturalWidth: CGFloat = 590
 
 private func formatQuotient(_ quotient: CGFloat) -> String {
@@ -346,6 +348,7 @@ struct AqueousEquationView_Previews: PreviewProvider {
         )
         .border(Color.black)
         .frame(width: NaturalWidth, height: NaturalHeight)
+        .border(Color.red)
         .previewLayout(.fixed(width: NaturalWidth + 30, height: NaturalHeight + 30))
         .frame(width: NaturalWidth + 30, height: NaturalHeight + 30)
         .background(Color.gray.opacity(0.5))
