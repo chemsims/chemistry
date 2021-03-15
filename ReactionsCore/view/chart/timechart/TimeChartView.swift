@@ -21,6 +21,7 @@ public struct TimeChartView: View {
 
     let offset: CGFloat
     let minDragTime: CGFloat?
+    let activeIndex: Int?
 
     public init(
         data: [TimeChartDataLine],
@@ -32,7 +33,8 @@ public struct TimeChartView: View {
         axisSettings: ChartAxisShapeSettings,
         clipData: Bool = false,
         offset: CGFloat = 0,
-        minDragTime: CGFloat? = nil
+        minDragTime: CGFloat? = nil,
+        activeIndex: Int? = nil
     ) {
         self.data = data
         self.initialTime = initialTime
@@ -44,6 +46,7 @@ public struct TimeChartView: View {
         self.clipData = clipData
         self.offset = offset
         self.minDragTime = minDragTime
+        self.activeIndex = activeIndex
     }
 
     public var body: some View {
@@ -61,7 +64,8 @@ public struct TimeChartView: View {
                 canSetCurrentTime: canSetCurrentTime,
                 clipData: clipData,
                 offset: offset,
-                minDragTime: minDragTime
+                minDragTime: minDragTime,
+                activeIndex: activeIndex
             )
         }
     }

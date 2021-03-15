@@ -23,6 +23,7 @@ public struct TimeChartMultiDataLineView: View {
     let clipData: Bool
     let offset: CGFloat
     let minDragTime: CGFloat?
+    let activeIndex: Int?
 
     public init(
         data: [TimeChartDataLine],
@@ -36,7 +37,8 @@ public struct TimeChartMultiDataLineView: View {
         highlightRhs: Bool = false,
         clipData: Bool = false,
         offset: CGFloat = 0,
-        minDragTime: CGFloat? = nil
+        minDragTime: CGFloat? = nil,
+        activeIndex: Int? = nil
     ) {
         self.data = data
         self.settings = settings
@@ -50,6 +52,7 @@ public struct TimeChartMultiDataLineView: View {
         self.clipData = clipData
         self.offset = offset
         self.minDragTime = minDragTime
+        self.activeIndex = activeIndex
     }
 
     public var body: some View {
@@ -58,6 +61,7 @@ public struct TimeChartMultiDataLineView: View {
                 TimeChartDataLineView(
                     data: data[i],
                     settings: settings,
+                    lineWidth: activeIndex == i ? 2 * settings.lineWidth : settings.lineWidth,
                     initialTime: initialTime,
                     currentTime: $currentTime,
                     finalTime: finalTime,
@@ -69,6 +73,8 @@ public struct TimeChartMultiDataLineView: View {
                     offset: offset,
                     minDragTime: minDragTime
                 )
+                .opacity(activeIndex.forAll({$0 == i }) ? 1 : 0.3)
+                .zIndex(activeIndex == i ? 1 : 0)
             }
         }
     }
@@ -78,6 +84,7 @@ public struct TimeChartDataLineView: View {
 
     let data: TimeChartDataLine
     let settings: TimeChartLayoutSettings
+    let lineWidth: CGFloat
 
     let initialTime: CGFloat
     @Binding var currentTime: CGFloat
@@ -96,6 +103,7 @@ public struct TimeChartDataLineView: View {
     public init(
         data: TimeChartDataLine,
         settings: TimeChartLayoutSettings,
+        lineWidth: CGFloat,
         initialTime: CGFloat,
         currentTime: Binding<CGFloat>,
         finalTime: CGFloat,
@@ -109,6 +117,7 @@ public struct TimeChartDataLineView: View {
     ) {
         self.data = data
         self.settings = settings
+        self.lineWidth = lineWidth
         self.initialTime = initialTime
         self._currentTime = currentTime
         self.finalTime = finalTime
@@ -182,7 +191,7 @@ public struct TimeChartDataLineView: View {
             startTime: initialTime,
             time: time,
             color: color,
-            lineWidth: settings.lineWidth
+            lineWidth: lineWidth
         )
     }
 
@@ -194,7 +203,7 @@ public struct TimeChartDataLineView: View {
             startTime: startTime,
             time: endTime,
             color: data.headColor,
-            lineWidth: 2.5 * settings.lineWidth
+            lineWidth: 2.5 * lineWidth
         )
     }
 

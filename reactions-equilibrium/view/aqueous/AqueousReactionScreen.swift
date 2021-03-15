@@ -93,6 +93,8 @@ private struct MiddleStackView: View {
             showData: model.showConcentrationLines,
             offset: model.chartOffset,
             minDragTime: model.components.quotientChartDiscontinuity?.x,
+            canSetIndex: model.canSetChartIndex,
+            activeIndex: $model.activeChartIndex,
             settings: settings.chartSettings
         )
         .colorMultiply(model.highlightedElements.colorMultiply(for: .chartEquilibrium))

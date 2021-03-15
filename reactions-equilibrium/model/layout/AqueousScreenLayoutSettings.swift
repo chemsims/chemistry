@@ -59,7 +59,7 @@ struct AqueousScreenLayoutSettings {
     }
 
     var chartSize: CGFloat {
-        let maxSizeForHeight = 0.4 * height
+        let maxSizeForHeight = 0.42 * height
         let maxSizeForWidth = 0.25 * width
         return min(maxSizeForWidth, maxSizeForHeight)
     }

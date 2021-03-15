@@ -54,7 +54,7 @@ extension ReactionEquilibriumChartsLayoutSettings {
 
 extension ReactionEquilibriumChartsLayoutSettings {
     var legendCircleSize: CGFloat {
-        0.09 * size
+        0.1 * size
     }
 
     var legendSpacing: CGFloat {

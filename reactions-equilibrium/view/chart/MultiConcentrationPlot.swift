@@ -19,6 +19,9 @@ struct MultiConcentrationPlot: View {
     let offset: CGFloat
     let minDragTime: CGFloat?
 
+    let canSetIndex: Bool
+    @Binding var activeIndex: Int?
+
     let settings: ReactionEquilibriumChartsLayoutSettings
 
     var body: some View {
@@ -88,7 +91,8 @@ struct MultiConcentrationPlot: View {
             axisSettings: settings.axisShapeSettings,
             clipData: true,
             offset: offset,
-            minDragTime: minDragTime
+            minDragTime: minDragTime,
+            activeIndex: activeIndex
         )
     }
 
@@ -110,23 +114,37 @@ struct MultiConcentrationPlot: View {
 extension MultiConcentrationPlot {
     private var legend: some View {
         HStack(spacing: settings.legendSpacing) {
-            legendPill(name: "A", color: .from(.aqMoleculeA))
-            legendPill(name: "B", color: .from(.aqMoleculeB))
-            legendPill(name: "C", color: .from(.aqMoleculeC))
-            legendPill(name: "D", color: .from(.aqMoleculeD))
+            legendPill(name: "A", color: .from(.aqMoleculeA), indexToActivate: 0)
+            legendPill(name: "B", color: .from(.aqMoleculeB), indexToActivate: 1)
+            legendPill(name: "C", color: .from(.aqMoleculeC), indexToActivate: 2)
+            legendPill(name: "D", color: .from(.aqMoleculeD), indexToActivate: 3)
         }
-        .padding(settings.legendPadding)
     }
 
-    private func legendPill(name: String, color: Color) -> some View {
-        ZStack {
-            Circle()
-                .foregroundColor(color)
-            Text(name)
-                .font(.system(size: settings.legendFontSize))
-                .foregroundColor(.white)
+    private func legendPill(
+        name: String,
+        color: Color,
+        indexToActivate: Int
+    ) -> some View {
+        Button(action: {
+            activeIndex = activeIndex == indexToActivate ? nil : indexToActivate
+        }) {
+            ZStack {
+                Circle()
+                    .foregroundColor(color)
+                    .opacity(activeIndex.forAll({$0 == indexToActivate}) ? 1 : 0.3)
+                Text(name)
+                    .font(.system(size: settings.legendFontSize))
+                    .foregroundColor(.white)
+            }
+            .padding(settings.legendPadding)
+            .contentShape(Rectangle())
+            .frame(
+                width: settings.legendCircleSize + (2 * settings.legendPadding),
+                height: settings.legendCircleSize + (2 * settings.legendPadding)
+            )
         }
-        .frame(width: settings.legendCircleSize, height: settings.legendCircleSize)
+        .disabled(!canSetIndex)
     }
 }
 
@@ -153,11 +171,12 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
             showData: true,
             offset: 0,
             minDragTime: nil,
+            canSetIndex: false,
+            activeIndex: .constant(nil),
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis
             )
         )
-        .background(Styling.inactiveScreenElement)
     }
 }
