@@ -24,7 +24,6 @@
 		5711DFF725C4704500B28E45 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFF625C4704500B28E45 /* Analytics.swift */; };
 		5711E00325C4840D00B28E45 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5711E00225C4840D00B28E45 /* GoogleService-Info.plist */; };
 		5712155E258103A600E92A99 /* Rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5712155D258103A600E92A99 /* Rates.swift */; };
-		5714D4C32600A029009890A5 /* ICETableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5714D4C22600A029009890A5 /* ICETableData.swift */; };
 		571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */; };
 		571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C41256405490075358B /* OrderedReactionScreen.swift */; };
 		571B3C4F256555460075358B /* ZeroOrderReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C4E256555460075358B /* ZeroOrderReactionViewModel.swift */; };
@@ -410,7 +409,6 @@
 		5711E00225C4840D00B28E45 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		571215552580DCD000E92A99 /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		5712155D258103A600E92A99 /* Rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rates.swift; sourceTree = "<group>"; };
-		5714D4C22600A029009890A5 /* ICETableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICETableData.swift; sourceTree = "<group>"; };
 		571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderStatements.swift; sourceTree = "<group>"; };
 		571B3C41256405490075358B /* OrderedReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedReactionScreen.swift; sourceTree = "<group>"; };
 		571B3C4E256555460075358B /* ZeroOrderReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionViewModel.swift; sourceTree = "<group>"; };
@@ -849,14 +847,6 @@
 				57F10984255E985700834783 /* ConcentrationEquation.swift */,
 			);
 			path = equation;
-			sourceTree = "<group>";
-		};
-		5714D4C12600A017009890A5 /* ice */ = {
-			isa = PBXGroup;
-			children = (
-				5714D4C22600A029009890A5 /* ICETableData.swift */,
-			);
-			path = ice;
 			sourceTree = "<group>";
 		};
 		571B3C4D2565552C0075358B /* reactions */ = {
@@ -1713,7 +1703,6 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				5714D4C12600A017009890A5 /* ice */,
 				576A422325F7A84100047618 /* molecule-container */,
 				576A41FB25F77B6C00047618 /* layout */,
 				5736DC2E25F5006B003FD2B4 /* grid */,
@@ -2378,7 +2367,6 @@
 				576A422525F7A86400047618 /* FallingMolecule.swift in Sources */,
 				576A421A25F7A81100047618 /* AddMoleculesViewmodel.swift in Sources */,
 				57DB304425F74D050070E96F /* AddMoleculeView.swift in Sources */,
-				5714D4C32600A029009890A5 /* ICETableData.swift in Sources */,
 				57952A5225E68184006AB876 /* AqueousNavigationModel.swift in Sources */,
 				57D2F32725EA86C600AEE0D8 /* EquilibriumGrid.swift in Sources */,
 				57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */,

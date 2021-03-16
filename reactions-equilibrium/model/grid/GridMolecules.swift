@@ -48,7 +48,7 @@ struct ForwardGridMolecules {
             coordinates: underlyingAGrid,
             fractionToDraw: MoleculeGridFractionToDraw(
                 underlyingConcentration: reaction.reactantA,
-                initialConcentration: reaction.a0,
+                initialConcentration: reaction.initialConcentrations.reactantA,
                 finalConcentration: reaction.reactantA.getY(at: reaction.convergenceTime),
                 gridCount: underlyingAGrid.count,
                 totalGridCount: EquilibriumGridSettings.grid.count
@@ -61,7 +61,7 @@ struct ForwardGridMolecules {
             coordinates: underlyingBGrid,
             fractionToDraw: MoleculeGridFractionToDraw(
                 underlyingConcentration: reaction.reactantB,
-                initialConcentration: reaction.b0,
+                initialConcentration: reaction.initialConcentrations.reactantA,
                 finalConcentration: reaction.reactantB.getY(at: reaction.convergenceTime),
                 gridCount: underlyingBGrid.count,
                 totalGridCount: EquilibriumGridSettings.grid.count

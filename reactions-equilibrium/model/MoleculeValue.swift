@@ -32,6 +32,21 @@ struct MoleculeValue<Value> {
         )
     }
 
+    func map<MappedValue>(_ f: (Value) -> MappedValue) -> MoleculeValue<MappedValue> {
+        MoleculeValue<MappedValue>(builder: { f(value(for: $0)) })
+    }
+
+    func combine<MappedValue>(
+        with other: MoleculeValue<Value>,
+        using combiner: (Value, Value) -> MappedValue
+    ) -> MoleculeValue<MappedValue> {
+        MoleculeValue<MappedValue>(builder: { molecule in
+            let lhs = value(for: molecule)
+            let rhs = other.value(for: molecule)
+            return combiner(lhs, rhs)
+        })
+    }
+
     func value(for molecule: AqueousMolecule) -> Value {
         switch molecule {
         case .A: return reactantA

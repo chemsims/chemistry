@@ -169,8 +169,8 @@ class AqueousReactionViewModel: ObservableObject {
 
     // Returns the first reactant which does not have enough molecules in the beaker
     private func getMissingReactant() -> AqueousMoleculeReactant? {
-        let aTooLow = components.equations.a0.rounded(decimals: 2) < inputSettings.minInitial
-        let bTooLow = components.equations.b0.rounded(decimals: 2) < inputSettings.minInitial
+        let aTooLow = components.equations.initialConcentrations.reactantA.rounded(decimals: 2) < inputSettings.minInitial
+        let bTooLow = components.equations.initialConcentrations.reactantB.rounded(decimals: 2) < inputSettings.minInitial
 
         if aTooLow {
             return .A

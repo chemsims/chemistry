@@ -17,7 +17,7 @@ struct ScalesRotationEquation: Equation {
         let quotientFactor = convergedQuotient == 0 ? 0 : quotient / convergedQuotient
 
         if reaction.direction == .forward {
-            let reactantSum = reaction.a0 + reaction.b0
+            let reactantSum = reaction.initialConcentrations.reactantA + reaction.initialConcentrations.reactantB
             let sumFactor = reactantSum / AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation
             let initAngle = min(sumFactor * maxAngle, maxAngle)
 

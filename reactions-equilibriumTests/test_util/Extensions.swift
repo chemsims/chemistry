@@ -13,11 +13,11 @@ extension BalancedReactionCoefficients {
 
 extension BalancedReactionEquations {
     func withA0(_ newValue: CGFloat) -> BalancedReactionEquations {
-        with(a0: newValue, b0: b0)
+        with(a0: newValue, b0: initialConcentrations.reactantB)
     }
 
     func withB0(_ newValue: CGFloat) -> BalancedReactionEquations {
-        with(a0: a0, b0: newValue)
+        with(a0: initialConcentrations.reactantA, b0: newValue)
     }
 
     private func with(a0: CGFloat, b0: CGFloat) -> BalancedReactionEquations {
