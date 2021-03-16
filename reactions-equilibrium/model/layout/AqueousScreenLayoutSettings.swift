@@ -7,11 +7,9 @@ import ReactionsCore
 
 struct AqueousScreenLayoutSettings {
 
-    static let padding: CGFloat = 10
-
     init(geometry: GeometryProxy) {
-        self.width = geometry.size.width - 20
-        self.height = geometry.size.height - 20
+        self.width = geometry.size.width
+        self.height = geometry.size.height
     }
 
     let width: CGFloat
