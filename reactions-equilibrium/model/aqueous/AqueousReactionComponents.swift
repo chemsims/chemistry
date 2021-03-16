@@ -250,16 +250,6 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
             $0.row < availableRows
         }
     }
-
-    private func reactantMoleculesToDraw(
-        equation: Equation
-    ) -> Equation {
-        ScaledEquation(
-            targetY: 1,
-            targetX: 0,
-            underlying: equation
-        )
-    }
 }
 
 struct ReverseAqueousReactionComponents: AqueousReactionComponents {
@@ -405,14 +395,6 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
             count: count
         )
         grid.setConcentration(of: .D, concentration: initialConcentration(of: dMolecules))
-    }
-
-    var productConcentrationIncremented: CGFloat {
-        let initC = forwardReaction.equations.productC.getY(at: forwardReaction.equations.convergenceTime)
-        let initD = forwardReaction.equations.productD.getY(at: forwardReaction.equations.convergenceTime)
-        let incC = initialConcentration(of: cMolecules) - initC
-        let incD = initialConcentration(of: dMolecules) - initD
-        return incC + incD
     }
 
     func concentrationIncremented(of molecule: AqueousMolecule) -> CGFloat {
