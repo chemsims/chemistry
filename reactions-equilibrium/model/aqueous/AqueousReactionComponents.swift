@@ -27,6 +27,8 @@ protocol AqueousReactionComponents {
     var quotientChartDiscontinuity: CGPoint? { get }
     var moleculeChartDiscontinuities: MoleculeValue<CGPoint>? { get }
 
+    var iceData: MoleculeValue<ICETableElement> { get }
+
     mutating func increment(molecule: AqueousMolecule, count: Int)
 
     func canIncrement(molecule: AqueousMolecule) -> Bool
@@ -245,6 +247,18 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
         )
     }
 
+    var iceData: MoleculeValue<ICETableElement> {
+        func element(_ c0: CGFloat, _ equation: Equation) -> ICETableElement {
+            ICETableElement(initial: c0, final: equation.getY(at: equations.convergenceTime))
+        }
+        return MoleculeValue(
+            reactantA: element(equations.a0, equations.reactantA),
+            reactantB: element(equations.b0, equations.reactantB),
+            productC: element(0, equations.productC),
+            productD: element(0, equations.productD)
+        )
+    }
+
     private var availableShuffledGrid: [GridCoordinate] {
         shuffledMoleculeGrid.filter {
             $0.row < availableRows
@@ -444,6 +458,21 @@ struct ReverseAqueousReactionComponents: AqueousReactionComponents {
                 startTime: AqueousReactionSettings.timeToAddProduct,
                 convergenceTime: AqueousReactionSettings.timeForReverseConvergence
             )
+        )
+    }
+
+    var iceData: MoleculeValue<ICETableElement> {
+        func element(_ equation: Equation) -> ICETableElement {
+            let initial = equation.getY(at: AqueousReactionSettings.timeToAddProduct)
+            let final = equation.getY(at: equations.convergenceTime)
+            return ICETableElement(initial: initial, final: final)
+        }
+
+        return MoleculeValue(
+            reactantA: element(equations.reactantA),
+            reactantB: element(equations.reactantB),
+            productC: element(equations.productC),
+            productD: element(equations.productD)
         )
     }
 

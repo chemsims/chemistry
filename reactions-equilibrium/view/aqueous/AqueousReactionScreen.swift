@@ -70,7 +70,7 @@ private struct MiddleStackView: View {
         ZStack(alignment: .leading) {
             concentrationChart.opacity(showGraph ? 1 : 0)
             if (!showGraph) {
-                ICETable(equations: model.equations)
+                ICETable(data: model.components.iceData)
                     .colorMultiply(
                         model.highlightedElements.colorMultiply(for: nil)
                     )

@@ -7,14 +7,14 @@ import ReactionsCore
 
 struct ICETable: View {
 
-    let equations: BalancedReactionEquations
+    let data: MoleculeValue<ICETableElement>
 
     var body: some View {
         GeometryReader { geo in
             SizedICETable(
                 width: geo.size.width,
                 height: geo.size.height,
-                equations: equations
+                data: data
             )
         }
     }
@@ -24,7 +24,7 @@ private struct SizedICETable: View {
 
     let width: CGFloat
     let height: CGFloat
-    let equations: BalancedReactionEquations
+    let data: MoleculeValue<ICETableElement>
 
     var body: some View {
         HStack(spacing: 0) {
@@ -34,31 +34,32 @@ private struct SizedICETable: View {
                 cell("Change")
                 cell("Final")
             }
-            column(equation: equations.reactantA, name: "A")
-            column(equation: equations.reactantB, name: "B")
-            column(equation: equations.productC, name: "C")
-            column(equation: equations.productD, name: "D")
+            column(element: data.reactantA, name: "A")
+            column(element: data.reactantB, name: "B")
+            column(element: data.productC, name: "C")
+            column(element: data.productD, name: "D")
         }
         .font(.system(size: 0.05 * width))
         .lineLimit(1)
         .minimumScaleFactor(0.7)
     }
 
-    private func column(equation: Equation, name: String) -> some View {
-        let change = equation.delta(t2: equations.convergenceTime)
+    private func column(element: ICETableElement, name: String) -> some View {
+        // Sometimes a very small change appears as a negative 0 in the table, so handle that here
+        let change = abs(element.change) < 0.00001 ? 0 : element.change
         let changeSign = change > 0 ? "+" : ""
         let changeString = "\(changeSign)\(change.str(decimals: 2))"
 
         return VStack(spacing: 0) {
             cell(name)
-            cell(equation, time: 0)
+            cell(element.initial)
             cell(changeString, emphasise: true)
-            cell(equation, time: equations.convergenceTime, emphasise: true)
+            cell(element.final, emphasise: true)
         }
     }
 
-    private func cell(_ equation: Equation, time: CGFloat, emphasise: Bool = false) -> some View {
-        cell("\(equation.getY(at: time).str(decimals: 2))", emphasise: emphasise)
+    private func cell(_ value: CGFloat, emphasise: Bool = false) -> some View {
+        cell("\(value.str(decimals: 2))", emphasise: emphasise)
     }
 
     private func cell(_ text: String, emphasise: Bool = false) -> some View {
@@ -81,17 +82,11 @@ extension Equation {
 struct ICETable_Previews: PreviewProvider {
     static var previews: some View {
         ICETable(
-            equations: BalancedReactionEquations(
-                coefficients: BalancedReactionCoefficients(
-                    reactantA: 2,
-                    reactantB: 2,
-                    productC: 1,
-                    productD: 4
-                ),
-                equilibriumConstant: 1,
-                a0: 0.4,
-                b0: 0.5,
-                convergenceTime: 15
+            data: MoleculeValue(
+                reactantA: ICETableElement(initial: 0, final: 1),
+                reactantB: ICETableElement(initial: 0.2, final: 0.3),
+                productC: ICETableElement(initial: 0.3, final: 0.1),
+                productD: ICETableElement(initial: 0.4, final: 0.2)
             )
         )
         .padding()
