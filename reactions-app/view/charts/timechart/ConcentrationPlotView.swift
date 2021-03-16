@@ -86,6 +86,7 @@ struct ConcentrationPlotView: View {
                         headRadius: settings.chartHeadSecondarySize
                     ),
                     settings: settings.timeChartLayoutSettings,
+                    lineWidth: settings.timeChartLayoutSettings.lineWidth,
                     initialTime: initialTime,
                     currentTime: .constant(currentTime),
                     finalTime: finalTime,
@@ -104,6 +105,7 @@ struct ConcentrationPlotView: View {
                     headRadius: settings.chartHeadPrimarySize
                 ),
                 settings: settings.timeChartLayoutSettings,
+                lineWidth: settings.timeChartLayoutSettings.lineWidth,
                 initialTime: initialTime,
                 currentTime: $currentTime,
                 finalTime: finalTime,

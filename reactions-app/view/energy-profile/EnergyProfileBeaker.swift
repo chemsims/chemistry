@@ -90,14 +90,19 @@ struct EnergyProfileBeaker: View {
         VStack(spacing: 0) {
             beakerView(settings: settings)
                 .frame(width: settings.beakerWidth, height: settings.skSceneHeight)
-            beakerStand(settings: settings)
-            slider(settings: settings, temp: tempBinding)
-                .padding(.top, settings.sliderTopPadding)
-                .background(
-                    Color.white
-                        .padding(.bottom, -settings.sliderTopPadding)
-                        .opacity(highlightSlider ? 1 : 0)
+
+            AdjustableBeakerBurner(
+                temp: tempBinding ?? .constant(settings.axis.minValue),
+                disabled: tempIsDisabled,
+                useHaptics: false,
+                highlightSlider: highlightSlider,
+                sliderAccessibilityValue: nil,
+                settings: AdjustableBeakerBurnerSettings(
+                    standWidth: settings.standWidth,
+                    handleHeight: settings.handleHeight,
+                    axis: settings.axis
                 )
+            )
         }
     }
 
@@ -274,99 +279,27 @@ struct EnergyProfileBeaker: View {
         }
     }
 
-    private func beakerStand(settings: EnergyBeakerSettings) -> some View {
-        ZStack(alignment: .bottom) {
-            Image("stand")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: settings.standWidth)
-
-            Image("burner")
-                .resizable()
-                .frame(width: settings.burnerWidth, height: settings.burnerHeight)
-
-            flame(settings: settings)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibility(label: Text("Beaker stand with flame"))
-    }
-
-    private func flame(settings: EnergyBeakerSettings) -> some View {
-        VStack(spacing: 0) {
-            ZStack(alignment: .bottom) {
-                smallFlame(settings: settings)
-                    .offset(x: settings.flameWidth)
-
-                smallFlame(settings: settings)
-                    .offset(x: -settings.flameWidth)
-
-                flameImage
-                    .frame(width: largeFlameWidth(settings: settings))
-                    .scaleEffect(
-                        x: 1 + flameScale,
-                        y: 1 - flameScale,
-                        anchor: .bottom
-                    )
-            }
-
-            Spacer()
-                .frame(width: settings.burnerWidth, height: settings.burnerHeight)
-        }
-    }
-
-    private var flameImage: some View {
-        Image("flame")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-    }
-
-    private func smallFlame(settings: EnergyBeakerSettings) -> some View {
-        flameImage
-            .opacity((temp ?? 0) > tripleFlameThreshold ? 1 : 0)
-            .animation(.easeIn(duration: 0.25))
-            .frame(width: largeFlameWidth(settings: settings) * 0.6)
-            .scaleEffect(
-                x: 1 + flameScale,
-                y: 1 - flameScale,
-                anchor: .bottom
-            )
-    }
-
-    private func largeFlameWidth(settings: EnergyBeakerSettings) -> CGFloat {
-        let speed = tempFactor(settings: settings)
-        let maxExtraScale: CGFloat = 0.5
-        let scale = 1 + (speed * maxExtraScale)
-        return settings.flameWidth * scale
-    }
-
-    private func slider(
-        settings: EnergyBeakerSettings,
-        temp: Binding<CGFloat>?
-    ) -> some View {
-        let currentValue = temp?.wrappedValue ?? settings.axis.minValue
+    private func burner(settings: EnergyBeakerSettings) -> some View {
+        let currentValue = temp ?? settings.axis.minValue
         let fraction = (currentValue - settings.axis.minValue) / (settings.axis.maxValue - settings.axis.minValue)
         let percent = (fraction * 100).str(decimals: 0)
 
         let position = chartInput.canReactToC ? "above" : "below"
         let positionMsg = temp == nil ? "" : ", current energy is \(position) EA hump"
-        let value = "\(currentValue.str(decimals: 0)), \(percent)%\(positionMsg)"
+        let accessibilityValue = "\(currentValue.str(decimals: 0)), \(percent)%\(positionMsg)"
 
-        return CustomSlider(
-            value: temp ?? .constant(settings.axis.minValue),
-            axis: settings.axis,
-            handleThickness: settings.handleThickness,
-            handleColor: tempIsDisabled ? .darkGray : .orangeAccent,
-            handleCornerRadius: settings.handleCornerRadius,
-            barThickness: settings.barThickness,
-            barColor: Styling.energySliderBar,
-            orientation: .landscape,
-            includeFill: true,
-            useHaptics: false
+        return AdjustableBeakerBurner(
+            temp: tempBinding ?? .constant(settings.axis.minValue),
+            disabled: tempIsDisabled,
+            useHaptics: false,
+            highlightSlider: highlightSlider,
+            sliderAccessibilityValue: accessibilityValue,
+            settings: AdjustableBeakerBurnerSettings(
+                standWidth: settings.standWidth,
+                handleHeight: settings.handleHeight,
+                axis: settings.axis
+            )
         )
-        .frame(height: settings.handleHeight)
-        .disabled(tempIsDisabled)
-        .accessibility(label: Text("Input for temperature in Kelvin"))
-        .accessibility(value: Text(value))
     }
 
     private var tempIsDisabled: Bool {
