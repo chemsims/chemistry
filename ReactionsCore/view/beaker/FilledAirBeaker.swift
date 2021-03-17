@@ -88,17 +88,17 @@ private struct FilledAirBeakerWithSettings: View {
             Group {
                 Rectangle()
                     .frame(
-                        width: sealSettings.sealHandleWidth,
-                        height: sealSettings.sealHandleHeight
+                        width: sealSettings.handleWidth,
+                        height: sealSettings.handleHeight
                     )
                 Rectangle()
-                    .frame(height: sealSettings.sealThickHeight)
+                    .frame(height: sealSettings.thickPadHeight)
             }
             .foregroundColor(Color.gray)
             Rectangle()
-                .frame(height: sealSettings.sealThinHeight)
+                .frame(height: sealSettings.thinPadHeight)
             Rectangle()
-                .frame(height: sealSettings.sealThickHeight)
+                .frame(height: sealSettings.thickPadHeight)
                 .foregroundColor(Color.gray)
         }
         .compositingGroup().opacity(0.8)
@@ -109,20 +109,24 @@ public struct FilledAirSealSettings {
 
     let width: CGFloat
 
-    var sealHandleWidth: CGFloat {
+    var handleWidth: CGFloat {
         0.05 * width
     }
 
-    var sealHandleHeight: CGFloat {
-        1.8 * sealHandleWidth
+    var handleHeight: CGFloat {
+        1.8 * handleWidth
     }
 
-    var sealThickHeight: CGFloat {
-        1.2 * sealHandleHeight
+    var thickPadHeight: CGFloat {
+        1.2 * handleHeight
     }
 
-    var sealThinHeight: CGFloat {
-        0.15 * sealThickHeight
+    var thinPadHeight: CGFloat {
+        0.15 * thickPadHeight
+    }
+
+    var midSealPosition: CGFloat {
+        thickPadHeight + (thinPadHeight / 2)
     }
 }
 

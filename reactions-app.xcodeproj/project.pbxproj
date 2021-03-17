@@ -127,6 +127,7 @@
 		57686AE72601D541005BD328 /* SliderHapticsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AE62601D541005BD328 /* SliderHapticsHandler.swift */; };
 		57686AEE2601EDB6005BD328 /* PressureBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AED2601EDB6005BD328 /* PressureBeaker.swift */; };
 		57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AF32601F5CF005BD328 /* FilledAirBeaker.swift */; };
+		57686AFA2601FD17005BD328 /* AdjustableAirBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */; };
 		576A41DB25F773D900047618 /* AqueousBeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41DA25F773D900047618 /* AqueousBeakerView.swift */; };
 		576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
 		576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */; };
@@ -531,6 +532,7 @@
 		57686AE62601D541005BD328 /* SliderHapticsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderHapticsHandler.swift; sourceTree = "<group>"; };
 		57686AED2601EDB6005BD328 /* PressureBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressureBeaker.swift; sourceTree = "<group>"; };
 		57686AF32601F5CF005BD328 /* FilledAirBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledAirBeaker.swift; sourceTree = "<group>"; };
+		57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustableAirBeaker.swift; sourceTree = "<group>"; };
 		576A41DA25F773D900047618 /* AqueousBeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousBeakerView.swift; sourceTree = "<group>"; };
 		576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenLayoutSettings.swift; sourceTree = "<group>"; };
 		576A420625F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEquilibriumChartsLayoutSettings.swift; sourceTree = "<group>"; };
@@ -1023,6 +1025,7 @@
 				57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */,
 				57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */,
 				57686AF32601F5CF005BD328 /* FilledAirBeaker.swift */,
+				57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */,
 			);
 			path = beaker;
 			sourceTree = "<group>";
@@ -2568,6 +2571,7 @@
 				57952A3925E67F6E006AB876 /* ScreenState.swift in Sources */,
 				57DDAD4325E57DEB00B535A7 /* TimeChartDataLine.swift in Sources */,
 				5797A4D325E40A8E00991BD9 /* Styling.swift in Sources */,
+				57686AFA2601FD17005BD328 /* AdjustableAirBeaker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

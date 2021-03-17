@@ -58,6 +58,27 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         orientation: Orientation,
         includeFill: Bool,
         settings: SliderGeometrySettings,
+        disabled: Bool,
+        useHaptics: Bool
+    ) {
+        self.init(
+            value: value,
+            axis: axis,
+            orientation: orientation,
+            includeFill: includeFill,
+            settings: settings,
+            handleColor: disabled ? .darkGray : .orangeAccent,
+            barColor: .black,
+            useHaptics: useHaptics
+        )
+    }
+
+    public init(
+        value: Binding<Value>,
+        axis: AxisPositionCalculations<Value>,
+        orientation: Orientation,
+        includeFill: Bool,
+        settings: SliderGeometrySettings,
         disabled: Bool = false,
         handleColor: Color = .orangeAccent,
         barColor: Color = .black,
