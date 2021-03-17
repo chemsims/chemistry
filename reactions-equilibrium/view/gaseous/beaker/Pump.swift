@@ -97,7 +97,7 @@ private struct PumpWithGeometry: View {
 }
 
 struct PumpSettings {
-    static let widthToHeight: CGFloat = 0.768
+    static let heightToWidth: CGFloat = 1.3
     static let nozzleToHeight: CGFloat = 0.641
 }
 
@@ -138,7 +138,7 @@ struct PumpView_Previews: PreviewProvider {
                     onDownPump: {})
             )
                 .frame(
-                    width: PumpSettings.widthToHeight * geo.size.height,
+                    width: (1 / PumpSettings.heightToWidth) * geo.size.height,
                     height: geo.size.height
                 )
         }

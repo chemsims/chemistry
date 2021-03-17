@@ -20,6 +20,7 @@ struct PressureBeaker: View {
                 burner
             }
         }
+        .frame(width: settings.width, alignment: .trailing)
     }
 
     private var pump: some View {
@@ -66,12 +67,16 @@ struct PressureBeaker: View {
             )
         )
         .frame(width: settings.standWidth)
-//        .offset(x: 50)
     }
 }
 
 struct GaseousReactionScreenSettings {
-    let beakerWidth: CGFloat
+
+    let width: CGFloat
+
+    var beakerWidth: CGFloat {
+        0.65 * width
+    }
 
     var standWidth: CGFloat {
         beakerWidth
@@ -82,19 +87,23 @@ struct GaseousReactionScreenSettings {
     }
 
     var sliderWidth: CGFloat {
-        0.11 * standWidth
+        0.06 * width
+    }
+
+    var beakerSliderSpacing: CGFloat {
+        sliderWidth
     }
 
     var airBeakerTotalWidth: CGFloat {
-        1.1 * (beakerWidth + sliderWidth)
+        beakerWidth + beakerSliderSpacing + sliderWidth
     }
 
     var pumpWidth: CGFloat {
-        PumpSettings.widthToHeight * pumpHeight
+        width - beakerWidth
     }
 
     var pumpHeight: CGFloat {
-        0.6 * beakerHeight
+        PumpSettings.heightToWidth * pumpWidth
     }
 
     var pumpYOffset: CGFloat {
@@ -121,9 +130,11 @@ struct GaseousReactionScreenSettings {
 
 struct PressureBeaker_Previews: PreviewProvider {
     static var previews: some View {
-        PressureBeaker(
-            disabled: false,
-            settings: GaseousReactionScreenSettings(beakerWidth: 225)
-        )
+        GeometryReader { geo in
+            PressureBeaker(
+                disabled: false,
+                settings: GaseousReactionScreenSettings(width: geo.size.width)
+            )
+        }
     }
 }
