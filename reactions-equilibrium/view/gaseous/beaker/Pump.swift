@@ -17,12 +17,14 @@ struct Pump: View {
 }
 
 private struct PumpWithGeometry: View {
+
     let width: CGFloat
     let height: CGFloat
 
     @State private var extensionFactor: CGFloat = 0
 
     private static let coordSpace = "PumpCoordinateSpace"
+    private let impactGenerator = UIImpactFeedbackGenerator(style: .light)
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -53,14 +55,9 @@ private struct PumpWithGeometry: View {
 
     private var dragGesture: some Gesture {
         DragGesture(coordinateSpace: .named(Self.coordSpace)).onChanged { drag in
-            let y = drag.location.y
-            let factor = axis.getValue(at: y)
+            let factor = axis.getValue(at: drag.location.y)
             let constrainedFactor = within(min: 0, max: 1, value: factor)
             self.extensionFactor = constrainedFactor
-
-            print("\(y), \(factor), \(constrainedFactor)")
-        }.onEnded { drag in
-            print("Ended drag")
         }
     }
 
@@ -75,6 +72,10 @@ private struct PumpWithGeometry: View {
             minValue: 0,
             maxValue: 1
         )
+    }
+
+    private var hapticHandler: SliderHapticsHandler<CGFloat> {
+        SliderHapticsHandler(axis: axis, impactGenerator: impactGenerator)
     }
 }
 

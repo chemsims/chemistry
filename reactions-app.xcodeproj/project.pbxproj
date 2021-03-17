@@ -124,6 +124,7 @@
 		57686AC72600E342005BD328 /* BurnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AC62600E342005BD328 /* BurnerView.swift */; };
 		57686AD12600E6B1005BD328 /* AdjustableBeakerBurner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AD02600E6B1005BD328 /* AdjustableBeakerBurner.swift */; };
 		57686AD92601C981005BD328 /* Pump.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AD82601C981005BD328 /* Pump.swift */; };
+		57686AE72601D541005BD328 /* SliderHapticsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AE62601D541005BD328 /* SliderHapticsHandler.swift */; };
 		576A41DB25F773D900047618 /* AqueousBeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41DA25F773D900047618 /* AqueousBeakerView.swift */; };
 		576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
 		576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */; };
@@ -525,6 +526,7 @@
 		57686AC62600E342005BD328 /* BurnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurnerView.swift; sourceTree = "<group>"; };
 		57686AD02600E6B1005BD328 /* AdjustableBeakerBurner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustableBeakerBurner.swift; sourceTree = "<group>"; };
 		57686AD82601C981005BD328 /* Pump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pump.swift; sourceTree = "<group>"; };
+		57686AE62601D541005BD328 /* SliderHapticsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderHapticsHandler.swift; sourceTree = "<group>"; };
 		576A41DA25F773D900047618 /* AqueousBeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousBeakerView.swift; sourceTree = "<group>"; };
 		576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenLayoutSettings.swift; sourceTree = "<group>"; };
 		576A420625F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEquilibriumChartsLayoutSettings.swift; sourceTree = "<group>"; };
@@ -1621,6 +1623,7 @@
 			isa = PBXGroup;
 			children = (
 				57035EDB255BFDB400DB3A19 /* AxisPositionCalculations.swift */,
+				57686AE62601D541005BD328 /* SliderHapticsHandler.swift */,
 			);
 			path = axis;
 			sourceTree = "<group>";
@@ -2547,6 +2550,7 @@
 				5786FAB525E692D800AAD8A6 /* RunnableState.swift in Sources */,
 				5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */,
 				57952A4225E67F83006AB876 /* ScreenStateTree.swift in Sources */,
+				57686AE72601D541005BD328 /* SliderHapticsHandler.swift in Sources */,
 				57D2F2EE25EA2D7400AEE0D8 /* EquationPlaceholderView.swift in Sources */,
 				57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */,
 				57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */,

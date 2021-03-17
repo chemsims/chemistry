@@ -46,6 +46,10 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         self.includeFill = includeFill
         self.useHaptics = useHaptics
         self.disabled = false
+        self.hapticHandler = SliderHapticsHandler(
+            axis: axis,
+            impactGenerator: UIImpactFeedbackGenerator(style: .light)
+        )
     }
 
     public init(
@@ -70,9 +74,13 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         self.includeFill = includeFill
         self.useHaptics = useHaptics
         self.disabled = disabled
+        self.hapticHandler = SliderHapticsHandler(
+            axis: axis,
+            impactGenerator: UIImpactFeedbackGenerator(style: .light)
+        )
     }
 
-    @State private var impactGenerator = UIImpactFeedbackGenerator(style: .light)
+    private let hapticHandler: SliderHapticsHandler<Value>
     @State private var scaleFactor: CGFloat = 0
     @State private var scaleAnchor: UnitPoint = .center
 
@@ -215,19 +223,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         newValue: Value,
         oldValue: Value
     ) {
-        if newValue > oldValue {
-            if newValue >= axis.maxValue {
-                impactGenerator.impactOccurred()
-            } else if newValue >= 0.75 * axis.maxValue {
-                impactGenerator.prepare()
-            }
-        } else if newValue < oldValue {
-            if newValue <= axis.minValue {
-                impactGenerator.impactOccurred()
-            } else if newValue <= 1.25 * axis.minValue {
-                impactGenerator.prepare()
-            }
-        }
+        hapticHandler.valueDidChange(newValue: newValue, oldValue: oldValue)
     }
 
     /// Return the x position of the center of the slider handle
