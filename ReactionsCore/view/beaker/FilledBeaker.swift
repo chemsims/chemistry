@@ -8,41 +8,10 @@ public struct FilledBeaker: View {
 
     let molecules: [BeakerMolecules]
     let animatingMolecules: [AnimatingBeakerMolecules]
-    let currentTime: CGFloat?
+    let currentTime: CGFloat
     let reactionPair: ReactionPairDisplay
     let outlineColor: Color
     let rows: CGFloat
-
-    @available(*, deprecated, message: "Use other initializer")
-    public init(
-        moleculesA: [GridCoordinate],
-        concentrationB: Equation?,
-        currentTime: CGFloat?,
-        reactionPair: ReactionPairDisplay,
-        outlineColor: Color = Styling.beakerOutline,
-        rows: CGFloat = CGFloat(MoleculeGridSettings.rows)
-    ) {
-        let molecule = BeakerMolecules(
-            coords: moleculesA,
-            color: reactionPair.reactant.color
-        )
-        self.molecules = [molecule]
-
-        let animating = concentrationB.map { cB in
-            [
-                AnimatingBeakerMolecules(
-                    molecules: molecule,
-                    fractionToDraw: concentrationB!
-                )
-            ]
-        }
-
-        self.animatingMolecules = animating ?? []
-        self.currentTime = currentTime
-        self.reactionPair = reactionPair
-        self.outlineColor = outlineColor
-        self.rows = rows
-    }
 
     public init(
         molecules: [BeakerMolecules],
@@ -59,21 +28,23 @@ public struct FilledBeaker: View {
     }
 
     public var body: some View {
-        GeometryReader { geometry in
-            makeView(
-                using: BeakerSettings(width: geometry.size.width)
+        GeometryReader { geo in
+            GeneralFluidBeaker(
+                molecules: molecules,
+                animatingMolecules: animatingMolecules,
+                currentTime: currentTime,
+                rows: rows,
+                fluidColor: Styling.beakerLiquid,
+                placeholderColor: Styling.moleculePlaceholder,
+                includeTicks: true,
+                settings: BeakerSettings(width: geo.size.width, hasLip: true)
+            )
+            .accessibility(
+                label: Text(
+                    "Beaker showing a grid of molecules of \(reactant) and \(product) in liquid"
+                )
             )
         }
-        .accessibilityElement(children: .ignore)
-        .accessibility(
-            label: Text(
-                "Beaker showing a grid of molecules of \(reactant) and \(product) in liquid"
-            )
-        )
-//        .updatingAccessibilityValue(
-//            x: currentTime ?? 0,
-//            format: valueForTime
-//        )
     }
 
     // TODO
@@ -85,6 +56,31 @@ public struct FilledBeaker: View {
         reactionPair.product.name
     }
 
+}
+
+struct GeneralFluidBeaker: View {
+
+    let molecules: [BeakerMolecules]
+    let animatingMolecules: [AnimatingBeakerMolecules]
+    let currentTime: CGFloat
+    let reactionPair: ReactionPairDisplay = ReactionType.A.display
+    let outlineColor: Color = Styling.beakerOutline
+    let rows: CGFloat
+    let fluidColor: Color
+    let placeholderColor: Color
+    let includeTicks: Bool
+    let settings: BeakerSettings
+
+    public var body: some View {
+        mainContent
+        .accessibilityElement(children: .ignore)
+       
+//        .updatingAccessibilityValue(
+//            x: currentTime ?? 0,
+//            format: valueForTime
+//        )
+    }
+
     // TODO
 //    private func valueForTime(_ time: CGFloat) -> String {
 //        let total = moleculesA.count
@@ -94,18 +90,21 @@ public struct FilledBeaker: View {
 //        return "\(countOfA) \(reactant) molecules, \(countOfB) \(product) molecules"
 //    }
 
-    private func makeView(using settings: BeakerSettings) -> some View {
+    private var mainContent: some View {
         ZStack(alignment: .bottom) {
-            BeakerTicks(
-                numTicks: settings.numTicks,
-                rightGap: settings.ticksRightGap,
-                bottomGap: settings.ticksBottomGap,
-                topGap: settings.ticksTopGap,
-                minorWidth: settings.ticksMinorWidth,
-                majorWidth: settings.ticksMajorWidth
-            )
-            .stroke(lineWidth: 1)
-            .fill(Color.darkGray.opacity(0.5))
+            if includeTicks {
+                BeakerTicks(
+                    numTicks: settings.numTicks,
+                    rightGap: settings.ticksRightGap,
+                    bottomGap: settings.ticksBottomGap,
+                    topGap: settings.ticksTopGap,
+                    minorWidth: settings.ticksMinorWidth,
+                    majorWidth: settings.ticksMajorWidth
+                )
+                .stroke(lineWidth: 1)
+                .fill(Color.darkGray.opacity(0.5))
+            }
+
             beakerFill(settings)
             EmptyBeaker(settings: settings, color: outlineColor)
         }.background(
@@ -138,12 +137,12 @@ public struct FilledBeaker: View {
 
     private func drawFill(_ settings: MoleculeGridSettings, beaker: BeakerSettings) -> some View {
         ZStack {
-            Styling.beakerLiquid
+            fluidColor
                 .frame(height: settings.height(for: rows))
 
             moleculeGrid(
                 settings,
-                color: Styling.moleculePlaceholder,
+                color: placeholderColor,
                 coordinates: MoleculeGridSettings.grid(rows: Int(ceil(rows)))
             )
 
@@ -155,17 +154,15 @@ public struct FilledBeaker: View {
                 )
             }
 
-            if currentTime != nil {
-                ForEach(0..<animatingMolecules.count, id: \.self) { i in
-                    AnimatingMoleculeGrid(
-                        settings: settings,
-                        coords: animatingMolecules[i].molecules.coords,
-                        color: animatingMolecules[i].molecules.color,
-                        fractionOfCoordsToDraw: animatingMolecules[i].fractionToDraw,
-                        currentTime: currentTime!
-                    )
-                    .frame(height: settings.height(for: rows))
-                }
+            ForEach(0..<animatingMolecules.count, id: \.self) { i in
+                AnimatingMoleculeGrid(
+                    settings: settings,
+                    coords: animatingMolecules[i].molecules.coords,
+                    color: animatingMolecules[i].molecules.color,
+                    fractionOfCoordsToDraw: animatingMolecules[i].fractionToDraw,
+                    currentTime: currentTime
+                )
+                .frame(height: settings.height(for: rows))
             }
         }
     }

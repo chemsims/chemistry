@@ -61,7 +61,10 @@ struct AqueousBeakerView: View {
                 settings: settings.sliderSettings,
                 disabled: !model.canSetLiquidLevel
             )
-            .frame(width: settings.sliderSettings.handleWidth, height: settings.sliderHeight)
+            .frame(
+                width: settings.sliderSettings.handleWidth,
+                height: settings.sliderHeight
+            )
             .background(
                 Color.white
                     .padding(.horizontal, -0.2 * settings.sliderSettings.handleWidth)
