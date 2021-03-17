@@ -1,0 +1,123 @@
+//
+// Reactions App
+//
+
+import SwiftUI
+import ReactionsCore
+
+struct Pump: View {
+    var body: some View {
+        GeometryReader { geo in
+            PumpWithGeometry(
+                width: geo.size.width,
+                height: geo.size.height
+            )
+        }
+    }
+}
+
+private struct PumpWithGeometry: View {
+    let width: CGFloat
+    let height: CGFloat
+
+    @State private var extensionFactor: CGFloat = 0
+
+    private static let coordSpace = "PumpCoordinateSpace"
+
+    var body: some View {
+        ZStack(alignment: .bottomLeading) {
+
+            // Without the spacer, the view does not fill the entire height,
+            // even when ZStack is given a frame of that height
+            Spacer()
+                .frame(height: height)
+
+            handle
+
+            Image("pump-base")
+                .resizable()
+                .frame(height: baseImageHeight)
+                .allowsHitTesting(false)
+
+        }.coordinateSpace(name: Self.coordSpace)
+    }
+
+    private var handle: some View {
+        Image("pump-handle")
+            .resizable()
+            .offset(y: -baseShapeHeight)
+            .frame(width: handleWidth, height: handleHeight)
+            .offset(x: handleXOffset, y: handleYOffset)
+            .gesture(dragGesture)
+    }
+
+    private var dragGesture: some Gesture {
+        DragGesture(coordinateSpace: .named(Self.coordSpace)).onChanged { drag in
+            let y = drag.location.y
+            let factor = axis.getValue(at: y)
+            let constrainedFactor = within(min: 0, max: 1, value: factor)
+            self.extensionFactor = constrainedFactor
+
+            print("\(y), \(factor), \(constrainedFactor)")
+        }.onEnded { drag in
+            print("Ended drag")
+        }
+    }
+
+    private var handleYOffset: CGFloat {
+        axis.getPosition(at: extensionFactor)
+    }
+
+    private var axis: AxisPositionCalculations<CGFloat> {
+        AxisPositionCalculations(
+            minValuePosition: pumpedHandleYCenter,
+            maxValuePosition: 0,
+            minValue: 0,
+            maxValue: 1
+        )
+    }
+}
+
+private let idealWidthToHeight: CGFloat = 0.768
+
+extension PumpWithGeometry {
+    // Height of the base image
+    var baseImageHeight: CGFloat {
+        0.69 * height
+    }
+
+    // Height of the base shape itself - i.e., the pumping distance
+    var baseShapeHeight: CGFloat {
+        0.45 * height
+    }
+
+    var handleHeight: CGFloat {
+        0.549 * height
+    }
+
+    var handleWidth: CGFloat {
+        0.588 * width
+    }
+
+    var handleXOffset: CGFloat {
+        0.024 * width
+    }
+
+    var pumpedHandleYCenter: CGFloat {
+        0.434 * height
+    }
+}
+
+struct PumpView_Previews: PreviewProvider {
+    static var previews: some View {
+        GeometryReader { geo in
+            Pump()
+                .frame(
+                    width: idealWidthToHeight * geo.size.height,
+                    height: geo.size.height
+                )
+        }
+        .frame(height: 500)
+
+    }
+}
