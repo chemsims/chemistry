@@ -130,6 +130,7 @@
 		57686AFA2601FD17005BD328 /* AdjustableAirBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */; };
 		57686B00260257C0005BD328 /* PumpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AFF260257C0005BD328 /* PumpViewModel.swift */; };
 		57686B062602590C005BD328 /* PumpViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686B052602590C005BD328 /* PumpViewModelTests.swift */; };
+		57686B0C26027BAE005BD328 /* GaseousReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686B0B26027BAE005BD328 /* GaseousReactionSettings.swift */; };
 		576A41DB25F773D900047618 /* AqueousBeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41DA25F773D900047618 /* AqueousBeakerView.swift */; };
 		576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
 		576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */; };
@@ -537,6 +538,7 @@
 		57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustableAirBeaker.swift; sourceTree = "<group>"; };
 		57686AFF260257C0005BD328 /* PumpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpViewModel.swift; sourceTree = "<group>"; };
 		57686B052602590C005BD328 /* PumpViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpViewModelTests.swift; sourceTree = "<group>"; };
+		57686B0B26027BAE005BD328 /* GaseousReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousReactionSettings.swift; sourceTree = "<group>"; };
 		576A41DA25F773D900047618 /* AqueousBeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousBeakerView.swift; sourceTree = "<group>"; };
 		576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenLayoutSettings.swift; sourceTree = "<group>"; };
 		576A420625F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEquilibriumChartsLayoutSettings.swift; sourceTree = "<group>"; };
@@ -1827,6 +1829,7 @@
 			isa = PBXGroup;
 			children = (
 				57DDAC7D25E5260400B535A7 /* AqueousReactionSettings.swift */,
+				57686B0B26027BAE005BD328 /* GaseousReactionSettings.swift */,
 			);
 			path = settings;
 			sourceTree = "<group>";
@@ -2477,6 +2480,7 @@
 				57686B00260257C0005BD328 /* PumpViewModel.swift in Sources */,
 				5736DC3025F5007D003FD2B4 /* GridMolecules.swift in Sources */,
 				57E902B425ED40B500758300 /* AqueousReactionInputState.swift in Sources */,
+				57686B0C26027BAE005BD328 /* GaseousReactionSettings.swift in Sources */,
 				57686A9D2600D0F3005BD328 /* GaseousScreenElement.swift in Sources */,
 				57E6A52A25FDFA5C00CC3B17 /* ShakeContainerViewModel.swift in Sources */,
 				57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */,

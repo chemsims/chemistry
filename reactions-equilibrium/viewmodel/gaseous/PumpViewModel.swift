@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ReactionsCore
 
 class PumpViewModel<Value: BinaryFloatingPoint> {
 
@@ -28,7 +29,7 @@ class PumpViewModel<Value: BinaryFloatingPoint> {
     private var oldValue: Value
 
     func moved(to newExtensionFactor: Value) {
-        let newValue = 1 - newExtensionFactor
+        let newValue = (1 - newExtensionFactor)
         let divisionsBeforeOld = getDivisions(before: oldValue)
         let divisionsBeforeNew = getDivisions(before: newValue)
         let divisionsMoved = divisionsBeforeNew - divisionsBeforeOld

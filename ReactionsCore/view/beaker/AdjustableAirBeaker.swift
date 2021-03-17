@@ -6,6 +6,9 @@
 import SwiftUI
 
 public struct AdjustableAirBeaker: View {
+
+    let molecules: [BeakerMolecules]
+    let animatingMolecules: [AnimatingBeakerMolecules]
     let minRows: Int
     let maxRows: Int
     @Binding var rows: CGFloat
@@ -13,11 +16,15 @@ public struct AdjustableAirBeaker: View {
     let settings: AdjustableAirBeakerSettings
 
     public init(
+        molecules: [BeakerMolecules],
+        animatingMolecules: [AnimatingBeakerMolecules],
         minRows: Int,
         maxRows: Int,
         rows: Binding<CGFloat>,
         settings: AdjustableAirBeakerSettings
     ) {
+        self.molecules = molecules
+        self.animatingMolecules = animatingMolecules
         self.minRows = minRows
         self.maxRows = maxRows
         self._rows = rows
@@ -27,6 +34,8 @@ public struct AdjustableAirBeaker: View {
     public var body: some View {
         GeometryReader { geo in
             AdjustableAirBeakerWithHeight(
+                molecules: molecules,
+                animatingMolecules: animatingMolecules,
                 minRows: CGFloat(minRows),
                 maxRows: CGFloat(maxRows),
                 rows: $rows,
@@ -41,6 +50,8 @@ public struct AdjustableAirBeaker: View {
 
 private struct AdjustableAirBeakerWithHeight: View {
 
+    let molecules: [BeakerMolecules]
+    let animatingMolecules: [AnimatingBeakerMolecules]
     let minRows: CGFloat
     let maxRows: CGFloat
     @Binding var rows: CGFloat
@@ -86,8 +97,8 @@ private struct AdjustableAirBeakerWithHeight: View {
 
     private var beaker: some View {
         FilledAirBeaker(
-            molecules: [],
-            animatingMolecules: [],
+            molecules: molecules,
+            animatingMolecules: animatingMolecules,
             currentTime: 10,
             rows: rows
         )
@@ -154,6 +165,8 @@ struct AdjustableAirBeaker_Previews: PreviewProvider {
 
         var body: some View {
             AdjustableAirBeaker(
+                molecules: [],
+                animatingMolecules: [],
                 minRows: 5,
                 maxRows: 15,
                 rows: $rows,

@@ -7,10 +7,10 @@ import ReactionsCore
 
 struct PressureBeaker: View {
 
-    let disabled: Bool
-    let settings: GaseousReactionScreenSettings
+    @ObservedObject var model: GaseousReactionViewModel
+    let settings: PressureBeakerSettings
+
     @State private var tempFactor: CGFloat = 0.5
-    @State private var rows: CGFloat = 7
 
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
@@ -24,22 +24,18 @@ struct PressureBeaker: View {
     }
 
     private var pump: some View {
-        Pump(pumpModel:
-                PumpViewModel(
-                    initialExtensionFactor: 1,
-                    divisions: 10,
-                    onDownPump: {}
-                )
-        )
+        Pump(pumpModel: model.pumpModel)
         .frame(width: settings.pumpWidth, height: settings.pumpHeight)
         .offset(x: settings.pumpXOffset, y: -settings.pumpYOffset)
     }
 
     private var beaker: some View {
         AdjustableAirBeaker(
-            minRows: 7,
-            maxRows: 13,
-            rows: $rows,
+            molecules: model.components.nonAnimatingMolecules,
+            animatingMolecules: model.components.animatingMolecules,
+            minRows: GaseousReactionSettings.minRows,
+            maxRows: GaseousReactionSettings.maxRows,
+            rows: $model.rows,
             settings: AdjustableAirBeakerSettings(
                 beakerWidth: settings.beakerWidth,
                 sliderWidth: settings.sliderWidth
@@ -51,7 +47,7 @@ struct PressureBeaker: View {
     private var burner: some View {
         AdjustableBeakerBurner(
             temp: $tempFactor,
-            disabled: disabled,
+            disabled: false,
             useHaptics: true,
             highlightSlider: false,
             sliderAccessibilityValue: nil, // TODO
@@ -59,8 +55,8 @@ struct PressureBeaker: View {
                 standWidth: settings.standWidth,
                 handleHeight: settings.sliderWidth,
                 axis: AxisPositionCalculations(
-                    minValuePosition: 20,
-                    maxValuePosition: 150,
+                    minValuePosition: settings.sliderValuePadding,
+                    maxValuePosition: settings.standWidth - settings.sliderValuePadding,
                     minValue: 0,
                     maxValue: 1
                 )
@@ -70,7 +66,7 @@ struct PressureBeaker: View {
     }
 }
 
-struct GaseousReactionScreenSettings {
+struct PressureBeakerSettings {
 
     let width: CGFloat
 
@@ -114,6 +110,10 @@ struct GaseousReactionScreenSettings {
         airBeakerTotalWidth - beakerWidth
     }
 
+    var sliderValuePadding: CGFloat {
+        0.1 * standWidth
+    }
+
     var burnerSettings: AdjustableBeakerBurnerSettings {
         AdjustableBeakerBurnerSettings(
             standWidth: standWidth,
@@ -132,8 +132,8 @@ struct PressureBeaker_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
             PressureBeaker(
-                disabled: false,
-                settings: GaseousReactionScreenSettings(width: geo.size.width)
+                model: GaseousReactionViewModel(),
+                settings: PressureBeakerSettings(width: geo.size.width)
             )
         }
     }

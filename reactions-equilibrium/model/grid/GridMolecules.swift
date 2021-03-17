@@ -37,6 +37,15 @@ struct GridMoleculesUtil {
     static func gridCount(for concentration: CGFloat, gridSize: Int) -> Int {
         (concentration * CGFloat(gridSize)).roundedInt()
     }
+
+    /// Returns the number of rows available for molecules
+    static func availableRows(for rows: CGFloat) -> Int {
+        if rows - rows.rounded(.down) > 0.4 {
+            assert(Int(rows) != Int(ceil(rows)), "\(rows)")
+            return Int(ceil(rows))
+        }
+        return Int(rows)
+    }
 }
 
 struct ForwardGridMolecules {

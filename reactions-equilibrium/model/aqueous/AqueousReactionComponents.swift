@@ -72,6 +72,32 @@ extension AqueousReactionComponents {
         availableCols * availableRows
     }
 
+    fileprivate mutating func removeHiddenMolecules(
+        a: inout [GridCoordinate],
+        b: inout [GridCoordinate],
+        c: inout [GridCoordinate],
+        d: inout [GridCoordinate]
+    ) {
+        a = movingHiddenMolecules(molecules: a, avoiding: b + c + d)
+        b = movingHiddenMolecules(molecules: a, avoiding: a + c + d)
+        c = movingHiddenMolecules(molecules: a, avoiding: a + b + d)
+        d = movingHiddenMolecules(molecules: a, avoiding: a + b + c)
+    }
+
+    fileprivate func movingHiddenMolecules(
+        molecules: [GridCoordinate],
+        avoiding: [GridCoordinate]
+    ) -> [GridCoordinate] {
+        let numRemoved = molecules.filter { $0.row >= availableRows }.count
+        let filtered = molecules.filter { $0.row < availableRows }
+        return GridCoordinateList.addingRandomElementsTo(
+            grid: filtered,
+            count: numRemoved,
+            cols: availableCols,
+            rows: availableRows,
+            avoiding: avoiding
+        )
+    }
 }
 
 struct ForwardAqueousReactionComponents: AqueousReactionComponents {
@@ -79,7 +105,18 @@ struct ForwardAqueousReactionComponents: AqueousReactionComponents {
     var coefficients: BalancedReactionCoefficients
     var equilibriumConstant: CGFloat
     let availableCols: Int
-    var availableRows: Int
+    var availableRows: Int {
+        didSet {
+            underlyingAMolecules = movingHiddenMolecules(
+                molecules: underlyingAMolecules,
+                avoiding: underlyingAMolecules + underlyingBMolecules
+            )
+            underlyingBMolecules = movingHiddenMolecules(
+                molecules: underlyingBMolecules,
+                avoiding: underlyingBMolecules + underlyingAMolecules
+            )
+        }
+    }
 
     let tForMaxQuotient: CGFloat = AqueousReactionSettings.timeForConvergence
     let quotientChartDiscontinuity: CGPoint? = nil

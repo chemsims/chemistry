@@ -3,6 +3,7 @@
 //
 
 import XCTest
+import ReactionsCore
 @testable import reactions_equilibrium
 
 class PumpViewModelTests: XCTestCase {

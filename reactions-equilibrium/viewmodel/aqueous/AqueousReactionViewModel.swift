@@ -35,7 +35,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows) {
         didSet {
-            components.availableRows = availableRows
+            components.availableRows = GridMoleculesUtil.availableRows(for: rows)
             highlightedElements.clear()
         }
     }
@@ -191,15 +191,6 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     private(set) var instructToAddMoreReactantCount = EquatableCounter<AqueousMoleculeReactant>()
-
-    /// Returns the number of rows available for molecules
-    private var availableRows: Int {
-        if rows - rows.rounded(.down) > 0.4 {
-            assert(Int(rows) != Int(ceil(rows)), "\(rows)")
-            return Int(ceil(rows))
-        }
-        return Int(rows)
-    }
 
     /// Returns the number of cols available for molecules
     private var availableCols: Int {
