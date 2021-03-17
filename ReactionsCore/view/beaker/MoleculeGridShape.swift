@@ -8,6 +8,7 @@ struct AnimatingMoleculeGrid: View {
     let settings: MoleculeGridSettings
     let coords: [GridCoordinate]
     let color: Color
+    let drawFromTop: Bool
     let fractionOfCoordsToDraw: Equation
     let currentTime: CGFloat
 
@@ -15,6 +16,7 @@ struct AnimatingMoleculeGrid: View {
         AnimatingMoleculeGridShape(
             cellSize: settings.cellSize,
             cellPadding: settings.cellPadding,
+            drawFromTop: drawFromTop,
             coords: coords,
             fractionOfCoordsToDraw: fractionOfCoordsToDraw,
             currentTime: currentTime
@@ -27,15 +29,16 @@ struct MoleculeGrid: View {
     let settings: MoleculeGridSettings
     let coords: [GridCoordinate]
     let color: Color
+    let drawFromTop: Bool
 
     var body: some View {
         MoleculeGridShape(
             cellSize: settings.cellSize,
             cellPadding: settings.cellPadding,
+            drawFromTop: drawFromTop,
             coords: coords
         ).fill(color)
     }
-
 }
 
 public struct AnimatingMoleculeGridShape: Shape {
@@ -44,6 +47,9 @@ public struct AnimatingMoleculeGridShape: Shape {
 
     /// How much padding to place in the cell before drawing the molecule
     let cellPadding: CGFloat
+
+    /// Whether the grid should start from the top or bottom
+    let drawFromTop: Bool
 
     /// The coordinates to draw
     let coords: [GridCoordinate]
@@ -55,12 +61,14 @@ public struct AnimatingMoleculeGridShape: Shape {
     public init(
         cellSize: CGFloat,
         cellPadding: CGFloat,
+        drawFromTop: Bool,
         coords: [GridCoordinate],
         fractionOfCoordsToDraw: Equation,
         currentTime: CGFloat
     ) {
         self.cellSize = cellSize
         self.cellPadding = cellPadding
+        self.drawFromTop = drawFromTop
         self.coords = coords
         self.fractionOfCoordsToDraw = fractionOfCoordsToDraw
         self.currentTime = currentTime
@@ -81,6 +89,7 @@ public struct AnimatingMoleculeGridShape: Shape {
         return MoleculeGridShape(
             cellSize: cellSize,
             cellPadding: cellPadding,
+            drawFromTop: drawFromTop,
             coords: Array(coords.prefix(coordsToDraw))
         ).path(in: rect)
     }
@@ -101,13 +110,17 @@ public struct MoleculeGridShape: Shape {
     /// The coordinates to draw
     let coords: [GridCoordinate]
 
+    let drawFromTop: Bool
+
     public init(
         cellSize: CGFloat,
         cellPadding: CGFloat,
+        drawFromTop: Bool,
         coords: [GridCoordinate]
     ) {
         self.cellSize = cellSize
         self.cellPadding = cellPadding
+        self.drawFromTop = drawFromTop
         self.coords = coords
     }
 
@@ -115,7 +128,7 @@ public struct MoleculeGridShape: Shape {
         var path = Path()
         for coord in coords {
             let x = cellSize * CGFloat(coord.col)
-            let y = cellSize * CGFloat(coord.row)
+            let y = getY(for: coord.row, rectHeight: rect.height)
 
             let xPadded = x + cellPadding
             let yPadded = y + cellPadding
@@ -126,16 +139,40 @@ public struct MoleculeGridShape: Shape {
         return path
     }
 
+    private func getY(for rowIndex: Int, rectHeight: CGFloat) -> CGFloat {
+        if drawFromTop {
+            return cellSize * CGFloat(rowIndex)
+        } else {
+            return rectHeight - (cellSize * CGFloat(rowIndex + 1))
+        }
+    }
+
 }
 
 struct MoleculeGrid_Previews: PreviewProvider {
     static var previews: some View {
-        GeometryReader { geometry in
-            MoleculeGrid(
-                settings: MoleculeGridSettings(totalWidth: geometry.size.width),
-                coords: MoleculeGridSettings.fullGrid,
-                color: Color.black
-            )
+        VStack {
+            GeometryReader { geometry in
+                MoleculeGrid(
+                    settings: MoleculeGridSettings(totalWidth: geometry.size.width),
+                    coords: MoleculeGridSettings.fullGrid,
+                    color: Color.black,
+                    drawFromTop: true
+                )
+            }
+            .border(Color.red)
+            GeometryReader { geometry in
+                MoleculeGrid(
+                    settings: MoleculeGridSettings(totalWidth: geometry.size.width),
+                    coords: [
+                        GridCoordinate(col: 0, row: 0),
+                        GridCoordinate(col: 0, row: 1)
+                    ],
+                    color: Color.black,
+                    drawFromTop: false
+                )
+            }
+            .border(Color.red)
         }
     }
 }

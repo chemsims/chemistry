@@ -75,6 +75,7 @@ private struct FilledAirBeakerWithSettings: View {
                 fluidColor: Styling.beakerAir,
                 placeholderColor: Styling.airMoleculePlaceholder,
                 includeTicks: false,
+                drawFromTop: false,
                 settings: settings
             )
             seal

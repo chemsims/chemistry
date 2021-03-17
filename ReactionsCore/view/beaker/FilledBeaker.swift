@@ -37,6 +37,7 @@ public struct FilledBeaker: View {
                 fluidColor: Styling.beakerLiquid,
                 placeholderColor: Styling.moleculePlaceholder,
                 includeTicks: true,
+                drawFromTop: true,
                 settings: BeakerSettings(width: geo.size.width, hasLip: true)
             )
             .accessibility(
@@ -69,6 +70,7 @@ struct GeneralFluidBeaker: View {
     let fluidColor: Color
     let placeholderColor: Color
     let includeTicks: Bool
+    let drawFromTop: Bool
     let settings: BeakerSettings
 
     public var body: some View {
@@ -159,6 +161,7 @@ struct GeneralFluidBeaker: View {
                     settings: settings,
                     coords: animatingMolecules[i].molecules.coords,
                     color: animatingMolecules[i].molecules.color,
+                    drawFromTop: drawFromTop,
                     fractionOfCoordsToDraw: animatingMolecules[i].fractionToDraw,
                     currentTime: currentTime
                 )
@@ -175,7 +178,8 @@ struct GeneralFluidBeaker: View {
         MoleculeGrid(
             settings: settings,
             coords: coordinates,
-            color: color
+            color: color,
+            drawFromTop: drawFromTop
         )
         .frame(height: settings.height(for: rows))
     }
