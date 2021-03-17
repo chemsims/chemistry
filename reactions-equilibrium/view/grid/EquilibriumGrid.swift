@@ -71,6 +71,7 @@ private struct SizedEquilibriumGrid: View {
         MoleculeGridShape(
             cellSize: settings.cellSize,
             cellPadding: settings.cellPadding,
+            drawFromTop: true,
             coords: EquilibriumGridSettings.grid
         )
         .foregroundColor(Styling.timeAxisCompleteBar)
@@ -80,6 +81,7 @@ private struct SizedEquilibriumGrid: View {
         AnimatingMoleculeGridShape(
             cellSize: settings.cellSize,
             cellPadding: settings.cellPadding,
+            drawFromTop: true,
             coords: coords,
             fractionOfCoordsToDraw: equation,
             currentTime: currentTime

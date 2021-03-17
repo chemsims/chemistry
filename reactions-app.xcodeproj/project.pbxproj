@@ -128,6 +128,8 @@
 		57686AEE2601EDB6005BD328 /* PressureBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AED2601EDB6005BD328 /* PressureBeaker.swift */; };
 		57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AF32601F5CF005BD328 /* FilledAirBeaker.swift */; };
 		57686AFA2601FD17005BD328 /* AdjustableAirBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */; };
+		57686B00260257C0005BD328 /* PumpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AFF260257C0005BD328 /* PumpViewModel.swift */; };
+		57686B062602590C005BD328 /* PumpViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686B052602590C005BD328 /* PumpViewModelTests.swift */; };
 		576A41DB25F773D900047618 /* AqueousBeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41DA25F773D900047618 /* AqueousBeakerView.swift */; };
 		576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
 		576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */; };
@@ -533,6 +535,8 @@
 		57686AED2601EDB6005BD328 /* PressureBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressureBeaker.swift; sourceTree = "<group>"; };
 		57686AF32601F5CF005BD328 /* FilledAirBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledAirBeaker.swift; sourceTree = "<group>"; };
 		57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustableAirBeaker.swift; sourceTree = "<group>"; };
+		57686AFF260257C0005BD328 /* PumpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpViewModel.swift; sourceTree = "<group>"; };
+		57686B052602590C005BD328 /* PumpViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpViewModelTests.swift; sourceTree = "<group>"; };
 		576A41DA25F773D900047618 /* AqueousBeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousBeakerView.swift; sourceTree = "<group>"; };
 		576A41FC25F77B9F00047618 /* AqueousScreenLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenLayoutSettings.swift; sourceTree = "<group>"; };
 		576A420625F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEquilibriumChartsLayoutSettings.swift; sourceTree = "<group>"; };
@@ -1253,6 +1257,7 @@
 				5736DC1D25F4B059003FD2B4 /* ScalesRotationEquationTests.swift */,
 				5736DC3925F50D1A003FD2B4 /* GridMoleculesTests.swift */,
 				5736DC4925F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift */,
+				57686B052602590C005BD328 /* PumpViewModelTests.swift */,
 			);
 			path = "reactions-equilibriumTests";
 			sourceTree = "<group>";
@@ -1301,6 +1306,7 @@
 			isa = PBXGroup;
 			children = (
 				57686A952600CFE8005BD328 /* GaseousReactionViewModel.swift */,
+				57686AFF260257C0005BD328 /* PumpViewModel.swift */,
 			);
 			path = gaseous;
 			sourceTree = "<group>";
@@ -2468,6 +2474,7 @@
 				5786FACB25E6B06600AAD8A6 /* ForwardEquilibriumBeakerGridBalancer.swift in Sources */,
 				57A1B7A225EAA7A800878B52 /* MoleculePile.swift in Sources */,
 				57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */,
+				57686B00260257C0005BD328 /* PumpViewModel.swift in Sources */,
 				5736DC3025F5007D003FD2B4 /* GridMolecules.swift in Sources */,
 				57E902B425ED40B500758300 /* AqueousReactionInputState.swift in Sources */,
 				57686A9D2600D0F3005BD328 /* GaseousScreenElement.swift in Sources */,
@@ -2488,6 +2495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5736DC3A25F50D1A003FD2B4 /* GridMoleculesTests.swift in Sources */,
+				57686B062602590C005BD328 /* PumpViewModelTests.swift in Sources */,
 				57E902CA25ED6A7800758300 /* MoleculeScalesGeometryTests.swift in Sources */,
 				57BCB4C425F3752800E50923 /* ReactionConvergenceSolverTests.swift in Sources */,
 				5736DC1E25F4B059003FD2B4 /* ScalesRotationEquationTests.swift in Sources */,

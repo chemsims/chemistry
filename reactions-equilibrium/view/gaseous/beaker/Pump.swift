@@ -6,9 +6,13 @@ import SwiftUI
 import ReactionsCore
 
 struct Pump: View {
+
+    let pumpModel: PumpViewModel<CGFloat>
+
     var body: some View {
         GeometryReader { geo in
             PumpWithGeometry(
+                pumpModel: pumpModel,
                 width: geo.size.width,
                 height: geo.size.height
             )
@@ -18,10 +22,22 @@ struct Pump: View {
 
 private struct PumpWithGeometry: View {
 
+    let pumpModel: PumpViewModel<CGFloat>
     let width: CGFloat
     let height: CGFloat
 
-    @State private var extensionFactor: CGFloat = 0
+    init(
+        pumpModel: PumpViewModel<CGFloat>,
+        width: CGFloat,
+        height: CGFloat
+    ) {
+        self.width = width
+        self.height = height
+        self.pumpModel = pumpModel
+        self.extensionFactor = pumpModel.initialExtensionFactor
+    }
+
+    @State private var extensionFactor: CGFloat
 
     private static let coordSpace = "PumpCoordinateSpace"
     private let impactGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -57,6 +73,7 @@ private struct PumpWithGeometry: View {
         DragGesture(coordinateSpace: .named(Self.coordSpace)).onChanged { drag in
             let factor = axis.getValue(at: drag.location.y)
             let constrainedFactor = within(min: 0, max: 1, value: factor)
+            pumpModel.moved(to: constrainedFactor)
             self.extensionFactor = constrainedFactor
         }
     }

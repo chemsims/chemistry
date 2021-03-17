@@ -16,7 +16,7 @@ struct AqueousScreenLayoutSettings {
     let height: CGFloat
 
     var beakerSettings: BeakerSettings {
-        BeakerSettings(width: beakerWidth)
+        BeakerSettings(width: beakerWidth, hasLip: true)
     }
 
     var beakerWidth: CGFloat {
@@ -158,7 +158,7 @@ extension AqueousScreenLayoutSettings {
 
 extension AqueousScreenLayoutSettings {
     var sliderAxis: AxisPositionCalculations<CGFloat> {
-        let innerBeakerWidth = BeakerSettings(width: beakerWidth).innerBeakerWidth
+        let innerBeakerWidth = BeakerSettings(width: beakerWidth, hasLip: true).innerBeakerWidth
         let grid = MoleculeGridSettings(totalWidth: innerBeakerWidth)
 
         func posForRows(_ rows: CGFloat) -> CGFloat {
