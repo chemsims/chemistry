@@ -34,7 +34,7 @@ private struct PumpWithGeometry: View {
         self.width = width
         self.height = height
         self.pumpModel = pumpModel
-        self.extensionFactor = pumpModel.initialExtensionFactor
+        self._extensionFactor = State(initialValue: pumpModel.initialExtensionFactor)
     }
 
     @State private var extensionFactor: CGFloat
@@ -96,7 +96,10 @@ private struct PumpWithGeometry: View {
     }
 }
 
-private let idealWidthToHeight: CGFloat = 0.768
+struct PumpSettings {
+    static let widthToHeight: CGFloat = 0.768
+    static let nozzleToHeight: CGFloat = 0.641
+}
 
 extension PumpWithGeometry {
     // Height of the base image
@@ -129,9 +132,13 @@ extension PumpWithGeometry {
 struct PumpView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
-            Pump()
+            Pump(pumpModel: PumpViewModel(
+                    initialExtensionFactor: 1,
+                    divisions: 10,
+                    onDownPump: {})
+            )
                 .frame(
-                    width: idealWidthToHeight * geo.size.height,
+                    width: PumpSettings.widthToHeight * geo.size.height,
                     height: geo.size.height
                 )
         }

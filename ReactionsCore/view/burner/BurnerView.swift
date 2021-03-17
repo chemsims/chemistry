@@ -32,7 +32,7 @@ struct BeakerBurner: View {
     }
 }
 
-struct BurnerSettings {
+public struct BurnerSettings {
 
     let standWidth: CGFloat
     let minTemp: CGFloat

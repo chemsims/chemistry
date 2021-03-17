@@ -5,14 +5,26 @@
 
 import SwiftUI
 
-struct AdjustableAirBeaker: View {
+public struct AdjustableAirBeaker: View {
     let minRows: Int
     let maxRows: Int
     @Binding var rows: CGFloat
 
     let settings: AdjustableAirBeakerSettings
 
-    var body: some View {
+    public init(
+        minRows: Int,
+        maxRows: Int,
+        rows: Binding<CGFloat>,
+        settings: AdjustableAirBeakerSettings
+    ) {
+        self.minRows = minRows
+        self.maxRows = maxRows
+        self._rows = rows
+        self.settings = settings
+    }
+
+    public var body: some View {
         GeometryReader { geo in
             AdjustableAirBeakerWithHeight(
                 minRows: CGFloat(minRows),
@@ -56,9 +68,9 @@ private struct AdjustableAirBeakerWithHeight: View {
     }
 
     // The rows for max/min of the slider axis (not the selectable range)
-    private var maxSliderRowsPos: CGFloat { maxRows + 2 }
+    private var maxSliderRowsPos: CGFloat { maxRows + 1 }
 
-    private var minSliderRowsPos: CGFloat { minRows - 2 }
+    private var minSliderRowsPos: CGFloat { minRows - 1 }
 
     private var slider: some View {
         CustomSlider(
@@ -119,9 +131,17 @@ private struct AdjustableAirBeakerWithHeight: View {
     }
 }
 
-struct AdjustableAirBeakerSettings {
+public struct AdjustableAirBeakerSettings {
     let beakerWidth: CGFloat
     let sliderWidth: CGFloat
+
+    public init(
+        beakerWidth: CGFloat,
+        sliderWidth: CGFloat
+    ) {
+        self.beakerWidth = beakerWidth
+        self.sliderWidth = sliderWidth
+    }
 }
 
 struct AdjustableAirBeaker_Previews: PreviewProvider {

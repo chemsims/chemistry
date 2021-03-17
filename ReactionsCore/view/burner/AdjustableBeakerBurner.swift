@@ -72,9 +72,9 @@ public struct AdjustableBeakerBurner: View {
 
 public struct AdjustableBeakerBurnerSettings {
 
-    let standWidth: CGFloat
-    let handleHeight: CGFloat
-    let axis: AxisPositionCalculations<CGFloat>
+    public let standWidth: CGFloat
+    public let handleHeight: CGFloat
+    public let axis: AxisPositionCalculations<CGFloat>
 
     public init(
         standWidth: CGFloat,
@@ -86,7 +86,7 @@ public struct AdjustableBeakerBurnerSettings {
         self.axis = axis
     }
 
-    var burnerSettings: BurnerSettings {
+    public var burnerSettings: BurnerSettings {
         BurnerSettings(
             standWidth: standWidth,
             minTemp: axis.minValue,
@@ -95,11 +95,11 @@ public struct AdjustableBeakerBurnerSettings {
         )
     }
 
-    var sliderSettings: SliderGeometrySettings {
+    public var sliderSettings: SliderGeometrySettings {
         SliderGeometrySettings(handleWidth: handleHeight)
     }
 
-    var sliderTopPadding: CGFloat {
+    public var sliderTopPadding: CGFloat {
         0.2 * handleHeight
     }
 
