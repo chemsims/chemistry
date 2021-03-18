@@ -221,18 +221,28 @@ class AqueousShiftChartState: AqueousScreenState {
 
 class InstructToAddProductState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
+        doApply(on: model, setComponent: true)
+    }
+
+    override func reapply(on model: AqueousReactionViewModel) {
+        doApply(on: model, setComponent: false)
+    }
+
+    private func doApply(on model: AqueousReactionViewModel, setComponent: Bool) {
         model.statement = AqueousStatements.instructToAddProduct(selected: model.selectedReaction)
         model.inputState = .addProducts
         model.highlightedElements.elements = [.moleculeContainers]
         if let fwd = model.components as? ForwardAqueousReactionComponents {
             model.components = ReverseAqueousReactionComponents(forwardReaction: fwd)
         }
-        model.componentStack.append(model.componentsWrapper)
-        model.componentsWrapper = ReactionComponentsWrapper(
-            previous: model.componentsWrapper,
-            startTime: AqueousReactionSettings.timeToAddProduct,
-            equilibriumTime: AqueousReactionSettings.timeForReverseConvergence
-        )
+        if setComponent {
+            model.componentsWrapper = ReactionComponentsWrapper(
+                previous: model.componentsWrapper,
+                startTime: AqueousReactionSettings.timeToAddProduct,
+                equilibriumTime: AqueousReactionSettings.timeForReverseConvergence
+            )
+        }
+
         DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 
@@ -243,8 +253,10 @@ class InstructToAddProductState: AqueousScreenState {
         if let rev = model.components as? ReverseAqueousReactionComponents {
             model.components = rev.forwardReaction
         }
-        if !model.componentStack.isEmpty {
-            model.componentsWrapper = model.componentStack.removeFirst()
+        if let previous = model.componentsWrapper.previous {
+            model.componentsWrapper = previous
+        } else {
+            print("no previous to unapply")
         }
         DeferScreenEdgesState.shared.deferEdges = []
     }

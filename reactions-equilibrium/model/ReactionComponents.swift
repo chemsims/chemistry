@@ -7,7 +7,7 @@ import CoreGraphics
 
 let maxC: CGFloat = 0.3
 
-struct ReactionComponentsWrapper {
+class ReactionComponentsWrapper {
 
     let cols: Int
     var rows: Int {
@@ -28,6 +28,7 @@ struct ReactionComponentsWrapper {
 
     let startTime: CGFloat
     let equilibriumTime: CGFloat
+    let previous: ReactionComponentsWrapper?
 
     private(set) var molecules: MoleculeValue<[GridCoordinate]>
 
@@ -46,6 +47,7 @@ struct ReactionComponentsWrapper {
         self.equilibriumConstant = equilibriumConstant
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
+        self.previous = nil
         self.molecules = MoleculeValue(builder: { _ in [] })
         self.components = ReactionComponents(
             initialBeakerMolecules: MoleculeValue(builder: { _ in [] }),
@@ -71,6 +73,7 @@ struct ReactionComponentsWrapper {
         self.equilibriumConstant = previous.equilibriumConstant
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
+        self.previous = previous
         let filteredMolecules = Self.consolidate(
             molecules: previous.components.beakerMolecules,
             at: previous.components.equation.equilibriumTime
@@ -89,7 +92,7 @@ struct ReactionComponentsWrapper {
         )
     }
 
-    mutating func increment(molecule: AqueousMolecule, count: Int) {
+    func increment(molecule: AqueousMolecule, count: Int) {
         let current = molecules.value(for: molecule)
         let avoid = molecules.all.flatten
         let maxAdd = maximumToAdd(to: current, maxConcentration: maxC)
@@ -108,7 +111,7 @@ struct ReactionComponentsWrapper {
 
     private(set) var components: ReactionComponents
 
-    private mutating func setComponents() {
+    private func setComponents() {
         components = ReactionComponents(
             initialBeakerMolecules: molecules,
             coefficients: coefficients,
@@ -126,10 +129,7 @@ struct ReactionComponentsWrapper {
         cols * rows
     }
 
-    func concentrationIncremented(
-        of molecule: AqueousMolecule,
-        previous: ReactionComponentsWrapper?
-    ) -> CGFloat {
+    func concentrationIncremented(of molecule: AqueousMolecule) -> CGFloat {
         func getConcentration(from components: ReactionComponents, at time: CGFloat) -> CGFloat {
             let molecules = components.beakerMolecules.first { $0.molecule == molecule }?.animatingMolecules
             let fraction = molecules.map {
