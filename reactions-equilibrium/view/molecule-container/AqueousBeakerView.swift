@@ -73,8 +73,8 @@ struct AqueousBeakerView: View {
             .colorMultiply(model.highlightedElements.colorMultiply(for: .waterSlider))
 
             FilledBeaker(
-                molecules: model.components.nonAnimatingMolecules,
-                animatingMolecules: model.components.animatingMolecules,
+                molecules: [],
+                animatingMolecules: model.components2.beakerMolecules.map(\.animatingMolecules),
                 currentTime: model.currentTime,
                 rows: model.rows
             )

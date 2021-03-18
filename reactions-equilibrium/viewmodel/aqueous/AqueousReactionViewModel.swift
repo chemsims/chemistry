@@ -22,6 +22,15 @@ class AqueousReactionViewModel: ObservableObject {
             availableRows: initialRows,
             maxRows: AqueousReactionSettings.maxRows
         )
+        self.componentsWrapper = ReactionComponentsWrapper(
+            coefficients: initialType.coefficients,
+            equilibriumConstant: initialType.equilibriumConstant,
+            cols: MoleculeGridSettings.cols,
+            rows: initialRows,
+            maxRows: AqueousReactionSettings.maxRows,
+            startTime: 0,
+            equilibriumTime: AqueousReactionSettings.timeForConvergence
+        )
 
         self.navigation = AqueousNavigationModel.model(model: self)
         self.addingMoleculesModel = AddingMoleculesViewModel(
@@ -36,6 +45,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows) {
         didSet {
             components.availableRows = GridMoleculesUtil.availableRows(for: rows)
+            componentsWrapper.rows = GridMoleculesUtil.availableRows(for: rows)
             highlightedElements.clear()
         }
     }
@@ -50,6 +60,8 @@ class AqueousReactionViewModel: ObservableObject {
         didSet {
             components.coefficients = selectedReaction.coefficients
             components.equilibriumConstant = selectedReaction.equilibriumConstant
+            componentsWrapper.coefficients = selectedReaction.coefficients
+            componentsWrapper.equilibriumConstant = selectedReaction.equilibriumConstant
         }
     }
 
@@ -59,6 +71,11 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var chartOffset: CGFloat = 0
 
     @Published var components: AqueousReactionComponents
+
+    @Published var componentsWrapper: ReactionComponentsWrapper
+    var components2: ReactionComponents {
+        componentsWrapper.components
+    }
 
     @Published var showEquationTerms = false
 
@@ -105,6 +122,7 @@ class AqueousReactionViewModel: ObservableObject {
         let canAddProduct = inputState == .addProducts && molecule.isProduct
         if canAddProduct || canAddReactant {
             components.increment(molecule: molecule, count: count)
+            componentsWrapper.increment(molecule: molecule, count: count)
             handlePostIncrementSaturation(of: molecule)
         }
     }
@@ -131,10 +149,10 @@ class AqueousReactionViewModel: ObservableObject {
 
     /// Informs the user if they've added the maximum allowed amount of `molecule`
     private func handlePostIncrementSaturation(of molecule: AqueousMolecule) {
-        guard !components.canIncrement(molecule: molecule) && (inputState == .addProducts || inputState == .addReactants) else {
+        guard !componentsWrapper.canIncrement(molecule: molecule) && (inputState == .addProducts || inputState == .addReactants) else {
             return
         }
-        let canAddComplement = components.canIncrement(molecule: molecule.complement)
+        let canAddComplement = componentsWrapper.canIncrement(molecule: molecule.complement)
         var msg: [TextLine] = ["That's plenty of \(molecule) for now!"]
         if canAddComplement {
             msg.append("Why don't you try adding some of \(molecule.complement)?")

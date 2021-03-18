@@ -29,8 +29,8 @@ struct ChartStack: View {
             concentrationChart.opacity(showGraph ? 1 : 0)
             if (!showGraph) {
                 ICETable(
-                    initial: model.components.equations.initialConcentrations,
-                    final: model.components.equations.equilibriumConcentrations
+                    initial: model.components2.equation.initialConcentrations,
+                    final: model.components2.equation.equilibriumConcentrations
                 )
                 .colorMultiply(
                     model.highlightedElements.colorMultiply(for: nil)
@@ -45,8 +45,8 @@ struct ChartStack: View {
 
     private var concentrationChart: some View {
         MultiConcentrationPlot(
-            equations: model.components.equations.reactions,
-            equilibriumTime: model.components.equations.convergenceTime,
+            equations: model.components2.equation.concentration,
+            equilibriumTime: model.components2.equation.equilibriumTime,
             discontinuities: model.components.moleculeChartDiscontinuities,
             initialTime: 0,
             currentTime: $model.currentTime,
@@ -71,7 +71,7 @@ struct ChartStack: View {
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
-            equilibriumTime: model.equations.convergenceTime,
+            equilibriumTime: model.components2.equation.equilibriumTime,
             showData: model.showQuotientLine,
             offset: model.chartOffset,
             discontinuity: model.components.quotientChartDiscontinuity,
