@@ -122,8 +122,7 @@ class AqueousReactionViewModel: ObservableObject {
         let canAddReactant = inputState == .addReactants && molecule.isReactant
         let canAddProduct = inputState == .addProducts && molecule.isProduct
         if canAddProduct || canAddReactant {
-//            components.increment(molecule: molecule, count: count)
-            objectWillChange.send()
+            components.increment(molecule: molecule, count: count)
             componentsWrapper.increment(molecule: molecule, count: count)
             handlePostIncrementSaturation(of: molecule)
         }
@@ -149,6 +148,8 @@ class AqueousReactionViewModel: ObservableObject {
         navigation?.back()
     }
 
+    var componentStack = [ReactionComponentsWrapper]()
+
     /// Informs the user if they've added the maximum allowed amount of `molecule`
     private func handlePostIncrementSaturation(of molecule: AqueousMolecule) {
         guard !componentsWrapper.canIncrement(molecule: molecule) && (inputState == .addProducts || inputState == .addReactants) else {
@@ -167,7 +168,8 @@ class AqueousReactionViewModel: ObservableObject {
     private var hasAddedEnoughProduct: Bool {
         let minIncrement = AqueousReactionSettings.ConcentrationInput.minProductIncrement
         func hasEnough(_ molecule: AqueousMolecule) -> Bool {
-            let didIncrementEnough = componentsWrapper.concentrationIncremented(of: molecule).rounded(decimals: 2) >= minIncrement
+            let incremented = componentsWrapper.concentrationIncremented(of: molecule, previous: componentStack.first)
+            let didIncrementEnough = incremented.rounded(decimals: 2) >= minIncrement
             return didIncrementEnough || !componentsWrapper.canIncrement(molecule: molecule)
         }
 

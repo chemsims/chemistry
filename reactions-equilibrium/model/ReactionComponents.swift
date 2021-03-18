@@ -7,7 +7,7 @@ import CoreGraphics
 
 let maxC: CGFloat = 0.3
 
-class ReactionComponentsWrapper {
+struct ReactionComponentsWrapper {
 
     let cols: Int
     var rows: Int {
@@ -28,7 +28,6 @@ class ReactionComponentsWrapper {
 
     let startTime: CGFloat
     let equilibriumTime: CGFloat
-    let previous: ReactionComponentsWrapper?
 
     private(set) var molecules: MoleculeValue<[GridCoordinate]>
 
@@ -47,7 +46,6 @@ class ReactionComponentsWrapper {
         self.equilibriumConstant = equilibriumConstant
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
-        self.previous = nil
         self.molecules = MoleculeValue(builder: { _ in [] })
         self.components = ReactionComponents(
             initialBeakerMolecules: MoleculeValue(builder: { _ in [] }),
@@ -57,7 +55,8 @@ class ReactionComponentsWrapper {
             gridSize: cols * rows,
             startTime: startTime,
             equilibriumTime: equilibriumTime,
-            previousEquation: nil
+            previousEquation: nil,
+            previousMolecules: nil
         )
     }
 
@@ -72,7 +71,6 @@ class ReactionComponentsWrapper {
         self.equilibriumConstant = previous.equilibriumConstant
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
-        self.previous = previous
         let filteredMolecules = Self.consolidate(
             molecules: previous.components.beakerMolecules,
             at: previous.components.equation.equilibriumTime
@@ -86,11 +84,12 @@ class ReactionComponentsWrapper {
             gridSize: previous.gridSize,
             startTime: startTime,
             equilibriumTime: equilibriumTime,
-            previousEquation: previous.components.equation
+            previousEquation: previous.components.equation,
+            previousMolecules: filteredMolecules
         )
     }
 
-    func increment(molecule: AqueousMolecule, count: Int) {
+    mutating func increment(molecule: AqueousMolecule, count: Int) {
         let current = molecules.value(for: molecule)
         let avoid = molecules.all.flatten
         let maxAdd = maximumToAdd(to: current, maxConcentration: maxC)
@@ -109,7 +108,7 @@ class ReactionComponentsWrapper {
 
     private(set) var components: ReactionComponents
 
-    private func setComponents() {
+    private mutating func setComponents() {
         components = ReactionComponents(
             initialBeakerMolecules: molecules,
             coefficients: coefficients,
@@ -118,7 +117,8 @@ class ReactionComponentsWrapper {
             gridSize: gridSize,
             startTime: startTime,
             equilibriumTime: equilibriumTime,
-            previousEquation: components.previousEquation
+            previousEquation: components.previousEquation,
+            previousMolecules: components.previousMolecules
         )
     }
 
@@ -126,7 +126,10 @@ class ReactionComponentsWrapper {
         cols * rows
     }
 
-    func concentrationIncremented(of molecule: AqueousMolecule) -> CGFloat {
+    func concentrationIncremented(
+        of molecule: AqueousMolecule,
+        previous: ReactionComponentsWrapper?
+    ) -> CGFloat {
         func getConcentration(from components: ReactionComponents, at time: CGFloat) -> CGFloat {
             let molecules = components.beakerMolecules.first { $0.molecule == molecule }?.animatingMolecules
             let fraction = molecules.map {
@@ -205,6 +208,7 @@ class ReactionComponents {
     let startTime: CGFloat
     let equilibriumTime: CGFloat
     let previousEquation: NewBalancedReactionEquation?
+    let previousMolecules: MoleculeValue<[GridCoordinate]>?
 
     init(
         initialBeakerMolecules: MoleculeValue<[GridCoordinate]>,
@@ -214,7 +218,8 @@ class ReactionComponents {
         gridSize: Int,
         startTime: CGFloat,
         equilibriumTime: CGFloat,
-        previousEquation: NewBalancedReactionEquation?
+        previousEquation: NewBalancedReactionEquation?,
+        previousMolecules: MoleculeValue<[GridCoordinate]>?
     ) {
         self.initialBeakerMolecules = initialBeakerMolecules
         self.coefficients = coefficients
@@ -224,12 +229,13 @@ class ReactionComponents {
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
         self.previousEquation = previousEquation
+        self.previousMolecules = previousMolecules
     }
 
     lazy var equation = NewBalancedReactionEquation(
         coefficients: coefficients,
         equilibriumConstant: equilibriumConstant,
-        initialConcentrations: initialBeakerMolecules.map(getConcentration),
+        initialConcentrations: MoleculeValue(builder: getConcentration),
         startTime: startTime,
         equilibriumTime: equilibriumTime,
         previous: previousEquation
@@ -360,8 +366,20 @@ class ReactionComponents {
         return ConstantEquation(value: 1)
     }
 
-    private func getConcentration(of coordinates: [GridCoordinate]) -> CGFloat {
-        CGFloat(coordinates.count) / CGFloat(gridSize)
+    /// Finding concentration using the molecule count may differ from the previously converged value
+    /// So, if molecules unchanged, use the previous equilibrium value
+    private func getConcentration(of molecule: AqueousMolecule) -> CGFloat {
+        let coords = initialBeakerMolecules.value(for: molecule)
+        let defaultValue = CGFloat(coords.count) / CGFloat(gridSize)
+        if let prevMolecules = previousMolecules,
+           let prevEq = previousEquation {
+            let prevForMolecule = prevMolecules.value(for: molecule)
+            let current = initialBeakerMolecules.value(for: molecule)
+            if prevForMolecule.count == current.count {
+                return prevEq.concentration.value(for: molecule).getY(at: startTime)
+            }
+        }
+        return defaultValue
     }
 
     private func getCount(for concentration: CGFloat) -> Int {

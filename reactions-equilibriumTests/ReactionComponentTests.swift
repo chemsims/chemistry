@@ -220,6 +220,71 @@ class ReactionComponentTests: XCTestCase {
         XCTAssertEqual(result.productD, Array(grid[15..<40]))
     }
 
+    func testAddingOnlyBMolecules() {
+        let grid = GridCoordinate.grid(cols: 10, rows: 10)
+        let model = ReactionComponents(
+            initialBeakerMolecules: MoleculeValue(builder: {
+                $0 == .B ? Array(grid.prefix(30)) : []
+            }),
+            coefficients: .unit,
+            equilibriumConstant: 1,
+            shuffledCoords: grid,
+            gridSize: 100,
+            startTime: 0,
+            equilibriumTime: 100,
+            previousEquation: nil,
+            previousMolecules: nil
+        )
+        XCTAssertEqual(
+            model.beakerMolecules[1].animatingMolecules.fractionToDraw.getY(at: 0), 1
+        )
+    }
+
+    func testThatConcentrationValueUsesPreviousConvergedConcentrationNotMoleculeCount() {
+        let grid = GridCoordinate.grid(cols: 10, rows: 10)
+        let forward = ReactionComponents(
+            initialBeakerMolecules: MoleculeValue(
+                reactantA: Array(grid.prefix(5)),
+                reactantB: Array(grid.dropFirst(5).prefix(5)),
+                productC: [],
+                productD: []
+            ),
+            coefficients: .unit,
+            equilibriumConstant: 1,
+            shuffledCoords: grid,
+            gridSize: 10,
+            startTime: 0,
+            equilibriumTime: 10,
+            previousEquation: nil,
+            previousMolecules: nil
+        )
+
+        let fwdC = forward.beakerMolecules[2]
+        XCTAssertEqual(fwdC.molecule, .C)
+        XCTAssertEqual(fwdC.animatingMolecules.molecules.coords.count, 3)
+        XCTAssertEqual(fwdC.animatingMolecules.fractionToDraw.getY(at: 10), 1)
+
+        let initReverse = ReactionComponentsWrapper.consolidate(
+            molecules: forward.beakerMolecules,
+            at: 10
+        )
+
+        let reverse = ReactionComponents(
+            initialBeakerMolecules: initReverse,
+            coefficients: .unit,
+            equilibriumConstant: 1,
+            shuffledCoords: grid,
+            gridSize: 10,
+            startTime: 11,
+            equilibriumTime: 20,
+            previousEquation: forward.equation,
+            previousMolecules: initReverse
+        )
+
+        XCTAssertEqual(reverse.equation.concentration.productC.getY(at: 11), 0.25, accuracy: 0.001)
+        XCTAssertEqual(reverse.equation.concentration.productD.getY(at: 11), 0.25, accuracy: 0.001)
+    }
+
     private func labelledAnimatingMolecules(
         element: AqueousMolecule,
         coords: [GridCoordinate],

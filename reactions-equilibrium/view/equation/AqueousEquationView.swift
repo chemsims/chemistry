@@ -8,7 +8,7 @@ import ReactionsCore
 struct AqueousEquationView: View {
 
     let showTerms: Bool
-    let equations: BalancedReactionEquations
+    let equations: NewBalancedReactionEquation
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
@@ -41,7 +41,7 @@ struct AqueousEquationView: View {
 private struct UnscaledAqueousEquationView: View {
 
     let showTerms: Bool
-    let equations: BalancedReactionEquations
+    let equations: NewBalancedReactionEquation
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
@@ -176,7 +176,7 @@ private struct QuotientEqualsKView: View {
 private struct FilledQuotientDefinitionView: View {
 
     let showTerms: Bool
-    let equations: BalancedReactionEquations
+    let equations: NewBalancedReactionEquation
     let quotient: Equation
     let currentTime: CGFloat
 
@@ -197,14 +197,14 @@ private struct FilledQuotientDefinitionView: View {
     private var fraction: some View {
         VStack(spacing: 0) {
             HStack(spacing: 3) {
-                concentration(equations.productC, coefficient: equations.coefficients.productC)
-                concentration(equations.productD, coefficient: equations.coefficients.productD)
+                concentration(equations.concentration.productC, coefficient: equations.coefficients.productC)
+                concentration(equations.concentration.productD, coefficient: equations.coefficients.productD)
             }
             Rectangle()
                 .frame(width:  180, height: 1)
             HStack(spacing: 3) {
-                concentration(equations.reactantA, coefficient: equations.coefficients.reactantA)
-                concentration(equations.reactantB, coefficient: equations.coefficients.reactantB)
+                concentration(equations.concentration.reactantA, coefficient: equations.coefficients.reactantA)
+                concentration(equations.concentration.reactantB, coefficient: equations.coefficients.reactantB)
             }
         }
     }
@@ -338,8 +338,8 @@ struct AqueousEquationView_Previews: PreviewProvider {
     static var previews: some View {
         UnscaledAqueousEquationView(
             showTerms: true,
-            equations: reverse,
-            quotient: ReactionQuotientEquation(equations: reverse),
+            equations: equations,
+            quotient: ReactionQuotientEquation(equations: equations),
             convergedQuotient: 0.14,
             currentTime: 14,
             highlightedElements: HighlightedElements(
@@ -354,21 +354,12 @@ struct AqueousEquationView_Previews: PreviewProvider {
         .background(Color.gray.opacity(0.5))
     }
 
-    private static let reverse = BalancedReactionEquations(
-        forwardReaction: equations,
-        reverseInput: ReverseReactionInput(c0: 0.4, d0: 0.4, startTime: 21, convergenceTime: 30)
-    )
-
-    private static let equations = BalancedReactionEquations(
-        coefficients: BalancedReactionCoefficients(
-            reactantA: 2,
-            reactantB: 2,
-            productC: 1,
-            productD: 4
-        ),
-        equilibriumConstant: 2,
-        a0: 0.3,
-        b0: 0.3,
-        convergenceTime: 20
+    private static let equations = NewBalancedReactionEquation(
+        coefficients: BalancedReactionCoefficients(builder: { _ in 1 }),
+        equilibriumConstant: 1,
+        initialConcentrations: MoleculeValue(builder: { _ in 0.5}),
+        startTime: 0,
+        equilibriumTime: 10,
+        previous: nil
     )
 }

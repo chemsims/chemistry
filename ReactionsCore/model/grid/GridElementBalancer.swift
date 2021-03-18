@@ -58,7 +58,7 @@ public struct GridElementBalancer {
     public var decreasingBalanced: GridElementPair<BalancedGridElement> {
         GridElementPair(
             first: initialReducingC.decreasingElement(with: cCoords, extraDrop: extraCToDrop),
-            second: initialReducingC.decreasingElement(with: dCoords, extraDrop: extraDToDrop)
+            second: initialReducingD.decreasingElement(with: dCoords, extraDrop: extraDToDrop)
         )
     }
 

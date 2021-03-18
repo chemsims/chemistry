@@ -21,7 +21,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 100,
             startTime: 0,
             equilibriumTime: 10,
-            previousEquation: nil
+            previousEquation: nil,
+            previousMolecules: nil
         )
         let concentration = model.equation.concentration
 
@@ -54,7 +55,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 100,
             startTime: 0,
             equilibriumTime: 10,
-            previousEquation: nil
+            previousEquation: nil,
+            previousMolecules: nil
         )
 
         XCTAssertEqual(model.moleculesC.coords(at: 0).count, 0)
@@ -83,7 +85,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 100,
             startTime: 0,
             equilibriumTime: 10,
-            previousEquation: nil
+            previousEquation: nil,
+            previousMolecules: nil
         )
 
         let consolidatedReverseCoords = ReactionComponentsWrapper.consolidate(
@@ -104,7 +107,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 100,
             startTime: 11,
             equilibriumTime: 20,
-            previousEquation: forwardModel.equation
+            previousEquation: forwardModel.equation,
+            previousMolecules: consolidatedReverseCoords
         )
 
         XCTAssertEqual(reverseModel.moleculesA.coords(at: 11).count, 15)
@@ -150,7 +154,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 10,
             startTime: 0,
             equilibriumTime: 10,
-            previousEquation: nil
+            previousEquation: nil,
+            previousMolecules: nil
         )
 
         let initReverseMolecules = ReactionComponentsWrapper.consolidate(molecules: forwardModel.beakerMolecules, at: 10)
@@ -162,7 +167,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 100,
             startTime: 11,
             equilibriumTime: 20,
-            previousEquation: forwardModel.equation
+            previousEquation: forwardModel.equation,
+            previousMolecules: initReverseMolecules
         )
 
         assertSameElements(forwardModel.getEffectiveReactants(at: 11).a, reverseModel.moleculesA.coords(at: 11))
@@ -197,7 +203,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 100,
             startTime: 0,
             equilibriumTime: 10,
-            previousEquation: nil
+            previousEquation: nil,
+            previousMolecules: nil
         )
 
         let finalProductGridCount = GridMoleculesUtil.gridCount(for: 0.3, gridSize: 100)
@@ -220,7 +227,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 100,
             startTime: 11,
             equilibriumTime: 20,
-            previousEquation: forwardModel.equation
+            previousEquation: forwardModel.equation,
+            previousMolecules: finalFwdMolecules
         )
 
         assertSameElements(forwardModel.getEffectiveReactants(at: 11).a, reverseModel.moleculesA.coords(at: 11))
@@ -311,7 +319,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 100,
             startTime: 0,
             equilibriumTime: 10,
-            previousEquation: nil
+            previousEquation: nil,
+            previousMolecules: nil
         )
 
         let forwardUnitChange: CGFloat = 0.0822
@@ -355,7 +364,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
             gridSize: 100,
             startTime: 11,
             equilibriumTime: 20,
-            previousEquation: forwardModel.equation
+            previousEquation: forwardModel.equation,
+            previousMolecules: consolidatedFwdMolecules
         )
 
         let reverseEquilibrium = reverseModel.equation.equilibriumConcentrations

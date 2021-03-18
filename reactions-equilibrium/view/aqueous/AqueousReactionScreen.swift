@@ -94,7 +94,7 @@ private struct RightStackView: View {
     private var equation: some View {
         AqueousEquationView(
             showTerms: model.showEquationTerms,
-            equations: model.equations,
+            equations: model.components2.equation,
             quotient: model.quotientEquation,
             convergedQuotient: model.convergenceQuotient,
             currentTime: model.currentTime,
