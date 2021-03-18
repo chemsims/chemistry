@@ -405,6 +405,7 @@ struct NewBalancedReactionEquation {
     let coefficients: MoleculeValue<Int>
 
     let initialConcentrations: MoleculeValue<CGFloat>
+    let equilibriumConstant: CGFloat
 
     var isForward: Bool {
         direction == .forward
@@ -420,6 +421,7 @@ struct NewBalancedReactionEquation {
     ) {
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
+        self.equilibriumConstant = equilibriumConstant
         self.initialConcentrations = initialConcentrations
         self.coefficients = coefficients
 

@@ -31,6 +31,27 @@ extension BalancedReactionEquations {
     }
 }
 
+extension NewBalancedReactionEquation {
+    func withA0(_ newValue: CGFloat) -> NewBalancedReactionEquation {
+        withInitialConcentration(newValue, for: .A)
+    }
+
+    func withB0(_ newValue: CGFloat) -> NewBalancedReactionEquation {
+        withInitialConcentration(newValue, for: .B)
+    }
+
+    private func withInitialConcentration(_ newValue: CGFloat, for molecule: AqueousMolecule) -> NewBalancedReactionEquation {
+        NewBalancedReactionEquation(
+            coefficients: coefficients,
+            equilibriumConstant: equilibriumTime,
+            initialConcentrations: initialConcentrations.updating(with: newValue, for: molecule),
+            startTime: startTime,
+            equilibriumTime: equilibriumTime,
+            previous: nil
+        )
+    }
+}
+
 extension BalancedReactionEquations {
     var convergenceA: CGFloat {
         convergence(of: reactantA)

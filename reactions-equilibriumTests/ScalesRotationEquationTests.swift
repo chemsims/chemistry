@@ -8,7 +8,14 @@ import XCTest
 class ScalesRotationEquationTests: XCTestCase {
 
     func testForwardReactionRotation() {
-        var reaction = BalancedReactionEquations(coefficients: .unit, equilibriumConstant: 1, a0: 0, b0: 0, convergenceTime: 10)
+        var reaction = NewBalancedReactionEquation(
+            coefficients: .unit,
+            equilibriumConstant: 1,
+            initialConcentrations: MoleculeValue(builder: { _ in 0 }),
+            startTime: 0,
+            equilibriumTime: 10,
+            previous: nil
+        )
         var model: ScalesRotationEquation {
             ScalesRotationEquation(reaction: reaction, maxAngle: 50)
         }
@@ -36,26 +43,38 @@ class ScalesRotationEquationTests: XCTestCase {
         reaction = reaction.withB0(AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation / 2)
         XCTAssertEqual(model.getY(at: 0), -50)
         XCTAssertEqual(model.getY(at: 10), 0)
-
-        let quotient = ReactionQuotientEquation(equations: reaction)
-        XCTAssertEqual(model.getY(at: 1), expectedFor(quotient: quotient.getY(at: 1)))
-        XCTAssertEqual(model.getY(at: 2), expectedFor(quotient: quotient.getY(at: 2)))
     }
 
     func testReverseReactionRotation() {
-        let forward = BalancedReactionEquations(coefficients: .unit, equilibriumConstant: 1, a0: 0.3, b0: 0.3, convergenceTime: 10)
+        var forward = NewBalancedReactionEquation(
+            coefficients: .unit,
+            equilibriumConstant: 1,
+            initialConcentrations: MoleculeValue(
+                reactantA: 0.3,
+                reactantB: 0.3,
+                productC: 0,
+                productD: 0
+            ),
+            startTime: 0,
+            equilibriumTime: 10,
+            previous: nil
+        )
         let tAddProd = AqueousReactionSettings.timeToAddProduct
         let tFinal = AqueousReactionSettings.endOfReverseReaction
 
-        func makeReverse(c0: CGFloat, d0: CGFloat) -> BalancedReactionEquations {
-            BalancedReactionEquations(
-                forwardReaction: forward,
-                reverseInput: ReverseReactionInput(
-                    c0: c0,
-                    d0: d0,
-                    startTime: tAddProd,
-                    convergenceTime: AqueousReactionSettings.endOfReverseReaction
-                )
+        func makeReverse(c0: CGFloat, d0: CGFloat) -> NewBalancedReactionEquation {
+            NewBalancedReactionEquation(
+                coefficients: .unit,
+                equilibriumConstant: 1,
+                initialConcentrations: MoleculeValue(
+                    reactantA: forward.equilibriumConcentrations.reactantA,
+                    reactantB: forward.equilibriumConcentrations.reactantB,
+                    productC: c0,
+                    productD: d0
+                ),
+                startTime: tAddProd,
+                equilibriumTime: tFinal,
+                previous: forward
             )
         }
         var reverse = makeReverse(c0: 0.15, d0: 0.15)

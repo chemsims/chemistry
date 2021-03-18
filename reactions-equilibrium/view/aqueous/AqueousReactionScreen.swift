@@ -135,7 +135,7 @@ private struct RightStackView: View {
 
     private var scales: some View {
         MoleculeScales(
-            equations: model.equations,
+            reaction: model.components2.equation,
             currentTime: model.currentTime
         )
         .frame(width: settings.scalesWidth, height: settings.scalesHeight)
