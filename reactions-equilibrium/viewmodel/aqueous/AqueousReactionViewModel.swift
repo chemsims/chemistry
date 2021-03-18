@@ -99,11 +99,11 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     var quotientEquation: Equation {
-        ReactionQuotientEquation(equations: components.equations)
+        components2.quotientEquation
     }
 
     var maxQuotient: CGFloat {
-        quotientEquation.getY(at: components.tForMaxQuotient)
+        quotientEquation.getY(at: components2.tForMaxQuotient)
     }
 
     var convergenceQuotient: CGFloat {
@@ -115,13 +115,15 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     func increment(molecule: AqueousMolecule, count: Int) {
-        guard components.canIncrement(molecule: molecule) else {
+        guard componentsWrapper.canIncrement(molecule: molecule) else {
             return
         }
+
         let canAddReactant = inputState == .addReactants && molecule.isReactant
         let canAddProduct = inputState == .addProducts && molecule.isProduct
         if canAddProduct || canAddReactant {
-            components.increment(molecule: molecule, count: count)
+//            components.increment(molecule: molecule, count: count)
+            objectWillChange.send()
             componentsWrapper.increment(molecule: molecule, count: count)
             handlePostIncrementSaturation(of: molecule)
         }
@@ -165,8 +167,8 @@ class AqueousReactionViewModel: ObservableObject {
     private var hasAddedEnoughProduct: Bool {
         let minIncrement = AqueousReactionSettings.ConcentrationInput.minProductIncrement
         func hasEnough(_ molecule: AqueousMolecule) -> Bool {
-            let didIncrementEnough = components.concentrationIncremented(of: molecule).rounded(decimals: 2) >= minIncrement
-            return didIncrementEnough || !components.canIncrement(molecule: molecule)
+            let didIncrementEnough = componentsWrapper.concentrationIncremented(of: molecule).rounded(decimals: 2) >= minIncrement
+            return didIncrementEnough || !componentsWrapper.canIncrement(molecule: molecule)
         }
 
         return hasEnough(.C) || hasEnough(.D)
@@ -187,8 +189,8 @@ class AqueousReactionViewModel: ObservableObject {
 
     // Returns the first reactant which does not have enough molecules in the beaker
     private func getMissingReactant() -> AqueousMoleculeReactant? {
-        let aTooLow = components.equations.initialConcentrations.reactantA.rounded(decimals: 2) < inputSettings.minInitial
-        let bTooLow = components.equations.initialConcentrations.reactantB.rounded(decimals: 2) < inputSettings.minInitial
+        let aTooLow = components2.equation.initialConcentrations.reactantA.rounded(decimals: 2) < inputSettings.minInitial
+        let bTooLow = components2.equation.initialConcentrations.reactantB.rounded(decimals: 2) < inputSettings.minInitial
 
         if aTooLow {
             return .A

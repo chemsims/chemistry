@@ -227,6 +227,11 @@ class InstructToAddProductState: AqueousScreenState {
         if let fwd = model.components as? ForwardAqueousReactionComponents {
             model.components = ReverseAqueousReactionComponents(forwardReaction: fwd)
         }
+        model.componentsWrapper = ReactionComponentsWrapper(
+            previous: model.componentsWrapper,
+            startTime: AqueousReactionSettings.timeToAddProduct,
+            equilibriumTime: AqueousReactionSettings.timeForReverseConvergence
+        )
         DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 
@@ -237,6 +242,9 @@ class InstructToAddProductState: AqueousScreenState {
         if let rev = model.components as? ReverseAqueousReactionComponents {
             model.components = rev.forwardReaction
         }
+//        if let previous = model.componentsWrapper.previous {
+//            model.componentsWrapper = previous
+//        }
         DeferScreenEdgesState.shared.deferEdges = []
     }
 }

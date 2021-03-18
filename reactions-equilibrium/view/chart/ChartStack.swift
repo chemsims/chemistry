@@ -47,14 +47,14 @@ struct ChartStack: View {
         MultiConcentrationPlot(
             equations: model.components2.equation.concentration,
             equilibriumTime: model.components2.equation.equilibriumTime,
-            discontinuities: model.components.moleculeChartDiscontinuities,
+            discontinuities: model.components2.moleculeChartDiscontinuities,
             initialTime: 0,
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showConcentrationLines,
             offset: model.chartOffset,
-            minDragTime: model.components.quotientChartDiscontinuity?.x,
+            minDragTime: model.components2.quotientChartDiscontinuity?.x,
             canSetIndex: model.canSetChartIndex,
             activeIndex: $model.activeChartIndex,
             settings: settings.chartSettings
@@ -66,7 +66,7 @@ struct ChartStack: View {
 
     private var quotientChart: some View {
         QuotientPlot(
-            equation: model.quotientEquation,
+            equation: model.components2.quotientEquation,
             initialTime: 0,
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
@@ -74,7 +74,7 @@ struct ChartStack: View {
             equilibriumTime: model.components2.equation.equilibriumTime,
             showData: model.showQuotientLine,
             offset: model.chartOffset,
-            discontinuity: model.components.quotientChartDiscontinuity,
+            discontinuity: model.components2.quotientChartDiscontinuity,
             settings: settings.quotientChartSettings(
                 convergenceQ: model.convergenceQuotient,
                 maxQ: model.maxQuotient
