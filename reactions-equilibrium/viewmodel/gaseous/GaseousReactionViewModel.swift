@@ -11,11 +11,11 @@ class GaseousReactionViewModel: ObservableObject {
         let initialReaction = AqueousReactionType.A
         let initialRows = GaseousReactionSettings.initialRows
         self.rows = CGFloat(initialRows)
-        self.components = ForwardAqueousReactionComponents(
+        self.componentWrapper = ReactionComponentsWrapper(
             coefficients: initialReaction.coefficients,
             equilibriumConstant: initialReaction.equilibriumConstant,
-            availableCols: MoleculeGridSettings.cols,
-            availableRows: initialRows,
+            cols: MoleculeGridSettings.cols,
+            rows: initialRows,
             maxRows: GaseousReactionSettings.maxRows
         )
         self.pumpModel = PumpViewModel(
@@ -25,17 +25,21 @@ class GaseousReactionViewModel: ObservableObject {
         )
     }
 
-    @Published var components: AqueousReactionComponents
+    @Published var componentWrapper: ReactionComponentsWrapper
     @Published var rows: CGFloat {
         didSet {
-            components.availableRows = GridMoleculesUtil.availableRows(for: rows)
+            componentWrapper.rows = GridMoleculesUtil.availableRows(for: rows)
         }
     }
 
     @Published var highlightedElements = HighlightedElements<GaseousScreenElement>()
 
+    var components: ReactionComponents {
+        componentWrapper.components
+    }
+
     private func onPump() {
-        components.increment(molecule: .A, count: 1)
+        componentWrapper.increment(molecule: .A, count: 1)
     }
 
     private(set) var pumpModel: PumpViewModel<CGFloat>!

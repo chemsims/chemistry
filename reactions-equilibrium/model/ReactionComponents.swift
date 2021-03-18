@@ -31,7 +31,7 @@ struct ReactionComponentsWrapper {
         equilibriumConstant: CGFloat,
         cols: Int,
         rows: Int,
-        shuffledCoords: [GridCoordinate]
+        maxRows: Int
     ) {
         self.cols = cols
         self.rows = rows
@@ -42,7 +42,7 @@ struct ReactionComponentsWrapper {
             initialBeakerMolecules: MoleculeValue(builder: { _ in [] }),
             coefficients: coefficients,
             equilibriumConstant: equilibriumConstant,
-            shuffledCoords: shuffledCoords,
+            shuffledCoords: GridCoordinate.grid(cols: cols, rows: maxRows).shuffled(),
             gridSize: cols * rows
         )
     }
@@ -58,6 +58,7 @@ struct ReactionComponentsWrapper {
             avoiding: avoid
         )
         molecules = molecules.updating(with: newCoords, for: molecule)
+        setComponents()
     }
 
     private(set) var components: ReactionComponents
@@ -73,7 +74,7 @@ struct ReactionComponentsWrapper {
     }
 }
 
-struct ReactionComponents {
+class ReactionComponents {
 
     let initialBeakerMolecules: MoleculeValue<[GridCoordinate]>
     let coefficients: BalancedReactionCoefficients
@@ -104,13 +105,35 @@ struct ReactionComponents {
         previous: nil
     )
 
-    private(set) lazy var beakerMolecules = MoleculeValue(
-        builder: { getBeakerMolecules(for: $0) }
-    )
+    private(set) lazy var beakerMolecules: [AnimatingBeakerMolecules] = {
+        var builder = [AnimatingBeakerMolecules]()
+        func add(_ molecule: AqueousMolecule) {
+            builder.append(getBeakerMolecules(for: molecule))
+        }
+        func addReactants() {
+            add(.A)
+            add(.B)
+        }
+
+        func addProducts() {
+            add(.C)
+            add(.D)
+        }
+
+
+        if equation.isForward {
+            addReactants()
+            addProducts()
+        } else {
+            addProducts()
+            addReactants()
+        }
+        return builder
+    }()
 
     private lazy var balancedMoleculeValues: MoleculeValue<BalancedGridElement?> = {
-        let reactants = equation.isIncreasing ? gridBalancer?.decreasingBalanced : gridBalancer?.increasingBalanced
-        let products = equation.isIncreasing ? gridBalancer?.increasingBalanced : gridBalancer?.decreasingBalanced
+        let reactants = equation.isForward ? gridBalancer?.decreasingBalanced : gridBalancer?.increasingBalanced
+        let products = equation.isForward ? gridBalancer?.increasingBalanced : gridBalancer?.decreasingBalanced
         return MoleculeValue(
             reactantA: reactants?.first,
             reactantB: reactants?.second,
@@ -120,8 +143,8 @@ struct ReactionComponents {
     }()
 
     private lazy var gridBalancer = GridElementBalancer(
-        increasingElements: equation.isIncreasing ? productPair : reactantPair,
-        decreasingElements: equation.isIncreasing ? reactantPair : productPair,
+        increasingElements: equation.isForward ? productPair : reactantPair,
+        decreasingElements: equation.isForward ? reactantPair : productPair,
         grid: shuffledCoords
     )
 
@@ -151,7 +174,7 @@ struct ReactionComponents {
         )
     }
 
-    private mutating func getBeakerMolecules(for element: AqueousMolecule) -> AnimatingBeakerMolecules {
+    private func getBeakerMolecules(for element: AqueousMolecule) -> AnimatingBeakerMolecules {
         let balancedElement = balancedMoleculeValues.value(for: element)
         return AnimatingBeakerMolecules(
             molecules: BeakerMolecules(
@@ -162,7 +185,7 @@ struct ReactionComponents {
         )
     }
 
-    private mutating func beakerFractionToDraw(for element: BalancedGridElement?) -> Equation {
+    private func beakerFractionToDraw(for element: BalancedGridElement?) -> Equation {
         if let element = element {
             return EquilibriumReactionEquation(
                 t1: equation.startTime,
@@ -184,6 +207,11 @@ struct NewBalancedReactionEquation {
     let startTime: CGFloat
     let equilibriumTime: CGFloat
     let concentration: MoleculeValue<Equation>
+    let direction: ReactionDirection
+
+    var isForward: Bool {
+        direction == .forward
+    }
 
     init(
         coefficients: BalancedReactionCoefficients,
@@ -196,7 +224,9 @@ struct NewBalancedReactionEquation {
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
 
-        let isForward = true // TODO
+        let direction = ReactionDirection.forward
+        self.direction = direction
+        let isForward = true
 
         func getTerm(_ molecule: AqueousMolecule) -> MoleculeTerms {
             MoleculeTerms(
@@ -210,7 +240,7 @@ struct NewBalancedReactionEquation {
             equilibriumConstant: equilibriumConstant,
             coeffs: coefficients,
             initialConcentrations: initialConcentrations,
-            isForward: isForward
+            isForward: direction == .forward
         )
 
 
@@ -241,6 +271,6 @@ struct NewBalancedReactionEquation {
         MoleculeValue(builder: { _ in 1 })
 
 
-    lazy var isIncreasing: Bool = false
+
 
 }

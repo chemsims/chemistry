@@ -31,8 +31,8 @@ struct PressureBeaker: View {
 
     private var beaker: some View {
         AdjustableAirBeaker(
-            molecules: model.components.nonAnimatingMolecules,
-            animatingMolecules: model.components.animatingMolecules,
+            molecules: [],
+            animatingMolecules: model.components.beakerMolecules,
             minRows: GaseousReactionSettings.minRows,
             maxRows: GaseousReactionSettings.maxRows,
             rows: $model.rows,
