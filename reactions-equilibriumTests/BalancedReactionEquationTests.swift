@@ -9,14 +9,21 @@ class BalancedReactionEquationTests: XCTestCase {
 
     func testBalancedReactionExample() {
         let coeffs = makeCoeffs(A: 2, B: 2, C: 1, D: 4)
-        let equations = BalancedReactionEquations(
+        let model = NewBalancedReactionEquation(
             coefficients: coeffs,
             equilibriumConstant: 1,
-            a0: 0.4,
-            b0: 0.5,
-            convergenceTime: 10
+            initialConcentrations: MoleculeValue(
+                reactantA: 0.4,
+                reactantB: 0.5,
+                productC: 0,
+                productD: 0
+            ), startTime: 0,
+            equilibriumTime: 10,
+            previous: nil
         )
-        let quotient = ReactionQuotientEquation(equations: equations)
+        let equations = model.concentration
+
+        let quotient = ReactionQuotientEquation(equations: model)
         XCTAssertEqual(quotient.getY(at: 10), 1, accuracy: 0.001)
 
         let unitChange: CGFloat = 0.10411

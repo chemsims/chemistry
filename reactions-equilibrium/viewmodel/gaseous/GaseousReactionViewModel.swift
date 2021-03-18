@@ -16,7 +16,9 @@ class GaseousReactionViewModel: ObservableObject {
             equilibriumConstant: initialReaction.equilibriumConstant,
             cols: MoleculeGridSettings.cols,
             rows: initialRows,
-            maxRows: GaseousReactionSettings.maxRows
+            maxRows: GaseousReactionSettings.maxRows,
+            startTime: 0,
+            equilibriumTime: AqueousReactionSettings.forwardReactionTime
         )
         self.pumpModel = PumpViewModel(
             initialExtensionFactor: 1,

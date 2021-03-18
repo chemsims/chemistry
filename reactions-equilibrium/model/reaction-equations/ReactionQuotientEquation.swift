@@ -13,6 +13,9 @@ struct ReactionQuotientEquation: Equation {
         self.init(coefficients: equations.coefficients, equations: equations.reactions)
     }
 
+    init(equations: NewBalancedReactionEquation) {
+        self.init(coefficients: equations.coefficients, equations: equations.concentration)
+    }
 
     init(coefficients: MoleculeValue<Int>, equations: MoleculeValue<Equation>) {
         self.init(

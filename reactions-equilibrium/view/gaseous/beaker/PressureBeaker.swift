@@ -32,7 +32,7 @@ struct PressureBeaker: View {
     private var beaker: some View {
         AdjustableAirBeaker(
             molecules: [],
-            animatingMolecules: model.components.beakerMolecules,
+            animatingMolecules: model.components.beakerMolecules.map(\.animatingMolecules),
             minRows: GaseousReactionSettings.minRows,
             maxRows: GaseousReactionSettings.maxRows,
             rows: $model.rows,
