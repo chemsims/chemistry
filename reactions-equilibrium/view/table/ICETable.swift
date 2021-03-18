@@ -7,14 +7,16 @@ import ReactionsCore
 
 struct ICETable: View {
 
-    let equations: BalancedReactionEquations
+    let initial: MoleculeValue<CGFloat>
+    let final: MoleculeValue<CGFloat>
 
     var body: some View {
         GeometryReader { geo in
             SizedICETable(
                 width: geo.size.width,
                 height: geo.size.height,
-                equations: equations
+                initialValues: initial,
+                finalValues: final
             )
         }
     }
@@ -24,7 +26,8 @@ private struct SizedICETable: View {
 
     let width: CGFloat
     let height: CGFloat
-    let equations: BalancedReactionEquations
+    let initialValues: MoleculeValue<CGFloat>
+    let finalValues: MoleculeValue<CGFloat>
 
     var body: some View {
         HStack(spacing: 0) {
@@ -45,11 +48,10 @@ private struct SizedICETable: View {
     }
 
     private func column(molecule: AqueousMolecule) -> some View {
-        // Sometimes a very small change appears as a negative 0 in the table, so handle that here
-        let equation = equations.reactions.value(for: molecule)
-        let initial = equations.initialConcentrations.value(for: molecule)
-        let final = equation.getY(at: equations.convergenceTime)
+        let initial = initialValues.value(for: molecule)
+        let final = finalValues.value(for: molecule)
 
+        // Sometimes a very small change appears as a negative 0 in the table
         let change = abs(final - initial) < 0.00001 ? 0 : final - initial
         let changeSign = change > 0 ? "+" : ""
         let changeString = "\(changeSign)\(change.str(decimals: 2))"
@@ -86,18 +88,8 @@ extension Equation {
 struct ICETable_Previews: PreviewProvider {
     static var previews: some View {
         ICETable(
-            equations: BalancedReactionEquations(
-                coefficients: BalancedReactionCoefficients(
-                    reactantA: 1,
-                    reactantB: 1,
-                    productC: 1,
-                    productD: 1
-                ),
-                equilibriumConstant: 10,
-                a0: 0.3,
-                b0: 0.3,
-                convergenceTime: 10
-            )
+            initial: MoleculeValue(builder: { _ in 1 }),
+            final: MoleculeValue(builder: { _ in 1 })
         )
         .padding()
     }

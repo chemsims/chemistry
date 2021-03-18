@@ -96,7 +96,7 @@ class ReactionComponents {
         self.gridSize = gridSize
     }
 
-    private(set) lazy var equation = NewBalancedReactionEquation(
+    lazy var equation = NewBalancedReactionEquation(
         coefficients: coefficients,
         equilibriumConstant: equilibriumConstant,
         initialConcentrations: initialBeakerMolecules.map(getConcentration),
@@ -209,6 +209,8 @@ struct NewBalancedReactionEquation {
     let concentration: MoleculeValue<Equation>
     let direction: ReactionDirection
 
+    let initialConcentrations: MoleculeValue<CGFloat>
+
     var isForward: Bool {
         direction == .forward
     }
@@ -223,6 +225,7 @@ struct NewBalancedReactionEquation {
     ) {
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
+        self.initialConcentrations = initialConcentrations
 
         let direction = ReactionDirection.forward
         self.direction = direction
@@ -267,10 +270,7 @@ struct NewBalancedReactionEquation {
         self.concentration = combinedWithPrevious ?? equations
     }
 
-    lazy var convergedConcentrations: MoleculeValue<CGFloat> =
-        MoleculeValue(builder: { _ in 1 })
-
-
-
-
+    lazy var equilibriumConcentrations: MoleculeValue<CGFloat> = concentration.map {
+        $0.getY(at: equilibriumTime)
+    }
 }

@@ -60,6 +60,10 @@ struct GaseousReactionScreenSettings {
     var pressureBeakerSettings: PressureBeakerSettings {
         PressureBeakerSettings(width: 0.3 * width)
     }
+
+    var common: AqueousScreenLayoutSettings {
+        AqueousScreenLayoutSettings(geometry: geometry)
+    }
 }
 
 struct GaseousReactionScreen_Previews: PreviewProvider {

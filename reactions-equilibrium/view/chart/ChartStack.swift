@@ -28,10 +28,13 @@ struct ChartStack: View {
         ZStack(alignment: .leading) {
             concentrationChart.opacity(showGraph ? 1 : 0)
             if (!showGraph) {
-                ICETable(equations: model.components.equations)
-                    .colorMultiply(
-                        model.highlightedElements.colorMultiply(for: nil)
-                    )
+                ICETable(
+                    initial: model.components.equations.initialConcentrations,
+                    final: model.components.equations.equilibriumConcentrations
+                )
+                .colorMultiply(
+                    model.highlightedElements.colorMultiply(for: nil)
+                )
             }
         }.frame(
             width: settings.chartSettings.totalChartWidth,
@@ -42,7 +45,8 @@ struct ChartStack: View {
 
     private var concentrationChart: some View {
         MultiConcentrationPlot(
-            equations: model.components.equations,
+            equations: model.components.equations.reactions,
+            equilibriumTime: model.components.equations.convergenceTime,
             discontinuities: model.components.moleculeChartDiscontinuities,
             initialTime: 0,
             currentTime: $model.currentTime,
@@ -55,7 +59,9 @@ struct ChartStack: View {
             activeIndex: $model.activeChartIndex,
             settings: settings.chartSettings
         )
-        .colorMultiply(model.highlightedElements.colorMultiply(for: .chartEquilibrium))
+        .colorMultiply(
+            model.highlightedElements.colorMultiply(for: .chartEquilibrium)
+        )
     }
 
     private var quotientChart: some View {
@@ -74,7 +80,9 @@ struct ChartStack: View {
                 maxQ: model.maxQuotient
             )
         )
-        .colorMultiply(model.highlightedElements.colorMultiply(for: .chartEquilibrium))
+        .colorMultiply(
+            model.highlightedElements.colorMultiply(for: .chartEquilibrium)
+        )
     }
 
     private var chartSelectionToggle: some View {
@@ -99,6 +107,5 @@ struct ChartStack: View {
             isSelected: showGraph == isGraph,
             action: { showGraph = isGraph }
         )
-        .font(.system(size: settings.chartSelectionFontSize))
     }
 }

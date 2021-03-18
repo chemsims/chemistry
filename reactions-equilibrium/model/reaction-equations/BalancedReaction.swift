@@ -115,6 +115,12 @@ struct BalancedReactionEquations {
     }
 }
 
+extension BalancedReactionEquations {
+    var equilibriumConcentrations: MoleculeValue<CGFloat> {
+        reactions.map { $0.getY(at: convergenceTime) }
+    }
+}
+
 struct BalancedEquationBuilder {
 
     static func getEquations(

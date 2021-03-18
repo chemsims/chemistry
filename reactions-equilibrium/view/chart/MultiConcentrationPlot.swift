@@ -7,7 +7,8 @@ import ReactionsCore
 
 struct MultiConcentrationPlot: View {
 
-    let equations: BalancedReactionEquations
+    let equations: MoleculeValue<Equation>
+    let equilibriumTime: CGFloat
     let discontinuities: MoleculeValue<CGPoint>?
 
     let initialTime: CGFloat
@@ -53,7 +54,7 @@ struct MultiConcentrationPlot: View {
 
     private var equilibriumHighlight: some View {
         EquilibriumHighlight(
-            equilibriumTime: equations.convergenceTime,
+            equilibriumTime: equilibriumTime,
             chartSize: settings.size,
             xAxis: settings.layout.xAxis,
             offset: offset
@@ -163,7 +164,8 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
                 a0: 0.4,
                 b0: 0.8,
                 convergenceTime: 15
-            ),
+            ).reactions,
+            equilibriumTime: 15,
             discontinuities: nil,
             initialTime: 0,
             currentTime: .constant(10),
