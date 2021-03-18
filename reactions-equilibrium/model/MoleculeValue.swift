@@ -55,6 +55,12 @@ struct MoleculeValue<Value> {
         case .D: return productD
         }
     }
+
+    func updating(with newValue: Value, for molecule: AqueousMolecule) -> MoleculeValue<Value> {
+        MoleculeValue(builder: {
+            $0 == molecule ? newValue : value(for: $0)
+        })
+    }
 }
 
 extension MoleculeValue {

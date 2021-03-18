@@ -26,7 +26,6 @@ struct BalancedReactionEquations {
 
     let equilibriumConstant: CGFloat
 
-    private let hasNonNilUnitChange: Bool
 
     init(
         coefficients: BalancedReactionCoefficients,
@@ -58,7 +57,6 @@ struct BalancedReactionEquations {
         self.coefficients = coefficients
         self.convergenceTime = convergenceTime
         self.equilibriumConstant = equilibriumConstant
-        self.hasNonNilUnitChange = unitChange != nil
         self.direction = .forward
     }
 
@@ -111,14 +109,13 @@ struct BalancedReactionEquations {
         self.initialConcentrations = initialConcentrations
         self.equilibriumConstant = forwardReaction.equilibriumConstant
         self.coefficients = forwardReaction.coefficients
-        self.hasNonNilUnitChange = unitChange != nil
         self.direction = .reverse
 
         self.convergenceTime = reverseInput.convergenceTime
     }
 }
 
-private struct BalancedEquationBuilder {
+struct BalancedEquationBuilder {
 
     static func getEquations(
         terms: MoleculeValue<MoleculeTerms>,
@@ -156,7 +153,7 @@ private struct BalancedEquationBuilder {
     }
 }
 
-private struct MoleculeTerms {
+struct MoleculeTerms {
     let initC: CGFloat
     let coeff: Int
     let increases: Bool

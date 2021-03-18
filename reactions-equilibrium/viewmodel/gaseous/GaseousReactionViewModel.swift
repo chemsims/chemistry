@@ -34,10 +34,7 @@ class GaseousReactionViewModel: ObservableObject {
 
     @Published var highlightedElements = HighlightedElements<GaseousScreenElement>()
 
-    private var count = 0
-
     private func onPump() {
-        count += 1
         components.increment(molecule: .A, count: 1)
     }
 
