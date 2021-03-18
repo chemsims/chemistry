@@ -208,6 +208,7 @@ struct NewBalancedReactionEquation {
     let equilibriumTime: CGFloat
     let concentration: MoleculeValue<Equation>
     let direction: ReactionDirection
+    let coefficients: MoleculeValue<Int>
 
     let initialConcentrations: MoleculeValue<CGFloat>
 
@@ -226,18 +227,15 @@ struct NewBalancedReactionEquation {
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
         self.initialConcentrations = initialConcentrations
+        self.coefficients = coefficients
 
-        let direction = ReactionDirection.forward
+        let direction = Self.getDirection(
+            coefficients: coefficients,
+            equilibriumConstant: equilibriumConstant,
+            initialConcentrations: initialConcentrations
+        )
         self.direction = direction
-        let isForward = true
-
-        func getTerm(_ molecule: AqueousMolecule) -> MoleculeTerms {
-            MoleculeTerms(
-                initC: initialConcentrations.value(for: molecule),
-                coeff: coefficients.value(for: molecule),
-                increases: molecule.isReactant ? !isForward : isForward
-            )
-        }
+        let isForward = direction == .forward
 
         let unitChange = ReactionConvergenceSolver.findUnitChangeFor(
             equilibriumConstant: equilibriumConstant,
@@ -246,6 +244,13 @@ struct NewBalancedReactionEquation {
             isForward: direction == .forward
         )
 
+        func getTerm(_ molecule: AqueousMolecule) -> MoleculeTerms {
+            MoleculeTerms(
+                initC: initialConcentrations.value(for: molecule),
+                coeff: coefficients.value(for: molecule),
+                increases: molecule.isReactant ? !isForward : isForward
+            )
+        }
 
         let equations = BalancedEquationBuilder.getEquations(
             terms: MoleculeValue(builder: getTerm),
@@ -272,5 +277,19 @@ struct NewBalancedReactionEquation {
 
     lazy var equilibriumConcentrations: MoleculeValue<CGFloat> = concentration.map {
         $0.getY(at: equilibriumTime)
+    }
+
+    private static func getDirection(
+        coefficients: MoleculeValue<Int>,
+        equilibriumConstant: CGFloat,
+        initialConcentrations: MoleculeValue<CGFloat>
+    ) -> ReactionDirection {
+        let initialQuotient = ReactionQuotientEquation(
+            coefficients: coefficients,
+            equations: initialConcentrations.map {
+                ConstantEquation(value: $0)
+            }
+        ).getY(at: 0)
+        return initialQuotient < equilibriumConstant ? .forward : .reverse
     }
 }

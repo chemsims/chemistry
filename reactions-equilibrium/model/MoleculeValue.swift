@@ -36,9 +36,9 @@ struct MoleculeValue<Value> {
         MoleculeValue<MappedValue>(builder: { f(value(for: $0)) })
     }
 
-    func combine<MappedValue>(
-        with other: MoleculeValue<Value>,
-        using combiner: (Value, Value) -> MappedValue
+    func combine<OtherValue, MappedValue>(
+        with other: MoleculeValue<OtherValue>,
+        using combiner: (Value, OtherValue) -> MappedValue
     ) -> MoleculeValue<MappedValue> {
         MoleculeValue<MappedValue>(builder: { molecule in
             let lhs = value(for: molecule)
