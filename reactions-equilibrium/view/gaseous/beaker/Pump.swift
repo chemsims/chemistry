@@ -99,6 +99,7 @@ private struct PumpWithGeometry: View {
 struct PumpSettings {
     static let heightToWidth: CGFloat = 1.3
     static let nozzleToHeight: CGFloat = 0.641
+    static let midPumpToWidth: CGFloat = 0.316
 }
 
 extension PumpWithGeometry {

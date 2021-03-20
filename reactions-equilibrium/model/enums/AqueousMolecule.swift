@@ -29,6 +29,13 @@ enum AqueousMolecule: String, CaseIterable {
 
 enum AqueousMoleculeReactant: String {
     case A, B
+
+    var molecule: AqueousMolecule {
+        switch self {
+        case .A: return .A
+        case .B: return .B
+        }
+    }
 }
 
 enum AqueousMoleculeProduct {

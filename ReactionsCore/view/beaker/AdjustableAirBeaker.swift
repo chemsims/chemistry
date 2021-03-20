@@ -9,6 +9,7 @@ public struct AdjustableAirBeaker: View {
 
     let molecules: [BeakerMolecules]
     let animatingMolecules: [AnimatingBeakerMolecules]
+    let currentTime: CGFloat
     let minRows: Int
     let maxRows: Int
     @Binding var rows: CGFloat
@@ -18,6 +19,7 @@ public struct AdjustableAirBeaker: View {
     public init(
         molecules: [BeakerMolecules],
         animatingMolecules: [AnimatingBeakerMolecules],
+        currentTime: CGFloat,
         minRows: Int,
         maxRows: Int,
         rows: Binding<CGFloat>,
@@ -25,6 +27,7 @@ public struct AdjustableAirBeaker: View {
     ) {
         self.molecules = molecules
         self.animatingMolecules = animatingMolecules
+        self.currentTime = currentTime
         self.minRows = minRows
         self.maxRows = maxRows
         self._rows = rows
@@ -36,6 +39,7 @@ public struct AdjustableAirBeaker: View {
             AdjustableAirBeakerWithHeight(
                 molecules: molecules,
                 animatingMolecules: animatingMolecules,
+                currentTime: currentTime,
                 minRows: CGFloat(minRows),
                 maxRows: CGFloat(maxRows),
                 rows: $rows,
@@ -52,6 +56,7 @@ private struct AdjustableAirBeakerWithHeight: View {
 
     let molecules: [BeakerMolecules]
     let animatingMolecules: [AnimatingBeakerMolecules]
+    let currentTime: CGFloat
     let minRows: CGFloat
     let maxRows: CGFloat
     @Binding var rows: CGFloat
@@ -99,7 +104,7 @@ private struct AdjustableAirBeakerWithHeight: View {
         FilledAirBeaker(
             molecules: molecules,
             animatingMolecules: animatingMolecules,
-            currentTime: 10,
+            currentTime: currentTime,
             rows: rows
         )
     }
@@ -167,6 +172,7 @@ struct AdjustableAirBeaker_Previews: PreviewProvider {
             AdjustableAirBeaker(
                 molecules: [],
                 animatingMolecules: [],
+                currentTime: 0,
                 minRows: 5,
                 maxRows: 15,
                 rows: $rows,

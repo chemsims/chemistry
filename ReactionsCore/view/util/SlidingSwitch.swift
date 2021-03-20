@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct SlidingSwitch<Value: Equatable>: View {
+public struct SlidingSwitch<Value: Equatable>: View {
 
     @Binding var selected: Value
     let backgroundColor: Color
@@ -13,7 +13,21 @@ struct SlidingSwitch<Value: Equatable>: View {
     let leftSettings: SwitchOptionSettings<Value>
     let rightSettings: SwitchOptionSettings<Value>
 
-    var body: some View {
+    public init(
+        selected: Binding<Value>,
+        backgroundColor: Color,
+        fontColor: Color,
+        leftSettings: SwitchOptionSettings<Value>,
+        rightSettings: SwitchOptionSettings<Value>
+    ) {
+        self._selected = selected
+        self.backgroundColor = backgroundColor
+        self.fontColor = fontColor
+        self.leftSettings = leftSettings
+        self.rightSettings = rightSettings
+    }
+
+    public var body: some View {
         GeometryReader { geo in
             SlidingSwitchWithGeometry(
                 selected: $selected,
@@ -28,10 +42,16 @@ struct SlidingSwitch<Value: Equatable>: View {
     }
 }
 
-struct SwitchOptionSettings<Value> {
+public struct SwitchOptionSettings<Value> {
     let value: Value
     let color: Color
     let label: String
+
+    public init(value: Value, color: Color, label: String) {
+        self.value = value
+        self.color = color
+        self.label = label
+    }
 }
 
 private struct SlidingSwitchWithGeometry<Value: Equatable>: View {
@@ -74,10 +94,9 @@ private struct SlidingSwitchWithGeometry<Value: Equatable>: View {
                 .foregroundColor(settings.color)
             Text(settings.label)
                 .fixedSize()
-                .font(.system(size: height / 3))
                 .foregroundColor(fontColor)
         }
-        .frame(width: 0.9 * height, height: 0.9 * height)
+        .frame(width: 0.85 * height, height: 0.9 * height)
         .shadow(radius: 2)
         .position(
             x: isLeft ? leftCircleX : rightCircleX,
@@ -94,7 +113,7 @@ private struct SlidingSwitchWithGeometry<Value: Equatable>: View {
             Circle()
                 .position(x: rightCircleX, y: height / 2)
         }
-        .foregroundColor(.gray)
+        .foregroundColor(backgroundColor)
     }
 
     private var leftCircleX: CGFloat {
@@ -137,6 +156,7 @@ struct SlidingSwitch_Previews: PreviewProvider {
                     label: "B"
                 )
             )
+            .font(.system(size: 40))
         }
     }
 }

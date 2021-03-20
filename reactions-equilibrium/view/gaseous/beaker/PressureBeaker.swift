@@ -24,15 +24,29 @@ struct PressureBeaker: View {
     }
 
     private var pump: some View {
-        Pump(pumpModel: model.pumpModel)
-            .frame(width: settings.pumpWidth, height: settings.pumpHeight)
-            .offset(x: settings.pumpXOffset, y: -settings.pumpYOffset)
+        VStack(alignment: .leading, spacing: settings.switchSpacing) {
+            Pump(pumpModel: model.pumpModel)
+                .frame(width: settings.pumpWidth, height: settings.pumpHeight)
+                .offset(x: settings.pumpXOffset)
+            SlidingSwitch(
+                selected: $model.selectedPumpReactant,
+                backgroundColor: Styling.switchBackground,
+                fontColor: .black,
+                leftSettings: AqueousMoleculeReactant.A.switchSettings,
+                rightSettings:  AqueousMoleculeReactant.B.switchSettings
+
+            )
+            .font(.system(size: settings.switchFontSize))
+            .frame(width: settings.switchWidth, height: settings.switchHeight)
+            .offset(x: settings.switchXOffset)
+        }
     }
 
     private var beaker: some View {
         AdjustableAirBeaker(
             molecules: [],
             animatingMolecules: model.components.beakerMolecules.map(\.animatingMolecules),
+            currentTime: model.currentTime,
             minRows: GaseousReactionSettings.minRows,
             maxRows: GaseousReactionSettings.maxRows,
             rows: $model.rows,
@@ -63,6 +77,25 @@ struct PressureBeaker: View {
             )
         )
         .frame(width: settings.standWidth)
+    }
+}
+
+private extension AqueousMoleculeReactant {
+    var switchSettings: SwitchOptionSettings<AqueousMoleculeReactant> {
+        switch self {
+        case .A:
+            return SwitchOptionSettings(
+                value: .A,
+                color: AqueousMolecule.A.color,
+                label: "A"
+            )
+        case .B:
+            return SwitchOptionSettings(
+                value: .B,
+                color: AqueousMolecule.B.color,
+                label: "B"
+            )
+        }
     }
 }
 
@@ -102,16 +135,34 @@ struct PressureBeakerSettings {
         PumpSettings.heightToWidth * pumpWidth
     }
 
-    var pumpYOffset: CGFloat {
-        sliderWidth + burnerSettings.sliderTopPadding
-    }
-
     var pumpXOffset: CGFloat {
         airBeakerTotalWidth - beakerWidth
     }
 
     var sliderValuePadding: CGFloat {
         0.1 * standWidth
+    }
+
+    var switchHeight: CGFloat {
+        0.14 * pumpHeight
+    }
+
+    var switchSpacing: CGFloat {
+        0.5 * switchHeight
+    }
+
+    var switchWidth: CGFloat {
+        2 * switchHeight
+    }
+
+    var switchFontSize: CGFloat {
+        0.8 * switchHeight
+    }
+
+    var switchXOffset: CGFloat {
+        let midPumpPosition = PumpSettings.midPumpToWidth * pumpWidth
+        let extraOffset = midPumpPosition - (switchWidth / 2)
+        return pumpXOffset + extraOffset
     }
 
     var burnerSettings: AdjustableBeakerBurnerSettings {

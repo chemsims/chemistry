@@ -30,6 +30,7 @@ class GaseousReactionViewModel: ObservableObject {
         )
     }
 
+    @Published var currentTime: CGFloat = 0
     @Published var componentWrapper: ReactionComponentsWrapper
     @Published var rows: CGFloat {
         didSet {
@@ -39,6 +40,7 @@ class GaseousReactionViewModel: ObservableObject {
     }
 
     @Published var highlightedElements = HighlightedElements<GaseousScreenElement>()
+    @Published var selectedPumpReactant = AqueousMoleculeReactant.A
 
     var components: ReactionComponents {
         componentWrapper.components
@@ -46,7 +48,7 @@ class GaseousReactionViewModel: ObservableObject {
 
     private func onPump() {
         objectWillChange.send()
-        componentWrapper.increment(molecule: .A, count: 1)
+        componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 1)
     }
 
     private(set) var pumpModel: PumpViewModel<CGFloat>!
