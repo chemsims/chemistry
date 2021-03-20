@@ -235,7 +235,8 @@ class ReactionComponentTests: XCTestCase {
             startTime: 0,
             equilibriumTime: 100,
             previousEquation: nil,
-            previousMolecules: nil
+            previousMolecules: nil,
+            rowsHaveChangeFromPrevious: nil
         )
         XCTAssertEqual(
             model.beakerMolecules[1].animatingMolecules.fractionToDraw.getY(at: 0), 1
@@ -260,7 +261,8 @@ class ReactionComponentTests: XCTestCase {
             startTime: 0,
             equilibriumTime: 10,
             previousEquation: nil,
-            previousMolecules: nil
+            previousMolecules: nil,
+            rowsHaveChangeFromPrevious: nil
         )
 
         let fwdC = forward.beakerMolecules[2]
@@ -284,11 +286,51 @@ class ReactionComponentTests: XCTestCase {
             startTime: 11,
             equilibriumTime: 20,
             previousEquation: forward.equation,
-            previousMolecules: initReverse
+            previousMolecules: initReverse,
+            rowsHaveChangeFromPrevious: nil
         )
 
         XCTAssertEqual(reverse.equation.concentration.productC.getY(at: 11), 0.25, accuracy: 0.001)
         XCTAssertEqual(reverse.equation.concentration.productD.getY(at: 11), 0.25, accuracy: 0.001)
+    }
+
+    func testReducingBeakerVolume() {
+        let fwdModel = ReactionComponentsWrapper(
+            coefficients: .unit,
+            equilibriumConstant: 1,
+            beakerCols: 10,
+            beakerRows: 10,
+            maxBeakerRows: 10,
+            dynamicGridCols: 10,
+            dynamicGridRows: 10,
+            startTime: 0,
+            equilibriumTime: 10
+        )
+        fwdModel.increment(molecule: .A, count: 30)
+        fwdModel.increment(molecule: .B, count: 30)
+
+        let revModel = ReactionComponentsWrapper(
+            previous: fwdModel,
+            startTime: 11,
+            equilibriumTime: 20
+        )
+
+        revModel.beakerRows = 6
+        revModel.beakerCoords.forEach { coords in
+            XCTAssertEqual(coords.count, 15)
+            coords.forEach { coord in
+                XCTAssertLessThan(coord.row, 6)
+            }
+        }
+
+        let initC = revModel.components.equation.initialConcentrations
+        initC.all.forEach {
+            XCTAssertEqual($0, 0.25)
+        }
+
+        revModel.components.equilibriumGrid.all.forEach { grid in
+            XCTAssertEqual(grid.coordinates.count, 25)
+        }
     }
 
     private func labelledAnimatingMolecules(

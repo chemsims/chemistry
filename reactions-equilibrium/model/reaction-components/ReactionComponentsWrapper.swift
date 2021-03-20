@@ -10,7 +10,7 @@ class ReactionComponentsWrapper {
     let beakerCols: Int
     var beakerRows: Int {
         didSet {
-            setComponents()
+            rowsWasSet()
         }
     }
     var coefficients: BalancedReactionCoefficients {
@@ -73,7 +73,8 @@ class ReactionComponentsWrapper {
             startTime: startTime,
             equilibriumTime: equilibriumTime,
             previousEquation: nil,
-            previousMolecules: nil
+            previousMolecules: nil,
+            rowsHaveChangeFromPrevious: nil
         )
     }
 
@@ -113,7 +114,8 @@ class ReactionComponentsWrapper {
             startTime: startTime,
             equilibriumTime: equilibriumTime,
             previousEquation: previous.components.equation,
-            previousMolecules: filteredMolecules
+            previousMolecules: filteredMolecules,
+            rowsHaveChangeFromPrevious: false
         )
     }
 
@@ -131,11 +133,13 @@ class ReactionComponentsWrapper {
             avoiding: avoid
         )
         molecules = molecules.updating(with: newCoords, for: molecule)
+        updateGridMolecules(for: molecule)
+        setComponents()
+    }
 
+    private func updateGridMolecules(for molecule: AqueousMolecule) {
         let updatedGrid = getUpdatedGridMolecule(for: molecule)
         gridMolecules = gridMolecules.updating(with: updatedGrid, for: molecule)
-
-        setComponents()
     }
 
     private func getUpdatedGridMolecule(
@@ -147,7 +151,8 @@ class ReactionComponentsWrapper {
             gridSize: beakerGridSize,
             previousCoords: components.previousMolecules?.value(for: molecule),
             previousEquation: components.previousEquation,
-            at: startTime
+            at: startTime,
+            rowsHaveChangeFromPrevious: previous.map { $0.beakerRows != beakerRows }
         )
         let targetCount = (targetConcentration * CGFloat(gridCols * gridRows)).roundedInt()
         let currentGrid = gridMolecules.value(for: molecule)
@@ -179,7 +184,8 @@ class ReactionComponentsWrapper {
             startTime: startTime,
             equilibriumTime: equilibriumTime,
             previousEquation: components.previousEquation,
-            previousMolecules: components.previousMolecules
+            previousMolecules: components.previousMolecules,
+            rowsHaveChangeFromPrevious: previous.map { $0.beakerRows != beakerRows }
         )
     }
 
@@ -204,6 +210,30 @@ class ReactionComponentsWrapper {
         let previousC = previous.map { getConcentration(from: $0.components, at: $0.equilibriumTime) }
 
         return currentC - (previousC ?? 0)
+    }
+
+    private func rowsWasSet() {
+        AqueousMolecule.allCases.forEach { molecule in
+            updateVolume(for: molecule)
+        }
+        setComponents()
+    }
+
+    private func updateVolume(for molecule: AqueousMolecule) {
+        let filteredMolecules = molecules.map { $0.filter { $0.row < beakerRows }}
+        let coords = molecules.value(for: molecule)
+        let filteredCoords = filteredMolecules.value(for: molecule)
+        let numToAdd = coords.count - filteredCoords.count
+        let updatedCoords = GridCoordinateList.addingRandomElementsTo(
+            grid: filteredCoords,
+            count: numToAdd,
+            cols: beakerCols,
+            rows: beakerRows,
+            avoiding: filteredMolecules.all.flatten
+        )
+
+        molecules = molecules.updating(with: updatedCoords, for: molecule)
+        updateGridMolecules(for: molecule)
     }
 
 }

@@ -18,6 +18,7 @@ class ReactionComponents {
     let equilibriumTime: CGFloat
     let previousEquation: BalancedReactionEquation?
     let previousMolecules: MoleculeValue<[GridCoordinate]>?
+    let rowsHaveChangeFromPrevious: Bool?
 
     init(
         initialBeakerMolecules: MoleculeValue<[GridCoordinate]>,
@@ -30,7 +31,8 @@ class ReactionComponents {
         startTime: CGFloat,
         equilibriumTime: CGFloat,
         previousEquation: BalancedReactionEquation?,
-        previousMolecules: MoleculeValue<[GridCoordinate]>?
+        previousMolecules: MoleculeValue<[GridCoordinate]>?,
+        rowsHaveChangeFromPrevious: Bool?
     ) {
         self.initialBeakerMolecules = initialBeakerMolecules
         self.coefficients = coefficients
@@ -43,6 +45,7 @@ class ReactionComponents {
         self.equilibriumTime = equilibriumTime
         self.previousEquation = previousEquation
         self.previousMolecules = previousMolecules
+        self.rowsHaveChangeFromPrevious = rowsHaveChangeFromPrevious
     }
 
     lazy var equation = BalancedReactionEquation(
@@ -218,7 +221,8 @@ class ReactionComponents {
             gridSize: beakerGridSize,
             previousCoords: previousMolecules?.value(for: molecule),
             previousEquation: previousEquation,
-            at: startTime
+            at: startTime,
+            rowsHaveChangeFromPrevious: rowsHaveChangeFromPrevious
         )
     }
 

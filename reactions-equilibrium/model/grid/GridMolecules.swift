@@ -24,12 +24,13 @@ struct GridUtil {
         gridSize: Int,
         previousCoords: [GridCoordinate]?,
         previousEquation: BalancedReactionEquation?,
-        at time: CGFloat
+        at time: CGFloat,
+        rowsHaveChangeFromPrevious: Bool?
     ) -> CGFloat {
         let defaultValue = CGFloat(coords.count) / CGFloat(gridSize)
         if let prevCoords = previousCoords, let prevEquation = previousEquation {
             let current = coords
-            if prevCoords.count == current.count {
+            if prevCoords.count == current.count && !(rowsHaveChangeFromPrevious ?? false) {
                 return prevEquation.concentration.value(for: molecule).getY(at: time)
             }
         }
