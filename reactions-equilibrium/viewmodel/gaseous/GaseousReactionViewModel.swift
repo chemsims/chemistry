@@ -11,6 +11,7 @@ class GaseousReactionViewModel: ObservableObject {
         let initialReaction = AqueousReactionType.A
         let initialRows = GaseousReactionSettings.initialRows
         self.rows = CGFloat(initialRows)
+        self.selectedReaction = initialReaction
         self.componentWrapper = ReactionComponentsWrapper(
             coefficients: initialReaction.coefficients,
             equilibriumConstant: initialReaction.equilibriumConstant,
@@ -51,11 +52,13 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var showConcentrationLines = false
     @Published var showQuotientLine = false
 
-    @Published var selectedReaction = AqueousReactionType.A
-    @Published var reactionSelectionIsToggled = true
+    @Published var selectedReaction: AqueousReactionType
+    @Published var reactionSelectionIsToggled = false
 
     @Published var highlightForwardReactionArrow = false
     @Published var highlightReverseReactionArrow = false
+
+    @Published var showEquationTerms = true
 
     func next() {
 

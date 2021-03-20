@@ -58,6 +58,7 @@ struct RightStackView: View {
     let statement: [TextLine]
     let components: ReactionComponents
     let currentTime: CGFloat
+    let equilibriumQuotient: CGFloat
     let isSelectingReaction: Bool
     @Binding var selectedReaction: AqueousReactionType
     @Binding var reactionSelectionIsToggled: Bool
@@ -65,7 +66,13 @@ struct RightStackView: View {
     let highlightReverseReactionArrow: Bool
     let next: () -> Void
     let back: () -> Void
+
     let generalElementHighlight: Color
+    let quotientToConcentrationDefinitionHighlight: Color
+    let quotientToEquilibriumConstantDefinitionHighlight: Color
+
+    let showEquationTerms: Bool
+    let formatElementName: (String) -> String
 
     let settings: AqueousScreenLayoutSettings
 
@@ -113,17 +120,20 @@ struct RightStackView: View {
     }
 
     private var equation: some View {
-        Text("")
-//        AqueousEquationView(
-//            showTerms: model.showEquationTerms,
-//            equations: model.components.equation,
-//            quotient: model.quotientEquation,
-//            convergedQuotient: model.convergenceQuotient,
-//            currentTime: model.currentTime,
-//            highlightedElements: model.highlightedElements,
-//            maxWidth: settings.equationWidth,
-//            maxHeight: settings.equationHeight
-//        )
+        AqueousEquationView(
+            showTerms: showEquationTerms,
+            equations: components.equation.concentration,
+            coefficients: components.coefficients,
+            quotient: components.quotientEquation,
+            convergedQuotient: equilibriumQuotient,
+            currentTime: currentTime,
+            formatElementName: formatElementName,
+            generalElementHighlight: generalElementHighlight,
+            quotientToConcentrationDefinitionHighlight: quotientToConcentrationDefinitionHighlight,
+            quotientToEquilibriumConstantDefinitionHighlight: quotientToEquilibriumConstantDefinitionHighlight,
+            maxWidth: settings.equationWidth,
+            maxHeight: settings.equationHeight
+        )
     }
 
     // Must use opacity to control visibility instead of removing from stack, otherwise animation stops
@@ -233,6 +243,7 @@ extension RightStackView {
             statement: model.statement,
             components: model.components,
             currentTime: model.currentTime,
+            equilibriumQuotient: model.convergenceQuotient,
             isSelectingReaction: model.inputState == .selectReactionType,
             selectedReaction: selectedReaction,
             reactionSelectionIsToggled: reactionSelectionIsToggled,
@@ -241,6 +252,16 @@ extension RightStackView {
             next: model.next,
             back: model.back,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
+            quotientToConcentrationDefinitionHighlight:
+                model.highlightedElements.colorMultiply(
+                    for: .quotientToConcentrationDefinition
+                ),
+            quotientToEquilibriumConstantDefinitionHighlight:
+                model.highlightedElements.colorMultiply(
+                    for: .quotientToEquilibriumConstantDefinition
+                ),
+            showEquationTerms: model.showEquationTerms,
+            formatElementName: { "[\($0)]" },
             settings: settings
         )
     }
@@ -255,6 +276,7 @@ extension RightStackView {
             statement: model.statement,
             components: model.components,
             currentTime: model.currentTime,
+            equilibriumQuotient: model.equilibriumQuotient,
             isSelectingReaction: model.inputState == .selectReactionType,
             selectedReaction: selectedReaction,
             reactionSelectionIsToggled: reactionSelectionIsToggled,
@@ -263,6 +285,14 @@ extension RightStackView {
             next: model.next,
             back: model.back,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
+            quotientToConcentrationDefinitionHighlight: model.highlightedElements.colorMultiply(
+                for: .quotientToConcentrationDefinition
+            ),
+            quotientToEquilibriumConstantDefinitionHighlight: model.highlightedElements.colorMultiply(
+                for: .quotientToEquilibriumConstantDefinition
+            ),
+            showEquationTerms: model.showEquationTerms,
+            formatElementName: { "P\($0.lowercased())" },
             settings: settings
         )
     }
