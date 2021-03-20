@@ -42,6 +42,13 @@ private struct GaseousReactionScreenWithSettings: View {
                 activeChartIndex: $model.activeChartIndex,
                 settings: settings.common
             )
+            Spacer()
+            RightStackView(
+                model: model,
+                selectedReaction: $model.selectedReaction,
+                reactionSelectionIsToggled: $model.reactionSelectionIsToggled,
+                settings: settings.common
+            )
         }
     }
 }

@@ -30,6 +30,8 @@ class GaseousReactionViewModel: ObservableObject {
         )
     }
 
+    @Published var statement = [TextLine]()
+    @Published var inputState = GaseousReactionInputState.none
     @Published var currentTime: CGFloat = 0
     @Published var componentWrapper: ReactionComponentsWrapper
     @Published var rows: CGFloat {
@@ -48,6 +50,20 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var canSetChartIndex = false
     @Published var showConcentrationLines = false
     @Published var showQuotientLine = false
+
+    @Published var selectedReaction = AqueousReactionType.A
+    @Published var reactionSelectionIsToggled = true
+
+    @Published var highlightForwardReactionArrow = false
+    @Published var highlightReverseReactionArrow = false
+
+    func next() {
+
+    }
+
+    func back() {
+
+    }
 
 
     var components: ReactionComponents {

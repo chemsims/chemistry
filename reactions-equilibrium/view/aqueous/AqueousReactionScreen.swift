@@ -43,14 +43,30 @@ private struct AqueousReactionScreenWithSettings: View {
                 settings: settings
             )
             Spacer()
-            RightStackView(model: model, settings: settings)
+            RightStackView(
+                model: model,
+                selectedReaction: $model.selectedReaction,
+                reactionSelectionIsToggled: $model.reactionSelectionIsToggled,
+                settings: settings
+            )
         }
     }
 }
 
 struct RightStackView: View {
 
-    @ObservedObject var model: AqueousReactionViewModel
+    let statement: [TextLine]
+    let components: ReactionComponents
+    let currentTime: CGFloat
+    let isSelectingReaction: Bool
+    @Binding var selectedReaction: AqueousReactionType
+    @Binding var reactionSelectionIsToggled: Bool
+    let highlightForwardReactionArrow: Bool
+    let highlightReverseReactionArrow: Bool
+    let next: () -> Void
+    let back: () -> Void
+    let generalElementHighlight: Color
+
     let settings: AqueousScreenLayoutSettings
 
     @State private var showGrid = false
@@ -70,43 +86,44 @@ struct RightStackView: View {
 
     private var reactionToggle: some View {
         HStack(spacing: 0) {
-            if model.inputState != .selectReactionType {
+            if !isSelectingReaction {
                 AqueousReactionTypeView(
-                    type: model.selectedReaction,
-                    highlightTopArrow: model.highlightForwardReactionArrow,
-                    highlightReverseArrow: model.highlightReverseReactionArrow
+                    type: selectedReaction,
+                    highlightTopArrow: highlightForwardReactionArrow,
+                    highlightReverseArrow: highlightReverseReactionArrow
                 )
                 .minimumScaleFactor(0.5)
             }
 
             Spacer()
             AqueousReactionDropDownSelection(
-                isToggled: $model.reactionSelectionIsToggled,
-                selection: $model.selectedReaction,
-                onSelection: model.next,
+                isToggled: $reactionSelectionIsToggled,
+                selection: $selectedReaction,
+                onSelection: next,
                 height: settings.reactionToggleHeight
             ).frame(
                 width: settings.reactionToggleHeight,
                 height: settings.reactionToggleHeight,
                 alignment: .topTrailing
             )
-            .disabled(model.inputState != .selectReactionType)
+            .disabled(!isSelectingReaction)
         }
         .frame(width: settings.gridWidth, height: settings.reactionToggleHeight)
-        .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
+        .colorMultiply(generalElementHighlight)
     }
 
     private var equation: some View {
-        AqueousEquationView(
-            showTerms: model.showEquationTerms,
-            equations: model.components.equation,
-            quotient: model.quotientEquation,
-            convergedQuotient: model.convergenceQuotient,
-            currentTime: model.currentTime,
-            highlightedElements: model.highlightedElements,
-            maxWidth: settings.equationWidth,
-            maxHeight: settings.equationHeight
-        )
+        Text("")
+//        AqueousEquationView(
+//            showTerms: model.showEquationTerms,
+//            equations: model.components.equation,
+//            quotient: model.quotientEquation,
+//            convergedQuotient: model.convergenceQuotient,
+//            currentTime: model.currentTime,
+//            highlightedElements: model.highlightedElements,
+//            maxWidth: settings.equationWidth,
+//            maxHeight: settings.equationHeight
+//        )
     }
 
     // Must use opacity to control visibility instead of removing from stack, otherwise animation stops
@@ -126,7 +143,7 @@ struct RightStackView: View {
                     height: settings.chartSelectionHeight
                 )
         }
-        .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
+        .colorMultiply(generalElementHighlight)
     }
 
     private var gridToggleSelection: some View {
@@ -140,45 +157,45 @@ struct RightStackView: View {
 
     private var scales: some View {
         MoleculeScales(
-            reaction: model.components.equation,
-            currentTime: model.currentTime
+            reaction: components.equation,
+            currentTime: currentTime
         )
         .frame(width: settings.scalesWidth, height: settings.scalesHeight)
     }
 
     private var grid: some View {
         EquilibriumGrid(
-            currentTime: model.currentTime,
+            currentTime: currentTime,
             reactants: [
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components.equilibriumGrid.reactantA.coordinates,
+                        coords: components.equilibriumGrid.reactantA.coordinates,
                         color: .from(.aqMoleculeA)
                     ),
-                    fractionToDraw: model.components.equilibriumGrid.reactantA.fractionToDraw
+                    fractionToDraw: components.equilibriumGrid.reactantA.fractionToDraw
                 ),
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components.equilibriumGrid.reactantB.coordinates,
+                        coords: components.equilibriumGrid.reactantB.coordinates,
                         color: .from(.aqMoleculeB)
                     ),
-                    fractionToDraw: model.components.equilibriumGrid.reactantB.fractionToDraw
+                    fractionToDraw: components.equilibriumGrid.reactantB.fractionToDraw
                 )
             ],
             products: [
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components.equilibriumGrid.productC.coordinates,
+                        coords: components.equilibriumGrid.productC.coordinates,
                         color: .from(.aqMoleculeC)
                     ),
-                    fractionToDraw: model.components.equilibriumGrid.productC.fractionToDraw
+                    fractionToDraw: components.equilibriumGrid.productC.fractionToDraw
                 ),
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components.equilibriumGrid.productD.coordinates,
+                        coords: components.equilibriumGrid.productD.coordinates,
                         color: .from(.aqMoleculeD)
                     ),
-                    fractionToDraw: model.components.equilibriumGrid.productD.fractionToDraw
+                    fractionToDraw: components.equilibriumGrid.productD.fractionToDraw
                 )
             ]
         )
@@ -187,9 +204,9 @@ struct RightStackView: View {
 
     private var beaky: some View {
         BeakyBox(
-            statement: model.statement,
-            next: model.next,
-            back: model.back,
+            statement: statement,
+            next: next,
+            back: back,
             nextIsDisabled: false,
             settings: settings.beakySettings
         )
@@ -202,6 +219,52 @@ struct RightStackView: View {
             action: { showGrid = isGrid }
         )
         .font(.system(size: settings.gridSelectionFontSize))
+    }
+}
+
+extension RightStackView {
+    init(
+        model: AqueousReactionViewModel,
+        selectedReaction: Binding<AqueousReactionType>,
+        reactionSelectionIsToggled: Binding<Bool>,
+        settings: AqueousScreenLayoutSettings
+    ) {
+        self.init(
+            statement: model.statement,
+            components: model.components,
+            currentTime: model.currentTime,
+            isSelectingReaction: model.inputState == .selectReactionType,
+            selectedReaction: selectedReaction,
+            reactionSelectionIsToggled: reactionSelectionIsToggled,
+            highlightForwardReactionArrow: model.highlightForwardReactionArrow,
+            highlightReverseReactionArrow: model.highlightReverseReactionArrow,
+            next: model.next,
+            back: model.back,
+            generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
+            settings: settings
+        )
+    }
+
+    init(
+        model: GaseousReactionViewModel,
+        selectedReaction: Binding<AqueousReactionType>,
+        reactionSelectionIsToggled: Binding<Bool>,
+        settings: AqueousScreenLayoutSettings
+    ) {
+        self.init(
+            statement: model.statement,
+            components: model.components,
+            currentTime: model.currentTime,
+            isSelectingReaction: model.inputState == .selectReactionType,
+            selectedReaction: selectedReaction,
+            reactionSelectionIsToggled: reactionSelectionIsToggled,
+            highlightForwardReactionArrow: model.highlightForwardReactionArrow,
+            highlightReverseReactionArrow: model.highlightReverseReactionArrow,
+            next: model.next,
+            back: model.back,
+            generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
+            settings: settings
+        )
     }
 }
 
