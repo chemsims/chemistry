@@ -42,8 +42,24 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var highlightedElements = HighlightedElements<GaseousScreenElement>()
     @Published var selectedPumpReactant = AqueousMoleculeReactant.A
 
+    @Published var chartOffset: CGFloat = 0
+    @Published var activeChartIndex: Int? = nil
+    @Published var canSetCurrentTime = false
+    @Published var canSetChartIndex = false
+    @Published var showConcentrationLines = false
+    @Published var showQuotientLine = false
+
+
     var components: ReactionComponents {
         componentWrapper.components
+    }
+
+    var maxQuotient: CGFloat {
+        10
+    }
+
+    var equilibriumQuotient: CGFloat {
+        10
     }
 
     private func onPump() {

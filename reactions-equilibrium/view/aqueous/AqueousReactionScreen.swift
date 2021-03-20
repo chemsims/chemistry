@@ -36,14 +36,19 @@ private struct AqueousReactionScreenWithSettings: View {
         HStack(spacing: 0) {
             AqueousBeakerView(model: model, settings: settings)
             Spacer()
-            ChartStack(model: model, settings: settings)
+            ChartStack(
+                model: model,
+                currentTime: $model.currentTime,
+                activeChartIndex: $model.activeChartIndex,
+                settings: settings
+            )
             Spacer()
             RightStackView(model: model, settings: settings)
         }
     }
 }
 
-private struct RightStackView: View {
+struct RightStackView: View {
 
     @ObservedObject var model: AqueousReactionViewModel
     let settings: AqueousScreenLayoutSettings

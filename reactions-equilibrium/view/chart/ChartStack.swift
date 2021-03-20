@@ -6,17 +6,28 @@ import SwiftUI
 import ReactionsCore
 
 struct ChartStack: View {
-    @ObservedObject var model: AqueousReactionViewModel
+
+    let components: ReactionComponents
+    @Binding var currentTime: CGFloat
+    let chartOffset: CGFloat
+    let canSetCurrentTime: Bool
+    let canSetChartIndex: Bool
+    let showConcentrationLines: Bool
+    let showQuotientLine: Bool
+    let maxQuotient: CGFloat
     let settings: AqueousScreenLayoutSettings
+    let equilibriumQuotient: CGFloat
+    @Binding var activeChartIndex: Int?
+
+    let generalElementHighlight: Color
+    let equilibriumHighlight: Color
 
     @State private var showGraph = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             chartSelectionToggle
-                .colorMultiply(
-                    model.highlightedElements.colorMultiply(for: nil)
-                )
+                .colorMultiply(generalElementHighlight)
             chartOrTable
             Spacer()
             quotientChart
@@ -29,12 +40,10 @@ struct ChartStack: View {
             concentrationChart.opacity(showGraph ? 1 : 0)
             if (!showGraph) {
                 ICETable(
-                    initial: model.components.equation.initialConcentrations,
-                    final: model.components.equation.equilibriumConcentrations
+                    initial: components.equation.initialConcentrations,
+                    final: components.equation.equilibriumConcentrations
                 )
-                .colorMultiply(
-                    model.highlightedElements.colorMultiply(for: nil)
-                )
+                .colorMultiply(generalElementHighlight)
             }
         }.frame(
             width: settings.chartSettings.totalChartWidth,
@@ -45,44 +54,40 @@ struct ChartStack: View {
 
     private var concentrationChart: some View {
         MultiConcentrationPlot(
-            equations: model.components.equation.concentration,
-            equilibriumTime: model.components.equation.equilibriumTime,
-            discontinuities: model.components.moleculeChartDiscontinuities,
+            equations: components.equation.concentration,
+            equilibriumTime: components.equation.equilibriumTime,
+            discontinuities: components.moleculeChartDiscontinuities,
             initialTime: 0,
-            currentTime: $model.currentTime,
+            currentTime: $currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
-            canSetCurrentTime: model.canSetCurrentTime,
-            showData: model.showConcentrationLines,
-            offset: model.chartOffset,
-            minDragTime: model.components.quotientChartDiscontinuity?.x,
-            canSetIndex: model.canSetChartIndex,
-            activeIndex: $model.activeChartIndex,
+            canSetCurrentTime: canSetCurrentTime,
+            showData: showConcentrationLines,
+            offset: chartOffset,
+            minDragTime: components.quotientChartDiscontinuity?.x,
+            canSetIndex: canSetChartIndex,
+            activeIndex: $activeChartIndex,
             settings: settings.chartSettings
         )
-        .colorMultiply(
-            model.highlightedElements.colorMultiply(for: .chartEquilibrium)
-        )
+        .colorMultiply(equilibriumHighlight)
     }
 
     private var quotientChart: some View {
         QuotientPlot(
-            equation: model.components.quotientEquation,
+            equation: components.quotientEquation,
             initialTime: 0,
-            currentTime: $model.currentTime,
+            currentTime: $currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
-            canSetCurrentTime: model.canSetCurrentTime,
-            equilibriumTime: model.components.equation.equilibriumTime,
-            showData: model.showQuotientLine,
-            offset: model.chartOffset,
-            discontinuity: model.components.quotientChartDiscontinuity,
+            canSetCurrentTime: canSetCurrentTime,
+            equilibriumTime: components.equation.equilibriumTime,
+            showData: showQuotientLine,
+            offset: chartOffset,
+            discontinuity: components.quotientChartDiscontinuity,
             settings: settings.quotientChartSettings(
-                convergenceQ: model.convergenceQuotient,
-                maxQ: model.maxQuotient
+                convergenceQ: equilibriumQuotient,
+                maxQ: maxQuotient
             )
         )
-        .colorMultiply(
-            model.highlightedElements.colorMultiply(for: .chartEquilibrium)
-        )
+        .colorMultiply(equilibriumHighlight)
     }
 
     private var chartSelectionToggle: some View {
@@ -106,6 +111,54 @@ struct ChartStack: View {
             text: isGraph ? "Graph" : "Table",
             isSelected: showGraph == isGraph,
             action: { showGraph = isGraph }
+        )
+    }
+}
+
+extension ChartStack {
+    init(
+        model: AqueousReactionViewModel,
+        currentTime: Binding<CGFloat>,
+        activeChartIndex: Binding<Int?>,
+        settings: AqueousScreenLayoutSettings
+    ) {
+        self.init(
+            components: model.components,
+            currentTime: currentTime,
+            chartOffset: model.chartOffset,
+            canSetCurrentTime: model.canSetCurrentTime,
+            canSetChartIndex: model.canSetChartIndex,
+            showConcentrationLines: model.showConcentrationLines,
+            showQuotientLine: model.showQuotientLine,
+            maxQuotient: model.maxQuotient,
+            settings: settings,
+            equilibriumQuotient: model.convergenceQuotient,
+            activeChartIndex: activeChartIndex,
+            generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
+            equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium)
+        )
+    }
+
+    init(
+        model: GaseousReactionViewModel,
+        currentTime: Binding<CGFloat>,
+        activeChartIndex: Binding<Int?>,
+        settings: AqueousScreenLayoutSettings
+    ) {
+        self.init(
+            components: model.components,
+            currentTime: currentTime,
+            chartOffset: model.chartOffset,
+            canSetCurrentTime: model.canSetCurrentTime,
+            canSetChartIndex: model.canSetChartIndex,
+            showConcentrationLines: model.showConcentrationLines,
+            showQuotientLine: model.showQuotientLine,
+            maxQuotient: model.maxQuotient,
+            settings: settings,
+            equilibriumQuotient: model.equilibriumQuotient,
+            activeChartIndex: activeChartIndex,
+            generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
+            equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium)
         )
     }
 }
