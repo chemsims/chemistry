@@ -158,6 +158,30 @@ class GridMoleculesTests: XCTestCase {
         XCTAssertEqual(dGrid.fractionToDraw.getY(at: tMid), expectedFraction(reverseReaction.productD, initC.productC), accuracy: 0.015)
     }
 
+    func testAddingSecondElementBeforeFirstElement() {
+        let model = ReactionComponentsWrapper(
+            coefficients: .unit,
+            equilibriumConstant: 1,
+            beakerCols: 10,
+            beakerRows: 10,
+            maxBeakerRows: 10,
+            dynamicGridCols: 10,
+            dynamicGridRows: 10,
+            startTime: 0,
+            equilibriumTime: 10
+        )
+        model.increment(molecule: .B, count: 30)
+
+        var getBCoords: [GridCoordinate] {
+            model.components.equilibriumGrid.reactantB.coordinates
+        }
+
+        let bCoordsPreAIncrement = getBCoords
+
+        model.increment(molecule: .A, count: 30)
+        XCTAssertEqual(getBCoords, bCoordsPreAIncrement)
+    }
+
     private func gridCountFor(_ concentration: CGFloat) -> Int {
         (concentration * 100).roundedInt()
     }
