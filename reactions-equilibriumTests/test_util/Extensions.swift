@@ -40,7 +40,7 @@ extension NewBalancedReactionEquation {
         withInitialConcentration(newValue, for: .B)
     }
 
-    private func withInitialConcentration(_ newValue: CGFloat, for molecule: AqueousMolecule) -> NewBalancedReactionEquation {
+    func withInitialConcentration(_ newValue: CGFloat, for molecule: AqueousMolecule) -> NewBalancedReactionEquation {
         NewBalancedReactionEquation(
             coefficients: coefficients,
             equilibriumConstant: equilibriumTime,

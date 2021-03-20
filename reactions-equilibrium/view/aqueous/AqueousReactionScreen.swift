@@ -163,17 +163,17 @@ private struct RightStackView: View {
             products: [
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components.cGridMolecules.coordinates,
+                        coords: model.components2.equilibriumGrid.productC.coordinates,
                         color: .from(.aqMoleculeC)
                     ),
-                    fractionToDraw: model.components.cGridMolecules.fractionToDraw
+                    fractionToDraw: model.components2.equilibriumGrid.productC.fractionToDraw
                 ),
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components.dGridMolecules.coordinates,
+                        coords: model.components2.equilibriumGrid.productD.coordinates,
                         color: .from(.aqMoleculeD)
                     ),
-                    fractionToDraw: model.components.dGridMolecules.fractionToDraw
+                    fractionToDraw: model.components2.equilibriumGrid.productD.fractionToDraw
                 )
             ]
         )

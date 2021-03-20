@@ -31,7 +31,8 @@ class AqueousReactionViewModel: ObservableObject {
             dynamicGridCols: EquilibriumGridSettings.cols,
             dynamicGridRows: EquilibriumGridSettings.rows,
             startTime: 0,
-            equilibriumTime: AqueousReactionSettings.timeForConvergence
+            equilibriumTime: AqueousReactionSettings.timeForConvergence,
+            maxC: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
 
         self.navigation = AqueousNavigationModel.model(model: self)
