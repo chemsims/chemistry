@@ -50,13 +50,17 @@ class ReactionComponentsWrapper {
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
         self.previous = nil
-        self.molecules = MoleculeValue(builder: { _ in [] })
+
+        let emptyCoords = MoleculeValue(builder: { _ in [GridCoordinate]() })
+        self.molecules = emptyCoords
         self.components = ReactionComponents(
-            initialBeakerMolecules: MoleculeValue(builder: { _ in [] }),
+            initialBeakerMolecules: emptyCoords,
             coefficients: coefficients,
             equilibriumConstant: equilibriumConstant,
             shuffledBeakerCoords: GridCoordinate.grid(cols: beakerCols, rows: beakerRows).shuffled(),
             beakerGridSize: beakerCols * beakerRows,
+            initialEquilibriumMolecules: emptyCoords,
+            shuffledEquilibriumGrid: GridCoordinate.grid(cols: dynamicGridCols, rows: dynamicGridRows).shuffled(),
             startTime: startTime,
             equilibriumTime: equilibriumTime,
             previousEquation: nil,
@@ -81,12 +85,18 @@ class ReactionComponentsWrapper {
             at: previous.components.equation.equilibriumTime
         )
         self.molecules = filteredMolecules
+
+        let initialEquilibriumGrid = previous.components.equilibriumGrid.map {
+            $0.coords(at: previous.equilibriumTime)
+        }
         self.components = ReactionComponents(
             initialBeakerMolecules: filteredMolecules,
             coefficients: previous.coefficients,
             equilibriumConstant: previous.equilibriumConstant,
             shuffledBeakerCoords: previous.components.shuffledBeakerCoords,
             beakerGridSize: previous.beakerGridSize,
+            initialEquilibriumMolecules: initialEquilibriumGrid,
+            shuffledEquilibriumGrid: previous.components.shuffledEquilibriumGrid,
             startTime: startTime,
             equilibriumTime: equilibriumTime,
             previousEquation: previous.components.equation,
@@ -120,6 +130,8 @@ class ReactionComponentsWrapper {
             equilibriumConstant: equilibriumConstant,
             shuffledBeakerCoords: components.shuffledBeakerCoords,
             beakerGridSize: beakerGridSize,
+            initialEquilibriumMolecules: components.initialBeakerMolecules,
+            shuffledEquilibriumGrid: components.shuffledEquilibriumGrid,
             startTime: startTime,
             equilibriumTime: equilibriumTime,
             previousEquation: components.previousEquation,
@@ -207,6 +219,8 @@ class ReactionComponents {
     let equilibriumConstant: CGFloat
     let shuffledBeakerCoords: [GridCoordinate]
     let beakerGridSize: Int
+    let initialEquilibriumMolecules: MoleculeValue<[GridCoordinate]>
+    let shuffledEquilibriumGrid: [GridCoordinate]
     let startTime: CGFloat
     let equilibriumTime: CGFloat
     let previousEquation: NewBalancedReactionEquation?
@@ -218,6 +232,8 @@ class ReactionComponents {
         equilibriumConstant: CGFloat,
         shuffledBeakerCoords: [GridCoordinate],
         beakerGridSize: Int,
+        initialEquilibriumMolecules: MoleculeValue<[GridCoordinate]>,
+        shuffledEquilibriumGrid: [GridCoordinate],
         startTime: CGFloat,
         equilibriumTime: CGFloat,
         previousEquation: NewBalancedReactionEquation?,
@@ -228,6 +244,8 @@ class ReactionComponents {
         self.equilibriumConstant = equilibriumConstant
         self.shuffledBeakerCoords = shuffledBeakerCoords
         self.beakerGridSize = beakerGridSize
+        self.initialEquilibriumMolecules = initialEquilibriumMolecules
+        self.shuffledEquilibriumGrid = shuffledEquilibriumGrid
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
         self.previousEquation = previousEquation
@@ -242,6 +260,31 @@ class ReactionComponents {
         equilibriumTime: equilibriumTime,
         previous: previousEquation
     )
+
+    private(set) lazy var equilibriumGrid = MoleculeValue(
+        reactantA: getFractionedCoords(for: reactantGridSetter.balancedElements[0]),
+        reactantB: getFractionedCoords(for: reactantGridSetter.balancedElements[1]),
+        productC: getFractionedCoords(for: productGridSetter.balancedElements[0]),
+        productD: getFractionedCoords(for: reactantGridSetter.balancedElements[1])
+    )
+
+    private lazy var reactantGridSetter = getGridSetter(elements: [.A, .B])
+    private lazy var productGridSetter = getGridSetter(elements: [.C, .D])
+
+    private func getFractionedCoords(for element: BalancedGridElement) -> FractionedCoordinates {
+        FractionedCoordinates(coordinates: element.coords, fractionToDraw: balancedFractionToDraw(for: element))
+    }
+
+    private func getGridSetter(elements: [AqueousMolecule]) -> GridElementSetter {
+        GridElementSetter(elements: elements.map(getEquilibriumElementToBalance), shuffledCoords: shuffledEquilibriumGrid)
+    }
+
+    private func getEquilibriumElementToBalance(molecule: AqueousMolecule) -> GridElementToBalance {
+        let initialCoords = initialEquilibriumMolecules.value(for: molecule)
+        let finalC = equation.equilibriumConcentrations.value(for: molecule)
+        let finalCount = (finalC * CGFloat(shuffledEquilibriumGrid.count)).roundedInt()
+        return GridElementToBalance(initialCoords: initialCoords, finalCount: finalCount)
+    }
 
     private(set) lazy var beakerMolecules: [LabelledAnimatingBeakerMolecules] = {
         var builder = [LabelledAnimatingBeakerMolecules]()
@@ -348,7 +391,7 @@ class ReactionComponents {
                 coords: balancedElement?.coords ?? initialBeakerMolecules.value(for: element),
                 color: element.color
             ),
-            fractionToDraw: beakerFractionToDraw(for: balancedElement)
+            fractionToDraw: balancedFractionToDraw(for: balancedElement)
         )
         return LabelledAnimatingBeakerMolecules(
             molecule: element,
@@ -356,7 +399,7 @@ class ReactionComponents {
         )
     }
 
-    private func beakerFractionToDraw(for element: BalancedGridElement?) -> Equation {
+    private func balancedFractionToDraw(for element: BalancedGridElement?) -> Equation {
         if let element = element {
             return EquilibriumReactionEquation(
                 t1: equation.startTime,

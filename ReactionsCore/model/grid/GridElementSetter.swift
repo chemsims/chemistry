@@ -5,11 +5,16 @@
 
 import Foundation
 
-struct GridElementSetter {
+public struct GridElementSetter {
     let elements: [GridElementToBalance]
     let shuffledCoords: [GridCoordinate]
 
-    var balancedElements: [BalancedGridElement] {
+    public init(elements: [GridElementToBalance], shuffledCoords: [GridCoordinate]) {
+        self.elements = elements
+        self.shuffledCoords = shuffledCoords
+    }
+
+    public var balancedElements: [BalancedGridElement] {
         var builder = [BalancedGridElement]()
 
         func getElement(for index: Int) -> BalancedGridElement {
