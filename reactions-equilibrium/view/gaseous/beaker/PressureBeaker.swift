@@ -25,8 +25,8 @@ struct PressureBeaker: View {
 
     private var pump: some View {
         Pump(pumpModel: model.pumpModel)
-        .frame(width: settings.pumpWidth, height: settings.pumpHeight)
-        .offset(x: settings.pumpXOffset, y: -settings.pumpYOffset)
+            .frame(width: settings.pumpWidth, height: settings.pumpHeight)
+            .offset(x: settings.pumpXOffset, y: -settings.pumpYOffset)
     }
 
     private var beaker: some View {

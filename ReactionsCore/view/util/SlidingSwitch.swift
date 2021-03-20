@@ -1,0 +1,142 @@
+//
+// Reactions App
+//
+
+
+import SwiftUI
+
+struct SlidingSwitch<Value: Equatable>: View {
+
+    @Binding var selected: Value
+    let backgroundColor: Color
+    let fontColor: Color
+    let leftSettings: SwitchOptionSettings<Value>
+    let rightSettings: SwitchOptionSettings<Value>
+
+    var body: some View {
+        GeometryReader { geo in
+            SlidingSwitchWithGeometry(
+                selected: $selected,
+                backgroundColor: backgroundColor,
+                fontColor: fontColor,
+                leftSettings: leftSettings,
+                rightSettings: rightSettings,
+                width: geo.size.width,
+                height: geo.size.height
+            )
+        }
+    }
+}
+
+struct SwitchOptionSettings<Value> {
+    let value: Value
+    let color: Color
+    let label: String
+}
+
+private struct SlidingSwitchWithGeometry<Value: Equatable>: View {
+
+    @Binding var selected: Value
+    let backgroundColor: Color
+    let fontColor: Color
+    let leftSettings: SwitchOptionSettings<Value>
+    let rightSettings: SwitchOptionSettings<Value>
+
+    let width: CGFloat
+    let height: CGFloat
+
+    var body: some View {
+        ZStack {
+            pill
+            face
+        }.onTapGesture {
+            withAnimation(.easeOut(duration: 0.3)) {
+                if isLeft {
+                    selected = rightSettings.value
+                } else {
+                    selected = leftSettings.value
+                }
+            }
+        }
+    }
+
+    private var isLeft: Bool {
+        selected == leftSettings.value
+    }
+
+    private var settings: SwitchOptionSettings<Value> {
+        isLeft ? leftSettings : rightSettings
+    }
+
+    private var face: some View {
+        ZStack {
+            Circle()
+                .foregroundColor(settings.color)
+            Text(settings.label)
+                .fixedSize()
+                .font(.system(size: height / 3))
+                .foregroundColor(fontColor)
+        }
+        .frame(width: 0.9 * height, height: 0.9 * height)
+        .shadow(radius: 2)
+        .position(
+            x: isLeft ? leftCircleX : rightCircleX,
+            y: height / 2
+        )
+    }
+
+    private var pill: some View {
+        ZStack {
+            Circle()
+                .position(x: leftCircleX, y: height / 2)
+            Rectangle()
+                .frame(width: width - circleWidth)
+            Circle()
+                .position(x: rightCircleX, y: height / 2)
+        }
+        .foregroundColor(.gray)
+    }
+
+    private var leftCircleX: CGFloat {
+        height / 2
+    }
+
+    private var rightCircleX: CGFloat {
+        width - height / 2
+    }
+
+    private var circleWidth: CGFloat {
+        let maxWidth = width / 2
+        return min(maxWidth, height)
+    }
+}
+
+struct SlidingSwitch_Previews: PreviewProvider {
+    static var previews: some View {
+        ViewWrapper()
+            .frame(width: 240, height: 120)
+    }
+
+    struct ViewWrapper: View {
+
+        @State private var value = 1
+
+        var body: some View {
+            SlidingSwitch(
+                selected: $value,
+                backgroundColor: .gray,
+                fontColor: .black,
+                leftSettings: SwitchOptionSettings(
+                    value: 1,
+                    color: .blue,
+                    label: "A"
+                ),
+                rightSettings: SwitchOptionSettings(
+                    value: 2,
+                    color: .red,
+                    label: "B"
+                )
+            )
+        }
+    }
+}

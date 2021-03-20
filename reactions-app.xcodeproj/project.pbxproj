@@ -88,6 +88,7 @@
 		57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B472605F1A0009711D4 /* GridElementToBalance.swift */; };
 		57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */; };
 		57567B6526065BA9009711D4 /* ReactionComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B6426065BA9009711D4 /* ReactionComponents.swift */; };
+		57567B6B26066450009711D4 /* SlidingSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B6A26066450009711D4 /* SlidingSwitch.swift */; };
 		575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A75255AC27400F4E635 /* TextLine.swift */; };
 		575A880125E430C200AEE448 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CBEAB25C0657A00CE6007 /* Labels.swift */; };
 		575A880F25E4310700AEE448 /* QuizOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16972584B277001CE039 /* QuizOption.swift */; };
@@ -509,6 +510,7 @@
 		57567B472605F1A0009711D4 /* GridElementToBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementToBalance.swift; sourceTree = "<group>"; };
 		57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementSetterTests.swift; sourceTree = "<group>"; };
 		57567B6426065BA9009711D4 /* ReactionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComponents.swift; sourceTree = "<group>"; };
+		57567B6A26066450009711D4 /* SlidingSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingSwitch.swift; sourceTree = "<group>"; };
 		575A884E25E4327800AEE448 /* QuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionSet.swift; sourceTree = "<group>"; };
 		575A885E25E435F600AEE448 /* BeakyGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyGeometrySettings.swift; sourceTree = "<group>"; };
 		575A888425E436A600AEE448 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1623,6 +1625,7 @@
 				571B3CAE25658ACC0075358B /* CircleIconButton.swift */,
 				5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */,
 				57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */,
+				57567B6A26066450009711D4 /* SlidingSwitch.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -2559,6 +2562,7 @@
 				5797A49C25E40A4C00991BD9 /* BeakerBottomShape.swift in Sources */,
 				5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */,
 				57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */,
+				57567B6B26066450009711D4 /* SlidingSwitch.swift in Sources */,
 				57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */,
 				575A886825E435FB00AEE448 /* BeakyBox.swift in Sources */,
 				5797A49525E40A4500991BD9 /* BeakerTicks.swift in Sources */,

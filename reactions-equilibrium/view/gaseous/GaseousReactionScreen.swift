@@ -22,6 +22,7 @@ struct GaseousReactionScreen: View {
                     settings: GaseousReactionScreenSettings(geometry: geometry)
                 )
             }
+            .padding(10)
         }
     }
 }
@@ -44,10 +45,14 @@ private struct LeftStack: View {
     let settings: GaseousReactionScreenSettings
 
     var body: some View {
-        PressureBeaker(
-            model: model,
-            settings: settings.pressureBeakerSettings
-        )
+        VStack(spacing: 0) {
+            Spacer()
+            PressureBeaker(
+                model: model,
+                settings: settings.pressureBeakerSettings
+            )
+        }
+
     }
 }
 
