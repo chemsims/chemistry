@@ -333,6 +333,46 @@ class ReactionComponentTests: XCTestCase {
         }
     }
 
+    func testIncreasingBeakerVolume() {
+        let fwdModel = ReactionComponentsWrapper(
+            coefficients: .unit,
+            equilibriumConstant: 1,
+            beakerCols: 10,
+            beakerRows: 5,
+            maxBeakerRows: 10,
+            dynamicGridCols: 10,
+            dynamicGridRows: 10,
+            startTime: 0,
+            equilibriumTime: 10,
+            maxC: 0.4
+        )
+        fwdModel.increment(molecule: .A, count: 20)
+        fwdModel.increment(molecule: .B, count: 20)
+
+        let revModel = ReactionComponentsWrapper(
+            previous: fwdModel,
+            startTime: 11,
+            equilibriumTime: 20
+        )
+
+        let coordsPreVolumeIncrease = revModel.beakerCoords
+
+        revModel.beakerRows = 10
+        for i in revModel.beakerCoords.indices {
+            XCTAssertNotEqual(revModel.beakerCoords[i], coordsPreVolumeIncrease[i])
+        }
+
+        revModel.beakerCoords.forEach { coords in
+            XCTAssertEqual(coords.count, 10)
+        }
+        revModel.components.equation.equilibriumConcentrations.all.forEach { eq in
+            XCTAssertEqual(eq, 0.1, accuracy: 0.001)
+        }
+        revModel.components.equilibriumGrid.all.forEach { grid in
+            XCTAssertEqual(grid.coords(at: 10).count, 10)
+        }
+    }
+
     private func labelledAnimatingMolecules(
         element: AqueousMolecule,
         coords: [GridCoordinate],

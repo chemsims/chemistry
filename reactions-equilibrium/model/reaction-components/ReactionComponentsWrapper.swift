@@ -10,7 +10,10 @@ class ReactionComponentsWrapper {
     let beakerCols: Int
     var beakerRows: Int {
         didSet {
-            rowsWasSet()
+            if beakerRows != oldValue {
+                rowsWasSet(volumeWasIncreased: beakerRows > oldValue)
+            }
+
         }
     }
     var coefficients: BalancedReactionCoefficients {
@@ -212,18 +215,46 @@ class ReactionComponentsWrapper {
         return currentC - (previousC ?? 0)
     }
 
-    private func rowsWasSet() {
-        AqueousMolecule.allCases.forEach { molecule in
-            updateVolume(for: molecule)
+    private func rowsWasSet(volumeWasIncreased: Bool) {
+        if volumeWasIncreased {
+            spreadOutMolecules()
+        } else {
+            AqueousMolecule.allCases.forEach { molecule in
+                decreaseVolume(for: molecule)
+            }
         }
+
         setComponents()
     }
 
-    private func updateVolume(for molecule: AqueousMolecule) {
+    private func spreadOutMolecules() {
+        for index in AqueousMolecule.allCases.indices {
+            let molecule = AqueousMolecule.allCases[index]
+            let current = molecules.value(for: molecule)
+            let previousMolecules = AqueousMolecule.allCases[0..<index]
+            let previousCoords = previousMolecules.flatMap {
+                molecules.value(for: $0)
+            }
+            let updatedCoords = GridCoordinateList.addingRandomElementsTo(
+                grid: [],
+                count: current.count,
+                cols: beakerCols,
+                rows: beakerRows,
+                avoiding: previousCoords
+            )
+            molecules = molecules.updating(with: updatedCoords, for: molecule)
+            updateGridMolecules(for: molecule)
+        }
+    }
+
+
+    private func decreaseVolume(for molecule: AqueousMolecule) {
         let filteredMolecules = molecules.map { $0.filter { $0.row < beakerRows }}
         let coords = molecules.value(for: molecule)
         let filteredCoords = filteredMolecules.value(for: molecule)
         let numToAdd = coords.count - filteredCoords.count
+
+        guard numToAdd > 0 else { return }
         let updatedCoords = GridCoordinateList.addingRandomElementsTo(
             grid: filteredCoords,
             count: numToAdd,
