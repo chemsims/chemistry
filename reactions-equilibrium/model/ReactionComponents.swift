@@ -52,6 +52,7 @@ class ReactionComponentsWrapper {
         self.previous = nil
 
         let emptyCoords = MoleculeValue(builder: { _ in [GridCoordinate]() })
+
         self.molecules = emptyCoords
         self.components = ReactionComponents(
             initialBeakerMolecules: emptyCoords,
@@ -59,7 +60,6 @@ class ReactionComponentsWrapper {
             equilibriumConstant: equilibriumConstant,
             shuffledBeakerCoords: GridCoordinate.grid(cols: beakerCols, rows: beakerRows).shuffled(),
             beakerGridSize: beakerCols * beakerRows,
-            initialEquilibriumMolecules: emptyCoords,
             shuffledEquilibriumGrid: GridCoordinate.grid(cols: dynamicGridCols, rows: dynamicGridRows).shuffled(),
             startTime: startTime,
             equilibriumTime: equilibriumTime,
@@ -85,17 +85,12 @@ class ReactionComponentsWrapper {
             at: previous.components.equation.equilibriumTime
         )
         self.molecules = filteredMolecules
-
-        let initialEquilibriumGrid = previous.components.equilibriumGrid.map {
-            $0.coords(at: previous.equilibriumTime)
-        }
         self.components = ReactionComponents(
             initialBeakerMolecules: filteredMolecules,
             coefficients: previous.coefficients,
             equilibriumConstant: previous.equilibriumConstant,
             shuffledBeakerCoords: previous.components.shuffledBeakerCoords,
             beakerGridSize: previous.beakerGridSize,
-            initialEquilibriumMolecules: initialEquilibriumGrid,
             shuffledEquilibriumGrid: previous.components.shuffledEquilibriumGrid,
             startTime: startTime,
             equilibriumTime: equilibriumTime,
@@ -130,7 +125,6 @@ class ReactionComponentsWrapper {
             equilibriumConstant: equilibriumConstant,
             shuffledBeakerCoords: components.shuffledBeakerCoords,
             beakerGridSize: beakerGridSize,
-            initialEquilibriumMolecules: components.initialBeakerMolecules,
             shuffledEquilibriumGrid: components.shuffledEquilibriumGrid,
             startTime: startTime,
             equilibriumTime: equilibriumTime,
@@ -219,7 +213,6 @@ class ReactionComponents {
     let equilibriumConstant: CGFloat
     let shuffledBeakerCoords: [GridCoordinate]
     let beakerGridSize: Int
-    let initialEquilibriumMolecules: MoleculeValue<[GridCoordinate]>
     let shuffledEquilibriumGrid: [GridCoordinate]
     let startTime: CGFloat
     let equilibriumTime: CGFloat
@@ -232,7 +225,6 @@ class ReactionComponents {
         equilibriumConstant: CGFloat,
         shuffledBeakerCoords: [GridCoordinate],
         beakerGridSize: Int,
-        initialEquilibriumMolecules: MoleculeValue<[GridCoordinate]>,
         shuffledEquilibriumGrid: [GridCoordinate],
         startTime: CGFloat,
         equilibriumTime: CGFloat,
@@ -244,7 +236,6 @@ class ReactionComponents {
         self.equilibriumConstant = equilibriumConstant
         self.shuffledBeakerCoords = shuffledBeakerCoords
         self.beakerGridSize = beakerGridSize
-        self.initialEquilibriumMolecules = initialEquilibriumMolecules
         self.shuffledEquilibriumGrid = shuffledEquilibriumGrid
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
@@ -268,22 +259,41 @@ class ReactionComponents {
         productD: getFractionedCoords(for: reactantGridSetter.balancedElements[1])
     )
 
-    private lazy var reactantGridSetter = getGridSetter(elements: [.A, .B])
-    private lazy var productGridSetter = getGridSetter(elements: [.C, .D])
+    private lazy var reactantGridSetter = getGridSetter(baseMolecule: .A)
+    private lazy var productGridSetter = getGridSetter(baseMolecule: .B)
 
     private func getFractionedCoords(for element: BalancedGridElement) -> FractionedCoordinates {
         FractionedCoordinates(coordinates: element.coords, fractionToDraw: balancedFractionToDraw(for: element))
     }
 
-    private func getGridSetter(elements: [AqueousMolecule]) -> GridElementSetter {
-        GridElementSetter(elements: elements.map(getEquilibriumElementToBalance), shuffledCoords: shuffledEquilibriumGrid)
+    private func getGridSetter(baseMolecule: AqueousMolecule) -> GridElementSetter {
+        GridElementSetter(
+            elements: getEquilibriumElementToBalance(baseMolecule: baseMolecule),
+            shuffledCoords: shuffledEquilibriumGrid
+        )
     }
 
-    private func getEquilibriumElementToBalance(molecule: AqueousMolecule) -> GridElementToBalance {
-        let initialCoords = initialEquilibriumMolecules.value(for: molecule)
-        let finalC = equation.equilibriumConcentrations.value(for: molecule)
-        let finalCount = (finalC * CGFloat(shuffledEquilibriumGrid.count)).roundedInt()
-        return GridElementToBalance(initialCoords: initialCoords, finalCount: finalCount)
+    private func getEquilibriumElementToBalance(baseMolecule: AqueousMolecule) -> [GridElementToBalance] {
+        let initGrid = getInitEqGrid(baseMolecule: baseMolecule)
+
+        func finalCount(_ m: AqueousMolecule) -> Int {
+            let finalC = equation.equilibriumConcentrations.value(for: m)
+            return (finalC * CGFloat(shuffledEquilibriumGrid.count)).roundedInt()
+        }
+
+        let lhs = GridElementToBalance(initialCoords: initGrid.0, finalCount: finalCount(baseMolecule))
+        let rhs = GridElementToBalance(initialCoords: initGrid.1, finalCount: finalCount(baseMolecule.complement))
+
+        return [lhs, rhs]
+    }
+
+    private func getInitEqGrid(baseMolecule: AqueousMolecule) -> ([GridCoordinate], [GridCoordinate]) {
+        func count(_ m: AqueousMolecule) -> Int {
+            (getConcentration(of: m) * CGFloat(shuffledEquilibriumGrid.count)).roundedInt()
+        }
+        let lhs = shuffledEquilibriumGrid.prefix(count(baseMolecule))
+        let rhs = shuffledEquilibriumGrid.dropFirst(lhs.count).prefix(count(baseMolecule.complement))
+        return (Array(lhs), Array(rhs))
     }
 
     private(set) lazy var beakerMolecules: [LabelledAnimatingBeakerMolecules] = {
