@@ -9,7 +9,7 @@ import XCTest
 class ReactionComponentTests: XCTestCase {
 
     func testIncrementingAMolecules() {
-        var model = newModel()
+        let model = newModel()
 
         model.beakerCoords.forEach {
             XCTAssert($0.isEmpty)
@@ -23,7 +23,7 @@ class ReactionComponentTests: XCTestCase {
     }
 
     func testIncrementingAMoleculesToMaxCount() {
-        var model = newModel()
+        let model = newModel()
         XCTAssert(model.canIncrement(molecule: .A))
 
         model.increment(molecule: .A, count: maxIncrementCount)
@@ -36,7 +36,7 @@ class ReactionComponentTests: XCTestCase {
     }
 
     func testIncrementingBMolecules() {
-        var model = newModel()
+        let model = newModel()
         model.increment(molecule: .A, count: maxIncrementCount)
         model.increment(molecule: .B, count: maxIncrementCount)
 
@@ -52,7 +52,7 @@ class ReactionComponentTests: XCTestCase {
     }
 
     func testA0AndB0AreCorrect() {
-        var model = newModel()
+        let model = newModel()
         model.increment(molecule: .A, count: maxIncrementCount)
         model.increment(molecule: .B, count: maxIncrementCount)
 
@@ -68,7 +68,7 @@ class ReactionComponentTests: XCTestCase {
     }
 
     func testEquationConverges() {
-        var model = newModel()
+        let model = newModel()
         model.increment(molecule: .A, count: maxIncrementCount)
         model.increment(molecule: .B, count: maxIncrementCount)
 
@@ -80,7 +80,7 @@ class ReactionComponentTests: XCTestCase {
     }
 
     func testProductMolecules() {
-        var model = newModel()
+        let model = newModel()
         model.increment(molecule: .A, count: maxIncrementCount)
         model.increment(molecule: .B, count: maxIncrementCount)
 
@@ -149,7 +149,7 @@ class ReactionComponentTests: XCTestCase {
     }
 
     func testReverseReactionAddingC() {
-        var model = newReverseModel()
+        let model = newReverseModel()
         model.beakerCoords.forEach {
             XCTAssertEqual($0.count, maxMolecules / 2)
         }
@@ -169,7 +169,7 @@ class ReactionComponentTests: XCTestCase {
     }
 
     func testReverseReactionCAndDIsIncreasedWhenAddingProduct() {
-        var model2 = newReverseModel()
+        let model2 = newReverseModel()
         model2.increment(molecule: .C, count: 1)
 
         let expectedCount = (maxMolecules / 2) + 1
@@ -228,8 +228,8 @@ class ReactionComponentTests: XCTestCase {
             }),
             coefficients: .unit,
             equilibriumConstant: 1,
-            shuffledCoords: grid,
-            gridSize: 100,
+            shuffledBeakerCoords: grid,
+            beakerGridSize: 100,
             startTime: 0,
             equilibriumTime: 100,
             previousEquation: nil,
@@ -251,8 +251,8 @@ class ReactionComponentTests: XCTestCase {
             ),
             coefficients: .unit,
             equilibriumConstant: 1,
-            shuffledCoords: grid,
-            gridSize: 10,
+            shuffledBeakerCoords: grid,
+            beakerGridSize: 10,
             startTime: 0,
             equilibriumTime: 10,
             previousEquation: nil,
@@ -273,8 +273,8 @@ class ReactionComponentTests: XCTestCase {
             initialBeakerMolecules: initReverse,
             coefficients: .unit,
             equilibriumConstant: 1,
-            shuffledCoords: grid,
-            gridSize: 10,
+            shuffledBeakerCoords: grid,
+            beakerGridSize: 10,
             startTime: 11,
             equilibriumTime: 20,
             previousEquation: forward.equation,
@@ -303,7 +303,7 @@ class ReactionComponentTests: XCTestCase {
     }
 
     private func newReverseModel() -> ReactionComponentsWrapper {
-        var forward = newModel()
+        let forward = newModel()
         forward.increment(molecule: .A, count: maxIncrementCount)
         forward.increment(molecule: .B, count: maxIncrementCount)
         return ReactionComponentsWrapper(
@@ -316,13 +316,14 @@ class ReactionComponentTests: XCTestCase {
     private func newModel(
         coeffs: BalancedReactionCoefficients = .unit
     ) -> ReactionComponentsWrapper {
-        
         ReactionComponentsWrapper(
             coefficients: coeffs,
             equilibriumConstant: 1,
-            cols: 10,
-            rows: 10,
-            maxRows: 10,
+            beakerCols: 10,
+            beakerRows: 10,
+            maxBeakerRows: 10,
+            dynamicGridCols: 10,
+            dynamicGridRows: 10,
             startTime: 0,
             equilibriumTime: 10
         )

@@ -109,7 +109,6 @@
 		575A889525E438CD00AEE448 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A889425E438CD00AEE448 /* BundleExtension.swift */; };
 		575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A88B525E43CD500AEE448 /* AppDelegate.swift */; };
 		575A88B825E43CD500AEE448 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A88B725E43CD500AEE448 /* SceneDelegate.swift */; };
-		575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A88B925E43CD500AEE448 /* ContentView.swift */; };
 		575A88BC25E43CD700AEE448 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 575A88BB25E43CD700AEE448 /* Assets.xcassets */; };
 		575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 575A88BE25E43CD700AEE448 /* Preview Assets.xcassets */; };
 		575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 575A88C025E43CD700AEE448 /* LaunchScreen.storyboard */; };
@@ -518,7 +517,6 @@
 		575A88B325E43CD500AEE448 /* reactions-equilibrium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reactions-equilibrium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		575A88B525E43CD500AEE448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		575A88B725E43CD500AEE448 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		575A88B925E43CD500AEE448 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		575A88BB25E43CD700AEE448 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		575A88BE25E43CD700AEE448 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		575A88C125E43CD700AEE448 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -1240,7 +1238,6 @@
 				57DDAC0725E4FD6500B535A7 /* view */,
 				575A88B525E43CD500AEE448 /* AppDelegate.swift */,
 				575A88B725E43CD500AEE448 /* SceneDelegate.swift */,
-				575A88B925E43CD500AEE448 /* ContentView.swift */,
 				575A88BB25E43CD700AEE448 /* Assets.xcassets */,
 				575A88C025E43CD700AEE448 /* LaunchScreen.storyboard */,
 				575A88C325E43CD700AEE448 /* Info.plist */,
@@ -2500,7 +2497,6 @@
 				57E6A52A25FDFA5C00CC3B17 /* ShakeContainerViewModel.swift in Sources */,
 				57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */,
 				576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */,
-				575A88BA25E43CD500AEE448 /* ContentView.swift in Sources */,
 				572BCF212603614000CE3FE0 /* ReactionComponents.swift in Sources */,
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
 				576A420725F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift in Sources */,

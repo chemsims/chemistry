@@ -14,9 +14,11 @@ class GaseousReactionViewModel: ObservableObject {
         self.componentWrapper = ReactionComponentsWrapper(
             coefficients: initialReaction.coefficients,
             equilibriumConstant: initialReaction.equilibriumConstant,
-            cols: MoleculeGridSettings.cols,
-            rows: initialRows,
-            maxRows: GaseousReactionSettings.maxRows,
+            beakerCols: MoleculeGridSettings.cols,
+            beakerRows: initialRows,
+            maxBeakerRows: GaseousReactionSettings.maxRows,
+            dynamicGridCols: EquilibriumGridSettings.cols,
+            dynamicGridRows: EquilibriumGridSettings.rows,
             startTime: 0,
             equilibriumTime: AqueousReactionSettings.forwardReactionTime
         )
@@ -30,7 +32,7 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var componentWrapper: ReactionComponentsWrapper
     @Published var rows: CGFloat {
         didSet {
-            componentWrapper.rows = GridMoleculesUtil.availableRows(for: rows)
+            componentWrapper.beakerRows = GridMoleculesUtil.availableRows(for: rows)
         }
     }
 

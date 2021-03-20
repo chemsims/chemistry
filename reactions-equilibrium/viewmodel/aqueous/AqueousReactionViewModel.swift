@@ -25,9 +25,11 @@ class AqueousReactionViewModel: ObservableObject {
         self.componentsWrapper = ReactionComponentsWrapper(
             coefficients: initialType.coefficients,
             equilibriumConstant: initialType.equilibriumConstant,
-            cols: MoleculeGridSettings.cols,
-            rows: initialRows,
-            maxRows: AqueousReactionSettings.maxRows,
+            beakerCols: MoleculeGridSettings.cols,
+            beakerRows: initialRows,
+            maxBeakerRows: AqueousReactionSettings.maxRows,
+            dynamicGridCols: EquilibriumGridSettings.cols,
+            dynamicGridRows: EquilibriumGridSettings.rows,
             startTime: 0,
             equilibriumTime: AqueousReactionSettings.timeForConvergence
         )
@@ -45,7 +47,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows) {
         didSet {
             components.availableRows = GridMoleculesUtil.availableRows(for: rows)
-            componentsWrapper.rows = GridMoleculesUtil.availableRows(for: rows)
+            componentsWrapper.beakerRows = GridMoleculesUtil.availableRows(for: rows)
             highlightedElements.clear()
         }
     }
