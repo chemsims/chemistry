@@ -64,6 +64,16 @@ public struct GridCoordinateList {
         return builder
     }
 
+    public static func addingElementsTo(
+        grid: [GridCoordinate],
+        count: Int,
+        from: [GridCoordinate],
+        avoiding: [GridCoordinate]
+    ) -> [GridCoordinate] {
+        let available = from.filter { !avoiding.contains($0) && !grid.contains($0) }
+        return grid + Array(available.prefix(count))
+    }
+
     /// Returns a list of all `GridCoordinate` up to the provided `cols` and `rows`
     public static func list(cols: Int, rows: Int) -> [GridCoordinate] {
         (0..<rows).flatMap { row in

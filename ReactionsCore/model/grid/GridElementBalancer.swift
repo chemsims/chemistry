@@ -172,53 +172,9 @@ public struct GridElementPair<Value> {
 }
 
 
-public struct GridElementToBalance {
-    let initialCoords: [GridCoordinate]
-    let finalCount: Int
-
-    public init(
-        initialCoords: [GridCoordinate],
-        finalCount: Int
-    ) {
-        self.initialCoords = initialCoords
-        self.finalCount = finalCount
-    }
-
-    fileprivate var delta: Int {
-        finalCount - initialCoords.count
-    }
-
-    fileprivate func increasingElement(
-        with coords: [GridCoordinate]
-    ) -> BalancedGridElement {
-        balancedElement(coords: coords, finalNumerator: finalCount)
-    }
-
-    fileprivate func decreasingElement(
-        with coords: [GridCoordinate],
-        extraDrop: Int
-    ) -> BalancedGridElement {
-        balancedElement(coords: coords, finalNumerator: initialCoords.count - extraDrop)
-    }
-
-    private func balancedElement(
-        coords: [GridCoordinate],
-        finalNumerator: Int
-    ) -> BalancedGridElement {
-        guard !coords.isEmpty else {
-            return BalancedGridElement(coords: [], initialFraction: 0, finalFraction: 0)
-        }
-        return BalancedGridElement(
-            coords: coords,
-            initialFraction: Double(initialCoords.count) / Double(coords.count),
-            finalFraction: Double(finalNumerator) / Double(coords.count)
-        )
-    }
-}
-
 /// - Note: Any fraction to draw must be drawn from the start of the coordinates
 ///         For example, given 10 elements and a fraction to draw of 0.3, then the indices 0, 1 and 2 should be drawn
-public struct BalancedGridElement {
+public struct BalancedGridElement: Equatable {
 
     public let coords: [GridCoordinate]
     public let initialFraction: Double
