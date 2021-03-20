@@ -7,7 +7,7 @@ import ReactionsCore
 
 struct MoleculeScales: View {
 
-    let reaction: NewBalancedReactionEquation
+    let reaction: BalancedReactionEquation
     let currentTime: CGFloat
 
     var body: some View {
@@ -28,7 +28,7 @@ struct MoleculeScales: View {
 
 private struct SizedMoleculeScales: View {
 
-    let reaction: NewBalancedReactionEquation
+    let reaction: BalancedReactionEquation
     let currentTime: CGFloat
     let settings: MoleculeScalesGeometry
 
@@ -209,7 +209,7 @@ extension MoleculeScalesGeometry {
 struct MoleculeScales_Previews: PreviewProvider {
     static var previews: some View {
         MoleculeScales(
-            reaction: NewBalancedReactionEquation(
+            reaction: BalancedReactionEquation(
                 coefficients: MoleculeValue(builder: { _ in 1 }),
                 equilibriumConstant: 1,
                 initialConcentrations: MoleculeValue(builder: { _ in 0.1 }),

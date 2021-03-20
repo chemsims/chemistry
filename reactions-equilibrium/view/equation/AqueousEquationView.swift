@@ -8,7 +8,7 @@ import ReactionsCore
 struct AqueousEquationView: View {
 
     let showTerms: Bool
-    let equations: NewBalancedReactionEquation
+    let equations: BalancedReactionEquation
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
@@ -41,7 +41,7 @@ struct AqueousEquationView: View {
 private struct UnscaledAqueousEquationView: View {
 
     let showTerms: Bool
-    let equations: NewBalancedReactionEquation
+    let equations: BalancedReactionEquation
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
@@ -176,7 +176,7 @@ private struct QuotientEqualsKView: View {
 private struct FilledQuotientDefinitionView: View {
 
     let showTerms: Bool
-    let equations: NewBalancedReactionEquation
+    let equations: BalancedReactionEquation
     let quotient: Equation
     let currentTime: CGFloat
 
@@ -354,7 +354,7 @@ struct AqueousEquationView_Previews: PreviewProvider {
         .background(Color.gray.opacity(0.5))
     }
 
-    private static let equations = NewBalancedReactionEquation(
+    private static let equations = BalancedReactionEquation(
         coefficients: BalancedReactionCoefficients(builder: { _ in 1 }),
         equilibriumConstant: 1,
         initialConcentrations: MoleculeValue(builder: { _ in 0.5}),

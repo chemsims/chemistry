@@ -9,7 +9,7 @@ class BalancedReactionEquationTests: XCTestCase {
 
     func testBalancedReactionExample() {
         let coeffs = makeCoeffs(A: 2, B: 2, C: 1, D: 4)
-        let model = NewBalancedReactionEquation(
+        let model = BalancedReactionEquation(
             coefficients: coeffs,
             equilibriumConstant: 1,
             initialConcentrations: MoleculeValue(

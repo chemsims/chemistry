@@ -7,7 +7,7 @@ import CoreGraphics
 
 struct ScalesRotationEquation: Equation {
 
-    let reaction: NewBalancedReactionEquation
+    let reaction: BalancedReactionEquation
     let maxAngle: CGFloat
 
     func getY(at x: CGFloat) -> CGFloat {

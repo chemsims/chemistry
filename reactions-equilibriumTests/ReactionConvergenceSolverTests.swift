@@ -56,7 +56,7 @@ class ReactionConvergenceSolverTests: XCTestCase {
     }
 
     func testForwardReactionConvergenceWithMultipleNonUnitCoefficients() {
-        let equation = NewBalancedReactionEquation(
+        let equation = BalancedReactionEquation(
             coefficients: BalancedReactionCoefficients(reactantA: 3, reactantB: 2, productC: 1, productD: 2),
             equilibriumConstant: 0.1,
             initialConcentrations: MoleculeValue(
@@ -100,7 +100,7 @@ class ReactionConvergenceSolverTests: XCTestCase {
         reactantRange.forEach { a in
             reactantRange.forEach { b in
                 let debug = "A: \(a), B: \(b)"
-                let equation = NewBalancedReactionEquation(
+                let equation = BalancedReactionEquation(
                     coefficients: reaction.coefficients,
                     equilibriumConstant: reaction.equilibriumConstant,
                     initialConcentrations: MoleculeValue(
@@ -132,7 +132,7 @@ class ReactionConvergenceSolverTests: XCTestCase {
                 let productRange = stride(from: minProduct, through: maxProduct, by: dc)
                 productRange.forEach { c in
                     productRange.forEach { d in
-                        let reverseEquation = NewBalancedReactionEquation(
+                        let reverseEquation = BalancedReactionEquation(
                             coefficients: equation.coefficients,
                             equilibriumConstant: equation.equilibriumConstant,
                             initialConcentrations: MoleculeValue(

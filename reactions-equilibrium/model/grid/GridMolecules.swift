@@ -3,6 +3,7 @@
 //
 
 import CoreGraphics
+import ReactionsCore
 
 struct GridUtil {
 
@@ -13,6 +14,26 @@ struct GridUtil {
             return Int(ceil(rows))
         }
         return Int(rows)
+    }
+
+    /// Finding concentration using the molecule count may differ from the previously converged value
+    /// So, if molecules unchanged, use the previous equilibrium value
+    static func initialConcentration(
+        of molecule: AqueousMolecule,
+        coords: [GridCoordinate],
+        gridSize: Int,
+        previousCoords: [GridCoordinate]?,
+        previousEquation: BalancedReactionEquation?,
+        at time: CGFloat
+    ) -> CGFloat {
+        let defaultValue = CGFloat(coords.count) / CGFloat(gridSize)
+        if let prevCoords = previousCoords, let prevEquation = previousEquation {
+            let current = coords
+            if prevCoords.count == current.count {
+                return prevEquation.concentration.value(for: molecule).getY(at: time)
+            }
+        }
+        return defaultValue
     }
 }
 

@@ -33,6 +33,7 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var componentWrapper: ReactionComponentsWrapper
     @Published var rows: CGFloat {
         didSet {
+            objectWillChange.send()
             componentWrapper.beakerRows = GridUtil.availableRows(for: rows)
         }
     }
@@ -44,6 +45,7 @@ class GaseousReactionViewModel: ObservableObject {
     }
 
     private func onPump() {
+        objectWillChange.send()
         componentWrapper.increment(molecule: .A, count: 1)
     }
 

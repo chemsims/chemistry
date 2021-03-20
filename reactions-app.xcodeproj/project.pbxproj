@@ -51,7 +51,7 @@
 		5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972925EE3ECE00D87964 /* Extensions.swift */; };
 		5727485F25A5F489000CFA1E /* NavigationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */; };
 		5727486725A60445000CFA1E /* ScreenStateTreeNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */; };
-		572BCF212603614000CE3FE0 /* ReactionComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572BCF202603614000CE3FE0 /* ReactionComponents.swift */; };
+		572BCF212603614000CE3FE0 /* ReactionComponentsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572BCF202603614000CE3FE0 /* ReactionComponentsWrapper.swift */; };
 		572BCF2C26036F3000CE3FE0 /* ArrayExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572BCF2626036E7700CE3FE0 /* ArrayExtensionTests.swift */; };
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
 		572CBEB025C0AECD00CE6007 /* LabellingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CBEAF25C0AECD00CE6007 /* LabellingTests.swift */; };
@@ -87,6 +87,7 @@
 		57567B422605F156009711D4 /* GridElementSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B412605F156009711D4 /* GridElementSetter.swift */; };
 		57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B472605F1A0009711D4 /* GridElementToBalance.swift */; };
 		57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */; };
+		57567B6526065BA9009711D4 /* ReactionComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B6426065BA9009711D4 /* ReactionComponents.swift */; };
 		575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A75255AC27400F4E635 /* TextLine.swift */; };
 		575A880125E430C200AEE448 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CBEAB25C0657A00CE6007 /* Labels.swift */; };
 		575A880F25E4310700AEE448 /* QuizOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16972584B277001CE039 /* QuizOption.swift */; };
@@ -467,7 +468,7 @@
 		5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenStateTreeNodeTests.swift; sourceTree = "<group>"; };
 		5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownSelectionView.swift; sourceTree = "<group>"; };
 		5727487325A61BDD000CFA1E /* ReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionType.swift; sourceTree = "<group>"; };
-		572BCF202603614000CE3FE0 /* ReactionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComponents.swift; sourceTree = "<group>"; };
+		572BCF202603614000CE3FE0 /* ReactionComponentsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComponentsWrapper.swift; sourceTree = "<group>"; };
 		572BCF2626036E7700CE3FE0 /* ArrayExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensionTests.swift; sourceTree = "<group>"; };
 		572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationBarChart.swift; sourceTree = "<group>"; };
 		572CBEAB25C0657A00CE6007 /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
@@ -507,6 +508,7 @@
 		57567B412605F156009711D4 /* GridElementSetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementSetter.swift; sourceTree = "<group>"; };
 		57567B472605F1A0009711D4 /* GridElementToBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementToBalance.swift; sourceTree = "<group>"; };
 		57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementSetterTests.swift; sourceTree = "<group>"; };
+		57567B6426065BA9009711D4 /* ReactionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComponents.swift; sourceTree = "<group>"; };
 		575A884E25E4327800AEE448 /* QuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionSet.swift; sourceTree = "<group>"; };
 		575A885E25E435F600AEE448 /* BeakyGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyGeometrySettings.swift; sourceTree = "<group>"; };
 		575A888425E436A600AEE448 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1167,6 +1169,15 @@
 			path = axis;
 			sourceTree = "<group>";
 		};
+		57567B5F26065B82009711D4 /* reaction-components */ = {
+			isa = PBXGroup;
+			children = (
+				572BCF202603614000CE3FE0 /* ReactionComponentsWrapper.swift */,
+				57567B6426065BA9009711D4 /* ReactionComponents.swift */,
+			);
+			path = "reaction-components";
+			sourceTree = "<group>";
+		};
 		575A87F325E4308000AEE448 /* text */ = {
 			isa = PBXGroup;
 			children = (
@@ -1785,6 +1796,7 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57567B5F26065B82009711D4 /* reaction-components */,
 				576A422325F7A84100047618 /* molecule-container */,
 				576A41FB25F77B6C00047618 /* layout */,
 				5736DC2E25F5006B003FD2B4 /* grid */,
@@ -1796,7 +1808,6 @@
 				57DDACDB25E54EE200B535A7 /* enums */,
 				57DDAC7C25E525F900B535A7 /* settings */,
 				5787C26325F65BC400CF685A /* MoleculeValue.swift */,
-				572BCF202603614000CE3FE0 /* ReactionComponents.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2474,9 +2485,10 @@
 				57E6A52A25FDFA5C00CC3B17 /* ShakeContainerViewModel.swift in Sources */,
 				57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */,
 				576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */,
-				572BCF212603614000CE3FE0 /* ReactionComponents.swift in Sources */,
+				572BCF212603614000CE3FE0 /* ReactionComponentsWrapper.swift in Sources */,
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
 				576A420725F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift in Sources */,
+				57567B6526065BA9009711D4 /* ReactionComponents.swift in Sources */,
 				57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */,
 				57DDACE925E552F700B535A7 /* AqueousReactionViewModel.swift in Sources */,
 			);

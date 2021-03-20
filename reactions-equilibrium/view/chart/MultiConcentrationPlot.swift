@@ -153,7 +153,7 @@ extension MultiConcentrationPlot {
 struct MultiConcentrationPlot_Previews: PreviewProvider {
     static var previews: some View {
         MultiConcentrationPlot(
-            equations: BalancedReactionEquations(
+            equations: BalancedReactionEquation(
                 coefficients: BalancedReactionCoefficients(
                     reactantA: 2,
                     reactantB: 2,
@@ -161,10 +161,16 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
                     productD: 4
                 ),
                 equilibriumConstant: 1,
-                a0: 0.4,
-                b0: 0.8,
-                convergenceTime: 15
-            ).reactions,
+                initialConcentrations: MoleculeValue(
+                    reactantA: 0.4,
+                    reactantB: 0.8,
+                    productC: 0,
+                    productD: 0
+                ),
+                startTime: 0,
+                equilibriumTime: 15,
+                previous: nil
+            ).concentration,
             equilibriumTime: 15,
             discontinuities: nil,
             initialTime: 0,

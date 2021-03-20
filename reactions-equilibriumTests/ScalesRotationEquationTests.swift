@@ -8,7 +8,7 @@ import XCTest
 class ScalesRotationEquationTests: XCTestCase {
 
     func testForwardReactionRotation() {
-        var reaction = NewBalancedReactionEquation(
+        var reaction = BalancedReactionEquation(
             coefficients: .unit,
             equilibriumConstant: 1,
             initialConcentrations: MoleculeValue(builder: { _ in 0 }),
@@ -46,7 +46,7 @@ class ScalesRotationEquationTests: XCTestCase {
     }
 
     func testReverseReactionRotation() {
-        let forward = NewBalancedReactionEquation(
+        let forward = BalancedReactionEquation(
             coefficients: .unit,
             equilibriumConstant: 1,
             initialConcentrations: MoleculeValue(
@@ -62,8 +62,8 @@ class ScalesRotationEquationTests: XCTestCase {
         let tAddProd = AqueousReactionSettings.timeToAddProduct
         let tFinal = AqueousReactionSettings.endOfReverseReaction
 
-        func makeReverse(c0: CGFloat, d0: CGFloat) -> NewBalancedReactionEquation {
-            NewBalancedReactionEquation(
+        func makeReverse(c0: CGFloat, d0: CGFloat) -> BalancedReactionEquation {
+            BalancedReactionEquation(
                 coefficients: .unit,
                 equilibriumConstant: 1,
                 initialConcentrations: MoleculeValue(

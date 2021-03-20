@@ -267,7 +267,6 @@ class BeakerMoleculeSetterTests: XCTestCase {
 
     func testNonUnitCoefficientWhereThereIsANetDropInBeakerConcentration() {
         let coeffs = BalancedReactionCoefficients(reactantA: 3, reactantB: 2, productC: 1, productD: 2)
-        let forwardReaction = BalancedReactionEquations(coefficients: coeffs, equilibriumConstant: 10, a0: 0.3, b0: 0.3, convergenceTime: 10)
 
         let forwardWrapper = ReactionComponentsWrapper(
             coefficients: coeffs,
@@ -284,6 +283,7 @@ class BeakerMoleculeSetterTests: XCTestCase {
         forwardWrapper.increment(molecule: .B, count: 30)
 
         let forwardModel = forwardWrapper.components
+        let forwardReaction = forwardModel.equation
 
         let unitChange: CGFloat = 0.057
         let expectedConvergedA = 0.3 - (3 * unitChange)
@@ -295,8 +295,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
         let expectedCMolecules = (unitChange * 100).roundedInt()
         let expectedDMolecules = (2 * unitChange * 100).roundedInt()
 
-        XCTAssertEqual(forwardReaction.convergenceA, expectedConvergedA, accuracy: 0.0001)
-        XCTAssertEqual(forwardReaction.convergenceB, expectedConvergedB, accuracy: 0.0001)
+        XCTAssertEqual(forwardReaction.equilibriumConcentrations.reactantA, expectedConvergedA, accuracy: 0.0001)
+        XCTAssertEqual(forwardReaction.equilibriumConcentrations.reactantB, expectedConvergedB, accuracy: 0.0001)
 
         let convergedReactants = forwardModel.getEffectiveReactants(at: 10)
 
