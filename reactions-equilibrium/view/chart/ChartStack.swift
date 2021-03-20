@@ -22,6 +22,8 @@ struct ChartStack: View {
     let generalElementHighlight: Color
     let equilibriumHighlight: Color
 
+    let topChartYLabel: String
+
     @State private var showGraph = true
 
     var body: some View {
@@ -66,6 +68,7 @@ struct ChartStack: View {
             minDragTime: components.quotientChartDiscontinuity?.x,
             canSetIndex: canSetChartIndex,
             activeIndex: $activeChartIndex,
+            yLabel: topChartYLabel,
             settings: settings.chartSettings
         )
         .colorMultiply(equilibriumHighlight)
@@ -135,7 +138,8 @@ extension ChartStack {
             equilibriumQuotient: model.convergenceQuotient,
             activeChartIndex: activeChartIndex,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
-            equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium)
+            equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium),
+            topChartYLabel: "Concentration"
         )
     }
 
@@ -158,7 +162,8 @@ extension ChartStack {
             equilibriumQuotient: model.equilibriumQuotient,
             activeChartIndex: activeChartIndex,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
-            equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium)
+            equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium),
+            topChartYLabel: "Pressure"
         )
     }
 }

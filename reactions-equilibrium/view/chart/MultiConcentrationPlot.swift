@@ -22,12 +22,13 @@ struct MultiConcentrationPlot: View {
 
     let canSetIndex: Bool
     @Binding var activeIndex: Int?
+    let yLabel: String
 
     let settings: ReactionEquilibriumChartsLayoutSettings
 
     var body: some View {
         HStack(spacing: settings.axisLabelGapFromAxis) {
-            Text("Concentration")
+            Text(yLabel)
                 .font(.system(size: settings.axisLabelFontSize))
                 .rotationEffect(.degrees(-90))
                 .fixedSize()
@@ -182,6 +183,7 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
             minDragTime: nil,
             canSetIndex: false,
             activeIndex: .constant(nil),
+            yLabel: "Concentration",
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis
