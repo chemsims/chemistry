@@ -74,7 +74,7 @@ struct AqueousBeakerView: View {
 
             FilledBeaker(
                 molecules: [],
-                animatingMolecules: model.components2.beakerMolecules.map(\.animatingMolecules),
+                animatingMolecules: model.components.beakerMolecules.map(\.animatingMolecules),
                 currentTime: model.currentTime,
                 rows: model.rows
             )

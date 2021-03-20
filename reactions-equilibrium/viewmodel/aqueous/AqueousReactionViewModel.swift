@@ -15,13 +15,6 @@ class AqueousReactionViewModel: ObservableObject {
 
         self.selectedReaction = initialType
         self.rows = CGFloat(initialRows)
-        self.components = ForwardAqueousReactionComponents(
-            coefficients: initialType.coefficients,
-            equilibriumConstant: initialType.equilibriumConstant,
-            availableCols: MoleculeGridSettings.cols,
-            availableRows: initialRows,
-            maxRows: AqueousReactionSettings.maxRows
-        )
         self.componentsWrapper = ReactionComponentsWrapper(
             coefficients: initialType.coefficients,
             equilibriumConstant: initialType.equilibriumConstant,
@@ -37,7 +30,7 @@ class AqueousReactionViewModel: ObservableObject {
 
         self.navigation = AqueousNavigationModel.model(model: self)
         self.addingMoleculesModel = AddingMoleculesViewModel(
-            canAddMolecule: { self.components.canIncrement(molecule: $0) },
+            canAddMolecule: { self.componentsWrapper.canIncrement(molecule: $0) },
             addMolecules: { (molecule, num) in self.increment(molecule: molecule, count: num) }
         )
     }
@@ -47,8 +40,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows) {
         didSet {
-            components.availableRows = GridMoleculesUtil.availableRows(for: rows)
-            componentsWrapper.beakerRows = GridMoleculesUtil.availableRows(for: rows)
+            componentsWrapper.beakerRows = GridUtil.availableRows(for: rows)
             highlightedElements.clear()
         }
     }
@@ -61,8 +53,6 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var reactionSelectionIsToggled = true
     @Published var selectedReaction: AqueousReactionType {
         didSet {
-            components.coefficients = selectedReaction.coefficients
-            components.equilibriumConstant = selectedReaction.equilibriumConstant
             componentsWrapper.coefficients = selectedReaction.coefficients
             componentsWrapper.equilibriumConstant = selectedReaction.equilibriumConstant
         }
@@ -73,10 +63,8 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var chartOffset: CGFloat = 0
 
-    @Published var components: AqueousReactionComponents
-
     @Published var componentsWrapper: ReactionComponentsWrapper
-    var components2: ReactionComponents {
+    var components: ReactionComponents {
         componentsWrapper.components
     }
 
@@ -97,16 +85,12 @@ class AqueousReactionViewModel: ObservableObject {
 
     private let inputSettings = AqueousReactionSettings.ConcentrationInput.self
 
-    var equations: BalancedReactionEquations {
-        components.equations
-    }
-
     var quotientEquation: Equation {
-        components2.quotientEquation
+        components.quotientEquation
     }
 
     var maxQuotient: CGFloat {
-        quotientEquation.getY(at: components2.tForMaxQuotient)
+        quotientEquation.getY(at: components.tForMaxQuotient)
     }
 
     var convergenceQuotient: CGFloat {
@@ -126,14 +110,12 @@ class AqueousReactionViewModel: ObservableObject {
         let canAddProduct = inputState == .addProducts && molecule.isProduct
         if canAddProduct || canAddReactant {
             objectWillChange.send()
-            components.increment(molecule: molecule, count: count)
             componentsWrapper.increment(molecule: molecule, count: count)
             handlePostIncrementSaturation(of: molecule)
         }
     }
 
     func resetMolecules() {
-        components.reset()
         instructToAddMoreReactantCount = instructToAddMoreReactantCount.reset()
     }
 
@@ -193,8 +175,8 @@ class AqueousReactionViewModel: ObservableObject {
 
     // Returns the first reactant which does not have enough molecules in the beaker
     private func getMissingReactant() -> AqueousMoleculeReactant? {
-        let aTooLow = components2.equation.initialConcentrations.reactantA.rounded(decimals: 2) < inputSettings.minInitial
-        let bTooLow = components2.equation.initialConcentrations.reactantB.rounded(decimals: 2) < inputSettings.minInitial
+        let aTooLow = components.equation.initialConcentrations.reactantA.rounded(decimals: 2) < inputSettings.minInitial
+        let bTooLow = components.equation.initialConcentrations.reactantB.rounded(decimals: 2) < inputSettings.minInitial
 
         if aTooLow {
             return .A

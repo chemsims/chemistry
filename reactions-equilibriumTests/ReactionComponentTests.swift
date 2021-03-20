@@ -346,26 +346,6 @@ class ReactionComponentTests: XCTestCase {
     private var maxConcentration: CGFloat = 0.3
 }
 
-private extension ForwardAqueousReactionComponents {
-    mutating func incrementA(count: Int) {
-        increment(molecule: .A, count: count)
-    }
-
-    mutating func incrementB(count: Int) {
-        increment(molecule: .B, count: count)
-    }
-}
-
-private extension ReverseAqueousReactionComponents {
-    mutating func incrementC(count: Int) {
-        increment(molecule: .C, count: count)
-    }
-
-    mutating func incrementD(count: Int) {
-        increment(molecule: .D, count: count)
-    }
-}
-
 
 private extension ReactionComponentsWrapper {
     var beakerCoords: [[GridCoordinate]] {

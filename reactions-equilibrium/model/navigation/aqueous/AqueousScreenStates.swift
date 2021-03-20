@@ -232,9 +232,6 @@ class InstructToAddProductState: AqueousScreenState {
         model.statement = AqueousStatements.instructToAddProduct(selected: model.selectedReaction)
         model.inputState = .addProducts
         model.highlightedElements.elements = [.moleculeContainers]
-        if let fwd = model.components as? ForwardAqueousReactionComponents {
-            model.components = ReverseAqueousReactionComponents(forwardReaction: fwd)
-        }
         if setComponent {
             model.componentsWrapper = ReactionComponentsWrapper(
                 previous: model.componentsWrapper,
@@ -250,9 +247,6 @@ class InstructToAddProductState: AqueousScreenState {
         model.inputState = .none
         model.highlightedElements.clear()
         model.stopShaking()
-        if let rev = model.components as? ReverseAqueousReactionComponents {
-            model.components = rev.forwardReaction
-        }
         if let previous = model.componentsWrapper.previous {
             model.componentsWrapper = previous
         } else {

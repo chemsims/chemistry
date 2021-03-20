@@ -9,10 +9,6 @@ struct ReactionQuotientEquation: Equation {
 
     let terms: MoleculeValue<QuotientTerm>
 
-    init(equations: BalancedReactionEquations) {
-        self.init(coefficients: equations.coefficients, equations: equations.reactions)
-    }
-
     init(equations: NewBalancedReactionEquation) {
         self.init(coefficients: equations.coefficients, equations: equations.concentration)
     }

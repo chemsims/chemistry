@@ -46,7 +46,7 @@ class ScalesRotationEquationTests: XCTestCase {
     }
 
     func testReverseReactionRotation() {
-        var forward = NewBalancedReactionEquation(
+        let forward = NewBalancedReactionEquation(
             coefficients: .unit,
             equilibriumConstant: 1,
             initialConcentrations: MoleculeValue(

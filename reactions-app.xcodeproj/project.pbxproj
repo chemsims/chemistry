@@ -47,7 +47,6 @@
 		571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */; };
 		571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E802560483A00A1C45E /* BarChartBar.swift */; };
 		571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
-		5725971925EE3A2A00D87964 /* AqueousReactionComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725971825EE3A2A00D87964 /* AqueousReactionComponents.swift */; };
 		5725972325EE3E9400D87964 /* ReactionComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972225EE3E9400D87964 /* ReactionComponentTests.swift */; };
 		5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972925EE3ECE00D87964 /* Extensions.swift */; };
 		5727485F25A5F489000CFA1E /* NavigationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */; };
@@ -162,7 +161,6 @@
 		5783965925A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783965825A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift */; };
 		5786FAAB25E6908D00AAD8A6 /* DisabledSliderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */; };
 		5786FAB525E692D800AAD8A6 /* RunnableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAB425E692D800AAD8A6 /* RunnableState.swift */; };
-		5786FACB25E6B06600AAD8A6 /* ForwardEquilibriumBeakerGridBalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FACA25E6B06600AAD8A6 /* ForwardEquilibriumBeakerGridBalancer.swift */; };
 		5786FADA25E6B60B00AAD8A6 /* ReactionsRateBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAD925E6B60B00AAD8A6 /* ReactionsRateBeaker.swift */; };
 		5786FAED25E6D66C00AAD8A6 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
 		5786FAF325E6D8D100AAD8A6 /* TimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAF225E6D8D100AAD8A6 /* TimeChartView.swift */; };
@@ -462,7 +460,6 @@
 		571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGeometrySettings.swift; sourceTree = "<group>"; };
 		571F6E802560483A00A1C45E /* BarChartBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartBar.swift; sourceTree = "<group>"; };
 		571F6E862560486400A1C45E /* BarChartAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartAxis.swift; sourceTree = "<group>"; };
-		5725971825EE3A2A00D87964 /* AqueousReactionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionComponents.swift; sourceTree = "<group>"; };
 		5725972225EE3E9400D87964 /* ReactionComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComponentTests.swift; sourceTree = "<group>"; };
 		5725972925EE3ECE00D87964 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModelTests.swift; sourceTree = "<group>"; };
@@ -577,7 +574,6 @@
 		5783965825A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChartInputTests.swift; sourceTree = "<group>"; };
 		5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledSliderModifier.swift; sourceTree = "<group>"; };
 		5786FAB425E692D800AAD8A6 /* RunnableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnableState.swift; sourceTree = "<group>"; };
-		5786FACA25E6B06600AAD8A6 /* ForwardEquilibriumBeakerGridBalancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardEquilibriumBeakerGridBalancer.swift; sourceTree = "<group>"; };
 		5786FAD925E6B60B00AAD8A6 /* ReactionsRateBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsRateBeaker.swift; sourceTree = "<group>"; };
 		5786FAF225E6D8D100AAD8A6 /* TimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartView.swift; sourceTree = "<group>"; };
 		5787039725B88E14002A4487 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
@@ -1061,14 +1057,6 @@
 			path = test_util;
 			sourceTree = "<group>";
 		};
-		5725973725EE4AED00D87964 /* aqueous */ = {
-			isa = PBXGroup;
-			children = (
-				5725971825EE3A2A00D87964 /* AqueousReactionComponents.swift */,
-			);
-			path = aqueous;
-			sourceTree = "<group>";
-		};
 		5727487225A61B9C000CFA1E /* enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -1463,14 +1451,6 @@
 			path = "animatable-modifiers";
 			sourceTree = "<group>";
 		};
-		5786FAC925E6B02400AAD8A6 /* beaker */ = {
-			isa = PBXGroup;
-			children = (
-				5786FACA25E6B06600AAD8A6 /* ForwardEquilibriumBeakerGridBalancer.swift */,
-			);
-			path = beaker;
-			sourceTree = "<group>";
-		};
 		5786FAD825E6B5FD00AAD8A6 /* beaker */ = {
 			isa = PBXGroup;
 			children = (
@@ -1808,10 +1788,8 @@
 				576A422325F7A84100047618 /* molecule-container */,
 				576A41FB25F77B6C00047618 /* layout */,
 				5736DC2E25F5006B003FD2B4 /* grid */,
-				5725973725EE4AED00D87964 /* aqueous */,
 				57ABDC4425EC03BC0078A82B /* statements */,
 				57A1B7A725EAB4C200878B52 /* scales */,
-				5786FAC925E6B02400AAD8A6 /* beaker */,
 				57952A5025E68175006AB876 /* navigation */,
 				57DDAD0E25E567B100B535A7 /* reaction-equations */,
 				57DDACF225E5549F00B535A7 /* styling */,
@@ -2486,7 +2464,6 @@
 				57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */,
 				57E59A3F25F91D510087F760 /* DoubleSidedArrow.swift in Sources */,
 				5787C26425F65BC400CF685A /* MoleculeValue.swift in Sources */,
-				5786FACB25E6B06600AAD8A6 /* ForwardEquilibriumBeakerGridBalancer.swift in Sources */,
 				57A1B7A225EAA7A800878B52 /* MoleculePile.swift in Sources */,
 				57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */,
 				57686B00260257C0005BD328 /* PumpViewModel.swift in Sources */,
@@ -2501,7 +2478,6 @@
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
 				576A420725F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift in Sources */,
 				57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */,
-				5725971925EE3A2A00D87964 /* AqueousReactionComponents.swift in Sources */,
 				57DDACE925E552F700B535A7 /* AqueousReactionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

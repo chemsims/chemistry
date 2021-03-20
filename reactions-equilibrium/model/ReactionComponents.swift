@@ -138,7 +138,9 @@ class ReactionComponentsWrapper {
         setComponents()
     }
 
-    private func getUpdatedGridMolecule(for molecule: AqueousMolecule) -> [GridCoordinate] {
+    private func getUpdatedGridMolecule(
+        for molecule: AqueousMolecule
+    ) -> [GridCoordinate] {
         let targetConcentration = initialConcentration(
             of: molecule,
             coords: molecules.value(for: molecule),
@@ -577,12 +579,14 @@ struct NewBalancedReactionEquation {
             )
         }
 
-        self.concentration = combinedWithPrevious ?? equations
+        let concentration = combinedWithPrevious ?? equations
+        self.concentration = concentration
+        self.equilibriumConcentrations = concentration.map {
+            $0.getY(at: equilibriumTime)
+        }
     }
 
-    lazy var equilibriumConcentrations: MoleculeValue<CGFloat> = concentration.map {
-        $0.getY(at: equilibriumTime)
-    }
+    let equilibriumConcentrations: MoleculeValue<CGFloat>
 
     private static func getDirection(
         coefficients: MoleculeValue<Int>,

@@ -94,7 +94,7 @@ private struct RightStackView: View {
     private var equation: some View {
         AqueousEquationView(
             showTerms: model.showEquationTerms,
-            equations: model.components2.equation,
+            equations: model.components.equation,
             quotient: model.quotientEquation,
             convergedQuotient: model.convergenceQuotient,
             currentTime: model.currentTime,
@@ -135,7 +135,7 @@ private struct RightStackView: View {
 
     private var scales: some View {
         MoleculeScales(
-            reaction: model.components2.equation,
+            reaction: model.components.equation,
             currentTime: model.currentTime
         )
         .frame(width: settings.scalesWidth, height: settings.scalesHeight)
@@ -147,33 +147,33 @@ private struct RightStackView: View {
             reactants: [
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components2.equilibriumGrid.reactantA.coordinates,
+                        coords: model.components.equilibriumGrid.reactantA.coordinates,
                         color: .from(.aqMoleculeA)
                     ),
-                    fractionToDraw: model.components2.equilibriumGrid.reactantA.fractionToDraw
+                    fractionToDraw: model.components.equilibriumGrid.reactantA.fractionToDraw
                 ),
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components2.equilibriumGrid.reactantB.coordinates,
+                        coords: model.components.equilibriumGrid.reactantB.coordinates,
                         color: .from(.aqMoleculeB)
                     ),
-                    fractionToDraw: model.components2.equilibriumGrid.reactantB.fractionToDraw
+                    fractionToDraw: model.components.equilibriumGrid.reactantB.fractionToDraw
                 )
             ],
             products: [
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components2.equilibriumGrid.productC.coordinates,
+                        coords: model.components.equilibriumGrid.productC.coordinates,
                         color: .from(.aqMoleculeC)
                     ),
-                    fractionToDraw: model.components2.equilibriumGrid.productC.fractionToDraw
+                    fractionToDraw: model.components.equilibriumGrid.productC.fractionToDraw
                 ),
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
-                        coords: model.components2.equilibriumGrid.productD.coordinates,
+                        coords: model.components.equilibriumGrid.productD.coordinates,
                         color: .from(.aqMoleculeD)
                     ),
-                    fractionToDraw: model.components2.equilibriumGrid.productD.fractionToDraw
+                    fractionToDraw: model.components.equilibriumGrid.productD.fractionToDraw
                 )
             ]
         )

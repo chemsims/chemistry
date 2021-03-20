@@ -124,7 +124,7 @@ class GridMoleculesTests: XCTestCase {
 
         incrementProducts()
 
-        var equation = reverseModel.components.equation
+        let equation = reverseModel.components.equation
         let initC = equation.initialConcentrations
         let eqC = equation.equilibriumConcentrations
         XCTAssertEqual(aGrid.coordinates.count, gridCountFor(eqC.reactantA))

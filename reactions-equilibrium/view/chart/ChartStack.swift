@@ -29,8 +29,8 @@ struct ChartStack: View {
             concentrationChart.opacity(showGraph ? 1 : 0)
             if (!showGraph) {
                 ICETable(
-                    initial: model.components2.equation.initialConcentrations,
-                    final: model.components2.equation.equilibriumConcentrations
+                    initial: model.components.equation.initialConcentrations,
+                    final: model.components.equation.equilibriumConcentrations
                 )
                 .colorMultiply(
                     model.highlightedElements.colorMultiply(for: nil)
@@ -45,16 +45,16 @@ struct ChartStack: View {
 
     private var concentrationChart: some View {
         MultiConcentrationPlot(
-            equations: model.components2.equation.concentration,
-            equilibriumTime: model.components2.equation.equilibriumTime,
-            discontinuities: model.components2.moleculeChartDiscontinuities,
+            equations: model.components.equation.concentration,
+            equilibriumTime: model.components.equation.equilibriumTime,
+            discontinuities: model.components.moleculeChartDiscontinuities,
             initialTime: 0,
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
             showData: model.showConcentrationLines,
             offset: model.chartOffset,
-            minDragTime: model.components2.quotientChartDiscontinuity?.x,
+            minDragTime: model.components.quotientChartDiscontinuity?.x,
             canSetIndex: model.canSetChartIndex,
             activeIndex: $model.activeChartIndex,
             settings: settings.chartSettings
@@ -66,15 +66,15 @@ struct ChartStack: View {
 
     private var quotientChart: some View {
         QuotientPlot(
-            equation: model.components2.quotientEquation,
+            equation: model.components.quotientEquation,
             initialTime: 0,
             currentTime: $model.currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: model.canSetCurrentTime,
-            equilibriumTime: model.components2.equation.equilibriumTime,
+            equilibriumTime: model.components.equation.equilibriumTime,
             showData: model.showQuotientLine,
             offset: model.chartOffset,
-            discontinuity: model.components2.quotientChartDiscontinuity,
+            discontinuity: model.components.quotientChartDiscontinuity,
             settings: settings.quotientChartSettings(
                 convergenceQ: model.convergenceQuotient,
                 maxQ: model.maxQuotient

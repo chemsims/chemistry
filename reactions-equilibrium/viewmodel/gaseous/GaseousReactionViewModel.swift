@@ -33,7 +33,7 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var componentWrapper: ReactionComponentsWrapper
     @Published var rows: CGFloat {
         didSet {
-            componentWrapper.beakerRows = GridMoleculesUtil.availableRows(for: rows)
+            componentWrapper.beakerRows = GridUtil.availableRows(for: rows)
         }
     }
 
