@@ -13,6 +13,7 @@
 		57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */; };
 		57062DB726072CAC00007BAA /* GaseousNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57062DB626072CAC00007BAA /* GaseousNavigationModel.swift */; };
 		57062DC126072DDE00007BAA /* GaseousStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57062DC026072DDE00007BAA /* GaseousStatements.swift */; };
+		57062DC72607A84C00007BAA /* NavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57062DC62607A84C00007BAA /* NavigationModel.swift */; };
 		57064BA225A77787008102CE /* ReactionInputModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57064BA125A77787008102CE /* ReactionInputModel.swift */; };
 		57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */; };
 		570E4F01256D10CD001EADCB /* EnergyProfileChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */; };
@@ -420,6 +421,7 @@
 		57035F11255C29A500DB3A19 /* ConcentrationTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTimeChartView.swift; sourceTree = "<group>"; };
 		57062DB626072CAC00007BAA /* GaseousNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousNavigationModel.swift; sourceTree = "<group>"; };
 		57062DC026072DDE00007BAA /* GaseousStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousStatements.swift; sourceTree = "<group>"; };
+		57062DC62607A84C00007BAA /* NavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModel.swift; sourceTree = "<group>"; };
 		57064BA125A77787008102CE /* ReactionInputModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputModel.swift; sourceTree = "<group>"; };
 		57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreenElement.swift; sourceTree = "<group>"; };
 		570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChart.swift; sourceTree = "<group>"; };
@@ -1875,6 +1877,7 @@
 				57686A942600CFDC005BD328 /* gaseous */,
 				576A421825F7A7EC00047618 /* molecule-container */,
 				57DDACE725E552E500B535A7 /* aqueous */,
+				57062DC62607A84C00007BAA /* NavigationModel.swift */,
 			);
 			path = viewmodel;
 			sourceTree = "<group>";
@@ -2496,6 +2499,7 @@
 				5787C26425F65BC400CF685A /* MoleculeValue.swift in Sources */,
 				57A1B7A225EAA7A800878B52 /* MoleculePile.swift in Sources */,
 				57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */,
+				57062DC72607A84C00007BAA /* NavigationModel.swift in Sources */,
 				57686B00260257C0005BD328 /* PumpViewModel.swift in Sources */,
 				5736DC3025F5007D003FD2B4 /* GridMolecules.swift in Sources */,
 				57E902B425ED40B500758300 /* AqueousReactionInputState.swift in Sources */,

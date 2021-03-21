@@ -73,7 +73,7 @@ class GaseousReactionViewModel: ObservableObject {
         }
     }
 
-    private var navigation: NavigationModel<GaseousScreenState>?
+    private(set) var navigation: NavigationModel<GaseousScreenState>?
     private let incrementingLimits = ConcentrationIncrementingLimits()
 
     func next() {

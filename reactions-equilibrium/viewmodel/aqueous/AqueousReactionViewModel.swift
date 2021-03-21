@@ -7,7 +7,7 @@ import ReactionsCore
 
 class AqueousReactionViewModel: ObservableObject {
 
-    private var navigation: NavigationModel<AqueousScreenState>?
+    private(set) var navigation: NavigationModel<AqueousScreenState>?
 
     init() {
         let initialType = AqueousReactionType.A
