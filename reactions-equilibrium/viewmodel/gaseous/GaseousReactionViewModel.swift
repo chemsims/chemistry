@@ -21,7 +21,7 @@ class GaseousReactionViewModel: ObservableObject {
             dynamicGridCols: EquilibriumGridSettings.cols,
             dynamicGridRows: EquilibriumGridSettings.rows,
             startTime: 0,
-            equilibriumTime: AqueousReactionSettings.forwardReactionTime,
+            equilibriumTime: GaseousReactionSettings.forwardTiming.equilibrium,
             maxC: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
         self.pumpModel = PumpViewModel(
@@ -118,7 +118,7 @@ class GaseousReactionViewModel: ObservableObject {
             return
         }
         objectWillChange.send()
-        componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 1)
+        componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 20) // TODO revert to 1
     }
 
     private(set) var pumpModel: PumpViewModel<CGFloat>!

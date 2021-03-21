@@ -168,6 +168,7 @@ private class GaseousRunReaction: GaseousScreenState {
     }
 
     override func apply(on model: GaseousReactionViewModel) {
+        model.statement = statement
         model.showQuotientLine = true
         model.highlightForwardReactionArrow = isForward
         model.highlightReverseReactionArrow = !isForward
@@ -194,6 +195,19 @@ private class GaseousRunReaction: GaseousScreenState {
         timing.end - timing.start
     }
 
+    override var delayedStates: [DelayedState<GaseousScreenState>] {
+        func delayedState(_ statement: [TextLine], _ highlights: [GaseousScreenElement]) -> DelayedState<GaseousScreenState> {
+            DelayedState(
+                state: GaseousSetStatement(statement: statement, highlights: highlights),
+                delay: Double((timing.equilibrium - timing.start) / 2)
+            )
+        }
+
+        return [
+            delayedState(GaseousStatements.midForwardReaction, []),
+            delayedState(GaseousStatements.forwardEquilibriumReached, [.chartEquilibrium])
+        ]
+    }
 }
 
 private class GaseousEndOfReaction: GaseousScreenState {
