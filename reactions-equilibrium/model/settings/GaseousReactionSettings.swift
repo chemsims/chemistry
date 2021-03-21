@@ -30,7 +30,7 @@ struct GaseousReactionSettings {
 
         init(offset: CGFloat) {
             self.offset = offset
-            self.start = offset + GaseousReactionSettings.gapBetweenReactions
+            self.start = offset == 0 ? 0 : offset + GaseousReactionSettings.gapBetweenReactions
             self.equilibrium = offset + GaseousReactionSettings.equilibriumTime
             self.end = offset + GaseousReactionSettings.totalReactionTime
             print(self)

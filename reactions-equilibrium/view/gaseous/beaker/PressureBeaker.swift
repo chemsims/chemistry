@@ -10,8 +10,6 @@ struct PressureBeaker: View {
     @ObservedObject var model: GaseousReactionViewModel
     let settings: PressureBeakerSettings
 
-    @State private var tempFactor: CGFloat = 0.5
-
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
             pump
@@ -63,7 +61,7 @@ struct PressureBeaker: View {
 
     private var burner: some View {
         AdjustableBeakerBurner(
-            temp: $tempFactor,
+            temp: $model.extraHeatFactor,
             disabled: model.inputState != .setTemperature,
             useHaptics: true,
             highlightSlider: false,

@@ -67,6 +67,11 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var showEquationTerms = true
 
     @Published var showFlame = false
+    @Published var extraHeatFactor: CGFloat = 0 {
+        didSet {
+            componentWrapper.equilibriumConstant = equilibriumQuotient
+        }
+    }
 
     private var navigation: NavigationModel<GaseousScreenState>?
 
@@ -88,11 +93,15 @@ class GaseousReactionViewModel: ObservableObject {
     }
 
     var equilibriumQuotient: CGFloat {
-        selectedReaction.equilibriumConstant
+        scaleQuotient(base: selectedReaction.equilibriumConstant)
     }
 
     var equilibriumPressureQuotient: CGFloat {
-        selectedReaction.pressureConstant
+        scaleQuotient(base: selectedReaction.pressureConstant)
+    }
+
+    private func scaleQuotient(base: CGFloat) -> CGFloat {
+        base * (1 + (5 * extraHeatFactor))
     }
 
     private func onPump() {
