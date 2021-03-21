@@ -136,4 +136,31 @@ struct GaseousStatements {
         "*Let's see how else equilibrium can be disturbed.*"
     ]
 
+    static let explainChangeOfTemp: [TextLine] = [
+        """
+        For reversible reactions when one reaction is endothermic, the other one is \
+        the opposite, exothermic.
+        """,
+        """
+        Changing temperature is another way that *equilibrium* can be disturbed.
+        """
+    ]
+
+    static let chatelier2: [TextLine] = [
+        """
+        Another way to test *Le Chatelier's principle* is by changing the temperature. \
+        Raising the temperature makes the system try to consume heat. In which case, \
+        the reaction favored will be the endothermic one.
+        """
+    ]
+
+    static let instructToSetTemp: [TextLine] = [
+        """
+        In this reaction, the forward reaction is exothermic, while the reverse \
+        is exothermic.
+        """,
+        "Change temperature of the system to see what happens!",
+        "*Use the flame slider.*"
+    ]
+
 }

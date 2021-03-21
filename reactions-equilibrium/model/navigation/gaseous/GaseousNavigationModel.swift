@@ -42,7 +42,10 @@ struct GaseousNavigationModel {
         GaseousEndOfReaction(
             statement: GaseousStatements.forwardEquilibriumReached,
             timing: GaseousReactionSettings.pressureTiming
-        )
+        ),
+        GaseousSetStatement(statement: GaseousStatements.endOfPressureReaction),
+        GaseousSetStatement(statement: GaseousStatements.chatelier2),
+        GaseousSetTemperature()
     ]
 }
 
@@ -230,6 +233,19 @@ private class GaseousSetVolume: GaseousScreenState {
         }
         if let previous = model.componentWrapper.previous {
             model.componentWrapper = previous
+        }
+    }
+}
+
+private class GaseousSetTemperature: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = GaseousStatements.instructToSetTemp
+        let timing = GaseousReactionSettings.heatTiming
+        withAnimation(.easeOut(duration: 1)) {
+            model.showFlame = true
+            model.inputState = .setTemperature
+            model.chartOffset = timing.offset
+            model.currentTime = timing.start
         }
     }
 }

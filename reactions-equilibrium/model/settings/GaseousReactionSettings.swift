@@ -17,6 +17,7 @@ struct GaseousReactionSettings {
 
     static let forwardTiming = ReactionTiming(offset: 0)
     static let pressureTiming = ReactionTiming(offset: totalReactionTime)
+    static let heatTiming = ReactionTiming(offset: 2 * totalReactionTime)
 
     static let pressureToConcentration: CGFloat = 5
 
@@ -32,6 +33,7 @@ struct GaseousReactionSettings {
             self.start = offset + GaseousReactionSettings.gapBetweenReactions
             self.equilibrium = offset + GaseousReactionSettings.equilibriumTime
             self.end = offset + GaseousReactionSettings.totalReactionTime
+            print(self)
         }
 
     }
