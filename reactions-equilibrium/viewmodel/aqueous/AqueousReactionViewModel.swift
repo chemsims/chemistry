@@ -83,6 +83,8 @@ class AqueousReactionViewModel: ObservableObject {
     }
     @Published var activeChartIndex: Int?
 
+    private let incrementingLimits = ConcentrationIncrementingLimits()
+
     private let inputSettings = AqueousReactionSettings.ConcentrationInput.self
 
     var quotientEquation: Equation {
@@ -117,7 +119,7 @@ class AqueousReactionViewModel: ObservableObject {
 
     func resetMolecules() {
         componentsWrapper.reset()
-        instructToAddMoreReactantCount = instructToAddMoreReactantCount.reset()
+        instructToAddMoreReactantCount.reset()
     }
 
     func next() {
@@ -166,25 +168,22 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     private func informUserOfMissing(reactant: AqueousMoleculeReactant) {
-        instructToAddMoreReactantCount = instructToAddMoreReactantCount.increment(value: reactant)
-        statement = AqueousStatements.addMore(
+        incrementingLimits.increment(for: reactant)
+        statement = StatementUtil.addMore(
             reactant: reactant,
-            count: instructToAddMoreReactantCount.count,
-            minConcentration: inputSettings.minInitial.str(decimals: 2)
+            count: incrementingLimits.count,
+            minProperty: inputSettings.minInitial.str(decimals: 2),
+            property: "concentration",
+            action: "shake"
         )
     }
 
     // Returns the first reactant which does not have enough molecules in the beaker
     private func getMissingReactant() -> AqueousMoleculeReactant? {
-        let aTooLow = components.equation.initialConcentrations.reactantA.rounded(decimals: 2) < inputSettings.minInitial
-        let bTooLow = components.equation.initialConcentrations.reactantB.rounded(decimals: 2) < inputSettings.minInitial
-
-        if aTooLow {
-            return .A
-        } else if bTooLow {
-            return .B
-        }
-        return nil
+        incrementingLimits.missingReactant(
+            incremented: components.equation.initialConcentrations,
+            minInitial: inputSettings.minInitial
+        )
     }
 
     private func reactantMoleculesToDraw(
@@ -218,5 +217,38 @@ extension AqueousReactionViewModel {
 
     var canChooseReactants: Bool {
         inputState == .selectReactionType
+    }
+}
+
+class ConcentrationIncrementingLimits {
+
+    private var counter = EquatableCounter<AqueousMoleculeReactant>()
+
+    func missingReactant(
+        incremented: MoleculeValue<CGFloat>,
+        minInitial: CGFloat
+    ) -> AqueousMoleculeReactant? {
+        func tooLow(_ molecule: AqueousMolecule) -> Bool {
+            incremented.value(for: molecule) < minInitial
+        }
+
+        if tooLow(.A) {
+            return .A
+        } else if tooLow(.B) {
+            return .B
+        }
+        return nil
+    }
+
+    var count: Int {
+        counter.count
+    }
+
+    func increment(for reactant: AqueousMoleculeReactant) {
+        counter.increment(value: reactant)
+    }
+
+    func resetCounter() {
+        counter.reset()
     }
 }

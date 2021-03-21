@@ -207,23 +207,25 @@ struct AqueousStatements {
 }
 
 // MARK: Statements to instruct to add more A/B molecules
-extension AqueousStatements {
+struct StatementUtil {
     static func addMore(
         reactant: AqueousMoleculeReactant,
         count: Int,
-        minConcentration: String
+        minProperty: String,
+        property: String,
+        action: String
     ) -> [TextLine] {
         switch count {
-        case 1: return addMore1(reactant.rawValue)
+        case 1: return addMore1(reactant.rawValue, action: action.capitalized)
         case 2: return addMore2(reactant.rawValue)
-        default: return addMore3(reactant.rawValue, minConcentration: minConcentration)
+        default: return addMore3(reactant.rawValue, minProperty: minProperty, property: property, action: action.capitalized)
         }
     }
 
-    private static func addMore1(_ name: String) -> [TextLine] {
+    private static func addMore1(_ name: String, action: String) -> [TextLine] {
         [
             "Add a bit more of *\(name)* to the beaker.",
-            "*Shake \(name) into the beaker*."
+            "*\(action) \(name) into the beaker*."
         ]
     }
 
@@ -233,12 +235,12 @@ extension AqueousStatements {
         ]
     }
 
-    private static func addMore3(_ name: String, minConcentration: String) -> [TextLine] {
+    private static func addMore3(_ name: String, minProperty: String, property: String, action: String) -> [TextLine] {
         [
             """
-            Add more of *\(name)* to the beaker. Make sure it's concentration is at least \(minConcentration).
+            Add more of *\(name)* to the beaker. Make sure it's \(property) is at least \(minProperty).
             """,
-            "Shake *\(name)* into the beaker."
+            "\(action) *\(name)* into the beaker."
         ]
     }
 }

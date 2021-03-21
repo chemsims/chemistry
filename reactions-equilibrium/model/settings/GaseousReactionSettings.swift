@@ -33,9 +33,6 @@ struct GaseousReactionSettings {
             self.start = offset == 0 ? 0 : offset + GaseousReactionSettings.gapBetweenReactions
             self.equilibrium = offset + GaseousReactionSettings.equilibriumTime
             self.end = offset + GaseousReactionSettings.totalReactionTime
-            print(self)
         }
-
     }
-
 }

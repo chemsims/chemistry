@@ -74,13 +74,22 @@ class GaseousReactionViewModel: ObservableObject {
     }
 
     private var navigation: NavigationModel<GaseousScreenState>?
+    private let incrementingLimits = ConcentrationIncrementingLimits()
 
     func next() {
-        navigation?.next()
+        if inputState == .addReactants, let missingReactant = getMissingReactant() {
+            informUserOfMissing(reactant: missingReactant)
+        } else {
+            navigation?.next()
+        }
     }
 
     func back() {
         navigation?.back()
+    }
+
+    func resetMolecules() {
+        componentWrapper.reset()
     }
 
 
@@ -105,9 +114,39 @@ class GaseousReactionViewModel: ObservableObject {
     }
 
     private func onPump() {
+        guard inputState == .addReactants else {
+            return
+        }
         objectWillChange.send()
         componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 1)
     }
 
     private(set) var pumpModel: PumpViewModel<CGFloat>!
+}
+
+private extension GaseousReactionViewModel {
+    private func informUserOfMissing(reactant: AqueousMoleculeReactant) {
+        incrementingLimits.increment(for: reactant)
+        statement = StatementUtil.addMore(
+            reactant: reactant,
+            count: incrementingLimits.count,
+            minProperty: minInitialP.str(decimals: 2),
+            property: "pressure",
+            action: "pump"
+        )
+    }
+
+    // Returns the first reactant which does not have enough molecules in the beaker
+    private func getMissingReactant() -> AqueousMoleculeReactant? {
+        incrementingLimits.missingReactant(
+            incremented: components.equation.initialConcentrations.map {
+                $0 * GaseousReactionSettings.pressureToConcentration
+            },
+            minInitial: minInitialP
+        )
+    }
+
+    private var minInitialP: CGFloat {
+        AqueousReactionSettings.ConcentrationInput.minInitial * GaseousReactionSettings.pressureToConcentration
+    }
 }

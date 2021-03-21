@@ -121,6 +121,10 @@ private class GaseousAddProducts: GaseousScreenState {
         model.highlightedElements.clear()
         model.showConcentrationLines = true
     }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.resetMolecules()
+    }
 }
 
 private class GaseousRunForwardReaction: GaseousScreenState {
