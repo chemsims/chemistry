@@ -246,12 +246,12 @@ private class GaseousSetVolume: GaseousScreenState {
 
     private func doApply(on model: GaseousReactionViewModel, setComponents: Bool) {
         model.statement = GaseousStatements.instructToChangeVolume(selected: model.selectedReaction)
-        model.inputState = .setBeakerVolume
         let timing = GaseousReactionSettings.pressureTiming
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = timing.offset
             model.currentTime = timing.start
             model.canSetChartIndex = false
+            model.inputState = .setBeakerVolume
         }
         if setComponents {
             model.componentWrapper = ReactionComponentsWrapper(
@@ -260,7 +260,6 @@ private class GaseousSetVolume: GaseousScreenState {
                 equilibriumTime: timing.equilibrium
             )
         }
-
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
@@ -268,6 +267,8 @@ private class GaseousSetVolume: GaseousScreenState {
             model.chartOffset = 0
             model.currentTime = GaseousReactionSettings.forwardTiming.end
             model.canSetChartIndex = false
+            model.inputState = .none
+            model.rows = CGFloat(GaseousReactionSettings.initialRows)
         }
         if let previous = model.componentWrapper.previous {
             model.componentWrapper = previous

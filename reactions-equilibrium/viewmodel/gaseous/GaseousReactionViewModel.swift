@@ -79,6 +79,8 @@ class GaseousReactionViewModel: ObservableObject {
     func next() {
         if inputState == .addReactants, let missingReactant = getMissingReactant() {
             informUserOfMissing(reactant: missingReactant)
+        } else if inputState == .setBeakerVolume, !hasChangedVolumeEnough {
+            informUserToChangeVolume()
         } else {
             navigation?.next()
         }
@@ -124,6 +126,8 @@ class GaseousReactionViewModel: ObservableObject {
     private(set) var pumpModel: PumpViewModel<CGFloat>!
 }
 
+
+// MARK: Helper functions for concentration, volume and heat input limits
 private extension GaseousReactionViewModel {
     private func informUserOfMissing(reactant: AqueousMoleculeReactant) {
         incrementingLimits.increment(for: reactant)
@@ -148,5 +152,15 @@ private extension GaseousReactionViewModel {
 
     private var minInitialP: CGFloat {
         AqueousReactionSettings.ConcentrationInput.minInitial * GaseousReactionSettings.pressureToConcentration
+    }
+
+    private var hasChangedVolumeEnough: Bool {
+        let currentRows = GridUtil.availableRows(for: rows)
+        let initialRows = GaseousReactionSettings.initialRows
+        return abs(currentRows - initialRows) >= GaseousReactionSettings.minRowDelta
+    }
+
+    private func informUserToChangeVolume() {
+        statement = GaseousStatements.adjustVolume
     }
 }

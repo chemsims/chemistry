@@ -164,3 +164,11 @@ struct GaseousStatements {
     ]
 
 }
+
+// MARK: Statements for user to adjust input
+extension GaseousStatements {
+    static let adjustVolume: [TextLine] = [
+        "Try changing the pressure in the beaker more before moving on!",
+        "*Use the slider to adjust the beaker pressure.*"
+    ]
+}
