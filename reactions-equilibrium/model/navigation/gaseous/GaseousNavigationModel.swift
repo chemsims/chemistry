@@ -26,7 +26,8 @@ struct GaseousNavigationModel {
         GaseousRunReaction(
             statement: GaseousStatements.forwardReactionIsRunning,
             timing: GaseousReactionSettings.forwardTiming,
-            isForward: true
+            isForward: true,
+            revealQuotientLine: true
         ),
         GaseousEndOfReaction(
             statement: GaseousStatements.forwardEquilibriumReached,
@@ -123,32 +124,11 @@ private class GaseousAddProducts: GaseousScreenState {
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
-        model.resetMolecules()
-    }
-}
-
-private class GaseousRunForwardReaction: GaseousScreenState {
-    override func apply(on model: GaseousReactionViewModel) {
-        model.showQuotientLine = true
-        model.highlightForwardReactionArrow = true
-        let time = GaseousReactionSettings.forwardTiming.end
-        model.currentTime = 0
-        model.inputState = .none
-        withAnimation(.linear(duration: Double(time))) {
-            model.currentTime = time
-        }
-    }
-
-    override func unapply(on model: GaseousReactionViewModel) {
-        model.highlightForwardReactionArrow = false
-        model.showQuotientLine = false
         withAnimation(.easeOut(duration: 0.5)) {
-            model.currentTime = 0
+            model.resetMolecules()
+            model.showConcentrationLines = false
         }
-    }
-
-    override func nextStateAutoDispatchDelay(model: GaseousReactionViewModel) -> Double? {
-        Double(AqueousReactionSettings.forwardReactionTime)
+        model.inputState = .none
     }
 }
 
@@ -156,34 +136,43 @@ private class GaseousRunReaction: GaseousScreenState {
     let statement: [TextLine]
     let timing: GaseousReactionSettings.ReactionTiming
     let isForward: Bool
+    let revealQuotientLine: Bool
 
     init(
         statement: [TextLine],
         timing: GaseousReactionSettings.ReactionTiming,
-        isForward: Bool
+        isForward: Bool,
+        revealQuotientLine: Bool = false
     ) {
         self.statement = statement
         self.timing = timing
         self.isForward = isForward
+        self.revealQuotientLine = revealQuotientLine
     }
 
     override func apply(on model: GaseousReactionViewModel) {
         model.statement = statement
-        model.showQuotientLine = true
+        if revealQuotientLine {
+            model.showQuotientLine = true
+        }
         model.highlightForwardReactionArrow = isForward
         model.highlightReverseReactionArrow = !isForward
         model.currentTime = timing.start
         model.inputState = .none
+        model.highlightedElements.clear()
         withAnimation(.linear(duration: Double(duration))) {
             model.currentTime = timing.end
         }
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
-        model.highlightForwardReactionArrow = false
-        model.highlightReverseReactionArrow = false
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = timing.start
+            model.highlightForwardReactionArrow = false
+            model.highlightReverseReactionArrow = false
+            if revealQuotientLine {
+                model.showQuotientLine = false
+            }
         }
     }
 
@@ -227,6 +216,7 @@ private class GaseousEndOfReaction: GaseousScreenState {
         model.canSetChartIndex = true
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = timing.end * 1.001
+            model.highlightedElements.elements = [.chartEquilibrium]
         }
     }
 
@@ -304,6 +294,13 @@ private class GaseousSetTemperature: GaseousScreenState {
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
+        withAnimation(.easeOut(duration: 1)) {
+            model.showFlame = false
+            model.extraHeatFactor = 0
+            model.inputState = .none
+            model.chartOffset = GaseousReactionSettings.pressureTiming.offset
+            model.currentTime = GaseousReactionSettings.pressureTiming.end
+        }
         if let previous = model.componentWrapper.previous {
             model.componentWrapper = previous
         }

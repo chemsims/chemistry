@@ -87,6 +87,7 @@ class GaseousReactionViewModel: ObservableObject {
     }
 
     func resetMolecules() {
+        objectWillChange.send()
         componentWrapper.reset()
     }
 

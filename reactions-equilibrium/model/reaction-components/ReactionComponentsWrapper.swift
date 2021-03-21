@@ -129,6 +129,7 @@ class ReactionComponentsWrapper {
         } else {
             molecules = MoleculeValue(builder: { _ in [] })
             gridMolecules = MoleculeValue(builder: { _ in [] })
+            setComponents()
         }
     }
 
