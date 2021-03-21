@@ -116,6 +116,7 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     func resetMolecules() {
+        componentsWrapper.reset()
         instructToAddMoreReactantCount = instructToAddMoreReactantCount.reset()
     }
 

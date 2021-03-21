@@ -134,6 +134,13 @@ class ReactionComponents {
         )
     }()
 
+    private(set) lazy var maxQuotient: CGFloat =
+        max(
+            quotientEquation.getY(at: startTime),
+            quotientEquation.getY(at: equilibriumTime)
+        )
+
+
     private lazy var balancedMoleculeValues: MoleculeValue<BalancedGridElement?> = {
         let reactants = equation.isForward ? gridBalancer?.decreasingBalanced : gridBalancer?.increasingBalanced
         let products = equation.isForward ? gridBalancer?.increasingBalanced : gridBalancer?.decreasingBalanced

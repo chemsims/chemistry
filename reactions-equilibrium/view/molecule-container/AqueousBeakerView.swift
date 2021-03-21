@@ -59,7 +59,8 @@ struct AqueousBeakerView: View {
                 orientation: .portrait,
                 includeFill: true,
                 settings: settings.sliderSettings,
-                disabled: !model.canSetLiquidLevel
+                disabled: !model.canSetLiquidLevel,
+                useHaptics: true
             )
             .frame(
                 width: settings.sliderSettings.handleWidth,

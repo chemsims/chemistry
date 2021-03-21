@@ -122,6 +122,16 @@ class ReactionComponentsWrapper {
         )
     }
 
+    func reset() {
+        if let previous = previous {
+            molecules = previous.molecules
+            gridMolecules = previous.gridMolecules
+        } else {
+            molecules = MoleculeValue(builder: { _ in [] })
+            gridMolecules = MoleculeValue(builder: { _ in [] })
+        }
+    }
+
     func increment(molecule: AqueousMolecule, count: Int) {
         let current = molecules.value(for: molecule)
         let avoid = molecules.all.flatten

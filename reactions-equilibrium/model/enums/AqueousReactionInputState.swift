@@ -10,5 +10,5 @@ enum AqueousReactionInputState {
 }
 
 enum GaseousReactionInputState {
-    case none, selectReactionType, addReactants, setBeakerVolume
+    case none, selectReactionType, addReactants, setBeakerVolume, setTemperature
 }

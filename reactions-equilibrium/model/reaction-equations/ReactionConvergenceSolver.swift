@@ -17,7 +17,6 @@ struct ReactionConvergenceSolver {
         initialConcentrations: BalancedReactionInitialConcentrations,
         isForward: Bool
     ) -> CGFloat? {
-
         let equation = ConvergingReactionQuotientEquation(coeffs: coeffs, initialConcentrations: initialConcentrations, isForward: isForward)
 
         let result = findSolution(

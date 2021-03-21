@@ -12,6 +12,7 @@ public struct AdjustableBeakerBurner: View {
     let disabled: Bool
     let useHaptics: Bool
     let highlightSlider: Bool
+    let showFlame: Bool
     let sliderAccessibilityValue: String?
     let settings: AdjustableBeakerBurnerSettings
 
@@ -20,6 +21,7 @@ public struct AdjustableBeakerBurner: View {
         disabled: Bool,
         useHaptics: Bool,
         highlightSlider: Bool,
+        showFlame: Bool,
         sliderAccessibilityValue: String?,
         settings: AdjustableBeakerBurnerSettings
     ) {
@@ -27,6 +29,7 @@ public struct AdjustableBeakerBurner: View {
         self.disabled = disabled
         self.useHaptics = useHaptics
         self.highlightSlider = highlightSlider
+        self.showFlame = showFlame
         self.sliderAccessibilityValue = sliderAccessibilityValue
         self.settings = settings
     }
@@ -35,6 +38,7 @@ public struct AdjustableBeakerBurner: View {
         VStack(spacing: 0) {
             BeakerBurner(
                 temp: $temp,
+                showFlame: showFlame,
                 settings: settings.burnerSettings
             )
 
@@ -109,9 +113,10 @@ struct AdjustableBeakerBurner_Previews: PreviewProvider {
     static var previews: some View {
         AdjustableBeakerBurner(
             temp: .constant(100),
-            disabled: false,
+            disabled: true,
             useHaptics: true,
             highlightSlider: false,
+            showFlame: true,
             sliderAccessibilityValue: "",
             settings: AdjustableBeakerBurnerSettings(
                 standWidth: 300,

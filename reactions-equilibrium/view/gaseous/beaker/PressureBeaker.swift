@@ -28,6 +28,7 @@ struct PressureBeaker: View {
             Pump(pumpModel: model.pumpModel)
                 .frame(width: settings.pumpWidth, height: settings.pumpHeight)
                 .offset(x: settings.pumpXOffset)
+
             SlidingSwitch(
                 selected: $model.selectedPumpReactant,
                 backgroundColor: Styling.switchBackground,
@@ -40,6 +41,7 @@ struct PressureBeaker: View {
             .frame(width: settings.switchWidth, height: settings.switchHeight)
             .offset(x: settings.switchXOffset)
         }
+        .disabled(model.inputState != .addReactants)
     }
 
     private var beaker: some View {
@@ -50,6 +52,7 @@ struct PressureBeaker: View {
             minRows: GaseousReactionSettings.minRows,
             maxRows: GaseousReactionSettings.maxRows,
             rows: $model.rows,
+            disabled: model.inputState != .setBeakerVolume,
             settings: AdjustableAirBeakerSettings(
                 beakerWidth: settings.beakerWidth,
                 sliderWidth: settings.sliderWidth
@@ -61,9 +64,10 @@ struct PressureBeaker: View {
     private var burner: some View {
         AdjustableBeakerBurner(
             temp: $tempFactor,
-            disabled: false,
+            disabled: model.inputState != .setTemperature,
             useHaptics: true,
             highlightSlider: false,
+            showFlame: model.showFlame,
             sliderAccessibilityValue: nil, // TODO
             settings: AdjustableBeakerBurnerSettings(
                 standWidth: settings.standWidth,

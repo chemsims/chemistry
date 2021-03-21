@@ -29,10 +29,11 @@ class GaseousReactionViewModel: ObservableObject {
             divisions: 5,
             onDownPump: onPump
         )
+        self.navigation = GaseousNavigationModel.model(model: self)
     }
 
     @Published var statement = [TextLine]()
-    @Published var inputState = GaseousReactionInputState.none
+    @Published var inputState = GaseousReactionInputState.selectReactionType
     @Published var currentTime: CGFloat = 0
     @Published var componentWrapper: ReactionComponentsWrapper
     @Published var rows: CGFloat {
@@ -52,20 +53,29 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var showConcentrationLines = false
     @Published var showQuotientLine = false
 
-    @Published var selectedReaction: AqueousReactionType
-    @Published var reactionSelectionIsToggled = false
+    @Published var selectedReaction: AqueousReactionType {
+        didSet {
+            componentWrapper.coefficients = selectedReaction.coefficients
+            componentWrapper.equilibriumConstant = selectedReaction.equilibriumConstant
+        }
+    }
+    @Published var reactionSelectionIsToggled = true
 
     @Published var highlightForwardReactionArrow = false
     @Published var highlightReverseReactionArrow = false
 
     @Published var showEquationTerms = true
 
-    func next() {
+    @Published var showFlame = false
 
+    private var navigation: NavigationModel<GaseousScreenState>?
+
+    func next() {
+        navigation?.next()
     }
 
     func back() {
-
+        navigation?.back()
     }
 
 
@@ -74,11 +84,11 @@ class GaseousReactionViewModel: ObservableObject {
     }
 
     var maxQuotient: CGFloat {
-        10
+        components.maxQuotient
     }
 
     var equilibriumQuotient: CGFloat {
-        10
+        selectedReaction.equilibriumConstant
     }
 
     private func onPump() {

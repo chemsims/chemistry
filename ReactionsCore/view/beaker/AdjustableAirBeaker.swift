@@ -13,6 +13,7 @@ public struct AdjustableAirBeaker: View {
     let minRows: Int
     let maxRows: Int
     @Binding var rows: CGFloat
+    let disabled: Bool
 
     let settings: AdjustableAirBeakerSettings
 
@@ -23,6 +24,7 @@ public struct AdjustableAirBeaker: View {
         minRows: Int,
         maxRows: Int,
         rows: Binding<CGFloat>,
+        disabled: Bool,
         settings: AdjustableAirBeakerSettings
     ) {
         self.molecules = molecules
@@ -31,6 +33,7 @@ public struct AdjustableAirBeaker: View {
         self.minRows = minRows
         self.maxRows = maxRows
         self._rows = rows
+        self.disabled = disabled
         self.settings = settings
     }
 
@@ -43,6 +46,7 @@ public struct AdjustableAirBeaker: View {
                 minRows: CGFloat(minRows),
                 maxRows: CGFloat(maxRows),
                 rows: $rows,
+                disabled: disabled,
                 width: geo.size.width,
                 height: geo.size.height,
                 settings: settings
@@ -60,6 +64,7 @@ private struct AdjustableAirBeakerWithHeight: View {
     let minRows: CGFloat
     let maxRows: CGFloat
     @Binding var rows: CGFloat
+    let disabled: Bool
 
     let width: CGFloat
     let height: CGFloat
@@ -95,7 +100,7 @@ private struct AdjustableAirBeakerWithHeight: View {
             orientation: .portrait,
             includeFill: true,
             settings: SliderGeometrySettings(handleWidth: settings.sliderWidth),
-            disabled: false,
+            disabled: disabled,
             useHaptics: true
         )
     }
@@ -176,6 +181,7 @@ struct AdjustableAirBeaker_Previews: PreviewProvider {
                 minRows: 5,
                 maxRows: 15,
                 rows: $rows,
+                disabled: true,
                 settings: AdjustableAirBeakerSettings(
                     beakerWidth: 200,
                     sliderWidth: 20
