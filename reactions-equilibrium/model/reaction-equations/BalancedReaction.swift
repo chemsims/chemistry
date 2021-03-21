@@ -83,12 +83,20 @@ struct BalancedReactionEquation {
 
         let concentration = combinedWithPrevious ?? equations
         self.concentration = concentration
+        self.pressure = concentration.map {
+            OperatorEquation(
+                lhs: $0,
+                rhs: ConstantEquation(value: GaseousReactionSettings.pressureToConcentration),
+                op: { $0 * $1 }
+            )
+        }
         self.equilibriumConcentrations = concentration.map {
             $0.getY(at: equilibriumTime)
         }
     }
 
     let equilibriumConcentrations: MoleculeValue<CGFloat>
+    let pressure: MoleculeValue<Equation>
 
     private static func getDirection(
         coefficients: MoleculeValue<Int>,

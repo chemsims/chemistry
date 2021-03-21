@@ -91,6 +91,10 @@ class GaseousReactionViewModel: ObservableObject {
         selectedReaction.equilibriumConstant
     }
 
+    var equilibriumPressureQuotient: CGFloat {
+        selectedReaction.pressureConstant
+    }
+
     private func onPump() {
         objectWillChange.send()
         componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 1)

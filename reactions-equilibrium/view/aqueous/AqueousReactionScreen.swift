@@ -74,6 +74,7 @@ struct RightStackView: View {
     let showEquationTerms: Bool
     let formatElementName: (String) -> String
 
+    let isPressure: Bool
     let settings: AqueousScreenLayoutSettings
 
     @State private var showGrid = false
@@ -122,9 +123,9 @@ struct RightStackView: View {
     private var equation: some View {
         AqueousEquationView(
             showTerms: showEquationTerms,
-            equations: components.equation.concentration,
+            equations: isPressure ? components.equation.pressure : components.equation.concentration,
             coefficients: components.coefficients,
-            quotient: components.quotientEquation,
+            quotient: isPressure ? components.pressureQuotientEquation : components.quotientEquation,
             convergedQuotient: equilibriumQuotient,
             currentTime: currentTime,
             formatElementName: formatElementName,
@@ -262,6 +263,7 @@ extension RightStackView {
                 ),
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "[\($0)]" },
+            isPressure: false,
             settings: settings
         )
     }
@@ -276,7 +278,7 @@ extension RightStackView {
             statement: model.statement,
             components: model.components,
             currentTime: model.currentTime,
-            equilibriumQuotient: model.equilibriumQuotient,
+            equilibriumQuotient: model.equilibriumPressureQuotient,
             isSelectingReaction: model.inputState == .selectReactionType,
             selectedReaction: selectedReaction,
             reactionSelectionIsToggled: reactionSelectionIsToggled,
@@ -293,6 +295,7 @@ extension RightStackView {
             ),
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "P\($0.lowercased())" },
+            isPressure: true,
             settings: settings
         )
     }

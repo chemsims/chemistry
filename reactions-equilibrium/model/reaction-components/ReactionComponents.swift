@@ -122,7 +122,14 @@ class ReactionComponents {
         }
     }()
 
-    private(set) lazy var quotientEquation: Equation = ReactionQuotientEquation(equations: equation)
+    private(set) lazy var quotientEquation: Equation = ReactionQuotientEquation(
+        equations: equation
+    )
+
+    private(set) lazy var pressureQuotientEquation: Equation = ReactionQuotientEquation(
+        coefficients: equation.coefficients,
+        equations: equation.pressure
+    )
 
     private(set) lazy var quotientChartDiscontinuity: CGPoint? = {
         guard startTime > 0 else {

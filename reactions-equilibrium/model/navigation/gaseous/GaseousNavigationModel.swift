@@ -23,10 +23,26 @@ struct GaseousNavigationModel {
             highlights: [.quotientToEquilibriumConstantDefinition]
         ),
         GaseousAddProducts(),
-        GaseousRunForwardReaction(),
-        GaseousEndOfReaction(),
+        GaseousRunReaction(
+            statement: GaseousStatements.forwardReactionIsRunning,
+            timing: GaseousReactionSettings.forwardTiming,
+            isForward: true
+        ),
+        GaseousEndOfReaction(
+            statement: GaseousStatements.forwardEquilibriumReached,
+            timing: GaseousReactionSettings.forwardTiming
+        ),
         GaseousSetStatement(statement: GaseousStatements.chatelier),
-        GaseousSetVolume()
+        GaseousSetVolume(),
+        GaseousRunReaction(
+            statement: GaseousStatements.forwardReactionIsRunning,
+            timing: GaseousReactionSettings.pressureTiming,
+            isForward: true
+        ),
+        GaseousEndOfReaction(
+            statement: GaseousStatements.forwardEquilibriumReached,
+            timing: GaseousReactionSettings.pressureTiming
+        )
     ]
 }
 
@@ -120,16 +136,72 @@ private class GaseousRunForwardReaction: GaseousScreenState {
     }
 }
 
-private class GaseousEndOfReaction: GaseousScreenState {
+private class GaseousRunReaction: GaseousScreenState {
+    let statement: [TextLine]
+    let timing: GaseousReactionSettings.ReactionTiming
+    let isForward: Bool
+
+    init(
+        statement: [TextLine],
+        timing: GaseousReactionSettings.ReactionTiming,
+        isForward: Bool
+    ) {
+        self.statement = statement
+        self.timing = timing
+        self.isForward = isForward
+    }
 
     override func apply(on model: GaseousReactionViewModel) {
-        model.statement = GaseousStatements.forwardEquilibriumReached
-        model.highlightForwardReactionArrow = false
-        model.canSetChartIndex = true
-        let endTime = GaseousReactionSettings.forwardTiming.end
-        withAnimation(.easeOut(duration: 0.5)) {
-            model.currentTime = endTime * 1.001
+        model.showQuotientLine = true
+        model.highlightForwardReactionArrow = isForward
+        model.highlightReverseReactionArrow = !isForward
+        model.currentTime = timing.start
+        model.inputState = .none
+        withAnimation(.linear(duration: Double(duration))) {
+            model.currentTime = timing.end
         }
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.highlightForwardReactionArrow = false
+        model.highlightReverseReactionArrow = false
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = timing.start
+        }
+    }
+
+    override func nextStateAutoDispatchDelay(model: GaseousReactionViewModel) -> Double? {
+        Double(duration)
+    }
+
+    private var duration: CGFloat {
+        timing.end - timing.start
+    }
+
+}
+
+private class GaseousEndOfReaction: GaseousScreenState {
+
+    let statement: [TextLine]
+    let timing: GaseousReactionSettings.ReactionTiming
+
+    init(statement: [TextLine], timing: GaseousReactionSettings.ReactionTiming) {
+        self.statement = statement
+        self.timing = timing
+    }
+
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = statement
+        model.highlightForwardReactionArrow = false
+        model.highlightReverseReactionArrow = false
+        model.canSetChartIndex = true
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = timing.end * 1.001
+        }
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.canSetChartIndex = false
     }
 }
 

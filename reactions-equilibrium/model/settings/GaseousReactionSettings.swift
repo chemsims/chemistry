@@ -15,10 +15,12 @@ struct GaseousReactionSettings {
     private static let totalReactionTime: CGFloat = AqueousReactionSettings.forwardReactionTime
     private static let gapBetweenReactions: CGFloat = AqueousReactionSettings.timeToAddProduct - totalReactionTime
 
-    static let forwardTiming = OffsetTiming(offset: 0)
-    static let pressureTiming = OffsetTiming(offset: totalReactionTime)
+    static let forwardTiming = ReactionTiming(offset: 0)
+    static let pressureTiming = ReactionTiming(offset: totalReactionTime)
 
-    struct OffsetTiming {
+    static let pressureToConcentration: CGFloat = 5
+
+    struct ReactionTiming {
 
         let offset: CGFloat
         let start: CGFloat
