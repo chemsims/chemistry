@@ -136,7 +136,7 @@ class ReactionComponents {
             return nil
         }
         return CGPoint(
-            x: AqueousReactionSettings.timeToAddProduct,
+            x: startTime,
             y: quotientEquation.getY(at: startTime)
         )
     }()
