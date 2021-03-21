@@ -171,4 +171,9 @@ extension GaseousStatements {
         "Try changing the pressure in the beaker more before moving on!",
         "*Use the slider to adjust the beaker pressure.*"
     ]
+
+    static let addHeat: [TextLine] = [
+        "Try increasing the temperature of the reaction before moving on!",
+        "*Use the slider to increase the beaker temperature*."
+    ]
 }

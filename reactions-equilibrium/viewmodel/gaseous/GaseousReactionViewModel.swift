@@ -77,11 +77,7 @@ class GaseousReactionViewModel: ObservableObject {
     private let incrementingLimits = ConcentrationIncrementingLimits()
 
     func next() {
-        if inputState == .addReactants, let missingReactant = getMissingReactant() {
-            informUserOfMissing(reactant: missingReactant)
-        } else if inputState == .setBeakerVolume, !hasChangedVolumeEnough {
-            informUserToChangeVolume()
-        } else {
+        if validateInputs() {
             navigation?.next()
         }
     }
@@ -129,6 +125,25 @@ class GaseousReactionViewModel: ObservableObject {
 
 // MARK: Helper functions for concentration, volume and heat input limits
 private extension GaseousReactionViewModel {
+
+    private func validateInputs() -> Bool {
+        switch inputState {
+        case .addReactants:
+            if let missingReactant = getMissingReactant() {
+                informUserOfMissing(reactant: missingReactant)
+                return false
+            }
+            return true
+        case .setBeakerVolume where !hasChangedVolumeEnough:
+            informUserToChangeVolume()
+            return false
+        case .setTemperature where !hasAddedEnoughHeat:
+            informUserToAddHeat()
+            return false
+        default: return true
+        }
+    }
+
     private func informUserOfMissing(reactant: AqueousMoleculeReactant) {
         incrementingLimits.increment(for: reactant)
         statement = StatementUtil.addMore(
@@ -158,6 +173,14 @@ private extension GaseousReactionViewModel {
         let currentRows = GridUtil.availableRows(for: rows)
         let initialRows = GaseousReactionSettings.initialRows
         return abs(currentRows - initialRows) >= GaseousReactionSettings.minRowDelta
+    }
+
+    private var hasAddedEnoughHeat: Bool {
+        extraHeatFactor >= GaseousReactionSettings.minHeatDelta
+    }
+
+    private func informUserToAddHeat() {
+        statement = GaseousStatements.addHeat
     }
 
     private func informUserToChangeVolume() {

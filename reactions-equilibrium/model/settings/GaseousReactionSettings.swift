@@ -11,6 +11,7 @@ struct GaseousReactionSettings {
     static let initialRows = (minRows + maxRows) / 2
 
     static let minRowDelta = 2
+    static let minHeatDelta: CGFloat = 0.2
 
 
     private static let equilibriumTime: CGFloat = AqueousReactionSettings.timeForConvergence
