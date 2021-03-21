@@ -223,7 +223,6 @@ private class GaseousEndOfReaction: GaseousScreenState {
         model.statement = statement
         model.highlightForwardReactionArrow = false
         model.highlightReverseReactionArrow = false
-        model.canSetChartIndex = true
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = timing.end * 1.001
             model.highlightedElements.elements = [.chartEquilibrium]
@@ -240,10 +239,12 @@ private class GaseousSetCurrentTime: GaseousScreenState {
         model.highlightedElements.clear()
         model.statement = GaseousStatements.instructToSetTime
         model.canSetCurrentTime = true
+        model.canSetChartIndex = true
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
         model.canSetCurrentTime = false
+        model.canSetChartIndex = false
     }
 }
 
@@ -260,6 +261,7 @@ private class GaseousSetVolume: GaseousScreenState {
         model.statement = GaseousStatements.instructToChangeVolume(selected: model.selectedReaction)
         let timing = GaseousReactionSettings.pressureTiming
         model.canSetChartIndex = false
+        model.canSetCurrentTime = false
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = timing.offset
             model.currentTime = timing.start
@@ -276,10 +278,10 @@ private class GaseousSetVolume: GaseousScreenState {
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
+        model.canSetChartIndex = true
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = 0
             model.currentTime = GaseousReactionSettings.forwardTiming.end
-            model.canSetChartIndex = false
             model.inputState = .none
             model.rows = CGFloat(GaseousReactionSettings.initialRows)
         }
@@ -307,12 +309,14 @@ private class GaseousSetTemperature: GaseousScreenState {
     private func doApply(on model: GaseousReactionViewModel, setComponents: Bool) {
         model.statement = GaseousStatements.instructToSetTemp
         model.canSetCurrentTime = false
+        model.canSetChartIndex = false
         let timing = GaseousReactionSettings.heatTiming
         withAnimation(.easeOut(duration: 1)) {
             model.showFlame = true
             model.inputState = .setTemperature
             model.chartOffset = timing.offset
             model.currentTime = timing.start
+            model.activeChartIndex = nil
         }
         if setComponents {
             model.componentWrapper = ReactionComponentsWrapper(
@@ -334,5 +338,6 @@ private class GaseousSetTemperature: GaseousScreenState {
         if let previous = model.componentWrapper.previous {
             model.componentWrapper = previous
         }
+        model.canSetChartIndex = true
     }
 }
