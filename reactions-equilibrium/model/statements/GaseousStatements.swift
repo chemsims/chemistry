@@ -27,7 +27,7 @@ struct GaseousStatements {
         """
         Similarly, in this case we talk about *Kp* (p stands for pressure). Everything \
         else works the same, the larger the partial pressures of the products, the larger \
-        is Q. The smaller the products, then the smaller Q will be.
+        Q is. The smaller the products, then the smaller Q will be.
         """
     ]
 
@@ -68,6 +68,12 @@ struct GaseousStatements {
         """
     ]
 
+    static let instructToSetTime: [TextLine] = [
+        """
+        Try *dragging either of the charts* to scrub through the reaction time!
+        """
+    ]
+
     static let chatelier: [TextLine] = [
         """
         Another way to test the *Le Chatelier's principle* is by making a change on the pressure \
@@ -91,13 +97,15 @@ struct GaseousStatements {
 
     static let explainReducedVolume: [TextLine] = [
         """
-        *Decreasing volume of container *increases pressure*, making the concentrations of \
+        *Increased pressure*, decreases volume of the container, making the concentrations of \
         the species higher. Since products have higher exponents, Q increases. *The system will \
         consume moles to relieve pressure*.
         """
     ]
 
-    static func describeReverseReaction(selected: AqueousReactionType) -> [TextLine] {
+    static func prePressureReaction(
+        selected: AqueousReactionType
+    ) -> [TextLine] {
         let moles = selected.coefficients.molesDisplay
         return [
             """
@@ -161,6 +169,13 @@ struct GaseousStatements {
         """,
         "Change temperature of the system to see what happens!",
         "*Use the flame slider.*"
+    ]
+
+    static let end: [TextLine] = [
+        """
+        There are some other reactions in which equilibrium has a big roll in.
+        """,
+        "*Let's learn about them now!*"
     ]
 
 }

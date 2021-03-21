@@ -33,8 +33,11 @@ struct GaseousNavigationModel {
             statement: GaseousStatements.forwardEquilibriumReached,
             timing: GaseousReactionSettings.forwardTiming
         ),
+        GaseousSetCurrentTime(),
         GaseousSetStatement(statement: GaseousStatements.chatelier),
         GaseousSetVolume(),
+        GaseousSetStatement(statement: GaseousStatements.explainReducedVolume),
+        GaseousPrePressureReaction(),
         GaseousRunReaction(
             statement: GaseousStatements.forwardReactionIsRunning,
             timing: GaseousReactionSettings.pressureTiming,
@@ -44,6 +47,7 @@ struct GaseousNavigationModel {
             statement: GaseousStatements.forwardEquilibriumReached,
             timing: GaseousReactionSettings.pressureTiming
         ),
+        GaseousSetCurrentTime(),
         GaseousSetStatement(statement: GaseousStatements.endOfPressureReaction),
         GaseousSetStatement(statement: GaseousStatements.chatelier2),
         GaseousSetTemperature(),
@@ -55,6 +59,10 @@ struct GaseousNavigationModel {
         GaseousEndOfReaction(
             statement: GaseousStatements.forwardEquilibriumReached,
             timing: GaseousReactionSettings.heatTiming
+        ),
+        GaseousSetCurrentTime(),
+        GaseousSetStatement(
+            statement: GaseousStatements.end
         )
     ]
 }
@@ -86,8 +94,10 @@ private class GaseousSetStatement: GaseousScreenState {
     let statement: [TextLine]
     let highlights: [GaseousScreenElement]
 
-
-    init(statement: [TextLine], highlights: [GaseousScreenElement] = []) {
+    init(
+        statement: [TextLine],
+        highlights: [GaseousScreenElement] = []
+    ) {
         self.statement = statement
         self.highlights = highlights
     }
@@ -225,6 +235,18 @@ private class GaseousEndOfReaction: GaseousScreenState {
     }
 }
 
+private class GaseousSetCurrentTime: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        model.highlightedElements.clear()
+        model.statement = GaseousStatements.instructToSetTime
+        model.canSetCurrentTime = true
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.canSetCurrentTime = false
+    }
+}
+
 private class GaseousSetVolume: GaseousScreenState {
     override func apply(on model: GaseousReactionViewModel) {
         doApply(on: model, setComponents: true)
@@ -237,10 +259,11 @@ private class GaseousSetVolume: GaseousScreenState {
     private func doApply(on model: GaseousReactionViewModel, setComponents: Bool) {
         model.statement = GaseousStatements.instructToChangeVolume(selected: model.selectedReaction)
         let timing = GaseousReactionSettings.pressureTiming
+        model.canSetChartIndex = false
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = timing.offset
             model.currentTime = timing.start
-            model.canSetChartIndex = false
+            model.activeChartIndex = nil
             model.inputState = .setBeakerVolume
         }
         if setComponents {
@@ -266,6 +289,12 @@ private class GaseousSetVolume: GaseousScreenState {
     }
 }
 
+private class GaseousPrePressureReaction: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = GaseousStatements.prePressureReaction(selected: model.selectedReaction)
+    }
+}
+
 private class GaseousSetTemperature: GaseousScreenState {
     override func apply(on model: GaseousReactionViewModel) {
         doApply(on: model, setComponents: true)
@@ -277,6 +306,7 @@ private class GaseousSetTemperature: GaseousScreenState {
 
     private func doApply(on model: GaseousReactionViewModel, setComponents: Bool) {
         model.statement = GaseousStatements.instructToSetTemp
+        model.canSetCurrentTime = false
         let timing = GaseousReactionSettings.heatTiming
         withAnimation(.easeOut(duration: 1)) {
             model.showFlame = true

@@ -30,7 +30,7 @@ struct PressureBeaker: View {
             SlidingSwitch(
                 selected: $model.selectedPumpReactant,
                 backgroundColor: Styling.switchBackground,
-                fontColor: .black,
+                fontColor: .white,
                 leftSettings: AqueousMoleculeReactant.A.switchSettings,
                 rightSettings:  AqueousMoleculeReactant.B.switchSettings
 

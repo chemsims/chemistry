@@ -97,7 +97,7 @@ private struct SlidingSwitchWithGeometry<Value: Equatable>: View {
                 .foregroundColor(fontColor)
         }
         .frame(width: 0.85 * height, height: 0.9 * height)
-        .shadow(radius: 2)
+        .shadow(radius: 1)
         .position(
             x: isLeft ? leftCircleX : rightCircleX,
             y: height / 2
@@ -133,7 +133,7 @@ private struct SlidingSwitchWithGeometry<Value: Equatable>: View {
 struct SlidingSwitch_Previews: PreviewProvider {
     static var previews: some View {
         ViewWrapper()
-            .frame(width: 240, height: 120)
+            .frame(width: 60, height: 30)
     }
 
     struct ViewWrapper: View {
@@ -156,7 +156,7 @@ struct SlidingSwitch_Previews: PreviewProvider {
                     label: "B"
                 )
             )
-            .font(.system(size: 40))
+            .font(.system(size: 20))
         }
     }
 }

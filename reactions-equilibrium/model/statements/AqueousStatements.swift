@@ -250,7 +250,7 @@ extension BalancedReactionCoefficients {
         MoleculeValue<String>(builder: { molecule in
             let coeff = value(for: molecule)
             let suffix = coeff > 1 ? "s" : ""
-            return "*\(coeff)* moles\(suffix) of *\(molecule.rawValue)*"
+            return "*\(coeff)* mole\(suffix) of *\(molecule.rawValue)*"
         })
     }
 }
