@@ -13,3 +13,12 @@ extension Optional {
         self.map { p($0) } ?? true
     }
 }
+
+extension Array where Element: Collection {
+
+    public var flatten: [Element.Element] {
+        self.reduce(into: [Element.Element]()) { (acc, next) in
+            acc.append(contentsOf: next)
+        }
+    }
+}

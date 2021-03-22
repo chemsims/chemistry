@@ -8,6 +8,7 @@ import SwiftUI
 struct BeakerBurner: View {
 
     @Binding var temp: CGFloat
+    let showFlame: Bool
     let settings: BurnerSettings
 
     var body: some View {
@@ -26,6 +27,7 @@ struct BeakerBurner: View {
                 settings: settings
             )
             .offset(y: -settings.burnerHeight)
+            .opacity(showFlame ? 1 : 0)
         }
         .accessibilityElement(children: .ignore)
         .accessibility(label: Text("Beaker stand with flame"))
@@ -56,6 +58,7 @@ struct BeakerBurner_Previews: PreviewProvider {
     static var previews: some View {
         BeakerBurner(
             temp: .constant(100),
+            showFlame: true,
             settings: BurnerSettings(
                 standWidth: 500,
                 minTemp: 100,

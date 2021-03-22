@@ -22,6 +22,7 @@ struct GaseousReactionScreen: View {
                     settings: GaseousReactionScreenSettings(geometry: geometry)
                 )
             }
+            .padding(10)
         }
     }
 }
@@ -34,6 +35,20 @@ private struct GaseousReactionScreenWithSettings: View {
     var body: some View {
         HStack(spacing: 0) {
             LeftStack(model: model, settings: settings)
+            Spacer()
+            ChartStack(
+                model: model,
+                currentTime: $model.currentTime,
+                activeChartIndex: $model.activeChartIndex,
+                settings: settings.common
+            )
+            Spacer()
+            RightStackView(
+                model: model,
+                selectedReaction: $model.selectedReaction,
+                reactionSelectionIsToggled: $model.reactionSelectionIsToggled,
+                settings: settings.common
+            )
         }
     }
 }
@@ -44,10 +59,15 @@ private struct LeftStack: View {
     let settings: GaseousReactionScreenSettings
 
     var body: some View {
-        PressureBeaker(
-            model: model,
-            settings: settings.pressureBeakerSettings
-        )
+        VStack(spacing: 0) {
+            Spacer()
+            PressureBeaker(
+                model: model,
+                settings: settings.pressureBeakerSettings
+            )
+            .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
+        }
+
     }
 }
 
@@ -59,6 +79,10 @@ struct GaseousReactionScreenSettings {
 
     var pressureBeakerSettings: PressureBeakerSettings {
         PressureBeakerSettings(width: 0.3 * width)
+    }
+
+    var common: AqueousScreenLayoutSettings {
+        AqueousScreenLayoutSettings(geometry: geometry)
     }
 }
 

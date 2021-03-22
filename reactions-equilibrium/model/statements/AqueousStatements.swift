@@ -62,7 +62,7 @@ struct AqueousStatements {
 
     static let explainK: [TextLine] = [
         """
-        In this equation, when using concentrations, *K* can often be referred to as *K_c_*, where \
+        In this equation, when using concentrations, *K* can often be referred to as *Kc*, where \
         *c* stands for concentration.
         """,
         """
@@ -80,12 +80,11 @@ struct AqueousStatements {
     ]
 
     static func instructToAddReactant(selected: AqueousReactionType) -> [TextLine] {
-        [
+        let moles = selected.coefficients.molesDisplay
+        return [
             """
-            The forward reaction is *\(selected.coefficients.reactantA)* of *A* and \
-            *\(selected.coefficients.reactantB)* of *B* transform into \
-            *\(selected.coefficients.productC)* of *C* and *\(selected.coefficients.productD)* of \
-            *D*.
+            The forward reaction is \(moles.reactantA) and \(moles.reactantB) transform into \
+            \(moles.productC)and \(moles.productD).
             """,
             "Add reactant to make it start.",
             "*Shake them into it*."
@@ -148,13 +147,11 @@ struct AqueousStatements {
     ]
 
     static func instructToAddProduct(selected: AqueousReactionType) -> [TextLine] {
-        [
+        let moles = selected.coefficients.molesDisplay
+        return [
             """
-            The reverse reaction is *\(selected.coefficients.productD)* moles of \
-            *\(AqueousMolecule.D.rawValue)* and *\(selected.coefficients.productC)* moles of \
-            *\(AqueousMolecule.C.rawValue)* transform into *\(selected.coefficients.reactantA)* \
-            moles of *\(AqueousMolecule.A.rawValue)* and *\(selected.coefficients.reactantB)* \
-            moles of *\(AqueousMolecule.B.rawValue)*.
+            The reverse reaction is \(moles.productD) and \(moles.productC) transform into \
+            \(moles.reactantA) and \(moles.reactantB).
             """,
             "*Shake it into it.*"
         ]
@@ -210,23 +207,25 @@ struct AqueousStatements {
 }
 
 // MARK: Statements to instruct to add more A/B molecules
-extension AqueousStatements {
+struct StatementUtil {
     static func addMore(
         reactant: AqueousMoleculeReactant,
         count: Int,
-        minConcentration: String
+        minProperty: String,
+        property: String,
+        action: String
     ) -> [TextLine] {
         switch count {
-        case 1: return addMore1(reactant.rawValue)
+        case 1: return addMore1(reactant.rawValue, action: action.capitalized)
         case 2: return addMore2(reactant.rawValue)
-        default: return addMore3(reactant.rawValue, minConcentration: minConcentration)
+        default: return addMore3(reactant.rawValue, minProperty: minProperty, property: property, action: action.capitalized)
         }
     }
 
-    private static func addMore1(_ name: String) -> [TextLine] {
+    private static func addMore1(_ name: String, action: String) -> [TextLine] {
         [
             "Add a bit more of *\(name)* to the beaker.",
-            "*Shake \(name) into the beaker*."
+            "*\(action) \(name) into the beaker*."
         ]
     }
 
@@ -236,12 +235,22 @@ extension AqueousStatements {
         ]
     }
 
-    private static func addMore3(_ name: String, minConcentration: String) -> [TextLine] {
+    private static func addMore3(_ name: String, minProperty: String, property: String, action: String) -> [TextLine] {
         [
             """
-            Add more of *\(name)* to the beaker. Make sure it's concentration is at least \(minConcentration).
+            Add more of *\(name)* to the beaker. Make sure it's \(property) is at least \(minProperty).
             """,
-            "Shake *\(name)* into the beaker."
+            "\(action) *\(name)* into the beaker."
         ]
+    }
+}
+
+extension BalancedReactionCoefficients {
+    var molesDisplay: MoleculeValue<String> {
+        MoleculeValue<String>(builder: { molecule in
+            let coeff = value(for: molecule)
+            let suffix = coeff > 1 ? "s" : ""
+            return "*\(coeff)* mole\(suffix) of *\(molecule.rawValue)*"
+        })
     }
 }

@@ -9,116 +9,112 @@ import CoreGraphics
 typealias BalancedReactionCoefficients = MoleculeValue<Int>
 typealias BalancedReactionInitialConcentrations = MoleculeValue<CGFloat>
 
-struct BalancedReactionEquations {
+struct BalancedReactionEquation {
 
-    let reactions: MoleculeValue<Equation>
-    let coefficients: BalancedReactionCoefficients
-    let convergenceTime: CGFloat
-
-    var reactantA: Equation { reactions.reactantA }
-    var reactantB: Equation { reactions.reactantB }
-    var productC: Equation { reactions.productC }
-    var productD: Equation { reactions.productD }
+    let startTime: CGFloat
+    let equilibriumTime: CGFloat
+    let concentration: MoleculeValue<Equation>
+    let direction: ReactionDirection
+    let coefficients: MoleculeValue<Int>
 
     let initialConcentrations: MoleculeValue<CGFloat>
-
-    let direction: ReactionDirection
-
     let equilibriumConstant: CGFloat
 
-    private let hasNonNilUnitChange: Bool
+    var isForward: Bool {
+        direction == .forward
+    }
 
     init(
         coefficients: BalancedReactionCoefficients,
         equilibriumConstant: CGFloat,
-        a0: CGFloat,
-        b0: CGFloat,
-        convergenceTime: CGFloat
+        initialConcentrations: MoleculeValue<CGFloat>,
+        startTime: CGFloat,
+        equilibriumTime: CGFloat,
+        previous: BalancedReactionEquation?
     ) {
-        let initialConcentrations = MoleculeValue(reactantA: a0, reactantB: b0, productC: 0, productD: 0)
+        self.startTime = startTime
+        self.equilibriumTime = equilibriumTime
+        self.equilibriumConstant = equilibriumConstant
+        self.initialConcentrations = initialConcentrations
+        self.coefficients = coefficients
+
+        let direction = Self.getDirection(
+            coefficients: coefficients,
+            equilibriumConstant: equilibriumConstant,
+            initialConcentrations: initialConcentrations
+        )
+        self.direction = direction
+        let isForward = direction == .forward
+
         let unitChange = ReactionConvergenceSolver.findUnitChangeFor(
             equilibriumConstant: equilibriumConstant,
             coeffs: coefficients,
             initialConcentrations: initialConcentrations,
-            isForward: true
-        )
-        self.initialConcentrations = initialConcentrations
-        self.reactions = BalancedEquationBuilder.getEquations(
-            terms: MoleculeValue(
-                reactantA: MoleculeTerms(initC: a0, coeff: coefficients.reactantA, increases: false),
-                reactantB: MoleculeTerms(initC: b0, coeff: coefficients.reactantB, increases: false),
-                productC: MoleculeTerms(initC: 0, coeff: coefficients.productC, increases: true),
-                productD: MoleculeTerms(initC: 0, coeff: coefficients.productD, increases: true)
-            ),
-            startTime: 0,
-            convergenceTime: convergenceTime,
-            unitChange: unitChange ?? 0
+            isForward: direction == .forward
         )
 
-        self.coefficients = coefficients
-        self.convergenceTime = convergenceTime
-        self.equilibriumConstant = equilibriumConstant
-        self.hasNonNilUnitChange = unitChange != nil
-        self.direction = .forward
-    }
-
-    /// Creates a new reverse reaction
-    init(
-        forwardReaction: BalancedReactionEquations,
-        reverseInput: ReverseReactionInput
-    ) {
-        let initA = forwardReaction.reactantA.getY(at: forwardReaction.convergenceTime)
-        let initB = forwardReaction.reactantB.getY(at: forwardReaction.convergenceTime)
-
-        let initialConcentrations = MoleculeValue(
-            reactantA: initA,
-            reactantB: initB,
-            productC: reverseInput.c0,
-            productD: reverseInput.d0
-        )
-        let unitChange = ReactionConvergenceSolver.findUnitChangeFor(
-            equilibriumConstant: forwardReaction.equilibriumConstant,
-            coeffs: forwardReaction.coefficients,
-            initialConcentrations: initialConcentrations,
-            isForward: false
-        )
-
-        let reverseReaction = BalancedEquationBuilder.getEquations(
-            terms: MoleculeValue(
-                reactantA: MoleculeTerms(initC: initA, coeff: forwardReaction.coefficients.reactantA, increases: true),
-                reactantB: MoleculeTerms(initC: initB, coeff: forwardReaction.coefficients.reactantB, increases: true),
-                productC: MoleculeTerms(initC: reverseInput.c0, coeff: forwardReaction.coefficients.productC, increases: false),
-                productD: MoleculeTerms(initC: reverseInput.d0, coeff: forwardReaction.coefficients.productD, increases: false)
-            ),
-            startTime: reverseInput.startTime,
-            convergenceTime: reverseInput.convergenceTime,
-            unitChange: unitChange ?? 0
-        )
-
-        func getEquation(lhs: Equation, rhs: Equation) -> Equation {
-            SwitchingEquation(
-                thresholdX: reverseInput.startTime,
-                underlyingLeft: lhs,
-                underlyingRight: rhs
+        func getTerm(_ molecule: AqueousMolecule) -> MoleculeTerms {
+            MoleculeTerms(
+                initC: initialConcentrations.value(for: molecule),
+                coeff: coefficients.value(for: molecule),
+                increases: molecule.isReactant ? !isForward : isForward
             )
         }
 
-        self.reactions = forwardReaction.reactions.combine(
-            with: reverseReaction,
-            using: { getEquation(lhs: $0, rhs: $1) }
+        let equations = BalancedEquationBuilder.getEquations(
+            terms: MoleculeValue(builder: getTerm),
+            startTime: startTime,
+            convergenceTime: equilibriumTime,
+            unitChange: unitChange ?? 0
         )
 
-        self.initialConcentrations = initialConcentrations
-        self.equilibriumConstant = forwardReaction.equilibriumConstant
-        self.coefficients = forwardReaction.coefficients
-        self.hasNonNilUnitChange = unitChange != nil
-        self.direction = .reverse
+        let combinedWithPrevious: MoleculeValue<Equation>? = previous.map { previous in
+            previous.concentration.combine(
+                with: equations,
+                using: {
+                    SwitchingEquation(
+                        thresholdX: startTime,
+                        underlyingLeft: $0,
+                        underlyingRight: $1
+                    )
+                }
+            )
+        }
 
-        self.convergenceTime = reverseInput.convergenceTime
+        let concentration = combinedWithPrevious ?? equations
+        self.concentration = concentration
+        self.pressure = concentration.map {
+            OperatorEquation(
+                lhs: $0,
+                rhs: ConstantEquation(value: GaseousReactionSettings.pressureToConcentration),
+                op: { $0 * $1 }
+            )
+        }
+        self.equilibriumConcentrations = concentration.map {
+            $0.getY(at: equilibriumTime)
+        }
+    }
+
+    let equilibriumConcentrations: MoleculeValue<CGFloat>
+    let pressure: MoleculeValue<Equation>
+
+    private static func getDirection(
+        coefficients: MoleculeValue<Int>,
+        equilibriumConstant: CGFloat,
+        initialConcentrations: MoleculeValue<CGFloat>
+    ) -> ReactionDirection {
+        let initialQuotient = ReactionQuotientEquation(
+            coefficients: coefficients,
+            equations: initialConcentrations.map {
+                ConstantEquation(value: $0)
+            }
+        ).getY(at: 0)
+        return initialQuotient < equilibriumConstant ? .forward : .reverse
     }
 }
 
-private struct BalancedEquationBuilder {
+
+struct BalancedEquationBuilder {
 
     static func getEquations(
         terms: MoleculeValue<MoleculeTerms>,
@@ -156,7 +152,7 @@ private struct BalancedEquationBuilder {
     }
 }
 
-private struct MoleculeTerms {
+struct MoleculeTerms {
     let initC: CGFloat
     let coeff: Int
     let increases: Bool
@@ -164,11 +160,4 @@ private struct MoleculeTerms {
     var denomTerm: CGFloat {
         CGFloat(increases ? coeff : -coeff)
     }
-}
-
-struct ReverseReactionInput {
-    let c0: CGFloat
-    let d0: CGFloat
-    let startTime: CGFloat
-    let convergenceTime: CGFloat
 }

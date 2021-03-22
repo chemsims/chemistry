@@ -8,12 +8,16 @@ import ReactionsCore
 struct AqueousEquationView: View {
 
     let showTerms: Bool
-    let equations: BalancedReactionEquations
+    let equations: MoleculeValue<Equation>
+    let coefficients: MoleculeValue<Int>
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
 
-    let highlightedElements: HighlightedElements<AqueousScreenElement>
+    let formatElementName: (String) -> String
+    let generalElementHighlight: Color
+    let quotientToConcentrationDefinitionHighlight: Color
+    let quotientToEquilibriumConstantDefinitionHighlight: Color
 
     let maxWidth: CGFloat
     let maxHeight: CGFloat
@@ -28,10 +32,14 @@ struct AqueousEquationView: View {
             UnscaledAqueousEquationView(
                 showTerms: showTerms,
                 equations: equations,
+                coefficients: coefficients,
                 quotient: quotient,
                 convergedQuotient: convergedQuotient,
                 currentTime: currentTime,
-                highlightedElements: highlightedElements
+                formatElementName: formatElementName,
+                generalElementHighlight: generalElementHighlight,
+                quotientToCHighlight: quotientToConcentrationDefinitionHighlight,
+                quotientToEqHighlight: quotientToEquilibriumConstantDefinitionHighlight
             )
         }
         .frame(width: maxWidth, height: maxHeight)
@@ -41,18 +49,26 @@ struct AqueousEquationView: View {
 private struct UnscaledAqueousEquationView: View {
 
     let showTerms: Bool
-    let equations: BalancedReactionEquations
+    let equations: MoleculeValue<Equation>
+    let coefficients: MoleculeValue<Int>
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
-    let highlightedElements: HighlightedElements<AqueousScreenElement>
+    let formatElementName: (String) -> String
+
+    let generalElementHighlight: Color
+    let quotientToCHighlight: Color
+    let quotientToEqHighlight: Color
 
     var body: some View {
         VStack(spacing: 10) {
             HStack(spacing: 40) {
-                QuotientDefinitionView(coefficients: equations.coefficients)
+                QuotientDefinitionView(
+                    coefficients: coefficients,
+                    formatName: formatElementName
+                )
                     .colorMultiply(
-                        highlightedElements.colorMultiply(for: .quotientToConcentrationDefinition)
+                        quotientToCHighlight
                     )
                     .background(
                         Color.white
@@ -60,7 +76,7 @@ private struct UnscaledAqueousEquationView: View {
                             .padding(.leading, -10)
                             .padding(.vertical, -10)
                             .colorMultiply(
-                                highlightedElements.colorMultiply(for: .quotientToConcentrationDefinition)
+                                quotientToCHighlight
                             )
                     )
 
@@ -73,13 +89,13 @@ private struct UnscaledAqueousEquationView: View {
                     convergedQuotient: convergedQuotient
                 )
                 .colorMultiply(
-                    highlightedElements.colorMultiply(for: .quotientToConcentrationDefinition)
+                    quotientToCHighlight
                 )
                 .background(
                     Color.white
                         .padding(-20)
                         .colorMultiply(
-                            highlightedElements.colorMultiply(for: .quotientToEquilibriumConstantDefinition)
+                            quotientToEqHighlight
                         )
                 )
 
@@ -88,10 +104,11 @@ private struct UnscaledAqueousEquationView: View {
                 FilledQuotientDefinitionView(
                     showTerms: showTerms,
                     equations: equations,
+                    coefficients: coefficients,
                     quotient: quotient,
                     currentTime: currentTime
                 )
-                .colorMultiply(highlightedElements.colorMultiply(for: nil))
+                .colorMultiply(generalElementHighlight)
                 Spacer()
                 FilledQuotientKView(
                     showTerms: showTerms,
@@ -99,7 +116,7 @@ private struct UnscaledAqueousEquationView: View {
                     convergedQuotient: convergedQuotient,
                     currentTime: currentTime
                 )
-                .colorMultiply(highlightedElements.colorMultiply(for: nil))
+                .colorMultiply(generalElementHighlight)
             }
         }
         .font(.system(size: EquationSizing.fontSize))
@@ -111,6 +128,7 @@ private struct UnscaledAqueousEquationView: View {
 private struct QuotientDefinitionView: View {
 
     let coefficients: BalancedReactionCoefficients
+    let formatName: (String) -> String
 
     var body: some View {
         HStack(spacing: 4) {
@@ -140,7 +158,7 @@ private struct QuotientDefinitionView: View {
 
     private func term(_ name: String, coefficient: Int) -> some View {
         HStack(spacing: 2) {
-            FixedText("[\(name)]")
+            FixedText(formatName(name))
             FixedText("\(coefficient)")
                 .offset(y: -10)
                 .font(.system(size: EquationSizing.subscriptFontSize))
@@ -176,7 +194,8 @@ private struct QuotientEqualsKView: View {
 private struct FilledQuotientDefinitionView: View {
 
     let showTerms: Bool
-    let equations: BalancedReactionEquations
+    let equations: MoleculeValue<Equation>
+    let coefficients: MoleculeValue<Int>
     let quotient: Equation
     let currentTime: CGFloat
 
@@ -197,34 +216,33 @@ private struct FilledQuotientDefinitionView: View {
     private var fraction: some View {
         VStack(spacing: 0) {
             HStack(spacing: 3) {
-                concentration(equations.productC, coefficient: equations.coefficients.productC)
-                concentration(equations.productD, coefficient: equations.coefficients.productD)
+                concentration(.C)
+                concentration(.D)
             }
             Rectangle()
                 .frame(width:  180, height: 1)
             HStack(spacing: 3) {
-                concentration(equations.reactantA, coefficient: equations.coefficients.reactantA)
-                concentration(equations.reactantB, coefficient: equations.coefficients.reactantB)
+                concentration(.A)
+                concentration(.B)
             }
         }
     }
 
     private func concentration(
-        _ equation: Equation,
-        coefficient: Int
+        _ molecule: AqueousMolecule
     ) -> some View {
         HStack(spacing: 2) {
             AnimatingNumberOrPlaceholder(
                 showTerm: showTerms,
                 currentTime: currentTime,
-                equation: equation,
+                equation: equations.value(for: molecule),
                 formatter: { "(\($0.str(decimals: 2)))" }
             )
 
-            FixedText("\(coefficient)")
+            FixedText("\(coefficients.value(for: molecule))")
                 .offset(y: -10)
                 .font(.system(size: EquationSizing.subscriptFontSize))
-                .opacity(coefficient == 1 ? 0 : 1)
+                .opacity(coefficients.value(for: molecule) == 1 ? 0 : 1)
                 .animation(nil)
                 .frame(width: 15)
         }
@@ -338,13 +356,17 @@ struct AqueousEquationView_Previews: PreviewProvider {
     static var previews: some View {
         UnscaledAqueousEquationView(
             showTerms: true,
-            equations: reverse,
-            quotient: ReactionQuotientEquation(equations: reverse),
+            equations: equations.concentration,
+            coefficients: equations.coefficients,
+            quotient: ReactionQuotientEquation(equations: equations),
             convergedQuotient: 0.14,
             currentTime: 14,
-            highlightedElements: HighlightedElements(
-                elements:  [AqueousScreenElement.quotientToEquilibriumConstantDefinition]
-            )
+            formatElementName: {
+                "P\($0.lowercased())"
+            },
+            generalElementHighlight: .white,
+            quotientToCHighlight: .white,
+            quotientToEqHighlight: .white
         )
         .border(Color.black)
         .frame(width: NaturalWidth, height: NaturalHeight)
@@ -354,21 +376,12 @@ struct AqueousEquationView_Previews: PreviewProvider {
         .background(Color.gray.opacity(0.5))
     }
 
-    private static let reverse = BalancedReactionEquations(
-        forwardReaction: equations,
-        reverseInput: ReverseReactionInput(c0: 0.4, d0: 0.4, startTime: 21, convergenceTime: 30)
-    )
-
-    private static let equations = BalancedReactionEquations(
-        coefficients: BalancedReactionCoefficients(
-            reactantA: 2,
-            reactantB: 2,
-            productC: 1,
-            productD: 4
-        ),
-        equilibriumConstant: 2,
-        a0: 0.3,
-        b0: 0.3,
-        convergenceTime: 20
+    private static let equations = BalancedReactionEquation(
+        coefficients: BalancedReactionCoefficients(builder: { _ in 2 }),
+        equilibriumConstant: 1,
+        initialConcentrations: MoleculeValue(builder: { _ in 0.5}),
+        startTime: 0,
+        equilibriumTime: 10,
+        previous: nil
     )
 }

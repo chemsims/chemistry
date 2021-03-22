@@ -9,25 +9,31 @@ public struct AdjustableAirBeaker: View {
 
     let molecules: [BeakerMolecules]
     let animatingMolecules: [AnimatingBeakerMolecules]
+    let currentTime: CGFloat
     let minRows: Int
     let maxRows: Int
     @Binding var rows: CGFloat
+    let disabled: Bool
 
     let settings: AdjustableAirBeakerSettings
 
     public init(
         molecules: [BeakerMolecules],
         animatingMolecules: [AnimatingBeakerMolecules],
+        currentTime: CGFloat,
         minRows: Int,
         maxRows: Int,
         rows: Binding<CGFloat>,
+        disabled: Bool,
         settings: AdjustableAirBeakerSettings
     ) {
         self.molecules = molecules
         self.animatingMolecules = animatingMolecules
+        self.currentTime = currentTime
         self.minRows = minRows
         self.maxRows = maxRows
         self._rows = rows
+        self.disabled = disabled
         self.settings = settings
     }
 
@@ -36,9 +42,11 @@ public struct AdjustableAirBeaker: View {
             AdjustableAirBeakerWithHeight(
                 molecules: molecules,
                 animatingMolecules: animatingMolecules,
+                currentTime: currentTime,
                 minRows: CGFloat(minRows),
                 maxRows: CGFloat(maxRows),
                 rows: $rows,
+                disabled: disabled,
                 width: geo.size.width,
                 height: geo.size.height,
                 settings: settings
@@ -52,9 +60,11 @@ private struct AdjustableAirBeakerWithHeight: View {
 
     let molecules: [BeakerMolecules]
     let animatingMolecules: [AnimatingBeakerMolecules]
+    let currentTime: CGFloat
     let minRows: CGFloat
     let maxRows: CGFloat
     @Binding var rows: CGFloat
+    let disabled: Bool
 
     let width: CGFloat
     let height: CGFloat
@@ -90,7 +100,7 @@ private struct AdjustableAirBeakerWithHeight: View {
             orientation: .portrait,
             includeFill: true,
             settings: SliderGeometrySettings(handleWidth: settings.sliderWidth),
-            disabled: false,
+            disabled: disabled,
             useHaptics: true
         )
     }
@@ -99,7 +109,7 @@ private struct AdjustableAirBeakerWithHeight: View {
         FilledAirBeaker(
             molecules: molecules,
             animatingMolecules: animatingMolecules,
-            currentTime: 10,
+            currentTime: currentTime,
             rows: rows
         )
     }
@@ -167,9 +177,11 @@ struct AdjustableAirBeaker_Previews: PreviewProvider {
             AdjustableAirBeaker(
                 molecules: [],
                 animatingMolecules: [],
+                currentTime: 0,
                 minRows: 5,
                 maxRows: 15,
                 rows: $rows,
+                disabled: true,
                 settings: AdjustableAirBeakerSettings(
                     beakerWidth: 200,
                     sliderWidth: 20

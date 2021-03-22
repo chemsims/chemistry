@@ -20,6 +20,13 @@ extension AqueousReactionType {
         case .C: return 2
         }
     }
+
+    var pressureConstant: CGFloat {
+        let productCoeffs = coefficients.productC + coefficients.productD
+        let reactantCoeffs = coefficients.reactantA + coefficients.reactantB
+        let factor = pow(GaseousReactionSettings.pressureToConcentration, CGFloat(productCoeffs - reactantCoeffs))
+        return equilibriumConstant * factor
+    }
 }
 
 extension AqueousReactionType {

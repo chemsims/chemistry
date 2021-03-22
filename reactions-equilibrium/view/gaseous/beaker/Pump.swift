@@ -74,6 +74,10 @@ private struct PumpWithGeometry: View {
             let factor = axis.getValue(at: drag.location.y)
             let constrainedFactor = within(min: 0, max: 1, value: factor)
             pumpModel.moved(to: constrainedFactor)
+            hapticHandler.valueDidChange(
+                newValue: constrainedFactor,
+                oldValue: self.extensionFactor
+            )
             self.extensionFactor = constrainedFactor
         }
     }
@@ -99,6 +103,7 @@ private struct PumpWithGeometry: View {
 struct PumpSettings {
     static let heightToWidth: CGFloat = 1.3
     static let nozzleToHeight: CGFloat = 0.641
+    static let midPumpToWidth: CGFloat = 0.316
 }
 
 extension PumpWithGeometry {

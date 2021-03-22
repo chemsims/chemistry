@@ -7,16 +7,16 @@ import CoreGraphics
 
 struct ScalesRotationEquation: Equation {
 
-    let reaction: BalancedReactionEquations
+    let reaction: BalancedReactionEquation
     let maxAngle: CGFloat
 
     func getY(at x: CGFloat) -> CGFloat {
         let quotientEquation = ReactionQuotientEquation(equations: reaction)
         let quotient = quotientEquation.getY(at: x)
-        let convergedQuotient = quotientEquation.getY(at: reaction.convergenceTime)
+        let convergedQuotient = quotientEquation.getY(at: reaction.equilibriumTime)
         let quotientFactor = convergedQuotient == 0 ? 0 : quotient / convergedQuotient
 
-        if reaction.direction == .forward {
+        if reaction.isForward {
             let reactantSum = reaction.initialConcentrations.reactantA + reaction.initialConcentrations.reactantB
             let sumFactor = reactantSum / AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation
             let initAngle = min(sumFactor * maxAngle, maxAngle)
@@ -25,8 +25,8 @@ struct ScalesRotationEquation: Equation {
         }
 
         let tAddProd = AqueousReactionSettings.timeToAddProduct
-        let c0 = reaction.productC.getY(at: tAddProd)
-        let t0 = reaction.productD.getY(at: tAddProd)
+        let c0 = reaction.concentration.productC.getY(at: tAddProd)
+        let t0 = reaction.concentration.productD.getY(at: tAddProd)
 
         let productFactor = (c0 + t0) / AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation
         let initAngle = min(productFactor * maxAngle, maxAngle)

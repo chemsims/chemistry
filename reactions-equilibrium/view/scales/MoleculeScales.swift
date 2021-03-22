@@ -7,13 +7,13 @@ import ReactionsCore
 
 struct MoleculeScales: View {
 
-    let equations: BalancedReactionEquations
+    let reaction: BalancedReactionEquation
     let currentTime: CGFloat
 
     var body: some View {
         GeometryReader { geo in
             SizedMoleculeScales(
-                reaction: equations,
+                reaction: reaction,
                 currentTime: currentTime,
                 settings: MoleculeScalesGeometry(
                     width: geo.size.width,
@@ -28,7 +28,7 @@ struct MoleculeScales: View {
 
 private struct SizedMoleculeScales: View {
 
-    let reaction: BalancedReactionEquations
+    let reaction: BalancedReactionEquation
     let currentTime: CGFloat
     let settings: MoleculeScalesGeometry
 
@@ -63,8 +63,8 @@ private struct SizedMoleculeScales: View {
     private var leftBasket: some View {
         basketView(
             isLeft: true,
-            left: MoleculeConcentration(concentration: reaction.reactantA, color: .from(.aqMoleculeA)),
-            right: MoleculeConcentration(concentration: reaction.reactantB, color: .from(.aqMoleculeB))
+            left: MoleculeConcentration(concentration: reaction.concentration.reactantA, color: .from(.aqMoleculeA)),
+            right: MoleculeConcentration(concentration: reaction.concentration.reactantB, color: .from(.aqMoleculeB))
         )
     }
 
@@ -72,11 +72,11 @@ private struct SizedMoleculeScales: View {
         basketView(
             isLeft: false,
             left: MoleculeConcentration(
-                concentration: reaction.productC,
+                concentration: reaction.concentration.productC,
                 color: .from(.aqMoleculeC)
             ),
             right: MoleculeConcentration(
-                concentration: reaction.productD,
+                concentration: reaction.concentration.productD,
                 color: .from(.aqMoleculeD)
             )
         )
@@ -209,17 +209,13 @@ extension MoleculeScalesGeometry {
 struct MoleculeScales_Previews: PreviewProvider {
     static var previews: some View {
         MoleculeScales(
-            equations: BalancedReactionEquations(
-                coefficients: BalancedReactionCoefficients(
-                    reactantA: 2,
-                    reactantB: 2,
-                    productC: 1,
-                    productD: 4
-                ),
+            reaction: BalancedReactionEquation(
+                coefficients: MoleculeValue(builder: { _ in 1 }),
                 equilibriumConstant: 1,
-                a0: 0.3,
-                b0: 0.3,
-                convergenceTime: 10
+                initialConcentrations: MoleculeValue(builder: { _ in 0.1 }),
+                startTime: 0,
+                equilibriumTime: 10,
+                previous: nil
             ),
             currentTime: 0
         )

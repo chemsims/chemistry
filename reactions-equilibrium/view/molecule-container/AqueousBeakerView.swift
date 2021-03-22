@@ -59,7 +59,8 @@ struct AqueousBeakerView: View {
                 orientation: .portrait,
                 includeFill: true,
                 settings: settings.sliderSettings,
-                disabled: !model.canSetLiquidLevel
+                disabled: !model.canSetLiquidLevel,
+                useHaptics: true
             )
             .frame(
                 width: settings.sliderSettings.handleWidth,
@@ -73,8 +74,8 @@ struct AqueousBeakerView: View {
             .colorMultiply(model.highlightedElements.colorMultiply(for: .waterSlider))
 
             FilledBeaker(
-                molecules: model.components.nonAnimatingMolecules,
-                animatingMolecules: model.components.animatingMolecules,
+                molecules: [],
+                animatingMolecules: model.components.beakerMolecules.map(\.animatingMolecules),
                 currentTime: model.currentTime,
                 rows: model.rows
             )

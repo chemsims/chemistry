@@ -7,33 +7,37 @@ import ReactionsCore
 
 struct ReactionQuotientEquation: Equation {
 
-    let equations: BalancedReactionEquations
+    let terms: MoleculeValue<QuotientTerm>
 
-    /// Number of decimals places to round concentrations to before using in calculations
-    ///
-    /// Rounding the decimals before using in calculations can be important when displaying the values to the user.
-    ///
-    /// Consider that the user scrubs to a specific point in the reaction, and tries to evaluate the equation they see on their own
-    /// calculator. Since the values they use are rounded, the result they get could be significantly different to the result obtained
-    /// if the raw values are used
-    let decimals: Int?
+    init(equations: BalancedReactionEquation) {
+        self.init(coefficients: equations.coefficients, equations: equations.concentration)
+    }
 
-    init(equations: BalancedReactionEquations, decimals: Int? = nil) {
-        self.equations = equations
-        self.decimals = decimals
+    init(coefficients: MoleculeValue<Int>, equations: MoleculeValue<Equation>) {
+        self.init(
+            terms: equations.combine(
+                with: coefficients,
+                using: { QuotientTerm(equation: $0, coefficient: $1) }
+            )
+        )
+    }
+
+    init(terms: MoleculeValue<QuotientTerm>) {
+        self.terms = terms
     }
 
     func getY(at x: CGFloat) -> CGFloat {
-        func getTerm(_ equation: Equation, _ coeff: Int) -> CGFloat {
+        func getTerm(_ term: QuotientTerm) -> CGFloat {
+            let equation = term.equation
+            let coeff = term.coefficient
             let y = equation.getY(at: x)
-            let rounded = decimals.map { y.rounded(decimals: $0) } ?? y
-            return pow(rounded, CGFloat(coeff))
+            return pow(y, CGFloat(coeff))
         }
 
-        let aTerm = getTerm(equations.reactantA, equations.coefficients.reactantA)
-        let bTerm = getTerm(equations.reactantB, equations.coefficients.reactantB)
-        let cTerm = getTerm(equations.productC, equations.coefficients.productC)
-        let dTerm = getTerm(equations.productD, equations.coefficients.productD)
+        let aTerm = getTerm(terms.reactantA)
+        let bTerm = getTerm(terms.reactantB)
+        let cTerm = getTerm(terms.productC)
+        let dTerm = getTerm(terms.productD)
 
         let numer = cTerm * dTerm
         let denom = aTerm * bTerm
@@ -42,3 +46,7 @@ struct ReactionQuotientEquation: Equation {
     }
 }
 
+struct QuotientTerm {
+    let equation: Equation
+    let coefficient: Int
+}

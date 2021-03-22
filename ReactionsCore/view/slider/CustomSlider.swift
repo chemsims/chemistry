@@ -67,8 +67,9 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             orientation: orientation,
             includeFill: includeFill,
             settings: settings,
+            disabled: disabled,
             handleColor: disabled ? .darkGray : .orangeAccent,
-            barColor: .black,
+            barColor: Styling.energySliderBar,
             useHaptics: useHaptics
         )
     }
@@ -79,10 +80,10 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         orientation: Orientation,
         includeFill: Bool,
         settings: SliderGeometrySettings,
-        disabled: Bool = false,
-        handleColor: Color = .orangeAccent,
-        barColor: Color = .black,
-        useHaptics: Bool = true
+        disabled: Bool,
+        handleColor: Color,
+        barColor: Color,
+        useHaptics: Bool
     ) {
         self._value = value
         self.axis = axis
@@ -321,7 +322,9 @@ struct CustomSlider_Previews: PreviewProvider {
                     ),
                     orientation: .landscape,
                     includeFill: true,
-                    settings: SliderGeometrySettings(handleWidth: width)
+                    settings: SliderGeometrySettings(handleWidth: width),
+                    disabled: false,
+                    useHaptics: false
                 ).frame(height: width)
 
                 CustomSlider(
@@ -334,9 +337,12 @@ struct CustomSlider_Previews: PreviewProvider {
                     ),
                     orientation: .portrait,
                     includeFill: true,
-                    settings: SliderGeometrySettings(handleWidth: width)
+                    settings: SliderGeometrySettings(handleWidth: width),
+                    disabled: false,
+                    useHaptics: false
                 ).frame(width: width)
             }
         }
     }
 }
+ 

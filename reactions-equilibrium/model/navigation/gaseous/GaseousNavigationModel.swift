@@ -1,0 +1,374 @@
+//
+// Reactions App
+//
+
+import SwiftUI
+import ReactionsCore
+
+struct GaseousNavigationModel {
+    static func model(
+        model: GaseousReactionViewModel
+    ) -> NavigationModel<GaseousScreenState> {
+        NavigationModel(
+            model: model,
+            states: states
+        )
+    }
+
+    private static let states = [
+        GaseousSetStatement(statement: GaseousStatements.intro),
+        GaseousAfterChoosingReaction(),
+        GaseousSetStatement(
+            statement: GaseousStatements.explainK,
+            highlights: [.quotientToEquilibriumConstantDefinition]
+        ),
+        GaseousAddProducts(),
+        GaseousRunReaction(
+            statement: GaseousStatements.forwardReactionIsRunning,
+            timing: GaseousReactionSettings.forwardTiming,
+            isForward: true,
+            revealQuotientLine: true
+        ),
+        GaseousEndOfReaction(
+            statement: GaseousStatements.forwardEquilibriumReached,
+            timing: GaseousReactionSettings.forwardTiming
+        ),
+        GaseousSetCurrentTime(),
+        GaseousShiftChart(
+            statement: GaseousStatements.chatelier,
+            timing: GaseousReactionSettings.pressureTiming,
+            previousTiming: GaseousReactionSettings.forwardTiming
+        ),
+        GaseousSetVolume(),
+        GaseousSetStatement(statement: GaseousStatements.explainReducedVolume),
+        GaseousPrePressureReaction(),
+        GaseousRunReaction(
+            statement: GaseousStatements.forwardReactionIsRunning,
+            timing: GaseousReactionSettings.pressureTiming,
+            isForward: true
+        ),
+        GaseousEndOfReaction(
+            statement: GaseousStatements.forwardEquilibriumReached,
+            timing: GaseousReactionSettings.pressureTiming
+        ),
+        GaseousSetCurrentTime(),
+        GaseousSetStatement(statement: GaseousStatements.endOfPressureReaction),
+        GaseousShiftChart(
+            statement: GaseousStatements.chatelier2,
+            timing: GaseousReactionSettings.heatTiming,
+            previousTiming: GaseousReactionSettings.pressureTiming
+        ),
+        GaseousSetTemperature(),
+        GaseousRunReaction(
+            statement: GaseousStatements.forwardReactionIsRunning,
+            timing: GaseousReactionSettings.heatTiming,
+            isForward: true
+        ),
+        GaseousEndOfReaction(
+            statement: GaseousStatements.forwardEquilibriumReached,
+            timing: GaseousReactionSettings.heatTiming
+        ),
+        GaseousSetCurrentTime(),
+        GaseousSetStatement(
+            statement: GaseousStatements.end
+        )
+    ]
+}
+
+class GaseousScreenState: ScreenState, SubState {
+
+    typealias Model = GaseousReactionViewModel
+    typealias NestedState = GaseousScreenState
+
+    var delayedStates: [DelayedState<GaseousScreenState>] {
+        []
+    }
+
+    func apply(on model: GaseousReactionViewModel) { }
+
+    func unapply(on model: GaseousReactionViewModel) { }
+
+    func reapply(on model: GaseousReactionViewModel) {
+        apply(on: model)
+    }
+
+    func nextStateAutoDispatchDelay(model: GaseousReactionViewModel) -> Double? {
+        nil
+    }
+}
+
+private class GaseousSetStatement: GaseousScreenState {
+
+    let statement: [TextLine]
+    let highlights: [GaseousScreenElement]
+
+    init(
+        statement: [TextLine],
+        highlights: [GaseousScreenElement] = []
+    ) {
+        self.statement = statement
+        self.highlights = highlights
+    }
+
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = statement
+        model.highlightedElements.elements = highlights
+    }
+}
+
+private class GaseousAfterChoosingReaction: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = GaseousStatements.explainQEquation
+        model.highlightedElements.elements = [.quotientToConcentrationDefinition]
+        model.inputState = .none
+        model.reactionSelectionIsToggled = false
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.reactionSelectionIsToggled = true
+        model.inputState = .selectReactionType
+    }
+}
+
+private class GaseousAddProducts: GaseousScreenState {
+
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = GaseousStatements.instructToAddReactants(
+            reaction: model.selectedReaction
+        )
+        model.inputState = .addReactants
+        model.highlightedElements.clear()
+        model.showConcentrationLines = true
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.resetMolecules()
+            model.showConcentrationLines = false
+        }
+        model.inputState = .none
+    }
+}
+
+private class GaseousRunReaction: GaseousScreenState {
+    let statement: [TextLine]
+    let timing: GaseousReactionSettings.ReactionTiming
+    let isForward: Bool
+    let revealQuotientLine: Bool
+
+    init(
+        statement: [TextLine],
+        timing: GaseousReactionSettings.ReactionTiming,
+        isForward: Bool,
+        revealQuotientLine: Bool = false
+    ) {
+        self.statement = statement
+        self.timing = timing
+        self.isForward = isForward
+        self.revealQuotientLine = revealQuotientLine
+    }
+
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = statement
+        if revealQuotientLine {
+            model.showQuotientLine = true
+        }
+        model.highlightForwardReactionArrow = isForward
+        model.highlightReverseReactionArrow = !isForward
+        model.currentTime = timing.start
+        model.inputState = .none
+        model.highlightedElements.clear()
+        withAnimation(.linear(duration: Double(duration))) {
+            model.currentTime = timing.end
+        }
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = timing.start
+            model.highlightForwardReactionArrow = false
+            model.highlightReverseReactionArrow = false
+            if revealQuotientLine {
+                model.showQuotientLine = false
+            }
+        }
+    }
+
+    override func nextStateAutoDispatchDelay(model: GaseousReactionViewModel) -> Double? {
+        Double(duration)
+    }
+
+    private var duration: CGFloat {
+        timing.end - timing.start
+    }
+
+    override var delayedStates: [DelayedState<GaseousScreenState>] {
+        func delayedState(_ statement: [TextLine], _ highlights: [GaseousScreenElement]) -> DelayedState<GaseousScreenState> {
+            DelayedState(
+                state: GaseousSetStatement(statement: statement, highlights: highlights),
+                delay: Double((timing.equilibrium - timing.start) / 2)
+            )
+        }
+
+        return [
+            delayedState(GaseousStatements.midForwardReaction, []),
+            delayedState(GaseousStatements.forwardEquilibriumReached, [.chartEquilibrium])
+        ]
+    }
+}
+
+private class GaseousEndOfReaction: GaseousScreenState {
+
+    let statement: [TextLine]
+    let timing: GaseousReactionSettings.ReactionTiming
+
+    init(statement: [TextLine], timing: GaseousReactionSettings.ReactionTiming) {
+        self.statement = statement
+        self.timing = timing
+    }
+
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = statement
+        model.highlightForwardReactionArrow = false
+        model.highlightReverseReactionArrow = false
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = timing.end * 1.001
+            model.highlightedElements.elements = [.chartEquilibrium]
+            model.activeChartIndex = nil
+        }
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.canSetChartIndex = false
+    }
+}
+
+private class GaseousSetCurrentTime: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        model.highlightedElements.clear()
+        model.statement = GaseousStatements.instructToSetTime
+        model.canSetCurrentTime = true
+        model.canSetChartIndex = true
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.canSetCurrentTime = false
+        model.canSetChartIndex = false
+    }
+}
+
+private class GaseousSetVolume: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        doApply(on: model, setComponents: true)
+    }
+
+    override func reapply(on model: GaseousReactionViewModel) {
+        doApply(on: model, setComponents: false)
+    }
+
+    private func doApply(on model: GaseousReactionViewModel, setComponents: Bool) {
+        model.statement = GaseousStatements.instructToChangeVolume(selected: model.selectedReaction)
+        let timing = GaseousReactionSettings.pressureTiming
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.inputState = .setBeakerVolume
+        }
+        if setComponents {
+            model.componentWrapper = ReactionComponentsWrapper(
+                previous: model.componentWrapper,
+                startTime: timing.start,
+                equilibriumTime: timing.equilibrium
+            )
+        }
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.inputState = .none
+            model.rows = CGFloat(GaseousReactionSettings.initialRows)
+        }
+        if let previous = model.componentWrapper.previous {
+            model.componentWrapper = previous
+        }
+    }
+}
+
+private class GaseousShiftChart: GaseousScreenState {
+
+    let statement: [TextLine]
+    let timing: GaseousReactionSettings.ReactionTiming
+    let previousTiming: GaseousReactionSettings.ReactionTiming
+
+    init(
+        statement: [TextLine],
+        timing: GaseousReactionSettings.ReactionTiming,
+        previousTiming: GaseousReactionSettings.ReactionTiming
+    ) {
+        self.statement = statement
+        self.timing = timing
+        self.previousTiming = previousTiming
+    }
+
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = statement
+        model.canSetChartIndex = false
+        model.canSetCurrentTime = false
+        withAnimation(.easeOut(duration: 1)) {
+            model.chartOffset = timing.offset
+            model.currentTime = timing.start
+            model.activeChartIndex = nil
+        }
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.canSetChartIndex = true
+        model.canSetCurrentTime = true
+        withAnimation(.easeOut(duration: 1)) {
+            model.chartOffset = previousTiming.offset
+            model.currentTime = previousTiming.end
+        }
+    }
+
+}
+
+private class GaseousPrePressureReaction: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = GaseousStatements.prePressureReaction(selected: model.selectedReaction)
+    }
+}
+
+private class GaseousSetTemperature: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        doApply(on: model, setComponents: true)
+    }
+
+    override func reapply(on model: GaseousReactionViewModel) {
+        doApply(on: model, setComponents: false)
+    }
+
+    private func doApply(on model: GaseousReactionViewModel, setComponents: Bool) {
+        model.statement = GaseousStatements.instructToSetTemp
+        let timing = GaseousReactionSettings.heatTiming
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.showFlame = true
+            model.inputState = .setTemperature
+        }
+        if setComponents {
+            model.componentWrapper = ReactionComponentsWrapper(
+                previous: model.componentWrapper,
+                startTime: timing.start,
+                equilibriumTime: timing.equilibrium
+            )
+        }
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.showFlame = false
+            model.extraHeatFactor = 0
+            model.inputState = .none
+        }
+        if let previous = model.componentWrapper.previous {
+            model.componentWrapper = previous
+        }
+    }
+}

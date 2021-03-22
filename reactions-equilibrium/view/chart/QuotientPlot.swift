@@ -76,12 +76,13 @@ struct QuotientPlot: View {
                     discontinuity: discontinuity
                 )
             ],
-            initialTime: 0,
+            initialTime: initialTime,
             currentTime: $currentTime,
-            finalTime: AqueousReactionSettings.forwardReactionTime,
+            finalTime: finalTime,
             canSetCurrentTime: canSetCurrentTime,
             settings: settings.layout,
             axisSettings: settings.axisShapeSettings,
+            clipData: true,
             offset: offset,
             minDragTime: discontinuity?.x
         )

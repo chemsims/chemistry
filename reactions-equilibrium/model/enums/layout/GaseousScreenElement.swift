@@ -5,5 +5,7 @@
 import Foundation
 
 enum GaseousScreenElement {
-    case A, B
+    case chartEquilibrium,
+         quotientToConcentrationDefinition,
+         quotientToEquilibriumConstantDefinition
 }

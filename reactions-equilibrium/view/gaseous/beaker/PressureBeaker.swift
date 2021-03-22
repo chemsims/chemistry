@@ -10,8 +10,6 @@ struct PressureBeaker: View {
     @ObservedObject var model: GaseousReactionViewModel
     let settings: PressureBeakerSettings
 
-    @State private var tempFactor: CGFloat = 0.5
-
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
             pump
@@ -24,18 +22,35 @@ struct PressureBeaker: View {
     }
 
     private var pump: some View {
-        Pump(pumpModel: model.pumpModel)
-        .frame(width: settings.pumpWidth, height: settings.pumpHeight)
-        .offset(x: settings.pumpXOffset, y: -settings.pumpYOffset)
+        VStack(alignment: .leading, spacing: settings.switchSpacing) {
+            Pump(pumpModel: model.pumpModel)
+                .frame(width: settings.pumpWidth, height: settings.pumpHeight)
+                .offset(x: settings.pumpXOffset)
+
+            SlidingSwitch(
+                selected: $model.selectedPumpReactant,
+                backgroundColor: Styling.switchBackground,
+                fontColor: .white,
+                leftSettings: AqueousMoleculeReactant.A.switchSettings,
+                rightSettings:  AqueousMoleculeReactant.B.switchSettings
+
+            )
+            .font(.system(size: settings.switchFontSize))
+            .frame(width: settings.switchWidth, height: settings.switchHeight)
+            .offset(x: settings.switchXOffset)
+        }
+        .disabled(model.inputState != .addReactants)
     }
 
     private var beaker: some View {
         AdjustableAirBeaker(
-            molecules: model.components.nonAnimatingMolecules,
-            animatingMolecules: model.components.animatingMolecules,
+            molecules: [],
+            animatingMolecules: model.components.beakerMolecules.map(\.animatingMolecules),
+            currentTime: model.currentTime,
             minRows: GaseousReactionSettings.minRows,
             maxRows: GaseousReactionSettings.maxRows,
             rows: $model.rows,
+            disabled: model.inputState != .setBeakerVolume,
             settings: AdjustableAirBeakerSettings(
                 beakerWidth: settings.beakerWidth,
                 sliderWidth: settings.sliderWidth
@@ -46,10 +61,11 @@ struct PressureBeaker: View {
 
     private var burner: some View {
         AdjustableBeakerBurner(
-            temp: $tempFactor,
-            disabled: false,
+            temp: $model.extraHeatFactor,
+            disabled: model.inputState != .setTemperature,
             useHaptics: true,
             highlightSlider: false,
+            showFlame: model.showFlame,
             sliderAccessibilityValue: nil, // TODO
             settings: AdjustableBeakerBurnerSettings(
                 standWidth: settings.standWidth,
@@ -63,6 +79,25 @@ struct PressureBeaker: View {
             )
         )
         .frame(width: settings.standWidth)
+    }
+}
+
+private extension AqueousMoleculeReactant {
+    var switchSettings: SwitchOptionSettings<AqueousMoleculeReactant> {
+        switch self {
+        case .A:
+            return SwitchOptionSettings(
+                value: .A,
+                color: AqueousMolecule.A.color,
+                label: "A"
+            )
+        case .B:
+            return SwitchOptionSettings(
+                value: .B,
+                color: AqueousMolecule.B.color,
+                label: "B"
+            )
+        }
     }
 }
 
@@ -102,16 +137,34 @@ struct PressureBeakerSettings {
         PumpSettings.heightToWidth * pumpWidth
     }
 
-    var pumpYOffset: CGFloat {
-        sliderWidth + burnerSettings.sliderTopPadding
-    }
-
     var pumpXOffset: CGFloat {
         airBeakerTotalWidth - beakerWidth
     }
 
     var sliderValuePadding: CGFloat {
         0.1 * standWidth
+    }
+
+    var switchHeight: CGFloat {
+        0.14 * pumpHeight
+    }
+
+    var switchSpacing: CGFloat {
+        0.5 * switchHeight
+    }
+
+    var switchWidth: CGFloat {
+        2 * switchHeight
+    }
+
+    var switchFontSize: CGFloat {
+        0.8 * switchHeight
+    }
+
+    var switchXOffset: CGFloat {
+        let midPumpPosition = PumpSettings.midPumpToWidth * pumpWidth
+        let extraOffset = midPumpPosition - (switchWidth / 2)
+        return pumpXOffset + extraOffset
     }
 
     var burnerSettings: AdjustableBeakerBurnerSettings {

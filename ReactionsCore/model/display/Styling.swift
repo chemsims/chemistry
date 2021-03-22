@@ -101,6 +101,8 @@ public struct Styling {
     public static let tableOddRow = RGB(r: 240, g: 240, b: 240).color
     public static let tableEvenRow = RGB(r: 230, g: 230, b: 230).color
     public static let tableCellBorder = RGB(r: 190, g: 190, b: 190).color
+
+    public static let switchBackground = RGB.gray(base: 210).color
 }
 
 extension UIColor {

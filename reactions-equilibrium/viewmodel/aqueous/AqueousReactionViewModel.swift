@@ -7,7 +7,7 @@ import ReactionsCore
 
 class AqueousReactionViewModel: ObservableObject {
 
-    private var navigation: NavigationModel<AqueousScreenState>?
+    private(set) var navigation: NavigationModel<AqueousScreenState>?
 
     init() {
         let initialType = AqueousReactionType.A
@@ -15,17 +15,22 @@ class AqueousReactionViewModel: ObservableObject {
 
         self.selectedReaction = initialType
         self.rows = CGFloat(initialRows)
-        self.components = ForwardAqueousReactionComponents(
+        self.componentsWrapper = ReactionComponentsWrapper(
             coefficients: initialType.coefficients,
             equilibriumConstant: initialType.equilibriumConstant,
-            availableCols: MoleculeGridSettings.cols,
-            availableRows: initialRows,
-            maxRows: AqueousReactionSettings.maxRows
+            beakerCols: MoleculeGridSettings.cols,
+            beakerRows: initialRows,
+            maxBeakerRows: AqueousReactionSettings.maxRows,
+            dynamicGridCols: EquilibriumGridSettings.cols,
+            dynamicGridRows: EquilibriumGridSettings.rows,
+            startTime: 0,
+            equilibriumTime: AqueousReactionSettings.timeForConvergence,
+            maxC: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
 
         self.navigation = AqueousNavigationModel.model(model: self)
         self.addingMoleculesModel = AddingMoleculesViewModel(
-            canAddMolecule: { self.components.canIncrement(molecule: $0) },
+            canAddMolecule: { self.componentsWrapper.canIncrement(molecule: $0) },
             addMolecules: { (molecule, num) in self.increment(molecule: molecule, count: num) }
         )
     }
@@ -35,7 +40,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows) {
         didSet {
-            components.availableRows = GridMoleculesUtil.availableRows(for: rows)
+            componentsWrapper.beakerRows = GridUtil.availableRows(for: rows)
             highlightedElements.clear()
         }
     }
@@ -48,8 +53,8 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var reactionSelectionIsToggled = true
     @Published var selectedReaction: AqueousReactionType {
         didSet {
-            components.coefficients = selectedReaction.coefficients
-            components.equilibriumConstant = selectedReaction.equilibriumConstant
+            componentsWrapper.coefficients = selectedReaction.coefficients
+            componentsWrapper.equilibriumConstant = selectedReaction.equilibriumConstant
         }
     }
 
@@ -58,7 +63,10 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var chartOffset: CGFloat = 0
 
-    @Published var components: AqueousReactionComponents
+    @Published var componentsWrapper: ReactionComponentsWrapper
+    var components: ReactionComponents {
+        componentsWrapper.components
+    }
 
     @Published var showEquationTerms = false
 
@@ -75,14 +83,12 @@ class AqueousReactionViewModel: ObservableObject {
     }
     @Published var activeChartIndex: Int?
 
+    private let incrementingLimits = ConcentrationIncrementingLimits()
+
     private let inputSettings = AqueousReactionSettings.ConcentrationInput.self
 
-    var equations: BalancedReactionEquations {
-        components.equations
-    }
-
     var quotientEquation: Equation {
-        ReactionQuotientEquation(equations: components.equations)
+        components.quotientEquation
     }
 
     var maxQuotient: CGFloat {
@@ -98,20 +104,22 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     func increment(molecule: AqueousMolecule, count: Int) {
-        guard components.canIncrement(molecule: molecule) else {
+        guard componentsWrapper.canIncrement(molecule: molecule) else {
             return
         }
+
         let canAddReactant = inputState == .addReactants && molecule.isReactant
         let canAddProduct = inputState == .addProducts && molecule.isProduct
         if canAddProduct || canAddReactant {
-            components.increment(molecule: molecule, count: count)
+            objectWillChange.send()
+            componentsWrapper.increment(molecule: molecule, count: count)
             handlePostIncrementSaturation(of: molecule)
         }
     }
 
     func resetMolecules() {
-        components.reset()
-        instructToAddMoreReactantCount = instructToAddMoreReactantCount.reset()
+        componentsWrapper.reset()
+        instructToAddMoreReactantCount.reset()
     }
 
     func next() {
@@ -131,10 +139,10 @@ class AqueousReactionViewModel: ObservableObject {
 
     /// Informs the user if they've added the maximum allowed amount of `molecule`
     private func handlePostIncrementSaturation(of molecule: AqueousMolecule) {
-        guard !components.canIncrement(molecule: molecule) && (inputState == .addProducts || inputState == .addReactants) else {
+        guard !componentsWrapper.canIncrement(molecule: molecule) && (inputState == .addProducts || inputState == .addReactants) else {
             return
         }
-        let canAddComplement = components.canIncrement(molecule: molecule.complement)
+        let canAddComplement = componentsWrapper.canIncrement(molecule: molecule.complement)
         var msg: [TextLine] = ["That's plenty of \(molecule) for now!"]
         if canAddComplement {
             msg.append("Why don't you try adding some of \(molecule.complement)?")
@@ -147,8 +155,9 @@ class AqueousReactionViewModel: ObservableObject {
     private var hasAddedEnoughProduct: Bool {
         let minIncrement = AqueousReactionSettings.ConcentrationInput.minProductIncrement
         func hasEnough(_ molecule: AqueousMolecule) -> Bool {
-            let didIncrementEnough = components.concentrationIncremented(of: molecule).rounded(decimals: 2) >= minIncrement
-            return didIncrementEnough || !components.canIncrement(molecule: molecule)
+            let incremented = componentsWrapper.concentrationIncremented(of: molecule)
+            let didIncrementEnough = incremented.rounded(decimals: 2) >= minIncrement
+            return didIncrementEnough || !componentsWrapper.canIncrement(molecule: molecule)
         }
 
         return hasEnough(.C) || hasEnough(.D)
@@ -159,25 +168,22 @@ class AqueousReactionViewModel: ObservableObject {
     }
 
     private func informUserOfMissing(reactant: AqueousMoleculeReactant) {
-        instructToAddMoreReactantCount = instructToAddMoreReactantCount.increment(value: reactant)
-        statement = AqueousStatements.addMore(
+        incrementingLimits.increment(for: reactant)
+        statement = StatementUtil.addMore(
             reactant: reactant,
-            count: instructToAddMoreReactantCount.count,
-            minConcentration: inputSettings.minInitial.str(decimals: 2)
+            count: incrementingLimits.count,
+            minProperty: inputSettings.minInitial.str(decimals: 2),
+            property: "concentration",
+            action: "shake"
         )
     }
 
     // Returns the first reactant which does not have enough molecules in the beaker
     private func getMissingReactant() -> AqueousMoleculeReactant? {
-        let aTooLow = components.equations.initialConcentrations.reactantA.rounded(decimals: 2) < inputSettings.minInitial
-        let bTooLow = components.equations.initialConcentrations.reactantB.rounded(decimals: 2) < inputSettings.minInitial
-
-        if aTooLow {
-            return .A
-        } else if bTooLow {
-            return .B
-        }
-        return nil
+        incrementingLimits.missingReactant(
+            incremented: components.equation.initialConcentrations,
+            minInitial: inputSettings.minInitial
+        )
     }
 
     private func reactantMoleculesToDraw(
@@ -211,5 +217,38 @@ extension AqueousReactionViewModel {
 
     var canChooseReactants: Bool {
         inputState == .selectReactionType
+    }
+}
+
+class ConcentrationIncrementingLimits {
+
+    private var counter = EquatableCounter<AqueousMoleculeReactant>()
+
+    func missingReactant(
+        incremented: MoleculeValue<CGFloat>,
+        minInitial: CGFloat
+    ) -> AqueousMoleculeReactant? {
+        func tooLow(_ molecule: AqueousMolecule) -> Bool {
+            incremented.value(for: molecule) < minInitial
+        }
+
+        if tooLow(.A) {
+            return .A
+        } else if tooLow(.B) {
+            return .B
+        }
+        return nil
+    }
+
+    var count: Int {
+        counter.count
+    }
+
+    func increment(for reactant: AqueousMoleculeReactant) {
+        counter.increment(value: reactant)
+    }
+
+    func resetCounter() {
+        counter.reset()
     }
 }
