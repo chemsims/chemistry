@@ -62,7 +62,7 @@ struct AqueousStatements {
 
     static let explainK: [TextLine] = [
         """
-        In this equation, when using concentrations, *K* can often be referred to as *K_c_*, where \
+        In this equation, when using concentrations, *K* can often be referred to as *Kc*, where \
         *c* stands for concentration.
         """,
         """

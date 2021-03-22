@@ -50,7 +50,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var canSetCurrentTime = false
     @Published var currentTime: CGFloat = 0
 
-    @Published var reactionSelectionIsToggled = false
+    @Published var reactionSelectionIsToggled = true
     @Published var selectedReaction: AqueousReactionType {
         didSet {
             componentsWrapper.coefficients = selectedReaction.coefficients
