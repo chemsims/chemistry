@@ -14,6 +14,7 @@ struct AqueousEquationView: View {
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
 
+    let kTerm: String
     let formatElementName: (String) -> String
     let generalElementHighlight: Color
     let quotientToConcentrationDefinitionHighlight: Color
@@ -36,6 +37,7 @@ struct AqueousEquationView: View {
                 quotient: quotient,
                 convergedQuotient: convergedQuotient,
                 currentTime: currentTime,
+                kTerm: kTerm,
                 formatElementName: formatElementName,
                 generalElementHighlight: generalElementHighlight,
                 quotientToCHighlight: quotientToConcentrationDefinitionHighlight,
@@ -54,6 +56,8 @@ private struct UnscaledAqueousEquationView: View {
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
+
+    let kTerm: String
     let formatElementName: (String) -> String
 
     let generalElementHighlight: Color
@@ -84,6 +88,7 @@ private struct UnscaledAqueousEquationView: View {
                     .frame(height: 10)
 
                 QuotientEqualsKView(
+                    kTerm: kTerm,
                     currentTime: currentTime,
                     quotient: quotient,
                     convergedQuotient: convergedQuotient
@@ -170,6 +175,7 @@ private struct QuotientDefinitionView: View {
 }
 private struct QuotientEqualsKView: View {
 
+    let kTerm: String
     let currentTime: CGFloat
     let quotient: Equation
     let convergedQuotient: CGFloat
@@ -185,7 +191,7 @@ private struct QuotientEqualsKView: View {
                 convergedQuotient: convergedQuotient
             )
 
-            FixedText("K")
+            FixedText(kTerm)
                 .frame(width: EquationSizing.boxWidth)
         }
     }
@@ -361,6 +367,7 @@ struct AqueousEquationView_Previews: PreviewProvider {
             quotient: ReactionQuotientEquation(equations: equations),
             convergedQuotient: 0.14,
             currentTime: 14,
+            kTerm: "K",
             formatElementName: {
                 "P\($0.lowercased())"
             },

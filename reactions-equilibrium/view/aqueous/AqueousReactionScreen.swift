@@ -128,6 +128,7 @@ struct RightStackView: View {
             quotient: isPressure ? components.pressureQuotientEquation : components.quotientEquation,
             convergedQuotient: equilibriumQuotient,
             currentTime: currentTime,
+            kTerm: isPressure ? "Kp" : "K",
             formatElementName: formatElementName,
             generalElementHighlight: generalElementHighlight,
             quotientToConcentrationDefinitionHighlight: quotientToConcentrationDefinitionHighlight,

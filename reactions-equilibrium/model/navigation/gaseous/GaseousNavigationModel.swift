@@ -228,12 +228,25 @@ private class GaseousEndOfReaction: GaseousScreenState {
     }
 
     override func apply(on model: GaseousReactionViewModel) {
+        doApply(on: model, isReapplying: false)
+    }
+
+    override func reapply(on model: GaseousReactionViewModel) {
+        doApply(on: model, isReapplying: true)
+    }
+
+    private func doApply(on model: GaseousReactionViewModel, isReapplying: Bool) {
         model.statement = statement
         model.highlightForwardReactionArrow = false
         model.highlightReverseReactionArrow = false
+        if isReapplying {
+            model.highlightedElements.elements = [.chartEquilibrium]
+        }
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = timing.end * 1.001
-            model.highlightedElements.elements = [.chartEquilibrium]
+            if !isReapplying {
+                model.highlightedElements.elements = [.chartEquilibrium]
+            }
             model.activeChartIndex = nil
         }
     }

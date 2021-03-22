@@ -128,6 +128,7 @@ class AqueousRunAnimationState: AqueousScreenState {
         model.highlightForwardReactionArrow = false
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
+            model.highlightedElements.clear()
         }
     }
 
@@ -168,12 +169,25 @@ class AqueousEndAnimationState: AqueousScreenState {
     }
 
     override func apply(on model: AqueousReactionViewModel) {
+        doApply(on: model, isReapplying: false)
+    }
+
+    override func reapply(on model: AqueousReactionViewModel) {
+        doApply(on: model, isReapplying: true)
+    }
+
+    private func doApply(on model: AqueousReactionViewModel, isReapplying: Bool) {
         model.statement = statement
         model.highlightForwardReactionArrow = false
         model.highlightReverseReactionArrow = false
-        model.highlightedElements.elements = [.chartEquilibrium]
+        if isReapplying {
+            model.highlightedElements.elements = [.chartEquilibrium]
+        }
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = endTime * endOfReactionFactor
+            if !isReapplying {
+                model.highlightedElements.elements = [.chartEquilibrium]
+            }
         }
     }
 
@@ -289,6 +303,7 @@ class AqueousRunReverseAnimation: AqueousScreenState {
         model.highlightReverseReactionArrow = false
         withAnimation(.easeOut(duration: Double(0.5))) {
             model.currentTime = tAddProduct
+            model.highlightedElements.clear()
         }
     }
 

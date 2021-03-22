@@ -117,7 +117,7 @@ class GaseousReactionViewModel: ObservableObject {
             return
         }
         objectWillChange.send()
-        componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 20) // TODO revert to 1
+        componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 1)
     }
 
     private(set) var pumpModel: PumpViewModel<CGFloat>!
