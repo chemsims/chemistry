@@ -8,6 +8,8 @@ import ReactionsCore
 struct ChartStack: View {
 
     let components: ReactionComponents
+    let initialParams: MoleculeValue<CGFloat>
+    let finalParams: MoleculeValue<CGFloat>
     @Binding var currentTime: CGFloat
     let chartOffset: CGFloat
     let canSetCurrentTime: Bool
@@ -42,8 +44,8 @@ struct ChartStack: View {
             concentrationChart.opacity(showGraph ? 1 : 0)
             if (!showGraph) {
                 ICETable(
-                    initial: components.equation.initialConcentrations,
-                    final: components.equation.equilibriumConcentrations
+                    initial: initialParams,
+                    final: finalParams
                 )
                 .colorMultiply(generalElementHighlight)
             }
@@ -127,6 +129,8 @@ extension ChartStack {
     ) {
         self.init(
             components: model.components,
+            initialParams: model.components.equation.initialConcentrations,
+            finalParams: model.components.equation.equilibriumConcentrations,
             currentTime: currentTime,
             chartOffset: model.chartOffset,
             canSetCurrentTime: model.canSetCurrentTime,
@@ -151,6 +155,12 @@ extension ChartStack {
     ) {
         self.init(
             components: model.components,
+            initialParams: model.components.equation.initialConcentrations.map {
+                $0 * GaseousReactionSettings.pressureToConcentration
+            },
+            finalParams: model.components.equation.equilibriumConcentrations.map {
+                $0 * GaseousReactionSettings.pressureToConcentration
+            },
             currentTime: currentTime,
             chartOffset: model.chartOffset,
             canSetCurrentTime: model.canSetCurrentTime,
