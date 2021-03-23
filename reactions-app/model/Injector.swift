@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ReactionsCore
 
 protocol Injector {
     var reactionPersistence: ReactionInputPersistence { get }

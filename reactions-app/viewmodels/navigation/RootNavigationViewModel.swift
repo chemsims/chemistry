@@ -60,10 +60,6 @@ class RootNavigationViewModel: ObservableObject {
         }
     }
 
-    func canSelectFilingCabinet(order: ReactionOrder) -> Bool {
-        persistence.hasCompleted(screen: order.reactionScreen)
-    }
-
     func jumpTo(screen: AppScreen) {
         if screen.isQuiz {
             goToExisting(screen: screen)

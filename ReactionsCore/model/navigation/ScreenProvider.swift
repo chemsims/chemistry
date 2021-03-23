@@ -4,6 +4,6 @@
 
 import SwiftUI
 
-protocol ScreenProvider {
+public protocol ScreenProvider {
     var screen: AnyView { get }
 }

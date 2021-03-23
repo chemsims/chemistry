@@ -11,12 +11,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-//        let contentView = AqueousReactionScreen(model: AqueousReactionViewModel())
-//        let contentView = GaseousReactionScreen(model: GaseousReactionViewModel())
         let contentView = RootNavigationView(model: RootNavigationModel())
         let controller = DeferScreenEdgesHostingController(rootView: contentView)
         DeferScreenEdgesState.shared.didSetEdgesDelegate = controller.didSetEdges
-        DeferScreenEdgesState.shared.deferEdges = [.top]
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

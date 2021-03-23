@@ -4,9 +4,11 @@
 
 import StoreKit
 
-struct ReviewPrompter {
+public struct ReviewPrompter {
 
-    static func requestReview(persistence: ReviewPromptPersistence) {
+    public static func requestReview(
+        persistence: ReviewPromptPersistence
+    ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             let previousVersion = persistence.lastPromptedVersion()
             let currentVersion = getCurrentVersion()

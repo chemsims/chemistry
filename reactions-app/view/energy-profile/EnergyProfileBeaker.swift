@@ -96,6 +96,7 @@ struct EnergyProfileBeaker: View {
                 disabled: tempIsDisabled,
                 useHaptics: false,
                 highlightSlider: highlightSlider,
+                showFlame: true,
                 sliderAccessibilityValue: nil,
                 settings: AdjustableBeakerBurnerSettings(
                     standWidth: settings.standWidth,
@@ -293,6 +294,7 @@ struct EnergyProfileBeaker: View {
             disabled: tempIsDisabled,
             useHaptics: false,
             highlightSlider: highlightSlider,
+            showFlame: true,
             sliderAccessibilityValue: accessibilityValue,
             settings: AdjustableBeakerBurnerSettings(
                 standWidth: settings.standWidth,
@@ -339,7 +341,7 @@ struct EnergyBeakerSettings {
     static let maxTemp: CGFloat = 600
 
     var beaker: BeakerSettings {
-        BeakerSettings(width: beakerWidth)
+        BeakerSettings(width: beakerWidth, hasLip: true)
     }
 
     var width: CGFloat {
