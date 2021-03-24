@@ -158,7 +158,6 @@
 		577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */; };
 		577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* SKBeakerScene.swift */; };
 		577077D325698DF2003E750E /* SkBeakerSceneRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077D225698DF2003E750E /* SkBeakerSceneRepresentable.swift */; };
-		5773B5EC25B84A9100889A2E /* MailComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5EB25B84A9100889A2E /* MailComposerView.swift */; };
 		5773B5F025B84E4100889A2E /* FeedbackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5EF25B84E4100889A2E /* FeedbackSettings.swift */; };
 		5773B5F425B84EF600889A2E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5F325B84EF600889A2E /* Version.swift */; };
 		5773B5FC25B8645F00889A2E /* FeedbackSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */; };
@@ -175,7 +174,6 @@
 		5786FADA25E6B60B00AAD8A6 /* ReactionsRateBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAD925E6B60B00AAD8A6 /* ReactionsRateBeaker.swift */; };
 		5786FAED25E6D66C00AAD8A6 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
 		5786FAF325E6D8D100AAD8A6 /* TimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAF225E6D8D100AAD8A6 /* TimeChartView.swift */; };
-		5787039825B88E14002A4487 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787039725B88E14002A4487 /* ShareSheetView.swift */; };
 		5787C26425F65BC400CF685A /* MoleculeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787C26325F65BC400CF685A /* MoleculeValue.swift */; };
 		5790AC2F25B375FC00B25776 /* ReactionComparisonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
@@ -236,6 +234,8 @@
 		57B3B915260B2E0000EB9B47 /* MainMenuOverlay2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B914260B2E0000EB9B47 /* MainMenuOverlay2.swift */; };
 		57B3B91E260B2F9F00EB9B47 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF71258289B200A30582 /* MenuButton.swift */; };
 		57B3B923260B35CE00EB9B47 /* MainMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF822582954C00A30582 /* MainMenuPanel.swift */; };
+		57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5EB25B84A9100889A2E /* MailComposerView.swift */; };
+		57B3B929260B39A600EB9B47 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787039725B88E14002A4487 /* ShareSheetView.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */; };
@@ -949,8 +949,6 @@
 				57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */,
 				57F337F82578CE7E00EF90A1 /* Tooltip.swift */,
 				57E7FF6D2582831000A30582 /* ConcentrationTable.swift */,
-				5773B5EB25B84A9100889A2E /* MailComposerView.swift */,
-				5787039725B88E14002A4487 /* ShareSheetView.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -1671,6 +1669,8 @@
 		5797A4E225E40AF600991BD9 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				5773B5EB25B84A9100889A2E /* MailComposerView.swift */,
+				5787039725B88E14002A4487 /* ShareSheetView.swift */,
 				576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */,
 				57D2F2D225EA27D100AEE0D8 /* shapes */,
 				571B3CAE25658ACC0075358B /* CircleIconButton.swift */,
@@ -2387,8 +2387,6 @@
 				57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */,
 				571B3C7C256560E40075358B /* ReactionStatements.swift in Sources */,
 				570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */,
-				5773B5EC25B84A9100889A2E /* MailComposerView.swift in Sources */,
-				5787039825B88E14002A4487 /* ShareSheetView.swift in Sources */,
 				57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */,
 				571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */,
 				57A119B425B8715300A7810B /* EnergyProfileFilingStatements.swift in Sources */,
@@ -2604,6 +2602,7 @@
 				575A889525E438CD00AEE448 /* BundleExtension.swift in Sources */,
 				5797A48125E40A3600991BD9 /* BeakerShape.swift in Sources */,
 				57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */,
+				57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */,
 				575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */,
 				57B3B915260B2E0000EB9B47 /* MainMenuOverlay2.swift in Sources */,
 				57686AD12600E6B1005BD328 /* AdjustableBeakerBurner.swift in Sources */,
@@ -2651,6 +2650,7 @@
 				575A882D25E4319E00AEE448 /* TextLineView.swift in Sources */,
 				57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */,
 				57B3B8FB260B281000EB9B47 /* AppAnalytics.swift in Sources */,
+				57B3B929260B39A600EB9B47 /* ShareSheetView.swift in Sources */,
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
 				575A887525E4364500AEE448 /* NavButton.swift in Sources */,

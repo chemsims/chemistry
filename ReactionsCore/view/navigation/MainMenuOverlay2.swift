@@ -8,20 +8,27 @@ import SwiftUI
 public struct MainMenuOverlay2<Injector: NavigationInjector>: View {
 
     let rows: [NavigationRow<Injector.Screen>]
+    @ObservedObject var navigation: RootNavigationViewModel<Injector>
+    let feedbackSettings: FeedbackSettings
+    let shareSettings: ShareSettings
     let size: CGFloat
     let topPadding: CGFloat
     let menuHPadding: CGFloat
-    @ObservedObject var navigation: RootNavigationViewModel<Injector>
+
 
     public init(
         rows: [NavigationRow<Injector.Screen>],
         navigation: RootNavigationViewModel<Injector>,
+        feedbackSettings: FeedbackSettings,
+        shareSettings: ShareSettings,
         size: CGFloat,
         topPadding: CGFloat,
         menuHPadding: CGFloat
     ) {
         self.rows = rows
         self.navigation = navigation
+        self.feedbackSettings = feedbackSettings
+        self.shareSettings = shareSettings
         self.size = size
         self.topPadding = topPadding
         self.menuHPadding = menuHPadding
@@ -35,6 +42,7 @@ public struct MainMenuOverlay2<Injector: NavigationInjector>: View {
             MainMenuOverlayWithSettings(
                 rows: rows,
                 navigation: navigation,
+                feedbackSettings: feedbackSettings,
                 activeSheet: $activeSheet,
                 showFailedMailAlert: $showFailedMailAlert,
                 settings: MainMenuLayoutSettings(
@@ -45,6 +53,26 @@ public struct MainMenuOverlay2<Injector: NavigationInjector>: View {
                 )
             )
         }
+        .sheet(item: $activeSheet) { item in
+            switch item {
+            case .mail:
+                MailComposerView(
+                    settings: feedbackSettings,
+                    onDismiss: { activeSheet = nil }
+                )
+                    .edgesIgnoringSafeArea(.all)
+            case .share:
+                ShareSheetView(activityItems: [shareSettings.message])
+                    .edgesIgnoringSafeArea(.all)
+            }
+        }
+        .alert(isPresented: $showFailedMailAlert) {
+            Alert(
+                title: Text("Send Feedback"),
+                message: Text("Could not open Mail composer. Please send feedback to \(feedbackSettings.toAddress)."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }
 
@@ -52,6 +80,7 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
 
     let rows: [NavigationRow<Injector.Screen>]
     @ObservedObject var navigation: RootNavigationViewModel<Injector>
+    let feedbackSettings: FeedbackSettings
     @Binding var activeSheet: ActiveSheet?
     @Binding var showFailedMailAlert: Bool
     let settings: MainMenuLayoutSettings
@@ -285,13 +314,12 @@ extension MainMenuOverlayWithSettings {
 
     // TODO
     private func openMailComposer() {
-        let canSendMail = true // MailComposerView.canSendMail()
-        if canSendMail {
+        if MailComposerView.canSendMail() {
             activeSheet = .mail
             return
         }
 
-        if let url = URL(string: "foo") { //} FeedbackSettings.mailToUrl {
+        if let url = feedbackSettings.mailToUrl {
             openMailToLink(url)
         } else {
             showFailedMailAlert = true
@@ -439,6 +467,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         MainMenuOverlay2(
             rows: rows,
             navigation: model,
+            feedbackSettings: FeedbackSettings(toAddress: "", subject: ""),
+            shareSettings: ShareSettings(appStoreUrl: "", appName: ""),
             size: 20,
             topPadding: 10,
             menuHPadding: 10
