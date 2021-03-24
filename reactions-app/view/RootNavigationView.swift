@@ -25,28 +25,15 @@ struct RootNavigationView: View {
     }
 
     private func makeView(settings: OrderedReactionLayoutSettings) -> some View {
-        ZStack {
-            model.view
-                .id(model.currentScreen)
-                .transition(
-                    .asymmetric(
-                        insertion: .move(
-                            edge: model.navigationDirection == .forward ? .trailing : .leading
-                        ),
-                        removal: AnyTransition.move(
-                            edge: model.navigationDirection == .forward ? .leading : .trailing
-                        ).combined(with: .opacity)
-                    )
-                )
-                .accessibility(hidden: model.showMenu)
-
-            MainMenuOverlay(
-                size: settings.menuSize,
-                topPadding: settings.menuTopPadding,
-                menuHPadding: settings.menuHPadding,
-                navigation: model
-            )
-        }
+        RootNavigationView2(
+            model: model,
+            navigationRows: ReactionRateNavigationRows.rows,
+            feedbackSettings: .reactionsRate,
+            shareSettings: .reactionsRate,
+            menuIconSize: settings.menuSize,
+            menuTopPadding: settings.menuTopPadding,
+            menuHPadding: settings.menuHPadding
+        )
     }
 }
 

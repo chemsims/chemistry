@@ -15,7 +15,6 @@ public struct MainMenuOverlay2<Injector: NavigationInjector>: View {
     let topPadding: CGFloat
     let menuHPadding: CGFloat
 
-
     public init(
         rows: [NavigationIconRow<Injector.Screen>],
         navigation: RootNavigationViewModel<Injector>,
@@ -91,8 +90,11 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             icon
+                .padding(.leading, settings.geometry.safeAreaInsets.leading)
+                .padding(.vertical, settings.geometry.safeAreaInsets.top)
+                .accessibility(sortPriority: 0.7)
 
-            if navigation.showMenu || true {
+            if navigation.showMenu {
                 panel
                     .gesture(
                         DragGesture(minimumDistance: 0, coordinateSpace: .global)

@@ -4,11 +4,15 @@
 
 import SwiftUI
 
-struct MenuButton: View {
+public struct MenuButton: View {
 
     let action: () -> Void
 
-    var body: some View {
+    public init(action: @escaping () -> Void) {
+        self.action = action
+    }
+
+    public var body: some View {
         GeometryReader { geo in
             makeView(size: min(geo.size.width, geo.size.height))
         }

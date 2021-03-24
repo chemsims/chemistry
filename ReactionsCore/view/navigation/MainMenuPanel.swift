@@ -4,13 +4,19 @@
 
 import SwiftUI
 
-struct MainMenuPanel: Shape {
+public struct MainMenuPanel: Shape {
 
     let tabWidth: CGFloat
     let tabHeight: CGFloat
     let cornerRadius: CGFloat
 
-    func path(in rect: CGRect) -> Path {
+    public init(tabWidth: CGFloat, tabHeight: CGFloat, cornerRadius: CGFloat) {
+        self.tabWidth = tabWidth
+        self.tabHeight = tabHeight
+        self.cornerRadius = cornerRadius
+    }
+
+    public func path(in rect: CGRect) -> Path {
         var path = Path()
 
         let height = rect.size.height

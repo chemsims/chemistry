@@ -7,7 +7,7 @@ import SwiftUI
 public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableObject {
 
     @Published public var view: AnyView
-    @Published public var showMenu = true
+    @Published public var showMenu = false
 
     private(set) public var currentScreen: Screen
     private(set) public var navigationDirection = NavigationDirection.forward
