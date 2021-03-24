@@ -11,7 +11,7 @@ struct MainMenuOverlay: View {
     let size: CGFloat
     let topPadding: CGFloat
     let menuHPadding: CGFloat
-    @ObservedObject var navigation: RootNavigationViewModel
+    @ObservedObject var navigation: RootNavigationViewModel2<AnyNavigationInjector<AppScreen>>
 
     @State private var showFailedMailAlert = false
     @State private var activeSheet: ActiveSheet?
@@ -60,7 +60,7 @@ private enum ActiveSheet: Int, Identifiable {
 
 private struct MainMenuOverlayWithSettings: View {
 
-    @ObservedObject var navigation: RootNavigationViewModel
+    @ObservedObject var navigation: RootNavigationViewModel2<AnyNavigationInjector<AppScreen>>
     @Binding var activeSheet: ActiveSheet?
     @Binding var showFailedMailAlert: Bool
     let settings: MainMenuLayoutSettings
@@ -258,7 +258,7 @@ private struct MainMenuOverlayWithSettings: View {
         let isSelected = navigation.currentScreen == screen
         let canSelect = navigation.canSelect(screen: screen)
 
-        let shouldFocus = navigation.focusScreen == screen
+        let shouldFocus = navigation.highlightedIcon == screen
         let mainColor = shouldFocus ? Color.orangeAccent : Styling.navIcon
         let color = canSelect ? mainColor : Styling.inactiveScreenElement
 
@@ -465,8 +465,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             size: 50,
             topPadding: 10,
             menuHPadding: 10,
-            navigation: RootNavigationViewModel(
-                injector: InMemoryInjector()
+            navigation: ReactionRateNavigationModel.navigationModel(
+                using: InMemoryInjector()
             )
         ).previewLayout(.fixed(width: 1300, height: 600))
     }

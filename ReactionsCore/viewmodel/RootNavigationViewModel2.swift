@@ -6,11 +6,11 @@ import SwiftUI
 
 public class RootNavigationViewModel2<Injector: NavigationInjector>: ObservableObject {
 
-    @Published var view: AnyView
-    @Published var showMenu = false
+    @Published public var view: AnyView
+    @Published public var showMenu = false
 
-    private(set) var currentScreen: Screen
-    private(set) var navigationDirection = NavigationDirection.forward
+    private(set) public var currentScreen: Screen
+    private(set) public var navigationDirection = NavigationDirection.forward
 
     private let injector: Injector
     private let persistence: Injector.Persistence
@@ -140,7 +140,7 @@ extension RootNavigationViewModel2 {
 }
 
 extension RootNavigationViewModel2 {
-    enum NavigationDirection {
+    public enum NavigationDirection {
         case forward, back
     }
 }

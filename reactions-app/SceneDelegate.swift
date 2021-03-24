@@ -20,8 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let injector: Injector = devMode ? InMemoryInjector() : ProductionInjector()
 
         let contentView = RootNavigationView(
-            model: RootNavigationViewModel(
-                injector: injector
+            model: ReactionRateNavigationModel.navigationModel(
+                using: injector
             )
         )
 

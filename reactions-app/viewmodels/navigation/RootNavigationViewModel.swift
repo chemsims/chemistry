@@ -8,19 +8,35 @@ import ReactionsCore
 
 struct ReactionRateNavigationModel {
 
-    func navigationModel(using injector: Injector) -> RootNavigationViewModel2<AnyNavigationInjector<AppScreen>> {
+    static func navigationModel(using injector: Injector) -> RootNavigationViewModel2<AnyNavigationInjector<AppScreen>> {
         RootNavigationViewModel2(injector: navigationInjector(using: injector))
     }
 
-    func navigationInjector(using injector: Injector) -> AnyNavigationInjector<AppScreen> {
+    private static func navigationInjector(using injector: Injector) -> AnyNavigationInjector<AppScreen> {
         AnyNavigationInjector(
-            behaviour: AnyNavigationBehavior(ReactionsRateNavigationBehaviour(injector: injector)),
+            behaviour: AnyNavigationBehavior(
+                ReactionsRateNavigationBehaviour(injector: injector)
+            ),
             persistence: injector.screenPersistence,
             analytics: injector.appAnalytics,
             allScreens: AppScreen.allCases,
-            linearScreens: [AppScreen.zeroOrderFiling]
+            linearScreens: linearScreens
         )
     }
+
+    private static let linearScreens: [AppScreen] = [
+        .zeroOrderReaction,
+        .zeroOrderReactionQuiz,
+        .firstOrderReaction,
+        .firstOrderReactionQuiz,
+        .secondOrderReaction,
+        .secondOrderReactionQuiz,
+        .reactionComparison,
+        .reactionComparisonQuiz,
+        .energyProfile,
+        .energyProfileQuiz,
+        .finalAppScreen
+    ]
 }
 
 struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
