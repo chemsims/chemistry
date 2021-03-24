@@ -230,6 +230,9 @@
 		57B2331F258E93AE00128760 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B2331E258E93AE00128760 /* PageViewController.swift */; };
 		57B23325258E94A500128760 /* ReactionFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23324258E94A500128760 /* ReactionFilingScreen.swift */; };
 		57B2332B258EA93F00128760 /* ReactionFilingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B2332A258EA93F00128760 /* ReactionFilingViewModel.swift */; };
+		57B3B8F4260B27E800EB9B47 /* NavigationBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B8F3260B27E800EB9B47 /* NavigationBehaviour.swift */; };
+		57B3B8FB260B281000EB9B47 /* AppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B8FA260B281000EB9B47 /* AppAnalytics.swift */; };
+		57B3B905260B282D00EB9B47 /* NavigationInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B904260B282D00EB9B47 /* NavigationInjector.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */; };
@@ -633,6 +636,9 @@
 		57B2331E258E93AE00128760 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		57B23324258E94A500128760 /* ReactionFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingScreen.swift; sourceTree = "<group>"; };
 		57B2332A258EA93F00128760 /* ReactionFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingViewModel.swift; sourceTree = "<group>"; };
+		57B3B8F3260B27E800EB9B47 /* NavigationBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBehaviour.swift; sourceTree = "<group>"; };
+		57B3B8FA260B281000EB9B47 /* AppAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAnalytics.swift; sourceTree = "<group>"; };
+		57B3B904260B282D00EB9B47 /* NavigationInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationInjector.swift; sourceTree = "<group>"; };
 		57B528E525B38A2300381550 /* ReviewPrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompter.swift; sourceTree = "<group>"; };
 		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
@@ -1514,6 +1520,8 @@
 				571B3C59256555C40075358B /* NavigationModel.swift */,
 				5727486225A5FB49000CFA1E /* ScreenStateTree.swift */,
 				57B168BF25A7C09200F6668E /* ScreenState.swift */,
+				57B3B8F3260B27E800EB9B47 /* NavigationBehaviour.swift */,
+				57B3B904260B282D00EB9B47 /* NavigationInjector.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -1582,6 +1590,7 @@
 		5797A45E25E406FC00991BD9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57B3B8F9260B280600EB9B47 /* analytics */,
 				57438A55260A3237005E3888 /* persistence */,
 				57FF9EDC25FF6E7E00C1C27F /* grid */,
 				57952A3825E67F61006AB876 /* navigation */,
@@ -1737,6 +1746,14 @@
 				57B23324258E94A500128760 /* ReactionFilingScreen.swift */,
 			);
 			path = filing;
+			sourceTree = "<group>";
+		};
+		57B3B8F9260B280600EB9B47 /* analytics */ = {
+			isa = PBXGroup;
+			children = (
+				57B3B8FA260B281000EB9B47 /* AppAnalytics.swift */,
+			);
+			path = analytics;
 			sourceTree = "<group>";
 		};
 		57D2F2D225EA27D100AEE0D8 /* shapes */ = {
@@ -2584,6 +2601,7 @@
 				57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */,
 				57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */,
 				57FF9EDE25FF6EA800C1C27F /* GridElementBalancer.swift in Sources */,
+				57B3B8F4260B27E800EB9B47 /* NavigationBehaviour.swift in Sources */,
 				575A880125E430C200AEE448 /* Labels.swift in Sources */,
 				575A883A25E431E500AEE448 /* Strings.swift in Sources */,
 				57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */,
@@ -2609,6 +2627,7 @@
 				5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */,
 				57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */,
 				57567B6B26066450009711D4 /* SlidingSwitch.swift in Sources */,
+				57B3B905260B282D00EB9B47 /* NavigationInjector.swift in Sources */,
 				57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */,
 				575A886825E435FB00AEE448 /* BeakyBox.swift in Sources */,
 				5797A49525E40A4500991BD9 /* BeakerTicks.swift in Sources */,
@@ -2619,6 +2638,7 @@
 				5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */,
 				575A882D25E4319E00AEE448 /* TextLineView.swift in Sources */,
 				57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */,
+				57B3B8FB260B281000EB9B47 /* AppAnalytics.swift in Sources */,
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
 				575A887525E4364500AEE448 /* NavButton.swift in Sources */,
