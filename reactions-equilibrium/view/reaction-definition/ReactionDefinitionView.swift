@@ -2,12 +2,11 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
-struct AqueousReactionTypeView: View {
+struct ReactionDefinitionView<Reaction: ReactionDefinition>: View {
 
-    let type: AqueousReactionType
+    let type: Reaction
     let highlightTopArrow: Bool
     let highlightReverseArrow: Bool
 
@@ -25,6 +24,6 @@ struct AqueousReactionTypeView: View {
 
 struct AqueousReactionTypeView_Previews: PreviewProvider {
     static var previews: some View {
-        AqueousReactionTypeView(type: .A, highlightTopArrow: false, highlightReverseArrow: true)
+        ReactionDefinitionView(type: AqueousReactionType.A, highlightTopArrow: false, highlightReverseArrow: true)
     }
 }

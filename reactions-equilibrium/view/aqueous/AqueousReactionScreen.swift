@@ -43,9 +43,10 @@ private struct AqueousReactionScreenWithSettings: View {
                 settings: settings
             )
             Spacer()
-            RightStackView(
+            RightStackView<AqueousReactionType>(
                 model: model,
                 selectedReaction: $model.selectedReaction,
+                reactions: AqueousReactionType.allCases,
                 reactionSelectionIsToggled: $model.reactionSelectionIsToggled,
                 settings: settings
             )
@@ -53,14 +54,15 @@ private struct AqueousReactionScreenWithSettings: View {
     }
 }
 
-struct RightStackView: View {
+struct RightStackView<Reaction: ReactionDefinition>: View {
 
     let statement: [TextLine]
     let components: ReactionComponents
     let currentTime: CGFloat
     let equilibriumQuotient: CGFloat
     let isSelectingReaction: Bool
-    @Binding var selectedReaction: AqueousReactionType
+    let reactions: [Reaction]
+    @Binding var selectedReaction: Reaction
     @Binding var reactionSelectionIsToggled: Bool
     let highlightForwardReactionArrow: Bool
     let highlightReverseReactionArrow: Bool
@@ -95,7 +97,7 @@ struct RightStackView: View {
     private var reactionToggle: some View {
         HStack(spacing: 0) {
             if !isSelectingReaction {
-                AqueousReactionTypeView(
+                ReactionDefinitionView<Reaction>(
                     type: selectedReaction,
                     highlightTopArrow: highlightForwardReactionArrow,
                     highlightReverseArrow: highlightReverseReactionArrow
@@ -107,6 +109,7 @@ struct RightStackView: View {
             AqueousReactionDropDownSelection(
                 isToggled: $reactionSelectionIsToggled,
                 selection: $selectedReaction,
+                options: reactions,
                 onSelection: next,
                 height: settings.reactionToggleHeight
             ).frame(
@@ -237,7 +240,8 @@ struct RightStackView: View {
 extension RightStackView {
     init(
         model: AqueousReactionViewModel,
-        selectedReaction: Binding<AqueousReactionType>,
+        selectedReaction: Binding<Reaction>,
+        reactions: [Reaction],
         reactionSelectionIsToggled: Binding<Bool>,
         settings: AqueousScreenLayoutSettings
     ) {
@@ -247,6 +251,7 @@ extension RightStackView {
             currentTime: model.currentTime,
             equilibriumQuotient: model.convergenceQuotient,
             isSelectingReaction: model.inputState == .selectReactionType,
+            reactions: reactions,
             selectedReaction: selectedReaction,
             reactionSelectionIsToggled: reactionSelectionIsToggled,
             highlightForwardReactionArrow: model.highlightForwardReactionArrow,
@@ -271,7 +276,8 @@ extension RightStackView {
 
     init(
         model: GaseousReactionViewModel,
-        selectedReaction: Binding<AqueousReactionType>,
+        selectedReaction: Binding<Reaction>,
+        reactions: [Reaction],
         reactionSelectionIsToggled: Binding<Bool>,
         settings: AqueousScreenLayoutSettings
     ) {
@@ -281,6 +287,7 @@ extension RightStackView {
             currentTime: model.currentTime,
             equilibriumQuotient: model.equilibriumPressureQuotient,
             isSelectingReaction: model.inputState == .selectReactionType,
+            reactions: reactions,
             selectedReaction: selectedReaction,
             reactionSelectionIsToggled: reactionSelectionIsToggled,
             highlightForwardReactionArrow: model.highlightForwardReactionArrow,

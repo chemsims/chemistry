@@ -243,6 +243,7 @@
 		57B3B954260B4A0900EB9B47 /* FeedbackAndShareSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B953260B4A0900EB9B47 /* FeedbackAndShareSettings.swift */; };
 		57B3B962260B4BF500EB9B47 /* NavigationIconRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B961260B4BF500EB9B47 /* NavigationIconRows.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
+		57BB21EA260BA62600250FB3 /* ReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */; };
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */; };
 		57BCB4C425F3752800E50923 /* ReactionConvergenceSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */; };
@@ -310,7 +311,7 @@
 		57DE4DB125A5035700644790 /* QuizAnswerIconOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DB025A5035700644790 /* QuizAnswerIconOverlay.swift */; };
 		57DE4DB725A5036E00644790 /* QuizLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DE4DB625A5036E00644790 /* QuizLayoutSettings.swift */; };
 		57E59A3F25F91D510087F760 /* DoubleSidedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */; };
-		57E59A4625F925F60087F760 /* AqueousReactionTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A4525F925F60087F760 /* AqueousReactionTypeView.swift */; };
+		57E59A4625F925F60087F760 /* ReactionDefinitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A4525F925F60087F760 /* ReactionDefinitionView.swift */; };
 		57E59A5425F92BFE0087F760 /* AqueousScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */; };
 		57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5D25F92E260087F760 /* HighlightedElements.swift */; };
 		57E59A6425F93D5D0087F760 /* ConvergenceHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A6325F93D5D0087F760 /* ConvergenceHighlight.swift */; };
@@ -656,6 +657,7 @@
 		57B528E525B38A2300381550 /* ReviewPrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompter.swift; sourceTree = "<group>"; };
 		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
+		57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinition.swift; sourceTree = "<group>"; };
 		57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonLinearEquationSolver.swift; sourceTree = "<group>"; };
 		57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolver.swift; sourceTree = "<group>"; };
 		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
@@ -716,7 +718,7 @@
 		57DE4DB025A5035700644790 /* QuizAnswerIconOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizAnswerIconOverlay.swift; sourceTree = "<group>"; };
 		57DE4DB625A5036E00644790 /* QuizLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLayoutSettings.swift; sourceTree = "<group>"; };
 		57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSidedArrow.swift; sourceTree = "<group>"; };
-		57E59A4525F925F60087F760 /* AqueousReactionTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionTypeView.swift; sourceTree = "<group>"; };
+		57E59A4525F925F60087F760 /* ReactionDefinitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionView.swift; sourceTree = "<group>"; };
 		57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenElement.swift; sourceTree = "<group>"; };
 		57E59A5D25F92E260087F760 /* HighlightedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedElements.swift; sourceTree = "<group>"; };
 		57E59A6325F93D5D0087F760 /* ConvergenceHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvergenceHighlight.swift; sourceTree = "<group>"; };
@@ -1793,6 +1795,22 @@
 			path = util;
 			sourceTree = "<group>";
 		};
+		57BB21E7260BA60B00250FB3 /* reactions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = reactions;
+			sourceTree = "<group>";
+		};
+		57BB21E8260BA61600250FB3 /* reaction-definitions */ = {
+			isa = PBXGroup;
+			children = (
+				57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */,
+				57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */,
+			);
+			path = "reaction-definitions";
+			sourceTree = "<group>";
+		};
 		57D2F2D225EA27D100AEE0D8 /* shapes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1892,6 +1910,7 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57BB21E8260BA61600250FB3 /* reaction-definitions */,
 				57B3B952260B49F900EB9B47 /* util */,
 				57567B5F26065B82009711D4 /* reaction-components */,
 				576A422325F7A84100047618 /* molecule-container */,
@@ -1942,9 +1961,9 @@
 		57DDACDB25E54EE200B535A7 /* enums */ = {
 			isa = PBXGroup;
 			children = (
+				57BB21E7260BA60B00250FB3 /* reactions */,
 				57686A9B2600D0E2005BD328 /* layout */,
 				57DDACDC25E54EF100B535A7 /* AqueousMolecule.swift */,
-				57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */,
 				57E902B325ED40B500758300 /* AqueousReactionInputState.swift */,
 				5736DC1125F4A91F003FD2B4 /* ReactionDirection.swift */,
 				57B3B946260B475F00EB9B47 /* EquilibriumAppScreen.swift */,
@@ -2041,7 +2060,7 @@
 			isa = PBXGroup;
 			children = (
 				57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */,
-				57E59A4525F925F60087F760 /* AqueousReactionTypeView.swift */,
+				57E59A4525F925F60087F760 /* ReactionDefinitionView.swift */,
 			);
 			path = "reaction-definition";
 			sourceTree = "<group>";
@@ -2534,6 +2553,7 @@
 				57A1B7A925EAB4CD00878B52 /* MoleculeConcentration.swift in Sources */,
 				57DDAC7E25E5260400B535A7 /* AqueousReactionSettings.swift in Sources */,
 				57B3B962260B4BF500EB9B47 /* NavigationIconRows.swift in Sources */,
+				57BB21EA260BA62600250FB3 /* ReactionDefinition.swift in Sources */,
 				5736DC1225F4A91F003FD2B4 /* ReactionDirection.swift in Sources */,
 				57B3B954260B4A0900EB9B47 /* FeedbackAndShareSettings.swift in Sources */,
 				57DDAD2425E5706A00B535A7 /* MultiConcentrationPlot.swift in Sources */,
@@ -2556,7 +2576,7 @@
 				57B3B94D260B478800EB9B47 /* ReactionsEquilibriumNavigationModel.swift in Sources */,
 				57062DB726072CAC00007BAA /* GaseousNavigationModel.swift in Sources */,
 				57952A5D25E6819C006AB876 /* AqueousScreenStates.swift in Sources */,
-				57E59A4625F925F60087F760 /* AqueousReactionTypeView.swift in Sources */,
+				57E59A4625F925F60087F760 /* ReactionDefinitionView.swift in Sources */,
 				57686A8B2600CF65005BD328 /* GaseousReactionScreen.swift in Sources */,
 				57686AEE2601EDB6005BD328 /* PressureBeaker.swift in Sources */,
 				57D2F31925EA601B00AEE0D8 /* ICETable.swift in Sources */,

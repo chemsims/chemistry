@@ -5,17 +5,18 @@
 import SwiftUI
 import ReactionsCore
 
-struct AqueousReactionDropDownSelection: View {
+struct AqueousReactionDropDownSelection<Reaction: ReactionDefinition>: View {
 
     @Binding var isToggled: Bool
-    @Binding var selection: AqueousReactionType
+    @Binding var selection: Reaction
+    let options: [Reaction]
     let onSelection: (() -> Void)?
     let height: CGFloat
 
     var body: some View {
         DropDownSelectionView(
             title: "Choose a reaction",
-            options: AqueousReactionType.allCases,
+            options: options,
             isToggled: $isToggled,
             selection: $selection,
             height: height,
@@ -33,6 +34,7 @@ struct AqueousReactionDropDownSelection_Previews: PreviewProvider {
         AqueousReactionDropDownSelection(
             isToggled: .constant(true),
             selection: .constant(.A),
+            options: AqueousReactionType.allCases,
             onSelection: nil,
             height: 50
         )
