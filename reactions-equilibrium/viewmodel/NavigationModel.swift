@@ -2,45 +2,43 @@
 // Reactions App
 //
 
-
 import SwiftUI
+import ReactionsCore
 
-struct RootNavigationView: View {
-    @ObservedObject var model: RootNavigationModel
+struct ReactionEquilibriumRootView: View {
+    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<EquilibriumAppScreen>>
 
     var body: some View {
-        model.view
-            .transition(.opacity)
+        GeometryReader { geo in
+            makeView(
+                settings: AqueousScreenLayoutSettings(geometry: geo)
+            )
+        }
+    }
+
+    private func makeView(settings: AqueousScreenLayoutSettings) -> some View {
+        GeneralRootNavigationView(
+            model: model,
+            navigationRows: ReactionEquilibriumNavigationRows.rows,
+            feedbackSettings: .reactionEquilibrium,
+            shareSettings: .reactionEquilibrium,
+            menuIconSize: settings.menuSize,
+            menuTopPadding: settings.menuTopPadding,
+            menuHPadding: settings.menuHPadding
+        )
     }
 }
 
-// TODO - remove this when root nav model from rates has been factored out into
-// reactions core
-class RootNavigationModel: ObservableObject {
-
-    @Published var view: AnyView
-
-    init() {
-        self.view = AnyView(EmptyView())
-        goToAqueous()
+extension AqueousScreenLayoutSettings {
+    var menuSize: CGFloat {
+        0.03 * width
     }
 
-    private var aqModel: AqueousReactionViewModel?
-
-    private func goToAqueous() {
-        let model = aqModel ?? AqueousReactionViewModel()
-        self.aqModel = model
-        model.navigation?.nextScreen = goToGaseous
-        withAnimation(.easeOut(duration: 0.35)) {
-            view = AnyView(AqueousReactionScreen(model: model))
-        }
+    var menuHPadding: CGFloat {
+        0.5 * menuSize
     }
 
-    private func goToGaseous() {
-        let model = GaseousReactionViewModel()
-        model.navigation?.prevScreen = goToAqueous
-        withAnimation(.easeOut(duration: 0.35)) {
-            view = AnyView(GaseousReactionScreen(model: model))
-        }
+    var menuTopPadding: CGFloat {
+        0.5 * menuSize
     }
 }

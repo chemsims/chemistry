@@ -22,3 +22,9 @@ public class AnyAppAnalytics<Screen>: AppAnalytics {
         _opened(screen)
     }
 }
+
+public class NoOpAppAnalytics<Screen>: AppAnalytics {
+    public init() { }
+    
+    public func opened(screen: Screen) { }
+}

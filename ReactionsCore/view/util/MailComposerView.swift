@@ -80,6 +80,15 @@ public struct FeedbackSettings {
         )
     }
 
+    public init(appName: String) {
+        self.init(
+            toAddress: Self.defaultAddress,
+            subject: "\(appName) Feedback",
+            body: Self.defaultBody
+        )
+    }
+    
+    public static let defaultAddress = "cogsci7@gmail.com"
     private static let defaultBody = """
 
     ---------

@@ -6,10 +6,7 @@ import ReactionsCore
 
 extension FeedbackSettings {
     static var reactionsRate: FeedbackSettings {
-        FeedbackSettings(
-            toAddress: "cogsci7@gmail.com",
-            subject: "Reactions Rate Feedback"
-        )
+        FeedbackSettings(appName: "Reactions Rate")
     }
 }
 

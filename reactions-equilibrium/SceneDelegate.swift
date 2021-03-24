@@ -11,7 +11,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let contentView = RootNavigationView(model: RootNavigationModel())
+        let injector = InMemoryEquilibriumInjector()
+        let navModel = ReactionsEquilibriumNavigationModel.model(using: injector)
+        let contentView = ReactionEquilibriumRootView(model: navModel)
         let controller = DeferScreenEdgesHostingController(rootView: contentView)
         DeferScreenEdgesState.shared.didSetEdgesDelegate = controller.didSetEdges
 
