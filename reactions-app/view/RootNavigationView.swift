@@ -25,7 +25,7 @@ struct RootNavigationView: View {
     }
 
     private func makeView(settings: OrderedReactionLayoutSettings) -> some View {
-        RootNavigationView2(
+        GeneralRootNavigationView(
             model: model,
             navigationRows: ReactionRateNavigationRows.rows,
             feedbackSettings: .reactionsRate,

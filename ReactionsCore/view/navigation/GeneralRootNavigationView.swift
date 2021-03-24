@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-public struct RootNavigationView2<Injector: NavigationInjector>: View {
+public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
 
     @ObservedObject var model: RootNavigationViewModel<Injector>
     let navigationRows: [NavigationIconRow<Injector.Screen>]

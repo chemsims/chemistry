@@ -237,7 +237,7 @@
 		57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5EB25B84A9100889A2E /* MailComposerView.swift */; };
 		57B3B929260B39A600EB9B47 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787039725B88E14002A4487 /* ShareSheetView.swift */; };
 		57B3B92F260B408500EB9B47 /* NavigationIconRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B92E260B408500EB9B47 /* NavigationIconRow.swift */; };
-		57B3B935260B40C100EB9B47 /* RootNavigationView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B934260B40C100EB9B47 /* RootNavigationView2.swift */; };
+		57B3B935260B40C100EB9B47 /* GeneralRootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B934260B40C100EB9B47 /* GeneralRootNavigationView.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */; };
@@ -644,7 +644,7 @@
 		57B3B904260B282D00EB9B47 /* NavigationInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationInjector.swift; sourceTree = "<group>"; };
 		57B3B914260B2E0000EB9B47 /* MainMenuOverlay2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOverlay2.swift; sourceTree = "<group>"; };
 		57B3B92E260B408500EB9B47 /* NavigationIconRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationIconRow.swift; sourceTree = "<group>"; };
-		57B3B934260B40C100EB9B47 /* RootNavigationView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView2.swift; sourceTree = "<group>"; };
+		57B3B934260B40C100EB9B47 /* GeneralRootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralRootNavigationView.swift; sourceTree = "<group>"; };
 		57B528E525B38A2300381550 /* ReviewPrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompter.swift; sourceTree = "<group>"; };
 		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
@@ -1770,7 +1770,7 @@
 				57E7FF822582954C00A30582 /* MainMenuPanel.swift */,
 				57E7FF71258289B200A30582 /* MenuButton.swift */,
 				57B3B914260B2E0000EB9B47 /* MainMenuOverlay2.swift */,
-				57B3B934260B40C100EB9B47 /* RootNavigationView2.swift */,
+				57B3B934260B40C100EB9B47 /* GeneralRootNavigationView.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -2634,7 +2634,7 @@
 				5797A53E25E41E0100991BD9 /* AxisPositionCalculations.swift in Sources */,
 				575A884F25E4327800AEE448 /* QuestionSet.swift in Sources */,
 				57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */,
-				57B3B935260B40C100EB9B47 /* RootNavigationView2.swift in Sources */,
+				57B3B935260B40C100EB9B47 /* GeneralRootNavigationView.swift in Sources */,
 				57438A3D260A26DB005E3888 /* RootNavigationViewModel.swift in Sources */,
 				57B3B91E260B2F9F00EB9B47 /* MenuButton.swift in Sources */,
 				57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */,
