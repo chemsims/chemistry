@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let devMode = CommandLine.arguments.contains("-DevMode")
         let injector: Injector = devMode ? InMemoryInjector() : ProductionInjector()
 
-        let contentView = RootNavigationView(
+        let contentView = ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: injector
             )

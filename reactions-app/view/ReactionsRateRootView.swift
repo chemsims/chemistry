@@ -5,7 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
-struct RootNavigationView: View {
+struct ReactionsRateRootView: View {
 
     @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<AppScreen>>
 
@@ -40,21 +40,21 @@ struct RootNavigationView: View {
 struct RootNavigationView_Previews: PreviewProvider {
     static var previews: some View {
         // iPhone SE
-        RootNavigationView(
+        ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector()
             )
         ).previewLayout(.fixed(width: 568, height: 320))
 
         // iPad mini
-        RootNavigationView(
+        ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector()
             )
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro 11
-        RootNavigationView(
+        ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector()
             )

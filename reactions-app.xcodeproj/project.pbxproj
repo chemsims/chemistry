@@ -184,7 +184,7 @@
 		57952A4725E67F96006AB876 /* NavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C59256555C40075358B /* NavigationModel.swift */; };
 		57952A5225E68184006AB876 /* AqueousNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A5125E68184006AB876 /* AqueousNavigationModel.swift */; };
 		57952A5D25E6819C006AB876 /* AqueousScreenStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A5C25E6819C006AB876 /* AqueousScreenStates.swift */; };
-		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
+		579628CF25659054007A7A6D /* ReactionsRateRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* ReactionsRateRootView.swift */; };
 		5797A44A25E4069F00991BD9 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
 		5797A45125E4069F00991BD9 /* ReactionsCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797A44325E4069F00991BD9 /* ReactionsCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5797A48125E40A3600991BD9 /* BeakerShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A7B255AC75C00F4E635 /* BeakerShape.swift */; };
@@ -607,7 +607,7 @@
 		57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionEquationTests.swift; sourceTree = "<group>"; };
 		57952A5125E68184006AB876 /* AqueousNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousNavigationModel.swift; sourceTree = "<group>"; };
 		57952A5C25E6819C006AB876 /* AqueousScreenStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenStates.swift; sourceTree = "<group>"; };
-		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
+		579628CE25659054007A7A6D /* ReactionsRateRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsRateRootView.swift; sourceTree = "<group>"; };
 		5797567E25C1C5CB005C484E /* LabelledImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelledImage.swift; sourceTree = "<group>"; };
 		5797A44125E4069F00991BD9 /* ReactionsCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactionsCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797A44325E4069F00991BD9 /* ReactionsCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactionsCore.h; sourceTree = "<group>"; };
@@ -1024,7 +1024,7 @@
 				57035F0A255C26B700DB3A19 /* charts */,
 				57035EF4255C19EC00DB3A19 /* reactions */,
 				57035ED6255BF03300DB3A19 /* slider */,
-				579628CE25659054007A7A6D /* RootNavigationView.swift */,
+				579628CE25659054007A7A6D /* ReactionsRateRootView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -2495,7 +2495,7 @@
 				57035EFD255C1A7000DB3A19 /* ReactionSettings.swift in Sources */,
 				571B3C4F256555460075358B /* ZeroOrderReactionViewModel.swift in Sources */,
 				57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */,
-				579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */,
+				579628CF25659054007A7A6D /* ReactionsRateRootView.swift in Sources */,
 				570FCD09258F8E0C0030D92E /* OrderedReactionScreenElement.swift in Sources */,
 				57DAE4D82577C4F1006D945B /* HalfLife.swift in Sources */,
 				570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */,
