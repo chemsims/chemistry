@@ -8,8 +8,8 @@ import ReactionsCore
 
 struct ReactionRateNavigationModel {
 
-    static func navigationModel(using injector: Injector) -> RootNavigationViewModel2<AnyNavigationInjector<AppScreen>> {
-        RootNavigationViewModel2(injector: navigationInjector(using: injector))
+    static func navigationModel(using injector: Injector) -> RootNavigationViewModel<AnyNavigationInjector<AppScreen>> {
+        RootNavigationViewModel(injector: navigationInjector(using: injector))
     }
 
     private static func navigationInjector(using injector: Injector) -> AnyNavigationInjector<AppScreen> {
@@ -39,7 +39,7 @@ struct ReactionRateNavigationModel {
     ]
 }
 
-struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
+private struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
 
     typealias Screen = AppScreen
     let injector: Injector
@@ -73,165 +73,8 @@ struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
             energyPersistence: injector.energyPersistence,
             analytics: injector.analytics,
             next: nextScreen,
-            prev: prevScreen,
-            hideMenu: {}
+            prev: prevScreen
         )
-    }
-}
-
-class RootNavigationViewModel: ObservableObject {
-
-    @Published var view: AnyView
-    @Published var showMenu = false {
-        didSet {
-            if showMenu {
-                UIAccessibility.post(notification: .screenChanged, argument: nil)
-            }
-        }
-    }
-    private(set) var navigationDirection = NavigationDirection.forward
-
-    var focusScreen: AppScreen? {
-        currentScreen == .finalAppScreen ? .zeroOrderFiling : nil
-    }
-
-    private let injector: Injector
-    private var models = [AppScreen: ScreenProvider]()
-    private(set) var currentScreen: AppScreen
-
-    init(
-        injector: Injector
-    ) {
-        let lastOpenedScreen = injector.lastOpenedScreenPersistence.get()
-        let firstScreen = lastOpenedScreen ?? AppScreen.zeroOrderReaction
-        self.currentScreen = firstScreen
-        self.injector = injector
-        self.view = AnyView(EmptyView())
-        goTo(screen: firstScreen, with: getProvider(for: firstScreen))
-    }
-
-    private var reduceMotion: Bool {
-        UIAccessibility.isReduceMotionEnabled
-    }
-
-    private var persistence: ReactionInputPersistence {
-        injector.reactionPersistence
-    }
-
-    func canSelect(screen: AppScreen) -> Bool {
-        return true
-        switch screen {
-        case .zeroOrderFiling: return canSelect(screen: .firstOrderReaction)
-        case.firstOrderFiling: return canSelect(screen: .secondOrderReaction)
-        case .secondOrderFiling: return canSelect(screen: .reactionComparison)
-        case .energyProfileFiling: return persistence.hasCompleted(screen: .energyProfileQuiz)
-        default:
-            if let previousScreen = linearScreens.element(before: screen) {
-                return persistence.hasCompleted(screen: previousScreen)
-            }
-            return true
-        }
-    }
-
-    func jumpTo(screen: AppScreen) {
-        if screen.isQuiz {
-            goToExisting(screen: screen)
-        } else {
-            goToFresh(screen: screen)
-        }
-    }
-
-    private func goToFresh(screen: AppScreen) {
-        guard screen != currentScreen else {
-            return
-        }
-        goTo(screen: screen, with: getProvider(for: screen))
-    }
-
-    private func next() {
-        if let nextScreen = linearScreens.element(after: currentScreen) {
-            persistence.setCompleted(screen: currentScreen)
-            goToFresh(screen: nextScreen)
-        }
-    }
-
-    private func prev() {
-        if let prevScreen = linearScreens.element(before: currentScreen) {
-            goToExisting(screen: prevScreen)
-        }
-    }
-
-    private func goToExisting(screen: AppScreen) {
-        let provider = models[screen] ?? getProvider(for: screen)
-        goTo(screen: screen, with: provider)
-    }
-
-    private func goTo(screen: AppScreen, with provider: ScreenProvider) {
-        models[screen] = provider
-        navigationDirection = screenIsAfterCurrent(nextScreen: screen) ? .forward : .back
-        self.currentScreen = screen
-        withAnimation(navigationAnimation) {
-            self.view = provider.screen
-        }
-        if screen == .finalAppScreen {
-            showMenu = true
-            ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
-        }
-        injector.analytics.opened(screen: screen)
-        injector.lastOpenedScreenPersistence.set(screen)
-    }
-
-    private func screenIsAfterCurrent(nextScreen: AppScreen) -> Bool {
-        if let indexOfCurrent = AppScreen.allCases.firstIndex(of: currentScreen),
-           let indexOfNew = AppScreen.allCases.firstIndex(of: nextScreen) {
-            return indexOfNew > indexOfCurrent
-        }
-        return false
-    }
-
-    private func getProvider(for screen: AppScreen) -> ScreenProvider {
-        screen.screenProvider(
-            persistence: persistence,
-            quizPersistence: injector.quizPersistence,
-            energyPersistence: injector.energyPersistence,
-            analytics: injector.analytics,
-            next: next,
-            prev: prev,
-            hideMenu: { self.showMenu = false }
-        )
-    }
-
-    enum NavigationDirection {
-        case forward, back
-    }
-
-    private var navigationAnimation: Animation? {
-        reduceMotion ? nil : Animation.easeOut(duration: 0.35)
-    }
-
-    // The linear navigation flow. i.e, when the user clicks 'next' they will navigate through these screens, in this order
-    private let linearScreens: [AppScreen] = [
-        .zeroOrderReaction,
-        .zeroOrderReactionQuiz,
-        .firstOrderReaction,
-        .firstOrderReactionQuiz,
-        .secondOrderReaction,
-        .secondOrderReactionQuiz,
-        .reactionComparison,
-        .reactionComparisonQuiz,
-        .energyProfile,
-        .energyProfileQuiz,
-        .finalAppScreen
-    ]
-}
-
-extension ReactionOrder {
-    var reactionScreen: AppScreen {
-        switch self {
-        case .Zero: return .zeroOrderReaction
-        case .First: return .firstOrderReaction
-        case .Second: return .secondOrderReaction
-        }
     }
 }
 
@@ -242,8 +85,7 @@ fileprivate extension AppScreen {
         energyPersistence: EnergyProfilePersistence,
         analytics: AnalyticsService,
         next: @escaping () -> Void,
-        prev: @escaping () -> Void,
-        hideMenu: @escaping () -> Void
+        prev: @escaping () -> Void
     ) -> ScreenProvider {
         switch self {
         case .zeroOrderReaction:
@@ -307,10 +149,7 @@ fileprivate extension AppScreen {
         case .finalAppScreen:
             return FinalAppScreenProvider(
                 persistence: energyPersistence,
-                prev: {
-                    prev()
-                    hideMenu()
-                }
+                prev: prev
             )
         }
     }

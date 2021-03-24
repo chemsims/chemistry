@@ -11,7 +11,7 @@ struct MainMenuOverlay: View {
     let size: CGFloat
     let topPadding: CGFloat
     let menuHPadding: CGFloat
-    @ObservedObject var navigation: RootNavigationViewModel2<AnyNavigationInjector<AppScreen>>
+    @ObservedObject var navigation: RootNavigationViewModel<AnyNavigationInjector<AppScreen>>
 
     @State private var showFailedMailAlert = false
     @State private var activeSheet: ActiveSheet?
@@ -60,7 +60,7 @@ private enum ActiveSheet: Int, Identifiable {
 
 private struct MainMenuOverlayWithSettings: View {
 
-    @ObservedObject var navigation: RootNavigationViewModel2<AnyNavigationInjector<AppScreen>>
+    @ObservedObject var navigation: RootNavigationViewModel<AnyNavigationInjector<AppScreen>>
     @Binding var activeSheet: ActiveSheet?
     @Binding var showFailedMailAlert: Bool
     let settings: MainMenuLayoutSettings

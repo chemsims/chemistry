@@ -7,7 +7,7 @@ import ReactionsCore
 
 struct RootNavigationView: View {
 
-    @ObservedObject var model: RootNavigationViewModel2<AnyNavigationInjector<AppScreen>>
+    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<AppScreen>>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass

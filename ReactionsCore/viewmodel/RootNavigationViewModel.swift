@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-public class RootNavigationViewModel2<Injector: NavigationInjector>: ObservableObject {
+public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableObject {
 
     @Published public var view: AnyView
     @Published public var showMenu = false
@@ -62,7 +62,7 @@ public class RootNavigationViewModel2<Injector: NavigationInjector>: ObservableO
     }
 }
 
-extension RootNavigationViewModel2 {
+extension RootNavigationViewModel {
     private func next() {
         if let nextScreen = injector.linearScreens.element(after: currentScreen) {
             persistence.setCompleted(screen: currentScreen)
@@ -80,7 +80,7 @@ extension RootNavigationViewModel2 {
     }
 }
 
-extension RootNavigationViewModel2 {
+extension RootNavigationViewModel {
 
     private func goToFresh(screen: Screen) {
         guard screen != currentScreen else {
@@ -120,7 +120,7 @@ extension RootNavigationViewModel2 {
     }
 }
 
-extension RootNavigationViewModel2 {
+extension RootNavigationViewModel {
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
     }
@@ -130,7 +130,7 @@ extension RootNavigationViewModel2 {
     }
 }
 
-extension RootNavigationViewModel2 {
+extension RootNavigationViewModel {
     private func screenIsAfterCurrent(nextScreen: Screen) -> Bool {
         if let indexOfCurrent = index(of: currentScreen),
            let indexOfNew = index(of: nextScreen) {
@@ -144,7 +144,7 @@ extension RootNavigationViewModel2 {
     }
 }
 
-extension RootNavigationViewModel2 {
+extension RootNavigationViewModel {
     public enum NavigationDirection {
         case forward, back
     }
