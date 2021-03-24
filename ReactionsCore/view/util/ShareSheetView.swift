@@ -4,19 +4,6 @@
 
 import SwiftUI
 
-public struct ShareSettings {
-    let message: String
-
-    public init(
-        appStoreUrl: String,
-        appName: String
-    ) {
-        self.message = """
-        Hey, check out the \(appName) app! Download it at \(appStoreUrl).
-        """
-    }
-}
-
 struct ShareSheetView: UIViewControllerRepresentable {
 
     let activityItems: [Any]
@@ -29,6 +16,19 @@ struct ShareSheetView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    }
+}
+
+public struct ShareSettings {
+    let message: String
+
+    public init(
+        appStoreUrl: String,
+        appName: String
+    ) {
+        self.message = """
+        Hey, check out the \(appName) app! Download it at \(appStoreUrl).
+        """
     }
 }
 

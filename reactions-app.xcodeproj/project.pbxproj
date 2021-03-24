@@ -231,7 +231,7 @@
 		57B3B8F4260B27E800EB9B47 /* NavigationBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B8F3260B27E800EB9B47 /* NavigationBehaviour.swift */; };
 		57B3B8FB260B281000EB9B47 /* AppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B8FA260B281000EB9B47 /* AppAnalytics.swift */; };
 		57B3B905260B282D00EB9B47 /* NavigationInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B904260B282D00EB9B47 /* NavigationInjector.swift */; };
-		57B3B915260B2E0000EB9B47 /* MainMenuOverlay2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B914260B2E0000EB9B47 /* MainMenuOverlay2.swift */; };
+		57B3B915260B2E0000EB9B47 /* MainMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B914260B2E0000EB9B47 /* MainMenuOverlay.swift */; };
 		57B3B91E260B2F9F00EB9B47 /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF71258289B200A30582 /* MenuButton.swift */; };
 		57B3B923260B35CE00EB9B47 /* MainMenuPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF822582954C00A30582 /* MainMenuPanel.swift */; };
 		57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5EB25B84A9100889A2E /* MailComposerView.swift */; };
@@ -642,7 +642,7 @@
 		57B3B8F3260B27E800EB9B47 /* NavigationBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBehaviour.swift; sourceTree = "<group>"; };
 		57B3B8FA260B281000EB9B47 /* AppAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAnalytics.swift; sourceTree = "<group>"; };
 		57B3B904260B282D00EB9B47 /* NavigationInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationInjector.swift; sourceTree = "<group>"; };
-		57B3B914260B2E0000EB9B47 /* MainMenuOverlay2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOverlay2.swift; sourceTree = "<group>"; };
+		57B3B914260B2E0000EB9B47 /* MainMenuOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOverlay.swift; sourceTree = "<group>"; };
 		57B3B92E260B408500EB9B47 /* NavigationIconRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationIconRow.swift; sourceTree = "<group>"; };
 		57B3B934260B40C100EB9B47 /* GeneralRootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralRootNavigationView.swift; sourceTree = "<group>"; };
 		57B528E525B38A2300381550 /* ReviewPrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompter.swift; sourceTree = "<group>"; };
@@ -1769,7 +1769,7 @@
 			children = (
 				57E7FF822582954C00A30582 /* MainMenuPanel.swift */,
 				57E7FF71258289B200A30582 /* MenuButton.swift */,
-				57B3B914260B2E0000EB9B47 /* MainMenuOverlay2.swift */,
+				57B3B914260B2E0000EB9B47 /* MainMenuOverlay.swift */,
 				57B3B934260B40C100EB9B47 /* GeneralRootNavigationView.swift */,
 			);
 			path = navigation;
@@ -2611,7 +2611,7 @@
 				57B3B92F260B408500EB9B47 /* NavigationIconRow.swift in Sources */,
 				57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */,
 				575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */,
-				57B3B915260B2E0000EB9B47 /* MainMenuOverlay2.swift in Sources */,
+				57B3B915260B2E0000EB9B47 /* MainMenuOverlay.swift in Sources */,
 				57686AD12600E6B1005BD328 /* AdjustableBeakerBurner.swift in Sources */,
 				5797A4BF25E40A6400991BD9 /* Equation.swift in Sources */,
 				57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */,

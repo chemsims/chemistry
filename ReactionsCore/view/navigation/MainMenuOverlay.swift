@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-public struct MainMenuOverlay2<Injector: NavigationInjector>: View {
+struct MainMenuOverlay<Injector: NavigationInjector>: View {
 
     let rows: [NavigationIconRow<Injector.Screen>]
     @ObservedObject var navigation: RootNavigationViewModel<Injector>
@@ -14,24 +14,6 @@ public struct MainMenuOverlay2<Injector: NavigationInjector>: View {
     let size: CGFloat
     let topPadding: CGFloat
     let menuHPadding: CGFloat
-
-    public init(
-        rows: [NavigationIconRow<Injector.Screen>],
-        navigation: RootNavigationViewModel<Injector>,
-        feedbackSettings: FeedbackSettings,
-        shareSettings: ShareSettings,
-        size: CGFloat,
-        topPadding: CGFloat,
-        menuHPadding: CGFloat
-    ) {
-        self.rows = rows
-        self.navigation = navigation
-        self.feedbackSettings = feedbackSettings
-        self.shareSettings = shareSettings
-        self.size = size
-        self.topPadding = topPadding
-        self.menuHPadding = menuHPadding
-    }
 
     @State private var showFailedMailAlert = false
     @State private var activeSheet: ActiveSheet?
@@ -427,7 +409,7 @@ private enum ActiveSheet: Int, Identifiable {
 
 struct MainMenuOverlay_Previews: PreviewProvider {
     static var previews: some View {
-        MainMenuOverlay2(
+        MainMenuOverlay(
             rows: rows,
             navigation: model,
             feedbackSettings: FeedbackSettings(toAddress: "", subject: ""),

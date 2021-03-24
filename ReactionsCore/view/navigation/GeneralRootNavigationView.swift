@@ -48,7 +48,7 @@ public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
                 )
                 .accessibility(hidden: model.showMenu)
 
-            MainMenuOverlay2(
+            MainMenuOverlay(
                 rows: navigationRows,
                 navigation: model,
                 feedbackSettings: feedbackSettings,
