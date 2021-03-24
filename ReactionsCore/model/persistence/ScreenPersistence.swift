@@ -14,6 +14,36 @@ public protocol ScreenPersistence {
     func setLastOpened(_ screen: Screen)
 }
 
+public class AnyScreenPersistence<Screen>: ScreenPersistence {
+    public init<Persistence: ScreenPersistence>(_ persistence: Persistence) where Persistence.Screen == Screen {
+        self._setCompleted = persistence.setCompleted
+        self._hasCompleted = persistence.hasCompleted
+        self._lastOpened = persistence.lastOpened
+        self._setLastOpened = persistence.setLastOpened
+    }
+
+    private let _setCompleted: (Screen) -> Void
+    private let _hasCompleted: (Screen) -> Bool
+    private let _lastOpened: () -> Screen?
+    private let _setLastOpened: (Screen) -> Void
+
+    public func setCompleted(screen: Screen) {
+        _setCompleted(screen)
+    }
+
+    public func hasCompleted(screen: Screen) -> Bool {
+        _hasCompleted(screen)
+    }
+
+    public func lastOpened() -> Screen? {
+        _lastOpened()
+    }
+
+    public func setLastOpened(_ screen: Screen) {
+        _setLastOpened(screen)
+    }
+}
+
 public class UserDefaultsScreenPersistence<Screen: RawRepresentable>: ScreenPersistence where Screen.RawValue == String {
 
     public init() {

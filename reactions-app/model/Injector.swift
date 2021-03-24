@@ -12,6 +12,9 @@ protocol Injector {
     var energyPersistence: EnergyProfilePersistence { get }
     var analytics: AnalyticsService { get }
     var lastOpenedScreenPersistence: LastOpenedScreenPersistence { get }
+
+    var screenPersistence: AnyScreenPersistence<AppScreen> { get }
+    var appAnalytics: AnyAppAnalytics<AppScreen> { get }
 }
 
 class ProductionInjector: Injector {
@@ -27,6 +30,9 @@ class ProductionInjector: Injector {
     let analytics: AnalyticsService = GoogleAnalytics()
 
     let lastOpenedScreenPersistence: LastOpenedScreenPersistence = UserDefaultsLastOpenedScreenPersistence()
+
+    let screenPersistence = AnyScreenPersistence(UserDefaultsScreenPersistence<AppScreen>())
+    let appAnalytics = AnyAppAnalytics(GoogleAnalytics())
 }
 
 class InMemoryInjector: Injector {
@@ -43,4 +49,7 @@ class InMemoryInjector: Injector {
     let analytics: AnalyticsService = NoOpAnalytics()
 
     let lastOpenedScreenPersistence: LastOpenedScreenPersistence = UserDefaultsLastOpenedScreenPersistence()
+
+    let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<AppScreen>())
+    let appAnalytics = AnyAppAnalytics(NoOpAnalytics())
 }

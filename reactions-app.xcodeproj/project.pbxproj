@@ -82,6 +82,7 @@
 		57438A48260A3004005E3888 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A47260A3004005E3888 /* Version.swift */; };
 		57438A56260A3242005E3888 /* ReviewPromptPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */; };
 		57438A5F260A3371005E3888 /* ReviewPrompter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B528E525B38A2300381550 /* ReviewPrompter.swift */; };
+		57438A65260A4177005E3888 /* ScreenPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A64260A4177005E3888 /* ScreenPersistence.swift */; };
 		5743D9B125C41CD2000C0397 /* ReactionFilingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9B025C41CD2000C0397 /* ReactionFilingViewModelTests.swift */; };
 		5743D9BD25C454F8000C0397 /* Injector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9BC25C454F8000C0397 /* Injector.swift */; };
 		5743D9C125C45C81000C0397 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */; };
@@ -506,6 +507,7 @@
 		573F16A625852D5D001CE039 /* BeakerReactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerReactionState.swift; sourceTree = "<group>"; };
 		57438A3C260A26DB005E3888 /* RootNavigationViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationViewModel2.swift; sourceTree = "<group>"; };
 		57438A47260A3004005E3888 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		57438A64260A4177005E3888 /* ScreenPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenPersistence.swift; sourceTree = "<group>"; };
 		5743D9B025C41CD2000C0397 /* ReactionFilingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingViewModelTests.swift; sourceTree = "<group>"; };
 		5743D9BC25C454F8000C0397 /* Injector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Injector.swift; sourceTree = "<group>"; };
 		5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
@@ -1181,6 +1183,7 @@
 			isa = PBXGroup;
 			children = (
 				57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */,
+				57438A64260A4177005E3888 /* ScreenPersistence.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -2602,6 +2605,7 @@
 				5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */,
 				575A887D25E4366900AEE448 /* CircleIconButton.swift in Sources */,
 				5797A49C25E40A4C00991BD9 /* BeakerBottomShape.swift in Sources */,
+				57438A65260A4177005E3888 /* ScreenPersistence.swift in Sources */,
 				5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */,
 				57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */,
 				57567B6B26066450009711D4 /* SlidingSwitch.swift in Sources */,

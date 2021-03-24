@@ -6,6 +6,62 @@ import SwiftUI
 import StoreKit
 import ReactionsCore
 
+struct ReactionRateNavigationModel {
+
+    func navigationModel(using injector: Injector) -> RootNavigationViewModel2<AnyNavigationInjector<AppScreen>> {
+        RootNavigationViewModel2(injector: navigationInjector(using: injector))
+    }
+
+    func navigationInjector(using injector: Injector) -> AnyNavigationInjector<AppScreen> {
+        AnyNavigationInjector(
+            behaviour: AnyNavigationBehavior(ReactionsRateNavigationBehaviour(injector: injector)),
+            persistence: injector.screenPersistence,
+            analytics: injector.appAnalytics,
+            allScreens: AppScreen.allCases,
+            linearScreens: [AppScreen.zeroOrderFiling]
+        )
+    }
+}
+
+struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
+
+    typealias Screen = AppScreen
+    let injector: Injector
+    
+    func deferCanSelect(of screen: AppScreen) -> AppScreen? {
+        switch screen {
+        case .zeroOrderFiling: return .firstOrderReaction
+        case .firstOrderFiling: return .secondOrderReaction
+        case .secondOrderFiling: return .reactionComparison
+        default: return nil
+        }
+    }
+
+    func shouldRestoreStateWhenJumpingTo(screen: AppScreen) -> Bool {
+        screen.isQuiz
+    }
+
+    func showReviewPromptOn(screen: AppScreen) -> Bool {
+        screen == .finalAppScreen
+    }
+
+    func highlightedNavIcon(for screen: AppScreen) -> AppScreen? {
+        screen == .finalAppScreen ? .zeroOrderFiling : nil
+    }
+
+    func getProvider(for screen: AppScreen, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) -> ScreenProvider {
+        screen.screenProvider(
+            persistence: injector.reactionPersistence,
+            quizPersistence: injector.quizPersistence,
+            energyPersistence: injector.energyPersistence,
+            analytics: injector.analytics,
+            next: nextScreen,
+            prev: prevScreen,
+            hideMenu: {}
+        )
+    }
+}
+
 class RootNavigationViewModel: ObservableObject {
 
     @Published var view: AnyView
@@ -104,7 +160,7 @@ class RootNavigationViewModel: ObservableObject {
             showMenu = true
             ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
         }
-        injector.analytics.openedScreen(screen)
+        injector.analytics.opened(screen: screen)
         injector.lastOpenedScreenPersistence.set(screen)
     }
 

@@ -67,6 +67,9 @@ extension RootNavigationViewModel2 {
 
     private func prev() {
         if let prevScreen = injector.linearScreens.element(before: currentScreen) {
+            if showMenu {
+                showMenu = false
+            }
             goToExisting(screen: prevScreen)
         }
     }
@@ -90,7 +93,7 @@ extension RootNavigationViewModel2 {
     }
 
     private func getProvider(for screen: Screen) -> ScreenProvider {
-        injector.getProvider(
+        injector.behaviour.getProvider(
             for: screen,
             nextScreen: next,
             prevScreen: prev
@@ -157,19 +160,33 @@ public protocol NavigationInjector {
     var allScreens: [Screen] { get }
 
     var linearScreens: [Screen] { get }
+}
 
-    func getProvider(
-        for screen: Screen,
-        nextScreen: @escaping () -> Void,
-        prevScreen: @escaping () -> Void
-    ) -> ScreenProvider
+public class AnyNavigationInjector<Screen: Hashable>: NavigationInjector {
+    public init(
+        behaviour: AnyNavigationBehavior<Screen>,
+        persistence: AnyScreenPersistence<Screen>,
+        analytics: AnyAppAnalytics<Screen>,
+        allScreens: [Screen],
+        linearScreens: [Screen]
+    ) {
+        self.behaviour = behaviour
+        self.persistence = persistence
+        self.analytics = analytics
+        self.allScreens = allScreens
+        self.linearScreens = linearScreens
+    }
+
+    public let behaviour: AnyNavigationBehavior<Screen>
+    public let persistence: AnyScreenPersistence<Screen>
+    public let analytics: AnyAppAnalytics<Screen>
+    public let allScreens: [Screen]
+    public let linearScreens: [Screen]
 }
 
 public protocol NavigationBehaviour {
 
     associatedtype Screen
-
-
 
     /// Returns an alternative screen to check if it can be selected
     ///
@@ -182,20 +199,70 @@ public protocol NavigationBehaviour {
     func showReviewPromptOn(screen: Screen) -> Bool
 
     func highlightedNavIcon(for screen: Screen) -> Screen?
+
+    func getProvider(
+        for screen: Screen,
+        nextScreen: @escaping () -> Void,
+        prevScreen: @escaping () -> Void
+    ) -> ScreenProvider
 }
 
-public protocol ScreenPersistence {
-    associatedtype Screen
+public class AnyNavigationBehavior<Screen>: NavigationBehaviour {
 
-    func setCompleted(screen: Screen)
-    func hasCompleted(screen: Screen) -> Bool
+    public init<Behaviour: NavigationBehaviour>(_ behaviour: Behaviour) where Behaviour.Screen == Screen {
+        self._deferCanSelect = behaviour.deferCanSelect
+        self._shouldRestoreState = behaviour.shouldRestoreStateWhenJumpingTo
+        self._showReviewPrompt = behaviour.showReviewPromptOn
+        self._highlightNavIcon = behaviour.highlightedNavIcon
+        self._getProvider = behaviour.getProvider
+    }
 
-    func lastOpened() -> Screen?
-    func setLastOpened(_ screen: Screen)
+    private let _deferCanSelect: (Screen) -> Screen?
+    private let _shouldRestoreState: (Screen) -> Bool
+    private let _showReviewPrompt: (Screen) -> Bool
+    private let _highlightNavIcon: (Screen) -> Screen?
+    private let _getProvider: (Screen, @escaping () -> Void, @escaping () -> Void) -> ScreenProvider
+
+    public func deferCanSelect(of screen: Screen) -> Screen? {
+        _deferCanSelect(screen)
+    }
+
+    public func shouldRestoreStateWhenJumpingTo(screen: Screen) -> Bool {
+        _shouldRestoreState(screen)
+    }
+
+    public func showReviewPromptOn(screen: Screen) -> Bool {
+        _showReviewPrompt(screen)
+    }
+
+    public func highlightedNavIcon(for screen: Screen) -> Screen? {
+        _highlightNavIcon(screen)
+    }
+
+    public func getProvider(
+        for screen: Screen,
+        nextScreen: @escaping () -> Void,
+        prevScreen: @escaping () -> Void
+    ) -> ScreenProvider {
+        _getProvider(screen, nextScreen, prevScreen)
+    }
 }
 
 public protocol AppAnalytics {
     associatedtype Screen
 
     func opened(screen: Screen)
+}
+
+public class AnyAppAnalytics<Screen>: AppAnalytics {
+
+    public init<Analytics: AppAnalytics>(_ analytics: Analytics) where Analytics.Screen == Screen {
+        self._opened = analytics.opened
+    }
+
+    private let _opened: (Screen) -> Void
+
+    public func opened(screen: Screen) {
+        _opened(screen)
+    }
 }

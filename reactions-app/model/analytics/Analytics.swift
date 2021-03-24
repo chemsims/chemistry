@@ -7,7 +7,7 @@ import FirebaseAnalytics
 import ReactionsCore
 
 protocol AnalyticsService {
-    func openedScreen(_ screen: AppScreen)
+    func opened(screen: AppScreen)
 
     func answeredQuestion(
         questionSet: QuestionSet,
@@ -26,16 +26,19 @@ protocol AnalyticsService {
     )
 }
 
-class NoOpAnalytics: AnalyticsService {
-    func openedScreen(_ screen: AppScreen) { }
+class NoOpAnalytics: AnalyticsService, AppAnalytics {
+
+    typealias Screen = AppScreen
+
+    func opened(screen: AppScreen) { }
     func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) { }
     func answeredQuestion(questionSet: QuestionSet, questionId: String, answerId: String, answerAttempt: Int, isCorrect: Bool) { }
     func completedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty, percentCorrect: Double) { }
 }
 
-struct GoogleAnalytics: AnalyticsService {
+struct GoogleAnalytics: AnalyticsService, AppAnalytics {
 
-    func openedScreen(_ screen: AppScreen) {
+    func opened(screen: AppScreen) {
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [
             AnalyticsParameterScreenName: screen.rawValue
         ])
