@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct MainMenuOverlay2<Injector: NavigationInjector>: View {
 
-    let rows: [NavigationRow<Injector.Screen>]
+    let rows: [NavigationIconRow<Injector.Screen>]
     @ObservedObject var navigation: RootNavigationViewModel<Injector>
     let feedbackSettings: FeedbackSettings
     let shareSettings: ShareSettings
@@ -17,7 +17,7 @@ public struct MainMenuOverlay2<Injector: NavigationInjector>: View {
 
 
     public init(
-        rows: [NavigationRow<Injector.Screen>],
+        rows: [NavigationIconRow<Injector.Screen>],
         navigation: RootNavigationViewModel<Injector>,
         feedbackSettings: FeedbackSettings,
         shareSettings: ShareSettings,
@@ -78,7 +78,7 @@ public struct MainMenuOverlay2<Injector: NavigationInjector>: View {
 
 private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
 
-    let rows: [NavigationRow<Injector.Screen>]
+    let rows: [NavigationIconRow<Injector.Screen>]
     @ObservedObject var navigation: RootNavigationViewModel<Injector>
     let feedbackSettings: FeedbackSettings
     @Binding var activeSheet: ActiveSheet?
@@ -208,7 +208,7 @@ extension MainMenuOverlayWithSettings {
         .padding(settings.panelContentPadding)
     }
 
-    private func navRow(_ row: NavigationRow<Injector.Screen>) -> some View {
+    private func navRow(_ row: NavigationIconRow<Injector.Screen>) -> some View {
         HStack(alignment: .bottom, spacing: settings.navRowHSpacing) {
             navIcon(icon: row.primaryIcon)
                 .frame(height: settings.navIconHeight)
@@ -335,45 +335,6 @@ extension MainMenuOverlayWithSettings {
     }
 }
 
-
-public struct NavigationRow<Screen> {
-    let primaryIcon: NavigationIcon<Screen>
-    let firstSecondaryIcon: NavigationIcon<Screen>?
-    let secondSecondaryIcon: NavigationIcon<Screen>?
-
-    public init(
-        primaryIcon: NavigationIcon<Screen>,
-        firstSecondaryIcon: NavigationIcon<Screen>?,
-        secondSecondaryIcon: NavigationIcon<Screen>?
-    ) {
-        self.primaryIcon = primaryIcon
-        self.firstSecondaryIcon = firstSecondaryIcon
-        self.secondSecondaryIcon = secondSecondaryIcon
-    }
-}
-
-public struct NavigationIcon<Screen> {
-    let screen: Screen
-    let image: String
-    let pressedImage: String
-    let isSystemImage: Bool
-    let label: String
-
-    public init(
-        screen: Screen,
-        image: String,
-        pressedImage: String,
-        isSystemImage: Bool,
-        label: String
-    ) {
-        self.screen = screen
-        self.image = image
-        self.pressedImage = pressedImage
-        self.isSystemImage = isSystemImage
-        self.label = label
-    }
-}
-
 private struct MainMenuLayoutSettings {
 
     let geometry: GeometryProxy
@@ -476,8 +437,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         .previewLayout(.iPhoneSELandscape)
     }
 
-    static let rows: [NavigationRow<Int>] = [
-        NavigationRow(
+    static let rows: [NavigationIconRow<Int>] = [
+        NavigationIconRow(
             primaryIcon: NavigationIcon(
                 screen: 1,
                 image: "folder.circle",
@@ -494,7 +455,7 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             ),
             secondSecondaryIcon: nil
         ),
-        NavigationRow(
+        NavigationIconRow(
             primaryIcon: NavigationIcon(
                 screen: 3,
                 image: "folder.circle",
