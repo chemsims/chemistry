@@ -39,8 +39,13 @@ public class RootNavigationViewModel2<Injector: NavigationInjector>: ObservableO
     }
 
     public func canSelect(screen: Screen) -> Bool {
-        if let deferredScreen = behaviour.deferCanSelect(of: screen) {
-            return canSelect(screen: deferredScreen)
+        if let deferOption = behaviour.deferCanSelect(of: screen) {
+            switch deferOption {
+            case let .canSelect(other):
+                return canSelect(screen: other)
+            case let .hasCompleted(other):
+                return persistence.hasCompleted(screen: other)
+            }
         }
         if let previousScreen = injector.linearScreens.element(before: screen) {
             return persistence.hasCompleted(screen: previousScreen)

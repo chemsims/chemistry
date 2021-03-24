@@ -11,7 +11,7 @@ public protocol NavigationBehaviour {
     /// Returns an alternative screen to check if it can be selected
     ///
     /// If the alternative screen can be selected, then the input screen can also be selected
-    func deferCanSelect(of screen: Screen) -> Screen?
+    func deferCanSelect(of screen: Screen) -> DeferCanSelect<Screen>?
 
     /// Returns whether the previous screen state should be restored when navigating to this screen from the menu
     func shouldRestoreStateWhenJumpingTo(screen: Screen) -> Bool
@@ -27,6 +27,11 @@ public protocol NavigationBehaviour {
     ) -> ScreenProvider
 }
 
+public enum DeferCanSelect<Screen> {
+    case canSelect(other: Screen)
+    case hasCompleted(other: Screen)
+}
+
 public class AnyNavigationBehavior<Screen>: NavigationBehaviour {
 
     public init<Behaviour: NavigationBehaviour>(_ behaviour: Behaviour) where Behaviour.Screen == Screen {
@@ -37,13 +42,13 @@ public class AnyNavigationBehavior<Screen>: NavigationBehaviour {
         self._getProvider = behaviour.getProvider
     }
 
-    private let _deferCanSelect: (Screen) -> Screen?
+    private let _deferCanSelect: (Screen) -> DeferCanSelect<Screen>?
     private let _shouldRestoreState: (Screen) -> Bool
     private let _showReviewPrompt: (Screen) -> Bool
     private let _highlightNavIcon: (Screen) -> Screen?
     private let _getProvider: (Screen, @escaping () -> Void, @escaping () -> Void) -> ScreenProvider
 
-    public func deferCanSelect(of screen: Screen) -> Screen? {
+    public func deferCanSelect(of screen: Screen) -> DeferCanSelect<Screen>? {
         _deferCanSelect(screen)
     }
 

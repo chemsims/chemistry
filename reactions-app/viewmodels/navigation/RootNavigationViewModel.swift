@@ -44,11 +44,12 @@ struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
     typealias Screen = AppScreen
     let injector: Injector
     
-    func deferCanSelect(of screen: AppScreen) -> AppScreen? {
+    func deferCanSelect(of screen: AppScreen) -> DeferCanSelect<AppScreen>? {
         switch screen {
-        case .zeroOrderFiling: return .firstOrderReaction
-        case .firstOrderFiling: return .secondOrderReaction
-        case .secondOrderFiling: return .reactionComparison
+        case .zeroOrderFiling: return .canSelect(other: .firstOrderReaction)
+        case .firstOrderFiling: return .canSelect(other: .secondOrderReaction)
+        case .secondOrderFiling: return .canSelect(other: .reactionComparison)
+        case .energyProfileFiling: return .hasCompleted(other: .energyProfileQuiz)
         default: return nil
         }
     }
