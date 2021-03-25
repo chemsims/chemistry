@@ -40,7 +40,7 @@ struct GaseousNavigationModel {
             previousTiming: GaseousReactionSettings.forwardTiming
         ),
         GaseousSetVolume(),
-        GaseousSetStatement(statement: GaseousStatements.explainReducedVolume),
+        GaseousExplainChangeInVolume(),
         GaseousPrePressureReaction(),
         GaseousRunReaction(
             statement: GaseousStatements.forwardReactionIsRunning,
@@ -302,6 +302,13 @@ private class GaseousSetVolume: GaseousScreenState {
         if let previous = model.componentWrapper.previous {
             model.componentWrapper = previous
         }
+    }
+}
+
+private class GaseousExplainChangeInVolume: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = GaseousStatements.explainReducedVolume
+        model.inputState = .none
     }
 }
 
