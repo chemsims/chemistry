@@ -19,11 +19,16 @@ struct ReactionDefinitionView<Reaction: ReactionDefinition>: View {
             )
             Text(type.productDisplay)
         }
+        .background(Color.white.padding(-10))
     }
 }
 
 struct AqueousReactionTypeView_Previews: PreviewProvider {
     static var previews: some View {
-        ReactionDefinitionView(type: AqueousReactionType.A, highlightTopArrow: false, highlightReverseArrow: true)
+        ReactionDefinitionView(
+            type: AqueousReactionType.A,
+            highlightTopArrow: false,
+            highlightReverseArrow: true
+        )
     }
 }

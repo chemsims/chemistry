@@ -10,5 +10,6 @@ enum GaseousScreenElement {
          quotientToEquilibriumConstantDefinition,
          pump,
          pressureSlider,
-         tempSlider
+         tempSlider,
+         reactionDefinition
 }

@@ -356,6 +356,11 @@ private class GaseousShiftChart: GaseousScreenState {
 private class GaseousPrePressureReaction: GaseousScreenState {
     override func apply(on model: GaseousReactionViewModel) {
         model.statement = GaseousStatements.prePressureReaction(selected: model.selectedReaction)
+        model.highlightedElements.elements = [.reactionDefinition]
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.highlightedElements.clear()
     }
 }
 

@@ -72,6 +72,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     let generalElementHighlight: Color
     let quotientToConcentrationDefinitionHighlight: Color
     let quotientToEquilibriumConstantDefinitionHighlight: Color
+    let reactionDefinitionHighlight: Color
 
     let showEquationTerms: Bool
     let formatElementName: (String) -> String
@@ -103,6 +104,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
                     highlightReverseArrow: highlightReverseReactionArrow
                 )
                 .minimumScaleFactor(0.5)
+                .colorMultiply(reactionDefinitionHighlight)
             }
 
             Spacer()
@@ -118,9 +120,10 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
                 alignment: .topTrailing
             )
             .disabled(!isSelectingReaction)
+            .colorMultiply(generalElementHighlight)
         }
         .frame(width: settings.gridWidth, height: settings.reactionToggleHeight)
-        .colorMultiply(generalElementHighlight)
+
     }
 
     private var equation: some View {
@@ -267,6 +270,10 @@ extension RightStackView {
                 model.highlightedElements.colorMultiply(
                     for: .quotientToEquilibriumConstantDefinition
                 ),
+            reactionDefinitionHighlight:
+                model.highlightedElements.colorMultiply(
+                    for: .reactionDefinition
+                ),
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "[\($0)]" },
             isPressure: false,
@@ -301,6 +308,7 @@ extension RightStackView {
             quotientToEquilibriumConstantDefinitionHighlight: model.highlightedElements.colorMultiply(
                 for: .quotientToEquilibriumConstantDefinition
             ),
+            reactionDefinitionHighlight: model.highlightedElements.colorMultiply(for: .reactionDefinition),
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "P\($0.lowercased())" },
             isPressure: true,
