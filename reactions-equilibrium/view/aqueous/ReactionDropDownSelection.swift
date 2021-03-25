@@ -5,7 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
-struct AqueousReactionDropDownSelection<Reaction: ReactionDefinition>: View {
+struct ReactionDropDownSelection<Reaction: ReactionDefinition>: View {
 
     @Binding var isToggled: Bool
     @Binding var selection: Reaction
@@ -31,7 +31,7 @@ struct AqueousReactionDropDownSelection<Reaction: ReactionDefinition>: View {
 
 struct AqueousReactionDropDownSelection_Previews: PreviewProvider {
     static var previews: some View {
-        AqueousReactionDropDownSelection(
+        ReactionDropDownSelection(
             isToggled: .constant(true),
             selection: .constant(.A),
             options: AqueousReactionType.allCases,

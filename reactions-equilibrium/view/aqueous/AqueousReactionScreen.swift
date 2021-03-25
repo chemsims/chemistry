@@ -108,7 +108,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             }
 
             Spacer()
-            AqueousReactionDropDownSelection(
+            ReactionDropDownSelection(
                 isToggled: $reactionSelectionIsToggled,
                 selection: $selectedReaction,
                 options: reactions,
@@ -120,10 +120,10 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
                 alignment: .topTrailing
             )
             .disabled(!isSelectingReaction)
+            .opacity(isSelectingReaction ? 1 : 0.6)
             .colorMultiply(generalElementHighlight)
         }
         .frame(width: settings.gridWidth, height: settings.reactionToggleHeight)
-
     }
 
     private var equation: some View {

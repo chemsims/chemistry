@@ -220,7 +220,7 @@
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
 		57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */; };
 		57ABDC3925EBF9300078A82B /* AqueousReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */; };
-		57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3E25EBFA230078A82B /* AqueousReactionDropDownSelection.swift */; };
+		57ABDC3F25EBFA230078A82B /* ReactionDropDownSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */; };
 		57ABDC4625EC03E10078A82B /* AqueousStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC4525EC03E10078A82B /* AqueousStatements.swift */; };
 		57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */; };
 		57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */; };
@@ -635,7 +635,7 @@
 		57AA05E62562F3750080C538 /* SliderIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderIndicator.swift; sourceTree = "<group>"; };
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
 		57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionType.swift; sourceTree = "<group>"; };
-		57ABDC3E25EBFA230078A82B /* AqueousReactionDropDownSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionDropDownSelection.swift; sourceTree = "<group>"; };
+		57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDropDownSelection.swift; sourceTree = "<group>"; };
 		57ABDC4525EC03E10078A82B /* AqueousStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousStatements.swift; sourceTree = "<group>"; };
 		57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
@@ -1905,7 +1905,7 @@
 			isa = PBXGroup;
 			children = (
 				57DDAC1925E4FD8100B535A7 /* AqueousReactionScreen.swift */,
-				57ABDC3E25EBFA230078A82B /* AqueousReactionDropDownSelection.swift */,
+				57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */,
 			);
 			path = aqueous;
 			sourceTree = "<group>";
@@ -2606,7 +2606,7 @@
 				57686B0C26027BAE005BD328 /* GaseousReactionSettings.swift in Sources */,
 				57686A9D2600D0F3005BD328 /* GaseousScreenElement.swift in Sources */,
 				57E6A52A25FDFA5C00CC3B17 /* ShakeContainerViewModel.swift in Sources */,
-				57ABDC3F25EBFA230078A82B /* AqueousReactionDropDownSelection.swift in Sources */,
+				57ABDC3F25EBFA230078A82B /* ReactionDropDownSelection.swift in Sources */,
 				576A41FD25F77B9F00047618 /* AqueousScreenLayoutSettings.swift in Sources */,
 				572BCF212603614000CE3FE0 /* ReactionComponentsWrapper.swift in Sources */,
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
