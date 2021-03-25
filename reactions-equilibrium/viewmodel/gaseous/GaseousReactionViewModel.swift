@@ -117,6 +117,7 @@ class GaseousReactionViewModel: ObservableObject {
             return
         }
         objectWillChange.send()
+        highlightedElements.clear()
         componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 1)
     }
 

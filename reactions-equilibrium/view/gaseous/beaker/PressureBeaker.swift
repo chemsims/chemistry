@@ -17,6 +17,7 @@ struct PressureBeaker: View {
                 beaker
                 burner
             }
+            .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
         }
         .frame(width: settings.width, alignment: .trailing)
     }
@@ -40,6 +41,13 @@ struct PressureBeaker: View {
             .offset(x: settings.switchXOffset)
         }
         .disabled(model.inputState != .addReactants)
+        .background(
+            Color
+                .white
+                .padding(-5)
+                .offset(x: settings.pumpXOffset)
+        )
+        .colorMultiply(model.highlightedElements.colorMultiply(for: .pump))
     }
 
     private var beaker: some View {
@@ -187,8 +195,15 @@ struct PressureBeaker_Previews: PreviewProvider {
         GeometryReader { geo in
             PressureBeaker(
                 model: GaseousReactionViewModel(),
-                settings: PressureBeakerSettings(width: geo.size.width)
+                settings: PressureBeakerSettings(
+                    width: GaseousReactionScreenSettings(
+                        geometry: geo
+                    ).pressureBeakerSettings.width
+                )
             )
+            .padding(50)
         }
+        .previewLayout(.iPhone12ProMaxLandscape)
+        .background(Color.gray)
     }
 }

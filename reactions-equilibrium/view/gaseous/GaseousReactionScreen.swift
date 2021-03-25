@@ -66,7 +66,6 @@ private struct LeftStack: View {
                 model: model,
                 settings: settings.pressureBeakerSettings
             )
-            .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
         }
 
     }

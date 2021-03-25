@@ -137,7 +137,7 @@ private class GaseousAddProducts: GaseousScreenState {
             reaction: model.selectedReaction
         )
         model.inputState = .addReactants
-        model.highlightedElements.clear()
+        model.highlightedElements.elements = [.pump]
         model.showConcentrationLines = true
     }
 

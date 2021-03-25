@@ -39,7 +39,7 @@ struct GaseousStatements {
             into \(moles.productC) and \(moles.productD).
             """,
             "Add reactants to make it start.",
-            "*Use the pump*"
+            "*Use the pump.*"
         ]
     }
 
