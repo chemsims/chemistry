@@ -244,6 +244,7 @@
 		57B3B962260B4BF500EB9B47 /* NavigationIconRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B961260B4BF500EB9B47 /* NavigationIconRows.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
 		57BB21EA260BA62600250FB3 /* ReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */; };
+		57BB21F8260BA66B00250FB3 /* GaseousReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */; };
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */; };
 		57BCB4C425F3752800E50923 /* ReactionConvergenceSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */; };
@@ -658,6 +659,7 @@
 		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
 		57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinition.swift; sourceTree = "<group>"; };
+		57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousReactionType.swift; sourceTree = "<group>"; };
 		57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonLinearEquationSolver.swift; sourceTree = "<group>"; };
 		57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolver.swift; sourceTree = "<group>"; };
 		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
@@ -1807,6 +1809,7 @@
 			children = (
 				57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */,
 				57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */,
+				57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */,
 			);
 			path = "reaction-definitions";
 			sourceTree = "<group>";
@@ -2557,6 +2560,7 @@
 				5736DC1225F4A91F003FD2B4 /* ReactionDirection.swift in Sources */,
 				57B3B954260B4A0900EB9B47 /* FeedbackAndShareSettings.swift in Sources */,
 				57DDAD2425E5706A00B535A7 /* MultiConcentrationPlot.swift in Sources */,
+				57BB21F8260BA66B00250FB3 /* GaseousReactionType.swift in Sources */,
 				576A41DB25F773D900047618 /* AqueousBeakerView.swift in Sources */,
 				57D2F2C925EA265900AEE0D8 /* QuotientPlot.swift in Sources */,
 				575A88B625E43CD500AEE448 /* AppDelegate.swift in Sources */,

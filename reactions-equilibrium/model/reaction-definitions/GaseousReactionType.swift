@@ -4,7 +4,7 @@
 
 import CoreGraphics
 
-enum AqueousReactionType: Int, ReactionDefinition, CaseIterable {
+enum GaseousReactionType: Int, ReactionDefinition, CaseIterable {
     case A, B, C
 
     var id: Int {
@@ -13,9 +13,9 @@ enum AqueousReactionType: Int, ReactionDefinition, CaseIterable {
 
     var equilibriumConstant: CGFloat {
         switch self {
-        case .A: return 0.75
+        case .A: return 10000
         case .B: return 10
-        case .C: return 2
+        case .C: return 50
         }
     }
 
@@ -23,24 +23,24 @@ enum AqueousReactionType: Int, ReactionDefinition, CaseIterable {
         switch self {
         case .A:
             return BalancedReactionCoefficients(
-                reactantA: 1,
-                reactantB: 1,
+                reactantA: 3,
+                reactantB: 4,
                 productC: 1,
-                productD: 1
+                productD: 2
             )
         case .B:
             return BalancedReactionCoefficients(
-                reactantA: 3,
-                reactantB: 2,
-                productC: 1,
+                reactantA: 1,
+                reactantB: 3,
+                productC: 3,
                 productD: 2
             )
         case .C:
             return BalancedReactionCoefficients(
-                reactantA: 2,
-                reactantB: 3,
+                reactantA: 4,
+                reactantB: 2,
                 productC: 1,
-                productD: 4
+                productD: 2
             )
         }
     }

@@ -8,7 +8,7 @@ import ReactionsCore
 struct ReactionConvergenceSolver {
 
     static let tolerance: CGFloat = 0.0001
-    private static let maxIterations = 30
+    private static let maxIterations = 50
 
     /// Returns the unit change for which the equilibrium quotient will equal the equilibrium constant at the end of the reaction
     static func findUnitChangeFor(

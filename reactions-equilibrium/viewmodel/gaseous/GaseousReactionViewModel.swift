@@ -8,7 +8,7 @@ import ReactionsCore
 class GaseousReactionViewModel: ObservableObject {
 
     init() {
-        let initialReaction = AqueousReactionType.A
+        let initialReaction = GaseousReactionType.A
         let initialRows = GaseousReactionSettings.initialRows
         self.rows = CGFloat(initialRows)
         self.selectedReaction = initialReaction
@@ -53,7 +53,7 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var showConcentrationLines = false
     @Published var showQuotientLine = false
 
-    @Published var selectedReaction: AqueousReactionType {
+    @Published var selectedReaction: GaseousReactionType {
         didSet {
             componentWrapper.coefficients = selectedReaction.coefficients
             componentWrapper.equilibriumConstant = selectedReaction.equilibriumConstant

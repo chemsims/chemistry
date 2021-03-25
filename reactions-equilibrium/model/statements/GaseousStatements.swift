@@ -31,7 +31,7 @@ struct GaseousStatements {
         """
     ]
 
-    static func instructToAddReactants(reaction: AqueousReactionType) -> [TextLine] {
+    static func instructToAddReactants(reaction: GaseousReactionType) -> [TextLine] {
         let moles = reaction.coefficients.molesDisplay.map { "\($0)*(g)*"}
         return [
             """
@@ -82,7 +82,7 @@ struct GaseousStatements {
         """
     ]
 
-    static func instructToChangeVolume(selected: AqueousReactionType) -> [TextLine] {
+    static func instructToChangeVolume(selected: GaseousReactionType) -> [TextLine] {
         let coeffs = selected.coefficients
         let reactantSum = coeffs.reactantA + coeffs.reactantB
         let productSum = coeffs.productC + coeffs.productD
@@ -104,7 +104,7 @@ struct GaseousStatements {
     ]
 
     static func prePressureReaction(
-        selected: AqueousReactionType
+        selected: GaseousReactionType
     ) -> [TextLine] {
         let moles = selected.coefficients.molesDisplay
         return [

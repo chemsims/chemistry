@@ -46,7 +46,7 @@ private struct GaseousReactionScreenWithSettings: View {
             RightStackView(
                 model: model,
                 selectedReaction: $model.selectedReaction,
-                reactions: AqueousReactionType.allCases,
+                reactions: GaseousReactionType.allCases,
                 reactionSelectionIsToggled: $model.reactionSelectionIsToggled,
                 settings: settings.common
             )
