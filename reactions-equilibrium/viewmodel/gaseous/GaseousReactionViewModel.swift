@@ -39,6 +39,7 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var rows: CGFloat {
         didSet {
             objectWillChange.send()
+            highlightedElements.clear()
             componentWrapper.beakerRows = GridUtil.availableRows(for: rows)
         }
     }

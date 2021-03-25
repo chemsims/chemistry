@@ -8,5 +8,7 @@ enum GaseousScreenElement {
     case chartEquilibrium,
          quotientToConcentrationDefinition,
          quotientToEquilibriumConstantDefinition,
-         pump
+         pump,
+         pressureSlider,
+         tempSlider
 }

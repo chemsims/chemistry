@@ -16,6 +16,10 @@ public struct AdjustableAirBeaker: View {
     @Binding var rows: CGFloat
     let disabled: Bool
 
+    let generalColorMultiply: Color
+    let sliderColorMultiply: Color
+    let highlightSlider: Bool
+
     let settings: AdjustableAirBeakerSettings
 
     public init(
@@ -27,6 +31,9 @@ public struct AdjustableAirBeaker: View {
         dynamicMinRows: Int?,
         rows: Binding<CGFloat>,
         disabled: Bool,
+        generalColorMultiply: Color,
+        sliderColorMultiply: Color,
+        highlightSlider: Bool,
         settings: AdjustableAirBeakerSettings
     ) {
         self.molecules = molecules
@@ -37,6 +44,9 @@ public struct AdjustableAirBeaker: View {
         self.dynamicMinRows = dynamicMinRows
         self._rows = rows
         self.disabled = disabled
+        self.generalColorMultiply = generalColorMultiply
+        self.sliderColorMultiply = sliderColorMultiply
+        self.highlightSlider = highlightSlider
         self.settings = settings
     }
 
@@ -51,6 +61,9 @@ public struct AdjustableAirBeaker: View {
                 dynamicMinRows: dynamicMinRows.map(CGFloat.init),
                 rows: $rows,
                 disabled: disabled,
+                generalColorMultiply: generalColorMultiply,
+                sliderColorMultiply: sliderColorMultiply,
+                highlightSlider: highlightSlider,
                 width: geo.size.width,
                 height: geo.size.height,
                 settings: settings
@@ -71,6 +84,10 @@ private struct AdjustableAirBeakerWithHeight: View {
     @Binding var rows: CGFloat
     let disabled: Bool
 
+    let generalColorMultiply: Color
+    let sliderColorMultiply: Color
+    let highlightSlider: Bool
+
     let width: CGFloat
     let height: CGFloat
 
@@ -82,13 +99,23 @@ private struct AdjustableAirBeakerWithHeight: View {
                 .frame(width: width)
 
             slider
+                .background(
+                    Color
+                        .white
+                        .padding(-0.2 * settings.sliderWidth)
+                        .opacity(highlightSlider ? 1 : 0)
+                )
                 .frame(
                     width: settings.sliderWidth,
                     height: sliderHeight
                 )
                 .position(x: settings.sliderWidth / 2, y: sliderYPos)
+                .colorMultiply(sliderColorMultiply)
 
-            beaker.frame(width: settings.beakerWidth)
+
+            beaker
+                .frame(width: settings.beakerWidth)
+                .colorMultiply(generalColorMultiply)
         }
         .frame(width: width)
     }
@@ -188,6 +215,9 @@ struct AdjustableAirBeaker_Previews: PreviewProvider {
                 dynamicMinRows: 6,
                 rows: $rows,
                 disabled: true,
+                generalColorMultiply: .red,
+                sliderColorMultiply: .blue,
+                highlightSlider: false,
                 settings: AdjustableAirBeakerSettings(
                     beakerWidth: 200,
                     sliderWidth: 20

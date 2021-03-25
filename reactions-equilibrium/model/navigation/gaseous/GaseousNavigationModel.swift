@@ -281,6 +281,7 @@ private class GaseousSetVolume: GaseousScreenState {
 
     private func doApply(on model: GaseousReactionViewModel, setComponents: Bool) {
         model.statement = GaseousStatements.instructToChangeVolume(selected: model.selectedReaction)
+        model.highlightedElements.elements = [.pressureSlider]
         let timing = GaseousReactionSettings.pressureTiming
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .setBeakerVolume
@@ -295,6 +296,7 @@ private class GaseousSetVolume: GaseousScreenState {
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
+        model.highlightedElements.clear()
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
             model.rows = CGFloat(GaseousReactionSettings.initialRows)
@@ -309,6 +311,7 @@ private class GaseousExplainChangeInVolume: GaseousScreenState {
     override func apply(on model: GaseousReactionViewModel) {
         model.statement = GaseousStatements.explainReducedVolume
         model.inputState = .none
+        model.highlightedElements.clear()
     }
 }
 

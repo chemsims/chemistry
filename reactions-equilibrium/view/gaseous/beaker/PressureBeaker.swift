@@ -17,7 +17,6 @@ struct PressureBeaker: View {
                 beaker
                 burner
             }
-            .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
         }
         .frame(width: settings.width, alignment: .trailing)
     }
@@ -34,7 +33,6 @@ struct PressureBeaker: View {
                 fontColor: .white,
                 leftSettings: AqueousMoleculeReactant.A.switchSettings,
                 rightSettings:  AqueousMoleculeReactant.B.switchSettings
-
             )
             .font(.system(size: settings.switchFontSize))
             .frame(width: settings.switchWidth, height: settings.switchHeight)
@@ -60,6 +58,9 @@ struct PressureBeaker: View {
             dynamicMinRows: model.componentWrapper.minBeakerRows,
             rows: $model.rows,
             disabled: model.inputState != .setBeakerVolume,
+            generalColorMultiply: model.highlightedElements.colorMultiply(for: nil),
+            sliderColorMultiply: model.highlightedElements.colorMultiply(for: .pressureSlider),
+            highlightSlider: model.highlightedElements.highlight(.pressureSlider),
             settings: AdjustableAirBeakerSettings(
                 beakerWidth: settings.beakerWidth,
                 sliderWidth: settings.sliderWidth
@@ -204,6 +205,5 @@ struct PressureBeaker_Previews: PreviewProvider {
             .padding(50)
         }
         .previewLayout(.iPhone12ProMaxLandscape)
-        .background(Color.gray)
     }
 }
