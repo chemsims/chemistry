@@ -49,6 +49,7 @@ struct PressureBeaker: View {
             currentTime: model.currentTime,
             minRows: GaseousReactionSettings.minRows,
             maxRows: GaseousReactionSettings.maxRows,
+            dynamicMinRows: model.componentWrapper.minBeakerRows,
             rows: $model.rows,
             disabled: model.inputState != .setBeakerVolume,
             settings: AdjustableAirBeakerSettings(

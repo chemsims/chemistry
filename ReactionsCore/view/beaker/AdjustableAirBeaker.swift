@@ -12,6 +12,7 @@ public struct AdjustableAirBeaker: View {
     let currentTime: CGFloat
     let minRows: Int
     let maxRows: Int
+    let dynamicMinRows: Int?
     @Binding var rows: CGFloat
     let disabled: Bool
 
@@ -23,6 +24,7 @@ public struct AdjustableAirBeaker: View {
         currentTime: CGFloat,
         minRows: Int,
         maxRows: Int,
+        dynamicMinRows: Int?,
         rows: Binding<CGFloat>,
         disabled: Bool,
         settings: AdjustableAirBeakerSettings
@@ -32,6 +34,7 @@ public struct AdjustableAirBeaker: View {
         self.currentTime = currentTime
         self.minRows = minRows
         self.maxRows = maxRows
+        self.dynamicMinRows = dynamicMinRows
         self._rows = rows
         self.disabled = disabled
         self.settings = settings
@@ -45,6 +48,7 @@ public struct AdjustableAirBeaker: View {
                 currentTime: currentTime,
                 minRows: CGFloat(minRows),
                 maxRows: CGFloat(maxRows),
+                dynamicMinRows: dynamicMinRows.map(CGFloat.init),
                 rows: $rows,
                 disabled: disabled,
                 width: geo.size.width,
@@ -63,6 +67,7 @@ private struct AdjustableAirBeakerWithHeight: View {
     let currentTime: CGFloat
     let minRows: CGFloat
     let maxRows: CGFloat
+    let dynamicMinRows: CGFloat?
     @Binding var rows: CGFloat
     let disabled: Bool
 
@@ -120,7 +125,7 @@ private struct AdjustableAirBeakerWithHeight: View {
             maxValuePosition: relativeSliderPosition(for: maxRows),
             minValue: minRows,
             maxValue: maxRows
-        )
+        ).updateMin(value: dynamicMinRows ?? minRows)
     }
 
     private var sliderHeight: CGFloat {
@@ -180,6 +185,7 @@ struct AdjustableAirBeaker_Previews: PreviewProvider {
                 currentTime: 0,
                 minRows: 5,
                 maxRows: 15,
+                dynamicMinRows: 6,
                 rows: $rows,
                 disabled: true,
                 settings: AdjustableAirBeakerSettings(
