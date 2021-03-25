@@ -97,6 +97,7 @@ struct QuotientPlot: View {
                 x: settings.size / 2,
                 y: asymptoteYPosition
             )
+            .zIndex(1)
     }
 
     private var asymptoteYLabelOffset: CGFloat {
