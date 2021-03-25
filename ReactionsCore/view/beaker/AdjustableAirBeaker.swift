@@ -41,7 +41,7 @@ public struct AdjustableAirBeaker: View {
         self.currentTime = currentTime
         self.minRows = minRows
         self.maxRows = maxRows
-        self.dynamicMinRows = dynamicMinRows
+        self.dynamicMinRows = dynamicMinRows.map { max(minRows, $0) }
         self._rows = rows
         self.disabled = disabled
         self.generalColorMultiply = generalColorMultiply
