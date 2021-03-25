@@ -74,9 +74,11 @@ struct PressureBeaker: View {
             temp: $model.extraHeatFactor,
             disabled: model.inputState != .setTemperature,
             useHaptics: true,
-            highlightSlider: false,
+            highlightSlider: model.highlightedElements.highlight(.tempSlider),
             showFlame: model.showFlame,
             sliderAccessibilityValue: nil, // TODO
+            generalColorMultiply: model.highlightedElements.colorMultiply(for: nil),
+            sliderColorMultiply: model.highlightedElements.colorMultiply(for: .tempSlider),
             settings: AdjustableBeakerBurnerSettings(
                 standWidth: settings.standWidth,
                 handleHeight: settings.sliderWidth,

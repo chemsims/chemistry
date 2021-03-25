@@ -14,6 +14,10 @@ public struct AdjustableBeakerBurner: View {
     let highlightSlider: Bool
     let showFlame: Bool
     let sliderAccessibilityValue: String?
+
+    let generalColorMultiply: Color
+    let sliderColorMultiply: Color
+
     let settings: AdjustableBeakerBurnerSettings
 
     public init(
@@ -23,6 +27,8 @@ public struct AdjustableBeakerBurner: View {
         highlightSlider: Bool,
         showFlame: Bool,
         sliderAccessibilityValue: String?,
+        generalColorMultiply: Color,
+        sliderColorMultiply: Color,
         settings: AdjustableBeakerBurnerSettings
     ) {
         self._temp = temp
@@ -31,6 +37,8 @@ public struct AdjustableBeakerBurner: View {
         self.highlightSlider = highlightSlider
         self.showFlame = showFlame
         self.sliderAccessibilityValue = sliderAccessibilityValue
+        self.generalColorMultiply = generalColorMultiply
+        self.sliderColorMultiply = sliderColorMultiply
         self.settings = settings
     }
 
@@ -41,6 +49,7 @@ public struct AdjustableBeakerBurner: View {
                 showFlame: showFlame,
                 settings: settings.burnerSettings
             )
+            .colorMultiply(generalColorMultiply)
 
             slider
         }
@@ -62,14 +71,15 @@ public struct AdjustableBeakerBurner: View {
             height: settings.sliderSettings.handleWidth
         )
         .disabled(disabled)
-        .padding(.top, settings.sliderTopPadding)
         .background(
             Color.white
-                .padding(.bottom, -settings.sliderTopPadding)
+                .padding(-settings.sliderTopPadding)
                 .opacity(highlightSlider ? 1 : 0)
         )
+        .padding(.top, settings.sliderTopPadding)
         .accessibility(label: Text("Input for temperature in Kelvin"))
         .accessibility(value: Text(sliderAccessibilityValue ?? ""))
+        .colorMultiply(sliderColorMultiply)
 
     }
 }
@@ -118,6 +128,8 @@ struct AdjustableBeakerBurner_Previews: PreviewProvider {
             highlightSlider: false,
             showFlame: true,
             sliderAccessibilityValue: "",
+            generalColorMultiply: .white,
+            sliderColorMultiply: .white,
             settings: AdjustableBeakerBurnerSettings(
                 standWidth: 300,
                 handleHeight: 30,

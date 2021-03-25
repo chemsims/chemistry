@@ -370,6 +370,7 @@ private class GaseousSetTemperature: GaseousScreenState {
 
     private func doApply(on model: GaseousReactionViewModel, setComponents: Bool) {
         model.statement = GaseousStatements.instructToSetTemp
+        model.highlightedElements.elements = [.tempSlider]
         let timing = GaseousReactionSettings.heatTiming
         withAnimation(.easeOut(duration: 0.5)) {
             model.showFlame = true
@@ -385,6 +386,7 @@ private class GaseousSetTemperature: GaseousScreenState {
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
+        model.highlightedElements.clear()
         withAnimation(.easeOut(duration: 0.5)) {
             model.showFlame = false
             model.extraHeatFactor = 0

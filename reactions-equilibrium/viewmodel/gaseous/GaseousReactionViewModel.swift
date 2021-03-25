@@ -70,6 +70,7 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var showFlame = false
     @Published var extraHeatFactor: CGFloat = 0 {
         didSet {
+            highlightedElements.clear()
             componentWrapper.equilibriumConstant = equilibriumQuotient
         }
     }
