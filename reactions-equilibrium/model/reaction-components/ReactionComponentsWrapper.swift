@@ -38,6 +38,9 @@ class ReactionComponentsWrapper {
     private(set) var molecules: MoleculeValue<[GridCoordinate]>
     private var gridMolecules: MoleculeValue<[GridCoordinate]>
 
+    private var numMoleculesAtStart: Int
+    private var numMoleculesAtEnd: Int
+
     init(
         coefficients: BalancedReactionCoefficients,
         equilibriumConstant: CGFloat,
@@ -65,6 +68,8 @@ class ReactionComponentsWrapper {
 
         self.molecules = emptyCoords
         self.gridMolecules = emptyCoords
+        self.numMoleculesAtStart = 0
+        self.numMoleculesAtEnd = 0
         self.components = ReactionComponents(
             initialBeakerMolecules: emptyCoords,
             coefficients: coefficients,
@@ -102,10 +107,15 @@ class ReactionComponentsWrapper {
             at: previous.components.equation.equilibriumTime
         )
         self.molecules = filteredMolecules
+
+        self.numMoleculesAtStart = filteredMolecules.map(\.count).all.reduce(0) { $0 + $1 }
+        self.numMoleculesAtEnd = filteredMolecules.map(\.count).all.reduce(0) { $0 + $1 }
+
         let previousGridMolecules = previous.components.equilibriumGrid.map {
             $0.coords(at: previous.equilibriumTime)
         }
         self.gridMolecules = previousGridMolecules
+
         self.components = ReactionComponents(
             initialBeakerMolecules: filteredMolecules,
             coefficients: previous.coefficients,
@@ -120,6 +130,19 @@ class ReactionComponentsWrapper {
             previousMolecules: filteredMolecules,
             rowsHaveChangeFromPrevious: false
         )
+    }
+
+    var canDecreaseVolume: Bool {
+        let coords = molecules.map(\.count).all.reduce(0) { $0 + $1 }
+        let availableIfRowsDecreases = (beakerRows - 1) * beakerCols
+        return availableIfRowsDecreases >= coords
+    }
+
+    var minBeakerRows: Int {
+        let numMoleculesNeeded = max(numMoleculesAtStart, numMoleculesAtEnd)
+        let value = numMoleculesNeeded / beakerCols
+        let extra = numMoleculesNeeded % beakerCols == 0 ? 0 : 1
+        return value + extra
     }
 
     func reset() {
@@ -201,6 +224,15 @@ class ReactionComponentsWrapper {
             previousMolecules: components.previousMolecules,
             rowsHaveChangeFromPrevious: previous.map { $0.beakerRows != beakerRows }
         )
+
+        numMoleculesAtStart = molecules.map(\.count).all.reduce(0) { $0 + $1 }
+
+        let finalCoords = Self.consolidate(
+            molecules: components.beakerMolecules,
+            at: components.equilibriumTime
+        ).map(\.count)
+
+        numMoleculesAtEnd = finalCoords.all.reduce(0) { $0 + $1 }
     }
 
     private var beakerGridSize: Int {
@@ -334,3 +366,11 @@ struct LabelledAnimatingBeakerMolecules {
     let animatingMolecules: AnimatingBeakerMolecules
 }
 
+extension LabelledAnimatingBeakerMolecules {
+    var fractioned: FractionedCoordinates {
+        FractionedCoordinates(
+            coordinates: animatingMolecules.molecules.coords,
+            fractionToDraw: animatingMolecules.fractionToDraw
+        )
+    }
+}

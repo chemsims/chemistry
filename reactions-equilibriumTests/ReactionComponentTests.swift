@@ -373,6 +373,56 @@ class ReactionComponentTests: XCTestCase {
         }
     }
 
+    func testBeakerRowLimitsDoesNotLoseMoleculesAtStartOfReaction() {
+        let fwdModel = ReactionComponentsWrapper(
+            coefficients: .unit,
+            equilibriumConstant: 1,
+            beakerCols: 10, beakerRows: 10,
+            maxBeakerRows: 10,
+            dynamicGridCols: 10,
+            dynamicGridRows: 10,
+            startTime: 0,
+            equilibriumTime: 10,
+            maxC: 1
+        )
+        fwdModel.increment(molecule: .A, count: 40)
+        fwdModel.increment(molecule: .A, count: 40)
+
+        let reverseModel = ReactionComponentsWrapper(previous: fwdModel, startTime: 11, equilibriumTime: 20)
+        XCTAssertEqual(reverseModel.minBeakerRows, 8)
+        XCTAssert(reverseModel.canDecreaseVolume)
+
+        reverseModel.increment(molecule: .C, count: 20)
+        XCTAssertEqual(reverseModel.minBeakerRows, 10)
+    }
+
+    func testBeakerRowLimitsDoesNotLoseMoleculesAtEndOfReaction() {
+        let model = ReactionComponentsWrapper(
+            coefficients: BalancedReactionCoefficients(
+                reactantA: 1,
+                reactantB: 1,
+                productC: 2,
+                productD: 2
+            ),
+            equilibriumConstant: 1,
+            beakerCols: 10,
+            beakerRows: 10,
+            maxBeakerRows: 10,
+            dynamicGridCols: 10,
+            dynamicGridRows: 10,
+            startTime: 0,
+            equilibriumTime: 10,
+            maxC: 1
+        )
+        model.increment(molecule: .A, count: 20)
+        model.increment(molecule: .B, count: 20)
+
+        let finalConcentration = model.components.equation.equilibriumConcentrations.all.reduce(0) { $0 + $1 }
+        XCTAssertEqual(finalConcentration, 0.662, accuracy: 0.001)
+
+        XCTAssertEqual(model.minBeakerRows, 7)
+    }
+
     private func labelledAnimatingMolecules(
         element: AqueousMolecule,
         coords: [GridCoordinate],
