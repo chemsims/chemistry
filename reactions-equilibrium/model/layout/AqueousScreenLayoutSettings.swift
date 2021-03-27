@@ -119,7 +119,7 @@ extension AqueousScreenLayoutSettings {
     }
 
     var equationHeight: CGFloat {
-        0.3 * topRightStackHeight
+        0.32 * topRightStackHeight
     }
 
     var equationWidth: CGFloat {
