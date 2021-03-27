@@ -78,6 +78,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     let formatElementName: (String) -> String
 
     let isPressure: Bool
+    let showHeat: Bool
     let settings: AqueousScreenLayoutSettings
 
     @State private var showGrid = false
@@ -101,8 +102,10 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
                 ReactionDefinitionView<Reaction>(
                     type: selectedReaction,
                     highlightTopArrow: highlightForwardReactionArrow,
-                    highlightReverseArrow: highlightReverseReactionArrow
+                    highlightReverseArrow: highlightReverseReactionArrow,
+                    showHeat: showHeat
                 )
+                .font(.system(size: settings.reactionDefintionFont))
                 .minimumScaleFactor(0.5)
                 .colorMultiply(reactionDefinitionHighlight)
             }
@@ -277,6 +280,7 @@ extension RightStackView {
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "[\($0)]" },
             isPressure: false,
+            showHeat: false,
             settings: settings
         )
     }
@@ -312,6 +316,7 @@ extension RightStackView {
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "P\($0.lowercased())" },
             isPressure: true,
+            showHeat: true,
             settings: settings
         )
     }

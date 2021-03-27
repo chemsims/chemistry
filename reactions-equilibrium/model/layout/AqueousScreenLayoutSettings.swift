@@ -134,6 +134,10 @@ extension AqueousScreenLayoutSettings {
         0.09 * topRightStackHeight
     }
 
+    var reactionDefintionFont: CGFloat {
+        0.7 * reactionToggleHeight
+    }
+
     var topRightStackHeight: CGFloat {
         height - beakyTotalHeight
     }

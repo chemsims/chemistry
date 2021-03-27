@@ -9,17 +9,40 @@ struct ReactionDefinitionView<Reaction: ReactionDefinition>: View {
     let type: Reaction
     let highlightTopArrow: Bool
     let highlightReverseArrow: Bool
+    let showHeat: Bool
 
     var body: some View {
         HStack(spacing: 5) {
+            if showHeat {
+                Text("Heat +")
+                    .foregroundColor(.orangeAccent)
+            }
+
             Text(type.reactantDisplay)
+            arrow
+            Text(type.productDisplay)
+        }
+        .background(Color.white.padding(-10))
+    }
+
+    private var arrow: some View {
+        VStack(spacing: 3) {
+            if showHeat {
+                deltaH(positive: true)
+            }
             DoubleSidedArrow(
                 topHighlight: highlightTopArrow ? .orangeAccent : nil,
                 reverseHighlight: highlightReverseArrow ? .orangeAccent : nil
             )
-            Text(type.productDisplay)
+            if showHeat {
+                deltaH(positive: false)
+            }
         }
-        .background(Color.white.padding(-10))
+    }
+
+    private func deltaH(positive: Bool) -> some View {
+        Text("\(positive ? "" : "-")ΔH")
+            .foregroundColor(.orangeAccent)
     }
 }
 
@@ -28,7 +51,8 @@ struct AqueousReactionTypeView_Previews: PreviewProvider {
         ReactionDefinitionView(
             type: AqueousReactionType.A,
             highlightTopArrow: false,
-            highlightReverseArrow: true
+            highlightReverseArrow: true,
+            showHeat: true
         )
     }
 }
