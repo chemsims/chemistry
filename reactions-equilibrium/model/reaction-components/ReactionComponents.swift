@@ -145,12 +145,18 @@ class ReactionComponents {
         )
     }()
 
-    private(set) lazy var maxQuotient: CGFloat =
-        max(
+    private(set) lazy var maxQuotient: CGFloat = {
+        let currentMax = max(
             quotientEquation.getY(at: startTime),
             quotientEquation.getY(at: equilibriumTime)
         )
-
+        if let previous = previousEquation {
+            let prevQ = ReactionQuotientEquation(equations: previous)
+            let prevMax = max(prevQ.getY(at: previous.startTime), prevQ.getY(at: previous.equilibriumTime))
+            return max(prevMax, currentMax)
+        }
+        return currentMax
+    }()
 
     private lazy var balancedMoleculeValues: MoleculeValue<BalancedGridElement?> = {
         let reactants = equation.isForward ? gridBalancer?.decreasingBalanced : gridBalancer?.increasingBalanced
