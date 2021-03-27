@@ -43,20 +43,29 @@ struct GaseousStatements {
         ]
     }
 
-    static let forwardReactionIsRunning: [TextLine] = [
-        """
-        Watch how reactants are being transformed into products. This will continue until \
-        the equilibrium state is reached, meaning, *until Q=Kp, as the products to reactants \
-        ratio is still lower than it would be at equilibrium.*
-        """
-    ]
+    static func reactionRunning(direction: ReactionDirection) -> [TextLine] {
+        let reactant = direction == .forward ? "reactants" : "products"
+        let product = direction == .forward ? "products" : "reactants"
+        let lower = direction == .forward ? "lower" : "higher"
+        return [
+            """
+            Watch how \(reactant) are being transformed into \(product). This will continue until \
+            the equilibrium state is reached, meaning, *until Q=Kp, as the products to reactants \
+            ratio is still \(lower) than it would be at equilibrium.*
+            """
+        ]
+    }
 
-    static let midForwardReaction: [TextLine] = [
-        """
-        Reactants are being converted into products because Q is still lower than Kp (*Q < Kp)*.
-        """,
-        "But you can see in the graphs we're almost there!"
-    ]
+    static func midReaction(direction: ReactionDirection) -> [TextLine] {
+        let lower = direction == .forward ? "lower" : "higher"
+        let sign = direction == .forward ? "<" : ">"
+        return [
+            """
+            Reactants are being converted into products because Q is still \(lower) than Kp (*Q \(sign) Kp)*.
+            """,
+            "But you can see in the graphs we're almost there!"
+        ]
+    }
 
     static let forwardEquilibriumReached: [TextLine] = [
         """
@@ -95,33 +104,41 @@ struct GaseousStatements {
         ]
     }
 
-    static let explainReducedVolume: [TextLine] = [
-        """
-        *Increased pressure*, decreases volume of the container, making the concentrations of \
-        the species higher. Since products have higher exponents, Q increases. *The system will \
-        consume moles to relieve pressure*.
-        """
-    ]
-
-    static func prePressureReaction(
-        selected: GaseousReactionType
-    ) -> [TextLine] {
-        let moles = selected.coefficients.molesDisplay
+    static func explainReducedVolume(productsHaveHigherExponents: Bool) -> [TextLine] {
+        let higherE = productsHaveHigherExponents ? "products" : "reactants"
+        let increases = productsHaveHigherExponents ? "increases" : "decreases"
         return [
             """
-            The reverse reaction is \(moles.productD) and \(moles.productC) transform into \
-            \(moles.reactantA) and \(moles.reactantB). As you raised the pressure, the system \
-            will *favor* this reaction, to be able to reach equilibrium.
+            *Increased pressure*, decreases volume of the container, making the concentration of \
+            the species higher. Since \(higherE) have higher exponents, Q \(increases). *The \
+            system will consume moles to relieve pressure.*
             """
         ]
     }
 
-    static var reverseReactionRunning: [TextLine] {
-        [
+    static func explainIncreasedVolume(productsHaveHigherExponents: Bool) -> [TextLine] {
+        let higherE = productsHaveHigherExponents ? "products" : "reactants"
+        let increase = productsHaveHigherExponents ? "decreases" : "increases"
+        return [
             """
-            Watch how products are being transformed into reactants. This will continue the \
-            equilibrium state is reached, meaning, *until Q=K, as the products to reactants \
-            ratio is still higher that it would be at equilibrium.*
+            *Decreased pressure*, increases volume of the container, making the concentration of \
+            the species lower. Since \(higherE) have higher exponents, Q \(increase). *The \
+            system will consume moles to relieve pressure.*
+            """
+        ]
+    }
+
+    static func prePressureReaction(
+        selected: GaseousReactionType,
+        pressureIncreased: Bool
+    ) -> [TextLine] {
+        let moles = selected.coefficients.molesDisplay
+        let raised = pressureIncreased ? "raised" : "reduced"
+        return [
+            """
+            The reverse reaction is \(moles.productD) and \(moles.productC) transform into \
+            \(moles.reactantA) and \(moles.reactantB). As you \(raised) the pressure, the system \
+            will *favor* this reaction, to be able to reach equilibrium.
             """
         ]
     }

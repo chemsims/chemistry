@@ -24,7 +24,6 @@ struct GaseousNavigationModel {
         ),
         GaseousAddProducts(),
         GaseousRunReaction(
-            statement: GaseousStatements.forwardReactionIsRunning,
             timing: GaseousReactionSettings.forwardTiming,
             isForward: true,
             revealQuotientLine: true
@@ -43,7 +42,6 @@ struct GaseousNavigationModel {
         GaseousExplainChangeInVolume(),
         GaseousPrePressureReaction(),
         GaseousRunReaction(
-            statement: GaseousStatements.forwardReactionIsRunning,
             timing: GaseousReactionSettings.pressureTiming,
             isForward: true
         ),
@@ -60,7 +58,6 @@ struct GaseousNavigationModel {
         ),
         GaseousSetTemperature(),
         GaseousRunReaction(
-            statement: GaseousStatements.forwardReactionIsRunning,
             timing: GaseousReactionSettings.heatTiming,
             isForward: true
         ),
@@ -151,25 +148,22 @@ private class GaseousAddProducts: GaseousScreenState {
 }
 
 private class GaseousRunReaction: GaseousScreenState {
-    let statement: [TextLine]
     let timing: GaseousReactionSettings.ReactionTiming
     let isForward: Bool
     let revealQuotientLine: Bool
 
     init(
-        statement: [TextLine],
         timing: GaseousReactionSettings.ReactionTiming,
         isForward: Bool,
         revealQuotientLine: Bool = false
     ) {
-        self.statement = statement
         self.timing = timing
         self.isForward = isForward
         self.revealQuotientLine = revealQuotientLine
     }
 
     override func apply(on model: GaseousReactionViewModel) {
-        model.statement = statement
+        model.statement = GaseousStatements.reactionRunning(direction: model.components.equation.direction)
         if revealQuotientLine {
             model.showQuotientLine = true
         }
@@ -211,7 +205,7 @@ private class GaseousRunReaction: GaseousScreenState {
         }
 
         return [
-            delayedState(GaseousStatements.midForwardReaction, []),
+            delayedState(GaseousStatements.midReaction(direction: .forward), []),
             delayedState(GaseousStatements.forwardEquilibriumReached, [.chartEquilibrium])
         ]
     }
@@ -309,7 +303,15 @@ private class GaseousSetVolume: GaseousScreenState {
 
 private class GaseousExplainChangeInVolume: GaseousScreenState {
     override func apply(on model: GaseousReactionViewModel) {
-        model.statement = GaseousStatements.explainReducedVolume
+        let coeffs = model.selectedReaction.coefficients
+        let productCoeffs = coeffs.productC + coeffs.productD
+        let reactantCoeffs = coeffs.reactantA + coeffs.reactantB
+        let productsHigher = productCoeffs > reactantCoeffs
+        if model.volumeHasDecreased {
+            model.statement = GaseousStatements.explainReducedVolume(productsHaveHigherExponents: productsHigher)
+        } else {
+            model.statement = GaseousStatements.explainIncreasedVolume(productsHaveHigherExponents: productsHigher)
+        }
         model.inputState = .none
         model.highlightedElements.clear()
     }
@@ -355,7 +357,10 @@ private class GaseousShiftChart: GaseousScreenState {
 
 private class GaseousPrePressureReaction: GaseousScreenState {
     override func apply(on model: GaseousReactionViewModel) {
-        model.statement = GaseousStatements.prePressureReaction(selected: model.selectedReaction)
+        model.statement = GaseousStatements.prePressureReaction(
+            selected: model.selectedReaction,
+            pressureIncreased: model.volumeHasDecreased
+        )
         model.highlightedElements.elements = [.reactionDefinition]
     }
 

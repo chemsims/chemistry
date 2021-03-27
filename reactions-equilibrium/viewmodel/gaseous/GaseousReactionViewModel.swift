@@ -111,6 +111,10 @@ class GaseousReactionViewModel: ObservableObject {
         scaleQuotient(base: selectedReaction.pressureConstant)
     }
 
+    var volumeHasDecreased: Bool {
+        GridUtil.availableRows(for: rows) < GaseousReactionSettings.initialRows
+    }
+
     private func scaleQuotient(base: CGFloat) -> CGFloat {
         base * (1 + (5 * extraHeatFactor))
     }
@@ -121,7 +125,7 @@ class GaseousReactionViewModel: ObservableObject {
         }
         objectWillChange.send()
         highlightedElements.clear()
-        componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 1)
+        componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 20)
     }
 
     private(set) var pumpModel: PumpViewModel<CGFloat>!
