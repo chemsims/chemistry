@@ -86,7 +86,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     var body: some View {
         VStack(spacing: 0) {
             reactionToggle
-                .zIndex(1)
+                .zIndex(isSelectingReaction ? 1 : 0)
             Spacer()
             equation
             Spacer()
