@@ -39,6 +39,7 @@ struct QuotientPlot: View {
                 .fixedSize()
                 .minimumScaleFactor(0.8)
                 .offset(y: asymptoteYLabelOffset)
+                .animation(nil)
                 .opacity(showData ? 1 : 0)
         }
         .font(.system(size: settings.axisLabelFontSize))
@@ -97,6 +98,7 @@ struct QuotientPlot: View {
                 x: settings.size / 2,
                 y: asymptoteYPosition
             )
+            .animation(nil)
             .zIndex(1)
     }
 
