@@ -65,7 +65,7 @@ private struct UnscaledAqueousEquationView: View {
     let quotientToEqHighlight: Color
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 1) {
             HStack(spacing: 40) {
                 QuotientDefinitionView(
                     coefficients: coefficients,
@@ -147,7 +147,7 @@ private struct QuotientDefinitionView: View {
     }
 
     private var fraction: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 4) {
             HStack(spacing: 8) {
                 term("C", coefficient: coefficients.productC)
                 term("D", coefficient: coefficients.productD)
@@ -171,6 +171,7 @@ private struct QuotientDefinitionView: View {
                 .frame(width: 15)
                 .animation(nil)
         }
+        .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
     }
 }
 private struct QuotientEqualsKView: View {
@@ -220,13 +221,13 @@ private struct FilledQuotientDefinitionView: View {
     }
 
     private var fraction: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 4) {
             HStack(spacing: 3) {
                 concentration(.C)
                 concentration(.D)
             }
             Rectangle()
-                .frame(width:  180, height: 1)
+                .frame(width:  170, height: 1)
             HStack(spacing: 3) {
                 concentration(.A)
                 concentration(.B)
@@ -346,8 +347,8 @@ private struct AnimatingNumberOrPlaceholder: View {
     }
 }
 
-private let NaturalHeight: CGFloat = 190
-private let NaturalWidth: CGFloat = 590
+private let NaturalHeight: CGFloat = 222
+private let NaturalWidth: CGFloat = 570
 
 private func formatQuotient(_ quotient: CGFloat) -> String {
     if (quotient >= 100) {
@@ -360,6 +361,24 @@ private func formatQuotient(_ quotient: CGFloat) -> String {
 
 struct AqueousEquationView_Previews: PreviewProvider {
     static var previews: some View {
+        AqueousEquationView(
+            showTerms: true,
+            equations: equations.concentration,
+            coefficients: equations.coefficients,
+            quotient: ReactionQuotientEquation(equations: equations),
+            convergedQuotient: 0.14,
+            currentTime: 14,
+            kTerm: "K",
+            formatElementName: {
+                "P\($0.lowercased())"
+            },
+            generalElementHighlight: .white,
+            quotientToConcentrationDefinitionHighlight: .white,
+            quotientToEquilibriumConstantDefinitionHighlight: .white,
+            maxWidth: 400,
+            maxHeight: 65
+        )
+
         UnscaledAqueousEquationView(
             showTerms: true,
             equations: equations.concentration,
@@ -377,10 +396,7 @@ struct AqueousEquationView_Previews: PreviewProvider {
         )
         .border(Color.black)
         .frame(width: NaturalWidth, height: NaturalHeight)
-        .border(Color.red)
-        .previewLayout(.fixed(width: NaturalWidth + 30, height: NaturalHeight + 30))
-        .frame(width: NaturalWidth + 30, height: NaturalHeight + 30)
-        .background(Color.gray.opacity(0.5))
+        .previewLayout(.fixed(width: NaturalWidth, height: NaturalHeight))
     }
 
     private static let equations = BalancedReactionEquation(

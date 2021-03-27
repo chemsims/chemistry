@@ -91,6 +91,6 @@ struct GaseousReactionScreen_Previews: PreviewProvider {
         GaseousReactionScreen(
             model: GaseousReactionViewModel()
         )
-        .previewLayout(.iPhone12ProMaxLandscape)
+        .previewLayout(.iPhone8Landscape)
     }
 }

@@ -98,6 +98,8 @@ struct EnergyProfileBeaker: View {
                 highlightSlider: highlightSlider,
                 showFlame: true,
                 sliderAccessibilityValue: nil,
+                generalColorMultiply: .white,
+                sliderColorMultiply: .white,
                 settings: AdjustableBeakerBurnerSettings(
                     standWidth: settings.standWidth,
                     handleHeight: settings.handleHeight,
@@ -296,6 +298,8 @@ struct EnergyProfileBeaker: View {
             highlightSlider: highlightSlider,
             showFlame: true,
             sliderAccessibilityValue: accessibilityValue,
+            generalColorMultiply: .white,
+            sliderColorMultiply: .white,
             settings: AdjustableBeakerBurnerSettings(
                 standWidth: settings.standWidth,
                 handleHeight: settings.handleHeight,
