@@ -14,7 +14,7 @@ enum GaseousReactionType: Int, ReactionDefinition, CaseIterable {
     var equilibriumConstant: CGFloat {
         switch self {
         case .A: return 10000
-        case .B: return 10
+        case .B: return 0.01
         case .C: return 50
         }
     }
@@ -31,9 +31,9 @@ enum GaseousReactionType: Int, ReactionDefinition, CaseIterable {
         case .B:
             return BalancedReactionCoefficients(
                 reactantA: 1,
-                reactantB: 3,
+                reactantB: 2,
                 productC: 3,
-                productD: 2
+                productD: 4
             )
         case .C:
             return BalancedReactionCoefficients(

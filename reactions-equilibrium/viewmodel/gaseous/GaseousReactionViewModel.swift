@@ -60,7 +60,7 @@ class GaseousReactionViewModel: ObservableObject {
             componentWrapper.equilibriumConstant = selectedReaction.equilibriumConstant
         }
     }
-    @Published var reactionSelectionIsToggled = false
+    @Published var reactionSelectionIsToggled = true
 
     @Published var highlightForwardReactionArrow = false
     @Published var highlightReverseReactionArrow = false
