@@ -15,9 +15,9 @@ private enum NavigationRow: CaseIterable {
         NavigationIconRow(
             primaryIcon: NavigationIcon(
                 screen: screen,
-                image: "tray",
-                pressedImage: "tray.fill",
-                isSystemImage: true,
+                image: icon,
+                pressedImage: icon,
+                isSystemImage: false,
                 label: label
             ),
             firstSecondaryIcon: nil,
@@ -36,6 +36,13 @@ private enum NavigationRow: CaseIterable {
         switch self {
         case .aqueous: return "Aqueous reaction"
         case .gaseous: return "Gaseous reaction"
+        }
+    }
+
+    private var icon: String {
+        switch self {
+        case .aqueous: return "aqueousicon"
+        case .gaseous: return "gaseousicon"
         }
     }
 }
