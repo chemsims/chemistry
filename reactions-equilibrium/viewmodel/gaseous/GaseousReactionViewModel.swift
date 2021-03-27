@@ -177,6 +177,11 @@ private extension GaseousReactionViewModel {
     private var hasChangedVolumeEnough: Bool {
         let currentRows = GridUtil.availableRows(for: rows)
         let initialRows = GaseousReactionSettings.initialRows
+        if currentRows == initialRows {
+            return false
+        } else if currentRows == componentWrapper.minBeakerRows {
+            return true
+        }
         return abs(currentRows - initialRows) >= GaseousReactionSettings.minRowDelta
     }
 
