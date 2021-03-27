@@ -107,6 +107,10 @@ class GaseousReactionViewModel: ObservableObject {
         scaleQuotient(base: selectedReaction.equilibriumConstant)
     }
 
+    var equilibriumQuotientForAxis: CGFloat {
+        (2 - extraHeatFactor) * equilibriumQuotient
+    }
+
     var equilibriumPressureQuotient: CGFloat {
         scaleQuotient(base: selectedReaction.pressureConstant)
     }

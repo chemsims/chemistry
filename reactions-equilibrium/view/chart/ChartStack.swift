@@ -169,7 +169,7 @@ extension ChartStack {
             showQuotientLine: model.showQuotientLine,
             maxQuotient: model.maxQuotient,
             settings: settings,
-            equilibriumQuotient: model.equilibriumQuotient,
+            equilibriumQuotient: model.equilibriumQuotientForAxis,
             activeChartIndex: activeChartIndex,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
             equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium),
