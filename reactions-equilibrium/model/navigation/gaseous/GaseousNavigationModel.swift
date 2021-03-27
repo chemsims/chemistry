@@ -57,6 +57,7 @@ struct GaseousNavigationModel {
             previousTiming: GaseousReactionSettings.pressureTiming
         ),
         GaseousSetTemperature(),
+        GaseousSetStatement(statement: GaseousStatements.preHeatReaction),
         GaseousRunReaction(
             timing: GaseousReactionSettings.heatTiming,
             isForward: true
@@ -205,7 +206,7 @@ private class GaseousRunReaction: GaseousScreenState {
         }
 
         return [
-            delayedState(GaseousStatements.midReaction(direction: .forward), []),
+            delayedState(GaseousStatements.midReaction(direction: model.components.equation.direction), []),
             delayedState(GaseousStatements.forwardEquilibriumReached, [.chartEquilibrium])
         ]
     }
@@ -352,14 +353,14 @@ private class GaseousShiftChart: GaseousScreenState {
             model.currentTime = previousTiming.end
         }
     }
-
 }
 
 private class GaseousPrePressureReaction: GaseousScreenState {
     override func apply(on model: GaseousReactionViewModel) {
         model.statement = GaseousStatements.prePressureReaction(
             selected: model.selectedReaction,
-            pressureIncreased: model.volumeHasDecreased
+            pressureIncreased: model.volumeHasDecreased,
+            direction: model.components.equation.direction
         )
         model.highlightedElements.elements = [.reactionDefinition]
     }

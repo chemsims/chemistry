@@ -130,15 +130,24 @@ struct GaseousStatements {
 
     static func prePressureReaction(
         selected: GaseousReactionType,
-        pressureIncreased: Bool
+        pressureIncreased: Bool,
+        direction: ReactionDirection
     ) -> [TextLine] {
         let moles = selected.coefficients.molesDisplay
         let raised = pressureIncreased ? "raised" : "reduced"
+        let directionStr = direction == .forward ? "forward" : "reverse"
+
+        var description: String
+        if direction == .forward {
+            description = "\(moles.reactantA) and \(moles.reactantB) transform into \(moles.productC) and \(moles.productD)"
+        } else {
+            description = "\(moles.productC) and \(moles.productD) transform into \(moles.reactantA) and \(moles.reactantB)"
+        }
+
         return [
             """
-            The reverse reaction is \(moles.productD) and \(moles.productC) transform into \
-            \(moles.reactantA) and \(moles.reactantB). As you \(raised) the pressure, the system \
-            will *favor* this reaction, to be able to reach equilibrium.
+            The \(directionStr) reaction is \(description). As you \(raised) the pressure, the \
+            system will *favor* this reaction, to be able to reach equilibrium.
             """
         ]
     }
@@ -186,6 +195,16 @@ struct GaseousStatements {
         """,
         "Change temperature of the system to see what happens!",
         "*Use the flame slider.*"
+    ]
+
+    static let preHeatReaction: [TextLine] = [
+        """
+        You raised the temperature! Now, the system needs to consume heat. The endothermic \
+        reaction will take place now!
+        """,
+        """
+        It is said that the *forward* reaction is being *favored*.
+        """
     ]
 
     static let end: [TextLine] = [
