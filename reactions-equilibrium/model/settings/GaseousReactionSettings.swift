@@ -24,6 +24,16 @@ struct GaseousReactionSettings {
 
     static let pressureToConcentration: CGFloat = 5
 
+    static func pressureConstantFromConcentrationConstant(
+        _ k: CGFloat,
+        coefficients: MoleculeValue<Int>
+    ) -> CGFloat {
+        let productCoeffs = coefficients.productC + coefficients.productD
+        let reactantCoeffs = coefficients.reactantA + coefficients.reactantB
+        let factor = pow(GaseousReactionSettings.pressureToConcentration, CGFloat(productCoeffs - reactantCoeffs))
+        return k * factor
+    }
+
     struct ReactionTiming {
 
         let offset: CGFloat

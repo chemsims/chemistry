@@ -51,7 +51,8 @@ class ReactionComponentsWrapper {
         dynamicGridRows: Int,
         startTime: CGFloat,
         equilibriumTime: CGFloat,
-        maxC: CGFloat = AqueousReactionSettings.ConcentrationInput.maxInitial
+        maxC: CGFloat = AqueousReactionSettings.ConcentrationInput.maxInitial,
+        usePressureValues: Bool = false
     ) {
         self.beakerCols = beakerCols
         self.beakerRows = beakerRows
@@ -82,7 +83,8 @@ class ReactionComponentsWrapper {
             equilibriumTime: equilibriumTime,
             previousEquation: nil,
             previousMolecules: nil,
-            rowsHaveChangeFromPrevious: nil
+            rowsHaveChangeFromPrevious: nil,
+            usePressureValues: usePressureValues
         )
     }
 
@@ -128,7 +130,8 @@ class ReactionComponentsWrapper {
             equilibriumTime: equilibriumTime,
             previousEquation: previous.components.equation,
             previousMolecules: filteredMolecules,
-            rowsHaveChangeFromPrevious: false
+            rowsHaveChangeFromPrevious: false,
+            usePressureValues: previous.components.usePressureValues
         )
     }
 
@@ -222,7 +225,8 @@ class ReactionComponentsWrapper {
             equilibriumTime: equilibriumTime,
             previousEquation: components.previousEquation,
             previousMolecules: components.previousMolecules,
-            rowsHaveChangeFromPrevious: previous.map { $0.beakerRows != beakerRows }
+            rowsHaveChangeFromPrevious: previous.map { $0.beakerRows != beakerRows },
+            usePressureValues: components.usePressureValues
         )
 
         numMoleculesAtStart = molecules.map(\.count).all.reduce(0) { $0 + $1 }

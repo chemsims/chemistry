@@ -12,10 +12,7 @@ protocol ReactionDefinition: Identifiable, Equatable {
 extension ReactionDefinition {
 
     var pressureConstant: CGFloat {
-        let productCoeffs = coefficients.productC + coefficients.productD
-        let reactantCoeffs = coefficients.reactantA + coefficients.reactantB
-        let factor = pow(GaseousReactionSettings.pressureToConcentration, CGFloat(productCoeffs - reactantCoeffs))
-        return equilibriumConstant * factor
+        GaseousReactionSettings.pressureConstantFromConcentrationConstant(equilibriumConstant, coefficients: coefficients)
     }
 
     var reactantDisplay: String {

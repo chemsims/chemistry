@@ -134,7 +134,7 @@ class ReactionConvergenceSolverTests: XCTestCase {
                     productRange.forEach { d in
                         let reverseEquation = BalancedReactionEquation(
                             coefficients: equation.coefficients,
-                            equilibriumConstant: equation.equilibriumConstant,
+                            equilibriumConstant: reaction.equilibriumConstant,
                             initialConcentrations: MoleculeValue(
                                 reactantA: equation.equilibriumConcentrations.reactantA,
                                 reactantB: equation.equilibriumConcentrations.reactantB,

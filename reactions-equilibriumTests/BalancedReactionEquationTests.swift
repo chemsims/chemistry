@@ -40,6 +40,24 @@ class BalancedReactionEquationTests: XCTestCase {
         XCTAssertEqual(equations.productD.getY(at: 10), 4 * unitChange, accuracy: tolerance)
     }
 
+    func testBalancedReactionConvergenceForAPressureReaction() {
+        let k: CGFloat = 0.01
+        let equation = BalancedReactionEquation(
+            coefficients: BalancedReactionCoefficients(reactantA: 1, reactantB: 2, productC: 3, productD: 4),
+            equilibriumConstant: k,
+            initialConcentrations: MoleculeValue(reactantA: 0.3, reactantB: 0.3, productC: 0, productD: 0),
+            startTime: 0,
+            equilibriumTime: 10,
+            previous: nil,
+            usePressureValues: true
+        )
+
+        let expectedPressureQuotient = GaseousReactionSettings.pressureConstantFromConcentrationConstant(k, coefficients: equation.coefficients)
+        let pressureQuotient = ReactionQuotientEquation(coefficients: equation.coefficients, equations: equation.pressure)
+
+        XCTAssertEqual(pressureQuotient.getY(at: 10), expectedPressureQuotient, accuracy: 0.001)
+    }
+
     private func makeCoeffs(A: Int, B: Int, C: Int, D: Int) -> BalancedReactionCoefficients {
         BalancedReactionCoefficients(reactantA: A, reactantB: B, productC: C, productD: D)
     }

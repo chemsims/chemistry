@@ -18,7 +18,6 @@ struct BalancedReactionEquation {
     let coefficients: MoleculeValue<Int>
 
     let initialConcentrations: MoleculeValue<CGFloat>
-    let equilibriumConstant: CGFloat
 
     var isForward: Bool {
         direction == .forward
@@ -30,11 +29,11 @@ struct BalancedReactionEquation {
         initialConcentrations: MoleculeValue<CGFloat>,
         startTime: CGFloat,
         equilibriumTime: CGFloat,
-        previous: BalancedReactionEquation?
+        previous: BalancedReactionEquation?,
+        usePressureValues: Bool = false
     ) {
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
-        self.equilibriumConstant = equilibriumConstant
         self.initialConcentrations = initialConcentrations
         self.coefficients = coefficients
 
@@ -46,11 +45,12 @@ struct BalancedReactionEquation {
         self.direction = direction
         let isForward = direction == .forward
 
-        let unitChange = ReactionConvergenceSolver.findUnitChangeFor(
+        let unitChange = Self.getUnitChange(
             equilibriumConstant: equilibriumConstant,
-            coeffs: coefficients,
+            coefficients: coefficients,
             initialConcentrations: initialConcentrations,
-            isForward: direction == .forward
+            direction: direction,
+            usePressure: usePressureValues
         )
 
         func getTerm(_ molecule: AqueousMolecule) -> MoleculeTerms {
@@ -110,6 +110,33 @@ struct BalancedReactionEquation {
             }
         ).getY(at: 0)
         return initialQuotient < equilibriumConstant ? .forward : .reverse
+    }
+
+    private static func getUnitChange(
+        equilibriumConstant: CGFloat,
+        coefficients: BalancedReactionCoefficients,
+        initialConcentrations: MoleculeValue<CGFloat>,
+        direction: ReactionDirection,
+        usePressure: Bool
+    ) -> CGFloat? {
+
+        var initParam = initialConcentrations
+        var initConstant = equilibriumConstant
+        var factor: CGFloat = 1
+
+        if usePressure {
+            initParam = initialConcentrations.map { $0 * GaseousReactionSettings.pressureToConcentration }
+            initConstant = GaseousReactionSettings.pressureConstantFromConcentrationConstant(equilibriumConstant, coefficients: coefficients)
+            factor = 1 / GaseousReactionSettings.pressureToConcentration
+        }
+
+        let unitChange = ReactionConvergenceSolver.findUnitChangeFor(
+            equilibriumConstant: initConstant,
+            coeffs: coefficients,
+            initialConcentrations: initParam,
+            isForward: direction == .forward
+        )
+        return unitChange.map { $0 * factor }
     }
 }
 
