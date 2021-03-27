@@ -17,7 +17,7 @@ public protocol ScreenState {
     ///
     /// Note that if `nextStateAutoDispatchDelays` is set, it's value is respected and any
     /// delayed states which have yet to be run will be ignored.
-    var delayedStates: [DelayedState<NestedState>] { get }
+    func delayedStates(model: Model) -> [DelayedState<NestedState>]
 
     /// Applies the reaction state to the model
     func apply(on model: Model)

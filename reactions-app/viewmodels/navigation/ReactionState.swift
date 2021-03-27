@@ -27,7 +27,10 @@ class ReactionState: ScreenState, SubState {
 
     func nextStateAutoDispatchDelay(model: ZeroOrderReactionViewModel) -> Double? { nil }
 
-    let delayedStates = [DelayedState<ReactionState>]()
+    func delayedStates(model: ZeroOrderReactionViewModel) -> [DelayedState<ReactionState>] {
+        []
+    }
+
 
 }
 

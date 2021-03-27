@@ -77,7 +77,7 @@ class GaseousScreenState: ScreenState, SubState {
     typealias Model = GaseousReactionViewModel
     typealias NestedState = GaseousScreenState
 
-    var delayedStates: [DelayedState<GaseousScreenState>] {
+    func delayedStates(model: GaseousReactionViewModel) -> [DelayedState<GaseousScreenState>] {
         []
     }
 
@@ -196,7 +196,7 @@ private class GaseousRunReaction: GaseousScreenState {
         timing.end - timing.start
     }
 
-    override var delayedStates: [DelayedState<GaseousScreenState>] {
+    override func delayedStates(model: GaseousReactionViewModel) -> [DelayedState<GaseousScreenState>] {
         func delayedState(_ statement: [TextLine], _ highlights: [GaseousScreenElement]) -> DelayedState<GaseousScreenState> {
             DelayedState(
                 state: GaseousSetStatement(statement: statement, highlights: highlights),

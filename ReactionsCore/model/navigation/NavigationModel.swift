@@ -66,11 +66,12 @@ public class NavigationModel<State: ScreenState> {
             subTimer = nil
         }
         let state = currentNode.state
-        guard state.delayedStates.count > indexToRun else {
+        let delayedStates = state.delayedStates(model: model)
+        guard delayedStates.count > indexToRun else {
             return
         }
 
-        let next = state.delayedStates[indexToRun]
+        let next = delayedStates[indexToRun]
         subTimer = Timer.scheduledTimer(
             timeInterval: next.delay,
             target: self,
@@ -82,10 +83,11 @@ public class NavigationModel<State: ScreenState> {
 
     @objc private func runForIndex(timer: Timer) {
         let state = currentNode.state
-        guard let index = timer.userInfo as? Int, state.delayedStates.count > index else {
+        let delayedStates = state.delayedStates(model: model)
+        guard let index = timer.userInfo as? Int, delayedStates.count > index else {
             return
         }
-        state.delayedStates[index].state.apply(on: model)
+        delayedStates[index].state.apply(on: model)
         scheduleSubState(indexToRun: index + 1)
     }
 

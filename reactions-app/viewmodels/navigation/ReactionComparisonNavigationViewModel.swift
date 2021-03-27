@@ -51,10 +51,9 @@ class ReactionComparisonState: ScreenState {
 
     func nextStateAutoDispatchDelay(model: ReactionComparisonViewModel) -> Double? { nil }
 
-    var delayedStates: [DelayedState<ReactionComparisonSubstate>] {
+    func delayedStates(model: ReactionComparisonViewModel) -> [DelayedState<ReactionComparisonSubstate>] {
         []
     }
-
 }
 
 class ReactionComparisonSubstate: SubState {
@@ -142,7 +141,7 @@ private class DragAndDropExplainerState: ReactionComparisonState {
         model.dragTutorialHandIsComplete = false
     }
 
-    override var delayedStates: [DelayedState<ReactionComparisonSubstate>] {
+    override func delayedStates(model: Model) -> [DelayedState<ReactionComparisonSubstate>] {
         [
             DelayedState(state: DragAndDropExplainerSubstate(), delay: 0.5)
         ]

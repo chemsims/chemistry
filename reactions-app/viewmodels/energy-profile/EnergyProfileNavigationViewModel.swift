@@ -114,7 +114,9 @@ class EnergyProfileState: ScreenState, SubState {
 
     func nextStateAutoDispatchDelay(model: EnergyProfileViewModel) -> Double? { nil }
 
-    let delayedStates = [DelayedState<EnergyProfileState>]()
+    func delayedStates(model: EnergyProfileViewModel) -> [DelayedState<EnergyProfileState>] {
+        []
+    }
 
     var ignoreOnBack: Bool {
         false

@@ -10,7 +10,7 @@ class AqueousScreenState: ScreenState, SubState {
     typealias Model = AqueousReactionViewModel
     typealias NestedState = AqueousScreenState
 
-    var delayedStates: [DelayedState<AqueousScreenState>] {
+    func delayedStates(model: AqueousReactionViewModel) -> [DelayedState<AqueousScreenState>] {
         []
     }
 
@@ -136,7 +136,7 @@ class AqueousRunAnimationState: AqueousScreenState {
         Double(AqueousReactionSettings.forwardReactionTime)
     }
 
-    override var delayedStates: [DelayedState<AqueousScreenState>] {
+    override func delayedStates(model: AqueousReactionViewModel) -> [DelayedState<AqueousScreenState>] {
         func delayedState(
             _ statement: [TextLine],
             _ delay: Double,
@@ -307,7 +307,7 @@ class AqueousRunReverseAnimation: AqueousScreenState {
         }
     }
 
-    override var delayedStates: [DelayedState<AqueousScreenState>] {
+    override func delayedStates(model: AqueousReactionViewModel) -> [DelayedState<AqueousScreenState>] {
         let tToConvergence = tConvergence - tAddProduct
         let delay = Double(tToConvergence / 2)
         return [
