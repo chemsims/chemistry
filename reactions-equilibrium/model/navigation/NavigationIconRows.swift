@@ -16,7 +16,7 @@ private enum NavigationRow: CaseIterable {
             primaryIcon: NavigationIcon(
                 screen: screen,
                 image: icon,
-                pressedImage: icon,
+                pressedImage: "\(icon)-pressed",
                 isSystemImage: false,
                 label: label
             ),
@@ -25,14 +25,14 @@ private enum NavigationRow: CaseIterable {
         )
     }
 
-    var screen: EquilibriumAppScreen {
+    private var screen: EquilibriumAppScreen {
         switch self {
         case .aqueous: return .aqueousReaction
         case .gaseous: return .gaseousReaction
         }
     }
 
-    var label: String {
+    private var label: String {
         switch self {
         case .aqueous: return "Aqueous reaction"
         case .gaseous: return "Gaseous reaction"
