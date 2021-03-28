@@ -6,38 +6,56 @@ import SpriteKit
 
 class SolidParticleNode: SKShapeNode {
 
+    private let geometry: HexagonGeometry
+    private let sideLength: CGFloat
+
     init(sideLength: CGFloat) {
+        self.sideLength = sideLength
+        self.geometry = HexagonGeometry(sideLength: sideLength)
         super.init()
 
-        let height = sideLength * 0.866
-        let center = CGPoint(x: sideLength / 2, y: height)
-        var angleRad: CGFloat = 0
-        var triangleRotation = CGFloat.pi
+        addParts()
+
+        let physics = SKPhysicsBody(polygonFrom: geometry.path())
+        self.physicsBody = physics
+    }
+
+    private func addParts() {
+        let halfHeight = geometry.totalHeight / 2
+        let center = CGPoint(x: sideLength / 2, y: halfHeight)
         let angleDelta = (60 * CGFloat.pi) / 180
-        for _ in 0..<7 {
-            let dx = (height / 2) * sin(angleRad)
-            let dy = (height / 2) * cos(angleRad)
+
+        for i in 0..<7 {
+            let centerAngle = CGFloat(i) * angleDelta
+            let triangleRotation = CGFloat.pi - (CGFloat(i) * angleDelta)
+
+            let dx = (halfHeight / 2) * sin(centerAngle)
+            let dy = (halfHeight / 2) * cos(centerAngle)
+
             let node = ParticleTrianglePart(
                 sideLength: sideLength,
-                height: height
+                height: halfHeight
             )
             node.position = CGPoint(
                 x: center.x + dx,
                 y: center.y + dy
             )
             node.zRotation = triangleRotation
-            angleRad += angleDelta
-            triangleRotation -= angleDelta
             addChild(node)
         }
     }
 
     func dissolve() {
+        let duration: TimeInterval = 1
         self.children.forEach { child in
-            if let elem = child as? ParticleTrianglePart {
-                elem.dissolve()
+            if let part = child as? ParticleTrianglePart {
+                part.dissolve(duration: duration)
             }
         }
+        let delay = SKAction.wait(forDuration: duration)
+        let remove = SKAction.removeFromParent()
+        let group = SKAction.sequence([delay, remove])
+        self.run(group)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,15 +84,46 @@ private class ParticleTrianglePart: SKShapeNode {
         addChild(node)
     }
 
-    func dissolve() {
-        let scale = SKAction.scale(by: CGFloat.random(in: 0.05...0.15), duration: 1)
-        let fade = SKAction.fadeOut(withDuration: 1)
-        let move = SKAction.move(by: CGVector(dx: 0, dy: -sideLength), duration: 1)
+    func dissolve(duration: TimeInterval) {
+
+        let scale = SKAction.scale(by: CGFloat.random(in: 0.05...0.15), duration: duration)
+        let fade = SKAction.fadeOut(withDuration: duration)
+        let move = SKAction.move(by: CGVector(dx: 0, dy: -sideLength), duration: duration)
         let group = SKAction.group([scale, fade, move])
         children.forEach { $0.run(group) }
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+private struct HexagonGeometry {
+
+    let sideLength: CGFloat
+    let totalHeight: CGFloat
+    init(sideLength: CGFloat) {
+        self.sideLength = sideLength
+        self.totalHeight = 2 * sideLength * 0.866
+    }
+
+    func path() -> CGPath {
+        let path = CGMutablePath()
+        let dh = sideLength * 0.866 // sin(60 degrees)
+        let dw = sideLength * 0.5   // cos(60 degrees)
+
+        path.addLines(
+            between: [
+                CGPoint(x: 0 + dw, y: 0),
+                CGPoint(x: 0 + dw + sideLength, y: 0),
+                CGPoint(x: 0 + (2 * dw) + sideLength, y: 0 + dh),
+                CGPoint(x: 0 + (2 * dw) + sideLength, y: 0 + dh + sideLength),
+                CGPoint(x: 0 + dw + sideLength, y: 0 + (2 * dh) + sideLength),
+                CGPoint(x: 0 + dw, y: 0 + (2 * dh) + sideLength),
+                CGPoint(x: 0, y: 0 + dh + sideLength),
+                CGPoint(x: 0, y: 0 + dh),
+            ]
+        )
+        return path
     }
 }
