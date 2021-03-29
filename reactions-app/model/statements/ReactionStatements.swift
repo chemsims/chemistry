@@ -35,7 +35,7 @@ struct ReactionStatements {
             "Let's watch all the molecules changing!",
             "As \(display.reactant.name) disappears, \(display.product.name) is being produced.",
             """
-            This happens at a variable *rate (in units of $M/s$)*, which is dependant on *k* \
+            This happens at a variable *rate (in units of $M/s$)*, which is dependent on *k* \
             and *[\(display.reactant.name)]*.
             """
         ]

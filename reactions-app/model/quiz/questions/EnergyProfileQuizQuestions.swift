@@ -57,7 +57,7 @@ extension QuizQuestionsList {
                         B to follow to produce C.
                         """,
                         explanation: """
-                        Even though another pathways has been indeed created by the addition of \
+                        Even though another pathway has been indeed created by the addition of \
                         the catalyst, A and B reactants wouldn't follow both pathways, but only \
                         the one with much less energy.
                         """
@@ -96,7 +96,7 @@ extension QuizQuestionsList {
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    1: Reactants, 2: Transition State, 3: Intermediate, 4: Activated Complex, \
+                    1: Reactants, 2: Transition State, 3: Intermediate, 4: Transition State, \
                     5: Intermediate, 6: Transition State, 7: Products
                     """,
                     explanation: """
@@ -194,7 +194,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: " A reaction like N_2_ + O_2_ ➝ 2NO in the presence of a catalyst",
                         explanation: """
-                        The decomposition of water $(N_2_ + O_2_ ➝ 2NO)$ is a non-spontaneous \
+                        The formation of nitrogen monoxide $(N_2_ + O_2_ ➝ 2NO)$ is a non-spontaneous \
                         reaction, so even with the addition of a catalyst, its activation energy \
                         would most likely still be higher than other choices.
                         """
@@ -353,7 +353,7 @@ extension QuizQuestionsList {
 
                     Canceling, we get:
 
-                    B + 2C yields BC_2_. Being that overall reaction, the remaining of the compounds would be the intermediates.
+                    B + 2C yields BC_2_. Being that the overall reaction, the remaining of the compounds would be the intermediates.
                     """
                 ),
                 otherAnswers: [
@@ -388,24 +388,25 @@ extension QuizQuestionsList {
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: """
-                    Yes, it takes part in the reaction. It acts as a reactant of the reaction and increases the speed of it
+                    Yes, it takes part in the reaction. It reacts in steps of the reaction, without \
+                    actually being neither a reactant nor a product of the overall reaction.
                     """,
                     explanation: """
-                    The catalyst can participate in the reaction but not as a reactant of the overall reaction \
-                    but as an intermediate that generates another pathway for the reaction to follow for faster production.
+                    The catalyst can participate in the reaction as an intermediate that \
+                    generates a "faster" pathway for the reaction to take. In some cases, it \
+                    participates in other ways, like physically serving as a surface to \
+                    increase the surface area where the reaction takes place.
+                    
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        Yes, it takes part in the reaction. It reacts in steps reaction, without \
-                        actually being neither a reactant nor a product of the overall reaction.
+                        Yes, it takes part in the reaction. It acts as a reactant of the reaction and increases the speed of it
                         """,
                         explanation: """
-                        The catalyst can participate in the reaction as an intermediate that \
-                        generates a "faster" pathway for the reaction to take. In some cases, it \
-                        participates in other ways, like physically serving as a surface to \
-                        increase the surface area where the reaction takes place.
+                        The catalyst can participate in the reaction but not as a reactant of the overall reaction \
+                        but as an intermediate that generates another pathway for the reaction to follow for faster production.
                         """
                     ),
                     QuizAnswerData(
@@ -671,7 +672,7 @@ extension QuizQuestionsList {
                     answer: "Section 1-2-3",
                     explanation: """
                     In the diagram, the difference between where the reaction starts with reactants \
-                    (in this case, on the right for the reverse reactions) and the peak of the hump \
+                     and the peak of the hump \
                     is the activation energy, or what is the same, the energy barrier to overcome.
 
                     For 5 to get to 7, the activation energy is the difference between 5 and 6, \
@@ -690,7 +691,7 @@ extension QuizQuestionsList {
                     """,
                     explanationLabel: """
                     In the diagram, the difference between where the reaction starts with reactants \
-                    (in this case, on the right for the reverse reactions) and the peak of the hump \
+                     and the peak of the hump \
                     is the activation energy, or what is the same, the energy barrier to overcome.
 
                     For 5 to get to 7, the activation energy is the difference between 5 and 6, \
@@ -803,7 +804,7 @@ extension QuizQuestionsList {
                     answer: "The reaction has four transition states and the overall reaction releases energy",
                     explanation: """
                     At a first glance it's noticeable that the reaction has four humps that represent the transition \
-                    state, meaning that it has four steps (three elementary reactions that compose the overall \
+                    state, meaning that it has four steps (four elementary reactions that compose the overall \
                     reaction). Reactants started at a higher energy state in comparison to the energy of the final \
                     products, meaning that energy was released, making the reaction exothermic.
                     """
@@ -858,7 +859,7 @@ extension QuizQuestionsList {
                         answer: "Increase the temperature of the reaction",
                         explanation: """
                         A way to increase the kinetic energy of the molecules, creating a higher \
-                        frequency of collisions and increasing the changes that the collisions \
+                        frequency of collisions and increasing the chances that the collisions \
                         meet the energy requirements to be successful is by increasing the temperature, \
                         but there are other ways to increase the rate of the reaction.
                         """
@@ -867,7 +868,7 @@ extension QuizQuestionsList {
                         answer: "Add a catalyst that creates another more efficient pathway to follow",
                         explanation: """
                         Adding a catalyst would ultimately decrease the activation energy, making \
-                        the reaction go faster, but there are other ways to increase the rate of the reaction.
+                        the reaction to go faster, but there are other ways to increase the rate of the reaction.
                         """
                     ),
                     QuizAnswerData(
@@ -920,7 +921,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: """
                         Increasing the temperature would make the liquid evaporate thus provoking \
-                        a gaseous mixture in which collisions are more often than not successful
+                        a gaseous mixture in which collisions are, more often than not, successful
                         """,
                         explanation: """
                         Increasing the temperature can ultimately in some cases lead to a change in \
@@ -1053,7 +1054,7 @@ extension QuizQuestionsList {
                         for the reactants to follow
                         """,
                         explanation: """
-                        Catalysts do change create a new pathway, but are not considered reactants \
+                        Catalysts do create a new pathway, but are not considered reactants \
                         of the overall reaction.
                         """
                     ),
@@ -1135,7 +1136,7 @@ extension QuizQuestionsList {
                         explanation: """
                         The average kinetic energy is just a way to represent the energy at which \
                         the molecules are moving, and when the temperature is increased, this \
-                        can leed to faster molecules.
+                        can lead to faster molecules.
                         """
                     )
                 ],
@@ -1143,10 +1144,10 @@ extension QuizQuestionsList {
                 image: LabelledImage(
                     image: "energy-profile-reaction-progress",
                     label: """
-                    Energy profile diagram with a single hump, where the product is at a higher \
-                    energy state than the reactants. There is a red vertical line on the left side \
-                    of the diagram where the energy state is the same as at the start of the reaction, \
-                    before the hump.
+                    Energy profile diagram with a single hump, where the product (C) is at a higher \
+                    energy state than the reactants (A and B). There is a red horizontal line below \
+                    the peak of the hump of the diagram and above both the energy state of the \
+                    products and the reactants.
                     """
                 )
             )

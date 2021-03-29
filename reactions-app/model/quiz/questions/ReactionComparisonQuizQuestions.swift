@@ -52,22 +52,22 @@ extension QuizQuestionsList {
                     answer: "First order",
                     explanation: """
                     For this first order reaction, the resultant integrated rate law is \
-                    $k = (ln[A_0_] – ln[A])/t$, that’s why a graph plotting $(ln[A] vs t)$ is a \
-                    straight line: $(ln[A](y) = -kt(mx) + ln[A_0_](b)))$ with a slope of -k.
+                    $k = (ln[X_0_] – ln[X])/t$, that’s why a graph plotting $(ln[X] vs t)$ is a \
+                    straight line: $(ln[X](y) = -kt(mx) + ln[X_0_](b)))$ with a slope of -k.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: "Zero order",
                         explanation: """
-                        The graph plotting [A] vs t results in a curved line. If it was a zero \
+                        The graph plotting [X] vs t results in a curved line. If it was a zero \
                         order reaction, it would be a straight line.
                         """
                     ),
                     QuizAnswerData(
                         answer: "Second order",
                         explanation: """
-                        The graph plotting $1/[A]$ vs t results in a curved line. If it was a zero \
+                        The graph plotting $1/[X]$ vs t results in a curved line. If it was a zero \
                         order reaction, it would be a straight line.
                         """
                     ),
@@ -83,9 +83,9 @@ extension QuizQuestionsList {
                     image: "reaction-comparison",
                     label: """
                     Three charts showing time in seconds on the x axis.
-                    Chart 1 shows concentration of A, with a curved line that reduces as time increases.
-                    Chart 2 shows ln a, with a straight line that reduces as time increases.
-                    Chart 3 shows inverse A, with a curved line that increases as time increases.
+                    Chart 1 shows concentration of X, with a curved line that reduces as time increases.
+                    Chart 2 shows ln X, with a straight line that reduces as time increases.
+                    Chart 3 shows inverse X, with a curved line that increases as time increases.
                     """
                 )
             ),
@@ -407,8 +407,8 @@ extension QuizQuestionsList {
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[NO]^2^[O_2_]^3^",
-                        answerLabel: "Rate = k, times [NO]^2^, times [O_2_]^3^",
+                        answer: "Rate = k[NO]^2^[O_2_]",
+                        answerLabel: "Rate = k, times [NO]^2^, times [O_2_]",
                         explanation: """
                         This assumes that the coefficients are the \
                         exponents for the equation, which would only be true if it was an \
@@ -427,17 +427,17 @@ extension QuizQuestionsList {
                 A + B ➝ Products
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "Rate = k[A]^2^[B]^3^",
+                    answer: "Rate = k[A][B]^3^",
                     explanation: """
                     When [B] goes from 0.0132 to 0.0264 (it's doubled, goes up by a factor of 2) \
-                    the rate goes from 4.30 to 34.4 (it goes up by a factor of 8). $2^x =  8$ \
+                    the rate goes from 4.30 to 34.4 (it goes up by a factor of 8). $2^x^ =  8$ \
                     where $x = 3$; the reaction is third order for [B].
 
                     When [B] drops to 0.0066, if [A] was maintained at 0.0176, then the Rate would \
                     have been 0.53 since we know it's of third order for [B]. In order for the \
                     Rate to be 2.15 when [A] goes from 0.0176 to 0.0704 (it goes up by a factor \
-                    of 4), it had to go up by a factor of 4. $4^x = 4$. where $x = 1$; the reaction \
-                    is of third order for [A].
+                    of 4), it had to go up by a factor of 4. $4^x^ = 4$. where $x = 1$; the reaction \
+                    is of first order for [A].
                     """
                 ),
                 otherAnswers: [
@@ -450,18 +450,16 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "Rate = k[A]^3^[B]^2^",
                         explanation: """
-                        Given the data, the concentrations affect the rate but not in this \
+                        Given the data, the concentrations affect the rate but not in these \
                         proportions.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate = k[A]^2^[B]",
+                        answer: "Rate = k[A][B]^2^",
                         explanation: """
-                        When [B] drops to 0.0066, if [A] was maintained at 0.0176, then the Rate would \
-                        have been 0.53 since we know it's of third order for [B]. In order for the \
-                        Rate to be 2.15 when [A] goes from 0.0176 to 0.0704 (it goes up by a factor \
-                        of 4), it had to go up by a factor of 4. $4^x^ = 4$. where $x = 1$; the reaction \
-                        is of third order for [A].
+                        When [B] goes from 0.0132 to 0.0264 (it's doubled, goes up by a factor of 2) \
+                        the rate goes from 4.30 to 34.4 (it goes up by a factor of 8). $2^x^ =  8$ \
+                        where $x = 3$; the reaction is third order for [B].
                         """
                     )
                 ],
@@ -516,7 +514,7 @@ extension QuizQuestionsList {
                         answer: "1.01x10^-24^ s^-1^",
                         explanation: """
                         Since both concentrations affect the rate of the reaction, it cannot be a \
-                        first order reaction, so the units couldn't possible be s^-1^.
+                        first order reaction, so the units couldn't possibly be s^-1^.
                         """
                     ),
                     QuizAnswerData(
@@ -558,7 +556,7 @@ extension QuizQuestionsList {
                 concentration of it remains as 0.0125 M throughout all the experiments conducted.
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "3.33x10^-3^ M^-4^ s^-1^",
+                    answer: "8.32x10^-4^ M^-4^ s^-1^",
                     explanation: """
                     When [A] goes from 0.0125 to 0.0375 (it's tripled, it goes up by a factor of \
                     3) the rate of appearance of D goes from $3.9x10^-13^$ to $3.51x10^-12^$ (nine \
@@ -571,17 +569,17 @@ extension QuizQuestionsList {
                     order for [B]. The rate law result is, $rate = k[A]^2^[B][C]^2^$.
 
                     Now we just replace the values to determine k, but take into account that \
-                    rate of reaction = 2 \\* rate of appearance of C, because $rate = [ΔD]/2Δt$, \
+                    rate of reaction = rate of appearance of D/2, because $rate = [ΔD]/2Δt$, \
                     where $[ΔD]/Δt$ is the rate of appearance of D.
 
                     Replacing, we get:
 
-                    $2 \\* 3.9x10^-13^ =$ $k(0.0125)^2^(0.0096)(0.0125)^2^$.
+                    $3.9x10^-13^/2 =$ $k(0.0125)^2^(0.0096)(0.0125)^2^$.
 
                     Solving for k:
 
-                    k = $2 \\* 3.9x10^-13^$ / $(0.0125)^2^(0.0096)(0.0125)^2^$
-                    k = 3.33x10^-3^ M^-4^ s^-1^.
+                    k = $3.9x10^-13^$ / $2 \\*(0.0125)^2^(0.0096)(0.0125)^2^$
+                    k = 8.32x10^-4^ M^-4^ s^-1^.
                     """,
                     explanationLabel: """
                     When [A] goes from 0.0125 to 0.0375 (it's tripled, it goes up by a factor of \
@@ -595,25 +593,25 @@ extension QuizQuestionsList {
                     order for [B]. The rate law result is, rate = k, times [A]^2^, times [B], times [C]^2^.
 
                     Now we just replace the values to determine k, but take into account that \
-                    rate of reaction = 2 \\* rate of appearance of C, because $rate = [ΔD]/2Δt$, \
+                    rate of reaction = rate of appearance of D/2, because $rate = [ΔD]/2Δt$, \
                     where $[ΔD]/Δt$ is the rate of appearance of D.
 
                     Replacing, we get:
 
-                    2 \\* 3.9x10^-13^ = k, times 0.0125^2^, times 0.0096, times 0.0125^2^.
+                    3.9x10^-13^, divided by 2 = k, times 0.0125^2^, times 0.0096, times 0.0125^2^.
 
                     Solving for k:
 
-                    k = 2 \\* 3.9x10^-13^ / (0.0125^2^ times 0.0096 times 0.0125^2^)
-                    k = 3.33x10^-3^ M^-4^ s^-1^.
+                    k = 3.9x10^-13^ / 2 times (0.0125^2^ times 0.0096 times 0.0125^2^)
+                    k = 8.32x10^-4^ M^-4^ s^-1^.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "5.2x10^-7^ M^-4^ s^-1^",
+                        answer: "1.3x10^-7^ M^-4^ s^-1^",
                         explanation: """
-                        You may have gotten $5.2x10^-7^$ M^-4^ s^-1^ as a result because you forgot to \
-                        include [C]2 in the rate law equation when calculating the rate constant.
+                        You may have gotten $1.3x10^-7^$ M^-4^ s^-1^ as a result because you forgot to \
+                        include [C]^2^ in the rate law equation when calculating the rate constant.
                         """
                     ),
                     QuizAnswerData(
@@ -628,7 +626,7 @@ extension QuizQuestionsList {
                         answer: "2.6x10^-7^ M^-4^ s^-1^",
                         explanation: """
                         Remember that the reaction is order 2 with respect to C, and is part of \
-                        the rate law equation as [C]2. Also, take into account that the rate of \
+                        the rate law equation as [C]^2^. Also, take into account that the rate of \
                         reaction = $[ΔD]/2Δt$, where [ΔD]/Δt is rate of appearance of D, the \
                         measured value in the tables.
                         """
@@ -723,7 +721,7 @@ extension QuizQuestionsList {
                     the slowest of the steps.
 
                     In other words, the rate for this reaction would be $rate = k[XY][Z]$, but \
-                    since I is only the intermediate, then the actual rate law is: \
+                    since XY is only the intermediate, then the actual rate law is: \
                     $rate = k[X][Y][Z]^2^$
                     """
                 ),
@@ -759,7 +757,7 @@ extension QuizQuestionsList {
                 question: """
                 Consider a reaction that follows these elementary steps:
 
-                Step 1: [ ]A + [ ]B ➝ C
+                Step 1: [ ]A_[ ]_ + [ ]B_[ ]_ ➝ C
                 Step 2: D + E ➝ F
                 Step 3: F ➝ G
 
@@ -798,8 +796,8 @@ extension QuizQuestionsList {
                         """
                     ),
                     QuizAnswerData(
-                        answer: "A^2^ + B^3^",
-                        answerLabel: "'A'^2^ + B^3^",
+                        answer: "A_2_ + B_3_",
+                        answerLabel: "'A'_2_ + B_3_",
                         explanation: """
                         The coefficients of the reactions are the number values on the left of the \
                         species, which in this case are A and B.
@@ -947,7 +945,7 @@ extension QuizQuestionsList {
                     $k = ln(2)/198 = 0.0035 seconds^-1^$.
 
                     The equation for a first order reaction is $ln[A] = ln[A_0_] - kt$. After 390 seconds have \
-                    passed, there's a fraction of A remaining, or: $[4A] = X[A_0_]$.
+                    passed, there's a fraction of A remaining, or: $[A] = X[A_0_]$.
 
                     Replacing we get: $ln(X[A_0_]) = ln[A_0_] - (0.0035)(390)$.
 
@@ -996,7 +994,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "0.98%",
                         explanation: """
-                        In order for 15.5% of A to be left, around 1,321 seconds should have passed.
+                        In order for 0.98% of A to be left, around 1,321 seconds should have passed.
                         """
                     )
                 ],

@@ -503,7 +503,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "15 hours",
                         explanation: """
-                        The time at which the reactant if half its initial amount is called \
+                        The time at which the reactant is half its initial amount is called \
                         half-life. Half-life for zero order equations is $t_1/2_ = [A_0_]/2k$, so \
                         you'd have to first determine what the value of k is. We could easily know \
                         that 15 hours is an unlikely answer because the reaction started 1 day ago \
@@ -516,7 +516,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "20 hours",
                         explanation: """
-                        The time at which the reactant if half its initial amount is called \
+                        The time at which the reactant is half its initial amount is called \
                         half-life. Half-life for zero order equations is $t_1/2_ = [A_0_]/2k$, so \
                         you'd have to first determine what the value of k is. 20 hours would still \
                         not be enough time for the reactant to be consumed until the point it's \
@@ -529,8 +529,7 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "ZEROORDER-11",
                 question: """
-                A reaction $(A to 3B)$ took place. It started with only A, and it ended up being \
-                8 M. Which of the following was the initial concentration of A?
+                A reaction $(A to 3B)$ took place. It started with only A, and it ended up turning completely into 8M of B. Which of the following was the initial concentration of A?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: "2.666 M",
@@ -604,7 +603,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "5[ΔA]/2Δt",
                         explanation: """
-                        So $5[ΔA]/2Δt$ is not the correct answer because that would be equivalent to \
+                        $5[ΔA]/2Δt$ is not the correct answer because that would be equivalent to \
                         $-[ΔB]/Δt$.
                         """
                     )
@@ -665,7 +664,7 @@ extension QuizQuestionsList {
                 correctAnswer: QuizAnswerData(
                     answer: "Is not a zero order reaction",
                     explanation: """
-                    For a zero order reaction, $rate = k$, so it's constant. If the reaction \
+                    For a zero order reaction, $rate = k$, so it's constant. If the rate \
                     varies, it definitely isn't a zero order reaction.
                     """
                 ),
@@ -761,47 +760,49 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "ZEROORDER-17",
                 question: """
-                A drug's decomposition follow a zero order kinetics with a rate constant of \
-                $0.001 g mL^-1^ month^-1^$. The initial concentration is $100 mg mL^-1^$. Which of \
-                the following corresponds to the shelf life (t10%)?
+                A substance (X) decomposes following a zero-order process. The rate constant is \
+                0.0032 g mL-1 week-1. After 10% of the substance gets decomposed, it's no longer \
+                considered functional. How much time is going to pass for this to happen? Consider \
+                the initial amount of the substance is 400 mg / mL.
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "10 months",
+                    answer: "12 weeks and a half",
                     explanation: """
-                    Using the equation for a zero order reaction: $[A] = [A_0_] - kt$. We want to \
-                    know the time at which 10% of [A] has been consumed, or in other words: \
-                    $[A] = 0.9[A_0_]$. We also need to adjust the k units for them to be aligned \
+                    Using the equation for a zero order reaction: $[X] = [X_0_] - kt$. We want to \
+                    know the time at which 10% of [X] has been consumed, or in other words: \
+                    $[X] = 0.9[X_0_]$. We also need to adjust the k units for them to be aligned \
                     with the other variables:
 
-                    0.001 g mL^-1^ month^-1^ \\* 1000mg/g = 1 g mL^-1^ month^-1^.
+                    0.0032 g mL^-1^ week^-1^ \\* 1000mg/g = 3.2 g mL^-1^ week^-1^.
 
-                    Replacing in the equation: $0.9[A_0_] = [A_0_] - t$. Solving for t: \
-                    $t = 0.10[A_0_] = 0.10(100) = 10 months$.
+                    Replacing in the equation: $0.9[X_0_] = [X_0_] - kt$. Solving for t: \
+                    $t = 0.10[X_0_]/k = 0.10(400)/3.2 = 12.5 weeks$ or 12 weeks and a half.
                     """,
                     explanationLabel: """
-                    Using the equation for a zero order reaction: $[A] = [A_0_] - kt$. We want to \
-                    know the time at which 10% of [A] has been consumed, or in other words: \
-                    $[A] = 0.9 times [A_0_]$. We also need to adjust the k units for them to be aligned \
+                    Using the equation for a zero order reaction: $[X] = [X_0_] - kt$. We want to \
+                    know the time at which 10% of [X] has been consumed, or in other words: \
+                    $[X] = 0.9 times [X_0_]$. We also need to adjust the k units for them to be aligned \
                     with the other variables:
 
-                    0.001 g mL^-1^ month^-1^ \\* 1000mg/gram, = 1 g mL^-1^ month^-1^.
+                    0.0032 g mL^-1^ week^-1^ \\* 1000mg/gram, = 1 g mL^-1^ week^-1^.
 
-                    Replacing in the equation: $0.9 times [A_0_] = [A_0_] - t$. Solving for t: \
-                    $t = 0.1 times [A_0_], = 0.1 times 100, = 10 months$.
+                    Replacing in the equation: $0.9 times [X_0_] = [X_0_] - t$. Solving for t: \
+                    $t = 0.1 times [X_0_] divided by k, = 0.1 times 400 divided by 3.2, = 12.5$ \
+                    weeks or 12 weeks and a half.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "5 months",
-                        explanation: "After 5 months only 5% of the drug has decomposed."
+                        answer: "10 weeks",
+                        explanation: "After 10 weeks only 8% of X has decomposed."
                     ),
                     QuizAnswerData(
-                        answer: "4 months",
-                        explanation: "After 4 months only 4% of the drug has decomposed."
+                        answer: "6 weeks",
+                        explanation: "After 6 weeks only 5% of X has decomposed."
                     ),
                     QuizAnswerData(
-                        answer: "3 months",
-                        explanation: "After 3 months only 3% of the drug has decomposed."
+                        answer: "3 weeks and a half",
+                        explanation: "After 3 weeks and a half only 3% of X has decomposed."
                     )
                 ],
                 difficulty: .medium
@@ -810,39 +811,29 @@ extension QuizQuestionsList {
                 id: "ZEROORDER-18",
                 question: "For a zero order reaction, which of the following is false?",
                 correctAnswer: QuizAnswerData(
-                    answer: "The half-life may be represented by the expression $t_1/2_ = 0.69 / k$",
+                    answer: "A graph plotting [A] vs t results in a straight line with a slope of k",
                     explanation: """
-                    It's false because $t_1/2_ = 0.69/k$ is the half-life equation for first order \
-                    reactions. For zero order reactions, $t_1/2_ = [A_0_]/2k$
+                    It's false because even though it results in a straight line, the slope \
+                    is -k (since [A] is decreasing over time)
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: """
-                        The rate of degradation is independent of the concentration of the \
-                        reactant(s)
-                        """,
-                        answerLabel: """
-                        The rate of degradation is independent of the concentration of the \
-                        reactant (or reactants)
+                        The rate is equals to the rate constant
                         """,
                         explanation: """
-                        It's true, the rate of the reaction is constant regardless of the \
-                        concentration of the reactant(s).
-                        """,
-                        explanationLabel: """
-                        It's true, the rate of the reaction is constant regardless of the \
-                        concentration of the reactant (or reactants).
+                        It's true, the rate of the reaction is constant and for zero \
+                        order reactions is the same as the rate.
                         """
                     ),
                     QuizAnswerData(
                         answer: """
-                        A plot of the concentration remaining against time is a straight line with \
-                        a gradient of -k
+                        The rate of the reaction doesn't depend on the concentration of the reactants.
                         """,
                         explanation: """
-                        It's true, a graph [A] vs t will result in a straight line for a zero \
-                        order reaction.
+                        It's true, the rate of the reaction is constant and independent of the \
+                        reactants' concentrations.
                         """
                     ),
                     QuizAnswerData(
@@ -881,7 +872,7 @@ extension QuizQuestionsList {
                         """
                     ),
                     QuizAnswerData(
-                        answer: "t_1/2_ = 1/[A_0_] \\* 2k",
+                        answer: "t_1/2_ = 1/[A_0_] \\* k",
                         explanation: """
                         For second order reactions, half-life equation is $1/[A_0_] \\* k$.
                         """
