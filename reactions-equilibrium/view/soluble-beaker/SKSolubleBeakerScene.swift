@@ -1,0 +1,158 @@
+//
+// Reactions App
+//
+
+import SpriteKit
+import SwiftUI
+
+struct Wrapper: UIViewRepresentable {
+    typealias UIViewType = SKView
+
+    let size: CGSize
+
+    func makeUIView(context: Context) -> SKView {
+        let view = SKView()
+        let scene = SKSolubleBeakerScene(size: size)
+        scene.scaleMode = .aspectFit
+        view.allowsTransparency = true
+        view.presentScene(scene)
+
+        view.showsFields = true
+        view.showsFPS = true
+        view.showsPhysics = true
+
+        return view
+    }
+
+    func updateUIView(_ uiView: SKView, context: Context) {
+
+    }
+}
+
+class SKSolubleBeakerScene: SKScene {
+
+    override func didMove(to view: SKView) {
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        backgroundColor = .white
+
+//        demoElectricField()
+//        demoMagneticField()
+        demoJoinedNodesAndMagneticField()
+    }
+
+    private func demoJoinedNodesAndMagneticField() {
+        func addNode() {
+            let radius: CGFloat = 10
+
+            let x0: CGFloat = CGFloat.random(in: 0..<size.width)
+            let y0: CGFloat = CGFloat.random(in: 0..<size.height)
+
+            let node1 = SKShapeNode(circleOfRadius: radius)
+            let physics1 = SKPhysicsBody(circleOfRadius: radius)
+            physics1.charge = 1
+            physics1.affectedByGravity = false
+            node1.physicsBody = physics1
+            node1.fillColor = .purple
+
+            let node2 = SKShapeNode(circleOfRadius: radius)
+            let physics2 = SKPhysicsBody(circleOfRadius: radius)
+            physics2.charge = -1
+            physics2.affectedByGravity = false
+            node2.physicsBody = physics2
+            node2.fillColor = .blue
+
+            node1.position = CGPoint(x: x0, y: y0)
+            node2.position = CGPoint(x: x0 + (3 * radius), y: y0)
+
+            let joint = SKPhysicsJointFixed.joint(
+                withBodyA: physics1,
+                bodyB: physics2,
+                anchor: CGPoint(x: x0 + (2.5 * radius), y: y0 + (0.5 * radius))
+            )
+
+            self.addChild(node1)
+            self.addChild(node2)
+            self.physicsWorld.add(joint)
+
+            let mag = 1
+            physics1.applyImpulse(CGVector(dx: mag, dy: mag))
+        }
+
+
+        let magneticField = SKFieldNode.magneticField()
+        magneticField.strength = 0.2
+        self.addChild(magneticField)
+
+
+        (0...10).forEach { _ in addNode() }
+    }
+
+    private func demoElectricField() {
+        let electricField = SKFieldNode.electricField()
+        self.addChild(electricField)
+
+        func addNode(_ color: UIColor, _ charge: CGFloat) {
+            let radius: CGFloat = 10
+            let node = SKShapeNode(circleOfRadius: radius)
+            let physics = SKPhysicsBody(circleOfRadius: radius)
+            node.fillColor = color
+
+            physics.charge = charge
+            physics.affectedByGravity = false
+            physics.restitution = 0.1
+            physics.linearDamping = 0.1
+
+            node.physicsBody = physics
+
+            let position = CGPoint(
+                x: CGFloat.random(in: 0..<size.width),
+                y: CGFloat.random(in: 0..<size.height)
+            )
+            node.position = position
+            addChild(node)
+        }
+
+        (0..<10).forEach { _ in addNode(.purple, 0.01) }
+        (0..<10).forEach { _ in addNode(.blue, -0.01) }
+    }
+
+    private func demoMagneticField() {
+        let magneticField = SKFieldNode.magneticField()
+        magneticField.strength = 0.2
+        self.addChild(magneticField)
+
+        func addNode(_ color: UIColor, _ charge: CGFloat) {
+            let radius: CGFloat = 10
+            let node = SKShapeNode(circleOfRadius: radius)
+            let physics = SKPhysicsBody(circleOfRadius: radius)
+            node.fillColor = color
+
+            physics.charge = charge
+            physics.affectedByGravity = false
+            physics.restitution = 0.1
+            physics.linearDamping = 0.1
+
+            node.physicsBody = physics
+
+            let position = CGPoint(
+                x: CGFloat.random(in: 0..<size.width),
+                y: CGFloat.random(in: 0..<size.height)
+            )
+            node.position = position
+            addChild(node)
+            let mag: CGFloat = 2
+            physics.applyImpulse(CGVector(dx: CGFloat.random(in: -mag...mag), dy: CGFloat.random(in: -mag...mag)))
+        }
+
+        (0..<10).forEach { _ in addNode(.purple, 0.01) }
+        (0..<10).forEach { _ in addNode(.blue, -0.01) }
+    }
+}
+
+struct SKSolubleBeakerScene_Previews: PreviewProvider {
+    static var previews: some View {
+        GeometryReader { geo in
+            Wrapper(size: geo.size)
+        }
+    }
+}
