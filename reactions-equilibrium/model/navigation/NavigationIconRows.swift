@@ -9,7 +9,7 @@ struct ReactionEquilibriumNavigationRows {
 }
 
 private enum NavigationRow: CaseIterable {
-    case aqueous, gaseous
+    case aqueous, gaseous, solubility
 
     var row: NavigationIconRow<EquilibriumAppScreen> {
         NavigationIconRow(
@@ -29,6 +29,7 @@ private enum NavigationRow: CaseIterable {
         switch self {
         case .aqueous: return .aqueousReaction
         case .gaseous: return .gaseousReaction
+        case .solubility: return .solubility
         }
     }
 
@@ -36,6 +37,7 @@ private enum NavigationRow: CaseIterable {
         switch self {
         case .aqueous: return "Aqueous reaction"
         case .gaseous: return "Gaseous reaction"
+        case .solubility: return "Solubility reaction"
         }
     }
 
@@ -43,6 +45,7 @@ private enum NavigationRow: CaseIterable {
         switch self {
         case .aqueous: return "aqueousicon"
         case .gaseous: return "gaseousicon"
+        case .solubility: return "solubilityicon"
         }
     }
 }

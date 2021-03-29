@@ -87,6 +87,9 @@
 		5743D9BD25C454F8000C0397 /* Injector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9BC25C454F8000C0397 /* Injector.swift */; };
 		5743D9C125C45C81000C0397 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */; };
 		5743D9C625C45D9D000C0397 /* ReviewPromptPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9C525C45D9D000C0397 /* ReviewPromptPersistenceTests.swift */; };
+		5745D2812610EB760040F3CF /* SolubilityScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745D2802610EB760040F3CF /* SolubilityScreen.swift */; };
+		5745D2882610EFF10040F3CF /* SolubilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745D2872610EFF10040F3CF /* SolubilityViewModel.swift */; };
+		5745D2932610F08C0040F3CF /* SolubilityNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745D2922610F08C0040F3CF /* SolubilityNavigationModel.swift */; };
 		5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */; };
 		574F14BC25B4898700EB316C /* InputLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F14BB25B4898700EB316C /* InputLimits.swift */; };
 		574F14C025B48C9200EB316C /* NewDualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F14BF25B48C9200EB316C /* NewDualValueSlider.swift */; };
@@ -526,6 +529,9 @@
 		5743D9BC25C454F8000C0397 /* Injector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Injector.swift; sourceTree = "<group>"; };
 		5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtensions.swift; sourceTree = "<group>"; };
 		5743D9C525C45D9D000C0397 /* ReviewPromptPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistenceTests.swift; sourceTree = "<group>"; };
+		5745D2802610EB760040F3CF /* SolubilityScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityScreen.swift; sourceTree = "<group>"; };
+		5745D2872610EFF10040F3CF /* SolubilityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityViewModel.swift; sourceTree = "<group>"; };
+		5745D2922610F08C0040F3CF /* SolubilityNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityNavigationModel.swift; sourceTree = "<group>"; };
 		5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationModelTest.swift; sourceTree = "<group>"; };
 		574F14BB25B4898700EB316C /* InputLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLimits.swift; sourceTree = "<group>"; };
 		574F14BF25B48C9200EB316C /* NewDualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDualValueSlider.swift; sourceTree = "<group>"; };
@@ -1226,6 +1232,30 @@
 			path = persistence;
 			sourceTree = "<group>";
 		};
+		5745D27F2610EB690040F3CF /* solubility */ = {
+			isa = PBXGroup;
+			children = (
+				5745D2802610EB760040F3CF /* SolubilityScreen.swift */,
+			);
+			path = solubility;
+			sourceTree = "<group>";
+		};
+		5745D2862610EFDE0040F3CF /* solubility */ = {
+			isa = PBXGroup;
+			children = (
+				5745D2872610EFF10040F3CF /* SolubilityViewModel.swift */,
+			);
+			path = solubility;
+			sourceTree = "<group>";
+		};
+		5745D2912610F07C0040F3CF /* solubility */ = {
+			isa = PBXGroup;
+			children = (
+				5745D2922610F08C0040F3CF /* SolubilityNavigationModel.swift */,
+			);
+			path = solubility;
+			sourceTree = "<group>";
+		};
 		574F14B625B488D400EB316C /* axis */ = {
 			isa = PBXGroup;
 			children = (
@@ -1550,6 +1580,7 @@
 		57952A5025E68175006AB876 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
+				5745D2912610F07C0040F3CF /* solubility */,
 				57062DB526072C4D00007BAA /* gaseous */,
 				57952A5B25E68189006AB876 /* aqueous */,
 				57B3B94C260B478800EB9B47 /* ReactionsEquilibriumNavigationModel.swift */,
@@ -1900,6 +1931,7 @@
 		57DDAC0725E4FD6500B535A7 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				5745D27F2610EB690040F3CF /* solubility */,
 				57D6F3682610A1C700AD23AD /* soluble-beaker */,
 				57686AAC2600D222005BD328 /* util */,
 				57686A892600CF54005BD328 /* gaseous */,
@@ -1991,6 +2023,7 @@
 		57DDACE625E552D200B535A7 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				5745D2862610EFDE0040F3CF /* solubility */,
 				57686A942600CFDC005BD328 /* gaseous */,
 				576A421825F7A7EC00047618 /* molecule-container */,
 				57DDACE725E552E500B535A7 /* aqueous */,
@@ -2602,17 +2635,20 @@
 				57D2F2C325EA227D00AEE0D8 /* ReactionQuotientEquation.swift in Sources */,
 				57D2F2E425EA2C4300AEE0D8 /* AqueousEquationView.swift in Sources */,
 				576A422525F7A86400047618 /* FallingMolecule.swift in Sources */,
+				5745D2932610F08C0040F3CF /* SolubilityNavigationModel.swift in Sources */,
 				576A421A25F7A81100047618 /* AddMoleculesViewmodel.swift in Sources */,
 				57686AA72600D1F7005BD328 /* ChartStack.swift in Sources */,
 				57686AD92601C981005BD328 /* Pump.swift in Sources */,
 				5790A5FF2610C3F800CA2ED7 /* SolidParticleNode.swift in Sources */,
 				57DB304425F74D050070E96F /* AddMoleculeView.swift in Sources */,
 				57952A5225E68184006AB876 /* AqueousNavigationModel.swift in Sources */,
+				5745D2882610EFF10040F3CF /* SolubilityViewModel.swift in Sources */,
 				57D2F32725EA86C600AEE0D8 /* EquilibriumGrid.swift in Sources */,
 				57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */,
 				57E59A3F25F91D510087F760 /* DoubleSidedArrow.swift in Sources */,
 				5787C26425F65BC400CF685A /* MoleculeValue.swift in Sources */,
 				57A1B7A225EAA7A800878B52 /* MoleculePile.swift in Sources */,
+				5745D2812610EB760040F3CF /* SolubilityScreen.swift in Sources */,
 				57DDACF425E554AD00B535A7 /* AqueousStyling.swift in Sources */,
 				57062DC72607A84C00007BAA /* NavigationModel.swift in Sources */,
 				57D6F3782610A20000AD23AD /* SKSolubleBeakerScene.swift in Sources */,

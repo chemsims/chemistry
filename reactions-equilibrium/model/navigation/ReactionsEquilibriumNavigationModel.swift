@@ -26,7 +26,10 @@ private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
     typealias Screen = EquilibriumAppScreen
 
     func deferCanSelect(of screen: EquilibriumAppScreen) -> DeferCanSelect<EquilibriumAppScreen>? {
-        nil
+        if screen == .aqueousReaction {
+            return nil
+        }
+        return .canSelect(other: .aqueousReaction)
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: EquilibriumAppScreen) -> Bool {
@@ -56,6 +59,8 @@ fileprivate extension EquilibriumAppScreen {
             return AqueousReactionScreenProvider(nextScreen: nextScreen, prevScreen: prevScreen)
         case .gaseousReaction:
             return GaseousReactionScreenProvider(nextScreen: nextScreen, prevScreen: prevScreen)
+        case .solubility:
+            return SolubilityScreenProvider(nextScreen: nextScreen, prevScreen: prevScreen)
         }
     }
 }
@@ -87,6 +92,22 @@ private class GaseousReactionScreenProvider: ScreenProvider {
 
     var screen: AnyView {
         AnyView(GaseousReactionScreen(model: model))
+    }
+}
+
+private class SolubilityScreenProvider: ScreenProvider {
+
+    init(nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) {
+        let model = SolubilityViewModel()
+        model.navigation?.nextScreen = nextScreen
+        model.navigation?.prevScreen = prevScreen
+        self.model = model
+    }
+
+    let model: SolubilityViewModel
+
+    var screen: AnyView {
+        AnyView(SolubilityScreen(model: model))
     }
 }
 

@@ -5,5 +5,5 @@
 import Foundation
 
 enum EquilibriumAppScreen: CaseIterable {
-    case aqueousReaction, gaseousReaction
+    case aqueousReaction, gaseousReaction, solubility
 }
