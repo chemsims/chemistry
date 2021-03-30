@@ -83,7 +83,7 @@ private struct QuizScreenWithSettings: View {
             navButtons
 
             NotificationView(
-                isShowing: $model.showNotification,
+                isShowing: model.showNotification,
                 settings: settings
             )
         }
@@ -226,10 +226,10 @@ private struct QuizScreenWithSettings: View {
 
 private struct NotificationView: View {
 
-    @Binding var isShowing: Bool
+    let isShowing: Bool
 
-    @State private var isDragging = false
-    @State private var offset: CGFloat = 0
+    @GestureState private var offset: CGFloat = 0
+    @GestureState private var isDragging = false
 
     let settings: QuizLayoutSettings
     var fontSize: CGFloat {
@@ -251,15 +251,6 @@ private struct NotificationView: View {
             .offset(y: !isShowing && !isDragging ? notShowingOffset : showingOffset + offset)
             .gesture(gesture)
             .animation(reduceMotion ? nil : .easeOut(duration: 0.5))
-            .onReceive(
-                NotificationCenter.default.publisher(
-                    for: UIApplication.willResignActiveNotification
-                )
-            ) { _ in
-//                isDragging = false
-                offset = 0
-                isShowing = false
-            }
             .frame(height: height)
     }
 
@@ -280,44 +271,18 @@ private struct NotificationView: View {
         return max(safeArea.bottom, safeArea.trailing, safeArea.leading, safeArea.top)
     }
 
-    private func scheduleRemoval() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) {
-            self.doHide()
-        }
-    }
-
-    private func doHide() {
-        if offset == 0 {
-            isShowing = false
-        } else {
-            scheduleRemoval()
-        }
-    }
-
     private var gesture: some Gesture {
         DragGesture()
-            .onChanged { gesture in
-                if !isDragging {
-                    offset = 0
-                }
-                isDragging = true
+            .updating($offset) { gesture, offsetState, _ in
                 let dy = gesture.translation.height
                 if dy > 0 {
-                    self.offset = dy * 0.33
+                    offsetState = dy * 0.33
                 } else {
-                    self.offset = dy
+                    offsetState = dy
                 }
-            }.onEnded { gesture in
-                withAnimation(.easeOut(duration: 0.35)) {
-                    isDragging = false
-                    let dy = gesture.translation.height
-                    if dy < 10 {
-                        self.offset = 0
-                        isShowing = false
-                    } else {
-                        self.offset = 0
-                    }
-                }
+            }
+            .updating($isDragging) { gesture, dragState, _ in
+                dragState = true
             }
     }
 
