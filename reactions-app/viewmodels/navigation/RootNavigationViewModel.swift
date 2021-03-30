@@ -25,6 +25,8 @@ class RootNavigationViewModel: ObservableObject {
     private var models = [AppScreen: ScreenProvider]()
     private(set) var currentScreen: AppScreen
 
+    private var hasOpenedFirstScreen = false
+
     init(
         injector: Injector
     ) {
@@ -102,12 +104,13 @@ class RootNavigationViewModel: ObservableObject {
         withAnimation(navigationAnimation) {
             self.view = provider.screen
         }
-        if screen == .finalAppScreen {
+        if screen == .finalAppScreen && !hasOpenedFirstScreen {
             showMenu = true
             ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
         }
         injector.analytics.openedScreen(screen)
         injector.lastOpenedScreenPersistence.set(screen)
+        hasOpenedFirstScreen = true
     }
 
     private func screenIsAfterCurrent(nextScreen: AppScreen) -> Bool {
