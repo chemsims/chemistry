@@ -32,8 +32,6 @@ private struct QuizScreenWithSettings: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var showNotification = false
-
     var body: some View {
         ZStack(alignment: .top) {
             if model.quizState != .completed {
@@ -84,21 +82,13 @@ private struct QuizScreenWithSettings: View {
 
             navButtons
 
-            if showNotification {
-                notificationView
-
-            }
+            NotificationView(
+                isShowing: $model.showNotification,
+                settings: settings
+            )
         }
         .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.8)
-    }
-
-    private var notificationView: some View {
-        NotificationView(
-            isShowing: $showNotification,
-            fontSize: settings.answerFontSize
-        )
-        .zIndex(1)
     }
 
     private var navButtons: some View {
@@ -127,26 +117,20 @@ private struct QuizScreenWithSettings: View {
     private var nextButton: some View {
         ZStack {
             NextButton(action: { navigate(next: true)})
-                .disabled(model.nextIsDisabled)
                 .opacity(model.nextIsDisabled ? 0.3 : 1)
                 .padding(settings.rightNavPadding)
                 .modifyIf(model.nextIsDisabled) {
                     $0.accessibility(hint: Text("Select correct answer to enable next button"))
                 }
 
-            if model.nextIsDisabled {
-                Button(action: { showNotification = true }) {
-                    Circle()
-                        .opacity(0)
-                }
-                .accessibility(hidden: true)
-            }
         }.frame(width: settings.rightNavSize, height: settings.rightNavSize)
     }
 
     private func navigate(next: Bool) {
-        UIAccessibility.post(notification: .screenChanged, argument: NSString(""))
         if next {
+            if !model.nextIsDisabled {
+                UIAccessibility.post(notification: .screenChanged, argument: NSString(""))
+            }
             model.next()
         } else {
             model.back()
@@ -203,7 +187,6 @@ private struct QuizScreenWithSettings: View {
         .accessibilityElement()
         .accessibility(label: Text("Quiz progress"))
         .accessibility(value: Text(accessibilityValue))
-
     }
 
     private var accessibilityValue: String {
@@ -244,9 +227,14 @@ private struct QuizScreenWithSettings: View {
 private struct NotificationView: View {
 
     @Binding var isShowing: Bool
+
+    @State private var isDragging = false
     @State private var offset: CGFloat = 0
 
-    let fontSize: CGFloat
+    let settings: QuizLayoutSettings
+    var fontSize: CGFloat {
+        settings.answerFontSize
+    }
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -260,18 +248,36 @@ private struct NotificationView: View {
                     .shadow(radius: 2)
             )
             .padding(.top, 15)
-            .offset(y: offset)
+            .offset(y: !isShowing && !isDragging ? notShowingOffset : showingOffset + offset)
             .gesture(gesture)
-            .transition(.move(edge: .top))
             .animation(reduceMotion ? nil : .easeOut(duration: 0.5))
-            .onAppear(perform: scheduleRemoval)
             .onReceive(
                 NotificationCenter.default.publisher(
                     for: UIApplication.willResignActiveNotification
                 )
             ) { _ in
+//                isDragging = false
+                offset = 0
                 isShowing = false
             }
+            .frame(height: height)
+    }
+
+    private var showingOffset: CGFloat {
+        0.1 * height
+    }
+
+    private var notShowingOffset: CGFloat {
+        -(height + safeAreaGap)
+    }
+
+    private var height: CGFloat {
+        settings.navSize
+    }
+
+    private var safeAreaGap: CGFloat {
+        let safeArea = settings.geometry.safeAreaInsets
+        return max(safeArea.bottom, safeArea.trailing, safeArea.leading, safeArea.top)
     }
 
     private func scheduleRemoval() {
@@ -291,6 +297,10 @@ private struct NotificationView: View {
     private var gesture: some Gesture {
         DragGesture()
             .onChanged { gesture in
+                if !isDragging {
+                    offset = 0
+                }
+                isDragging = true
                 let dy = gesture.translation.height
                 if dy > 0 {
                     self.offset = dy * 0.33
@@ -299,8 +309,10 @@ private struct NotificationView: View {
                 }
             }.onEnded { gesture in
                 withAnimation(.easeOut(duration: 0.35)) {
+                    isDragging = false
                     let dy = gesture.translation.height
                     if dy < 10 {
+                        self.offset = 0
                         isShowing = false
                     } else {
                         self.offset = 0
