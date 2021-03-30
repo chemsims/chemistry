@@ -158,11 +158,11 @@
 		57CDFE5125E29968005D699A /* LastOpenedScreenPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE5025E29968005D699A /* LastOpenedScreenPersistence.swift */; };
 		57CDFE5725E29B0F005D699A /* LastOpenedScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */; };
 		57CF6FD226123727007F50A7 /* SecondOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FCD26123726007F50A7 /* SecondOrderQuizQuestions.swift */; };
-		57CF6FD326123727007F50A7 /* ReactionComparisonQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FCE26123727007F50A7 /* ReactionComparisonQuizQuestions.swift */; };
-		57CF6FD426123727007F50A7 /* FirstOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FCF26123727007F50A7 /* FirstOrderQuizQuestions.swift */; };
 		57CF6FD526123727007F50A7 /* ZeroOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FD026123727007F50A7 /* ZeroOrderQuizQuestions.swift */; };
 		57CF6FD626123727007F50A7 /* EnergyProfileQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FD126123727007F50A7 /* EnergyProfileQuizQuestions.swift */; };
 		57CF6FE6261237FD007F50A7 /* ReactionStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FE5261237FD007F50A7 /* ReactionStatements.swift */; };
+		57CF6FEF261323DD007F50A7 /* FirstOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FED261323DD007F50A7 /* FirstOrderQuizQuestions.swift */; };
+		57CF6FF0261323DD007F50A7 /* ReactionComparisonQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FEE261323DD007F50A7 /* ReactionComparisonQuizQuestions.swift */; };
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
 		57D8BA17257B6ABF006B3C8B /* ReactionComparisonScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */; };
@@ -376,11 +376,11 @@
 		57CDFE5025E29968005D699A /* LastOpenedScreenPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastOpenedScreenPersistence.swift; sourceTree = "<group>"; };
 		57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastOpenedScreenTests.swift; sourceTree = "<group>"; };
 		57CF6FCD26123726007F50A7 /* SecondOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondOrderQuizQuestions.swift; sourceTree = "<group>"; };
-		57CF6FCE26123727007F50A7 /* ReactionComparisonQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionComparisonQuizQuestions.swift; sourceTree = "<group>"; };
-		57CF6FCF26123727007F50A7 /* FirstOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FD026123727007F50A7 /* ZeroOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZeroOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FD126123727007F50A7 /* EnergyProfileQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyProfileQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FE5261237FD007F50A7 /* ReactionStatements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionStatements.swift; sourceTree = "<group>"; };
+		57CF6FED261323DD007F50A7 /* FirstOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstOrderQuizQuestions.swift; sourceTree = "<group>"; };
+		57CF6FEE261323DD007F50A7 /* ReactionComparisonQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionComparisonQuizQuestions.swift; sourceTree = "<group>"; };
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
 		57D8BA16257B6ABF006B3C8B /* ReactionComparisonScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreen.swift; sourceTree = "<group>"; };
@@ -933,9 +933,9 @@
 		57778B8425937B5900254262 /* questions */ = {
 			isa = PBXGroup;
 			children = (
+				57CF6FED261323DD007F50A7 /* FirstOrderQuizQuestions.swift */,
+				57CF6FEE261323DD007F50A7 /* ReactionComparisonQuizQuestions.swift */,
 				57CF6FD126123727007F50A7 /* EnergyProfileQuizQuestions.swift */,
-				57CF6FCF26123727007F50A7 /* FirstOrderQuizQuestions.swift */,
-				57CF6FCE26123727007F50A7 /* ReactionComparisonQuizQuestions.swift */,
 				57CF6FCD26123726007F50A7 /* SecondOrderQuizQuestions.swift */,
 				57CF6FD026123727007F50A7 /* ZeroOrderQuizQuestions.swift */,
 			);
@@ -1253,7 +1253,6 @@
 				57DAE4E42577C53B006D945B /* EquationSettings.swift in Sources */,
 				57CF6FD226123727007F50A7 /* SecondOrderQuizQuestions.swift in Sources */,
 				57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */,
-				57CF6FD426123727007F50A7 /* FirstOrderQuizQuestions.swift in Sources */,
 				571D6A76255AC27400F4E635 /* TextLine.swift in Sources */,
 				570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */,
 				5773B5EC25B84A9100889A2E /* MailComposerView.swift in Sources */,
@@ -1319,6 +1318,7 @@
 				57FDA125255D5CFA00CB8804 /* EquationPlaceholderView.swift in Sources */,
 				5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */,
 				571B3C5A256555C40075358B /* NavigationViewModel.swift in Sources */,
+				57CF6FF0261323DD007F50A7 /* ReactionComparisonQuizQuestions.swift in Sources */,
 				57035F12255C29A500DB3A19 /* ConcentrationTimeChartView.swift in Sources */,
 				573F16922584ACEC001CE039 /* QuizViewModel.swift in Sources */,
 				57D8BA27257BBCE9006B3C8B /* ReactionComparisonViews.swift in Sources */,
@@ -1358,9 +1358,9 @@
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,
 				57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */,
 				57DE4DA125A502BF00644790 /* QuizIntroBody.swift in Sources */,
-				57CF6FD326123727007F50A7 /* ReactionComparisonQuizQuestions.swift in Sources */,
 				57D8BA17257B6ABF006B3C8B /* ReactionComparisonScreen.swift in Sources */,
 				573F169D2584C035001CE039 /* QuizQuestion.swift in Sources */,
+				57CF6FEF261323DD007F50A7 /* FirstOrderQuizQuestions.swift in Sources */,
 				571215562580DCD000E92A99 /* Equation.swift in Sources */,
 				57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */,
 				57F10981255E88CF00834783 /* ChartLine.swift in Sources */,
