@@ -8,7 +8,7 @@ import ReactionsCore
 struct SecondOrderStatements {
     static let intro: [TextLine] = [
         "This is a second order reaction.",
-        "Why don't you set the *initial concentration of A (c_1_)*, the reactant?"
+        "Why don't you set the *initial concentration of A (A_0_)*, the reactant?"
     ]
 
     static func explainRateConstant(rateConstant: CGFloat) -> [TextLine] {
