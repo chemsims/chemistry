@@ -129,6 +129,8 @@
 		5783965925A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783965825A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift */; };
 		5787039825B88E14002A4487 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787039725B88E14002A4487 /* ShareSheetView.swift */; };
 		5787039C25B89D01002A4487 /* ReactionPairDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */; };
+		578B16E42615DDD200D8079F /* PrimaryNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16E32615DDD200D8079F /* PrimaryNextButton.swift */; };
+		578B16E82615DDE900D8079F /* PillShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16E72615DDE900D8079F /* PillShape.swift */; };
 		5790AC2F25B375FC00B25776 /* ReactionComparisonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
@@ -347,6 +349,8 @@
 		5783965825A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChartInputTests.swift; sourceTree = "<group>"; };
 		5787039725B88E14002A4487 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPairDisplay.swift; sourceTree = "<group>"; };
+		578B16E32615DDD200D8079F /* PrimaryNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryNextButton.swift; sourceTree = "<group>"; };
+		578B16E72615DDE900D8079F /* PillShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillShape.swift; sourceTree = "<group>"; };
 		5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViewModelTests.swift; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
@@ -606,6 +610,8 @@
 				5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */,
 				5773B5EB25B84A9100889A2E /* MailComposerView.swift */,
 				5787039725B88E14002A4487 /* ShareSheetView.swift */,
+				578B16E32615DDD200D8079F /* PrimaryNextButton.swift */,
+				578B16E72615DDE900D8079F /* PillShape.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -1274,6 +1280,7 @@
 				577077BC2568E3E1003E750E /* BeakyOverlay.swift in Sources */,
 				57D8BA2C257BF17E006B3C8B /* ReactionComparisonScreenElement.swift in Sources */,
 				571B3C842565638F0075358B /* OrderedReactionLayoutSettings.swift in Sources */,
+				578B16E42615DDD200D8079F /* PrimaryNextButton.swift in Sources */,
 				57DAE4FE2577ED76006D945B /* ReactionInput.swift in Sources */,
 				57D8BA23257B7379006B3C8B /* ReactionComparisonStatements.swift in Sources */,
 				571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */,
@@ -1337,6 +1344,7 @@
 				57064BA225A77787008102CE /* ReactionInputModel.swift in Sources */,
 				57DAE4FA2577ECD9006D945B /* ReactionInputPersistence.swift in Sources */,
 				57C3A8272563248F00EE753E /* FirstOrderReactionScreen.swift in Sources */,
+				578B16E82615DDE900D8079F /* PillShape.swift in Sources */,
 				57B528EA25B38A4E00381550 /* ReviewPromptPersistence.swift in Sources */,
 				577077D325698DF2003E750E /* SkBeakerSceneRepresentable.swift in Sources */,
 				576D5A7825665E170062F722 /* ScaledView.swift in Sources */,
