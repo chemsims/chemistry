@@ -16,7 +16,7 @@ struct MainMenuOverlay: View {
     @State private var activeSheet: ActiveSheet?
 
     var body: some View {
-        GeometryReader { geo in
+        return GeometryReader { geo in
             MainMenuOverlayWithSettings(
                 navigation: navigation,
                 activeSheet: $activeSheet,
@@ -35,7 +35,10 @@ struct MainMenuOverlay: View {
                 MailComposerView(onDismiss: { activeSheet = nil })
                     .edgesIgnoringSafeArea(.all)
             case .share:
-                ShareSheetView(activityItems: [ShareSettings.message])
+                ShareSheetView(
+                    activityItems: [ShareSettings.message],
+                    onCompletion: { activeSheet = nil }
+                )
                     .edgesIgnoringSafeArea(.all)
             }
         }
