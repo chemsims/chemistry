@@ -135,6 +135,8 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 
     private let runCatalystKey = "AddCatalysts"
 
+    private var timeSinceLastSpeedAdjustment: TimeInterval?
+
     var extraSpeed: CGFloat = 0 {
         didSet {
             let minV = settings.minVelocity
@@ -144,10 +146,7 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    @objc
-    private func updateSpeeds(
-        allowRapidChange: Bool
-    ) {
+    private func updateSpeeds(allowRapidChange: Bool) {
         func updateSpeed(_ body: SKPhysicsBody) {
             let magnitude = body.velocity.magnitude
             let factor = velocity / magnitude
@@ -269,11 +268,6 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
         if reactionState == .completed {
             endReaction(duration: nil)
         }
-
-        let updateSpeedAction = SKAction.run { self.updateSpeeds(allowRapidChange: false) }
-        let wait = SKAction.wait(forDuration: updateSpeedDelay)
-        let sequence = SKAction.sequence([wait, updateSpeedAction])
-        self.run(SKAction.repeatForever(sequence))
     }
 
     private func initialiseCatalysts() {
@@ -468,6 +462,13 @@ class SKBeakerScene: SKScene, SKPhysicsContactDelegate {
 
                 catalyst.constraints = [xConstraint, yConstraint]
             }
+        }
+
+        let elapsed = timeSinceLastSpeedAdjustment.map { currentTime - $0 }
+        let shouldUpdateSpeeds = elapsed.map { $0 > 0.5 } ?? true
+        if shouldUpdateSpeeds {
+            updateSpeeds(allowRapidChange: false)
+            timeSinceLastSpeedAdjustment = currentTime
         }
     }
 
