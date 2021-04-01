@@ -40,7 +40,7 @@ class EnergyProfileViewModel: ObservableObject {
         EnergyProfileChartInput(
             shape: selectedReaction.energyProfileShapeSettings,
             temperature: temp2 ?? temp1,
-            catalyst: catalystState.selected
+            catalyst: catalystForActivationEnergy
         )
     }
 
@@ -49,8 +49,16 @@ class EnergyProfileViewModel: ObservableObject {
     var navigation: NavigationViewModel<EnergyProfileState>?
 
     var activationEnergy: CGFloat {
-        let reduction = catalystState.selected?.energyReduction ?? 0
+        let reduction = catalystForActivationEnergy?.energyReduction ?? 0
         return selectedReaction.activationEnergy - reduction
+    }
+
+    private var catalystForActivationEnergy: Catalyst? {
+        switch catalystState {
+        case .active: return usedCatalysts.last
+        case let .selected(catalyst: catalyst): return catalyst
+        default: return nil
+        }
     }
 
     var extraEnergyFactor: CGFloat {
