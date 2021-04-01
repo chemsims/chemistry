@@ -131,6 +131,7 @@
 		5787039C25B89D01002A4487 /* ReactionPairDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */; };
 		578B16E42615DDD200D8079F /* PrimaryNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16E32615DDD200D8079F /* PrimaryNextButton.swift */; };
 		578B16E82615DDE900D8079F /* PillShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16E72615DDE900D8079F /* PillShape.swift */; };
+		578B16EC2615F11D00D8079F /* AppURLCanBeOpenedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16EB2615F11D00D8079F /* AppURLCanBeOpenedTests.swift */; };
 		5790AC2F25B375FC00B25776 /* ReactionComparisonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
 		579628CF25659054007A7A6D /* RootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* RootNavigationView.swift */; };
@@ -351,6 +352,7 @@
 		5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPairDisplay.swift; sourceTree = "<group>"; };
 		578B16E32615DDD200D8079F /* PrimaryNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryNextButton.swift; sourceTree = "<group>"; };
 		578B16E72615DDE900D8079F /* PillShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillShape.swift; sourceTree = "<group>"; };
+		578B16EB2615F11D00D8079F /* AppURLCanBeOpenedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppURLCanBeOpenedTests.swift; sourceTree = "<group>"; };
 		5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViewModelTests.swift; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* RootNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationView.swift; sourceTree = "<group>"; };
@@ -486,6 +488,7 @@
 				5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */,
 				572CBEAF25C0AECD00CE6007 /* LabellingTests.swift */,
 				5743D9B025C41CD2000C0397 /* ReactionFilingViewModelTests.swift */,
+				578B16EB2615F11D00D8079F /* AppURLCanBeOpenedTests.swift */,
 			);
 			path = "reactions-appTests";
 			sourceTree = "<group>";
@@ -1224,6 +1227,7 @@
 				5743D9B125C41CD2000C0397 /* ReactionFilingViewModelTests.swift in Sources */,
 				57F4776025617B240041D406 /* BoundedSliderPositioningTests.swift in Sources */,
 				57AA012425A8C635001131A0 /* EnergyProfileViewModelTests.swift in Sources */,
+				578B16EC2615F11D00D8079F /* AppURLCanBeOpenedTests.swift in Sources */,
 				57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */,
 				57DD22A125B771A8003E6842 /* ReactionInputLimitsWithoutC2Tests.swift in Sources */,
 				5738ADAF25AF2907002D4EB7 /* ReactionModelExtensions.swift in Sources */,
