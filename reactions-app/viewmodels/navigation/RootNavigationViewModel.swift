@@ -79,15 +79,21 @@ class RootNavigationViewModel: ObservableObject {
         goTo(screen: screen, with: getProvider(for: screen))
     }
 
-    private func next() {
-        if let nextScreen = linearScreens.element(after: currentScreen) {
-            persistence.setCompleted(screen: currentScreen)
+    private func next(from screen: AppScreen) {
+        guard screen == currentScreen else {
+            return
+        }
+        if let nextScreen = linearScreens.element(after: screen) {
+            persistence.setCompleted(screen: screen)
             goToFresh(screen: nextScreen)
         }
     }
 
-    private func prev() {
-        if let prevScreen = linearScreens.element(before: currentScreen) {
+    private func prev(from screen: AppScreen) {
+        guard screen == currentScreen else {
+            return
+        }
+        if let prevScreen = linearScreens.element(before: screen) {
             goToExisting(screen: prevScreen)
         }
     }
@@ -127,8 +133,8 @@ class RootNavigationViewModel: ObservableObject {
             quizPersistence: injector.quizPersistence,
             energyPersistence: injector.energyPersistence,
             analytics: injector.analytics,
-            next: next,
-            prev: prev,
+            next: { [weak self] in self?.next(from: screen) },
+            prev: { [weak self] in self?.prev(from: screen) },
             hideMenu: { self.showMenu = false }
         )
     }
