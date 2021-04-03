@@ -2,18 +2,20 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
-/// A beaker where the fill is the provided view
-struct FillableBeaker<Content: View>: View {
+/// A beaker where the provided view is placed inside the liquid.
+///
+/// Note that the provided view may be larger than the liquid dimensions. For example,
+/// this can allow molecules to be added above the beaker, and fall inside the liquid
+public struct FillableBeaker<Content: View>: View {
 
     let waterColor: Color
     let highlightBeaker: Bool
     let settings: FillableBeakerSettings
     let content: () -> Content
 
-    init(
+    public init(
         waterColor: Color,
         highlightBeaker: Bool,
         settings: FillableBeakerSettings,
@@ -25,10 +27,12 @@ struct FillableBeaker<Content: View>: View {
         self.content = content
     }
 
-
-    var body: some View {
+    public var body: some View {
         ZStack(alignment: .bottom) {
-            Color.white.mask(beakerShape)
+            Color.white
+                .mask(beakerShape)
+                .frame(height: settings.beakerHeight)
+                .opacity(highlightBeaker ? 1 : 0)
             beakerTicks
             beakerFill
             EmptyBeaker(settings: settings.beaker)
@@ -70,8 +74,6 @@ struct FillableBeaker<Content: View>: View {
             bottomGap: 0,
             rightGap: 0
         )
-        .frame(height: settings.beakerHeight)
-        .opacity(highlightBeaker ? 1 : 0)
     }
 
     private var beakerTicks: some View {
@@ -89,16 +91,21 @@ struct FillableBeaker<Content: View>: View {
     }
 }
 
-struct FillableBeakerSettings {
+public struct FillableBeakerSettings {
 
-    let beakerWidth: CGFloat
-    let waterHeight: CGFloat
+    public let beakerWidth: CGFloat
+    public let waterHeight: CGFloat
 
-    var beaker: BeakerSettings {
+    public init(beakerWidth: CGFloat, waterHeight: CGFloat) {
+        self.beakerWidth = beakerWidth
+        self.waterHeight = waterHeight
+    }
+
+    public var beaker: BeakerSettings {
         BeakerSettings(width: beakerWidth, hasLip: true)
     }
 
-    var beakerHeight: CGFloat {
+    public var beakerHeight: CGFloat {
         BeakerSettings.heightToWidth * beakerWidth
     }
 }
