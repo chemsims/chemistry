@@ -41,7 +41,6 @@ class ShakeContainerViewModel: ObservableObject {
         isUpdating = true
         if motion.isDeviceMotionAvailable {
             motion.deviceMotionUpdateInterval = 1 / 120
-            motion.showsDeviceMovementDisplay = true
             motion.startDeviceMotionUpdates(using: .xArbitraryZVertical, to: .main) { (data, error) in
                 if let data = data {
                     if self.initialAttitude == nil {
