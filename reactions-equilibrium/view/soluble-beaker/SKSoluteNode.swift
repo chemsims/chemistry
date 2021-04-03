@@ -3,6 +3,7 @@
 //
 
 import SpriteKit
+import SwiftUI
 
 class SKSoluteNode: SKShapeNode {
 
@@ -17,12 +18,13 @@ class SKSoluteNode: SKShapeNode {
         addParts()
 
         let physics = SKPhysicsBody(polygonFrom: geometry.path())
+        physics.usesPreciseCollisionDetection = true
         self.physicsBody = physics
     }
 
     private func addParts() {
         let halfHeight = geometry.totalHeight / 2
-        let center = CGPoint(x: sideLength / 2, y: halfHeight)
+        let center = CGPoint(x: sideLength, y: halfHeight)
         let angleDelta = (60 * CGFloat.pi) / 180
 
         for i in 0..<7 {
@@ -85,7 +87,6 @@ private class ParticleTrianglePart: SKShapeNode {
     }
 
     func dissolve(duration: TimeInterval) {
-
         let scale = SKAction.scale(by: CGFloat.random(in: 0.05...0.15), duration: duration)
         let fade = SKAction.fadeOut(withDuration: duration)
         let move = SKAction.move(by: CGVector(dx: 0, dy: -sideLength), duration: duration)
@@ -109,21 +110,53 @@ private struct HexagonGeometry {
 
     func path() -> CGPath {
         let path = CGMutablePath()
-        let dh = sideLength * 0.866 // sin(60 degrees)
-        let dw = sideLength * 0.5   // cos(60 degrees)
+        let dx = sideLength * 0.5 // cos(60)
 
         path.addLines(
             between: [
-                CGPoint(x: 0 + dw, y: 0),
-                CGPoint(x: 0 + dw + sideLength, y: 0),
-                CGPoint(x: 0 + (2 * dw) + sideLength, y: 0 + dh),
-                CGPoint(x: 0 + (2 * dw) + sideLength, y: 0 + dh + sideLength),
-                CGPoint(x: 0 + dw + sideLength, y: 0 + (2 * dh) + sideLength),
-                CGPoint(x: 0 + dw, y: 0 + (2 * dh) + sideLength),
-                CGPoint(x: 0, y: 0 + dh + sideLength),
-                CGPoint(x: 0, y: 0 + dh),
+                CGPoint(x: 0, y: totalHeight / 2),  // Center left
+                CGPoint(x: dx, y: 0),               // Bottom left
+                CGPoint(x: dx + sideLength, y: 0),  // Bottom right
+                CGPoint(x: (2 * dx) + sideLength, y: totalHeight / 2), // Center right
+                CGPoint(x: dx + sideLength, y: totalHeight), // Top right
+                CGPoint(x: dx, y: totalHeight)               // Top left
             ]
         )
         return path
+    }
+}
+
+
+struct SKSoluteNode_Previews: PreviewProvider {
+    static var previews: some View {
+        NodeRepresentable()
+            .frame(width: NodeRepresentable.sceneSize, height: NodeRepresentable.sceneSize)
+            .border(Color.red)
+    }
+
+    struct NodeRepresentable: UIViewRepresentable {
+        typealias UIView = SKView
+
+        func makeUIView(context: Context) -> SKView {
+            let view = SKView()
+            view.allowsTransparency = true
+            let scene = SKScene(size: CGSize(width: Self.sceneSize, height: Self.sceneSize))
+            scene.backgroundColor = .clear
+            view.presentScene(scene)
+            let node = SKSoluteNode(sideLength: Self.sideLength)
+            node.position = CGPoint(
+                x: (Self.sceneSize / 2) - Self.sideLength,
+                y: (Self.sceneSize / 2) - Self.sideLength
+            )
+            scene.addChild(node)
+            return view
+        }
+
+        func updateUIView(_ uiView: SKView, context: Context) {
+
+        }
+
+        static let sideLength: CGFloat = 20
+        static let sceneSize: CGFloat = 100
     }
 }

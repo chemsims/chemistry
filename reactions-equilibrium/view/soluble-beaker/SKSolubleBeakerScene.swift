@@ -76,6 +76,10 @@ class SKSolubleBeakerScene: SKScene {
         let node = SKSoluteNode(sideLength: sideLength)
         node.position = position.offset(dx: -sideLength, dy: 0)
         addChild(node)
+
+        let action = SKAction.run(node.dissolve)
+        let delay = SKAction.wait(forDuration: 2)
+        self.run(SKAction.sequence([delay, action]))
     }
 
     private func demoJoinedNodesAndMagneticField() {
