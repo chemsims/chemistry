@@ -27,6 +27,7 @@ struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         }
         .lineLimit(1)
         .frame(width: height, alignment: .trailing)
+        .accessibilityElement(children: .contain)
     }
 
     private let width: CGFloat = 1
