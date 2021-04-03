@@ -8,7 +8,12 @@ import CoreMotion
 /// Provides x & y offsets in response to device movement
 public class CoreMotionPositionViewModel: ObservableObject {
 
-    public init() { }
+    public init() {
+        self.queue = OperationQueue()
+        self.queue.qualityOfService = .userInteractive
+    }
+
+    private let queue: OperationQueue
 
     @Published public var xOffset: CGFloat = 0
     @Published public var yOffset: CGFloat = 0
@@ -24,7 +29,6 @@ public class CoreMotionPositionViewModel: ObservableObject {
     private let motion = CMMotionManager()
     private var initialAttitude: CMAttitude?
 
-
     /// Starts motion updates
     ///
     /// - Parameters:
@@ -39,7 +43,7 @@ public class CoreMotionPositionViewModel: ObservableObject {
         isUpdating = true
         if motion.isDeviceMotionAvailable {
             motion.deviceMotionUpdateInterval = 1 / 60
-            motion.startDeviceMotionUpdates(using: .xArbitraryZVertical, to: .main) { (data, error) in
+            motion.startDeviceMotionUpdates(using: .xArbitraryZVertical, to: queue) { (data, error) in
                 if let data = data {
                     if self.initialAttitude == nil {
                         self.initialAttitude = data.attitude
@@ -50,6 +54,7 @@ public class CoreMotionPositionViewModel: ObservableObject {
         }
     }
 
+    /// Stops motion updates
     public func stop() {
         isUpdating = false
         motion.stopDeviceMotionUpdates()
@@ -65,8 +70,10 @@ public class CoreMotionPositionViewModel: ObservableObject {
             return
         }
         if let initialAttitude = initialAttitude {
-            handlePitch(newValue: motion.attitude.pitch - initialAttitude.pitch)
-            handleRoll(newValue: motion.attitude.roll - initialAttitude.roll)
+            DispatchQueue.main.async { [weak self] in
+                self?.handlePitch(newValue: motion.attitude.pitch - initialAttitude.pitch)
+                self?.handleRoll(newValue: motion.attitude.roll - initialAttitude.roll)
+            }
         }
         delegate?.handleMotionUpdate(motion: motion)
     }

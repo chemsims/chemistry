@@ -80,6 +80,8 @@ class ShakeContainerViewModel: NSObject, ObservableObject {
 
 extension ShakeContainerViewModel: CoreMotionShakingDelegate {
     func didShake() {
-        doAdd()
+        DispatchQueue.main.async { [weak self] in
+            self?.doAdd()
+        }
     }
 }

@@ -138,7 +138,10 @@ class SoluteBeakerShakingViewModel: NSObject, CoreMotionShakingDelegate, Observa
     }
 
     func didShake() {
-        shouldAddParticle = true
+        DispatchQueue.main.async { [weak self] in
+            self?.shouldAddParticle = true
+        }
+
     }
 }
 
