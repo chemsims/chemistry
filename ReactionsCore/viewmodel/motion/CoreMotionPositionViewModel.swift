@@ -38,7 +38,7 @@ public class CoreMotionPositionViewModel: ObservableObject {
         }
         isUpdating = true
         if motion.isDeviceMotionAvailable {
-            motion.deviceMotionUpdateInterval = 1 / 120
+            motion.deviceMotionUpdateInterval = 1 / 60
             motion.startDeviceMotionUpdates(using: .xArbitraryZVertical, to: .main) { (data, error) in
                 if let data = data {
                     if self.initialAttitude == nil {
