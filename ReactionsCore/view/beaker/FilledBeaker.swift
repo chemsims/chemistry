@@ -104,7 +104,7 @@ struct GeneralFluidBeaker: View {
                     majorWidth: settings.ticksMajorWidth
                 )
                 .stroke(lineWidth: 1)
-                .fill(Color.darkGray.opacity(0.5))
+                .fill(Styling.beakerTicks)
             }
 
             beakerFill(settings)

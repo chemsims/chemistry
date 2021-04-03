@@ -57,6 +57,7 @@ public struct Styling {
     public static let beakerLiquid = Color(red: 218 / 255, green: 238 / 255, blue: 245 / 255)
     public static let beakerAir = RGB.gray(base: 235).color
     public static let beakerOutline = Color.darkGray
+    public static let beakerTicks = Color.darkGray.opacity(0.5)
 
     public static let moleculePlaceholder = Color(red: 206 / 255, green: 227 / 255, blue: 237 / 255)
     public static let airMoleculePlaceholder = RGB.gray(base: 225).color
