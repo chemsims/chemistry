@@ -60,3 +60,9 @@ extension CMRotationRate {
         sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2))
     }
 }
+
+extension CGPoint {
+    public func offset(dx: CGFloat, dy: CGFloat) -> CGPoint {
+        CGPoint(x: self.x + dx, y: self.y + dy)
+    }
+}
