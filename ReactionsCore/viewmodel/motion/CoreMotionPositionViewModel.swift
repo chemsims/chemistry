@@ -6,7 +6,9 @@ import SwiftUI
 import CoreMotion
 
 /// Provides x & y offsets in response to device movement
-public class CoreMotionMovableElementViewModel {
+public class CoreMotionPositionViewModel: ObservableObject {
+
+    public init() { }
 
     @Published public var xOffset: CGFloat = 0
     @Published public var yOffset: CGFloat = 0
@@ -17,14 +19,15 @@ public class CoreMotionMovableElementViewModel {
     /// Half of the range that the y offset can vary
     public var halfXRange: CGFloat?
 
-    weak var delegate: CoreMotionDeviceMovedDelegate?
+    public weak var delegate: CoreMotionDevicePositionDelegate?
+
+    public private(set) var isUpdating = false
 
     private let motion = CMMotionManager()
-
     private var initialAttitude: CMAttitude?
-    private var isUpdating = false
 
-    func start() {
+
+    public func start() {
         guard !isUpdating else {
             return
         }
@@ -42,7 +45,7 @@ public class CoreMotionMovableElementViewModel {
         }
     }
 
-    func stop() {
+    public func stop() {
         isUpdating = false
         motion.stopDeviceMotionUpdates()
         initialAttitude = nil
@@ -60,6 +63,7 @@ public class CoreMotionMovableElementViewModel {
             handlePitch(newValue: motion.attitude.pitch - initialAttitude.pitch)
             handleRoll(newValue: motion.attitude.roll - initialAttitude.roll)
         }
+        delegate?.handleMotionUpdate(motion: motion)
     }
 
     private let pitchEquation = LinearEquation(x1: 0.5, y1: -1, x2: -0.5, y2: 1)
@@ -84,72 +88,5 @@ public class CoreMotionMovableElementViewModel {
     private func getOffset(value: Double, equation: Equation, halfRange: CGFloat?) -> CGFloat {
         let factor = within(min: -1, max: 1, value: equation.getY(at: CGFloat(value)))
         return halfRange.map { $0 * factor } ?? 0
-    }
-}
-
-
-open class CoreMotionDeviceMovedDelegate {
-    func handleMotionUpdate(motion: CMDeviceMotion) { }
-}
-
-/// Provides a hook to run an action whenever the device has been shook.
-///
-/// The shaking sensitivity is based on configurable thresholds.
-public class CoreMotionShakingElementDelegate: CoreMotionDeviceMovedDelegate {
-
-    let settings: CoreMotionShakingBehavior
-    let action: () -> Void
-
-    init(settings: CoreMotionShakingBehavior, onEmit: @escaping () -> Void) {
-        self.settings = settings
-        self.action = onEmit
-    }
-
-    private var lastAction: Date?
-
-    override func handleMotionUpdate(motion: CMDeviceMotion) {
-        let rotationRateMag = motion.rotationRate.magnitude
-        if let timeInterval = settings.getTimeInterval(for: CGFloat(rotationRateMag)) {
-            let now = Date()
-            let enoughTimeHasPassed = lastAction.map {
-                now.timeIntervalSince($0) >= Double(timeInterval)
-            }
-            if enoughTimeHasPassed ?? true {
-                lastAction = now
-                action()
-            }
-        }
-    }
-}
-
-struct CoreMotionShakingBehavior {
-    let minTimeInterval: CGFloat
-    let maxTimeInterval: CGFloat
-    let minRotationThreshold: CGFloat
-    let maxRotationRate: CGFloat
-
-    func getTimeInterval(for rotationRate: CGFloat) -> CGFloat? {
-        guard rotationRate >= minRotationThreshold else {
-            return nil
-        }
-        return timeIntervalEquation
-            .getY(at: rotationRate)
-            .within(min: minTimeInterval, max: maxTimeInterval)
-    }
-
-    private var timeIntervalEquation: LinearEquation {
-        LinearEquation(
-            x1: minRotationThreshold,
-            y1: minTimeInterval,
-            x2: maxRotationRate,
-            y2: maxTimeInterval
-        )
-    }
-}
-
-
-private extension CMRotationRate {
-    var magnitude: Double {
-        sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2))
     }
 }

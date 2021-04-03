@@ -178,7 +178,10 @@
 		5786FAED25E6D66C00AAD8A6 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
 		5786FAF325E6D8D100AAD8A6 /* TimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAF225E6D8D100AAD8A6 /* TimeChartView.swift */; };
 		5787C26425F65BC400CF685A /* MoleculeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787C26325F65BC400CF685A /* MoleculeValue.swift */; };
-		578B1700261864CB00D8079F /* CoreMotionMovableElementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16FF261864CB00D8079F /* CoreMotionMovableElementViewModel.swift */; };
+		578B1700261864CB00D8079F /* CoreMotionPositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16FF261864CB00D8079F /* CoreMotionPositionViewModel.swift */; };
+		578B170F2618749800D8079F /* CoreMotionShakingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B170E2618749800D8079F /* CoreMotionShakingViewModel.swift */; };
+		578B1716261874D500D8079F /* CoreMotionShakingBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B1715261874D500D8079F /* CoreMotionShakingBehavior.swift */; };
+		578B17202618751B00D8079F /* MotionDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B171F2618751B00D8079F /* MotionDelegates.swift */; };
 		5790A5FF2610C3F800CA2ED7 /* SolidParticleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790A5FE2610C3F800CA2ED7 /* SolidParticleNode.swift */; };
 		5790AC2F25B375FC00B25776 /* ReactionComparisonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */; };
 		57913D82258EB9730042A89F /* ReactionFilingStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57913D81258EB9730042A89F /* ReactionFilingStatements.swift */; };
@@ -616,7 +619,10 @@
 		5787039725B88E14002A4487 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPairDisplay.swift; sourceTree = "<group>"; };
 		5787C26325F65BC400CF685A /* MoleculeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeValue.swift; sourceTree = "<group>"; };
-		578B16FF261864CB00D8079F /* CoreMotionMovableElementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionMovableElementViewModel.swift; sourceTree = "<group>"; };
+		578B16FF261864CB00D8079F /* CoreMotionPositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionPositionViewModel.swift; sourceTree = "<group>"; };
+		578B170E2618749800D8079F /* CoreMotionShakingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionShakingViewModel.swift; sourceTree = "<group>"; };
+		578B1715261874D500D8079F /* CoreMotionShakingBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionShakingBehavior.swift; sourceTree = "<group>"; };
+		578B171F2618751B00D8079F /* MotionDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDelegates.swift; sourceTree = "<group>"; };
 		5790A5FE2610C3F800CA2ED7 /* SolidParticleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidParticleNode.swift; sourceTree = "<group>"; };
 		5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViewModelTests.swift; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
@@ -1208,8 +1214,8 @@
 		57438A37260A26BE005E3888 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				578B170D2618748200D8079F /* motion */,
 				57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */,
-				578B16FF261864CB00D8079F /* CoreMotionMovableElementViewModel.swift */,
 			);
 			path = viewmodel;
 			sourceTree = "<group>";
@@ -1566,6 +1572,24 @@
 			path = beaker;
 			sourceTree = "<group>";
 		};
+		578B170D2618748200D8079F /* motion */ = {
+			isa = PBXGroup;
+			children = (
+				578B16FF261864CB00D8079F /* CoreMotionPositionViewModel.swift */,
+				578B170E2618749800D8079F /* CoreMotionShakingViewModel.swift */,
+			);
+			path = motion;
+			sourceTree = "<group>";
+		};
+		578B1714261874CC00D8079F /* motion */ = {
+			isa = PBXGroup;
+			children = (
+				578B1715261874D500D8079F /* CoreMotionShakingBehavior.swift */,
+				578B171F2618751B00D8079F /* MotionDelegates.swift */,
+			);
+			path = motion;
+			sourceTree = "<group>";
+		};
 		57952A3825E67F61006AB876 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1647,6 +1671,7 @@
 		5797A45E25E406FC00991BD9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				578B1714261874CC00D8079F /* motion */,
 				57B3B8F9260B280600EB9B47 /* analytics */,
 				57438A55260A3237005E3888 /* persistence */,
 				57FF9EDC25FF6E7E00C1C27F /* grid */,
@@ -2702,7 +2727,7 @@
 				5786FAED25E6D66C00AAD8A6 /* ChartAxisShape.swift in Sources */,
 				575A881D25E4310E00AEE448 /* QuizState.swift in Sources */,
 				5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */,
-				578B1700261864CB00D8079F /* CoreMotionMovableElementViewModel.swift in Sources */,
+				578B1700261864CB00D8079F /* CoreMotionPositionViewModel.swift in Sources */,
 				575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */,
 				57438A42260A2DC7005E3888 /* ScreenProvider.swift in Sources */,
 				5797A4C625E40A6900991BD9 /* GridCoordinate.swift in Sources */,
@@ -2715,10 +2740,12 @@
 				57B3B92F260B408500EB9B47 /* NavigationIconRow.swift in Sources */,
 				57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */,
 				575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */,
+				578B17202618751B00D8079F /* MotionDelegates.swift in Sources */,
 				57B3B915260B2E0000EB9B47 /* MainMenuOverlay.swift in Sources */,
 				57686AD12600E6B1005BD328 /* AdjustableBeakerBurner.swift in Sources */,
 				5797A4BF25E40A6400991BD9 /* Equation.swift in Sources */,
 				57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */,
+				578B170F2618749800D8079F /* CoreMotionShakingViewModel.swift in Sources */,
 				57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */,
 				57FF9EDE25FF6EA800C1C27F /* GridElementBalancer.swift in Sources */,
 				57B3B8F4260B27E800EB9B47 /* NavigationBehaviour.swift in Sources */,
@@ -2741,6 +2768,7 @@
 				57B3B935260B40C100EB9B47 /* GeneralRootNavigationView.swift in Sources */,
 				57438A3D260A26DB005E3888 /* RootNavigationViewModel.swift in Sources */,
 				57B3B91E260B2F9F00EB9B47 /* MenuButton.swift in Sources */,
+				578B1716261874D500D8079F /* CoreMotionShakingBehavior.swift in Sources */,
 				57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */,
 				5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */,
 				575A887D25E4366900AEE448 /* CircleIconButton.swift in Sources */,

@@ -3,6 +3,7 @@
 //
 
 import CoreGraphics
+import CoreMotion
 
 extension CGFloat {
     public func str(decimals: Int) -> String {
@@ -51,5 +52,11 @@ extension Array where Self.Element: Equatable {
 
     public subscript (safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
+    }
+}
+
+extension CMRotationRate {
+    var magnitude: Double {
+        sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2))
     }
 }
