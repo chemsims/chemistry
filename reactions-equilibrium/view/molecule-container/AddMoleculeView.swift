@@ -45,6 +45,7 @@ struct AddMoleculesView: View {
         let isActive = activeProduct || activeReactant
         return AddMoleculeContainerView(
             model: model.models.value(for: molecule),
+            position: model.models.value(for: molecule).motion.position,
             onTap: {
                 didTap(
                     molecule: molecule,
@@ -120,6 +121,7 @@ struct AddMoleculesView: View {
 private struct AddMoleculeContainerView: View {
 
     @ObservedObject var model: ShakeContainerViewModel
+    @ObservedObject var position: CoreMotionPositionViewModel
 
     let onTap: () -> Void
     let width: CGFloat
@@ -152,7 +154,7 @@ private struct AddMoleculeContainerView: View {
             .rotationEffect(rotation)
             .frame(width: containerWidth)
             .position(initialLocation)
-            .offset(CGSize(width: model.xOffset, height: model.yOffset))
+            .offset(CGSize(width: position.xOffset, height: position.yOffset))
             .onTapGesture {
                 onTap()
             }

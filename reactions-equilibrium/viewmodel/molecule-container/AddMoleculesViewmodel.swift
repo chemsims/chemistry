@@ -39,9 +39,9 @@ class AddingMoleculesViewModel: ObservableObject {
         let model = models.value(for: molecule)
         model.initialLocation = location
         model.bottomY = bottomY
-        model.halfXRange = halfXRange
-        model.halfYRange = halfYRange
-        model.startMoleculeShake()
+        model.motion.position.halfXRange = halfXRange
+        model.motion.position.halfYRange = halfYRange
+        model.motion.position.start()
     }
 
     func stopAll() {
@@ -52,7 +52,7 @@ class AddingMoleculesViewModel: ObservableObject {
     }
 
     private func stopShaking() {
-        models.all.forEach { $0.stopMoleculeShake() }
+        models.all.forEach { $0.motion.position.stop() }
     }
 }
 
