@@ -4,7 +4,7 @@
 
 import SpriteKit
 
-class SolidParticleNode: SKShapeNode {
+class SKSoluteNode: SKShapeNode {
 
     private let geometry: HexagonGeometry
     private let sideLength: CGFloat

@@ -9,6 +9,8 @@ struct Wrapper: UIViewRepresentable {
     typealias UIViewType = SKView
 
     let size: CGSize
+    let particlePosition: CGPoint
+    @Binding var shouldAddParticle: Bool
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
@@ -17,15 +19,43 @@ struct Wrapper: UIViewRepresentable {
         view.allowsTransparency = true
         view.presentScene(scene)
 
-        view.showsFields = true
-        view.showsFPS = true
-        view.showsPhysics = true
+        return view
+    }
+
+    func updateUIView(_ uiView: SKView, context: Context) {
+        if let scene = uiView.scene as? SKSolubleBeakerScene {
+            if shouldAddParticle {
+                scene.addParticle(at: particlePosition)
+                shouldAddParticle = false
+            }
+        }
+    }
+}
+
+struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
+    typealias UIView = SKView
+
+    let size: CGSize
+    let particlePosition: CGPoint
+    @Binding var shouldAddParticle: Bool
+
+    func makeUIView(context: Context) -> SKView {
+        let view = SKView()
+        let scene = SKSolubleBeakerScene(size: size)
+        scene.scaleMode = .aspectFit
+        view.allowsTransparency = true
+        view.presentScene(scene)
 
         return view
     }
 
     func updateUIView(_ uiView: SKView, context: Context) {
-
+        if let scene = uiView.scene as? SKSolubleBeakerScene {
+            if shouldAddParticle {
+                scene.addParticle(at: particlePosition)
+                shouldAddParticle = false
+            }
+        }
     }
 }
 
@@ -33,11 +63,19 @@ class SKSolubleBeakerScene: SKScene {
 
     override func didMove(to view: SKView) {
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
-        backgroundColor = .white
+        backgroundColor = .clear
+
 
 //        demoElectricField()
 //        demoMagneticField()
-        demoJoinedNodesAndMagneticField()
+//        demoJoinedNodesAndMagneticField()
+    }
+
+    func addParticle(at position: CGPoint) {
+        let sideLength: CGFloat = 20
+        let node = SKSoluteNode(sideLength: sideLength)
+        node.position = position.offset(dx: -sideLength, dy: 0)
+        addChild(node)
     }
 
     private func demoJoinedNodesAndMagneticField() {
@@ -146,13 +184,5 @@ class SKSolubleBeakerScene: SKScene {
 
         (0..<10).forEach { _ in addNode(.purple, 0.01) }
         (0..<10).forEach { _ in addNode(.blue, -0.01) }
-    }
-}
-
-struct SKSolubleBeakerScene_Previews: PreviewProvider {
-    static var previews: some View {
-        GeometryReader { geo in
-            Wrapper(size: geo.size)
-        }
     }
 }

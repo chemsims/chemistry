@@ -39,9 +39,7 @@ class AddingMoleculesViewModel: ObservableObject {
         let model = models.value(for: molecule)
         model.initialLocation = location
         model.bottomY = bottomY
-        model.motion.position.halfXRange = halfXRange
-        model.motion.position.halfYRange = halfYRange
-        model.motion.position.start()
+        model.motion.position.start(halfXRange: halfXRange, halfYRange: halfYRange)
     }
 
     func stopAll() {

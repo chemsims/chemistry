@@ -13,11 +13,9 @@ public class CoreMotionPositionViewModel: ObservableObject {
     @Published public var xOffset: CGFloat = 0
     @Published public var yOffset: CGFloat = 0
 
-    /// Half of the range that the x offset can vary
-    public var halfYRange: CGFloat?
+    private var halfYRange: CGFloat?
 
-    /// Half of the range that the y offset can vary
-    public var halfXRange: CGFloat?
+    private var halfXRange: CGFloat?
 
     public weak var delegate: CoreMotionDevicePositionDelegate?
 
@@ -27,7 +25,14 @@ public class CoreMotionPositionViewModel: ObservableObject {
     private var initialAttitude: CMAttitude?
 
 
-    public func start() {
+    /// Starts motion updates
+    ///
+    /// - Parameters:
+    ///     - halfXRange: Half of the range that the x offset can vary
+    ///     - halfYRange: Half of the range that the y offset can vary
+    public func start(halfXRange: CGFloat, halfYRange: CGFloat) {
+        self.halfXRange = halfXRange
+        self.halfYRange = halfYRange
         guard !isUpdating else {
             return
         }
