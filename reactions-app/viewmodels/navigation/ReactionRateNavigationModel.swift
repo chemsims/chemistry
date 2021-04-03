@@ -20,7 +20,7 @@ struct ReactionRateNavigationModel {
             persistence: injector.screenPersistence,
             analytics: injector.appAnalytics,
             allScreens: AppScreen.allCases,
-            linearScreens: linearScreens
+            linearScreens: [.energyProfile]
         )
     }
 

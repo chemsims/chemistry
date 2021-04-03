@@ -112,7 +112,6 @@ struct EnergyProfileBeaker: View {
     private func beakerView(
         settings: EnergyBeakerSettings
     ) -> some View {
-
         let input = order.energyProfileReactionInput
         let a = input.moleculeA.name
         let b = input.moleculeB.name
@@ -125,59 +124,17 @@ struct EnergyProfileBeaker: View {
         let catalystMsg = catalyst.map { ", with catalyst \($0) particles also in the beaker" } ?? ""
         let label = "Beaker with molecules of \(a) and \(b) colliding which occasionally produces a molecule of \(c)\(catalystMsg)"
 
-        return ZStack(alignment: .bottom) {
-            Color.white.mask(
-                BeakerShape(
-                    lipHeight: settings.beaker.lipRadius,
-                    lipWidthLeft: settings.beaker.lipWidthLeft,
-                    lipWidthRight: settings.beaker.lipWidthLeft,
-                    leftCornerRadius: settings.beaker.outerBottomCornerRadius,
-                    rightCornerRadius: settings.beaker.outerBottomCornerRadius,
-                    bottomGap: 0,
-                    rightGap: 0
-                )
-            )
-            .frame(height: settings.beakerHeight)
-            .opacity(highlightBeaker ? 1 : 0)
-
-            beakerTicks(settings: settings)
-            beakerFill(settings: settings)
-            EmptyBeaker(settings: settings.beaker)
-                .frame(width: settings.beakerWidth, height: settings.beakerHeight)
-
+        return FillableBeaker(
+            waterColor: Styling.beakerLiquid,
+            highlightBeaker: highlightBeaker,
+            settings: settings.fillableBeaker
+        ) {
+            skSceneView(settings: settings)
         }
         .accessibilityElement(children: .ignore)
         .accessibility(label: Text(label))
         .accessibility(value: Text(value))
         .accessibility(addTraits: .updatesFrequently)
-    }
-
-    private func beakerFill(settings: EnergyBeakerSettings) -> some View {
-        Group {
-            Rectangle()
-                .frame(
-                    width: settings.beaker.innerBeakerWidth,
-                    height: settings.waterHeight
-                )
-                .foregroundColor(Styling.beakerLiquid)
-            skSceneView(settings: settings)
-        }.mask(
-            BeakerBottomShape(cornerRadius: settings.beaker.outerBottomCornerRadius)
-        ).colorMultiply(highlightBeaker ? .white : Styling.inactiveScreenElement)
-    }
-
-    private func beakerTicks(settings: EnergyBeakerSettings) -> some View {
-        BeakerTicks(
-            numTicks: settings.beaker.numTicks,
-            rightGap: settings.beaker.ticksRightGap,
-            bottomGap: settings.beaker.ticksBottomGap,
-            topGap: settings.beaker.ticksTopGap,
-            minorWidth: settings.beaker.ticksMinorWidth,
-            majorWidth: settings.beaker.ticksMajorWidth
-        )
-        .stroke(lineWidth: 1)
-        .fill(Color.darkGray.opacity(0.5))
-        .frame(width: settings.beakerWidth, height: settings.beakerHeight)
     }
 
     private func skSceneView(settings: EnergyBeakerSettings) -> some View {
@@ -345,7 +302,11 @@ struct EnergyBeakerSettings {
     static let maxTemp: CGFloat = 600
 
     var beaker: BeakerSettings {
-        BeakerSettings(width: beakerWidth, hasLip: true)
+        fillableBeaker.beaker
+    }
+
+    var fillableBeaker: FillableBeakerSettings {
+        FillableBeakerSettings(beakerWidth: beakerWidth, waterHeight: waterHeight)
     }
 
     var width: CGFloat {
