@@ -85,6 +85,7 @@ private struct QuizScreenWithSettings: View {
                 isShowing: model.showNotification,
                 settings: settings
             )
+            .accessibility(hidden: true)
         }
         .font(.system(size: settings.fontSize))
         .minimumScaleFactor(0.8)
@@ -115,12 +116,21 @@ private struct QuizScreenWithSettings: View {
 
     private var nextButton: some View {
         ZStack {
-            NextButton(action: { navigate(next: true)})
+            NextButton(action: { navigate(next: true) })
+                .disabled(model.nextIsDisabled)
                 .opacity(model.nextIsDisabled ? 0.3 : 1)
                 .padding(settings.rightNavPadding)
                 .ifTrue(model.nextIsDisabled) {
                     $0.accessibility(hint: Text("Select correct answer to enable next button"))
                 }
+
+            if model.nextIsDisabled {
+                Button(action: { navigate(next: true) }) {
+                    Circle()
+                        .opacity(0)
+                }
+                .accessibility(hidden: true)
+            }
 
         }.frame(width: settings.rightNavSize, height: settings.rightNavSize)
     }
