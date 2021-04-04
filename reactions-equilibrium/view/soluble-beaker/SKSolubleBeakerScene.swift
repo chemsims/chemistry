@@ -12,6 +12,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     let particlePosition: CGPoint
     let soluteWidth: CGFloat
     let waterHeight: CGFloat
+    let onDissolve: () -> Void
     @Binding var shouldAddParticle: Bool
 
     func makeUIView(context: Context) -> SKView {
@@ -19,7 +20,8 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
         let scene = SKSolubleBeakerScene(
             size: size,
             soluteWidth: soluteWidth,
-            waterHeight: waterHeight
+            waterHeight: waterHeight,
+            onDissolve: onDissolve
         )
         scene.scaleMode = .aspectFit
         view.allowsTransparency = true
@@ -36,6 +38,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             }
             scene.soluteWidth = soluteWidth
             scene.waterHeight = waterHeight
+            scene.onDissolve = onDissolve
         }
     }
 }
@@ -44,10 +47,17 @@ class SKSolubleBeakerScene: SKScene {
 
     var soluteWidth: CGFloat
     var waterHeight: CGFloat
+    var onDissolve: () -> Void
 
-    init(size: CGSize, soluteWidth: CGFloat, waterHeight: CGFloat) {
+    init(
+        size: CGSize,
+        soluteWidth: CGFloat,
+        waterHeight: CGFloat,
+        onDissolve: @escaping () -> Void
+    ) {
         self.soluteWidth = soluteWidth
         self.waterHeight = waterHeight
+        self.onDissolve = onDissolve
         super.init(size: size)
     }
 
@@ -69,7 +79,10 @@ class SKSolubleBeakerScene: SKScene {
 
         node.physicsBody?.applyTorque(CGFloat.random(in: -0.01...0.01))
 
-        let action = SKAction.run(node.dissolve)
+        let action = SKAction.run {
+            node.dissolve()
+            self.onDissolve()
+        }
         let delay = SKAction.wait(forDuration: 2)
         self.run(SKAction.sequence([delay, action]))
     }

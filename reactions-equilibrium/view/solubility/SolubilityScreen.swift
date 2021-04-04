@@ -27,7 +27,6 @@ private struct SolubilityScreenWithSettings: View {
     var body: some View {
         HStack(spacing: 0) {
             SolubleBeakerView(
-                waterColor: Styling.beakerLiquid,
                 model: model,
                 shakeModel: model.shakingModel,
                 settings: SolubleBeakerSettings(

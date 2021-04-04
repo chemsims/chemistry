@@ -7,7 +7,6 @@ import ReactionsCore
 
 struct SolubleBeakerView: View {
 
-    let waterColor: Color
     let model: SolubilityViewModel
     let shakeModel: SoluteBeakerShakingViewModel
     let settings: SolubleBeakerSettings
@@ -15,7 +14,6 @@ struct SolubleBeakerView: View {
     var body: some View {
         GeometryReader { geo in
             SolubleBeakerViewWithGeometry(
-                waterColor: waterColor,
                 model: model,
                 shakeModel: shakeModel,
                 position: shakeModel.shake.position,
@@ -29,7 +27,6 @@ struct SolubleBeakerView: View {
 
 private struct SolubleBeakerViewWithGeometry: View {
 
-    let waterColor: Color
     @ObservedObject var model: SolubilityViewModel
     @ObservedObject var shakeModel: SoluteBeakerShakingViewModel
     @ObservedObject var position: CoreMotionPositionViewModel
@@ -74,7 +71,7 @@ private struct SolubleBeakerViewWithGeometry: View {
 
     private var beaker: some View {
         FillableBeaker(
-            waterColor: waterColor,
+            waterColor: Styling.beakerLiquid,
             highlightBeaker: true,
             settings: settings.beaker
         ) {
@@ -91,6 +88,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             particlePosition: skParticlePosition,
             soluteWidth: settings.soluteWidth,
             waterHeight: settings.waterHeight,
+            onDissolve: model.onDissolve,
             shouldAddParticle: $shakeModel.shouldAddParticle
         ).frame(
             width: settings.beaker.beaker.innerBeakerWidth,
@@ -129,6 +127,12 @@ private struct SolubleBeakerViewWithGeometry: View {
             x: activeContainerLocation.x,
             y: geometry.size.height - activeContainerLocation.y
         )
+    }
+}
+
+extension SolubleBeakerViewWithGeometry {
+    private func waterColor(for countOfSolute: Int, maxCount: Int) -> Color {
+        return Styling.beakerLiquid
     }
 }
 
@@ -192,7 +196,6 @@ private extension SoluteBeakerShakingViewModel {
 struct SolubleBeakerView_Previews: PreviewProvider {
     static var previews: some View {
         SolubleBeakerView(
-            waterColor: Styling.beakerLiquid,
             model: SolubilityViewModel(),
             shakeModel: SoluteBeakerShakingViewModel(),
             settings: SolubleBeakerSettings(

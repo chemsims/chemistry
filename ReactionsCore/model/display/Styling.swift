@@ -34,6 +34,21 @@ public struct RGB {
 }
 
 extension RGB {
+    public static func interpolate(_ left: RGB, _ right: RGB, fraction: Double) -> RGB {
+
+        func interpolateElement(_ l: Double, _ r: Double) -> Double {
+            l + ((r - l) * fraction)
+        }
+
+        return RGB(
+            r: interpolateElement(left.r, right.r),
+            g: interpolateElement(left.g, right.g),
+            b: interpolateElement(left.b, right.b)
+        )
+    }
+}
+
+extension RGB {
     public static let moleculeA = RGB(r: 8, g: 168, b: 232)
     public static let moleculeB = RGB(r: 255, g: 19, b: 19)
     public static let moleculeC = RGB(r: 225, g: 132, b: 19)
@@ -45,6 +60,8 @@ extension RGB {
     public static let moleculeG = RGB(r: 156, g: 109, b: 138)
     public static let moleculeH = RGB(r: 27, g: 153, b: 139)
     public static let moleculeI = RGB(r: 221, g: 183, b: 113)
+
+    public static let beakerLiquid = RGB(r: 218, g: 238, b: 245)
 }
 
 public struct Styling {
@@ -54,7 +71,7 @@ public struct Styling {
     public static let beakerOuterTone = Color.black.opacity(0.15)
     public static let beakerInnerTone = Color.black.opacity(0.075)
 
-    public static let beakerLiquid = Color(red: 218 / 255, green: 238 / 255, blue: 245 / 255)
+    public static let beakerLiquid = RGB.beakerLiquid.color
     public static let beakerAir = RGB.gray(base: 235).color
     public static let beakerOutline = Color.darkGray
     public static let beakerTicks = Color.darkGray.opacity(0.5)

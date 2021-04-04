@@ -34,6 +34,10 @@ class SolubilityViewModel: ObservableObject {
         navigation?.back()
     }
 
+    func onDissolve() {
+        print("did dissolve")
+    }
+
     func stopShaking() {
         shakingModel.shake.position.stop()
     }
