@@ -2,14 +2,15 @@
 // Reactions App
 //
 
-
 import ReactionsCore
 
 class SolubilityNavigationModel {
     static func model(model: SolubilityViewModel) -> NavigationModel<SolubilityScreenState> {
         NavigationModel(
             model: model,
-            states: []
+            states: [
+                SetStatement(statement: [])
+            ]
         )
     }
 }
@@ -38,5 +39,18 @@ class SolubilityScreenState: ScreenState, SubState {
 
     func nextStateAutoDispatchDelay(model: SolubilityViewModel) -> Double? {
         nil
+    }
+}
+
+private class SetStatement: SolubilityScreenState {
+
+    let statement: [TextLine]
+
+    init(statement: [TextLine]) {
+        self.statement = statement
+    }
+
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = statement
     }
 }

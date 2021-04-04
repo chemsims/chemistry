@@ -5,43 +5,17 @@
 import SpriteKit
 import SwiftUI
 
-struct Wrapper: UIViewRepresentable {
-    typealias UIViewType = SKView
-
-    let size: CGSize
-    let particlePosition: CGPoint
-    @Binding var shouldAddParticle: Bool
-
-    func makeUIView(context: Context) -> SKView {
-        let view = SKView()
-        let scene = SKSolubleBeakerScene(size: size)
-        scene.scaleMode = .aspectFit
-        view.allowsTransparency = true
-        view.presentScene(scene)
-
-        return view
-    }
-
-    func updateUIView(_ uiView: SKView, context: Context) {
-        if let scene = uiView.scene as? SKSolubleBeakerScene {
-            if shouldAddParticle {
-                scene.addParticle(at: particlePosition)
-                shouldAddParticle = false
-            }
-        }
-    }
-}
-
 struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     typealias UIView = SKView
 
     let size: CGSize
     let particlePosition: CGPoint
+    let soluteWidth: CGFloat
     @Binding var shouldAddParticle: Bool
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
-        let scene = SKSolubleBeakerScene(size: size)
+        let scene = SKSolubleBeakerScene(size: size, soluteWidth: soluteWidth)
         scene.scaleMode = .aspectFit
         view.allowsTransparency = true
         view.presentScene(scene)
@@ -61,6 +35,17 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
 
 class SKSolubleBeakerScene: SKScene {
 
+    private let soluteWidth: CGFloat
+
+    init(size: CGSize, soluteWidth: CGFloat) {
+        self.soluteWidth = soluteWidth
+        super.init(size: size)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func didMove(to view: SKView) {
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         backgroundColor = .clear
@@ -72,7 +57,7 @@ class SKSolubleBeakerScene: SKScene {
     }
 
     func addParticle(at position: CGPoint) {
-        let sideLength: CGFloat = 20
+        let sideLength = soluteWidth / 2
         let node = SKSoluteNode(sideLength: sideLength)
         node.position = position.offset(dx: -sideLength, dy: 0)
         addChild(node)

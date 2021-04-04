@@ -54,6 +54,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             }
             Spacer()
         }
+        .frame(width: settings.beaker.beaker.innerBeakerWidth)
     }
 
     private var beaker: some View {
@@ -73,6 +74,7 @@ private struct SolubleBeakerViewWithGeometry: View {
                 height: geometry.size.height
             ),
             particlePosition: skParticlePosition,
+            soluteWidth: settings.soluteWidth,
             shouldAddParticle: $shakeModel.shouldAddParticle
         ).frame(
             width: settings.beaker.beaker.innerBeakerWidth,
@@ -117,11 +119,15 @@ struct SolubleBeakerSettings {
     }
 
     var containerWidth: CGFloat {
-        0.17 * beakerWidth
+        0.15 * beakerWidth
     }
 
     var containerYRange: CGFloat {
         2 * containerWidth
+    }
+
+    var soluteWidth: CGFloat {
+        0.8 * containerWidth
     }
 }
 
