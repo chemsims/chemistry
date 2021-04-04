@@ -58,9 +58,15 @@ struct ChartStack: View {
 
     private var concentrationChart: some View {
         MultiConcentrationPlot(
-            equations: components.equation.concentration,
+            values: MoleculeValue(builder: { molecule in
+                MultiConcentrationPlotData(
+                    equation: components.equation.concentration.value(for: molecule),
+                    color: molecule.color,
+                    discontinuity: components.moleculeChartDiscontinuities?.value(for: molecule),
+                    legendValue: molecule.rawValue
+                )
+            }).all,
             equilibriumTime: components.equation.equilibriumTime,
-            discontinuities: components.moleculeChartDiscontinuities,
             initialTime: 0,
             currentTime: $currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,

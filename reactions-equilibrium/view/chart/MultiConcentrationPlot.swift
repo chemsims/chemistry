@@ -5,11 +5,17 @@
 import SwiftUI
 import ReactionsCore
 
+struct MultiConcentrationPlotData {
+    let equation: Equation
+    let color: Color
+    let discontinuity: CGPoint?
+    let legendValue: String
+}
+
 struct MultiConcentrationPlot: View {
 
-    let equations: MoleculeValue<Equation>
+    let values: [MultiConcentrationPlotData]
     let equilibriumTime: CGFloat
-    let discontinuities: MoleculeValue<CGPoint>?
 
     let initialTime: CGFloat
     @Binding var currentTime: CGFloat
@@ -64,28 +70,7 @@ struct MultiConcentrationPlot: View {
 
     private var chart: some View {
         TimeChartView(
-            data: !showData ? [] : [
-                data(
-                    equation: equations.reactantA,
-                    color: .from(.aqMoleculeA),
-                    discontinuity: discontinuities?.reactantA
-                ),
-                data(
-                    equation: equations.reactantB,
-                    color: .from(.aqMoleculeB),
-                    discontinuity: discontinuities?.reactantB
-                ),
-                data(
-                    equation: equations.productC,
-                    color: .from(.aqMoleculeC),
-                    discontinuity: discontinuities?.productC
-                ),
-                data(
-                    equation: equations.productD,
-                    color: .from(.aqMoleculeD),
-                    discontinuity: discontinuities?.productD
-                ),
-            ],
+            data: !showData ? [] : allData,
             initialTime: initialTime,
             currentTime: $currentTime,
             finalTime: finalTime,
@@ -97,6 +82,12 @@ struct MultiConcentrationPlot: View {
             minDragTime: minDragTime,
             activeIndex: activeIndex
         )
+    }
+
+    private var allData: [TimeChartDataLine] {
+        values.map { value in
+            data(equation: value.equation, color: value.color, discontinuity: value.discontinuity)
+        }
     }
 
     private func data(
@@ -117,10 +108,9 @@ struct MultiConcentrationPlot: View {
 extension MultiConcentrationPlot {
     private var legend: some View {
         HStack(spacing: settings.legendSpacing) {
-            legendPill(name: "A", color: .from(.aqMoleculeA), indexToActivate: 0)
-            legendPill(name: "B", color: .from(.aqMoleculeB), indexToActivate: 1)
-            legendPill(name: "C", color: .from(.aqMoleculeC), indexToActivate: 2)
-            legendPill(name: "D", color: .from(.aqMoleculeD), indexToActivate: 3)
+            ForEach(0..<values.count, id: \.self) { i in
+                legendPill(name: values[i].legendValue, color: values[i].color, indexToActivate: i)
+            }
         }
     }
 
@@ -154,7 +144,7 @@ extension MultiConcentrationPlot {
 struct MultiConcentrationPlot_Previews: PreviewProvider {
     static var previews: some View {
         MultiConcentrationPlot(
-            equations: BalancedReactionEquation(
+            values: BalancedReactionEquation(
                 coefficients: BalancedReactionCoefficients(
                     reactantA: 2,
                     reactantB: 2,
@@ -171,9 +161,15 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
                 startTime: 0,
                 equilibriumTime: 15,
                 previous: nil
-            ).concentration,
+            ).concentration.all.map {
+                MultiConcentrationPlotData(
+                    equation: $0,
+                    color: .red,
+                    discontinuity: nil,
+                    legendValue: "A"
+                )
+            },
             equilibriumTime: 15,
-            discontinuities: nil,
             initialTime: 0,
             currentTime: .constant(10),
             finalTime: 20,
