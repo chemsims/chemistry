@@ -29,7 +29,6 @@ class SolubilityComponentsWrapper {
 
 class SolubilityComponents {
 
-
     let equilibriumConstant: CGFloat
     let initialConcentration: SoluteValues<CGFloat>
 
@@ -47,7 +46,6 @@ class SolubilityComponents {
         startTime: 0,
         equilibriumTime: 20
     )
-
 
 }
 

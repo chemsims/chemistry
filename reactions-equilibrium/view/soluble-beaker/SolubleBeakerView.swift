@@ -71,7 +71,7 @@ private struct SolubleBeakerViewWithGeometry: View {
 
     private var beaker: some View {
         FillableBeaker(
-            waterColor: Styling.beakerLiquid,
+            waterColor: model.waterColor,
             highlightBeaker: true,
             settings: settings.beaker
         ) {

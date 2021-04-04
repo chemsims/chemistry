@@ -52,8 +52,19 @@ class SolubilityViewModel: ObservableObject {
     func stopShaking() {
         shakingModel.shake.position.stop()
     }
+
+    var waterColor: Color {
+        let initialRGB = RGB.beakerLiquid
+        let finalRGB = RGB.saturatedLiquid
+        let fraction = currentTime / 20
+        return RGB.interpolate(initialRGB, finalRGB, fraction: Double(fraction)).color
+    }
 }
 
 enum SolubilityInputState {
     case none, addSolute
+}
+
+extension RGB {
+    static let saturatedLiquid = RGB(r: 230, g: 203, b: 140)
 }
