@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-import CoreGraphics
+import SwiftUI
 import ReactionsCore
 
 class SolubilityComponentsWrapper {
@@ -47,12 +47,16 @@ class SolubilityComponents {
         equilibriumTime: 20
     )
 
+    var quotient: SolubilityQuotientEquation {
+        SolubilityQuotientEquation(concentration: equation.concentration)
+    }
 }
-
 
 class SolubleReactionEquation {
 
     let concentration: SoluteValues<Equation>
+    let initialConcentration: SoluteValues<CGFloat>
+    let finalConcentration: SoluteValues<CGFloat>
 
     init(
         initialConcentration: SoluteValues<CGFloat>,
@@ -65,7 +69,12 @@ class SolubleReactionEquation {
             EquilibriumReactionEquation(t1: startTime, c1: initC, t2: equilibriumTime, c2: initC + unitChange)
         }
 
-        self.concentration = initialConcentration.map(makeEquation)
+        let concentration = initialConcentration.map(makeEquation)
+        self.concentration = concentration
+        self.initialConcentration = initialConcentration
+        self.finalConcentration = concentration.map {
+            $0.getY(at: equilibriumTime)
+        }
     }
 
     // Unit change for forward reaction
@@ -88,6 +97,17 @@ class SolubleReactionEquation {
         // NB, the solution is always +ve rootTerm, as using -ve would always produce a negative value
         // and we want a positive unit change
         return (-bTerm + rootTerm) / 2
+    }
+
+}
+
+struct SolubilityQuotientEquation: Equation {
+
+    let concentration: SoluteValues<Equation>
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let values = concentration.map { $0.getY(at: x) }
+        return values.productA * values.productB
     }
 
 }
@@ -128,4 +148,11 @@ struct SoluteValues<Value> {
 
 enum SoluteProductType: String {
     case A, B
+
+    var color: Color {
+        switch self {
+        case .A: return Color.from(RGB.aqMoleculeA)
+        case .B: return Color.from(RGB.aqMoleculeB)
+        }
+    }
 }

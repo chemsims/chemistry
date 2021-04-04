@@ -185,9 +185,9 @@ extension ChartStack {
     ) {
         self.init(
             concentrationData: model.components.concentrationData,
-            tableColumns: [],
+            tableColumns: model.components.tableData,
             equilibriumTime: 20,
-            quotientEquation: ConstantEquation(value: 1),
+            quotientEquation: model.components.quotient,
             currentTime: currentTime,
             quotientChartDiscontinuity: nil,
             chartOffset: 0,
@@ -195,9 +195,9 @@ extension ChartStack {
             canSetChartIndex: false,
             showConcentrationLines: true,
             showQuotientLine: true,
-            maxQuotient: 10,
+            maxQuotient: 0.1,
             settings: settings,
-            equilibriumQuotient: 10,
+            equilibriumQuotient: 0.1,
             activeChartIndex: activeChartIndex,
             generalElementHighlight: .white,
             equilibriumHighlight: .white,
@@ -211,9 +211,19 @@ private extension SolubilityComponents {
         SoluteValues(builder: { element in
             MultiConcentrationPlotData(
                 equation: equation.concentration.value(for: element),
-                color: .red,
+                color: element.color,
                 discontinuity: nil,
                 legendValue: element.rawValue
+            )
+        }).all
+    }
+
+    var tableData: [ICETableColumn] {
+        SoluteValues(builder: { element in
+            ICETableColumn(
+                header: element.rawValue,
+                initialValue: equation.initialConcentration.value(for: element),
+                finalValue: equation.finalConcentration.value(for: element)
             )
         }).all
     }
@@ -241,23 +251,3 @@ private extension ReactionComponents {
         }).all
     }
 }
-
-
-//MoleculeValue(builder: { molecule in
-//    ICETableColumn(
-//        header: molecule.rawValue,
-//        initialValue: initialParams.value(for: molecule),
-//        finalValue: finalParams.value(for: molecule)
-//    )
-//}).all
-
-
-
-//MoleculeValue(builder: { molecule in
-//    MultiConcentrationPlotData(
-//        equation: components.equation.concentration.value(for: molecule),
-//        color: molecule.color,
-//        discontinuity: components.moleculeChartDiscontinuities?.value(for: molecule),
-//        legendValue: molecule.rawValue
-//    )
-//}).all
