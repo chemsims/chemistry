@@ -91,7 +91,12 @@ private class ParticleTrianglePart: SKShapeNode {
         let scale = SKAction.scale(by: CGFloat.random(in: 0.05...0.15), duration: duration)
         let fade = SKAction.fadeOut(withDuration: duration)
         let move = SKAction.move(by: CGVector(dx: 0, dy: -sideLength), duration: duration)
-        let group = SKAction.group([scale, fade, move])
+
+        let maxRotation = 2 * CGFloat.pi
+        let rotation = CGFloat.random(in: -maxRotation...maxRotation)
+        let rotate = SKAction.rotate(byAngle: rotation, duration: duration)
+
+        let group = SKAction.group([scale, fade, move, rotate])
         children.forEach { $0.run(group) }
     }
 
