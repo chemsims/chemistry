@@ -5,6 +5,10 @@
 import CoreGraphics
 import ReactionsCore
 
+class SolubilityComponents {
+    
+}
+
 
 class SolubleReactionEquation {
 

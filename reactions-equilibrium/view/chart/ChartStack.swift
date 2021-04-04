@@ -7,10 +7,12 @@ import ReactionsCore
 
 struct ChartStack: View {
 
-    let components: ReactionComponents
-    let initialParams: MoleculeValue<CGFloat>
-    let finalParams: MoleculeValue<CGFloat>
+    let concentrationData: [MultiConcentrationPlotData]
+    let tableColumns: [ICETableColumn]
+    let equilibriumTime: CGFloat
+    let quotientEquation: Equation
     @Binding var currentTime: CGFloat
+    let quotientChartDiscontinuity: CGPoint?
     let chartOffset: CGFloat
     let canSetCurrentTime: Bool
     let canSetChartIndex: Bool
@@ -44,8 +46,7 @@ struct ChartStack: View {
             concentrationChart.opacity(showGraph ? 1 : 0)
             if (!showGraph) {
                 ICETable(
-                    initial: initialParams,
-                    final: finalParams
+                    columns: tableColumns
                 )
                 .colorMultiply(generalElementHighlight)
             }
@@ -58,22 +59,15 @@ struct ChartStack: View {
 
     private var concentrationChart: some View {
         MultiConcentrationPlot(
-            values: MoleculeValue(builder: { molecule in
-                MultiConcentrationPlotData(
-                    equation: components.equation.concentration.value(for: molecule),
-                    color: molecule.color,
-                    discontinuity: components.moleculeChartDiscontinuities?.value(for: molecule),
-                    legendValue: molecule.rawValue
-                )
-            }).all,
-            equilibriumTime: components.equation.equilibriumTime,
+            values: concentrationData,
+            equilibriumTime: equilibriumTime,
             initialTime: 0,
             currentTime: $currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: canSetCurrentTime,
             showData: showConcentrationLines,
             offset: chartOffset,
-            minDragTime: components.quotientChartDiscontinuity?.x,
+            minDragTime: quotientChartDiscontinuity?.x,
             canSetIndex: canSetChartIndex,
             activeIndex: $activeChartIndex,
             yLabel: topChartYLabel,
@@ -84,15 +78,15 @@ struct ChartStack: View {
 
     private var quotientChart: some View {
         QuotientPlot(
-            equation: components.quotientEquation,
+            equation: quotientEquation,
             initialTime: 0,
             currentTime: $currentTime,
             finalTime: AqueousReactionSettings.forwardReactionTime,
             canSetCurrentTime: canSetCurrentTime,
-            equilibriumTime: components.equation.equilibriumTime,
+            equilibriumTime: equilibriumTime,
             showData: showQuotientLine,
             offset: chartOffset,
-            discontinuity: components.quotientChartDiscontinuity,
+            discontinuity: quotientChartDiscontinuity,
             settings: settings.quotientChartSettings(
                 convergenceQ: equilibriumQuotient,
                 maxQ: maxQuotient
@@ -134,10 +128,12 @@ extension ChartStack {
         settings: AqueousScreenLayoutSettings
     ) {
         self.init(
-            components: model.components,
-            initialParams: model.components.equation.initialConcentrations,
-            finalParams: model.components.equation.equilibriumConcentrations,
+            concentrationData: model.components.concentrationData,
+            tableColumns: model.components.tableData(),
+            equilibriumTime: model.components.equilibriumTime,
+            quotientEquation: model.components.quotientEquation,
             currentTime: currentTime,
+            quotientChartDiscontinuity: model.components.quotientChartDiscontinuity,
             chartOffset: model.chartOffset,
             canSetCurrentTime: model.canSetCurrentTime,
             canSetChartIndex: model.canSetChartIndex,
@@ -160,14 +156,12 @@ extension ChartStack {
         settings: AqueousScreenLayoutSettings
     ) {
         self.init(
-            components: model.components,
-            initialParams: model.components.equation.initialConcentrations.map {
-                $0 * GaseousReactionSettings.pressureToConcentration
-            },
-            finalParams: model.components.equation.equilibriumConcentrations.map {
-                $0 * GaseousReactionSettings.pressureToConcentration
-            },
+            concentrationData: model.components.concentrationData,
+            tableColumns: model.components.tableData(factor: GaseousReactionSettings.pressureToConcentration),
+            equilibriumTime: model.components.equilibriumTime,
+            quotientEquation: model.components.quotientEquation,
             currentTime: currentTime,
+            quotientChartDiscontinuity: model.components.quotientChartDiscontinuity,
             chartOffset: model.chartOffset,
             canSetCurrentTime: model.canSetCurrentTime,
             canSetChartIndex: model.canSetChartIndex,
@@ -182,4 +176,76 @@ extension ChartStack {
             topChartYLabel: "Pressure"
         )
     }
+
+    init(
+        model: SolubilityViewModel,
+        currentTime: Binding<CGFloat>,
+        activeChartIndex: Binding<Int?>,
+        settings: AqueousScreenLayoutSettings
+    ) {
+        self.init(
+            concentrationData: [],
+            tableColumns: [],
+            equilibriumTime: 20,
+            quotientEquation: ConstantEquation(value: 1),
+            currentTime: .constant(0),
+            quotientChartDiscontinuity: nil,
+            chartOffset: 0,
+            canSetCurrentTime: false,
+            canSetChartIndex: false,
+            showConcentrationLines: true,
+            showQuotientLine: true,
+            maxQuotient: 10,
+            settings: settings,
+            equilibriumQuotient: 10,
+            activeChartIndex: .constant(nil),
+            generalElementHighlight: .white,
+            equilibriumHighlight: .white,
+            topChartYLabel: "Concentration"
+        )
+    }
 }
+
+
+private extension ReactionComponents {
+    var concentrationData: [MultiConcentrationPlotData] {
+        MoleculeValue(builder: { molecule in
+            MultiConcentrationPlotData(
+                equation: equation.concentration.value(for: molecule),
+                color: molecule.color,
+                discontinuity: moleculeChartDiscontinuities?.value(for: molecule),
+                legendValue: molecule.rawValue
+            )
+        }).all
+    }
+
+    func tableData(factor: CGFloat = 1) -> [ICETableColumn] {
+        MoleculeValue(builder: { molecule in
+            ICETableColumn(
+                header: molecule.rawValue,
+                initialValue: equation.initialConcentrations.map{ $0 * factor }.value(for: molecule),
+                finalValue: equation.equilibriumConcentrations.map{ $0 * factor }.value(for: molecule)
+            )
+        }).all
+    }
+}
+
+
+//MoleculeValue(builder: { molecule in
+//    ICETableColumn(
+//        header: molecule.rawValue,
+//        initialValue: initialParams.value(for: molecule),
+//        finalValue: finalParams.value(for: molecule)
+//    )
+//}).all
+
+
+
+//MoleculeValue(builder: { molecule in
+//    MultiConcentrationPlotData(
+//        equation: components.equation.concentration.value(for: molecule),
+//        color: molecule.color,
+//        discontinuity: components.moleculeChartDiscontinuities?.value(for: molecule),
+//        legendValue: molecule.rawValue
+//    )
+//}).all
