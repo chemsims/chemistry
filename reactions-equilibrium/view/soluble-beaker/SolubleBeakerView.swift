@@ -8,22 +8,21 @@ import ReactionsCore
 struct SolubleBeakerView: View {
 
     let waterColor: Color
-    let model: SoluteBeakerShakingViewModel
+    let model: SolubilityViewModel
+    let shakeModel: SoluteBeakerShakingViewModel
     let settings: SolubleBeakerSettings
 
     var body: some View {
         GeometryReader { geo in
             SolubleBeakerViewWithGeometry(
                 waterColor: waterColor,
-                shakeModel: model,
-                position: model.shake.position,
+                model: model,
+                shakeModel: shakeModel,
+                position: shakeModel.shake.position,
                 settings: settings,
                 geometry: geo
             )
             .frame(width: settings.beakerWidth)
-        }
-        .onAppear {
-            model.shake.position.start()
         }
     }
 }
@@ -31,11 +30,12 @@ struct SolubleBeakerView: View {
 private struct SolubleBeakerViewWithGeometry: View {
 
     let waterColor: Color
+    @ObservedObject var model: SolubilityViewModel
     @ObservedObject var shakeModel: SoluteBeakerShakingViewModel
     @ObservedObject var position: CoreMotionPositionViewModel
     let settings: SolubleBeakerSettings
     let geometry: GeometryProxy
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
             beaker
@@ -44,10 +44,28 @@ private struct SolubleBeakerViewWithGeometry: View {
     }
 
     private var containers: some View {
-        VStack(spacing: 0) {
+        let isActive = model.activeSolute == SoluteType.primary
+        return VStack(spacing: 0) {
             ZStack {
                 container(name: "soluteAB")
-                    .position(activeContainerLocation)
+                    .rotationEffect(isActive ? .degrees(135) : .zero)
+                    .position(
+                        isActive ? activeContainerLocation : standardContainerLocation
+                    )
+                    .scaleEffect(isActive ? 1.2 : 1)
+                    .onTapGesture {
+                        guard model.inputState == .addSolute else {
+                            return
+                        }
+                        if isActive {
+                            shakeModel.manualAdd()
+                        } else {
+                            withAnimation(.easeOut(duration: 0.5)) {
+                                model.activeSolute = .primary
+                            }
+                            shakeModel.shake.position.start()
+                        }
+                    }
             }
             Spacer()
         }
@@ -87,11 +105,21 @@ private struct SolubleBeakerViewWithGeometry: View {
             .frame(width: settings.containerWidth)
     }
 
+    private var standardContainerLocation: CGPoint {
+        CGPoint(
+            x: settings.beaker.beaker.innerBeakerWidth / 3,
+            y: settings.containerWidth * 1.5
+        )
+    }
+
     private var activeContainerLocation: CGPoint {
-        let initX = settings.beaker.beaker.innerBeakerWidth / 3
-        let initY: CGFloat = settings.containerWidth * 3
+        let initX = settings.beaker.beaker.innerBeakerWidth / 2
+        let initY: CGFloat = settings.containerWidth * 3.5
         return CGPoint(x: initX, y: initY)
-            .offset(dx: position.xOffset, dy: position.yOffset)
+            .offset(
+                dx: position.xOffset * settings.beaker.beaker.innerBeakerWidth / 2,
+                dy: position.yOffset * settings.containerWidth
+            )
     }
 
     // Maps active container location into the SpriteKit frame of reference.
@@ -117,7 +145,7 @@ struct SolubleBeakerSettings {
     }
 
     var containerWidth: CGFloat {
-        0.15 * beakerWidth
+        0.13 * beakerWidth
     }
 
     var containerYRange: CGFloat {
@@ -131,7 +159,7 @@ struct SolubleBeakerSettings {
 
 class SoluteBeakerShakingViewModel: NSObject, CoreMotionShakingDelegate, ObservableObject {
 
-    @Published var shouldAddParticle: Bool = true
+    @Published var shouldAddParticle: Bool = false
 
     let shake: CoreMotionShakingViewModel
 
@@ -141,11 +169,14 @@ class SoluteBeakerShakingViewModel: NSObject, CoreMotionShakingDelegate, Observa
         self.shake.delegate = self
     }
 
+    func manualAdd() {
+        self.shouldAddParticle = true
+    }
+
     func didShake() {
         DispatchQueue.main.async { [weak self] in
             self?.shouldAddParticle = true
         }
-
     }
 }
 
@@ -162,7 +193,8 @@ struct SolubleBeakerView_Previews: PreviewProvider {
     static var previews: some View {
         SolubleBeakerView(
             waterColor: Styling.beakerLiquid,
-            model: SoluteBeakerShakingViewModel(),
+            model: SolubilityViewModel(),
+            shakeModel: SoluteBeakerShakingViewModel(),
             settings: SolubleBeakerSettings(
                 beakerWidth: 200,
                 waterHeight: 100

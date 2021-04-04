@@ -3,13 +3,16 @@
 //
 
 import ReactionsCore
+import SwiftUI
 
 class SolubilityNavigationModel {
     static func model(model: SolubilityViewModel) -> NavigationModel<SolubilityScreenState> {
         NavigationModel(
             model: model,
             states: [
-                SetStatement(statement: [])
+                SetStatement(statement: ["Click next to add solute"]),
+                AddSolute(),
+                ShowSaturatedSolution()
             ]
         )
     }
@@ -52,5 +55,23 @@ private class SetStatement: SolubilityScreenState {
 
     override func apply(on model: SolubilityViewModel) {
         model.statement = statement
+    }
+}
+
+private class AddSolute: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["Now, add solute"]
+        model.inputState = .addSolute
+    }
+}
+
+private class ShowSaturatedSolution: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["Solution is now saturated"]
+        model.stopShaking()
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.inputState = .none
+            model.activeSolute = nil
+        }
     }
 }

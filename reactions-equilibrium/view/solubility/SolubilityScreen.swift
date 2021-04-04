@@ -28,13 +28,14 @@ private struct SolubilityScreenWithSettings: View {
         HStack(spacing: 0) {
             SolubleBeakerView(
                 waterColor: Styling.beakerLiquid,
-                model: SoluteBeakerShakingViewModel(),
+                model: model,
+                shakeModel: model.shakingModel,
                 settings: SolubleBeakerSettings(
                     beakerWidth: settings.common.beakerWidth,
                     waterHeight: settings.waterHeightAxis.getPosition(at: model.waterHeightFactor)
                 )
             )
-            
+
             Spacer()
 
             SolubilityRightStack(
