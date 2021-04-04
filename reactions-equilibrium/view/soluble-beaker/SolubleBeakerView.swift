@@ -44,12 +44,7 @@ private struct SolubleBeakerViewWithGeometry: View {
         let isActive = model.activeSolute == SoluteType.primary
         return VStack(spacing: 0) {
             ZStack {
-                container(name: "soluteAB")
-                    .rotationEffect(isActive ? .degrees(135) : .zero)
-                    .position(
-                        isActive ? activeContainerLocation : standardContainerLocation
-                    )
-                    .scaleEffect(isActive ? 1.2 : 1)
+                container(solute: .primary, index: 0)
                     .onTapGesture {
                         guard model.inputState == .addSolute else {
                             return
@@ -63,6 +58,9 @@ private struct SolubleBeakerViewWithGeometry: View {
                             shakeModel.shake.position.start()
                         }
                     }
+
+                container(solute: .commonIon, index: 1)
+                container(solute: .acid, index: 2)
             }
             Spacer()
         }
@@ -96,16 +94,23 @@ private struct SolubleBeakerViewWithGeometry: View {
         )
     }
 
-    private func container(name: String) -> some View {
-        Image(name)
+    private func container(solute: SoluteType, index: Int) -> some View {
+        let isActive = model.activeSolute == solute
+        return Image(solute.image)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: settings.containerWidth)
+            .rotationEffect(isActive ? .degrees(135) : .zero)
+            .position(
+                isActive ? activeContainerLocation : standardContainerLocation(index: index)
+            )
+            .scaleEffect(isActive ? 1.2 : 1)
+            .zIndex(isActive ? 1 : 0)
     }
 
-    private var standardContainerLocation: CGPoint {
-        CGPoint(
-            x: settings.beaker.beaker.innerBeakerWidth / 3,
+    private func standardContainerLocation(index: Int) -> CGPoint {
+        return CGPoint(
+            x: CGFloat(index + 1) * settings.beaker.beaker.innerBeakerWidth / 4,
             y: settings.containerWidth * 1.5
         )
     }

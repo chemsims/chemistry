@@ -8,6 +8,14 @@ import ReactionsCore
 
 enum SoluteType {
     case primary, commonIon, acid
+
+    var image: String {
+        switch self {
+        case .primary: return "soluteAB"
+        case .commonIon: return "soluteCB"
+        case .acid: return "acidH"
+        }
+    }
 }
 
 class SolubilityViewModel: ObservableObject {
