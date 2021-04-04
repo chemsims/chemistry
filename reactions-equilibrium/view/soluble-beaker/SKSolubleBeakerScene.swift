@@ -11,11 +11,16 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     let size: CGSize
     let particlePosition: CGPoint
     let soluteWidth: CGFloat
+    let waterHeight: CGFloat
     @Binding var shouldAddParticle: Bool
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
-        let scene = SKSolubleBeakerScene(size: size, soluteWidth: soluteWidth)
+        let scene = SKSolubleBeakerScene(
+            size: size,
+            soluteWidth: soluteWidth,
+            waterHeight: waterHeight
+        )
         scene.scaleMode = .aspectFit
         view.allowsTransparency = true
         view.presentScene(scene)
@@ -29,16 +34,20 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
                 scene.addParticle(at: particlePosition)
                 shouldAddParticle = false
             }
+            scene.soluteWidth = soluteWidth
+            scene.waterHeight = waterHeight
         }
     }
 }
 
 class SKSolubleBeakerScene: SKScene {
 
-    private let soluteWidth: CGFloat
+    var soluteWidth: CGFloat
+    var waterHeight: CGFloat
 
-    init(size: CGSize, soluteWidth: CGFloat) {
+    init(size: CGSize, soluteWidth: CGFloat, waterHeight: CGFloat) {
         self.soluteWidth = soluteWidth
+        self.waterHeight = waterHeight
         super.init(size: size)
     }
 
@@ -49,22 +58,31 @@ class SKSolubleBeakerScene: SKScene {
     override func didMove(to view: SKView) {
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         backgroundColor = .clear
-
-
-//        demoElectricField()
-//        demoMagneticField()
-//        demoJoinedNodesAndMagneticField()
     }
 
     func addParticle(at position: CGPoint) {
         let sideLength = soluteWidth / 2
         let node = SKSoluteNode(sideLength: sideLength)
         node.position = position.offset(dx: -sideLength, dy: 0)
+
         addChild(node)
+
+        node.physicsBody?.applyTorque(CGFloat.random(in: -0.01...0.01))
 
         let action = SKAction.run(node.dissolve)
         let delay = SKAction.wait(forDuration: 2)
         self.run(SKAction.sequence([delay, action]))
+    }
+
+    override func update(_ currentTime: TimeInterval) {
+        for child in children {
+            if let solute = child as? SKSoluteNode, let physics = solute.physicsBody {
+                if solute.position.y < waterHeight {
+                    physics.linearDamping = 50
+                    physics.angularDamping = 1
+                }
+            }
+        }
     }
 
     private func demoJoinedNodesAndMagneticField() {
