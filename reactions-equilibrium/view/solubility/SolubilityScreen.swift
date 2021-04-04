@@ -35,6 +35,13 @@ private struct SolubilityScreenWithSettings: View {
                 )
             )
 
+            ChartStack(
+                model: model,
+                currentTime: $model.currentTime,
+                activeChartIndex: .constant(nil),
+                settings: settings.common
+            )
+
             Spacer()
 
             SolubilityRightStack(

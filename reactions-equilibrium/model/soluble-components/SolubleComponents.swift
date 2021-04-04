@@ -5,8 +5,50 @@
 import CoreGraphics
 import ReactionsCore
 
+class SolubilityComponentsWrapper {
+
+    var equilibriumConstant: CGFloat {
+        didSet {
+            components = SolubilityComponents(
+                equilibriumConstant: equilibriumConstant,
+                initialConcentration: components.initialConcentration
+            )
+        }
+    }
+
+    init(equilibriumConstant: CGFloat) {
+        self.equilibriumConstant = equilibriumConstant
+        self.components = SolubilityComponents(
+            equilibriumConstant: equilibriumConstant,
+            initialConcentration: SoluteValues.constant(0)
+        )
+    }
+
+    private(set) var components: SolubilityComponents
+}
+
 class SolubilityComponents {
-    
+
+
+    let equilibriumConstant: CGFloat
+    let initialConcentration: SoluteValues<CGFloat>
+
+    init(
+        equilibriumConstant: CGFloat,
+        initialConcentration: SoluteValues<CGFloat>
+    ) {
+        self.equilibriumConstant = equilibriumConstant
+        self.initialConcentration = initialConcentration
+    }
+
+    lazy var equation = SolubleReactionEquation(
+        initialConcentration: initialConcentration,
+        equilibriumConstant: equilibriumConstant,
+        startTime: 0,
+        equilibriumTime: 20
+    )
+
+
 }
 
 
@@ -61,7 +103,31 @@ struct SoluteValues<Value> {
         self.productB = productB
     }
 
+    init(builder: (SoluteProductType) -> Value) {
+        self.init(productA: builder(.A), productB: builder(.B))
+    }
+
+    static func constant(_ value: Value) -> SoluteValues {
+        SoluteValues(builder: { _ in value })
+    }
+
     func map<MappedValue>(_ f: (Value) -> MappedValue) -> SoluteValues<MappedValue> {
         SoluteValues<MappedValue>(productA: f(productA), productB: f(productB))
     }
+
+    func value(for element: SoluteProductType) -> Value {
+        switch element {
+        case .A: return productA
+        case .B: return productB
+        }
+    }
+
+    var all: [Value] {
+        [productA, productB]
+    }
+    
+}
+
+enum SoluteProductType: String {
+    case A, B
 }

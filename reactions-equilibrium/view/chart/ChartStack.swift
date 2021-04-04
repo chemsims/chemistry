@@ -184,11 +184,11 @@ extension ChartStack {
         settings: AqueousScreenLayoutSettings
     ) {
         self.init(
-            concentrationData: [],
+            concentrationData: model.components.concentrationData,
             tableColumns: [],
             equilibriumTime: 20,
             quotientEquation: ConstantEquation(value: 1),
-            currentTime: .constant(0),
+            currentTime: currentTime,
             quotientChartDiscontinuity: nil,
             chartOffset: 0,
             canSetCurrentTime: false,
@@ -198,7 +198,7 @@ extension ChartStack {
             maxQuotient: 10,
             settings: settings,
             equilibriumQuotient: 10,
-            activeChartIndex: .constant(nil),
+            activeChartIndex: activeChartIndex,
             generalElementHighlight: .white,
             equilibriumHighlight: .white,
             topChartYLabel: "Concentration"
@@ -206,6 +206,18 @@ extension ChartStack {
     }
 }
 
+private extension SolubilityComponents {
+    var concentrationData: [MultiConcentrationPlotData] {
+        SoluteValues(builder: { element in
+            MultiConcentrationPlotData(
+                equation: equation.concentration.value(for: element),
+                color: .red,
+                discontinuity: nil,
+                legendValue: element.rawValue
+            )
+        }).all
+    }
+}
 
 private extension ReactionComponents {
     var concentrationData: [MultiConcentrationPlotData] {

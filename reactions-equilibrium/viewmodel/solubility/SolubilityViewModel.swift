@@ -19,9 +19,18 @@ class SolubilityViewModel: ObservableObject {
     @Published var inputState = SolubilityInputState.none
     @Published var activeSolute: SoluteType?
 
+    @Published var currentTime: CGFloat = 0
+
+    var componentWrapper: SolubilityComponentsWrapper
+
     init() {
         self.shakingModel = SoluteBeakerShakingViewModel()
+        self.componentWrapper = SolubilityComponentsWrapper(equilibriumConstant: 0.1)
         self.navigation = SolubilityNavigationModel.model(model: self)
+    }
+
+    var components: SolubilityComponents {
+        componentWrapper.components
     }
 
     let shakingModel: SoluteBeakerShakingViewModel
@@ -35,7 +44,9 @@ class SolubilityViewModel: ObservableObject {
     }
 
     func onDissolve() {
-        print("did dissolve")
+        withAnimation(.linear(duration: 0.5)) {
+            currentTime += 0.5
+        }
     }
 
     func stopShaking() {
