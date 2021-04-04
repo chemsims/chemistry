@@ -15,12 +15,9 @@ public class CoreMotionPositionViewModel: ObservableObject {
 
     private let queue: OperationQueue
 
+    /// The x offset, which will lie between -1 and 1
     @Published public var xOffset: CGFloat = 0
     @Published public var yOffset: CGFloat = 0
-
-    private var halfYRange: CGFloat?
-
-    private var halfXRange: CGFloat?
 
     public weak var delegate: CoreMotionDevicePositionDelegate?
 
@@ -30,13 +27,7 @@ public class CoreMotionPositionViewModel: ObservableObject {
     private var initialAttitude: CMAttitude?
 
     /// Starts motion updates
-    ///
-    /// - Parameters:
-    ///     - halfXRange: Half of the range that the x offset can vary
-    ///     - halfYRange: Half of the range that the y offset can vary
-    public func start(halfXRange: CGFloat, halfYRange: CGFloat) {
-        self.halfXRange = halfXRange
-        self.halfYRange = halfYRange
+    public func start() {
         guard !isUpdating else {
             return
         }
@@ -84,21 +75,18 @@ public class CoreMotionPositionViewModel: ObservableObject {
     private func handlePitch(newValue: Double) {
         self.xOffset = getOffset(
             value: newValue,
-            equation: pitchEquation,
-            halfRange: halfXRange
+            equation: pitchEquation
         )
     }
 
     private func handleRoll(newValue: Double) {
         self.yOffset = getOffset(
             value: newValue,
-            equation: rollEquation,
-            halfRange: halfYRange
+            equation: rollEquation
         )
     }
 
-    private func getOffset(value: Double, equation: Equation, halfRange: CGFloat?) -> CGFloat {
-        let factor = within(min: -1, max: 1, value: equation.getY(at: CGFloat(value)))
-        return halfRange.map { $0 * factor } ?? 0
+    private func getOffset(value: Double, equation: Equation) -> CGFloat {
+        within(min: -1, max: 1, value: equation.getY(at: CGFloat(value)))
     }
 }

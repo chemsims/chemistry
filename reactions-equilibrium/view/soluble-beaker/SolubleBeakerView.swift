@@ -23,10 +23,7 @@ struct SolubleBeakerView: View {
             .frame(width: settings.beakerWidth)
         }
         .onAppear {
-            model.shake.position.start(
-                halfXRange: settings.beaker.beaker.innerBeakerWidth / 2,
-                halfYRange: settings.containerYRange / 2
-            )
+            model.shake.position.start()
         }
     }
 }

@@ -38,8 +38,10 @@ class AddingMoleculesViewModel: ObservableObject {
         stopShaking()
         let model = models.value(for: molecule)
         model.initialLocation = location
+        model.halfXRange = halfXRange
+        model.halfYRange = halfYRange
         model.bottomY = bottomY
-        model.motion.position.start(halfXRange: halfXRange, halfYRange: halfYRange)
+        model.motion.position.start()
     }
 
     func stopAll() {

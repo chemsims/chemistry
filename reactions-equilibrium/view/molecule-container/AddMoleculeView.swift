@@ -64,7 +64,9 @@ struct AddMoleculesView: View {
             moleculeSize: moleculeSize,
             moleculeColor: molecule.color,
             imageName: molecule.imageName,
-            rotation: model.activeMolecule == molecule ? .degrees(135) : .zero
+            rotation: model.activeMolecule == molecule ? .degrees(135) : .zero,
+            halfXRange: width / 2,
+            halfYRange: containerHeight
         )
         .zIndex(model.activeMolecule == molecule ? 1 : 0)
         .disabled(!isActive)
@@ -135,6 +137,9 @@ private struct AddMoleculeContainerView: View {
     let imageName: String
     let rotation: Angle
 
+    let halfXRange: CGFloat
+    let halfYRange: CGFloat
+
     var body: some View {
         ZStack {
             ForEach(model.molecules) { molecule in
@@ -154,7 +159,12 @@ private struct AddMoleculeContainerView: View {
             .rotationEffect(rotation)
             .frame(width: containerWidth)
             .position(initialLocation)
-            .offset(CGSize(width: position.xOffset, height: position.yOffset))
+            .offset(
+                CGSize(
+                    width: position.xOffset * halfXRange,
+                    height: position.yOffset * halfYRange
+                )
+            )
             .onTapGesture {
                 onTap()
             }

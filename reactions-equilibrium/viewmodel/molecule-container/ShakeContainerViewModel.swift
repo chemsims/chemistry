@@ -16,6 +16,9 @@ class ShakeContainerViewModel: NSObject, ObservableObject {
     var initialLocation: CGPoint?
     var bottomY: CGFloat?
 
+    var halfXRange: CGFloat?
+    var halfYRange: CGFloat?
+
     init(
         canAddMolecule: @escaping () -> Bool,
         addMolecules: @escaping (Int) -> Void
@@ -51,8 +54,8 @@ class ShakeContainerViewModel: NSObject, ObservableObject {
         if let location = initialLocation, let bottomY = bottomY {
             let molecule = FallingMolecule(
                 position: CGPoint(
-                    x: location.x + motion.position.xOffset,
-                    y: location.y + motion.position.yOffset
+                    x: location.x + (motion.position.xOffset * (halfXRange ?? 0)),
+                    y: location.y + (motion.position.yOffset * (halfYRange ?? 0))
                 )
             )
             molecules.append(molecule)
