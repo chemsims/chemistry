@@ -16,6 +16,14 @@ enum SoluteType {
         case .acid: return "acidH"
         }
     }
+
+    var color: RGB {
+        switch self {
+        case .primary: return RGB.primarySolute
+        case .commonIon: return RGB.commonIonSolute
+        case .acid: return RGB.acidSolute
+        }
+    }
 }
 
 class SolubilityViewModel: ObservableObject {
@@ -80,8 +88,6 @@ class SolubilityViewModel: ObservableObject {
         switch inputState {
         case .addSaturatedSolute where soluteType == .primary:
             saturatedSoluteEnteredWater()
-        case .addSolute(type: soluteType) where soluteType == .acid:
-            acidEnteredWater()
         default: break
         }
     }
@@ -95,7 +101,7 @@ class SolubilityViewModel: ObservableObject {
         switch soluteType {
         case .primary: primarySoluteDissolved()
         case .commonIon: commonIonSoluteDissolved()
-        case .acid: break
+        case .acid: acidDissolved()
         }
     }
 
@@ -105,7 +111,7 @@ class SolubilityViewModel: ObservableObject {
         }
     }
 
-    private func acidEnteredWater() {
+    private func acidDissolved() {
         if let initB0 = components.previousEquation?.finalConcentration.value(for: .B) {
             let dc = (0.75 * initB0) / CGFloat(SolubleReactionSettings.acidSoluteParticlesToAdd)
             withAnimation(.easeOut(duration: 0.5)) {
@@ -149,21 +155,6 @@ class SolubilityViewModel: ObservableObject {
 
     var canEmit: Bool {
         inputState.isAddingSolute && soluteCounts.canEmit
-    }
-
-    var waterColor2: Color {
-        let initialRGB = initialWaterColor
-        let finalRGB = RGB.saturatedLiquid
-        let fraction = (currentTime - components.startTime) / (components.equilibriumTime - components.startTime)
-        let boundFraction = fraction.within(min: 0, max: 1)
-        return RGB.interpolate(initialRGB, finalRGB, fraction: Double(boundFraction)).color
-    }
-
-    private var initialWaterColor: RGB {
-        let initialRGB = RGB.beakerLiquid
-        let finalRGB = RGB.maxCommonIon
-        let fraction = min(1, extraB0 / SolubleReactionSettings.maxInitialBConcentration)
-        return RGB.interpolate(initialRGB, finalRGB, fraction: Double(fraction))
     }
 
     var soluteToAddForSaturation: Int {
@@ -217,7 +208,7 @@ class SolubilityViewModel: ObservableObject {
                 finalValue: SolubleReactionSettings.maxInitialBConcentration,
                 currentValue: extraB0,
                 initialColor: .beakerLiquid,
-                finalColor: .maxCommonIon
+                finalColor: .maxCommonIonLiquid
             ).rgb,
             finalColor: .saturatedLiquid
         ).rgb.color
@@ -232,7 +223,7 @@ class SolubilityViewModel: ObservableObject {
                 finalValue: 0,
                 currentValue: components.initialConcentration.value(for: .B),
                 initialColor: .saturatedLiquid,
-                finalColor: RGB(r: 255, g: 0, b: 0)
+                finalColor: .maxAcidLiquid
             ).rgb,
             finalColor: .saturatedLiquid
         ).rgb.color
@@ -336,5 +327,10 @@ enum SolubilityInputState: Equatable {
 
 extension RGB {
     static let saturatedLiquid = RGB(r: 230, g: 203, b: 140)
-    static let maxCommonIon = RGB(r: 233, g: 200, b: 183)
+    static let maxCommonIonLiquid = RGB(r: 233, g: 200, b: 183)
+    static let maxAcidLiquid = RGB(r: 167, g: 250, b: 218)
+
+    static let primarySolute = RGB(r: 230, g: 175, b: 33)
+    static let commonIonSolute = RGB(r: 214, g: 91, b: 35)
+    static let acidSolute = RGB(r: 9, g: 179, b: 97)
 }

@@ -110,7 +110,8 @@ class SKSolubleBeakerScene: SKScene {
     }
 
     func addParticle(at position: CGPoint) {
-        let sideLength = soluteWidth / 2
+        let factor: CGFloat = soluteState.soluteType == .acid ? 0.75 : 1
+        let sideLength = (soluteWidth / 2) * factor
         let node = SKSoluteNode(sideLength: sideLength, soluteType: soluteState.soluteType)
         node.position = position.offset(dx: -sideLength, dy: 0)
 

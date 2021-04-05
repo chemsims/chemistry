@@ -56,7 +56,8 @@ class SKSoluteNode: SKShapeNode {
 
             let node = ParticleTrianglePart(
                 sideLength: sideLength,
-                height: halfHeight
+                height: halfHeight,
+                fillColor: soluteType.color.uiColor
             )
             node.position = CGPoint(
                 x: center.x + dx,
@@ -98,7 +99,7 @@ private class ParticleTrianglePart: SKShapeNode {
 
     private let sideLength: CGFloat
 
-    init(sideLength: CGFloat, height: CGFloat) {
+    init(sideLength: CGFloat, height: CGFloat, fillColor: UIColor) {
         self.sideLength = sideLength
         super.init()
         let path = CGMutablePath()
@@ -110,7 +111,7 @@ private class ParticleTrianglePart: SKShapeNode {
             ]
         )
         let node = SKShapeNode(path: path)
-        node.fillColor = .purple
+        node.fillColor = fillColor
         node.strokeColor = .clear
         addChild(node)
     }
