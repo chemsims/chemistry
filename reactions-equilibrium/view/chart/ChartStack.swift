@@ -189,7 +189,7 @@ extension ChartStack {
             equilibriumTime: 20,
             quotientEquation: model.components.quotient,
             currentTime: currentTime,
-            quotientChartDiscontinuity: nil,
+            quotientChartDiscontinuity: model.components.quotientDiscontinuity,
             chartOffset: model.chartOffset,
             canSetCurrentTime: false,
             canSetChartIndex: false,
@@ -212,7 +212,7 @@ private extension SolubilityComponents {
             MultiConcentrationPlotData(
                 equation: equation.concentration.value(for: element),
                 color: element.color,
-                discontinuity: nil,
+                discontinuity: concentrationDiscontinuity?.value(for: element),
                 legendValue: element.rawValue
             )
         }).all

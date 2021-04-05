@@ -174,21 +174,11 @@ private class AddCommonIonSolute: SolubilityScreenState {
 private class PrepareAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Next, we will add acid"]
-        model.components = SolubilityComponents(
-            equilibriumConstant: model.components.equilibriumConstant,
-            initialConcentration: model.components.equation.finalConcentration,
-            startTime: model.components.startTime,
-            equilibriumTime: model.components.equilibriumTime,
-            previousEquation: model.components.equation
-        )
-        model.timing = SolubleReactionSettings.secondReactionTiming
-        model.extraB0 = 0
-        model.reactionPhase = .acidity
         withAnimation(.easeOut(duration: 1)) {
             model.inputState = .none
             model.activeSolute = nil
-            model.chartOffset = model.timing.offset
-            model.currentTime = model.timing.start
+            model.chartOffset = SolubleReactionSettings.secondReactionTiming.offset
+            model.currentTime = SolubleReactionSettings.secondReactionTiming.start
         }
     }
 
@@ -219,6 +209,16 @@ private class AddAcidSolute: SolubilityScreenState {
         model.inputState = .addSolute(type: .acid)
         model.beakerSoluteState = .addingSolute(type: .acid, clearPrevious: false)
         model.soluteCounts = SoluteContainer(maxAllowed: SolubleReactionSettings.acidSoluteParticlesToAdd)
+        model.components = SolubilityComponents(
+            equilibriumConstant: model.components.equilibriumConstant,
+            initialConcentration: model.components.equation.finalConcentration,
+            startTime: model.components.startTime,
+            equilibriumTime: model.components.equilibriumTime,
+            previousEquation: model.components.equation
+        )
+        model.timing = SolubleReactionSettings.secondReactionTiming
+        model.extraB0 = 0
+        model.reactionPhase = .acidity
     }
 }
 
