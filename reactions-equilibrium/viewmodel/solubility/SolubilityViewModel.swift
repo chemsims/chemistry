@@ -23,7 +23,7 @@ class SolubilityViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     private(set) var navigation: NavigationModel<SolubilityScreenState>?
 
-    @Published var waterHeightFactor: CGFloat = 0
+    @Published var waterHeightFactor: CGFloat = 0.5
     @Published var inputState = SolubilityInputState.none
     @Published var activeSolute: SoluteType?
 
