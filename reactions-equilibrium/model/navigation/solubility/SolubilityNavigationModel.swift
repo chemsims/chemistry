@@ -118,15 +118,9 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
     }
 }
 
-
 private class PrepareCommonIonReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["This is a common ion reaction"]
-        model.componentWrapper = SolubilityComponentsWrapper(
-            equilibriumConstant: 0.1,
-            startTime: SolubleReactionSettings.firstReactionTiming.start,
-            equilibriumTime: SolubleReactionSettings.firstReactionTiming.equilibrium
-        )
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = 0
             model.inputState = .none
@@ -151,5 +145,9 @@ private class AddCommonIonSolute: SolubilityScreenState {
         model.statement = ["Now, add common ion solute"]
         model.inputState = .addSolute(type: .commonIon)
         model.soluteCounts = SoluteContainer(maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd)
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        model.b0 = 0
     }
 }

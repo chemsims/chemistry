@@ -11,5 +11,7 @@ struct SolubleReactionSettings {
     static let saturatedSoluteParticlesToAdd = 5
     static let commonIonSoluteParticlesToAdd = 5
 
+    static let maxInitialBConcentration: CGFloat = 0.15
+
     static let firstReactionTiming = ReactionTiming.standard(reactionIndex: 0)
 }

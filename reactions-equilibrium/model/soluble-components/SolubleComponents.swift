@@ -5,55 +5,56 @@
 import SwiftUI
 import ReactionsCore
 
-class SolubilityComponentsWrapper {
+//class SolubilityComponentsWrapper {
+//
+//    var startTime: CGFloat {
+//        didSet {
+//            setComponents()
+//        }
+//    }
+//    var equilibriumTime: CGFloat {
+//        didSet {
+//            setComponents()
+//        }
+//    }
+//
+//    init(equilibriumConstant: CGFloat, startTime: CGFloat, equilibriumTime: CGFloat, b0: CGFloat = 0) {
+//        self.equilibriumConstant = equilibriumConstant
+//        self.startTime = startTime
+//        self.equilibriumTime = equilibriumTime
+//        self.components = SolubilityComponents(
+//            equilibriumConstant: equilibriumConstant,
+//            initialConcentration: SoluteValues(productA: 0, productB: b0),
+//            startTime: startTime,
+//            equilibriumTime: equilibriumTime
+//        )
+//    }
+//
+//    var equilibriumConstant: CGFloat {
+//        didSet {
+//            setComponents()
+//        }
+//    }
+//
+//    private(set) var components: SolubilityComponents
+//
+//    private func setComponents() {
+//        components = SolubilityComponents(
+//            equilibriumConstant: equilibriumConstant,
+//            initialConcentration: components.initialConcentration,
+//            startTime: startTime,
+//            equilibriumTime: equilibriumTime
+//        )
+//    }
+//}
 
-    var startTime: CGFloat {
-        didSet {
-            setComponents()
-        }
-    }
-    var equilibriumTime: CGFloat {
-        didSet {
-            setComponents()
-        }
-    }
-
-    init(equilibriumConstant: CGFloat, startTime: CGFloat, equilibriumTime: CGFloat, b0: CGFloat = 0) {
-        self.equilibriumConstant = equilibriumConstant
-        self.startTime = startTime
-        self.equilibriumTime = equilibriumTime
-        self.components = SolubilityComponents(
-            equilibriumConstant: equilibriumConstant,
-            initialConcentration: SoluteValues(productA: 0, productB: b0),
-            startTime: startTime,
-            equilibriumTime: equilibriumTime
-        )
-    }
-
-    var equilibriumConstant: CGFloat {
-        didSet {
-            setComponents()
-        }
-    }
-
-    private(set) var components: SolubilityComponents
-
-    private func setComponents() {
-        components = SolubilityComponents(
-            equilibriumConstant: equilibriumConstant,
-            initialConcentration: components.initialConcentration,
-            startTime: startTime,
-            equilibriumTime: equilibriumTime
-        )
-    }
-}
-
-class SolubilityComponents {
+struct SolubilityComponents {
 
     let equilibriumConstant: CGFloat
     let initialConcentration: SoluteValues<CGFloat>
     let startTime: CGFloat
     let equilibriumTime: CGFloat
+    let equation: SolubleReactionEquation
 
     init(
         equilibriumConstant: CGFloat,
@@ -65,14 +66,13 @@ class SolubilityComponents {
         self.initialConcentration = initialConcentration
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
+        self.equation = SolubleReactionEquation(
+            initialConcentration: initialConcentration,
+            equilibriumConstant: equilibriumConstant,
+            startTime: startTime,
+            equilibriumTime: equilibriumTime
+        )
     }
-
-    lazy var equation = SolubleReactionEquation(
-        initialConcentration: initialConcentration,
-        equilibriumConstant: equilibriumConstant,
-        startTime: startTime,
-        equilibriumTime: equilibriumTime
-    )
 
     var quotient: SolubilityQuotientEquation {
         SolubilityQuotientEquation(concentration: equation.concentration)
