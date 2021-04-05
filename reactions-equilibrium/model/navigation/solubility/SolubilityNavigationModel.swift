@@ -136,6 +136,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
         }
         model.beakerSoluteState = .addingSolute(type: .commonIon, clearPrevious: true)
         model.shouldRemoveSolute = true
+        model.reactionPhase = .commonIon
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -144,6 +145,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
             model.shouldRemoveSolute = false
             model.shouldAddRemovedSolute = true
         }
+        model.reactionPhase = .primarySolute
     }
 }
 
@@ -181,6 +183,7 @@ private class PrepareAcidReaction: SolubilityScreenState {
         )
         model.timing = SolubleReactionSettings.secondReactionTiming
         model.extraB0 = 0
+        model.reactionPhase = .acidity
         withAnimation(.easeOut(duration: 1)) {
             model.inputState = .none
             model.activeSolute = nil
@@ -198,6 +201,7 @@ private class PrepareAcidReaction: SolubilityScreenState {
             equilibriumTime: model.components.equilibriumTime,
             previousEquation: nil
         )
+        model.reactionPhase = .commonIon
         if let previousEquation = previousEquation {
             model.extraB0 = previousEquation.initialConcentration.value(for: .B)
         }

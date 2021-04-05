@@ -151,11 +151,12 @@ class SolubilityViewModel: ObservableObject {
         inputState.isAddingSolute && soluteCounts.canEmit
     }
 
-    var waterColor: Color {
+    var waterColor2: Color {
         let initialRGB = initialWaterColor
         let finalRGB = RGB.saturatedLiquid
-        let fraction = min(1, currentTime / components.equilibriumTime)
-        return RGB.interpolate(initialRGB, finalRGB, fraction: Double(fraction)).color
+        let fraction = (currentTime - components.startTime) / (components.equilibriumTime - components.startTime)
+        let boundFraction = fraction.within(min: 0, max: 1)
+        return RGB.interpolate(initialRGB, finalRGB, fraction: Double(boundFraction)).color
     }
 
     private var initialWaterColor: RGB {
@@ -186,6 +187,94 @@ class SolubilityViewModel: ObservableObject {
             previousEquation: components.previousEquation
         )
     }
+
+
+    var waterColor: Color {
+        switch reactionPhase {
+        case .primarySolute: return primarySoluteColor
+        case .commonIon: return commonIonReactionColor
+        case .acidity: return acidIonReactionColor
+        }
+    }
+
+    var reactionPhase: SolubleReactionPhase = .primarySolute
+
+    private var primarySoluteColor: Color {
+        ReactionTimingColor(
+            timing: timing,
+            currentTime: currentTime,
+            initialColor: .beakerLiquid,
+            finalColor: .saturatedLiquid
+        ).rgb.color
+    }
+
+    private var commonIonReactionColor: Color {
+        ReactionTimingColor(
+            timing: timing,
+            currentTime: currentTime,
+            initialColor: ColorInterpolator(
+                initialValue: 0,
+                finalValue: SolubleReactionSettings.maxInitialBConcentration,
+                currentValue: extraB0,
+                initialColor: .beakerLiquid,
+                finalColor: .maxCommonIon
+            ).rgb,
+            finalColor: .saturatedLiquid
+        ).rgb.color
+    }
+
+    private var acidIonReactionColor: Color {
+        ReactionTimingColor(
+            timing: timing,
+            currentTime: currentTime,
+            initialColor: ColorInterpolator(
+                initialValue: components.previousEquation?.finalConcentration.value(for: .B) ?? 0,
+                finalValue: 0,
+                currentValue: components.initialConcentration.value(for: .B),
+                initialColor: .saturatedLiquid,
+                finalColor: RGB(r: 255, g: 0, b: 0)
+            ).rgb,
+            finalColor: .saturatedLiquid
+        ).rgb.color
+    }
+}
+
+struct ReactionTimingColor {
+    let timing: ReactionTiming
+    let currentTime: CGFloat
+    let initialColor: RGB
+    let finalColor: RGB
+
+    var rgb: RGB {
+        ColorInterpolator(
+            initialValue: timing.start,
+            finalValue: timing.equilibrium,
+            currentValue: currentTime,
+            initialColor: initialColor,
+            finalColor: finalColor
+        ).rgb
+    }
+}
+
+enum SolubleReactionPhase {
+    case primarySolute, commonIon, acidity
+}
+
+struct ColorInterpolator {
+    let initialValue: CGFloat
+    let finalValue: CGFloat
+    let currentValue: CGFloat
+    let initialColor: RGB
+    let finalColor: RGB
+
+    var rgb: RGB {
+        let fraction = abs((currentValue - initialValue) / (finalValue - initialValue))
+
+        // The max is above 1, so that when overlapping an existing animation to a later state,
+        // the animation carries on
+        let boundFraction = fraction.within(min: 0, max: 1.1)
+        return RGB.interpolate(initialColor, finalColor, fraction: Double(boundFraction))
+    }
 }
 
 class SoluteContainer {
@@ -201,7 +290,7 @@ class SoluteContainer {
     }
 
     private var emitted: Int = 0
-    private var dissolved: Int = 0
+    private(set) var dissolved: Int = 0
 
     func didEmit() {
         emitted += 1
