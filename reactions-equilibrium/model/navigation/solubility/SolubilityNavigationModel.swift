@@ -21,7 +21,8 @@ class SolubilityNavigationModel {
                 AddSoluteToSaturatedBeaker(),
                 PrepareAcidReaction(),
                 AddAcidSolute(),
-                RunAcidReaction()
+                RunAcidReaction(),
+                EndAcidReaction()
             ]
         )
     }
@@ -221,6 +222,10 @@ private class RunAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         let dt = model.timing.end - model.timing.start
         model.beakerSoluteState = .dissolvingSuperSaturatedPrimary
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.inputState = .none
+            model.activeSolute = nil
+        }
         withAnimation(.linear(duration: Double(dt))) {
             model.currentTime = model.timing.end
         }
@@ -230,5 +235,14 @@ private class RunAcidReaction: SolubilityScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.start
         }
+    }
+}
+
+private class EndAcidReaction: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = model.timing.end * 1.001
+        }
+        model.beakerSoluteState = .completedSuperSaturatedReaction
     }
 }

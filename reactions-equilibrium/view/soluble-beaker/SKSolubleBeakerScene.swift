@@ -54,6 +54,7 @@ enum BeakerSoluteState: Equatable {
     case addingSolute(type: SoluteType, clearPrevious: Bool)
     case addingSaturatedPrimary
     case dissolvingSuperSaturatedPrimary
+    case completedSuperSaturatedReaction
 
     var soluteType: SoluteType {
         switch self {
@@ -159,20 +160,21 @@ class SKSolubleBeakerScene: SKScene {
         case (.addingSaturatedPrimary, .addingSolute(type: _, clearPrevious: true)):
             showHiddenSolute()
         case (.dissolvingSuperSaturatedPrimary, _):
-            runSuperSaturatedReaction()
+            runSuperSaturatedReaction(duration: saturatedReactionDuration)
         case (.addingSolute(type: .acid, clearPrevious: _), .dissolvingSuperSaturatedPrimary):
             cancelSaturatedReaction()
             reAddSaturatedReactionSolute()
+        case (.completedSuperSaturatedReaction, _):
+            endSuperSaturatedReaction()
         case (_, .dissolvingSuperSaturatedPrimary):
             cancelSaturatedReaction()
-
         default:
             break
         }
     }
 
     private var saturatedNodesReacted = [SKSoluteNode]()
-    private func runSuperSaturatedReaction() {
+    private func runSuperSaturatedReaction(duration: CGFloat) {
         let primaryNodes: [SKSoluteNode] = children.compactMap {
             if let solute = $0 as? SKSoluteNode, solute.soluteType == .primary, !solute.willDissolve {
                 return solute
@@ -182,7 +184,7 @@ class SKSolubleBeakerScene: SKScene {
         guard !primaryNodes.isEmpty else {
             return
         }
-        let dt = saturatedReactionDuration / CGFloat(primaryNodes.count)
+        let dt = duration / CGFloat(primaryNodes.count)
         (0..<primaryNodes.count).forEach { i in
             let node = primaryNodes[i]
             let delay = SKAction.wait(forDuration: Double(i + 1) * Double(dt))
@@ -195,6 +197,12 @@ class SKSolubleBeakerScene: SKScene {
             node.run(action, withKey: saturatedReactionKey)
         }
     }
+
+    private func endSuperSaturatedReaction() {
+        cancelSaturatedReaction()
+        runSuperSaturatedReaction(duration: 0.5)
+    }
+    
 
     private func reAddSaturatedReactionSolute() {
         saturatedNodesReacted.forEach(addChild)
