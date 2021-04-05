@@ -212,5 +212,6 @@ private class AddAcidSolute: SolubilityScreenState {
         model.statement = ["Now, add acid solute"]
         model.inputState = .addSolute(type: .acid)
         model.beakerSoluteState = .addingSolute(type: .acid, clearPrevious: false)
+        model.soluteCounts = SoluteContainer(maxAllowed: SolubleReactionSettings.acidSoluteParticlesToAdd)
     }
 }

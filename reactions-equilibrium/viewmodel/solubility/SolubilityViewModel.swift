@@ -77,10 +77,12 @@ class SolubilityViewModel: ObservableObject {
     }
 
     func onParticleWaterEntry(soluteType: SoluteType) {
-        if inputState == .addSaturatedSolute {
-            withAnimation(.linear(duration: Double(saturatedDt))) {
-                currentTime += saturatedDt
-            }
+        switch inputState {
+        case .addSaturatedSolute where soluteType == .primary:
+            saturatedSoluteEnteredWater()
+        case .addSolute(type: soluteType) where soluteType == .acid:
+            acidEnteredWater()
+        default: break
         }
     }
 
@@ -94,6 +96,21 @@ class SolubilityViewModel: ObservableObject {
         case .primary: primarySoluteDissolved()
         case .commonIon: commonIonSoluteDissolved()
         case .acid: break
+        }
+    }
+
+    private func saturatedSoluteEnteredWater() {
+        withAnimation(.linear(duration: Double(saturatedDt))) {
+            currentTime += saturatedDt
+        }
+    }
+
+    private func acidEnteredWater() {
+        if let initB0 = components.previousEquation?.finalConcentration.value(for: .B) {
+            let dc = (0.75 * initB0) / CGFloat(SolubleReactionSettings.acidSoluteParticlesToAdd)
+            withAnimation(.easeOut(duration: 0.5)) {
+                extraB0 -= dc
+            }
         }
     }
 
