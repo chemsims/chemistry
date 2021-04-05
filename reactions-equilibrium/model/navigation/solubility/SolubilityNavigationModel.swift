@@ -20,7 +20,8 @@ class SolubilityNavigationModel {
                 ShowSaturatedSolution(),
                 AddSoluteToSaturatedBeaker(),
                 PrepareAcidReaction(),
-                AddAcidSolute()
+                AddAcidSolute(),
+                RunAcidReaction()
             ]
         )
     }
@@ -213,5 +214,20 @@ private class AddAcidSolute: SolubilityScreenState {
         model.inputState = .addSolute(type: .acid)
         model.beakerSoluteState = .addingSolute(type: .acid, clearPrevious: false)
         model.soluteCounts = SoluteContainer(maxAllowed: SolubleReactionSettings.acidSoluteParticlesToAdd)
+    }
+}
+
+private class RunAcidReaction: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        let dt = model.timing.end - model.timing.start
+        withAnimation(.linear(duration: Double(dt))) {
+            model.currentTime = model.timing.end
+        }
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = model.timing.start
+        }
     }
 }
