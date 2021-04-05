@@ -23,12 +23,23 @@ class SKSoluteNode: SKShapeNode {
         addParts()
 
         let physics = SKPhysicsBody(polygonFrom: geometry.path())
-        physics.usesPreciseCollisionDetection = true
         self.physicsBody = physics
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func copyNode() -> SKSoluteNode {
+        let newCopy = SKSoluteNode(sideLength: sideLength, soluteType: soluteType)
+        newCopy.hasEnteredWater = hasEnteredWater
+        newCopy.willDissolve = willDissolve
+        newCopy.position = position
+        newCopy.fillColor = fillColor
+        if let physics = physicsBody?.copy() as? SKPhysicsBody {
+            newCopy.physicsBody = physics
+        }
+        return newCopy
     }
 
     private func addParts() {

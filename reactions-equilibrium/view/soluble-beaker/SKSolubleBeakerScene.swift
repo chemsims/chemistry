@@ -78,7 +78,7 @@ class SKSolubleBeakerScene: SKScene {
         }
     }
 
-    private let soluteReactionKey = "soluteReactionKey"
+    private let saturatedReactionKey = "soluteReactionKey"
 
     init(
         size: CGSize,
@@ -133,7 +133,7 @@ class SKSolubleBeakerScene: SKScene {
     }
 
     private func removeSolute() {
-        mapSolute { solute in
+        runOnSolute { solute in
             solute.removeFromParent()
         }
     }
@@ -160,11 +160,18 @@ class SKSolubleBeakerScene: SKScene {
             showHiddenSolute()
         case (.dissolvingSuperSaturatedPrimary, _):
             runSuperSaturatedReaction()
+        case (.addingSolute(type: .acid, clearPrevious: _), .dissolvingSuperSaturatedPrimary):
+            cancelSaturatedReaction()
+            reAddSaturatedReactionSolute()
+        case (_, .dissolvingSuperSaturatedPrimary):
+            cancelSaturatedReaction()
+
         default:
             break
         }
     }
 
+    private var saturatedNodesReacted = [SKSoluteNode]()
     private func runSuperSaturatedReaction() {
         let primaryNodes: [SKSoluteNode] = children.compactMap {
             if let solute = $0 as? SKSoluteNode, solute.soluteType == .primary, !solute.willDissolve {
@@ -178,17 +185,27 @@ class SKSolubleBeakerScene: SKScene {
         let dt = saturatedReactionDuration / CGFloat(primaryNodes.count)
         (0..<primaryNodes.count).forEach { i in
             let node = primaryNodes[i]
-            let delay = SKAction.wait(forDuration: Double(i) * Double(dt))
+            let delay = SKAction.wait(forDuration: Double(i + 1) * Double(dt))
             let dissolve = SKAction.run {
+                self.saturatedNodesReacted.append(node.copyNode())
                 node.dissolve()
                 self.onDissolve(node.soluteType)
             }
             let action = SKAction.sequence([delay, dissolve])
-            node.run(action, withKey: soluteReactionKey)
+            node.run(action, withKey: saturatedReactionKey)
         }
     }
 
-    private func mapSolute(_ f: (SKSoluteNode) -> Void) {
+    private func reAddSaturatedReactionSolute() {
+        saturatedNodesReacted.forEach(addChild)
+        saturatedNodesReacted.removeAll()
+    }
+
+    private func cancelSaturatedReaction() {
+        children.forEach { $0.removeAction(forKey: saturatedReactionKey) }
+    }
+
+    private func runOnSolute(_ f: (SKSoluteNode) -> Void) {
         for child in children {
             if let solute = child as? SKSoluteNode {
                 f(solute)
@@ -197,7 +214,7 @@ class SKSolubleBeakerScene: SKScene {
     }
 
     override func update(_ currentTime: TimeInterval) {
-        mapSolute { solute in
+        runOnSolute { solute in
             if let physics = solute.physicsBody {
                 if solute.position.y < waterHeight && !solute.hasEnteredWater {
                     solute.hasEnteredWater = true
