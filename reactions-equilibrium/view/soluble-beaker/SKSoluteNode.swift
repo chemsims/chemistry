@@ -11,6 +11,7 @@ class SKSoluteNode: SKShapeNode {
     private let sideLength: CGFloat
 
     var hasEnteredWater = false
+    var willDissolve = false
 
     init(sideLength: CGFloat) {
         self.sideLength = sideLength
@@ -22,6 +23,10 @@ class SKSoluteNode: SKShapeNode {
         let physics = SKPhysicsBody(polygonFrom: geometry.path())
         physics.usesPreciseCollisionDetection = true
         self.physicsBody = physics
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func addParts() {
@@ -63,8 +68,16 @@ class SKSoluteNode: SKShapeNode {
         self.run(group)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func hide() {
+        self.isHidden = true
+        self.physicsBody?.isDynamic = false
+        self.physicsBody?.collisionBitMask = 0
+    }
+
+    func show() {
+        self.isHidden = false
+        self.physicsBody?.isDynamic = true
+        self.physicsBody?.collisionBitMask = UInt32.max
     }
 }
 

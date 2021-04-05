@@ -12,11 +12,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     let particlePosition: CGPoint
     let soluteWidth: CGFloat
     let waterHeight: CGFloat
-    let shouldDissolveNodes: Bool
-    let canEmit: Bool
-    let onEmit: () -> Void
-    let onWaterEntry: () -> Void
-    let onDissolve: () -> Void
+    let model: SolubilityViewModel
     @Binding var shouldAddParticle: Bool
 
     func makeUIView(context: Context) -> SKView {
@@ -25,9 +21,9 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             size: size,
             soluteWidth: soluteWidth,
             waterHeight: waterHeight,
-            shouldDissolveNodes: shouldDissolveNodes,
-            onWaterEntry: onWaterEntry,
-            onDissolve: onDissolve
+            shouldDissolveNodes: model.shouldDissolveNodes,
+            onWaterEntry: model.onParticleWaterEntry,
+            onDissolve: model.onDissolve
         )
         scene.scaleMode = .aspectFit
         view.allowsTransparency = true
@@ -38,16 +34,22 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
 
     func updateUIView(_ uiView: SKView, context: Context) {
         if let scene = uiView.scene as? SKSolubleBeakerScene {
-            if shouldAddParticle && canEmit {
+            if shouldAddParticle && model.canEmit {
                 scene.addParticle(at: particlePosition)
-                onEmit()
+                model.onParticleEmit()
                 shouldAddParticle = false
+            }
+            if model.shouldRemoveSolute {
+                scene.removeSolute()
+            }
+            if model.shouldAddRemovedSolute {
+                scene.addRemovedSolute()
             }
             scene.soluteWidth = soluteWidth
             scene.waterHeight = waterHeight
-            scene.onWaterEntry = onWaterEntry
-            scene.onDissolve = onDissolve
-            scene.shouldDissolveNodes = shouldDissolveNodes
+            scene.onWaterEntry = model.onParticleWaterEntry
+            scene.onDissolve = model.onDissolve
+            scene.shouldDissolveNodes = model.shouldDissolveNodes
         }
     }
 }
@@ -95,6 +97,7 @@ class SKSolubleBeakerScene: SKScene {
         node.physicsBody?.applyTorque(CGFloat.random(in: -0.01...0.01))
 
         if shouldDissolveNodes {
+            node.willDissolve = true
             let action = SKAction.run {
                 node.dissolve()
                 self.onDissolve()
@@ -104,9 +107,31 @@ class SKSolubleBeakerScene: SKScene {
         }
     }
 
-    override func update(_ currentTime: TimeInterval) {
+    func removeSolute() {
+        mapSolute { solute in
+            solute.hide()
+        }
+    }
+
+    func addRemovedSolute() {
+        mapSolute { solute in
+            if solute.isHidden {
+                solute.show()
+            }
+        }
+    }
+
+    private func mapSolute(_ f: (SKSoluteNode) -> Void) {
         for child in children {
-            if let solute = child as? SKSoluteNode, let physics = solute.physicsBody {
+            if let solute = child as? SKSoluteNode {
+                f(solute)
+            }
+        }
+    }
+
+    override func update(_ currentTime: TimeInterval) {
+        mapSolute { solute in
+            if let physics = solute.physicsBody {
                 if solute.position.y < waterHeight && !solute.hasEnteredWater {
                     solute.hasEnteredWater = true
                     physics.linearDamping = 50
@@ -116,6 +141,7 @@ class SKSolubleBeakerScene: SKScene {
             }
         }
     }
+
 
     private func demoJoinedNodesAndMagneticField() {
         func addNode() {

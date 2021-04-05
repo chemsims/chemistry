@@ -28,6 +28,9 @@ class SolubilityViewModel: ObservableObject {
     @Published var activeSolute: SoluteType?
 
     @Published var currentTime: CGFloat = 0
+    
+    @Published var shouldRemoveSolute = false
+    @Published var shouldAddRemovedSolute = false
 
     var shouldDissolveNodes: Bool {
         inputState != .addSaturatedSolute
@@ -97,6 +100,11 @@ class SolubilityViewModel: ObservableObject {
 
     func stopShaking() {
         shakingModel.shake.position.stop()
+    }
+
+    func resetParticles() {
+        soluteEmitted = 0
+        soluteDissolved = 0
     }
 
     var canEmit: Bool {

@@ -13,7 +13,8 @@ class SolubilityNavigationModel {
                 SetStatement(statement: ["Click next to add solute"]),
                 AddSolute(),
                 ShowSaturatedSolution(),
-                AddSoluteToSaturatedBeaker()
+                AddSoluteToSaturatedBeaker(),
+                PrepareCommonIonReaction()
             ]
         )
     }
@@ -85,5 +86,32 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
             model.activeSolute = .primary
         }
         model.startShaking()
+    }
+}
+
+
+private class PrepareCommonIonReaction: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["This is a common ion reaction"]
+        model.componentWrapper = SolubilityComponentsWrapper(
+            equilibriumConstant: 0.1,
+            startTime: SolubleReactionSettings.firstReactionTiming.start,
+            equilibriumTime: SolubleReactionSettings.firstReactionTiming.equilibrium
+        )
+        withAnimation(.easeOut(duration: 1)) {
+            model.currentTime = 0
+            model.inputState = .none
+            model.activeSolute = nil
+        }
+        model.resetParticles()
+        model.shouldRemoveSolute = true
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        withAnimation(.easeOut(duration: 1)) {
+            model.currentTime = 1
+            model.shouldRemoveSolute = false
+            model.shouldAddRemovedSolute = true
+        }
     }
 }
