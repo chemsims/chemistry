@@ -18,13 +18,13 @@ class SolubilityComponentsWrapper {
         }
     }
 
-    init(equilibriumConstant: CGFloat, startTime: CGFloat, equilibriumTime: CGFloat) {
+    init(equilibriumConstant: CGFloat, startTime: CGFloat, equilibriumTime: CGFloat, b0: CGFloat = 0) {
         self.equilibriumConstant = equilibriumConstant
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
         self.components = SolubilityComponents(
             equilibriumConstant: equilibriumConstant,
-            initialConcentration: SoluteValues.constant(0),
+            initialConcentration: SoluteValues(productA: 0, productB: b0),
             startTime: startTime,
             equilibriumTime: equilibriumTime
         )

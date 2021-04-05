@@ -9,13 +9,15 @@ class SKSoluteNode: SKShapeNode {
 
     private let geometry: HexagonGeometry
     private let sideLength: CGFloat
+    let soluteType: SoluteType
 
     var hasEnteredWater = false
     var willDissolve = false
 
-    init(sideLength: CGFloat) {
+    init(sideLength: CGFloat, soluteType: SoluteType) {
         self.sideLength = sideLength
         self.geometry = HexagonGeometry(sideLength: sideLength)
+        self.soluteType = soluteType
         super.init()
 
         addParts()
@@ -164,7 +166,7 @@ struct SKSoluteNode_Previews: PreviewProvider {
             let scene = SKScene(size: CGSize(width: Self.sceneSize, height: Self.sceneSize))
             scene.backgroundColor = .clear
             view.presentScene(scene)
-            let node = SKSoluteNode(sideLength: Self.sideLength)
+            let node = SKSoluteNode(sideLength: Self.sideLength, soluteType: .primary)
             node.position = CGPoint(
                 x: (Self.sceneSize / 2) - Self.sideLength,
                 y: (Self.sceneSize / 2) - Self.sideLength

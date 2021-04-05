@@ -63,8 +63,13 @@ private class SetStatement: SolubilityScreenState {
 
 private class AddSolute: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = 0
+        }
+        model.resetParticles()
         model.statement = ["Now, add solute"]
         model.inputState = .addSolute(type: .primary)
+        model.soluteCounts = SoluteContainer(maxAllowed: model.soluteToAddForSaturation)
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -73,7 +78,6 @@ private class AddSolute: SolubilityScreenState {
             model.inputState = .none
             model.activeSolute = nil
         }
-        model.resetParticles()
     }
 }
 
@@ -82,17 +86,16 @@ private class ShowSaturatedSolution: SolubilityScreenState {
         model.statement = ["Solution is now saturated"]
         model.stopShaking()
         model.beakerSoluteState = .addingSolute(type: .primary, clearPrevious: false)
+
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
             model.activeSolute = nil
         }
     }
 
-    override func unapply(on model: SolubilityViewModel) {
-        withAnimation(.easeOut(duration: 0.5)) {
-            model.currentTime = 0
-        }
-        model.resetParticles()
+    override func reapply(on model: SolubilityViewModel) {
+        apply(on: model)
+        model.soluteCounts = SoluteContainer(maxAllowed: model.soluteToAddForSaturation, isSaturated: true)
     }
 }
 
@@ -100,6 +103,7 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Now add a little more solute"]
         model.beakerSoluteState = .addingSaturatedPrimary
+        model.soluteCounts = SoluteContainer(maxAllowed: SolubleReactionSettings.saturatedSoluteParticlesToAdd)
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .addSaturatedSolute
             model.activeSolute = .primary
@@ -146,5 +150,6 @@ private class AddCommonIonSolute: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Now, add common ion solute"]
         model.inputState = .addSolute(type: .commonIon)
+        model.soluteCounts = SoluteContainer(maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd)
     }
 }
