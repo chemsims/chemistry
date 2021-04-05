@@ -46,7 +46,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             ZStack {
                 container(solute: .primary, index: 0)
                     .onTapGesture {
-                        guard model.inputState == .addSolute else {
+                        guard model.inputState.addingSolute else {
                             return
                         }
                         if isActive {
@@ -108,6 +108,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             particlePosition: skParticlePosition,
             soluteWidth: settings.soluble.soluteWidth,
             waterHeight: waterHeight,
+            shouldDissolveNodes: model.shouldDissolveNodes,
             canEmit: model.canEmit,
             onEmit: model.onParticleEmit,
             onDissolve: model.onDissolve,

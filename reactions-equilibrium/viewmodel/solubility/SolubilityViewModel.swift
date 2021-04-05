@@ -29,16 +29,29 @@ class SolubilityViewModel: ObservableObject {
 
     @Published var currentTime: CGFloat = 0
 
+    var shouldDissolveNodes: Bool {
+        inputState != .addSaturatedSolute
+    }
+
     var componentWrapper: SolubilityComponentsWrapper
 
     init() {
+        let firstTiming = SolubleReactionSettings.firstReactionTiming
+        self.timing = firstTiming
         self.shakingModel = SoluteBeakerShakingViewModel()
         self.componentWrapper = SolubilityComponentsWrapper(
             equilibriumConstant: 0.1,
-            startTime: SolubleReactionSettings.firstReactionTiming.start,
-            equilibriumTime: SolubleReactionSettings.firstReactionTiming.equilibrium
+            startTime: firstTiming.start,
+            equilibriumTime: firstTiming.equilibrium
         )
         self.navigation = SolubilityNavigationModel.model(model: self)
+    }
+
+    var timing: ReactionTiming {
+        didSet {
+            self.componentWrapper.startTime = timing.start
+            self.componentWrapper.equilibriumTime = timing.equilibrium
+        }
     }
 
     var components: SolubilityComponents {
@@ -57,12 +70,26 @@ class SolubilityViewModel: ObservableObject {
 
     func onParticleEmit() {
         soluteEmitted += 1
+        if inputState == .addSaturatedSolute {
+            withAnimation(.linear(duration: Double(saturatedDt))) {
+                currentTime += saturatedDt
+            }
+        }
     }
 
     func onDissolve() {
+        soluteDissolved += 1
         withAnimation(.linear(duration: Double(dt))) {
             currentTime += dt
         }
+        if soluteDissolved == soluteToAddForSaturation {
+            navigation?.next()
+            shakingModel.shouldAddParticle = false
+        }
+    }
+
+    func startShaking() {
+        shakingModel.shake.position.start()
     }
 
     func stopShaking() {
@@ -70,7 +97,14 @@ class SolubilityViewModel: ObservableObject {
     }
 
     var canEmit: Bool {
-        soluteEmitted < soluteToAddForSaturation
+        switch inputState {
+        case .addSolute:
+            return soluteEmitted < soluteToAddForSaturation
+        case .addSaturatedSolute:
+            return soluteEmitted < soluteToAddForSaturation + saturatedSoluteToAdd
+        default:
+            return false
+        }
     }
 
     var waterColor: Color {
@@ -81,19 +115,30 @@ class SolubilityViewModel: ObservableObject {
     }
 
     private var soluteEmitted: Int = 0
+    private var soluteDissolved: Int = 0
 
-    var soluteToAddForSaturation: Int {
+    private let saturatedSoluteToAdd: Int = 5
+
+    private var soluteToAddForSaturation: Int {
         let equation = LinearEquation(x1: 0, y1: 10, x2: 1, y2: 20)
         return equation.getY(at: waterHeightFactor).roundedInt()
     }
 
-    var dt: CGFloat {
+    private var dt: CGFloat {
         components.equilibriumTime / CGFloat(soluteToAddForSaturation)
+    }
+
+    private var saturatedDt: CGFloat {
+        (timing.end - timing.equilibrium) / CGFloat(saturatedSoluteToAdd)
     }
 }
 
 enum SolubilityInputState {
-    case none, addSolute
+    case none, addSolute, addSaturatedSolute
+
+    var addingSolute: Bool {
+        self == .addSolute || self == .addSaturatedSolute
+    }
 }
 
 extension RGB {

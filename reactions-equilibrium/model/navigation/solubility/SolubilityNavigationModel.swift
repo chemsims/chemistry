@@ -12,7 +12,8 @@ class SolubilityNavigationModel {
             states: [
                 SetStatement(statement: ["Click next to add solute"]),
                 AddSolute(),
-                ShowSaturatedSolution()
+                ShowSaturatedSolution(),
+                AddSoluteToSaturatedBeaker()
             ]
         )
     }
@@ -73,5 +74,16 @@ private class ShowSaturatedSolution: SolubilityScreenState {
             model.inputState = .none
             model.activeSolute = nil
         }
+    }
+}
+
+private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["Now add a little more solute"]
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.inputState = .addSaturatedSolute
+            model.activeSolute = .primary
+        }
+        model.startShaking()
     }
 }

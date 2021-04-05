@@ -12,6 +12,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     let particlePosition: CGPoint
     let soluteWidth: CGFloat
     let waterHeight: CGFloat
+    let shouldDissolveNodes: Bool
     let canEmit: Bool
     let onEmit: () -> Void
     let onDissolve: () -> Void
@@ -23,6 +24,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             size: size,
             soluteWidth: soluteWidth,
             waterHeight: waterHeight,
+            shouldDissolveNodes: shouldDissolveNodes,
             onDissolve: onDissolve
         )
         scene.scaleMode = .aspectFit
@@ -42,6 +44,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             scene.soluteWidth = soluteWidth
             scene.waterHeight = waterHeight
             scene.onDissolve = onDissolve
+            scene.shouldDissolveNodes = shouldDissolveNodes
         }
     }
 }
@@ -51,16 +54,19 @@ class SKSolubleBeakerScene: SKScene {
     var soluteWidth: CGFloat
     var waterHeight: CGFloat
     var onDissolve: () -> Void
+    var shouldDissolveNodes: Bool
 
     init(
         size: CGSize,
         soluteWidth: CGFloat,
         waterHeight: CGFloat,
+        shouldDissolveNodes: Bool,
         onDissolve: @escaping () -> Void
     ) {
         self.soluteWidth = soluteWidth
         self.waterHeight = waterHeight
         self.onDissolve = onDissolve
+        self.shouldDissolveNodes = shouldDissolveNodes
         super.init(size: size)
     }
 
@@ -82,12 +88,14 @@ class SKSolubleBeakerScene: SKScene {
 
         node.physicsBody?.applyTorque(CGFloat.random(in: -0.01...0.01))
 
-        let action = SKAction.run {
-            node.dissolve()
-            self.onDissolve()
+        if shouldDissolveNodes {
+            let action = SKAction.run {
+                node.dissolve()
+                self.onDissolve()
+            }
+            let delay = SKAction.wait(forDuration: 2)
+            self.run(SKAction.sequence([delay, action]))
         }
-        let delay = SKAction.wait(forDuration: 2)
-        self.run(SKAction.sequence([delay, action]))
     }
 
     override func update(_ currentTime: TimeInterval) {

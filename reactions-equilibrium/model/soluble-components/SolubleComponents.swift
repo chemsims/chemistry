@@ -7,8 +7,16 @@ import ReactionsCore
 
 class SolubilityComponentsWrapper {
 
-    let startTime: CGFloat
-    let equilibriumTime: CGFloat
+    var startTime: CGFloat {
+        didSet {
+            setComponents()
+        }
+    }
+    var equilibriumTime: CGFloat {
+        didSet {
+            setComponents()
+        }
+    }
 
     init(equilibriumConstant: CGFloat, startTime: CGFloat, equilibriumTime: CGFloat) {
         self.equilibriumConstant = equilibriumConstant
