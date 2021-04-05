@@ -34,6 +34,8 @@ class SolubilityViewModel: ObservableObject {
 
     @Published var beakerSoluteState = BeakerSoluteState.addingSolute(type: .primary, clearPrevious: false)
 
+    @Published var chartOffset: CGFloat = 0
+
     var soluteCounts: SoluteContainer
     @Published var components: SolubilityComponents
 
@@ -46,7 +48,8 @@ class SolubilityViewModel: ObservableObject {
             equilibriumConstant: 0.1,
             initialConcentration: SoluteValues.constant(0),
             startTime: firstTiming.start,
-            equilibriumTime: firstTiming.equilibrium
+            equilibriumTime: firstTiming.equilibrium,
+            previousEquation: nil
         )
         self.navigation = SolubilityNavigationModel.model(model: self)
         self.soluteCounts.maxAllowed = self.soluteToAddForSaturation
@@ -54,7 +57,13 @@ class SolubilityViewModel: ObservableObject {
 
     var timing: ReactionTiming {
         didSet {
-            setComponents()
+            self.components = SolubilityComponents(
+                equilibriumConstant: components.equilibriumConstant,
+                initialConcentration: components.initialConcentration,
+                startTime: timing.start,
+                equilibriumTime: timing.equilibrium,
+                previousEquation: components.previousEquation
+            )
         }
     }
 
@@ -114,7 +123,13 @@ class SolubilityViewModel: ObservableObject {
 
     var b0: CGFloat = 0 {
         didSet {
-            setComponents()
+            self.components = SolubilityComponents(
+                equilibriumConstant: components.equilibriumConstant,
+                initialConcentration: SoluteValues(productA: 0, productB: b0),
+                startTime: timing.start,
+                equilibriumTime: timing.equilibrium,
+                previousEquation: components.previousEquation
+            )
         }
     }
 
@@ -151,15 +166,6 @@ class SolubilityViewModel: ObservableObject {
 
     private var saturatedDt: CGFloat {
         (timing.end - timing.equilibrium) / CGFloat(SolubleReactionSettings.saturatedSoluteParticlesToAdd)
-    }
-
-    private func setComponents() {
-        self.components = SolubilityComponents(
-            equilibriumConstant: 0.1,
-            initialConcentration: SoluteValues(productA: 0, productB: b0),
-            startTime: timing.start,
-            equilibriumTime: timing.equilibrium
-        )
     }
 }
 

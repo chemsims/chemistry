@@ -190,7 +190,7 @@ extension ChartStack {
             quotientEquation: model.components.quotient,
             currentTime: currentTime,
             quotientChartDiscontinuity: nil,
-            chartOffset: 0,
+            chartOffset: model.chartOffset,
             canSetCurrentTime: false,
             canSetChartIndex: false,
             showConcentrationLines: true,

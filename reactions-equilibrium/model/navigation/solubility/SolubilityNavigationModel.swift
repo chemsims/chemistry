@@ -18,7 +18,8 @@ class SolubilityNavigationModel {
                 AddCommonIonSolute(),
                 AddSolute(),
                 ShowSaturatedSolution(),
-                AddSoluteToSaturatedBeaker()
+                AddSoluteToSaturatedBeaker(),
+                PrepareAddAcidSolute()
             ]
         )
     }
@@ -161,6 +162,41 @@ private class AddCommonIonSolute: SolubilityScreenState {
     override func unapply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
             model.b0 = 0
+        }
+    }
+}
+
+private class PrepareAddAcidSolute: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["Next, we will add acid"]
+        model.components = SolubilityComponents(
+            equilibriumConstant: model.components.equilibriumConstant,
+            initialConcentration: model.components.equation.finalConcentration,
+            startTime: model.components.startTime,
+            equilibriumTime: model.components.equilibriumTime,
+            previousEquation: model.components.equation
+        )
+        model.timing = SolubleReactionSettings.secondReactionTiming
+        withAnimation(.easeOut(duration: 1)) {
+            model.inputState = .none
+            model.activeSolute = nil
+            model.chartOffset = model.timing.offset
+            model.currentTime = model.timing.start
+        }
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        model.timing = SolubleReactionSettings.firstReactionTiming
+        model.components = SolubilityComponents(
+            equilibriumConstant: model.components.equilibriumConstant,
+            initialConcentration: SoluteValues(productA: 0, productB: model.b0),
+            startTime: model.timing.start,
+            equilibriumTime: model.timing.equilibrium,
+            previousEquation: nil
+        )
+        withAnimation(.easeOut(duration: 1)) {
+            model.chartOffset = 0
+            model.currentTime = model.timing.end
         }
     }
 }

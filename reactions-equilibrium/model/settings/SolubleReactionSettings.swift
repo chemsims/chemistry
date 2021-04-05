@@ -14,4 +14,5 @@ struct SolubleReactionSettings {
     static let maxInitialBConcentration: CGFloat = 0.15
 
     static let firstReactionTiming = ReactionTiming.standard(reactionIndex: 0)
+    static let secondReactionTiming = ReactionTiming.standard(reactionIndex: 1)
 }

@@ -55,22 +55,26 @@ struct SolubilityComponents {
     let startTime: CGFloat
     let equilibriumTime: CGFloat
     let equation: SolubleReactionEquation
+    let previousEquation: SolubleReactionEquation?
 
     init(
         equilibriumConstant: CGFloat,
         initialConcentration: SoluteValues<CGFloat>,
         startTime: CGFloat,
-        equilibriumTime: CGFloat
+        equilibriumTime: CGFloat,
+        previousEquation: SolubleReactionEquation?
     ) {
         self.equilibriumConstant = equilibriumConstant
         self.initialConcentration = initialConcentration
         self.startTime = startTime
         self.equilibriumTime = equilibriumTime
+        self.previousEquation = previousEquation
         self.equation = SolubleReactionEquation(
             initialConcentration: initialConcentration,
             equilibriumConstant: equilibriumConstant,
             startTime: startTime,
-            equilibriumTime: equilibriumTime
+            equilibriumTime: equilibriumTime,
+            previousEquation: previousEquation
         )
     }
 
@@ -79,7 +83,7 @@ struct SolubilityComponents {
     }
 }
 
-class SolubleReactionEquation {
+struct SolubleReactionEquation {
 
     let concentration: SoluteValues<Equation>
     let initialConcentration: SoluteValues<CGFloat>
@@ -89,7 +93,8 @@ class SolubleReactionEquation {
         initialConcentration: SoluteValues<CGFloat>,
         equilibriumConstant: CGFloat,
         startTime: CGFloat,
-        equilibriumTime: CGFloat
+        equilibriumTime: CGFloat,
+        previousEquation: SolubleReactionEquation?
     ) {
         let unitChange = Self.getUnitChange(initialConcentration: initialConcentration, equilibriumConstant: equilibriumConstant) ?? 0
         func makeEquation(_ initC: CGFloat) -> Equation {
@@ -97,9 +102,19 @@ class SolubleReactionEquation {
         }
 
         let concentration = initialConcentration.map(makeEquation)
-        self.concentration = concentration
+        let combined = previousEquation.map { previous in
+            SoluteValues(builder: { element in
+                SwitchingEquation(
+                    thresholdX: startTime,
+                    underlyingLeft: previous.concentration.value(for: element),
+                    underlyingRight: concentration.value(for: element)
+                )
+            })
+        } ?? concentration
+
+        self.concentration = combined
         self.initialConcentration = initialConcentration
-        self.finalConcentration = concentration.map {
+        self.finalConcentration = combined.map {
             $0.getY(at: equilibriumTime)
         }
     }
