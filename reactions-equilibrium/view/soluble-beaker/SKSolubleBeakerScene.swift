@@ -12,6 +12,8 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     let particlePosition: CGPoint
     let soluteWidth: CGFloat
     let waterHeight: CGFloat
+    let canEmit: Bool
+    let onEmit: () -> Void
     let onDissolve: () -> Void
     @Binding var shouldAddParticle: Bool
 
@@ -32,8 +34,9 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
 
     func updateUIView(_ uiView: SKView, context: Context) {
         if let scene = uiView.scene as? SKSolubleBeakerScene {
-            if shouldAddParticle {
+            if shouldAddParticle && canEmit {
                 scene.addParticle(at: particlePosition)
+                onEmit()
                 shouldAddParticle = false
             }
             scene.soluteWidth = soluteWidth

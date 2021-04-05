@@ -108,6 +108,8 @@ private struct SolubleBeakerViewWithGeometry: View {
             particlePosition: skParticlePosition,
             soluteWidth: settings.soluble.soluteWidth,
             waterHeight: waterHeight,
+            canEmit: model.canEmit,
+            onEmit: model.onParticleEmit,
             onDissolve: model.onDissolve,
             shouldAddParticle: $shakeModel.shouldAddParticle
         ).frame(

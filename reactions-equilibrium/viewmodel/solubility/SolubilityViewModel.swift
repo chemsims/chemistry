@@ -55,9 +55,13 @@ class SolubilityViewModel: ObservableObject {
         navigation?.back()
     }
 
+    func onParticleEmit() {
+        soluteEmitted += 1
+    }
+
     func onDissolve() {
-        withAnimation(.linear(duration: 0.5)) {
-            currentTime += 0.5
+        withAnimation(.linear(duration: Double(dt))) {
+            currentTime += dt
         }
     }
 
@@ -65,11 +69,26 @@ class SolubilityViewModel: ObservableObject {
         shakingModel.shake.position.stop()
     }
 
+    var canEmit: Bool {
+        soluteEmitted < soluteToAddForSaturation
+    }
+
     var waterColor: Color {
         let initialRGB = RGB.beakerLiquid
         let finalRGB = RGB.saturatedLiquid
         let fraction = min(1, currentTime / components.equilibriumTime)
         return RGB.interpolate(initialRGB, finalRGB, fraction: Double(fraction)).color
+    }
+
+    private var soluteEmitted: Int = 0
+
+    var soluteToAddForSaturation: Int {
+        let equation = LinearEquation(x1: 0, y1: 10, x2: 1, y2: 20)
+        return equation.getY(at: waterHeightFactor).roundedInt()
+    }
+
+    var dt: CGFloat {
+        components.equilibriumTime / CGFloat(soluteToAddForSaturation)
     }
 }
 
