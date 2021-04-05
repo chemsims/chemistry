@@ -78,6 +78,7 @@ private class AddSolute: SolubilityScreenState {
         model.statement = ["Now, add solute"]
         model.beakerSoluteState = .addingSolute(type: .primary, clearPrevious: false)
         model.soluteCounts = SoluteContainer(maxAllowed: model.soluteToAddForSaturation)
+        model.stopShaking()
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -135,15 +136,13 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
             model.activeSolute = nil
         }
         model.beakerSoluteState = .addingSolute(type: .commonIon, clearPrevious: true)
-        model.shouldRemoveSolute = true
         model.reactionPhase = .commonIon
+        model.stopShaking()
     }
 
     override func unapply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = 1
-            model.shouldRemoveSolute = false
-            model.shouldAddRemovedSolute = true
         }
         model.reactionPhase = .primarySolute
     }
@@ -174,6 +173,7 @@ private class AddCommonIonSolute: SolubilityScreenState {
 private class PrepareAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Next, we will add acid"]
+        model.stopShaking()
         withAnimation(.easeOut(duration: 1)) {
             model.inputState = .none
             model.activeSolute = nil
@@ -226,6 +226,7 @@ private class RunAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         let dt = model.timing.end - model.timing.start
         model.beakerSoluteState = .dissolvingSuperSaturatedPrimary
+        model.stopShaking()
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
             model.activeSolute = nil
@@ -245,7 +246,7 @@ private class RunAcidReaction: SolubilityScreenState {
 private class EndAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
-            model.currentTime = model.timing.end * 1.001
+            model.currentTime = model.timing.end * 1.5
         }
         model.beakerSoluteState = .completedSuperSaturatedReaction
     }

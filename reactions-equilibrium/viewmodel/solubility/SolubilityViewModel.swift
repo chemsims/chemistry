@@ -37,9 +37,6 @@ class SolubilityViewModel: ObservableObject {
 
     @Published var currentTime: CGFloat = 0
     
-    @Published var shouldRemoveSolute = false
-    @Published var shouldAddRemovedSolute = false
-
     @Published var beakerSoluteState = BeakerSoluteState.addingSolute(type: .primary, clearPrevious: false)
 
     @Published var chartOffset: CGFloat = 0
@@ -129,7 +126,6 @@ class SolubilityViewModel: ObservableObject {
         }
         if !soluteCounts.canDissolve {
             navigation?.next()
-            shakingModel.shouldAddParticle = false
         }
     }
 
@@ -146,11 +142,11 @@ class SolubilityViewModel: ObservableObject {
     }
 
     func startShaking() {
-        shakingModel.shake.position.start()
+        shakingModel.start()
     }
 
     func stopShaking() {
-        shakingModel.shake.position.stop()
+        shakingModel.stop()
     }
 
     var canEmit: Bool {
@@ -326,7 +322,7 @@ enum SolubilityInputState: Equatable {
 }
 
 extension RGB {
-    static let saturatedLiquid = RGB(r: 230, g: 203, b: 140)
+    static let saturatedLiquid = RGB(r: 237, g: 218, b: 174)
     static let maxCommonIonLiquid = RGB(r: 233, g: 200, b: 183)
     static let maxAcidLiquid = RGB(r: 167, g: 250, b: 218)
 

@@ -123,7 +123,7 @@ private struct SolubleBeakerViewWithGeometry: View {
                     withAnimation(.easeOut(duration: 0.5)) {
                         model.activeSolute = solute
                     }
-                    shakeModel.shake.position.start()
+                    model.startShaking()
                 }
             }
     }
@@ -220,6 +220,16 @@ class SoluteBeakerShakingViewModel: NSObject, CoreMotionShakingDelegate, Observa
 
     func manualAdd() {
         self.shouldAddParticle = true
+    }
+
+    func start() {
+        shouldAddParticle = false
+        shake.position.start()
+    }
+
+    func stop() {
+        shouldAddParticle  = false
+        shake.position.stop()
     }
 
     func didShake() {
