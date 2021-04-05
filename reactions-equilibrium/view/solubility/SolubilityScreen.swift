@@ -29,10 +29,7 @@ private struct SolubilityScreenWithSettings: View {
             SolubleBeakerView(
                 model: model,
                 shakeModel: model.shakingModel,
-                settings: SolubleBeakerSettings(
-                    beakerWidth: settings.common.beakerWidth,
-                    waterHeight: settings.waterHeightAxis.getPosition(at: model.waterHeightFactor)
-                )
+                settings: settings
             )
 
             ChartStack(
@@ -72,7 +69,7 @@ private struct SolubilityRightStack: View {
     }
 }
 
-private struct SolubilityScreenLayoutSettings {
+struct SolubilityScreenLayoutSettings {
     let geometry: GeometryProxy
 
     var common: AqueousScreenLayoutSettings {
@@ -87,6 +84,11 @@ private struct SolubilityScreenLayoutSettings {
             maxValue: 1
         )
     }
+
+    var soluble: SolubleBeakerSettings {
+        SolubleBeakerSettings(beakerWidth: common.beakerWidth)
+    }
+
 }
 
 struct SolubilityScreen_Previews: PreviewProvider {

@@ -9,7 +9,7 @@ struct SolubleBeakerView: View {
 
     let model: SolubilityViewModel
     let shakeModel: SoluteBeakerShakingViewModel
-    let settings: SolubleBeakerSettings
+    let settings: SolubilityScreenLayoutSettings
 
     var body: some View {
         GeometryReader { geo in
@@ -20,7 +20,7 @@ struct SolubleBeakerView: View {
                 settings: settings,
                 geometry: geo
             )
-            .frame(width: settings.beakerWidth)
+            .frame(width: settings.soluble.beakerWidth)
         }
     }
 }
@@ -30,7 +30,7 @@ private struct SolubleBeakerViewWithGeometry: View {
     @ObservedObject var model: SolubilityViewModel
     @ObservedObject var shakeModel: SoluteBeakerShakingViewModel
     @ObservedObject var position: CoreMotionPositionViewModel
-    let settings: SolubleBeakerSettings
+    let settings: SolubilityScreenLayoutSettings
     let geometry: GeometryProxy
 
     var body: some View {
@@ -64,32 +64,54 @@ private struct SolubleBeakerViewWithGeometry: View {
             }
             Spacer()
         }
-        .frame(width: settings.beaker.beaker.innerBeakerWidth)
+        .frame(width: settings.soluble.beaker.beaker.innerBeakerWidth)
     }
 
     private var beaker: some View {
-        FillableBeaker(
-            waterColor: model.waterColor,
-            highlightBeaker: true,
-            settings: settings.beaker
-        ) {
-            scene
+        HStack(alignment: .bottom, spacing: 0) {
+            slider
+
+            FillableBeaker(
+                waterColor: model.waterColor,
+                waterHeight: waterHeight,
+                highlightBeaker: true,
+                settings: settings.soluble.beaker
+            ) {
+                scene
+            }
         }
+    }
+
+    private var slider: some View {
+        CustomSlider(
+            value: $model.waterHeightFactor,
+            axis: sliderAxis,
+            orientation: .portrait,
+            includeFill: true,
+            settings: settings.common.sliderSettings,
+            disabled: false,
+            useHaptics: true
+        )
+        .frame(
+            width: settings.common.sliderSettings.handleWidth,
+            height: settings.soluble.sliderHeight
+        )
+        .padding(.bottom, settings.soluble.sliderBottomPadding)
     }
 
     private var scene: some View {
         SolubleBeakerSceneRepresentable(
             size: CGSize(
-                width: settings.beaker.beaker.innerBeakerWidth,
+                width: settings.soluble.beaker.beaker.innerBeakerWidth,
                 height: geometry.size.height
             ),
             particlePosition: skParticlePosition,
-            soluteWidth: settings.soluteWidth,
-            waterHeight: settings.waterHeight,
+            soluteWidth: settings.soluble.soluteWidth,
+            waterHeight: waterHeight,
             onDissolve: model.onDissolve,
             shouldAddParticle: $shakeModel.shouldAddParticle
         ).frame(
-            width: settings.beaker.beaker.innerBeakerWidth,
+            width: settings.soluble.beaker.beaker.innerBeakerWidth,
             height: geometry.size.height
         )
     }
@@ -99,7 +121,7 @@ private struct SolubleBeakerViewWithGeometry: View {
         return Image(solute.image)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(width: settings.containerWidth)
+            .frame(width: settings.soluble.containerWidth)
             .rotationEffect(isActive ? .degrees(135) : .zero)
             .position(
                 isActive ? activeContainerLocation : standardContainerLocation(index: index)
@@ -110,18 +132,18 @@ private struct SolubleBeakerViewWithGeometry: View {
 
     private func standardContainerLocation(index: Int) -> CGPoint {
         return CGPoint(
-            x: CGFloat(index + 1) * settings.beaker.beaker.innerBeakerWidth / 4,
-            y: settings.containerWidth * 1.5
+            x: CGFloat(index + 1) * settings.soluble.beaker.beaker.innerBeakerWidth / 4,
+            y: settings.soluble.containerWidth * 1.5
         )
     }
 
     private var activeContainerLocation: CGPoint {
-        let initX = settings.beaker.beaker.innerBeakerWidth / 2
-        let initY: CGFloat = settings.containerWidth * 3.5
+        let initX = settings.soluble.beaker.beaker.innerBeakerWidth / 2
+        let initY: CGFloat = settings.soluble.containerWidth * 3.5
         return CGPoint(x: initX, y: initY)
             .offset(
-                dx: position.xOffset * settings.beaker.beaker.innerBeakerWidth / 2,
-                dy: position.yOffset * settings.containerWidth
+                dx: position.xOffset * settings.soluble.beaker.beaker.innerBeakerWidth / 2,
+                dy: position.yOffset * settings.soluble.containerWidth
             )
     }
 
@@ -131,6 +153,22 @@ private struct SolubleBeakerViewWithGeometry: View {
         CGPoint(
             x: activeContainerLocation.x,
             y: geometry.size.height - activeContainerLocation.y
+        )
+    }
+
+    private var waterHeight: CGFloat {
+        settings.waterHeightAxis.getPosition(at: model.waterHeightFactor)
+    }
+
+    private var sliderAxis: AxisPositionCalculations<CGFloat> {
+        func position(_ waterHeight: CGFloat) -> CGFloat {
+            settings.soluble.beaker.beakerHeight - waterHeight - settings.soluble.sliderBottomPadding
+        }
+        return AxisPositionCalculations(
+            minValuePosition: position(settings.waterHeightAxis.minValuePosition),
+            maxValuePosition: position(settings.waterHeightAxis.maxValuePosition),
+            minValue: settings.waterHeightAxis.minValue,
+            maxValue: settings.waterHeightAxis.maxValue
         )
     }
 }
@@ -144,13 +182,9 @@ extension SolubleBeakerViewWithGeometry {
 struct SolubleBeakerSettings {
 
     let beakerWidth: CGFloat
-    let waterHeight: CGFloat
 
     var beaker: FillableBeakerSettings {
-        FillableBeakerSettings(
-            beakerWidth: beakerWidth,
-            waterHeight: waterHeight
-        )
+        FillableBeakerSettings(beakerWidth: beakerWidth)
     }
 
     var containerWidth: CGFloat {
@@ -163,6 +197,14 @@ struct SolubleBeakerSettings {
 
     var soluteWidth: CGFloat {
         0.8 * containerWidth
+    }
+
+    var sliderHeight: CGFloat {
+        0.9 * beaker.beakerHeight
+    }
+
+    var sliderBottomPadding: CGFloat {
+        (beaker.beakerHeight - sliderHeight) / 2
     }
 }
 
@@ -200,14 +242,12 @@ private extension SoluteBeakerShakingViewModel {
 
 struct SolubleBeakerView_Previews: PreviewProvider {
     static var previews: some View {
-        SolubleBeakerView(
-            model: SolubilityViewModel(),
-            shakeModel: SoluteBeakerShakingViewModel(),
-            settings: SolubleBeakerSettings(
-                beakerWidth: 200,
-                waterHeight: 100
+        GeometryReader { geo in
+            SolubleBeakerView(
+                model: SolubilityViewModel(),
+                shakeModel: SoluteBeakerShakingViewModel(),
+                settings: SolubilityScreenLayoutSettings(geometry: geo)
             )
-        )
-        .frame(width: 200, height: 500)
+        }.previewLayout(.iPhone8Landscape)
     }
 }

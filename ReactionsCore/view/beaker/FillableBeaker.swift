@@ -11,17 +11,20 @@ import SwiftUI
 public struct FillableBeaker<Content: View>: View {
 
     let waterColor: Color
+    let waterHeight: CGFloat
     let highlightBeaker: Bool
     let settings: FillableBeakerSettings
     let content: () -> Content
 
     public init(
         waterColor: Color,
+        waterHeight: CGFloat,
         highlightBeaker: Bool,
         settings: FillableBeakerSettings,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.waterColor = waterColor
+        self.waterHeight = waterHeight
         self.highlightBeaker = highlightBeaker
         self.settings = settings
         self.content = content
@@ -46,9 +49,7 @@ public struct FillableBeaker<Content: View>: View {
     private var beakerFill: some View {
         Group {
             Rectangle()
-                .frame(
-                    height: settings.waterHeight
-                )
+                .frame(height: waterHeight)
                 .foregroundColor(waterColor)
 
             content()
@@ -94,11 +95,9 @@ public struct FillableBeaker<Content: View>: View {
 public struct FillableBeakerSettings {
 
     public let beakerWidth: CGFloat
-    public let waterHeight: CGFloat
 
-    public init(beakerWidth: CGFloat, waterHeight: CGFloat) {
+    public init(beakerWidth: CGFloat) {
         self.beakerWidth = beakerWidth
-        self.waterHeight = waterHeight
     }
 
     public var beaker: BeakerSettings {
@@ -114,11 +113,9 @@ struct FillableBeaker_Previews: PreviewProvider {
     static var previews: some View {
         FillableBeaker(
             waterColor: .red,
+            waterHeight: 130,
             highlightBeaker: false,
-            settings: FillableBeakerSettings(
-                beakerWidth: 300,
-                waterHeight: 130
-            )
+            settings: FillableBeakerSettings(beakerWidth: 300)
         ) {
             Circle()
                 .frame(width: 40, height: 40)
