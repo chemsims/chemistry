@@ -7,44 +7,63 @@ import ReactionsCore
 
 class SolubilityComponentsWrapper {
 
-    var equilibriumConstant: CGFloat {
-        didSet {
-            components = SolubilityComponents(
-                equilibriumConstant: equilibriumConstant,
-                initialConcentration: components.initialConcentration
-            )
-        }
-    }
+    let startTime: CGFloat
+    let equilibriumTime: CGFloat
 
-    init(equilibriumConstant: CGFloat) {
+    init(equilibriumConstant: CGFloat, startTime: CGFloat, equilibriumTime: CGFloat) {
         self.equilibriumConstant = equilibriumConstant
+        self.startTime = startTime
+        self.equilibriumTime = equilibriumTime
         self.components = SolubilityComponents(
             equilibriumConstant: equilibriumConstant,
-            initialConcentration: SoluteValues.constant(0)
+            initialConcentration: SoluteValues.constant(0),
+            startTime: startTime,
+            equilibriumTime: equilibriumTime
         )
     }
 
+    var equilibriumConstant: CGFloat {
+        didSet {
+            setComponents()
+        }
+    }
+
     private(set) var components: SolubilityComponents
+
+    private func setComponents() {
+        components = SolubilityComponents(
+            equilibriumConstant: equilibriumConstant,
+            initialConcentration: components.initialConcentration,
+            startTime: startTime,
+            equilibriumTime: equilibriumTime
+        )
+    }
 }
 
 class SolubilityComponents {
 
     let equilibriumConstant: CGFloat
     let initialConcentration: SoluteValues<CGFloat>
+    let startTime: CGFloat
+    let equilibriumTime: CGFloat
 
     init(
         equilibriumConstant: CGFloat,
-        initialConcentration: SoluteValues<CGFloat>
+        initialConcentration: SoluteValues<CGFloat>,
+        startTime: CGFloat,
+        equilibriumTime: CGFloat
     ) {
         self.equilibriumConstant = equilibriumConstant
         self.initialConcentration = initialConcentration
+        self.startTime = startTime
+        self.equilibriumTime = equilibriumTime
     }
 
     lazy var equation = SolubleReactionEquation(
         initialConcentration: initialConcentration,
         equilibriumConstant: equilibriumConstant,
-        startTime: 0,
-        equilibriumTime: 20
+        startTime: startTime,
+        equilibriumTime: equilibriumTime
     )
 
     var quotient: SolubilityQuotientEquation {

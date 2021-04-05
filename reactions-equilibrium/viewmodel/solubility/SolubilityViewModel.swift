@@ -33,7 +33,11 @@ class SolubilityViewModel: ObservableObject {
 
     init() {
         self.shakingModel = SoluteBeakerShakingViewModel()
-        self.componentWrapper = SolubilityComponentsWrapper(equilibriumConstant: 0.1)
+        self.componentWrapper = SolubilityComponentsWrapper(
+            equilibriumConstant: 0.1,
+            startTime: SolubleReactionSettings.firstReactionTiming.start,
+            equilibriumTime: SolubleReactionSettings.firstReactionTiming.equilibrium
+        )
         self.navigation = SolubilityNavigationModel.model(model: self)
     }
 
@@ -64,7 +68,7 @@ class SolubilityViewModel: ObservableObject {
     var waterColor: Color {
         let initialRGB = RGB.beakerLiquid
         let finalRGB = RGB.saturatedLiquid
-        let fraction = currentTime / 20
+        let fraction = min(1, currentTime / components.equilibriumTime)
         return RGB.interpolate(initialRGB, finalRGB, fraction: Double(fraction)).color
     }
 }

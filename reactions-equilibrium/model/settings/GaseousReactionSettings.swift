@@ -13,9 +13,9 @@ struct GaseousReactionSettings {
     static let minRowDelta = 2
     static let minHeatDelta: CGFloat = 0.2
 
-    static let forwardTiming = ReactionTiming.timing(reactionIndex: 0)
-    static let pressureTiming = ReactionTiming.timing(reactionIndex: 1)
-    static let heatTiming = ReactionTiming.timing(reactionIndex: 2)
+    static let forwardTiming = ReactionTiming.standard(reactionIndex: 0)
+    static let pressureTiming = ReactionTiming.standard(reactionIndex: 1)
+    static let heatTiming = ReactionTiming.standard(reactionIndex: 2)
 
     static let pressureToConcentration: CGFloat = 5
 

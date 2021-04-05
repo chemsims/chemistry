@@ -5,7 +5,7 @@
 
 import CoreGraphics
 
-
+// TODO - make this use the reaction timing struct
 struct AqueousReactionSettings {
     static let minRows = 6
     static let maxRows = 14

@@ -18,7 +18,7 @@ extension ReactionTiming {
 
     static let gapBetweenReactions: CGFloat = 3
 
-    static func timing(reactionIndex: Int) -> ReactionTiming {
+    static func standard(reactionIndex: Int) -> ReactionTiming {
         let offset = CGFloat(reactionIndex) * totalReactionTime
         let start = offset == 0 ? 0 : offset + gapBetweenReactions
         return ReactionTiming(
