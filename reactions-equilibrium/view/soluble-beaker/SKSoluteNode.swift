@@ -10,6 +10,8 @@ class SKSoluteNode: SKShapeNode {
     private let geometry: HexagonGeometry
     private let sideLength: CGFloat
 
+    var hasEnteredWater = false
+
     init(sideLength: CGFloat) {
         self.sideLength = sideLength
         self.geometry = HexagonGeometry(sideLength: sideLength)

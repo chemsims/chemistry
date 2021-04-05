@@ -70,6 +70,9 @@ class SolubilityViewModel: ObservableObject {
 
     func onParticleEmit() {
         soluteEmitted += 1
+    }
+
+    func onParticleWaterEntry() {
         if inputState == .addSaturatedSolute {
             withAnimation(.linear(duration: Double(saturatedDt))) {
                 currentTime += saturatedDt

@@ -15,6 +15,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     let shouldDissolveNodes: Bool
     let canEmit: Bool
     let onEmit: () -> Void
+    let onWaterEntry: () -> Void
     let onDissolve: () -> Void
     @Binding var shouldAddParticle: Bool
 
@@ -25,6 +26,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             soluteWidth: soluteWidth,
             waterHeight: waterHeight,
             shouldDissolveNodes: shouldDissolveNodes,
+            onWaterEntry: onWaterEntry,
             onDissolve: onDissolve
         )
         scene.scaleMode = .aspectFit
@@ -43,6 +45,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             }
             scene.soluteWidth = soluteWidth
             scene.waterHeight = waterHeight
+            scene.onWaterEntry = onWaterEntry
             scene.onDissolve = onDissolve
             scene.shouldDissolveNodes = shouldDissolveNodes
         }
@@ -53,20 +56,23 @@ class SKSolubleBeakerScene: SKScene {
 
     var soluteWidth: CGFloat
     var waterHeight: CGFloat
-    var onDissolve: () -> Void
     var shouldDissolveNodes: Bool
+    var onWaterEntry: () -> Void
+    var onDissolve: () -> Void
 
     init(
         size: CGSize,
         soluteWidth: CGFloat,
         waterHeight: CGFloat,
         shouldDissolveNodes: Bool,
+        onWaterEntry: @escaping () -> Void,
         onDissolve: @escaping () -> Void
     ) {
         self.soluteWidth = soluteWidth
         self.waterHeight = waterHeight
-        self.onDissolve = onDissolve
         self.shouldDissolveNodes = shouldDissolveNodes
+        self.onWaterEntry = onWaterEntry
+        self.onDissolve = onDissolve
         super.init(size: size)
     }
 
@@ -101,9 +107,11 @@ class SKSolubleBeakerScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         for child in children {
             if let solute = child as? SKSoluteNode, let physics = solute.physicsBody {
-                if solute.position.y < waterHeight {
+                if solute.position.y < waterHeight && !solute.hasEnteredWater {
+                    solute.hasEnteredWater = true
                     physics.linearDamping = 50
                     physics.angularDamping = 1
+                    onWaterEntry()
                 }
             }
         }

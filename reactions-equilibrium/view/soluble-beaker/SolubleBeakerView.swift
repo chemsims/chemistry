@@ -111,6 +111,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             shouldDissolveNodes: model.shouldDissolveNodes,
             canEmit: model.canEmit,
             onEmit: model.onParticleEmit,
+            onWaterEntry: model.onParticleWaterEntry,
             onDissolve: model.onDissolve,
             shouldAddParticle: $shakeModel.shouldAddParticle
         ).frame(
