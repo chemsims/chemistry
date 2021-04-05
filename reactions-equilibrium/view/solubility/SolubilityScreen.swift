@@ -78,8 +78,8 @@ struct SolubilityScreenLayoutSettings {
 
     var waterHeightAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
-            minValuePosition: 0.4 * common.beakerHeight,
-            maxValuePosition:  0.7 * common.beakerHeight,
+            minValuePosition: SolubleReactionSettings.minWaterHeight * common.beakerHeight,
+            maxValuePosition:  SolubleReactionSettings.maxWaterHeight * common.beakerHeight,
             minValue: 0,
             maxValue: 1
         )
