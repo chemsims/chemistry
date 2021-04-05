@@ -15,7 +15,10 @@ class SolubilityNavigationModel {
                 ShowSaturatedSolution(),
                 AddSoluteToSaturatedBeaker(),
                 PrepareCommonIonReaction(),
-                AddCommonIonSolute()
+                AddCommonIonSolute(),
+                AddSolute(),
+                ShowSaturatedSolution(),
+                AddSoluteToSaturatedBeaker()
             ]
         )
     }
@@ -65,10 +68,11 @@ private class AddSolute: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
+            model.inputState = .addSolute(type: .primary)
+            model.activeSolute = nil
         }
-        model.resetParticles()
         model.statement = ["Now, add solute"]
-        model.inputState = .addSolute(type: .primary)
+        model.beakerSoluteState = .addingSolute(type: .primary, clearPrevious: false)
         model.soluteCounts = SoluteContainer(maxAllowed: model.soluteToAddForSaturation)
     }
 
@@ -127,7 +131,6 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
             model.activeSolute = nil
         }
         model.beakerSoluteState = .addingSolute(type: .commonIon, clearPrevious: true)
-        model.resetParticles()
         model.shouldRemoveSolute = true
     }
 
@@ -144,10 +147,20 @@ private class AddCommonIonSolute: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Now, add common ion solute"]
         model.inputState = .addSolute(type: .commonIon)
+        model.beakerSoluteState = .addingSolute(type: .commonIon, clearPrevious: false)
         model.soluteCounts = SoluteContainer(maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd)
     }
 
+    override func reapply(on model: SolubilityViewModel) {
+        apply(on: model)
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.b0 = 0
+        }
+    }
+
     override func unapply(on model: SolubilityViewModel) {
-        model.b0 = 0
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.b0 = 0
+        }
     }
 }

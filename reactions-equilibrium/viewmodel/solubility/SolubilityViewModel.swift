@@ -126,11 +126,6 @@ class SolubilityViewModel: ObservableObject {
         shakingModel.shake.position.stop()
     }
 
-    func resetParticles() {
-        soluteEmitted = 0
-        soluteDissolved = 0
-    }
-
     var canEmit: Bool {
         inputState.isAddingSolute && soluteCounts.canEmit
     }
@@ -149,21 +144,13 @@ class SolubilityViewModel: ObservableObject {
         return RGB.interpolate(initialRGB, finalRGB, fraction: Double(fraction))
     }
 
-    private var soluteEmitted: Int = 0
-    private var soluteDissolved: Int = 0
-    private let saturatedSoluteToAdd: Int = 5
-
     var soluteToAddForSaturation: Int {
         let equation = LinearEquation(x1: 0, y1: 10, x2: 1, y2: 20)
         return equation.getY(at: waterHeightFactor).roundedInt()
     }
 
-    private var dt: CGFloat {
-        components.equilibriumTime / CGFloat(soluteToAddForSaturation)
-    }
-
     private var saturatedDt: CGFloat {
-        (timing.end - timing.equilibrium) / CGFloat(saturatedSoluteToAdd)
+        (timing.end - timing.equilibrium) / CGFloat(SolubleReactionSettings.saturatedSoluteParticlesToAdd)
     }
 
     private func setComponents() {
