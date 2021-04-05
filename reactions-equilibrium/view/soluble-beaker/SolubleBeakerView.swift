@@ -241,10 +241,10 @@ class SoluteBeakerShakingViewModel: NSObject, CoreMotionShakingDelegate, Observa
 
 private extension SoluteBeakerShakingViewModel {
     static let shakingSettings = CoreMotionShakingBehavior(
-        minTimeInterval: 0.5,
-        maxTimeInterval: 1,
-        minRotationThreshold: 2,
-        maxRotationRate: 10
+        minTimeInterval: 0.25,
+        maxTimeInterval: 0.75,
+        minRotationThreshold: 1,
+        maxRotationRate: 15
     )
 }
 
