@@ -57,7 +57,7 @@ class SKSoluteNode: SKShapeNode {
         let delay = SKAction.wait(forDuration: duration)
         let remove = SKAction.removeFromParent()
         let group = SKAction.sequence([delay, remove])
-        self.physicsBody = nil
+        self.physicsBody?.collisionBitMask = 0
         self.run(group)
     }
 
