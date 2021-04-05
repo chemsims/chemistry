@@ -13,13 +13,13 @@ struct AqueousReactionSettings {
     static let initialRows = (minRows + maxRows) / 2
 
     /// The time at which the concentrations should converge
-    static let timeForConvergence: CGFloat = 15
+    static let timeForConvergence: CGFloat = ReactionTiming.equilibriumTime
 
     /// The total reaction time
-    static let forwardReactionTime: CGFloat = 20
+    static let forwardReactionTime: CGFloat = ReactionTiming.totalReactionTime
 
     /// Time when the product is added
-    static let timeToAddProduct: CGFloat = 23
+    static let timeToAddProduct: CGFloat = ReactionTiming.totalReactionTime + ReactionTiming.gapBetweenReactions
 
     /// The time convergence is reached in the reverse reaction
     static let timeForReverseConvergence: CGFloat = 35

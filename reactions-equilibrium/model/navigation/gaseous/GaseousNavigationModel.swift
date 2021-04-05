@@ -149,12 +149,12 @@ private class GaseousAddProducts: GaseousScreenState {
 }
 
 private class GaseousRunReaction: GaseousScreenState {
-    let timing: GaseousReactionSettings.ReactionTiming
+    let timing: ReactionTiming
     let isForward: Bool
     let revealQuotientLine: Bool
 
     init(
-        timing: GaseousReactionSettings.ReactionTiming,
+        timing: ReactionTiming,
         isForward: Bool,
         revealQuotientLine: Bool = false
     ) {
@@ -215,9 +215,9 @@ private class GaseousRunReaction: GaseousScreenState {
 private class GaseousEndOfReaction: GaseousScreenState {
 
     let statement: [TextLine]
-    let timing: GaseousReactionSettings.ReactionTiming
+    let timing: ReactionTiming
 
-    init(statement: [TextLine], timing: GaseousReactionSettings.ReactionTiming) {
+    init(statement: [TextLine], timing: ReactionTiming) {
         self.statement = statement
         self.timing = timing
     }
@@ -321,13 +321,13 @@ private class GaseousExplainChangeInVolume: GaseousScreenState {
 private class GaseousShiftChart: GaseousScreenState {
 
     let statement: [TextLine]
-    let timing: GaseousReactionSettings.ReactionTiming
-    let previousTiming: GaseousReactionSettings.ReactionTiming
+    let timing: ReactionTiming
+    let previousTiming: ReactionTiming
 
     init(
         statement: [TextLine],
-        timing: GaseousReactionSettings.ReactionTiming,
-        previousTiming: GaseousReactionSettings.ReactionTiming
+        timing: ReactionTiming,
+        previousTiming: ReactionTiming
     ) {
         self.statement = statement
         self.timing = timing

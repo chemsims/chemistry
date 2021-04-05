@@ -166,6 +166,7 @@
 		5773B5FC25B8645F00889A2E /* FeedbackSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */; };
 		57778B8A25937D8C00254262 /* QuizQuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57778B8925937D8C00254262 /* QuizQuestionTests.swift */; };
 		57792CF1261AD69200C26CFF /* SolubleReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */; };
+		57792CF7261AD84D00C26CFF /* ReactionTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF6261AD84D00C26CFF /* ReactionTiming.swift */; };
 		5780320325B0677F00A0F610 /* SavedQuizInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5780320225B0677F00A0F610 /* SavedQuizInput.swift */; };
 		5780320725B0888300A0F610 /* QuizPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5780320625B0888300A0F610 /* QuizPersistenceTests.swift */; };
 		57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8625EAB8450099D720 /* MoleculeScales.swift */; };
@@ -612,6 +613,7 @@
 		57778B7E259368B800254262 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		57778B8925937D8C00254262 /* QuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTests.swift; sourceTree = "<group>"; };
 		57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleReactionSettings.swift; sourceTree = "<group>"; };
+		57792CF6261AD84D00C26CFF /* ReactionTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTiming.swift; sourceTree = "<group>"; };
 		5780320225B0677F00A0F610 /* SavedQuizInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedQuizInput.swift; sourceTree = "<group>"; };
 		5780320625B0888300A0F610 /* QuizPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPersistenceTests.swift; sourceTree = "<group>"; };
 		57812A8625EAB8450099D720 /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
@@ -2058,6 +2060,7 @@
 				57DDAC7D25E5260400B535A7 /* AqueousReactionSettings.swift */,
 				57686B0B26027BAE005BD328 /* GaseousReactionSettings.swift */,
 				57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */,
+				57792CF6261AD84D00C26CFF /* ReactionTiming.swift */,
 			);
 			path = settings;
 			sourceTree = "<group>";
@@ -2669,6 +2672,7 @@
 				5736DC1225F4A91F003FD2B4 /* ReactionDirection.swift in Sources */,
 				57B3B954260B4A0900EB9B47 /* FeedbackAndShareSettings.swift in Sources */,
 				57DDAD2425E5706A00B535A7 /* MultiConcentrationPlot.swift in Sources */,
+				57792CF7261AD84D00C26CFF /* ReactionTiming.swift in Sources */,
 				57BB21F8260BA66B00250FB3 /* GaseousReactionType.swift in Sources */,
 				57A4DF462619FFBF006C8637 /* SolubleComponents.swift in Sources */,
 				576A41DB25F773D900047618 /* AqueousBeakerView.swift in Sources */,

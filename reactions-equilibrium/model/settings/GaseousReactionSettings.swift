@@ -13,14 +13,9 @@ struct GaseousReactionSettings {
     static let minRowDelta = 2
     static let minHeatDelta: CGFloat = 0.2
 
-
-    private static let equilibriumTime: CGFloat = AqueousReactionSettings.timeForConvergence
-    private static let totalReactionTime: CGFloat = AqueousReactionSettings.forwardReactionTime
-    private static let gapBetweenReactions: CGFloat = AqueousReactionSettings.timeToAddProduct - totalReactionTime
-
-    static let forwardTiming = ReactionTiming(offset: 0)
-    static let pressureTiming = ReactionTiming(offset: totalReactionTime)
-    static let heatTiming = ReactionTiming(offset: 2 * totalReactionTime)
+    static let forwardTiming = ReactionTiming.timing(reactionIndex: 0)
+    static let pressureTiming = ReactionTiming.timing(reactionIndex: 1)
+    static let heatTiming = ReactionTiming.timing(reactionIndex: 2)
 
     static let pressureToConcentration: CGFloat = 5
 
@@ -33,19 +28,5 @@ struct GaseousReactionSettings {
         let factor = pow(GaseousReactionSettings.pressureToConcentration, CGFloat(productCoeffs - reactantCoeffs))
         return k * factor
     }
-
-    struct ReactionTiming {
-
-        let offset: CGFloat
-        let start: CGFloat
-        let equilibrium: CGFloat
-        let end: CGFloat
-
-        init(offset: CGFloat) {
-            self.offset = offset
-            self.start = offset == 0 ? 0 : offset + GaseousReactionSettings.gapBetweenReactions
-            self.equilibrium = offset + GaseousReactionSettings.equilibriumTime
-            self.end = offset + GaseousReactionSettings.totalReactionTime
-        }
-    }
 }
+
