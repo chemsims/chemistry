@@ -37,6 +37,7 @@ class SolubilityViewModel: ObservableObject {
     @Published var chartOffset: CGFloat = 0
 
     var soluteCounts: SoluteContainer
+    
     @Published var components: SolubilityComponents
 
     init() {
@@ -57,13 +58,7 @@ class SolubilityViewModel: ObservableObject {
 
     var timing: ReactionTiming {
         didSet {
-            self.components = SolubilityComponents(
-                equilibriumConstant: components.equilibriumConstant,
-                initialConcentration: components.initialConcentration,
-                startTime: timing.start,
-                equilibriumTime: timing.equilibrium,
-                previousEquation: components.previousEquation
-            )
+            setComponents()
         }
     }
 
@@ -117,19 +112,13 @@ class SolubilityViewModel: ObservableObject {
 
     private func commonIonSoluteDissolved() {
         withAnimation(.easeOut(duration: 0.5)) {
-            b0 = SolubleReactionSettings.maxInitialBConcentration * soluteCounts.dissolvedFraction
+            extraB0 = SolubleReactionSettings.maxInitialBConcentration * soluteCounts.dissolvedFraction
         }
     }
 
-    var b0: CGFloat = 0 {
+    var extraB0: CGFloat = 0 {
         didSet {
-            self.components = SolubilityComponents(
-                equilibriumConstant: components.equilibriumConstant,
-                initialConcentration: SoluteValues(productA: 0, productB: b0),
-                startTime: timing.start,
-                equilibriumTime: timing.equilibrium,
-                previousEquation: components.previousEquation
-            )
+            setComponents()
         }
     }
 
@@ -155,7 +144,7 @@ class SolubilityViewModel: ObservableObject {
     private var initialWaterColor: RGB {
         let initialRGB = RGB.beakerLiquid
         let finalRGB = RGB.maxCommonIon
-        let fraction = min(1, b0 / SolubleReactionSettings.maxInitialBConcentration)
+        let fraction = min(1, extraB0 / SolubleReactionSettings.maxInitialBConcentration)
         return RGB.interpolate(initialRGB, finalRGB, fraction: Double(fraction))
     }
 
@@ -166,6 +155,19 @@ class SolubilityViewModel: ObservableObject {
 
     private var saturatedDt: CGFloat {
         (timing.end - timing.equilibrium) / CGFloat(SolubleReactionSettings.saturatedSoluteParticlesToAdd)
+    }
+
+    private func setComponents() {
+        self.components = SolubilityComponents(
+            equilibriumConstant: components.equilibriumConstant,
+            initialConcentration: SoluteValues(
+                productA: (components.previousEquation?.finalConcentration.value(for: .A) ?? 0),
+                productB: (components.previousEquation?.finalConcentration.value(for: .B) ?? 0) + extraB0
+            ),
+            startTime: timing.start,
+            equilibriumTime: timing.equilibrium,
+            previousEquation: components.previousEquation
+        )
     }
 }
 

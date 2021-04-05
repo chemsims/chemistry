@@ -19,7 +19,8 @@ class SolubilityNavigationModel {
                 AddSolute(),
                 ShowSaturatedSolution(),
                 AddSoluteToSaturatedBeaker(),
-                PrepareAddAcidSolute()
+                PrepareAcidReaction(),
+                AddAcidSolute()
             ]
         )
     }
@@ -155,18 +156,18 @@ private class AddCommonIonSolute: SolubilityScreenState {
     override func reapply(on model: SolubilityViewModel) {
         apply(on: model)
         withAnimation(.easeOut(duration: 0.5)) {
-            model.b0 = 0
+            model.extraB0 = 0
         }
     }
 
     override func unapply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
-            model.b0 = 0
+            model.extraB0 = 0
         }
     }
 }
 
-private class PrepareAddAcidSolute: SolubilityScreenState {
+private class PrepareAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Next, we will add acid"]
         model.components = SolubilityComponents(
@@ -177,6 +178,7 @@ private class PrepareAddAcidSolute: SolubilityScreenState {
             previousEquation: model.components.equation
         )
         model.timing = SolubleReactionSettings.secondReactionTiming
+        model.extraB0 = 0
         withAnimation(.easeOut(duration: 1)) {
             model.inputState = .none
             model.activeSolute = nil
@@ -186,17 +188,29 @@ private class PrepareAddAcidSolute: SolubilityScreenState {
     }
 
     override func unapply(on model: SolubilityViewModel) {
-        model.timing = SolubleReactionSettings.firstReactionTiming
+        let previousEquation = model.components.previousEquation
         model.components = SolubilityComponents(
             equilibriumConstant: model.components.equilibriumConstant,
-            initialConcentration: SoluteValues(productA: 0, productB: model.b0),
-            startTime: model.timing.start,
-            equilibriumTime: model.timing.equilibrium,
+            initialConcentration: model.components.initialConcentration,
+            startTime: model.components.startTime,
+            equilibriumTime: model.components.equilibriumTime,
             previousEquation: nil
         )
+        if let previousEquation = previousEquation {
+            model.extraB0 = previousEquation.initialConcentration.value(for: .B)
+        }
+        model.timing = SolubleReactionSettings.firstReactionTiming
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = 0
             model.currentTime = model.timing.end
         }
+    }
+}
+
+private class AddAcidSolute: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["Now, add acid solute"]
+        model.inputState = .addSolute(type: .acid)
+        model.beakerSoluteState = .addingSolute(type: .acid, clearPrevious: false)
     }
 }
