@@ -10,11 +10,19 @@ struct SolubilityScreen: View {
     let model: SolubilityViewModel
 
     var body: some View {
-        GeometryReader { geo in
-            SolubilityScreenWithSettings(
-                model: model,
-                settings: SolubilityScreenLayoutSettings(geometry: geo)
-            )
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color.white)
+                .colorMultiply(.white)
+                .edgesIgnoringSafeArea(.all)
+
+            GeometryReader { geometry in
+                SolubilityScreenWithSettings(
+                    model: model,
+                    settings: SolubilityScreenLayoutSettings(geometry: geometry)
+                )
+            }
+            .padding(10)
         }
     }
 }
