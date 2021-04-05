@@ -317,7 +317,7 @@ private struct QuotientEqualitySign: View {
     }
 }
 
-private struct AnimatingNumberOrPlaceholder: View {
+struct AnimatingNumberOrPlaceholder: View {
 
     let showTerm: Bool
     let currentTime: CGFloat
