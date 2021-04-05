@@ -32,6 +32,8 @@ class SolubilityViewModel: ObservableObject {
     @Published var shouldRemoveSolute = false
     @Published var shouldAddRemovedSolute = false
 
+    @Published var beakerSoluteState = BeakerSoluteState.addingSolute(type: .primary, clearPrevious: false)
+
     var shouldDissolveNodes: Bool {
         inputState != .addSaturatedSolute
     }
@@ -84,6 +86,9 @@ class SolubilityViewModel: ObservableObject {
     }
 
     func onDissolve() {
+        guard inputState.addingSolute(type: .primary) else {
+            return
+        }
         soluteDissolved += 1
         withAnimation(.linear(duration: Double(dt))) {
             currentTime += dt

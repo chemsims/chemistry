@@ -21,6 +21,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             size: size,
             soluteWidth: soluteWidth,
             waterHeight: waterHeight,
+            soluteState: model.beakerSoluteState,
             shouldDissolveNodes: model.shouldDissolveNodes,
             onWaterEntry: model.onParticleWaterEntry,
             onDissolve: model.onDissolve
@@ -39,19 +40,20 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
                 model.onParticleEmit()
                 shouldAddParticle = false
             }
-            if model.shouldRemoveSolute {
-                scene.removeSolute()
-            }
-            if model.shouldAddRemovedSolute {
-                scene.addRemovedSolute()
-            }
             scene.soluteWidth = soluteWidth
             scene.waterHeight = waterHeight
             scene.onWaterEntry = model.onParticleWaterEntry
+            scene.soluteState = model.beakerSoluteState
             scene.onDissolve = model.onDissolve
             scene.shouldDissolveNodes = model.shouldDissolveNodes
         }
     }
+}
+
+enum BeakerSoluteState: Equatable {
+    case addingSolute(type: SoluteType, clearPrevious: Bool)
+    case addingSaturatedPrimary
+    case dissolvingSuperSaturatedPrimary
 }
 
 class SKSolubleBeakerScene: SKScene {
@@ -62,16 +64,24 @@ class SKSolubleBeakerScene: SKScene {
     var onWaterEntry: () -> Void
     var onDissolve: () -> Void
 
+    var soluteState: BeakerSoluteState {
+        didSet {
+            handleBeakerStateUpdate(oldValue: oldValue)
+        }
+    }
+
     init(
         size: CGSize,
         soluteWidth: CGFloat,
         waterHeight: CGFloat,
+        soluteState: BeakerSoluteState,
         shouldDissolveNodes: Bool,
         onWaterEntry: @escaping () -> Void,
         onDissolve: @escaping () -> Void
     ) {
         self.soluteWidth = soluteWidth
         self.waterHeight = waterHeight
+        self.soluteState = soluteState
         self.shouldDissolveNodes = shouldDissolveNodes
         self.onWaterEntry = onWaterEntry
         self.onDissolve = onDissolve
@@ -107,17 +117,40 @@ class SKSolubleBeakerScene: SKScene {
         }
     }
 
-    func removeSolute() {
+    private func hideSolute() {
         mapSolute { solute in
             solute.hide()
         }
     }
 
-    func addRemovedSolute() {
+    private func removeSolute() {
+        mapSolute { solute in
+            solute.removeFromParent()
+        }
+    }
+
+    private func showHiddenSolute() {
         mapSolute { solute in
             if solute.isHidden {
                 solute.show()
             }
+        }
+    }
+
+    private func handleBeakerStateUpdate(oldValue: BeakerSoluteState) {
+        guard soluteState != oldValue else {
+            return
+        }
+
+        switch (soluteState, oldValue) {
+        case (.addingSolute(type: .primary, clearPrevious: _), .addingSaturatedPrimary):
+            removeSolute()
+        case (.addingSolute(type: _, clearPrevious: true), _):
+            hideSolute()
+        case (.addingSaturatedPrimary, .addingSolute(type: _, clearPrevious: true)):
+            showHiddenSolute()
+        default:
+            break
         }
     }
 

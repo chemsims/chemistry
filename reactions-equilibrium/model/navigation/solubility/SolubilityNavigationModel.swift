@@ -66,27 +66,51 @@ private class AddSolute: SolubilityScreenState {
         model.statement = ["Now, add solute"]
         model.inputState = .addSolute(type: .primary)
     }
+
+    override func unapply(on model: SolubilityViewModel) {
+        withAnimation(.easeOut(duration: 1)) {
+            model.currentTime = 0
+            model.inputState = .none
+            model.activeSolute = nil
+        }
+        model.resetParticles()
+    }
 }
 
 private class ShowSaturatedSolution: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Solution is now saturated"]
         model.stopShaking()
+        model.beakerSoluteState = .addingSolute(type: .primary, clearPrevious: false)
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
             model.activeSolute = nil
         }
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = 0
+        }
+        model.resetParticles()
     }
 }
 
 private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Now add a little more solute"]
+        model.beakerSoluteState = .addingSaturatedPrimary
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .addSaturatedSolute
             model.activeSolute = .primary
         }
         model.startShaking()
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.currentTime = model.timing.equilibrium
+        }
     }
 }
 
@@ -104,6 +128,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
             model.inputState = .none
             model.activeSolute = nil
         }
+        model.beakerSoluteState = .addingSolute(type: .commonIon, clearPrevious: true)
         model.resetParticles()
         model.shouldRemoveSolute = true
     }
