@@ -22,6 +22,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             soluteWidth: soluteWidth,
             waterHeight: waterHeight,
             soluteState: model.beakerSoluteState,
+            saturatedReactionDuration: model.timing.equilibrium - model.timing.start,
             onWaterEntry: model.onParticleWaterEntry,
             onDissolve: model.onDissolve
         )
@@ -43,6 +44,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             scene.waterHeight = waterHeight
             scene.onWaterEntry = model.onParticleWaterEntry
             scene.soluteState = model.beakerSoluteState
+            scene.saturatedReactionDuration = model.timing.equilibrium - model.timing.start
             scene.onDissolve = model.onDissolve
         }
     }
@@ -66,6 +68,7 @@ class SKSolubleBeakerScene: SKScene {
 
     var soluteWidth: CGFloat
     var waterHeight: CGFloat
+    var saturatedReactionDuration: CGFloat
     var onWaterEntry: (SoluteType) -> Void
     var onDissolve: (SoluteType) -> Void
 
@@ -75,16 +78,20 @@ class SKSolubleBeakerScene: SKScene {
         }
     }
 
+    private let soluteReactionKey = "soluteReactionKey"
+
     init(
         size: CGSize,
         soluteWidth: CGFloat,
         waterHeight: CGFloat,
         soluteState: BeakerSoluteState,
+        saturatedReactionDuration: CGFloat,
         onWaterEntry: @escaping (SoluteType) -> Void,
         onDissolve: @escaping (SoluteType) -> Void
     ) {
         self.soluteWidth = soluteWidth
         self.waterHeight = waterHeight
+        self.saturatedReactionDuration = saturatedReactionDuration
         self.soluteState = soluteState
         self.onWaterEntry = onWaterEntry
         self.onDissolve = onDissolve
@@ -94,6 +101,7 @@ class SKSolubleBeakerScene: SKScene {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 
     override func didMove(to view: SKView) {
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
@@ -121,11 +129,7 @@ class SKSolubleBeakerScene: SKScene {
     }
 
     private func hideSolute() {
-        mapSolute { solute in
-            if !solute.willDissolve {
-                solute.hide()
-            }
-        }
+        removeSolute()
     }
 
     private func removeSolute() {
@@ -135,11 +139,11 @@ class SKSolubleBeakerScene: SKScene {
     }
 
     private func showHiddenSolute() {
-        mapSolute { solute in
-            if solute.isHidden {
-                solute.show()
-            }
-        }
+//        mapSolute { solute in
+//            if solute.isHidden {
+//                solute.show()
+//            }
+//        }
     }
 
     private func handleBeakerStateUpdate(oldValue: BeakerSoluteState) {
@@ -154,8 +158,33 @@ class SKSolubleBeakerScene: SKScene {
             hideSolute()
         case (.addingSaturatedPrimary, .addingSolute(type: _, clearPrevious: true)):
             showHiddenSolute()
+        case (.dissolvingSuperSaturatedPrimary, _):
+            runSuperSaturatedReaction()
         default:
             break
+        }
+    }
+
+    private func runSuperSaturatedReaction() {
+        let primaryNodes: [SKSoluteNode] = children.compactMap {
+            if let solute = $0 as? SKSoluteNode, solute.soluteType == .primary, !solute.willDissolve {
+                return solute
+            }
+            return nil
+        }
+        guard !primaryNodes.isEmpty else {
+            return
+        }
+        let dt = saturatedReactionDuration / CGFloat(primaryNodes.count)
+        (0..<primaryNodes.count).forEach { i in
+            let node = primaryNodes[i]
+            let delay = SKAction.wait(forDuration: Double(i) * Double(dt))
+            let dissolve = SKAction.run {
+                node.dissolve()
+                self.onDissolve(node.soluteType)
+            }
+            let action = SKAction.sequence([delay, dissolve])
+            node.run(action, withKey: soluteReactionKey)
         }
     }
 

@@ -220,6 +220,7 @@ private class AddAcidSolute: SolubilityScreenState {
 private class RunAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         let dt = model.timing.end - model.timing.start
+        model.beakerSoluteState = .dissolvingSuperSaturatedPrimary
         withAnimation(.linear(duration: Double(dt))) {
             model.currentTime = model.timing.end
         }
