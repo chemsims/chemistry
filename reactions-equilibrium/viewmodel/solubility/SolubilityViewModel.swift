@@ -144,11 +144,12 @@ class SolubilityViewModel: ObservableObject {
     }
 }
 
-enum SolubilityInputState {
-    case none, addSolute, addSaturatedSolute
+enum SolubilityInputState: Equatable {
+    case none, addSaturatedSolute
+    case addSolute(type: SoluteType)
 
-    var addingSolute: Bool {
-        self == .addSolute || self == .addSaturatedSolute
+    func addingSolute(type: SoluteType) -> Bool {
+        self == .addSolute(type: type) || (type == .primary && self == .addSaturatedSolute)
     }
 }
 

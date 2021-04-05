@@ -14,7 +14,8 @@ class SolubilityNavigationModel {
                 AddSolute(),
                 ShowSaturatedSolution(),
                 AddSoluteToSaturatedBeaker(),
-                PrepareCommonIonReaction()
+                PrepareCommonIonReaction(),
+                AddCommonIonSolute()
             ]
         )
     }
@@ -63,7 +64,7 @@ private class SetStatement: SolubilityScreenState {
 private class AddSolute: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Now, add solute"]
-        model.inputState = .addSolute
+        model.inputState = .addSolute(type: .primary)
     }
 }
 
@@ -113,5 +114,12 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
             model.shouldRemoveSolute = false
             model.shouldAddRemovedSolute = true
         }
+    }
+}
+
+private class AddCommonIonSolute: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["Now, add common ion solute"]
+        model.inputState = .addSolute(type: .commonIon)
     }
 }

@@ -41,24 +41,9 @@ private struct SolubleBeakerViewWithGeometry: View {
     }
 
     private var containers: some View {
-        let isActive = model.activeSolute == SoluteType.primary
-        return VStack(spacing: 0) {
+        VStack(spacing: 0) {
             ZStack {
                 container(solute: .primary, index: 0)
-                    .onTapGesture {
-                        guard model.inputState.addingSolute else {
-                            return
-                        }
-                        if isActive {
-                            shakeModel.manualAdd()
-                        } else {
-                            withAnimation(.easeOut(duration: 0.5)) {
-                                model.activeSolute = .primary
-                            }
-                            shakeModel.shake.position.start()
-                        }
-                    }
-
                 container(solute: .commonIon, index: 1)
                 container(solute: .acid, index: 2)
             }
@@ -128,6 +113,19 @@ private struct SolubleBeakerViewWithGeometry: View {
             )
             .scaleEffect(isActive ? 1.2 : 1)
             .zIndex(isActive ? 1 : 0)
+            .onTapGesture {
+                guard model.inputState.addingSolute(type: solute) else {
+                    return
+                }
+                if isActive {
+                    shakeModel.manualAdd()
+                } else {
+                    withAnimation(.easeOut(duration: 0.5)) {
+                        model.activeSolute = solute
+                    }
+                    shakeModel.shake.position.start()
+                }
+            }
     }
 
     private func standardContainerLocation(index: Int) -> CGPoint {
