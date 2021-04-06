@@ -28,23 +28,25 @@ private struct SizedSolubilityEquationView: View {
     @ObservedObject var model: SolubilityViewModel
 
     var body: some View {
-        VStack(spacing: 5) {
-            HStack(spacing: 0) {
+        HStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 5) {
                 QuotientConcentrationDefinition(
                     isStruckOut: true,
                     showDenom: true
                 )
-                Spacer()
-                QuotientKspDefinition()
-            }
-            HStack(spacing: 0) {
+                .frame(height: 90)
+
                 QuotientConcentrationBlank(
                     quotient: model.components.quotient,
                     concentration: model.components.equation.concentration,
                     currentTime: model.currentTime,
                     showValues: false
                 )
-                Spacer()
+            }
+            Spacer()
+            VStack(alignment: .leading, spacing: 5) {
+                QuotientKspDefinition()
+                    .frame(height: 90)
                 QuotientKspBlank(
                     quotient: model.components.quotient,
                     ksp: model.components.equilibriumConstant,
@@ -186,7 +188,7 @@ private struct Equals: View {
     }
 }
 
-private let NaturalHeight: CGFloat = 142
+private let NaturalHeight: CGFloat = 146
 private let NaturalWidth: CGFloat = 470
 
 struct SolubilityEquationView_Previews: PreviewProvider {
