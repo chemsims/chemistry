@@ -32,7 +32,7 @@ private struct SizedSolubilityEquationView: View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 5) {
                 QuotientConcentrationDefinition(
-                    isStruckOut: model.equationState == .crossOutOriginalQuotientDenominator,
+                    isStruckOut: model.equationState.doCrossOutDenom,
                     showDenom: model.equationState.doShowOriginalQuotient
                 )
                 .frame(height: 90)
@@ -72,25 +72,16 @@ private struct QuotientConcentrationDefinition: View {
         ZStack {
             content
 
-            CrossOutLine(
-                start: CGPoint(x: 115, y: 65),
-                end: CGPoint(x: 215, y: 40),
-                progress: isStruckOut ? 1: 0
-            )
-            .stroke(lineWidth: 3)
-            .foregroundColor(.red)
-            .frame(width: 230, height: 50)
-
-//            if isStruckOut {
-//                Rectangle()
-//                    .frame(width: 90, height: 4)
-//                    .foregroundColor(.red)
-//                    .rotationEffect(.degrees(-14))
-//                    .position(x: 167, y: 70)
-//                    .opacity(isStruckOut ? 1 : 0)
-//                    .transition(.scale)
-//                    .animation(.easeOut(duration: 0.5))
-//            }
+            if showDenom {
+                CrossOutLine(
+                    start: CGPoint(x: 115, y: 65),
+                    end: CGPoint(x: 215, y: 40),
+                    progress: isStruckOut ? 1: 0
+                )
+                .stroke(lineWidth: 3)
+                .foregroundColor(.red)
+                .frame(width: 230, height: 50)
+            }
         }
         .frame(width: 230)
     }

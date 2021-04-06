@@ -94,7 +94,10 @@ private class ShowCrossedOutOldQuotient: SolubilityScreenState {
 private class ShowCorrectQuotient: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Now, here is the correct quotient"]
-        model.equationState = .showCorrectQuotientNotFilledIn
+        withAnimation(.easeOut(duration: 0.3)) {
+            model.equationState = .showCorrectQuotientNotFilledIn
+        }
+
     }
 }
 

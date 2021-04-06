@@ -360,4 +360,11 @@ enum SolubilityEquationState {
         default: return false
         }
     }
+
+    var doCrossOutDenom: Bool {
+        switch self {
+        case .showOriginalQuotient, .showOriginalQuotientAndQuotientRecap: return false
+        default: return true
+        }
+    }
 }
