@@ -63,6 +63,15 @@ private struct SolubilityRightStack: View {
     let settings: AqueousScreenLayoutSettings
 
     var body: some View {
+        ZStack {
+            mainContent
+            if model.equationState == .showOriginalQuotientAndQuotientRecap {
+                equationRecap
+            }
+        }
+    }
+
+    private var mainContent: some View {
         VStack(spacing: 0) {
             SolubilityEquationView(model: model)
                 .frame(
@@ -77,6 +86,16 @@ private struct SolubilityRightStack: View {
                 nextIsDisabled: false,
                 settings: settings.beakySettings
             )
+        }
+    }
+
+    private var equationRecap: some View {
+        VStack(spacing: 0) {
+            Spacer()
+            SolubilityQuotientRecapEquations()
+                .frame(width: settings.equationWidth, height: settings.equationHeight)
+            Spacer()
+                .frame(height: 1.1 * settings.beakyTotalHeight)
         }
     }
 }
