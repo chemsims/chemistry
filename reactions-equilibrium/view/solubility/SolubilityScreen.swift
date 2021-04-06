@@ -64,6 +64,11 @@ private struct SolubilityRightStack: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            SolubilityEquationView(model: model)
+                .frame(
+                    width: settings.equationWidth,
+                    height: settings.equationHeight
+                )
             Spacer()
             BeakyBox(
                 statement: model.statement,
@@ -73,7 +78,6 @@ private struct SolubilityRightStack: View {
                 settings: settings.beakySettings
             )
         }
-
     }
 }
 
@@ -95,6 +99,14 @@ struct SolubilityScreenLayoutSettings {
 
     var soluble: SolubleBeakerSettings {
         SolubleBeakerSettings(beakerWidth: common.beakerWidth)
+    }
+
+    var equationWidth: CGFloat {
+        common.equationWidth
+    }
+
+    var equationHeight: CGFloat {
+        common.equationHeight
     }
 
 }

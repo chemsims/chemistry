@@ -19,6 +19,7 @@ struct SolubilityEquationView: View {
             ) {
                 SizedSolubilityEquationView(model: model)
             }
+            .frame(width: geo.size.width, height: geo.size.height)
         }
     }
 }
@@ -44,6 +45,7 @@ private struct SizedSolubilityEquationView: View {
                 )
             }
             Spacer()
+                .frame(width: 45)
             VStack(alignment: .leading, spacing: 5) {
                 QuotientKspDefinition()
                     .frame(height: 90)
@@ -189,7 +191,7 @@ private struct Equals: View {
 }
 
 private let NaturalHeight: CGFloat = 146
-private let NaturalWidth: CGFloat = 470
+private let NaturalWidth: CGFloat = 475
 
 struct SolubilityEquationView_Previews: PreviewProvider {
     static var previews: some View {
