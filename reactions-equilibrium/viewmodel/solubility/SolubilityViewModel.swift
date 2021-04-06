@@ -309,7 +309,7 @@ class SoluteContainer {
 
 // TODO - move everything below here to other files
 enum SolubilityInputState: Equatable {
-    case none, addSaturatedSolute
+    case none, addSaturatedSolute, setWaterLevel
     case addSolute(type: SoluteType)
 
     var isAddingSolute: Bool {

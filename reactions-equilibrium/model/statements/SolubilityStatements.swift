@@ -14,7 +14,7 @@ struct SolubilityStatements {
 
     static let explainPrecipitationReactions: [TextLine] = [
         """
-        Some reactions can produce solids as their products - these are called *precipitation \
+        Some reactions can produce solids as their products, these are called *precipitation \
         reactions*. But as they are reversible, the opposite can happen and the solid can even \
         dissolve. *Choose one*.
         """
@@ -54,14 +54,14 @@ struct SolubilityStatements {
     static let explainQEquation2: [TextLine] = [
         """
         That's also why K is referred to as *Ksp*. They are the same values, constant of \
-        equilibrium, but in these reactions it serves as an indicator on how soluble is a salt. \
-        *KSP stands for solubility product.*
+        equilibrium, but in these reactions it serves as an indicator on how soluble a salt is. \
+        *Ksp stands for solubility product.*
         """
     ]
 
     static let explainKspRatio1: [TextLine] = [
         """
-        The higher is the *KSP* then the higher the amount of ions the reaction produces at the \
+        The higher the *Ksp*, then the higher the amount of ions the reaction produces at the \
         equilibrium state will be. Once the quotient *Q* reaches *Ksp*, the reverse reaction and \
         forward reaction will be taking place at the same rate, meaning that no more solid can be \
         turned into ions.
@@ -120,11 +120,17 @@ struct SolubilityStatements {
         Great! No more salt can be dissolved in water now that we reached *equilibrium*.
         """,
         """
-        Notice that you could only dissolve 1925mg of AB(s). *Shake it one more time*.
+        Notice that you could only dissolve 1925mg of AB(s).
         """
     ]
 
-    static let primaryReactionSuperSaturated: [TextLine] = [
+    static let instructToAddSaturatedSolute: [TextLine] = [
+        """
+        Now, try shaking a bit more of *AB(s)* into the beaker and see what happens.
+        """
+    ]
+
+    static let explainSuperSaturated: [TextLine] = [
         """
         Wow! Now the salt doesn't dissolve anymore. The extra solid added doesn't affect Q, as it \
         is still *$Q = Ksp$*. More ions cannot be produced as the solution has now reached its \
@@ -159,7 +165,7 @@ struct SolubilityStatements {
     static let instructToAddCommonIon: [TextLine] = [
         """
         Once you add *CB(s)*, it will dissolve into ions *C+* and *B-*. In this case, *C+* doesn't \
-        affect the solubility of *AB(s), it only affects *A+* and *B-(aq)*.
+        affect the solubility of *AB(s), it only affects A+ and B-(aq)*.
         """,
         "*Shake it into it to see what happens!*"
     ]
@@ -181,10 +187,9 @@ struct SolubilityStatements {
         """
         Notice that you could only dissolve 1841 mg of AB(s), which is less than before.
         """,
-        "Now, try shaking a bit more *AB(s)* and see what happens."
     ]
 
-    static let explainPh: [TextLine] = [
+    static let explainPh1: [TextLine] = [
         """
         *pH* can affect the solubility of some salts. When pH is high or low, it means that there \
         are more *H+ (low pH)* or *OH- (high pH)* ions free that can react with the ions produced \
@@ -192,9 +197,17 @@ struct SolubilityStatements {
         """
     ]
 
+    static let explainPh2: [TextLine] = [
+        """
+        Another factor that can affect the solubility of a salt is *pH*. Lower pH values mean \
+        higher presence of *H+ ions*. In some cases, H+ could react with ions in the solution. In \
+        this case, H+ reacts with *B-* to form *HB(aq)*.
+        """
+    ]
+
     static let instructToAddH: [TextLine] = [
         """
-        In other words, if you add H_ ions, they will react and therefore reduce the presence of \
+        In other words, if you add H+ ions, they will react and therefore reduce the presence of \
         B- ions in the solution, *reducing Q*, allowing *AB(s) to turn into more A+ and B- ions*.
         """,
         "Shake *H+* ions into the beaker!"
