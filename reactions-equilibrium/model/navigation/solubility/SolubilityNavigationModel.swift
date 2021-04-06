@@ -11,6 +11,9 @@ class SolubilityNavigationModel {
             model: model,
             states: [
                 SetStatement(statement: ["Click next to add solute"]),
+                ShowRecapQuotient(),
+                ShowCrossedOutOldQuotient(),
+                ShowCorrectQuotient(),
                 AddSolute(),
                 ShowSaturatedSolution(),
                 AddSoluteToSaturatedBeaker(),
@@ -68,6 +71,27 @@ private class SetStatement: SolubilityScreenState {
     }
 }
 
+private class ShowRecapQuotient: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["These are the previous Q equations"]
+        model.equationState = .showOriginalQuotientAndQuotientRecap
+    }
+}
+
+private class ShowCrossedOutOldQuotient: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["Here, we can cross out the denominator"]
+        model.equationState = .crossOutOriginalQuotientDenominator
+    }
+}
+
+private class ShowCorrectQuotient: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = ["Now, here is the correct quotient"]
+        model.equationState = .showCorrectQuotientNotFilledIn
+    }
+}
+
 private class AddSolute: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
@@ -75,6 +99,7 @@ private class AddSolute: SolubilityScreenState {
             model.inputState = .addSolute(type: .primary)
             model.activeSolute = nil
         }
+        model.equationState = .showCorrectQuotientFilledIn
         model.statement = ["Now, add solute"]
         model.beakerSoluteState = .addingSolute(type: .primary, clearPrevious: false)
         model.soluteCounts = SoluteContainer(maxAllowed: model.soluteToAddForSaturation)

@@ -32,8 +32,8 @@ private struct SizedSolubilityEquationView: View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 5) {
                 QuotientConcentrationDefinition(
-                    isStruckOut: true,
-                    showDenom: true
+                    isStruckOut: model.equationState == .crossOutOriginalQuotientDenominator,
+                    showDenom: model.equationState.doShowOriginalQuotient
                 )
                 .frame(height: 90)
 
@@ -41,8 +41,9 @@ private struct SizedSolubilityEquationView: View {
                     quotient: model.components.quotient,
                     concentration: model.components.equation.concentration,
                     currentTime: model.currentTime,
-                    showValues: false
+                    showValues: model.equationState == .showCorrectQuotientFilledIn
                 )
+                .opacity(model.equationState.doShowCorrectQuotient ? 1 : 0)
             }
             Spacer()
                 .frame(width: 45)
@@ -53,8 +54,9 @@ private struct SizedSolubilityEquationView: View {
                     quotient: model.components.quotient,
                     ksp: model.components.equilibriumConstant,
                     currentTime: model.currentTime,
-                    showValues: false
+                    showValues: model.equationState == .showCorrectQuotientFilledIn
                 )
+                .opacity(model.equationState.doShowCorrectQuotient ? 1 : 0)
             }
         }
         .font(.system(size: EquationSizing.fontSize))

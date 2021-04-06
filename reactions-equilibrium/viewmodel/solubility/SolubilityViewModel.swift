@@ -44,6 +44,7 @@ class SolubilityViewModel: ObservableObject {
     var soluteCounts: SoluteContainer
     
     @Published var components: SolubilityComponents
+    @Published var equationState = SolubilityEquationState.showOriginalQuotient
 
     init() {
         let firstTiming = SolubleReactionSettings.firstReactionTiming
@@ -305,6 +306,8 @@ class SoluteContainer {
     }
 }
 
+
+// TODO - move everything below here to other files
 enum SolubilityInputState: Equatable {
     case none, addSaturatedSolute
     case addSolute(type: SoluteType)
@@ -329,4 +332,32 @@ extension RGB {
     static let primarySolute = RGB(r: 230, g: 175, b: 33)
     static let commonIonSolute = RGB(r: 214, g: 91, b: 35)
     static let acidSolute = RGB(r: 9, g: 179, b: 97)
+}
+
+
+enum SolubilityEquationState {
+    case showOriginalQuotient,
+         showOriginalQuotientAndQuotientRecap,
+         crossOutOriginalQuotientDenominator,
+         showCorrectQuotientNotFilledIn,
+         showCorrectQuotientFilledIn
+
+    var doShowOriginalQuotient: Bool {
+        switch self {
+        case .showOriginalQuotient,
+             .showOriginalQuotientAndQuotientRecap,
+             .crossOutOriginalQuotientDenominator:
+            return true
+        default: return false
+        }
+    }
+
+    var doShowCorrectQuotient: Bool {
+        switch self {
+        case .showCorrectQuotientFilledIn,
+             .showCorrectQuotientNotFilledIn:
+            return true
+        default: return false
+        }
+    }
 }
