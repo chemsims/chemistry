@@ -67,6 +67,7 @@ private struct SolubilityRightStack: View {
             mainContent
             if model.equationState == .showOriginalQuotientAndQuotientRecap {
                 equationRecap
+                    .transition(.identity)
             }
         }
     }

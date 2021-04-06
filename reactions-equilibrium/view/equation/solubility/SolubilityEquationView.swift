@@ -71,16 +71,26 @@ private struct QuotientConcentrationDefinition: View {
     var body: some View {
         ZStack {
             content
-            if isStruckOut {
-                Rectangle()
-                    .frame(width: 90, height: 4)
-                    .foregroundColor(.red)
-                    .rotationEffect(.degrees(-14))
-                    .position(x: 167, y: 70)
-                    .opacity(isStruckOut ? 1 : 0)
-                    .transition(.scale)
-                    .animation(.easeOut(duration: 0.5))
-            }
+
+            CrossOutLine(
+                start: CGPoint(x: 115, y: 65),
+                end: CGPoint(x: 215, y: 40),
+                progress: isStruckOut ? 1: 0
+            )
+            .stroke(lineWidth: 3)
+            .foregroundColor(.red)
+            .frame(width: 230, height: 50)
+
+//            if isStruckOut {
+//                Rectangle()
+//                    .frame(width: 90, height: 4)
+//                    .foregroundColor(.red)
+//                    .rotationEffect(.degrees(-14))
+//                    .position(x: 167, y: 70)
+//                    .opacity(isStruckOut ? 1 : 0)
+//                    .transition(.scale)
+//                    .animation(.easeOut(duration: 0.5))
+//            }
         }
         .frame(width: 230)
     }
@@ -117,6 +127,32 @@ private struct QuotientConcentrationDefinition: View {
                 .font(.system(size: EquationSizing.subscriptFontSize))
             FixedText("]")
         }
+    }
+}
+
+private struct CrossOutLine: Shape {
+    let start: CGPoint
+    let end: CGPoint
+    var progress: CGFloat
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        func getPart(_ startPart: CGFloat, _ endPart: CGFloat) -> CGFloat {
+            let dPart = endPart - startPart
+            return startPart + (progress * dPart)
+        }
+        var path = Path()
+        path.move(to: start)
+        path.addLine(
+            to: CGPoint(
+                x: getPart(start.x, end.x),
+                y: getPart(start.y, end.y)
+            )
+        )
+        return path
     }
 }
 

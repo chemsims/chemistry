@@ -76,12 +76,18 @@ private class ShowRecapQuotient: SolubilityScreenState {
         model.statement = ["These are the previous Q equations"]
         model.equationState = .showOriginalQuotientAndQuotientRecap
     }
+
+    override func unapply(on model: SolubilityViewModel) {
+        model.equationState = .showOriginalQuotient
+    }
 }
 
 private class ShowCrossedOutOldQuotient: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = ["Here, we can cross out the denominator"]
-        model.equationState = .crossOutOriginalQuotientDenominator
+        withAnimation(.easeOut(duration: 0.3)) {
+            model.equationState = .crossOutOriginalQuotientDenominator
+        }
     }
 }
 
