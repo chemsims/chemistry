@@ -289,7 +289,9 @@ private class SKSolubleBeakerScene: SKScene {
     private func cleanupDemoReaction() {
         for child in children {
             if child is SKSoluteNode || child is SKIonNode {
-                child.removeFromParent()
+                let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+                let remove = SKAction.removeFromParent()
+                child.run(SKAction.sequence([fadeOut, remove]))
             }
         }
     }
