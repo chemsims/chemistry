@@ -78,5 +78,16 @@ public struct QuadraticEquation: Equation {
         (a * pow(x, 2)) + (b * x) + c
     }
 
+    public func getX(for y: CGFloat) -> (CGFloat, CGFloat)? {
+        let termToSquareRoot = pow(b, 2) - (4 * a * (c - y))
+        let denom = 2 * a
+        guard termToSquareRoot > 0, denom != 0 else {
+            return nil
+        }
+        let sqrtTerm = sqrt(termToSquareRoot)
+        let term1 = (-b + sqrtTerm) / denom
+        let term2 = (-b - sqrtTerm) / denom
+        return (term1, term2)
+    }
 }
 

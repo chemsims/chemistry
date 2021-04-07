@@ -93,6 +93,7 @@ struct SolubleReactionEquation {
     }
 
     // Unit change for forward reaction
+    // TODO - change this to use quadratic equation solver
     private static func getUnitChange(
         initialConcentration: SoluteValues<CGFloat>,
         equilibriumConstant: CGFloat

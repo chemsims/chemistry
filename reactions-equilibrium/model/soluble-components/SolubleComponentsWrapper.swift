@@ -22,11 +22,22 @@ protocol SolubleComponentsWrapper {
     var timing: ReactionTiming { get }
 
     var counts: SoluteContainer { get set }
+
+    var ph: Equation { get }
+    var solubility: Equation { get }
 }
 
 extension SolubleComponentsWrapper {
     mutating func reset() {
         counts.reset()
+    }
+
+    var ph: Equation {
+        ConstantEquation(value: SolubleReactionSettings.startingPh)
+    }
+
+    var solubility: Equation {
+        makeSolubilityEquation(timing: timing)
     }
 }
 
@@ -129,10 +140,16 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
     var components: SolubilityComponents {
         underlyingPrevious.components
     }
+}
 
-    private var extraDt: CGFloat {
-        counts.enteredWaterFraction * (timing.end - timing.equilibrium)
-    }
+private func makeSolubilityEquation(timing: ReactionTiming) -> Equation {
+    let saturated = SolubleReactionSettings.saturatedSolubility
+    let superSaturated = SolubleReactionSettings.superSaturatedSolubility
+    return SwitchingEquation(
+        thresholdX: timing.equilibrium,
+        underlyingLeft: LinearEquation(x1: timing.start, y1: 0, x2: timing.equilibrium, y2: saturated),
+        underlyingRight: LinearEquation(x1: timing.equilibrium, y1: saturated, x2: timing.end, y2: superSaturated)
+    ).upTo(superSaturated)
 }
 
 struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
@@ -247,6 +264,20 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
 
     let finalColor = RGB.saturatedLiquid
 
+    var ph: Equation {
+        LinearEquation(
+            x1: timing.start,
+            y1: SolubleReactionSettings.startingPh,
+            x2: timing.equilibrium,
+            y2: SolubleReactionSettings.phForAcidSaturation
+        )
+        .atLeast(SolubleReactionSettings.phForAcidSaturation)
+    }
+
+    var solubility: Equation {
+        ConstantEquation(value: SolubleReactionSettings.superSaturatedSolubility)
+    }
+
     private var currentB0: CGFloat {
         prevEquilibriumB - (counts.dissolvedFraction * (prevEquilibriumB - minB0))
     }
@@ -264,42 +295,3 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
     }
 }
 
-struct RunAcidReactionComponentsWrapper: SolubleComponentsWrapper {
-
-    init(previous: SolubleComponentsWrapper, timing: ReactionTiming) {
-        self.underlyingPrevious = previous
-        self.timing = timing
-        self.counts = previous.counts
-    }
-
-    var previous: SolubleComponentsWrapper? {
-        underlyingPrevious
-    }
-    private let underlyingPrevious: SolubleComponentsWrapper
-    let timing: ReactionTiming
-    var counts: SoluteContainer
-
-    mutating func soluteEnteredWater(_ soluteType: SoluteType) {
-
-    }
-
-    mutating func soluteDissolved(_ soluteType: SoluteType) {
-
-    }
-
-    mutating func soluteEmitted(_ soluteType: SoluteType) {
-
-    }
-
-    var components: SolubilityComponents {
-        underlyingPrevious.components
-    }
-
-    let deltaTime: CGFloat = 0
-
-    var initialColor: RGB {
-        underlyingPrevious.initialColor
-    }
-
-    let finalColor: RGB = .saturatedLiquid
-}

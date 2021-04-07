@@ -81,10 +81,10 @@ private struct SolubilityRightStack: View {
                 )
             Spacer()
             SolubilityPhChart(
-                curve: model.phCurve.curve,
-                startPh: model.phCurve.startPh,
-                ph: model.phCurve.ph,
-                solubility: model.phCurve.solubility,
+                curve: SolubleReactionSettings.PhCurve.curve,
+                startPh: SolubleReactionSettings.startingPh,
+                ph: model.componentsWrapper.ph,
+                solubility: model.componentsWrapper.solubility,
                 currentTime: model.currentTime,
                 lineWidth: settings.common.chartSettings.layout.lineWidth,
                 indicatorRadius: settings.common.chartSettings.headRadius,

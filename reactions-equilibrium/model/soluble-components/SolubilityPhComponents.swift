@@ -5,54 +5,10 @@
 import SwiftUI
 import ReactionsCore
 
-struct SolubilityPhComponents {
-
-    let curve: SolubilityChartEquation
-    let timing: ReactionTiming
-
-    var startPh: CGFloat {
-        0.85
-    }
-
-    var ph: Equation {
-        ConstantEquation(value: startPh)
-    }
-
-    var solubility: Equation {
-        SwitchingEquation(
-            thresholdX: timing.equilibrium,
-            underlyingLeft: notSaturatedSolubility,
-            underlyingRight: saturatedSolubility
-        )
-    }
-
-    private var notSaturatedSolubility: Equation {
-        EquilibriumReactionEquation(
-            t1: timing.start,
-            c1: 0,
-            t2: timing.end,
-            c2: curve.getY(at: startPh)
-        )
-    }
-
-    private var saturatedSolubility: Equation {
-        LinearEquation(
-            x1: timing.equilibrium,
-            y1: saturatedPh,
-            x2: timing.end,
-            y2: min(0.9, 1.5 * saturatedPh)
-        )
-    }
-
-    private var saturatedPh: CGFloat {
-        curve.getY(at: startPh)
-    }
-
-}
-
 struct SolubilityChartEquation: Equation {
 
-    private let underlying: Equation
+    private let underlyingLeft: QuadraticEquation
+    private let underlyingRight: QuadraticEquation
 
     let zeroPhSolubility: CGFloat
     let maxPhSolubility: CGFloat
@@ -72,20 +28,40 @@ struct SolubilityChartEquation: Equation {
         self.phAtMinSolubility = phAtMinSolubility
 
         let parabola = CGPoint(x: phAtMinSolubility, y: minSolubility)
-        self.underlying = SwitchingEquation(
+        self.underlyingLeft = QuadraticEquation(
+            parabola: parabola,
+            through: CGPoint(x: 0, y: zeroPhSolubility)
+        )
+        self.underlyingRight = QuadraticEquation(
+            parabola: parabola,
+            through: CGPoint(x: 1, y: maxPhSolubility)
+        )
+    }
+
+    private var underlying: Equation {
+        SwitchingEquation(
             thresholdX: phAtMinSolubility,
-            underlyingLeft: QuadraticEquation(
-                parabola: parabola,
-                through: CGPoint(x: 0, y: zeroPhSolubility)
-            ),
-            underlyingRight: QuadraticEquation(
-                parabola: parabola,
-                through: CGPoint(x: 1, y: maxPhSolubility)
-            )
+            underlyingLeft: underlyingLeft,
+            underlyingRight: underlyingRight
         )
     }
 
     func getY(at x: CGFloat) -> CGFloat {
         underlying.getY(at: x)
+    }
+
+    func getLeftHandPh(for solubility: CGFloat) -> CGFloat? {
+        func isValid(_ result: CGFloat) -> Bool {
+            result > 0 && result < phAtMinSolubility
+        }
+
+        return underlyingLeft.getX(for: solubility).flatMap { results in
+            if isValid(results.0) {
+                return results.0
+            } else if isValid(results.1) {
+                return results.1
+            }
+            return nil
+        }
     }
 }

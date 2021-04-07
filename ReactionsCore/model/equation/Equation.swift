@@ -84,3 +84,44 @@ public struct OperatorEquation: Equation {
         op(lhs.getY(at: x), rhs.getY(at: x))
     }
 }
+
+public struct BoundEquation: Equation {
+    let underlying: Equation
+    let lowerBound: CGFloat?
+    let upperBound: CGFloat?
+
+    public init(
+        underlying: Equation,
+        lowerBound: CGFloat?,
+        upperBound: CGFloat?
+    ) {
+        precondition(
+            lowerBound.flatMap { lb in upperBound.map { ub in ub >= lb }} ?? true,
+            "Cannot create bounded equation when upper bound is smaller than lower bound"
+        )
+        self.underlying = underlying
+        self.lowerBound = lowerBound
+        self.upperBound = upperBound
+    }
+
+    public func getY(at x: CGFloat) -> CGFloat {
+        let value = underlying.getY(at: x)
+        let withLowerBound = lowerBound.map { max($0, value) } ?? value
+        return upperBound.map { min($0, withLowerBound) } ?? withLowerBound
+    }
+}
+
+extension Equation {
+    public func within(min: CGFloat, max: CGFloat) -> Equation {
+        BoundEquation(underlying: self, lowerBound: min, upperBound: max)
+    }
+
+    public func upTo(_ max: CGFloat) -> Equation {
+        BoundEquation(underlying: self, lowerBound: nil, upperBound: max)
+    }
+
+    public func atLeast(_ min: CGFloat) -> Equation {
+        BoundEquation(underlying: self, lowerBound: min, upperBound: nil)
+    }
+
+}

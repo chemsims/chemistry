@@ -30,7 +30,8 @@ extension BinaryFloatingPoint {
 
 extension Comparable {
     public func within(min: Self, max: Self) -> Self {
-        Swift.min(max, Swift.max(min, self))
+        precondition(max >= min, "Cannot check bounds when max is smaller than min")
+        return Swift.min(max, Swift.max(min, self))
     }
 }
 
