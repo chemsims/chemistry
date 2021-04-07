@@ -51,10 +51,19 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
 }
 
 enum BeakerSoluteState: Equatable {
+    case none
     case addingSolute(type: SoluteType, clearPrevious: Bool)
     case addingSaturatedPrimary
     case dissolvingSuperSaturatedPrimary
     case completedSuperSaturatedReaction
+    case demoReaction
+
+    var isAddingNonSaturatedSolute: Bool  {
+        if case .addingSolute = self {
+            return true
+        }
+        return false
+    }
 
     var soluteType: SoluteType {
         switch self {
@@ -65,7 +74,7 @@ enum BeakerSoluteState: Equatable {
     }
 }
 
-class SKSolubleBeakerScene: SKScene {
+private class SKSolubleBeakerScene: SKScene {
 
     var soluteWidth: CGFloat
     var waterHeight: CGFloat
@@ -120,6 +129,7 @@ class SKSolubleBeakerScene: SKScene {
 
         let waterRect = CGRect(x: 0, y: 0, width: size.width, height: waterHeight)
         let water = SKShapeNode(rect: waterRect)
+        water.strokeColor = .clear
         let waterPhysics = SKPhysicsBody(edgeLoopFrom: waterRect)
         waterPhysics.categoryBitMask = Category.water
         waterPhysics.collisionBitMask = Category.ion
@@ -141,12 +151,18 @@ class SKSolubleBeakerScene: SKScene {
         node.physicsBody?.categoryBitMask = Category.solute
         node.physicsBody?.mass = 1
 
-        if case .addingSolute = soluteState {
+        if soluteState.isAddingNonSaturatedSolute || soluteState == .demoReaction {
             node.willDissolve = true
-            let action = SKAction.run { [weak self] in
-                self?.addIons(at: node.position.offset(dx: sideLength, dy: 0))
-                node.dissolve()
-                self?.onDissolve(node.soluteType)
+            let action = SKAction.run { [weak self, weak node] in
+                guard let strongSelf = self, let strongNode = node else {
+                    return
+                }
+
+                strongNode.dissolve()
+                strongSelf.onDissolve(strongNode.soluteType)
+                if strongSelf.soluteState == .demoReaction {
+                    strongSelf.addIons(at: strongNode.position.offset(dx: sideLength, dy: 0))
+                }
             }
             let delay = SKAction.wait(forDuration: 2)
             self.run(SKAction.sequence([delay, action]))
@@ -223,6 +239,8 @@ class SKSolubleBeakerScene: SKScene {
             endSuperSaturatedReaction()
         case (_, .dissolvingSuperSaturatedPrimary):
             cancelSaturatedReaction()
+        case (_, .demoReaction):
+            cleanupDemoReaction()
         default:
             break
         }
@@ -266,6 +284,14 @@ class SKSolubleBeakerScene: SKScene {
 
     private func cancelSaturatedReaction() {
         children.forEach { $0.removeAction(forKey: saturatedReactionKey) }
+    }
+
+    private func cleanupDemoReaction() {
+        for child in children {
+            if child is SKSoluteNode || child is SKIonNode {
+                child.removeFromParent()
+            }
+        }
     }
 
     private func runOnSolute(_ f: (SKSoluteNode) -> Void) {

@@ -12,16 +12,16 @@ class SolubilityNavigationModel {
         NavigationModel(
             model: model,
             states: [
-//                SetStatement(statement: statements.intro),
-//                SetStatement(statement: statements.explainPrecipitationReactions),
-//                SetStatement(statement: statements.explainSolubility1),
-//                SetStatement(statement: statements.explainSolubility2),
-//                ShowRecapQuotient(),
-//                ShowCrossedOutOldQuotient(),
-//                SetStatement(statement: statements.explainQEquation2),
-//                ShowCorrectQuotient(),
-//                SetStatement(statement: statements.explainKspRatio2),
-//                SetWaterLevel(),
+                SetStatement(statement: statements.intro),
+                SetStatement(statement: statements.explainPrecipitationReactions),
+                SetStatement(statement: statements.explainSolubility1),
+                SetStatement(statement: statements.explainSolubility2),
+                ShowRecapQuotient(),
+                ShowCrossedOutOldQuotient(),
+                SetStatement(statement: statements.explainQEquation2),
+                ShowCorrectQuotient(),
+                StopDemo(),
+                SetWaterLevel(),
                 AddSolute(statement: statements.instructToAddSolute),
                 ShowSaturatedSolution(statement: statements.primaryEquilibriumReached),
                 AddSoluteToSaturatedBeaker(),
@@ -105,14 +105,45 @@ private class ShowCrossedOutOldQuotient: SolubilityScreenState {
 }
 
 private class ShowCorrectQuotient: SolubilityScreenState {
+
+    private let catalystCount = 4
+    private let catalystDelay: TimeInterval = 1
+
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.explainKspRatio1
+        model.beakerSoluteState = .demoReaction
         withAnimation(.easeOut(duration: 0.3)) {
             model.equationState = .showCorrectQuotientNotFilledIn
         }
+    }
 
+    override func delayedStates(model: SolubilityViewModel) -> [DelayedState<SolubilityScreenState>] {
+        let addSoluteState: DelayedState<SolubilityScreenState> = DelayedState(
+            state: AutoAddSolute(),
+            delay: 1
+        )
+        let count = 4
+        return (0..<count).map { _ in addSoluteState }
+    }
+
+    private class AutoAddSolute: SolubilityScreenState {
+        override func apply(on model: SolubilityViewModel) {
+            model.shakingModel.shouldAddParticle = true
+        }
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        model.beakerSoluteState = .none
     }
 }
+
+private class StopDemo: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = statements.explainKspRatio2
+        model.beakerSoluteState = .none
+    }
+}
+
 
 private class SetWaterLevel: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
