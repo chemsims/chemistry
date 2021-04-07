@@ -23,8 +23,9 @@ class SKIonNode: SKNode {
         let physics = SKPhysicsBody(circleOfRadius: radius)
         physics.affectedByGravity = false
         physics.linearDamping = 0
+        physics.angularDamping = 0
         physics.mass = 0.5
-        physics.charge = charge.isPositive ? 0.2 : -0.2
+        physics.charge = charge.isPositive ? 0.4 : -0.4
 
         self.physicsBody = physics
         addChild(node)

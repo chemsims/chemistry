@@ -114,7 +114,7 @@ class SKSolubleBeakerScene: SKScene {
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
 
         let field = SKFieldNode.magneticField()
-        field.strength = 0.5
+        field.strength = 0.75
         addChild(field)
         backgroundColor = .clear
 
@@ -164,11 +164,7 @@ class SKSolubleBeakerScene: SKScene {
         let radius = soluteWidth / 4
         let ion = SKIonNode(radius: radius, charge: charge)
 
-        func randomOffset() -> CGFloat {
-            0
-//            CGFloat.random(in: -radius...radius)
-        }
-        ion.position = CGPoint(x: position.x + randomOffset(), y: position.y + randomOffset())
+        ion.position = CGPoint(x: position.x, y: position.y)
 
         ion.physicsBody?.categoryBitMask = Category.ion
         ion.physicsBody?.collisionBitMask = Category.water | Category.solute
@@ -179,8 +175,13 @@ class SKSolubleBeakerScene: SKScene {
 
         addChild(ion)
 
-        func randomImpulse() -> CGFloat { CGFloat.random(in: -50...50) }
-        ion.physicsBody?.applyImpulse(CGVector(dx: randomImpulse(), dy: randomImpulse()))
+        func randomImpulse() -> CGFloat {
+            CGFloat.random(in: 25...50) * (Bool.random() ? 1 : -1)
+
+        }
+        let impulse = CGVector(dx: randomImpulse(), dy: randomImpulse())
+        let action = SKAction.applyImpulse(impulse, duration: 0.5)
+        ion.run(action)
     }
 
     private func hideSolute() {
