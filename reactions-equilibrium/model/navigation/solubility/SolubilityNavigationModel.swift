@@ -207,10 +207,16 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
         model.statement = statements.instructToAddSaturatedSolute
         model.beakerSoluteState = .addingSaturatedPrimary
         withAnimation(.easeOut(duration: 0.5)) {
+//            model.currentTime = model.timing.equilibrium
             model.inputState = .addSaturatedSolute
             model.activeSolute = .primary
         }
         model.startShaking()
+    }
+
+    override func reapply(on model: SolubilityViewModel) {
+//        model.componentsWrapper.reset()
+        apply(on: model)
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -298,6 +304,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
     }
 
     override func reapply(on model: SolubilityViewModel) {
+        model.componentsWrapper.reset()
         doApply(on: model, setWrapper: false)
     }
 

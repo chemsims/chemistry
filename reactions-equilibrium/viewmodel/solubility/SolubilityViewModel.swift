@@ -83,7 +83,23 @@ final class SolubilityViewModel: ObservableObject {
     let shakingModel: SoluteBeakerShakingViewModel
 
     func next() {
-        navigation?.next()
+        doGoNext(force: false)
+    }
+
+    private func doGoNext(force: Bool) {
+        if force {
+            navigation?.next()
+        } else {
+            switch inputState {
+            case .addSaturatedSolute,
+                 .addSolute(type: _):
+                if componentsWrapper.shouldGoNext {
+                    navigation?.next()
+                }
+                break;
+            default: navigation?.next()
+            }
+        }
     }
 
     func back() {
@@ -110,7 +126,7 @@ final class SolubilityViewModel: ObservableObject {
 
     private func goNextIfNeeded() {
         if componentsWrapper.shouldGoNext {
-            next()
+            doGoNext(force: true)
         }
     }
 
