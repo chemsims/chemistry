@@ -62,6 +62,18 @@ class SolubilityViewModel: ObservableObject {
         self.soluteCounts.maxAllowed = self.soluteToAddForSaturation
     }
 
+    var phCurve: SolubilityPhComponents {
+        SolubilityPhComponents(
+            curve: SolubilityChartEquation(
+                zeroPhSolubility: 0.9,
+                maxPhSolubility: 0.95,
+                minSolubility: 0.1,
+                phAtMinSolubility: 0.4
+            ),
+            timing: timing
+        )
+    }
+
     var timing: ReactionTiming {
         didSet {
             setComponents()

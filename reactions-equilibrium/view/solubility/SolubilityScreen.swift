@@ -51,7 +51,7 @@ private struct SolubilityScreenWithSettings: View {
 
             SolubilityRightStack(
                 model: model,
-                settings: settings.common
+                settings: settings
             )
         }
     }
@@ -60,7 +60,7 @@ private struct SolubilityScreenWithSettings: View {
 private struct SolubilityRightStack: View {
 
     @ObservedObject var model: SolubilityViewModel
-    let settings: AqueousScreenLayoutSettings
+    let settings: SolubilityScreenLayoutSettings
 
     var body: some View {
         ZStack {
@@ -80,12 +80,23 @@ private struct SolubilityRightStack: View {
                     height: settings.equationHeight
                 )
             Spacer()
+            SolubilityPhChart(
+                curve: model.phCurve.curve,
+                startPh: model.phCurve.startPh,
+                endPh: model.phCurve.endPh,
+                endSolubility: model.phCurve.endSolubility,
+                currentTime: model.currentTime,
+                lineWidth: settings.common.chartSettings.layout.lineWidth
+            )
+            .frame(width: settings.phPlotWidth, height: settings.phPlotHeight)
+            .font(.system(size: settings.phPlotFontSize))
+            Spacer()
             BeakyBox(
                 statement: model.statement,
                 next: model.next,
                 back: model.back,
                 nextIsDisabled: false,
-                settings: settings.beakySettings
+                settings: settings.common.beakySettings
             )
         }
     }
@@ -96,7 +107,7 @@ private struct SolubilityRightStack: View {
             SolubilityQuotientRecapEquations()
                 .frame(width: settings.equationWidth, height: settings.equationHeight)
             Spacer()
-                .frame(height: 1.1 * settings.beakyTotalHeight)
+                .frame(height: 1.1 * settings.common.beakyTotalHeight)
         }
     }
 }
@@ -127,6 +138,18 @@ struct SolubilityScreenLayoutSettings {
 
     var equationHeight: CGFloat {
         common.equationHeight
+    }
+
+    var phPlotWidth: CGFloat {
+        0.8 * common.equationWidth
+    }
+
+    var phPlotHeight: CGFloat {
+        1.2 * equationHeight
+    }
+
+    var phPlotFontSize: CGFloat {
+        common.chartSelectionFontSize
     }
 
 }
