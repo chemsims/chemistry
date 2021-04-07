@@ -36,6 +36,7 @@ final class SolubilityViewModel: ObservableObject {
     @Published var activeSolute: SoluteType?
 
     @Published var currentTime: CGFloat = 0
+    @Published var waterColor: Color = RGB.beakerLiquid.color
     
     @Published var beakerSoluteState = BeakerSoluteState.addingSolute(type: .primary, clearPrevious: false)
 
@@ -62,8 +63,16 @@ final class SolubilityViewModel: ObservableObject {
 
     func setTime(to newTime: CGFloat) {
         let dt = newTime - currentTime
+        let newColor = color(at: newTime)
         withAnimation(.linear(duration: abs(Double(dt)))) {
             currentTime = newTime
+            waterColor = newColor
+        }
+    }
+
+    func setColor(to newColor: Color) {
+        withAnimation(.linear(duration: 0.5)) {
+            waterColor = newColor
         }
     }
 
@@ -126,14 +135,15 @@ final class SolubilityViewModel: ObservableObject {
         return equation.getY(at: waterHeightFactor).roundedInt()
     }
 
-    var waterColor: Color {
+    private func color(at time: CGFloat) -> Color {
         RGBEquation(
             initialX: timing.start,
             finalX: timing.equilibrium,
             initialColor: componentsWrapper.initialColor,
             finalColor: componentsWrapper.finalColor
-        ).getRgb(at: currentTime).color
+        ).getRgb(at: time).color
     }
+
 }
 
 struct ReactionTimingColor {

@@ -134,6 +134,7 @@ private class AddSolute: SolubilityScreenState {
             model.currentTime = 0
             model.inputState = .addSolute(type: .primary)
             model.activeSolute = nil
+            model.waterColor = model.componentsWrapper.initialColor.color
         }
         model.equationState = .showCorrectQuotientFilledIn
         model.statement = statement
@@ -141,11 +142,17 @@ private class AddSolute: SolubilityScreenState {
         model.stopShaking()
     }
 
+    override func reapply(on model: SolubilityViewModel) {
+        model.componentsWrapper.reset()
+        apply(on: model)
+    }
+
     override func unapply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = 0
             model.inputState = .none
             model.activeSolute = nil
+            model.waterColor = model.componentsWrapper.initialColor.color
         }
         model.componentsWrapper.reset()
     }
@@ -233,6 +240,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
             model.currentTime = 0
             model.inputState = .none
             model.activeSolute = nil
+            model.waterColor = model.componentsWrapper.initialColor.color
         }
         model.beakerSoluteState = .addingSolute(type: .commonIon, clearPrevious: true)
         model.stopShaking()
@@ -241,6 +249,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
     override func unapply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = model.timing.end
+            model.waterColor = model.componentsWrapper.finalColor.color
         }
     }
 }
@@ -252,6 +261,9 @@ private class AddCommonIonSolute: SolubilityScreenState {
 
     override func reapply(on model: SolubilityViewModel) {
         model.componentsWrapper.reset()
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.waterColor = model.componentsWrapper.initialColor.color
+        }
         doApply(on: model, setComponents: false)
     }
 
@@ -262,10 +274,12 @@ private class AddCommonIonSolute: SolubilityScreenState {
         if setComponents {
             model.componentsWrapper = CommonIonComponentsWrapper(
                 timing: SolubleReactionSettings.firstReactionTiming,
-                previous: model.componentsWrapper
+                previous: model.componentsWrapper,
+                setColor: model.setColor
             )
         }
     }
+
 
     override func unapply(on model: SolubilityViewModel) {
         if let previous = model.componentsWrapper.previous {
@@ -288,6 +302,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
             model.currentTime = 0
             model.inputState = .addSolute(type: .primary)
             model.activeSolute = nil
+            model.waterColor = model.componentsWrapper.initialColor.color
         }
         model.equationState = .showCorrectQuotientFilledIn
         model.statement = statements.instructToAddPrimarySolutePostCommonIon
@@ -342,6 +357,9 @@ private class AddAcidSolute: SolubilityScreenState {
 
     override func reapply(on model: SolubilityViewModel) {
         model.componentsWrapper.reset()
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.waterColor = model.componentsWrapper.initialColor.color
+        }
         doApply(on: model, setComponents: false)
     }
 
@@ -352,7 +370,8 @@ private class AddAcidSolute: SolubilityScreenState {
         if setComponents {
             model.componentsWrapper = AddAcidComponentsWrapper(
                 previous: model.componentsWrapper,
-                timing: SolubleReactionSettings.secondReactionTiming
+                timing: SolubleReactionSettings.secondReactionTiming,
+                setColor: model.setColor
             )
         }
     }
@@ -361,6 +380,12 @@ private class AddAcidSolute: SolubilityScreenState {
         if let previous = model.componentsWrapper.previous {
             model.componentsWrapper = previous
         }
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.waterColor = model.componentsWrapper.finalColor.color
+            model.activeSolute = nil
+            model.inputState = .none
+        }
+        model.stopShaking()
     }
 }
 
@@ -376,12 +401,14 @@ private class RunAcidReaction: SolubilityScreenState {
         }
         withAnimation(.linear(duration: Double(dt))) {
             model.currentTime = model.timing.end
+            model.waterColor = model.componentsWrapper.finalColor.color
         }
     }
 
     override func unapply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.start
+            model.waterColor = model.componentsWrapper.initialColor.color
         }
     }
 }
@@ -391,7 +418,14 @@ private class EndAcidReaction: SolubilityScreenState {
         model.statement = statements.acidEquilibriumReached
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.end * 1.001
+            model.waterColor = model.componentsWrapper.finalColor.incremented(by: 1).color
         }
         model.beakerSoluteState = .completedSuperSaturatedReaction
+    }
+}
+
+private extension RGB {
+    func incremented(by delta: Double) -> RGB {
+        RGB(r: r + delta, g: g + delta, b: b + delta)
     }
 }

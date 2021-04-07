@@ -139,9 +139,11 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
     let timing: ReactionTiming
     var counts: SoluteContainer
-    init(timing: ReactionTiming, previous: SolubleComponentsWrapper?) {
+    let setColor: (Color) -> Void
+    init(timing: ReactionTiming, previous: SolubleComponentsWrapper?, setColor: @escaping (Color) -> Void) {
         self.timing = timing
         self.previous = previous
+        self.setColor = setColor
         self.counts = SoluteContainer(
             maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd
         )
@@ -153,6 +155,7 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
     mutating func soluteDissolved(_ soluteType: SoluteType) {
         counts.didDissolve()
+        setColor(initialColor.color)
     }
 
     mutating func soluteEmitted(_ soluteType: SoluteType) {
@@ -191,14 +194,16 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
 struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
 
-    init(previous: SolubleComponentsWrapper, timing: ReactionTiming) {
+    init(previous: SolubleComponentsWrapper, timing: ReactionTiming, setColor: @escaping (Color) -> Void) {
         self.counts = SoluteContainer(maxAllowed: SolubleReactionSettings.acidSoluteParticlesToAdd)
         self.underlyingPrevious = previous
         self.timing = timing
+        self.setColor = setColor
     }
 
     var counts: SoluteContainer
     let timing: ReactionTiming
+    private let setColor: (Color) -> Void
 
     mutating func soluteEnteredWater(_ soluteType: SoluteType) {
         counts.didEnterWater()
@@ -206,6 +211,7 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
 
     mutating func soluteDissolved(_ soluteType: SoluteType) {
         counts.didDissolve()
+        setColor(initialColor.color)
     }
 
     mutating func soluteEmitted(_ soluteType: SoluteType) {
