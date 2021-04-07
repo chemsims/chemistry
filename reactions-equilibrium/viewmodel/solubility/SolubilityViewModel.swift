@@ -277,6 +277,21 @@ struct ColorInterpolator {
     }
 }
 
+struct RGBEquation {
+
+    let initialX: CGFloat
+    let finalX: CGFloat
+    let initialColor: RGB
+    let finalColor: RGB
+
+    func getRgb(at x: CGFloat) -> RGB {
+        let fraction = abs((x - initialX) / (finalX - initialX))
+        let boundFraction = fraction.within(min: 0, max: 1)
+        return RGB.interpolate(initialColor, finalColor, fraction: Double(boundFraction))
+    }
+    
+}
+
 class SoluteContainer {
 
     var maxAllowed: Int
@@ -291,6 +306,7 @@ class SoluteContainer {
 
     private var emitted: Int = 0
     private(set) var dissolved: Int = 0
+    private var enteredWater: Int = 0
 
     func didEmit() {
         emitted += 1
@@ -298,6 +314,10 @@ class SoluteContainer {
 
     func didDissolve() {
         dissolved += 1
+    }
+
+    func didEnterWater() {
+        enteredWater += 1
     }
 
     func reset() {
@@ -315,6 +335,10 @@ class SoluteContainer {
 
     var dissolvedFraction: CGFloat {
         CGFloat(dissolved) / CGFloat(maxAllowed)
+    }
+
+    var enteredWaterFraction: CGFloat {
+        CGFloat(enteredWater) / CGFloat(maxAllowed)
     }
 }
 
