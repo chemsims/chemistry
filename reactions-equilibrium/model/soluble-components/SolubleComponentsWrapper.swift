@@ -81,15 +81,6 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     }
     let finalColor = RGB.saturatedLiquid
 
-//    var liquidColor: RGBEquation {
-//        RGBEquation(
-//            initialX: timing.start,
-//            finalX: timing.equilibrium,
-//            initialColor: .beakerLiquid,
-//            finalColor: .saturatedLiquid
-//        )
-//    }
-
     var prevComponents: SolubilityComponents? {
         previous?.components
     }
@@ -139,10 +130,6 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
         underlyingPrevious.components
     }
 
-//    var liquidColor: RGBEquation {
-//        underlyingPrevious.reactionColor
-//    }
-
     private var extraDt: CGFloat {
         counts.enteredWaterFraction * (timing.end - timing.equilibrium)
     }
@@ -152,9 +139,12 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
     let timing: ReactionTiming
     var counts: SoluteContainer
-    init(timing: ReactionTiming) {
+    init(timing: ReactionTiming, previous: SolubleComponentsWrapper?) {
         self.timing = timing
-        self.counts = SoluteContainer(maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd)
+        self.previous = previous
+        self.counts = SoluteContainer(
+            maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd
+        )
     }
 
     mutating func soluteEnteredWater(_ soluteType: SoluteType) {
@@ -169,7 +159,7 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
         counts.didEmit()
     }
 
-    let previous: SolubleComponentsWrapper? = nil
+    let previous: SolubleComponentsWrapper?
 
     private let maxB = SolubleReactionSettings.maxInitialBConcentration
 

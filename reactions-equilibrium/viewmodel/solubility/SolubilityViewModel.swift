@@ -217,53 +217,10 @@ final class SolubilityViewModel: ObservableObject {
             initialColor: componentsWrapper.initialColor,
             finalColor: componentsWrapper.finalColor
         ).getRgb(at: currentTime).color
-//        switch reactionPhase {
-//        case .primarySolute: return primarySoluteColor
-//        case .commonIon: return commonIonReactionColor
-//        case .acidity: return acidIonReactionColor
-//        }
     }
 
     var reactionPhase: SolubleReactionPhase = .primarySolute
 
-//    private var primarySoluteColor: Color {
-//        ReactionTimingColor(
-//            timing: timing,
-//            currentTime: currentTime,
-//            initialColor: .beakerLiquid,
-//            finalColor: .saturatedLiquid
-//        ).rgb.color
-//    }
-//
-//    private var commonIonReactionColor: Color {
-//        ReactionTimingColor(
-//            timing: timing,
-//            currentTime: currentTime,
-//            initialColor: ColorInterpolator(
-//                initialValue: 0,
-//                finalValue: SolubleReactionSettings.maxInitialBConcentration,
-//                currentValue: extraB0,
-//                initialColor: .beakerLiquid,
-//                finalColor: .maxCommonIonLiquid
-//            ).rgb,
-//            finalColor: .saturatedLiquid
-//        ).rgb.color
-//    }
-//
-//    private var acidIonReactionColor: Color {
-//        ReactionTimingColor(
-//            timing: timing,
-//            currentTime: currentTime,
-//            initialColor: ColorInterpolator(
-//                initialValue: components.previousEquation?.finalConcentration.value(for: .B) ?? 0,
-//                finalValue: 0,
-//                currentValue: components.initialConcentration.value(for: .B),
-//                initialColor: .saturatedLiquid,
-//                finalColor: .maxAcidLiquid
-//            ).rgb,
-//            finalColor: .saturatedLiquid
-//        ).rgb.color
-//    }
 }
 
 struct ReactionTimingColor {
