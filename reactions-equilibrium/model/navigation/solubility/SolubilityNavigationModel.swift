@@ -110,10 +110,30 @@ private class ShowCorrectQuotient: SolubilityScreenState {
     private let catalystDelay: TimeInterval = 1
 
     override func apply(on model: SolubilityViewModel) {
+        doApply(on: model, setComponents: true)
+    }
+
+
+    override func reapply(on model: SolubilityViewModel) {
+        model.componentsWrapper.reset()
+        doApply(on: model, setComponents: false)
+    }
+
+    private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
         model.statement = statements.explainKspRatio1
         model.beakerSoluteState = .demoReaction
+
         withAnimation(.easeOut(duration: 0.3)) {
             model.equationState = .showCorrectQuotientNotFilledIn
+        }
+
+        if setComponents {
+            model.componentsWrapper = DemoReactionComponentsWrapper(
+                maxCount: catalystCount,
+                previous: model.componentsWrapper,
+                timing: model.timing,
+                setColor: model.setColor
+            )
         }
     }
 
@@ -134,6 +154,12 @@ private class ShowCorrectQuotient: SolubilityScreenState {
 
     override func unapply(on model: SolubilityViewModel) {
         model.beakerSoluteState = .none
+        if let previous = model.componentsWrapper.previous {
+            model.componentsWrapper = previous
+        }
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.waterColor = RGB.beakerLiquid.color
+        }
     }
 }
 
@@ -141,6 +167,9 @@ private class StopDemo: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.explainKspRatio2
         model.beakerSoluteState = .none
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.waterColor = RGB.beakerLiquid.color
+        }
     }
 }
 

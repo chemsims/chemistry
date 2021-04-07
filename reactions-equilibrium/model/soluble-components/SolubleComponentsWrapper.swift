@@ -104,6 +104,57 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     }
 }
 
+struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
+    init(
+        maxCount: Int,
+        previous: SolubleComponentsWrapper?,
+        timing: ReactionTiming,
+        setColor: @escaping (Color) -> Void
+    ) {
+        self.counts = SoluteContainer(maxAllowed: maxCount)
+        self.previous = previous
+        self.timing = timing
+        self.setColor = setColor
+    }
+
+    var counts: SoluteContainer
+    let timing: ReactionTiming
+    let previous: SolubleComponentsWrapper?
+    let setColor: (Color) -> Void
+
+    mutating func soluteEmitted(_ soluteType: SoluteType) {
+        counts.didEmit()
+    }
+
+    mutating func soluteEnteredWater(_ soluteType: SoluteType) {
+        counts.didEnterWater()
+    }
+
+    mutating func soluteDissolved(_ soluteType: SoluteType) {
+        counts.didDissolve()
+        setColor(colorEquation.getRgb(at: CGFloat(counts.dissolved)).color)
+    }
+
+    var components: SolubilityComponents {
+        SolubilityComponents(
+            equilibriumConstant: 0.1,
+            initialConcentration: SoluteValues.constant(0),
+            startTime: timing.start,
+            equilibriumTime: timing.equilibrium,
+            previousEquation: previous?.components.equation
+        )
+    }
+
+    let initialColor: RGB = RGB.beakerLiquid
+    let finalColor: RGB = RGB.saturatedLiquid
+    let shouldGoNext: Bool = false
+
+    private var colorEquation: RGBEquation {
+        RGBEquation(initialX: 0, finalX: CGFloat(counts.maxAllowed), initialColor: initialColor, finalColor: finalColor)
+    }
+
+}
+
 struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
 
     init(previous: SolubleComponentsWrapper, setTime: @escaping (CGFloat) -> Void) {

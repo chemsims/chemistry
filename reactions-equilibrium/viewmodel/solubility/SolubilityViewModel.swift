@@ -117,7 +117,7 @@ final class SolubilityViewModel: ObservableObject {
     }
 
     func onDissolve(soluteType: SoluteType) {
-        guard inputState == .addSolute(type: soluteType) else {
+        guard inputState == .addSolute(type: soluteType) || beakerSoluteState == .demoReaction else {
             return
         }
         componentsWrapper.soluteDissolved(soluteType)
