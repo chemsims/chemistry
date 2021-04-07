@@ -39,6 +39,9 @@ private struct SolubilityScreenWithSettings: View {
                 shakeModel: model.shakingModel,
                 settings: settings
             )
+            .padding(.leading, settings.common.menuSize)
+
+            Spacer()
 
             ChartStack(
                 model: model,
@@ -79,7 +82,9 @@ private struct SolubilityRightStack: View {
                     width: settings.equationWidth,
                     height: settings.equationHeight
                 )
+
             Spacer()
+
             SolubilityPhChart(
                 curve: SolubleReactionSettings.PhCurve.curve,
                 startPh: SolubleReactionSettings.startingPh,
@@ -93,7 +98,10 @@ private struct SolubilityRightStack: View {
             )
             .frame(width: settings.phPlotWidth, height: settings.phPlotHeight)
             .font(.system(size: settings.phPlotFontSize))
+            .opacity(model.equationState.doShowCorrectQuotient ? 1 : 0)
+
             Spacer()
+
             BeakyBox(
                 statement: model.statement,
                 next: model.next,
