@@ -211,7 +211,12 @@ final class SolubilityViewModel: ObservableObject {
 
 
     var waterColor: Color {
-        componentsWrapper.liquidColor.getRgb(at: currentTime).color
+        RGBEquation(
+            initialX: timing.start,
+            finalX: timing.equilibrium,
+            initialColor: componentsWrapper.initialColor,
+            finalColor: componentsWrapper.finalColor
+        ).getRgb(at: currentTime).color
 //        switch reactionPhase {
 //        case .primarySolute: return primarySoluteColor
 //        case .commonIon: return commonIonReactionColor
@@ -311,7 +316,6 @@ struct RGBEquation {
         let boundFraction = fraction.within(min: 0, max: 1)
         return RGB.interpolate(initialColor, finalColor, fraction: Double(boundFraction))
     }
-    
 }
 
 struct SoluteContainer {

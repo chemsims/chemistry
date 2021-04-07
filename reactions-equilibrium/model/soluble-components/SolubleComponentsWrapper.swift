@@ -16,7 +16,8 @@ protocol SolubleComponentsWrapper {
 
     var components: SolubilityComponents { get }
 
-    var liquidColor: RGBEquation { get }
+    var initialColor: RGB { get }
+    var finalColor: RGB { get }
 
     var timing: ReactionTiming { get }
 
@@ -75,14 +76,19 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
         )
     }
 
-    var liquidColor: RGBEquation {
-        RGBEquation(
-            initialX: timing.start,
-            finalX: timing.equilibrium,
-            initialColor: .beakerLiquid,
-            finalColor: .saturatedLiquid
-        )
+    var initialColor: RGB {
+        previous?.finalColor ?? .beakerLiquid
     }
+    let finalColor = RGB.saturatedLiquid
+
+//    var liquidColor: RGBEquation {
+//        RGBEquation(
+//            initialX: timing.start,
+//            finalX: timing.equilibrium,
+//            initialColor: .beakerLiquid,
+//            finalColor: .saturatedLiquid
+//        )
+//    }
 
     var prevComponents: SolubilityComponents? {
         previous?.components
@@ -103,6 +109,14 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
         underlyingPrevious.timing
     }
     private let setTime: (CGFloat) -> Void
+
+    var initialColor: RGB {
+        underlyingPrevious.initialColor
+    }
+
+    var finalColor: RGB {
+        underlyingPrevious.finalColor
+    }
 
     mutating func soluteEmitted(_ soluteType: SoluteType) {
         counts.didEmit()
@@ -125,9 +139,9 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
         underlyingPrevious.components
     }
 
-    var liquidColor: RGBEquation {
-        underlyingPrevious.liquidColor
-    }
+//    var liquidColor: RGBEquation {
+//        underlyingPrevious.reactionColor
+//    }
 
     private var extraDt: CGFloat {
         counts.enteredWaterFraction * (timing.end - timing.equilibrium)
@@ -172,23 +186,17 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
         )
     }
 
-    var liquidColor: RGBEquation {
-        RGBEquation(
-            initialX: 0,
-            finalX: maxB,
-            initialColor: initialColor.getRgb(at: maxB * counts.dissolvedFraction),
-            finalColor: .saturatedLiquid
-        )
-    }
-
-    private var initialColor: RGBEquation {
+    var initialColor: RGB {
         RGBEquation(
             initialX: 0,
             finalX: maxB,
             initialColor: .beakerLiquid,
             finalColor: .maxCommonIonLiquid
-        )
+        ).getRgb(at: maxB * counts.dissolvedFraction)
     }
+
+    let finalColor = RGB.maxCommonIonLiquid
+
 }
 
 struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
@@ -232,15 +240,16 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
         )
     }
 
-    var liquidColor: RGBEquation {
+    var initialColor: RGB {
         RGBEquation(
             initialX: prevEquilibriumB,
             finalX: minB0,
             initialColor: .saturatedLiquid,
             finalColor: .maxAcidLiquid
-        )
-
+        ).getRgb(at: currentB0)
     }
+
+    let finalColor = RGB.saturatedLiquid
 
     private var currentB0: CGFloat {
         prevEquilibriumB - (counts.dissolvedFraction * (prevEquilibriumB - minB0))
@@ -292,12 +301,9 @@ struct RunAcidReactionComponentsWrapper: SolubleComponentsWrapper {
 
     let deltaTime: CGFloat = 0
 
-    var liquidColor: RGBEquation {
-        RGBEquation(
-            initialX: timing.start,
-            finalX: timing.equilibrium,
-            initialColor: underlyingPrevious.liquidColor.finalColor,
-            finalColor: .saturatedLiquid
-        )
+    var initialColor: RGB {
+        underlyingPrevious.initialColor
     }
+
+    let finalColor: RGB = .saturatedLiquid
 }
