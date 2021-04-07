@@ -81,6 +81,13 @@ class SKSolubleBeakerScene: SKScene {
 
     private let saturatedReactionKey = "soluteReactionKey"
 
+    struct Category {
+        static let water: UInt32 = 0b1
+        static let solute: UInt32 = 0b10
+        static let ion: UInt32 = 0b100
+    }
+
+
     init(
         size: CGSize,
         soluteWidth: CGFloat,
@@ -103,10 +110,21 @@ class SKSolubleBeakerScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     override func didMove(to view: SKView) {
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+
+        let field = SKFieldNode.magneticField()
+        field.strength = 0.5
+        addChild(field)
         backgroundColor = .clear
+
+        let waterRect = CGRect(x: 0, y: 0, width: size.width, height: waterHeight)
+        let water = SKShapeNode(rect: waterRect)
+        let waterPhysics = SKPhysicsBody(edgeLoopFrom: waterRect)
+        waterPhysics.categoryBitMask = Category.water
+        waterPhysics.collisionBitMask = Category.ion
+        water.physicsBody = waterPhysics
+        addChild(water)
     }
 
     func addParticle(at position: CGPoint) {
@@ -114,20 +132,55 @@ class SKSolubleBeakerScene: SKScene {
         let sideLength = (soluteWidth / 2) * factor
         let node = SKSoluteNode(sideLength: sideLength, soluteType: soluteState.soluteType)
         node.position = position.offset(dx: -sideLength, dy: 0)
+        node.zPosition = 1
 
         addChild(node)
 
-        node.physicsBody?.applyTorque(CGFloat.random(in: -0.01...0.01))
+        node.physicsBody?.applyTorque(CGFloat.random(in: -1...1))
+        node.physicsBody?.collisionBitMask = Category.solute | Category.ion
+        node.physicsBody?.categoryBitMask = Category.solute
+        node.physicsBody?.mass = 1
 
         if case .addingSolute = soluteState {
             node.willDissolve = true
-            let action = SKAction.run {
+            let action = SKAction.run { [weak self] in
+                self?.addIons(at: node.position.offset(dx: sideLength, dy: 0))
                 node.dissolve()
-                self.onDissolve(node.soluteType)
+                self?.onDissolve(node.soluteType)
             }
             let delay = SKAction.wait(forDuration: 2)
             self.run(SKAction.sequence([delay, action]))
         }
+    }
+
+    private func addIons(at position: CGPoint) {
+        for _ in 0..<3 {
+            addIon(at: position, charge: .positive)
+            addIon(at: position, charge: .negative)
+        }
+    }
+
+    private func addIon(at position: CGPoint, charge: IonCharge) {
+        let radius = soluteWidth / 4
+        let ion = SKIonNode(radius: radius, charge: charge)
+
+        func randomOffset() -> CGFloat {
+            0
+//            CGFloat.random(in: -radius...radius)
+        }
+        ion.position = CGPoint(x: position.x + randomOffset(), y: position.y + randomOffset())
+
+        ion.physicsBody?.categoryBitMask = Category.ion
+        ion.physicsBody?.collisionBitMask = Category.water | Category.solute
+
+        ion.constraints = [
+            SKConstraint.positionX(SKRange(lowerLimit: 0, upperLimit: size.width), y: SKRange(lowerLimit: 0, upperLimit: waterHeight))
+        ]
+
+        addChild(ion)
+
+        func randomImpulse() -> CGFloat { CGFloat.random(in: -50...50) }
+        ion.physicsBody?.applyImpulse(CGVector(dx: randomImpulse(), dy: randomImpulse()))
     }
 
     private func hideSolute() {
