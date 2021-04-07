@@ -175,10 +175,6 @@ struct ReactionTimingColor {
     }
 }
 
-enum SolubleReactionPhase {
-    case primarySolute, commonIon, acidity
-}
-
 struct ColorInterpolator {
     let initialValue: CGFloat
     let finalValue: CGFloat
