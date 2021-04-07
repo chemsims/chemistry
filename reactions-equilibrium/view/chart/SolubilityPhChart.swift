@@ -12,7 +12,10 @@ struct SolubilityPhChart: View {
     let endPh: Equation
     let endSolubility: Equation
     let currentTime: CGFloat
+
     let lineWidth: CGFloat
+    let indicatorRadius: CGFloat
+    let haloRadius: CGFloat
 
     var body: some View {
         GeometryReader { geo in
@@ -23,6 +26,8 @@ struct SolubilityPhChart: View {
                 endSolubility: endSolubility,
                 currentTime: currentTime,
                 lineWidth: lineWidth,
+                indicatorRadius: indicatorRadius,
+                haloRadius: haloRadius,
                 width: geo.size.width,
                 height: geo.size.height
             )
@@ -39,6 +44,9 @@ private struct SolubilityChartWithGeometry: View {
     let currentTime: CGFloat
 
     let lineWidth: CGFloat
+    let indicatorRadius: CGFloat
+    let haloRadius: CGFloat
+
     let width: CGFloat
     let height: CGFloat
 
@@ -69,8 +77,17 @@ private struct SolubilityChartWithGeometry: View {
             .stroke(lineWidth: lineWidth)
 
             plotLines
+
+            plotIndicatorHead
         }
         .frame(width: plotWidth, height: plotHeight)
+    }
+
+    private var plotIndicatorHead: some View {
+        ZStack {
+            head(radius: haloRadius, color: Styling.primaryColorHalo)
+            head(radius: indicatorRadius, color: .orangeAccent)
+        }
     }
 
     private var plotLines: some View {
@@ -114,6 +131,19 @@ private struct SolubilityChartWithGeometry: View {
         )
     }
 
+    private func head(radius: CGFloat, color: Color) -> some View {
+        SolubilityPhIndicatorHead(
+            ph: endPh,
+            solubility: endSolubility,
+            currentTime: currentTime,
+            radius: radius,
+            solubilityAxis: solubilityAxis,
+            phAxis: phAxis
+        )
+        .foregroundColor(color)
+
+    }
+
     private var plotWidth: CGFloat {
         0.9 * width
     }
@@ -128,6 +158,34 @@ private struct SolubilityChartWithGeometry: View {
 
     private var xAxisHeight: CGFloat {
         height - plotHeight
+    }
+}
+
+private struct SolubilityPhIndicatorHead: Shape {
+
+    let ph: Equation
+    let solubility: Equation
+    var currentTime: CGFloat
+
+    let radius: CGFloat
+    let solubilityAxis: AxisPositionCalculations<CGFloat>
+    let phAxis: AxisPositionCalculations<CGFloat>
+
+
+    var animatableData: CGFloat {
+        get { currentTime }
+        set { currentTime = newValue }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        ChartIndicatorHead(
+            radius: radius,
+            equation: ConstantEquation(value: solubility.getY(at: currentTime)),
+            yAxis: solubilityAxis,
+            xAxis: phAxis,
+            x: ph.getY(at: currentTime),
+            offset: 0
+        ).path(in: rect)
     }
 }
 
@@ -183,7 +241,9 @@ struct SolubilityPhChart_Previews: PreviewProvider {
             endPh: ConstantEquation(value: 0.4),
             endSolubility: ConstantEquation(value: 0.75),
             currentTime: 0,
-            lineWidth: 1
+            lineWidth: 1,
+            indicatorRadius: 5,
+            haloRadius: 10
         )
         .frame(width: 300, height: 200)
     }

@@ -86,7 +86,10 @@ private struct SolubilityRightStack: View {
                 endPh: model.phCurve.endPh,
                 endSolubility: model.phCurve.endSolubility,
                 currentTime: model.currentTime,
-                lineWidth: settings.common.chartSettings.layout.lineWidth
+                lineWidth: settings.common.chartSettings.layout.lineWidth,
+                indicatorRadius: settings.common.chartSettings.headRadius,
+                haloRadius: settings.common.chartSettings.layout.haloRadius
+
             )
             .frame(width: settings.phPlotWidth, height: settings.phPlotHeight)
             .font(.system(size: settings.phPlotFontSize))

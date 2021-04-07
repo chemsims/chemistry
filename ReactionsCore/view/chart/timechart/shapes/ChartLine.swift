@@ -100,7 +100,7 @@ public struct ChartLine: Shape {
 
 }
 
-struct ChartIndicatorHead: Shape {
+public struct ChartIndicatorHead: Shape {
 
     let radius: CGFloat
     let equation: Equation
@@ -111,11 +111,28 @@ struct ChartIndicatorHead: Shape {
     var x: CGFloat
     var offset: CGFloat
 
+    public init(
+        radius: CGFloat,
+        equation: Equation,
+        yAxis: AxisPositionCalculations<CGFloat>,
+        xAxis: AxisPositionCalculations<CGFloat>,
+        x: CGFloat,
+        offset: CGFloat
+    ) {
+        self.radius = radius
+        self.equation = equation
+        self.yAxis = yAxis
+        self.xAxis = xAxis
+        self.x = x
+        self.offset = offset
+    }
+
+
     private var shiftedXAxis: AxisPositionCalculations<CGFloat> {
         xAxis.shift(by: offset)
     }
 
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         var path = Path()
         let y = equation.getY(at: x)
 
@@ -131,7 +148,7 @@ struct ChartIndicatorHead: Shape {
         return path
     }
 
-    var animatableData: AnimatablePair<CGFloat, CGFloat> {
+    public var animatableData: AnimatablePair<CGFloat, CGFloat> {
         get { AnimatablePair(offset, x) }
         set {
             offset = newValue.first
