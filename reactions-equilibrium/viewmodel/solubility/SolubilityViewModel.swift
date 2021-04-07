@@ -26,7 +26,7 @@ enum SoluteType {
     }
 }
 
-class SolubilityViewModel: ObservableObject {
+final class SolubilityViewModel: ObservableObject {
 
     @Published var statement = [TextLine]()
     private(set) var navigation: NavigationModel<SolubilityScreenState>?
@@ -41,25 +41,44 @@ class SolubilityViewModel: ObservableObject {
 
     @Published var chartOffset: CGFloat = 0
 
-    var soluteCounts: SoluteContainer
+//    var soluteCounts: SoluteContainer
     
-    @Published var components: SolubilityComponents
+//    @Published var components: SolubilityComponents
     @Published var equationState = SolubilityEquationState.showOriginalQuotient
+
+    @Published var componentsWrapper: SolubleComponentsWrapper!
+
+    var components: SolubilityComponents {
+        componentsWrapper.components
+    }
 
     init() {
         let firstTiming = SolubleReactionSettings.firstReactionTiming
-        self.timing = firstTiming
+//        self.timing = firstTiming
         self.shakingModel = SoluteBeakerShakingViewModel()
-        self.soluteCounts = SoluteContainer(maxAllowed: 0)
-        self.components = SolubilityComponents(
-            equilibriumConstant: 0.1,
-            initialConcentration: SoluteValues.constant(0),
-            startTime: firstTiming.start,
-            equilibriumTime: firstTiming.equilibrium,
-            previousEquation: nil
+//        self.soluteCounts = SoluteContainer(maxAllowed: 0)
+        self.componentsWrapper = PrimarySoluteComponentsWrapper(
+            soluteToAddForSaturation: soluteToAddForSaturation,
+            timing: firstTiming,
+            previous: nil,
+            setTime: setTime
         )
+//        self.components = SolubilityComponents(
+//            equilibriumConstant: 0.1,
+//            initialConcentration: SoluteValues.constant(0),
+//            startTime: firstTiming.start,
+//            equilibriumTime: firstTiming.equilibrium,
+//            previousEquation: nil
+//        )
         self.navigation = SolubilityNavigationModel.model(model: self)
-        self.soluteCounts.maxAllowed = self.soluteToAddForSaturation
+//        self.soluteCounts.maxAllowed = self.soluteToAddForSaturation
+    }
+
+    func setTime(to newTime: CGFloat) {
+        let dt = newTime - currentTime
+        withAnimation(.linear(duration: abs(Double(dt)))) {
+            currentTime = newTime
+        }
     }
 
     var phCurve: SolubilityPhComponents {
@@ -75,9 +94,7 @@ class SolubilityViewModel: ObservableObject {
     }
 
     var timing: ReactionTiming {
-        didSet {
-            setComponents()
-        }
+        componentsWrapper.timing
     }
 
     let shakingModel: SoluteBeakerShakingViewModel
@@ -91,68 +108,71 @@ class SolubilityViewModel: ObservableObject {
     }
 
     func onParticleEmit(soluteType: SoluteType) {
-        soluteCounts.didEmit()
+        componentsWrapper.soluteEmitted(soluteType)
+//        soluteCounts.didEmit()
     }
 
     func onParticleWaterEntry(soluteType: SoluteType) {
-        switch inputState {
-        case .addSaturatedSolute where soluteType == .primary:
-            saturatedSoluteEnteredWater()
-        default: break
-        }
+        componentsWrapper.soluteEnteredWater(soluteType)
+//        switch inputState {
+//        case .addSaturatedSolute where soluteType == .primary:
+//            saturatedSoluteEnteredWater()
+//        default: break
+//        }
     }
 
     func onDissolve(soluteType: SoluteType) {
         guard inputState == .addSolute(type: soluteType) else {
             return
         }
-
-        soluteCounts.didDissolve()
-        switch soluteType {
-        case .primary: primarySoluteDissolved()
-        case .commonIon: commonIonSoluteDissolved()
-        case .acid: acidDissolved()
-        }
+        componentsWrapper.soluteDissolved(soluteType)
+//
+//        soluteCounts.didDissolve()
+//        switch soluteType {
+//        case .primary: primarySoluteDissolved()
+//        case .commonIon: commonIonSoluteDissolved()
+//        case .acid: acidDissolved()
+//        }
     }
 
-    private func saturatedSoluteEnteredWater() {
-        withAnimation(.linear(duration: Double(saturatedDt))) {
-            currentTime += saturatedDt
-        }
-    }
+//    private func saturatedSoluteEnteredWater() {
+//        withAnimation(.linear(duration: Double(saturatedDt))) {
+//            currentTime += saturatedDt
+//        }
+//    }
+//
+//    private func acidDissolved() {
+//        if let initB0 = components.previousEquation?.finalConcentration.value(for: .B) {
+//            let dc = (0.75 * initB0) / CGFloat(SolubleReactionSettings.acidSoluteParticlesToAdd)
+//            withAnimation(.easeOut(duration: 0.5)) {
+//                extraB0 -= dc
+//            }
+//        }
+//    }
+//
+//    private func primarySoluteDissolved() {
+//        let newTime = soluteCounts.dissolvedFraction * (timing.equilibrium - timing.start)
+//        let dt = newTime - currentTime
+//
+//        withAnimation(.linear(duration: Double(dt))) {
+//            currentTime = newTime
+//        }
+//        if !soluteCounts.canDissolve {
+//            navigation?.next()
+//        }
+//    }
+//
+//    private func commonIonSoluteDissolved() {
+//        withAnimation(.easeOut(duration: 0.5)) {
+//            extraB0 = SolubleReactionSettings.maxInitialBConcentration * soluteCounts.dissolvedFraction
+//        }
+//    }
 
-    private func acidDissolved() {
-        if let initB0 = components.previousEquation?.finalConcentration.value(for: .B) {
-            let dc = (0.75 * initB0) / CGFloat(SolubleReactionSettings.acidSoluteParticlesToAdd)
-            withAnimation(.easeOut(duration: 0.5)) {
-                extraB0 -= dc
-            }
-        }
-    }
-
-    private func primarySoluteDissolved() {
-        let newTime = soluteCounts.dissolvedFraction * (timing.equilibrium - timing.start)
-        let dt = newTime - currentTime
-
-        withAnimation(.linear(duration: Double(dt))) {
-            currentTime = newTime
-        }
-        if !soluteCounts.canDissolve {
-            navigation?.next()
-        }
-    }
-
-    private func commonIonSoluteDissolved() {
-        withAnimation(.easeOut(duration: 0.5)) {
-            extraB0 = SolubleReactionSettings.maxInitialBConcentration * soluteCounts.dissolvedFraction
-        }
-    }
-
-    var extraB0: CGFloat = 0 {
-        didSet {
-            setComponents()
-        }
-    }
+//    var extraB0: CGFloat = 0 {
+//        didSet {
+//            setComponents()
+//        }
+//    }
 
     func startShaking() {
         shakingModel.start()
@@ -163,7 +183,8 @@ class SolubilityViewModel: ObservableObject {
     }
 
     var canEmit: Bool {
-        inputState.isAddingSolute && soluteCounts.canEmit
+        true
+//        inputState.isAddingSolute && soluteCounts.canEmit
     }
 
     var soluteToAddForSaturation: Int {
@@ -176,67 +197,68 @@ class SolubilityViewModel: ObservableObject {
     }
 
     private func setComponents() {
-        self.components = SolubilityComponents(
-            equilibriumConstant: components.equilibriumConstant,
-            initialConcentration: SoluteValues(
-                productA: (components.previousEquation?.finalConcentration.value(for: .A) ?? 0),
-                productB: (components.previousEquation?.finalConcentration.value(for: .B) ?? 0) + extraB0
-            ),
-            startTime: timing.start,
-            equilibriumTime: timing.equilibrium,
-            previousEquation: components.previousEquation
-        )
+//        self.components = SolubilityComponents(
+//            equilibriumConstant: components.equilibriumConstant,
+//            initialConcentration: SoluteValues(
+//                productA: (components.previousEquation?.finalConcentration.value(for: .A) ?? 0),
+//                productB: (components.previousEquation?.finalConcentration.value(for: .B) ?? 0) + extraB0
+//            ),
+//            startTime: timing.start,
+//            equilibriumTime: timing.equilibrium,
+//            previousEquation: components.previousEquation
+//        )
     }
 
 
     var waterColor: Color {
-        switch reactionPhase {
-        case .primarySolute: return primarySoluteColor
-        case .commonIon: return commonIonReactionColor
-        case .acidity: return acidIonReactionColor
-        }
+        componentsWrapper.liquidColor.getRgb(at: currentTime).color
+//        switch reactionPhase {
+//        case .primarySolute: return primarySoluteColor
+//        case .commonIon: return commonIonReactionColor
+//        case .acidity: return acidIonReactionColor
+//        }
     }
 
     var reactionPhase: SolubleReactionPhase = .primarySolute
 
-    private var primarySoluteColor: Color {
-        ReactionTimingColor(
-            timing: timing,
-            currentTime: currentTime,
-            initialColor: .beakerLiquid,
-            finalColor: .saturatedLiquid
-        ).rgb.color
-    }
-
-    private var commonIonReactionColor: Color {
-        ReactionTimingColor(
-            timing: timing,
-            currentTime: currentTime,
-            initialColor: ColorInterpolator(
-                initialValue: 0,
-                finalValue: SolubleReactionSettings.maxInitialBConcentration,
-                currentValue: extraB0,
-                initialColor: .beakerLiquid,
-                finalColor: .maxCommonIonLiquid
-            ).rgb,
-            finalColor: .saturatedLiquid
-        ).rgb.color
-    }
-
-    private var acidIonReactionColor: Color {
-        ReactionTimingColor(
-            timing: timing,
-            currentTime: currentTime,
-            initialColor: ColorInterpolator(
-                initialValue: components.previousEquation?.finalConcentration.value(for: .B) ?? 0,
-                finalValue: 0,
-                currentValue: components.initialConcentration.value(for: .B),
-                initialColor: .saturatedLiquid,
-                finalColor: .maxAcidLiquid
-            ).rgb,
-            finalColor: .saturatedLiquid
-        ).rgb.color
-    }
+//    private var primarySoluteColor: Color {
+//        ReactionTimingColor(
+//            timing: timing,
+//            currentTime: currentTime,
+//            initialColor: .beakerLiquid,
+//            finalColor: .saturatedLiquid
+//        ).rgb.color
+//    }
+//
+//    private var commonIonReactionColor: Color {
+//        ReactionTimingColor(
+//            timing: timing,
+//            currentTime: currentTime,
+//            initialColor: ColorInterpolator(
+//                initialValue: 0,
+//                finalValue: SolubleReactionSettings.maxInitialBConcentration,
+//                currentValue: extraB0,
+//                initialColor: .beakerLiquid,
+//                finalColor: .maxCommonIonLiquid
+//            ).rgb,
+//            finalColor: .saturatedLiquid
+//        ).rgb.color
+//    }
+//
+//    private var acidIonReactionColor: Color {
+//        ReactionTimingColor(
+//            timing: timing,
+//            currentTime: currentTime,
+//            initialColor: ColorInterpolator(
+//                initialValue: components.previousEquation?.finalConcentration.value(for: .B) ?? 0,
+//                finalValue: 0,
+//                currentValue: components.initialConcentration.value(for: .B),
+//                initialColor: .saturatedLiquid,
+//                finalColor: .maxAcidLiquid
+//            ).rgb,
+//            finalColor: .saturatedLiquid
+//        ).rgb.color
+//    }
 }
 
 struct ReactionTimingColor {
@@ -292,7 +314,7 @@ struct RGBEquation {
     
 }
 
-class SoluteContainer {
+struct SoluteContainer {
 
     var maxAllowed: Int
 
@@ -308,21 +330,22 @@ class SoluteContainer {
     private(set) var dissolved: Int = 0
     private var enteredWater: Int = 0
 
-    func didEmit() {
+    mutating func didEmit() {
         emitted += 1
     }
 
-    func didDissolve() {
+    mutating func didDissolve() {
         dissolved += 1
     }
 
-    func didEnterWater() {
+    mutating func didEnterWater() {
         enteredWater += 1
     }
 
-    func reset() {
+    mutating func reset() {
         emitted = 0
         dissolved = 0
+        enteredWater = 0
     }
 
     var canEmit: Bool {

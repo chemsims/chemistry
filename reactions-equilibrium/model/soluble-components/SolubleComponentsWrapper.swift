@@ -3,17 +3,30 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 protocol SolubleComponentsWrapper {
 
+    mutating func soluteEmitted(_ soluteType: SoluteType)
     mutating func soluteEnteredWater(_ soluteType: SoluteType)
     mutating func soluteDissolved(_ soluteType: SoluteType)
+    mutating func reset()
 
     var previous: SolubleComponentsWrapper? { get }
 
     var components: SolubilityComponents { get }
 
     var liquidColor: RGBEquation { get }
+
+    var timing: ReactionTiming { get }
+
+    var counts: SoluteContainer { get set }
+}
+
+extension SolubleComponentsWrapper {
+    mutating func reset() {
+        counts.reset()
+    }
 }
 
 struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
@@ -33,11 +46,15 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
 
     let soluteToAddForSaturation: Int
     let timing: ReactionTiming
-    let counts: SoluteContainer
+    var counts: SoluteContainer
     let previous: SolubleComponentsWrapper?
     let setTime: (CGFloat) -> Void
 
     func soluteEnteredWater(_ soluteType: SoluteType) {
+    }
+
+    mutating func soluteEmitted(_ soluteType: SoluteType) {
+        counts.didEmit()
     }
 
     mutating func soluteDissolved(_ soluteType: SoluteType) {
@@ -74,20 +91,25 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
 
 struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
 
-    init(previous: SolubleComponentsWrapper, timing: ReactionTiming, setTime: @escaping (CGFloat) -> Void) {
+    init(previous: SolubleComponentsWrapper, setTime: @escaping (CGFloat) -> Void) {
         self.underlyingPrevious = previous
         self.counts = SoluteContainer(maxAllowed: SolubleReactionSettings.saturatedSoluteParticlesToAdd)
-        self.timing = timing
         self.setTime = setTime
     }
 
-    private let counts: SoluteContainer
+    var counts: SoluteContainer
     private let underlyingPrevious: SolubleComponentsWrapper
-    private let timing: ReactionTiming
+    var timing: ReactionTiming {
+        underlyingPrevious.timing
+    }
     private let setTime: (CGFloat) -> Void
 
-    mutating func soluteEnteredWater(_ soluteType: SoluteType) {
+    mutating func soluteEmitted(_ soluteType: SoluteType) {
         counts.didEmit()
+    }
+
+    mutating func soluteEnteredWater(_ soluteType: SoluteType) {
+        counts.didEnterWater()
         let dt = timing.end - timing.equilibrium
         let time = timing.equilibrium + (counts.enteredWaterFraction * dt)
         setTime(time)
@@ -115,7 +137,11 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
 struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
     let timing: ReactionTiming
-    let counts: SoluteContainer
+    var counts: SoluteContainer
+    init(timing: ReactionTiming) {
+        self.timing = timing
+        self.counts = SoluteContainer(maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd)
+    }
 
     mutating func soluteEnteredWater(_ soluteType: SoluteType) {
 
@@ -123,6 +149,10 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
     mutating func soluteDissolved(_ soluteType: SoluteType) {
         counts.didDissolve()
+    }
+
+    mutating func soluteEmitted(_ soluteType: SoluteType) {
+        counts.didEmit()
     }
 
     let previous: SolubleComponentsWrapper? = nil
@@ -146,6 +176,15 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
         RGBEquation(
             initialX: 0,
             finalX: maxB,
+            initialColor: initialColor.getRgb(at: maxB * counts.dissolvedFraction),
+            finalColor: .saturatedLiquid
+        )
+    }
+
+    private var initialColor: RGBEquation {
+        RGBEquation(
+            initialX: 0,
+            finalX: maxB,
             initialColor: .beakerLiquid,
             finalColor: .maxCommonIonLiquid
         )
@@ -160,7 +199,7 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
         self.timing = timing
     }
 
-    let counts: SoluteContainer
+    var counts: SoluteContainer
     let timing: ReactionTiming
 
     mutating func soluteEnteredWater(_ soluteType: SoluteType) {
@@ -169,6 +208,10 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
 
     mutating func soluteDissolved(_ soluteType: SoluteType) {
         counts.didDissolve()
+    }
+
+    mutating func soluteEmitted(_ soluteType: SoluteType) {
+        counts.didEmit()
     }
 
     var previous: SolubleComponentsWrapper? {
@@ -221,19 +264,25 @@ struct RunAcidReactionComponentsWrapper: SolubleComponentsWrapper {
     init(previous: SolubleComponentsWrapper, timing: ReactionTiming) {
         self.underlyingPrevious = previous
         self.timing = timing
+        self.counts = previous.counts
     }
 
     var previous: SolubleComponentsWrapper? {
         underlyingPrevious
     }
     private let underlyingPrevious: SolubleComponentsWrapper
-    private let timing: ReactionTiming
+    let timing: ReactionTiming
+    var counts: SoluteContainer
 
     mutating func soluteEnteredWater(_ soluteType: SoluteType) {
 
     }
 
     mutating func soluteDissolved(_ soluteType: SoluteType) {
+
+    }
+
+    mutating func soluteEmitted(_ soluteType: SoluteType) {
 
     }
 
