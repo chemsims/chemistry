@@ -9,8 +9,8 @@ struct SolubilityPhChart: View {
 
     let curve: SolubilityChartEquation
     let startPh: CGFloat
-    let endPh: Equation
-    let endSolubility: Equation
+    let ph: Equation
+    let solubility: Equation
     let currentTime: CGFloat
 
     let lineWidth: CGFloat
@@ -22,8 +22,8 @@ struct SolubilityPhChart: View {
             SolubilityChartWithGeometry(
                 curve: curve,
                 startPh: startPh,
-                endPh: endPh,
-                endSolubility: endSolubility,
+                ph: ph,
+                solubility: solubility,
                 currentTime: currentTime,
                 lineWidth: lineWidth,
                 indicatorRadius: indicatorRadius,
@@ -39,8 +39,8 @@ private struct SolubilityChartWithGeometry: View {
 
     let curve: SolubilityChartEquation
     let startPh: CGFloat
-    let endPh: Equation
-    let endSolubility: Equation
+    let ph: Equation
+    let solubility: Equation
     let currentTime: CGFloat
 
     let lineWidth: CGFloat
@@ -103,8 +103,8 @@ private struct SolubilityChartWithGeometry: View {
 
             SolubilityPhPositionLine(
                 startingPh: startPh,
-                endSolubility: endSolubility,
-                endPh: endPh,
+                solubility: solubility,
+                ph: ph,
                 currentTime: currentTime,
                 phAxis: phAxis,
                 solubilityAxis: solubilityAxis
@@ -133,8 +133,8 @@ private struct SolubilityChartWithGeometry: View {
 
     private func head(radius: CGFloat, color: Color) -> some View {
         SolubilityPhIndicatorHead(
-            ph: endPh,
-            solubility: endSolubility,
+            ph: ph,
+            solubility: solubility,
             currentTime: currentTime,
             radius: radius,
             solubilityAxis: solubilityAxis,
@@ -192,8 +192,8 @@ private struct SolubilityPhIndicatorHead: Shape {
 private struct SolubilityPhPositionLine: Shape {
 
     let startingPh: CGFloat
-    let endSolubility: Equation
-    let endPh: Equation
+    let solubility: Equation
+    let ph: Equation
     var currentTime: CGFloat
 
     let phAxis: AxisPositionCalculations<CGFloat>
@@ -216,8 +216,8 @@ private struct SolubilityPhPositionLine: Shape {
 
         path.move(to: getPoint(ph: startingPh, solubility: 0))
 
-        let endPh = self.endPh.getY(at: currentTime)
-        let endSolubility = self.endSolubility.getY(at: currentTime)
+        let endPh = self.ph.getY(at: currentTime)
+        let endSolubility = self.solubility.getY(at: currentTime)
 
         if startingPh != endPh {
             path.addLine(to: getPoint(ph: startingPh, solubility: endSolubility))
@@ -238,8 +238,8 @@ struct SolubilityPhChart_Previews: PreviewProvider {
                 phAtMinSolubility: 0.6
             ),
             startPh: 0.8,
-            endPh: ConstantEquation(value: 0.4),
-            endSolubility: ConstantEquation(value: 0.75),
+            ph: ConstantEquation(value: 0.4),
+            solubility: ConstantEquation(value: 0.75),
             currentTime: 0,
             lineWidth: 1,
             indicatorRadius: 5,

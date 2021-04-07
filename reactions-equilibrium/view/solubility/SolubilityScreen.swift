@@ -83,8 +83,8 @@ private struct SolubilityRightStack: View {
             SolubilityPhChart(
                 curve: model.phCurve.curve,
                 startPh: model.phCurve.startPh,
-                endPh: model.phCurve.endPh,
-                endSolubility: model.phCurve.endSolubility,
+                ph: model.phCurve.ph,
+                solubility: model.phCurve.solubility,
                 currentTime: model.currentTime,
                 lineWidth: settings.common.chartSettings.layout.lineWidth,
                 indicatorRadius: settings.common.chartSettings.headRadius,

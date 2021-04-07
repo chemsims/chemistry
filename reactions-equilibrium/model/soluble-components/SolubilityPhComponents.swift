@@ -14,11 +14,11 @@ struct SolubilityPhComponents {
         0.85
     }
 
-    var endPh: Equation {
+    var ph: Equation {
         ConstantEquation(value: startPh)
     }
 
-    var endSolubility: Equation {
+    var solubility: Equation {
         SwitchingEquation(
             thresholdX: timing.equilibrium,
             underlyingLeft: notSaturatedSolubility,
