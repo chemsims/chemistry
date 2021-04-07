@@ -159,6 +159,8 @@ private class ShowCorrectQuotient: SolubilityScreenState {
         }
         withAnimation(.easeOut(duration: 0.5)) {
             model.waterColor = RGB.beakerLiquid.color
+            model.equationState = .crossOutOriginalQuotientDenominator
+
         }
     }
 }
@@ -194,21 +196,32 @@ private class AddSolute: SolubilityScreenState {
     }
 
     override func apply(on model: SolubilityViewModel) {
+        model.componentsWrapper = PrimarySoluteComponentsWrapper(
+            soluteToAddForSaturation: model.soluteToAddForSaturation,
+            timing: model.timing,
+            previous: nil,
+            setTime: model.setTime
+        )
+        doApply(on: model)
+    }
+
+    override func reapply(on model: SolubilityViewModel) {
+        model.componentsWrapper.reset()
+        apply(on: model)
+    }
+
+    private func doApply(on model: SolubilityViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
             model.inputState = .addSolute(type: .primary)
             model.activeSolute = nil
             model.waterColor = model.componentsWrapper.initialColor.color
         }
+
         model.equationState = .showCorrectQuotientFilledIn
         model.statement = statement
         model.beakerSoluteState = .addingSolute(type: .primary, clearPrevious: false)
         model.stopShaking()
-    }
-
-    override func reapply(on model: SolubilityViewModel) {
-        model.componentsWrapper.reset()
-        apply(on: model)
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -218,7 +231,6 @@ private class AddSolute: SolubilityScreenState {
             model.activeSolute = nil
             model.waterColor = model.componentsWrapper.initialColor.color
         }
-        model.componentsWrapper.reset()
     }
 }
 
@@ -461,6 +473,7 @@ private class AddAcidSolute: SolubilityScreenState {
 }
 
 private class RunAcidReaction: SolubilityScreenState {
+
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.acidReactionRunning
         let dt = model.timing.end - model.timing.start
@@ -481,6 +494,10 @@ private class RunAcidReaction: SolubilityScreenState {
             model.currentTime = model.timing.start
             model.waterColor = model.componentsWrapper.initialColor.color
         }
+    }
+
+    override func nextStateAutoDispatchDelay(model: SolubilityViewModel) -> Double? {
+        Double(model.timing.end - model.timing.start)
     }
 }
 
