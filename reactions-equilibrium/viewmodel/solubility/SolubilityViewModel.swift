@@ -40,10 +40,6 @@ final class SolubilityViewModel: ObservableObject {
     @Published var beakerSoluteState = BeakerSoluteState.addingSolute(type: .primary, clearPrevious: false)
 
     @Published var chartOffset: CGFloat = 0
-
-//    var soluteCounts: SoluteContainer
-    
-//    @Published var components: SolubilityComponents
     @Published var equationState = SolubilityEquationState.showOriginalQuotient
 
     @Published var componentsWrapper: SolubleComponentsWrapper!
@@ -54,24 +50,14 @@ final class SolubilityViewModel: ObservableObject {
 
     init() {
         let firstTiming = SolubleReactionSettings.firstReactionTiming
-//        self.timing = firstTiming
         self.shakingModel = SoluteBeakerShakingViewModel()
-//        self.soluteCounts = SoluteContainer(maxAllowed: 0)
         self.componentsWrapper = PrimarySoluteComponentsWrapper(
             soluteToAddForSaturation: soluteToAddForSaturation,
             timing: firstTiming,
             previous: nil,
             setTime: setTime
         )
-//        self.components = SolubilityComponents(
-//            equilibriumConstant: 0.1,
-//            initialConcentration: SoluteValues.constant(0),
-//            startTime: firstTiming.start,
-//            equilibriumTime: firstTiming.equilibrium,
-//            previousEquation: nil
-//        )
         self.navigation = SolubilityNavigationModel.model(model: self)
-//        self.soluteCounts.maxAllowed = self.soluteToAddForSaturation
     }
 
     func setTime(to newTime: CGFloat) {
@@ -109,16 +95,10 @@ final class SolubilityViewModel: ObservableObject {
 
     func onParticleEmit(soluteType: SoluteType) {
         componentsWrapper.soluteEmitted(soluteType)
-//        soluteCounts.didEmit()
     }
 
     func onParticleWaterEntry(soluteType: SoluteType) {
         componentsWrapper.soluteEnteredWater(soluteType)
-//        switch inputState {
-//        case .addSaturatedSolute where soluteType == .primary:
-//            saturatedSoluteEnteredWater()
-//        default: break
-//        }
     }
 
     func onDissolve(soluteType: SoluteType) {
@@ -126,53 +106,7 @@ final class SolubilityViewModel: ObservableObject {
             return
         }
         componentsWrapper.soluteDissolved(soluteType)
-//
-//        soluteCounts.didDissolve()
-//        switch soluteType {
-//        case .primary: primarySoluteDissolved()
-//        case .commonIon: commonIonSoluteDissolved()
-//        case .acid: acidDissolved()
-//        }
     }
-
-//    private func saturatedSoluteEnteredWater() {
-//        withAnimation(.linear(duration: Double(saturatedDt))) {
-//            currentTime += saturatedDt
-//        }
-//    }
-//
-//    private func acidDissolved() {
-//        if let initB0 = components.previousEquation?.finalConcentration.value(for: .B) {
-//            let dc = (0.75 * initB0) / CGFloat(SolubleReactionSettings.acidSoluteParticlesToAdd)
-//            withAnimation(.easeOut(duration: 0.5)) {
-//                extraB0 -= dc
-//            }
-//        }
-//    }
-//
-//    private func primarySoluteDissolved() {
-//        let newTime = soluteCounts.dissolvedFraction * (timing.equilibrium - timing.start)
-//        let dt = newTime - currentTime
-//
-//        withAnimation(.linear(duration: Double(dt))) {
-//            currentTime = newTime
-//        }
-//        if !soluteCounts.canDissolve {
-//            navigation?.next()
-//        }
-//    }
-//
-//    private func commonIonSoluteDissolved() {
-//        withAnimation(.easeOut(duration: 0.5)) {
-//            extraB0 = SolubleReactionSettings.maxInitialBConcentration * soluteCounts.dissolvedFraction
-//        }
-//    }
-
-//    var extraB0: CGFloat = 0 {
-//        didSet {
-//            setComponents()
-//        }
-//    }
 
     func startShaking() {
         shakingModel.start()
@@ -192,24 +126,6 @@ final class SolubilityViewModel: ObservableObject {
         return equation.getY(at: waterHeightFactor).roundedInt()
     }
 
-    private var saturatedDt: CGFloat {
-        (timing.end - timing.equilibrium) / CGFloat(SolubleReactionSettings.saturatedSoluteParticlesToAdd)
-    }
-
-    private func setComponents() {
-//        self.components = SolubilityComponents(
-//            equilibriumConstant: components.equilibriumConstant,
-//            initialConcentration: SoluteValues(
-//                productA: (components.previousEquation?.finalConcentration.value(for: .A) ?? 0),
-//                productB: (components.previousEquation?.finalConcentration.value(for: .B) ?? 0) + extraB0
-//            ),
-//            startTime: timing.start,
-//            equilibriumTime: timing.equilibrium,
-//            previousEquation: components.previousEquation
-//        )
-    }
-
-
     var waterColor: Color {
         RGBEquation(
             initialX: timing.start,
@@ -218,9 +134,6 @@ final class SolubilityViewModel: ObservableObject {
             finalColor: componentsWrapper.finalColor
         ).getRgb(at: currentTime).color
     }
-
-    var reactionPhase: SolubleReactionPhase = .primarySolute
-
 }
 
 struct ReactionTimingColor {
