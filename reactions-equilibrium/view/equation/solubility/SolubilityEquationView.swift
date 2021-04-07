@@ -199,6 +199,7 @@ private struct QuotientKspBlank: View {
             quotientView
             Equals()
             FixedText(ksp.str(decimals: 2))
+                .foregroundColor(.orangeAccent)
         }
     }
 

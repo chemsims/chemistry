@@ -35,7 +35,7 @@ private struct SizedSolubilityQuotientRecapEquations: View {
 
 private struct AqueousQuotientRecap: View {
     var body: some View {
-        GeneralRecap(elementType: "aq") { element in
+        GeneralRecap(title: "Aqueous compounds", elementType: "aq") { element in
             FixedText("[\(element)]")
         }
     }
@@ -43,7 +43,7 @@ private struct AqueousQuotientRecap: View {
 
 private struct GaseousQuotientRecap: View {
     var body: some View {
-        GeneralRecap(elementType: "g") { element in
+        GeneralRecap(title: "Gaseous compounds", elementType: "g") { element in
             HStack(alignment: .bottom, spacing: 0) {
                 FixedText("P")
                 Text(element)
@@ -55,11 +55,15 @@ private struct GaseousQuotientRecap: View {
 
 private struct GeneralRecap<Content: View>: View  {
 
+    let title: String
     let elementType: String
     let formatElement: (String) -> Content
 
+
     var body: some View {
         VStack(spacing: 5) {
+            FixedText(title)
+                .foregroundColor(.orangeAccent)
             decomposition
             quotient
         }
