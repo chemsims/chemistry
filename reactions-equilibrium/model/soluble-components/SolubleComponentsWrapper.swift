@@ -25,6 +25,8 @@ protocol SolubleComponentsWrapper {
 
     var ph: Equation { get }
     var solubility: Equation { get }
+
+    var shouldGoNext: Bool { get }
 }
 
 extension SolubleComponentsWrapper {
@@ -96,6 +98,10 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     var prevComponents: SolubilityComponents? {
         previous?.components
     }
+
+    var shouldGoNext: Bool {
+        !counts.canDissolve
+    }
 }
 
 struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
@@ -140,6 +146,10 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
 
     var components: SolubilityComponents {
         underlyingPrevious.components
+    }
+
+    var shouldGoNext: Bool {
+        counts.enteredWater == counts.maxAllowed
     }
 }
 
@@ -208,6 +218,9 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
     let finalColor = RGB.maxCommonIonLiquid
 
+    var shouldGoNext: Bool {
+        !counts.canDissolve
+    }
 }
 
 struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
@@ -277,6 +290,10 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
 
     var solubility: Equation {
         ConstantEquation(value: SolubleReactionSettings.superSaturatedSolubility)
+    }
+
+    var shouldGoNext: Bool {
+        !counts.canDissolve
     }
 
     private var currentB0: CGFloat {

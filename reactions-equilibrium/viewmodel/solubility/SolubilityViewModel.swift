@@ -92,10 +92,12 @@ final class SolubilityViewModel: ObservableObject {
 
     func onParticleEmit(soluteType: SoluteType) {
         componentsWrapper.soluteEmitted(soluteType)
+        goNextIfNeeded()
     }
 
     func onParticleWaterEntry(soluteType: SoluteType) {
         componentsWrapper.soluteEnteredWater(soluteType)
+        goNextIfNeeded()
     }
 
     func onDissolve(soluteType: SoluteType) {
@@ -103,6 +105,13 @@ final class SolubilityViewModel: ObservableObject {
             return
         }
         componentsWrapper.soluteDissolved(soluteType)
+        goNextIfNeeded()
+    }
+
+    private func goNextIfNeeded() {
+        if componentsWrapper.shouldGoNext {
+            next()
+        }
     }
 
     func startShaking() {
@@ -197,9 +206,9 @@ struct SoluteContainer {
         }
     }
 
-    private var emitted: Int = 0
+    private(set) var emitted: Int = 0
     private(set) var dissolved: Int = 0
-    private var enteredWater: Int = 0
+    private(set) var enteredWater: Int = 0
 
     mutating func didEmit() {
         emitted += 1
