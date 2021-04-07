@@ -76,6 +76,7 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
 
         setTime(time)
     }
+    
 
     var components: SolubilityComponents {
         SolubilityComponents(

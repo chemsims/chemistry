@@ -74,7 +74,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             orientation: .portrait,
             includeFill: true,
             settings: settings.common.sliderSettings,
-            disabled: false,
+            disabled: model.inputState != .setWaterLevel,
             useHaptics: true
         )
         .frame(

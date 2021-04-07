@@ -119,6 +119,10 @@ private class SetWaterLevel: SolubilityScreenState {
         model.statement = statements.instructToSetWaterLevel
         model.inputState = .setWaterLevel
     }
+
+    override func unapply(on model: SolubilityViewModel) {
+        model.inputState = .none
+    }
 }
 
 private class AddSolute: SolubilityScreenState {
