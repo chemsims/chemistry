@@ -60,6 +60,7 @@
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
 		572CBEB025C0AECD00CE6007 /* LabellingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CBEAF25C0AECD00CE6007 /* LabellingTests.swift */; };
 		572CF3A425AA6E2100B49E34 /* ReactionInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CF3A325AA6E2100B49E34 /* ReactionInputTests.swift */; };
+		572FD6B62621B2A7007E8E42 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
 		57303FE7261DB2FA00045193 /* SolubleComponentsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57303FE6261DB2FA00045193 /* SolubleComponentsWrapper.swift */; };
 		57303FF1261E2DE800045193 /* SKIonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57303FF0261E2DE800045193 /* SKIonNode.swift */; };
 		5736B669258A79BD002CEF5E /* QuizViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B668258A79BD002CEF5E /* QuizViewModelTests.swift */; };
@@ -1218,6 +1219,14 @@
 			path = "rate-comparison";
 			sourceTree = "<group>";
 		};
+		572FD6B12621B27C007E8E42 /* shared */ = {
+			isa = PBXGroup;
+			children = (
+				5760536F25AE519B0068B533 /* NavigationExtensions.swift */,
+			);
+			path = shared;
+			sourceTree = "<group>";
+		};
 		5736DC2E25F5006B003FD2B4 /* grid */ = {
 			isa = PBXGroup;
 			children = (
@@ -1431,6 +1440,7 @@
 		575A88CB25E43CD700AEE448 /* reactions-equilibriumTests */ = {
 			isa = PBXGroup;
 			children = (
+				572FD6B12621B27C007E8E42 /* shared */,
 				5725972825EE3EC000D87964 /* test_util */,
 				575A88CE25E43CD700AEE448 /* Info.plist */,
 				57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */,
@@ -1449,7 +1459,6 @@
 		5760536E25AE518E0068B533 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				5760536F25AE519B0068B533 /* NavigationExtensions.swift */,
 				5738AD8F25AF131B002D4EB7 /* TextLineExtensions.swift */,
 				5738ADA625AF2713002D4EB7 /* EnumExtensions.swift */,
 				5738ADAE25AF2907002D4EB7 /* ReactionModelExtensions.swift */,
@@ -2842,6 +2851,7 @@
 				57952A3325E66FBD006AB876 /* BalancedReactionEquationTests.swift in Sources */,
 				5725972325EE3E9400D87964 /* ReactionComponentTests.swift in Sources */,
 				5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */,
+				572FD6B62621B2A7007E8E42 /* NavigationExtensions.swift in Sources */,
 				5771BFED2621ACBE0033B807 /* SolubilityScreenNavigationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

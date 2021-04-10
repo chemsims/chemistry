@@ -3,9 +3,9 @@
 //
 
 import XCTest
-@testable import reactions_app
+import ReactionsCore
 
-extension NavigationViewModel {
+extension NavigationModel {
 
     func nextWhile(_ condition: (State.Model) -> Bool) {
         progressWhile(condition, isNext: true)
