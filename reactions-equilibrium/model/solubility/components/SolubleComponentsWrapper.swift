@@ -21,7 +21,7 @@ protocol SolubleComponentsWrapper {
 
     var timing: ReactionTiming { get }
 
-    var counts: SoluteContainer { get set }
+    var counts: SoluteCounter { get set }
 
     var ph: Equation { get }
     var solubility: Equation { get }
@@ -53,14 +53,14 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     ) {
         self.soluteToAddForSaturation = soluteToAddForSaturation
         self.timing = timing
-        self.counts = SoluteContainer(maxAllowed: soluteToAddForSaturation)
+        self.counts = SoluteCounter(maxAllowed: soluteToAddForSaturation)
         self.previous = previous
         self.setTime = setTime
     }
 
     let soluteToAddForSaturation: Int
     let timing: ReactionTiming
-    var counts: SoluteContainer
+    var counts: SoluteCounter
     let previous: SolubleComponentsWrapper?
     let setTime: (CGFloat) -> Void
 
@@ -111,13 +111,13 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
         timing: ReactionTiming,
         setColor: @escaping (Color) -> Void
     ) {
-        self.counts = SoluteContainer(maxAllowed: maxCount)
+        self.counts = SoluteCounter(maxAllowed: maxCount)
         self.previous = previous
         self.timing = timing
         self.setColor = setColor
     }
 
-    var counts: SoluteContainer
+    var counts: SoluteCounter
     let timing: ReactionTiming
     let previous: SolubleComponentsWrapper?
     let setColor: (Color) -> Void
@@ -159,11 +159,11 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
 
     init(previous: SolubleComponentsWrapper, setTime: @escaping (CGFloat) -> Void) {
         self.underlyingPrevious = previous
-        self.counts = SoluteContainer(maxAllowed: SolubleReactionSettings.saturatedSoluteParticlesToAdd)
+        self.counts = SoluteCounter(maxAllowed: SolubleReactionSettings.saturatedSoluteParticlesToAdd)
         self.setTime = setTime
     }
 
-    var counts: SoluteContainer
+    var counts: SoluteCounter
     private let underlyingPrevious: SolubleComponentsWrapper
     var timing: ReactionTiming {
         underlyingPrevious.timing
@@ -217,13 +217,13 @@ private func makeSolubilityEquation(timing: ReactionTiming) -> Equation {
 struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
     let timing: ReactionTiming
-    var counts: SoluteContainer
+    var counts: SoluteCounter
     let setColor: (Color) -> Void
     init(timing: ReactionTiming, previous: SolubleComponentsWrapper?, setColor: @escaping (Color) -> Void) {
         self.timing = timing
         self.previous = previous
         self.setColor = setColor
-        self.counts = SoluteContainer(
+        self.counts = SoluteCounter(
             maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd
         )
     }
@@ -277,13 +277,13 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
 
     init(previous: SolubleComponentsWrapper, timing: ReactionTiming, setColor: @escaping (Color) -> Void) {
-        self.counts = SoluteContainer(maxAllowed: SolubleReactionSettings.acidSoluteParticlesToAdd)
+        self.counts = SoluteCounter(maxAllowed: SolubleReactionSettings.acidSoluteParticlesToAdd)
         self.underlyingPrevious = previous
         self.timing = timing
         self.setColor = setColor
     }
 
-    var counts: SoluteContainer
+    var counts: SoluteCounter
     let timing: ReactionTiming
     private let setColor: (Color) -> Void
 
