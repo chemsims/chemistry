@@ -19,6 +19,8 @@ final class SolubilityViewModel: ObservableObject {
     
     @Published var beakerSoluteState = BeakerSoluteState.addingSolute(type: .primary, clearPrevious: false)
 
+    @Published var beakerAction: SKSoluteBeakerAction?
+
     @Published var chartOffset: CGFloat = 0
     @Published var equationState = SolubilityEquationState.showOriginalQuotient
 

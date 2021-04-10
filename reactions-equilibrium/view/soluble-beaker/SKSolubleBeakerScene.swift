@@ -46,6 +46,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             scene.soluteState = model.beakerSoluteState
             scene.saturatedReactionDuration = model.timing.equilibrium - model.timing.start
             scene.onDissolve = model.onDissolve
+            scene.action = model.beakerAction
         }
     }
 }
@@ -81,12 +82,16 @@ private class SKSolubleBeakerScene: SKScene {
     var saturatedReactionDuration: CGFloat
     var onWaterEntry: (SoluteType) -> Void
     var onDissolve: (SoluteType) -> Void
-
-    var soluteState: BeakerSoluteState {
+    var action: SKSoluteBeakerAction? {
         didSet {
-            handleBeakerStateUpdate(oldValue: oldValue)
+            guard action != oldValue, let getAction = action else {
+                return
+            }
+            handleAction(getAction)
         }
     }
+
+    var soluteState: BeakerSoluteState
 
     private let saturatedReactionKey = "soluteReactionKey"
 
@@ -200,8 +205,10 @@ private class SKSolubleBeakerScene: SKScene {
         ion.run(action)
     }
 
-    private func hideSolute() {
-        removeSolute()
+    private func hideSolute(actionId: Int) {
+        runOnSolute { solute in
+            solute.hide(actionId: actionId)
+        }
     }
 
     private func removeSolute() {
@@ -210,12 +217,12 @@ private class SKSolubleBeakerScene: SKScene {
         }
     }
 
-    private func showHiddenSolute() {
-//        mapSolute { solute in
-//            if solute.isHidden {
-//                solute.show()
-//            }
-//        }
+    private func showHiddenSolute(actionId: Int) {
+        runOnSolute { solute in
+            if solute.isHidden {
+                solute.show(actionId: actionId)
+            }
+        }
     }
 
     private func handleBeakerStateUpdate(oldValue: BeakerSoluteState) {
@@ -227,9 +234,9 @@ private class SKSolubleBeakerScene: SKScene {
         case (.addingSolute(type: .primary, clearPrevious: _), .addingSaturatedPrimary):
             removeSolute()
         case (.addingSolute(type: _, clearPrevious: true), _):
-            hideSolute()
+            hideSolute(actionId: 1)
         case (.addingSaturatedPrimary, .addingSolute(type: _, clearPrevious: true)):
-            showHiddenSolute()
+            showHiddenSolute(actionId: 1)
         case (.dissolvingSuperSaturatedPrimary, _):
             runSuperSaturatedReaction(duration: saturatedReactionDuration)
         case (.addingSolute(type: .acid, clearPrevious: _), .dissolvingSuperSaturatedPrimary):
@@ -316,4 +323,36 @@ private class SKSolubleBeakerScene: SKScene {
             }
         }
     }
+}
+
+extension SKSolubleBeakerScene {
+    private func handleAction(_ action: SKSoluteBeakerAction) {
+        switch action {
+        case .runReaction:
+            runSuperSaturatedReaction(duration: saturatedReactionDuration)
+        case .completeReaction:
+            endSuperSaturatedReaction()
+        case .undoReaction:
+            cancelSaturatedReaction()
+            reAddSaturatedReactionSolute()
+        case .cleanupDemoReaction:
+            cleanupDemoReaction()
+        case .removeSolute:
+            removeSolute()
+        case let .hideSolute(id: id):
+            hideSolute(actionId: id)
+        case let .reAddSolute(id: id):
+            showHiddenSolute(actionId: id)
+        }
+    }
+}
+
+enum SKSoluteBeakerAction: Equatable {
+    case runReaction,
+         completeReaction,
+         undoReaction,
+         cleanupDemoReaction,
+         removeSolute,
+         hideSolute(id: Int),
+         reAddSolute(id: Int)
 }
