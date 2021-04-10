@@ -5,48 +5,43 @@
 import CoreGraphics
 
 struct SoluteCounter {
-
     var maxAllowed: Int
 
     init(maxAllowed: Int) {
         self.maxAllowed = maxAllowed
+        self.counts = Dictionary(
+            uniqueKeysWithValues: SoluteParticleAction.allCases.map {
+                ($0, 0)
+            }
+        )
     }
 
-    private(set) var emitted: Int = 0
-    private(set) var dissolved: Int = 0
-    private(set) var enteredWater: Int = 0
+    private var counts = [SoluteParticleAction:Int]()
 
-    mutating func didEmit() {
-        emitted += 1
-    }
-
-    mutating func didDissolve() {
-        dissolved += 1
-    }
-
-    mutating func didEnterWater() {
-        enteredWater += 1
+    mutating func didPerform(action: SoluteParticleAction) {
+        let count = counts[action] ?? -1
+        counts[action] = count + 1
     }
 
     mutating func reset() {
-        emitted = 0
-        dissolved = 0
-        enteredWater = 0
+        counts.removeAll()
     }
 
-    var canEmit: Bool {
-        emitted < maxAllowed
+    func count(of action: SoluteParticleAction) -> Int {
+        counts[action] ?? 0
     }
 
-    var canDissolve: Bool {
-        dissolved < maxAllowed
+    func canPerform(action: SoluteParticleAction) -> Bool {
+        (count(of: action)) < maxAllowed
     }
 
-    var dissolvedFraction: CGFloat {
-        CGFloat(dissolved) / CGFloat(maxAllowed)
+    func fraction(of action: SoluteParticleAction) -> CGFloat {
+        CGFloat(count(of: action)) / CGFloat(maxAllowed)
     }
+}
 
-    var enteredWaterFraction: CGFloat {
-        CGFloat(enteredWater) / CGFloat(maxAllowed)
-    }
+enum SoluteParticleAction: CaseIterable {
+    case emitted,
+         enteredWater,
+         dissolved
 }

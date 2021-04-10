@@ -7,10 +7,8 @@ import ReactionsCore
 
 protocol SolubleComponentsWrapper {
 
-    mutating func soluteEmitted(_ soluteType: SoluteType)
-    mutating func soluteEnteredWater(_ soluteType: SoluteType)
-    mutating func soluteDissolved(_ soluteType: SoluteType)
     mutating func reset()
+    mutating func solutePerformed(action: SoluteParticleAction)
 
     var previous: SolubleComponentsWrapper? { get }
 
@@ -64,21 +62,14 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     let previous: SolubleComponentsWrapper?
     let setTime: (CGFloat) -> Void
 
-    func soluteEnteredWater(_ soluteType: SoluteType) {
+    mutating func solutePerformed(action: SoluteParticleAction) {
+        counts.didPerform(action: action)
+        if action == .dissolved {
+            let dt = timing.equilibrium - timing.start
+            let time = timing.start + (counts.fraction(of: .dissolved) * dt)
+            setTime(time)
+        }
     }
-
-    mutating func soluteEmitted(_ soluteType: SoluteType) {
-        counts.didEmit()
-    }
-
-    mutating func soluteDissolved(_ soluteType: SoluteType) {
-        counts.didDissolve()
-        let dt = timing.equilibrium - timing.start
-        let time = timing.start + (counts.dissolvedFraction * dt)
-
-        setTime(time)
-    }
-    
 
     var components: SolubilityComponents {
         SolubilityComponents(
@@ -100,7 +91,7 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     }
 
     var shouldGoNext: Bool {
-        !counts.canDissolve
+        !counts.canPerform(action: .dissolved)
     }
 }
 
@@ -122,17 +113,11 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
     let previous: SolubleComponentsWrapper?
     let setColor: (Color) -> Void
 
-    mutating func soluteEmitted(_ soluteType: SoluteType) {
-        counts.didEmit()
-    }
-
-    mutating func soluteEnteredWater(_ soluteType: SoluteType) {
-        counts.didEnterWater()
-    }
-
-    mutating func soluteDissolved(_ soluteType: SoluteType) {
-        counts.didDissolve()
-        setColor(colorEquation.getRgb(at: CGFloat(counts.dissolved)).color)
+    mutating func solutePerformed(action: SoluteParticleAction) {
+        counts.didPerform(action: action)
+        if action == .dissolved {
+            setColor(colorEquation.getRgb(at: CGFloat(counts.fraction(of: .dissolved))).color)
+        }
     }
 
     var components: SolubilityComponents {
@@ -178,18 +163,14 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
         underlyingPrevious.finalColor
     }
 
-    mutating func soluteEmitted(_ soluteType: SoluteType) {
-        counts.didEmit()
+    mutating func solutePerformed(action: SoluteParticleAction) {
+        counts.didPerform(action: action)
+        if action == .enteredWater {
+            let dt = timing.end - timing.equilibrium
+            let time = timing.equilibrium + (counts.fraction(of: .enteredWater) * dt)
+            setTime(time)
+        }
     }
-
-    mutating func soluteEnteredWater(_ soluteType: SoluteType) {
-        counts.didEnterWater()
-        let dt = timing.end - timing.equilibrium
-        let time = timing.equilibrium + (counts.enteredWaterFraction * dt)
-        setTime(time)
-    }
-
-    mutating func soluteDissolved(_ soluteType: SoluteType) { }
 
     var previous: SolubleComponentsWrapper? {
         underlyingPrevious
@@ -200,7 +181,7 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
     }
 
     var shouldGoNext: Bool {
-        counts.enteredWater == counts.maxAllowed
+        !counts.canPerform(action: .enteredWater)
     }
 }
 
@@ -228,17 +209,11 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
         )
     }
 
-    mutating func soluteEnteredWater(_ soluteType: SoluteType) {
-
-    }
-
-    mutating func soluteDissolved(_ soluteType: SoluteType) {
-        counts.didDissolve()
-        setColor(initialColor.color)
-    }
-
-    mutating func soluteEmitted(_ soluteType: SoluteType) {
-        counts.didEmit()
+    mutating func solutePerformed(action: SoluteParticleAction) {
+        counts.didPerform(action: action)
+        if action == .dissolved {
+            setColor(initialColor.color)
+        }
     }
 
     let previous: SolubleComponentsWrapper?
@@ -250,7 +225,7 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
             equilibriumConstant: 0.1,
             initialConcentration: SoluteValues(
                 productA: 0,
-                productB: maxB * counts.dissolvedFraction
+                productB: maxB * counts.fraction(of: .dissolved)
             ),
             startTime: timing.start,
             equilibriumTime: timing.equilibrium,
@@ -264,13 +239,13 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
             finalX: maxB,
             initialColor: .beakerLiquid,
             finalColor: .maxCommonIonLiquid
-        ).getRgb(at: maxB * counts.dissolvedFraction)
+        ).getRgb(at: maxB * counts.fraction(of: .dissolved))
     }
 
     let finalColor = RGB.maxCommonIonLiquid
 
     var shouldGoNext: Bool {
-        !counts.canDissolve
+        !counts.canPerform(action: .dissolved)
     }
 }
 
@@ -287,17 +262,9 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
     let timing: ReactionTiming
     private let setColor: (Color) -> Void
 
-    mutating func soluteEnteredWater(_ soluteType: SoluteType) {
-        counts.didEnterWater()
-    }
-
-    mutating func soluteDissolved(_ soluteType: SoluteType) {
-        counts.didDissolve()
+    mutating func solutePerformed(action: SoluteParticleAction) {
+        counts.didPerform(action: action)
         setColor(initialColor.color)
-    }
-
-    mutating func soluteEmitted(_ soluteType: SoluteType) {
-        counts.didEmit()
     }
 
     var previous: SolubleComponentsWrapper? {
@@ -344,11 +311,11 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
     }
 
     var shouldGoNext: Bool {
-        !counts.canDissolve
+        !counts.canPerform(action: .dissolved)
     }
 
     private var currentB0: CGFloat {
-        prevEquilibriumB - (counts.dissolvedFraction * (prevEquilibriumB - minB0))
+        prevEquilibriumB - (counts.fraction(of: .dissolved) * (prevEquilibriumB - minB0))
     }
 
     private var prevEquilibriumB: CGFloat {

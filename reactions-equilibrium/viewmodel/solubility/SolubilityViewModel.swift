@@ -86,12 +86,12 @@ final class SolubilityViewModel: ObservableObject {
     }
 
     func onParticleEmit(soluteType: SoluteType) {
-        componentsWrapper.soluteEmitted(soluteType)
+        componentsWrapper.solutePerformed(action: .emitted)
         goNextIfNeeded()
     }
 
     func onParticleWaterEntry(soluteType: SoluteType) {
-        componentsWrapper.soluteEnteredWater(soluteType)
+        componentsWrapper.solutePerformed(action: .enteredWater)
         goNextIfNeeded()
     }
 
@@ -99,7 +99,7 @@ final class SolubilityViewModel: ObservableObject {
         guard inputState == .addSolute(type: soluteType) || beakerSoluteState == .demoReaction else {
             return
         }
-        componentsWrapper.soluteDissolved(soluteType)
+        componentsWrapper.solutePerformed(action: .dissolved)
         goNextIfNeeded()
     }
 
@@ -118,7 +118,7 @@ final class SolubilityViewModel: ObservableObject {
     }
 
     var canEmit: Bool {
-        componentsWrapper.counts.canEmit
+        componentsWrapper.counts.canPerform(action: .emitted)
     }
 
     var soluteToAddForSaturation: Int {
