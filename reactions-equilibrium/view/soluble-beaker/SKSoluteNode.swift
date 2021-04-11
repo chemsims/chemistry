@@ -13,6 +13,7 @@ class SKSoluteNode: SKShapeNode {
 
     var hasEnteredWater = false
     var willDissolve = false
+    var willHide = false
 
     init(sideLength: CGFloat, soluteType: SoluteType) {
         self.sideLength = sideLength
@@ -29,8 +30,6 @@ class SKSoluteNode: SKShapeNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    private var hideActionId: Int?
 
     func copyNode() -> SKSoluteNode {
         let newCopy = SKSoluteNode(sideLength: sideLength, soluteType: soluteType)
@@ -84,17 +83,13 @@ class SKSoluteNode: SKShapeNode {
         self.run(group)
     }
 
-    func hide(actionId: Int) {
-        hideActionId = actionId
+    func hide() {
         self.isHidden = true
         self.physicsBody?.isDynamic = false
         self.physicsBody?.collisionBitMask = 0
     }
 
-    func show(actionId: Int) {
-        guard hideActionId == actionId else {
-            return
-        }
+    func show() {
         self.isHidden = false
         self.physicsBody?.isDynamic = true
         self.physicsBody?.collisionBitMask = UInt32.max

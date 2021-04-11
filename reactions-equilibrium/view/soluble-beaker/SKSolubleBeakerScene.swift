@@ -182,10 +182,33 @@ private class SKSolubleBeakerScene: SKScene {
         ion.run(action)
     }
 
-    private func hideSolute(actionId: Int) {
+    private func hideSolute(duration: TimeInterval) {
         runOnSolute { solute in
-            solute.hide(actionId: actionId)
-            solute.physicsBody?.categoryBitMask = 0
+            solute.willHide = true
+            let fadeOut = SKAction.fadeOut(withDuration: duration)
+            let hide = SKAction.run { [weak solute] in
+                guard let strongSolute = solute, strongSolute.willHide else {
+                    return
+                }
+                strongSolute.hide()
+                strongSolute.physicsBody?.categoryBitMask = 0
+            }
+
+            self.run(SKAction.sequence([fadeOut, hide]))
+        }
+    }
+
+    private func showHiddenSolute(duration: TimeInterval) {
+        runOnSolute { solute in
+            if solute.isHidden || solute.willHide {
+                solute.willHide = false
+                let show = SKAction.run { [weak solute] in
+                    solute?.show()
+                    solute?.physicsBody?.categoryBitMask = Category.solute
+                }
+                let fadeIn = SKAction.fadeIn(withDuration: duration)
+                self.run(SKAction.sequence([show, fadeIn]))
+            }
         }
     }
 
@@ -197,14 +220,6 @@ private class SKSolubleBeakerScene: SKScene {
         }
     }
 
-    private func showHiddenSolute(actionId: Int) {
-        runOnSolute { solute in
-            if solute.isHidden {
-                solute.show(actionId: actionId)
-                solute.physicsBody?.categoryBitMask = Category.solute
-            }
-        }
-    }
 
     private var saturatedNodesReacted = [SKSoluteNode]()
     private func runSuperSaturatedReaction(duration: CGFloat) {
@@ -294,10 +309,10 @@ extension SKSolubleBeakerScene {
             cleanupDemoReaction()
         case .removeSolute:
             removeSolute()
-        case let .hideSolute(id: id):
-            hideSolute(actionId: id)
-        case let .reAddSolute(id: id):
-            showHiddenSolute(actionId: id)
+        case let .hideSolute(duration: duration):
+            hideSolute(duration: duration)
+        case let .reAddSolute(duration: duration):
+            showHiddenSolute(duration: duration)
         case .none:
             break;
         }

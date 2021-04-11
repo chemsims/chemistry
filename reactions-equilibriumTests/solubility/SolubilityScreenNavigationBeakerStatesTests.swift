@@ -71,11 +71,11 @@ class SolubilityScreenNavigationBeakerStatesTests: XCTestCase {
 
         // Chart shifts to prepare common ion reaction
         nav.nextUntil { $0.currentTime == 0 }
-        XCTAssertEqual(model.beakerState, makeState(.none, .hideSolute(id: 0)))
+        XCTAssertEqual(model.beakerState, makeState(.none, .hideSolute(duration: 1)))
         XCTAssertEqual(model.inputState, .none)
 
         nav.back()
-        XCTAssertEqual(model.beakerState, makeState(.none, .reAddSolute(id: 0)))
+        XCTAssertEqual(model.beakerState, makeState(.none, .reAddSolute(duration: 1)))
         XCTAssertEqual(model.inputState, .none)
     }
 

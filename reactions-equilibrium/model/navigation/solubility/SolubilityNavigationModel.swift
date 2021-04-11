@@ -332,7 +332,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
             model.activeSolute = nil
             model.waterColor = model.componentsWrapper.initialColor.color
         }
-        model.beakerState.goTo(state: .none, with: .hideSolute(id: 0))
+        model.beakerState.goTo(state: .none, with: .hideSolute(duration: 1))
         model.stopShaking()
     }
 
@@ -342,7 +342,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
             model.waterColor = model.componentsWrapper.finalColor.color
 
         }
-        model.beakerState.goTo(state: .none, with: .reAddSolute(id: 0))
+        model.beakerState.goTo(state: .none, with: .reAddSolute(duration: 1))
     }
 }
 
