@@ -185,6 +185,7 @@ private class SKSolubleBeakerScene: SKScene {
     private func hideSolute(actionId: Int) {
         runOnSolute { solute in
             solute.hide(actionId: actionId)
+            solute.physicsBody?.categoryBitMask = 0
         }
     }
 
@@ -200,6 +201,7 @@ private class SKSolubleBeakerScene: SKScene {
         runOnSolute { solute in
             if solute.isHidden {
                 solute.show(actionId: actionId)
+                solute.physicsBody?.categoryBitMask = Category.solute
             }
         }
     }
