@@ -51,7 +51,7 @@ class SolubilityScreenNavigationBeakerStatesTests: XCTestCase {
 
         // Back to previous pre add saturated solute
         nav.back()
-        XCTAssertEqual(model.beakerState, makeState(.none, .removeSolute))
+        XCTAssertEqual(model.beakerState, makeState(.none, .removeSolute(duration: 0.5)))
         XCTAssertEqual(model.inputState, .none)
 
         // Reapply add saturated solute
@@ -60,11 +60,11 @@ class SolubilityScreenNavigationBeakerStatesTests: XCTestCase {
         XCTAssertEqual(model.beakerState, makeState(.none, .none))
         XCTAssertEqual(model.inputState, .none)
         nav.back()
-        XCTAssertEqual(model.beakerState, makeState(.addingSaturatedPrimary, .removeSolute))
+        XCTAssertEqual(model.beakerState, makeState(.addingSaturatedPrimary, .removeSolute(duration: 0.5)))
         XCTAssertEqual(model.inputState, .addSaturatedSolute)
 
         nav.back()
-        XCTAssertEqual(model.beakerState, makeState(.none, .removeSolute))
+        XCTAssertEqual(model.beakerState, makeState(.none, .removeSolute(duration: 0.5)))
         XCTAssertEqual(model.inputState, .none)
 
         model.currentTime = 10 // Set current time to > 0 to detect when it is reset
@@ -118,7 +118,7 @@ class SolubilityScreenNavigationBeakerStatesTests: XCTestCase {
         // Reapply add saturated solute
         nav.next()
         nav.back()
-        XCTAssertEqual(model.beakerState, makeState(.addingSaturatedPrimary, .removeSolute))
+        XCTAssertEqual(model.beakerState, makeState(.addingSaturatedPrimary, .removeSolute(duration: 0.5)))
         XCTAssertEqual(model.inputState, .addSaturatedSolute)
 
         nav.nextUntilStatement(startsWith: "In other words, if you add H")

@@ -281,7 +281,7 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
 
     override func reapply(on model: SolubilityViewModel) {
         model.componentsWrapper.reset()
-        model.beakerState.goTo(state: .addingSaturatedPrimary, with: .removeSolute)
+        model.beakerState.goTo(state: .addingSaturatedPrimary, with: .removeSolute(duration: 0.5))
         doApply(on: model)
     }
 
@@ -301,7 +301,7 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
             model.currentTime = model.timing.equilibrium
         }
         model.componentsWrapper.reset()
-        model.beakerState.goTo(state: .none, with: .removeSolute)
+        model.beakerState.goTo(state: .none, with: .removeSolute(duration: 0.5))
     }
 }
 

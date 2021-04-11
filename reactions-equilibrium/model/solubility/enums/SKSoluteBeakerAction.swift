@@ -10,7 +10,7 @@ enum SKSoluteBeakerAction: Equatable {
          completeReaction,
          undoReaction,
          cleanupDemoReaction,
-         removeSolute,
+         removeSolute(duration: TimeInterval),
          hideSolute(duration: TimeInterval),
          reAddSolute(duration: TimeInterval)
 }

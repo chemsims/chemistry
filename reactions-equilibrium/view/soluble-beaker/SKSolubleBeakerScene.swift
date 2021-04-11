@@ -194,7 +194,7 @@ private class SKSolubleBeakerScene: SKScene {
                 strongSolute.physicsBody?.categoryBitMask = 0
             }
 
-            self.run(SKAction.sequence([fadeOut, hide]))
+            solute.run(SKAction.sequence([fadeOut, hide]))
         }
     }
 
@@ -207,15 +207,17 @@ private class SKSolubleBeakerScene: SKScene {
                     solute?.physicsBody?.categoryBitMask = Category.solute
                 }
                 let fadeIn = SKAction.fadeIn(withDuration: duration)
-                self.run(SKAction.sequence([show, fadeIn]))
+                solute.run(SKAction.sequence([show, fadeIn]))
             }
         }
     }
 
-    private func removeSolute() {
+    private func removeSolute(duration: TimeInterval) {
         runOnSolute { solute in
             if !solute.isHidden {
-                solute.removeFromParent()
+                let fadeOut = SKAction.fadeOut(withDuration: duration)
+                let remove = SKAction.removeFromParent()
+                solute.run(SKAction.sequence([fadeOut, remove]))
             }
         }
     }
@@ -307,8 +309,8 @@ extension SKSolubleBeakerScene {
             reAddSaturatedReactionSolute()
         case .cleanupDemoReaction:
             cleanupDemoReaction()
-        case .removeSolute:
-            removeSolute()
+        case let .removeSolute(duration: duration):
+            removeSolute(duration: duration)
         case let .hideSolute(duration: duration):
             hideSolute(duration: duration)
         case let .reAddSolute(duration: duration):
