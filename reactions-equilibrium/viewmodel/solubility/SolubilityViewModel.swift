@@ -17,9 +17,7 @@ final class SolubilityViewModel: ObservableObject {
     @Published var currentTime: CGFloat = 0
     @Published var waterColor: Color = RGB.beakerLiquid.color
     
-    @Published var beakerSoluteState = BeakerSoluteState.addingSolute(type: .primary, clearPrevious: false)
-
-    @Published var beakerAction: SKSoluteBeakerAction?
+    @Published var beakerState: BeakerStateTransition = BeakerStateTransition()
 
     @Published var chartOffset: CGFloat = 0
     @Published var equationState = SolubilityEquationState.showOriginalQuotient
@@ -98,7 +96,7 @@ final class SolubilityViewModel: ObservableObject {
     }
 
     func onDissolve(soluteType: SoluteType) {
-        guard inputState == .addSolute(type: soluteType) || beakerSoluteState == .demoReaction else {
+        guard inputState == .addSolute(type: soluteType) || beakerState.state == .demoReaction else {
             return
         }
         componentsWrapper.solutePerformed(action: .dissolved)

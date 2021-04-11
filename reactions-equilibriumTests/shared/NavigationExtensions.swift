@@ -57,5 +57,22 @@ extension NavigationModel {
     func backUntil(_ keyPath: KeyPath<State.Model, Bool>) {
         backUntil { $0[keyPath: keyPath] }
     }
+}
 
+extension NavigationModel where State.Model: HasStatement {
+    func nextUntilStatement(startsWith startOfString: String) {
+        nextUntil {
+            $0.statement.content.lowercased().starts(with: startOfString.lowercased())
+        }
+    }
+}
+
+protocol HasStatement {
+    var statement: [TextLine] { get }
+}
+
+extension Array where Element == TextLine {
+    var content: String {
+        self.reduce("") { $0 + $1.asString }
+    }
 }

@@ -121,6 +121,7 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
 
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
         model.statement = statements.explainKspRatio1
+        model.beakerState.goTo(state: .demoReaction, with: .none)
         withAnimation(.easeOut(duration: 0.3)) {
             model.equationState = .showCorrectQuotientNotFilledIn
         }
@@ -151,7 +152,7 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
     }
 
     override func unapply(on model: SolubilityViewModel) {
-        model.beakerAction = .cleanupDemoReaction
+        model.beakerState.goTo(state: .none, with: .cleanupDemoReaction)
         if let previous = model.componentsWrapper.previous {
             model.componentsWrapper = previous
         }
@@ -166,7 +167,7 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
 private class StopDemo: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.explainKspRatio2
-        model.beakerAction = .cleanupDemoReaction
+        model.beakerState.goTo(state: .none, with: .cleanupDemoReaction)
         withAnimation(.easeOut(duration: 0.5)) {
             model.waterColor = RGB.beakerLiquid.color
         }
@@ -218,7 +219,7 @@ private class AddSolute: SolubilityScreenState {
 
         model.equationState = .showCorrectQuotientFilledIn
         model.statement = statement
-        model.beakerSoluteState = .addingSolute(type: .primary, clearPrevious: false)
+        model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
         model.stopShaking()
     }
 
@@ -240,6 +241,7 @@ private class ShowSaturatedSolution: SolubilityScreenState {
     }
 
     override func apply(on model: SolubilityViewModel) {
+        model.beakerState.goTo(state: .none, with: .none)
         doApply(on: model, setComponents: true)
     }
 
@@ -250,7 +252,6 @@ private class ShowSaturatedSolution: SolubilityScreenState {
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
         model.statement = statement
         model.stopShaking()
-        model.beakerSoluteState = .addingSolute(type: .primary, clearPrevious: false)
 
         if setComponents {
             model.componentsWrapper = PrimarySoluteSaturatedComponentsWrapper(
@@ -274,19 +275,25 @@ private class ShowSaturatedSolution: SolubilityScreenState {
 
 private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
+        model.beakerState.goTo(state: .addingSaturatedPrimary, with: .none)
+        doApply(on: model)
+    }
+
+    override func reapply(on model: SolubilityViewModel) {
+        model.componentsWrapper.reset()
+        model.beakerState.goTo(state: .addingSaturatedPrimary, with: .removeSolute)
+        doApply(on: model)
+    }
+
+    private func doApply(on model: SolubilityViewModel) {
         model.statement = statements.instructToAddSaturatedSolute
-        model.beakerSoluteState = .addingSaturatedPrimary
+
         withAnimation(.easeOut(duration: 0.5)) {
-//            model.currentTime = model.timing.equilibrium
+            model.currentTime = model.timing.equilibrium
             model.inputState = .addSaturatedSolute
             model.activeSolute = .primary
         }
         model.startShaking()
-    }
-
-    override func reapply(on model: SolubilityViewModel) {
-//        model.componentsWrapper.reset()
-        apply(on: model)
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -294,6 +301,7 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
             model.currentTime = model.timing.equilibrium
         }
         model.componentsWrapper.reset()
+        model.beakerState.goTo(state: .none, with: .removeSolute)
     }
 }
 
@@ -306,6 +314,7 @@ private class PostAddingSoluteToSaturatedBeaker: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statement
         model.stopShaking()
+        model.beakerState.goTo(state: .none, with: .none)
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
             model.activeSolute = nil
@@ -323,8 +332,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
             model.activeSolute = nil
             model.waterColor = model.componentsWrapper.initialColor.color
         }
-        model.beakerAction = .hideSolute(id: 0)
-        model.beakerSoluteState = .addingSolute(type: .commonIon, clearPrevious: true)
+        model.beakerState.goTo(state: .none, with: .hideSolute(id: 0))
         model.stopShaking()
     }
 
@@ -332,8 +340,9 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = model.timing.end
             model.waterColor = model.componentsWrapper.finalColor.color
+
         }
-        model.beakerAction = .reAddSolute(id: 0)
+        model.beakerState.goTo(state: .none, with: .reAddSolute(id: 0))
     }
 }
 
@@ -353,7 +362,7 @@ private class AddCommonIonSolute: SolubilityScreenState {
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
         model.statement = statements.instructToAddCommonIon
         model.inputState = .addSolute(type: .commonIon)
-        model.beakerSoluteState = .addingSolute(type: .commonIon, clearPrevious: false)
+        model.beakerState.goTo(state: .addingSolute(type: .commonIon), with: .none)
         if setComponents {
             model.componentsWrapper = CommonIonComponentsWrapper(
                 timing: SolubleReactionSettings.firstReactionTiming,
@@ -390,7 +399,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
         }
         model.equationState = .showCorrectQuotientFilledIn
         model.statement = statements.instructToAddPrimarySolutePostCommonIon
-        model.beakerSoluteState = .addingSolute(type: .primary, clearPrevious: false)
+        model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
         model.stopShaking()
         if setWrapper {
             model.componentsWrapper = PrimarySoluteComponentsWrapper(
@@ -418,7 +427,6 @@ private class PrepareAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.explainPh1
         model.stopShaking()
-        model.beakerAction = .hideSolute(id: 1)
         withAnimation(.easeOut(duration: 1)) {
             model.inputState = .none
             model.activeSolute = nil
@@ -428,7 +436,6 @@ private class PrepareAcidReaction: SolubilityScreenState {
     }
 
     override func unapply(on model: SolubilityViewModel) {
-        model.beakerAction = .reAddSolute(id: 1)
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = 0
             model.currentTime = model.timing.end
@@ -438,6 +445,7 @@ private class PrepareAcidReaction: SolubilityScreenState {
 
 private class AddAcidSolute: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
+        model.beakerState.goTo(state: .addingSolute(type: .acid), with: .none)
         doApply(on: model, setComponents: true)
     }
 
@@ -452,7 +460,7 @@ private class AddAcidSolute: SolubilityScreenState {
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
         model.statement = statements.instructToAddH
         model.inputState = .addSolute(type: .acid)
-        model.beakerSoluteState = .addingSolute(type: .acid, clearPrevious: false)
+
         if setComponents {
             model.componentsWrapper = AddAcidComponentsWrapper(
                 previous: model.componentsWrapper,
@@ -478,14 +486,25 @@ private class AddAcidSolute: SolubilityScreenState {
 private class RunAcidReaction: SolubilityScreenState {
 
     override func apply(on model: SolubilityViewModel) {
+        model.beakerState.goTo(state: .none, with: .runReaction)
+        doApply(on: model)
+    }
+
+    override func reapply(on model: SolubilityViewModel) {
+        model.beakerState.goTo(state: .none, with: [.undoReaction, .runReaction])
+        doApply(on: model)
+    }
+
+    private func doApply(on model: SolubilityViewModel) {
         model.statement = statements.acidReactionRunning
         let dt = model.timing.end - model.timing.start
-        model.beakerSoluteState = .dissolvingSuperSaturatedPrimary
-        model.beakerAction = .runReaction
+
         model.stopShaking()
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
             model.activeSolute = nil
+            model.currentTime = model.timing.start
+            model.waterColor = model.componentsWrapper.initialColor.color
         }
         withAnimation(.linear(duration: Double(dt))) {
             model.currentTime = model.timing.end
@@ -494,7 +513,7 @@ private class RunAcidReaction: SolubilityScreenState {
     }
 
     override func unapply(on model: SolubilityViewModel) {
-        model.beakerAction = .undoReaction
+        model.beakerState.goTo(state: .addingSolute(type: .acid), with: .undoReaction)
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.start
             model.waterColor = model.componentsWrapper.initialColor.color
@@ -513,8 +532,7 @@ private class EndAcidReaction: SolubilityScreenState {
             model.currentTime = model.timing.end * 1.001
             model.waterColor = model.componentsWrapper.finalColor.incremented(by: 1).color
         }
-        model.beakerSoluteState = .completedSuperSaturatedReaction
-        model.beakerAction = .completeReaction
+        model.beakerState.goTo(state: .none, with: .completeReaction)
     }
 }
 
