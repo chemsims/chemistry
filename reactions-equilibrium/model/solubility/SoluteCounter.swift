@@ -9,18 +9,16 @@ struct SoluteCounter {
 
     init(maxAllowed: Int) {
         self.maxAllowed = maxAllowed
-        self.counts = Dictionary(
-            uniqueKeysWithValues: SoluteParticleAction.allCases.map {
-                ($0, 0)
-            }
-        )
     }
 
     private var counts = [SoluteParticleAction:Int]()
 
     mutating func didPerform(action: SoluteParticleAction) {
-        let count = counts[action] ?? -1
-        counts[action] = count + 1
+        let nextCount = count(of: action) + 1
+        guard nextCount <= maxAllowed else {
+            return
+        }
+        counts[action] = nextCount
     }
 
     mutating func reset() {

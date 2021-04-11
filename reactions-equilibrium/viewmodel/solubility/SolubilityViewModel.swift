@@ -118,7 +118,7 @@ final class SolubilityViewModel: ObservableObject {
     }
 
     var canEmit: Bool {
-        componentsWrapper.counts.canPerform(action: .emitted)
+        componentsWrapper.canPerform(action: .emitted)
     }
 
     var soluteToAddForSaturation: Int {

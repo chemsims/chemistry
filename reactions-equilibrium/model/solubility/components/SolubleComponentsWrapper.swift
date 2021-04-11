@@ -28,8 +28,13 @@ protocol SolubleComponentsWrapper {
 }
 
 extension SolubleComponentsWrapper {
+    
     mutating func reset() {
         counts.reset()
+    }
+
+    func canPerform(action: SoluteParticleAction) -> Bool {
+        counts.canPerform(action: action)
     }
 
     var ph: Equation {
