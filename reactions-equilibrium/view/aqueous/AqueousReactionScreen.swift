@@ -86,7 +86,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     var body: some View {
         VStack(spacing: 0) {
             reactionToggle
-                .zIndex(isSelectingReaction ? 1 : 0)
+
             Spacer()
             equation
             Spacer()
@@ -97,36 +97,19 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     }
 
     private var reactionToggle: some View {
-        HStack(spacing: 0) {
-            if !isSelectingReaction {
-                ReactionDefinitionView<Reaction>(
-                    type: selectedReaction,
-                    highlightTopArrow: highlightForwardReactionArrow,
-                    highlightReverseArrow: highlightReverseReactionArrow,
-                    showHeat: showHeat
-                )
-                .font(.system(size: settings.reactionDefintionFont))
-                .minimumScaleFactor(0.5)
-                .colorMultiply(reactionDefinitionHighlight)
-            }
-
-            Spacer()
-            ReactionDropDownSelection(
-                isToggled: $reactionSelectionIsToggled,
-                selection: $selectedReaction,
-                options: reactions,
-                onSelection: next,
-                height: settings.reactionToggleHeight
-            ).frame(
-                width: settings.reactionToggleHeight,
-                height: settings.reactionToggleHeight,
-                alignment: .topTrailing
-            )
-            .disabled(!isSelectingReaction)
-            .opacity(isSelectingReaction ? 1 : 0.6)
-            .colorMultiply(generalElementHighlight)
-        }
-        .frame(width: settings.gridWidth, height: settings.reactionToggleHeight)
+        ReactionToggle(
+            reactions: reactions,
+            selectedReaction: $selectedReaction,
+            reactionSelectionIsToggled: $reactionSelectionIsToggled,
+            isSelectingReaction: isSelectingReaction,
+            onSelection: next,
+            highlightForwardArrow: highlightForwardReactionArrow,
+            highlightReverseArrow: highlightReverseReactionArrow,
+            showHeat: showHeat,
+            reactionDefinitionHighlight: reactionDefinitionHighlight,
+            generalElementHighlight: generalElementHighlight,
+            settings: settings
+        )
     }
 
     private var equation: some View {

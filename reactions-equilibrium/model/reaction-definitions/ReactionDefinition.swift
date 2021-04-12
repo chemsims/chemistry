@@ -3,8 +3,14 @@
 //
 
 import CoreGraphics
+import ReactionsCore
 
-protocol ReactionDefinition: Identifiable, Equatable {
+protocol SelectableReaction: Identifiable, Equatable, Labelled {
+    var reactantDisplay: String { get }
+    var productDisplay: String { get }
+}
+
+protocol ReactionDefinition: SelectableReaction {
     var equilibriumConstant: CGFloat { get }
     var coefficients: BalancedReactionCoefficients { get }
 }

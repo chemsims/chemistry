@@ -5,7 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
-struct ReactionDropDownSelection<Reaction: ReactionDefinition>: View {
+struct ReactionDropDownSelection<Reaction: SelectableReaction>: View {
 
     @Binding var isToggled: Bool
     @Binding var selection: Reaction

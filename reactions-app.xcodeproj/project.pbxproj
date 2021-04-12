@@ -294,6 +294,8 @@
 		57D15C0C2622D67F00BE1303 /* BeakerStateTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C0B2622D67F00BE1303 /* BeakerStateTransition.swift */; };
 		57D15C172622D7ED00BE1303 /* SolubilityScreenSoluteCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C162622D7ED00BE1303 /* SolubilityScreenSoluteCounterTests.swift */; };
 		57D15C2B2622DC9F00BE1303 /* SoluteCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C2A2622DC9F00BE1303 /* SoluteCounterTests.swift */; };
+		57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C4426241FCC00BE1303 /* Labelled.swift */; };
+		57D15C4B2624267D00BE1303 /* ReactionToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C4A2624267D00BE1303 /* ReactionToggle.swift */; };
 		57D2F2C325EA227D00AEE0D8 /* ReactionQuotientEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2C225EA227D00AEE0D8 /* ReactionQuotientEquation.swift */; };
 		57D2F2C925EA265900AEE0D8 /* QuotientPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2C825EA265900AEE0D8 /* QuotientPlot.swift */; };
 		57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2D325EA27DA00AEE0D8 /* Line.swift */; };
@@ -747,6 +749,8 @@
 		57D15C0B2622D67F00BE1303 /* BeakerStateTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerStateTransition.swift; sourceTree = "<group>"; };
 		57D15C162622D7ED00BE1303 /* SolubilityScreenSoluteCounterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityScreenSoluteCounterTests.swift; sourceTree = "<group>"; };
 		57D15C2A2622DC9F00BE1303 /* SoluteCounterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoluteCounterTests.swift; sourceTree = "<group>"; };
+		57D15C4426241FCC00BE1303 /* Labelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labelled.swift; sourceTree = "<group>"; };
+		57D15C4A2624267D00BE1303 /* ReactionToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionToggle.swift; sourceTree = "<group>"; };
 		57D2F2C225EA227D00AEE0D8 /* ReactionQuotientEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionQuotientEquation.swift; sourceTree = "<group>"; };
 		57D2F2C825EA265900AEE0D8 /* QuotientPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotientPlot.swift; sourceTree = "<group>"; };
 		57D2F2D325EA27DA00AEE0D8 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
@@ -1529,6 +1533,7 @@
 			isa = PBXGroup;
 			children = (
 				57686AAD2600D22C005BD328 /* SelectionToggleText.swift */,
+				57D15C4A2624267D00BE1303 /* ReactionToggle.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -1833,6 +1838,7 @@
 				571D6A6E255AB25400F4E635 /* Styling.swift */,
 				5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */,
 				57E59A5D25F92E260087F760 /* HighlightedElements.swift */,
+				57D15C4426241FCC00BE1303 /* Labelled.swift */,
 			);
 			path = display;
 			sourceTree = "<group>";
@@ -2803,6 +2809,7 @@
 				57ABDC3925EBF9300078A82B /* AqueousReactionType.swift in Sources */,
 				57952A2125E63F7F006AB876 /* BalancedReaction.swift in Sources */,
 				575A88B825E43CD500AEE448 /* SceneDelegate.swift in Sources */,
+				57D15C4B2624267D00BE1303 /* ReactionToggle.swift in Sources */,
 				57DDAC1A25E4FD8100B535A7 /* AqueousReactionScreen.swift in Sources */,
 				57B3B94D260B478800EB9B47 /* ReactionsEquilibriumNavigationModel.swift in Sources */,
 				5729BC22261D883F000390A0 /* SolubilityChartEquation.swift in Sources */,
@@ -2967,6 +2974,7 @@
 				57B3B929260B39A600EB9B47 /* ShareSheetView.swift in Sources */,
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
+				57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */,
 				575A887525E4364500AEE448 /* NavButton.swift in Sources */,
 				5797A4A325E40A5100991BD9 /* MoleculeGrid.swift in Sources */,
 				5786FAB525E692D800AAD8A6 /* RunnableState.swift in Sources */,

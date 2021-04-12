@@ -78,7 +78,11 @@ private struct SolubilityRightStack: View {
     }
 
     private var mainContent: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .trailing, spacing: 0) {
+            reactionToggle
+
+            Spacer()
+
             SolubilityEquationView(model: model)
                 .frame(
                     width: settings.equationWidth,
@@ -112,6 +116,22 @@ private struct SolubilityRightStack: View {
                 settings: settings.common.beakySettings
             )
         }
+    }
+
+    private var reactionToggle: some View {
+        ReactionToggle(
+            reactions: AqueousReactionType.allCases,
+            selectedReaction: .constant(.A),
+            reactionSelectionIsToggled: .constant(true),
+            isSelectingReaction: true,
+            onSelection: {},
+            highlightForwardArrow: false,
+            highlightReverseArrow: false,
+            showHeat: false,
+            reactionDefinitionHighlight: .white,
+            generalElementHighlight: .white,
+            settings: settings.common
+        )
     }
 
     private var equationRecap: some View {

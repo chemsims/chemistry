@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct ReactionDefinitionView<Reaction: ReactionDefinition>: View {
+struct ReactionDefinitionView<Reaction: SelectableReaction>: View {
 
     let type: Reaction
     let highlightTopArrow: Bool
