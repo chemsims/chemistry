@@ -13,18 +13,27 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
     }
 
     var reactantDisplay: String {
-        "\(components.0)\(components.1)(s)"
+        "\(products.concatenated)(s)"
     }
 
     var productDisplay: String {
-        "\(components.0)+ + \(components.1)-"
+        "\(products.first)+ + \(products.second)-"
     }
 
-    private var components: (String, String) {
+    var products: SolubleProductPair {
         switch self {
-        case .A: return ("A", "B")
-        case .B: return ("C", "D")
-        case .C: return ("E", "F")
+        case .A: return SolubleProductPair(first: "A", second: "B")
+        case .B: return SolubleProductPair (first: "C", second: "D")
+        case .C: return SolubleProductPair (first: "E", second: "F")
         }
+    }
+}
+
+struct SolubleProductPair {
+    let first: String
+    let second: String
+
+    var concatenated: String {
+        "\(first)\(second)"
     }
 }

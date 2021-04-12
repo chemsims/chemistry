@@ -33,7 +33,8 @@ private struct SizedSolubilityEquationView: View {
             VStack(alignment: .leading, spacing: 5) {
                 QuotientConcentrationDefinition(
                     isStruckOut: model.equationState.doCrossOutDenom,
-                    showDenom: model.equationState.doShowOriginalQuotient
+                    showDenom: model.equationState.doShowOriginalQuotient,
+                    products: model.selectedReaction.products
                 )
                 .frame(height: 90)
 
@@ -67,6 +68,7 @@ private struct QuotientConcentrationDefinition: View {
 
     let isStruckOut: Bool
     let showDenom: Bool
+    let products: SolubleProductPair
 
     var body: some View {
         ZStack {
@@ -83,7 +85,7 @@ private struct QuotientConcentrationDefinition: View {
                 .frame(width: 230, height: 50)
             }
         }
-        .frame(width: 230)
+        .frame(width: 250)
     }
 
     private var content: some View {
@@ -93,19 +95,22 @@ private struct QuotientConcentrationDefinition: View {
             Equals()
             VStack(spacing: 2) {
                 HStack(spacing: 2) {
-                    term("A", "+")
-                    term("B", "-")
+                    term(products.first, "+")
+                    term(products.second, "-")
                 }
                 if showDenom {
                     Rectangle()
                         .frame(width: 110, height: 2)
                     HStack(spacing: 2) {
-                        FixedText("[AB]")
+                        FixedText("[\(products.concatenated)]")
+                            .frame(width: 65)
                     }
                 }
-
             }
+            .frame(width: 130)
+            Spacer()
         }
+        .animation(nil)
     }
 
     private func term(_ name: String, _ power: String) -> some View {

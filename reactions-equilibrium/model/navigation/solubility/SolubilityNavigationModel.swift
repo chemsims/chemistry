@@ -102,6 +102,7 @@ private class PostSelectReaction: SolubilityScreenState {
         model.statement = statements.explainSolubility1
         model.inputState = .none
         model.showSelectedReaction = true
+        model.reactionSelectionToggled = false
     }
 
     override func unapply(on model: SolubilityViewModel) {
