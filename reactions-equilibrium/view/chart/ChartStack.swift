@@ -184,7 +184,7 @@ extension ChartStack {
         settings: AqueousScreenLayoutSettings
     ) {
         self.init(
-            concentrationData: model.components.concentrationData,
+            concentrationData: model.components.concentrationData(reaction: model.selectedReaction),
             tableColumns: model.components.tableData(reaction: model.selectedReaction),
             equilibriumTime: 20,
             quotientEquation: model.components.quotient,
@@ -207,13 +207,13 @@ extension ChartStack {
 }
 
 private extension SolubilityComponents {
-    var concentrationData: [MultiConcentrationPlotData] {
+    func concentrationData(reaction: SolubleReactionType) -> [MultiConcentrationPlotData] {
         SoluteValues(builder: { element in
             MultiConcentrationPlotData(
                 equation: equation.concentration.value(for: element),
                 color: element.color,
                 discontinuity: concentrationDiscontinuity?.value(for: element),
-                legendValue: element.rawValue
+                legendValue: reaction.product(for: element)
             )
         }).all
     }
@@ -221,11 +221,17 @@ private extension SolubilityComponents {
     func tableData(reaction: SolubleReactionType) -> [ICETableColumn] {
         SoluteValues(builder: { element in
             ICETableColumn(
-                header: element == .A ? reaction.products.first : reaction.products.second,
+                header: reaction.product(for: element),
                 initialValue: equation.initialConcentration.value(for: element),
                 finalValue: equation.finalConcentration.value(for: element)
             )
         }).all
+    }
+}
+
+private extension SolubleReactionType {
+    func product(for element: SoluteProductType) -> String {
+        element == .A ? products.first : products.second
     }
 }
 
