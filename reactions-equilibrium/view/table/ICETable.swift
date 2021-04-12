@@ -62,6 +62,7 @@ private struct SizedICETable: View {
 
         return VStack(spacing: 0) {
             cell(columnValue.header)
+                .animation(nil)
             cell(initial)
             cell(changeString, emphasise: true)
             cell(final, emphasise: true)

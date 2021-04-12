@@ -185,7 +185,7 @@ extension ChartStack {
     ) {
         self.init(
             concentrationData: model.components.concentrationData,
-            tableColumns: model.components.tableData,
+            tableColumns: model.components.tableData(reaction: model.selectedReaction),
             equilibriumTime: 20,
             quotientEquation: model.components.quotient,
             currentTime: currentTime,
@@ -218,10 +218,10 @@ private extension SolubilityComponents {
         }).all
     }
 
-    var tableData: [ICETableColumn] {
+    func tableData(reaction: SolubleReactionType) -> [ICETableColumn] {
         SoluteValues(builder: { element in
             ICETableColumn(
-                header: element.rawValue,
+                header: element == .A ? reaction.products.first : reaction.products.second,
                 initialValue: equation.initialConcentration.value(for: element),
                 finalValue: equation.finalConcentration.value(for: element)
             )
