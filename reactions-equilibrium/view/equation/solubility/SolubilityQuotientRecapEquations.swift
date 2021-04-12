@@ -6,6 +6,9 @@ import SwiftUI
 import ReactionsCore
 
 struct SolubilityQuotientRecapEquations: View {
+
+    let reaction: SolubleReactionType
+
     var body: some View {
         GeometryReader { geo in
             ScaledView(
@@ -14,7 +17,7 @@ struct SolubilityQuotientRecapEquations: View {
                 maxWidth: geo.size.width,
                 maxHeight: geo.size.height
             ) {
-                SizedSolubilityQuotientRecapEquations()
+                SizedSolubilityQuotientRecapEquations(reaction: reaction)
             }
             .frame(width: geo.size.width, height: geo.size.height)
         }
@@ -22,28 +25,45 @@ struct SolubilityQuotientRecapEquations: View {
 }
 
 private struct SizedSolubilityQuotientRecapEquations: View {
+
+    let reaction: SolubleReactionType
+
     var body: some View {
         HStack(spacing: 0) {
-            AqueousQuotientRecap()
+            AqueousQuotientRecap(products: reaction.products)
             Spacer()
                 .frame(width: 40)
-            GaseousQuotientRecap()
+            GaseousQuotientRecap(products: reaction.products)
         }
         .font(.system(size: EquationSizing.fontSize))
     }
 }
 
 private struct AqueousQuotientRecap: View {
+
+    let products: SolubleProductPair
+
     var body: some View {
-        GeneralRecap(title: "Aqueous compounds", elementType: "aq") { element in
+        GeneralRecap(
+            products: products,
+            title: "Aqueous compounds",
+            elementType: "aq"
+        ) { element in
             FixedText("[\(element)]")
         }
     }
 }
 
 private struct GaseousQuotientRecap: View {
+
+    let products: SolubleProductPair
+
     var body: some View {
-        GeneralRecap(title: "Gaseous compounds", elementType: "g") { element in
+        GeneralRecap(
+            products: products,
+            title: "Gaseous compounds",
+            elementType: "g"
+        ) { element in
             HStack(alignment: .bottom, spacing: 0) {
                 FixedText("P")
                 Text(element)
@@ -55,6 +75,7 @@ private struct GaseousQuotientRecap: View {
 
 private struct GeneralRecap<Content: View>: View  {
 
+    let products: SolubleProductPair
     let title: String
     let elementType: String
     let formatElement: (String) -> Content
@@ -71,11 +92,11 @@ private struct GeneralRecap<Content: View>: View  {
 
     private var decomposition: some View {
         HStack(spacing: 5) {
-            elementWithType("AB")
+            elementWithType(products.concatenated)
             FixedText("➝")
-            elementWithType("A")
+            elementWithType(products.first)
             FixedText("+")
-            elementWithType("B")
+            elementWithType(products.second)
         }
     }
 
@@ -85,12 +106,12 @@ private struct GeneralRecap<Content: View>: View  {
             FixedText("=")
             VStack(spacing: 2) {
                 HStack(spacing: 2) {
-                    formatElement("A")
-                    formatElement("B")
+                    formatElement(products.first)
+                    formatElement(products.second)
                 }
                 Rectangle()
                     .frame(width: 90, height: 2)
-                formatElement("AB")
+                formatElement(products.concatenated)
             }
         }
     }
@@ -106,15 +127,15 @@ private struct GeneralRecap<Content: View>: View  {
     }
 }
 
-private let NaturalWidth: CGFloat = 535
-private let NaturalHeight: CGFloat = 128
+private let NaturalWidth: CGFloat = 587
+private let NaturalHeight: CGFloat = 169
 
 struct SolubilityQuotientRecapEquations_Previews: PreviewProvider {
     static var previews: some View {
-        SizedSolubilityQuotientRecapEquations()
+        SizedSolubilityQuotientRecapEquations(reaction: .C)
             .border(Color.red)
             .frame(width: NaturalWidth, height: NaturalHeight)
             .border(Color.black)
-            .previewLayout(.iPhoneSELandscape)
+            .previewLayout(.iPhone12ProMaxLandscape)
     }
 }

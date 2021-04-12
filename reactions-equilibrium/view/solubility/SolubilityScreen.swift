@@ -138,7 +138,7 @@ private struct SolubilityRightStack: View {
     private var equationRecap: some View {
         VStack(spacing: 0) {
             Spacer()
-            SolubilityQuotientRecapEquations()
+            SolubilityQuotientRecapEquations(reaction: model.selectedReaction)
                 .frame(width: settings.equationWidth, height: settings.equationHeight)
             Spacer()
                 .frame(height: 1.1 * settings.common.beakyTotalHeight)
