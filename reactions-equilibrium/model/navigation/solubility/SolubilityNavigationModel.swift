@@ -157,6 +157,7 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
                 maxCount: catalystCount,
                 previous: model.componentsWrapper,
                 timing: model.timing,
+                solubilityCurve: model.selectedReaction.solubility,
                 setColor: model.setColor
             )
         }
@@ -225,6 +226,7 @@ private class AddSolute: SolubilityScreenState {
             soluteToAddForSaturation: model.soluteToAddForSaturation,
             timing: model.timing,
             previous: nil,
+            solubilityCurve: model.selectedReaction.solubility,
             setTime: model.setTime
         )
         doApply(on: model)
@@ -282,6 +284,7 @@ private class ShowSaturatedSolution: SolubilityScreenState {
         if setComponents {
             model.componentsWrapper = PrimarySoluteSaturatedComponentsWrapper(
                 previous: model.componentsWrapper,
+                solubilityCurve: model.selectedReaction.solubility,
                 setTime: model.setTime
             )
         }
@@ -393,6 +396,7 @@ private class AddCommonIonSolute: SolubilityScreenState {
             model.componentsWrapper = CommonIonComponentsWrapper(
                 timing: SolubleReactionSettings.firstReactionTiming,
                 previous: model.componentsWrapper,
+                solubilityCurve: model.selectedReaction.solubility,
                 setColor: model.setColor
             )
         }
@@ -432,6 +436,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
                 soluteToAddForSaturation: model.soluteToAddForSaturation,
                 timing: SolubleReactionSettings.firstReactionTiming,
                 previous: model.componentsWrapper,
+                solubilityCurve: model.selectedReaction.solubility,
                 setTime: model.setTime
             )
         }
@@ -491,6 +496,7 @@ private class AddAcidSolute: SolubilityScreenState {
             model.componentsWrapper = AddAcidComponentsWrapper(
                 previous: model.componentsWrapper,
                 timing: SolubleReactionSettings.secondReactionTiming,
+                solubilityCurve: model.selectedReaction.solubility,
                 setColor: model.setColor
             )
         }

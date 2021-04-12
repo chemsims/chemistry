@@ -25,6 +25,8 @@ protocol SolubleComponentsWrapper {
     var solubility: Equation { get }
 
     var shouldGoNext: Bool { get }
+
+    var solubilityCurve: SolublePhCurve { get set }
 }
 
 extension SolubleComponentsWrapper {
@@ -38,11 +40,11 @@ extension SolubleComponentsWrapper {
     }
 
     var ph: Equation {
-        ConstantEquation(value: SolubleReactionSettings.startingPh)
+        ConstantEquation(value: solubilityCurve.startingPh)
     }
 
     var solubility: Equation {
-        makeSolubilityEquation(timing: timing)
+        makeSolubilityEquation(timing: timing, solubilityCurve: solubilityCurve)
     }
 }
 
@@ -52,11 +54,13 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
         soluteToAddForSaturation: Int,
         timing: ReactionTiming,
         previous: SolubleComponentsWrapper?,
+        solubilityCurve: SolublePhCurve,
         setTime: @escaping (CGFloat) -> Void
     ) {
         self.soluteToAddForSaturation = soluteToAddForSaturation
         self.timing = timing
         self.counts = SoluteCounter(maxAllowed: soluteToAddForSaturation)
+        self.solubilityCurve = solubilityCurve
         self.previous = previous
         self.setTime = setTime
     }
@@ -66,6 +70,7 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     var counts: SoluteCounter
     let previous: SolubleComponentsWrapper?
     let setTime: (CGFloat) -> Void
+    var solubilityCurve: SolublePhCurve
 
     mutating func solutePerformed(action: SoluteParticleAction) {
         counts.didPerform(action: action)
@@ -105,11 +110,13 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
         maxCount: Int,
         previous: SolubleComponentsWrapper?,
         timing: ReactionTiming,
+        solubilityCurve: SolublePhCurve,
         setColor: @escaping (Color) -> Void
     ) {
         self.counts = SoluteCounter(maxAllowed: maxCount)
         self.previous = previous
         self.timing = timing
+        self.solubilityCurve = solubilityCurve
         self.setColor = setColor
     }
 
@@ -117,6 +124,7 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
     let timing: ReactionTiming
     let previous: SolubleComponentsWrapper?
     let setColor: (Color) -> Void
+    var solubilityCurve: SolublePhCurve
 
     mutating func solutePerformed(action: SoluteParticleAction) {
         counts.didPerform(action: action)
@@ -147,13 +155,15 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
 
 struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
 
-    init(previous: SolubleComponentsWrapper, setTime: @escaping (CGFloat) -> Void) {
+    init(previous: SolubleComponentsWrapper, solubilityCurve: SolublePhCurve, setTime: @escaping (CGFloat) -> Void) {
         self.underlyingPrevious = previous
         self.counts = SoluteCounter(maxAllowed: SolubleReactionSettings.saturatedSoluteParticlesToAdd)
+        self.solubilityCurve = solubilityCurve
         self.setTime = setTime
     }
 
     var counts: SoluteCounter
+    var solubilityCurve: SolublePhCurve
     private let underlyingPrevious: SolubleComponentsWrapper
     var timing: ReactionTiming {
         underlyingPrevious.timing
@@ -190,9 +200,9 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
     }
 }
 
-private func makeSolubilityEquation(timing: ReactionTiming) -> Equation {
-    let saturated = SolubleReactionSettings.saturatedSolubility
-    let superSaturated = SolubleReactionSettings.superSaturatedSolubility
+private func makeSolubilityEquation(timing: ReactionTiming, solubilityCurve: SolublePhCurve) -> Equation {
+    let saturated = solubilityCurve.saturatedSolubility
+    let superSaturated = solubilityCurve.superSaturatedSolubility
     return SwitchingEquation(
         thresholdX: timing.equilibrium,
         underlyingLeft: LinearEquation(x1: timing.start, y1: 0, x2: timing.equilibrium, y2: saturated),
@@ -205,10 +215,11 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
     let timing: ReactionTiming
     var counts: SoluteCounter
     let setColor: (Color) -> Void
-    init(timing: ReactionTiming, previous: SolubleComponentsWrapper?, setColor: @escaping (Color) -> Void) {
+    init(timing: ReactionTiming, previous: SolubleComponentsWrapper?, solubilityCurve: SolublePhCurve, setColor: @escaping (Color) -> Void) {
         self.timing = timing
         self.previous = previous
         self.setColor = setColor
+        self.solubilityCurve = solubilityCurve
         self.counts = SoluteCounter(
             maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd
         )
@@ -222,6 +233,7 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
     }
 
     let previous: SolubleComponentsWrapper?
+    var solubilityCurve: SolublePhCurve
 
     private let maxB = SolubleReactionSettings.maxInitialBConcentration
 
@@ -256,15 +268,17 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
 struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
 
-    init(previous: SolubleComponentsWrapper, timing: ReactionTiming, setColor: @escaping (Color) -> Void) {
+    init(previous: SolubleComponentsWrapper, timing: ReactionTiming, solubilityCurve: SolublePhCurve, setColor: @escaping (Color) -> Void) {
         self.counts = SoluteCounter(maxAllowed: SolubleReactionSettings.acidSoluteParticlesToAdd)
         self.underlyingPrevious = previous
         self.timing = timing
         self.setColor = setColor
+        self.solubilityCurve = solubilityCurve
     }
 
     var counts: SoluteCounter
     let timing: ReactionTiming
+    var solubilityCurve: SolublePhCurve
     private let setColor: (Color) -> Void
 
     mutating func solutePerformed(action: SoluteParticleAction) {
@@ -304,15 +318,15 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
     var ph: Equation {
         LinearEquation(
             x1: timing.start,
-            y1: SolubleReactionSettings.startingPh,
+            y1: solubilityCurve.startingPh,
             x2: timing.equilibrium,
-            y2: SolubleReactionSettings.phForAcidSaturation
+            y2: solubilityCurve.phForAcidSaturation
         )
-        .atLeast(SolubleReactionSettings.phForAcidSaturation)
+        .atLeast(solubilityCurve.phForAcidSaturation)
     }
 
     var solubility: Equation {
-        ConstantEquation(value: SolubleReactionSettings.superSaturatedSolubility)
+        ConstantEquation(value: solubilityCurve.superSaturatedSolubility)
     }
 
     var shouldGoNext: Bool {

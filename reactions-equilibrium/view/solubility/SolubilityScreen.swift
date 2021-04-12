@@ -78,7 +78,7 @@ private struct SolubilityRightStack: View {
     }
 
     private var mainContent: some View {
-        VStack(alignment: .trailing, spacing: 0) {
+        VStack(spacing: 0) {
             reactionToggle
 
             Spacer()
@@ -92,8 +92,8 @@ private struct SolubilityRightStack: View {
             Spacer()
 
             SolubilityPhChart(
-                curve: SolubleReactionSettings.PhCurve.curve,
-                startPh: SolubleReactionSettings.startingPh,
+                curve: model.selectedReaction.solubility.curve,
+                startPh: model.selectedReaction.solubility.startingPh,
                 ph: model.componentsWrapper.ph,
                 solubility: model.componentsWrapper.solubility,
                 currentTime: model.currentTime,
@@ -104,7 +104,7 @@ private struct SolubilityRightStack: View {
             )
             .frame(width: settings.phPlotWidth, height: settings.phPlotHeight)
             .font(.system(size: settings.phPlotFontSize))
-            .opacity(model.equationState.doShowCorrectQuotient ? 1 : 0)
+            .opacity(model.equationState == .showOriginalQuotientAndQuotientRecap ? 0 : 1)
 
             Spacer()
 

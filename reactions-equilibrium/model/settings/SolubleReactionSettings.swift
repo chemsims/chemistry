@@ -16,19 +16,4 @@ struct SolubleReactionSettings {
 
     static let firstReactionTiming = ReactionTiming.standard(reactionIndex: 0)
     static let secondReactionTiming = ReactionTiming.standard(reactionIndex: 1)
-
-
-    struct PhCurve {
-        static let curve = SolubilityChartEquation(
-            zeroPhSolubility: 1,
-            maxPhSolubility: 0.9,
-            minSolubility: 0.3,
-            phAtMinSolubility: 0.6
-        )
-    }
-
-    static let startingPh: CGFloat = 0.88
-    static let saturatedSolubility: CGFloat = PhCurve.curve.getY(at: startingPh)
-    static let superSaturatedSolubility: CGFloat = 1.25 * saturatedSolubility
-    static let phForAcidSaturation: CGFloat = PhCurve.curve.getLeftHandPh(for: superSaturatedSolubility)!
 }

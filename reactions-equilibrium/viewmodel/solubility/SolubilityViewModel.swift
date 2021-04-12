@@ -22,7 +22,11 @@ final class SolubilityViewModel: ObservableObject {
     @Published var chartOffset: CGFloat = 0
     @Published var equationState = SolubilityEquationState.showOriginalQuotient
 
-    @Published var selectedReaction = SolubleReactionType.A
+    @Published var selectedReaction: SolubleReactionType {
+        didSet {
+            componentsWrapper.solubilityCurve = selectedReaction.solubility
+        }
+    }
     @Published var reactionSelectionToggled = false
     @Published var showSelectedReaction = false
 
@@ -34,11 +38,14 @@ final class SolubilityViewModel: ObservableObject {
 
     init() {
         let firstTiming = SolubleReactionSettings.firstReactionTiming
+        let firstReaction = SolubleReactionType.A
+        self.selectedReaction = firstReaction
         self.shakingModel = SoluteBeakerShakingViewModel()
         self.componentsWrapper = PrimarySoluteComponentsWrapper(
             soluteToAddForSaturation: soluteToAddForSaturation,
             timing: firstTiming,
             previous: nil,
+            solubilityCurve: firstReaction.solubility,
             setTime: setTime
         )
         self.navigation = SolubilityNavigationModel.model(model: self)
