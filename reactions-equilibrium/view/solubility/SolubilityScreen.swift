@@ -120,11 +120,12 @@ private struct SolubilityRightStack: View {
 
     private var reactionToggle: some View {
         ReactionToggle(
-            reactions: AqueousReactionType.allCases,
-            selectedReaction: .constant(.A),
-            reactionSelectionIsToggled: .constant(true),
-            isSelectingReaction: true,
-            onSelection: {},
+            reactions: SolubleReactionType.allCases,
+            selectedReaction: $model.selectedReaction,
+            reactionSelectionIsToggled: $model.reactionSelectionToggled,
+            showSelectedReaction: model.showSelectedReaction,
+            isSelectingReaction: model.inputState == .selectingReaction,
+            onSelection: model.next,
             highlightForwardArrow: false,
             highlightReverseArrow: false,
             showHeat: false,

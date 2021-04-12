@@ -10,6 +10,17 @@ protocol SelectableReaction: Identifiable, Equatable, Labelled {
     var productDisplay: String { get }
 }
 
+extension SelectableReaction {
+    var displayName: String {
+        "\(reactantDisplay) ⇌ \(productDisplay)"
+    }
+
+    // TODO
+    var label: String {
+        displayName
+    }
+}
+
 protocol ReactionDefinition: SelectableReaction {
     var equilibriumConstant: CGFloat { get }
     var coefficients: BalancedReactionCoefficients { get }
@@ -31,15 +42,6 @@ extension ReactionDefinition {
         let a = moleculeString("C", coeff: coefficients.productC)
         let b = moleculeString("D", coeff: coefficients.productD)
         return "\(a) + \(b)"
-    }
-
-    var displayName: String {
-        "\(reactantDisplay) ⇌ \(productDisplay)"
-    }
-
-    // TODO
-    var label: String {
-        displayName
     }
 
     private func moleculeString(_ name: String, coeff: Int) -> String {

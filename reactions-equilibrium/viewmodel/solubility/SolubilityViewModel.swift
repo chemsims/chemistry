@@ -22,6 +22,10 @@ final class SolubilityViewModel: ObservableObject {
     @Published var chartOffset: CGFloat = 0
     @Published var equationState = SolubilityEquationState.showOriginalQuotient
 
+    @Published var selectedReaction = SolubleReactionType.A
+    @Published var reactionSelectionToggled = false
+    @Published var showSelectedReaction = false
+
     @Published var componentsWrapper: SolubleComponentsWrapper!
 
     var components: SolubilityComponents {

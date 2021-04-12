@@ -13,8 +13,8 @@ class SolubilityNavigationModel {
             model: model,
             states: [
                 SetStatement(statement: statements.intro),
-                SetStatement(statement: statements.explainPrecipitationReactions),
-                SetStatement(statement: statements.explainSolubility1),
+                SelectReaction(),
+                PostSelectReaction(),
                 SetStatement(statement: statements.explainSolubility2),
                 ShowRecapQuotient(),
                 ShowCrossedOutOldQuotient(),
@@ -81,6 +81,31 @@ private class SetStatement: SolubilityScreenState {
 
     override func apply(on model: SolubilityViewModel) {
         model.statement = statement
+    }
+}
+
+private class SelectReaction: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = statements.explainPrecipitationReactions
+        model.inputState = .selectingReaction
+        model.reactionSelectionToggled = true
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        model.inputState = .none
+        model.reactionSelectionToggled = false
+    }
+}
+
+private class PostSelectReaction: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = statements.explainSolubility1
+        model.inputState = .none
+        model.showSelectedReaction = true
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        model.showSelectedReaction = false
     }
 }
 

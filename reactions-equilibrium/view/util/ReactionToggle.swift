@@ -10,6 +10,7 @@ struct ReactionToggle<Reaction: SelectableReaction>: View {
     let reactions: [Reaction]
     @Binding var selectedReaction: Reaction
     @Binding var reactionSelectionIsToggled: Bool
+    let showSelectedReaction: Bool
     let isSelectingReaction: Bool
     let onSelection: (() -> Void)?
     let highlightForwardArrow: Bool
@@ -21,7 +22,10 @@ struct ReactionToggle<Reaction: SelectableReaction>: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            if !isSelectingReaction {
+
+            Spacer()
+
+            if showSelectedReaction {
                 ReactionDefinitionView<Reaction>(
                     type: selectedReaction,
                     highlightTopArrow: highlightForwardArrow,
