@@ -103,9 +103,17 @@ private struct SolubleBeakerViewWithGeometry: View {
 
     private func container(solute: SoluteType, index: Int) -> some View {
         let isActive = model.activeSolute == solute
-        return Image(solute.image)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
+
+        return ParticleContainer(
+                settings: ParticleContainerSettings(
+                    labelColor: solute.color.color,
+                    label: labelName(for: solute),
+                    strokeLineWidth: 0.4
+                )
+            )
+            .animation(nil)
+            .foregroundColor(.white)
+            .font(.system(size: settings.soluble.containerFontSize))
             .frame(width: settings.soluble.containerWidth)
             .rotationEffect(isActive ? .degrees(135) : .zero)
             .position(
@@ -126,6 +134,14 @@ private struct SolubleBeakerViewWithGeometry: View {
                     model.startShaking()
                 }
             }
+    }
+
+    private func labelName(for soluteType: SoluteType) -> String {
+        switch soluteType {
+        case .primary: return model.selectedReaction.products.salt
+        case .commonIon: return model.selectedReaction.products.commonSalt
+        case .acid: return "H+"
+        }
     }
 
     private func standardContainerLocation(index: Int) -> CGPoint {
@@ -187,6 +203,10 @@ struct SolubleBeakerSettings {
 
     var containerWidth: CGFloat {
         0.13 * beakerWidth
+    }
+
+    var containerFontSize: CGFloat {
+        0.7 * containerWidth
     }
 
     var containerYRange: CGFloat {

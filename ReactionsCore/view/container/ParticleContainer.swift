@@ -33,9 +33,9 @@ public struct ParticleContainerSettings {
     let strokeLineWidth: CGFloat
 
     public init(
-        containerColor: Color,
         labelColor: Color,
         label: String?,
+        containerColor: Color = Color.white,
         strokeColor: Color = Color.black,
         strokeLineWidth: CGFloat = 3
     ) {
@@ -165,7 +165,6 @@ struct ParticleContainer_Previews: PreviewProvider {
     static var previews: some View {
         ParticleContainer(
             settings: ParticleContainerSettings(
-                containerColor: .white,
                 labelColor: .purple,
                 label: "AB"
             )
