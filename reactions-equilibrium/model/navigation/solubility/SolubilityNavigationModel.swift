@@ -326,7 +326,7 @@ private class ShowCommonIonSaturatedSolution: ShowSaturatedSolution {
 
     private func setStatement(_ model: SolubilityViewModel) {
         model.statement = statements.commonIonEquilibriumReached(
-            amount: SolubleReactionSettings.milligrams(for: model.soluteToAddForSaturation),
+            amount: SolubleReactionSettings.milligrams(for: model.commonIonSoluteToAddForSaturation),
             product: model.selectedReaction.products
         )
     }
@@ -463,7 +463,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
         model.stopShaking()
         if setWrapper {
             model.componentsWrapper = PrimarySoluteComponentsWrapper(
-                soluteToAddForSaturation: model.soluteToAddForSaturation,
+                soluteToAddForSaturation: model.commonIonSoluteToAddForSaturation,
                 timing: SolubleReactionSettings.firstReactionTiming,
                 previous: model.componentsWrapper,
                 solubilityCurve: model.selectedReaction.solubility,

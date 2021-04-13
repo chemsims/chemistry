@@ -137,6 +137,10 @@ final class SolubilityViewModel: ObservableObject {
         return equation.getY(at: waterHeightFactor).roundedInt()
     }
 
+    var commonIonSoluteToAddForSaturation: Int {
+        soluteToAddForSaturation - 4
+    }
+
     private func color(at time: CGFloat) -> Color {
         RGBEquation(
             initialX: timing.start,
