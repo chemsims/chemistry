@@ -127,7 +127,7 @@ private class ShowRecapQuotient: SolubilityScreenState {
 
 private class ShowCrossedOutOldQuotient: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
-        model.statement = statements.explainQEquation1(solute: model.selectedReaction.products.concatenated)
+        model.statement = statements.explainQEquation1(solute: model.selectedReaction.products.salt)
         withAnimation(.easeOut(duration: 0.3)) {
             model.equationState = .crossOutOriginalQuotientDenominator
         }
@@ -308,7 +308,7 @@ private class ShowFirstReactionSaturatedSolution: ShowSaturatedSolution {
     private func setStatement(_ model: SolubilityViewModel) {
         model.statement = statements.primaryEquilibriumReached(
             amount: SolubleReactionSettings.milligrams(for: model.soluteToAddForSaturation),
-            solute: model.selectedReaction.products.concatenated
+            solute: model.selectedReaction.products.salt
         )
     }
 }
@@ -345,7 +345,7 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
     }
 
     private func doApply(on model: SolubilityViewModel) {
-        model.statement = statements.instructToAddSaturatedSolute(solute: model.selectedReaction.products.concatenated)
+        model.statement = statements.instructToAddSaturatedSolute(solute: model.selectedReaction.products.salt)
 
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.equilibrium
@@ -603,4 +603,3 @@ private extension RGB {
         RGB(r: r + delta, g: g + delta, b: b + delta)
     }
 }
-

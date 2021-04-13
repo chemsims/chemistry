@@ -14,7 +14,7 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
     }
 
     var reactantDisplay: String {
-        "\(products.concatenated)(s)"
+        "\(products.salt)(s)"
     }
 
     var productDisplay: String {
@@ -44,7 +44,7 @@ struct SolubleProductPair {
     let second: String
     let third: String
 
-    var concatenated: String {
+    var salt: String {
         "\(first)\(second)"
     }
 

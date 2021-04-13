@@ -88,7 +88,7 @@ struct SolubilityStatements {
     static func instructToAddSolute(product: SolubleProductPair) -> [TextLine] {
         [
             """
-            The forward reaction is *1* mole of *\(product.concatenated)(s) (the salt)*, transforms \
+            The forward reaction is *1* mole of *\(product.salt)(s) (the salt)*, transforms \
             into *1* mole of mole of *\(product.first)+ (cation)* and *1* mole of \
             *\(product.second)- (anion)*.
             """,
@@ -151,9 +151,9 @@ struct SolubilityStatements {
         [
             """
             Forward and reverse reactions are taking place at the same rate at equilibrium. So as \
-            ions \(product.first)+ and \(product.second)- become \(product.concatenated)(s), \
-            \(product.concatenated)(s) becomes \(product.first)+ and \(product.second)-. Remember, \
-            the amount of *\(product.concatenated)(s) doesn't affect Q or Ksp*.
+            ions \(product.first)+ and \(product.second)- become \(product.salt)(s), \
+            \(product.salt)(s) becomes \(product.first)+ and \(product.second)-. Remember, \
+            the amount of *\(product.salt)(s) doesn't affect Q or Ksp*.
             """
         ]
     }
@@ -181,7 +181,7 @@ struct SolubilityStatements {
             """
             Once you add *\(product.commonSalt)(s)*, it will dissolve into ions \
             *\(product.third)+* and *\(product.second)-*. In this case, *\(product.third)+* \
-            doesn't affect the solubility of *\(product.concatenated)(s), it only affects \
+            doesn't affect the solubility of *\(product.salt)(s), it only affects \
             \(product.first)+ and \(product.second)-(aq)*.
             """,
             "*Shake it into it to see what happens!*"
@@ -192,10 +192,10 @@ struct SolubilityStatements {
         [
             """
             Notice how the amount of *\(product.second)-* goes up. Now, let's add \
-            *\(product.concatenated)(s)* the same as before and spot the difference.
+            *\(product.salt)(s)* the same as before and spot the difference.
             """,
             """
-            Shake *\(product.concatenated)(s)* into it and see what happens!
+            Shake *\(product.salt)(s)* into it and see what happens!
             """
         ]
     }
@@ -206,7 +206,7 @@ struct SolubilityStatements {
             Great! No more salt can be dissolved in water now that we reached *equilibrium*.
             """,
             """
-            Notice that you could only dissolve \(amount)mg of \(product.concatenated)(s), which is \
+            Notice that you could only dissolve \(amount)mg of \(product.salt)(s), which is \
             less than before.
             """
         ]
@@ -235,7 +235,7 @@ struct SolubilityStatements {
             """
             In other words, if you add H+ ions, they will react and therefore reduce the presence of \
             \(product.second))- ions in the solution, *reducing Q*, allowing \
-            *\(product.concatenated)(s) to turn into more \(product.first)+ and \(product.second)- ions*.
+            *\(product.salt)(s) to turn into more \(product.first)+ and \(product.second)- ions*.
             """,
             "Shake *H+* ions into the beaker!"
         ]
@@ -255,7 +255,7 @@ struct SolubilityStatements {
         [
             """
             Awesome! Now the precipitate has totally dissolved. We made the solution have a larger \
-            capacity to dissolve the *\(product.concatenated)(s)* salt by making its *pH lower*. This can apply to various \
+            capacity to dissolve the *\(product.salt)(s)* salt by making its *pH lower*. This can apply to various \
             other salts.
             """
         ]

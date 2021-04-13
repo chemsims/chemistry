@@ -102,7 +102,7 @@ private struct QuotientConcentrationDefinition: View {
                     Rectangle()
                         .frame(width: 110, height: 2)
                     HStack(spacing: 2) {
-                        FixedText("[\(products.concatenated)]")
+                        FixedText("[\(products.salt)]")
                             .frame(width: 65)
                     }
                 }

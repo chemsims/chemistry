@@ -92,7 +92,7 @@ private struct GeneralRecap<Content: View>: View  {
 
     private var decomposition: some View {
         HStack(spacing: 5) {
-            elementWithType(products.concatenated)
+            elementWithType(products.salt)
             FixedText("➝")
             elementWithType(products.first)
             FixedText("+")
@@ -111,7 +111,7 @@ private struct GeneralRecap<Content: View>: View  {
                 }
                 Rectangle()
                     .frame(width: 90, height: 2)
-                formatElement(products.concatenated)
+                formatElement(products.salt)
             }
         }
     }
