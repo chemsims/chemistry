@@ -22,20 +22,20 @@ class SolubilityNavigationModel {
                 ShowCorrectQuotientAndRunDemo(),
                 StopDemo(),
                 SetWaterLevel(),
-                AddSolute(statement: statements.instructToAddSolute),
-                ShowSaturatedSolution(statement: statements.primaryEquilibriumReached),
+                AddSolute(),
+                ShowFirstReactionSaturatedSolution(),
                 AddSoluteToSaturatedBeaker(),
                 PostAddingSoluteToSaturatedBeaker(statement: statements.explainSuperSaturated),
-                SetStatement(statement: statements.explainSaturatedEquilibrium1),
+                SetStatement(statement: { statements.explainSaturatedEquilibrium1(product: $0.selectedReaction.products) }),
                 SetStatement(statement: statements.explainSaturatedEquilibrium2),
                 PrepareCommonIonReaction(),
                 AddCommonIonSolute(),
                 AddSoluteToCommonIonSolution(),
-                ShowSaturatedSolution(statement: statements.commonIonEquilibriumReached),
+                ShowCommonIonSaturatedSolution(),
                 AddSoluteToSaturatedBeaker(),
                 PostAddingSoluteToSaturatedBeaker(statement: statements.explainSuperSaturated),
                 PrepareAcidReaction(),
-                SetStatement(statement: statements.explainPh2),
+                SetStatement(statement: { statements.explainPh2(product: $0.selectedReaction.products) }),
                 AddAcidSolute(),
                 RunAcidReaction(),
                 EndAcidReaction(),
@@ -73,14 +73,18 @@ class SolubilityScreenState: ScreenState, SubState {
 
 private class SetStatement: SolubilityScreenState {
 
-    let statement: [TextLine]
+    private let statement: (SolubilityViewModel) -> [TextLine]
 
-    init(statement: [TextLine]) {
+    init(statement: @escaping (SolubilityViewModel) -> [TextLine]) {
         self.statement = statement
     }
 
+    convenience init(statement: [TextLine]) {
+        self.init(statement: { _ in statement })
+    }
+
     override func apply(on model: SolubilityViewModel) {
-        model.statement = statement
+        model.statement = statement(model)
     }
 }
 
@@ -123,7 +127,7 @@ private class ShowRecapQuotient: SolubilityScreenState {
 
 private class ShowCrossedOutOldQuotient: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
-        model.statement = statements.explainQEquation1
+        model.statement = statements.explainQEquation1(solute: model.selectedReaction.products.concatenated)
         withAnimation(.easeOut(duration: 0.3)) {
             model.equationState = .crossOutOriginalQuotientDenominator
         }
@@ -215,12 +219,6 @@ private class SetWaterLevel: SolubilityScreenState {
 
 private class AddSolute: SolubilityScreenState {
 
-    let statement: [TextLine]
-
-    init(statement: [TextLine]) {
-        self.statement = statement
-    }
-
     override func apply(on model: SolubilityViewModel) {
         model.componentsWrapper = PrimarySoluteComponentsWrapper(
             soluteToAddForSaturation: model.soluteToAddForSaturation,
@@ -246,7 +244,7 @@ private class AddSolute: SolubilityScreenState {
         }
 
         model.equationState = .showCorrectQuotientFilledIn
-        model.statement = statement
+        model.statement = statements.instructToAddSolute(product: model.selectedReaction.products)
         model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
         model.stopShaking()
     }
@@ -263,11 +261,6 @@ private class AddSolute: SolubilityScreenState {
 
 private class ShowSaturatedSolution: SolubilityScreenState {
 
-    let statement: [TextLine]
-    init(statement: [TextLine]) {
-        self.statement = statement
-    }
-
     override func apply(on model: SolubilityViewModel) {
         model.beakerState.goTo(state: .none, with: .none)
         doApply(on: model, setComponents: true)
@@ -278,7 +271,6 @@ private class ShowSaturatedSolution: SolubilityScreenState {
     }
 
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
-        model.statement = statement
         model.stopShaking()
 
         if setComponents {
@@ -302,6 +294,44 @@ private class ShowSaturatedSolution: SolubilityScreenState {
     }
 }
 
+private class ShowFirstReactionSaturatedSolution: ShowSaturatedSolution {
+    override func apply(on model: SolubilityViewModel) {
+        super.apply(on: model)
+        setStatement(model)
+    }
+
+    override func reapply(on model: SolubilityViewModel) {
+        super.reapply(on: model)
+        setStatement(model)
+    }
+
+    private func setStatement(_ model: SolubilityViewModel) {
+        model.statement = statements.primaryEquilibriumReached(
+            amount: SolubleReactionSettings.milligrams(for: model.soluteToAddForSaturation),
+            solute: model.selectedReaction.products.concatenated
+        )
+    }
+}
+
+private class ShowCommonIonSaturatedSolution: ShowSaturatedSolution {
+    override func apply(on model: SolubilityViewModel) {
+        super.apply(on: model)
+        setStatement(model)
+    }
+
+    override func reapply(on model: SolubilityViewModel) {
+        super.reapply(on: model)
+        setStatement(model)
+    }
+
+    private func setStatement(_ model: SolubilityViewModel) {
+        model.statement = statements.commonIonEquilibriumReached(
+            amount: SolubleReactionSettings.milligrams(for: model.soluteToAddForSaturation),
+            product: model.selectedReaction.products
+        )
+    }
+}
+
 private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.beakerState.goTo(state: .addingSaturatedPrimary, with: .none)
@@ -315,7 +345,7 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
     }
 
     private func doApply(on model: SolubilityViewModel) {
-        model.statement = statements.instructToAddSaturatedSolute
+        model.statement = statements.instructToAddSaturatedSolute(solute: model.selectedReaction.products.concatenated)
 
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.equilibrium
@@ -354,7 +384,7 @@ private class PostAddingSoluteToSaturatedBeaker: SolubilityScreenState {
 private class PrepareCommonIonReaction: SolubilityScreenState {
 
     override func apply(on model: SolubilityViewModel) {
-        model.statement = statements.explainCommonIonEffect
+        model.statement = statements.explainCommonIonEffect(product: model.selectedReaction.products)
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = 0
             model.inputState = .none
@@ -389,7 +419,7 @@ private class AddCommonIonSolute: SolubilityScreenState {
     }
 
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
-        model.statement = statements.instructToAddCommonIon
+        model.statement = statements.instructToAddCommonIon(product: model.selectedReaction.products)
         model.inputState = .addSolute(type: .commonIon)
         model.beakerState.goTo(state: .addingSolute(type: .commonIon), with: .none)
         if setComponents {
@@ -428,7 +458,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
             model.waterColor = model.componentsWrapper.initialColor.color
         }
         model.equationState = .showCorrectQuotientFilledIn
-        model.statement = statements.instructToAddPrimarySolutePostCommonIon
+        model.statement = statements.instructToAddPrimarySolutePostCommonIon(product: model.selectedReaction.products)
         model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
         model.stopShaking()
         if setWrapper {
@@ -489,7 +519,7 @@ private class AddAcidSolute: SolubilityScreenState {
     }
 
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
-        model.statement = statements.instructToAddH
+        model.statement = statements.instructToAddH(product: model.selectedReaction.products)
         model.inputState = .addSolute(type: .acid)
 
         if setComponents {
@@ -528,7 +558,7 @@ private class RunAcidReaction: SolubilityScreenState {
     }
 
     private func doApply(on model: SolubilityViewModel) {
-        model.statement = statements.acidReactionRunning
+        model.statement = statements.acidReactionRunning(product: model.selectedReaction.products)
         let dt = model.timing.end - model.timing.start
 
         model.stopShaking()
@@ -559,7 +589,7 @@ private class RunAcidReaction: SolubilityScreenState {
 
 private class EndAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
-        model.statement = statements.acidEquilibriumReached
+        model.statement = statements.acidEquilibriumReached(product: model.selectedReaction.products)
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.end * 1.001
             model.waterColor = model.componentsWrapper.finalColor.incremented(by: 1).color

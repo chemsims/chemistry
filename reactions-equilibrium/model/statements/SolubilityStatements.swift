@@ -43,13 +43,15 @@ struct SolubilityStatements {
         """
     ]
 
-    static let explainQEquation1: [TextLine] = [
-        """
-        The equation of Q in these types of reaction is the same as always, but this time *AB(s)* \
-        is not included. This is because *pure solids and liquids are not included* as they don't \
-        affect the amounts at equilibrium.
-        """
-    ]
+    static func explainQEquation1(solute: String) -> [TextLine] {
+        [
+            """
+            The equation of Q in these types of reaction is the same as always, but this time *\(solute)(s)* \
+            is not included. This is because *pure solids and liquids are not included* as they don't \
+            affect the amounts at equilibrium.
+            """
+        ]
+    }
 
     static let explainQEquation2: [TextLine] = [
         """
@@ -83,14 +85,17 @@ struct SolubilityStatements {
         "*Use the slider.*"
     ]
 
-    static let instructToAddSolute: [TextLine] = [
-        """
-        The forward reaction is *1* mole of *AB(s) (the salt)*, transforms into *1* mole of \
-        mole of *A+ (cation)* and *1* mole of *B- (anion)*.
-        """,
-        "Add reactant to make it start",
-        "*Shake it into it*."
-    ]
+    static func instructToAddSolute(product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            The forward reaction is *1* mole of *\(product.concatenated)(s) (the salt)*, transforms \
+            into *1* mole of mole of *\(product.first)+ (cation)* and *1* mole of \
+            *\(product.second)- (anion)*.
+            """,
+            "Add reactant to make it start",
+            "*Shake it into it*."
+        ]
+    }
 
     static let primaryReactionStarted: [TextLine] = [
         """
@@ -115,20 +120,24 @@ struct SolubilityStatements {
         "But you can see in the graphs we're almost there!"
     ]
 
-    static let primaryEquilibriumReached: [TextLine] = [
-        """
-        Great! No more salt can be dissolved in water now that we reached *equilibrium*.
-        """,
-        """
-        Notice that you could only dissolve 1925mg of AB(s).
-        """
-    ]
+    static func primaryEquilibriumReached(amount: Int, solute: String) -> [TextLine] {
+        [
+            """
+            Great! No more salt can be dissolved in water now that we reached *equilibrium*.
+            """,
+            """
+            Notice that you could only dissolve \(amount)mg of \(solute)(s).
+            """
+        ]
+    }
 
-    static let instructToAddSaturatedSolute: [TextLine] = [
-        """
-        Now, try shaking a bit more of *AB(s)* into the beaker and see what happens.
-        """
-    ]
+    static func instructToAddSaturatedSolute(solute: String) -> [TextLine] {
+        [
+            """
+            Now, try shaking a bit more of *\(solute)(s)* into the beaker and see what happens.
+            """
+        ]
+    }
 
     static let explainSuperSaturated: [TextLine] = [
         """
@@ -138,13 +147,16 @@ struct SolubilityStatements {
         """
     ]
 
-    static let explainSaturatedEquilibrium1: [TextLine] = [
-        """
-        Forward and reverse reactions are taking place at the same rate at equilibrium. So as \
-        ions A+ and B- become AB(s), AB(s) becomes A+ and B-. Remember, the amount of *AB(s) \
-        doesn't affect Q or Ksp*.
-        """
-    ]
+    static func explainSaturatedEquilibrium1(product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            Forward and reverse reactions are taking place at the same rate at equilibrium. So as \
+            ions \(product.first)+ and \(product.second)- become \(product.concatenated)(s), \
+            \(product.concatenated)(s) becomes \(product.first)+ and \(product.second)-. Remember, \
+            the amount of *\(product.concatenated)(s) doesn't affect Q or Ksp*.
+            """
+        ]
+    }
 
     static let explainSaturatedEquilibrium2: [TextLine] = [
         """
@@ -154,40 +166,51 @@ struct SolubilityStatements {
         """
     ]
 
-    static let explainCommonIonEffect: [TextLine] = [
-        """
-        When an ion is already within the solution in which the reaction will take place, the salt \
-        won't be as soluble. This is called the *common-ion effect*, and the "common ion" in this \
-        situation is *B-*.
-        """
-    ]
+    static func explainCommonIonEffect(product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            When an ion is already within the solution in which the reaction will take place, the salt \
+            won't be as soluble. This is called the *common-ion effect*, and the "common ion" in this \
+            situation is *\(product.second)-*.
+            """
+        ]
+    }
 
-    static let instructToAddCommonIon: [TextLine] = [
-        """
-        Once you add *CB(s)*, it will dissolve into ions *C+* and *B-*. In this case, *C+* doesn't \
-        affect the solubility of *AB(s), it only affects A+ and B-(aq)*.
-        """,
-        "*Shake it into it to see what happens!*"
-    ]
+    static func instructToAddCommonIon(product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            Once you add *\(product.commonSalt)(s)*, it will dissolve into ions \
+            *\(product.third)+* and *\(product.second)-*. In this case, *\(product.third)+* \
+            doesn't affect the solubility of *\(product.concatenated)(s), it only affects \
+            \(product.first)+ and \(product.second)-(aq)*.
+            """,
+            "*Shake it into it to see what happens!*"
+        ]
+    }
 
-    static let instructToAddPrimarySolutePostCommonIon: [TextLine] = [
-        """
-        Notice how the amount of *B-* goes up. Now, let's add *AB(s)* the same as before and spot \
-        the difference.
-        """,
-        """
-        Shake *AB(s)* into it and see what happens!
-        """
-    ]
+    static func instructToAddPrimarySolutePostCommonIon(product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            Notice how the amount of *\(product.second)-* goes up. Now, let's add \
+            *\(product.concatenated)(s)* the same as before and spot the difference.
+            """,
+            """
+            Shake *\(product.concatenated)(s)* into it and see what happens!
+            """
+        ]
+    }
 
-    static let commonIonEquilibriumReached: [TextLine] = [
-        """
-        Great! No more salt can be dissolved in water now that we reached *equilibrium*.
-        """,
-        """
-        Notice that you could only dissolve 1841 mg of AB(s), which is less than before.
-        """,
-    ]
+    static func commonIonEquilibriumReached(amount: Int, product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            Great! No more salt can be dissolved in water now that we reached *equilibrium*.
+            """,
+            """
+            Notice that you could only dissolve \(amount)mg of \(product.concatenated)(s), which is \
+            less than before.
+            """
+        ]
+    }
 
     static let explainPh1: [TextLine] = [
         """
@@ -197,37 +220,46 @@ struct SolubilityStatements {
         """
     ]
 
-    static let explainPh2: [TextLine] = [
-        """
-        Another factor that can affect the solubility of a salt is *pH*. Lower pH values mean \
-        higher presence of *H+ ions*. In some cases, H+ could react with ions in the solution. In \
-        this case, H+ reacts with *B-* to form *HB(aq)*.
-        """
-    ]
+    static func explainPh2(product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            Another factor that can affect the solubility of a salt is *pH*. Lower pH values mean \
+            higher presence of *H+ ions*. In some cases, H+ could react with ions in the solution. In \
+            this case, H+ reacts with *\(product.second)-* to form *H\(product.second)(aq)*.
+            """
+        ]
+    }
 
-    static let instructToAddH: [TextLine] = [
-        """
-        In other words, if you add H+ ions, they will react and therefore reduce the presence of \
-        B- ions in the solution, *reducing Q*, allowing *AB(s) to turn into more A+ and B- ions*.
-        """,
-        "Shake *H+* ions into the beaker!"
-    ]
+    static func instructToAddH(product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            In other words, if you add H+ ions, they will react and therefore reduce the presence of \
+            \(product.second))- ions in the solution, *reducing Q*, allowing \
+            *\(product.concatenated)(s) to turn into more \(product.first)+ and \(product.second)- ions*.
+            """,
+            "Shake *H+* ions into the beaker!"
+        ]
+    }
 
-    static let acidReactionRunning: [TextLine] = [
-        """
-        *H+* ions reacted with *B-* ions and reduced its concentration! Now, the solution is now \
-        longer saturated and the extra solid (*precipitate*) can turn into ions and dissolve. This \
-        makes the *forward reaction* to be favored, until *equilibrium*.
-        """
-    ]
+    static func acidReactionRunning(product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            *H+* ions reacted with *\(product.second)-* ions and reduced its concentration! Now, \
+            the solution is no longer saturated and the extra solid (*precipitate*) can turn into \
+            ions and dissolve. This makes the *forward reaction* to be favored, until *equilibrium*.
+            """
+        ]
+    }
 
-    static let acidEquilibriumReached: [TextLine] = [
-        """
-        Awesome! Now the precipitate has totally dissolved. We made the solution have a larger \
-        capacity to dissolve the *AB(s)* salt by making its *pH lower*. This can apply to various \
-        other salts.
-        """
-    ]
+    static func acidEquilibriumReached(product: SolubleProductPair) -> [TextLine] {
+        [
+            """
+            Awesome! Now the precipitate has totally dissolved. We made the solution have a larger \
+            capacity to dissolve the *\(product.concatenated)(s)* salt by making its *pH lower*. This can apply to various \
+            other salts.
+            """
+        ]
+    }
 
     static let end: [TextLine] = [
         "It's done!",

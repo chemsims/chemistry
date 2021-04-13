@@ -16,4 +16,10 @@ struct SolubleReactionSettings {
 
     static let firstReactionTiming = ReactionTiming.standard(reactionIndex: 0)
     static let secondReactionTiming = ReactionTiming.standard(reactionIndex: 1)
+
+    static let milligramsPerSolute = 125
+
+    static func milligrams(for solute: Int) -> Int {
+        solute * milligramsPerSolute
+    }
 }

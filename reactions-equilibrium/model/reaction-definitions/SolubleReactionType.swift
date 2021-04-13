@@ -23,9 +23,9 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
 
     var products: SolubleProductPair {
         switch self {
-        case .A: return SolubleProductPair(first: "A", second: "B")
-        case .B: return SolubleProductPair (first: "C", second: "D")
-        case .C: return SolubleProductPair (first: "E", second: "F")
+        case .A: return SolubleProductPair(first: "A", second: "B", third: "G")
+        case .B: return SolubleProductPair (first: "C", second: "D", third: "H")
+        case .C: return SolubleProductPair (first: "E", second: "F", third: "I")
         }
     }
 
@@ -42,9 +42,14 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
 struct SolubleProductPair {
     let first: String
     let second: String
+    let third: String
 
     var concatenated: String {
         "\(first)\(second)"
+    }
+
+    var commonSalt: String {
+        "\(third)\(second)"
     }
 }
 

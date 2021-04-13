@@ -15,7 +15,6 @@ struct SolubilityChartEquation: Equation {
     let minSolubility: CGFloat
     let phAtMinSolubility: CGFloat
 
-
     init(
         zeroPhSolubility: CGFloat,
         maxPhSolubility: CGFloat,
