@@ -297,6 +297,7 @@
 		57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C4426241FCC00BE1303 /* Labelled.swift */; };
 		57D15C4B2624267D00BE1303 /* ReactionToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C4A2624267D00BE1303 /* ReactionToggle.swift */; };
 		57D15C512624303F00BE1303 /* SolubleReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C502624303F00BE1303 /* SolubleReactionType.swift */; };
+		57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C5F2625B12700BE1303 /* ParticleContainer.swift */; };
 		57D2F2C325EA227D00AEE0D8 /* ReactionQuotientEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2C225EA227D00AEE0D8 /* ReactionQuotientEquation.swift */; };
 		57D2F2C925EA265900AEE0D8 /* QuotientPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2C825EA265900AEE0D8 /* QuotientPlot.swift */; };
 		57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2D325EA27DA00AEE0D8 /* Line.swift */; };
@@ -753,6 +754,7 @@
 		57D15C4426241FCC00BE1303 /* Labelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labelled.swift; sourceTree = "<group>"; };
 		57D15C4A2624267D00BE1303 /* ReactionToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionToggle.swift; sourceTree = "<group>"; };
 		57D15C502624303F00BE1303 /* SolubleReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleReactionType.swift; sourceTree = "<group>"; };
+		57D15C5F2625B12700BE1303 /* ParticleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleContainer.swift; sourceTree = "<group>"; };
 		57D2F2C225EA227D00AEE0D8 /* ReactionQuotientEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionQuotientEquation.swift; sourceTree = "<group>"; };
 		57D2F2C825EA265900AEE0D8 /* QuotientPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotientPlot.swift; sourceTree = "<group>"; };
 		57D2F2D325EA27DA00AEE0D8 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
@@ -1848,6 +1850,7 @@
 		5797A47A25E4092600991BD9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57D15C5E2625B11700BE1303 /* container */,
 				57B3B913260B2DF500EB9B47 /* navigation */,
 				57686AB72600DFF1005BD328 /* burner */,
 				57812A8C25EABA830099D720 /* animatable-modifiers */,
@@ -2021,6 +2024,14 @@
 				57D15C162622D7ED00BE1303 /* SolubilityScreenSoluteCounterTests.swift */,
 			);
 			path = solubility;
+			sourceTree = "<group>";
+		};
+		57D15C5E2625B11700BE1303 /* container */ = {
+			isa = PBXGroup;
+			children = (
+				57D15C5F2625B12700BE1303 /* ParticleContainer.swift */,
+			);
+			path = container;
 			sourceTree = "<group>";
 		};
 		57D2F2D225EA27D100AEE0D8 /* shapes */ = {
@@ -2914,6 +2925,7 @@
 				57438A42260A2DC7005E3888 /* ScreenProvider.swift in Sources */,
 				5797A4C625E40A6900991BD9 /* GridCoordinate.swift in Sources */,
 				57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */,
+				57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */,
 				575A880F25E4310700AEE448 /* QuizOption.swift in Sources */,
 				57DDAD5B25E57E9300B535A7 /* ChartLine.swift in Sources */,
 				575A889525E438CD00AEE448 /* BundleExtension.swift in Sources */,
