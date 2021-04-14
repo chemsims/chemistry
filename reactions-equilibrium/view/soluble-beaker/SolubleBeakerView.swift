@@ -50,6 +50,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             Spacer()
         }
         .frame(width: settings.soluble.beaker.beaker.innerBeakerWidth)
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var beaker: some View {
@@ -64,6 +65,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             ) {
                 scene
             }
+            .colorMultiply(model.highlights.colorMultiply(for: nil))
         }
     }
 
@@ -82,6 +84,8 @@ private struct SolubleBeakerViewWithGeometry: View {
             height: settings.soluble.sliderHeight
         )
         .padding(.bottom, settings.soluble.sliderBottomPadding)
+        .background(Color.white.padding(-3))
+        .colorMultiply(model.highlights.colorMultiply(for: .waterSlider))
     }
 
     private var scene: some View {
@@ -276,6 +280,8 @@ struct SolubleBeakerView_Previews: PreviewProvider {
                 shakeModel: SoluteBeakerShakingViewModel(),
                 settings: SolubilityScreenLayoutSettings(geometry: geo)
             )
-        }.previewLayout(.iPhone8Landscape)
+        }
+        .padding()
+        .previewLayout(.iPhone12ProMaxLandscape)
     }
 }

@@ -37,6 +37,12 @@ private struct SizedSolubilityEquationView: View {
                     products: model.selectedReaction.products
                 )
                 .frame(height: 90)
+                .background(Color.white.padding(-5))
+                .colorMultiply(
+                    model.highlights.colorMultiply(
+                        for: .quotientToConcentrationDefinition
+                    )
+                )
 
                 QuotientConcentrationBlank(
                     quotient: model.components.quotient,
@@ -51,6 +57,14 @@ private struct SizedSolubilityEquationView: View {
             VStack(alignment: .leading, spacing: 5) {
                 QuotientKspDefinition()
                     .frame(height: 90)
+                    .background(Color.white.padding(-5))
+                    .colorMultiply(
+                        model.highlights.colorMultiply(
+                            for: .quotientToKspDefinition
+                        )
+                    )
+
+
                 QuotientKspBlank(
                     quotient: model.components.quotient,
                     ksp: model.components.equilibriumConstant,
@@ -230,10 +244,15 @@ private let NaturalWidth: CGFloat = 475
 
 struct SolubilityEquationView_Previews: PreviewProvider {
     static var previews: some View {
-        SizedSolubilityEquationView(model: SolubilityViewModel())
-            .border(Color.red)
-            .frame(width: NaturalWidth, height: NaturalHeight)
-            .border(Color.black)
-            .previewLayout(.iPhoneSELandscape)
+        ZStack {
+            Rectangle()
+                .foregroundColor(Styling.inactiveScreenElement)
+
+            SizedSolubilityEquationView(model: SolubilityViewModel())
+                .border(Color.red)
+                .frame(width: NaturalWidth, height: NaturalHeight)
+                .border(Color.black)
+        }
+        .previewLayout(.iPhoneSELandscape)
     }
 }

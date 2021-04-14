@@ -10,7 +10,11 @@ final class SolubilityViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     private(set) var navigation: NavigationModel<SolubilityScreenState>?
 
-    @Published var waterHeightFactor: CGFloat = 0.5
+    @Published var waterHeightFactor: CGFloat = 0.5 {
+        didSet {
+            highlights.clear()
+        }
+    }
     @Published var inputState = SolubilityInputState.none
     @Published var activeSolute: SoluteType?
 
@@ -29,6 +33,7 @@ final class SolubilityViewModel: ObservableObject {
     }
     @Published var reactionSelectionToggled = false
     @Published var showSelectedReaction = false
+    @Published var highlights = HighlightedElements<SolubleScreenElement>()
 
     @Published var componentsWrapper: SolubleComponentsWrapper!
 

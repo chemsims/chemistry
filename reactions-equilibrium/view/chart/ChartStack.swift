@@ -199,8 +199,8 @@ extension ChartStack {
             settings: settings,
             equilibriumQuotient: 0.1,
             activeChartIndex: activeChartIndex,
-            generalElementHighlight: .white,
-            equilibriumHighlight: .white,
+            generalElementHighlight: model.highlights.colorMultiply(for: nil),
+            equilibriumHighlight: model.highlights.colorMultiply(for: .chartEquilibrium),
             topChartYLabel: "Concentration"
         )
     }

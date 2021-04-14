@@ -18,7 +18,7 @@ class SolubilityNavigationModel {
                 SetStatement(statement: statements.explainSolubility2),
                 ShowRecapQuotient(),
                 ShowCrossedOutOldQuotient(),
-                SetStatement(statement: statements.explainQEquation2),
+                SetStatement(statement: statements.explainQEquation2, highlights: [.quotientToKspDefinition]),
                 ShowCorrectQuotientAndRunDemo(),
                 StopDemo(),
                 SetWaterLevel(),
@@ -74,17 +74,27 @@ class SolubilityScreenState: ScreenState, SubState {
 private class SetStatement: SolubilityScreenState {
 
     private let statement: (SolubilityViewModel) -> [TextLine]
+    private let highlights: [SolubleScreenElement]
 
-    init(statement: @escaping (SolubilityViewModel) -> [TextLine]) {
+    init(
+        statement: @escaping (SolubilityViewModel) -> [TextLine],
+        highlights: [SolubleScreenElement] = []
+    ) {
         self.statement = statement
+        self.highlights = highlights
     }
 
-    convenience init(statement: [TextLine]) {
-        self.init(statement: { _ in statement })
+    convenience init(statement: [TextLine], highlights: [SolubleScreenElement] = []) {
+        self.init(statement: { _ in statement }, highlights: highlights)
     }
 
     override func apply(on model: SolubilityViewModel) {
         model.statement = statement(model)
+        model.highlights.elements = highlights
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        model.highlights.clear()
     }
 }
 
@@ -118,6 +128,7 @@ private class ShowRecapQuotient: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.explainRecapEquation
         model.equationState = .showOriginalQuotientAndQuotientRecap
+        model.highlights.elements = [.quotientRecap]
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -128,6 +139,7 @@ private class ShowRecapQuotient: SolubilityScreenState {
 private class ShowCrossedOutOldQuotient: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.explainQEquation1(solute: model.selectedReaction.products.salt)
+        model.highlights.elements = [.quotientToConcentrationDefinition]
         withAnimation(.easeOut(duration: 0.3)) {
             model.equationState = .crossOutOriginalQuotientDenominator
         }
@@ -152,6 +164,7 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
         model.statement = statements.explainKspRatio1
         model.beakerState.goTo(state: .demoReaction, with: .none)
+        model.highlights.clear()
         withAnimation(.easeOut(duration: 0.3)) {
             model.equationState = .showCorrectQuotientNotFilledIn
         }
@@ -213,10 +226,12 @@ private class SetWaterLevel: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.instructToSetWaterLevel
         model.inputState = .setWaterLevel
+        model.highlights.elements = [.waterSlider]
     }
 
     override func unapply(on model: SolubilityViewModel) {
         model.inputState = .none
+        model.highlights.clear()
     }
 }
 
@@ -250,6 +265,7 @@ private class AddSolute: SolubilityScreenState {
         model.statement = statements.instructToAddSolute(product: model.selectedReaction.products)
         model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
         model.startShaking()
+        model.highlights.clear()
     }
 
     override func unapply(on model: SolubilityViewModel) {

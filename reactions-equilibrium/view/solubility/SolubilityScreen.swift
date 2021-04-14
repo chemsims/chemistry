@@ -7,13 +7,13 @@ import ReactionsCore
 
 struct SolubilityScreen: View {
 
-    let model: SolubilityViewModel
+    @ObservedObject var model: SolubilityViewModel
 
     var body: some View {
         ZStack {
             Rectangle()
                 .foregroundColor(Color.white)
-                .colorMultiply(.white)
+                .colorMultiply(model.highlights.colorMultiply(for: nil))
                 .edgesIgnoringSafeArea(.all)
 
             GeometryReader { geometry in
@@ -43,7 +43,6 @@ private struct SolubilityScreenWithSettings: View {
             )
             .frame(width: 1.2 * settings.soluble.beakerWidth)
             .padding(.leading, settings.common.menuSize)
-
 
             Spacer()
 
@@ -131,8 +130,8 @@ private struct SolubilityRightStack: View {
             highlightForwardArrow: false,
             highlightReverseArrow: false,
             showHeat: false,
-            reactionDefinitionHighlight: .white,
-            generalElementHighlight: .white,
+            reactionDefinitionHighlight: model.highlights.colorMultiply(for: nil),
+            generalElementHighlight: model.highlights.colorMultiply(for: nil),
             settings: settings.common
         )
     }
@@ -142,6 +141,10 @@ private struct SolubilityRightStack: View {
             Spacer()
             SolubilityQuotientRecapEquations(reaction: model.selectedReaction)
                 .frame(width: settings.equationWidth, height: settings.equationHeight)
+                .background(
+                    Color.white
+                        .padding(-0.05 * settings.equationHeight)
+                )
             Spacer()
                 .frame(height: 1.1 * settings.common.beakyTotalHeight)
         }
