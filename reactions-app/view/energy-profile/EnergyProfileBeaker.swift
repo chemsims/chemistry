@@ -76,12 +76,9 @@ struct EnergyProfileBeaker: View {
             VStack(spacing: 0) {
                 Spacer()
                     .frame(height: settings.catHeight)
-                Image(systemName: "arrowtriangle.up.fill")
-                Text("shake")
-                Image(systemName: "arrowtriangle.down.fill")
+                ShakeText()
             }
             .font(.system(size: settings.shakeFontSize))
-            .foregroundColor(.darkGray)
         }
         .accessibility(hidden: true)
     }
@@ -126,6 +123,7 @@ struct EnergyProfileBeaker: View {
 
         return FillableBeaker(
             waterColor: Styling.beakerLiquid,
+            waterHeight: settings.waterHeight,
             highlightBeaker: highlightBeaker,
             settings: settings.fillableBeaker
         ) {
@@ -306,7 +304,7 @@ struct EnergyBeakerSettings {
     }
 
     var fillableBeaker: FillableBeakerSettings {
-        FillableBeakerSettings(beakerWidth: beakerWidth, waterHeight: waterHeight)
+        FillableBeakerSettings(beakerWidth: beakerWidth)
     }
 
     var width: CGFloat {
