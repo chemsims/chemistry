@@ -82,18 +82,17 @@ final class SolubilityViewModel: ObservableObject {
     }
 
     private func doGoNext(force: Bool) {
-        if force {
+        if force || !nextIsDisabled {
             navigation?.next()
-        } else {
-            switch inputState {
-            case .addSaturatedSolute,
-                 .addSolute(type: _):
-                if componentsWrapper.shouldGoNext {
-                    navigation?.next()
-                }
-                break;
-            default: navigation?.next()
-            }
+        }
+    }
+
+    var nextIsDisabled: Bool {
+        switch inputState {
+        case .addSaturatedSolute, .addSolute(type: _):
+            return !componentsWrapper.shouldGoNext
+        default:
+            return false
         }
     }
 

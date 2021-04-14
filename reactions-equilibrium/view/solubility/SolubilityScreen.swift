@@ -113,7 +113,7 @@ private struct SolubilityRightStack: View {
                 statement: model.statement,
                 next: model.next,
                 back: model.back,
-                nextIsDisabled: false,
+                nextIsDisabled: model.nextIsDisabled,
                 settings: settings.common.beakySettings
             )
         }
