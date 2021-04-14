@@ -111,7 +111,20 @@ final class SolubilityViewModel: ObservableObject {
             return
         }
         componentsWrapper.solutePerformed(action: .dissolved)
+
+        if inputState == .addSolute(type: .primary) {
+            let dissolvedFraction = componentsWrapper.counts.fraction(of: .dissolved)
+            if dissolvedFraction < 0.3 {
+                statement = SolubilityStatements.primaryReactionStarted
+            } else if dissolvedFraction < 0.6 {
+                statement = SolubilityStatements.firstThirdPrimaryReaction
+            } else {
+                statement = SolubilityStatements.lastThirdPrimaryReaction
+            }
+        }
+
         goNextIfNeeded()
+
     }
 
     private func goNextIfNeeded() {
