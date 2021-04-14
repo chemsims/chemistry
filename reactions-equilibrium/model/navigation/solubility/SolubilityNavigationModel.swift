@@ -155,6 +155,7 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
         withAnimation(.easeOut(duration: 0.3)) {
             model.equationState = .showCorrectQuotientNotFilledIn
         }
+        model.shakingModel.shouldAddParticle = true
 
         if setComponents {
             model.componentsWrapper = DemoReactionComponentsWrapper(
@@ -192,6 +193,7 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
             model.equationState = .crossOutOriginalQuotientDenominator
 
         }
+        model.shakingModel.shouldAddParticle = false
     }
 }
 
@@ -199,6 +201,7 @@ private class StopDemo: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.explainKspRatio2
         model.beakerState.goTo(state: .none, with: .cleanupDemoReaction)
+        model.shakingModel.shouldAddParticle = false
         withAnimation(.easeOut(duration: 0.5)) {
             model.waterColor = RGB.beakerLiquid.color
         }
