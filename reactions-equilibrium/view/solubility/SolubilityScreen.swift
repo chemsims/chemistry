@@ -41,7 +41,9 @@ private struct SolubilityScreenWithSettings: View {
                 shakeModel: model.shakingModel,
                 settings: settings
             )
+            .frame(width: 1.2 * settings.soluble.beakerWidth)
             .padding(.leading, settings.common.menuSize)
+
 
             Spacer()
 
@@ -191,6 +193,6 @@ struct SolubilityScreenLayoutSettings {
 struct SolubilityScreen_Previews: PreviewProvider {
     static var previews: some View {
         SolubilityScreen(model: SolubilityViewModel())
-            .previewLayout(.iPhoneSELandscape)
+            .previewLayout(.iPhone8Landscape)
     }
 }
