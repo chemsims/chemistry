@@ -239,14 +239,14 @@ private class AddSolute: SolubilityScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
             model.inputState = .addSolute(type: .primary)
-            model.activeSolute = nil
+            model.activeSolute = .primary
             model.waterColor = model.componentsWrapper.initialColor.color
         }
 
         model.equationState = .showCorrectQuotientFilledIn
         model.statement = statements.instructToAddSolute(product: model.selectedReaction.products)
         model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
-        model.stopShaking()
+        model.startShaking()
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -256,6 +256,7 @@ private class AddSolute: SolubilityScreenState {
             model.activeSolute = nil
             model.waterColor = model.componentsWrapper.initialColor.color
         }
+        model.stopShaking()
     }
 }
 
@@ -422,6 +423,10 @@ private class AddCommonIonSolute: SolubilityScreenState {
         model.statement = statements.instructToAddCommonIon(product: model.selectedReaction.products)
         model.inputState = .addSolute(type: .commonIon)
         model.beakerState.goTo(state: .addingSolute(type: .commonIon), with: .none)
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.activeSolute = .commonIon
+        }
+        model.startShaking()
         if setComponents {
             model.componentsWrapper = CommonIonComponentsWrapper(
                 timing: SolubleReactionSettings.firstReactionTiming,
@@ -454,13 +459,13 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
             model.inputState = .addSolute(type: .primary)
-            model.activeSolute = nil
+            model.activeSolute = .primary
             model.waterColor = model.componentsWrapper.initialColor.color
         }
         model.equationState = .showCorrectQuotientFilledIn
         model.statement = statements.instructToAddPrimarySolutePostCommonIon(product: model.selectedReaction.products)
         model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
-        model.stopShaking()
+        model.startShaking()
         if setWrapper {
             model.componentsWrapper = PrimarySoluteComponentsWrapper(
                 soluteToAddForSaturation: model.commonIonSoluteToAddForSaturation,
@@ -478,9 +483,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
         }
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = 0
-            model.activeSolute = nil
         }
-        model.stopShaking()
     }
 }
 
@@ -521,6 +524,10 @@ private class AddAcidSolute: SolubilityScreenState {
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
         model.statement = statements.instructToAddH(product: model.selectedReaction.products)
         model.inputState = .addSolute(type: .acid)
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.activeSolute = .acid
+        }
+        model.startShaking()
 
         if setComponents {
             model.componentsWrapper = AddAcidComponentsWrapper(
