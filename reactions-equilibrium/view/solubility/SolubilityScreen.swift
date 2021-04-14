@@ -127,7 +127,7 @@ private struct SolubilityRightStack: View {
             showSelectedReaction: model.showSelectedReaction,
             isSelectingReaction: model.inputState == .selectingReaction,
             onSelection: model.next,
-            highlightForwardArrow: false,
+            highlightForwardArrow: model.highlightForwardReactionArrow,
             highlightReverseArrow: false,
             showHeat: false,
             reactionDefinitionHighlight: model.highlights.colorMultiply(for: nil),
