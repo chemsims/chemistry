@@ -12,22 +12,22 @@ class SolubilityNavigationModel {
         NavigationModel(
             model: model,
             states: [
-                SetStatement(statement: statements.intro),
-                SelectReaction(),
-                PostSelectReaction(),
-                SetStatement(statement: statements.explainSolubility2),
-                ShowRecapQuotient(),
-                ShowCrossedOutOldQuotient(),
-                SetStatement(statement: statements.explainQEquation2),
-                ShowCorrectQuotientAndRunDemo(),
-                StopDemo(),
-                SetWaterLevel(),
-                AddSolute(),
-                ShowFirstReactionSaturatedSolution(),
-                AddSoluteToSaturatedBeaker(),
-                PostAddingSoluteToSaturatedBeaker(statement: statements.explainSuperSaturated),
-                SetStatement(statement: { statements.explainSaturatedEquilibrium1(product: $0.selectedReaction.products) }),
-                SetStatement(statement: statements.explainSaturatedEquilibrium2),
+//                SetStatement(statement: statements.intro),
+//                SelectReaction(),
+//                PostSelectReaction(),
+//                SetStatement(statement: statements.explainSolubility2),
+//                ShowRecapQuotient(),
+//                ShowCrossedOutOldQuotient(),
+//                SetStatement(statement: statements.explainQEquation2),
+//                ShowCorrectQuotientAndRunDemo(),
+//                StopDemo(),
+//                SetWaterLevel(),
+//                AddSolute(),
+//                ShowFirstReactionSaturatedSolution(),
+//                AddSoluteToSaturatedBeaker(),
+//                PostAddingSoluteToSaturatedBeaker(statement: statements.explainSuperSaturated),
+//                SetStatement(statement: { statements.explainSaturatedEquilibrium1(product: $0.selectedReaction.products) }),
+//                SetStatement(statement: statements.explainSaturatedEquilibrium2),
                 PrepareCommonIonReaction(),
                 AddCommonIonSolute(),
                 AddSoluteToCommonIonSolution(),
@@ -559,7 +559,7 @@ private class RunAcidReaction: SolubilityScreenState {
 
     private func doApply(on model: SolubilityViewModel) {
         model.statement = statements.acidReactionRunning(product: model.selectedReaction.products)
-        let dt = model.timing.end - model.timing.start
+        let dt = model.timing.equilibrium - model.timing.start
 
         model.stopShaking()
         withAnimation(.easeOut(duration: 0.5)) {
@@ -569,7 +569,7 @@ private class RunAcidReaction: SolubilityScreenState {
             model.waterColor = model.componentsWrapper.initialColor.color
         }
         withAnimation(.linear(duration: Double(dt))) {
-            model.currentTime = model.timing.end
+            model.currentTime = model.timing.equilibrium
             model.waterColor = model.componentsWrapper.finalColor.color
         }
     }
@@ -582,8 +582,24 @@ private class RunAcidReaction: SolubilityScreenState {
         }
     }
 
+    override func delayedStates(model: SolubilityViewModel) -> [DelayedState<SolubilityScreenState>] {
+        [
+            DelayedState(state: CompleteAnimation(), delay: Double(model.timing.equilibrium - model.timing.start))
+        ]
+    }
+
     override func nextStateAutoDispatchDelay(model: SolubilityViewModel) -> Double? {
         Double(model.timing.end - model.timing.start)
+    }
+
+    private class CompleteAnimation: SolubilityScreenState {
+        override func apply(on model: SolubilityViewModel) {
+            model.statement = statements.acidEquilibriumReached(product: model.selectedReaction.products)
+            let dt = model.timing.end - model.timing.equilibrium
+            withAnimation(.linear(duration: Double(dt))) {
+                model.currentTime = model.timing.end
+            }
+        }
     }
 }
 
