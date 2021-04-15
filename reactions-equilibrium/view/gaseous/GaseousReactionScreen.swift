@@ -39,7 +39,6 @@ private struct GaseousReactionScreenWithSettings: View {
             ChartStack(
                 model: model,
                 currentTime: $model.currentTime,
-                activeChartIndex: $model.activeChartIndex,
                 settings: settings.common
             )
             Spacer()

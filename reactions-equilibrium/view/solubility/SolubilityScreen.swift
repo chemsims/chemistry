@@ -32,7 +32,6 @@ private struct SolubilityScreenWithSettings: View {
     @ObservedObject var model: SolubilityViewModel
     let settings: SolubilityScreenLayoutSettings
 
-    @State private var activeScreenIndex: Int? = nil
 
     var body: some View {
         HStack(spacing: 0) {
@@ -49,7 +48,6 @@ private struct SolubilityScreenWithSettings: View {
             ChartStack(
                 model: model,
                 currentTime: $model.currentTime,
-                activeChartIndex: $activeScreenIndex,
                 settings: settings.common
             )
 

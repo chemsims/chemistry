@@ -203,12 +203,10 @@ class AqueousCanSetCurrentTimeState: AqueousScreenState {
         model.statement = AqueousStatements.instructToChangeCurrentTime
         model.highlightedElements.clear()
         model.canSetCurrentTime = true
-        model.canSetChartIndex = true
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
         model.canSetCurrentTime = false
-        model.canSetChartIndex = false
     }
 
 }
@@ -220,7 +218,6 @@ class AqueousShiftChartState: AqueousScreenState {
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = AqueousReactionSettings.forwardReactionTime
             model.currentTime = AqueousReactionSettings.timeToAddProduct
-            model.canSetChartIndex = false
         }
     }
 
@@ -230,7 +227,6 @@ class AqueousShiftChartState: AqueousScreenState {
             model.currentTime = AqueousReactionSettings.forwardReactionTime
         }
         model.canSetCurrentTime = true
-        model.canSetChartIndex = true
     }
 }
 

@@ -21,7 +21,6 @@ struct ChartStack: View {
     let maxQuotient: CGFloat
     let settings: AqueousScreenLayoutSettings
     let equilibriumQuotient: CGFloat
-    @Binding var activeChartIndex: Int?
 
     let generalElementHighlight: Color
     let equilibriumHighlight: Color
@@ -69,7 +68,6 @@ struct ChartStack: View {
             offset: chartOffset,
             minDragTime: quotientChartDiscontinuity?.x,
             canSetIndex: canSetChartIndex,
-            activeIndex: $activeChartIndex,
             yLabel: topChartYLabel,
             settings: settings.chartSettings
         )
@@ -124,7 +122,6 @@ extension ChartStack {
     init(
         model: AqueousReactionViewModel,
         currentTime: Binding<CGFloat>,
-        activeChartIndex: Binding<Int?>,
         settings: AqueousScreenLayoutSettings
     ) {
         self.init(
@@ -136,13 +133,12 @@ extension ChartStack {
             quotientChartDiscontinuity: model.components.quotientChartDiscontinuity,
             chartOffset: model.chartOffset,
             canSetCurrentTime: model.canSetCurrentTime,
-            canSetChartIndex: model.canSetChartIndex,
+            canSetChartIndex: true,
             showConcentrationLines: model.showConcentrationLines,
             showQuotientLine: model.showQuotientLine,
             maxQuotient: model.maxQuotient,
             settings: settings,
             equilibriumQuotient: model.convergenceQuotient,
-            activeChartIndex: activeChartIndex,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
             equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium),
             topChartYLabel: "Concentration"
@@ -152,7 +148,6 @@ extension ChartStack {
     init(
         model: GaseousReactionViewModel,
         currentTime: Binding<CGFloat>,
-        activeChartIndex: Binding<Int?>,
         settings: AqueousScreenLayoutSettings
     ) {
         self.init(
@@ -164,13 +159,12 @@ extension ChartStack {
             quotientChartDiscontinuity: model.components.quotientChartDiscontinuity,
             chartOffset: model.chartOffset,
             canSetCurrentTime: model.canSetCurrentTime,
-            canSetChartIndex: model.canSetChartIndex,
+            canSetChartIndex: true,
             showConcentrationLines: model.showConcentrationLines,
             showQuotientLine: model.showQuotientLine,
             maxQuotient: model.maxQuotient,
             settings: settings,
             equilibriumQuotient: model.equilibriumQuotientForAxis,
-            activeChartIndex: activeChartIndex,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
             equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium),
             topChartYLabel: "Pressure"
@@ -180,7 +174,6 @@ extension ChartStack {
     init(
         model: SolubilityViewModel,
         currentTime: Binding<CGFloat>,
-        activeChartIndex: Binding<Int?>,
         settings: AqueousScreenLayoutSettings
     ) {
         self.init(
@@ -198,7 +191,6 @@ extension ChartStack {
             maxQuotient: 0.1,
             settings: settings,
             equilibriumQuotient: 0.1,
-            activeChartIndex: activeChartIndex,
             generalElementHighlight: model.highlights.colorMultiply(for: nil),
             equilibriumHighlight: model.highlights.colorMultiply(for: .chartEquilibrium),
             topChartYLabel: "Concentration"

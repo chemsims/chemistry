@@ -242,13 +242,9 @@ private class GaseousEndOfReaction: GaseousScreenState {
             if !isReapplying {
                 model.highlightedElements.elements = [.chartEquilibrium]
             }
-            model.activeChartIndex = nil
         }
     }
 
-    override func unapply(on model: GaseousReactionViewModel) {
-        model.canSetChartIndex = false
-    }
 }
 
 private class GaseousSetCurrentTime: GaseousScreenState {
@@ -256,12 +252,10 @@ private class GaseousSetCurrentTime: GaseousScreenState {
         model.highlightedElements.clear()
         model.statement = GaseousStatements.instructToSetTime
         model.canSetCurrentTime = true
-        model.canSetChartIndex = true
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
         model.canSetCurrentTime = false
-        model.canSetChartIndex = false
     }
 }
 
@@ -336,17 +330,14 @@ private class GaseousShiftChart: GaseousScreenState {
 
     override func apply(on model: GaseousReactionViewModel) {
         model.statement = statement
-        model.canSetChartIndex = false
         model.canSetCurrentTime = false
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = timing.offset
             model.currentTime = timing.start
-            model.activeChartIndex = nil
         }
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
-        model.canSetChartIndex = true
         model.canSetCurrentTime = true
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = previousTiming.offset

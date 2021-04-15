@@ -49,9 +49,7 @@ class GaseousReactionViewModel: ObservableObject {
     @Published var selectedPumpReactant = AqueousMoleculeReactant.A
 
     @Published var chartOffset: CGFloat = 0
-    @Published var activeChartIndex: Int? = nil
     @Published var canSetCurrentTime = false
-    @Published var canSetChartIndex = false
     @Published var showConcentrationLines = false
     @Published var showQuotientLine = false
 

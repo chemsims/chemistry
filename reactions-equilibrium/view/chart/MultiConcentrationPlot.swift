@@ -27,10 +27,11 @@ struct MultiConcentrationPlot: View {
     let minDragTime: CGFloat?
 
     let canSetIndex: Bool
-    @Binding var activeIndex: Int?
     let yLabel: String
 
     let settings: ReactionEquilibriumChartsLayoutSettings
+
+    @State private var activeIndex: Int? = nil
 
     var body: some View {
         HStack(spacing: settings.axisLabelGapFromAxis) {
@@ -178,7 +179,6 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
             offset: 0,
             minDragTime: nil,
             canSetIndex: false,
-            activeIndex: .constant(nil),
             yLabel: "Concentration",
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,

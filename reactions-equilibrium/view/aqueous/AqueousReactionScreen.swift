@@ -39,7 +39,6 @@ private struct AqueousReactionScreenWithSettings: View {
             ChartStack(
                 model: model,
                 currentTime: $model.currentTime,
-                activeChartIndex: $model.activeChartIndex,
                 settings: settings
             )
             Spacer()

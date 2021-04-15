@@ -74,15 +74,6 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var highlightForwardReactionArrow = false
     @Published var highlightedElements = HighlightedElements<AqueousScreenElement>()
 
-    @Published var canSetChartIndex = false {
-        didSet {
-            if !canSetChartIndex {
-                activeChartIndex = nil
-            }
-        }
-    }
-    @Published var activeChartIndex: Int?
-
     private let incrementingLimits = ConcentrationIncrementingLimits()
 
     private let inputSettings = AqueousReactionSettings.ConcentrationInput.self
