@@ -115,7 +115,9 @@ private struct SolubleBeakerViewWithGeometry: View {
                     strokeLineWidth: 0.4
                 )
             )
+            .compositingGroup()
             .animation(nil)
+            .shadow(radius: isActive ? 3 : 0)
             .foregroundColor(.white)
             .font(.system(size: settings.soluble.containerFontSize))
             .frame(width: settings.soluble.containerWidth)
