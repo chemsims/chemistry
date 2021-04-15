@@ -27,16 +27,10 @@ struct ReactionDefinitionView<Reaction: SelectableReaction>: View {
 
     private var arrow: some View {
         VStack(spacing: 3) {
-            if showHeat {
-                deltaH(positive: true)
-            }
             DoubleSidedArrow(
                 topHighlight: highlightTopArrow ? .orangeAccent : nil,
                 reverseHighlight: highlightReverseArrow ? .orangeAccent : nil
             )
-            if showHeat {
-                deltaH(positive: false)
-            }
         }
     }
 
