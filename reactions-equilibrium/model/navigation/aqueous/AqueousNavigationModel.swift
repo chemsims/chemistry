@@ -16,7 +16,7 @@ struct AqueousNavigationModel {
     }
 
     private static let states = [
-        AqueousSetStatementState(statement: AqueousStatements.intro),
+        AqueousSetStatementState(statement: AqueousStatements.intro, highlights: [.reactionToggle]),
         AqueousHasSelectedReactionState(),
         AqueousSetStatementState(statement: AqueousStatements.explainQuotient1),
         AqueousSetStatementState(statement: AqueousStatements.explainQuotient2, highlights: [.quotientToConcentrationDefinition]),

@@ -16,7 +16,7 @@ struct GaseousNavigationModel {
     }
 
     private static let states = [
-        GaseousSetStatement(statement: GaseousStatements.intro),
+        GaseousSetStatement(statement: GaseousStatements.intro, highlights: [.reactionToggle]),
         GaseousAfterChoosingReaction(),
         GaseousSetStatement(
             statement: GaseousStatements.explainK,

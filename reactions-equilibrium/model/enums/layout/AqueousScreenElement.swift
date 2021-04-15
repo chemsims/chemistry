@@ -10,5 +10,6 @@ enum AqueousScreenElement {
          chartEquilibrium,
          waterSlider,
          moleculeContainers,
-         reactionDefinition
+         reactionDefinition,
+         reactionToggle
 }

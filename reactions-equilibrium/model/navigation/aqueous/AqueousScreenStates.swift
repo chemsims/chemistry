@@ -55,6 +55,7 @@ class AqueousHasSelectedReactionState: AqueousScreenState {
         model.statement = AqueousStatements.explainEquilibrium
         model.inputState = .none
         model.reactionSelectionIsToggled = false
+        model.highlightedElements.clear()
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
