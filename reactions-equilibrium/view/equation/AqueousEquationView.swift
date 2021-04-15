@@ -289,7 +289,7 @@ private struct FilledQuotientKView: View {
     }
 }
 
-private struct QuotientEqualitySign: View {
+struct QuotientEqualitySign: View {
 
     let currentTime: CGFloat
     let quotient: Equation

@@ -216,7 +216,12 @@ private struct QuotientKspBlank: View {
     var body: some View {
         HStack(spacing: 2) {
             quotientView
-            Equals()
+            QuotientEqualitySign(
+                currentTime: currentTime,
+                quotient: quotient,
+                convergedQuotient: ksp
+            )
+            .frame(width: 35)
             FixedText(ksp.str(decimals: 2))
                 .foregroundColor(.orangeAccent)
         }
