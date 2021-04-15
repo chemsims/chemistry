@@ -143,13 +143,12 @@ class AqueousReactionViewModel: ObservableObject {
             return
         }
         let canAddComplement = componentsWrapper.canIncrement(molecule: molecule.complement)
-        var msg: [TextLine] = ["That's plenty of \(molecule) for now!"]
-        if canAddComplement {
-            msg.append("Why don't you try adding some of \(molecule.complement)?")
-        } else {
-            msg.append("Why don't you press next to start the reaction?")
-        }
-        statement = msg
+
+        statement = StatementUtil.hasAddedEnough(
+            of: molecule.rawValue,
+            complement: molecule.complement.rawValue,
+            canAddComplement: canAddComplement
+        )
     }
 
     private var hasAddedEnoughProduct: Bool {

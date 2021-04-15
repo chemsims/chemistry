@@ -243,6 +243,16 @@ struct StatementUtil {
             "\(action) *\(name)* into the beaker."
         ]
     }
+
+    static func hasAddedEnough(of molecule: String, complement: String, canAddComplement: Bool) -> [TextLine]  {
+        var msg: [TextLine] = ["That's plenty of \(molecule) for now!"]
+        if canAddComplement {
+            msg.append("Why don't you try adding some of \(complement)?")
+        } else {
+            msg.append("Why don't you press next to start the reaction?")
+        }
+        return msg
+    }
 }
 
 extension BalancedReactionCoefficients {

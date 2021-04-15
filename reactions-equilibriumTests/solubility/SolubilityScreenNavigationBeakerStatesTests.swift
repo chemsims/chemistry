@@ -84,7 +84,7 @@ class SolubilityScreenNavigationBeakerStatesTests: XCTestCase {
         let nav = model.navigation!
 
         // Adding common ion
-        nav.nextUntilStatement(startsWith: "Once you add CB(S)")
+        nav.nextUntilStatement(startsWith: "Once you add \(SolubleReactionType.A.products.commonSalt)(S)")
         XCTAssertEqual(model.beakerState, makeState(.addingSolute(type: .commonIon), .none))
         XCTAssertEqual(model.inputState, .addSolute(type: .commonIon))
 

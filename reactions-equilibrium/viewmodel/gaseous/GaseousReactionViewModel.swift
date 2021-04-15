@@ -129,7 +129,15 @@ class GaseousReactionViewModel: ObservableObject {
         }
         objectWillChange.send()
         highlightedElements.clear()
-        componentWrapper.increment(molecule: selectedPumpReactant.molecule, count: 1)
+        let molecule = selectedPumpReactant.molecule
+        componentWrapper.increment(molecule: molecule, count: 1)
+        if !componentWrapper.canIncrement(molecule: molecule) {
+            statement = StatementUtil.hasAddedEnough(
+                of: selectedPumpReactant.molecule.rawValue,
+                complement: molecule.complement.rawValue,
+                canAddComplement: componentWrapper.canIncrement(molecule: molecule.complement)
+            )
+        }
     }
 
     private(set) var pumpModel: PumpViewModel<CGFloat>!

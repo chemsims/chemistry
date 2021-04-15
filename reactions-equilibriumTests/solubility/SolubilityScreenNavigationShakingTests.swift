@@ -117,7 +117,7 @@ class SolubilityScreenNavigationShakingTests: XCTestCase {
     }
 
     private func assertSolute(_ model: SolubilityViewModel, _ solute: SoluteType?) {
-        XCTAssertEqual(model.activeSolute, solute)
+        XCTAssertEqual(model.activeSolute.value, solute)
     }
 
     private func assertShaking(_ model: SolubilityViewModel) {
