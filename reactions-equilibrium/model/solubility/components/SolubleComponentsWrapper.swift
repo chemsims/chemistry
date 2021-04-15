@@ -55,7 +55,8 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
         timing: ReactionTiming,
         previous: SolubleComponentsWrapper?,
         solubilityCurve: SolublePhCurve,
-        setTime: @escaping (CGFloat) -> Void
+        setTime: @escaping (CGFloat) -> Void,
+        reaction: SolubleReactionType
     ) {
         self.soluteToAddForSaturation = soluteToAddForSaturation
         self.timing = timing
@@ -63,6 +64,7 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
         self.solubilityCurve = solubilityCurve
         self.previous = previous
         self.setTime = setTime
+        self.reaction = reaction
     }
 
     let soluteToAddForSaturation: Int
@@ -71,6 +73,7 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     let previous: SolubleComponentsWrapper?
     let setTime: (CGFloat) -> Void
     var solubilityCurve: SolublePhCurve
+    let reaction: SolubleReactionType
 
     mutating func solutePerformed(action: SoluteParticleAction) {
         counts.didPerform(action: action)
@@ -94,7 +97,9 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     var initialColor: RGB {
         previous?.finalColor ?? .beakerLiquid
     }
-    let finalColor = RGB.saturatedLiquid
+    var finalColor: RGB {
+        reaction.saturatedLiquid
+    }
 
     var prevComponents: SolubilityComponents? {
         previous?.components
@@ -111,13 +116,15 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
         previous: SolubleComponentsWrapper?,
         timing: ReactionTiming,
         solubilityCurve: SolublePhCurve,
-        setColor: @escaping (Color) -> Void
+        setColor: @escaping (Color) -> Void,
+        reaction: SolubleReactionType
     ) {
         self.counts = SoluteCounter(maxAllowed: maxCount)
         self.previous = previous
         self.timing = timing
         self.solubilityCurve = solubilityCurve
         self.setColor = setColor
+        self.reaction = reaction
     }
 
     var counts: SoluteCounter
@@ -125,6 +132,7 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
     let previous: SolubleComponentsWrapper?
     let setColor: (Color) -> Void
     var solubilityCurve: SolublePhCurve
+    let reaction: SolubleReactionType
 
     mutating func solutePerformed(action: SoluteParticleAction) {
         counts.didPerform(action: action)
@@ -144,7 +152,9 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
     }
 
     let initialColor: RGB = RGB.beakerLiquid
-    let finalColor: RGB = RGB.saturatedLiquid
+    var finalColor: RGB {
+        reaction.saturatedLiquid
+    }
     let shouldGoNext: Bool = false
 
     private var colorEquation: RGBEquation {
@@ -215,11 +225,18 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
     let timing: ReactionTiming
     var counts: SoluteCounter
     let setColor: (Color) -> Void
-    init(timing: ReactionTiming, previous: SolubleComponentsWrapper?, solubilityCurve: SolublePhCurve, setColor: @escaping (Color) -> Void) {
+    init(
+        timing: ReactionTiming,
+        previous: SolubleComponentsWrapper?,
+        solubilityCurve: SolublePhCurve,
+        setColor: @escaping (Color) -> Void,
+        reaction: SolubleReactionType
+    ) {
         self.timing = timing
         self.previous = previous
         self.setColor = setColor
         self.solubilityCurve = solubilityCurve
+        self.reaction = reaction
         self.counts = SoluteCounter(
             maxAllowed: SolubleReactionSettings.commonIonSoluteParticlesToAdd
         )
@@ -234,6 +251,7 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
     let previous: SolubleComponentsWrapper?
     var solubilityCurve: SolublePhCurve
+    let reaction: SolubleReactionType
 
     private let maxB = SolubleReactionSettings.maxInitialBConcentration
 
@@ -255,11 +273,13 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
             initialX: 0,
             finalX: maxB,
             initialColor: .beakerLiquid,
-            finalColor: .maxCommonIonLiquid
+            finalColor: reaction.maxCommonIonLiquid
         ).getRgb(at: maxB * counts.fraction(of: .dissolved))
     }
 
-    let finalColor = RGB.maxCommonIonLiquid
+    var finalColor: RGB {
+        reaction.maxCommonIonLiquid
+    }
 
     var shouldGoNext: Bool {
         !counts.canPerform(action: .dissolved)
@@ -268,17 +288,25 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
 
 struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
 
-    init(previous: SolubleComponentsWrapper, timing: ReactionTiming, solubilityCurve: SolublePhCurve, setColor: @escaping (Color) -> Void) {
+    init(
+        previous: SolubleComponentsWrapper,
+        timing: ReactionTiming,
+        solubilityCurve: SolublePhCurve,
+        setColor: @escaping (Color) -> Void,
+        reaction: SolubleReactionType
+    ) {
         self.counts = SoluteCounter(maxAllowed: SolubleReactionSettings.acidSoluteParticlesToAdd)
         self.underlyingPrevious = previous
         self.timing = timing
         self.setColor = setColor
         self.solubilityCurve = solubilityCurve
+        self.reaction = reaction
     }
 
     var counts: SoluteCounter
     let timing: ReactionTiming
     var solubilityCurve: SolublePhCurve
+    let reaction: SolubleReactionType
     private let setColor: (Color) -> Void
 
     mutating func solutePerformed(action: SoluteParticleAction) {
@@ -308,12 +336,14 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
         RGBEquation(
             initialX: prevEquilibriumB,
             finalX: minB0,
-            initialColor: .saturatedLiquid,
+            initialColor: reaction.saturatedLiquid,
             finalColor: .maxAcidLiquid
         ).getRgb(at: currentB0)
     }
 
-    let finalColor = RGB.saturatedLiquid
+    var finalColor: RGB {
+        reaction.saturatedLiquid
+    }
 
     var ph: Equation {
         LinearEquation(

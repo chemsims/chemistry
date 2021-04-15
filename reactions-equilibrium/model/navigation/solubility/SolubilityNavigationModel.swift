@@ -178,7 +178,8 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
                 previous: model.componentsWrapper,
                 timing: model.timing,
                 solubilityCurve: model.selectedReaction.solubility,
-                setColor: model.setColor
+                setColor: model.setColor,
+                reaction: model.selectedReaction
             )
         }
     }
@@ -245,7 +246,8 @@ private class AddSolute: SolubilityScreenState {
             timing: model.timing,
             previous: nil,
             solubilityCurve: model.selectedReaction.solubility,
-            setTime: model.setTime
+            setTime: model.setTime,
+            reaction: model.selectedReaction
         )
         doApply(on: model)
     }
@@ -456,7 +458,8 @@ private class AddCommonIonSolute: SolubilityScreenState {
                 timing: SolubleReactionSettings.firstReactionTiming,
                 previous: model.componentsWrapper,
                 solubilityCurve: model.selectedReaction.solubility,
-                setColor: model.setColor
+                setColor: model.setColor,
+                reaction: model.selectedReaction
             )
         }
     }
@@ -497,7 +500,8 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
                 timing: SolubleReactionSettings.firstReactionTiming,
                 previous: model.componentsWrapper,
                 solubilityCurve: model.selectedReaction.solubility,
-                setTime: model.setTime
+                setTime: model.setTime,
+                reaction: model.selectedReaction
             )
         }
     }
@@ -560,7 +564,8 @@ private class AddAcidSolute: SolubilityScreenState {
                 previous: model.componentsWrapper,
                 timing: SolubleReactionSettings.secondReactionTiming,
                 solubilityCurve: model.selectedReaction.solubility,
-                setColor: model.setColor
+                setColor: model.setColor,
+                reaction: model.selectedReaction
             )
         }
     }

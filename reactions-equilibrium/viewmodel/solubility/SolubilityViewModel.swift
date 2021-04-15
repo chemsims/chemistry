@@ -52,7 +52,8 @@ final class SolubilityViewModel: ObservableObject {
             timing: firstTiming,
             previous: nil,
             solubilityCurve: firstReaction.solubility,
-            setTime: setTime
+            setTime: setTime,
+            reaction: firstReaction
         )
         self.navigation = SolubilityNavigationModel.model(model: self)
     }

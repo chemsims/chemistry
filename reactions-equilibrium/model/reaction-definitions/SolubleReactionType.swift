@@ -25,7 +25,7 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
     var products: SolubleProductPair {
         switch self {
         case .A: return SolubleProductPair(first: "A", second: "B", third: "C")
-        case .B: return SolubleProductPair (first: "C", second: "D", third: "A")
+        case .B: return SolubleProductPair (first: "C", second: "D", third: "E")
         case .C: return SolubleProductPair (first: "E", second: "F", third: "B")
         }
     }
@@ -40,36 +40,35 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
 
     var soluteColor: RGB {
         switch self {
-        case .A: return RGB.primarySolute
-        case .B: return .acidSolute
-        case .C: return .maxCommonIonLiquid
+        case .A: return .primarySoluteA
+        case .B: return .primarySoluteB
+        case .C: return .primarySoluteC
         }
     }
 
     var saturatedLiquid: RGB {
         switch self {
-        case .A: return RGB.saturatedLiquid
-        case .B: return .maxCommonIonLiquid
-        case .C: return .saturatedLiquid
+        case .A: return .saturatedLiquidA
+        case .B: return .saturatedLiquidB
+        case .C: return .saturatedLiquidC
         }
     }
 
     var commonIonSolute: RGB {
         switch self {
-        case .A: return RGB.commonIonSolute
-        case .B: return .aqMoleculeA
-        case .C: return .aqMoleculeD
+        case .A: return .commonIonSoluteA
+        case .B: return .commonIonSoluteB
+        case .C: return .commonIonSoluteC
         }
     }
 
     var maxCommonIonLiquid: RGB {
         switch self {
-        case .A: return RGB.maxCommonIonLiquid
-        case .B: return .beakerLiquid
-        case .C: return .maxCommonIonLiquid
+        case .A: return .maxCommonIonLiquidA
+        case .B: return .maxCommonIonLiquidB
+        case .C: return .maxCommonIonLiquidC
         }
     }
-
 }
 
 struct SolubleProductPair {
