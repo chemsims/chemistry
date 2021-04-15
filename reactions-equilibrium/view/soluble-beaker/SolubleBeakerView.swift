@@ -110,7 +110,7 @@ private struct SolubleBeakerViewWithGeometry: View {
 
         return ParticleContainer(
                 settings: ParticleContainerSettings(
-                    labelColor: solute.color.color,
+                    labelColor: solute.color(for: model.selectedReaction).color,
                     label: labelName(for: solute),
                     strokeLineWidth: 0.4
                 )

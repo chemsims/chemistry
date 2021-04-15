@@ -22,6 +22,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             soluteWidth: soluteWidth,
             waterHeight: waterHeight,
             saturatedReactionDuration: model.timing.equilibrium - model.timing.start,
+            reaction: model.selectedReaction,
             onWaterEntry: model.onParticleWaterEntry,
             onDissolve: model.onDissolve
         )
@@ -45,6 +46,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
             scene.saturatedReactionDuration = model.timing.equilibrium - model.timing.start
             scene.onDissolve = model.onDissolve
             scene.transition = model.beakerState
+            scene.reaction = model.selectedReaction
         }
     }
 }
@@ -56,6 +58,7 @@ private class SKSolubleBeakerScene: SKScene {
     var saturatedReactionDuration: CGFloat
     var onWaterEntry: (SoluteType) -> Void
     var onDissolve: (SoluteType) -> Void
+    var reaction: SolubleReactionType
 
     var transition: BeakerStateTransition {
         didSet {
@@ -83,12 +86,14 @@ private class SKSolubleBeakerScene: SKScene {
         soluteWidth: CGFloat,
         waterHeight: CGFloat,
         saturatedReactionDuration: CGFloat,
+        reaction: SolubleReactionType,
         onWaterEntry: @escaping (SoluteType) -> Void,
         onDissolve: @escaping (SoluteType) -> Void
     ) {
         self.soluteWidth = soluteWidth
         self.waterHeight = waterHeight
         self.saturatedReactionDuration = saturatedReactionDuration
+        self.reaction = reaction
         self.onWaterEntry = onWaterEntry
         self.onDissolve = onDissolve
         self.transition = BeakerStateTransition()
@@ -120,7 +125,11 @@ private class SKSolubleBeakerScene: SKScene {
     func addParticle(at position: CGPoint) {
         let factor: CGFloat = soluteState.soluteType == .acid ? 0.75 : 1
         let sideLength = (soluteWidth / 2) * factor
-        let node = SKSoluteNode(sideLength: sideLength, soluteType: soluteState.soluteType)
+        let node = SKSoluteNode(
+            sideLength: sideLength,
+            soluteType: soluteState.soluteType,
+            reaction: reaction
+        )
         node.position = position.offset(dx: -sideLength, dy: 0)
         node.zPosition = 1
 

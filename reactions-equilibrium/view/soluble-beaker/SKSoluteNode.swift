@@ -10,15 +10,17 @@ class SKSoluteNode: SKShapeNode {
     private let geometry: HexagonGeometry
     private let sideLength: CGFloat
     let soluteType: SoluteType
+    let reaction: SolubleReactionType
 
     var hasEnteredWater = false
     var willDissolve = false
     var willHide = false
 
-    init(sideLength: CGFloat, soluteType: SoluteType) {
+    init(sideLength: CGFloat, soluteType: SoluteType, reaction: SolubleReactionType) {
         self.sideLength = sideLength
         self.geometry = HexagonGeometry(sideLength: sideLength)
         self.soluteType = soluteType
+        self.reaction = reaction
         super.init()
 
         addParts()
@@ -32,7 +34,11 @@ class SKSoluteNode: SKShapeNode {
     }
 
     func copyNode() -> SKSoluteNode {
-        let newCopy = SKSoluteNode(sideLength: sideLength, soluteType: soluteType)
+        let newCopy = SKSoluteNode(
+            sideLength: sideLength,
+            soluteType: soluteType,
+            reaction: reaction
+        )
         newCopy.hasEnteredWater = hasEnteredWater
         newCopy.willDissolve = willDissolve
         newCopy.position = position
@@ -58,7 +64,7 @@ class SKSoluteNode: SKShapeNode {
             let node = ParticleTrianglePart(
                 sideLength: sideLength,
                 height: halfHeight,
-                fillColor: soluteType.color.uiColor
+                fillColor: soluteType.color(for: reaction).uiColor
             )
             node.position = CGPoint(
                 x: center.x + dx,
@@ -162,7 +168,6 @@ private struct HexagonGeometry {
     }
 }
 
-
 struct SKSoluteNode_Previews: PreviewProvider {
     static var previews: some View {
         NodeRepresentable()
@@ -179,7 +184,7 @@ struct SKSoluteNode_Previews: PreviewProvider {
             let scene = SKScene(size: CGSize(width: Self.sceneSize, height: Self.sceneSize))
             scene.backgroundColor = .clear
             view.presentScene(scene)
-            let node = SKSoluteNode(sideLength: Self.sideLength, soluteType: .primary)
+            let node = SKSoluteNode(sideLength: Self.sideLength, soluteType: .primary, reaction: .A)
             node.position = CGPoint(
                 x: (Self.sceneSize / 2) - Self.sideLength,
                 y: (Self.sceneSize / 2) - Self.sideLength

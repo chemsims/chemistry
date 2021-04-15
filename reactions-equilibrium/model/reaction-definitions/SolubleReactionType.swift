@@ -2,8 +2,9 @@
 // Reactions App
 //
 
-import Foundation
 import CoreGraphics
+import SwiftUI
+import ReactionsCore
 
 enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
 
@@ -23,9 +24,9 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
 
     var products: SolubleProductPair {
         switch self {
-        case .A: return SolubleProductPair(first: "A", second: "B", third: "G")
-        case .B: return SolubleProductPair (first: "C", second: "D", third: "H")
-        case .C: return SolubleProductPair (first: "E", second: "F", third: "I")
+        case .A: return SolubleProductPair(first: "A", second: "B", third: "C")
+        case .B: return SolubleProductPair (first: "C", second: "D", third: "A")
+        case .C: return SolubleProductPair (first: "E", second: "F", third: "B")
         }
     }
 
@@ -34,6 +35,38 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
         case .A: return .curve1
         case .B: return .curve2
         case .C: return .curve3
+        }
+    }
+
+    var soluteColor: RGB {
+        switch self {
+        case .A: return RGB.primarySolute
+        case .B: return .acidSolute
+        case .C: return .maxCommonIonLiquid
+        }
+    }
+
+    var saturatedLiquid: RGB {
+        switch self {
+        case .A: return RGB.saturatedLiquid
+        case .B: return .maxCommonIonLiquid
+        case .C: return .saturatedLiquid
+        }
+    }
+
+    var commonIonSolute: RGB {
+        switch self {
+        case .A: return RGB.commonIonSolute
+        case .B: return .aqMoleculeA
+        case .C: return .aqMoleculeD
+        }
+    }
+
+    var maxCommonIonLiquid: RGB {
+        switch self {
+        case .A: return RGB.maxCommonIonLiquid
+        case .B: return .beakerLiquid
+        case .C: return .maxCommonIonLiquid
         }
     }
 

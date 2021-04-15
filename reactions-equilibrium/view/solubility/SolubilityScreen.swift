@@ -32,7 +32,6 @@ private struct SolubilityScreenWithSettings: View {
     @ObservedObject var model: SolubilityViewModel
     let settings: SolubilityScreenLayoutSettings
 
-
     var body: some View {
         HStack(spacing: 0) {
             SolubleBeakerView(
