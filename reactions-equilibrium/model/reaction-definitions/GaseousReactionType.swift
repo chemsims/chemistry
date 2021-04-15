@@ -3,6 +3,7 @@
 //
 
 import CoreGraphics
+import ReactionsCore
 
 enum GaseousReactionType: Int, ReactionDefinition, CaseIterable {
     case A, B, C
@@ -42,6 +43,14 @@ enum GaseousReactionType: Int, ReactionDefinition, CaseIterable {
                 productC: 1,
                 productD: 2
             )
+        }
+    }
+
+    var energyTransfer: ReactionEnergyTransfer {
+        switch self {
+        case .A: return .exothermic
+        case .B: return .endothermic
+        case .C: return .exothermic
         }
     }
 }

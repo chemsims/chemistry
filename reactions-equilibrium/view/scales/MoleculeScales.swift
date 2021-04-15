@@ -8,12 +8,14 @@ import ReactionsCore
 struct MoleculeScales: View {
 
     let reaction: BalancedReactionEquation
+    let angleFraction: Equation
     let currentTime: CGFloat
 
     var body: some View {
         GeometryReader { geo in
             SizedMoleculeScales(
                 reaction: reaction,
+                angleFraction: angleFraction,
                 currentTime: currentTime,
                 settings: MoleculeScalesGeometry(
                     width: geo.size.width,
@@ -24,11 +26,10 @@ struct MoleculeScales: View {
     }
 }
 
-
-
 private struct SizedMoleculeScales: View {
 
     let reaction: BalancedReactionEquation
+    let angleFraction: Equation
     let currentTime: CGFloat
     let settings: MoleculeScalesGeometry
 
@@ -43,7 +44,10 @@ private struct SizedMoleculeScales: View {
     }
 
     private var rotationDegrees: ScalesRotationEquation {
-        ScalesRotationEquation(reaction: reaction, maxAngle: settings.maxRotationAngle)
+        ScalesRotationEquation(
+            fraction: angleFraction,
+            maxAngle: settings.maxRotationAngle
+        )
     }
 
     private var stand: some View {
@@ -203,22 +207,5 @@ extension MoleculeScalesGeometry {
     ) -> Angle {
         let sinTheta = (maxHeight - basketHeight) / singleArmWidth
         return Angle(radians: Double(asin(sinTheta)))
-    }
-}
-
-struct MoleculeScales_Previews: PreviewProvider {
-    static var previews: some View {
-        MoleculeScales(
-            reaction: BalancedReactionEquation(
-                coefficients: MoleculeValue(builder: { _ in 1 }),
-                equilibriumConstant: 1,
-                initialConcentrations: MoleculeValue(builder: { _ in 0.1 }),
-                startTime: 0,
-                equilibriumTime: 10,
-                previous: nil
-            ),
-            currentTime: 0
-        )
-        .previewLayout(.fixed(width: 400, height: 300))
     }
 }

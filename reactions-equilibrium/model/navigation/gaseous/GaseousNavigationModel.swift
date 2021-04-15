@@ -271,6 +271,7 @@ private class SetVolume: GaseousScreenState {
         model.statement = GaseousStatements.instructToChangeVolume(selected: model.selectedReaction)
         model.highlightedElements.elements = [.pressureSlider]
         let timing = GaseousReactionSettings.pressureTiming
+        model.reactionPhase = .pressureReaction
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .setBeakerVolume
         }
@@ -287,10 +288,12 @@ private class SetVolume: GaseousScreenState {
         model.highlightedElements.clear()
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
+            model.rows = CGFloat(GaseousReactionSettings.initialRows)
         }
         if let previous = model.componentWrapper.previous {
             model.componentWrapper = previous
         }
+        model.reactionPhase = .firstReaction
     }
 }
 
@@ -374,6 +377,7 @@ private class SetTemperature: GaseousScreenState {
     private func doApply(on model: GaseousReactionViewModel, setComponents: Bool) {
         model.statement = GaseousStatements.instructToSetTemp
         model.highlightedElements.elements = [.tempSlider]
+        model.reactionPhase = .heatReaction
         let timing = GaseousReactionSettings.heatTiming
         withAnimation(.easeOut(duration: 0.5)) {
             model.showFlame = true
@@ -398,5 +402,6 @@ private class SetTemperature: GaseousScreenState {
         if let previous = model.componentWrapper.previous {
             model.componentWrapper = previous
         }
+        model.reactionPhase = .pressureReaction
     }
 }

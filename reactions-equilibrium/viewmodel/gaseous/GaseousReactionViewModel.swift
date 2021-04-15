@@ -74,6 +74,8 @@ class GaseousReactionViewModel: ObservableObject {
         }
     }
 
+    var reactionPhase = GaseousReactionPhase.firstReaction
+
     private(set) var navigation: NavigationModel<GaseousScreenState>?
     private let incrementingLimits = ConcentrationIncrementingLimits()
 
@@ -118,7 +120,10 @@ class GaseousReactionViewModel: ObservableObject {
     }
 
     private func scaleQuotient(base: CGFloat) -> CGFloat {
-        base * (1 + (5 * extraHeatFactor))
+        if selectedReaction.energyTransfer == .endothermic {
+            return base * (1 + (5 * extraHeatFactor))
+        }
+        return base / (1 + (3 * extraHeatFactor))
     }
 
     private func onPump() {
@@ -128,7 +133,7 @@ class GaseousReactionViewModel: ObservableObject {
         objectWillChange.send()
         highlightedElements.clear()
         let molecule = selectedPumpReactant.molecule
-        componentWrapper.increment(molecule: molecule, count: 1)
+        componentWrapper.increment(molecule: molecule, count: 20)
         if !componentWrapper.canIncrement(molecule: molecule) {
             statement = StatementUtil.hasAddedEnough(
                 of: selectedPumpReactant.molecule.rawValue,
@@ -138,9 +143,60 @@ class GaseousReactionViewModel: ObservableObject {
         }
     }
 
+    var scalesRotationFraction: Equation {
+        EquilibriumReactionEquation(
+            t1: componentWrapper.startTime,
+            c1: initialAngle.fraction,
+            t2: components.equilibriumTime,
+            c2: 0
+        )
+    }
+
+    private var initialAngle: InitialAngleValue {
+        switch reactionPhase {
+        case .firstReaction: return initialAngleForFirstReaction
+        case .pressureReaction: return initialAngleForPressureReaction
+        case .heatReaction: return initialAngleForHeatReaction
+        }
+    }
+
+    private var initialAngleForFirstReaction: InitialAngleValue {
+        InitialAngleValue(
+            currentValue: components.equation.initialConcentrations.all.reduce(0) { $0 + $1 },
+            valueAtZeroAngle: 0,
+            valueAtMaxAngle: AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation,
+            isNegative: true
+        )
+    }
+
+    private var initialAngleForPressureReaction: InitialAngleValue {
+        let settings = GaseousReactionSettings.self
+        let minRows = CGFloat(settings.minRows)
+        let maxRows = CGFloat(settings.maxRows)
+        let isReducingVolume = rows < CGFloat(settings.initialRows)
+        return InitialAngleValue(
+            currentValue: rows,
+            valueAtZeroAngle: CGFloat(settings.initialRows),
+            valueAtMaxAngle: isReducingVolume ? minRows : maxRows,
+            isNegative: isReducingVolume
+        )
+    }
+
+    private var initialAngleForHeatReaction: InitialAngleValue {
+        InitialAngleValue(
+            currentValue: extraHeatFactor,
+            valueAtZeroAngle: 0,
+            valueAtMaxAngle: 1,
+            isNegative: selectedReaction.energyTransfer == .endothermic
+        )
+    }
+
     private(set) var pumpModel: PumpViewModel<CGFloat>!
 }
 
+enum GaseousReactionPhase {
+    case firstReaction, pressureReaction, heatReaction
+}
 
 // MARK: Helper functions for concentration, volume and heat input limits
 private extension GaseousReactionViewModel {

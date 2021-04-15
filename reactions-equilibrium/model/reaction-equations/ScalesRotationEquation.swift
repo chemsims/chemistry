@@ -7,35 +7,46 @@ import CoreGraphics
 
 struct ScalesRotationEquation: Equation {
 
-    let reaction: BalancedReactionEquation
-    let maxAngle: CGFloat
+    private let fraction: Equation
+    private let maxAngle: CGFloat
+
+    init(
+        fraction: Equation,
+        maxAngle: CGFloat
+    ) {
+        self.fraction = fraction
+        self.maxAngle = maxAngle
+    }
 
     func getY(at x: CGFloat) -> CGFloat {
-        let quotientEquation = ReactionQuotientEquation(equations: reaction)
-        let quotient = quotientEquation.getY(at: x)
-        let convergedQuotient = quotientEquation.getY(at: reaction.equilibriumTime)
-        let quotientFactor = convergedQuotient == 0 ? 0 : quotient / convergedQuotient
+        fraction.getY(at: x) * maxAngle
+    }
+}
 
-        if reaction.isForward {
-            let reactantSum = reaction.initialConcentrations.reactantA + reaction.initialConcentrations.reactantB
-            let sumFactor = reactantSum / AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation
-            let initAngle = min(sumFactor * maxAngle, maxAngle)
+struct InitialAngleValue {
+    let currentValue: CGFloat
+    let valueAtZeroAngle: CGFloat
+    let valueAtMaxAngle: CGFloat
+    let isNegative: Bool
 
-            return -initAngle * (1 - quotientFactor)
-        }
+    init(
+        currentValue: CGFloat,
+        valueAtZeroAngle: CGFloat,
+        valueAtMaxAngle: CGFloat,
+        isNegative: Bool = false
+    ) {
+        self.currentValue = currentValue
+        self.valueAtZeroAngle = valueAtZeroAngle
+        self.valueAtMaxAngle = valueAtMaxAngle
+        self.isNegative = isNegative
+    }
 
-        let tAddProd = AqueousReactionSettings.timeToAddProduct
-        let c0 = reaction.concentration.productC.getY(at: tAddProd)
-        let t0 = reaction.concentration.productD.getY(at: tAddProd)
-
-        let productFactor = (c0 + t0) / AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation
-        let initAngle = min(productFactor * maxAngle, maxAngle)
-
-        let maxQuotient = quotientEquation.getY(at: tAddProd)
-        if (abs(convergedQuotient - maxQuotient) < 0.001) {
+    var fraction: CGFloat {
+        guard valueAtMaxAngle != valueAtZeroAngle else {
             return 0
         }
-        let factor = (quotient - convergedQuotient) / (maxQuotient - convergedQuotient)
-        return min(initAngle * factor, maxAngle)
+        let returnValue = (currentValue - valueAtZeroAngle) / (valueAtMaxAngle - valueAtZeroAngle)
+        let direction: CGFloat = isNegative ? -1 : 1
+        return returnValue * direction
     }
 }

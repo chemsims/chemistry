@@ -281,6 +281,7 @@ private class InstructToAddProductState: AqueousScreenState {
             startTime: AqueousReactionSettings.timeToAddProduct,
             equilibriumTime: AqueousReactionSettings.timeForReverseConvergence
         )
+        model.reactionPhase = .second
 
         DeferScreenEdgesState.shared.deferEdges = [.top]
     }
@@ -300,6 +301,7 @@ private class InstructToAddProductState: AqueousScreenState {
             model.componentsWrapper = previous
         }
         DeferScreenEdgesState.shared.deferEdges = []
+        model.reactionPhase = .first
     }
 }
 

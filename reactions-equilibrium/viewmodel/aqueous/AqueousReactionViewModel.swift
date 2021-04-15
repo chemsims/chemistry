@@ -74,6 +74,8 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var highlightForwardReactionArrow = false
     @Published var highlightedElements = HighlightedElements<AqueousScreenElement>()
 
+    var reactionPhase = AqueousReactionPhase.first
+
     private let incrementingLimits = ConcentrationIncrementingLimits()
 
     private let inputSettings = AqueousReactionSettings.ConcentrationInput.self
@@ -192,6 +194,52 @@ class AqueousReactionViewModel: ObservableObject {
     private var availableCols: Int {
         MoleculeGridSettings.cols
     }
+
+    var scalesRotationFraction: Equation {
+        EquilibriumReactionEquation(
+            t1: components.startTime,
+            c1: initialAngle.fraction,
+            t2: components.equilibriumTime,
+            c2: 0
+        )
+    }
+
+    private var initialAngle: InitialAngleValue {
+        reactionPhase == .first ? initialReactionScalesRotation : secondReactionScalesRotation
+    }
+
+    private var initialReactionScalesRotation: InitialAngleValue {
+        InitialAngleValue(
+            currentValue: components.equation.initialConcentrations.all.reduce(0) { $0 + $1 },
+            valueAtZeroAngle: 0,
+            valueAtMaxAngle: AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation,
+            isNegative: true
+        )
+    }
+
+    private var secondReactionScalesRotation: InitialAngleValue {
+        let currentMoleculeCounts = componentsWrapper.molecules.map { $0.count }
+        let currentCAndD = currentMoleculeCounts.productC + currentMoleculeCounts.productD
+
+        let prevCAndD = componentsWrapper.previous?.components.beakerMolecules.filter {
+            $0.molecule == .C || $0.molecule == .D
+        }.map { molecule in
+            molecule.fractioned.coords(at: components.startTime).count
+        }.reduce(0) { $0 + $1 } ?? 0
+
+        let maxConcentration = AqueousReactionSettings.Scales.concentrationSumAtMaxScaleRotation
+        let gridCount = GridUtil.availableRows(for: rows) * availableCols
+
+        return InitialAngleValue(
+            currentValue: CGFloat(currentCAndD),
+            valueAtZeroAngle: CGFloat(prevCAndD),
+            valueAtMaxAngle: CGFloat(gridCount) * maxConcentration
+        )
+    }
+}
+
+enum AqueousReactionPhase {
+    case first, second
 }
 
 // MARK: Computed vars for input state

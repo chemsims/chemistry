@@ -56,7 +56,8 @@ private struct AqueousReactionScreenWithSettings: View {
 struct RightStackView<Reaction: ReactionDefinition>: View {
 
     let statement: [TextLine]
-    let components: ReactionComponents
+    let componentWrapper: ReactionComponentsWrapper
+    let scalesAngleFraction: Equation
     let currentTime: CGFloat
     let equilibriumQuotient: CGFloat
     let isSelectingReaction: Bool
@@ -80,6 +81,10 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     let isPressure: Bool
     let showHeat: Bool
     let settings: AqueousScreenLayoutSettings
+
+    var components: ReactionComponents {
+        componentWrapper.components
+    }
 
     @State private var showGrid = false
 
@@ -163,6 +168,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     private var scales: some View {
         MoleculeScales(
             reaction: components.equation,
+            angleFraction: scalesAngleFraction,
             currentTime: currentTime
         )
         .frame(width: settings.scalesWidth, height: settings.scalesHeight)
@@ -237,7 +243,8 @@ extension RightStackView {
     ) {
         self.init(
             statement: model.statement,
-            components: model.components,
+            componentWrapper: model.componentsWrapper,
+            scalesAngleFraction: model.scalesRotationFraction,
             currentTime: model.currentTime,
             equilibriumQuotient: model.convergenceQuotient,
             isSelectingReaction: model.inputState == .selectReactionType,
@@ -279,7 +286,8 @@ extension RightStackView {
     ) {
         self.init(
             statement: model.statement,
-            components: model.components,
+            componentWrapper: model.componentWrapper,
+            scalesAngleFraction: model.scalesRotationFraction,
             currentTime: model.currentTime,
             equilibriumQuotient: model.equilibriumPressureQuotient,
             isSelectingReaction: model.inputState == .selectReactionType,
