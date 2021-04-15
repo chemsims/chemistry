@@ -43,6 +43,14 @@ struct GaseousStatements {
         ]
     }
 
+    static let preFirstReaction: [TextLine] = [
+        """
+        Awesome! Now the forward reaction will take place. It is said that the forward reaction \
+        is being *favored*, this is because in order for the reaction to reach the equilibrium \
+        state, products must be produced.
+        """
+    ]
+
     static func reactionRunning(direction: ReactionDirection) -> [TextLine] {
         let reactant = direction == .forward ? "reactants" : "products"
         let product = direction == .forward ? "products" : "reactants"

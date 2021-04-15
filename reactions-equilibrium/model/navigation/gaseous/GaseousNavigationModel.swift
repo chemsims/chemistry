@@ -23,10 +23,8 @@ struct GaseousNavigationModel {
             highlights: [.quotientToEquilibriumConstantDefinition]
         ),
         AddProducts(),
-        RunReaction(
-            timing: GaseousReactionSettings.forwardTiming,
-            revealQuotientLine: true
-        ),
+        PreFirstReaction(),
+        RunReaction(timing: GaseousReactionSettings.forwardTiming),
         EndOfReaction(
             statement: GaseousStatements.forwardEquilibriumReached,
             timing: GaseousReactionSettings.forwardTiming
@@ -132,6 +130,13 @@ private class AddProducts: GaseousScreenState {
         model.showConcentrationLines = true
     }
 
+    override func reapply(on model: GaseousReactionViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.resetMolecules()
+        }
+        apply(on: model)
+    }
+
     override func unapply(on model: GaseousReactionViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
             model.resetMolecules()
@@ -141,23 +146,27 @@ private class AddProducts: GaseousScreenState {
     }
 }
 
+private class PreFirstReaction: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = GaseousStatements.preFirstReaction
+        model.inputState = .none
+        model.showQuotientLine = true
+    }
+
+    override func unapply(on model: GaseousReactionViewModel) {
+        model.showQuotientLine = false
+    }
+}
+
 private class RunReaction: GaseousScreenState {
     let timing: ReactionTiming
-    let revealQuotientLine: Bool
 
-    init(
-        timing: ReactionTiming,
-        revealQuotientLine: Bool = false
-    ) {
+    init(timing: ReactionTiming) {
         self.timing = timing
-        self.revealQuotientLine = revealQuotientLine
     }
 
     override func apply(on model: GaseousReactionViewModel) {
         model.statement = GaseousStatements.reactionRunning(direction: model.components.equation.direction)
-        if revealQuotientLine {
-            model.showQuotientLine = true
-        }
         model.highlightForwardReactionArrow = model.components.equation.isForward
         model.highlightReverseReactionArrow = !model.components.equation.isForward
         model.currentTime = timing.start
@@ -173,9 +182,6 @@ private class RunReaction: GaseousScreenState {
             model.currentTime = timing.start
             model.highlightForwardReactionArrow = false
             model.highlightReverseReactionArrow = false
-            if revealQuotientLine {
-                model.showQuotientLine = false
-            }
         }
     }
 
@@ -255,6 +261,9 @@ private class SetVolume: GaseousScreenState {
     }
 
     override func reapply(on model: GaseousReactionViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.rows = CGFloat(GaseousReactionSettings.initialRows)
+        }
         doApply(on: model, setComponents: false)
     }
 
@@ -278,7 +287,6 @@ private class SetVolume: GaseousScreenState {
         model.highlightedElements.clear()
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
-            model.rows = CGFloat(GaseousReactionSettings.initialRows)
         }
         if let previous = model.componentWrapper.previous {
             model.componentWrapper = previous
@@ -357,6 +365,9 @@ private class SetTemperature: GaseousScreenState {
     }
 
     override func reapply(on model: GaseousReactionViewModel) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.extraHeatFactor = 0
+        }
         doApply(on: model, setComponents: false)
     }
 
