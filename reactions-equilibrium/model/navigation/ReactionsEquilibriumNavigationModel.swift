@@ -26,10 +26,7 @@ private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
     typealias Screen = EquilibriumAppScreen
 
     func deferCanSelect(of screen: EquilibriumAppScreen) -> DeferCanSelect<EquilibriumAppScreen>? {
-        if screen == .aqueousReaction {
-            return nil
-        }
-        return .canSelect(other: .aqueousReaction)
+        nil
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: EquilibriumAppScreen) -> Bool {
