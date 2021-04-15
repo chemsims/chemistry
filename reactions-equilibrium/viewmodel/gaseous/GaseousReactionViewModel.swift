@@ -133,7 +133,7 @@ class GaseousReactionViewModel: ObservableObject {
         objectWillChange.send()
         highlightedElements.clear()
         let molecule = selectedPumpReactant.molecule
-        componentWrapper.increment(molecule: molecule, count: 20)
+        componentWrapper.increment(molecule: molecule, count: 1)
         if !componentWrapper.canIncrement(molecule: molecule) {
             statement = StatementUtil.hasAddedEnough(
                 of: selectedPumpReactant.molecule.rawValue,

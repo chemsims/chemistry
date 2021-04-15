@@ -20,7 +20,6 @@ struct AddMoleculesView: View {
 
     var body: some View {
         GeometryReader { geometry in
-
             Rectangle()
                 .foregroundColor(.white)
                 .frame(height: 1.1 * containerHeight)
