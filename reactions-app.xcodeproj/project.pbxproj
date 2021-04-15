@@ -218,7 +218,6 @@
 		57952A4225E67F83006AB876 /* ScreenStateTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486225A5FB49000CFA1E /* ScreenStateTree.swift */; };
 		57952A4725E67F96006AB876 /* NavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C59256555C40075358B /* NavigationModel.swift */; };
 		57952A5225E68184006AB876 /* AqueousNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A5125E68184006AB876 /* AqueousNavigationModel.swift */; };
-		57952A5D25E6819C006AB876 /* AqueousScreenStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A5C25E6819C006AB876 /* AqueousScreenStates.swift */; };
 		579628CF25659054007A7A6D /* ReactionsRateRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579628CE25659054007A7A6D /* ReactionsRateRootView.swift */; };
 		5797A44A25E4069F00991BD9 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
 		5797A45125E4069F00991BD9 /* ReactionsCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797A44325E4069F00991BD9 /* ReactionsCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -694,7 +693,6 @@
 		57952A2025E63F7F006AB876 /* BalancedReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReaction.swift; sourceTree = "<group>"; };
 		57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionEquationTests.swift; sourceTree = "<group>"; };
 		57952A5125E68184006AB876 /* AqueousNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousNavigationModel.swift; sourceTree = "<group>"; };
-		57952A5C25E6819C006AB876 /* AqueousScreenStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenStates.swift; sourceTree = "<group>"; };
 		579628CE25659054007A7A6D /* ReactionsRateRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsRateRootView.swift; sourceTree = "<group>"; };
 		5797567E25C1C5CB005C484E /* LabelledImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelledImage.swift; sourceTree = "<group>"; };
 		5797A44125E4069F00991BD9 /* ReactionsCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactionsCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1755,7 +1753,6 @@
 			isa = PBXGroup;
 			children = (
 				57952A5125E68184006AB876 /* AqueousNavigationModel.swift */,
-				57952A5C25E6819C006AB876 /* AqueousScreenStates.swift */,
 			);
 			path = aqueous;
 			sourceTree = "<group>";
@@ -2844,7 +2841,6 @@
 				57B3B94D260B478800EB9B47 /* ReactionsEquilibriumNavigationModel.swift in Sources */,
 				5729BC22261D883F000390A0 /* SolubilityChartEquation.swift in Sources */,
 				57062DB726072CAC00007BAA /* GaseousNavigationModel.swift in Sources */,
-				57952A5D25E6819C006AB876 /* AqueousScreenStates.swift in Sources */,
 				57E59A4625F925F60087F760 /* ReactionDefinitionView.swift in Sources */,
 				57D15C0C2622D67F00BE1303 /* BeakerStateTransition.swift in Sources */,
 				57686A8B2600CF65005BD328 /* GaseousReactionScreen.swift in Sources */,
