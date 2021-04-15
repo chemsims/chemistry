@@ -62,6 +62,9 @@ public class CoreMotionPositionViewModel: ObservableObject {
         }
         if let initialAttitude = initialAttitude {
             DispatchQueue.main.async { [weak self] in
+                guard (self?.isUpdating ?? false) else {
+                    return
+                }
                 self?.handlePitch(newValue: motion.attitude.pitch - initialAttitude.pitch)
                 self?.handleRoll(newValue: motion.attitude.roll - initialAttitude.roll)
             }
