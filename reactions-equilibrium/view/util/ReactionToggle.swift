@@ -17,7 +17,7 @@ struct ReactionToggle<Reaction: SelectableReaction>: View {
     let highlightReverseArrow: Bool
     let showHeat: Bool
     let reactionDefinitionHighlight: Color
-    let generalElementHighlight: Color
+    let reactionToggleHighlight: Color
     let settings: AqueousScreenLayoutSettings
 
     var body: some View {
@@ -52,7 +52,7 @@ struct ReactionToggle<Reaction: SelectableReaction>: View {
             )
             .disabled(!isSelectingReaction)
             .opacity(isSelectingReaction ? 1 : 0.6)
-            .colorMultiply(generalElementHighlight)
+            .colorMultiply(reactionToggleHighlight)
         }
         .frame(width: settings.gridWidth, height: settings.reactionToggleHeight)
         .zIndex(isSelectingReaction ? 1 : 0)

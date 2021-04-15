@@ -9,5 +9,6 @@ enum SolubleScreenElement {
          quotientToConcentrationDefinition,
          quotientToKspDefinition,
          waterSlider,
-         chartEquilibrium
+         chartEquilibrium,
+         reactionSelectionToggle
 }

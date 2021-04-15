@@ -103,6 +103,7 @@ private class SelectReaction: SolubilityScreenState {
         model.statement = statements.explainPrecipitationReactions
         model.inputState = .selectingReaction
         model.reactionSelectionToggled = true
+        model.highlights.elements = [.reactionSelectionToggle]
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -117,6 +118,7 @@ private class PostSelectReaction: SolubilityScreenState {
         model.inputState = .none
         model.showSelectedReaction = true
         model.reactionSelectionToggled = false
+        model.highlights.clear()
     }
 
     override func unapply(on model: SolubilityViewModel) {

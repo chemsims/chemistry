@@ -130,8 +130,8 @@ private struct SolubilityRightStack: View {
             highlightForwardArrow: model.highlightForwardReactionArrow,
             highlightReverseArrow: false,
             showHeat: false,
-            reactionDefinitionHighlight: model.highlights.colorMultiply(for: nil),
-            generalElementHighlight: model.highlights.colorMultiply(for: nil),
+            reactionDefinitionHighlight: model.highlights.colorMultiply(for: .reactionSelectionToggle),
+            reactionToggleHighlight: model.highlights.colorMultiply(for: .reactionSelectionToggle),
             settings: settings.common
         )
     }

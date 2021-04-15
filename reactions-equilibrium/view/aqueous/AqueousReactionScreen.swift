@@ -108,7 +108,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             highlightReverseArrow: highlightReverseReactionArrow,
             showHeat: showHeat,
             reactionDefinitionHighlight: reactionDefinitionHighlight,
-            generalElementHighlight: generalElementHighlight,
+            reactionToggleHighlight: generalElementHighlight,
             settings: settings
         )
     }
