@@ -41,7 +41,7 @@ private struct SolubilityScreenWithSettings: View {
                 shakeModel: model.shakingModel,
                 settings: settings
             )
-            .frame(width: 1.2 * settings.soluble.beakerWidth)
+            .frame(width: settings.totalBeakerWidth)
             .padding(.leading, settings.common.menuSize)
 
             Spacer()
@@ -189,6 +189,10 @@ struct SolubilityScreenLayoutSettings {
 
     var phPlotFontSize: CGFloat {
         common.chartSelectionFontSize
+    }
+
+    var totalBeakerWidth: CGFloat {
+        common.beakerWidth + common.sliderSettings.handleWidth
     }
 
 }
