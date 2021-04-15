@@ -16,16 +16,15 @@ struct GaseousNavigationModel {
     }
 
     private static let states = [
-        GaseousSetStatement(statement: GaseousStatements.intro, highlights: [.reactionToggle]),
+        SetStatement(statement: GaseousStatements.intro, highlights: [.reactionToggle]),
         GaseousAfterChoosingReaction(),
-        GaseousSetStatement(
+        SetStatement(
             statement: GaseousStatements.explainK,
             highlights: [.quotientToEquilibriumConstantDefinition]
         ),
         GaseousAddProducts(),
-        GaseousRunReaction(
+        RunReaction(
             timing: GaseousReactionSettings.forwardTiming,
-            isForward: true,
             revealQuotientLine: true
         ),
         GaseousEndOfReaction(
@@ -41,33 +40,27 @@ struct GaseousNavigationModel {
         GaseousSetVolume(),
         GaseousExplainChangeInVolume(),
         GaseousPrePressureReaction(),
-        GaseousRunReaction(
-            timing: GaseousReactionSettings.pressureTiming,
-            isForward: true
-        ),
+        RunReaction(timing: GaseousReactionSettings.pressureTiming),
         GaseousEndOfReaction(
             statement: GaseousStatements.forwardEquilibriumReached,
             timing: GaseousReactionSettings.pressureTiming
         ),
         GaseousSetCurrentTime(),
-        GaseousSetStatement(statement: GaseousStatements.endOfPressureReaction),
+        SetStatement(statement: GaseousStatements.endOfPressureReaction),
         GaseousShiftChart(
             statement: GaseousStatements.chatelier2,
             timing: GaseousReactionSettings.heatTiming,
             previousTiming: GaseousReactionSettings.pressureTiming
         ),
         GaseousSetTemperature(),
-        GaseousSetStatement(statement: GaseousStatements.preHeatReaction),
-        GaseousRunReaction(
-            timing: GaseousReactionSettings.heatTiming,
-            isForward: true
-        ),
+        SetStatement(statement: GaseousStatements.preHeatReaction),
+        RunReaction(timing: GaseousReactionSettings.heatTiming),
         GaseousEndOfReaction(
             statement: GaseousStatements.forwardEquilibriumReached,
             timing: GaseousReactionSettings.heatTiming
         ),
         GaseousSetCurrentTime(),
-        GaseousSetStatement(
+        SetStatement(
             statement: GaseousStatements.end
         )
     ]
@@ -95,7 +88,7 @@ class GaseousScreenState: ScreenState, SubState {
     }
 }
 
-private class GaseousSetStatement: GaseousScreenState {
+private class SetStatement: GaseousScreenState {
 
     let statement: [TextLine]
     let highlights: [GaseousScreenElement]
@@ -148,18 +141,15 @@ private class GaseousAddProducts: GaseousScreenState {
     }
 }
 
-private class GaseousRunReaction: GaseousScreenState {
+private class RunReaction: GaseousScreenState {
     let timing: ReactionTiming
-    let isForward: Bool
     let revealQuotientLine: Bool
 
     init(
         timing: ReactionTiming,
-        isForward: Bool,
         revealQuotientLine: Bool = false
     ) {
         self.timing = timing
-        self.isForward = isForward
         self.revealQuotientLine = revealQuotientLine
     }
 
@@ -168,8 +158,8 @@ private class GaseousRunReaction: GaseousScreenState {
         if revealQuotientLine {
             model.showQuotientLine = true
         }
-        model.highlightForwardReactionArrow = isForward
-        model.highlightReverseReactionArrow = !isForward
+        model.highlightForwardReactionArrow = model.components.equation.isForward
+        model.highlightReverseReactionArrow = !model.components.equation.isForward
         model.currentTime = timing.start
         model.inputState = .none
         model.highlightedElements.clear()
@@ -200,7 +190,7 @@ private class GaseousRunReaction: GaseousScreenState {
     override func delayedStates(model: GaseousReactionViewModel) -> [DelayedState<GaseousScreenState>] {
         func delayedState(_ statement: [TextLine], _ highlights: [GaseousScreenElement]) -> DelayedState<GaseousScreenState> {
             DelayedState(
-                state: GaseousSetStatement(statement: statement, highlights: highlights),
+                state: SetStatement(statement: statement, highlights: highlights),
                 delay: Double((timing.equilibrium - timing.start) / 2)
             )
         }
