@@ -112,11 +112,6 @@ private class SetWaterLevelState: AqueousScreenState {
         model.highlightedElements.elements = [.waterSlider]
     }
 
-    override func reapply(on model: AqueousReactionViewModel) {
-        model.resetMolecules()
-        super.reapply(on: model)
-    }
-
     override func unapply(on model: AqueousReactionViewModel) {
         model.inputState = .none
     }
@@ -132,8 +127,14 @@ private class AddReactantState: AqueousScreenState {
         DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 
+    override func reapply(on model: AqueousReactionViewModel) {
+        model.resetMolecules()
+        super.reapply(on: model)
+    }
+
     override func unapply(on model: AqueousReactionViewModel) {
         model.stopShaking()
+        model.resetMolecules()
         model.showConcentrationLines = false
         model.showEquationTerms = false
         DeferScreenEdgesState.shared.deferEdges = []
@@ -272,26 +273,23 @@ private class ShiftChartState: AqueousScreenState {
 
 private class InstructToAddProductState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
-        doApply(on: model, setComponent: true)
-    }
-
-    override func reapply(on model: AqueousReactionViewModel) {
-        doApply(on: model, setComponent: false)
-    }
-
-    private func doApply(on model: AqueousReactionViewModel, setComponent: Bool) {
         model.statement = AqueousStatements.instructToAddProduct(selected: model.selectedReaction)
         model.inputState = .addProducts
         model.highlightedElements.elements = [.moleculeContainers]
-        if setComponent {
-            model.componentsWrapper = ReactionComponentsWrapper(
-                previous: model.componentsWrapper,
-                startTime: AqueousReactionSettings.timeToAddProduct,
-                equilibriumTime: AqueousReactionSettings.timeForReverseConvergence
-            )
-        }
+        model.componentsWrapper = ReactionComponentsWrapper(
+            previous: model.componentsWrapper,
+            startTime: AqueousReactionSettings.timeToAddProduct,
+            equilibriumTime: AqueousReactionSettings.timeForReverseConvergence
+        )
 
         DeferScreenEdgesState.shared.deferEdges = [.top]
+    }
+
+    override func reapply(on model: AqueousReactionViewModel) {
+        if let previous = model.componentsWrapper.previous {
+            model.componentsWrapper = previous
+        }
+        apply(on: model)
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
@@ -300,8 +298,6 @@ private class InstructToAddProductState: AqueousScreenState {
         model.stopShaking()
         if let previous = model.componentsWrapper.previous {
             model.componentsWrapper = previous
-        } else {
-            print("no previous to unapply")
         }
         DeferScreenEdgesState.shared.deferEdges = []
     }
