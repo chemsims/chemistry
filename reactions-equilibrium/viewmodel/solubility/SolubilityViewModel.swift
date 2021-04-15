@@ -16,7 +16,7 @@ final class SolubilityViewModel: ObservableObject {
         }
     }
     @Published var inputState = SolubilityInputState.none
-    @Published var activeSolute: SoluteType?
+    @Published var activeSolute = ValueWithPrevious<SoluteType?>(value: nil)
 
     @Published var currentTime: CGFloat = 0
     @Published var waterColor: Color = RGB.beakerLiquid.color

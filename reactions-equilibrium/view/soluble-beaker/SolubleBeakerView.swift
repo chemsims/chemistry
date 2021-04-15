@@ -106,7 +106,7 @@ private struct SolubleBeakerViewWithGeometry: View {
     }
 
     private func container(solute: SoluteType, index: Int) -> some View {
-        let isActive = model.activeSolute == solute
+        let isActive = model.activeSolute.value == solute
 
         return ParticleContainer(
                 settings: ParticleContainerSettings(
@@ -124,7 +124,7 @@ private struct SolubleBeakerViewWithGeometry: View {
                 isActive ? activeContainerLocation : standardContainerLocation(index: index)
             )
             .scaleEffect(isActive ? 1.2 : 1)
-            .zIndex(isActive ? 1 : 0)
+            .zIndex(model.activeSolute.showSoluteOnTop(solute) ? 1 : 0)
             .onTapGesture {
                 guard model.inputState.addingSolute(type: solute) else {
                     return
@@ -133,7 +133,7 @@ private struct SolubleBeakerViewWithGeometry: View {
                     shakeModel.manualAdd()
                 } else {
                     withAnimation(.easeOut(duration: 0.5)) {
-                        model.activeSolute = solute
+                        model.activeSolute.setValue(solute)
                     }
                     model.startShaking()
                 }
@@ -194,6 +194,12 @@ private struct SolubleBeakerViewWithGeometry: View {
 extension SolubleBeakerViewWithGeometry {
     private func waterColor(for countOfSolute: Int, maxCount: Int) -> Color {
         return Styling.beakerLiquid
+    }
+}
+
+private extension ValueWithPrevious where Value == SoluteType? {
+    func showSoluteOnTop(_ solute: SoluteType) -> Bool {
+        value == solute || (value == nil && oldValue == solute)
     }
 }
 

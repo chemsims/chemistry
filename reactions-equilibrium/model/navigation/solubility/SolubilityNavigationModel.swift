@@ -259,7 +259,7 @@ private class AddSolute: SolubilityScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
             model.inputState = .addSolute(type: .primary)
-            model.activeSolute = .primary
+            model.activeSolute.setValue(.primary)
             model.waterColor = model.componentsWrapper.initialColor.color
         }
 
@@ -275,7 +275,7 @@ private class AddSolute: SolubilityScreenState {
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = 0
             model.inputState = .none
-            model.activeSolute = nil
+            model.activeSolute.setValue(nil)
             model.waterColor = model.componentsWrapper.initialColor.color
         }
         model.stopShaking()
@@ -308,7 +308,7 @@ private class ShowSaturatedSolution: SolubilityScreenState {
 
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
-            model.activeSolute = nil
+            model.activeSolute.setValue(nil)
         }
     }
 
@@ -375,7 +375,7 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.equilibrium
             model.inputState = .addSaturatedSolute
-            model.activeSolute = .primary
+            model.activeSolute.setValue(.primary)
         }
         model.startShaking()
     }
@@ -401,7 +401,7 @@ private class PostAddingSoluteToSaturatedBeaker: SolubilityScreenState {
         model.beakerState.goTo(state: .none, with: .none)
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
-            model.activeSolute = nil
+            model.activeSolute.setValue(nil)
         }
     }
 }
@@ -413,7 +413,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = 0
             model.inputState = .none
-            model.activeSolute = nil
+            model.activeSolute.setValue(nil)
             model.waterColor = model.componentsWrapper.initialColor.color
         }
         model.beakerState.goTo(state: .none, with: .hideSolute(duration: 1))
@@ -448,7 +448,7 @@ private class AddCommonIonSolute: SolubilityScreenState {
         model.inputState = .addSolute(type: .commonIon)
         model.beakerState.goTo(state: .addingSolute(type: .commonIon), with: .none)
         withAnimation(.easeOut(duration: 0.5)) {
-            model.activeSolute = .commonIon
+            model.activeSolute.setValue(.commonIon)
         }
         model.startShaking()
         if setComponents {
@@ -483,7 +483,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
             model.inputState = .addSolute(type: .primary)
-            model.activeSolute = .primary
+            model.activeSolute.setValue(.primary)
             model.waterColor = model.componentsWrapper.initialColor.color
         }
         model.equationState = .showCorrectQuotientFilledIn
@@ -519,7 +519,7 @@ private class PrepareAcidReaction: SolubilityScreenState {
         model.stopShaking()
         withAnimation(.easeOut(duration: 1)) {
             model.inputState = .none
-            model.activeSolute = nil
+            model.activeSolute.setValue(nil)
             model.chartOffset = SolubleReactionSettings.secondReactionTiming.offset
             model.currentTime = SolubleReactionSettings.secondReactionTiming.start
         }
@@ -551,7 +551,7 @@ private class AddAcidSolute: SolubilityScreenState {
         model.statement = statements.instructToAddH(product: model.selectedReaction.products)
         model.inputState = .addSolute(type: .acid)
         withAnimation(.easeOut(duration: 0.5)) {
-            model.activeSolute = .acid
+            model.activeSolute.setValue(.acid)
         }
         model.startShaking()
 
@@ -571,7 +571,7 @@ private class AddAcidSolute: SolubilityScreenState {
         }
         withAnimation(.easeOut(duration: 0.5)) {
             model.waterColor = model.componentsWrapper.finalColor.color
-            model.activeSolute = nil
+            model.activeSolute.setValue(nil)
             model.inputState = .none
         }
         model.stopShaking()
@@ -597,7 +597,7 @@ private class RunAcidReaction: SolubilityScreenState {
         model.stopShaking()
         withAnimation(.easeOut(duration: 0.5)) {
             model.inputState = .none
-            model.activeSolute = nil
+            model.activeSolute.setValue(nil)
             model.currentTime = model.timing.start
             model.waterColor = model.componentsWrapper.initialColor.color
         }
