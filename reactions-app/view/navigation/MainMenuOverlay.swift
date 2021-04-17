@@ -182,7 +182,6 @@ private struct MainMenuOverlayWithSettings: View {
             Image("share-icon")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .colorMultiply(Styling.navIcon)
         }
         .accessibility(label: Text("Open share sheet"))
     }
