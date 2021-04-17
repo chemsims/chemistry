@@ -138,7 +138,10 @@ private struct QuizScreenWithSettings: View {
     private func navigate(next: Bool) {
         if next {
             if !model.nextIsDisabled {
-                UIAccessibility.post(notification: .screenChanged, argument: NSString(""))
+                UIAccessibility.post(
+                    notification: .screenChanged,
+                    argument: NSString(string: "")
+                )
             }
             model.next()
         } else {
@@ -261,29 +264,33 @@ private struct NotificationView: View {
     var body: some View {
         Text(message)
             .font(.system(size: fontSize))
-            .padding()
+            .padding(0.3 * height)
             .background(
                 RoundedRectangle(cornerRadius: 5)
                     .foregroundColor(.white)
                     .shadow(radius: 2)
             )
-            .padding(.top, 15)
+            .frame(height: height)
+            .padding(.top, topPadding)
             .offset(y: !isShowing && !isDragging ? notShowingOffset : showingOffset + offset)
             .gesture(gesture)
             .animation(reduceMotion ? nil : .easeOut(duration: 0.5))
-            .frame(height: height)
     }
 
     private var showingOffset: CGFloat {
-        0.1 * height
+        0
     }
 
     private var notShowingOffset: CGFloat {
-        -(height + safeAreaGap)
+        -(height + safeAreaGap + topPadding + 10)
     }
 
     private var height: CGFloat {
-        settings.navSize
+        1.2 * settings.navSize
+    }
+
+    private var topPadding: CGFloat {
+        0.1 * height
     }
 
     private var safeAreaGap: CGFloat {
@@ -320,6 +327,6 @@ struct QuizScreen_Previews: PreviewProvider {
                 analytics: NoOpAnalytics()
             )
         )
-        .previewLayout(.fixed(width: 1366, height: 1024))
+        .previewLayout(.fixed(width: 667, height: 375))
     }
 }
