@@ -146,8 +146,6 @@
 		57AA012E25A90172001131A0 /* EnergyProfileReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA012D25A90172001131A0 /* EnergyProfileReactionType.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
-		57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */; };
-		57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */; };
 		57B168C025A7C09200F6668E /* ScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B168BF25A7C09200F6668E /* ScreenState.swift */; };
 		57B23314258E8BCB00128760 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23313258E8BCB00128760 /* AppScreen.swift */; };
 		57B2331A258E8BD900128760 /* ScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23319258E8BD900128760 /* ScreenProvider.swift */; };
@@ -367,8 +365,6 @@
 		57AA012D25A90172001131A0 /* EnergyProfileReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileReactionType.swift; sourceTree = "<group>"; };
 		57AA05E62562F3750080C538 /* SliderIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderIndicator.swift; sourceTree = "<group>"; };
 		57AA05EA2562F3910080C538 /* SpecificSliders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificSliders.swift; sourceTree = "<group>"; };
-		57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-VariableFont_wght.ttf"; sourceTree = "<group>"; };
-		57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		57B168BF25A7C09200F6668E /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
 		57B23313258E8BCB00128760 /* AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreen.swift; sourceTree = "<group>"; };
 		57B23319258E8BD900128760 /* ScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProvider.swift; sourceTree = "<group>"; };
@@ -642,7 +638,6 @@
 			children = (
 				5711E00225C4840D00B28E45 /* GoogleService-Info.plist */,
 				5763177C259B8E9B00D7CE2C /* util */,
-				57B0FBC82565D44500BB6ACC /* fonts */,
 				57035EFB255C1A2700DB3A19 /* viewmodels */,
 				571D6A6C255AB23D00F4E635 /* model */,
 				571D6A55255AAC0900F4E635 /* view */,
@@ -992,15 +987,6 @@
 			path = shapes;
 			sourceTree = "<group>";
 		};
-		57B0FBC82565D44500BB6ACC /* fonts */ = {
-			isa = PBXGroup;
-			children = (
-				57B0FBC92565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf */,
-				57B0FBCD2565D48C00BB6ACC /* CustomFont.swift */,
-			);
-			path = fonts;
-			sourceTree = "<group>";
-		};
 		57B23312258E8BC100128760 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1201,7 +1187,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */,
 				571D6A4C255A780900F4E635 /* LaunchScreen.storyboard in Resources */,
 				5711E00325C4840D00B28E45 /* GoogleService-Info.plist in Resources */,
 				571D6A49255A780900F4E635 /* Preview Assets.xcassets in Resources */,
@@ -1364,7 +1349,6 @@
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
 				57B2331F258E93AE00128760 /* PageViewController.swift in Sources */,
 				57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */,
-				57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */,
 				57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */,
 				57D8BA1F257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift in Sources */,
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,
