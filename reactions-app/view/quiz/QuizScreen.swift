@@ -256,7 +256,7 @@ private struct NotificationView: View {
 
     let settings: QuizLayoutSettings
     var fontSize: CGFloat {
-        settings.answerFontSize
+        0.75 * settings.answerFontSize
     }
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -264,6 +264,7 @@ private struct NotificationView: View {
     var body: some View {
         Text(message)
             .font(.system(size: fontSize))
+            .minimumScaleFactor(0.7)
             .padding(0.3 * height)
             .background(
                 RoundedRectangle(cornerRadius: 5)
@@ -327,6 +328,6 @@ struct QuizScreen_Previews: PreviewProvider {
                 analytics: NoOpAnalytics()
             )
         )
-        .previewLayout(.fixed(width: 667, height: 375))
+        .previewLayout(.fixed(width: 568, height: 320))
     }
 }
