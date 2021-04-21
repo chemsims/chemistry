@@ -72,6 +72,15 @@ private struct MainMenuOverlayWithSettings: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
+
+            if navigation.showAnalyticsConsent {
+                Rectangle()
+                    .opacity(0.2)
+                    .onTapGesture {
+                        navigation.showAnalyticsConsent = false
+                    }
+            }
+
             icon
                 .padding(.leading, settings.geometry.safeAreaInsets.leading)
                 .padding(.vertical, settings.geometry.safeAreaInsets.top)
@@ -97,9 +106,29 @@ private struct MainMenuOverlayWithSettings: View {
                     .accessibility(sortPriority: 10)
                     .accessibility(addTraits: .isModal)
             }
+
+            if navigation.showAnalyticsConsent {
+                consentView
+            }
         }
         .edgesIgnoringSafeArea(.all)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.25))
+    }
+
+    private var consentView: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                AnalyticsConsentView(
+                    isShowing: $navigation.showAnalyticsConsent,
+                    model: navigation.analyticsConsent
+                )
+                    .frame(width: 0.45 * settings.geometry.size.width)
+                Spacer()
+            }
+            Spacer()
+        }
     }
 
     private var icon: some View {
@@ -159,6 +188,7 @@ private struct MainMenuOverlayWithSettings: View {
         VStack(spacing: settings.navVStackSpacing) {
             mailButton
             shareButton
+            analyticsButton
         }
         .frame(width: settings.settingButtonsWidth)
         .padding(.top, 2 * settings.panelContentPadding)
@@ -184,6 +214,18 @@ private struct MainMenuOverlayWithSettings: View {
                 .aspectRatio(contentMode: .fit)
         }
         .accessibility(label: Text("Open share sheet"))
+    }
+
+    private var analyticsButton: some View {
+        Button(action: {
+            navigation.showAnalyticsConsent.toggle()
+        }) {
+            Image(systemName: "chart.bar.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(Styling.navIcon)
+        }
+        .accessibility(label: Text("Open analytics consent settings"))
     }
 
     private var panelContent: some View {

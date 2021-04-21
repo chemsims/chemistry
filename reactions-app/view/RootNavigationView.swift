@@ -38,6 +38,7 @@ struct RootNavigationView: View {
                     )
                 )
                 .accessibility(hidden: model.showMenu)
+                .disabled(model.showAnalyticsConsent)
 
             MainMenuOverlay(
                 size: settings.menuSize,

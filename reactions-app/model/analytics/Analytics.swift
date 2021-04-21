@@ -23,6 +23,8 @@ protocol AnalyticsService {
         difficulty: QuizDifficulty,
         percentCorrect: Double
     )
+
+    var enabled: Bool { get set }
 }
 
 class NoOpAnalytics: AnalyticsService {
@@ -30,9 +32,35 @@ class NoOpAnalytics: AnalyticsService {
     func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) { }
     func answeredQuestion(questionSet: QuestionSet, questionId: String, answerId: String, answerAttempt: Int, isCorrect: Bool) { }
     func completedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty, percentCorrect: Double) { }
+
+    var enabled = false
 }
 
 struct GoogleAnalytics: AnalyticsService {
+
+    private let userDefaults = UserDefaults.standard
+    private static let analyticsEnabledKey = "analyticsEnabled"
+
+    init() {
+        userDefaults.register(defaults: [
+            Self.analyticsEnabledKey: true
+        ])
+        setAnalyticsCollection(enabled)
+    }
+
+    var enabled: Bool {
+        get {
+            userDefaults.bool(forKey: Self.analyticsEnabledKey)
+        }
+        set {
+            userDefaults.setValue(newValue, forKey: Self.analyticsEnabledKey)
+            setAnalyticsCollection(newValue)
+        }
+    }
+
+    private func setAnalyticsCollection(_ value: Bool) {
+        Analytics.setAnalyticsCollectionEnabled(value)
+    }
 
     func openedScreen(_ screen: AppScreen) {
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [

@@ -12,9 +12,12 @@ class RootNavigationViewModel: ObservableObject {
         didSet {
             if showMenu {
                 UIAccessibility.post(notification: .screenChanged, argument: nil)
+            } else {
+                showAnalyticsConsent = false
             }
         }
     }
+    @Published var showAnalyticsConsent = false
     private(set) var navigationDirection = NavigationDirection.forward
 
     var focusScreen: AppScreen? {
@@ -35,8 +38,11 @@ class RootNavigationViewModel: ObservableObject {
         self.currentScreen = firstScreen
         self.injector = injector
         self.view = AnyView(EmptyView())
+        self.analyticsConsent = AnalyticsConsentViewModel(service: injector.analytics)
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
     }
+
+    let analyticsConsent: AnalyticsConsentViewModel
 
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
