@@ -188,7 +188,9 @@ private struct MainMenuOverlayWithSettings: View {
         VStack(spacing: settings.navVStackSpacing) {
             mailButton
             shareButton
-            analyticsButton
+            if Flags.showAnalyticsOptOutToggle {
+                analyticsButton
+            }
         }
         .frame(width: settings.settingButtonsWidth)
         .padding(.top, 2 * settings.panelContentPadding)
