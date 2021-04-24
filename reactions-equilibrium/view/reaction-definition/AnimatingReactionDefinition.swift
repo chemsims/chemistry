@@ -7,8 +7,9 @@ import ReactionsCore
 
 struct AnimatingReactionDefinition: View {
 
-    init(coefficients: MoleculeValue<Int>) {
+    init(coefficients: MoleculeValue<Int>, showMolecules: Bool) {
         self.coefficients = coefficients
+        self.showMolecules = showMolecules
         let moleculeNameWidths = coefficients.map(Self.width)
         self.moleculeNameWidths = moleculeNameWidths
         self.elementWidths = [
@@ -20,17 +21,19 @@ struct AnimatingReactionDefinition: View {
             Self.elementWidth,
             moleculeNameWidths.productD
         ]
+
     }
 
     let coefficients: MoleculeValue<Int>
-    let moleculeNameWidths: MoleculeValue<CGFloat>
-    let elementWidths: [CGFloat]
+    let showMolecules: Bool
+
+    private let moleculeNameWidths: MoleculeValue<CGFloat>
+    private let elementWidths: [CGFloat]
 
     private static let elementWidth: CGFloat = 20
     private let moleculeRadius: CGFloat = 4
 
     @State private var progress: CGFloat = 0
-    @State private var color = Color.black
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -38,49 +41,56 @@ struct AnimatingReactionDefinition: View {
             elements
             bottomMolecules
         }
-        .onAppear {
-            let animation = Animation.easeOut(duration: 1.5).repeatForever(autoreverses: false)
-            withAnimation(animation) {
-                progress = 1
-                color = .red
-            }
-        }
     }
 
     private var topMolecules: some View {
         ZStack(alignment: .leading) {
-            molecules(
-                startMolecule: .A,
-                endMolecule: .C,
-                verticalAlignment: .bottom,
-                horizontalAlignment: .leading
-            )
+            if showMolecules {
+                molecules(
+                    startMolecule: .A,
+                    endMolecule: .C,
+                    verticalAlignment: .bottom,
+                    horizontalAlignment: .leading
+                )
+                .onAppear {
+                    let animation = Animation.easeOut(duration: 1.5).repeatForever(autoreverses: false)
+                    withAnimation(animation) {
+                        progress = 1
+                    }
+                }.onDisappear {
+                    progress = 0
+                }
 
-            molecules(
-                startMolecule: .B,
-                endMolecule: .D,
-                verticalAlignment: .bottom,
-                horizontalAlignment: .leading
-            )
+                molecules(
+                    startMolecule: .B,
+                    endMolecule: .D,
+                    verticalAlignment: .bottom,
+                    horizontalAlignment: .leading
+                )
+            }
         }
+        .frame(height: 4 * moleculeRadius)
     }
 
     private var bottomMolecules: some View {
         ZStack(alignment: .leading) {
-            molecules(
-                startMolecule: .D,
-                endMolecule: .B,
-                verticalAlignment: .top,
-                horizontalAlignment: .trailing
-            )
+            if showMolecules {
+                molecules(
+                    startMolecule: .D,
+                    endMolecule: .B,
+                    verticalAlignment: .top,
+                    horizontalAlignment: .trailing
+                )
 
-            molecules(
-                startMolecule: .C,
-                endMolecule: .A,
-                verticalAlignment: .top,
-                horizontalAlignment: .trailing
-            )
+                molecules(
+                    startMolecule: .C,
+                    endMolecule: .A,
+                    verticalAlignment: .top,
+                    horizontalAlignment: .trailing
+                )
+            }
         }
+        .frame(height: 4 * moleculeRadius)
     }
 
     private var elements: some View {
@@ -134,18 +144,17 @@ private extension AnimatingReactionDefinition {
             verticalAlignment: verticalAlignment,
             horizontalAlignment: horizontalAlignment,
             startState: MoleculeArcState(
-                count: moleculeCount(startMolecule), rotation: .zero
+                count: moleculeCount(startMolecule), rotation: .degrees(60)
             ),
             endState: MoleculeArcState(
-                count: moleculeCount(endMolecule), rotation: .zero
+                count: moleculeCount(endMolecule), rotation: .degrees(235)
             ),
             moleculeRadius: moleculeRadius,
             progress: progress
         )
         .foregroundColor(progress == 0 ? startMolecule.color : endMolecule.color)
         .frame(
-            width: getSpanWidth(startIndex: startIndex, span: span),
-            height: 4 * moleculeRadius
+            width: getSpanWidth(startIndex: startIndex, span: span)
         )
         .offset(x: getOffset(startIndex: startIndex))
     }
@@ -164,14 +173,34 @@ private extension AnimatingReactionDefinition {
 }
 
 struct AnimatingReactionDefinition_Previews: PreviewProvider {
+
     static var previews: some View {
-        AnimatingReactionDefinition(
-            coefficients: MoleculeValue(
-                reactantA: 1,
-                reactantB: 2,
-                productC: 3,
-                productD: 4
-            )
-        )
+        ViewWrapper()
+    }
+
+    private struct ViewWrapper: View {
+        @State private var showMolecules = true
+
+        var body: some View {
+            VStack {
+                Button(action: {
+                    withAnimation(.easeOut) {
+                        showMolecules.toggle()
+                    }
+                }) {
+                    Text("Button")
+                }
+
+                AnimatingReactionDefinition(
+                    coefficients: MoleculeValue(
+                        reactantA: 1,
+                        reactantB: 2,
+                        productC: 3,
+                        productD: 4
+                    ),
+                    showMolecules: showMolecules
+                )
+            }
+        }
     }
 }
