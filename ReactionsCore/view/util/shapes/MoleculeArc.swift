@@ -8,23 +8,6 @@ import SwiftUI
 
 public struct MoleculeArc: Shape {
 
-    public enum Alignment {
-        case top, bottom
-    }
-
-    /// Supported number of final molecules
-    public enum Count {
-        case one, two, three
-
-        var number: Int {
-            switch self {
-            case .one: return 1
-            case .two: return 2
-            case .three: return 3
-            }
-        }
-    }
-
     /// Creates a new molecule arc
     ///
     /// - Parameters:
@@ -35,24 +18,33 @@ public struct MoleculeArc: Shape {
     ///     - progress: Progress along the path, between 0 and 1
     public init(
         alignment: Alignment,
-        finalCount: Count,
-        finalRotation: Angle,
+        startState: MoleculeArcState,
+        endState: MoleculeArcState,
         moleculeRadius: CGFloat,
         progress: CGFloat
     ) {
         self.alignment = alignment
-        self.finalCount = finalCount
-        self.finalRotation = finalRotation
+        self.startState = startState
+        self.endState = endState
         self.moleculeRadius = moleculeRadius
         self.progress = progress.within(min: 0, max: 1)
     }
 
     let alignment: Alignment
-    let finalCount: Count
-    let finalRotation: Angle
+    let startState: MoleculeArcState
+    let endState: MoleculeArcState
     let moleculeRadius: CGFloat
 
     var progress: CGFloat
+
+
+    var finalCount: Count {
+        endState.count
+    }
+
+    var finalRotation: Angle {
+        endState.rotation
+    }
 
     public var animatableData: CGFloat {
         get { progress }
@@ -74,11 +66,11 @@ public struct MoleculeArc: Shape {
     }
 
     private func addMolecules(at center: CGPoint, path: inout Path) {
-        for i in 0..<finalCount.number {
+        let maxCount = max(startState.count.number, endState.count.number)
+        let rotation = getScaledRotation()
+        for i in 0..<maxCount {
             let offset = getScaledOffset(forIndex: i)
-            let rotatedOffset = offset.rotate(
-                by: CGFloat(finalRotation.radians) * progress
-            )
+            let rotatedOffset = offset.rotate(by: rotation)
 
             let position = center.offset(dx: rotatedOffset.width, dy: rotatedOffset.height)
             let rect = CGRect(
@@ -92,16 +84,26 @@ public struct MoleculeArc: Shape {
         }
     }
 
-    private func getScaledOffset(forIndex index: Int) -> CGSize {
-        let maxOffset = getMaxOffset(forIndex: index)
-        return CGSize(
-            width: maxOffset.width * progress,
-            height: maxOffset.height * progress
-        )
+    private func getScaledRotation() -> CGFloat {
+        let startRotation = CGFloat(startState.rotation.radians)
+        let endRotation = CGFloat(endState.rotation.radians)
+
+        let delta = endRotation - startRotation
+        return startRotation + (delta * progress)
     }
 
-    private func getMaxOffset(forIndex index: Int) -> CGSize {
-        switch finalCount {
+    private func getScaledOffset(forIndex index: Int) -> CGSize {
+        let startOffset = getMaxOffset(forIndex: index, count: startState.count)
+        let endOffset = getMaxOffset(forIndex: index, count: endState.count)
+        let deltaOffset = endOffset - startOffset
+        return startOffset + deltaOffset.scale(by: progress)
+    }
+
+    private func getMaxOffset(
+        forIndex index: Int,
+        count: Count
+    ) -> CGSize {
+        switch count {
         case .one: return .zero
         case .two: return offsetForCountOfTwo(forIndex: index)
         case .three: return offsetForCountOfThree(forIndex: index)
@@ -112,6 +114,23 @@ public struct MoleculeArc: Shape {
         parabola: CGPoint(x: 0.5, y: 1),
         through: CGPoint(x: 0, y: 0)
     )
+
+    public enum Alignment {
+        case top, bottom
+    }
+
+    /// Supported number of final molecules
+    public enum Count {
+        case one, two, three
+
+        var number: Int {
+            switch self {
+            case .one: return 1
+            case .two: return 2
+            case .three: return 3
+            }
+        }
+    }
 }
 
 // MARK: Offset for 2 molecules
@@ -148,7 +167,16 @@ private extension MoleculeArc {
     private static let sin45 = sin(CGFloat(Angle.degrees(45).radians))
     private static let sqrt2: CGFloat = sqrt(2)
     private static let sqrt3: CGFloat = sqrt(3)
+}
 
+public struct MoleculeArcState {
+    public init(count: MoleculeArc.Count, rotation: Angle) {
+        self.count = count
+        self.rotation = rotation
+    }
+
+    let count: MoleculeArc.Count
+    let rotation: Angle
 }
 
 private extension CGSize {
@@ -156,6 +184,18 @@ private extension CGSize {
         let rotatedWidth = (cos(angle) * width) - (sin(angle) * height)
         let rotatedHeight = (sin(angle) * width) + (cos(angle) * height)
         return CGSize(width: rotatedWidth, height: rotatedHeight)
+    }
+
+    static func -(lhs: CGSize, rhs: CGSize) -> CGSize {
+        CGSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
+    }
+
+    static func +(lhs: CGSize, rhs: CGSize) -> CGSize {
+        CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+    }
+
+    func scale(by factor: CGFloat) -> CGSize {
+        CGSize(width: width * factor, height: height * factor)
     }
 }
 
@@ -170,9 +210,9 @@ struct MoleculeArc_Previews: PreviewProvider {
         var body: some View {
             MoleculeArc(
                 alignment: .bottom,
-                finalCount: .three,
-                finalRotation: .degrees(225),
-                moleculeRadius: 20,
+                startState: MoleculeArcState(count: .two, rotation: .degrees(45)),
+                endState: MoleculeArcState(count: .three, rotation: .degrees(225)),
+                moleculeRadius: 15,
                 progress: progress
             )
             .frame(width: 200, height: 100)

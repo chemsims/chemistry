@@ -286,6 +286,8 @@
 		57BCB4C425F3752800E50923 /* ReactionConvergenceSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */; };
 		57C0A61A261C31D400777E32 /* SolubilityStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A619261C31D400777E32 /* SolubilityStatements.swift */; };
 		57C0A620261C4A3500777E32 /* SolubilityPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */; };
+		57C315B82631B37D0092C454 /* AnimatingReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */; };
+		57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315C12631B58A0092C454 /* MoleculeArc.swift */; };
 		57C3A8272563248F00EE753E /* FirstOrderReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */; };
 		57CDFE3525E26F87005D699A /* ZeroOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE3425E26F87005D699A /* ZeroOrderQuizQuestions.swift */; };
 		57CDFE3B25E26FA1005D699A /* FirstOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE3A25E26FA1005D699A /* FirstOrderQuizQuestions.swift */; };
@@ -748,6 +750,8 @@
 		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
 		57C0A619261C31D400777E32 /* SolubilityStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityStatements.swift; sourceTree = "<group>"; };
 		57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPhChart.swift; sourceTree = "<group>"; };
+		57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingReactionDefinition.swift; sourceTree = "<group>"; };
+		57C315C12631B58A0092C454 /* MoleculeArc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeArc.swift; sourceTree = "<group>"; };
 		57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionScreen.swift; sourceTree = "<group>"; };
 		57CDFE3425E26F87005D699A /* ZeroOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZeroOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CDFE3A25E26FA1005D699A /* FirstOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstOrderQuizQuestions.swift; sourceTree = "<group>"; };
@@ -2052,6 +2056,7 @@
 			isa = PBXGroup;
 			children = (
 				57D2F2D325EA27DA00AEE0D8 /* Line.swift */,
+				57C315C12631B58A0092C454 /* MoleculeArc.swift */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
@@ -2318,6 +2323,7 @@
 			children = (
 				57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */,
 				57E59A4525F925F60087F760 /* ReactionDefinitionView.swift */,
+				57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */,
 			);
 			path = "reaction-definition";
 			sourceTree = "<group>";
@@ -2832,6 +2838,7 @@
 				57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */,
 				5736DC4025F5478F003FD2B4 /* FractionedCoordinates.swift in Sources */,
 				57B3B947260B475F00EB9B47 /* EquilibriumAppScreen.swift in Sources */,
+				57C315B82631B37D0092C454 /* AnimatingReactionDefinition.swift in Sources */,
 				5736DC1825F4B036003FD2B4 /* ScalesRotationEquation.swift in Sources */,
 				57E59A5425F92BFE0087F760 /* AqueousScreenElement.swift in Sources */,
 				57ABDC4625EC03E10078A82B /* AqueousStatements.swift in Sources */,
@@ -3010,6 +3017,7 @@
 				57B3B929260B39A600EB9B47 /* ShareSheetView.swift in Sources */,
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
+				57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */,
 				57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */,
 				575A887525E4364500AEE448 /* NavButton.swift in Sources */,
 				5797A4A325E40A5100991BD9 /* MoleculeGrid.swift in Sources */,
