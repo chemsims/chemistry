@@ -37,15 +37,6 @@ public struct MoleculeArc: Shape {
 
     var progress: CGFloat
 
-
-    var finalCount: Count {
-        endState.count
-    }
-
-    var finalRotation: Angle {
-        endState.rotation
-    }
-
     public var animatableData: CGFloat {
         get { progress }
         set { progress = newValue.within(min: 0, max: 1) }
@@ -54,13 +45,7 @@ public struct MoleculeArc: Shape {
     public func path(in rect: CGRect) -> Path {
         var path = Path()
         let x = progress * rect.width
-        let y = AxisPositionCalculations(
-            minValuePosition: rect.height,
-            maxValuePosition: 0,
-            minValue: 0,
-            maxValue: 1
-        ).getPosition(at: Self.equation.getY(at: progress))
-
+        let y = rect.height - (Self.equation.getY(at: progress) * rect.height)
         addMolecules(at: CGPoint(x: x, y: y), path: &path)
         return path
     }
@@ -107,6 +92,7 @@ public struct MoleculeArc: Shape {
         case .one: return .zero
         case .two: return offsetForCountOfTwo(forIndex: index)
         case .three: return offsetForCountOfThree(forIndex: index)
+        case .four: return offsetForCountOfFour(forIndex: index)
         }
     }
 
@@ -115,19 +101,21 @@ public struct MoleculeArc: Shape {
         through: CGPoint(x: 0, y: 0)
     )
 
+    //MARK: Enums
     public enum Alignment {
         case top, bottom
     }
 
     /// Supported number of final molecules
     public enum Count {
-        case one, two, three
+        case one, two, three, four
 
         var number: Int {
             switch self {
             case .one: return 1
             case .two: return 2
             case .three: return 3
+            case .four: return 4
             }
         }
     }
@@ -167,6 +155,17 @@ private extension MoleculeArc {
     private static let sin45 = sin(CGFloat(Angle.degrees(45).radians))
     private static let sqrt2: CGFloat = sqrt(2)
     private static let sqrt3: CGFloat = sqrt(3)
+}
+
+private extension MoleculeArc {
+    private func offsetForCountOfFour(forIndex index: Int) -> CGSize {
+        switch index {
+        case 0: return CGSize(width: moleculeRadius, height: moleculeRadius)
+        case 1: return CGSize(width: moleculeRadius, height: -moleculeRadius)
+        case 2: return CGSize(width: -moleculeRadius, height: -moleculeRadius)
+        default: return CGSize(width: -moleculeRadius, height: moleculeRadius)
+        }
+    }
 }
 
 public struct MoleculeArcState {
@@ -210,8 +209,8 @@ struct MoleculeArc_Previews: PreviewProvider {
         var body: some View {
             MoleculeArc(
                 alignment: .bottom,
-                startState: MoleculeArcState(count: .two, rotation: .degrees(45)),
-                endState: MoleculeArcState(count: .three, rotation: .degrees(225)),
+                startState: MoleculeArcState(count: .three, rotation: .degrees(20)),
+                endState: MoleculeArcState(count: .four, rotation: .degrees(-45)),
                 moleculeRadius: 15,
                 progress: progress
             )
