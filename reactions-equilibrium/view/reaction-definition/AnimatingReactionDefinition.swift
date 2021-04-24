@@ -98,8 +98,16 @@ struct AnimatingReactionDefinition: View {
             element(AqueousMolecule.A)
             element("+")
             element(AqueousMolecule.B)
-            DoubleSidedArrow(topHighlight: nil, reverseHighlight: nil)
-                .frame(width: Self.elementWidth)
+            if showMolecules {
+                AnimatingDoubleSidedArrow(
+                    topHighlight: .orangeAccent,
+                    bottomHighlight: .orangeAccent,
+                    width: Self.elementWidth
+                )
+            } else {
+                DoubleSidedArrow(topHighlight: nil, reverseHighlight: nil)
+                    .frame(width: Self.elementWidth)
+            }
             element(AqueousMolecule.C)
             element("+")
             element(AqueousMolecule.D)

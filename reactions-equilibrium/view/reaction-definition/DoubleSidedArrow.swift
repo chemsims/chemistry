@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct AnimatingDoubleSidedArrow: View {
