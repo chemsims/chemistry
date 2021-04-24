@@ -31,6 +31,7 @@ struct ReactionDefinitionView<Reaction: SelectableReaction>: View {
                 topHighlight: highlightTopArrow ? .orangeAccent : nil,
                 reverseHighlight: highlightReverseArrow ? .orangeAccent : nil
             )
+            .frame(width: 15)
         }
     }
 

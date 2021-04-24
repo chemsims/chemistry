@@ -7,9 +7,17 @@ import ReactionsCore
 
 struct AnimatingReactionDefinition: View {
 
-    init(coefficients: MoleculeValue<Int>, showMolecules: Bool) {
+    init(
+        coefficients: MoleculeValue<Int>,
+        showMolecules: Bool,
+        topArrowHighlight: Color?,
+        bottomArrowHighlight: Color?
+    ) {
         self.coefficients = coefficients
         self.showMolecules = showMolecules
+        self.topArrowHighlight = topArrowHighlight
+        self.bottomArrowHighlight = bottomArrowHighlight
+
         let moleculeNameWidths = coefficients.map(Self.width)
         self.moleculeNameWidths = moleculeNameWidths
         self.elementWidths = [
@@ -26,6 +34,8 @@ struct AnimatingReactionDefinition: View {
 
     let coefficients: MoleculeValue<Int>
     let showMolecules: Bool
+    let topArrowHighlight: Color?
+    let bottomArrowHighlight: Color?
 
     private let moleculeNameWidths: MoleculeValue<CGFloat>
     private let elementWidths: [CGFloat]
@@ -69,7 +79,7 @@ struct AnimatingReactionDefinition: View {
                 )
             }
         }
-        .frame(height: 4 * moleculeRadius)
+        .frame(height:  moleculeFrameHeight)
     }
 
     private var bottomMolecules: some View {
@@ -90,7 +100,11 @@ struct AnimatingReactionDefinition: View {
                 )
             }
         }
-        .frame(height: 4 * moleculeRadius)
+        .frame(height: moleculeFrameHeight)
+    }
+
+    private var moleculeFrameHeight: CGFloat {
+        2 * moleculeRadius
     }
 
     private var elements: some View {
@@ -105,8 +119,11 @@ struct AnimatingReactionDefinition: View {
                     width: Self.elementWidth
                 )
             } else {
-                DoubleSidedArrow(topHighlight: nil, reverseHighlight: nil)
-                    .frame(width: Self.elementWidth)
+                DoubleSidedArrow(
+                    topHighlight: topArrowHighlight,
+                    reverseHighlight: bottomArrowHighlight
+                )
+                .frame(width: Self.elementWidth)
             }
             element(AqueousMolecule.C)
             element("+")
@@ -206,7 +223,9 @@ struct AnimatingReactionDefinition_Previews: PreviewProvider {
                         productC: 3,
                         productD: 4
                     ),
-                    showMolecules: showMolecules
+                    showMolecules: showMolecules,
+                    topArrowHighlight: nil,
+                    bottomArrowHighlight: nil
                 )
             }
         }

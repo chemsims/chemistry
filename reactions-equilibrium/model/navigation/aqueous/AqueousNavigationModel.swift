@@ -38,7 +38,8 @@ struct AqueousNavigationModel {
         RunReverseAnimation(),
         EndAnimationState(
             statement: AqueousStatements.reverseEquilibriumReached,
-            endTime: AqueousReactionSettings.endOfReverseReaction
+            endTime: AqueousReactionSettings.endOfReverseReaction,
+            showReactionDefinitionMolecules: true
         ),
         CanSetCurrentTimeState(),
         FinalState()
@@ -204,10 +205,12 @@ private class EndAnimationState: AqueousScreenState {
 
     let statement: [TextLine]
     let endTime: CGFloat
+    let showReactionDefinitionMolecules: Bool
 
-    init(statement: [TextLine], endTime: CGFloat) {
+    init(statement: [TextLine], endTime: CGFloat, showReactionDefinitionMolecules: Bool = false) {
         self.statement = statement
         self.endTime = endTime
+        self.showReactionDefinitionMolecules = showReactionDefinitionMolecules
     }
 
     override func apply(on model: AqueousReactionViewModel) {
@@ -222,6 +225,7 @@ private class EndAnimationState: AqueousScreenState {
         model.statement = statement
         model.highlightForwardReactionArrow = false
         model.highlightReverseReactionArrow = false
+        model.showReactionDefinitionMolecules = showReactionDefinitionMolecules
         if isReapplying {
             model.highlightedElements.elements = [.chartEquilibrium]
         }
@@ -235,6 +239,7 @@ private class EndAnimationState: AqueousScreenState {
 
     override func unapply(on model: AqueousReactionViewModel) {
         model.highlightedElements.clear()
+        model.showReactionDefinitionMolecules = false
     }
 }
 

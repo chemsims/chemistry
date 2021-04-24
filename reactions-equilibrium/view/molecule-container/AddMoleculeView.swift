@@ -13,7 +13,6 @@ struct AddMoleculesView: View {
     let containerWidth: CGFloat
     let containerHeight: CGFloat
     let startOfWater: CGFloat
-    let maxContainerY: CGFloat
     let moleculeSize: CGFloat
     let topRowColorMultiply: Color?
     let onDrag: () -> Void
@@ -58,8 +57,6 @@ struct AddMoleculesView: View {
             height: height,
             initialLocation: getLocation(for: molecule, width: width, index: index),
             containerWidth: containerWidth,
-            startOfWater: startOfWater,
-            maxContainerY: maxContainerY,
             moleculeSize: moleculeSize,
             moleculeColor: molecule.color,
             imageName: molecule.imageName,
@@ -76,7 +73,7 @@ struct AddMoleculesView: View {
         if model.activeMolecule == molecule {
             return CGPoint(
                 x: width / 2,
-                y: topRowHeight + (1.5 * containerHeight)
+                y: topRowHeight + (0.75 * containerHeight)
             )
         }
         return CGPoint(x: containerX(width: width, index: index), y: topRowHeight)
@@ -129,8 +126,6 @@ private struct AddMoleculeContainerView: View {
     let height: CGFloat
     let initialLocation: CGPoint
     let containerWidth: CGFloat
-    let startOfWater: CGFloat
-    let maxContainerY: CGFloat
     let moleculeSize: CGFloat
     let moleculeColor: Color
     let imageName: String
@@ -186,7 +181,6 @@ struct AddMoleculeView_Previews: PreviewProvider {
                     containerWidth: 50,
                     containerHeight: 115,
                     startOfWater: geo.size.height - 150,
-                    maxContainerY: geo.size.height - 300,
                     moleculeSize: 25,
                     topRowColorMultiply: nil,
                     onDrag: {}

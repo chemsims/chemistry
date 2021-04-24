@@ -45,12 +45,12 @@ class AqueousReactionViewModel: ObservableObject {
         }
     }
 
-    @Published var inputState = AqueousReactionInputState.selectReactionType
+    @Published var inputState = AqueousReactionInputState.none
 
     @Published var canSetCurrentTime = false
     @Published var currentTime: CGFloat = 0
 
-    @Published var reactionSelectionIsToggled = true
+    @Published var reactionSelectionIsToggled = false
     @Published var selectedReaction: AqueousReactionType {
         didSet {
             componentsWrapper.coefficients = selectedReaction.coefficients
@@ -73,6 +73,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var highlightReverseReactionArrow = false
     @Published var highlightForwardReactionArrow = false
     @Published var highlightedElements = HighlightedElements<AqueousScreenElement>()
+    @Published var showReactionDefinitionMolecules = false
 
     var reactionPhase = AqueousReactionPhase.first
 
