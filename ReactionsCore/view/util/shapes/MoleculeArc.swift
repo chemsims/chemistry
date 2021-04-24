@@ -141,6 +141,16 @@ extension MoleculeArc {
             case .four: return 4
             }
         }
+
+        public static func fromNumber(_ number: Int) -> Count? {
+            switch number {
+            case 1: return .one
+            case 2: return .two
+            case 3: return .three
+            case 4: return .four
+            default: return nil
+            }
+        }
     }
 }
 

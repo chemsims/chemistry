@@ -33,19 +33,23 @@ extension ReactionDefinition {
     }
 
     var reactantDisplay: String {
-        let a = moleculeString("A", coeff: coefficients.reactantA)
-        let b = moleculeString("B", coeff: coefficients.reactantB)
+        let a = coefficients.string(forMolecule: .A)
+        let b = coefficients.string(forMolecule: .B)
         return "\(a) + \(b)"
     }
 
     var productDisplay: String {
-        let a = moleculeString("C", coeff: coefficients.productC)
-        let b = moleculeString("D", coeff: coefficients.productD)
-        return "\(a) + \(b)"
+        let c = coefficients.string(forMolecule: .C)
+        let d = coefficients.string(forMolecule: .D)
+        return "\(c) + \(d)"
     }
+}
 
-    private func moleculeString(_ name: String, coeff: Int) -> String {
+extension BalancedReactionCoefficients {
+
+    func string(forMolecule molecule: AqueousMolecule) -> String {
+        let coeff = self.value(for: molecule)
         let coeffString = coeff == 1 ? "" : "\(coeff)"
-        return "\(coeffString)\(name)"
+        return "\(coeffString)\(molecule.rawValue)"
     }
 }
