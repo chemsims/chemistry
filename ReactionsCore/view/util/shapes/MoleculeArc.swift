@@ -11,26 +11,30 @@ public struct MoleculeArc: Shape {
     /// Creates a new molecule arc
     ///
     /// - Parameters:
-    ///     - alignment: Alignment of the start & end y positions in the frame
+    ///     - verticalAlignment: Alignment of the start & end y positions
+    ///     - horizontalAlignment:Alignment of the start & end x positions
     ///     - finalCount: Number of molecules in the final state
     ///     - finalRotation: Rotation of the molecules in the final state
     ///     - moleculeRadius: Radius of the molecule
     ///     - progress: Progress along the path, between 0 and 1
     public init(
-        alignment: Alignment,
+        verticalAlignment: VerticalAlignment,
+        horizontalAlignment: HorizontalAlignment,
         startState: MoleculeArcState,
         endState: MoleculeArcState,
         moleculeRadius: CGFloat,
         progress: CGFloat
     ) {
-        self.alignment = alignment
+        self.vAlignment = verticalAlignment
+        self.hAlignment = horizontalAlignment
         self.startState = startState
         self.endState = endState
         self.moleculeRadius = moleculeRadius
         self.progress = progress.within(min: 0, max: 1)
     }
 
-    let alignment: Alignment
+    let vAlignment: VerticalAlignment
+    let hAlignment: HorizontalAlignment
     let startState: MoleculeArcState
     let endState: MoleculeArcState
     let moleculeRadius: CGFloat
@@ -44,8 +48,20 @@ public struct MoleculeArc: Shape {
 
     public func path(in rect: CGRect) -> Path {
         var path = Path()
-        let x = progress * rect.width
-        let y = rect.height - (Self.equation.getY(at: progress) * rect.height)
+        let x = AxisPositionCalculations(
+            minValuePosition: hAlignment == .leading ? 0 : rect.width,
+            maxValuePosition: hAlignment == .leading ? rect.width : 0,
+            minValue: 0,
+            maxValue: 1
+        ).getPosition(at: progress)
+
+        let y = AxisPositionCalculations<CGFloat>(
+            minValuePosition: vAlignment == .bottom ? rect.height : 0,
+            maxValuePosition: vAlignment == .bottom ? 0 : rect.height,
+            minValue: 0,
+            maxValue: 1
+        ).getPosition(at: Self.equation.getY(at: progress))
+
         addMolecules(at: CGPoint(x: x, y: y), path: &path)
         return path
     }
@@ -100,10 +116,17 @@ public struct MoleculeArc: Shape {
         parabola: CGPoint(x: 0.5, y: 1),
         through: CGPoint(x: 0, y: 0)
     )
+}
 
-    //MARK: Enums
-    public enum Alignment {
+//MARK: Enums
+
+extension MoleculeArc {
+    public enum VerticalAlignment {
         case top, bottom
+    }
+
+    public enum HorizontalAlignment {
+        case leading, trailing
     }
 
     /// Supported number of final molecules
@@ -200,15 +223,24 @@ private extension CGSize {
 
 struct MoleculeArc_Previews: PreviewProvider {
     static var previews: some View {
-        ViewWrapper()
+        VStack(spacing: 50) {
+            ViewWrapper(vAlignment: .bottom, hAlignment: .leading)
+            ViewWrapper(vAlignment: .top, hAlignment: .trailing)
+        }
+
     }
 
     struct ViewWrapper: View {
+
+        let vAlignment: MoleculeArc.VerticalAlignment
+        let hAlignment: MoleculeArc.HorizontalAlignment
+
         @State var progress: CGFloat = 0
 
         var body: some View {
             MoleculeArc(
-                alignment: .bottom,
+                verticalAlignment: vAlignment,
+                horizontalAlignment: hAlignment,
                 startState: MoleculeArcState(count: .three, rotation: .degrees(20)),
                 endState: MoleculeArcState(count: .four, rotation: .degrees(-45)),
                 moleculeRadius: 15,
@@ -219,7 +251,7 @@ struct MoleculeArc_Previews: PreviewProvider {
             .onAppear {
                 let animation = Animation.easeOut(duration: 0.75).repeatForever()
                 withAnimation(animation) {
-                    progress = 1
+                    progress = 0
                 }
             }
         }
