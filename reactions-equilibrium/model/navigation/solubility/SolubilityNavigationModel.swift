@@ -241,6 +241,7 @@ private class SetWaterLevel: SolubilityScreenState {
 private class AddSolute: SolubilityScreenState {
 
     override func apply(on model: SolubilityViewModel) {
+        print("Set components")
         model.componentsWrapper = PrimarySoluteComponentsWrapper(
             soluteToAddForSaturation: model.soluteToAddForSaturation,
             timing: model.timing,

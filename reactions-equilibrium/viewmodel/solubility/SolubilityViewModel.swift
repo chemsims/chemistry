@@ -98,16 +98,28 @@ final class SolubilityViewModel: ObservableObject {
         }
     }
 
+    var milligramsSoluteAdded: Int {
+        let enteredWater = componentsWrapper.counts.count(of: .enteredWater)
+        return SolubleReactionSettings.milligrams(for: enteredWater)
+    }
+
     func back() {
         navigation?.back()
     }
 
     func onParticleEmit(soluteType: SoluteType) {
+        guard inputState.addingSolute(type: soluteType) else {
+            return
+        }
         componentsWrapper.solutePerformed(action: .emitted)
         goNextIfNeeded()
     }
 
     func onParticleWaterEntry(soluteType: SoluteType) {
+        guard inputState.addingSolute(type: soluteType) else {
+            return
+        }
+        print("did enter water")
         componentsWrapper.solutePerformed(action: .enteredWater)
         goNextIfNeeded()
     }

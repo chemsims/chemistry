@@ -36,7 +36,11 @@ private struct SolubleBeakerViewWithGeometry: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             beaker
-            containers
+            HStack(spacing: 0) {
+                Spacer()
+                    .frame(width: settings.common.sliderSettings.handleWidth)
+                containers
+            }
         }
     }
 
@@ -46,11 +50,24 @@ private struct SolubleBeakerViewWithGeometry: View {
                 container(solute: .primary, index: 0)
                 container(solute: .commonIon, index: 1)
                 container(solute: .acid, index: 2)
+                if showMilligramsLabel {
+                    milligramsLabel
+                        .zIndex(2)
+                        .transition(.identity)
+                        .animation(nil)
+                }
+
             }
             Spacer()
         }
         .frame(width: settings.soluble.beaker.beaker.innerBeakerWidth)
-//        .colorMultiply(model.highlights.colorMultiply(for: nil))
+    }
+
+    private var showMilligramsLabel: Bool {
+        func isAdding(_ solute: SoluteType) -> Bool {
+            model.inputState == .addSolute(type: solute)
+        }
+        return isAdding(.primary) || isAdding(.commonIon)
     }
 
     private var beaker: some View {
@@ -141,7 +158,22 @@ private struct SolubleBeakerViewWithGeometry: View {
                 model.startShaking()
             }
         }
+    }
 
+    private var milligramsLabel: some View {
+        Text("+\(model.milligramsSoluteAdded)mg")
+            .frame(
+                width: 4 * settings.soluble.containerWidth,
+                height: settings.soluble.containerWidth,
+                alignment: .leading
+            )
+            .font(.system(size: 18))
+            .minimumScaleFactor(0.75)
+            .foregroundColor(
+                model.activeSolute.value?.color(for: model.selectedReaction).color ?? .orangeAccent
+            )
+            .position(activeContainerLocation)
+            .offset(x: 4 * settings.soluble.containerWidth)
     }
 
     private func labelName(for soluteType: SoluteType) -> String {
