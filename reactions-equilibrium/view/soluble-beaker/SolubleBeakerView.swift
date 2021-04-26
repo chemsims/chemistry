@@ -159,19 +159,25 @@ private struct SolubleBeakerViewWithGeometry: View {
     }
 
     private var milligramsLabel: some View {
-        Text("+\(model.milligramsSoluteAdded)mg")
-            .frame(
-                width: 4 * settings.soluble.containerWidth,
-                height: settings.soluble.containerWidth,
+        HStack(spacing: 2) {
+            AnimatingNumber(
+                x: model.milligramsSoluteAdded,
+                equation: LinearEquation(m: 1, x1: 0, y1: 0),
+                formatter: { mg in
+                    "+\(mg.str(decimals: 0))"
+                },
                 alignment: .leading
             )
-            .font(.system(size: 18))
-            .minimumScaleFactor(0.75)
-            .foregroundColor(
-                model.activeSolute.value?.color(for: model.selectedReaction).color ?? .orangeAccent
-            )
-            .position(activeContainerLocation)
-            .offset(x: 4 * settings.soluble.containerWidth)
+            .frame(width: 2.5 * settings.soluble.containerWidth)
+            Text("mg")
+        }
+        .font(.system(size: 18))
+        .minimumScaleFactor(0.75)
+        .foregroundColor(
+            model.activeSolute.value?.color(for: model.selectedReaction).color ?? .orangeAccent
+        )
+        .position(activeContainerLocation)
+        .offset(x: 4 * settings.soluble.containerWidth)
     }
 
     private func labelName(for soluteType: SoluteType) -> String {

@@ -254,6 +254,7 @@ private class AddSolute: SolubilityScreenState {
 
     override func reapply(on model: SolubilityViewModel) {
         model.componentsWrapper.reset()
+        model.setMilligramsAdded()
         apply(on: model)
     }
 
@@ -462,8 +463,8 @@ private class AddCommonIonSolute: SolubilityScreenState {
                 reaction: model.selectedReaction
             )
         }
+        model.setMilligramsAdded()
     }
-
 
     override func unapply(on model: SolubilityViewModel) {
         if let previous = model.componentsWrapper.previous {
@@ -504,6 +505,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
                 reaction: model.selectedReaction
             )
         }
+        model.setMilligramsAdded()
     }
 
     override func unapply(on model: SolubilityViewModel) {

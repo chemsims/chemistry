@@ -38,6 +38,8 @@ final class SolubilityViewModel: ObservableObject {
 
     @Published var componentsWrapper: SolubleComponentsWrapper!
 
+    @Published var milligramsSoluteAdded: CGFloat = 0
+
     var components: SolubilityComponents {
         componentsWrapper.components
     }
@@ -98,11 +100,6 @@ final class SolubilityViewModel: ObservableObject {
         }
     }
 
-    var milligramsSoluteAdded: Int {
-        let enteredWater = componentsWrapper.totalSoluteCount(of: .enteredWater, soluteType: beakerState.state.soluteType)
-        return SolubleReactionSettings.milligrams(for: enteredWater)
-    }
-
     func back() {
         navigation?.back()
     }
@@ -120,6 +117,9 @@ final class SolubilityViewModel: ObservableObject {
             return
         }
         componentsWrapper.solutePerformed(action: .enteredWater)
+        withAnimation(.linear(duration: 1)) {
+            setMilligramsAdded()
+        }
         goNextIfNeeded()
     }
 
@@ -144,13 +144,19 @@ final class SolubilityViewModel: ObservableObject {
 
     }
 
+    func setMilligramsAdded() {
+        let enteredWater = componentsWrapper.totalSoluteCount(of: .enteredWater, soluteType: beakerState.state.soluteType)
+        let newSoluteAdded = SolubleReactionSettings.milligrams(for: enteredWater)
+        milligramsSoluteAdded = CGFloat(newSoluteAdded)
+    }
+
     private func canRunSoluteAction(soluteType: SoluteType, onBeakerState: BeakerState) -> Bool {
         inputState.addingSolute(type: soluteType) && beakerState.state == onBeakerState
     }
 
     private func goNextIfNeeded() {
         if componentsWrapper.shouldGoNext {
-//            doGoNext(force: true)
+            doGoNext(force: true)
         }
     }
 
