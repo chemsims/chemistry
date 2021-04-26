@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import ReactionsCore
 
 extension RGB {
@@ -18,8 +17,6 @@ extension RGB {
     static let maxCommonIonLiquidA = RGB(r: 233, g: 200, b: 183)
     static let maxCommonIonLiquidB = RGB(r: 255, g: 216, b: 173)
     static let maxCommonIonLiquidC = RGB(r: 255, g: 210, b: 194)
-
-
 
     static let primarySoluteA = RGB(r: 230, g: 175, b: 33)
     static let primarySoluteB = RGB(r: 206, g: 106, b: 133)

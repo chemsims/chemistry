@@ -169,8 +169,8 @@ struct ParticleContainer_Previews: PreviewProvider {
                 label: "AB"
             )
         )
-            .padding()
-            .font(.system(size: 300))
-            .foregroundColor(.white)
+        .padding()
+        .font(.system(size: 300))
+        .foregroundColor(.white)
     }
 }

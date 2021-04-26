@@ -50,7 +50,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             Spacer()
         }
         .frame(width: settings.soluble.beaker.beaker.innerBeakerWidth)
-        .colorMultiply(model.highlights.colorMultiply(for: nil))
+//        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var beaker: some View {
@@ -109,37 +109,39 @@ private struct SolubleBeakerViewWithGeometry: View {
         let isActive = model.activeSolute.value == solute
 
         return ParticleContainer(
-                settings: ParticleContainerSettings(
-                    labelColor: solute.color(for: model.selectedReaction).color,
-                    label: labelName(for: solute),
-                    strokeLineWidth: 0.4
-                )
+            settings: ParticleContainerSettings(
+                labelColor: solute.color(for: model.selectedReaction).color,
+                label: labelName(for: solute),
+                strokeLineWidth: 0.4
             )
-            .compositingGroup()
-            .animation(nil)
-            .shadow(radius: isActive ? 3 : 0)
-            .foregroundColor(.white)
-            .font(.system(size: settings.soluble.containerFontSize))
-            .frame(width: settings.soluble.containerWidth)
-            .rotationEffect(isActive ? .degrees(135) : .zero)
-            .position(
-                isActive ? activeContainerLocation : standardContainerLocation(index: index)
-            )
-            .scaleEffect(isActive ? 1.2 : 1)
-            .zIndex(model.activeSolute.showSoluteOnTop(solute) ? 1 : 0)
-            .onTapGesture {
-                guard model.inputState.addingSolute(type: solute) else {
-                    return
-                }
-                if isActive {
-                    shakeModel.manualAdd()
-                } else {
-                    withAnimation(.easeOut(duration: 0.5)) {
-                        model.activeSolute.setValue(solute)
-                    }
-                    model.startShaking()
-                }
+        )
+        .compositingGroup()
+        .colorMultiply(isActive ? .white : Styling.inactiveContainerMultiply)
+        .animation(nil)
+        .shadow(radius: isActive ? 3 : 0)
+        .foregroundColor(.white)
+        .font(.system(size: settings.soluble.containerFontSize))
+        .frame(width: settings.soluble.containerWidth)
+        .rotationEffect(isActive ? .degrees(135) : .zero)
+        .position(
+            isActive ? activeContainerLocation : standardContainerLocation(index: index)
+        )
+        .scaleEffect(isActive ? 1.2 : 1)
+        .zIndex(model.activeSolute.showSoluteOnTop(solute) ? 1 : 0)
+        .onTapGesture {
+            guard model.inputState.addingSolute(type: solute) else {
+                return
             }
+            if isActive {
+                shakeModel.manualAdd()
+            } else {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    model.activeSolute.setValue(solute)
+                }
+                model.startShaking()
+            }
+        }
+
     }
 
     private func labelName(for soluteType: SoluteType) -> String {

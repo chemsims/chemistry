@@ -69,7 +69,7 @@ struct AddMoleculesView: View {
         )
         .zIndex(model.activeMolecule == molecule ? 1 : 0)
         .disabled(!isActive)
-        .colorMultiply(isActive ? .white : Color.gray.opacity(0.5))
+        .colorMultiply(isActive ? .white : Styling.inactiveContainerMultiply)
     }
 
     private func getLocation(for molecule: AqueousMolecule, width: CGFloat, index: Int) -> CGPoint {

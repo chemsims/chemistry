@@ -16,7 +16,7 @@ public struct RGB {
         self.b = b
     }
 
-    static func gray(base: Double) -> RGB {
+    public static func gray(base: Double) -> RGB {
         RGB(r: base, g: base, b: base)
     }
 
@@ -121,6 +121,8 @@ public struct Styling {
     public static let tableCellBorder = RGB(r: 190, g: 190, b: 190).color
 
     public static let switchBackground = RGB.gray(base: 210).color
+
+    public static let inactiveContainerMultiply = Color.gray.opacity(0.5)
 }
 
 extension UIColor {
