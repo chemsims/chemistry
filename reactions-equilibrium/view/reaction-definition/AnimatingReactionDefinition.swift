@@ -123,9 +123,11 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
     }
 
     private func element(_ molecule: AqueousMolecule) -> some View {
-        FixedText(coefficients.string(forMolecule: molecule))
+        let str = coefficients.string(forMolecule: molecule)
+        return FixedText(str)
             .frame(width: elementWidth)
-            .animation(nil)
+            .transition(.identity)
+            .id(str)
     }
 
     private var plus: some View {
@@ -195,7 +197,7 @@ extension AnimatingReactionDefinitionWithGeometry {
         geometry.size.height
     }
     var fontSize: CGFloat {
-        0.18 * height
+        0.21 * height
     }
     var elementWidth: CGFloat {
         0.17 * width

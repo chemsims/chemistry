@@ -106,7 +106,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             reactions: reactions,
             selectedReaction: $selectedReaction,
             reactionSelectionIsToggled: $reactionSelectionIsToggled,
-            showSelectedReaction: !isSelectingReaction,
+            showSelectedReaction: false,
             isSelectingReaction: isSelectingReaction,
             onSelection: next,
             highlightForwardArrow: highlightForwardReactionArrow,

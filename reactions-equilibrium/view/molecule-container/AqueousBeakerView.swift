@@ -13,25 +13,29 @@ struct AqueousBeakerView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             beaker
-            VStack(spacing: 0) {
-                reactionDefinition
-                molecules
-            }
+            molecules
+            reactionDefinition
         }
         .frame(height: settings.height)
     }
 
     private var reactionDefinition: some View {
-        HStack(spacing: 0) {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                Spacer()
+                    .frame(width: settings.sliderSettings.handleWidth)
+                AnimatingReactionDefinition(
+                    coefficients: model.selectedReaction.coefficients,
+                    showMolecules: model.showReactionDefinitionMolecules,
+                    topArrowHighlight: model.highlightForwardReactionArrow ? .orangeAccent : nil,
+                    bottomArrowHighlight: model.highlightReverseReactionArrow ? .orangeAccent : nil
+                )
+                .frame(
+                    width: settings.reactionDefinitionWidth,
+                    height: settings.reactionDefinitionHeight
+                )
+            }
             Spacer()
-                .frame(width: settings.sliderSettings.handleWidth)
-            AnimatingReactionDefinition(
-                coefficients: model.selectedReaction.coefficients,
-                showMolecules: model.showReactionDefinitionMolecules,
-                topArrowHighlight: model.highlightForwardReactionArrow ? .orangeAccent : nil,
-                bottomArrowHighlight: model.highlightReverseReactionArrow ? .orangeAccent : nil
-            )
-            .frame(width: settings.beakerWidth)
         }
     }
 
@@ -64,7 +68,8 @@ struct AqueousBeakerView: View {
                 }
 
             )
-        }.zIndex(1)
+        }
+//        .zIndex(1)
     }
 
     private var beaker: some View {
@@ -109,7 +114,7 @@ struct AqueousBeakerView: View {
 struct AddMoleculeWithLiquidBeaker_Previews: PreviewProvider {
     static var previews: some View {
         ViewWrapper()
-            .previewLayout(.iPhone12ProMaxLandscape)
+            .previewLayout(.iPhoneSELandscape)
     }
 
     private struct ViewWrapper: View {
