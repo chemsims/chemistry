@@ -15,9 +15,9 @@ class SolubilityScreenSoluteCounterTests: XCTestCase {
 
         func addMax() {
             for _ in 0..<model.componentsWrapper.counts.maxAllowed {
-                model.onParticleEmit(soluteType: .primary)
-                model.onParticleWaterEntry(soluteType: .primary)
-                model.onDissolve(soluteType: .primary)
+                model.onParticleEmit(soluteType: .primary, onBeakerState: model.beakerState.state)
+                model.onParticleWaterEntry(soluteType: .primary, onBeakerState: model.beakerState.state)
+                model.onDissolve(soluteType: .primary, onBeakerState: model.beakerState.state)
             }
         }
 

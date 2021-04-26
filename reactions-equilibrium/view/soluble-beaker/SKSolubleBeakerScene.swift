@@ -37,7 +37,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
         if let scene = uiView.scene as? SKSolubleBeakerScene {
             if shouldAddParticle && model.canEmit {
                 scene.addParticle(at: particlePosition)
-                model.onParticleEmit(soluteType: model.beakerState.state.soluteType)
+                model.onParticleEmit(soluteType: model.beakerState.state.soluteType, onBeakerState: model.beakerState.state)
                 shouldAddParticle = false
             }
             scene.soluteWidth = soluteWidth
@@ -53,11 +53,13 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
 
 private class SKSolubleBeakerScene: SKScene {
 
+    typealias SoluteClosure = (SoluteType, BeakerState) -> Void
+
     var soluteWidth: CGFloat
     var waterHeight: CGFloat
     var saturatedReactionDuration: CGFloat
-    var onWaterEntry: (SoluteType) -> Void
-    var onDissolve: (SoluteType) -> Void
+    var onWaterEntry: SoluteClosure
+    var onDissolve: SoluteClosure
     var reaction: SolubleReactionType
 
     var transition: BeakerStateTransition {
@@ -87,8 +89,8 @@ private class SKSolubleBeakerScene: SKScene {
         waterHeight: CGFloat,
         saturatedReactionDuration: CGFloat,
         reaction: SolubleReactionType,
-        onWaterEntry: @escaping (SoluteType) -> Void,
-        onDissolve: @escaping (SoluteType) -> Void
+        onWaterEntry: @escaping SoluteClosure,
+        onDissolve: @escaping SoluteClosure
     ) {
         self.soluteWidth = soluteWidth
         self.waterHeight = waterHeight
@@ -127,8 +129,8 @@ private class SKSolubleBeakerScene: SKScene {
         let sideLength = (soluteWidth / 2) * factor
         let node = SKSoluteNode(
             sideLength: sideLength,
-            soluteType: soluteState.soluteType,
-            reaction: reaction
+            reaction: reaction,
+            stateOnEmit: soluteState
         )
         node.position = position.offset(dx: -sideLength, dy: 0)
         node.zPosition = 1
@@ -141,14 +143,13 @@ private class SKSolubleBeakerScene: SKScene {
         node.physicsBody?.mass = 1
 
         if soluteState.shouldDissolve {
-            node.willDissolve = true
             let action = SKAction.run { [weak self, weak node] in
                 guard let strongSelf = self, let strongNode = node else {
                     return
                 }
 
                 strongNode.dissolve()
-                strongSelf.onDissolve(strongNode.soluteType)
+                strongSelf.onDissolve(strongNode.soluteType, strongNode.stateOnEmit)
                 if strongSelf.soluteState == .demoReaction {
                     strongSelf.addIons(
                         at: strongNode.position.offset(dx: sideLength, dy: 0)
@@ -231,7 +232,6 @@ private class SKSolubleBeakerScene: SKScene {
         }
     }
 
-
     private var saturatedNodesReacted = [SKSoluteNode]()
     private func runSuperSaturatedReaction(duration: CGFloat) {
         let primaryNodes: [SKSoluteNode] = children.compactMap {
@@ -252,7 +252,7 @@ private class SKSolubleBeakerScene: SKScene {
             let dissolve = SKAction.run {
                 self.saturatedNodesReacted.append(node.copyNode())
                 node.dissolve()
-                self.onDissolve(node.soluteType)
+                self.onDissolve(node.soluteType, node.stateOnEmit)
             }
             let action = SKAction.sequence([delay, dissolve])
             node.run(action, withKey: saturatedReactionKey)
@@ -299,7 +299,7 @@ private class SKSolubleBeakerScene: SKScene {
                     solute.hasEnteredWater = true
                     physics.linearDamping = 50
                     physics.angularDamping = 1
-                    onWaterEntry(solute.soluteType)
+                    onWaterEntry(solute.soluteType, solute.stateOnEmit)
                 }
             }
         }

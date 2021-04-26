@@ -107,25 +107,24 @@ final class SolubilityViewModel: ObservableObject {
         navigation?.back()
     }
 
-    func onParticleEmit(soluteType: SoluteType) {
-        guard inputState.addingSolute(type: soluteType) else {
+    func onParticleEmit(soluteType: SoluteType, onBeakerState: BeakerState) {
+        guard canRunSoluteAction(soluteType: soluteType, onBeakerState: onBeakerState) else {
             return
         }
         componentsWrapper.solutePerformed(action: .emitted)
         goNextIfNeeded()
     }
 
-    func onParticleWaterEntry(soluteType: SoluteType) {
-        guard inputState.addingSolute(type: soluteType) else {
+    func onParticleWaterEntry(soluteType: SoluteType, onBeakerState: BeakerState) {
+        guard canRunSoluteAction(soluteType: soluteType, onBeakerState: onBeakerState) else {
             return
         }
-        print("did enter water")
         componentsWrapper.solutePerformed(action: .enteredWater)
         goNextIfNeeded()
     }
 
-    func onDissolve(soluteType: SoluteType) {
-        guard inputState == .addSolute(type: soluteType) || beakerState.state == .demoReaction else {
+    func onDissolve(soluteType: SoluteType, onBeakerState: BeakerState) {
+        guard canRunSoluteAction(soluteType: soluteType, onBeakerState: onBeakerState) else {
             return
         }
         componentsWrapper.solutePerformed(action: .dissolved)
@@ -143,6 +142,10 @@ final class SolubilityViewModel: ObservableObject {
 
         goNextIfNeeded()
 
+    }
+
+    private func canRunSoluteAction(soluteType: SoluteType, onBeakerState: BeakerState) -> Bool {
+        inputState.addingSolute(type: soluteType) && beakerState.state == onBeakerState
     }
 
     private func goNextIfNeeded() {
