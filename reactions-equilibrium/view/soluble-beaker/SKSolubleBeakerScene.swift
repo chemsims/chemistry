@@ -261,7 +261,7 @@ private class SKSolubleBeakerScene: SKScene {
 
     private func endSuperSaturatedReaction() {
         cancelSaturatedReaction()
-        runSuperSaturatedReaction(duration: 0.5)
+        runSuperSaturatedReaction(duration: 0.25)
     }
     
 
