@@ -10,6 +10,8 @@ protocol SolubleComponentsWrapper {
     mutating func reset()
     mutating func solutePerformed(action: SoluteParticleAction)
 
+    func totalSoluteCount(of action: SoluteParticleAction, soluteType: SoluteType) -> Int
+
     var previous: SolubleComponentsWrapper? { get }
 
     var components: SolubilityComponents { get }
@@ -27,6 +29,8 @@ protocol SolubleComponentsWrapper {
     var shouldGoNext: Bool { get }
 
     var solubilityCurve: SolublePhCurve { get set }
+
+    var soluteType: SoluteType? { get }
 }
 
 extension SolubleComponentsWrapper {
@@ -45,6 +49,13 @@ extension SolubleComponentsWrapper {
 
     var solubility: Equation {
         makeSolubilityEquation(timing: timing, solubilityCurve: solubilityCurve)
+    }
+
+    func totalSoluteCount(of action: SoluteParticleAction, soluteType: SoluteType) -> Int {
+        if self.soluteType == soluteType {
+            return counts.count(of: action)
+        }
+        return previous?.totalSoluteCount(of: action, soluteType: soluteType) ?? 0
     }
 }
 
@@ -74,6 +85,8 @@ struct PrimarySoluteComponentsWrapper: SolubleComponentsWrapper {
     let setTime: (CGFloat) -> Void
     var solubilityCurve: SolublePhCurve
     let reaction: SolubleReactionType
+
+    let soluteType: SoluteType? = .primary
 
     mutating func solutePerformed(action: SoluteParticleAction) {
         counts.didPerform(action: action)
@@ -134,6 +147,8 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
     var solubilityCurve: SolublePhCurve
     let reaction: SolubleReactionType
 
+    let soluteType: SoluteType? = .primary
+
     mutating func solutePerformed(action: SoluteParticleAction) {
         counts.didPerform(action: action)
         if action == .dissolved {
@@ -180,12 +195,22 @@ struct PrimarySoluteSaturatedComponentsWrapper: SolubleComponentsWrapper {
     }
     private let setTime: (CGFloat) -> Void
 
+    let soluteType: SoluteType? = .primary
+
     var initialColor: RGB {
         underlyingPrevious.initialColor
     }
 
     var finalColor: RGB {
         underlyingPrevious.finalColor
+    }
+
+    func totalSoluteCount(of action: SoluteParticleAction, soluteType: SoluteType) -> Int {
+        let previousCount = previous?.totalSoluteCount(of: action, soluteType: soluteType) ?? 0
+        if soluteType == .primary {
+            return counts.count(of: action) + previousCount
+        }
+        return previousCount
     }
 
     mutating func solutePerformed(action: SoluteParticleAction) {
@@ -253,6 +278,8 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
     var solubilityCurve: SolublePhCurve
     let reaction: SolubleReactionType
 
+    let soluteType: SoluteType? = .commonIon
+
     private let maxB = SolubleReactionSettings.maxInitialBConcentration
 
     var components: SolubilityComponents {
@@ -308,6 +335,8 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
     var solubilityCurve: SolublePhCurve
     let reaction: SolubleReactionType
     private let setColor: (Color) -> Void
+
+    let soluteType: SoluteType? = .acid
 
     mutating func solutePerformed(action: SoluteParticleAction) {
         counts.didPerform(action: action)

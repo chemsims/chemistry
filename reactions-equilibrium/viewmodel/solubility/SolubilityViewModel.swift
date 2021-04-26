@@ -99,7 +99,7 @@ final class SolubilityViewModel: ObservableObject {
     }
 
     var milligramsSoluteAdded: Int {
-        let enteredWater = componentsWrapper.counts.count(of: .enteredWater)
+        let enteredWater = componentsWrapper.totalSoluteCount(of: .enteredWater, soluteType: beakerState.state.soluteType)
         return SolubleReactionSettings.milligrams(for: enteredWater)
     }
 
@@ -150,7 +150,7 @@ final class SolubilityViewModel: ObservableObject {
 
     private func goNextIfNeeded() {
         if componentsWrapper.shouldGoNext {
-            doGoNext(force: true)
+//            doGoNext(force: true)
         }
     }
 

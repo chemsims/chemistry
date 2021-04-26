@@ -53,8 +53,6 @@ private struct SolubleBeakerViewWithGeometry: View {
                 if showMilligramsLabel {
                     milligramsLabel
                         .zIndex(2)
-                        .transition(.identity)
-                        .animation(nil)
                 }
 
             }
