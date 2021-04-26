@@ -7,46 +7,38 @@ import ReactionsCore
 
 struct AnimatingReactionDefinition: View {
 
-    init(
-        coefficients: MoleculeValue<Int>,
-        showMolecules: Bool,
-        topArrowHighlight: Color?,
-        bottomArrowHighlight: Color?
-    ) {
-        self.coefficients = coefficients
-        self.showMolecules = showMolecules
-        self.topArrowHighlight = topArrowHighlight
-        self.bottomArrowHighlight = bottomArrowHighlight
+    let coefficients: MoleculeValue<Int>
+    let showMolecules: Bool
+    let topArrowHighlight: Color?
+    let bottomArrowHighlight: Color?
 
-        let moleculeNameWidths = coefficients.map(Self.width)
-        self.moleculeNameWidths = moleculeNameWidths
-        self.elementWidths = [
-            moleculeNameWidths.reactantA,
-            Self.elementWidth,
-            moleculeNameWidths.reactantB,
-            Self.elementWidth,
-            moleculeNameWidths.productC,
-            Self.elementWidth,
-            moleculeNameWidths.productD
-        ]
-
+    var body: some View {
+        GeometryReader { geo in
+            AnimatingReactionDefinitionWithGeometry(
+                coefficients: coefficients,
+                showMolecules: showMolecules,
+                topArrowHighlight: topArrowHighlight,
+                bottomArrowHighlight: bottomArrowHighlight,
+                geometry: geo
+            )
+        }
     }
+}
+
+private struct AnimatingReactionDefinitionWithGeometry: View {
 
     let coefficients: MoleculeValue<Int>
     let showMolecules: Bool
     let topArrowHighlight: Color?
     let bottomArrowHighlight: Color?
 
-    private let moleculeNameWidths: MoleculeValue<CGFloat>
-    private let elementWidths: [CGFloat]
-
-    private static let elementWidth: CGFloat = 20
-    private let moleculeRadius: CGFloat = 4
-
     @State private var progress: CGFloat = 0
 
+    let geometry: GeometryProxy
+
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: vSpacing) {
             topMolecules
             elements
             bottomMolecules
@@ -82,6 +74,33 @@ struct AnimatingReactionDefinition: View {
         .frame(height:  moleculeFrameHeight)
     }
 
+    private var elements: some View {
+        HStack(spacing: 0) {
+            element(AqueousMolecule.A)
+            plus
+            element(AqueousMolecule.B)
+            if showMolecules {
+                AnimatingDoubleSidedArrow(
+                    topHighlight: .orangeAccent,
+                    bottomHighlight: .orangeAccent,
+                    width: arrowWidth
+                )
+            } else {
+                DoubleSidedArrow(
+                    topHighlight: topArrowHighlight,
+                    reverseHighlight: bottomArrowHighlight
+                )
+                .frame(width: arrowWidth)
+            }
+            element(AqueousMolecule.C)
+            plus
+            element(AqueousMolecule.D)
+        }
+        .font(.system(size: fontSize))
+        .frame(height: textHeight)
+        .minimumScaleFactor(0.75)
+    }
+
     private var bottomMolecules: some View {
         ZStack(alignment: .leading) {
             if showMolecules {
@@ -103,55 +122,21 @@ struct AnimatingReactionDefinition: View {
         .frame(height: moleculeFrameHeight)
     }
 
-    private var moleculeFrameHeight: CGFloat {
-        2 * moleculeRadius
-    }
-
-    private var elements: some View {
-        HStack(spacing: 0) {
-            element(AqueousMolecule.A)
-            element("+")
-            element(AqueousMolecule.B)
-            if showMolecules {
-                AnimatingDoubleSidedArrow(
-                    topHighlight: .orangeAccent,
-                    bottomHighlight: .orangeAccent,
-                    width: Self.elementWidth
-                )
-            } else {
-                DoubleSidedArrow(
-                    topHighlight: topArrowHighlight,
-                    reverseHighlight: bottomArrowHighlight
-                )
-                .frame(width: Self.elementWidth)
-            }
-            element(AqueousMolecule.C)
-            element("+")
-            element(AqueousMolecule.D)
-        }
-        .font(.system(size: 15))
-    }
-
     private func element(_ molecule: AqueousMolecule) -> some View {
         FixedText(coefficients.string(forMolecule: molecule))
-            .frame(width: moleculeNameWidths.value(for: molecule))
+            .frame(width: elementWidth)
+            .animation(nil)
     }
 
-    private func element(_ name: String) -> some View {
-        FixedText(name)
-            .frame(width: Self.elementWidth)
-    }
-
-    private static func width(forCoefficient coeff: Int) -> CGFloat {
-        coeff == 1 ? elementWidth : 1.5 * elementWidth
-    }
-
-    private func moleculeCount(_ molecule: AqueousMolecule) -> MoleculeArc.Count {
-        MoleculeArc.Count.fromNumber(coefficients.value(for: molecule)) ?? .four
+    private var plus: some View {
+        FixedText("+")
+            .frame(width: plusWidth)
     }
 }
 
-private extension AnimatingReactionDefinition {
+
+extension AnimatingReactionDefinitionWithGeometry {
+
     func molecules(
         startMolecule: AqueousMolecule,
         endMolecule: AqueousMolecule,
@@ -172,7 +157,7 @@ private extension AnimatingReactionDefinition {
                 count: moleculeCount(startMolecule), rotation: .degrees(60)
             ),
             endState: MoleculeArcState(
-                count: moleculeCount(endMolecule), rotation: .degrees(235)
+                count: moleculeCount(endMolecule), rotation: .degrees(295)
             ),
             moleculeRadius: moleculeRadius,
             progress: progress
@@ -184,10 +169,9 @@ private extension AnimatingReactionDefinition {
         .offset(x: getOffset(startIndex: startIndex))
     }
 
-    private func getOffset(startIndex: Int) -> CGFloat {
-        let previous = elementWidths.prefix(startIndex).reduce(0) { $0 + $1 }
-        let extra = elementWidths[startIndex] / 2
-        return previous  + extra
+
+    private func moleculeCount(_ molecule: AqueousMolecule) -> MoleculeArc.Count {
+        MoleculeArc.Count.fromNumber(coefficients.value(for: molecule)) ?? .four
     }
 
     private func getSpanWidth(startIndex: Int, span: Int) -> CGFloat {
@@ -195,7 +179,59 @@ private extension AnimatingReactionDefinition {
         let startOffset = getOffset(startIndex: startIndex)
         return endOffset - startOffset
     }
+
+    private func getOffset(startIndex: Int) -> CGFloat {
+        let previous = elementWidths.prefix(startIndex).reduce(0) { $0 + $1 }
+        let extra = elementWidths[startIndex] / 2
+        return previous  + extra
+    }
 }
+
+extension AnimatingReactionDefinitionWithGeometry {
+    var width: CGFloat {
+        geometry.size.width
+    }
+    var height: CGFloat {
+        geometry.size.height
+    }
+    var fontSize: CGFloat {
+        0.18 * height
+    }
+    var elementWidth: CGFloat {
+        0.17 * width
+    }
+    var arrowWidth: CGFloat {
+        0.1 * width
+    }
+    var plusWidth: CGFloat {
+        0.5 * (width - arrowWidth - (4 * elementWidth))
+    }
+    var textHeight: CGFloat {
+        0.3 * height
+    }
+    var moleculeFrameHeight: CGFloat {
+        0.28 * height
+    }
+    var moleculeRadius: CGFloat {
+        0.16 * moleculeFrameHeight
+    }
+    var vSpacing: CGFloat {
+        0.5 * (height - textHeight - (2 * moleculeFrameHeight))
+    }
+
+    var elementWidths: [CGFloat] {
+        [
+            elementWidth,
+            plusWidth,
+            elementWidth,
+            arrowWidth,
+            elementWidth,
+            plusWidth,
+            elementWidth
+        ]
+    }
+}
+
 
 struct AnimatingReactionDefinition_Previews: PreviewProvider {
 
@@ -215,7 +251,6 @@ struct AnimatingReactionDefinition_Previews: PreviewProvider {
                 }) {
                     Text("Button")
                 }
-
                 AnimatingReactionDefinition(
                     coefficients: MoleculeValue(
                         reactantA: 1,
@@ -227,6 +262,7 @@ struct AnimatingReactionDefinition_Previews: PreviewProvider {
                     topArrowHighlight: nil,
                     bottomArrowHighlight: nil
                 )
+                .frame(width: 160, height: 60)
             }
         }
     }
