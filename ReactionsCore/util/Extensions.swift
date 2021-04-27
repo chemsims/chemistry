@@ -35,6 +35,12 @@ extension Comparable {
     }
 }
 
+extension Array {
+    public subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
 extension Array where Self.Element: Equatable {
 
     public func element(after element: Element) -> Element? {
@@ -51,9 +57,7 @@ extension Array where Self.Element: Equatable {
         return nextIndex.flatMap { self[safe: $0] }
     }
 
-    public subscript (safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
+
 }
 
 extension CMRotationRate {

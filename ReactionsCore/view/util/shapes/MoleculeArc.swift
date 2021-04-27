@@ -24,6 +24,7 @@ public struct MoleculeArc: Shape {
         startState: MoleculeArcState,
         endState: MoleculeArcState,
         apexXLocation: CGFloat,
+        apexCount: Count?,
         moleculeRadius: CGFloat,
         progress: CGFloat
     ) {
@@ -31,6 +32,7 @@ public struct MoleculeArc: Shape {
         self.hAlignment = horizontalAlignment
         self.startState = startState
         self.endState = endState
+        self.apexCount = apexCount
         self.moleculeRadius = moleculeRadius
         self.progress = progress.within(min: 0, max: 1)
 
@@ -45,19 +47,16 @@ public struct MoleculeArc: Shape {
                 through: CGPoint(x: 1, y: 0)
             )
         )
+        let adjustedApexX = horizontalAlignment == .leading ? apexXLocation : 1 - apexXLocation
         self.xEquation = SwitchingEquation(
             thresholdX: 0.5,
-            underlyingLeft: LinearEquation(
-                x1: 0,
-                y1: 0,
-                x2: 0.5,
-                y2: apexXLocation
+            underlyingLeft: QuadraticEquation(
+                parabola: CGPoint(x: 0.5, y: adjustedApexX),
+                through: .zero
             ),
-            underlyingRight: LinearEquation(
-                x1: 0.5,
-                y1: apexXLocation,
-                x2: 1,
-                y2: 1
+            underlyingRight: QuadraticEquation(
+                parabola: CGPoint(x: 0.5, y: adjustedApexX),
+                through: CGPoint(x: 1, y: 1)
             )
         )
     }
@@ -66,6 +65,7 @@ public struct MoleculeArc: Shape {
     let hAlignment: HorizontalAlignment
     let startState: MoleculeArcState
     let endState: MoleculeArcState
+    let apexCount: Count?
     let moleculeRadius: CGFloat
 
     var progress: CGFloat
@@ -101,9 +101,9 @@ public struct MoleculeArc: Shape {
     }
 
     private func addMolecules(at center: CGPoint, path: inout Path) {
-        let maxCount = max(startState.count.number, endState.count.number)
+        let counts = [startState.count.number, endState.count.number, apexCount?.number ?? 0]
         let rotation = getScaledRotation()
-        for i in 0..<maxCount {
+        for i in 0..<counts.max()! {
             let offset = getScaledOffset(forIndex: i)
             let rotatedOffset = offset.rotate(by: rotation)
 
@@ -128,19 +128,27 @@ public struct MoleculeArc: Shape {
     }
 
     private func getScaledOffset(forIndex index: Int) -> CGSize {
-        if progress < 0.5 {
+        if let apexCount = apexCount {
+            if progress < 0.5 {
+                return getInterpolatedOffset(
+                    moleculeIndex: index,
+                    startCount: startState.count,
+                    endCount: apexCount,
+                    fraction: 2 * progress
+                )
+            }
             return getInterpolatedOffset(
                 moleculeIndex: index,
-                startCount: startState.count,
-                endCount: .one,
-                fraction: 2 * progress
+                startCount: apexCount,
+                endCount: endState.count,
+                fraction: 2 * (progress - 0.5)
             )
         }
         return getInterpolatedOffset(
             moleculeIndex: index,
-            startCount: .one,
+            startCount: startState.count,
             endCount: endState.count,
-            fraction: 2 * (progress - 0.5)
+            fraction: progress
         )
     }
 
@@ -183,10 +191,10 @@ extension MoleculeArc {
     }
 
     /// Supported number of final molecules
-    public enum Count {
+    public enum Count: CaseIterable {
         case one, two, three, four
 
-        var number: Int {
+        public var number: Int {
             switch self {
             case .one: return 1
             case .two: return 2
@@ -304,8 +312,9 @@ struct MoleculeArc_Previews: PreviewProvider {
                 verticalAlignment: vAlignment,
                 horizontalAlignment: hAlignment,
                 startState: MoleculeArcState(count: .three, rotation: .degrees(20)),
-                endState: MoleculeArcState(count: .four, rotation: .degrees(-45)),
-                apexXLocation: 0.3,
+                endState: MoleculeArcState(count: .two, rotation: .degrees(-45)),
+                apexXLocation: 0.5,
+                apexCount: .four,
                 moleculeRadius: 15,
                 progress: progress
             )
