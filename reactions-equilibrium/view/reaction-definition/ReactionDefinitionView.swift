@@ -9,12 +9,13 @@ struct ReactionDefinitionView<Reaction: SelectableReaction>: View {
     let type: Reaction
     let runForwardArrow: Bool
     let runReverseArrow: Bool
+    let arrowWidth: CGFloat
 
     var body: some View {
         HStack(spacing: 5) {
             Text(type.reactantDisplay)
             AnimatingDoubleSidedArrow(
-                width: 15,
+                width: arrowWidth,
                 runForward: runForwardArrow,
                 runReverse: runReverseArrow
             )
@@ -28,7 +29,8 @@ struct AqueousReactionTypeView_Previews: PreviewProvider {
         ReactionDefinitionView(
             type: AqueousReactionType.A,
             runForwardArrow: false,
-            runReverseArrow: true
+            runReverseArrow: true,
+            arrowWidth: 15
         )
     }
 }
