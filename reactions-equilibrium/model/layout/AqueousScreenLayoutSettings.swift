@@ -99,6 +99,10 @@ extension AqueousScreenLayoutSettings {
     var moleculeSize: CGFloat {
         beakerSettings.innerBeakerWidth / CGFloat(MoleculeGridSettings.cols)
     }
+
+    var shakeTextFontSize: CGFloat {
+        0.08 * reactionDefinitionWidth
+    }
 }
 
 // Right stack
@@ -140,10 +144,6 @@ extension AqueousScreenLayoutSettings {
 
     var reactionToggleHeight: CGFloat {
         0.09 * topRightStackHeight
-    }
-
-    var reactionDefintionFont: CGFloat {
-        0.7 * reactionToggleHeight
     }
 
     var topRightStackHeight: CGFloat {

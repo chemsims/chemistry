@@ -13,10 +13,28 @@ struct AqueousBeakerView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             beaker
+            shakeText
+                .opacity(model.showShakeText ? 1 : 0)
+                .animation(.easeOut(duration: 0.5))
             molecules
             reactionDefinition
         }
         .frame(height: settings.height)
+    }
+
+    private var shakeText: some View {
+        HStack {
+            Spacer()
+
+            VStack {
+                ShakeText()
+                    .font(.system(size: settings.shakeTextFontSize))
+                Spacer()
+                    .frame(height: 1.1 * settings.beakerHeight)
+            }
+        }
+        .frame(width: settings.beakerSettings.innerBeakerWidth)
+        .padding(.leading, settings.sliderSettings.handleWidth)
     }
 
     private var reactionDefinition: some View {
@@ -63,7 +81,8 @@ struct AqueousBeakerView: View {
                 startOfWater: topOfWaterPosition,
                 moleculeSize: settings.moleculeSize,
                 topRowColorMultiply: model.highlightedElements.colorMultiply(for: .moleculeContainers),
-                onDrag: { model.highlightedElements.clear() }
+                onDrag: { model.highlightedElements.clear() },
+                showShakeText: { model.showShakeTextIfNeeded() }
             )
             .frame(
                 width: settings.beakerSettings.innerBeakerWidth - settings.moleculeSize
@@ -80,7 +99,6 @@ struct AqueousBeakerView: View {
 
             )
         }
-//        .zIndex(1)
     }
 
     private var beaker: some View {

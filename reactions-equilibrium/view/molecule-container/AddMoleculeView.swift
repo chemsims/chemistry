@@ -16,6 +16,7 @@ struct AddMoleculesView: View {
     let moleculeSize: CGFloat
     let topRowColorMultiply: Color?
     let onDrag: () -> Void
+    let showShakeText: () -> Void
 
     var body: some View {
         GeometryReader { geometry in
@@ -100,6 +101,7 @@ struct AddMoleculesView: View {
         
         withAnimation(.easeOut(duration: 0.25)) {
             model.activeMolecule = molecule
+            showShakeText()
         }
         model.start(
             for: molecule,
@@ -183,7 +185,8 @@ struct AddMoleculeView_Previews: PreviewProvider {
                     startOfWater: geo.size.height - 150,
                     moleculeSize: 25,
                     topRowColorMultiply: nil,
-                    onDrag: {}
+                    onDrag: {},
+                    showShakeText: {}
                 )
 
                 Rectangle()

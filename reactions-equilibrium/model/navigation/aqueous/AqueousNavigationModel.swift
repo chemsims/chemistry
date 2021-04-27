@@ -315,7 +315,6 @@ private class InstructToAddProductState: AqueousScreenState {
             equilibriumTime: AqueousReactionSettings.timeForReverseConvergence
         )
         model.reactionPhase = .second
-
         DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 

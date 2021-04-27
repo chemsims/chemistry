@@ -15,16 +15,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navModel = ReactionsEquilibriumNavigationModel.model(using: injector)
         let contentView = ReactionEquilibriumRootView(model: navModel)
 
-//        let contentView = SolubleBeakerView(
-//            waterColor: Styling.beakerLiquid,
-//            model: SoluteBeakerShakingViewModel(),
-//            settings: SolubleBeakerSettings(
-//                beakerWidth: 180,
-//                waterHeight: 100
-//            )
-//        )
-//        .frame(height: 350)
-
         let controller = DeferScreenEdgesHostingController(rootView: contentView)
         DeferScreenEdgesState.shared.didSetEdgesDelegate = controller.didSetEdges
 

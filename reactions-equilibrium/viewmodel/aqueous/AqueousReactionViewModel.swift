@@ -72,6 +72,7 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var highlightedElements = HighlightedElements<AqueousScreenElement>()
     @Published var reactionDefinitionDirection = AnimatingReactionDefinition.Direction.none
+    @Published private(set) var showShakeText = false
 
     var reactionPhase = AqueousReactionPhase.first
 
@@ -99,6 +100,7 @@ class AqueousReactionViewModel: ObservableObject {
         guard componentsWrapper.canIncrement(molecule: molecule) else {
             return
         }
+        showShakeText = false
 
         let canAddReactant = inputState == .addReactants && molecule.isReactant
         let canAddProduct = inputState == .addProducts && molecule.isProduct
@@ -121,13 +123,32 @@ class AqueousReactionViewModel: ObservableObject {
         } else if inputState == .addProducts && !hasAddedEnoughProduct {
             informUserOfMissingProduct()
         } else {
+            hasShownShakeTextOnCurrentState = false
+            showShakeText = false
             navigation?.next()
         }
     }
 
     func back() {
+        hasShownShakeTextOnCurrentState = false
+        showShakeText = false
         navigation?.back()
     }
+
+
+    func showShakeTextIfNeeded() {
+        guard !hasShownShakeTextOnCurrentState else {
+            return
+        }
+        showShakeText = true
+        hasShownShakeTextOnCurrentState = true
+    }
+
+    func hideShakeText() {
+        showShakeText = false
+    }
+
+    private var hasShownShakeTextOnCurrentState = false
 
     /// Informs the user if they've added the maximum allowed amount of `molecule`
     private func handlePostIncrementSaturation(of molecule: AqueousMolecule) {
