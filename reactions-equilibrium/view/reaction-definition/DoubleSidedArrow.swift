@@ -141,42 +141,10 @@ private struct SingleArrow: View {
 }
 
 
-
-struct DoubleSidedArrow: View {
-
-    let topHighlight: Color?
-    let reverseHighlight: Color?
-
-    var body: some View {
-        VStack(spacing: 2) {
-            image
-                .foregroundColor(topHighlight ?? .black)
-            image
-                .foregroundColor(reverseHighlight ?? .black)
-                .rotationEffect(.degrees(180))
-        }
-    }
-
-    private var image: some View {
-        Image("top-right-harpoon")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-    }
-}
-
 struct DoubleSidedArrow_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
-            HStack {
-                Text("2A + 3B")
-                DoubleSidedArrow(topHighlight: nil, reverseHighlight: .orangeAccent)
-                    .frame(width: 40)
-            }
-
-            ViewWrapper()
-
-        }
-        .font(.system(size: 30))
+        ViewWrapper()
+            .font(.system(size: 30))
     }
 
     struct ViewWrapper: View {
