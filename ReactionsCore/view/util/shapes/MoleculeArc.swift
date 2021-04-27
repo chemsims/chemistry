@@ -36,18 +36,24 @@ public struct MoleculeArc: Shape {
         self.moleculeRadius = moleculeRadius
         self.progress = progress.within(min: 0, max: 1)
 
+        let adjustedApexX = horizontalAlignment == .leading ? apexXLocation : 1 - apexXLocation
+
+        // This is an equation for the y position as a function of the x position
         self.yEquation = SwitchingEquation(
-            thresholdX: apexXLocation,
+            thresholdX: adjustedApexX,
             underlyingLeft: QuadraticEquation(
-                parabola: CGPoint(x: apexXLocation, y: 1),
+                parabola: CGPoint(x: adjustedApexX, y: 1),
                 through: .zero
             ),
             underlyingRight: QuadraticEquation(
-                parabola: CGPoint(x: apexXLocation, y: 1),
+                parabola: CGPoint(x: adjustedApexX, y: 1),
                 through: CGPoint(x: 1, y: 0)
             )
         )
-        let adjustedApexX = horizontalAlignment == .leading ? apexXLocation : 1 - apexXLocation
+
+        // This is an equation for the x position as a function of the progress
+        // So the 'x' term in the equation refers to the progress in this context,
+        // while the 'y' term is the output, which is the x position (as a fraction)
         self.xEquation = SwitchingEquation(
             thresholdX: 0.5,
             underlyingLeft: QuadraticEquation(
@@ -313,7 +319,7 @@ struct MoleculeArc_Previews: PreviewProvider {
                 horizontalAlignment: hAlignment,
                 startState: MoleculeArcState(count: .three, rotation: .degrees(20)),
                 endState: MoleculeArcState(count: .two, rotation: .degrees(-45)),
-                apexXLocation: 0.5,
+                apexXLocation: 0.3,
                 apexCount: .four,
                 moleculeRadius: 15,
                 progress: progress
