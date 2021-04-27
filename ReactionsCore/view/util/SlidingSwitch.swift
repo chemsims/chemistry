@@ -13,6 +13,8 @@ public struct SlidingSwitch<Value: Equatable>: View {
     let leftSettings: SwitchOptionSettings<Value>
     let rightSettings: SwitchOptionSettings<Value>
 
+    let feedbackGenerator: UISelectionFeedbackGenerator
+
     public init(
         selected: Binding<Value>,
         backgroundColor: Color,
@@ -25,6 +27,7 @@ public struct SlidingSwitch<Value: Equatable>: View {
         self.fontColor = fontColor
         self.leftSettings = leftSettings
         self.rightSettings = rightSettings
+        self.feedbackGenerator = UISelectionFeedbackGenerator()
     }
 
     public var body: some View {
@@ -35,6 +38,7 @@ public struct SlidingSwitch<Value: Equatable>: View {
                 fontColor: fontColor,
                 leftSettings: leftSettings,
                 rightSettings: rightSettings,
+                feedbackGenerator: feedbackGenerator,
                 width: geo.size.width,
                 height: geo.size.height
             )
@@ -62,6 +66,8 @@ private struct SlidingSwitchWithGeometry<Value: Equatable>: View {
     let leftSettings: SwitchOptionSettings<Value>
     let rightSettings: SwitchOptionSettings<Value>
 
+    let feedbackGenerator: UISelectionFeedbackGenerator
+
     let width: CGFloat
     let height: CGFloat
 
@@ -76,6 +82,7 @@ private struct SlidingSwitchWithGeometry<Value: Equatable>: View {
                 } else {
                     selected = leftSettings.value
                 }
+                feedbackGenerator.selectionChanged()
             }
         }
     }
