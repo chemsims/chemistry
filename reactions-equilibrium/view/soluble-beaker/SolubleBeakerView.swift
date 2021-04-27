@@ -67,10 +67,13 @@ private struct SolubleBeakerViewWithGeometry: View {
                 container(solute: .primary, index: 0)
                 container(solute: .commonIon, index: 1)
                 container(solute: .acid, index: 2)
-                if showMilligramsLabel {
-                    milligramsLabel
+
+                // NB: There was a strange bug when conditionally including this view, which
+                // causes it to now show, and container opacity to remain < 1, when navigating back
+                // and forward quickly on the add solute state
+                milligramsLabel
+                    .opacity(showMilligramsLabel ? 1 : 0)
                         .zIndex(2)
-                }
 
             }
             Spacer()
@@ -195,7 +198,7 @@ private struct SolubleBeakerViewWithGeometry: View {
         .lineLimit(1)
         .minimumScaleFactor(0.75)
         .foregroundColor(
-            model.activeSolute.value?.color(for: model.selectedReaction).color ?? .orangeAccent
+            (model.activeSolute.value ?? .primary).color(for: model.selectedReaction).color
         )
         .background(
             RoundedRectangle(cornerRadius: 0.2 * settings.soluble.containerWidth)
