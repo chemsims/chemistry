@@ -184,7 +184,7 @@ extension ChartStack {
             currentTime: currentTime,
             quotientChartDiscontinuity: model.components.quotientDiscontinuity,
             chartOffset: model.chartOffset,
-            canSetCurrentTime: false,
+            canSetCurrentTime: model.canSetCurrentTime,
             canSetChartIndex: true,
             showConcentrationLines: true,
             showQuotientLine: true,

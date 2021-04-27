@@ -166,6 +166,12 @@ struct SolubilityStatements {
         """
     ]
 
+    static let instructToSetCurrentTime: [TextLine] = [
+        """
+        Try *dragging the time indicator* on the chart to scrub through the reaction time!
+        """
+    ]
+
     static func explainCommonIonEffect(product: SolubleProductPair) -> [TextLine] {
         [
             """

@@ -28,17 +28,20 @@ class SolubilityNavigationModel {
                 PostAddingSoluteToSaturatedBeaker(statement: statements.explainSuperSaturated),
                 SetStatement(statement: { statements.explainSaturatedEquilibrium1(product: $0.selectedReaction.products) }),
                 SetStatement(statement: statements.explainSaturatedEquilibrium2),
+                SetCurrentTime(),
                 PrepareCommonIonReaction(),
                 AddCommonIonSolute(),
                 AddSoluteToCommonIonSolution(),
                 ShowCommonIonSaturatedSolution(),
                 AddSoluteToSaturatedBeaker(),
                 PostAddingSoluteToSaturatedBeaker(statement: statements.explainSuperSaturated),
+                SetCurrentTime(),
                 PrepareAcidReaction(),
                 SetStatement(statement: { statements.explainPh2(product: $0.selectedReaction.products) }),
                 AddAcidSolute(),
                 RunAcidReaction(),
                 EndAcidReaction(),
+                SetCurrentTime(),
                 SetStatement(statement: statements.end)
             ]
         )
@@ -415,6 +418,17 @@ private class PostAddingSoluteToSaturatedBeaker: SolubilityScreenState {
     }
 }
 
+private class SetCurrentTime: SolubilityScreenState {
+    override func apply(on model: SolubilityViewModel) {
+        model.statement = statements.instructToSetCurrentTime
+        model.canSetCurrentTime = true
+    }
+
+    override func unapply(on model: SolubilityViewModel) {
+        model.canSetCurrentTime = false
+    }
+}
+
 private class PrepareCommonIonReaction: SolubilityScreenState {
 
     override func apply(on model: SolubilityViewModel) {
@@ -427,6 +441,7 @@ private class PrepareCommonIonReaction: SolubilityScreenState {
         }
         model.beakerState.goTo(state: .none, with: .hideSolute(duration: 1))
         model.stopShaking()
+        model.canSetCurrentTime = false
     }
 
     override func unapply(on model: SolubilityViewModel) {
@@ -534,6 +549,7 @@ private class PrepareAcidReaction: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.explainPh1
         model.stopShaking()
+        model.canSetCurrentTime = false
         withAnimation(.easeOut(duration: 1)) {
             model.inputState = .none
             model.activeSolute.setValue(nil)

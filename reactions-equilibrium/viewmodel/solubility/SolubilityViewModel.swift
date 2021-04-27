@@ -41,6 +41,7 @@ final class SolubilityViewModel: ObservableObject {
     @Published var milligramsSoluteAdded: CGFloat = 0
 
     @Published var showShakeText = false
+    @Published var canSetCurrentTime = false
 
     var components: SolubilityComponents {
         componentsWrapper.components
