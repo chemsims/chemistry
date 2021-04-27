@@ -36,6 +36,7 @@ private struct SolubilityScreenWithSettings: View {
         HStack(spacing: 0) {
 
             leftStack
+                .zIndex(2)
 
             Spacer()
 

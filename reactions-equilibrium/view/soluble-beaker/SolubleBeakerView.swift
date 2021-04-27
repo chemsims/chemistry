@@ -22,6 +22,7 @@ struct SolubleBeakerView: View {
             )
             .frame(width: settings.soluble.beakerWidth)
         }
+        .zIndex(10)
     }
 }
 
@@ -168,14 +169,24 @@ private struct SolubleBeakerViewWithGeometry: View {
                 },
                 alignment: .leading
             )
-            .frame(width: 2.5 * settings.soluble.containerWidth)
+            .frame(
+                width: 2.4 * settings.soluble.containerWidth,
+                height: 1.2 * settings.soluble.containerWidth
+            )
             Text("mg")
         }
-        .font(.system(size: 18))
+        .font(.system(size: 0.75 * settings.soluble.containerWidth))
+        .lineLimit(1)
         .minimumScaleFactor(0.75)
         .foregroundColor(
             model.activeSolute.value?.color(for: model.selectedReaction).color ?? .orangeAccent
         )
+        .background(
+            RoundedRectangle(cornerRadius: 0.2 * settings.soluble.containerWidth)
+                .foregroundColor(.white)
+                .opacity(0.95)
+        )
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
         .position(activeContainerLocation)
         .offset(x: 4 * settings.soluble.containerWidth)
     }

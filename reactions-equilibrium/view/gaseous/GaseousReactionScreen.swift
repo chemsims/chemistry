@@ -91,6 +91,8 @@ private struct LeftStack: View {
 
         }
         .font(.system(size: AnimatingReactionDefinition.fontSizeToHeight * settings.common.reactionDefinitionHeight))
+        .lineLimit(1)
+        .minimumScaleFactor(0.6)
         .background(background)
         .padding(.leading, settings.common.menuSize)
         .colorMultiply(model.highlightedElements.colorMultiply(for: .reactionDefinition))
