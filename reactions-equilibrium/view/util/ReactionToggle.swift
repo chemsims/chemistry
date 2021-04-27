@@ -10,33 +10,13 @@ struct ReactionToggle<Reaction: SelectableReaction>: View {
     let reactions: [Reaction]
     @Binding var selectedReaction: Reaction
     @Binding var reactionSelectionIsToggled: Bool
-    let showSelectedReaction: Bool
     let isSelectingReaction: Bool
     let onSelection: (() -> Void)?
-    let highlightForwardArrow: Bool
-    let highlightReverseArrow: Bool
-    let showHeat: Bool
-    let reactionDefinitionHighlight: Color
     let reactionToggleHighlight: Color
     let settings: AqueousScreenLayoutSettings
 
     var body: some View {
         HStack(spacing: 0) {
-
-            Spacer()
-
-            if showSelectedReaction {
-                ReactionDefinitionView<Reaction>(
-                    type: selectedReaction,
-                    highlightTopArrow: highlightForwardArrow,
-                    highlightReverseArrow: highlightReverseArrow,
-                    showHeat: showHeat
-                )
-                .font(.system(size: settings.reactionDefintionFont))
-                .minimumScaleFactor(0.5)
-                .colorMultiply(reactionDefinitionHighlight)
-            }
-
             Spacer()
             ReactionDropDownSelection(
                 isToggled: $reactionSelectionIsToggled,

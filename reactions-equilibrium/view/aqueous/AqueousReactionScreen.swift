@@ -70,14 +70,12 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     let generalElementHighlight: Color
     let quotientToConcentrationDefinitionHighlight: Color
     let quotientToEquilibriumConstantDefinitionHighlight: Color
-    let reactionDefinitionHighlight: Color
     let reactionToggleHighlight: Color
 
     let showEquationTerms: Bool
     let formatElementName: (String) -> String
 
     let isPressure: Bool
-    let showHeat: Bool
     let settings: AqueousScreenLayoutSettings
 
     var components: ReactionComponents {
@@ -104,13 +102,8 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             reactions: reactions,
             selectedReaction: $selectedReaction,
             reactionSelectionIsToggled: $reactionSelectionIsToggled,
-            showSelectedReaction: false,
             isSelectingReaction: isSelectingReaction,
             onSelection: next,
-            highlightForwardArrow: false,
-            highlightReverseArrow: false,
-            showHeat: showHeat,
-            reactionDefinitionHighlight: reactionDefinitionHighlight,
             reactionToggleHighlight: reactionToggleHighlight,
             settings: settings
         )
@@ -260,15 +253,10 @@ extension RightStackView {
                 model.highlightedElements.colorMultiply(
                     for: .quotientToEquilibriumConstantDefinition
                 ),
-            reactionDefinitionHighlight:
-                model.highlightedElements.colorMultiply(
-                    for: .reactionDefinition
-                ),
             reactionToggleHighlight: model.highlightedElements.colorMultiply(for: .reactionToggle),
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "[\($0)]" },
             isPressure: false,
-            showHeat: false,
             settings: settings
         )
     }
@@ -299,12 +287,10 @@ extension RightStackView {
             quotientToEquilibriumConstantDefinitionHighlight: model.highlightedElements.colorMultiply(
                 for: .quotientToEquilibriumConstantDefinition
             ),
-            reactionDefinitionHighlight: model.highlightedElements.colorMultiply(for: .reactionDefinition),
             reactionToggleHighlight: model.highlightedElements.colorMultiply(for: .reactionToggle),
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "P\($0.lowercased())" },
             isPressure: true,
-            showHeat: true,
             settings: settings
         )
     }
