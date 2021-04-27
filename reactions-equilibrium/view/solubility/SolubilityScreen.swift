@@ -34,13 +34,8 @@ private struct SolubilityScreenWithSettings: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            SolubleBeakerView(
-                model: model,
-                shakeModel: model.shakingModel,
-                settings: settings
-            )
-            .frame(width: settings.totalBeakerWidth)
-            .padding(.leading, settings.common.menuSize)
+
+            leftStack
 
             Spacer()
 
@@ -57,6 +52,26 @@ private struct SolubilityScreenWithSettings: View {
                 settings: settings
             )
         }
+    }
+
+    private var leftStack: some View {
+        VStack(spacing: 0) {
+            ReactionDefinitionView(
+                type: model.selectedReaction,
+                runForwardArrow: model.highlightForwardReactionArrow,
+                runReverseArrow: false
+            )
+            .id(model.selectedReaction.rawValue)
+            .transition(.identity)
+
+            SolubleBeakerView(
+                model: model,
+                shakeModel: model.shakingModel,
+                settings: settings
+            )
+            .frame(width: settings.totalBeakerWidth)
+        }
+        .padding(.leading, settings.common.menuSize)
     }
 }
 
@@ -121,13 +136,8 @@ private struct SolubilityRightStack: View {
             reactions: SolubleReactionType.allCases,
             selectedReaction: $model.selectedReaction,
             reactionSelectionIsToggled: $model.reactionSelectionToggled,
-            showSelectedReaction: model.showSelectedReaction,
             isSelectingReaction: model.inputState == .selectingReaction,
             onSelection: model.next,
-            highlightForwardArrow: model.highlightForwardReactionArrow,
-            highlightReverseArrow: false,
-            showHeat: false,
-            reactionDefinitionHighlight: model.highlights.colorMultiply(for: .reactionSelectionToggle),
             reactionToggleHighlight: model.highlights.colorMultiply(for: .reactionSelectionToggle),
             settings: settings.common
         )

@@ -13,8 +13,9 @@ public struct MoleculeArc: Shape {
     /// - Parameters:
     ///     - verticalAlignment: Alignment of the start & end y positions
     ///     - horizontalAlignment:Alignment of the start & end x positions
-    ///     - finalCount: Number of molecules in the final state
-    ///     - finalRotation: Rotation of the molecules in the final state
+    ///     - startState: Molecule state at start position
+    ///     - endState: Molecule state at end position
+    ///     - apexXLocation: Position of the curve apex as a fraction of the width, between 0 and 1
     ///     - moleculeRadius: Radius of the molecule
     ///     - progress: Progress along the path, between 0 and 1
     public init(
@@ -22,6 +23,8 @@ public struct MoleculeArc: Shape {
         horizontalAlignment: HorizontalAlignment,
         startState: MoleculeArcState,
         endState: MoleculeArcState,
+        apexXLocation: CGFloat,
+        apexCount: Count?,
         moleculeRadius: CGFloat,
         progress: CGFloat
     ) {
@@ -29,17 +32,46 @@ public struct MoleculeArc: Shape {
         self.hAlignment = horizontalAlignment
         self.startState = startState
         self.endState = endState
+        self.apexCount = apexCount
         self.moleculeRadius = moleculeRadius
         self.progress = progress.within(min: 0, max: 1)
+
+        self.yEquation = SwitchingEquation(
+            thresholdX: apexXLocation,
+            underlyingLeft: QuadraticEquation(
+                parabola: CGPoint(x: apexXLocation, y: 1),
+                through: .zero
+            ),
+            underlyingRight: QuadraticEquation(
+                parabola: CGPoint(x: apexXLocation, y: 1),
+                through: CGPoint(x: 1, y: 0)
+            )
+        )
+        let adjustedApexX = horizontalAlignment == .leading ? apexXLocation : 1 - apexXLocation
+        self.xEquation = SwitchingEquation(
+            thresholdX: 0.5,
+            underlyingLeft: QuadraticEquation(
+                parabola: CGPoint(x: 0.5, y: adjustedApexX),
+                through: .zero
+            ),
+            underlyingRight: QuadraticEquation(
+                parabola: CGPoint(x: 0.5, y: adjustedApexX),
+                through: CGPoint(x: 1, y: 1)
+            )
+        )
     }
 
     let vAlignment: VerticalAlignment
     let hAlignment: HorizontalAlignment
     let startState: MoleculeArcState
     let endState: MoleculeArcState
+    let apexCount: Count?
     let moleculeRadius: CGFloat
 
     var progress: CGFloat
+
+    private let yEquation: Equation
+    private let xEquation: Equation
 
     public var animatableData: CGFloat {
         get { progress }
@@ -48,28 +80,30 @@ public struct MoleculeArc: Shape {
 
     public func path(in rect: CGRect) -> Path {
         var path = Path()
+        let xFraction = xEquation.getY(at: progress)
         let x = AxisPositionCalculations(
             minValuePosition: hAlignment == .leading ? 0 : rect.width,
             maxValuePosition: hAlignment == .leading ? rect.width : 0,
             minValue: 0,
             maxValue: 1
-        ).getPosition(at: progress)
+        ).getPosition(at: xFraction)
 
+        let yFraction = yEquation.getY(at: xFraction)
         let y = AxisPositionCalculations<CGFloat>(
             minValuePosition: vAlignment == .bottom ? rect.height : 0,
             maxValuePosition: vAlignment == .bottom ? 0 : rect.height,
             minValue: 0,
             maxValue: 1
-        ).getPosition(at: Self.equation.getY(at: progress))
+        ).getPosition(at: yFraction)
 
         addMolecules(at: CGPoint(x: x, y: y), path: &path)
         return path
     }
 
     private func addMolecules(at center: CGPoint, path: inout Path) {
-        let maxCount = max(startState.count.number, endState.count.number)
+        let counts = [startState.count.number, endState.count.number, apexCount?.number ?? 0]
         let rotation = getScaledRotation()
-        for i in 0..<maxCount {
+        for i in 0..<counts.max()! {
             let offset = getScaledOffset(forIndex: i)
             let rotatedOffset = offset.rotate(by: rotation)
 
@@ -94,10 +128,42 @@ public struct MoleculeArc: Shape {
     }
 
     private func getScaledOffset(forIndex index: Int) -> CGSize {
-        let startOffset = getMaxOffset(forIndex: index, count: startState.count)
-        let endOffset = getMaxOffset(forIndex: index, count: endState.count)
+        if let apexCount = apexCount {
+            if progress < 0.5 {
+                return getInterpolatedOffset(
+                    moleculeIndex: index,
+                    startCount: startState.count,
+                    endCount: apexCount,
+                    fraction: 2 * progress
+                )
+            }
+            return getInterpolatedOffset(
+                moleculeIndex: index,
+                startCount: apexCount,
+                endCount: endState.count,
+                fraction: 2 * (progress - 0.5)
+            )
+        }
+        return getInterpolatedOffset(
+            moleculeIndex: index,
+            startCount: startState.count,
+            endCount: endState.count,
+            fraction: progress
+        )
+    }
+
+    private func getInterpolatedOffset(
+        moleculeIndex: Int,
+        startCount: Count,
+        endCount: Count,
+        fraction: CGFloat
+    ) -> CGSize {
+        let startOffset =
+            getMaxOffset(forIndex: moleculeIndex, count: startCount)
+        let endOffset =
+            getMaxOffset(forIndex: moleculeIndex, count: endCount)
         let deltaOffset = endOffset - startOffset
-        return startOffset + deltaOffset.scale(by: progress)
+        return startOffset + deltaOffset.scale(by: fraction)
     }
 
     private func getMaxOffset(
@@ -111,11 +177,6 @@ public struct MoleculeArc: Shape {
         case .four: return offsetForCountOfFour(forIndex: index)
         }
     }
-
-    private static let equation = QuadraticEquation(
-        parabola: CGPoint(x: 0.5, y: 1),
-        through: CGPoint(x: 0, y: 0)
-    )
 }
 
 //MARK: Enums
@@ -130,10 +191,10 @@ extension MoleculeArc {
     }
 
     /// Supported number of final molecules
-    public enum Count {
+    public enum Count: CaseIterable {
         case one, two, three, four
 
-        var number: Int {
+        public var number: Int {
             switch self {
             case .one: return 1
             case .two: return 2
@@ -237,7 +298,6 @@ struct MoleculeArc_Previews: PreviewProvider {
             ViewWrapper(vAlignment: .bottom, hAlignment: .leading)
             ViewWrapper(vAlignment: .top, hAlignment: .trailing)
         }
-
     }
 
     struct ViewWrapper: View {
@@ -252,16 +312,18 @@ struct MoleculeArc_Previews: PreviewProvider {
                 verticalAlignment: vAlignment,
                 horizontalAlignment: hAlignment,
                 startState: MoleculeArcState(count: .three, rotation: .degrees(20)),
-                endState: MoleculeArcState(count: .four, rotation: .degrees(-45)),
+                endState: MoleculeArcState(count: .two, rotation: .degrees(-45)),
+                apexXLocation: 0.5,
+                apexCount: .four,
                 moleculeRadius: 15,
                 progress: progress
             )
             .frame(width: 200, height: 100)
             .border(Color.red)
             .onAppear {
-                let animation = Animation.easeOut(duration: 0.75).repeatForever()
+                let animation = Animation.easeOut(duration: 2).repeatForever()
                 withAnimation(animation) {
-                    progress = 0
+                    progress = 1
                 }
             }
         }

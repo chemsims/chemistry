@@ -73,6 +73,14 @@ struct AqueousScreenLayoutSettings {
     var chartSelectionBottomPadding: CGFloat {
         0.1 * chartSelectionHeight
     }
+
+    var reactionDefinitionHeight: CGFloat {
+        0.15 * height
+    }
+
+    var reactionDefinitionWidth: CGFloat {
+        beakerSettings.innerBeakerWidth
+    }
 }
 
 extension AqueousScreenLayoutSettings {
@@ -85,7 +93,7 @@ extension AqueousScreenLayoutSettings {
     }
 
     var moleculeContainerYPos: CGFloat {
-        0.75 * moleculeContainerHeight
+        (0.75 * moleculeContainerHeight) + reactionDefinitionHeight
     }
 
     var moleculeSize: CGFloat {

@@ -158,7 +158,7 @@ private class PreRunAnimationState: AqueousScreenState {
 private class RunAnimationState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.runAnimation
-        model.highlightForwardReactionArrow = true
+        model.reactionDefinitionDirection = .forward
         let time = AqueousReactionSettings.forwardReactionTime
         model.currentTime = 0
         withAnimation(.linear(duration: Double(time))) {
@@ -167,7 +167,7 @@ private class RunAnimationState: AqueousScreenState {
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
-        model.highlightForwardReactionArrow = false
+        model.reactionDefinitionDirection = .none
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
             model.highlightedElements.clear()
@@ -220,21 +220,21 @@ private class EndAnimationState: AqueousScreenState {
 
     private func doApply(on model: AqueousReactionViewModel, isReapplying: Bool) {
         model.statement = statement
-        model.highlightForwardReactionArrow = false
-        model.highlightReverseReactionArrow = false
+        model.reactionDefinitionDirection = .equilibrium
         if isReapplying {
-            model.highlightedElements.elements = [.chartEquilibrium]
+            model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
         }
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = endTime * endOfReactionFactor
             if !isReapplying {
-                model.highlightedElements.elements = [.chartEquilibrium]
+                model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
             }
         }
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
         model.highlightedElements.clear()
+        model.reactionDefinitionDirection = .none
     }
 }
 
@@ -244,6 +244,7 @@ private class CanSetCurrentTimeState: AqueousScreenState {
         model.statement = AqueousStatements.instructToChangeCurrentTime
         model.highlightedElements.clear()
         model.canSetCurrentTime = true
+        model.reactionDefinitionDirection = .none
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
@@ -323,7 +324,7 @@ private class RunReverseAnimation: AqueousScreenState {
 
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.reverseReactionStarted
-        model.highlightReverseReactionArrow = true
+        model.reactionDefinitionDirection = .reverse
         withAnimation(.linear(duration: Double(tEnd - tAddProduct))) {
             model.currentTime = tEnd
         }
@@ -335,7 +336,7 @@ private class RunReverseAnimation: AqueousScreenState {
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
-        model.highlightReverseReactionArrow = false
+        model.reactionDefinitionDirection = .none
         withAnimation(.easeOut(duration: Double(0.5))) {
             model.currentTime = tAddProduct
             model.highlightedElements.clear()

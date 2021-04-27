@@ -7,36 +7,47 @@ import ReactionsCore
 
 struct AnimatingReactionDefinition: View {
 
-    init(coefficients: MoleculeValue<Int>, showMolecules: Bool) {
-        self.coefficients = coefficients
-        self.showMolecules = showMolecules
-        let moleculeNameWidths = coefficients.map(Self.width)
-        self.moleculeNameWidths = moleculeNameWidths
-        self.elementWidths = [
-            moleculeNameWidths.reactantA,
-            Self.elementWidth,
-            moleculeNameWidths.reactantB,
-            Self.elementWidth,
-            moleculeNameWidths.productC,
-            Self.elementWidth,
-            moleculeNameWidths.productD
-        ]
+    let coefficients: MoleculeValue<Int>
+    let direction: Direction
 
+    var body: some View {
+        GeometryReader { geo in
+            AnimatingReactionDefinitionWithGeometry(
+                coefficients: coefficients,
+                direction: direction,
+                geometry: geo
+            )
+        }
     }
 
+    enum Direction {
+        case forward, reverse, equilibrium, none
+
+        var runForward: Bool {
+            self == .forward || self == .equilibrium
+        }
+
+        var runReverse: Bool {
+            self == .reverse || self == .equilibrium
+        }
+
+        static func from(direction: ReactionDirection) -> Direction {
+            direction == .forward ? .forward : .reverse
+        }
+    }
+}
+
+
+private struct AnimatingReactionDefinitionWithGeometry: View {
+
     let coefficients: MoleculeValue<Int>
-    let showMolecules: Bool
-
-    private let moleculeNameWidths: MoleculeValue<CGFloat>
-    private let elementWidths: [CGFloat]
-
-    private static let elementWidth: CGFloat = 20
-    private let moleculeRadius: CGFloat = 4
+    let direction: AnimatingReactionDefinition.Direction
+    let geometry: GeometryProxy
 
     @State private var progress: CGFloat = 0
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: vSpacing) {
             topMolecules
             elements
             bottomMolecules
@@ -45,7 +56,7 @@ struct AnimatingReactionDefinition: View {
 
     private var topMolecules: some View {
         ZStack(alignment: .leading) {
-            if showMolecules {
+            if direction == .equilibrium {
                 molecules(
                     startMolecule: .A,
                     endMolecule: .C,
@@ -69,12 +80,31 @@ struct AnimatingReactionDefinition: View {
                 )
             }
         }
-        .frame(height: 4 * moleculeRadius)
+        .frame(height:  moleculeFrameHeight)
+    }
+
+    private var elements: some View {
+        HStack(spacing: 0) {
+            element(AqueousMolecule.A)
+            plus
+            element(AqueousMolecule.B)
+            AnimatingDoubleSidedArrow(
+                width: arrowWidth,
+                runForward: direction.runForward,
+                runReverse: direction.runReverse
+            )
+            element(AqueousMolecule.C)
+            plus
+            element(AqueousMolecule.D)
+        }
+        .font(.system(size: fontSize))
+        .frame(height: textHeight)
+        .minimumScaleFactor(0.75)
     }
 
     private var bottomMolecules: some View {
         ZStack(alignment: .leading) {
-            if showMolecules {
+            if direction == .equilibrium {
                 molecules(
                     startMolecule: .D,
                     endMolecule: .B,
@@ -90,51 +120,26 @@ struct AnimatingReactionDefinition: View {
                 )
             }
         }
-        .frame(height: 4 * moleculeRadius)
-    }
-
-    private var elements: some View {
-        HStack(spacing: 0) {
-            element(AqueousMolecule.A)
-            element("+")
-            element(AqueousMolecule.B)
-            if showMolecules {
-                AnimatingDoubleSidedArrow(
-                    topHighlight: .orangeAccent,
-                    bottomHighlight: .orangeAccent,
-                    width: Self.elementWidth
-                )
-            } else {
-                DoubleSidedArrow(topHighlight: nil, reverseHighlight: nil)
-                    .frame(width: Self.elementWidth)
-            }
-            element(AqueousMolecule.C)
-            element("+")
-            element(AqueousMolecule.D)
-        }
-        .font(.system(size: 15))
+        .frame(height: moleculeFrameHeight)
     }
 
     private func element(_ molecule: AqueousMolecule) -> some View {
-        FixedText(coefficients.string(forMolecule: molecule))
-            .frame(width: moleculeNameWidths.value(for: molecule))
+        let str = coefficients.string(forMolecule: molecule)
+        return FixedText(str)
+            .frame(width: elementWidth)
+            .transition(.identity)
+            .id(str)
     }
 
-    private func element(_ name: String) -> some View {
-        FixedText(name)
-            .frame(width: Self.elementWidth)
-    }
-
-    private static func width(forCoefficient coeff: Int) -> CGFloat {
-        coeff == 1 ? elementWidth : 1.5 * elementWidth
-    }
-
-    private func moleculeCount(_ molecule: AqueousMolecule) -> MoleculeArc.Count {
-        MoleculeArc.Count.fromNumber(coefficients.value(for: molecule)) ?? .four
+    private var plus: some View {
+        FixedText("+")
+            .frame(width: plusWidth)
     }
 }
 
-private extension AnimatingReactionDefinition {
+
+extension AnimatingReactionDefinitionWithGeometry {
+
     func molecules(
         startMolecule: AqueousMolecule,
         endMolecule: AqueousMolecule,
@@ -148,29 +153,62 @@ private extension AnimatingReactionDefinition {
         let startIndex = min(startMoleculeIndex, endMoleculeIndex)
         let span = abs(startMoleculeIndex - endMoleculeIndex)
 
+        let spanWidth = getSpanWidth(startIndex: startIndex, span: span)
+
+        let arrowIndex = 3
+        let spanToArrow = arrowIndex - startIndex
+        let arrowLocation = getSpanWidth(startIndex: startIndex, span: spanToArrow)
+
+        let startRotation = Angle.degrees(Double(60 + (startMoleculeIndex * 20)))
+        let endRotation = Angle.degrees(Double(295 + (endMoleculeIndex * 5)))
+
+        let rgb = RGBGradientEquation(
+            colors: [startMolecule.rgb, .gray(base: 170), endMolecule.rgb],
+            initialX: 0,
+            finalX: 1
+        )
+
+        let startCount = moleculeCount(startMolecule)
+        let endCount = moleculeCount(endMolecule)
+
         return MoleculeArc(
             verticalAlignment: verticalAlignment,
             horizontalAlignment: horizontalAlignment,
             startState: MoleculeArcState(
-                count: moleculeCount(startMolecule), rotation: .degrees(60)
+                count: startCount, rotation: startRotation
             ),
             endState: MoleculeArcState(
-                count: moleculeCount(endMolecule), rotation: .degrees(235)
+                count: endCount, rotation: endRotation
             ),
+            apexXLocation: arrowLocation / spanWidth,
+            apexCount: apexCount(startCount: startCount, endCount: endCount),
             moleculeRadius: moleculeRadius,
             progress: progress
         )
-        .foregroundColor(progress == 0 ? startMolecule.color : endMolecule.color)
-        .frame(
-            width: getSpanWidth(startIndex: startIndex, span: span)
-        )
+        .foregroundColor(rgb: rgb, progress: progress)
+        .frame(width: spanWidth)
         .offset(x: getOffset(startIndex: startIndex))
     }
 
-    private func getOffset(startIndex: Int) -> CGFloat {
-        let previous = elementWidths.prefix(startIndex).reduce(0) { $0 + $1 }
-        let extra = elementWidths[startIndex] / 2
-        return previous  + extra
+    private func apexCount(startCount: MoleculeArc.Count, endCount: MoleculeArc.Count) -> MoleculeArc.Count {
+        if startCount == endCount {
+            return startCount
+        }
+
+        let midNumber = (startCount.number + endCount.number) / 2
+        if let midCount = MoleculeArc.Count.fromNumber(midNumber),
+           midCount != startCount && midCount != endCount {
+            return midCount
+        }
+
+        return MoleculeArc.Count.allCases.reversed().first { count in
+            count != startCount && count != endCount
+        } ?? .four
+    }
+
+
+    private func moleculeCount(_ molecule: AqueousMolecule) -> MoleculeArc.Count {
+        MoleculeArc.Count.fromNumber(coefficients.value(for: molecule)) ?? .four
     }
 
     private func getSpanWidth(startIndex: Int, span: Int) -> CGFloat {
@@ -178,7 +216,86 @@ private extension AnimatingReactionDefinition {
         let startOffset = getOffset(startIndex: startIndex)
         return endOffset - startOffset
     }
+
+    private func getOffset(startIndex: Int) -> CGFloat {
+        let previous = elementWidths.prefix(startIndex).reduce(0) { $0 + $1 }
+        let extra = elementWidths[startIndex] / 2
+        return previous  + extra
+    }
 }
+
+struct AnimatableForegroundColor: AnimatableModifier {
+
+    let rgb: GeneralRGBEquation
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(rgb.getRgb(at: progress).color)
+    }
+}
+
+// TODO - move to reactions core
+extension View {
+    func foregroundColor(rgb: GeneralRGBEquation, progress: CGFloat) -> some View {
+        self.modifier(AnimatableForegroundColor(rgb: rgb, progress: progress))
+    }
+}
+
+extension AnimatingReactionDefinition {
+    static let fontSizeToHeight: CGFloat = 0.21
+}
+
+extension AnimatingReactionDefinitionWithGeometry {
+    var width: CGFloat {
+        geometry.size.width
+    }
+    var height: CGFloat {
+        geometry.size.height
+    }
+    var fontSize: CGFloat {
+        AnimatingReactionDefinition.fontSizeToHeight * height
+    }
+    var elementWidth: CGFloat {
+        0.17 * width
+    }
+    var arrowWidth: CGFloat {
+        0.1 * width
+    }
+    var plusWidth: CGFloat {
+        0.5 * (width - arrowWidth - (4 * elementWidth))
+    }
+    var textHeight: CGFloat {
+        0.3 * height
+    }
+    var moleculeFrameHeight: CGFloat {
+        0.28 * height
+    }
+    var moleculeRadius: CGFloat {
+        0.16 * moleculeFrameHeight
+    }
+    var vSpacing: CGFloat {
+        0.5 * (height - textHeight - (2 * moleculeFrameHeight))
+    }
+
+    var elementWidths: [CGFloat] {
+        [
+            elementWidth,
+            plusWidth,
+            elementWidth,
+            arrowWidth,
+            elementWidth,
+            plusWidth,
+            elementWidth
+        ]
+    }
+}
+
 
 struct AnimatingReactionDefinition_Previews: PreviewProvider {
 
@@ -198,7 +315,6 @@ struct AnimatingReactionDefinition_Previews: PreviewProvider {
                 }) {
                     Text("Button")
                 }
-
                 AnimatingReactionDefinition(
                     coefficients: MoleculeValue(
                         reactantA: 1,
@@ -206,8 +322,9 @@ struct AnimatingReactionDefinition_Previews: PreviewProvider {
                         productC: 3,
                         productD: 4
                     ),
-                    showMolecules: showMolecules
+                    direction: .equilibrium
                 )
+                .frame(width: 160, height: 60)
             }
         }
     }

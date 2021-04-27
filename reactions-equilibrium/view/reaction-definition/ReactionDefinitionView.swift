@@ -7,36 +7,19 @@ import SwiftUI
 struct ReactionDefinitionView<Reaction: SelectableReaction>: View {
 
     let type: Reaction
-    let highlightTopArrow: Bool
-    let highlightReverseArrow: Bool
-    let showHeat: Bool
+    let runForwardArrow: Bool
+    let runReverseArrow: Bool
 
     var body: some View {
         HStack(spacing: 5) {
-            if showHeat {
-                Text("Heat +")
-                    .foregroundColor(.orangeAccent)
-            }
-
             Text(type.reactantDisplay)
-            arrow
+            AnimatingDoubleSidedArrow(
+                width: 15,
+                runForward: runForwardArrow,
+                runReverse: runReverseArrow
+            )
             Text(type.productDisplay)
         }
-        .background(Color.white.padding(-10))
-    }
-
-    private var arrow: some View {
-        VStack(spacing: 3) {
-            DoubleSidedArrow(
-                topHighlight: highlightTopArrow ? .orangeAccent : nil,
-                reverseHighlight: highlightReverseArrow ? .orangeAccent : nil
-            )
-        }
-    }
-
-    private func deltaH(positive: Bool) -> some View {
-        Text("\(positive ? "" : "-")ΔH")
-            .foregroundColor(.orangeAccent)
     }
 }
 
@@ -44,9 +27,8 @@ struct AqueousReactionTypeView_Previews: PreviewProvider {
     static var previews: some View {
         ReactionDefinitionView(
             type: AqueousReactionType.A,
-            highlightTopArrow: false,
-            highlightReverseArrow: true,
-            showHeat: true
+            runForwardArrow: false,
+            runReverseArrow: true
         )
     }
 }

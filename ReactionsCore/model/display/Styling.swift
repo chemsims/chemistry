@@ -49,6 +49,8 @@ extension RGB {
 }
 
 extension RGB {
+    public static let black = RGB(r: 0, g: 0, b: 0)
+
     public static let moleculeA = RGB(r: 8, g: 168, b: 232)
     public static let moleculeB = RGB(r: 255, g: 19, b: 19)
     public static let moleculeC = RGB(r: 225, g: 132, b: 19)

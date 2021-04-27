@@ -12,7 +12,7 @@ class SolubilityNavigationModel {
         NavigationModel(
             model: model,
             states: [
-                SetStatement(statement: statements.intro),
+                SetStatement(statement: statements.intro, highlights: [.reactionSelectionToggle]),
                 SelectReaction(),
                 PostSelectReaction(),
                 SetStatement(statement: statements.explainSolubility2),

@@ -14,8 +14,40 @@ struct AqueousBeakerView: View {
         ZStack(alignment: .bottom) {
             beaker
             molecules
+            reactionDefinition
         }
         .frame(height: settings.height)
+    }
+
+    private var reactionDefinition: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                Spacer()
+                    .frame(width: settings.sliderSettings.handleWidth)
+                AnimatingReactionDefinition(
+                    coefficients: model.selectedReaction.coefficients,
+                    direction: model.reactionDefinitionDirection
+                )
+                .background(reactionBackground)
+                .frame(
+                    width: settings.reactionDefinitionWidth,
+                    height: settings.reactionDefinitionHeight
+                )
+            }
+            Spacer()
+        }
+    }
+
+    private var reactionBackground: some View {
+        Group {
+            if model.highlightedElements.highlight(.reactionDefinition) {
+                Rectangle()
+                    .foregroundColor(.white)
+                    .padding(.vertical, -0.07 * settings.reactionDefinitionHeight)
+            } else {
+                EmptyView()
+            }
+        }
     }
 
     private var molecules: some View {
@@ -29,7 +61,6 @@ struct AqueousBeakerView: View {
                 containerWidth: settings.moleculeContainerWidth,
                 containerHeight: settings.moleculeContainerHeight,
                 startOfWater: topOfWaterPosition,
-                maxContainerY: maxContainerY,
                 moleculeSize: settings.moleculeSize,
                 topRowColorMultiply: model.highlightedElements.colorMultiply(for: .moleculeContainers),
                 onDrag: { model.highlightedElements.clear() }
@@ -48,7 +79,8 @@ struct AqueousBeakerView: View {
                 }
 
             )
-        }.zIndex(1)
+        }
+//        .zIndex(1)
     }
 
     private var beaker: some View {
@@ -88,21 +120,30 @@ struct AqueousBeakerView: View {
         let topFromSlider = settings.sliderAxis.getPosition(at: model.rows)
         return settings.height - settings.sliderHeight + topFromSlider
     }
-
-    private var maxContainerY: CGFloat {
-        (settings.height - settings.beakerHeight) - settings.moleculeContainerHeight
-    }
 }
 
 struct AddMoleculeWithLiquidBeaker_Previews: PreviewProvider {
     static var previews: some View {
-        GeometryReader { geo in
-            AqueousBeakerView(
-                model: AqueousReactionViewModel(),
-                settings: AqueousScreenLayoutSettings(geometry: geo)
-            )
+        ViewWrapper()
+            .previewLayout(.iPhoneSELandscape)
+    }
+
+    private struct ViewWrapper: View {
+
+        init() {
+            self.model = AqueousReactionViewModel()
+            self.model.highlightedElements.clear()
         }
-        .previewLayout(.iPhone12ProMaxLandscape)
-        .background(Color.gray.opacity(0.4))
+
+        let model: AqueousReactionViewModel
+
+        var body: some View {
+            GeometryReader { geo in
+                AqueousBeakerView(
+                    model: model,
+                    settings: AqueousScreenLayoutSettings(geometry: geo)
+                )
+            }
+        }
     }
 }

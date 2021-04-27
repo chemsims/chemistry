@@ -70,9 +70,8 @@ class AqueousReactionViewModel: ObservableObject {
 
     @Published var showEquationTerms = false
 
-    @Published var highlightReverseReactionArrow = false
-    @Published var highlightForwardReactionArrow = false
     @Published var highlightedElements = HighlightedElements<AqueousScreenElement>()
+    @Published var reactionDefinitionDirection = AnimatingReactionDefinition.Direction.none
 
     var reactionPhase = AqueousReactionPhase.first
 

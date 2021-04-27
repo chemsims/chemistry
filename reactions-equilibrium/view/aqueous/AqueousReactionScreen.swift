@@ -64,22 +64,18 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     let reactions: [Reaction]
     @Binding var selectedReaction: Reaction
     @Binding var reactionSelectionIsToggled: Bool
-    let highlightForwardReactionArrow: Bool
-    let highlightReverseReactionArrow: Bool
     let next: () -> Void
     let back: () -> Void
 
     let generalElementHighlight: Color
     let quotientToConcentrationDefinitionHighlight: Color
     let quotientToEquilibriumConstantDefinitionHighlight: Color
-    let reactionDefinitionHighlight: Color
     let reactionToggleHighlight: Color
 
     let showEquationTerms: Bool
     let formatElementName: (String) -> String
 
     let isPressure: Bool
-    let showHeat: Bool
     let settings: AqueousScreenLayoutSettings
 
     var components: ReactionComponents {
@@ -106,13 +102,8 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             reactions: reactions,
             selectedReaction: $selectedReaction,
             reactionSelectionIsToggled: $reactionSelectionIsToggled,
-            showSelectedReaction: !isSelectingReaction,
             isSelectingReaction: isSelectingReaction,
             onSelection: next,
-            highlightForwardArrow: highlightForwardReactionArrow,
-            highlightReverseArrow: highlightReverseReactionArrow,
-            showHeat: showHeat,
-            reactionDefinitionHighlight: reactionDefinitionHighlight,
             reactionToggleHighlight: reactionToggleHighlight,
             settings: settings
         )
@@ -251,8 +242,6 @@ extension RightStackView {
             reactions: reactions,
             selectedReaction: selectedReaction,
             reactionSelectionIsToggled: reactionSelectionIsToggled,
-            highlightForwardReactionArrow: model.highlightForwardReactionArrow,
-            highlightReverseReactionArrow: model.highlightReverseReactionArrow,
             next: model.next,
             back: model.back,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
@@ -264,15 +253,10 @@ extension RightStackView {
                 model.highlightedElements.colorMultiply(
                     for: .quotientToEquilibriumConstantDefinition
                 ),
-            reactionDefinitionHighlight:
-                model.highlightedElements.colorMultiply(
-                    for: .reactionDefinition
-                ),
             reactionToggleHighlight: model.highlightedElements.colorMultiply(for: .reactionToggle),
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "[\($0)]" },
             isPressure: false,
-            showHeat: false,
             settings: settings
         )
     }
@@ -294,8 +278,6 @@ extension RightStackView {
             reactions: reactions,
             selectedReaction: selectedReaction,
             reactionSelectionIsToggled: reactionSelectionIsToggled,
-            highlightForwardReactionArrow: model.highlightForwardReactionArrow,
-            highlightReverseReactionArrow: model.highlightReverseReactionArrow,
             next: model.next,
             back: model.back,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
@@ -305,12 +287,10 @@ extension RightStackView {
             quotientToEquilibriumConstantDefinitionHighlight: model.highlightedElements.colorMultiply(
                 for: .quotientToEquilibriumConstantDefinition
             ),
-            reactionDefinitionHighlight: model.highlightedElements.colorMultiply(for: .reactionDefinition),
             reactionToggleHighlight: model.highlightedElements.colorMultiply(for: .reactionToggle),
             showEquationTerms: model.showEquationTerms,
             formatElementName: { "P\($0.lowercased())" },
             isPressure: true,
-            showHeat: true,
             settings: settings
         )
     }

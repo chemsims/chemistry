@@ -204,7 +204,7 @@ struct PressureBeaker_Previews: PreviewProvider {
                     ).pressureBeakerSettings.width
                 )
             )
-            .padding(50)
+            .padding(10)
         }
         .previewLayout(.iPhone12ProMaxLandscape)
     }
