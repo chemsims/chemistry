@@ -152,23 +152,57 @@ extension AnimatingReactionDefinitionWithGeometry {
         let startIndex = min(startMoleculeIndex, endMoleculeIndex)
         let span = abs(startMoleculeIndex - endMoleculeIndex)
 
+        let spanWidth = getSpanWidth(startIndex: startIndex, span: span)
+
+        let arrowIndex = 3
+        let spanToArrow = arrowIndex - startIndex
+        let arrowLocation = getSpanWidth(startIndex: startIndex, span: spanToArrow)
+
+        let startRotation = Angle.degrees(Double(60 + (startMoleculeIndex * 20)))
+        let endRotation = Angle.degrees(Double(295 + (endMoleculeIndex * 5)))
+
+        let rgb = RGBGradientEquation(
+            colors: [startMolecule.rgb, .gray(base: 170), endMolecule.rgb],
+            initialX: 0,
+            finalX: 1
+        )
+
+        let startCount = moleculeCount(startMolecule)
+        let endCount = moleculeCount(endMolecule)
+
         return MoleculeArc(
             verticalAlignment: verticalAlignment,
             horizontalAlignment: horizontalAlignment,
             startState: MoleculeArcState(
-                count: moleculeCount(startMolecule), rotation: .degrees(60)
+                count: startCount, rotation: startRotation
             ),
             endState: MoleculeArcState(
-                count: moleculeCount(endMolecule), rotation: .degrees(295)
+                count: endCount, rotation: endRotation
             ),
+            apexXLocation: arrowLocation / spanWidth,
+            apexCount: apexCount(startCount: startCount, endCount: endCount),
             moleculeRadius: moleculeRadius,
             progress: progress
         )
-        .foregroundColor(progress == 0 ? startMolecule.color : endMolecule.color)
-        .frame(
-            width: getSpanWidth(startIndex: startIndex, span: span)
-        )
+        .foregroundColor(rgb: rgb, progress: progress)
+        .frame(width: spanWidth)
         .offset(x: getOffset(startIndex: startIndex))
+    }
+
+    private func apexCount(startCount: MoleculeArc.Count, endCount: MoleculeArc.Count) -> MoleculeArc.Count {
+        if startCount == endCount {
+            return startCount
+        }
+
+        let midNumber = (startCount.number + endCount.number) / 2
+        if let midCount = MoleculeArc.Count.fromNumber(midNumber),
+           midCount != startCount && midCount != endCount {
+            return midCount
+        }
+
+        return MoleculeArc.Count.allCases.reversed().first { count in
+            count != startCount && count != endCount
+        } ?? .four
     }
 
 
@@ -186,6 +220,29 @@ extension AnimatingReactionDefinitionWithGeometry {
         let previous = elementWidths.prefix(startIndex).reduce(0) { $0 + $1 }
         let extra = elementWidths[startIndex] / 2
         return previous  + extra
+    }
+}
+
+struct AnimatableForegroundColor: AnimatableModifier {
+
+    let rgb: GeneralRGBEquation
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(rgb.getRgb(at: progress).color)
+    }
+}
+
+// TODO - move to reactions core
+extension View {
+    func foregroundColor(rgb: GeneralRGBEquation, progress: CGFloat) -> some View {
+        self.modifier(AnimatableForegroundColor(rgb: rgb, progress: progress))
     }
 }
 
