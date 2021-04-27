@@ -40,6 +40,8 @@ final class SolubilityViewModel: ObservableObject {
 
     @Published var milligramsSoluteAdded: CGFloat = 0
 
+    @Published var showShakeText = false
+
     var components: SolubilityComponents {
         componentsWrapper.components
     }
@@ -115,6 +117,9 @@ final class SolubilityViewModel: ObservableObject {
     func onParticleWaterEntry(soluteType: SoluteType, onBeakerState: BeakerState) {
         guard canRunSoluteAction(soluteType: soluteType, onBeakerState: onBeakerState) else {
             return
+        }
+        withAnimation(.easeOut(duration: 0.5)) {
+            showShakeText = false
         }
         componentsWrapper.solutePerformed(action: .enteredWater)
         withAnimation(.linear(duration: 1)) {

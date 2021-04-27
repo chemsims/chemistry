@@ -37,12 +37,28 @@ private struct SolubleBeakerViewWithGeometry: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             beaker
+            shakeText
+                .opacity(model.showShakeText ? 1 : 0)
+
             HStack(spacing: 0) {
                 Spacer()
                     .frame(width: settings.common.sliderSettings.handleWidth)
                 containers
             }
         }
+    }
+
+    private var shakeText: some View {
+        HStack(spacing: 0) {
+            Spacer()
+            VStack(spacing: 0) {
+                ShakeText()
+                Spacer()
+                    .frame(height: 1.1 * settings.common.beakerHeight)
+            }
+        }
+        .frame(width: settings.totalBeakerWidth)
+        .font(.system(size: settings.common.shakeTextFontSize))
     }
 
     private var containers: some View {
