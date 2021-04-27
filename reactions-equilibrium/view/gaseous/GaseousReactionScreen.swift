@@ -73,9 +73,6 @@ private struct LeftStack: View {
 
     private var reactionDefinition: some View {
         HStack(spacing: 3) {
-            Spacer()
-                .frame(width: settings.common.menuSize)
-
             if model.selectedReaction.energyTransfer == .endothermic {
                 heatPlus
             }
@@ -95,6 +92,8 @@ private struct LeftStack: View {
         }
         .font(.system(size: AnimatingReactionDefinition.fontSizeToHeight * settings.common.reactionDefinitionHeight))
         .background(background)
+        .padding(.leading, settings.common.menuSize)
+        .colorMultiply(model.highlightedElements.colorMultiply(for: .reactionDefinition))
     }
 
     private var background: some View {
