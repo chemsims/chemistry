@@ -71,7 +71,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var showEquationTerms = false
 
     @Published var highlightedElements = HighlightedElements<AqueousScreenElement>()
-    @Published var reactionDefinitionDirection = AnimatingReactionDefinition.ReactionDirection.none
+    @Published var reactionDefinitionDirection = AnimatingReactionDefinition.Direction.none
 
     var reactionPhase = AqueousReactionPhase.first
 

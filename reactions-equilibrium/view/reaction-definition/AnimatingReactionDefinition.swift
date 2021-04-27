@@ -8,7 +8,7 @@ import ReactionsCore
 struct AnimatingReactionDefinition: View {
 
     let coefficients: MoleculeValue<Int>
-    let direction: Self.ReactionDirection
+    let direction: Direction
 
     var body: some View {
         GeometryReader { geo in
@@ -20,7 +20,7 @@ struct AnimatingReactionDefinition: View {
         }
     }
 
-    enum ReactionDirection {
+    enum Direction {
         case forward, reverse, equilibrium, none
 
         var runForward: Bool {
@@ -30,6 +30,10 @@ struct AnimatingReactionDefinition: View {
         var runReverse: Bool {
             self == .reverse || self == .equilibrium
         }
+
+        static func from(direction: ReactionDirection) -> Direction {
+            direction == .forward ? .forward : .reverse
+        }
     }
 }
 
@@ -37,7 +41,7 @@ struct AnimatingReactionDefinition: View {
 private struct AnimatingReactionDefinitionWithGeometry: View {
 
     let coefficients: MoleculeValue<Int>
-    let direction: AnimatingReactionDefinition.ReactionDirection
+    let direction: AnimatingReactionDefinition.Direction
     let geometry: GeometryProxy
 
     @State private var progress: CGFloat = 0
@@ -243,6 +247,10 @@ extension View {
     }
 }
 
+extension AnimatingReactionDefinition {
+    static let fontSizeToHeight: CGFloat = 0.21
+}
+
 extension AnimatingReactionDefinitionWithGeometry {
     var width: CGFloat {
         geometry.size.width
@@ -251,7 +259,7 @@ extension AnimatingReactionDefinitionWithGeometry {
         geometry.size.height
     }
     var fontSize: CGFloat {
-        0.21 * height
+        AnimatingReactionDefinition.fontSizeToHeight * height
     }
     var elementWidth: CGFloat {
         0.17 * width

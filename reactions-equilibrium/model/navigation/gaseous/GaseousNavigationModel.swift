@@ -167,8 +167,10 @@ private class RunReaction: GaseousScreenState {
 
     override func apply(on model: GaseousReactionViewModel) {
         model.statement = GaseousStatements.reactionRunning(direction: model.components.equation.direction)
-        model.highlightForwardReactionArrow = model.components.equation.isForward
-        model.highlightReverseReactionArrow = !model.components.equation.isForward
+
+        let reactionDirection: ReactionDirection = model.components.equation.direction
+
+        model.reactionDefinitionDirection = AnimatingReactionDefinition.Direction.from(direction: reactionDirection)
         model.currentTime = timing.start
         model.inputState = .none
         model.highlightedElements.clear()
@@ -180,8 +182,7 @@ private class RunReaction: GaseousScreenState {
     override func unapply(on model: GaseousReactionViewModel) {
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = timing.start
-            model.highlightForwardReactionArrow = false
-            model.highlightReverseReactionArrow = false
+            model.reactionDefinitionDirection = .none
         }
     }
 
@@ -228,15 +229,14 @@ private class EndOfReaction: GaseousScreenState {
 
     private func doApply(on model: GaseousReactionViewModel, isReapplying: Bool) {
         model.statement = statement
-        model.highlightForwardReactionArrow = false
-        model.highlightReverseReactionArrow = false
+        model.reactionDefinitionDirection = .equilibrium
         if isReapplying {
-            model.highlightedElements.elements = [.chartEquilibrium]
+            model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
         }
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = timing.end * 1.001
             if !isReapplying {
-                model.highlightedElements.elements = [.chartEquilibrium]
+                model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
             }
         }
     }
@@ -248,6 +248,7 @@ private class SetCurrentTime: GaseousScreenState {
         model.highlightedElements.clear()
         model.statement = GaseousStatements.instructToSetTime
         model.canSetCurrentTime = true
+        model.reactionDefinitionDirection = .none
     }
 
     override func unapply(on model: GaseousReactionViewModel) {

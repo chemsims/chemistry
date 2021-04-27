@@ -61,8 +61,7 @@ class GaseousReactionViewModel: ObservableObject {
     }
     @Published var reactionSelectionIsToggled = true
 
-    @Published var highlightForwardReactionArrow = false
-    @Published var highlightReverseReactionArrow = false
+    @Published var reactionDefinitionDirection = AnimatingReactionDefinition.Direction.none
 
     @Published var showEquationTerms = true
 

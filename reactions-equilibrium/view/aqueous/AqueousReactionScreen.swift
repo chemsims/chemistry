@@ -64,8 +64,6 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     let reactions: [Reaction]
     @Binding var selectedReaction: Reaction
     @Binding var reactionSelectionIsToggled: Bool
-    let highlightForwardReactionArrow: Bool
-    let highlightReverseReactionArrow: Bool
     let next: () -> Void
     let back: () -> Void
 
@@ -109,8 +107,8 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             showSelectedReaction: false,
             isSelectingReaction: isSelectingReaction,
             onSelection: next,
-            highlightForwardArrow: highlightForwardReactionArrow,
-            highlightReverseArrow: highlightReverseReactionArrow,
+            highlightForwardArrow: false,
+            highlightReverseArrow: false,
             showHeat: showHeat,
             reactionDefinitionHighlight: reactionDefinitionHighlight,
             reactionToggleHighlight: reactionToggleHighlight,
@@ -251,8 +249,6 @@ extension RightStackView {
             reactions: reactions,
             selectedReaction: selectedReaction,
             reactionSelectionIsToggled: reactionSelectionIsToggled,
-            highlightForwardReactionArrow: false,
-            highlightReverseReactionArrow: false,
             next: model.next,
             back: model.back,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
@@ -294,8 +290,6 @@ extension RightStackView {
             reactions: reactions,
             selectedReaction: selectedReaction,
             reactionSelectionIsToggled: reactionSelectionIsToggled,
-            highlightForwardReactionArrow: model.highlightForwardReactionArrow,
-            highlightReverseReactionArrow: model.highlightReverseReactionArrow,
             next: model.next,
             back: model.back,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
