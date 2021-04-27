@@ -226,13 +226,17 @@ private class EndAnimationState: AqueousScreenState {
         model.highlightForwardReactionArrow = false
         model.highlightReverseReactionArrow = false
         model.showReactionDefinitionMolecules = showReactionDefinitionMolecules
+        var highlights = [AqueousScreenElement.chartEquilibrium]
+        if showReactionDefinitionMolecules {
+            highlights.append(.reactionDefinition)
+        }
         if isReapplying {
-            model.highlightedElements.elements = [.chartEquilibrium]
+            model.highlightedElements.elements = highlights
         }
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = endTime * endOfReactionFactor
             if !isReapplying {
-                model.highlightedElements.elements = [.chartEquilibrium]
+                model.highlightedElements.elements = highlights
             }
         }
     }

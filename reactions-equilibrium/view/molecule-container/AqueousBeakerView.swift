@@ -30,12 +30,25 @@ struct AqueousBeakerView: View {
                     topArrowHighlight: model.highlightForwardReactionArrow ? .orangeAccent : nil,
                     bottomArrowHighlight: model.highlightReverseReactionArrow ? .orangeAccent : nil
                 )
+                .background(reactionBackground)
                 .frame(
                     width: settings.reactionDefinitionWidth,
                     height: settings.reactionDefinitionHeight
                 )
             }
             Spacer()
+        }
+    }
+
+    private var reactionBackground: some View {
+        Group {
+            if model.highlightedElements.highlight(.reactionDefinition) {
+                Rectangle()
+                    .foregroundColor(.white)
+                    .padding(.vertical, -0.07 * settings.reactionDefinitionHeight)
+            } else {
+                EmptyView()
+            }
         }
     }
 
