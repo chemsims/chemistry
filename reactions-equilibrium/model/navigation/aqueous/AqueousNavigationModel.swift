@@ -182,12 +182,14 @@ private class RunAnimationState: AqueousScreenState {
         func delayedState(
             _ statement: [TextLine],
             _ delay: Double,
-            _ elements: [AqueousScreenElement] = []
+            _ elements: [AqueousScreenElement] = [],
+            _ direction: AnimatingReactionDefinition.Direction? = nil
         ) -> DelayedState<AqueousScreenState> {
             DelayedState(
-                state: SetStatementState(
+                state: RunReactionDelayedState(
                     statement: statement,
-                    highlights: elements
+                    highlights: elements,
+                    reactionDirection: direction
                 ),
                 delay: delay
             )
@@ -195,8 +197,38 @@ private class RunAnimationState: AqueousScreenState {
         let delay = Double(AqueousReactionSettings.timeForConvergence / 2)
         return [
             delayedState(AqueousStatements.midAnimation, delay),
-            delayedState(AqueousStatements.reachedEquilibrium, delay, [.chartEquilibrium]),
+            delayedState(
+                AqueousStatements.reachedEquilibrium,
+                delay,
+                [.chartEquilibrium, .reactionDefinition],
+                .equilibrium
+            ),
         ]
+    }
+
+    private class RunReactionDelayedState: AqueousScreenState {
+
+        init(
+            statement: [TextLine],
+            highlights: [AqueousScreenElement],
+            reactionDirection: AnimatingReactionDefinition.Direction?
+        ) {
+            self.statement = statement
+            self.highlights = highlights
+            self.reactionDirection = reactionDirection
+        }
+
+        let statement: [TextLine]
+        let highlights: [AqueousScreenElement]
+        let reactionDirection: AnimatingReactionDefinition.Direction?
+
+        override func apply(on model: AqueousReactionViewModel) {
+            model.statement = statement
+            model.highlightedElements.elements = highlights
+            if let direction = reactionDirection {
+                model.reactionDefinitionDirection = direction
+            }
+        }
     }
 }
 

@@ -195,17 +195,50 @@ private class RunReaction: GaseousScreenState {
     }
 
     override func delayedStates(model: GaseousReactionViewModel) -> [DelayedState<GaseousScreenState>] {
-        func delayedState(_ statement: [TextLine], _ highlights: [GaseousScreenElement]) -> DelayedState<GaseousScreenState> {
+        func delayedState(
+            _ statement: [TextLine],
+            _ highlights: [GaseousScreenElement] = [],
+            _ direction: AnimatingReactionDefinition.Direction? = nil
+        ) -> DelayedState<GaseousScreenState> {
             DelayedState(
-                state: SetStatement(statement: statement, highlights: highlights),
+                state: RunReactionDelayedState(statement: statement, highlights: highlights, reactionDirection: direction),
                 delay: Double((timing.equilibrium - timing.start) / 2)
             )
         }
 
         return [
-            delayedState(GaseousStatements.midReaction(direction: model.components.equation.direction), []),
-            delayedState(GaseousStatements.forwardEquilibriumReached, [.chartEquilibrium])
+            delayedState(GaseousStatements.midReaction(direction: model.components.equation.direction)),
+            delayedState(
+                GaseousStatements.forwardEquilibriumReached,
+                [.chartEquilibrium, .reactionDefinition],
+                .equilibrium
+            )
         ]
+    }
+
+    private class RunReactionDelayedState: GaseousScreenState {
+
+        init(
+            statement: [TextLine],
+            highlights: [GaseousScreenElement],
+            reactionDirection: AnimatingReactionDefinition.Direction?
+        ) {
+            self.statement = statement
+            self.highlights = highlights
+            self.reactionDirection = reactionDirection
+        }
+
+        let statement: [TextLine]
+        let highlights: [GaseousScreenElement]
+        let reactionDirection: AnimatingReactionDefinition.Direction?
+
+        override func apply(on model: GaseousReactionViewModel) {
+            model.statement = statement
+            model.highlightedElements.elements = highlights
+            if let direction = reactionDirection {
+                model.reactionDefinitionDirection = direction
+            }
+        }
     }
 }
 
