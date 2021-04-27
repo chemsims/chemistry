@@ -8,34 +8,39 @@ import ReactionsCore
 struct AnimatingReactionDefinition: View {
 
     let coefficients: MoleculeValue<Int>
-    let showMolecules: Bool
-    let topArrowHighlight: Color?
-    let bottomArrowHighlight: Color?
+    let direction: Self.ReactionDirection
 
     var body: some View {
         GeometryReader { geo in
             AnimatingReactionDefinitionWithGeometry(
                 coefficients: coefficients,
-                showMolecules: showMolecules,
-                topArrowHighlight: topArrowHighlight,
-                bottomArrowHighlight: bottomArrowHighlight,
+                direction: direction,
                 geometry: geo
             )
         }
     }
+
+    enum ReactionDirection {
+        case forward, reverse, equilibrium, none
+
+        var runForward: Bool {
+            self == .forward || self == .equilibrium
+        }
+
+        var runReverse: Bool {
+            self == .reverse || self == .equilibrium
+        }
+    }
 }
+
 
 private struct AnimatingReactionDefinitionWithGeometry: View {
 
     let coefficients: MoleculeValue<Int>
-    let showMolecules: Bool
-    let topArrowHighlight: Color?
-    let bottomArrowHighlight: Color?
-
-    @State private var progress: CGFloat = 0
-
+    let direction: AnimatingReactionDefinition.ReactionDirection
     let geometry: GeometryProxy
 
+    @State private var progress: CGFloat = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: vSpacing) {
@@ -47,7 +52,7 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
 
     private var topMolecules: some View {
         ZStack(alignment: .leading) {
-            if showMolecules {
+            if direction == .equilibrium {
                 molecules(
                     startMolecule: .A,
                     endMolecule: .C,
@@ -79,19 +84,11 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
             element(AqueousMolecule.A)
             plus
             element(AqueousMolecule.B)
-            if showMolecules {
-                AnimatingDoubleSidedArrow(
-                    topHighlight: .orangeAccent,
-                    bottomHighlight: .orangeAccent,
-                    width: arrowWidth
-                )
-            } else {
-                DoubleSidedArrow(
-                    topHighlight: topArrowHighlight,
-                    reverseHighlight: bottomArrowHighlight
-                )
-                .frame(width: arrowWidth)
-            }
+            AnimatingDoubleSidedArrow(
+                width: arrowWidth,
+                runForward: direction.runForward,
+                runReverse: direction.runReverse
+            )
             element(AqueousMolecule.C)
             plus
             element(AqueousMolecule.D)
@@ -103,7 +100,7 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
 
     private var bottomMolecules: some View {
         ZStack(alignment: .leading) {
-            if showMolecules {
+            if direction == .equilibrium {
                 molecules(
                     startMolecule: .D,
                     endMolecule: .B,
@@ -317,9 +314,7 @@ struct AnimatingReactionDefinition_Previews: PreviewProvider {
                         productC: 3,
                         productD: 4
                     ),
-                    showMolecules: showMolecules,
-                    topArrowHighlight: nil,
-                    bottomArrowHighlight: nil
+                    direction: .equilibrium
                 )
                 .frame(width: 160, height: 60)
             }

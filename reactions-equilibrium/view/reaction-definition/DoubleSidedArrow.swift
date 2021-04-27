@@ -6,30 +6,123 @@ import SwiftUI
 
 struct AnimatingDoubleSidedArrow: View {
 
-    let topHighlight: Color?
-    let bottomHighlight: Color?
     let width: CGFloat
+    let runForward: Bool
+    let runReverse: Bool
 
+    private let duration: TimeInterval = 0.75
+
+    var body: some View {
+        Group {
+            if runForward && runReverse {
+                AnimatingDoubleArrow(width: width, duration: duration)
+            } else if runForward {
+                topArrowRunning
+            } else if runReverse {
+                bottomArrowRunning
+            } else {
+                DoubleArrow(width: width)
+            }
+        }
+    }
+
+    private var topArrowRunning: some View {
+        ArrowStack(
+            width: width,
+            topArrow: SingleAnimatingArrow(width: width, isForward: true, duration: 0.75),
+            bottomArrow: SingleArrow(width: width, offset: 0, isForward: false)
+        )
+    }
+
+    private var bottomArrowRunning: some View {
+        ArrowStack(
+            width: width,
+            topArrow: SingleArrow(width: width, offset: 0, isForward: true),
+            bottomArrow: SingleAnimatingArrow(width: width, isForward: false, duration: 0.75)
+        )
+    }
+
+}
+
+fileprivate struct SingleAnimatingArrow: View {
+
+    let width: CGFloat
+    let isForward: Bool
+    let duration: TimeInterval
     @State private var offset: CGFloat = 0
 
     var body: some View {
-        VStack(spacing: 2) {
-            imageStack
-                .foregroundColor(topHighlight ?? .black)
-                .offset(x: offset)
-            imageStack
-                .foregroundColor(bottomHighlight ?? .black)
-                .rotationEffect(.degrees(180))
-                .offset(x: -offset)
-        }
-        .frame(width: width)
+        SingleArrow(width: width, offset: offset, isForward: isForward)
+            .foregroundColor(.orangeAccent)
+            .onAppear {
+                let animation = Animation.linear(duration: duration).repeatForever(autoreverses: false)
+                withAnimation(animation) {
+                    offset = width
+                }
+            }
+    }
+}
+
+private struct AnimatingDoubleArrow: View {
+
+    let width: CGFloat
+    let duration: TimeInterval
+    @State private var offset: CGFloat = 0
+
+    var body: some View {
+        ArrowStack(
+            width: width,
+            topArrow: SingleArrow(width: width, offset: offset, isForward: true),
+            bottomArrow: SingleArrow(width: width, offset: offset, isForward: false)
+        )
+        .foregroundColor(.orangeAccent)
         .onAppear {
-            let animation = Animation.linear(duration: 0.75).repeatForever(autoreverses: false)
+            let animation = Animation.linear(duration: duration).repeatForever(autoreverses: false)
             withAnimation(animation) {
                 offset = width
             }
         }
+    }
+}
+
+fileprivate struct DoubleArrow: View {
+
+    let width: CGFloat
+
+    var body: some View {
+        ArrowStack(
+            width: width,
+            topArrow: SingleArrow(width: width, offset: 0, isForward: true),
+            bottomArrow: SingleArrow(width: width, offset: 0, isForward: false)
+        )
+    }
+}
+
+private struct ArrowStack<TopArrow: View, BottomArrow: View>: View {
+    let width: CGFloat
+    let topArrow: TopArrow
+    let bottomArrow: BottomArrow
+
+    var body: some View {
+        VStack(spacing: 2) {
+            topArrow
+            bottomArrow
+        }
+        .frame(width: width)
         .clipped()
+    }
+}
+
+private struct SingleArrow: View {
+
+    let width: CGFloat
+    let offset: CGFloat
+    let isForward: Bool
+
+    var body: some View {
+        imageStack
+            .rotationEffect(isForward ? .zero : .degrees(180))
+            .offset(x: isForward ? offset : -offset)
     }
 
     private var imageStack: some View {
@@ -46,6 +139,8 @@ struct AnimatingDoubleSidedArrow: View {
             .frame(width: width)
     }
 }
+
+
 
 struct DoubleSidedArrow: View {
 
@@ -77,17 +172,36 @@ struct DoubleSidedArrow_Previews: PreviewProvider {
                 DoubleSidedArrow(topHighlight: nil, reverseHighlight: .orangeAccent)
                     .frame(width: 40)
             }
-            HStack {
-                Text("2A + 3B")
-                AnimatingDoubleSidedArrow(
-                    topHighlight: nil,
-                    bottomHighlight: .orangeAccent,
-                    width: 40
-                )
-                .frame(width: 40)
-            }
+
+            ViewWrapper()
 
         }
         .font(.system(size: 30))
+    }
+
+    struct ViewWrapper: View {
+        @State private var runForward = true
+        @State private var runReverse = false
+
+        var body: some View {
+            VStack {
+                HStack {
+                    Text("2A + 3B")
+                    AnimatingDoubleSidedArrow(
+                        width: 40,
+                        runForward: runForward,
+                        runReverse: runReverse
+                    )
+                    .frame(width: 40)
+                }
+                Toggle(isOn: $runForward, label: {
+                    Text("Run forward")
+                })
+
+                Toggle(isOn: $runReverse, label: {
+                    Text("Run forward")
+                })
+            }
+        }
     }
 }

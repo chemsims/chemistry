@@ -26,9 +26,7 @@ struct AqueousBeakerView: View {
                     .frame(width: settings.sliderSettings.handleWidth)
                 AnimatingReactionDefinition(
                     coefficients: model.selectedReaction.coefficients,
-                    showMolecules: model.showReactionDefinitionMolecules,
-                    topArrowHighlight: model.highlightForwardReactionArrow ? .orangeAccent : nil,
-                    bottomArrowHighlight: model.highlightReverseReactionArrow ? .orangeAccent : nil
+                    direction: model.reactionDefinitionDirection
                 )
                 .background(reactionBackground)
                 .frame(
