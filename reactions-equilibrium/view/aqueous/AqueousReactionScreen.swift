@@ -35,12 +35,14 @@ private struct AqueousReactionScreenWithSettings: View {
     var body: some View {
         HStack(spacing: 0) {
             AqueousBeakerView(model: model, settings: settings)
+                .accessibilityElement(children: .contain)
             Spacer()
             ChartStack(
                 model: model,
                 currentTime: $model.currentTime,
                 settings: settings
             )
+            .accessibilityElement(children: .contain)
             Spacer()
             RightStackView<AqueousReactionType>(
                 model: model,

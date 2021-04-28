@@ -122,6 +122,7 @@ struct AqueousBeakerView: View {
                     .padding(.top, -0.2 * settings.sliderSettings.handleWidth)
             )
             .colorMultiply(model.highlightedElements.colorMultiply(for: .waterSlider))
+            .accessibility(label: Text("Slider for number of rows of molecules in beaker"))
 
             FilledBeaker(
                 molecules: [],

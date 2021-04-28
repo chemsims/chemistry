@@ -18,5 +18,7 @@ struct SelectionToggleText: View {
             )
             .onTapGesture(perform: action)
             .lineLimit(1)
+            .accessibility(addTraits: .isButton)
+            .accessibility(addTraits: isSelected ? [.isSelected] : [])
     }
 }

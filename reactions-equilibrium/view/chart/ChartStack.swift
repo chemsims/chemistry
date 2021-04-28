@@ -107,14 +107,21 @@ struct ChartStack: View {
         .padding(.leading, settings.chartSettings.yAxisWidthLabelWidth)
         .padding(.bottom, settings.chartSelectionBottomPadding)
         .font(.system(size: settings.chartSelectionFontSize))
+        .accessibilityToggle(
+            isOn: $showGraph,
+            label: "Toggle for showing graph or table",
+            value: { $0 ? "graph" : "table" }
+        )
     }
 
     private func selectionToggleText(isGraph: Bool) -> some View {
-        SelectionToggleText(
-            text: isGraph ? "Graph" : "Table",
+        let text = isGraph ? "Graph" : "Table"
+        return SelectionToggleText(
+            text: text,
             isSelected: showGraph == isGraph,
             action: { showGraph = isGraph }
         )
+        .accessibility(hint: Text("Shows \(text)"))
     }
 }
 

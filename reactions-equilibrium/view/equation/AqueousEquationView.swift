@@ -71,18 +71,19 @@ private struct UnscaledAqueousEquationView: View {
                     coefficients: coefficients,
                     formatName: formatElementName
                 )
-                    .colorMultiply(
-                        quotientToCHighlight
-                    )
-                    .background(
-                        Color.white
-                            .padding(.trailing, -15)
-                            .padding(.leading, -10)
-                            .padding(.vertical, -10)
-                            .colorMultiply(
-                                quotientToCHighlight
-                            )
-                    )
+                .colorMultiply(
+                    quotientToCHighlight
+                )
+                .background(
+                    Color.white
+                        .padding(.trailing, -15)
+                        .padding(.leading, -10)
+                        .padding(.vertical, -10)
+                        .colorMultiply(
+                            quotientToCHighlight
+                        )
+                )
+                .accessibility(addTraits: .isHeader)
 
                 Spacer()
                     .frame(height: 10)
@@ -117,6 +118,7 @@ private struct UnscaledAqueousEquationView: View {
                 Spacer()
                 FilledQuotientKView(
                     showTerms: showTerms,
+                    kTerm: kTerm,
                     quotient: quotient,
                     convergedQuotient: convergedQuotient,
                     currentTime: currentTime
@@ -127,6 +129,7 @@ private struct UnscaledAqueousEquationView: View {
         .font(.system(size: EquationSizing.fontSize))
         .lineLimit(1)
         .minimumScaleFactor(1)
+        .accessibilityElement(children: .contain)
     }
 }
 
@@ -144,6 +147,21 @@ private struct QuotientDefinitionView: View {
             fraction
                 .frame(width: 150)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+    }
+
+    private var label: String {
+        func moleculeLabel(_ molecule: AqueousMolecule) -> String {
+            let coeff = coefficients.value(for: molecule)
+            let power = coeff == 1 ? "" : " to the power of \(coeff)"
+            return "concentration of \(molecule.rawValue)\(power)"
+        }
+
+        return """
+        Q equals \(moleculeLabel(.C)) times \(moleculeLabel(.D)), divide by
+        \(moleculeLabel(.A)) times \(moleculeLabel(.B))
+        """
     }
 
     private var fraction: some View {
@@ -195,6 +213,8 @@ private struct QuotientEqualsKView: View {
             FixedText(kTerm)
                 .frame(width: EquationSizing.boxWidth)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Q equals \(kTerm)"))
     }
 }
 
@@ -214,10 +234,15 @@ private struct FilledQuotientDefinitionView: View {
                 equation: quotient,
                 formatter: formatQuotient
             )
+            .accessibility(label: Text("Q"))
+            .accessibility(sortPriority: 10)
             FixedText("=")
+                .accessibility(sortPriority: 9)
             fraction
+                .accessibility(sortPriority: 8)
         }
         .minimumScaleFactor(0.5)
+        .accessibilityElement(children: .contain)
     }
 
     private var fraction: some View {
@@ -228,6 +253,8 @@ private struct FilledQuotientDefinitionView: View {
             }
             Rectangle()
                 .frame(width:  170, height: 1)
+                .accessibility(label: Text("Divide by"))
+
             HStack(spacing: 3) {
                 concentration(.A)
                 concentration(.B)
@@ -238,20 +265,24 @@ private struct FilledQuotientDefinitionView: View {
     private func concentration(
         _ molecule: AqueousMolecule
     ) -> some View {
-        HStack(spacing: 2) {
+        let coeff = coefficients.value(for: molecule)
+        let label = coeff == 1 ? "" : "To the power of \(coeff)"
+        return HStack(spacing: 2) {
             AnimatingNumberOrPlaceholder(
                 showTerm: showTerms,
                 currentTime: currentTime,
                 equation: equations.value(for: molecule),
                 formatter: { "(\($0.str(decimals: 2)))" }
             )
+            .accessibility(label: Text("Concentration of \(molecule.rawValue)"))
 
-            FixedText("\(coefficients.value(for: molecule))")
+            FixedText("\(coeff)")
                 .offset(y: -10)
                 .font(.system(size: EquationSizing.subscriptFontSize))
-                .opacity(coefficients.value(for: molecule) == 1 ? 0 : 1)
+                .opacity(coeff == 1 ? 0 : 1)
                 .animation(nil)
                 .frame(width: 15)
+                .accessibility(label: Text(label))
         }
     }
 
@@ -260,6 +291,7 @@ private struct FilledQuotientDefinitionView: View {
 private struct FilledQuotientKView: View {
 
     let showTerms: Bool
+    let kTerm: String
     let quotient: Equation
     let convergedQuotient: CGFloat
     let currentTime: CGFloat
@@ -272,6 +304,7 @@ private struct FilledQuotientKView: View {
                 equation: quotient,
                 formatter: formatQuotient
             )
+            .accessibility(label: Text("Q"))
 
             QuotientEqualitySign(
                 currentTime: currentTime,
@@ -285,7 +318,9 @@ private struct FilledQuotientKView: View {
                 equation: ConstantEquation(value: convergedQuotient),
                 formatter: { $0.str(decimals: 2) }
             )
+            .accessibility(label: Text("\(kTerm)"))
         }
+        .accessibilityElement(children: .contain)
     }
 }
 

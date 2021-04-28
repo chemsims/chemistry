@@ -85,21 +85,37 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
 
     private var elements: some View {
         HStack(spacing: 0) {
-            element(AqueousMolecule.A)
-            plus
-            element(AqueousMolecule.B)
+            elementSide(.A, .B)
             AnimatingDoubleSidedArrow(
                 width: arrowWidth,
                 runForward: direction.runForward,
                 runReverse: direction.runReverse
             )
-            element(AqueousMolecule.C)
-            plus
-            element(AqueousMolecule.D)
+            elementSide(.C, .D)
         }
         .font(.system(size: fontSize))
         .frame(height: textHeight)
         .minimumScaleFactor(0.75)
+    }
+
+    private func elementSide(_ lhs: AqueousMolecule, _ rhs: AqueousMolecule) -> some View {
+        HStack(spacing: 0) {
+            element(lhs)
+            plus
+            element(rhs)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label(lhs, rhs)))
+    }
+
+    private func label(_ lhs: AqueousMolecule, _ rhs: AqueousMolecule) -> String {
+        func labelForMolecule(_ molecule: AqueousMolecule) -> String {
+            let coeff = coefficients.value(for: molecule)
+            let prefix = coeff == 1 ? "" : "\(coeff)"
+            return "\(prefix)\(molecule.rawValue)"
+        }
+
+        return "\(labelForMolecule(lhs)) + \(labelForMolecule(rhs))"
     }
 
     private var bottomMolecules: some View {
