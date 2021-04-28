@@ -18,6 +18,8 @@ struct AddMoleculesView: View {
     let onDrag: () -> Void
     let showShakeText: () -> Void
 
+    private let manualAddAmount = 5
+
     var body: some View {
         GeometryReader { geometry in
             Rectangle()
@@ -68,6 +70,17 @@ struct AddMoleculesView: View {
         .zIndex(model.activeMolecule == molecule ? 1 : 0)
         .disabled(!isActive)
         .colorMultiply(isActive ? .white : Styling.inactiveContainerMultiply)
+        .accessibility(removeTraits: .isImage)
+        .accessibility(addTraits: .isButton)
+        .accessibility(label: Text("Container of molecule \(molecule.rawValue)"))
+        .accessibility(hint: Text(getContainerHint(molecule: molecule)))
+    }
+
+    private func getContainerHint(molecule: AqueousMolecule) -> String {
+        if model.activeMolecule == molecule {
+            return "Adds \(manualAddAmount) molecules of \(molecule) to the beaker"
+        }
+        return "Prepares molecule \(molecule) to add to beaker"
     }
 
     private func getLocation(for molecule: AqueousMolecule, width: CGFloat, index: Int) -> CGPoint {
@@ -95,7 +108,7 @@ struct AddMoleculesView: View {
         bottomY: CGFloat
     ) {
         guard model.activeMolecule != molecule else {
-            model.models.value(for: molecule).manualAdd()
+            model.models.value(for: molecule).manualAdd(amount: manualAddAmount)
             return
         }
         

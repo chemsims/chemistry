@@ -32,8 +32,8 @@ class ShakeContainerViewModel: NSObject, ObservableObject {
 
     private let velocity = 200.0 // pts per second
 
-    func manualAdd() {
-        doManualAdd(remaining: 5)
+    func manualAdd(amount: Int) {
+        doManualAdd(remaining: amount)
     }
 
     private func doManualAdd(remaining: Int) {

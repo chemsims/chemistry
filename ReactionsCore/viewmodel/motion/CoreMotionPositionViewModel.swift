@@ -27,11 +27,22 @@ public class CoreMotionPositionViewModel: ObservableObject {
     private var initialAttitude: CMAttitude?
 
     /// Starts motion updates
-    public func start() {
+    /// - Parameters:
+    ///   - enableWhenVoiceOverRunning: Whether to run motion updates when VoiceOver is running
+    public func start(
+        enableWhenVoiceOverRunning: Bool = false
+    ) {
         guard !isUpdating else {
             return
         }
         isUpdating = true
+
+        // Note: check this after setting isUpdating so that isUpdating is the
+        // same whether voice over is running or not
+        guard enableWhenVoiceOverRunning || !UIAccessibility.isVoiceOverRunning else {
+            return
+        }
+
         if motion.isDeviceMotionAvailable {
             motion.deviceMotionUpdateInterval = 1 / 60
             motion.startDeviceMotionUpdates(using: .xArbitraryZVertical, to: queue) { (data, error) in
