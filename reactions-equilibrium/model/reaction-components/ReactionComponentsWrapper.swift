@@ -335,35 +335,31 @@ extension ReactionComponentsWrapper {
 }
 
 extension ReactionComponentsWrapper {
+
+    /// Returns only the coordinates which are visible at a given reaction time
     static func consolidate(
         molecules: [LabelledAnimatingBeakerMolecules],
         at time: CGFloat
     ) -> MoleculeValue<[GridCoordinate]> {
-        let fractionedCoords = molecules.map {
-            FractionedCoordinates(
-                coordinates: $0.animatingMolecules.molecules.coords,
-                fractionToDraw: $0.animatingMolecules.fractionToDraw
-            )
+        let visibleMolecules = molecules.map {
+            $0.fractioned.coords(at: time)
         }
-        let visibleMolecules = fractionedCoords.map {
-            $0.coords(at: time)
-        }
+
+        let unique = Array(
+            GridCoordinate.uniqueGridCoordinates(
+                coords: visibleMolecules.reversed()
+            ).reversed()
+        )
 
         var builder = [AqueousMolecule:[GridCoordinate]]()
 
-        for i in 0..<visibleMolecules.count {
+        for i in 0..<unique.count {
             let element = molecules[i].molecule
-            let others = Array(visibleMolecules[i+1..<visibleMolecules.count]).flatten
-            let current = visibleMolecules[i]
-            let filtered = current.filter {
-                !others.contains($0)
-            }
-            builder[element] = filtered
+            builder[element] = unique[i]
         }
         return MoleculeValue(builder: { builder[$0] ?? [] })
     }
 }
-
 
 struct LabelledAnimatingBeakerMolecules {
     let molecule: AqueousMolecule
