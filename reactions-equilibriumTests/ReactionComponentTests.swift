@@ -433,7 +433,8 @@ class ReactionComponentTests: XCTestCase {
             animatingMolecules: AnimatingBeakerMolecules(
                 molecules: BeakerMolecules(
                     coords: coords,
-                    color: .red
+                    color: .red,
+                    label: ""
                 ),
                 fractionToDraw: ConstantEquation(value: fraction)
             )

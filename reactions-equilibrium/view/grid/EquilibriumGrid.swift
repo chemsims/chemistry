@@ -140,7 +140,8 @@ struct EquilibriumGrid_Previews: PreviewProvider {
                             GridCoordinate(col: 0, row: 0),
                             GridCoordinate(col: 1, row: 1),
                         ],
-                        color: .red
+                        color: .red,
+                        label: ""
                     ),
                     fractionToDraw: ConstantEquation(value: 1)
                 )

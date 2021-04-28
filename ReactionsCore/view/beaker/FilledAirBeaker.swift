@@ -140,7 +140,8 @@ struct FilledAirBeaker_Previews: PreviewProvider {
                         GridCoordinate(col: 1, row: 1),
                         GridCoordinate(col: 2, row: 2)
                     ],
-                    color: .orangeAccent
+                    color: .orangeAccent,
+                    label: "A"
                 ),
                 BeakerMolecules(
                     coords: [
@@ -148,7 +149,8 @@ struct FilledAirBeaker_Previews: PreviewProvider {
                         GridCoordinate(col: 1, row: 2),
                         GridCoordinate(col: 2, row: 3)
                     ],
-                    color: .black
+                    color: .black,
+                    label: "B"
                 )
             ],
             animatingMolecules: [],

@@ -2,29 +2,46 @@
 // Reactions App
 //
 
-
 import XCTest
+import ReactionsCore
 
 class UniqueGridCoordinateTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testAnEmptyList() {
+        XCTAssertEqual(getUnique([[]]), [[]])
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testASingleListWithNoDuplicates() {
+        let elements = [[coord(0), coord(1), coord(2)]]
+        XCTAssertEqual(getUnique(elements), elements)
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testASingleListWithDuplicates() {
+        let elements = [[coord(0), coord(1), coord(0)]]
+        let expected = [[coord(0), coord(1)]]
+        XCTAssertEqual(getUnique(elements), expected)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testMultipleListsWithDuplicates() {
+        let elements = [
+            [coord(0), coord(1), coord(2), coord(3), coord(0)],
+            [coord(3), coord(4), coord(5)],
+            [coord(0), coord(1), coord(2)]
+        ]
+        let expected = [
+            [coord(0), coord(1), coord(2), coord(3)],
+            [coord(4), coord(5)],
+            []
+        ]
+        XCTAssertEqual(getUnique(elements), expected)
+    }
+
+    private func coord(_ value: Int) -> GridCoordinate {
+        GridCoordinate(col: value, row: value)
+    }
+
+    private func getUnique(_ coords: [[GridCoordinate]]) -> [[GridCoordinate]] {
+        GridCoordinate.uniqueGridCoordinates(coords: coords)
     }
 
 }

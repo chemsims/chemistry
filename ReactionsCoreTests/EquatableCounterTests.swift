@@ -11,16 +11,16 @@ class EquatableCounterTests: XCTestCase {
         var counter = EquatableCounter<TestEnum>()
         XCTAssertEqual(counter.count, 0)
 
-        counter = counter.increment(value: .A)
+        counter.increment(value: .A)
         XCTAssertEqual(counter.count, 1)
 
-        counter = counter.increment(value: .A)
+        counter.increment(value: .A)
         XCTAssertEqual(counter.count, 2)
 
-        counter = counter.increment(value: .B)
+        counter.increment(value: .B)
         XCTAssertEqual(counter.count, 1)
 
-        counter = counter.reset()
+        counter.reset()
         XCTAssertEqual(counter.count, 0)
     }
 }

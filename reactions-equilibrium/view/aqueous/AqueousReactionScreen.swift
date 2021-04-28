@@ -174,14 +174,16 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
                         coords: components.equilibriumGrid.reactantA.coordinates,
-                        color: .from(.aqMoleculeA)
+                        color: .from(.aqMoleculeA),
+                        label: "A"
                     ),
                     fractionToDraw: components.equilibriumGrid.reactantA.fractionToDraw
                 ),
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
                         coords: components.equilibriumGrid.reactantB.coordinates,
-                        color: .from(.aqMoleculeB)
+                        color: .from(.aqMoleculeB),
+                        label: "B"
                     ),
                     fractionToDraw: components.equilibriumGrid.reactantB.fractionToDraw
                 )
@@ -190,14 +192,16 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
                         coords: components.equilibriumGrid.productC.coordinates,
-                        color: .from(.aqMoleculeC)
+                        color: .from(.aqMoleculeC),
+                        label: "C"
                     ),
                     fractionToDraw: components.equilibriumGrid.productC.fractionToDraw
                 ),
                 AnimatingBeakerMolecules(
                     molecules: BeakerMolecules(
                         coords: components.equilibriumGrid.productD.coordinates,
-                        color: .from(.aqMoleculeD)
+                        color: .from(.aqMoleculeD),
+                        label: "D"
                     ),
                     fractionToDraw: components.equilibriumGrid.productD.fractionToDraw
                 )

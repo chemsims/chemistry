@@ -9,7 +9,6 @@ public struct FilledBeaker: View {
     let molecules: [BeakerMolecules]
     let animatingMolecules: [AnimatingBeakerMolecules]
     let currentTime: CGFloat
-    let reactionPair: ReactionPairDisplay
     let outlineColor: Color
     let rows: CGFloat
 
@@ -22,7 +21,6 @@ public struct FilledBeaker: View {
         self.molecules = molecules
         self.animatingMolecules = animatingMolecules
         self.currentTime = currentTime
-        self.reactionPair = ReactionType.A.display
         self.outlineColor = Styling.beakerOutline
         self.rows = rows
     }
@@ -41,22 +39,23 @@ public struct FilledBeaker: View {
                 settings: BeakerSettings(width: geo.size.width, hasLip: true)
             )
             .accessibility(
-                label: Text(
-                    "Beaker showing a grid of molecules of \(reactant) and \(product) in liquid"
-                )
+                label: Text(label)
             )
         }
     }
 
-    // TODO
-    private var reactant: String {
-        reactionPair.reactant.name
+    private var label: String {
+        let labels = molecules.map(\.label) + animatingMolecules.map(\.molecules.label)
+        let sortedLabels = labels.sorted()
+        if sortedLabels.isEmpty {
+            return "Beaker showing an empty grid of molecules"
+        }
+        let start = "Beaker showing a grid of molecules of \(sortedLabels.first!)"
+        let withMolecules = sortedLabels.dropFirst(1).reduce(start) {
+            $0 + " and \($1)"
+        }
+        return "\(withMolecules) in liquid"
     }
-
-    private var product: String {
-        reactionPair.product.name
-    }
-
 }
 
 struct GeneralFluidBeaker: View {
@@ -76,21 +75,39 @@ struct GeneralFluidBeaker: View {
     public var body: some View {
         mainContent
         .accessibilityElement(children: .ignore)
-       
-//        .updatingAccessibilityValue(
-//            x: currentTime ?? 0,
-//            format: valueForTime
-//        )
+        .updatingAccessibilityValue(
+            x: currentTime,
+            format: valueForTime
+        )
     }
 
-    // TODO
-//    private func valueForTime(_ time: CGFloat) -> String {
-//        let total = moleculesA.count
-//        let bFraction = concentrationB?.getY(at: time) ?? 0
-//        let countOfB = Int(CGFloat(total) * bFraction)
-//        let countOfA = total - countOfB
-//        return "\(countOfA) \(reactant) molecules, \(countOfB) \(product) molecules"
-//    }
+    private func valueForTime(_ time: CGFloat) -> String {
+        let currentAnimatingMolecules = animatingMolecules.map {
+            $0.fractioned.coords(at: time)
+        }
+
+        let allMolecules = molecules.map(\.coords) + currentAnimatingMolecules
+
+        let visibleMolecules = Array(
+            GridCoordinate.uniqueGridCoordinates(coords: allMolecules.reversed()).reversed()
+        )
+
+        let labels = molecules.map(\.label) + animatingMolecules.map(\.molecules.label)
+
+        let labelWithCount = labels.enumerated().map { (index, label) -> (String, Int) in
+            let count = visibleMolecules[index].count
+            return (label, count)
+        }
+
+        let sorted = labelWithCount.sorted(by: { $0.0 < $1.0 })
+        let counts = sorted.map { (label, count) in
+            "\(count) of \(label)"
+        }
+        if counts.isEmpty {
+            return ""
+        }
+        return counts.dropFirst().reduce(counts.first!) { $0 + ", \($1)" }
+    }
 
     private var mainContent: some View {
         ZStack(alignment: .bottom) {
@@ -195,7 +212,8 @@ struct FilledBeaker_Previews: PreviewProvider {
                         GridCoordinate(col: 1, row: 1),
                         GridCoordinate(col: 2, row: 2)
                     ],
-                    color: .orangeAccent
+                    color: .orangeAccent,
+                    label: "A"
                 ),
                 BeakerMolecules(
                     coords: [
@@ -203,7 +221,8 @@ struct FilledBeaker_Previews: PreviewProvider {
                         GridCoordinate(col: 1, row: 2),
                         GridCoordinate(col: 2, row: 3)
                     ],
-                    color: .black
+                    color: .black,
+                    label: "B"
                 )
             ],
             animatingMolecules: [],

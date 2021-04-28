@@ -214,7 +214,8 @@ class ReactionComponents {
         let model = AnimatingBeakerMolecules(
             molecules: BeakerMolecules(
                 coords: balancedElement?.coords ?? initialBeakerMolecules.value(for: element),
-                color: element.color
+                color: element.color,
+                label: element.rawValue
             ),
             fractionToDraw: balancedFractionToDraw(for: balancedElement)
         )

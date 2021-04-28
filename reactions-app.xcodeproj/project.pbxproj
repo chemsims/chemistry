@@ -72,7 +72,6 @@
 		5736DC1825F4B036003FD2B4 /* ScalesRotationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC1725F4B036003FD2B4 /* ScalesRotationEquation.swift */; };
 		5736DC3025F5007D003FD2B4 /* GridMolecules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC2F25F5007C003FD2B4 /* GridMolecules.swift */; };
 		5736DC3A25F50D1A003FD2B4 /* GridMoleculesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3925F50D1A003FD2B4 /* GridMoleculesTests.swift */; };
-		5736DC4025F5478F003FD2B4 /* FractionedCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */; };
 		5736DC4A25F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC4925F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift */; };
 		5738AD9025AF131B002D4EB7 /* TextLineExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD8F25AF131B002D4EB7 /* TextLineExtensions.swift */; };
 		5738AD9925AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD9825AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift */; };
@@ -280,6 +279,9 @@
 		57B3B954260B4A0900EB9B47 /* FeedbackAndShareSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B953260B4A0900EB9B47 /* FeedbackAndShareSettings.swift */; };
 		57B3B962260B4BF500EB9B47 /* NavigationIconRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B961260B4BF500EB9B47 /* NavigationIconRows.swift */; };
 		57B5781D2639634C008DFAB5 /* AccessibilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5781C2639634C008DFAB5 /* AccessibilityExtensions.swift */; };
+		57B5781F2639953B008DFAB5 /* UniqueGridCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */; };
+		57B57821263995E8008DFAB5 /* UniqueGridCoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */; };
+		57B5782226399C07008DFAB5 /* FractionedCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
 		57BB21EA260BA62600250FB3 /* ReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */; };
 		57BB21F8260BA66B00250FB3 /* GaseousReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */; };
@@ -746,6 +748,8 @@
 		57B528E525B38A2300381550 /* ReviewPrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompter.swift; sourceTree = "<group>"; };
 		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B5781C2639634C008DFAB5 /* AccessibilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityExtensions.swift; sourceTree = "<group>"; };
+		57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinates.swift; sourceTree = "<group>"; };
+		57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinateTests.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
 		57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinition.swift; sourceTree = "<group>"; };
 		57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousReactionType.swift; sourceTree = "<group>"; };
@@ -1267,7 +1271,6 @@
 			isa = PBXGroup;
 			children = (
 				5736DC2F25F5007C003FD2B4 /* GridMolecules.swift */,
-				5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */,
 			);
 			path = grid;
 			sourceTree = "<group>";
@@ -1808,6 +1811,7 @@
 				57E902C325ED585800758300 /* EquatableCounterTests.swift */,
 				57FF9EE325FF6EC100C1C27F /* GridElementBalancerTests.swift */,
 				57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */,
+				57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */,
 			);
 			path = ReactionsCoreTests;
 			sourceTree = "<group>";
@@ -2409,9 +2413,11 @@
 		57FF9EDC25FF6E7E00C1C27F /* grid */ = {
 			isa = PBXGroup;
 			children = (
+				5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */,
 				57FF9EDD25FF6EA800C1C27F /* GridElementBalancer.swift */,
 				57567B412605F156009711D4 /* GridElementSetter.swift */,
 				57567B472605F1A0009711D4 /* GridElementToBalance.swift */,
+				57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */,
 			);
 			path = grid;
 			sourceTree = "<group>";
@@ -2850,7 +2856,6 @@
 				57A1B79825EAA65800878B52 /* MoleculeScaleBasket.swift in Sources */,
 				57E59A6425F93D5D0087F760 /* ConvergenceHighlight.swift in Sources */,
 				57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */,
-				5736DC4025F5478F003FD2B4 /* FractionedCoordinates.swift in Sources */,
 				57B3B947260B475F00EB9B47 /* EquilibriumAppScreen.swift in Sources */,
 				57C315B82631B37D0092C454 /* AnimatingReactionDefinition.swift in Sources */,
 				5736DC1825F4B036003FD2B4 /* ScalesRotationEquation.swift in Sources */,
@@ -3014,6 +3019,7 @@
 				57B3B923260B35CE00EB9B47 /* MainMenuPanel.swift in Sources */,
 				5797A49C25E40A4C00991BD9 /* BeakerBottomShape.swift in Sources */,
 				57438A65260A4177005E3888 /* ScreenPersistence.swift in Sources */,
+				57B5782226399C07008DFAB5 /* FractionedCoordinates.swift in Sources */,
 				5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */,
 				577A2609262822FF0060EC54 /* ValueWithPrevious.swift in Sources */,
 				57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */,
@@ -3046,6 +3052,7 @@
 				57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */,
 				57DDAD1D25E5700400B535A7 /* QuadraticEquation.swift in Sources */,
 				57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */,
+				57B5781F2639953B008DFAB5 /* UniqueGridCoordinates.swift in Sources */,
 				57438A48260A3004005E3888 /* Version.swift in Sources */,
 				575A884125E431FF00AEE448 /* LabelledImage.swift in Sources */,
 				57952A3925E67F6E006AB876 /* ScreenState.swift in Sources */,
@@ -3059,6 +3066,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57B57821263995E8008DFAB5 /* UniqueGridCoordinateTests.swift in Sources */,
 				57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */,
 				57FF9EE425FF6EC100C1C27F /* GridElementBalancerTests.swift in Sources */,
 				57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */,

@@ -368,9 +368,6 @@ struct LabelledAnimatingBeakerMolecules {
 
 extension LabelledAnimatingBeakerMolecules {
     var fractioned: FractionedCoordinates {
-        FractionedCoordinates(
-            coordinates: animatingMolecules.molecules.coords,
-            fractionToDraw: animatingMolecules.fractionToDraw
-        )
+        animatingMolecules.fractioned
     }
 }
