@@ -29,6 +29,7 @@ struct ChartStack: View {
 
     let kTerm: String
     let accessibilityQuotient: Equation
+    let maxDragTime: CGFloat
 
     @State private var showGraph = true
 
@@ -73,6 +74,7 @@ struct ChartStack: View {
             minDragTime: quotientChartDiscontinuity?.x,
             canSetIndex: canSetChartIndex,
             yLabel: topChartYLabel,
+            maxDragTime: maxDragTime,
             settings: settings.chartSettings
         )
         .colorMultiply(equilibriumHighlight)
@@ -91,6 +93,7 @@ struct ChartStack: View {
             discontinuity: quotientChartDiscontinuity,
             kTerm: kTerm,
             accessibilityValue: accessibilityQuotient,
+            maxDragTime: maxDragTime,
             settings: settings.quotientChartSettings(
                 convergenceQ: equilibriumQuotient,
                 maxQ: maxQuotient
@@ -157,7 +160,8 @@ extension ChartStack {
             equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium),
             topChartYLabel: "Concentration",
             kTerm: "K",
-            accessibilityQuotient: model.components.quotientEquation
+            accessibilityQuotient: model.components.quotientEquation,
+            maxDragTime: model.timing.end
         )
     }
 
@@ -185,7 +189,8 @@ extension ChartStack {
             equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium),
             topChartYLabel: "Pressure",
             kTerm: "Kp",
-            accessibilityQuotient: model.components.pressureQuotientEquation
+            accessibilityQuotient: model.components.pressureQuotientEquation,
+            maxDragTime: model.timing.end
         )
     }
 
@@ -213,7 +218,8 @@ extension ChartStack {
             equilibriumHighlight: model.highlights.colorMultiply(for: .chartEquilibrium),
             topChartYLabel: "Concentration",
             kTerm: "K",
-            accessibilityQuotient: model.components.quotient
+            accessibilityQuotient: model.components.quotient,
+            maxDragTime: model.timing.end
         )
     }
 }

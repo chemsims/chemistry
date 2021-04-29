@@ -22,6 +22,8 @@ struct QuotientPlot: View {
     let kTerm: String
     let accessibilityValue: Equation
 
+    let maxDragTime: CGFloat
+
     let settings: ReactionEquilibriumChartsLayoutSettings
 
     var body: some View {
@@ -56,7 +58,7 @@ struct QuotientPlot: View {
             currentTime: $currentTime,
             canSetTime: canSetCurrentTime,
             initialTime: discontinuity?.x ?? 0,
-            finalTime: finalTime
+            finalTime: maxDragTime
         )
     }
 
@@ -160,6 +162,7 @@ struct QuotientPlot_Previews: PreviewProvider {
             discontinuity: nil,
             kTerm: "K",
             accessibilityValue: ConstantEquation(value: 0),
+            maxDragTime: 10,
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: 1

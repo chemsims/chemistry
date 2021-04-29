@@ -73,6 +73,7 @@ class AqueousReactionViewModel: ObservableObject {
     @Published var highlightedElements = HighlightedElements<AqueousScreenElement>()
     @Published var reactionDefinitionDirection = AnimatingReactionDefinition.Direction.none
     @Published private(set) var showShakeText = false
+    @Published var timing: ReactionTiming = AqueousReactionSettings.firstReactionTiming
 
     var reactionPhase = AqueousReactionPhase.first
 

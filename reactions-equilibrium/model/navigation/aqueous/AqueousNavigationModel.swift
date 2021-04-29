@@ -290,16 +290,18 @@ private class ShiftChartState: AqueousScreenState {
     override func apply(on model: AqueousReactionViewModel) {
         model.statement = AqueousStatements.introToReverse
         model.canSetCurrentTime = false
+        model.timing = AqueousReactionSettings.secondReactionTiming
         withAnimation(.easeOut(duration: 1)) {
-            model.chartOffset = AqueousReactionSettings.forwardReactionTime
-            model.currentTime = AqueousReactionSettings.timeToAddProduct
+            model.chartOffset = model.timing.offset
+            model.currentTime = model.timing.start
         }
     }
 
     override func unapply(on model: AqueousReactionViewModel) {
+        model.timing = AqueousReactionSettings.firstReactionTiming
         withAnimation(.easeOut(duration: 1)) {
-            model.chartOffset = 0
-            model.currentTime = AqueousReactionSettings.forwardReactionTime
+            model.chartOffset = model.timing.offset
+            model.currentTime = model.timing.end
         }
         model.canSetCurrentTime = true
     }

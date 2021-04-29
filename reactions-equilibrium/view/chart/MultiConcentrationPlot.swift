@@ -30,6 +30,8 @@ struct MultiConcentrationPlot: View {
     let canSetIndex: Bool
     let yLabel: String
 
+    let maxDragTime: CGFloat
+
     let settings: ReactionEquilibriumChartsLayoutSettings
 
     @State private var activeIndex: Int? = nil
@@ -62,8 +64,8 @@ struct MultiConcentrationPlot: View {
         .accessibilitySetCurrentTimeAction(
             currentTime: $currentTime,
             canSetTime: canSetCurrentTime,
-            initialTime: quotientChartDiscontinuity?.x ?? 0,
-            finalTime: finalTime
+            initialTime: minDragTime ?? 0,
+            finalTime: maxDragTime
         )
     }
 
@@ -216,6 +218,7 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
             minDragTime: nil,
             canSetIndex: false,
             yLabel: "Concentration",
+            maxDragTime: 20,
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: AqueousReactionSettings.ConcentrationInput.maxAxis

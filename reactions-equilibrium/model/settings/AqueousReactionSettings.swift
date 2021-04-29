@@ -12,6 +12,9 @@ struct AqueousReactionSettings {
 
     static let initialRows = (minRows + maxRows) / 2
 
+    static let firstReactionTiming = ReactionTiming.standard(reactionIndex: 0)
+    static let secondReactionTiming = ReactionTiming.standard(reactionIndex: 1)
+
     /// The time at which the concentrations should converge
     static let timeForConvergence: CGFloat = ReactionTiming.equilibriumTime
 

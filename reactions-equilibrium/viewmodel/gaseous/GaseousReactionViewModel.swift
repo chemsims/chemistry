@@ -72,6 +72,7 @@ class GaseousReactionViewModel: ObservableObject {
             componentWrapper.equilibriumConstant = equilibriumQuotient
         }
     }
+    @Published var timing: ReactionTiming = GaseousReactionSettings.forwardTiming
 
     var reactionPhase = GaseousReactionPhase.firstReaction
 

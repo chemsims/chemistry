@@ -366,6 +366,7 @@ private class ShiftChart: GaseousScreenState {
     override func apply(on model: GaseousReactionViewModel) {
         model.statement = statement
         model.canSetCurrentTime = false
+        model.timing = timing
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = timing.offset
             model.currentTime = timing.start
@@ -374,6 +375,7 @@ private class ShiftChart: GaseousScreenState {
 
     override func unapply(on model: GaseousReactionViewModel) {
         model.canSetCurrentTime = true
+        model.timing = previousTiming
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = previousTiming.offset
             model.currentTime = previousTiming.end
