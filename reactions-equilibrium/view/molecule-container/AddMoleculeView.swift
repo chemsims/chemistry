@@ -33,6 +33,7 @@ struct AddMoleculesView: View {
             container(molecule: .C, width: geometry.size.width, height: geometry.size.height, index: 2)
             container(molecule: .D, width: geometry.size.width, height: geometry.size.height, index: 3)
         }
+        .accessibilityElement(children: .contain)
     }
 
     private func container(
@@ -74,6 +75,7 @@ struct AddMoleculesView: View {
         .accessibility(addTraits: .isButton)
         .accessibility(label: Text("Container of molecule \(molecule.rawValue)"))
         .accessibility(hint: Text(getContainerHint(molecule: molecule)))
+        .accessibility(sortPriority: Double(10 - index))
     }
 
     private func getContainerHint(molecule: AqueousMolecule) -> String {

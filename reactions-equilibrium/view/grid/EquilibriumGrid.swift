@@ -65,6 +65,23 @@ private struct SizedEquilibriumGrid: View {
             }
         }
         .frame(width: settings.gridWidth, height: settings.gridHeight)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+        .updatingAccessibilityValue(x: currentTime, format: getAccessibilityValue)
+    }
+
+    private var label: String {
+        let labels = molecules.map(\.molecules.label)
+        let labelString = StringUtil.combineStringsWithFinalAnd(labels)
+        return "Grid of \(labelString) molecules"
+    }
+
+    private func getAccessibilityValue(forTime time: CGFloat) -> String {
+        let counts = molecules.map { molecule -> String in
+            let count = molecule.fractioned.coords(at: time).count
+            return "\(count) of \(molecule.molecules.label)"
+        }
+        return StringUtil.combineStrings(counts)
     }
 
     private var backgroundGrid: some View {

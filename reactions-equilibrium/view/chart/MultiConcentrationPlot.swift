@@ -52,13 +52,12 @@ struct MultiConcentrationPlot: View {
                     .accessibility(hidden: true)
             }
         }
-        .accessibilityElement()
+        .accessibilityElement(children: .ignore)
         .accessibility(label: Text(label))
         .updatingAccessibilityValue(
             x: currentTime,
             format: getAccessibilityValue
         )
-        .accessibility(addTraits: .isHeader)
     }
 
     private var labelledChart: some View {

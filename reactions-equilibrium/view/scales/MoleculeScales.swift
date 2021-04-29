@@ -38,7 +38,6 @@ private struct SizedMoleculeScales: View {
             arm
                 .accessibility(label: Text("Scales with a basket of molecules on the left and right"))
                 .updatingAccessibilityValue(x: currentTime, format: getRotationLabel)
-                .accessibility(addTraits: .isHeader)
                 .accessibility(sortPriority: 3)
             stand
 

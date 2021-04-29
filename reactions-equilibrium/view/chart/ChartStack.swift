@@ -37,6 +37,7 @@ struct ChartStack: View {
             Spacer()
             quotientChart
         }
+        .accessibilityElement(children: .contain)
     }
 
     // Must use opacity to hide chart rather than remove from view, otherwise the animation doesn't resume
@@ -112,6 +113,7 @@ struct ChartStack: View {
             label: "Toggle for showing graph or table",
             value: { $0 ? "graph" : "table" }
         )
+        .accessibility(addTraits: .isHeader)
     }
 
     private func selectionToggleText(isGraph: Bool) -> some View {

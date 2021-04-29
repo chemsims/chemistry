@@ -35,14 +35,12 @@ private struct AqueousReactionScreenWithSettings: View {
     var body: some View {
         HStack(spacing: 0) {
             AqueousBeakerView(model: model, settings: settings)
-                .accessibilityElement(children: .contain)
             Spacer()
             ChartStack(
                 model: model,
                 currentTime: $model.currentTime,
                 settings: settings
             )
-            .accessibilityElement(children: .contain)
             Spacer()
             RightStackView<AqueousReactionType>(
                 model: model,
@@ -145,8 +143,11 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
                     width: settings.gridWidth,
                     height: settings.chartSelectionHeight
                 )
+                .accessibility(sortPriority: 2)
+                .accessibility(addTraits: .isHeader)
         }
         .colorMultiply(generalElementHighlight)
+        .accessibilityElement(children: .contain)
     }
 
     private var gridToggleSelection: some View {

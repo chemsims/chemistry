@@ -13,13 +13,17 @@ struct AqueousBeakerView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             beaker
+                .accessibility(sortPriority: 3)
             shakeText
                 .opacity(model.showShakeText ? 1 : 0)
                 .animation(.easeOut(duration: 0.5))
             molecules
+                .accessibility(sortPriority: 4)
             reactionDefinition
+                .accessibility(sortPriority: 5)
         }
         .frame(height: settings.height)
+        .accessibilityElement(children: .contain)
     }
 
     private var shakeText: some View {
