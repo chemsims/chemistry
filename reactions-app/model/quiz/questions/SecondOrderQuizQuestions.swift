@@ -387,7 +387,7 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "SECONDORDER-8",
                 question: """
-                The decomposition of a substance X follows a first order process. It takes around 8 hours for the substance \
+                The decomposition of a substance X follows a first order process. It takes around 12 hours for the substance \
                 X to be half of its initial amount. What would be the rate constant k for this decomposition process?
                 """,
                 correctAnswer: QuizAnswerData(
