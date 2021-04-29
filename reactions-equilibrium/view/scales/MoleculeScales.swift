@@ -36,11 +36,32 @@ private struct SizedMoleculeScales: View {
     var body: some View {
         ZStack {
             arm
+                .accessibility(label: Text("Scales with a basket of molecules on the left and right"))
+                .updatingAccessibilityValue(x: currentTime, format: getRotationLabel)
+                .accessibility(addTraits: .isHeader)
+                .accessibility(sortPriority: 3)
             stand
+
             leftBasket
+                .accessibility(sortPriority: 2)
+
             rightBasket
+                .accessibility(sortPriority: 1)
         }
         .frame(width: settings.width)
+        .accessibilityElement(children: .contain)
+    }
+
+    private func getRotationLabel(forTime time: CGFloat) -> String {
+        let rotation = rotationDegrees.getY(at: time)
+        var end: String {
+            if rotation > 0 {
+                return " clockwise"
+            }
+            return rotation < 0 ? " anti-clockwise" : ""
+        }
+
+        return "Rotation is \(abs(rotation).str(decimals: 0)) degrees\(end)"
     }
 
     private var rotationDegrees: ScalesRotationEquation {
@@ -54,6 +75,7 @@ private struct SizedMoleculeScales: View {
         Image("scales-stand")
             .resizable()
             .aspectRatio(contentMode: .fit)
+            .accessibility(hidden: true)
     }
 
     private var arm: some View {
@@ -67,9 +89,10 @@ private struct SizedMoleculeScales: View {
     private var leftBasket: some View {
         basketView(
             isLeft: true,
-            left: MoleculeConcentration(concentration: reaction.concentration.reactantA, color: .from(.aqMoleculeA)),
-            right: MoleculeConcentration(concentration: reaction.concentration.reactantB, color: .from(.aqMoleculeB))
+            left: MoleculeConcentration(concentration: reaction.concentration.reactantA, color: .from(.aqMoleculeA), label: "A"),
+            right: MoleculeConcentration(concentration: reaction.concentration.reactantB, color: .from(.aqMoleculeB), label: "B")
         )
+        .accessibility(label: Text(basketLabel(side: "left", molecule1: "A", molecule2: "B")))
     }
 
     private var rightBasket: some View {
@@ -77,13 +100,24 @@ private struct SizedMoleculeScales: View {
             isLeft: false,
             left: MoleculeConcentration(
                 concentration: reaction.concentration.productC,
-                color: .from(.aqMoleculeC)
+                color: .from(.aqMoleculeC),
+                label: "C"
             ),
             right: MoleculeConcentration(
                 concentration: reaction.concentration.productD,
-                color: .from(.aqMoleculeD)
+                color: .from(.aqMoleculeD),
+                label: "D"
             )
         )
+        .accessibility(label: Text(basketLabel(side: "right", molecule1: "C", molecule2: "D")))
+    }
+
+    private func basketLabel(
+        side: String,
+        molecule1: String,
+        molecule2: String
+    ) -> String {
+        "\(side) basket showing molecules of \(molecule1) and \(molecule2)"
     }
 
     private func basketView(

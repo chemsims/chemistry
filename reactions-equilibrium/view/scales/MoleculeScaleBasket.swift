@@ -38,6 +38,21 @@ private struct SizedMoleculeScaleBasket: View {
             moleculePiles
             image
         }
+        .updatingAccessibilityValue(x: currentTime, format: getAccessibilityLabel)
+        .accessibility(removeTraits: .isImage)
+    }
+
+    private func getAccessibilityLabel(forTime time: CGFloat) -> String {
+        func moleculeLabel(_ molecule: MoleculeConcentration) -> String {
+            "\(getCount(molecule: molecule, at: time)) of \(molecule.label)"
+        }
+
+        return "\(moleculeLabel(moleculeLeft)), \(moleculeLabel(moleculeRight))"
+    }
+
+    private func getCount(molecule: MoleculeConcentration, at time: CGFloat) -> Int {
+        let fraction = fractionToDraw(concentration: molecule.concentration).getY(at: time)
+        return (fraction * CGFloat(MoleculePileSettings.grid.count)).roundedInt()
     }
 
     private func fractionToDraw(concentration: Equation) -> Equation {
@@ -114,11 +129,13 @@ struct MoleculeScaleBasket_Previews: PreviewProvider {
         MoleculeScaleBasket(
             moleculeLeft: MoleculeConcentration(
                 concentration: ConstantEquation(value: 0.5),
-                color: .red
+                color: .red,
+                label: ""
             ),
             moleculeRight: MoleculeConcentration(
                 concentration: ConstantEquation(value: 1),
-                color: .blue
+                color: .blue,
+                label: ""
             ),
             currentTime: 0
         )

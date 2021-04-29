@@ -156,6 +156,11 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             selectionToggleText(isGrid: false)
             Spacer()
         }
+        .accessibilityToggle(
+            isOn: $showGrid,
+            label: "Toggle for showing dynamic equilibrium grid or scales",
+            value: { $0 ? "Dynamic equilibrium grid" : "scales" }
+        )
     }
 
     private var scales: some View {
