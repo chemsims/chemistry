@@ -81,6 +81,17 @@ private struct FilledAirBeakerWithSettings: View {
             seal
                 .offset(y: sealYOffset)
         }
+        .accessibilityElement(children: .combine)
+        .accessibility(label: Text(label))
+    }
+
+    private var label: String {
+        let base = AccessibilityLabelUtil.beakerGridLabel(
+            molecules: molecules,
+            animatingMolecules: animatingMolecules,
+            fluid: "air"
+        )
+        return "\(base) with a pressure seal on top"
     }
 
     private var seal: some View {

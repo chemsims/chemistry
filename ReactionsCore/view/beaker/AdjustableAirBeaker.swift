@@ -111,6 +111,7 @@ private struct AdjustableAirBeakerWithHeight: View {
                 )
                 .position(x: settings.sliderWidth / 2, y: sliderYPos)
                 .colorMultiply(sliderColorMultiply)
+                .accessibility(label: Text(sliderLabel))
 
 
             beaker
@@ -181,6 +182,14 @@ private struct AdjustableAirBeakerWithHeight: View {
         let liquidHeight = grid.height(for: rows)
         let midSealPosition = sealSettings.midSealPosition
         return height - liquidHeight - midSealPosition
+    }
+
+    private var sliderLabel: String {
+        "Slider to set rows of molecules below beaker piston"
+    }
+
+    private var sliderValue: String {
+        "\(rows.str(decimals: 1))"
     }
 }
 

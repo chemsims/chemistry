@@ -45,15 +45,11 @@ public struct FilledBeaker: View {
     }
 
     private var label: String {
-        let labels = molecules.map(\.label) + animatingMolecules.map(\.molecules.label)
-        let sortedLabels = labels.sorted()
-        if sortedLabels.isEmpty {
-            return "Beaker showing an empty grid of molecules"
-        }
-
-        let moleculeStrings = StringUtil.combineStringsWithFinalAnd(sortedLabels)
-
-        return "Beaker showing a grid of molecules of \(moleculeStrings) in liquid"
+        AccessibilityLabelUtil.beakerGridLabel(
+            molecules: molecules,
+            animatingMolecules: animatingMolecules,
+            fluid: "liquid"
+        )
     }
 }
 
