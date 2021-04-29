@@ -50,11 +50,10 @@ public struct FilledBeaker: View {
         if sortedLabels.isEmpty {
             return "Beaker showing an empty grid of molecules"
         }
-        let start = "Beaker showing a grid of molecules of \(sortedLabels.first!)"
-        let withMolecules = sortedLabels.dropFirst(1).reduce(start) {
-            $0 + " and \($1)"
-        }
-        return "\(withMolecules) in liquid"
+
+        let moleculeStrings = StringUtil.combineStringsWithFinalAnd(sortedLabels)
+
+        return "Beaker showing a grid of molecules of \(moleculeStrings) in liquid"
     }
 }
 

@@ -79,6 +79,8 @@
 		5738ADA325AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADA225AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift */; };
 		5738ADA725AF2713002D4EB7 /* EnumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADA625AF2713002D4EB7 /* EnumExtensions.swift */; };
 		5738ADAF25AF2907002D4EB7 /* ReactionModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADAE25AF2907002D4EB7 /* ReactionModelExtensions.swift */; };
+		573E1B2B263AACE000379A1D /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2A263AACE000379A1D /* StringUtil.swift */; };
+		573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2C263AADBD00379A1D /* StringUtilTests.swift */; };
 		573F168D2584AC56001CE039 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F168C2584AC56001CE039 /* ProgressBar.swift */; };
 		573F16922584ACEC001CE039 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16912584ACEC001CE039 /* QuizViewModel.swift */; };
 		573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16A625852D5D001CE039 /* BeakerReactionState.swift */; };
@@ -373,7 +375,7 @@
 		57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */; };
 		57E6A52A25FDFA5C00CC3B17 /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6A52925FDFA5C00CC3B17 /* ShakeContainerViewModel.swift */; };
 		57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF6D2582831000A30582 /* ConcentrationTable.swift */; };
-		57E7FF7F25828E0500A30582 /* MainMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF7E25828E0500A30582 /* MainMenuOverlay.swift */; };
+		57E7FF7F25828E0500A30582 /* ReactionRateNavigationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF7E25828E0500A30582 /* ReactionRateNavigationRows.swift */; };
 		57E7FF8825829DE400A30582 /* QuizScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF8725829DE400A30582 /* QuizScreen.swift */; };
 		57E902B425ED40B500758300 /* AqueousReactionInputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902B325ED40B500758300 /* AqueousReactionInputState.swift */; };
 		57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902B925ED561200758300 /* EquatableCounter.swift */; };
@@ -571,6 +573,8 @@
 		5738ADA225AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderNavigationModelTests.swift; sourceTree = "<group>"; };
 		5738ADA625AF2713002D4EB7 /* EnumExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumExtensions.swift; sourceTree = "<group>"; };
 		5738ADAE25AF2907002D4EB7 /* ReactionModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionModelExtensions.swift; sourceTree = "<group>"; };
+		573E1B2A263AACE000379A1D /* StringUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
+		573E1B2C263AADBD00379A1D /* StringUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtilTests.swift; sourceTree = "<group>"; };
 		573F168C2584AC56001CE039 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		573F16912584ACEC001CE039 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
 		573F16972584B277001CE039 /* QuizOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizOption.swift; sourceTree = "<group>"; };
@@ -836,7 +840,7 @@
 		57E7FF692582307A00A30582 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		57E7FF6D2582831000A30582 /* ConcentrationTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTable.swift; sourceTree = "<group>"; };
 		57E7FF71258289B200A30582 /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
-		57E7FF7E25828E0500A30582 /* MainMenuOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOverlay.swift; sourceTree = "<group>"; };
+		57E7FF7E25828E0500A30582 /* ReactionRateNavigationRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionRateNavigationRows.swift; sourceTree = "<group>"; };
 		57E7FF822582954C00A30582 /* MainMenuPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuPanel.swift; sourceTree = "<group>"; };
 		57E7FF8725829DE400A30582 /* QuizScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizScreen.swift; sourceTree = "<group>"; };
 		57E902B325ED40B500758300 /* AqueousReactionInputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionInputState.swift; sourceTree = "<group>"; };
@@ -1136,7 +1140,6 @@
 			children = (
 				5786FAD825E6B5FD00AAD8A6 /* beaker */,
 				57E7FF8625829DD400A30582 /* quiz */,
-				57E7FF7525828BED00A30582 /* navigation */,
 				577077B32568E2F6003E750E /* energy-profile */,
 				571B3CAD25658ABC0075358B /* util */,
 				572CB947255C411F0071C600 /* equations */,
@@ -1812,6 +1815,7 @@
 				57FF9EE325FF6EC100C1C27F /* GridElementBalancerTests.swift */,
 				57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */,
 				57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */,
+				573E1B2C263AADBD00379A1D /* StringUtilTests.swift */,
 			);
 			path = ReactionsCoreTests;
 			sourceTree = "<group>";
@@ -1984,6 +1988,7 @@
 		57B23312258E8BC100128760 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
+				57E7FF7E25828E0500A30582 /* ReactionRateNavigationRows.swift */,
 				57B23313258E8BCB00128760 /* AppScreen.swift */,
 			);
 			path = navigation;
@@ -2214,6 +2219,7 @@
 				57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */,
 				57438A47260A3004005E3888 /* Version.swift */,
 				577A2608262822FF0060EC54 /* ValueWithPrevious.swift */,
+				573E1B2A263AACE000379A1D /* StringUtil.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -2344,14 +2350,6 @@
 				57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */,
 			);
 			path = "reaction-definition";
-			sourceTree = "<group>";
-		};
-		57E7FF7525828BED00A30582 /* navigation */ = {
-			isa = PBXGroup;
-			children = (
-				57E7FF7E25828E0500A30582 /* MainMenuOverlay.swift */,
-			);
-			path = navigation;
 			sourceTree = "<group>";
 		};
 		57E7FF8625829DD400A30582 /* quiz */ = {
@@ -2718,7 +2716,7 @@
 				57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */,
 				571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */,
 				57A119B425B8715300A7810B /* EnergyProfileFilingStatements.swift in Sources */,
-				57E7FF7F25828E0500A30582 /* MainMenuOverlay.swift in Sources */,
+				57E7FF7F25828E0500A30582 /* ReactionRateNavigationRows.swift in Sources */,
 				57517F3325739E5200EB79C7 /* ReactionOrder.swift in Sources */,
 				57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */,
 				57DE4DB125A5035700644790 /* QuizAnswerIconOverlay.swift in Sources */,
@@ -2957,6 +2955,7 @@
 			files = (
 				57438A56260A3242005E3888 /* ReviewPromptPersistence.swift in Sources */,
 				57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */,
+				573E1B2B263AACE000379A1D /* StringUtil.swift in Sources */,
 				5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */,
 				57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */,
 				575A886625E435FB00AEE448 /* Beaky.swift in Sources */,
@@ -3068,6 +3067,7 @@
 			files = (
 				57B57821263995E8008DFAB5 /* UniqueGridCoordinateTests.swift in Sources */,
 				57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */,
+				573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */,
 				57FF9EE425FF6EC100C1C27F /* GridElementBalancerTests.swift in Sources */,
 				57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */,
 				572BCF2C26036F3000CE3FE0 /* ArrayExtensionTests.swift in Sources */,
