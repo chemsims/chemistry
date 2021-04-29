@@ -45,13 +45,6 @@ struct MultiConcentrationPlot: View {
 
             VStack(spacing: settings.axisLabelGapFromAxis) {
                 labelledChart
-                    .accessibilityElement()
-                    .accessibility(label: Text(label))
-                    .updatingAccessibilityValue(
-                        x: currentTime,
-                        format: getAccessibilityValue
-                    )
-                    .accessibility(addTraits: .isHeader)
 
                 Text("Time")
                     .font(.system(size: settings.axisLabelFontSize))
@@ -59,6 +52,13 @@ struct MultiConcentrationPlot: View {
                     .accessibility(hidden: true)
             }
         }
+        .accessibilityElement()
+        .accessibility(label: Text(label))
+        .updatingAccessibilityValue(
+            x: currentTime,
+            format: getAccessibilityValue
+        )
+        .accessibility(addTraits: .isHeader)
     }
 
     private var labelledChart: some View {

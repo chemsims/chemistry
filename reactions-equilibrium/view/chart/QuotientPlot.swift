@@ -28,10 +28,12 @@ struct QuotientPlot: View {
                 .fixedSize()
                 .minimumScaleFactor(0.8)
                 .zIndex(1)
+                .accessibility(hidden: true)
 
             VStack(spacing: settings.axisLabelGapFromAxis) {
                 annotatedChart
                 Text("Time")
+                    .accessibility(hidden: true)
             }
             Text("K")
                 .foregroundColor(.orangeAccent)
@@ -41,8 +43,27 @@ struct QuotientPlot: View {
                 .offset(y: asymptoteYLabelOffset)
                 .animation(nil)
                 .opacity(showData ? 1 : 0)
+                .accessibility(hidden: true)
         }
         .font(.system(size: settings.axisLabelFontSize))
+        .accessibilityElement()
+        .accessibility(label: Text(label))
+        .updatingAccessibilityValue(x: currentTime, format: getAccessibilityValue)
+    }
+
+    private var label: String {
+        "Graph showing time vs quotient, with a horizontal line for K"
+    }
+
+    private func getAccessibilityValue(forTime time: CGFloat) -> String {
+        guard showData else {
+            return "no data"
+        }
+        let quotient = equation.getY(at: time).str(decimals: 2)
+        let timeString = time.str(decimals: 1)
+        let k = equilibriumConstant.str(decimals: 2)
+
+        return "Time \(timeString), quotient \(quotient), K \(k)"
     }
 
     private var annotatedChart: some View {
@@ -107,7 +128,11 @@ struct QuotientPlot: View {
     }
 
     private var asymptoteYPosition: CGFloat {
-        settings.layout.yAxis.getPosition(at: equation.getY(at: finalTime + offset))
+        settings.layout.yAxis.getPosition(at: equilibriumConstant)
+    }
+
+    private var equilibriumConstant: CGFloat {
+        equation.getY(at: finalTime + offset)
     }
 }
 
