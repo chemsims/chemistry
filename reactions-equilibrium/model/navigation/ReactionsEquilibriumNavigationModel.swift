@@ -17,7 +17,7 @@ struct ReactionsEquilibriumNavigationModel {
             persistence: injector.persistence,
             analytics: injector.screenAnalytics,
             allScreens: EquilibriumAppScreen.allCases,
-            linearScreens: EquilibriumAppScreen.allCases
+            linearScreens: [.gaseousReaction]
         )
     }
 }

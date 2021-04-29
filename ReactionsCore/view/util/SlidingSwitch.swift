@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 public struct SlidingSwitch<Value: Equatable>: View {
@@ -85,6 +84,8 @@ private struct SlidingSwitchWithGeometry<Value: Equatable>: View {
                 feedbackGenerator.selectionChanged()
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(value: Text(isLeft ? leftSettings.label : rightSettings.label))
     }
 
     private var isLeft: Bool {

@@ -126,19 +126,25 @@ class GaseousReactionViewModel: ObservableObject {
     }
 
     private func onPump() {
+        incrementReactant(selectedPumpReactant, amount: 1)
+        highlightedElements.clear()
+    }
+
+    func incrementReactant(_ reactant: AqueousMoleculeReactant, amount: Int) {
         guard inputState == .addReactants else {
             return
         }
         objectWillChange.send()
-        highlightedElements.clear()
-        let molecule = selectedPumpReactant.molecule
-        componentWrapper.increment(molecule: molecule, count: 1)
+        let molecule = reactant.molecule
+        componentWrapper.increment(molecule: molecule, count: amount)
         if !componentWrapper.canIncrement(molecule: molecule) {
-            statement = StatementUtil.hasAddedEnough(
-                of: selectedPumpReactant.molecule.rawValue,
+            let saturatedStatement = StatementUtil.hasAddedEnough(
+                of: molecule.rawValue,
                 complement: molecule.complement.rawValue,
                 canAddComplement: componentWrapper.canIncrement(molecule: molecule.complement)
             )
+            statement = saturatedStatement
+            UIAccessibility.post(notification: .announcement, argument: saturatedStatement.label)
         }
     }
 

@@ -26,6 +26,9 @@ struct PressureBeaker: View {
             Pump(pumpModel: model.pumpModel)
                 .frame(width: settings.pumpWidth, height: settings.pumpHeight)
                 .offset(x: settings.pumpXOffset)
+                .accessibilityElement(children: .ignore)
+                .accessibility(label: Text("Pump connected to beaker"))
+                .accessibilityPumpReactant(enabled: model.inputState == .addReactants, add: pumpReactant)
 
             SlidingSwitch(
                 selected: $model.selectedPumpReactant,
@@ -37,6 +40,7 @@ struct PressureBeaker: View {
             .font(.system(size: settings.switchFontSize))
             .frame(width: settings.switchWidth, height: settings.switchHeight)
             .offset(x: settings.switchXOffset)
+            .accessibility(hidden: true)
         }
         .disabled(model.inputState != .addReactants)
         .background(
@@ -91,6 +95,49 @@ struct PressureBeaker: View {
             )
         )
         .frame(width: settings.standWidth)
+    }
+
+    private func pumpReactant(reactant: AqueousMoleculeReactant, amount: Int) {
+        model.incrementReactant(reactant, amount: amount)
+    }
+}
+
+private extension View {
+    func accessibilityPumpReactant(
+        enabled: Bool,
+        add: @escaping (AqueousMoleculeReactant, Int) -> Void
+    ) -> some View {
+        self.modifyIf(enabled) {
+            $0.modifier(PumpAddReactantModifier(molecule: .A, add: add))
+        }.modifyIf(enabled) {
+            $0.modifier(PumpAddReactantModifier(molecule: .B, add: add))
+        }
+    }
+}
+
+private struct PumpAddReactantModifier: ViewModifier {
+    let molecule: AqueousMoleculeReactant
+    let add: (AqueousMoleculeReactant, Int) -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .modifier(PumpActionModifier(molecule: molecule, amount: 5, add: add))
+            .modifier(PumpActionModifier(molecule: molecule, amount: 15, add: add))
+    }
+}
+
+private struct PumpActionModifier: ViewModifier {
+
+    let molecule: AqueousMoleculeReactant
+    let amount: Int
+    let add: (AqueousMoleculeReactant, Int) -> Void
+
+    func body(content: Content) -> some View {
+        content.accessibilityAction(
+            named: Text("Pump \(amount) \(molecule.rawValue) molecules into the beaker")
+        ) {
+            add(molecule, amount)
+        }
     }
 }
 

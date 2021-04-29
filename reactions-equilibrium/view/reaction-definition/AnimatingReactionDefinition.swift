@@ -10,12 +10,35 @@ struct AnimatingReactionDefinition: View {
     let coefficients: MoleculeValue<Int>
     let direction: Direction
 
+    let labelPrefix: String?
+    let labelSuffix: String?
+
+    /// - Parameters:
+    ///      - direction: Direction of the reaction
+    ///      - labelPrefix: Optional string to add before the accessibility label
+    ///      - labelSuffix: Optional string to add at the end of the accessibility label. This occurs at the end of the element
+    ///      names, but before the arrows & molecules are described
+    ///
+    init(
+        coefficients: MoleculeValue<Int>,
+        direction: Direction,
+        labelPrefix: String? = nil,
+        labelSuffix: String? = nil
+    ) {
+        self.coefficients = coefficients
+        self.direction = direction
+        self.labelPrefix = labelPrefix
+        self.labelSuffix = labelSuffix
+    }
+
     var body: some View {
         GeometryReader { geo in
             AnimatingReactionDefinitionWithGeometry(
                 coefficients: coefficients,
                 direction: direction,
-                geometry: geo
+                geometry: geo,
+                labelPrefix: labelPrefix,
+                labelSuffix: labelSuffix
             )
         }
     }
@@ -43,6 +66,9 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
     let coefficients: MoleculeValue<Int>
     let direction: AnimatingReactionDefinition.Direction
     let geometry: GeometryProxy
+
+    let labelPrefix: String?
+    let labelSuffix: String?
 
     @State private var progress: CGFloat = 0
 
@@ -115,8 +141,9 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
         let lhs = label(.A, .B)
         let rhs = label(.C, .D)
         let base = "Reaction definition, \(lhs), double sided arrow, \(rhs)."
+        let baseWithExtra = "\(labelPrefix ?? "")\(base)\(labelSuffix ?? "")"
 
-        return "\(base). \(arrowLabel). \(moleculeMovementLabel)"
+        return "\(baseWithExtra). \(arrowLabel). \(moleculeMovementLabel)"
     }
 
     private var arrowLabel: String {

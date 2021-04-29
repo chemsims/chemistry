@@ -73,20 +73,24 @@ private struct LeftStack: View {
 
     private var reactionDefinition: some View {
         HStack(spacing: 3) {
-            if model.selectedReaction.energyTransfer == .endothermic {
+            if heatOnReactantSide {
                 heatPlus
+                    .accessibility(hidden: true)
             }
 
             AnimatingReactionDefinition(
                 coefficients: model.selectedReaction.coefficients,
-                direction: model.reactionDefinitionDirection
+                direction: model.reactionDefinitionDirection,
+                labelPrefix: heatOnReactantSide ? "heat + " : "",
+                labelSuffix: heatOnProductsSide ? " + heat" : ""
             ).frame(
                 width: settings.common.reactionDefinitionWidth,
                 height: settings.common.reactionDefinitionHeight
             )
 
-            if model.selectedReaction.energyTransfer == .exothermic {
+            if heatOnProductsSide {
                 plusHeat
+                    .accessibility(hidden: true)
             }
 
         }
@@ -96,6 +100,15 @@ private struct LeftStack: View {
         .background(background)
         .padding(.leading, settings.common.menuSize)
         .colorMultiply(model.highlightedElements.colorMultiply(for: .reactionDefinition))
+        .accessibilityElement(children: .combine)
+    }
+
+    private var heatOnReactantSide: Bool {
+        model.selectedReaction.energyTransfer == .endothermic
+    }
+
+    private var heatOnProductsSide: Bool {
+        model.selectedReaction.energyTransfer == .exothermic
     }
 
     private var background: some View {
@@ -124,6 +137,7 @@ private struct LeftStack: View {
             Text("Heat")
         }
         .foregroundColor(.orangeAccent)
+        .accessibilityElement(children: .ignore)
     }
 }
 
