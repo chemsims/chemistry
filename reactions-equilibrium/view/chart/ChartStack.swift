@@ -27,6 +27,9 @@ struct ChartStack: View {
 
     let topChartYLabel: String
 
+    let kTerm: String
+    let accessibilityQuotient: Equation
+
     @State private var showGraph = true
 
     var body: some View {
@@ -86,6 +89,8 @@ struct ChartStack: View {
             showData: showQuotientLine,
             offset: chartOffset,
             discontinuity: quotientChartDiscontinuity,
+            kTerm: kTerm,
+            accessibilityValue: accessibilityQuotient,
             settings: settings.quotientChartSettings(
                 convergenceQ: equilibriumQuotient,
                 maxQ: maxQuotient
@@ -134,7 +139,7 @@ extension ChartStack {
         settings: AqueousScreenLayoutSettings
     ) {
         self.init(
-            concentrationData: model.components.concentrationData,
+            concentrationData: model.components.concentrationData(),
             tableColumns: model.components.tableData(),
             equilibriumTime: model.components.equilibriumTime,
             quotientEquation: model.components.quotientEquation,
@@ -150,7 +155,9 @@ extension ChartStack {
             equilibriumQuotient: model.convergenceQuotient,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
             equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium),
-            topChartYLabel: "Concentration"
+            topChartYLabel: "Concentration",
+            kTerm: "K",
+            accessibilityQuotient: model.components.quotientEquation
         )
     }
 
@@ -160,7 +167,7 @@ extension ChartStack {
         settings: AqueousScreenLayoutSettings
     ) {
         self.init(
-            concentrationData: model.components.concentrationData,
+            concentrationData: model.components.concentrationData(usePressureForAccessibility: true),
             tableColumns: model.components.tableData(factor: GaseousReactionSettings.pressureToConcentration),
             equilibriumTime: model.components.equilibriumTime,
             quotientEquation: model.components.quotientEquation,
@@ -176,7 +183,9 @@ extension ChartStack {
             equilibriumQuotient: model.equilibriumQuotientForAxis,
             generalElementHighlight: model.highlightedElements.colorMultiply(for: nil),
             equilibriumHighlight: model.highlightedElements.colorMultiply(for: .chartEquilibrium),
-            topChartYLabel: "Pressure"
+            topChartYLabel: "Pressure",
+            kTerm: "Kp",
+            accessibilityQuotient: model.components.pressureQuotientEquation
         )
     }
 
@@ -202,7 +211,9 @@ extension ChartStack {
             equilibriumQuotient: 0.1,
             generalElementHighlight: model.highlights.colorMultiply(for: nil),
             equilibriumHighlight: model.highlights.colorMultiply(for: .chartEquilibrium),
-            topChartYLabel: "Concentration"
+            topChartYLabel: "Concentration",
+            kTerm: "K",
+            accessibilityQuotient: model.components.quotient
         )
     }
 }
@@ -214,7 +225,8 @@ private extension SolubilityComponents {
                 equation: equation.concentration.value(for: element),
                 color: element.color,
                 discontinuity: concentrationDiscontinuity?.value(for: element),
-                legendValue: reaction.product(for: element)
+                legendValue: reaction.product(for: element),
+                accessibilityValue: equation.concentration.value(for: element)
             )
         }).all
     }
@@ -237,13 +249,17 @@ private extension SolubleReactionType {
 }
 
 private extension ReactionComponents {
-    var concentrationData: [MultiConcentrationPlotData] {
-        MoleculeValue(builder: { molecule in
+
+    func concentrationData(usePressureForAccessibility: Bool = false) -> [MultiConcentrationPlotData] {
+        let accessibilityEq = usePressureForAccessibility ? equation.pressure : equation.concentration
+
+        return MoleculeValue(builder: { molecule in
             MultiConcentrationPlotData(
                 equation: equation.concentration.value(for: molecule),
                 color: molecule.color,
                 discontinuity: moleculeChartDiscontinuities?.value(for: molecule),
-                legendValue: molecule.rawValue
+                legendValue: molecule.rawValue,
+                accessibilityValue: accessibilityEq.value(for: molecule)
             )
         }).all
     }

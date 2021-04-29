@@ -19,6 +19,9 @@ struct QuotientPlot: View {
     let offset: CGFloat
     let discontinuity: CGPoint?
 
+    let kTerm: String
+    let accessibilityValue: Equation
+
     let settings: ReactionEquilibriumChartsLayoutSettings
 
     var body: some View {
@@ -35,7 +38,7 @@ struct QuotientPlot: View {
                 Text("Time")
                     .accessibility(hidden: true)
             }
-            Text("K")
+            Text(kTerm)
                 .foregroundColor(.orangeAccent)
                 .frame(width: settings.yAxisWidthLabelWidth, height: settings.size)
                 .fixedSize()
@@ -52,24 +55,24 @@ struct QuotientPlot: View {
         .accessibilitySetCurrentTimeAction(
             currentTime: $currentTime,
             canSetTime: canSetCurrentTime,
-            initialTime: initialTime,
+            initialTime: discontinuity?.x ?? 0,
             finalTime: finalTime
         )
     }
 
     private var label: String {
-        "Graph showing time vs quotient, with a horizontal line for K"
+        "Graph showing time vs quotient, with a horizontal line for \(kTerm)"
     }
 
     private func getAccessibilityValue(forTime time: CGFloat) -> String {
         guard showData else {
             return "no data"
         }
-        let quotient = equation.getY(at: time).str(decimals: 2)
+        let quotient = accessibilityValue.getY(at: time).str(decimals: 2)
         let timeString = time.str(decimals: 1)
-        let k = equilibriumConstant.str(decimals: 2)
+        let k = accessibilityValue.getY(at: finalTime + offset).str(decimals: 2)
 
-        return "Time \(timeString), quotient \(quotient), K \(k)"
+        return "Time \(timeString), quotient \(quotient), \(kTerm) \(k)"
     }
 
     private var annotatedChart: some View {
@@ -155,6 +158,8 @@ struct QuotientPlot_Previews: PreviewProvider {
             showData: true,
             offset: 0,
             discontinuity: nil,
+            kTerm: "K",
+            accessibilityValue: ConstantEquation(value: 0),
             settings: ReactionEquilibriumChartsLayoutSettings(
                 size: 300,
                 maxYAxisValue: 1

@@ -10,6 +10,7 @@ struct MultiConcentrationPlotData {
     let color: Color
     let discontinuity: CGPoint?
     let legendValue: String
+    let accessibilityValue: Equation
 }
 
 struct MultiConcentrationPlot: View {
@@ -61,7 +62,7 @@ struct MultiConcentrationPlot: View {
         .accessibilitySetCurrentTimeAction(
             currentTime: $currentTime,
             canSetTime: canSetCurrentTime,
-            initialTime: initialTime,
+            initialTime: quotientChartDiscontinuity?.x ?? 0,
             finalTime: finalTime
         )
     }
@@ -104,7 +105,7 @@ struct MultiConcentrationPlot: View {
     private var label: String {
         let lineNames = values.map(\.legendValue)
         let lineString = StringUtil.combineStringsWithFinalAnd(lineNames)
-        return "Graph showing time vs concentration of \(lineString)"
+        return "Graph showing time vs \(yLabel) of \(lineString)"
     }
 
     private func getAccessibilityValue(forTime time: CGFloat) -> String {
@@ -112,10 +113,10 @@ struct MultiConcentrationPlot: View {
             return "no data"
         }
         let concentrations = values.map { value -> String in
-            let concentration = value.equation.getY(at: time).str(decimals: 2)
+            let concentration = value.accessibilityValue.getY(at: time).str(decimals: 2)
             return "\(value.legendValue) \(concentration)"
         }
-        let concentrationString = StringUtil.combineStringsWithFinalAnd(concentrations)
+        let concentrationString = StringUtil.combineStrings(concentrations)
         return "time \(time.str(decimals: 1)), \(concentrationString)"
     }
 
@@ -201,7 +202,8 @@ struct MultiConcentrationPlot_Previews: PreviewProvider {
                     equation: $0,
                     color: .red,
                     discontinuity: nil,
-                    legendValue: "A"
+                    legendValue: "A",
+                    accessibilityValue: $0
                 )
             },
             equilibriumTime: 15,
