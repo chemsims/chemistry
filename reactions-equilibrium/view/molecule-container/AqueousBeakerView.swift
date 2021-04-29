@@ -136,12 +136,68 @@ struct AqueousBeakerView: View {
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
+            .modifier(AddReactantsModifier(enabled: model.inputState == .addReactants, doAdd: manualAddMolecule))
+            .modifier(AddProductsModifier(enabled: model.inputState == .addProducts, doAdd: manualAddMolecule))
         }
+    }
+
+    private func manualAddMolecule(molecule: AqueousMolecule, amount: Int) {
+        model.increment(molecule: molecule, count: amount)
     }
 
     private var topOfWaterPosition: CGFloat {
         let topFromSlider = settings.sliderAxis.getPosition(at: model.rows)
         return settings.height - settings.sliderHeight + topFromSlider
+    }
+}
+
+private struct AddReactantsModifier: ViewModifier {
+    let enabled: Bool
+    let doAdd: (AqueousMolecule, Int) -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .modifier(AddToBeakerAccessibilityModifier(enabled: enabled, molecule: .A, doAdd: doAdd))
+            .modifier(AddToBeakerAccessibilityModifier(enabled: enabled, molecule: .B, doAdd: doAdd))
+    }
+}
+
+private struct AddProductsModifier: ViewModifier {
+    let enabled: Bool
+    let doAdd: (AqueousMolecule, Int) -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .modifier(AddToBeakerAccessibilityModifier(enabled: enabled, molecule: .C, doAdd: doAdd))
+            .modifier(AddToBeakerAccessibilityModifier(enabled: enabled, molecule: .D, doAdd: doAdd))
+    }
+}
+
+private struct AddToBeakerAccessibilityModifier: ViewModifier {
+    let enabled: Bool
+    let molecule: AqueousMolecule
+    let doAdd: (AqueousMolecule, Int) -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .modifier(AddSingleCountToBeakerAccessibilityModifier(enabled: enabled, molecule: molecule, count: 5, doAdd: doAdd))
+            .modifier(AddSingleCountToBeakerAccessibilityModifier(enabled: enabled, molecule: molecule, count: 15, doAdd: doAdd))
+    }
+}
+
+private struct AddSingleCountToBeakerAccessibilityModifier: ViewModifier {
+
+    let enabled: Bool
+    let molecule: AqueousMolecule
+    let count: Int
+    let doAdd: (AqueousMolecule, Int) -> Void
+
+    func body(content: Content) -> some View {
+        content.modifyIf(enabled) {
+            $0.accessibilityAction(named: Text("Add \(count) of \(molecule.rawValue) to the beaker")) {
+                doAdd(molecule, count)
+            }
+        }
     }
 }
 

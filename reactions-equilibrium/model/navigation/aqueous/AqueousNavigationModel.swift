@@ -147,6 +147,7 @@ private class PreRunAnimationState: AqueousScreenState {
         model.inputState = .none
         model.showQuotientLine = true
         model.stopShaking()
+        model.highlightedElements.clear()
         DeferScreenEdgesState.shared.deferEdges = []
     }
 
