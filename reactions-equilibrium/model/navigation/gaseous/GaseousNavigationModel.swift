@@ -180,6 +180,7 @@ private class RunReaction: GaseousScreenState {
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
+        model.highlightedElements.clear()
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = timing.start
             model.reactionDefinitionDirection = .none
