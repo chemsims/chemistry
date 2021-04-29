@@ -241,17 +241,6 @@ private struct QuizScreenWithSettings: View {
     }
 }
 
-fileprivate extension View {
-    @ViewBuilder
-    func ifTrue<T: View>(_ condition: Bool, apply: (Self) -> T) -> some View {
-        if condition {
-            apply(self)
-        } else {
-            self
-        }
-    }
-}
-
 private struct NotificationView: View {
 
     @Binding var isShowing: Bool

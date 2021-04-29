@@ -108,7 +108,7 @@ struct AddMoleculesView: View {
         bottomY: CGFloat
     ) {
         guard model.activeMolecule != molecule else {
-            model.models.value(for: molecule).manualAdd(amount: manualAddAmount)
+            manualAdd(molecule: molecule, amount: manualAddAmount)
             return
         }
         
@@ -128,6 +128,10 @@ struct AddMoleculesView: View {
             halfYRange: containerHeight
         )
         onDrag()
+    }
+
+    private func manualAdd(molecule: AqueousMolecule, amount: Int) {
+        model.models.value(for: molecule).manualAdd(amount: amount)
     }
 }
 

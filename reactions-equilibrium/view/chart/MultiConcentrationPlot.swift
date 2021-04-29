@@ -111,7 +111,7 @@ struct MultiConcentrationPlot: View {
             return "\(value.legendValue) \(concentration)"
         }
         let concentrationString = StringUtil.combineStringsWithFinalAnd(concentrations)
-        return "time \(time), \(concentrationString)"
+        return "time \(time.str(decimals: 1)), \(concentrationString)"
     }
 
     private var allData: [TimeChartDataLine] {

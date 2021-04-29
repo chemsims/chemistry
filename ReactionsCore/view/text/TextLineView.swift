@@ -74,9 +74,7 @@ public struct TextLinesView: View {
     }
 
     private var label: String {
-        lines.reduce("") { (acc, next) in
-            acc + "\n" + next.label
-        }
+        lines.label
     }
 
     private func lineView(_ line: TextLine) -> Text {

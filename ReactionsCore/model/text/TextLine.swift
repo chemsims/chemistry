@@ -77,6 +77,17 @@ extension TextLine {
 
 }
 
+extension Array where Element == TextLine {
+    public var label: String {
+        if let firstLine = first {
+            return dropFirst().reduce(firstLine.label) { acc, next in
+                acc + "\n" + next.label
+            }
+        }
+        return ""
+    }
+}
+
 /// An individual segment of a line, including whether the content should
 /// appear emphasised.
 public struct TextSegment: Equatable {

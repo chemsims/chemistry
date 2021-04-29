@@ -157,11 +157,14 @@ class AqueousReactionViewModel: ObservableObject {
         }
         let canAddComplement = componentsWrapper.canIncrement(molecule: molecule.complement)
 
-        statement = StatementUtil.hasAddedEnough(
+
+        let enoughStatement = StatementUtil.hasAddedEnough(
             of: molecule.rawValue,
             complement: molecule.complement.rawValue,
             canAddComplement: canAddComplement
         )
+        statement = enoughStatement
+        UIAccessibility.post(notification: .announcement, argument: statement.label)
     }
 
     private var hasAddedEnoughProduct: Bool {
