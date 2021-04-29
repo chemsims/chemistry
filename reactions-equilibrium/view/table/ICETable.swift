@@ -37,9 +37,14 @@ private struct SizedICETable: View {
         HStack(spacing: 0) {
             VStack(spacing: 0) {
                 cell("ICE")
+                    .accessibility(label: Text("ICE Table"))
+                    .accessibility(addTraits: .isHeader)
                 cell("Initial")
+                    .accessibility(hidden: true)
                 cell("Change")
+                    .accessibility(hidden: true)
                 cell("Final")
+                    .accessibility(hidden: true)
             }
             ForEach(0..<columns.count, id: \.self) { i in
                 column(index: i)
@@ -63,9 +68,15 @@ private struct SizedICETable: View {
         return VStack(spacing: 0) {
             cell(columnValue.header)
                 .animation(nil)
+                .accessibility(hidden: true)
             cell(initial)
+                .accessibility(label: Text("Initial \(columnValue.header)"))
+
             cell(changeString, emphasise: true)
+                .accessibility(label: Text("Change in \(columnValue.header)"))
+
             cell(final, emphasise: true)
+                .accessibility(label: Text("Final \(columnValue.header)"))
         }
     }
 
@@ -81,6 +92,7 @@ private struct SizedICETable: View {
                 Rectangle()
                     .stroke()
             )
+            .accessibility(value: Text(text))
     }
 }
 
