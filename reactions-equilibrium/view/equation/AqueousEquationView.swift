@@ -20,6 +20,8 @@ struct AqueousEquationView: View {
     let quotientToConcentrationDefinitionHighlight: Color
     let quotientToEquilibriumConstantDefinitionHighlight: Color
 
+    let propertyAccessibilityLabel: String
+
     let maxWidth: CGFloat
     let maxHeight: CGFloat
 
@@ -41,7 +43,8 @@ struct AqueousEquationView: View {
                 formatElementName: formatElementName,
                 generalElementHighlight: generalElementHighlight,
                 quotientToCHighlight: quotientToConcentrationDefinitionHighlight,
-                quotientToEqHighlight: quotientToEquilibriumConstantDefinitionHighlight
+                quotientToEqHighlight: quotientToEquilibriumConstantDefinitionHighlight,
+                propertyAccessibilityLabel: propertyAccessibilityLabel
             )
         }
         .frame(width: maxWidth, height: maxHeight)
@@ -64,12 +67,15 @@ private struct UnscaledAqueousEquationView: View {
     let quotientToCHighlight: Color
     let quotientToEqHighlight: Color
 
+    let propertyAccessibilityLabel: String
+
     var body: some View {
         VStack(spacing: 1) {
             HStack(spacing: 40) {
                 QuotientDefinitionView(
                     coefficients: coefficients,
-                    formatName: formatElementName
+                    formatName: formatElementName,
+                    propertyAccessibilityLabel: propertyAccessibilityLabel
                 )
                 .colorMultiply(
                     quotientToCHighlight
@@ -111,7 +117,8 @@ private struct UnscaledAqueousEquationView: View {
                     equations: equations,
                     coefficients: coefficients,
                     quotient: quotient,
-                    currentTime: currentTime
+                    currentTime: currentTime,
+                    propertyAccessibilityLabel: propertyAccessibilityLabel
                 )
                 .colorMultiply(generalElementHighlight)
                 Spacer()
@@ -136,6 +143,7 @@ private struct QuotientDefinitionView: View {
 
     let coefficients: BalancedReactionCoefficients
     let formatName: (String) -> String
+    let propertyAccessibilityLabel: String
 
     var body: some View {
         HStack(spacing: 4) {
@@ -154,7 +162,7 @@ private struct QuotientDefinitionView: View {
         func moleculeLabel(_ molecule: AqueousMolecule) -> String {
             let coeff = coefficients.value(for: molecule)
             let power = coeff == 1 ? "" : " to the power of \(coeff)"
-            return "concentration of \(molecule.rawValue)\(power)"
+            return "\(propertyAccessibilityLabel) of \(molecule.rawValue)\(power)"
         }
 
         return """
@@ -213,7 +221,14 @@ private struct QuotientEqualsKView: View {
                 .frame(width: EquationSizing.boxWidth)
         }
         .accessibilityElement(children: .ignore)
-        .accessibility(label: Text("Q equals \(kTerm)"))
+        .accessibility(label: Text(label))
+        .accessibility(addTraits: .updatesFrequently)
+    }
+
+    private var label: String {
+        let quotient = self.quotient.getY(at: currentTime)
+        let symbol = QuotientEqualitySign.formatEquals(quotient: quotient, convergedQuotient: convergedQuotient)
+        return "Q \(symbol) \(kTerm)"
     }
 }
 
@@ -224,6 +239,7 @@ private struct FilledQuotientDefinitionView: View {
     let coefficients: MoleculeValue<Int>
     let quotient: Equation
     let currentTime: CGFloat
+    let propertyAccessibilityLabel: String
 
     var body: some View {
         HStack(spacing: 4) {
@@ -273,7 +289,7 @@ private struct FilledQuotientDefinitionView: View {
                 equation: equations.value(for: molecule),
                 formatter: { "(\($0.str(decimals: 2)))" }
             )
-            .accessibility(label: Text("Concentration of \(molecule.rawValue)"))
+            .accessibility(label: Text("\(propertyAccessibilityLabel) of \(molecule.rawValue)"))
 
             FixedText("\(coeff)")
                 .offset(y: -10)
@@ -339,6 +355,13 @@ struct QuotientEqualitySign: View {
     }
 
     private func formatEquals(at quotient: CGFloat) -> String {
+        Self.formatEquals(quotient: quotient, convergedQuotient: convergedQuotient)
+    }
+
+    static func formatEquals(
+        quotient: CGFloat,
+        convergedQuotient: CGFloat
+    ) -> String {
         let roundedQuotient = quotient.rounded(decimals: 2)
         let roundedConverged = convergedQuotient.rounded(decimals: 2)
 
@@ -409,6 +432,7 @@ struct AqueousEquationView_Previews: PreviewProvider {
             generalElementHighlight: .white,
             quotientToConcentrationDefinitionHighlight: .white,
             quotientToEquilibriumConstantDefinitionHighlight: .white,
+            propertyAccessibilityLabel: "",
             maxWidth: 400,
             maxHeight: 65
         )
@@ -426,7 +450,8 @@ struct AqueousEquationView_Previews: PreviewProvider {
             },
             generalElementHighlight: .white,
             quotientToCHighlight: .white,
-            quotientToEqHighlight: .white
+            quotientToEqHighlight: .white,
+            propertyAccessibilityLabel: ""
         )
         .border(Color.black)
         .frame(width: NaturalWidth, height: NaturalHeight)

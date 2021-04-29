@@ -123,6 +123,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             generalElementHighlight: generalElementHighlight,
             quotientToConcentrationDefinitionHighlight: quotientToConcentrationDefinitionHighlight,
             quotientToEquilibriumConstantDefinitionHighlight: quotientToEquilibriumConstantDefinitionHighlight,
+            propertyAccessibilityLabel: isPressure ? "pressure" : "concentration",
             maxWidth: settings.equationWidth,
             maxHeight: settings.equationHeight
         )
