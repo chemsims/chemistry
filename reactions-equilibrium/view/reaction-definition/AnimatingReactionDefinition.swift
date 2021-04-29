@@ -52,7 +52,10 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
             elements
             bottomMolecules
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
     }
+
 
     private var topMolecules: some View {
         ZStack(alignment: .leading) {
@@ -106,6 +109,35 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibility(label: Text(label(lhs, rhs)))
+    }
+
+    private var label: String {
+        let lhs = label(.A, .B)
+        let rhs = label(.C, .D)
+        let base = "Reaction definition, \(lhs), double sided arrow, \(rhs)."
+
+        return "\(base). \(arrowLabel). \(moleculeMovementLabel)"
+    }
+
+    private var arrowLabel: String {
+        if direction.runForward && direction.runReverse {
+            return "top arrow is moving to the right and bottom arrow is moving to the left"
+        } else if direction.runForward {
+            return "top arrow is moving to the right"
+        } else if direction.runReverse {
+            return "bottom arrow is moving to the left"
+        }
+        return ""
+    }
+
+    private var moleculeMovementLabel: String {
+        if direction.runForward && direction.runReverse {
+            return """
+            Molecules on the left side are turning into molecules on the right side above the text.
+            The reverse motion is happening at the same speed below the text.
+            """
+        }
+        return ""
     }
 
     private func label(_ lhs: AqueousMolecule, _ rhs: AqueousMolecule) -> String {

@@ -24,24 +24,6 @@ struct AnimatingDoubleSidedArrow: View {
                 DoubleArrow(width: width)
             }
         }
-        .accessibilityElement(children: .ignore)
-        .accessibility(label: Text("Double sided arrow"))
-
-        .accessibility(value: Text(value))
-    }
-
-    private var value: String {
-        let top = "top arrow is moving right"
-        let bottom = "bottom arrow is moving left"
-
-        if runForward && runReverse {
-            return "\(top) and \(bottom)"
-        } else if runForward {
-            return top
-        } else if runReverse {
-            return bottom
-        }
-        return ""
     }
 
     private var topArrowRunning: some View {
