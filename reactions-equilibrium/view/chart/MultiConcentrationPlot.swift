@@ -58,6 +58,12 @@ struct MultiConcentrationPlot: View {
             x: currentTime,
             format: getAccessibilityValue
         )
+        .accessibilitySetCurrentTimeAction(
+            currentTime: $currentTime,
+            canSetTime: canSetCurrentTime,
+            initialTime: initialTime,
+            finalTime: finalTime
+        )
     }
 
     private var labelledChart: some View {

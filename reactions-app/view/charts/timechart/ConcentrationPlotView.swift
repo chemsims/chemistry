@@ -118,7 +118,7 @@ struct ConcentrationPlotView: View {
         .frame(width: settings.chartSize, height: settings.chartSize)
         .accessibilityElement()
         .modifier(currentValueModifier)
-        .accessibilityAdjustableAction { direction in
+        .accessibilityAdjustableAction { direction in // TODO use the accessibilitySetCurrentTimeAction modifier in reactions core
             guard canSetCurrentTime else {
                 return
             }
