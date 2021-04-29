@@ -69,6 +69,7 @@ private struct LeftStack: View {
                 settings: settings.pressureBeakerSettings
             )
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var reactionDefinition: some View {

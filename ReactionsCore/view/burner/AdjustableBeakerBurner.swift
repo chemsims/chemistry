@@ -5,7 +5,6 @@
 
 import SwiftUI
 
-// TODO - make the accessibility value not optional
 public struct AdjustableBeakerBurner: View {
 
     @Binding var temp: CGFloat
@@ -13,7 +12,7 @@ public struct AdjustableBeakerBurner: View {
     let useHaptics: Bool
     let highlightSlider: Bool
     let showFlame: Bool
-    let sliderAccessibilityValue: String?
+    let sliderAccessibilityValue: String
 
     let generalColorMultiply: Color
     let sliderColorMultiply: Color
@@ -26,7 +25,7 @@ public struct AdjustableBeakerBurner: View {
         useHaptics: Bool,
         highlightSlider: Bool,
         showFlame: Bool,
-        sliderAccessibilityValue: String?,
+        sliderAccessibilityValue: String,
         generalColorMultiply: Color,
         sliderColorMultiply: Color,
         settings: AdjustableBeakerBurnerSettings
@@ -50,9 +49,11 @@ public struct AdjustableBeakerBurner: View {
                 settings: settings.burnerSettings
             )
             .colorMultiply(generalColorMultiply)
+            .accessibility(hidden: true)
 
             slider
         }
+        .accessibilityElement(children: .combine)
     }
 
     private var slider: some View {
@@ -78,7 +79,7 @@ public struct AdjustableBeakerBurner: View {
         )
         .padding(.top, settings.sliderTopPadding)
         .accessibility(label: Text("Input for temperature in Kelvin"))
-        .accessibility(value: Text(sliderAccessibilityValue ?? ""))
+        .accessibility(value: Text(sliderAccessibilityValue))
         .colorMultiply(sliderColorMultiply)
 
     }
