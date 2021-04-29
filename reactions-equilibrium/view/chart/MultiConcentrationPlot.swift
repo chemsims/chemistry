@@ -41,12 +41,22 @@ struct MultiConcentrationPlot: View {
                 .fixedSize()
                 .frame(width: settings.yAxisWidthLabelWidth)
                 .zIndex(1)
+                .accessibility(hidden: true)
 
             VStack(spacing: settings.axisLabelGapFromAxis) {
                 labelledChart
+                    .accessibilityElement()
+                    .accessibility(label: Text(label))
+                    .updatingAccessibilityValue(
+                        x: currentTime,
+                        format: getAccessibilityValue
+                    )
+                    .accessibility(addTraits: .isHeader)
+
                 Text("Time")
                     .font(.system(size: settings.axisLabelFontSize))
                     .frame(height: settings.xAxisLabelHeight)
+                    .accessibility(hidden: true)
             }
         }
     }
@@ -56,6 +66,7 @@ struct MultiConcentrationPlot: View {
             equilibriumHighlight
             chart
             legend
+                .accessibility(hidden: true)
         }
         .frame(width: settings.size, height: settings.size)
     }
@@ -83,6 +94,24 @@ struct MultiConcentrationPlot: View {
             minDragTime: minDragTime,
             activeIndex: activeIndex
         )
+    }
+
+    private var label: String {
+        let lineNames = values.map(\.legendValue)
+        let lineString = StringUtil.combineStringsWithFinalAnd(lineNames)
+        return "Graph showing time vs concentration of \(lineString)"
+    }
+
+    private func getAccessibilityValue(forTime time: CGFloat) -> String {
+        guard showData else {
+            return "no data"
+        }
+        let concentrations = values.map { value -> String in
+            let concentration = value.equation.getY(at: time).str(decimals: 2)
+            return "\(value.legendValue) \(concentration)"
+        }
+        let concentrationString = StringUtil.combineStringsWithFinalAnd(concentrations)
+        return "time \(time), \(concentrationString)"
     }
 
     private var allData: [TimeChartDataLine] {

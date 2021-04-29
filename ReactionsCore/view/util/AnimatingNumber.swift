@@ -109,7 +109,12 @@ public struct AccessibleValueModifier: AnimatableModifier {
 }
 
 extension View {
-    public func updatingAccessibilityValue(x: CGFloat, format: @escaping (CGFloat) -> String) -> some View {
+
+    /// Adds an accessibility value which is a function of the input `x`
+    public func updatingAccessibilityValue(
+        x: CGFloat,
+        format: @escaping (CGFloat) -> String
+    ) -> some View {
         self.modifier(AccessibleValueModifier(x: x, format: format))
     }
 }

@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-public struct TimeChartMultiDataLineView: View {
+struct TimeChartMultiDataLineView: View {
 
     let data: [TimeChartDataLine]
     let settings: TimeChartLayoutSettings
@@ -25,7 +25,7 @@ public struct TimeChartMultiDataLineView: View {
     let minDragTime: CGFloat?
     let activeIndex: Int?
 
-    public init(
+    init(
         data: [TimeChartDataLine],
         settings: TimeChartLayoutSettings,
         initialTime: CGFloat,
@@ -55,7 +55,7 @@ public struct TimeChartMultiDataLineView: View {
         self.activeIndex = activeIndex
     }
 
-    public var body: some View {
+    var body: some View {
         ZStack {
             ForEach(0..<data.count, id: \.self) { i in
                 TimeChartDataLineView(

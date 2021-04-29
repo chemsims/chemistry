@@ -15,6 +15,8 @@ public struct StringUtil {
     /// // returns "a, b, c and d"
     /// combineStringsWithFinalAnd(["a", "b", "c", "d"])
     /// ```
+    ///
+    /// - Parameter elements: The elements to combine
     public static func combineStringsWithFinalAnd(
         _ elements: [String]
     ) -> String {
@@ -24,10 +26,24 @@ public struct StringUtil {
             return elements.first!
         }
 
-        let withoutLastElement = elements.dropFirst().dropLast().reduce(elements.first!) {
+        let withoutLastElement = combineStrings(elements.dropLast())
+        return "\(withoutLastElement) and \(elements.last!)"
+    }
+
+    /// Combines strings using commas
+    ///
+    /// ```
+    /// // returns "a, b, c, d"
+    /// combineStrings(["a", b", "c", "d"])
+    /// ```
+    ///
+    /// - Parameter elements: The elements to combine
+    public static func combineStrings(_ elements: [String]) -> String {
+        if elements.isEmpty {
+            return ""
+        }
+        return elements.dropFirst().reduce(elements.first!) {
             $0 + ", \($1)"
         }
-
-        return "\(withoutLastElement) and \(elements.last!)"
     }
 }
