@@ -48,6 +48,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
             selectionView
                 .opacity(isToggled ? 1 : 0)
             indicatorView
+                .accessibility(sortPriority: 2)
         }
         .lineLimit(1)
         .frame(width: height, alignment: .trailing)
@@ -59,6 +60,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         VStack(spacing: 0) {
             textBox(text: title)
                 .border(Color.black)
+                .accessibility(addTraits: .isHeader)
             VStack(spacing: 0) {
                 ForEach(options) { option in
                     selection(option)
@@ -71,6 +73,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         .background(Color.white)
         .font(.system(size: height * 0.44))
         .minimumScaleFactor(0.8)
+        .accessibilityElement(children: .contain)
     }
 
     private func selection(

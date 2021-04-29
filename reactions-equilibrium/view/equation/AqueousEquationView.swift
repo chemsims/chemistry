@@ -83,7 +83,6 @@ private struct UnscaledAqueousEquationView: View {
                             quotientToCHighlight
                         )
                 )
-                .accessibility(addTraits: .isHeader)
 
                 Spacer()
                     .frame(height: 10)

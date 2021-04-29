@@ -107,6 +107,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             reactionToggleHighlight: reactionToggleHighlight,
             settings: settings
         )
+        .accessibility(sortPriority: -1)
     }
 
     private var equation: some View {

@@ -15,9 +15,8 @@ extension SelectableReaction {
         "\(reactantDisplay) ⇌ \(productDisplay)"
     }
 
-    // TODO
     var label: String {
-        displayName
+        "\(reactantDisplay), double-sided arrow, \(productDisplay)"
     }
 }
 
