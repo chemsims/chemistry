@@ -26,7 +26,15 @@ struct ReactionDefinitionView<Reaction: SelectableReaction>: View {
     }
 
     private var label: String {
-        "\(type.reactantLabel) double-sided arrow \(type.productLabel)"
+        var base = "\(type.reactantLabel) double-sided arrow \(type.productLabel)"
+        if runForwardArrow && runReverseArrow {
+            base.append(", top arrow is moving to the right and bottom arrow is moving to the left")
+        } else if runForwardArrow {
+            base.append(", top arrow is moving to the right")
+        } else if runReverseArrow {
+            base.append(", bottom arrow is moving to the left")
+        }
+        return base
     }
 }
 
