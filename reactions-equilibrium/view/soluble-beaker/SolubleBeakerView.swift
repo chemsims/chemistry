@@ -69,16 +69,26 @@ private struct SolubleBeakerViewWithGeometry: View {
                 container(solute: .acid, index: 2)
 
                 // NB: There was a strange bug when conditionally including this view, which
-                // causes it to now show, and container opacity to remain < 1, when navigating back
+                // causes it to not show, and container opacity to remain < 1, when navigating back
                 // and forward quickly on the add solute state
                 milligramsLabel
                     .opacity(showMilligramsLabel ? 1 : 0)
                         .zIndex(2)
 
             }
+            .accessibilityElement(children: .ignore)
+            .accessibility(label: Text(containerLabel))
             Spacer()
         }
         .frame(width: settings.soluble.beaker.beaker.innerBeakerWidth)
+    }
+
+    private var containerLabel: String {
+        let salt = model.selectedReaction.products.salt
+        let commonSalt = model.selectedReaction.products.commonSalt
+        let acid = "H+"
+        let all = StringUtil.combineStringsWithFinalAnd([salt, commonSalt, acid])
+        return "Three containers for solutes \(all)"
     }
 
     private var showMilligramsLabel: Bool {
@@ -104,14 +114,6 @@ private struct SolubleBeakerViewWithGeometry: View {
         }
     }
 
-    private var beakerLabelValue: String? {
-        model.beakerLabel.value(at: model.currentTime, model: model)
-    }
-
-    private func getBeakerLabelValue(at time: CGFloat) -> String {
-        model.beakerLabel.value(at: time, model: model) ?? ""
-    }
-
     private var slider: some View {
         CustomSlider(
             value: $model.waterHeightFactor,
@@ -121,7 +123,14 @@ private struct SolubleBeakerViewWithGeometry: View {
             settings: settings.common.sliderSettings,
             disabled: model.inputState != .setWaterLevel,
             useHaptics: true,
-            formatAccessibilityValue: { $0.percentage }
+            formatAccessibilityValue: {
+                LinearEquation(
+                    x1: 0,
+                    y1: settings.minWaterHeightFraction,
+                    x2: 1,
+                    y2: settings.maxWaterHeightFraction
+                ).getY(at: $0).percentage
+            }
         )
         .frame(
             width: settings.common.sliderSettings.handleWidth,
@@ -135,15 +144,9 @@ private struct SolubleBeakerViewWithGeometry: View {
 
     private var scene: some View {
         ZStack {
-            Rectangle()
-                .opacity(0)
-                .accessibility(label: Text(model.beakerLabel.label))
-                .modifyIf(beakerLabelValue != nil) {
-                    $0.updatingAccessibilityValue(
-                        x: model.currentTime,
-                        format: getBeakerLabelValue
-                    )
-                }
+            // Note - attaching the modifiers from this host view onto the
+            // scene below results in a bug where the scene disappears as of iOS 14.5
+            SolubleBeakerAccessibilityHostView(model: model)
 
             SolubleBeakerSceneRepresentable(
                 size: CGSize(
@@ -294,6 +297,44 @@ extension SolubleBeakerViewWithGeometry {
 private extension ValueWithPrevious where Value == SoluteType? {
     func showSoluteOnTop(_ solute: SoluteType) -> Bool {
         value == solute || (value == nil && oldValue == solute)
+    }
+}
+
+private struct SolubleBeakerAccessibilityHostView: View {
+
+    @ObservedObject var model: SolubilityViewModel
+
+    var body: some View {
+        Rectangle()
+            .opacity(0)
+            .accessibility(label: Text(label))
+            .modifyIf(labelValue != nil) {
+                $0.updatingAccessibilityValue(
+                    x: model.currentTime,
+                    format: getBeakerLabelValue
+                )
+            }
+            .modifyIf(action != nil) {
+                $0.accessibilityAction(named: Text(action!.0)) {
+                    action!.1()
+                }
+            }
+    }
+
+    private var label: String {
+        model.beakerLabel.label(model: model)
+    }
+
+    private var action: (String, () -> Void)? {
+        model.beakerLabel.action(model: model)
+    }
+
+    private var labelValue: String? {
+        model.beakerLabel.value(at: model.currentTime, model: model)
+    }
+
+    private func getBeakerLabelValue(at time: CGFloat) -> String {
+        model.beakerLabel.value(at: time, model: model) ?? ""
     }
 }
 
