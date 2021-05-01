@@ -352,6 +352,7 @@ struct QuotientEqualitySign: View {
             formatter: formatEquals
         )
         .frame(width: 22, height: 30)
+        .accessibility(value: Text("")) // Remove the value, since the symbol is already read out in the label
     }
 
     private func formatEquals(at quotient: CGFloat) -> String {

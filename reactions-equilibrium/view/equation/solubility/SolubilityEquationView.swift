@@ -21,6 +21,7 @@ struct SolubilityEquationView: View {
             }
             .frame(width: geo.size.width, height: geo.size.height)
         }
+        .accessibilityElement(children: .contain)
     }
 }
 
@@ -48,7 +49,8 @@ private struct SizedSolubilityEquationView: View {
                     quotient: model.components.quotient,
                     concentration: model.components.equation.concentration,
                     currentTime: model.currentTime,
-                    showValues: model.equationState == .showCorrectQuotientFilledIn
+                    showValues: model.equationState == .showCorrectQuotientFilledIn,
+                    products: model.selectedReaction.products
                 )
                 .opacity(model.equationState.doShowCorrectQuotient ? 1 : 0)
             }
@@ -100,6 +102,25 @@ private struct QuotientConcentrationDefinition: View {
             }
         }
         .frame(width: 250)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+    }
+
+    private var label: String {
+        let base = """
+        Q equals concentration of \(products.first) times concentration of \(products.second)
+        """
+
+        var denom: String {
+            if isStruckOut && showDenom {
+                return ". Denominator is concentration of \(products.salt), which has been crossed out"
+            } else if !isStruckOut {
+                return ", divide by concentration of \(products.salt)"
+            }
+            return ""
+        }
+
+        return "\(base)\(denom)"
     }
 
     private var content: some View {
@@ -175,6 +196,8 @@ private struct QuotientKspDefinition: View {
             FixedText("Ksp")
                 .frame(width: EquationSizing.boxWidth)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Q equals Ksp"))
     }
 }
 
@@ -184,14 +207,19 @@ private struct QuotientConcentrationBlank: View {
     let concentration: SoluteValues<Equation>
     let currentTime: CGFloat
     let showValues: Bool
+    let products: SolubleProductPair
 
     var body: some View {
         HStack(spacing: 2) {
             term(quotient, parens: false)
+                .accessibility(label: Text("Q"))
             Equals()
             term(concentration.productA)
+                .accessibility(label: Text("concentration of \(products.first)"))
             term(concentration.productB)
+                .accessibility(label: Text("concentration of \(products.second)"))
         }
+        .accessibilityElement(children: .contain)
     }
 
     private func term(_ equation: Equation, parens: Bool = true) -> some View {
@@ -216,6 +244,7 @@ private struct QuotientKspBlank: View {
     var body: some View {
         HStack(spacing: 2) {
             quotientView
+                .accessibility(label: Text("Q"))
             QuotientEqualitySign(
                 currentTime: currentTime,
                 quotient: quotient,
@@ -224,7 +253,10 @@ private struct QuotientKspBlank: View {
             .frame(width: 35)
             FixedText(ksp.str(decimals: 2))
                 .foregroundColor(.orangeAccent)
+                .accessibility(label: Text("Ksp"))
+                .accessibility(value: Text("\(ksp.str(decimals: 2))"))
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var quotientView: some View {
