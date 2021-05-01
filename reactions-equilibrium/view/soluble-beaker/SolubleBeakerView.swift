@@ -104,6 +104,14 @@ private struct SolubleBeakerViewWithGeometry: View {
         }
     }
 
+    private var beakerLabelValue: String? {
+        model.beakerLabel.value(at: model.currentTime, model: model)
+    }
+
+    private func getBeakerLabelValue(at time: CGFloat) -> String {
+        model.beakerLabel.value(at: time, model: model) ?? ""
+    }
+
     private var slider: some View {
         CustomSlider(
             value: $model.waterHeightFactor,
@@ -112,7 +120,8 @@ private struct SolubleBeakerViewWithGeometry: View {
             includeFill: true,
             settings: settings.common.sliderSettings,
             disabled: model.inputState != .setWaterLevel,
-            useHaptics: true
+            useHaptics: true,
+            formatAccessibilityValue: { $0.percentage }
         )
         .frame(
             width: settings.common.sliderSettings.handleWidth,
@@ -121,23 +130,38 @@ private struct SolubleBeakerViewWithGeometry: View {
         .padding(.bottom, settings.soluble.sliderBottomPadding)
         .background(Color.white.padding(-3))
         .colorMultiply(model.highlights.colorMultiply(for: .waterSlider))
+        .accessibility(label: Text("Slider to set height of water in beaker"))
     }
 
     private var scene: some View {
-        SolubleBeakerSceneRepresentable(
-            size: CGSize(
-                width: settings.soluble.beaker.beaker.innerBeakerWidth,
-                height: geometry.size.height
-            ),
-            particlePosition: skParticlePosition,
-            soluteWidth: settings.soluble.soluteWidth,
-            waterHeight: waterHeight,
-            model: model,
-            shouldAddParticle: $shakeModel.shouldAddParticle
-        ).frame(
+        ZStack {
+            Rectangle()
+                .opacity(0)
+                .accessibility(label: Text(model.beakerLabel.label))
+                .modifyIf(beakerLabelValue != nil) {
+                    $0.updatingAccessibilityValue(
+                        x: model.currentTime,
+                        format: getBeakerLabelValue
+                    )
+                }
+
+            SolubleBeakerSceneRepresentable(
+                size: CGSize(
+                    width: settings.soluble.beaker.beaker.innerBeakerWidth,
+                    height: geometry.size.height
+                ),
+                particlePosition: skParticlePosition,
+                soluteWidth: settings.soluble.soluteWidth,
+                waterHeight: waterHeight,
+                model: model,
+                shouldAddParticle: $shakeModel.shouldAddParticle
+            )
+        }
+        .frame(
             width: settings.soluble.beaker.beaker.innerBeakerWidth,
             height: geometry.size.height
         )
+        .accessibilityElement(children: .combine)
     }
 
     private func container(solute: SoluteType, index: Int) -> some View {

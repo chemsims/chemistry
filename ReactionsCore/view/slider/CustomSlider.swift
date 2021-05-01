@@ -22,6 +22,8 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     let useHaptics: Bool
     let disabled: Bool
 
+    let formatAccessibilityValue: (Value) -> String
+
     @available(*, deprecated, message: "Use other initialiser")
     public init(
         value: Binding<Value>,
@@ -33,7 +35,8 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         barColor: Color,
         orientation: Orientation,
         includeFill: Bool,
-        useHaptics: Bool = true
+        useHaptics: Bool = true,
+        formatAccessibilityValue: @escaping (Value) -> String = { $0.str(decimals: 2) }
     ) {
         self._value = value
         self.axis = axis
@@ -50,6 +53,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             axis: axis,
             impactGenerator: UIImpactFeedbackGenerator(style: .light)
         )
+        self.formatAccessibilityValue = formatAccessibilityValue
     }
 
     public init(
@@ -59,7 +63,8 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         includeFill: Bool,
         settings: SliderGeometrySettings,
         disabled: Bool,
-        useHaptics: Bool
+        useHaptics: Bool,
+        formatAccessibilityValue: @escaping (Value) -> String = { $0.str(decimals: 2) }
     ) {
         self.init(
             value: value,
@@ -70,7 +75,8 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             disabled: disabled,
             handleColor: disabled ? .darkGray : .orangeAccent,
             barColor: Styling.energySliderBar,
-            useHaptics: useHaptics
+            useHaptics: useHaptics,
+            formatAccessibilityValue: formatAccessibilityValue
         )
     }
 
@@ -83,7 +89,8 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         disabled: Bool,
         handleColor: Color,
         barColor: Color,
-        useHaptics: Bool
+        useHaptics: Bool,
+        formatAccessibilityValue: @escaping (Value) -> String = { $0.str(decimals: 2) }
     ) {
         self._value = value
         self.axis = axis
@@ -100,6 +107,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             axis: axis,
             impactGenerator: UIImpactFeedbackGenerator(style: .light)
         )
+        self.formatAccessibilityValue = formatAccessibilityValue
     }
 
     private let hapticHandler: SliderHapticsHandler<Value>
@@ -122,7 +130,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
                     axis: axis
                 )
             }
-            .accessibility(value: Text(value.str(decimals: 2)))
+            .accessibility(value: Text(formatAccessibilityValue(value)))
             .accessibilityAdjustableAction { direction in
                 if direction == .increment {
                     setNewValue(newValue: value + axis.accessibilityIncrement)

@@ -42,6 +42,7 @@ final class SolubilityViewModel: ObservableObject {
 
     @Published var showShakeText = false
     @Published var canSetCurrentTime = false
+    @Published var beakerLabel = SolubilityBeakerAccessibilityLabel.clear
 
     var components: SolubilityComponents {
         componentsWrapper.components
