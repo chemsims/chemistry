@@ -57,14 +57,18 @@ private struct SizedSolubilityEquationView: View {
             Spacer()
                 .frame(width: 45)
             VStack(alignment: .leading, spacing: 5) {
-                QuotientKspDefinition()
-                    .frame(height: 90)
-                    .background(Color.white.padding(-5))
-                    .colorMultiply(
-                        model.highlights.colorMultiply(
-                            for: .quotientToKspDefinition
-                        )
+                QuotientKspDefinition(
+                    quotient: model.components.quotient,
+                    currentTime: model.currentTime,
+                    convergedQuotient: model.components.equilibriumConstant
+                )
+                .frame(height: 90)
+                .background(Color.white.padding(-5))
+                .colorMultiply(
+                    model.highlights.colorMultiply(
+                        for: .quotientToKspDefinition
                     )
+                )
 
 
                 QuotientKspBlank(
@@ -188,16 +192,34 @@ private struct CrossOutLine: Shape {
 }
 
 private struct QuotientKspDefinition: View {
+
+    let quotient: Equation
+    let currentTime: CGFloat
+    let convergedQuotient: CGFloat
+
     var body: some View {
         HStack(spacing: 2) {
             FixedText("Q")
                 .frame(width: EquationSizing.boxWidth)
-            Equals()
+            QuotientEqualitySign(
+                currentTime: currentTime,
+                quotient: quotient,
+                convergedQuotient: convergedQuotient
+            )
             FixedText("Ksp")
                 .frame(width: EquationSizing.boxWidth)
         }
         .accessibilityElement(children: .ignore)
-        .accessibility(label: Text("Q equals Ksp"))
+        .accessibility(label: Text(label))
+        .accessibility(addTraits: .updatesFrequently)
+    }
+
+    private var label: String {
+        let symbol = QuotientEqualitySign.formatEquals(
+            quotient: quotient.getY(at: currentTime),
+            convergedQuotient: convergedQuotient
+        )
+        return "Q \(symbol) Ksp"
     }
 }
 

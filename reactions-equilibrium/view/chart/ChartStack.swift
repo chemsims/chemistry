@@ -217,7 +217,7 @@ extension ChartStack {
             generalElementHighlight: model.highlights.colorMultiply(for: nil),
             equilibriumHighlight: model.highlights.colorMultiply(for: .chartEquilibrium),
             topChartYLabel: "Concentration",
-            kTerm: "Ksp",
+            kTerm: "K",
             accessibilityQuotient: model.components.quotient,
             maxDragTime: model.timing.end
         )
