@@ -64,3 +64,14 @@ struct SolubilityChartEquation: Equation {
         }
     }
 }
+
+extension SolubilityChartEquation {
+    var label: String {
+        """
+        Graph showing pH vs solubility profile. The curve looks like a quadratic curve, with a minimum \
+        point at \(phAtMinSolubility.percentage) along the pH axis and \(minSolubility.percentage) up \
+        the solubility axis. The curve starts \(zeroPhSolubility.percentage) up the solubility axis on the left, \
+        and ends \(maxPhSolubility.percentage) up the solubility axis on the right.
+        """
+    }
+}

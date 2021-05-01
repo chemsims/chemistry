@@ -56,15 +56,18 @@ private struct SolubilityChartWithGeometry: View {
                 .fixedSize()
                 .rotationEffect(.degrees(-90))
                 .frame(width: yAxisWidth, height: plotHeight)
+                .accessibility(hidden: true)
 
             VStack(alignment: .leading, spacing: 0) {
                 plotArea
                 Text("pH")
                     .fixedSize()
                     .frame(width: plotWidth, height: xAxisHeight)
+                    .accessibility(hidden: true)
             }
         }
         .minimumScaleFactor(0.8)
+        .accessibilityElement(children: .contain)
     }
 
     private var plotArea: some View {
@@ -77,8 +80,12 @@ private struct SolubilityChartWithGeometry: View {
             .stroke(lineWidth: lineWidth)
 
             plotLines
+                .accessibility(sortPriority: 2)
 
             plotIndicatorHead
+                .accessibility(label: Text("Reaction position on ph-solubility curve"))
+                .updatingAccessibilityValue(x: currentTime, format: chartLineLabel)
+                .accessibility(sortPriority: 1)
         }
         .frame(width: plotWidth, height: plotHeight)
     }
@@ -111,7 +118,30 @@ private struct SolubilityChartWithGeometry: View {
             )
             .stroke(lineWidth: lineWidth)
             .foregroundColor(.red)
+            .accessibility(label: Text(curve.label))
         }
+    }
+
+    private func chartLineLabel(at time: CGFloat) -> String {
+        let rawPh = ph.getY(at: time)
+        let rawSol = solubility.getY(at: time)
+
+        let phPerc = rawPh.percentage
+        let solPerc = rawSol.percentage
+        var label = "Ph \(phPerc) along x axis, solubility \(solPerc) up y axis. "
+
+        let curveSolubility = curve.getY(at: rawPh)
+        let delta = curveSolubility - rawSol
+
+        if abs(delta) < 0.01 {
+            label.append(" solubility is equal to the ph-solubility profile curve.")
+        } else if delta < 0 {
+            label.append(" solubility is above the ph-solubility profile curve.")
+        } else {
+            label.append(" solubility is below the ph-solubility profile curve")
+        }
+
+        return label
     }
 
     private var phAxis: AxisPositionCalculations<CGFloat> {
