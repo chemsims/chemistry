@@ -21,6 +21,7 @@ struct SolubilityQuotientRecapEquations: View {
             }
             .frame(width: geo.size.width, height: geo.size.height)
         }
+        .accessibilityElement(children: .contain)
     }
 }
 
@@ -47,7 +48,8 @@ private struct AqueousQuotientRecap: View {
         GeneralRecap(
             products: products,
             title: "Aqueous compounds",
-            elementType: "aq"
+            elementType: "aq",
+            propertyLabel: "concentration"
         ) { element in
             FixedText("[\(element)]")
         }
@@ -62,7 +64,8 @@ private struct GaseousQuotientRecap: View {
         GeneralRecap(
             products: products,
             title: "Gaseous compounds",
-            elementType: "g"
+            elementType: "g",
+            propertyLabel: "pressure"
         ) { element in
             HStack(alignment: .bottom, spacing: 0) {
                 FixedText("P")
@@ -78,6 +81,7 @@ private struct GeneralRecap<Content: View>: View  {
     let products: SolubleProductPair
     let title: String
     let elementType: String
+    let propertyLabel: String
     let formatElement: (String) -> Content
 
 
@@ -85,9 +89,11 @@ private struct GeneralRecap<Content: View>: View  {
         VStack(spacing: 5) {
             FixedText(title)
                 .foregroundColor(.orangeAccent)
+                .accessibility(addTraits: .isHeader)
             decomposition
             quotient
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var decomposition: some View {
@@ -98,6 +104,15 @@ private struct GeneralRecap<Content: View>: View  {
             FixedText("+")
             elementWithType(products.second)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(decompositionLabel))
+    }
+
+    private var decompositionLabel: String {
+        func element(_ kp: KeyPath<SolubleProductPair, String>) -> String {
+            "\(products[keyPath: kp]) \(elementType)"
+        }
+        return "\(element(\.salt)) produces \(element(\.first)) + \(element(\.second))"
     }
 
     private var quotient: some View {
@@ -114,6 +129,18 @@ private struct GeneralRecap<Content: View>: View  {
                 formatElement(products.salt)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(quotientLabel))
+    }
+
+    private var quotientLabel: String {
+        func element(_ kp: KeyPath<SolubleProductPair, String>) -> String {
+            "\(propertyLabel) of \(products[keyPath: kp])"
+        }
+        let first = element(\.first)
+        let second = element(\.second)
+        let salt = element(\.salt)
+        return "Q equals \(first) times \(second), divide by \(salt)"
     }
 
     private func elementWithType(_ name: String) -> some View {
