@@ -8,6 +8,9 @@ import ReactionsCore
 protocol SelectableReaction: Identifiable, Equatable, Labelled {
     var reactantDisplay: String { get }
     var productDisplay: String { get }
+
+    var reactantLabel: String { get }
+    var productLabel: String { get }
 }
 
 extension SelectableReaction {
@@ -16,7 +19,7 @@ extension SelectableReaction {
     }
 
     var label: String {
-        "\(reactantDisplay), double-sided arrow, \(productDisplay)"
+        "\(reactantLabel), double-sided arrow, \(productLabel)"
     }
 }
 
@@ -41,6 +44,14 @@ extension ReactionDefinition {
         let c = coefficients.string(forMolecule: .C)
         let d = coefficients.string(forMolecule: .D)
         return "\(c) + \(d)"
+    }
+
+    var reactantLabel: String {
+        reactantDisplay
+    }
+
+    var productLabel: String {
+        productDisplay
     }
 }
 

@@ -21,6 +21,12 @@ struct ReactionDefinitionView<Reaction: SelectableReaction>: View {
             )
             Text(type.productDisplay)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+    }
+
+    private var label: String {
+        "\(type.reactantLabel) double-sided arrow \(type.productLabel)"
     }
 }
 

@@ -22,6 +22,14 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
         "\(products.first)+ + \(products.second)-"
     }
 
+    var reactantLabel: String {
+        "\(products.salt) (s in parenthesis)"
+    }
+
+    var productLabel: String {
+        "\(products.first) superscript plus sign, + \(products.second) superscript minus sign"
+    }
+
     var products: SolubleProductPair {
         switch self {
         case .A: return SolubleProductPair(first: "A", second: "B", third: "C")
