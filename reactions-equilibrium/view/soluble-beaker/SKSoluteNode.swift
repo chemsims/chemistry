@@ -12,6 +12,7 @@ class SKSoluteNode: SKShapeNode {
     let soluteType: SoluteType
     let reaction: SolubleReactionType
     let stateOnEmit: BeakerState
+    let runCallback: Bool
 
     var hasEnteredWater = false
     var willDissolve = false
@@ -20,13 +21,15 @@ class SKSoluteNode: SKShapeNode {
     init(
         sideLength: CGFloat,
         reaction: SolubleReactionType,
-        stateOnEmit: BeakerState
+        stateOnEmit: BeakerState,
+        runCallback: Bool
     ) {
         self.sideLength = sideLength
         self.geometry = HexagonGeometry(sideLength: sideLength)
         self.soluteType = stateOnEmit.soluteType
         self.reaction = reaction
         self.stateOnEmit = stateOnEmit
+        self.runCallback = runCallback
         super.init()
 
         addParts()
@@ -43,7 +46,8 @@ class SKSoluteNode: SKShapeNode {
         let newCopy = SKSoluteNode(
             sideLength: sideLength,
             reaction: reaction,
-            stateOnEmit: stateOnEmit
+            stateOnEmit: stateOnEmit,
+            runCallback: runCallback
         )
         newCopy.hasEnteredWater = hasEnteredWater
         newCopy.willDissolve = willDissolve
@@ -190,7 +194,12 @@ struct SKSoluteNode_Previews: PreviewProvider {
             let scene = SKScene(size: CGSize(width: Self.sceneSize, height: Self.sceneSize))
             scene.backgroundColor = .clear
             view.presentScene(scene)
-            let node = SKSoluteNode(sideLength: Self.sideLength, reaction: .A, stateOnEmit: .addingSolute(type: .primary))
+            let node = SKSoluteNode(
+                sideLength: Self.sideLength,
+                reaction: .A,
+                stateOnEmit: .addingSolute(type: .primary),
+                runCallback: true
+            )
             node.position = CGPoint(
                 x: (Self.sceneSize / 2) - Self.sideLength,
                 y: (Self.sceneSize / 2) - Self.sideLength

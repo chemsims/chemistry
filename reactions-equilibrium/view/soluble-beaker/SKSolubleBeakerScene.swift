@@ -5,6 +5,19 @@
 import SpriteKit
 import SwiftUI
 
+/// Enum to control adding a particle without calling any callbacks when particle emits, enters water or dissolves.
+/// This is useful in accessibility for example, where the timing of these functions can be run sequentially to avoid
+/// the user having to wait until the solute particle to actually dissolves for state to be updated.
+enum AddManualParticle {
+    /// Adds a particle
+    /// - Parameters:
+    ///   - forceEmit: Forces this particle to be emitted, regardless of model state.
+    case add(forceDissolve: Bool)
+
+    /// Does not add a particle
+    case none
+}
+
 struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     typealias UIView = SKView
 
@@ -14,6 +27,7 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     let waterHeight: CGFloat
     let model: SolubilityViewModel
     @Binding var shouldAddParticle: Bool
+    @Binding var addManualParticle: AddManualParticle
 
     func makeUIView(context: Context) -> SKView {
         let view = SKView()
@@ -36,9 +50,13 @@ struct SolubleBeakerSceneRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: SKView, context: Context) {
         if let scene = uiView.scene as? SKSolubleBeakerScene {
             if shouldAddParticle && model.canEmit {
-                scene.addParticle(at: particlePosition)
+                scene.addParticle(at: particlePosition, runCallback: true, forceDissolve: false)
                 model.onParticleEmit(soluteType: model.beakerState.state.soluteType, onBeakerState: model.beakerState.state)
                 shouldAddParticle = false
+            }
+            if case let .add(forceDissolve) = addManualParticle {
+                scene.addParticle(at: particlePosition, runCallback: false, forceDissolve: forceDissolve)
+                addManualParticle = .none
             }
             scene.soluteWidth = soluteWidth
             scene.waterHeight = waterHeight
@@ -124,13 +142,14 @@ private class SKSolubleBeakerScene: SKScene {
         addChild(water)
     }
 
-    func addParticle(at position: CGPoint) {
+    func addParticle(at position: CGPoint, runCallback: Bool, forceDissolve: Bool) {
         let factor: CGFloat = soluteState.soluteType == .acid ? 0.75 : 1
         let sideLength = (soluteWidth / 2) * factor
         let node = SKSoluteNode(
             sideLength: sideLength,
             reaction: reaction,
-            stateOnEmit: soluteState
+            stateOnEmit: soluteState,
+            runCallback: runCallback
         )
         node.position = position.offset(dx: -sideLength, dy: 0)
         node.zPosition = 1
@@ -142,14 +161,17 @@ private class SKSolubleBeakerScene: SKScene {
         node.physicsBody?.categoryBitMask = Category.solute
         node.physicsBody?.mass = 1
 
-        if soluteState.shouldDissolve {
+        if soluteState.shouldDissolve || forceDissolve {
             let action = SKAction.run { [weak self, weak node] in
                 guard let strongSelf = self, let strongNode = node else {
                     return
                 }
 
                 strongNode.dissolve()
-                strongSelf.onDissolve(strongNode.soluteType, strongNode.stateOnEmit)
+                if strongNode.runCallback {
+                    strongSelf.onDissolve(strongNode.soluteType, strongNode.stateOnEmit)
+                }
+
                 if strongSelf.soluteState == .demoReaction {
                     strongSelf.addIons(
                         at: strongNode.position.offset(dx: sideLength, dy: 0)
@@ -299,7 +321,9 @@ private class SKSolubleBeakerScene: SKScene {
                     solute.hasEnteredWater = true
                     physics.linearDamping = 50
                     physics.angularDamping = 1
-                    onWaterEntry(solute.soluteType, solute.stateOnEmit)
+                    if solute.runCallback {
+                        onWaterEntry(solute.soluteType, solute.stateOnEmit)
+                    }
                 }
             }
         }

@@ -44,6 +44,8 @@ final class SolubilityViewModel: ObservableObject {
     @Published var canSetCurrentTime = false
     @Published var beakerLabel = SolubilityBeakerAccessibilityLabel.clear
 
+    @Published var addVoiceOverParticle = AddManualParticle.none
+
     var components: SolubilityComponents {
         componentsWrapper.components
     }
@@ -87,6 +89,14 @@ final class SolubilityViewModel: ObservableObject {
 
     func next() {
         doGoNext(force: false)
+    }
+
+    func addVoiceOverParticle(soluteType: SoluteType) {
+        let shouldDissolve = inputState == .addSolute(type: .primary)
+        addVoiceOverParticle = .add(forceDissolve: shouldDissolve)
+        onParticleEmit(soluteType: soluteType, onBeakerState: beakerState.state)
+        onParticleWaterEntry(soluteType: soluteType, onBeakerState: beakerState.state)
+        onDissolve(soluteType: soluteType, onBeakerState: beakerState.state)
     }
 
     private func doGoNext(force: Bool) {
@@ -164,6 +174,7 @@ final class SolubilityViewModel: ObservableObject {
     private func goNextIfNeeded() {
         if componentsWrapper.shouldGoNext {
             doGoNext(force: true)
+            UIAccessibility.post(notification: .announcement, argument: statement.label)
         }
     }
 

@@ -157,7 +157,8 @@ private struct SolubleBeakerViewWithGeometry: View {
                 soluteWidth: settings.soluble.soluteWidth,
                 waterHeight: waterHeight,
                 model: model,
-                shouldAddParticle: $shakeModel.shouldAddParticle
+                shouldAddParticle: $shakeModel.shouldAddParticle,
+                addManualParticle: $model.addVoiceOverParticle
             )
         }
         .frame(

@@ -30,7 +30,7 @@ enum SolubilityBeakerAccessibilityLabel {
             """
         case .addingSolute:
             return """
-            Beaker of liquid. \(salt) solute being added to the beaker dissolves, causing the reaction time \
+            Beaker of liquid. \(salt) solute being added to the beaker dissolves causing the reaction time \
             to progress forward and the color of the liquid to change
             """
         case .saturated:
@@ -47,7 +47,7 @@ enum SolubilityBeakerAccessibilityLabel {
         case .addingAcid:
             return """
             Beaker of supersaturated liquid with \(salt) solute particles lying at the bottom of beaker. \
-            H+ solute being added dissolves and causes the color of the liquid to change.
+            H+ solute being added dissolves and causes the color of the liquid to change and concentration of \(products.second) to decrease.
             """
         case .runningAcidReaction:
             return "Beaker of supersaturated liquid, where the solute particles at the bottom of the beaker are gradually dissolving while the reaction is running"
@@ -62,6 +62,12 @@ enum SolubilityBeakerAccessibilityLabel {
         var concentrationB: CGFloat {
             model.components.equation.concentration.productB.getY(at: time)
         }
+        var mg: String {
+            "\(model.milligramsSoluteAdded.str(decimals: 0))mg"
+        }
+        var concentrationBString: String {
+            "concentration of \(products.second) is \(concentrationB.str(decimals: 2))"
+        }
 
         switch self {
         case .clear: return nil
@@ -70,29 +76,31 @@ enum SolubilityBeakerAccessibilityLabel {
         case .superSaturated: return nil
         case .runningAcidReaction: return nil
         case .addingSolute:
-            return "\(model.milligramsSoluteAdded.str(decimals: 0))mg of \(products.salt) solute added, reaction time \(model.currentTime.str(decimals: 1))"
+            return "\(mg) of \(products.salt) added, reaction time \(model.currentTime.str(decimals: 1))"
         case .addingSaturatedSolute:
             return "\(emitted) \(products.salt) solute particles lying on bottom of beaker"
         case .addingCommonIon:
-            return "\(emitted) \(products.commonSalt) solute particles added, concentration of \(products.second) is \(concentrationB)"
+            return "\(mg) of \(products.commonSalt) added, \(concentrationBString)"
         case .addingAcid:
-            return "\(emitted) H+ solute particles added"
+            return "\(emitted) H+ solute particles added, \(concentrationBString)"
 
         }
     }
 
     func action(model: SolubilityViewModel) -> (String, () -> Void)? {
-        let doAdd = { model.shakingModel.shouldAddParticle = true }
+        func add(_ type: SoluteType) {
+            model.addVoiceOverParticle(soluteType: type)
+        }
         let product = model.selectedReaction.products
         switch self {
         case .addingSolute:
-            return ("Add \(product.salt) solute particle", doAdd)
+            return ("Add \(product.salt) solute particle", { add(.primary) })
         case .addingSaturatedSolute:
-            return ("Add \(product) salt particle", doAdd)
+            return ("Add \(product.salt) solute particle", { add(.primary) })
         case .addingCommonIon:
-            return ("Add \(product.commonSalt) particle", doAdd)
+            return ("Add \(product.commonSalt) particle", { add(.commonIon) })
         case .addingAcid:
-            return ("Add H+ solute particle", doAdd)
+            return ("Add H+ solute particle", { add(.acid) })
         default: return nil
         }
     }
