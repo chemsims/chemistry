@@ -93,12 +93,13 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
                     .transition(AnyTransition.move(edge: .leading))
                     .zIndex(1)
                     .accessibilityElement(children: .contain)
-                    .accessibility(sortPriority: 10)
+                    .accessibility(sortPriority: 0.5)
                     .accessibility(addTraits: .isModal)
             }
         }
         .edgesIgnoringSafeArea(.all)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.25))
+        .accessibilityElement(children: .contain)
     }
 
     private var icon: some View {
@@ -121,9 +122,11 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
             Spacer()
                 .frame(width: settings.leadingPanelSpace)
             settingsButtons
-                .accessibility(sortPriority: -1)
+                .accessibility(sortPriority: 2)
             panelContent
+                .accessibility(sortPriority: 3)
             grabHandle
+                .accessibility(sortPriority: 1)
         }
         .background(panelBackground)
         .compositingGroup()
@@ -284,6 +287,7 @@ extension MainMenuOverlayWithSettings {
                 .font(.system(size: 10, weight: .ultraLight))
         }
         .accessibility(label: Text("Open mail composer"))
+        .accessibility(hint: Text("Opens mail composer to send app feedback"))
     }
 
     private var shareButton: some View {
@@ -294,6 +298,7 @@ extension MainMenuOverlayWithSettings {
                 .colorMultiply(Styling.navIcon)
         }
         .accessibility(label: Text("Open share sheet"))
+        .accessibility(hint: Text("Opens share sheet to share app with others"))
     }
 
     // TODO
