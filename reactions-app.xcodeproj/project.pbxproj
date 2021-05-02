@@ -253,7 +253,12 @@
 		57A4DF462619FFBF006C8637 /* SolubleComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4DF452619FFBF006C8637 /* SolubleComponents.swift */; };
 		57A5F076263EA066002F23DE /* QuizQuestionReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A5F075263EA066002F23DE /* QuizQuestionReader.swift */; };
 		57A5F078263EA0C8002F23DE /* QuizQuestionReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A5F077263EA0C8002F23DE /* QuizQuestionReaderTests.swift */; };
-		57A5F086263EBB7A002F23DE /* Quiz Parsing Test Case.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 57A5F085263EBB7A002F23DE /* Quiz Parsing Test Case.tsv */; };
+		57A5F086263EBB7A002F23DE /* quiz-parse-valid-file.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 57A5F085263EBB7A002F23DE /* quiz-parse-valid-file.tsv */; };
+		57A5F089263EC124002F23DE /* quiz-parse-invalid-difficulty.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 57A5F088263EC124002F23DE /* quiz-parse-invalid-difficulty.tsv */; };
+		57A5F08B263EC93B002F23DE /* quiz-parse-missing-fields.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 57A5F08A263EC93B002F23DE /* quiz-parse-missing-fields.tsv */; };
+		57A5F08D263ED3F3002F23DE /* quiz-parse-invalid-position.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 57A5F08C263ED3F3002F23DE /* quiz-parse-invalid-position.tsv */; };
+		57A5F08F263ED4C0002F23DE /* quiz-parse-invalid-images.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 57A5F08E263ED4C0002F23DE /* quiz-parse-invalid-images.tsv */; };
+		57A5F091263ED5A4002F23DE /* quiz-parse-invalid-tables.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 57A5F090263ED5A4002F23DE /* quiz-parse-invalid-tables.tsv */; };
 		57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A666D025E5874200F51FDC /* EquilibriumReactionEquation.swift */; };
 		57A7CE012636EB6100D83731 /* SolubilityScreenDemoToAddSoluteRaceConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7CE002636EB6100D83731 /* SolubilityScreenDemoToAddSoluteRaceConditionTests.swift */; };
 		57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */; };
@@ -731,7 +736,12 @@
 		57A4DF452619FFBF006C8637 /* SolubleComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleComponents.swift; sourceTree = "<group>"; };
 		57A5F075263EA066002F23DE /* QuizQuestionReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionReader.swift; sourceTree = "<group>"; };
 		57A5F077263EA0C8002F23DE /* QuizQuestionReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionReaderTests.swift; sourceTree = "<group>"; };
-		57A5F085263EBB7A002F23DE /* Quiz Parsing Test Case.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Quiz Parsing Test Case.tsv"; sourceTree = "<group>"; };
+		57A5F085263EBB7A002F23DE /* quiz-parse-valid-file.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "quiz-parse-valid-file.tsv"; sourceTree = "<group>"; };
+		57A5F088263EC124002F23DE /* quiz-parse-invalid-difficulty.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "quiz-parse-invalid-difficulty.tsv"; sourceTree = "<group>"; };
+		57A5F08A263EC93B002F23DE /* quiz-parse-missing-fields.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "quiz-parse-missing-fields.tsv"; sourceTree = "<group>"; };
+		57A5F08C263ED3F3002F23DE /* quiz-parse-invalid-position.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "quiz-parse-invalid-position.tsv"; sourceTree = "<group>"; };
+		57A5F08E263ED4C0002F23DE /* quiz-parse-invalid-images.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "quiz-parse-invalid-images.tsv"; sourceTree = "<group>"; };
+		57A5F090263ED5A4002F23DE /* quiz-parse-invalid-tables.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "quiz-parse-invalid-tables.tsv"; sourceTree = "<group>"; };
 		57A666D025E5874200F51FDC /* EquilibriumReactionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumReactionEquation.swift; sourceTree = "<group>"; };
 		57A7CE002636EB6100D83731 /* SolubilityScreenDemoToAddSoluteRaceConditionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityScreenDemoToAddSoluteRaceConditionTests.swift; sourceTree = "<group>"; };
 		57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputPersistenceTests.swift; sourceTree = "<group>"; };
@@ -1820,7 +1830,7 @@
 		5797A44D25E4069F00991BD9 /* ReactionsCoreTests */ = {
 			isa = PBXGroup;
 			children = (
-				57A5F085263EBB7A002F23DE /* Quiz Parsing Test Case.tsv */,
+				57A5F087263EBD12002F23DE /* quiz-parsing-test-cases */,
 				572FD6B12621B27C007E8E42 /* shared */,
 				572BCF2626036E7700CE3FE0 /* ArrayExtensionTests.swift */,
 				57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */,
@@ -1979,6 +1989,19 @@
 				57303FE6261DB2FA00045193 /* SolubleComponentsWrapper.swift */,
 			);
 			path = components;
+			sourceTree = "<group>";
+		};
+		57A5F087263EBD12002F23DE /* quiz-parsing-test-cases */ = {
+			isa = PBXGroup;
+			children = (
+				57A5F090263ED5A4002F23DE /* quiz-parse-invalid-tables.tsv */,
+				57A5F08E263ED4C0002F23DE /* quiz-parse-invalid-images.tsv */,
+				57A5F08C263ED3F3002F23DE /* quiz-parse-invalid-position.tsv */,
+				57A5F08A263EC93B002F23DE /* quiz-parse-missing-fields.tsv */,
+				57A5F088263EC124002F23DE /* quiz-parse-invalid-difficulty.tsv */,
+				57A5F085263EBB7A002F23DE /* quiz-parse-valid-file.tsv */,
+			);
+			path = "quiz-parsing-test-cases";
 			sourceTree = "<group>";
 		};
 		57ABDC4425EC03BC0078A82B /* statements */ = {
@@ -2674,7 +2697,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57A5F086263EBB7A002F23DE /* Quiz Parsing Test Case.tsv in Resources */,
+				57A5F086263EBB7A002F23DE /* quiz-parse-valid-file.tsv in Resources */,
+				57A5F08D263ED3F3002F23DE /* quiz-parse-invalid-position.tsv in Resources */,
+				57A5F08B263EC93B002F23DE /* quiz-parse-missing-fields.tsv in Resources */,
+				57A5F089263EC124002F23DE /* quiz-parse-invalid-difficulty.tsv in Resources */,
+				57A5F08F263ED4C0002F23DE /* quiz-parse-invalid-images.tsv in Resources */,
+				57A5F091263ED5A4002F23DE /* quiz-parse-invalid-tables.tsv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
