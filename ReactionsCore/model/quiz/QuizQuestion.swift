@@ -191,7 +191,7 @@ public struct QuizQuestionsList {
         self.questions = questions
     }
 
-    private let questions: [QuizQuestionData]
+    let questions: [QuizQuestionData]
 
     public func createQuestions() -> [QuizQuestion] {
         questions.map { $0.createQuestion() }

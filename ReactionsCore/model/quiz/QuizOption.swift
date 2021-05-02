@@ -38,6 +38,15 @@ public enum QuizDifficulty: Int, CaseIterable, Comparable, Codable {
     public static func < (lhs: QuizDifficulty, rhs: QuizDifficulty) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
+
+    public static func from(string: String) -> QuizDifficulty? {
+        switch string {
+        case "easy": return .easy
+        case "medium": return .medium
+        case "hard": return .hard
+        default: return nil
+        }
+    }
 }
 
 extension QuizDifficulty {

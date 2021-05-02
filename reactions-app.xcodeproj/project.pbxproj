@@ -251,6 +251,9 @@
 		57A1B7A925EAB4CD00878B52 /* MoleculeConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1B7A825EAB4CD00878B52 /* MoleculeConcentration.swift */; };
 		57A26855259A011600919E48 /* QuizDifficultyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A26854259A011600919E48 /* QuizDifficultyTests.swift */; };
 		57A4DF462619FFBF006C8637 /* SolubleComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A4DF452619FFBF006C8637 /* SolubleComponents.swift */; };
+		57A5F076263EA066002F23DE /* QuizQuestionReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A5F075263EA066002F23DE /* QuizQuestionReader.swift */; };
+		57A5F078263EA0C8002F23DE /* QuizQuestionReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A5F077263EA0C8002F23DE /* QuizQuestionReaderTests.swift */; };
+		57A5F086263EBB7A002F23DE /* Quiz Parsing Test Case.tsv in Resources */ = {isa = PBXBuildFile; fileRef = 57A5F085263EBB7A002F23DE /* Quiz Parsing Test Case.tsv */; };
 		57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A666D025E5874200F51FDC /* EquilibriumReactionEquation.swift */; };
 		57A7CE012636EB6100D83731 /* SolubilityScreenDemoToAddSoluteRaceConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7CE002636EB6100D83731 /* SolubilityScreenDemoToAddSoluteRaceConditionTests.swift */; };
 		57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */; };
@@ -726,6 +729,9 @@
 		57A1B7A825EAB4CD00878B52 /* MoleculeConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeConcentration.swift; sourceTree = "<group>"; };
 		57A26854259A011600919E48 /* QuizDifficultyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDifficultyTests.swift; sourceTree = "<group>"; };
 		57A4DF452619FFBF006C8637 /* SolubleComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleComponents.swift; sourceTree = "<group>"; };
+		57A5F075263EA066002F23DE /* QuizQuestionReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionReader.swift; sourceTree = "<group>"; };
+		57A5F077263EA0C8002F23DE /* QuizQuestionReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionReaderTests.swift; sourceTree = "<group>"; };
+		57A5F085263EBB7A002F23DE /* Quiz Parsing Test Case.tsv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Quiz Parsing Test Case.tsv"; sourceTree = "<group>"; };
 		57A666D025E5874200F51FDC /* EquilibriumReactionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumReactionEquation.swift; sourceTree = "<group>"; };
 		57A7CE002636EB6100D83731 /* SolubilityScreenDemoToAddSoluteRaceConditionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityScreenDemoToAddSoluteRaceConditionTests.swift; sourceTree = "<group>"; };
 		57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputPersistenceTests.swift; sourceTree = "<group>"; };
@@ -1429,6 +1435,7 @@
 				573F169C2584C035001CE039 /* QuizQuestion.swift */,
 				5736B66E258A7C20002CEF5E /* QuizState.swift */,
 				57631763259B66CF00D7CE2C /* QuizTable.swift */,
+				57A5F075263EA066002F23DE /* QuizQuestionReader.swift */,
 			);
 			path = quiz;
 			sourceTree = "<group>";
@@ -1813,6 +1820,7 @@
 		5797A44D25E4069F00991BD9 /* ReactionsCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				57A5F085263EBB7A002F23DE /* Quiz Parsing Test Case.tsv */,
 				572FD6B12621B27C007E8E42 /* shared */,
 				572BCF2626036E7700CE3FE0 /* ArrayExtensionTests.swift */,
 				57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */,
@@ -1822,6 +1830,7 @@
 				57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */,
 				57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */,
 				573E1B2C263AADBD00379A1D /* StringUtilTests.swift */,
+				57A5F077263EA0C8002F23DE /* QuizQuestionReaderTests.swift */,
 			);
 			path = ReactionsCoreTests;
 			sourceTree = "<group>";
@@ -2665,6 +2674,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57A5F086263EBB7A002F23DE /* Quiz Parsing Test Case.tsv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3010,6 +3020,7 @@
 				578B173B2618D14400D8079F /* BeakerSettings.swift in Sources */,
 				5786FAF325E6D8D100AAD8A6 /* TimeChartView.swift in Sources */,
 				575A885F25E435F600AEE448 /* BeakyGeometrySettings.swift in Sources */,
+				57A5F076263EA066002F23DE /* QuizQuestionReader.swift in Sources */,
 				5797A4DB25E40AD400991BD9 /* ReactionType.swift in Sources */,
 				5797A48825E40A3E00991BD9 /* EmptyBeaker.swift in Sources */,
 				5797A4B825E40A6000991BD9 /* ReactionPairDisplay.swift in Sources */,
@@ -3084,6 +3095,7 @@
 				57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */,
 				572BCF2C26036F3000CE3FE0 /* ArrayExtensionTests.swift in Sources */,
 				57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */,
+				57A5F078263EA0C8002F23DE /* QuizQuestionReaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
