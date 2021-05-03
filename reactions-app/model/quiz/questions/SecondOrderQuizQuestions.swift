@@ -432,15 +432,15 @@ extension QuizQuestionsList {
                 that the rate constant k is $1.2x10^11^$, what would be the value of X?
                 """,
                 correctAnswer: QuizAnswerData(
-                    answer: "2.3x10^-6^",
+                    answer: "3.07x10^-6^",
                     explanation: """
                     When [B] goes from 0.002 to 0.008 (it goes up by a factor of 4) while C and D \
-                    remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
+                    remain constant, the rate goes from 20X to 80X (it goes up by a factor of 4). \
                     $4^x^ = 4$ where $x = 1$; the reaction is first order for [B].
 
-                    When [C] goes from 0.001 to 0.006 (it goes up by a factor of 4) while B and D \
-                    remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
-                    $4^x^ = 4$ where $x = 1$; the reaction is first order for [C].
+                    When [C] goes from 0.001 to 0.008 (it goes up by a factor of 8) while B and D \
+                    remain constant, the rate goes from 20X to 160X (it goes up by a factor of 8). \
+                    $8^x^ = 8$ where $x = 1$; the reaction is first order for [C].
 
                     When [D] goes from 0.002 to 0.004 (it's doubled, goes up by a factor of 2) while \
                     B and C remain constant, the rate goes from 10X to 160X (it goes up by a factor of \
@@ -451,48 +451,45 @@ extension QuizQuestionsList {
                     """,
                     explanationLabel: """
                     When [B] goes from 0.002 to 0.008 (it goes up by a factor of 4) while C and D \
-                    remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
+                    remain constant, the rate goes from 20X to 80X (it goes up by a factor of 4). \
                     4^x^ = 4 where x = 1; the reaction is first order for [B].
 
-                    When [C] goes from 0.001 to 0.006 (it goes up by a factor of 4) while B and D \
-                    remain constant, the rate goes from 27X to 160X (it goes up by a factor of 4). \
-                    4^x^ = 4 where x = 1; the reaction is first order for [C].
+                    When [C] goes from 0.001 to 0.008 (it goes up by a factor of 8) while B and D \
+                    remain constant, the rate goes from 20X to 160X (it goes up by a factor of 8). \
+                    8^x^ = 8 where x = 1; the reaction is first order for [C].
 
                     When [D] goes from 0.002 to 0.004 (it's doubled, goes up by a factor of 2) while \
                     B and C remain constant, the rate goes from 10X to 160X (it goes up by a factor of \
                     16). 2^x^ = 16 where x = 4; the reaction is fourth order for [D].
 
                     Replacing in the rate law equation and solving for X we get: \
-                    $X =, \(Labels.openParen), 1.2x10^11^ \\* 0.002 \\* 0.006 \\* 0.002^4^, \(Labels.closedParen), / 10, = 2.3x10^-6^$.
+                    $X =, \(Labels.openParen), 1.2x10^11^ \\* 0.002 \\* 0.008 \\* 0.002^4^, \(Labels.closedParen), / 10, = 3.07x10^-6^$.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
-                        answer: "288",
+                        answer: "384",
                         explanation: """
-                        You might have used the rate law equation as if D is of first order. When [D] goes \
-                        from 0.002 to 0.004 (it goes up by a factor of 4) while B and C remain constant, \
+                        You might have used the rate law equation as if D was of first order. When [D] goes \
+                        from 0.002 to 0.004 (it goes up by a factor of 2) while B and C remain constant, \
                         the rate goes from 10X to 160X (it goes up by a factor of 16). \
-                        $2^x^ = 16$ where $x = 4$; the reaction is forth order for [D].
+                        $2^x^ = 16$ where $x = 4$; the reaction is fourth order for [D].
                         """
                     ),
                     QuizAnswerData(
-                        answer: "1.92x10^-17^",
+                        answer: "2.56x10^-17^",
                         explanation: """
                         You might have forgotten the rate constant k in the rate law equation when calculating \
                         X. Try determining the rate law equation first with the provided data.
                         """
                     ),
                     QuizAnswerData(
-                        answer: "8.3x10^-11^",
-                        answerLabel: "Rate = k, times B^2^, times C^2^, times D",
+                        answer: "1.64x10^-21^",
                         explanation: """
                         You might have used the rate law equation as if it was $rate = k[B][C]^3^[D]^4^$. When [C] \
-                        goes from 0.001 to 0.006 (it goes up by a factor of 4) while B and D remain constant, \
-                        the rate goes from 27X to 160X (it goes up by a factor of 4). $4^x^ = 4$ where $x = 1$; the \
-                        reaction is first order for [C]. When [D] goes from 0.002 to 0.004 (it's doubled, goes \
-                        up by a factor of 2) while B and C remain constant, the rate goes from 10X to 160X (it \
-                        goes up by a factor of 16). $2^x^ = 16$ where $x = 4$; the reaction is fourth order for [D].
+                        goes from 0.001 to 0.008 (it goes up by a factor of 8) while B and D remain constant, \
+                        the rate goes from 20X to 160X (it goes up by a factor of 8). $8^x^ = 8$ where $x = 1$; the \
+                        reaction is first order for [C].
                         """
                     )
                 ],
@@ -500,10 +497,10 @@ extension QuizQuestionsList {
                 table: QuizTable(
                     rows: [
                         ["[B] (M)", "[C] (M)", "[D] (M)", "Rate M/s"],
-                        ["0.002", "0.006", "0.002", "10X"],
-                        ["0.002", "0.001", "0.004", "27X"],
-                        ["0.002", "0.006", "0.004", "160X"],
-                        ["0.008", "0.001", "0.004", "108X"]
+                        ["0.002", "0.008", "0.002", "10X"],
+                        ["0.002", "0.001", "0.004", "20X"],
+                        ["0.002", "0.008", "0.004", "160X"],
+                        ["0.008", "0.001", "0.004", "80X"]
                     ]
                 )
             ),
@@ -610,7 +607,7 @@ extension QuizQuestionsList {
                         explanation: """
                         Three reactants for an elementary reaction would imply that a successful \
                         collision of those would have to take place, and given the very low chances \
-                        for it to happen, this results in a slower rate of reaction compared ot the \
+                        for it to happen, this results in a slower rate of reaction compared to the \
                         rest of the scenarios. The products are irrelevant to the rate of the \
                         reaction.
                         """
@@ -718,7 +715,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "Rate = k[AB]^m^",
                         explanation: """
-                        $Rate = k[AB]^m^$ means that the reactant A affects the rate, and for zero \
+                        $Rate = k[AB]^m^$ means that the reactant AB affects the rate, and for zero \
                         order reactions the rate is independent of the concentration of any \
                         reactant.
                         """
@@ -732,7 +729,7 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "Rate = k[AB]^m^[C]^n^",
                         explanation: """
-                        $Rate = k[AB]^m^[C]^n^$ means that the reactants A and B affect the rate, and \
+                        $Rate = k[AB]^m^[C]^n^$ means that the reactants AB and C affect the rate, and \
                         for zero order reactions the rate is independent of the concentration of \
                         any reactant.
                         """
@@ -806,8 +803,7 @@ extension QuizQuestionsList {
                         ["E", "[S_2_O_8_^-2^](M)", "[I^-^](M)", "Rate M/s"],
                         ["1", "0.15", "0.15", "8.44x10^-4^"],
                         ["2", "0.30", "0.15", "1.69x10^-3^"],
-                        ["3", "0.30", "0.60", "2.7x10^-2^"],
-                        ["4", "0.002", "0.004", "32X"]
+                        ["3", "0.30", "0.60", "2.7x10^-2^"]
                     ]
                 )
             ),
@@ -1088,7 +1084,7 @@ extension QuizQuestionsList {
                 question: """
                 Consider a reaction thats A ➝ B + C. The rate constant (k) for that reaction \
                 is 0.6 weeks^-1^. Taking the initial amount of A as 100%, what percentage of A is left \
-                after 4 days have passed?
+                after 5 days have passed?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: "65%",
@@ -1141,21 +1137,21 @@ extension QuizQuestionsList {
                     QuizAnswerData(
                         answer: "35%",
                         explanation: """
-                        After 4 days of the reaction, given that rate constant, there would be \
+                        After 5 days of the reaction, given that rate constant, there would be \
                         much more than 35% of A remaining.
                         """
                     ),
                     QuizAnswerData(
                         answer: "45%",
                         explanation: """
-                        After 4 days of the reaction, given that rate constant, there would be \
+                        After 5 days of the reaction, given that rate constant, there would be \
                         much more than 45% of A remaining.
                         """
                     ),
                     QuizAnswerData(
                         answer: "55%",
                         explanation: """
-                        After 4 days of the reaction, given that rate constant, there would be \
+                        After 5 days of the reaction, given that rate constant, there would be \
                         more than 55% of A remaining. The equation for a first order reaction is \
                         $ln[A] = ln[A_0_] - kt$.
                         """

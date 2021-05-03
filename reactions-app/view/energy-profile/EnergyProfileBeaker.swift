@@ -94,7 +94,7 @@ struct EnergyProfileBeaker: View {
                 useHaptics: false,
                 highlightSlider: highlightSlider,
                 showFlame: true,
-                sliderAccessibilityValue: nil,
+                sliderAccessibilityValue: "TODO", // TODO
                 generalColorMultiply: .white,
                 sliderColorMultiply: .white,
                 settings: AdjustableBeakerBurnerSettings(

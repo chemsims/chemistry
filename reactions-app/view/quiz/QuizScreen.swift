@@ -130,7 +130,7 @@ private struct QuizScreenWithSettings: View {
                 .disabled(model.nextIsDisabled)
                 .opacity(model.nextIsDisabled ? 0.3 : 1)
                 .padding(settings.rightNavPadding)
-                .ifTrue(model.nextIsDisabled) {
+                .modifyIf(model.nextIsDisabled) {
                     $0.accessibility(hint: Text("Select correct answer to enable next button"))
                 }
 

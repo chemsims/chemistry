@@ -53,21 +53,21 @@ extension QuizQuestionsList {
                 correctAnswer: QuizAnswerData(
                     answer: "First order",
                     explanation: """
-                    The rate law for first order reactions is rate = k[A] where A is the reactant.
+                    The rate law for first order reactions is usually rate = k[A] where A is the reactant.
                     """
                 ),
                 otherAnswers: [
                     QuizAnswerData(
                         answer: "Zero order",
                         explanation: """
-                        The rate law for second order reactions is $rate = k[A]$ because the rate \
+                        The rate law for zero order is usually $rate = k$ because the rate \
                         remains constant no matter the concentration of A.
                         """
                     ),
                     QuizAnswerData(
                         answer: "Second order",
                         explanation: """
-                        The rate law for second order reactions is $rate = k[A]^2^$ or \
+                        The rate law for second order reactions is usually $rate = k[A]^2^$ or \
                         $rate = k[A][B]$ where A and B are the reactants.
                         """
                     ),
@@ -87,11 +87,11 @@ extension QuizQuestionsList {
                     answer: "s^-1^",
                     explanation: """
                     Units for the rate constant are $M^(1-n)^/s$ where n is the order. When \
-                    $n = 0$, $M^(1-1)^/s = 1/s$ which is the same as s^-1^.
+                    $n = 1$, $M^(1-1)^/s = 1/s$ which is the same as s^-1^.
                     """,
                     explanationLabel: """
                     Units for the rate constant are $M^(1-n)^/s$, where n is the order. When \
-                    $n = 0$, $M^(1-1)^/s, = 1/s$, which is the same as s^-1^.
+                    $n = 1$, $M^(1-1)^/s, = 1/s$, which is the same as s^-1^.
                     """
                 ),
                 otherAnswers: [
@@ -181,12 +181,12 @@ extension QuizQuestionsList {
                     answer: "First order",
                     explanation: """
                     Units for the rate constant are $M^(1-n)^/s$ where n is the order. When \
-                    $n = 0$, $M^(1-1)^/s = 1/s$ which is the same as s^-1^. When useful, it can be \
+                    $n = 1$, $M^(1-1)^/s = 1/s$ which is the same as s^-1^. When useful, it can be \
                     represented in any $time^-1^$ unit, for example $days^-1^$.
                     """,
                     explanationLabel: """
                     Units for the rate constant are $M^(1-n)^/s$, where n is the order. When \
-                    $n = 0$, $M^(1-1)^/s, = 1/s$, which is the same as s^-1^. When useful, it can be \
+                    $n = 1$, $M^(1-1)^/s, = 1/s$, which is the same as s^-1^. When useful, it can be \
                     represented in any time to the power of minus 1 unit, for example $days^-1^$.
                     """
                 ),
@@ -206,11 +206,11 @@ extension QuizQuestionsList {
                         answer: "Second order",
                         explanation: """
                         Units for the rate constant are $M^(1-2)^/s$ where n is the order. When \
-                        n = 0, $M^(1-2)^/s = 1/M \\* s$.
+                        n = 2, $M^(1-2)^/s = 1/M \\* s$.
                         """,
                         explanationLabel: """
                         Units for the rate constant are M^(1-2)^/s, where n is the order. When \
-                        n = 0, $M^(1-2)^/s, = 1, /M \\* s$.
+                        n = 2, $M^(1-2)^/s, = 1, /M \\* s$.
                         """
                     ),
                     QuizAnswerData(
@@ -308,7 +308,7 @@ extension QuizQuestionsList {
                         answer: "Rate constant k has the units of $1/time$",
                         explanation: """
                         It's true, units for the rate constant are $M^(1-n)^/s$, where n is the \
-                        order. When $n = 0$, $M^(1-1)^/s = 1/s$ which is the same as s^-1^. Or, \
+                        order. When $n = 1$, $M^(1-1)^/s = 1/s$ which is the same as s^-1^. Or, \
                         whichever measurement of $time^-1^$, which is the same as $1/time$.
                         """
                     ),
@@ -320,10 +320,10 @@ extension QuizQuestionsList {
                         """
                     ),
                     QuizAnswerData(
-                        answer: "Rate is dependant on the concentration of one reactant",
+                        answer: "Rate is dependent on the concentration of one reactant",
                         explanation: """
-                        It's true, the rate law for first order reactions is $rate=k[A]$ where A \
-                        is the reactant, making the rate dependant on the concentration of it.
+                        It's true, the rate law for first order reactions is usually $rate=k[A]$ where A \
+                        is the reactant, making the rate dependent on the concentration of it.
                         """
                     )
                 ],
@@ -686,12 +686,12 @@ extension QuizQuestionsList {
                     answer: "First Order",
                     explanation: """
                     Units for the rate constant are $M^(1-n)^/s$ where n is the order. When \
-                    $n = 0$, $M^(1-1)^/s = 1/s$ which is the same as $s^-1^$. When useful, it can \
+                    $n = 1$, $M^(1-1)^/s = 1/s$ which is the same as $s^-1^$. When useful, it can \
                     be represented in any $time^-1^$ unit, for example $week^-1^$.
                     """,
                     explanationLabel: """
                     Units for the rate constant are $M^(1-n)^/s$ where n is the order. When \
-                    $n = 0$, $M^(1-1)^/s, = 1/s$ which is the same as $s^-1^$. When useful, it can \
+                    $n = 1$, $M^(1-1)^/s, = 1/s$ which is the same as $s^-1^$. When useful, it can \
                     be represented in any time to the power of minus 1 unit, for example $week^-1^$.
                     """
                 ),
@@ -707,7 +707,7 @@ extension QuizQuestionsList {
                         answer: "Second Order",
                         explanation: """
                         Units for the rate constant are $M^(1-2)^/s$ where n is the order. When \
-                        n = 0, $M^(1-2)^/s = 1/, M \\* s$.
+                        n = 2, $M^(1-2)^/s = 1/, M \\* s$.
                         """
                     ),
                     QuizAnswerData(
@@ -832,7 +832,7 @@ extension QuizQuestionsList {
 
                     $k = ln[A_0_] - ln(0.25[A_0_]) / 30$ ➝
                     $k = ln([A_0_]/0.25[A_0_]) / 30$ ➝
-                    $k = ln(1/0.25) / 16$.
+                    $k = ln(1/0.25) / 30$.
 
                     We get $k = 0.0462 h^-1^$. Now to determine half-life, we use the half-life \
                     equation $t_1/2_ = ln(2) / 0.0462 h^-1^ = 15 hours$.
@@ -858,7 +858,7 @@ extension QuizQuestionsList {
 
                     k =, ln[A_0_], -, ln 0.25[A_0_] , / 30 ➝
                     k =, ln, open parenthesis, [A_0_], /, 0.25[A_0_], close parenthesis, / 30 ➝
-                    k =, ln(1/0.25), / 16.
+                    k =, ln(1/0.25), / 30.
 
                     We get, $k = 0.0462 h^-1^$. Now to determine half-life, we use the half-life \
                     equation $t_1/2_ = ln(2) / 0.0462 h^-1^, = 15 hours$.
@@ -936,7 +936,7 @@ extension QuizQuestionsList {
                         """
                     ),
                     QuizAnswerData(
-                        answer: "It's a first order reaction where B is the product",
+                        answer: "It's a first order reaction where B is the reactant",
                         explanation: """
                         Of the two species, B is being produced, because the concentration of it is getting \
                         higher through time. A would be the reactant.

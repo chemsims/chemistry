@@ -18,7 +18,8 @@ struct ReactionsRateBeaker: View {
             molecules: [
                 BeakerMolecules(
                     coords: moleculesA,
-                    color: reactionPair.reactant.color
+                    color: reactionPair.reactant.color,
+                    label: reactionPair.reactant.name
                 )
             ],
             animatingMolecules: bMolecules ?? [],
@@ -34,7 +35,8 @@ struct ReactionsRateBeaker: View {
                     AnimatingBeakerMolecules(
                         molecules: BeakerMolecules(
                             coords: moleculesA.suffix(numB),
-                            color: reactionPair.product.color
+                            color: reactionPair.product.color,
+                            label: reactionPair.product.name
                         ),
                         fractionToDraw:
                             ScaledEquation(
