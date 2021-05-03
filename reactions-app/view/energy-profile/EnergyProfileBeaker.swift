@@ -84,17 +84,21 @@ struct EnergyProfileBeaker: View {
     }
 
     private func stackView(settings: EnergyBeakerSettings) -> some View {
-        VStack(spacing: 0) {
+        let temp = tempBinding ?? .constant(settings.axis.minValue)
+        return VStack(spacing: 0) {
             beakerView(settings: settings)
                 .frame(width: settings.beakerWidth, height: settings.skSceneHeight)
 
             AdjustableBeakerBurner(
-                temp: tempBinding ?? .constant(settings.axis.minValue),
+                temp: temp,
                 disabled: tempIsDisabled,
                 useHaptics: false,
                 highlightSlider: highlightSlider,
                 showFlame: true,
-                sliderAccessibilityValue: "TODO", // TODO
+                sliderAccessibilityValue: getSliderAccessibilityValue(
+                    temp: temp,
+                    settings: settings
+                ),
                 generalColorMultiply: .white,
                 sliderColorMultiply: .white,
                 settings: AdjustableBeakerBurnerSettings(
@@ -104,6 +108,20 @@ struct EnergyProfileBeaker: View {
                 )
             )
         }
+    }
+
+    private func getSliderAccessibilityValue(
+        temp: Binding<CGFloat>?,
+        settings: EnergyBeakerSettings
+    ) -> String {
+        let currentValue = temp?.wrappedValue ?? settings.axis.minValue
+        let fraction = (currentValue - settings.axis.minValue) / (settings.axis.maxValue - settings.axis.minValue)
+        let percent = fraction.percentage
+
+        let position = chartInput.canReactToC ? "above" : "below"
+        let positionMsg = temp == nil ? "" : ", current energy is \(position) EA hump"
+
+        return "\(currentValue.str(decimals: 0)), \(percent)\(positionMsg)"
     }
 
     private func beakerView(
