@@ -88,7 +88,7 @@ public struct FeedbackSettings {
         )
     }
     
-    public static let defaultAddress = "cogsci7@gmail.com"
+    public static let defaultAddress = "reactionsrateapp@gmail.com"
     private static let defaultBody = """
 
     ---------
