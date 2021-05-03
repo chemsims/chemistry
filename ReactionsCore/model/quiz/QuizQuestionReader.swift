@@ -10,9 +10,9 @@ public struct QuizQuestionReader {
     private init() { }
 
     private static let headerRows = 2
-    private static let rowSeparator: Character = "\r\n"
-    private static let fileType = "tsv"
-    private static let colSeparator: Character = "\t"
+    private static let tableRowSeparator: Character = "\n"
+    private static let fileType = "csv"
+    private static let colSeparator: Character = ","
 
     public static func read<QuestionSet>(
         from fileName: String,
@@ -39,11 +39,9 @@ public struct QuizQuestionReader {
     private static func parseCsv(
         contents: String
     ) -> [CsvRow] {
-        let lines = contents.split(separator: rowSeparator)
-        return lines.indices.map { i in
-            let line = lines[i]
-            let cols = line.split(separator: colSeparator, omittingEmptySubsequences: false).map(String.init)
-            return CsvRow(underlying: cols, index: i)
+        let parsed = CsvParser.parse(content: contents)
+        return parsed.indices.map { i in
+            CsvRow(underlying: parsed[i], index: i)
         }
     }
 
@@ -177,9 +175,9 @@ public struct QuizQuestionReader {
             return .success(nil)
         }
 
-        let rows = data.split(separator: "\\").map { tableRow in
+        let rows = data.split(separator: tableRowSeparator).map { tableRow in
             tableRow.split(separator: "|").map { cell -> TextLine in
-                let str = cell.trimmingCharacters(in: .whitespaces)
+                let str = cell.trimmingCharacters(in: .whitespacesAndNewlines)
                 return TextLine(stringLiteral: str)
             }
         }
@@ -232,7 +230,6 @@ private struct CsvRow {
         }
         return nil
     }
-
 }
 
 public enum ReadResult<Data> {

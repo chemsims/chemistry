@@ -126,10 +126,10 @@ class QuizQuestionReaderTests: XCTestCase {
         read(file).error?.list() ?? []
     }
 
-    private func read(_ file: String) -> ReadResult<QuizQuestionsList> {
+    private func read(_ file: String) -> ReadResult<QuizQuestionsList<Int>> {
         QuizQuestionReader.read(
             from: file,
-            questionSet: .zeroOrder,
+            questionSet: 0,
             bundle: Bundle(for: type(of: self))
         )
     }

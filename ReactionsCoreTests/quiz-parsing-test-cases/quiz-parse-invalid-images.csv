@@ -1,0 +1,4 @@
+Question,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,
+id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position
+0,question text 0,easy,name,,,correct answer 0,explanation correct answer 0,,wrong answer 1 0,explanation wrong answer 1 0,,wrong answer 2 0,explanation wrong answer 2 0,,wrong answer 3 0,explanation wrong answer 3 0,D
+1,question text 1,easy,,label,,correct answer 1,explanation correct answer 1,,wrong answer 1 1,explanation wrong answer 1 1,,wrong answer 2 1,explanation wrong answer 2 1,,wrong answer 3 1,explanation wrong answer 3 1,
