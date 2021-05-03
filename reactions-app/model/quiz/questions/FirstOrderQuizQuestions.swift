@@ -723,8 +723,7 @@ extension QuizQuestionsList {
             QuizQuestionData(
                 id: "FIRSTORDER-16",
                 question: """
-                The rate constant of a first order reaction is $0.0042/hours$. Which of the \
-                following is the half-life of the reaction in days?
+                The rate constant of a first order reaction is $0.0042/hours$. What would be the half-life for the reaction?
                 """,
                 correctAnswer: QuizAnswerData(
                     answer: "Almost 7 days",
