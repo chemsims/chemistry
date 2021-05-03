@@ -7,7 +7,16 @@ import SwiftUI
 public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableObject {
 
     @Published public var view: AnyView
-    @Published public var showMenu = false
+    @Published public var showMenu = false {
+        didSet {
+            if showMenu {
+                UIAccessibility.post(notification: .screenChanged, argument: nil)
+            } else {
+                showAnalyticsConsent = false
+            }
+        }
+    }
+    @Published var showAnalyticsConsent = false
 
     private(set) public var currentScreen: Screen
     private(set) public var navigationDirection = NavigationDirection.forward
@@ -34,8 +43,12 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
         self.behaviour = injector.behaviour
 
         self.view = AnyView(EmptyView())
+        self.analyticsConsent = AnalyticsConsentViewModel(service: injector.analytics)
+
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
     }
+
+    let analyticsConsent: AnalyticsConsentViewModel<Injector.Analytics>
 
     public var highlightedIcon: Screen? {
         behaviour.highlightedNavIcon(for: currentScreen)

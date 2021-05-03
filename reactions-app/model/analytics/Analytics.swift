@@ -34,9 +34,37 @@ class NoOpAnalytics: AnalyticsService, AppAnalytics {
     func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) { }
     func answeredQuestion(questionSet: QuestionSet, questionId: String, answerId: String, answerAttempt: Int, isCorrect: Bool) { }
     func completedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty, percentCorrect: Double) { }
+
+    private(set) var enabled = false
+    func setEnabled(value: Bool) {
+        enabled = value
+    }
 }
 
 struct GoogleAnalytics: AnalyticsService, AppAnalytics {
+
+    private let userDefaults = UserDefaults.standard
+    private static let analyticsEnabledKey = "analyticsEnabled"
+
+    init() {
+        userDefaults.register(defaults: [
+            Self.analyticsEnabledKey: true
+        ])
+        setAnalyticsCollection(enabled)
+    }
+
+    var enabled: Bool {
+        userDefaults.bool(forKey: Self.analyticsEnabledKey)
+    }
+
+    func setEnabled(value: Bool) {
+        userDefaults.setValue(value, forKey: Self.analyticsEnabledKey)
+        setAnalyticsCollection(value)
+    }
+
+    private func setAnalyticsCollection(_ value: Bool) {
+        Analytics.setAnalyticsCollectionEnabled(value)
+    }
 
     func opened(screen: AppScreen) {
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [
