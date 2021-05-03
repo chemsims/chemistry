@@ -298,7 +298,6 @@ extension MainMenuOverlayWithSettings {
             Image("share-icon", bundle: .reactionsCore)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .colorMultiply(Styling.navIcon)
         }
         .accessibility(label: Text("Open share sheet"))
         .accessibility(hint: Text("Opens share sheet to share app with others"))
