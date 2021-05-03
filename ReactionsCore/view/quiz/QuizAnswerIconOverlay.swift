@@ -3,7 +3,6 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
 struct QuizAnswerIconOverlay: View {
     let isCorrect: Bool

@@ -7,7 +7,7 @@ import ReactionsCore
 
 struct ReactionsRateRootView: View {
 
-    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<AppScreen>>
+    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass

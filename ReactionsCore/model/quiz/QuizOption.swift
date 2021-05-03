@@ -35,6 +35,14 @@ public enum QuizDifficulty: Int, CaseIterable, Comparable, Codable {
         }
     }
 
+    public var displayName: String {
+        switch self {
+        case .easy: return "Easy"
+        case .medium: return "Medium"
+        case .hard: return "Hard"
+        }
+    }
+
     public static func < (lhs: QuizDifficulty, rhs: QuizDifficulty) -> Bool {
         lhs.rawValue < rhs.rawValue
     }

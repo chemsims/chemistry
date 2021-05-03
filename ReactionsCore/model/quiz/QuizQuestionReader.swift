@@ -14,11 +14,11 @@ public struct QuizQuestionReader {
     private static let fileType = "tsv"
     private static let colSeparator: Character = "\t"
 
-    public static func read(
+    public static func read<QuestionSet>(
         from fileName: String,
         questionSet: QuestionSet,
         bundle: Bundle = Bundle.main
-    ) -> ReadResult<QuizQuestionsList> {
+    ) -> ReadResult<QuizQuestionsList<QuestionSet>> {
         if let path = bundle.path(forResource: fileName, ofType: fileType) {
             do {
                 let contents = try String(contentsOfFile: path)

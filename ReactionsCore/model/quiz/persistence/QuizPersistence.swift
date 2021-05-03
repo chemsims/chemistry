@@ -3,52 +3,35 @@
 //
 
 import Foundation
-import ReactionsCore
 
-protocol QuizPersistence {
+public protocol QuizPersistence {
+    associatedtype QuestionSet
 
-    func saveAnswers(
-        quiz: SavedQuiz,
-        questions: [QuizQuestion]
-    )
+    func saveAnswers(quiz: SavedQuiz<QuestionSet>, questions: [QuizQuestion])
 
     func getAnswers(
         questionSet: QuestionSet,
         questions: [QuizQuestion]
-    ) -> SavedQuiz?
+    ) -> SavedQuiz<QuestionSet>?
 }
 
-struct SavedQuiz {
-    let questionSet: QuestionSet
-    let difficulty: QuizDifficulty
-    let answers: [String: QuizAnswerInput]
-}
+public class InMemoryQuizPersistence<QuestionSet: Hashable>: QuizPersistence {
 
-private struct SavedPersistedQuiz: Codable {
-    let difficulty: QuizDifficulty
-    let answers: [String: QuizAnswerPersistedInput]
-}
-
-private struct QuizAnswerPersistedInput: Codable {
-    let firstAnswerId: String
-    let otherAnswersId: [String]
-}
-
-class InMemoryQuizPersistence: QuizPersistence {
+    public init() { }
 
     private var underlyingResults = [QuestionSet: SavedPersistedQuiz]()
 
-    func saveAnswers(
-        quiz: SavedQuiz,
+    public func saveAnswers(
+        quiz: SavedQuiz<QuestionSet>,
         questions: [QuizQuestion]
     ) {
         underlyingResults[quiz.questionSet] = serialiseAnswers(quiz, questions: questions)
     }
 
-    func getAnswers(
+    public func getAnswers(
         questionSet: QuestionSet,
         questions: [QuizQuestion]
-    ) -> SavedQuiz? {
+    ) -> SavedQuiz<QuestionSet>? {
         let quiz = underlyingResults[questionSet]
         return quiz.map { q in
             deserialiseAnswers(q, questionSet: questionSet, questions: questions)
@@ -56,13 +39,15 @@ class InMemoryQuizPersistence: QuizPersistence {
     }
 }
 
-class UserDefaultsQuizPersistence: QuizPersistence {
+public class UserDefaultsQuizPersistence<QuestionSet: RawRepresentable>: QuizPersistence where QuestionSet.RawValue == String {
+
+    public init() { }
 
     private let userDefaults = UserDefaults.standard
 
     private let keyBase = "quiz-results"
 
-    func saveAnswers(quiz: SavedQuiz, questions: [QuizQuestion]) {
+    public func saveAnswers(quiz: SavedQuiz<QuestionSet>, questions: [QuizQuestion]) {
         let serialized = serialiseAnswers(quiz, questions: questions)
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(serialized) {
@@ -70,7 +55,7 @@ class UserDefaultsQuizPersistence: QuizPersistence {
         }
     }
 
-    func getAnswers(questionSet: QuestionSet, questions: [QuizQuestion]) -> SavedQuiz? {
+    public func getAnswers(questionSet: QuestionSet, questions: [QuizQuestion]) -> SavedQuiz<QuestionSet>? {
         let decoder = JSONDecoder()
         if let data = userDefaults.object(forKey: key(for: questionSet)) as? Data {
             if let decoded = try? decoder.decode(SavedPersistedQuiz.self, from: data) {
@@ -88,7 +73,7 @@ class UserDefaultsQuizPersistence: QuizPersistence {
 // MARK: Serialize
 fileprivate extension QuizPersistence {
     func serialiseAnswers(
-        _ quiz: SavedQuiz,
+        _ quiz: SavedQuiz<QuestionSet>,
         questions: [QuizQuestion]
     ) -> SavedPersistedQuiz {
         var serializedAnswers = [String: QuizAnswerPersistedInput]()
@@ -133,7 +118,7 @@ fileprivate extension QuizPersistence {
         _ quiz: SavedPersistedQuiz,
         questionSet: QuestionSet,
         questions: [QuizQuestion]
-    ) -> SavedQuiz {
+    ) -> SavedQuiz<QuestionSet> {
 
         var deserializedAnswers = [String: QuizAnswerInput]()
         quiz.answers.forEach { (questionId, answer) in
@@ -171,4 +156,14 @@ fileprivate extension QuizPersistence {
             QuizAnswerInput(firstAnswer: firstOption, otherAnswers: otherOptions)
         }
     }
+}
+
+private struct SavedPersistedQuiz: Codable {
+    let difficulty: QuizDifficulty
+    let answers: [String: QuizAnswerPersistedInput]
+}
+
+private struct QuizAnswerPersistedInput: Codable {
+    let firstAnswerId: String
+    let otherAnswersId: [String]
 }

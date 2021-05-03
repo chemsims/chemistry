@@ -514,7 +514,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
     static let injector = AnyNavigationInjector(
         behaviour: AnyNavigationBehavior(EmptyBehaviour()),
         persistence: AnyScreenPersistence(InMemoryScreenPersistence()),
-        analytics: AnyAppAnalytics(NoOpAnalytics()),
+        analytics: AnyAppAnalytics(NoOpAnalytics<Int>()),
+        quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence<Int>()),
         allScreens: [1, 2, 3, 4],
         linearScreens: [1, 2, 3, 4]
     )
@@ -546,10 +547,22 @@ struct MainMenuOverlay_Previews: PreviewProvider {
     }
 
     struct NoOpAnalytics<Screen>: AppAnalytics {
+        typealias Screen = Screen
+        typealias QuestionSet = Int
+
         func opened(screen: Screen) { }
 
         let enabled: Bool = false
         func setEnabled(value: Bool) {
+        }
+
+        func startedQuiz(questionSet: Int, difficulty: QuizDifficulty) {
+        }
+
+        func completedQuiz(questionSet: Int, difficulty: QuizDifficulty, percentCorrect: Double) {
+        }
+
+        func answeredQuestion(questionSet: Int, questionId: String, answerId: String, answerAttempt: Int, isCorrect: Bool) {
         }
     }
 }

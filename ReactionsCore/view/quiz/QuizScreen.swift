@@ -3,16 +3,21 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-struct QuizScreen: View {
+public struct QuizScreen<QP: QuizPersistence, Analytics: AppAnalytics>: View where QP.QuestionSet == Analytics.QuestionSet {
 
-    @ObservedObject var model: QuizViewModel
+    @ObservedObject var model: QuizViewModel<QP, Analytics>
+
+    public init(
+        model: QuizViewModel<QP, Analytics>
+    ) {
+        self.model = model
+    }
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             QuizScreenWithSettings(
                 model: model,
@@ -26,8 +31,8 @@ struct QuizScreen: View {
     }
 }
 
-private struct QuizScreenWithSettings: View {
-    @ObservedObject var model: QuizViewModel
+private struct QuizScreenWithSettings<QP: QuizPersistence, Analytics: AppAnalytics>: View where QP.QuestionSet == Analytics.QuestionSet {
+    @ObservedObject var model: QuizViewModel<QP, Analytics>
     let settings: QuizLayoutSettings
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -306,18 +311,5 @@ private struct NotificationView: View {
 
     private var message: String {
         "Choose the correct answer to progress to the next question"
-    }
-}
-
-struct QuizScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        QuizScreen(
-            model: QuizViewModel(
-                questions: .zeroOrderQuestions,
-                persistence: InMemoryQuizPersistence(),
-                analytics: NoOpAnalytics()
-            )
-        )
-        .previewLayout(.fixed(width: 568, height: 320))
     }
 }

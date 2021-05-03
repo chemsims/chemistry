@@ -6,42 +6,11 @@ import Foundation
 import FirebaseAnalytics
 import ReactionsCore
 
-protocol AnalyticsService {
-    func opened(screen: AppScreen)
 
-    func answeredQuestion(
-        questionSet: QuestionSet,
-        questionId: String,
-        answerId: String,
-        answerAttempt: Int,
-        isCorrect: Bool
-    )
-
-    func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty)
-
-    func completedQuiz(
-        questionSet: QuestionSet,
-        difficulty: QuizDifficulty,
-        percentCorrect: Double
-    )
-}
-
-class NoOpAnalytics: AnalyticsService, AppAnalytics {
+struct GoogleAnalytics: AppAnalytics {
 
     typealias Screen = AppScreen
-
-    func opened(screen: AppScreen) { }
-    func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) { }
-    func answeredQuestion(questionSet: QuestionSet, questionId: String, answerId: String, answerAttempt: Int, isCorrect: Bool) { }
-    func completedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty, percentCorrect: Double) { }
-
-    private(set) var enabled = false
-    func setEnabled(value: Bool) {
-        enabled = value
-    }
-}
-
-struct GoogleAnalytics: AnalyticsService, AppAnalytics {
+    typealias QuestionSet = ReactionsRateQuestionSet
 
     private let userDefaults = UserDefaults.standard
     private static let analyticsEnabledKey = "analyticsEnabled"
@@ -136,7 +105,7 @@ struct GoogleAnalytics: AnalyticsService, AppAnalytics {
     }
 }
 
-extension QuestionSet {
+extension ReactionsRateQuestionSet {
     var eventNameSuffix: String {
         self.rawValue.prefix(1).capitalized + self.rawValue.dropFirst()
     }

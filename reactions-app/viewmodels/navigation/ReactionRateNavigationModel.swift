@@ -8,17 +8,20 @@ import ReactionsCore
 
 struct ReactionRateNavigationModel {
 
-    static func navigationModel(using injector: Injector) -> RootNavigationViewModel<AnyNavigationInjector<AppScreen>> {
+    typealias ConcreteInjector = AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>
+
+    static func navigationModel(using injector: Injector) -> RootNavigationViewModel<ConcreteInjector> {
         RootNavigationViewModel(injector: navigationInjector(using: injector))
     }
 
-    private static func navigationInjector(using injector: Injector) -> AnyNavigationInjector<AppScreen> {
+    private static func navigationInjector(using injector: Injector) -> ConcreteInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
                 ReactionsRateNavigationBehaviour(injector: injector)
             ),
             persistence: injector.screenPersistence,
             analytics: injector.appAnalytics,
+            quizPersistence: injector.quizPersistence,
             allScreens: AppScreen.allCases,
             linearScreens: [.energyProfile]
         )
@@ -71,7 +74,7 @@ private struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
             persistence: injector.reactionPersistence,
             quizPersistence: injector.quizPersistence,
             energyPersistence: injector.energyPersistence,
-            analytics: injector.analytics,
+            analytics: injector.appAnalytics,
             next: nextScreen,
             prev: prevScreen
         )
@@ -81,9 +84,9 @@ private struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
 fileprivate extension AppScreen {
     func screenProvider(
         persistence: ReactionInputPersistence,
-        quizPersistence: QuizPersistence,
+        quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet>,
         energyPersistence: EnergyProfilePersistence,
-        analytics: AnalyticsService,
+        analytics: AnyAppAnalytics<AppScreen, ReactionsRateQuestionSet>,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) -> ScreenProvider {
@@ -214,9 +217,9 @@ private class SecondOrderReactionScreenProvider: ScreenProvider {
 
 private class QuizScreenProvider: ScreenProvider {
     init(
-        questions: QuizQuestionsList,
-        persistence: QuizPersistence,
-        analytics: AnalyticsService,
+        questions: QuizQuestionsList<ReactionsRateQuestionSet>,
+        persistence: AnyQuizPersistence<ReactionsRateQuestionSet>,
+        analytics: AnyAppAnalytics<AppScreen, ReactionsRateQuestionSet>,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) {
@@ -225,7 +228,7 @@ private class QuizScreenProvider: ScreenProvider {
         viewModel.prevScreen = prev
     }
 
-    let viewModel: QuizViewModel
+    let viewModel: QuizViewModel<AnyQuizPersistence<ReactionsRateQuestionSet>, AnyAppAnalytics<AppScreen, ReactionsRateQuestionSet>>
 
     var screen: AnyView {
         AnyView(QuizScreen(model: viewModel))

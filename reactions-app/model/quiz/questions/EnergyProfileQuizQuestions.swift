@@ -5,8 +5,8 @@
 import Foundation
 import ReactionsCore
 
-extension QuizQuestionsList {
-    static let energyProfileQuizQuestions = QuizQuestionsList(
+extension QuizQuestionsList where QuestionSet == ReactionsRateQuestionSet {
+    static let energyProfileQuizQuestions = QuizQuestionsList<ReactionsRateQuestionSet>(
         questionSet: .energyProfile,
         [
             QuizQuestionData(

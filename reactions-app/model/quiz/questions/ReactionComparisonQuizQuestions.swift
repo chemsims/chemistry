@@ -5,8 +5,8 @@
 import Foundation
 import ReactionsCore
 
-extension QuizQuestionsList {
-    static let reactionComparisonQuizQuestions = QuizQuestionsList(
+extension QuizQuestionsList where QuestionSet == ReactionsRateQuestionSet {
+    static let reactionComparisonQuizQuestions = QuizQuestionsList<ReactionsRateQuestionSet>(
         questionSet: .reactionComparison,
         [
             QuizQuestionData(

@@ -3,12 +3,11 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-struct QuizReviewBody: View {
+struct QuizReviewBody<QP: QuizPersistence, Analytics: AppAnalytics>: View where QP.QuestionSet == Analytics.QuestionSet {
 
     let settings: QuizLayoutSettings
-    @ObservedObject var model: QuizViewModel
+    @ObservedObject var model: QuizViewModel<QP, Analytics>
 
     var body: some View {
         ScrollView {

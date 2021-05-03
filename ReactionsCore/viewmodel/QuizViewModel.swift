@@ -3,19 +3,27 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-class QuizViewModel: ObservableObject {
+public protocol QuizInjector {
+    associatedtype QuestionSet
+    associatedtype QP: QuizPersistence where QP.QuestionSet == QuestionSet
+    associatedtype Analytics: AppAnalytics where Analytics.QuestionSet == QuestionSet
+
+    var persistence: QP { get }
+    var analytics: Analytics { get }
+}
+
+public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: ObservableObject where QP.QuestionSet == Analytics.QuestionSet {
 
     private let allQuestions: [QuizQuestion]
-    private let questionSet: QuestionSet
-    private let persistence: QuizPersistence
-    private let analytics: AnalyticsService
+    private let questionSet: QP.QuestionSet
+    private let persistence: QP
+    private let analytics: Analytics
 
-    init(
-        questions: QuizQuestionsList,
-        persistence: QuizPersistence,
-        analytics: AnalyticsService,
+    public init(
+        questions: QuizQuestionsList<QP.QuestionSet>,
+        persistence: QP,
+        analytics: Analytics,
         restoreLastPersistedQuiz: Bool = true
     ) {
         let displayQuestions = questions.createQuestions()
@@ -37,8 +45,8 @@ class QuizViewModel: ObservableObject {
         }
     }
 
-    var nextScreen: (() -> Void)?
-    var prevScreen: (() -> Void)?
+    public var nextScreen: (() -> Void)?
+    public var prevScreen: (() -> Void)?
 
     // MARK: Published properties
     @Published var currentQuestion: QuizQuestion
@@ -284,29 +292,5 @@ fileprivate extension QuizViewModel {
             answerAttempt: answerAttempt,
             isCorrect: currentQuestion.correctOption == option
         )
-    }
-}
-
-struct QuizAnswerInput: Equatable {
-    let firstAnswer: QuizOption
-    let otherAnswers: [QuizOption]
-
-    init(firstAnswer: QuizOption, otherAnswers: [QuizOption] = []) {
-        self.firstAnswer = firstAnswer
-        self.otherAnswers = otherAnswers
-    }
-
-    func appending(_ option: QuizOption) -> QuizAnswerInput {
-        guard !allAnswers.contains(option) else {
-            return self
-        }
-        return QuizAnswerInput(
-            firstAnswer: firstAnswer,
-            otherAnswers: otherAnswers + [option]
-        )
-    }
-
-    var allAnswers: [QuizOption] {
-        [firstAnswer] + otherAnswers
     }
 }

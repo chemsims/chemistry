@@ -60,9 +60,8 @@ struct AnalyticsConsentView_Previews: PreviewProvider {
     static var previews: some View {
         AnalyticsConsentView(
             isShowing: .constant(true),
-            model: AnalyticsConsentViewModel(service: NoOpAppAnalytics<Int>())
+            model: AnalyticsConsentViewModel(service: NoOpAppAnalytics<Int, Int>())
         )
         .padding()
     }
-
 }

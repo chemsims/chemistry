@@ -3,12 +3,11 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-struct QuizQuestionsBody: View {
+struct QuizQuestionsBody<QP: QuizPersistence, Analytics: AppAnalytics>: View where QP.QuestionSet == Analytics.QuestionSet {
 
     let settings: QuizLayoutSettings
-    @ObservedObject var model: QuizViewModel
+    @ObservedObject var model: QuizViewModel<QP, Analytics>
 
     @State private var badgeScale: CGFloat = 1
 
@@ -62,9 +61,9 @@ struct QuizQuestionsBody: View {
     }
 }
 
-private struct QuizAnswerOption: View {
+private struct QuizAnswerOption<QP: QuizPersistence, Analytics: AppAnalytics>: View where QP.QuestionSet == Analytics.QuestionSet {
 
-    @ObservedObject var model: QuizViewModel
+    @ObservedObject var model: QuizViewModel<QP, Analytics>
     let settings: QuizLayoutSettings
     let option: QuizOption
 

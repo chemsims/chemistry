@@ -183,7 +183,7 @@ public struct QuizAnswer: Equatable {
     public let id: String
 }
 
-public struct QuizQuestionsList {
+public struct QuizQuestionsList<QuestionSet> {
 
     public let questionSet: QuestionSet
     public init(questionSet: QuestionSet, _ questions: [QuizQuestionData]) {

@@ -3,12 +3,11 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-struct QuizIntroBody: View {
+struct QuizIntroBody<QP: QuizPersistence, Analytics: AppAnalytics>: View where QP.QuestionSet == Analytics.QuestionSet {
 
     let settings: QuizLayoutSettings
-    @ObservedObject var model: QuizViewModel
+    @ObservedObject var model: QuizViewModel<QP, Analytics>
 
     var body: some View {
         VStack {
@@ -85,16 +84,6 @@ struct QuizIntroBody: View {
                     .padding(2 * settings.progressCornerRadius)
                 Spacer()
             }
-        }
-    }
-}
-
-extension QuizDifficulty {
-    var displayName: String {
-        switch self {
-        case .easy: return "Easy"
-        case .medium: return "Medium"
-        case .hard: return "Hard"
         }
     }
 }
