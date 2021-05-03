@@ -43,7 +43,10 @@ struct MainMenuOverlay<Injector: NavigationInjector>: View {
                 )
                     .edgesIgnoringSafeArea(.all)
             case .share:
-                ShareSheetView(activityItems: [shareSettings.message])
+                ShareSheetView(
+                    activityItems: [shareSettings.message],
+                    onCompletion: { activeSheet = nil }
+                )
                     .edgesIgnoringSafeArea(.all)
             }
         }
