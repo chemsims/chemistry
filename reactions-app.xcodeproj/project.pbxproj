@@ -268,6 +268,7 @@
 		57AA012E25A90172001131A0 /* EnergyProfileReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA012D25A90172001131A0 /* EnergyProfileReactionType.swift */; };
 		57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05E62562F3750080C538 /* SliderIndicator.swift */; };
 		57AA05EB2562F3910080C538 /* SpecificSliders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA05EA2562F3910080C538 /* SpecificSliders.swift */; };
+		57B168C025A7C09200F6668E /* ScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B168BF25A7C09200F6668E /* ScreenState.swift */; };
 		57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */; };
 		57ABDC3925EBF9300078A82B /* AqueousReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */; };
 		57ABDC3F25EBFA230078A82B /* ReactionDropDownSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */; };
@@ -1141,7 +1142,6 @@
 			children = (
 				5711E00225C4840D00B28E45 /* GoogleService-Info.plist */,
 				5763177C259B8E9B00D7CE2C /* util */,
-				57B0FBC82565D44500BB6ACC /* fonts */,
 				57035EFB255C1A2700DB3A19 /* viewmodels */,
 				571D6A6C255AB23D00F4E635 /* model */,
 				571D6A55255AAC0900F4E635 /* view */,
@@ -2669,7 +2669,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57B0FBCA2565D45100BB6ACC /* RobotoSlab-VariableFont_wght.ttf in Resources */,
 				571D6A4C255A780900F4E635 /* LaunchScreen.storyboard in Resources */,
 				5711E00325C4840D00B28E45 /* GoogleService-Info.plist in Resources */,
 				571D6A49255A780900F4E635 /* Preview Assets.xcassets in Resources */,
@@ -2841,7 +2840,6 @@
 				571B3C64256556560075358B /* ZeroOrderReactionNavigationViewModel.swift in Sources */,
 				57B2331F258E93AE00128760 /* PageViewController.swift in Sources */,
 				57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */,
-				57B0FBCE2565D48C00BB6ACC /* CustomFont.swift in Sources */,
 				57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */,
 				57D8BA1F257B72EC006B3C8B /* ReactionComparisonNavigationViewModel.swift in Sources */,
 				571B3C702565571B0075358B /* SecondOrderReactionViewModel.swift in Sources */,
