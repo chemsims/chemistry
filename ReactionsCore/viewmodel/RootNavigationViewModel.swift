@@ -19,6 +19,9 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
 
     public typealias Screen = Injector.Screen
 
+    private var hasOpenedFirstScreen = false
+
+
     public init(
         injector: Injector
     ) {
@@ -112,11 +115,12 @@ extension RootNavigationViewModel {
         withAnimation(navigationAnimation) {
             view = provider.screen
         }
-        if behaviour.showReviewPromptOn(screen: screen) {
+        if behaviour.showReviewPromptOn(screen: screen) && !hasOpenedFirstScreen {
             showMenu = true
         }
         injector.analytics.opened(screen: screen)
         persistence.setLastOpened(screen)
+        hasOpenedFirstScreen = true
     }
 }
 
