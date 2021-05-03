@@ -66,14 +66,20 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
 }
 
 extension RootNavigationViewModel {
-    private func next() {
+    private func next(from screen: Injector.Screen) {
+        guard screen == currentScreen else {
+            return
+        }
         if let nextScreen = injector.linearScreens.element(after: currentScreen) {
             persistence.setCompleted(screen: currentScreen)
             goToFresh(screen: nextScreen)
         }
     }
 
-    private func prev() {
+    private func prev(from screen: Injector.Screen) {
+        guard screen == currentScreen else {
+            return
+        }
         if let prevScreen = injector.linearScreens.element(before: currentScreen) {
             if showMenu {
                 showMenu = false
@@ -103,8 +109,8 @@ extension RootNavigationViewModel {
     private func getProvider(for screen: Screen) -> ScreenProvider {
         injector.behaviour.getProvider(
             for: screen,
-            nextScreen: next,
-            prevScreen: prev
+            nextScreen: { [weak self] in self?.next(from: screen) },
+            prevScreen: { [weak self] in self?.prev(from: screen) }
         )
     }
 
