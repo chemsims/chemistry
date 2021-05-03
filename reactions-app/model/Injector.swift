@@ -29,7 +29,7 @@ class ProductionInjector: Injector {
     let lastOpenedScreenPersistence: LastOpenedScreenPersistence = UserDefaultsLastOpenedScreenPersistence()
 
     let screenPersistence = AnyScreenPersistence(UserDefaultsScreenPersistence<AppScreen>())
-    let appAnalytics = AnyAppAnalytics(GoogleAnalytics())
+    let appAnalytics = AnyAppAnalytics(GoogleAnalytics<AppScreen, ReactionsRateQuestionSet>(client: AnalyticsClient()))
 }
 
 class InMemoryInjector: Injector {
