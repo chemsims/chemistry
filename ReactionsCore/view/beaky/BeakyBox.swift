@@ -89,11 +89,46 @@ public struct BeakyBox: View {
                     .frame(width: navButtonSize, height: navButtonSize)
                     .accessibility(sortPriority: 0.8)
                 Spacer()
-                NextButton(action: next)
-                    .frame(width: navButtonSize, height: navButtonSize)
+                PrimaryNextButton(action: next)
+                    .frame(width: nextButtonWidth, height: navButtonSize)
                     .accessibility(sortPriority: 0.9)
                     .disabled(nextIsDisabled)
+                    .compositingGroup()
+                    .opacity(nextIsDisabled ? 0.6 : 1)
             }.frame(width: bubbleWidth - bubbleStemWidth)
         }
+    }
+
+    private var nextButtonWidth: CGFloat {
+        let maxWidth = 0.9 * (bubbleWidth - bubbleStemWidth - navButtonSize)
+        return min(maxWidth, 3.2 * navButtonSize)
+    }
+}
+
+
+struct BeakyBox_Previews: PreviewProvider {
+    static var previews: some View {
+        GeometryReader { geometry in
+            ZStack {
+                box(
+                    BeakyGeometrySettings(
+                        screenWidth: geometry.size.width,
+                        screenHeight: geometry.size.height
+                    )
+                )
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+        }
+        .previewLayout(.fixed(width: 568, height: 320))
+    }
+
+    private static func box(_ settings:  BeakyGeometrySettings) -> some View {
+        BeakyBox(
+            statement: ["Test statement"],
+            next: { },
+            back: { },
+            nextIsDisabled: true,
+            settings: settings
+        )
     }
 }

@@ -77,12 +77,14 @@ private struct GeneralDirectionButton: View {
 
 public struct NavButtonButtonStyle: ButtonStyle {
 
-    public init() { }
+    let scaleDelta: CGFloat
+    public init(scaleDelta: CGFloat = 0.1) {
+        self.scaleDelta = scaleDelta
+    }
 
     public func makeBody(configuration: Configuration) -> some View {
-        let delta: CGFloat = 0.1
-        let xScale = configuration.isPressed ? 1 + delta : 1
-        let yScale = configuration.isPressed ? 1 - delta : 1
+        let xScale = configuration.isPressed ? 1 + scaleDelta : 1
+        let yScale = configuration.isPressed ? 1 - scaleDelta : 1
         return configuration
             .label
             .scaleEffect(x: xScale, y: yScale)
