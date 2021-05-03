@@ -46,6 +46,7 @@ class QuizViewModel: ObservableObject {
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.pending
     @Published var quizDifficulty = QuizDifficulty.medium
+    @Published var showNotification = false
 
     // MARK: Public computed properties
     var selectedAnswer: QuizAnswerInput? {
@@ -111,6 +112,7 @@ class QuizViewModel: ObservableObject {
     }
 
     private var hasLoggedQuizCompletion = false
+    private var hideNotificationDispatchId = UUID()
 
     // MARK: Public methods
     func question(with id: String) -> QuizQuestion {
@@ -161,6 +163,18 @@ class QuizViewModel: ObservableObject {
             questions: allQuestions
         )
     }
+
+    private func triggerNotification() {
+        showNotification = true
+        let nextId = UUID()
+        hideNotificationDispatchId = nextId
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500)) { [weak self] in
+            guard self?.hideNotificationDispatchId == nextId else {
+                return
+            }
+            self?.showNotification = false
+        }
+    }
 }
 
 // MARK: Quiz Navigation
@@ -168,6 +182,7 @@ extension QuizViewModel {
 
     func next(force: Bool = false) {
         guard !nextIsDisabled || force else {
+            triggerNotification()
             return
         }
         switch quizState {

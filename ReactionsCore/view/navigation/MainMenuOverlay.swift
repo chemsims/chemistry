@@ -43,7 +43,10 @@ struct MainMenuOverlay<Injector: NavigationInjector>: View {
                 )
                     .edgesIgnoringSafeArea(.all)
             case .share:
-                ShareSheetView(activityItems: [shareSettings.message])
+                ShareSheetView(
+                    activityItems: [shareSettings.message],
+                    onCompletion: { activeSheet = nil }
+                )
                     .edgesIgnoringSafeArea(.all)
             }
         }
@@ -71,6 +74,15 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
+
+            if navigation.showAnalyticsConsent {
+                Rectangle()
+                    .opacity(0.2)
+                    .onTapGesture {
+                        navigation.showAnalyticsConsent = false
+                    }
+            }
+
             icon
                 .padding(.leading, settings.geometry.safeAreaInsets.leading)
                 .padding(.vertical, settings.geometry.safeAreaInsets.top)
@@ -96,10 +108,30 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
                     .accessibility(sortPriority: 0.5)
                     .accessibility(addTraits: .isModal)
             }
+
+            if navigation.showAnalyticsConsent {
+                consentView
+            }
         }
         .edgesIgnoringSafeArea(.all)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.25))
         .accessibilityElement(children: .contain)
+    }
+
+    private var consentView: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                AnalyticsConsentView(
+                    isShowing: $navigation.showAnalyticsConsent,
+                    model: navigation.analyticsConsent
+                )
+                    .frame(width: 0.45 * settings.geometry.size.width)
+                Spacer()
+            }
+            Spacer()
+        }
     }
 
     private var icon: some View {
@@ -271,6 +303,9 @@ extension MainMenuOverlayWithSettings {
         VStack(spacing: settings.navVStackSpacing) {
             mailButton
             shareButton
+             if Flags.showAnalyticsOptOutToggle {
+                analyticsButton
+            }
         }
         .frame(width: settings.settingButtonsWidth)
         .padding(.top, 2 * settings.panelContentPadding)
@@ -295,11 +330,22 @@ extension MainMenuOverlayWithSettings {
             Image("share-icon", bundle: .reactionsCore)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .colorMultiply(Styling.navIcon)
         }
         .accessibility(label: Text("Open share sheet"))
         .accessibility(hint: Text("Opens share sheet to share app with others"))
     }
+
+        private var analyticsButton: some View {
+            Button(action: {
+                navigation.showAnalyticsConsent.toggle()
+            }) {
+                Image(systemName: "chart.bar.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(Styling.navIcon)
+            }
+            .accessibility(label: Text("Open analytics consent settings"))
+        }
 
     // TODO
     private func openMailComposer() {
@@ -501,6 +547,10 @@ struct MainMenuOverlay_Previews: PreviewProvider {
 
     struct NoOpAnalytics<Screen>: AppAnalytics {
         func opened(screen: Screen) { }
+
+        let enabled: Bool = false
+        func setEnabled(value: Bool) {
+        }
     }
 }
 

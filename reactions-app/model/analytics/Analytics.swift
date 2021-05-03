@@ -34,13 +34,48 @@ class NoOpAnalytics: AnalyticsService, AppAnalytics {
     func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) { }
     func answeredQuestion(questionSet: QuestionSet, questionId: String, answerId: String, answerAttempt: Int, isCorrect: Bool) { }
     func completedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty, percentCorrect: Double) { }
+
+    private(set) var enabled = false
+    func setEnabled(value: Bool) {
+        enabled = value
+    }
 }
 
 struct GoogleAnalytics: AnalyticsService, AppAnalytics {
 
+    private let userDefaults = UserDefaults.standard
+    private static let analyticsEnabledKey = "analyticsEnabled"
+
+    init() {
+        userDefaults.register(defaults: [
+            Self.analyticsEnabledKey: true
+        ])
+        setAnalyticsCollection(enabled)
+    }
+
+    var enabled: Bool {
+        userDefaults.bool(forKey: Self.analyticsEnabledKey)
+    }
+
+    func setEnabled(value: Bool) {
+        userDefaults.setValue(value, forKey: Self.analyticsEnabledKey)
+        setAnalyticsCollection(value)
+    }
+
+    private func setAnalyticsCollection(_ value: Bool) {
+        Analytics.setAnalyticsCollectionEnabled(value)
+    }
+
     func opened(screen: AppScreen) {
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [
             AnalyticsParameterScreenName: screen.rawValue
+        ])
+    }
+
+    func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) {
+        let eventName = "\(Events.startedQuiz)\(questionSet.eventNameSuffix)"
+        Analytics.logEvent(eventName, parameters: [
+            Params.quizDifficulty: difficulty.displayName.lowercased()
         ])
     }
 
@@ -51,19 +86,15 @@ struct GoogleAnalytics: AnalyticsService, AppAnalytics {
         answerAttempt: Int,
         isCorrect: Bool
     ) {
-        Analytics.logEvent(Events.answeredQuestion, parameters: [
+        let sanitisedId = questionId.replacingOccurrences(of: "-", with: "_")
+        let eventName = "\(Events.answeredQuestion)_\(sanitisedId)"
+        Analytics.logEvent(eventName, parameters: [
             Params.questionSet: questionSet.rawValue,
-            Params.questionId: questionId,
             Params.answerId: answerId,
             Params.answerAttempt: answerAttempt,
-            Params.isCorrect: isCorrect
-        ])
-    }
-
-    func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) {
-        Analytics.logEvent(Events.startedQuiz, parameters: [
-            Params.questionSet: questionSet.rawValue,
-            Params.quizDifficulty: difficulty.displayName.lowercased()
+            Params.answerAttemptDimension: "_\(answerAttempt)",
+            Params.isCorrect: isCorrect,
+            Params.isCorrectDimension: isCorrect ? "YES" : "NO"
         ])
     }
 
@@ -72,10 +103,11 @@ struct GoogleAnalytics: AnalyticsService, AppAnalytics {
         difficulty: QuizDifficulty,
         percentCorrect: Double
     ) {
-        Analytics.logEvent(Events.completedQuiz, parameters: [
-            Params.questionSet: questionSet.rawValue,
+        let eventName = "\(Events.completedQuiz)\(questionSet.eventNameSuffix)"
+        Analytics.logEvent(eventName, parameters: [
             Params.quizDifficulty: difficulty.displayName.lowercased(),
-            Params.percentCorrect: percentCorrect
+            Params.percentCorrect: percentCorrect,
+            Params.percentCorrectDimension: "_\(percentCorrect.str(decimals: 0))"
         ])
     }
 
@@ -91,11 +123,21 @@ struct GoogleAnalytics: AnalyticsService, AppAnalytics {
         static let questionId = "questionId"
         static let answerId = "answerId"
         static let answerAttempt = "answerAttempt"
+        static let answerAttemptDimension = "answerAttemptDimension"
+
         static let isCorrect = "isCorrect"
+        static let isCorrectDimension = "isCorrectDimension"
 
         static let quizScreen = "quizScreen"
         static let quizDifficulty = "quizDifficulty"
 
         static let percentCorrect = "percentCorrect"
+        static let percentCorrectDimension = "percentCorrectDimension"
+    }
+}
+
+extension QuestionSet {
+    var eventNameSuffix: String {
+        self.rawValue.prefix(1).capitalized + self.rawValue.dropFirst()
     }
 }

@@ -7,7 +7,16 @@ import SwiftUI
 public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableObject {
 
     @Published public var view: AnyView
-    @Published public var showMenu = false
+    @Published public var showMenu = false {
+        didSet {
+            if showMenu {
+                UIAccessibility.post(notification: .screenChanged, argument: nil)
+            } else {
+                showAnalyticsConsent = false
+            }
+        }
+    }
+    @Published var showAnalyticsConsent = false
 
     private(set) public var currentScreen: Screen
     private(set) public var navigationDirection = NavigationDirection.forward
@@ -18,6 +27,9 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
     private var models = [Screen: ScreenProvider]()
 
     public typealias Screen = Injector.Screen
+
+    private var hasOpenedFirstScreen = false
+
 
     public init(
         injector: Injector
@@ -31,8 +43,12 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
         self.behaviour = injector.behaviour
 
         self.view = AnyView(EmptyView())
+        self.analyticsConsent = AnalyticsConsentViewModel(service: injector.analytics)
+
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
     }
+
+    let analyticsConsent: AnalyticsConsentViewModel<Injector.Analytics>
 
     public var highlightedIcon: Screen? {
         behaviour.highlightedNavIcon(for: currentScreen)
@@ -63,14 +79,20 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
 }
 
 extension RootNavigationViewModel {
-    private func next() {
+    private func next(from screen: Injector.Screen) {
+        guard screen == currentScreen else {
+            return
+        }
         if let nextScreen = injector.linearScreens.element(after: currentScreen) {
             persistence.setCompleted(screen: currentScreen)
             goToFresh(screen: nextScreen)
         }
     }
 
-    private func prev() {
+    private func prev(from screen: Injector.Screen) {
+        guard screen == currentScreen else {
+            return
+        }
         if let prevScreen = injector.linearScreens.element(before: currentScreen) {
             if showMenu {
                 showMenu = false
@@ -100,8 +122,8 @@ extension RootNavigationViewModel {
     private func getProvider(for screen: Screen) -> ScreenProvider {
         injector.behaviour.getProvider(
             for: screen,
-            nextScreen: next,
-            prevScreen: prev
+            nextScreen: { [weak self] in self?.next(from: screen) },
+            prevScreen: { [weak self] in self?.prev(from: screen) }
         )
     }
 
@@ -112,11 +134,12 @@ extension RootNavigationViewModel {
         withAnimation(navigationAnimation) {
             view = provider.screen
         }
-        if behaviour.showReviewPromptOn(screen: screen) {
+        if behaviour.showReviewPromptOn(screen: screen) && !hasOpenedFirstScreen {
             showMenu = true
         }
         injector.analytics.opened(screen: screen)
         persistence.setLastOpened(screen)
+        hasOpenedFirstScreen = true
     }
 }
 
