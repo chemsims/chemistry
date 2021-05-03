@@ -68,6 +68,7 @@
 		57315EB1263FEFEB00A7D0F9 /* PrimaryNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16E32615DDD200D8079F /* PrimaryNextButton.swift */; };
 		57315EB2263FEFEB00A7D0F9 /* PillShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16E72615DDE900D8079F /* PillShape.swift */; };
 		57315EB3263FF33000A7D0F9 /* AnalyticsConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AD96BB263024FD0027DD0C /* AnalyticsConsentView.swift */; };
+		57315EB4263FF79900A7D0F9 /* Flags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579B5D742632A2D600502B69 /* Flags.swift */; };
 		5736B669258A79BD002CEF5E /* QuizViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B668258A79BD002CEF5E /* QuizViewModelTests.swift */; };
 		5736B673258CCC69002CEF5E /* EnergyProfileNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B672258CCC69002CEF5E /* EnergyProfileNavigationViewModel.swift */; };
 		5736DC1225F4A91F003FD2B4 /* ReactionDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC1125F4A91F003FD2B4 /* ReactionDirection.swift */; };
@@ -729,6 +730,7 @@
 		5797A44425E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5797A44925E4069F00991BD9 /* ReactionsCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactionsCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797A45025E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		579B5D742632A2D600502B69 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
 		57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingScreen.swift; sourceTree = "<group>"; };
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
 		57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistence.swift; sourceTree = "<group>"; };
@@ -2248,6 +2250,7 @@
 		57DDAC5725E51AB500B535A7 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				579B5D742632A2D600502B69 /* Flags.swift */,
 				57B528E525B38A2300381550 /* ReviewPrompter.swift */,
 				57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */,
 				57E902B925ED561200758300 /* EquatableCounter.swift */,
@@ -3081,6 +3084,7 @@
 				57686AB92600E008005BD328 /* FlamesView.swift in Sources */,
 				57315EB2263FEFEB00A7D0F9 /* PillShape.swift in Sources */,
 				57952A4725E67F96006AB876 /* NavigationModel.swift in Sources */,
+				57315EB4263FF79900A7D0F9 /* Flags.swift in Sources */,
 				5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */,
 				575A882D25E4319E00AEE448 /* TextLineView.swift in Sources */,
 				57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */,
