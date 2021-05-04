@@ -5,6 +5,6 @@
 
 import Foundation
 
-enum EquilibriumQuestionSet {
+enum EquilibriumQuestionSet: String {
     case aqueous, gaseous, solubility
 }

@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum EquilibriumAppScreen: CaseIterable {
+enum EquilibriumAppScreen: String, CaseIterable {
     case aqueousReaction,
          aqueousQuiz,
          gaseousReaction,

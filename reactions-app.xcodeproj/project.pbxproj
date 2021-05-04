@@ -321,6 +321,7 @@
 		57BDFF4E26415540001B97CC /* ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4D26415540001B97CC /* ImageType.swift */; };
 		57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4F26415745001B97CC /* ImageTypeView.swift */; };
 		57BDFF5226415E00001B97CC /* dummy-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5126415E00001B97CC /* dummy-quiz.csv */; };
+		57BDFF5426416AC7001B97CC /* EquilibriumInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF5326416AC7001B97CC /* EquilibriumInjector.swift */; };
 		57C0A61A261C31D400777E32 /* SolubilityStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A619261C31D400777E32 /* SolubilityStatements.swift */; };
 		57C0A620261C4A3500777E32 /* SolubilityPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */; };
 		57C315B82631B37D0092C454 /* AnimatingReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */; };
@@ -809,6 +810,7 @@
 		57BDFF4D26415540001B97CC /* ImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageType.swift; sourceTree = "<group>"; };
 		57BDFF4F26415745001B97CC /* ImageTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTypeView.swift; sourceTree = "<group>"; };
 		57BDFF5126415E00001B97CC /* dummy-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dummy-quiz.csv"; sourceTree = "<group>"; };
+		57BDFF5326416AC7001B97CC /* EquilibriumInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumInjector.swift; sourceTree = "<group>"; };
 		57C0A619261C31D400777E32 /* SolubilityStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityStatements.swift; sourceTree = "<group>"; };
 		57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPhChart.swift; sourceTree = "<group>"; };
 		57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingReactionDefinition.swift; sourceTree = "<group>"; };
@@ -1828,6 +1830,7 @@
 				57952A5B25E68189006AB876 /* aqueous */,
 				57B3B94C260B478800EB9B47 /* ReactionsEquilibriumNavigationModel.swift */,
 				57B3B961260B4BF500EB9B47 /* NavigationIconRows.swift */,
+				57BDFF5326416AC7001B97CC /* EquilibriumInjector.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -3020,6 +3023,7 @@
 				57473AF626218F45009B608D /* SoluteType.swift in Sources */,
 				572BCF212603614000CE3FE0 /* ReactionComponentsWrapper.swift in Sources */,
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
+				57BDFF5426416AC7001B97CC /* EquilibriumInjector.swift in Sources */,
 				57BDFF4926413B57001B97CC /* EquilibriumQuizQuestions.swift in Sources */,
 				576A420725F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift in Sources */,
 				57567B6526065BA9009711D4 /* ReactionComponents.swift in Sources */,

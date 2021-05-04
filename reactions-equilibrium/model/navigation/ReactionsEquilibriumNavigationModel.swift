@@ -169,15 +169,3 @@ private class QuizScreenProvider: ScreenProvider {
     }
 
 }
-
-protocol EquilibriumInjector {
-    var persistence: AnyScreenPersistence<EquilibriumAppScreen> { get }
-    var screenAnalytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> { get }
-    var quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> { get }
-}
-
-class InMemoryEquilibriumInjector: EquilibriumInjector {
-    let persistence = AnyScreenPersistence(InMemoryScreenPersistence<EquilibriumAppScreen>())
-    let screenAnalytics = AnyAppAnalytics(NoOpAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>())
-    let quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> = AnyQuizPersistence(InMemoryQuizPersistence())
-}
