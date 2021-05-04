@@ -6,7 +6,7 @@ import SwiftUI
 import ReactionsCore
 
 struct ReactionEquilibriumRootView: View {
-    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<EquilibriumAppScreen>>
+    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<EquilibriumAppScreen, EquilibriumQuestionSet>>
 
     var body: some View {
         GeometryReader { geo in

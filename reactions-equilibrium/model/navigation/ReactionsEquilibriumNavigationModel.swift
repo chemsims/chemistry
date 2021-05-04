@@ -7,15 +7,18 @@ import ReactionsCore
 
 struct ReactionsEquilibriumNavigationModel {
 
-    static func model(using injector: EquilibriumInjector) -> RootNavigationViewModel<AnyNavigationInjector<EquilibriumAppScreen>> {
+    typealias Injector = AnyNavigationInjector<EquilibriumAppScreen, EquilibriumQuestionSet>
+
+    static func model(using injector: EquilibriumInjector) -> RootNavigationViewModel<Injector> {
         RootNavigationViewModel(injector: makeInjector(using: injector))
     }
 
-    private static func makeInjector(using injector: EquilibriumInjector) -> AnyNavigationInjector<EquilibriumAppScreen> {
+    private static func makeInjector(using injector: EquilibriumInjector) -> Injector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(EquilibriumNavigationBehaviour()),
             persistence: injector.persistence,
             analytics: injector.screenAnalytics,
+            quizPersistence: injector.quizPersistence,
             allScreens: EquilibriumAppScreen.allCases,
             linearScreens: EquilibriumAppScreen.allCases
         )
@@ -110,10 +113,12 @@ private class SolubilityScreenProvider: ScreenProvider {
 
 protocol EquilibriumInjector {
     var persistence: AnyScreenPersistence<EquilibriumAppScreen> { get }
-    var screenAnalytics: AnyAppAnalytics<EquilibriumAppScreen> { get }
+    var screenAnalytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> { get }
+    var quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> { get }
 }
 
 class InMemoryEquilibriumInjector: EquilibriumInjector {
     let persistence = AnyScreenPersistence(InMemoryScreenPersistence<EquilibriumAppScreen>())
-    let screenAnalytics = AnyAppAnalytics(NoOpAppAnalytics<EquilibriumAppScreen>())
+    let screenAnalytics = AnyAppAnalytics(NoOpAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>())
+    let quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> = AnyQuizPersistence(InMemoryQuizPersistence())
 }
