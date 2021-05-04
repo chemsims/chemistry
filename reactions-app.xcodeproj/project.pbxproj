@@ -26,7 +26,6 @@
 		5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E22126272A3800CF6FBE /* ShakeText.swift */; };
 		5711DFC525C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */; };
 		5711DFCB25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFCA25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift */; };
-		5711DFF725C4704500B28E45 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFF625C4704500B28E45 /* Analytics.swift */; };
 		5711E00325C4840D00B28E45 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5711E00225C4840D00B28E45 /* GoogleService-Info.plist */; };
 		5712155E258103A600E92A99 /* Rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5712155D258103A600E92A99 /* Rates.swift */; };
 		571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */; };
@@ -313,16 +312,17 @@
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */; };
 		57BCB4C425F3752800E50923 /* ReactionConvergenceSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */; };
-		57BDFF4226413836001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF4126413836001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		57BDFF4426413847001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF4326413847001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		57BDFF4626413A7A001B97CC /* EquilibriumQuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4526413A7A001B97CC /* EquilibriumQuestionSet.swift */; };
 		57BDFF4926413B57001B97CC /* EquilibriumQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4826413B57001B97CC /* EquilibriumQuizQuestions.swift */; };
-		57BDFF4C264153BE001B97CC /* dummy-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF4B264153BE001B97CC /* dummy-quiz.csv */; };
 		57BDFF4E26415540001B97CC /* ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4D26415540001B97CC /* ImageType.swift */; };
 		57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4F26415745001B97CC /* ImageTypeView.swift */; };
 		57BDFF5226415E00001B97CC /* dummy-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5126415E00001B97CC /* dummy-quiz.csv */; };
 		57BDFF5426416AC7001B97CC /* EquilibriumInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF5326416AC7001B97CC /* EquilibriumInjector.swift */; };
 		57BDFF5626416C14001B97CC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5526416C14001B97CC /* GoogleService-Info.plist */; };
+		57BDFF5826416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF5726416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		57BDFF5C2641764A001B97CC /* solubility-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF592641764A001B97CC /* solubility-quiz.csv */; };
+		57BDFF5D2641764A001B97CC /* aqueous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5A2641764A001B97CC /* aqueous-quiz.csv */; };
+		57BDFF5E2641764A001B97CC /* gaseous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5B2641764A001B97CC /* gaseous-quiz.csv */; };
 		57C0A61A261C31D400777E32 /* SolubilityStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A619261C31D400777E32 /* SolubilityStatements.swift */; };
 		57C0A620261C4A3500777E32 /* SolubilityPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */; };
 		57C315B82631B37D0092C454 /* AnimatingReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */; };
@@ -533,7 +533,6 @@
 		5710E22126272A3800CF6FBE /* ShakeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeText.swift; sourceTree = "<group>"; };
 		5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistenceTests.swift; sourceTree = "<group>"; };
 		5711DFCA25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionQuizQuestionsTests.swift; sourceTree = "<group>"; };
-		5711DFF625C4704500B28E45 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		5711E00225C4840D00B28E45 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		571215552580DCD000E92A99 /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		5712155D258103A600E92A99 /* Rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rates.swift; sourceTree = "<group>"; };
@@ -807,12 +806,14 @@
 		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
 		57BDFF4526413A7A001B97CC /* EquilibriumQuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumQuestionSet.swift; sourceTree = "<group>"; };
 		57BDFF4826413B57001B97CC /* EquilibriumQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumQuizQuestions.swift; sourceTree = "<group>"; };
-		57BDFF4B264153BE001B97CC /* dummy-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dummy-quiz.csv"; sourceTree = "<group>"; };
 		57BDFF4D26415540001B97CC /* ImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageType.swift; sourceTree = "<group>"; };
 		57BDFF4F26415745001B97CC /* ImageTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTypeView.swift; sourceTree = "<group>"; };
 		57BDFF5126415E00001B97CC /* dummy-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dummy-quiz.csv"; sourceTree = "<group>"; };
 		57BDFF5326416AC7001B97CC /* EquilibriumInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumInjector.swift; sourceTree = "<group>"; };
 		57BDFF5526416C14001B97CC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		57BDFF592641764A001B97CC /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
+		57BDFF5A2641764A001B97CC /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
+		57BDFF5B2641764A001B97CC /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
 		57C0A619261C31D400777E32 /* SolubilityStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityStatements.swift; sourceTree = "<group>"; };
 		57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPhChart.swift; sourceTree = "<group>"; };
 		57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingReactionDefinition.swift; sourceTree = "<group>"; };
@@ -936,7 +937,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				57DDACC825E5448000B535A7 /* ReactionsCore.framework in Frameworks */,
-				57BDFF4426413847001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -945,7 +945,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				57DDACD225E5458100B535A7 /* ReactionsCore.framework in Frameworks */,
-				57BDFF4226413836001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -960,6 +959,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57BDFF5826416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,14 +1085,6 @@
 			path = "energy-profile";
 			sourceTree = "<group>";
 		};
-		5711DFF525C4703400B28E45 /* analytics */ = {
-			isa = PBXGroup;
-			children = (
-				5711DFF625C4704500B28E45 /* Analytics.swift */,
-			);
-			path = analytics;
-			sourceTree = "<group>";
-		};
 		571215542580DCC000E92A99 /* equation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1209,7 +1201,6 @@
 		571D6A6C255AB23D00F4E635 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				5711DFF525C4703400B28E45 /* analytics */,
 				574F14B625B488D400EB316C /* axis */,
 				578031FF25B0670300A0F610 /* persistence */,
 				57064BA025A77774008102CE /* reaction-input */,
@@ -2152,7 +2143,9 @@
 		57BDFF4A264153B5001B97CC /* quiz-questions */ = {
 			isa = PBXGroup;
 			children = (
-				57BDFF4B264153BE001B97CC /* dummy-quiz.csv */,
+				57BDFF5A2641764A001B97CC /* aqueous-quiz.csv */,
+				57BDFF5B2641764A001B97CC /* gaseous-quiz.csv */,
+				57BDFF592641764A001B97CC /* solubility-quiz.csv */,
 			);
 			path = "quiz-questions";
 			sourceTree = "<group>";
@@ -2576,7 +2569,6 @@
 			);
 			name = "reactions-app";
 			packageProductDependencies = (
-				57BDFF4326413847001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */,
 			);
 			productName = "reactions-app";
 			productReference = 571D6A3C255A780700F4E635 /* reactions-app.app */;
@@ -2599,7 +2591,6 @@
 			);
 			name = "reactions-equilibrium";
 			packageProductDependencies = (
-				57BDFF4126413836001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */,
 			);
 			productName = "reactions-equilibrium";
 			productReference = 575A88B325E43CD500AEE448 /* reactions-equilibrium.app */;
@@ -2637,6 +2628,9 @@
 			dependencies = (
 			);
 			name = ReactionsCore;
+			packageProductDependencies = (
+				57BDFF5726416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */,
+			);
 			productName = ReactionsCore;
 			productReference = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */;
 			productType = "com.apple.product-type.framework";
@@ -2743,8 +2737,10 @@
 				575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */,
 				575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */,
 				57BDFF5626416C14001B97CC /* GoogleService-Info.plist in Resources */,
-				57BDFF4C264153BE001B97CC /* dummy-quiz.csv in Resources */,
+				57BDFF5C2641764A001B97CC /* solubility-quiz.csv in Resources */,
 				575A88BC25E43CD700AEE448 /* Assets.xcassets in Resources */,
+				57BDFF5D2641764A001B97CC /* aqueous-quiz.csv in Resources */,
+				57BDFF5E2641764A001B97CC /* gaseous-quiz.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2917,7 +2913,6 @@
 				571D6A42255A780700F4E635 /* SceneDelegate.swift in Sources */,
 				57AA05E72562F3750080C538 /* SliderIndicator.swift in Sources */,
 				571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */,
-				5711DFF725C4704500B28E45 /* Analytics.swift in Sources */,
 				571B3C782565605C0075358B /* SecondOrderReactionNavigationViewModel.swift in Sources */,
 				57CDFE5125E29968005D699A /* LastOpenedScreenPersistence.swift in Sources */,
 				57035EFD255C1A7000DB3A19 /* ReactionSettings.swift in Sources */,
@@ -3753,12 +3748,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		57BDFF4126413836001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5711DFD825C46DD100B28E45 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
-		};
-		57BDFF4326413847001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+		57BDFF5726416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5711DFD825C46DD100B28E45 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsWithoutAdIdSupport;

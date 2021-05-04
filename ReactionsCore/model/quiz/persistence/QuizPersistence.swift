@@ -33,7 +33,7 @@ public class InMemoryQuizPersistence<QuestionSet: Hashable>: QuizPersistence {
         questions: [QuizQuestion]
     ) -> SavedQuiz<QuestionSet>? {
         let quiz = underlyingResults[questionSet]
-        return quiz.map { q in
+        return quiz.flatMap { q in
             deserialiseAnswers(q, questionSet: questionSet, questions: questions)
         }
     }
@@ -118,7 +118,7 @@ fileprivate extension QuizPersistence {
         _ quiz: SavedPersistedQuiz,
         questionSet: QuestionSet,
         questions: [QuizQuestion]
-    ) -> SavedQuiz<QuestionSet> {
+    ) -> SavedQuiz<QuestionSet>? {
 
         var deserializedAnswers = [String: QuizAnswerInput]()
         quiz.answers.forEach { (questionId, answer) in
@@ -127,12 +127,14 @@ fileprivate extension QuizPersistence {
                 deserializedAnswers[questionId] = deserialized
             }
         }
-        assert(deserializedAnswers.count == quiz.answers.count)
-        return SavedQuiz(
-            questionSet: questionSet,
-            difficulty: quiz.difficulty,
-            answers: deserializedAnswers
-        )
+        if deserializedAnswers.count == quiz.answers.count {
+            return SavedQuiz(
+                questionSet: questionSet,
+                difficulty: quiz.difficulty,
+                answers: deserializedAnswers
+            )
+        }
+        return nil
     }
 
     func deserializeAnswer(
@@ -148,9 +150,6 @@ fileprivate extension QuizPersistence {
 
         let firstOption = getOption(answer.firstAnswerId)
         let otherOptions = answer.otherAnswersId.compactMap(getOption)
-
-        assert(firstOption != nil)
-        assert(answer.otherAnswersId.count == otherOptions.count)
 
         return firstOption.map { firstOption in
             QuizAnswerInput(firstAnswer: firstOption, otherAnswers: otherOptions)

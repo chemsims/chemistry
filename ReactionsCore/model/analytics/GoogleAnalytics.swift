@@ -3,13 +3,12 @@
 //
 
 import Foundation
+import FirebaseAnalytics
 
 public struct GoogleAnalytics<Screen: RawRepresentable, QuestionSet: RawRepresentable>
 where Screen.RawValue == String, QuestionSet.RawValue == String {
 
-    let client: GoogleAnalyticsClient
-    public init(client: GoogleAnalyticsClient) {
-        self.client = client
+    public init() {
         userDefaults.register(defaults: [
             analyticsEnabledKey: true
         ])
@@ -20,7 +19,7 @@ where Screen.RawValue == String, QuestionSet.RawValue == String {
     private let analyticsEnabledKey = "analyticsEnabled"
 
     private func setAnalyticsCollection(_ value: Bool) {
-        client.setAnalyticsCollectionEnabled(value)
+        Analytics.setAnalyticsCollectionEnabled(value)
     }
 }
 
@@ -37,14 +36,14 @@ extension GoogleAnalytics: AppAnalytics {
     }
 
     public func opened(screen: Screen) {
-        client.logEvent(client.eventScreenView, parameters: [
-            client.parameterScreenName: screen.rawValue
+        Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+            AnalyticsParameterScreenName: screen.rawValue
         ])
     }
 
     public func startedQuiz(questionSet: QuestionSet, difficulty: QuizDifficulty) {
         let eventName = "\(Events.startedQuiz)\(questionSet.eventNameSuffix)"
-        client.logEvent(eventName, parameters: [
+        Analytics.logEvent(eventName, parameters: [
             Params.quizDifficulty: difficulty.displayName.lowercased()
         ])
     }
@@ -58,7 +57,7 @@ extension GoogleAnalytics: AppAnalytics {
     ) {
         let sanitisedId = questionId.replacingOccurrences(of: "-", with: "_")
         let eventName = "\(Events.answeredQuestion)_\(sanitisedId)"
-        client.logEvent(eventName, parameters: [
+        Analytics.logEvent(eventName, parameters: [
             Params.questionSet: questionSet.rawValue,
             Params.answerId: answerId,
             Params.answerAttempt: answerAttempt,
@@ -74,7 +73,7 @@ extension GoogleAnalytics: AppAnalytics {
         percentCorrect: Double
     ) {
         let eventName = "\(Events.completedQuiz)\(questionSet.eventNameSuffix)"
-        client.logEvent(eventName, parameters: [
+        Analytics.logEvent(eventName, parameters: [
             Params.quizDifficulty: difficulty.displayName.lowercased(),
             Params.percentCorrect: percentCorrect,
             Params.percentCorrectDimension: "_\(percentCorrect.str(decimals: 0))"
@@ -104,14 +103,6 @@ private struct Params {
 
     static let percentCorrect = "percentCorrect"
     static let percentCorrectDimension = "percentCorrectDimension"
-}
-
-public protocol GoogleAnalyticsClient {
-    func setAnalyticsCollectionEnabled(_ enabled: Bool)
-    func logEvent(_ name: String, parameters: [String : Any]?)
-
-    var eventScreenView: String { get }
-    var parameterScreenName: String { get }
 }
 
 private extension RawRepresentable where RawValue == String {

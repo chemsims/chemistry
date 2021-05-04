@@ -5,7 +5,6 @@
 import Foundation
 import ReactionsCore
 
-
 protocol EquilibriumInjector {
     var persistence: AnyScreenPersistence<EquilibriumAppScreen> { get }
     var screenAnalytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> { get }
@@ -23,7 +22,9 @@ class InMemoryEquilibriumInjector: EquilibriumInjector {
 class ProductionEquilibriumInjector: EquilibriumInjector {
     let persistence = AnyScreenPersistence(UserDefaultsScreenPersistence<EquilibriumAppScreen>())
 
-    let screenAnalytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> = AnyAppAnalytics(NoOpAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>())
+    let screenAnalytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> =
+        AnyAppAnalytics(GoogleAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>())
 
-    let quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> = AnyQuizPersistence(UserDefaultsQuizPersistence<EquilibriumQuestionSet>())
+    let quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> =
+        AnyQuizPersistence(UserDefaultsQuizPersistence<EquilibriumQuestionSet>())
 }
