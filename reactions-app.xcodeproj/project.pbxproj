@@ -322,6 +322,7 @@
 		57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4F26415745001B97CC /* ImageTypeView.swift */; };
 		57BDFF5226415E00001B97CC /* dummy-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5126415E00001B97CC /* dummy-quiz.csv */; };
 		57BDFF5426416AC7001B97CC /* EquilibriumInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF5326416AC7001B97CC /* EquilibriumInjector.swift */; };
+		57BDFF5626416C14001B97CC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5526416C14001B97CC /* GoogleService-Info.plist */; };
 		57C0A61A261C31D400777E32 /* SolubilityStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A619261C31D400777E32 /* SolubilityStatements.swift */; };
 		57C0A620261C4A3500777E32 /* SolubilityPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */; };
 		57C315B82631B37D0092C454 /* AnimatingReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */; };
@@ -811,6 +812,7 @@
 		57BDFF4F26415745001B97CC /* ImageTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTypeView.swift; sourceTree = "<group>"; };
 		57BDFF5126415E00001B97CC /* dummy-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dummy-quiz.csv"; sourceTree = "<group>"; };
 		57BDFF5326416AC7001B97CC /* EquilibriumInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumInjector.swift; sourceTree = "<group>"; };
+		57BDFF5526416C14001B97CC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		57C0A619261C31D400777E32 /* SolubilityStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityStatements.swift; sourceTree = "<group>"; };
 		57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPhChart.swift; sourceTree = "<group>"; };
 		57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingReactionDefinition.swift; sourceTree = "<group>"; };
@@ -1539,6 +1541,7 @@
 				575A88BB25E43CD700AEE448 /* Assets.xcassets */,
 				575A88C025E43CD700AEE448 /* LaunchScreen.storyboard */,
 				575A88C325E43CD700AEE448 /* Info.plist */,
+				57BDFF5526416C14001B97CC /* GoogleService-Info.plist */,
 				575A88BD25E43CD700AEE448 /* Preview Content */,
 			);
 			path = "reactions-equilibrium";
@@ -2739,6 +2742,7 @@
 			files = (
 				575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */,
 				575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */,
+				57BDFF5626416C14001B97CC /* GoogleService-Info.plist in Resources */,
 				57BDFF4C264153BE001B97CC /* dummy-quiz.csv in Resources */,
 				575A88BC25E43CD700AEE448 /* Assets.xcassets in Resources */,
 			);
