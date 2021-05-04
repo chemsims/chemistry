@@ -15,18 +15,31 @@ struct ReactionsEquilibriumNavigationModel {
 
     private static func makeInjector(using injector: EquilibriumInjector) -> Injector {
         AnyNavigationInjector(
-            behaviour: AnyNavigationBehavior(EquilibriumNavigationBehaviour()),
+            behaviour: AnyNavigationBehavior(
+                EquilibriumNavigationBehaviour(injector: injector)
+            ),
             persistence: injector.persistence,
             analytics: injector.screenAnalytics,
             quizPersistence: injector.quizPersistence,
             allScreens: EquilibriumAppScreen.allCases,
-            linearScreens: EquilibriumAppScreen.allCases
+            linearScreens: linearScreens
         )
     }
+
+    private static let linearScreens: [EquilibriumAppScreen] = [
+        .aqueousReaction,
+        .aqueousQuiz,
+        .gaseousReaction,
+        .gaseousQuiz,
+        .solubility,
+        .solubilityQuiz
+    ]
 }
 
 private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
     typealias Screen = EquilibriumAppScreen
+
+    let injector: EquilibriumInjector
 
     func deferCanSelect(of screen: EquilibriumAppScreen) -> DeferCanSelect<EquilibriumAppScreen>? {
         nil
@@ -45,15 +58,31 @@ private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
     }
 
     func getProvider(for screen: EquilibriumAppScreen, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) -> ScreenProvider {
-        screen.getProvider(nextScreen: nextScreen, prevScreen: prevScreen)
+        screen.getProvider(
+            injector: injector,
+            nextScreen: nextScreen,
+            prevScreen: prevScreen
+        )
     }
 }
 
 fileprivate extension EquilibriumAppScreen {
     func getProvider(
+        injector: EquilibriumInjector,
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) -> ScreenProvider {
+
+        func quiz(_ questions: QuizQuestionsList<EquilibriumQuestionSet>) -> ScreenProvider {
+            QuizScreenProvider(
+                questions: questions,
+                persistence: injector.quizPersistence,
+                analytics: injector.screenAnalytics,
+                next: nextScreen,
+                prev: prevScreen
+            )
+        }
+
         switch self {
         case .aqueousReaction:
             return AqueousReactionScreenProvider(nextScreen: nextScreen, prevScreen: prevScreen)
@@ -61,8 +90,16 @@ fileprivate extension EquilibriumAppScreen {
             return GaseousReactionScreenProvider(nextScreen: nextScreen, prevScreen: prevScreen)
         case .solubility:
             return SolubilityScreenProvider(nextScreen: nextScreen, prevScreen: prevScreen)
+        case .aqueousQuiz:
+            return quiz(.aqueous)
+        case .gaseousQuiz:
+            return quiz(.gaseous)
+        case .solubilityQuiz:
+            return quiz(.solubility)
         }
     }
+
+
 }
 
 private class AqueousReactionScreenProvider: ScreenProvider {
@@ -109,6 +146,28 @@ private class SolubilityScreenProvider: ScreenProvider {
     var screen: AnyView {
         AnyView(SolubilityScreen(model: model))
     }
+}
+
+private class QuizScreenProvider: ScreenProvider {
+
+    init(
+        questions: QuizQuestionsList<EquilibriumQuestionSet>,
+        persistence: AnyQuizPersistence<EquilibriumQuestionSet>,
+        analytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>,
+        next: @escaping () -> Void,
+        prev: @escaping () -> Void
+    ) {
+        self.model = QuizViewModel(questions: questions, persistence: persistence, analytics: analytics)
+        self.model.nextScreen = next
+        self.model.prevScreen = prev
+    }
+
+    let model: QuizViewModel<AnyQuizPersistence<EquilibriumQuestionSet>, AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>>
+
+    var screen: AnyView {
+        AnyView(QuizScreen(model: model))
+    }
+
 }
 
 protocol EquilibriumInjector {

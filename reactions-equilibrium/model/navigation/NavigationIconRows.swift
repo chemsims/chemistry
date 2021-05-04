@@ -15,17 +15,21 @@ private enum NavigationRow: CaseIterable {
         NavigationIconRow(
             primaryIcon: NavigationIcon(
                 screen: screen,
-                image: icon,
-                pressedImage: "\(icon)-pressed",
-                isSystemImage: false,
+                image: .application(icon),
+                selectedImage: .application("\(icon)-pressed"),
                 label: label
             ),
-            firstSecondaryIcon: nil,
+            firstSecondaryIcon: NavigationIcon(
+                screen: quizScreen,
+                image: .core(.quizIcon),
+                selectedImage: .core(.quizIconSelected),
+                label: "\(label) quiz"
+            ),
             secondSecondaryIcon: nil
         )
     }
 
-    private var screen: EquilibriumAppScreen {
+    var screen: EquilibriumAppScreen {
         switch self {
         case .aqueous: return .aqueousReaction
         case .gaseous: return .gaseousReaction
@@ -46,6 +50,14 @@ private enum NavigationRow: CaseIterable {
         case .aqueous: return "aqueousicon"
         case .gaseous: return "gaseousicon"
         case .solubility: return "solubilityicon"
+        }
+    }
+
+    private var quizScreen: EquilibriumAppScreen {
+        switch self {
+        case .aqueous: return .aqueousQuiz
+        case .gaseous: return .gaseousQuiz
+        case .solubility: return .solubilityQuiz
         }
     }
 }
