@@ -316,6 +316,10 @@
 		57BDFF4226413836001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF4126413836001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		57BDFF4426413847001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF4326413847001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		57BDFF4626413A7A001B97CC /* EquilibriumQuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4526413A7A001B97CC /* EquilibriumQuestionSet.swift */; };
+		57BDFF4926413B57001B97CC /* EquilibriumQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4826413B57001B97CC /* EquilibriumQuizQuestions.swift */; };
+		57BDFF4C264153BE001B97CC /* dummy-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF4B264153BE001B97CC /* dummy-quiz.csv */; };
+		57BDFF4E26415540001B97CC /* ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4D26415540001B97CC /* ImageType.swift */; };
+		57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4F26415745001B97CC /* ImageTypeView.swift */; };
 		57C0A61A261C31D400777E32 /* SolubilityStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A619261C31D400777E32 /* SolubilityStatements.swift */; };
 		57C0A620261C4A3500777E32 /* SolubilityPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */; };
 		57C315B82631B37D0092C454 /* AnimatingReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */; };
@@ -799,6 +803,10 @@
 		57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolver.swift; sourceTree = "<group>"; };
 		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
 		57BDFF4526413A7A001B97CC /* EquilibriumQuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumQuestionSet.swift; sourceTree = "<group>"; };
+		57BDFF4826413B57001B97CC /* EquilibriumQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumQuizQuestions.swift; sourceTree = "<group>"; };
+		57BDFF4B264153BE001B97CC /* dummy-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dummy-quiz.csv"; sourceTree = "<group>"; };
+		57BDFF4D26415540001B97CC /* ImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageType.swift; sourceTree = "<group>"; };
+		57BDFF4F26415745001B97CC /* ImageTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTypeView.swift; sourceTree = "<group>"; };
 		57C0A619261C31D400777E32 /* SolubilityStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityStatements.swift; sourceTree = "<group>"; };
 		57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPhChart.swift; sourceTree = "<group>"; };
 		57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingReactionDefinition.swift; sourceTree = "<group>"; };
@@ -1518,6 +1526,7 @@
 		575A88B425E43CD500AEE448 /* reactions-equilibrium */ = {
 			isa = PBXGroup;
 			children = (
+				57BDFF4A264153B5001B97CC /* quiz-questions */,
 				57DDACE625E552D200B535A7 /* viewmodel */,
 				57DDAC2B25E4FD8C00B535A7 /* model */,
 				57DDAC0725E4FD6500B535A7 /* view */,
@@ -1959,6 +1968,7 @@
 				57035EF0255C09B500DB3A19 /* Orientation.swift */,
 				5727487325A61BDD000CFA1E /* ReactionType.swift */,
 				577A261C262862C00060EC54 /* ReactionEnergyTransfer.swift */,
+				57BDFF4D26415540001B97CC /* ImageType.swift */,
 			);
 			path = enums;
 			sourceTree = "<group>";
@@ -1976,6 +1986,7 @@
 				57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */,
 				57567B6A26066450009711D4 /* SlidingSwitch.swift */,
 				5710E22126272A3800CF6FBE /* ShakeText.swift */,
+				57BDFF4F26415745001B97CC /* ImageTypeView.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -2121,6 +2132,22 @@
 			path = "reaction-definitions";
 			sourceTree = "<group>";
 		};
+		57BDFF4726413B43001B97CC /* quiz */ = {
+			isa = PBXGroup;
+			children = (
+				57BDFF4826413B57001B97CC /* EquilibriumQuizQuestions.swift */,
+			);
+			path = quiz;
+			sourceTree = "<group>";
+		};
+		57BDFF4A264153B5001B97CC /* quiz-questions */ = {
+			isa = PBXGroup;
+			children = (
+				57BDFF4B264153BE001B97CC /* dummy-quiz.csv */,
+			);
+			path = "quiz-questions";
+			sourceTree = "<group>";
+		};
 		57D15C152622D7D600BE1303 /* solubility */ = {
 			isa = PBXGroup;
 			children = (
@@ -2254,6 +2281,7 @@
 		57DDAC2B25E4FD8C00B535A7 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57BDFF4726413B43001B97CC /* quiz */,
 				57473ACB26218DF7009B608D /* solubility */,
 				57BB21E8260BA61600250FB3 /* reaction-definitions */,
 				57B3B952260B49F900EB9B47 /* util */,
@@ -2705,6 +2733,7 @@
 			files = (
 				575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */,
 				575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */,
+				57BDFF4C264153BE001B97CC /* dummy-quiz.csv in Resources */,
 				575A88BC25E43CD700AEE448 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2987,6 +3016,7 @@
 				57473AF626218F45009B608D /* SoluteType.swift in Sources */,
 				572BCF212603614000CE3FE0 /* ReactionComponentsWrapper.swift in Sources */,
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
+				57BDFF4926413B57001B97CC /* EquilibriumQuizQuestions.swift in Sources */,
 				576A420725F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift in Sources */,
 				57567B6526065BA9009711D4 /* ReactionComponents.swift in Sources */,
 				57BCB4BE25F371B200E50923 /* ReactionConvergenceSolver.swift in Sources */,
@@ -3039,6 +3069,7 @@
 				575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */,
 				573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */,
 				57438A42260A2DC7005E3888 /* ScreenProvider.swift in Sources */,
+				57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */,
 				57315EB3263FF33000A7D0F9 /* AnalyticsConsentView.swift in Sources */,
 				57491BF9263B363200962B92 /* AccessibilityLabelUtil.swift in Sources */,
 				5797A4C625E40A6900991BD9 /* GridCoordinate.swift in Sources */,
@@ -3133,6 +3164,7 @@
 				5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */,
 				57952A4225E67F83006AB876 /* ScreenStateTree.swift in Sources */,
 				57686AE72601D541005BD328 /* SliderHapticsHandler.swift in Sources */,
+				57BDFF4E26415540001B97CC /* ImageType.swift in Sources */,
 				57D2F2EE25EA2D7400AEE0D8 /* EquationPlaceholderView.swift in Sources */,
 				57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */,
 				577A261D262862C00060EC54 /* ReactionEnergyTransfer.swift in Sources */,

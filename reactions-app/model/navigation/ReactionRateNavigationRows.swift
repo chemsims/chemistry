@@ -19,24 +19,21 @@ private enum TopLevelScreen: CaseIterable {
         NavigationIconRow(
             primaryIcon: NavigationIcon(
                 screen: appScreen,
-                image: navImage,
-                pressedImage: navImagePressed,
-                isSystemImage: false,
+                image: .application(navImage),
+                selectedImage: .application(navImageSelected),
                 label: label
             ),
             firstSecondaryIcon: NavigationIcon(
                 screen: quizScreen,
-                image: "text-book-closed",
-                pressedImage: "text-book-closed",
-                isSystemImage: false,
+                image: .core(.quizIcon),
+                selectedImage: .core(.quizIconSelected),
                 label: "\(label) quiz"
             ),
             secondSecondaryIcon: filingScreen.map {
                 NavigationIcon(
                     screen: $0,
-                    image: "archivebox-thinner",
-                    pressedImage: "archivebox-thinner",
-                    isSystemImage: false,
+                    image: .core(.filingCabinet),
+                    selectedImage: .core(.filingCabinetSelected),
                     label: "\(label) saved snapshots"
                 )
             }
@@ -53,7 +50,7 @@ private enum TopLevelScreen: CaseIterable {
         }
     }
 
-    var navImagePressed: String {
+    var navImageSelected: String {
         "\(navImage)-pressed"
     }
 

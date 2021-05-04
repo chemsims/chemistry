@@ -14,6 +14,23 @@ public struct QuizQuestionReader {
     private static let fileType = "csv"
     private static let colSeparator: Character = ","
 
+    /// Reads a list of questions from the provided `fileName`, returning nil if the file cannot be read
+    public static func readOptional<QuestionSet>(
+        from fileName: String,
+        questionSet: QuestionSet,
+        bundle: Bundle = Bundle.main
+    ) -> QuizQuestionsList<QuestionSet>? {
+        let result = read(from: fileName, questionSet: questionSet, bundle: bundle)
+        if let quiz = result.option {
+            return quiz
+        }
+        let errors = result.error?.list() ?? []
+        let errorString = errors.reduce("") { $0 + "\n" + $1.describe }
+        print("Failed to read quiz from file \(fileName) with errors: \(errorString)")
+        return nil
+    }
+
+    /// Reads a list of question from the provided `fileName`, returning the result of the read
     public static func read<QuestionSet>(
         from fileName: String,
         questionSet: QuestionSet,

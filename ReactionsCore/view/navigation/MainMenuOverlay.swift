@@ -244,51 +244,27 @@ extension MainMenuOverlayWithSettings {
         }
     }
 
-    private func navIcon(icon: NavigationIcon<Injector.Screen>) -> some View {
-        navIcon(
-            image: icon.image,
-            selectedImage: icon.pressedImage,
-            isSystem: icon.isSystemImage,
-            screen: icon.screen,
-            label: icon.label
-        )
-    }
-
     private func navIcon(
-        image: String,
-        selectedImage: String,
-        isSystem: Bool,
-        screen: Injector.Screen,
-        label: String
+        icon: NavigationIcon<Injector.Screen>
     ) -> some View {
-        let isSelected = navigation.currentScreen == screen
-        let canSelect = navigation.canSelect(screen: screen)
+        let isSelected = navigation.currentScreen == icon.screen
+        let canSelect = navigation.canSelect(screen: icon.screen)
 
-        let shouldFocus = navigation.highlightedIcon == screen
+        let shouldFocus = navigation.highlightedIcon == icon.screen
         let mainColor = shouldFocus ? Color.orangeAccent : Styling.navIcon
         let color = canSelect ? mainColor : Styling.inactiveScreenElement
 
-        return Button(action: { goTo(screen: screen) }) {
-            makeImage(
-                name: isSelected ? selectedImage : image,
-                isSystem: isSystem
-            )
-            .renderingMode(.template)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .font(.system(size: 10, weight: isSelected ? .light : .ultraLight))
-            .foregroundColor(color)
+        return Button(action: { goTo(screen: icon.screen) }) {
+            Image(isSelected ? icon.selectedImage : icon.image)
+                .renderingMode(.template)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .font(.system(size: 10, weight: isSelected ? .light : .ultraLight))
+                .foregroundColor(color)
         }
         .disabled(!canSelect)
-        .accessibility(label: Text(label))
+        .accessibility(label: Text(icon.label))
         .accessibility(addTraits: isSelected ? .isSelected : [])
-    }
-
-    private func makeImage(name: String, isSystem: Bool) -> Image {
-        if isSystem {
-            return Image(systemName: name)
-        }
-        return Image(name)
     }
 
     private func goTo(screen: Injector.Screen) {
@@ -476,16 +452,14 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         NavigationIconRow(
             primaryIcon: NavigationIcon(
                 screen: 1,
-                image: "folder.circle",
-                pressedImage: "folder.circle.fill",
-                isSystemImage: true,
+                image: .system("folder.circle"),
+                selectedImage: .system("folder.circle.fill"),
                 label: ""
             ),
             firstSecondaryIcon: NavigationIcon(
                 screen: 2,
-                image: "externaldrive",
-                pressedImage: "externaldrive.fill",
-                isSystemImage: true,
+                image: .system("externaldrive"),
+                selectedImage: .system("externaldrive.fill"),
                 label: ""
             ),
             secondSecondaryIcon: nil
@@ -493,16 +467,14 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         NavigationIconRow(
             primaryIcon: NavigationIcon(
                 screen: 3,
-                image: "folder.circle",
-                pressedImage: "folder.circle.fill",
-                isSystemImage: true,
+                image: .system("folder.circle"),
+                selectedImage: .system("folder.circle.fill"),
                 label: ""
             ),
             firstSecondaryIcon: NavigationIcon(
                 screen: 2,
-                image: "externaldrive",
-                pressedImage: "externaldrive.fill",
-                isSystemImage: true,
+                image: .system("externaldrive"),
+                selectedImage: .system("externaldrive.fill"),
                 label: ""
             ),
             secondSecondaryIcon: nil

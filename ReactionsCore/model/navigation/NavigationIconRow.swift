@@ -22,22 +22,19 @@ public struct NavigationIconRow<Screen> {
 
 public struct NavigationIcon<Screen> {
     let screen: Screen
-    let image: String
-    let pressedImage: String
-    let isSystemImage: Bool
+    let image: ImageType
+    let selectedImage: ImageType
     let label: String
 
     public init(
         screen: Screen,
-        image: String,
-        pressedImage: String,
-        isSystemImage: Bool,
+        image: ImageType,
+        selectedImage: ImageType,
         label: String
     ) {
         self.screen = screen
         self.image = image
-        self.pressedImage = pressedImage
-        self.isSystemImage = isSystemImage
+        self.selectedImage = selectedImage
         self.label = label
     }
 }
