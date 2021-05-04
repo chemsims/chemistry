@@ -12,6 +12,11 @@ protocol EquilibriumInjector {
 }
 
 class InMemoryEquilibriumInjector: EquilibriumInjector {
+
+    init() {
+        print("Using in mem")
+    }
+
     let persistence = AnyScreenPersistence(InMemoryScreenPersistence<EquilibriumAppScreen>())
 
     let screenAnalytics = AnyAppAnalytics(NoOpAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>())
@@ -20,6 +25,11 @@ class InMemoryEquilibriumInjector: EquilibriumInjector {
 }
 
 class ProductionEquilibriumInjector: EquilibriumInjector {
+
+    init() {
+        print("Using prod")
+    }
+
     let persistence = AnyScreenPersistence(UserDefaultsScreenPersistence<EquilibriumAppScreen>())
 
     let screenAnalytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> =

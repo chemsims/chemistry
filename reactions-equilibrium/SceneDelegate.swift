@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let injector = ProductionEquilibriumInjector()
+        let injector = getInjector()
         let navModel = ReactionsEquilibriumNavigationModel.model(using: injector)
         let contentView = ReactionEquilibriumRootView(model: navModel)
 
@@ -25,5 +25,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
+    }
+
+    private func getInjector() -> EquilibriumInjector {
+        EquilibriumApp.isDebug ? InMemoryEquilibriumInjector() : ProductionEquilibriumInjector()
     }
 }
