@@ -2,8 +2,8 @@
 // Reactions App
 //
 
-
 import Foundation
+import OSLog
 
 public struct QuizQuestionReader {
 
@@ -14,12 +14,19 @@ public struct QuizQuestionReader {
     private static let fileType = "csv"
     private static let colSeparator: Character = ","
 
+    private static let pointsOfInterest = OSLog(subsystem: "com.reactions.core", category: .pointsOfInterest)
+
     /// Reads a list of questions from the provided `fileName`, returning nil if the file cannot be read
     public static func readOptional<QuestionSet>(
         from fileName: String,
         questionSet: QuestionSet,
         bundle: Bundle = Bundle.main
     ) -> QuizQuestionsList<QuestionSet>? {
+        os_signpost(.begin, log: pointsOfInterest, name: "Read quiz")
+        defer {
+            os_signpost(.end, log: pointsOfInterest, name: "Read quiz")
+        }
+
         let result = read(from: fileName, questionSet: questionSet, bundle: bundle)
         if let quiz = result.option {
             return quiz

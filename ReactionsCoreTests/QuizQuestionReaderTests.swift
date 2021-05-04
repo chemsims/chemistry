@@ -118,6 +118,12 @@ class QuizQuestionReaderTests: XCTestCase {
         XCTAssertEqual(errors, expected)
     }
 
+    func testPerformance() {
+        measure {
+            let _ = read("dummy-quiz")
+        }
+    }
+
     func missingCell(row: Int, _ kp: KeyPath<Columns, Column>) -> QuizReadFailure {
         .missingCell(rowIndex: row, name: Columns.shared[keyPath: kp].name)
     }

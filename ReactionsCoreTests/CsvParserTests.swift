@@ -67,9 +67,30 @@ class CsvParserTests: XCTestCase {
         XCTAssertEqual(parse(content), expected)
     }
 
+    func testPerformance() {
+        let cols = 100
+        let rows = 100
+
+        func makeRow(_ row: Int) -> String {
+            let cells = (1...cols).map { col in
+                "\(row) \(col)"
+            }
+            return cells.dropFirst().reduce(cells.first!) {
+                $0 + ",\($1)"
+            }
+        }
+
+        let lines = (1...rows).map(makeRow)
+        let allContent = lines.dropFirst().reduce(lines.first!) {
+            $0 + "\n\($1)"
+        }
+
+        measure {
+            let _ = parse(allContent)
+        }
+    }
 
     private func parse(_ content: String) -> [[String]] {
         CsvParser.parse(content: content)
     }
-
 }

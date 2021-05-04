@@ -22,10 +22,12 @@ struct CsvParser {
         var rowBuffer = [String]()
         var cellBuffer = ""
 
-        while(content.indices.contains(position)) {
+        let endIndex = content.indices.endIndex
+
+        while(position < endIndex) {
             let element = content[position]
             let nextIndex = content.index(after: position)
-            let nextElement = content.indices.contains(nextIndex) ? content[nextIndex] : nil
+            let nextElement = nextIndex == endIndex ? nil : content[nextIndex]
 
             // Special case of 2 quote characters
             if element == quoteCharacter, let next = nextElement, next == quoteCharacter {
