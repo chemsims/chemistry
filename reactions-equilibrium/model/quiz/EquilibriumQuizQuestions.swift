@@ -15,11 +15,9 @@ struct EquilibriumQuizQuestions {
     private init() { }
 
     static func load() {
-        print("Started read at \(mach_absolute_time())")
         aqueous = read("aqueous-quiz", .aqueous)
         gaseous = read("gaseous-quiz", .gaseous)
         solubility = read("solubility-quiz", .solubility)
-        print("Ended read at \(mach_absolute_time())")
     }
 
     private(set) fileprivate static var aqueous: QuizQuestionsList<EquilibriumQuestionSet>!

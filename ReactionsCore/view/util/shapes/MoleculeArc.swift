@@ -17,6 +17,8 @@ public struct MoleculeArc: Shape {
     ///     - endState: Molecule state at end position
     ///     - apexXLocation: Position of the curve apex as a fraction of the width, between 0 and 1
     ///     - moleculeRadius: Radius of the molecule
+    ///     - startProgress: The progress at which to start the motion
+    ///     - endProgress: The progress at which to end the motion
     ///     - progress: Progress along the path, between 0 and 1
     public init(
         verticalAlignment: VerticalAlignment,
@@ -26,6 +28,8 @@ public struct MoleculeArc: Shape {
         apexXLocation: CGFloat,
         apexCount: Count?,
         moleculeRadius: CGFloat,
+        startProgress: CGFloat,
+        endProgress: CGFloat,
         progress: CGFloat
     ) {
         self.vAlignment = verticalAlignment
@@ -34,6 +38,8 @@ public struct MoleculeArc: Shape {
         self.endState = endState
         self.apexCount = apexCount
         self.moleculeRadius = moleculeRadius
+        self.startProgress = startProgress
+        self.endProgress = endProgress
         self.progress = progress.within(min: 0, max: 1)
 
         let adjustedApexX = horizontalAlignment == .leading ? apexXLocation : 1 - apexXLocation
@@ -73,6 +79,8 @@ public struct MoleculeArc: Shape {
     let endState: MoleculeArcState
     let apexCount: Count?
     let moleculeRadius: CGFloat
+    let startProgress: CGFloat
+    let endProgress: CGFloat
 
     var progress: CGFloat
 
@@ -81,7 +89,14 @@ public struct MoleculeArc: Shape {
 
     public var animatableData: CGFloat {
         get { progress }
-        set { progress = newValue.within(min: 0, max: 1) }
+        set {
+            progress = LinearEquation(
+                x1: startProgress,
+                y1: 0,
+                x2: endProgress,
+                y2: 1
+            ).within(min: 0, max: 1).getY(at: newValue)
+        }
     }
 
     public func path(in rect: CGRect) -> Path {
@@ -322,12 +337,14 @@ struct MoleculeArc_Previews: PreviewProvider {
                 apexXLocation: 0.3,
                 apexCount: .four,
                 moleculeRadius: 15,
+                startProgress: 0.15,
+                endProgress: 0.9,
                 progress: progress
             )
             .frame(width: 200, height: 100)
             .border(Color.red)
             .onAppear {
-                let animation = Animation.easeOut(duration: 2).repeatForever()
+                let animation = Animation.easeOut(duration: 2).repeatForever(autoreverses: false)
                 withAnimation(animation) {
                     progress = 1
                 }

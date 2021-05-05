@@ -72,6 +72,10 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
 
     @State private var progress: CGFloat = 0
 
+    private let animationDuration: Double = 2
+    private let startProgress: CGFloat = 0.15
+    private let endProgress: CGFloat = 0.75
+
     var body: some View {
         VStack(alignment: .leading, spacing: vSpacing) {
             topMolecules
@@ -93,7 +97,9 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
                     horizontalAlignment: .leading
                 )
                 .onAppear {
-                    let animation = Animation.easeOut(duration: 1.5).repeatForever(autoreverses: false)
+                    let animation = Animation
+                        .linear(duration: animationDuration)
+                        .repeatForever(autoreverses: false)
                     withAnimation(animation) {
                         progress = 1
                     }
@@ -258,6 +264,8 @@ extension AnimatingReactionDefinitionWithGeometry {
             apexXLocation: arrowLocation / spanWidth,
             apexCount: apexCount(startCount: startCount, endCount: endCount),
             moleculeRadius: moleculeRadius,
+            startProgress: startProgress,
+            endProgress: endProgress,
             progress: progress
         )
         .foregroundColor(rgb: rgb, progress: progress)
