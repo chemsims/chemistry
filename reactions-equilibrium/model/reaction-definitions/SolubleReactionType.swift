@@ -23,7 +23,7 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
     }
 
     var productDisplay: String {
-        "\(products.first)+ + \(products.second)-"
+        "\(products.first)^+^ + \(products.second)^-^"
     }
 
     var reactantLabel: String {

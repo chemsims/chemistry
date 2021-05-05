@@ -12,7 +12,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     @Binding var selection: Data
     let height: CGFloat
     let animation: Animation?
-    let displayString: (Data) -> String
+    let displayString: (Data) -> TextLine
     let label: (Data) -> String
     let disabledOptions: [Data]
     let onSelection: (() -> Void)?
@@ -37,12 +37,14 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         self._selection = selection
         self.height = height
         self.animation = animation
-        self.displayString = displayString
+        self.displayString = {
+            TextLine(stringLiteral: displayString($0))
+        }
         self.label = label
         self.disabledOptions = disabledOptions
         self.onSelection = onSelection
     }
-
+    
     public var body: some View {
         HStack(alignment: .top, spacing: 0) {
             selectionView
@@ -56,10 +58,13 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     }
 
     private let width: CGFloat = 1
+    private var fontSize: CGFloat {
+        height * 0.44
+    }
 
     private var selectionView: some View {
         VStack(spacing: 0) {
-            textBox(text: title)
+            textBox(text: TextLine(stringLiteral: title))
                 .border(Color.black)
                 .accessibility(addTraits: .isHeader)
             VStack(spacing: 0) {
@@ -108,9 +113,9 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     }
 
     private func textBox(
-        text: String
+        text: TextLine
     ) -> some View {
-        Text(text)
+        TextLinesView(line: text, fontSize: fontSize)
             .padding(.leading, height * 0.2)
             .padding(.trailing, height * 0.2)
             .frame(
@@ -168,7 +173,7 @@ struct DropDownSelectionView_Previews: PreviewProvider {
                 selection: .constant(.A),
                 height: 30,
                 animation: nil,
-                displayString: { "\($0)"},
+                displayString: { "\($0.rawValue)"},
                 label: { "\($0)"},
                 disabledOptions: [.B],
                 onSelection: nil
@@ -178,7 +183,8 @@ struct DropDownSelectionView_Previews: PreviewProvider {
     }
 
     private enum TempEnum: String, CaseIterable, Identifiable {
-        case A, B, C, D
+        case A, B, C
+        case D = "D^2^"
 
         var id: String {
             rawValue

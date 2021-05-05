@@ -29,6 +29,12 @@ public struct TextLine: ExpressibleByStringLiteral, ExpressibleByStringInterpola
         self.init(value, label: Labelling.stringToLabel(value))
     }
 
+    /// Creates a new `TextLine` from the provided `value`, after parsing the String, and applying mapping the string to a
+    /// more accessible label
+    public init(_ rawString: String) {
+        self.init(stringLiteral: rawString)
+    }
+
     public init(_ rawString: String, label: String) {
         self.init(
             content: TextLineGenerator.makeLine(rawString).content,
