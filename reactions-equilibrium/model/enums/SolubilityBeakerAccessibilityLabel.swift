@@ -20,6 +20,10 @@ enum SolubilityBeakerAccessibilityLabel {
         let salt = products.salt
         let commonIon = products.commonSalt
 
+        func reaction(_ type: SoluteType) -> String {
+            type.reactionLabel(for: model.selectedReaction)
+        }
+
         switch self {
         case .clear:
             return "Beaker of liquid"
@@ -42,12 +46,12 @@ enum SolubilityBeakerAccessibilityLabel {
         case .addingCommonIon:
             return """
             Beaker of liquid, where \(commonIon) solute being added dissolves, causing the liquid color \
-            to change and the concentration of \(products.second) to increase
+            to change and the concentration of \(products.second) to increase. Reaction definition is \(reaction(.commonIon))
             """
         case .addingAcid:
             return """
             Beaker of supersaturated liquid with \(salt) solute particles lying at the bottom of beaker. \
-            H+ solute being added dissolves and causes the color of the liquid to change and concentration of \(products.second) to decrease.
+            H+ solute being added dissolves and causes the color of the liquid to change and concentration of \(products.second) to decrease. Reaction definition is \(reaction(.acid))
             """
         case .runningAcidReaction:
             return "Beaker of supersaturated liquid, where the solute particles at the bottom of the beaker are gradually dissolving while the reaction is running"

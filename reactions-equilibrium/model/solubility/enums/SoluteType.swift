@@ -29,6 +29,26 @@ enum SoluteType {
         }
     }
 
+    func reactionLabel(for type: SolubleReactionType) -> String {
+        let products = type.products
+
+        func positive(_ base: String) -> String {
+            "\(base) superscript plus sign"
+        }
+        func negative(_ base: String) -> String {
+            "\(base) superscript minus sign"
+        }
+
+        switch self {
+        case .primary:
+            return "\(products.salt)(s) double-sided-arrow \(positive(products.first)) + \(negative(products.second))"
+        case .commonIon:
+            return "\(products.commonSalt)(s) double-sided-arrow \(positive(products.third)) + \(negative(products.second))"
+        case .acid:
+            return "\(positive("H")) + \(negative(products.second)) double-sided-arrow  H\(products.second)(aq)"
+        }
+    }
+
     func tooltipBackground(for type: SolubleReactionType) -> Color {
         switch self {
         case .primary: return type.saturatedLiquid.color
