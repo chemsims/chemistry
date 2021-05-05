@@ -45,6 +45,7 @@ final class SolubilityViewModel: ObservableObject {
     @Published var beakerLabel = SolubilityBeakerAccessibilityLabel.clear
 
     @Published var addVoiceOverParticle = AddManualParticle.none
+    @Published var showSoluteReactionLabel = false
 
     var components: SolubilityComponents {
         componentsWrapper.components

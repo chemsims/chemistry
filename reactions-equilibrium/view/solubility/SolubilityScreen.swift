@@ -208,6 +208,27 @@ struct SolubilityScreenLayoutSettings {
         common.beakerWidth + common.sliderSettings.handleWidth
     }
 
+    var milligramLabelFontSize: CGFloat {
+        0.75 * soluble.containerWidth
+    }
+
+    var milligramNumberFrameSize: CGSize {
+        CGSize(
+            width: 2.4 * soluble.containerWidth,
+            height: 1.2 * soluble.containerWidth
+        )
+    }
+
+    var reactionDefinitionPopupFontSize: CGFloat {
+        0.7 * milligramLabelFontSize
+    }
+
+    var reactionDefinitionPopupSize: CGSize {
+        CGSize(
+            width: 2.1 * milligramNumberFrameSize.width,
+            height: milligramNumberFrameSize.height
+        )
+    }
 }
 
 struct SolubilityScreen_Previews: PreviewProvider {

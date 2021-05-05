@@ -485,6 +485,7 @@ private class AddCommonIonSolute: SolubilityScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.activeSolute.setValue(.commonIon)
             model.showShakeText = true
+            model.showSoluteReactionLabel = true
         }
         model.startShaking()
         if setComponents {
@@ -506,6 +507,7 @@ private class AddCommonIonSolute: SolubilityScreenState {
         }
         withAnimation(.easeOut(duration: 0.5)) {
             model.showShakeText = false
+            model.showSoluteReactionLabel = false
         }
     }
 }
@@ -527,6 +529,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
             model.activeSolute.setValue(.primary)
             model.waterColor = model.componentsWrapper.initialColor.color
             model.showShakeText = true
+            model.showSoluteReactionLabel = false
         }
         model.equationState = .showCorrectQuotientFilledIn
         model.statement = statements.instructToAddPrimarySolutePostCommonIon(product: model.selectedReaction.products)
@@ -599,6 +602,7 @@ private class AddAcidSolute: SolubilityScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.activeSolute.setValue(.acid)
             model.showShakeText = true
+            model.showSoluteReactionLabel = true
         }
         model.startShaking()
         model.beakerLabel = .addingAcid
@@ -623,6 +627,7 @@ private class AddAcidSolute: SolubilityScreenState {
             model.activeSolute.setValue(nil)
             model.inputState = .none
             model.showShakeText = false
+            model.showSoluteReactionLabel = false
         }
         model.stopShaking()
         model.beakerLabel = .superSaturated
@@ -651,6 +656,7 @@ private class RunAcidReaction: SolubilityScreenState {
             model.activeSolute.setValue(nil)
             model.currentTime = model.timing.start
             model.waterColor = model.componentsWrapper.initialColor.color
+            model.showSoluteReactionLabel = false
         }
         withAnimation(.linear(duration: Double(dt))) {
             model.currentTime = model.timing.equilibrium

@@ -68,13 +68,7 @@ private struct SolubleBeakerViewWithGeometry: View {
                 container(solute: .commonIon, index: 1)
                 container(solute: .acid, index: 2)
 
-                // NB: There was a strange bug when conditionally including this view, which
-                // causes it to not show, and container opacity to remain < 1, when navigating back
-                // and forward quickly on the add solute state
-                milligramsLabel
-                    .opacity(showMilligramsLabel ? 1 : 0)
-                        .zIndex(2)
-
+                containerRightView
             }
             .accessibilityElement(children: .ignore)
             .accessibility(label: Text(containerLabel))
@@ -206,36 +200,79 @@ private struct SolubleBeakerViewWithGeometry: View {
         }
     }
 
+    private var containerRightView: some View {
+        VStack(alignment: .leading) {
+            reactionLabel
+                .animation(nil)
+                .opacity(model.showSoluteReactionLabel ? 1 : 0)
+
+            milligramsLabel
+                .opacity(showMilligramsLabel ? 1 : 0)
+        }
+        .position(activeContainerLocation)
+        .offset(
+            x: 4.5 * settings.soluble.containerWidth,
+            y: -0.5 * settings.soluble.containerWidth
+        )
+    }
+
     private var milligramsLabel: some View {
         HStack(spacing: 2) {
             AnimatingNumber(
                 x: model.milligramsSoluteAdded,
                 equation: LinearEquation(m: 1, x1: 0, y1: 0),
                 formatter: { mg in
-                    "+\(mg.str(decimals: 0))"
+                    "+\(max(0, mg).str(decimals: 0))"
                 },
                 alignment: .leading
             )
             .frame(
-                width: 2.4 * settings.soluble.containerWidth,
-                height: 1.2 * settings.soluble.containerWidth
+                width: settings.milligramNumberFrameSize.width,
+                height: settings.milligramNumberFrameSize.height
             )
             Text("mg")
         }
-        .font(.system(size: 0.75 * settings.soluble.containerWidth))
+        .font(.system(size: settings.milligramLabelFontSize))
         .lineLimit(1)
         .minimumScaleFactor(0.75)
         .foregroundColor(
             (model.activeSolute.value ?? .primary).color(for: model.selectedReaction).color
         )
         .background(
-            RoundedRectangle(cornerRadius: 0.2 * settings.soluble.containerWidth)
-                .foregroundColor(.white)
-                .opacity(0.95)
+            RoundedRectangle(
+                cornerRadius: 0.2 * settings.soluble.containerWidth
+            )
+            .foregroundColor(.white)
+            .opacity(0.95)
         )
         .colorMultiply(model.highlights.colorMultiply(for: nil))
-        .position(activeContainerLocation)
-        .offset(x: 4 * settings.soluble.containerWidth)
+    }
+
+    private var reactionLabel: some View {
+        let labelCases = [SoluteType.commonIon, SoluteType.acid]
+        var activeSolute: SoluteType?
+        if let current = model.activeSolute.value, labelCases.contains(current) {
+            activeSolute = current
+        } else if let prevOpt = model.activeSolute.oldValue,
+                  let prev = prevOpt,
+                  labelCases.contains(prev) {
+            activeSolute = prev
+        }
+
+        let solute = activeSolute ?? .commonIon
+        return Tooltip(
+            text: solute.reaction(for: model.selectedReaction),
+            color: .black,
+            background: solute.tooltipBackground(for: model.selectedReaction),
+            border: solute.tooltipBorder(for: model.selectedReaction),
+            fontSize: settings.reactionDefinitionPopupFontSize,
+            arrowPosition: .left,
+            arrowLocation: .outside
+        )
+        .frame(
+            width: settings.reactionDefinitionPopupSize.width,
+            height: settings.reactionDefinitionPopupSize.height
+        )
     }
 
     private func labelName(for soluteType: SoluteType) -> String {
