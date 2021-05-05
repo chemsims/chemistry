@@ -64,7 +64,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
 
     private var selectionView: some View {
         VStack(spacing: 0) {
-            textBox(text: TextLine(stringLiteral: title))
+            textBox(text: TextLine(stringLiteral: title), color: .black)
                 .border(Color.black)
                 .accessibility(addTraits: .isHeader)
             VStack(spacing: 0) {
@@ -102,10 +102,10 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
             onSelection?()
         }) {
             textBox(
-                text: displayString(option)
+                text: displayString(option),
+                color: fontColor(option)
             )
             .background(background)
-            .foregroundColor(fontColor(option))
             .accessibility(addTraits: selected ? .isSelected : [])
             .accessibility(label: Text(label(option)))
         }
@@ -113,9 +113,10 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     }
 
     private func textBox(
-        text: TextLine
+        text: TextLine,
+        color: Color
     ) -> some View {
-        TextLinesView(line: text, fontSize: fontSize)
+        TextLinesView(line: text, fontSize: fontSize, color: color)
             .padding(.leading, height * 0.2)
             .padding(.trailing, height * 0.2)
             .frame(
