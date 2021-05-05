@@ -18,8 +18,8 @@ struct ReactionsEquilibriumNavigationModel {
             behaviour: AnyNavigationBehavior(
                 EquilibriumNavigationBehaviour(injector: injector)
             ),
-            persistence: injector.persistence,
-            analytics: injector.screenAnalytics,
+            persistence: injector.screenPersistence,
+            analytics: injector.analytics,
             quizPersistence: injector.quizPersistence,
             allScreens: EquilibriumAppScreen.allCases,
             linearScreens: linearScreens
@@ -77,7 +77,7 @@ fileprivate extension EquilibriumAppScreen {
             QuizScreenProvider(
                 questions: questions,
                 persistence: injector.quizPersistence,
-                analytics: injector.screenAnalytics,
+                analytics: injector.analytics,
                 next: nextScreen,
                 prev: prevScreen
             )
