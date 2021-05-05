@@ -108,6 +108,7 @@
 		573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2C263AADBD00379A1D /* StringUtilTests.swift */; };
 		573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2E263AB81D00379A1D /* ViewExtensions.swift */; };
 		573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16A625852D5D001CE039 /* BeakerReactionState.swift */; };
+		574103DF2642966300E6EDCB /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F82578CE7E00EF90A1 /* Tooltip.swift */; };
 		57438A3D260A26DB005E3888 /* RootNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */; };
 		57438A42260A2DC7005E3888 /* ScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23319258E8BD900128760 /* ScreenProvider.swift */; };
 		57438A48260A3004005E3888 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A47260A3004005E3888 /* Version.swift */; };
@@ -411,7 +412,6 @@
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
-		57F337F92578CE7E00EF90A1 /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F82578CE7E00EF90A1 /* Tooltip.swift */; };
 		57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4774F256105620041D406 /* ZeroOrderStatements.swift */; };
 		57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775925616F400041D406 /* BoundedSliderPositioning.swift */; };
 		57F4776025617B240041D406 /* BoundedSliderPositioningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775F25617B240041D406 /* BoundedSliderPositioningTests.swift */; };
@@ -1123,7 +1123,6 @@
 			children = (
 				57B2331E258E93AE00128760 /* PageViewController.swift */,
 				57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */,
-				57F337F82578CE7E00EF90A1 /* Tooltip.swift */,
 				57E7FF6D2582831000A30582 /* ConcentrationTable.swift */,
 			);
 			path = util;
@@ -1975,6 +1974,7 @@
 		5797A4E225E40AF600991BD9 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				57F337F82578CE7E00EF90A1 /* Tooltip.swift */,
 				57AD96BB263024FD0027DD0C /* AnalyticsConsentView.swift */,
 				5773B5EB25B84A9100889A2E /* MailComposerView.swift */,
 				5787039725B88E14002A4487 /* ShareSheetView.swift */,
@@ -2848,7 +2848,6 @@
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
 				576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */,
 				571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */,
-				57F337F92578CE7E00EF90A1 /* Tooltip.swift in Sources */,
 				5773B5F425B84EF600889A2E /* Version.swift in Sources */,
 				57D8BA1B257B6AD5006B3C8B /* ReactionComparisonViewModel.swift in Sources */,
 				5783965525A9DB1D009CC8FC /* EnergyProfileChartInput.swift in Sources */,
@@ -3162,6 +3161,7 @@
 				57315EC026401CF500A7D0F9 /* QuizLayoutSettings.swift in Sources */,
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
+				574103DF2642966300E6EDCB /* Tooltip.swift in Sources */,
 				57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */,
 				57315EBD26401C0800A7D0F9 /* QuizViewModel.swift in Sources */,
 				57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */,

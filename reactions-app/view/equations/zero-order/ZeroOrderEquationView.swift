@@ -331,12 +331,20 @@ private struct A0WithTooltip: View {
     private var overlay: some View {
         if isShowingTooltip {
             return AnyView(
-                Tooltip(text: "Concentration of \(reactant) at t=0")
-                    .font(.system(size: EquationSettings.fontSize * 0.73))
-                    .frame(width: 170)
-                    .lineLimit(3)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(1)
+                Tooltip(
+                    text: "Concentration of \(reactant) at t=0",
+                    color: Styling.tooltipText,
+                    background: Styling.tooltipBackground,
+                    border: Styling.tooltipBorder,
+                    fontSize: EquationSettings.fontSize * 0.73,
+                    arrowPosition: .bottom,
+                    arrowLocation: .inside
+                )
+                .foregroundColor(Styling.tooltipText)
+                .frame(width: 170, height: 100)
+                .lineLimit(3)
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.8)
             )
         }
         return AnyView(EmptyView())
