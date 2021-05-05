@@ -3,36 +3,34 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
-struct ReactionDefinitionView<Reaction: SelectableReaction>: View {
+struct SolubleReactionDefinitionView: View {
 
-    let type: Reaction
+    let reaction: SolubleReactionType
     let runForwardArrow: Bool
-    let runReverseArrow: Bool
     let arrowWidth: CGFloat
+    let fontSize: CGFloat
 
     var body: some View {
         HStack(spacing: 5) {
-            Text(type.reactantDisplay)
+            Text(reaction.reactantDisplay)
             AnimatingDoubleSidedArrow(
                 width: arrowWidth,
                 runForward: runForwardArrow,
-                runReverse: runReverseArrow
+                runReverse: false
             )
-            Text(type.productDisplay)
+            TextLinesView(lines: [reaction.productText], fontSize: fontSize)
         }
         .accessibilityElement(children: .ignore)
         .accessibility(label: Text(label))
+        .font(.system(size: fontSize))
     }
 
     private var label: String {
-        var base = "\(type.reactantLabel) double-sided arrow \(type.productLabel)"
-        if runForwardArrow && runReverseArrow {
-            base.append(", top arrow is moving to the right and bottom arrow is moving to the left")
-        } else if runForwardArrow {
+        var base = "\(reaction.reactantLabel) double-sided arrow \(reaction.productLabel)"
+        if runForwardArrow {
             base.append(", top arrow is moving to the right")
-        } else if runReverseArrow {
-            base.append(", bottom arrow is moving to the left")
         }
         return base
     }
@@ -40,11 +38,11 @@ struct ReactionDefinitionView<Reaction: SelectableReaction>: View {
 
 struct AqueousReactionTypeView_Previews: PreviewProvider {
     static var previews: some View {
-        ReactionDefinitionView(
-            type: AqueousReactionType.A,
+        SolubleReactionDefinitionView(
+            reaction: .A,
             runForwardArrow: false,
-            runReverseArrow: true,
-            arrowWidth: 15
+            arrowWidth: 15,
+            fontSize: 15
         )
     }
 }

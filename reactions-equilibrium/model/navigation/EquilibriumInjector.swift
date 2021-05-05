@@ -13,7 +13,7 @@ protocol EquilibriumInjector {
 
 class InMemoryEquilibriumInjector: EquilibriumInjector {
 
-    let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<EquilibriumAppScreen>())
+    let screenPersistence = AnyScreenPersistence(NoOpScreenPersistence<EquilibriumAppScreen>())
 
     let analytics = AnyAppAnalytics(NoOpAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>())
 

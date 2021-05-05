@@ -14,6 +14,10 @@ enum SolubleReactionType: Int, CaseIterable, SelectableReaction {
         rawValue
     }
 
+    var productText: TextLine {
+        "\(products.first)^+^ + \(products.second)^-^"
+    }
+
     var reactantDisplay: String {
         "\(products.salt)(s)"
     }

@@ -100,3 +100,25 @@ public class InMemoryScreenPersistence<Screen: Hashable>: ScreenPersistence {
         _lastOpened = screen
     }
 }
+
+public class NoOpScreenPersistence<Screen>: ScreenPersistence {
+    public init(lastOpened: Screen? = nil) {
+        self._lastOpened = lastOpened
+    }
+
+    private let _lastOpened: Screen?
+
+    public func setCompleted(screen: Screen) {
+    }
+
+    public func hasCompleted(screen: Screen) -> Bool {
+        true
+    }
+
+    public func lastOpened() -> Screen? {
+        _lastOpened
+    }
+
+    public func setLastOpened(_ screen: Screen) {
+    }
+}

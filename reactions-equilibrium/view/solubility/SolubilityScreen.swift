@@ -57,15 +57,14 @@ private struct SolubilityScreenWithSettings: View {
 
     private var leftStack: some View {
         VStack(spacing: 0) {
-            ReactionDefinitionView(
-                type: model.selectedReaction,
+            SolubleReactionDefinitionView(
+                reaction: model.selectedReaction,
                 runForwardArrow: model.highlightForwardReactionArrow,
-                runReverseArrow: false,
-                arrowWidth: 1.3 * settings.common.shakeTextFontSize
+                arrowWidth: 1.3 * settings.common.shakeTextFontSize,
+                fontSize: 1.3 * settings.common.shakeTextFontSize
             )
             .id(model.selectedReaction.rawValue)
             .transition(.identity)
-            .font(.system(size: 1.3 * settings.common.shakeTextFontSize))
 
             SolubleBeakerView(
                 model: model,
