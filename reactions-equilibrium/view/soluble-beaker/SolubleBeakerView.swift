@@ -455,7 +455,9 @@ struct SolubleBeakerView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
             SolubleBeakerView(
-                model: SolubilityViewModel(),
+                model: SolubilityViewModel(
+                    persistence: InMemorySolubilityPersistence()
+                ),
                 shakeModel: SoluteBeakerShakingViewModel(),
                 settings: SolubilityScreenLayoutSettings(geometry: geo)
             )

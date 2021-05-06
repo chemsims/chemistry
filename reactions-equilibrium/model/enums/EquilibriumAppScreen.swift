@@ -10,5 +10,13 @@ enum EquilibriumAppScreen: String, CaseIterable {
          gaseousReaction,
          gaseousQuiz,
          solubility,
-         solubilityQuiz
+         solubilityQuiz,
+         finalScreen
+
+    var isQuiz: Bool {
+        switch self {
+        case .aqueousQuiz, .gaseousQuiz, .solubilityQuiz: return true
+        default: return false
+        }
+    }
 }

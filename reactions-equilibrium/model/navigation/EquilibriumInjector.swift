@@ -9,9 +9,12 @@ protocol EquilibriumInjector {
     var screenPersistence: AnyScreenPersistence<EquilibriumAppScreen> { get }
     var analytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> { get }
     var quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> { get }
+    var solubilityPersistence: SolubilityPersistence { get }
 }
 
 class InMemoryEquilibriumInjector: EquilibriumInjector {
+
+    let solubilityPersistence: SolubilityPersistence = InMemorySolubilityPersistence()
 
     let screenPersistence = AnyScreenPersistence(NoOpScreenPersistence<EquilibriumAppScreen>())
 
@@ -29,4 +32,6 @@ class ProductionEquilibriumInjector: EquilibriumInjector {
 
     let quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> =
         AnyQuizPersistence(UserDefaultsQuizPersistence<EquilibriumQuestionSet>())
+
+    let solubilityPersistence: SolubilityPersistence = InMemorySolubilityPersistence()
 }

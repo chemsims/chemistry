@@ -7,8 +7,27 @@ import ReactionsCore
 
 final class SolubilityViewModel: ObservableObject {
 
+    init(persistence: SolubilityPersistence) {
+        let firstTiming = SolubleReactionSettings.firstReactionTiming
+        let firstReaction = SolubleReactionType.A
+        self.selectedReaction = firstReaction
+        self.shakingModel = SoluteBeakerShakingViewModel()
+        self.persistence = persistence
+        self.componentsWrapper = PrimarySoluteComponentsWrapper(
+            soluteToAddForSaturation: soluteToAddForSaturation,
+            timing: firstTiming,
+            previous: nil,
+            solubilityCurve: firstReaction.solubility,
+            setTime: setTime,
+            reaction: firstReaction
+        )
+        self.navigation = SolubilityNavigationModel.model(model: self)
+    }
+
+    var persistence: SolubilityPersistence
+
     @Published var statement = [TextLine]()
-    private(set) var navigation: NavigationModel<SolubilityScreenState>?
+    var navigation: NavigationModel<SolubilityScreenState>?
 
     @Published var waterHeightFactor: CGFloat = 0.5 {
         didSet {
@@ -29,6 +48,7 @@ final class SolubilityViewModel: ObservableObject {
     @Published var selectedReaction: SolubleReactionType {
         didSet {
             componentsWrapper.solubilityCurve = selectedReaction.solubility
+            persistence.reaction = selectedReaction
         }
     }
     @Published var reactionSelectionToggled = false
@@ -49,22 +69,6 @@ final class SolubilityViewModel: ObservableObject {
 
     var components: SolubilityComponents {
         componentsWrapper.components
-    }
-
-    init() {
-        let firstTiming = SolubleReactionSettings.firstReactionTiming
-        let firstReaction = SolubleReactionType.A
-        self.selectedReaction = firstReaction
-        self.shakingModel = SoluteBeakerShakingViewModel()
-        self.componentsWrapper = PrimarySoluteComponentsWrapper(
-            soluteToAddForSaturation: soluteToAddForSaturation,
-            timing: firstTiming,
-            previous: nil,
-            solubilityCurve: firstReaction.solubility,
-            setTime: setTime,
-            reaction: firstReaction
-        )
-        self.navigation = SolubilityNavigationModel.model(model: self)
     }
 
     func setTime(to newTime: CGFloat) {

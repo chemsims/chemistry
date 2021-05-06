@@ -307,7 +307,9 @@ struct SolubilityEquationView_Previews: PreviewProvider {
             Rectangle()
                 .foregroundColor(Styling.inactiveScreenElement)
 
-            SizedSolubilityEquationView(model: SolubilityViewModel())
+            SizedSolubilityEquationView(model: SolubilityViewModel(
+                persistence: InMemorySolubilityPersistence()
+            ))
                 .border(Color.red)
                 .frame(width: NaturalWidth, height: NaturalHeight)
                 .border(Color.black)

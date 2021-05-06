@@ -32,7 +32,8 @@ struct ReactionsEquilibriumNavigationModel {
         .gaseousReaction,
         .gaseousQuiz,
         .solubility,
-        .solubilityQuiz
+        .solubilityQuiz,
+        .finalScreen
     ]
 }
 
@@ -46,15 +47,15 @@ private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: EquilibriumAppScreen) -> Bool {
-        false
+        screen.isQuiz
     }
 
     func showReviewPromptOn(screen: EquilibriumAppScreen) -> Bool {
-        false
+        screen == .finalScreen
     }
 
     func highlightedNavIcon(for screen: EquilibriumAppScreen) -> EquilibriumAppScreen? {
-        nil
+        screen == .finalScreen ? .aqueousReaction : nil
     }
 
     func getProvider(for screen: EquilibriumAppScreen, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) -> ScreenProvider {
@@ -89,17 +90,17 @@ fileprivate extension EquilibriumAppScreen {
         case .gaseousReaction:
             return GaseousReactionScreenProvider(nextScreen: nextScreen, prevScreen: prevScreen)
         case .solubility:
-            return SolubilityScreenProvider(nextScreen: nextScreen, prevScreen: prevScreen)
+            return SolubilityScreenProvider(persistence: injector.solubilityPersistence, nextScreen: nextScreen, prevScreen: prevScreen)
         case .aqueousQuiz:
             return quiz(.aqueous)
         case .gaseousQuiz:
             return quiz(.gaseous)
         case .solubilityQuiz:
             return quiz(.solubility)
+        case .finalScreen:
+            return FinalScreenProvider(persistence: injector.solubilityPersistence, prevScreen: prevScreen)
         }
     }
-
-
 }
 
 private class AqueousReactionScreenProvider: ScreenProvider {
@@ -134,8 +135,8 @@ private class GaseousReactionScreenProvider: ScreenProvider {
 
 private class SolubilityScreenProvider: ScreenProvider {
 
-    init(nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) {
-        let model = SolubilityViewModel()
+    init(persistence: SolubilityPersistence, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) {
+        let model = SolubilityViewModel(persistence: persistence)
         model.navigation?.nextScreen = nextScreen
         model.navigation?.prevScreen = prevScreen
         self.model = model
@@ -168,4 +169,69 @@ private class QuizScreenProvider: ScreenProvider {
         AnyView(QuizScreen(model: model))
     }
 
+}
+
+private class FinalScreenProvider: ScreenProvider  {
+    init(
+        persistence: SolubilityPersistence,
+        prevScreen: @escaping () -> Void
+    ) {
+        let model = SolubilityViewModel(persistence: NoOpPersistence())
+        let state: SolubilityScreenState = FinalSolubilityScreenState(persistence: persistence)
+        let navigation = NavigationModel(model: model, states: [state])
+        navigation.prevScreen = prevScreen
+        model.navigation = navigation
+        self.model = model
+    }
+
+    let model: SolubilityViewModel
+
+    var screen: AnyView {
+        AnyView(SolubilityScreen(model: model))
+    }
+
+    private class NoOpPersistence: SolubilityPersistence {
+        var reaction: SolubleReactionType?
+    }
+}
+
+
+private class FinalSolubilityScreenState: SolubilityScreenState {
+
+    let persistence: SolubilityPersistence
+    init(persistence: SolubilityPersistence) {
+        self.persistence = persistence
+    }
+
+    override func apply(on model: SolubilityViewModel) {
+        model.highlights.clear()
+        model.selectedReaction = persistence.reaction ?? .A
+        model.statement = SolubilityStatements.endOfApp
+        var addIons = CommonIonComponentsWrapper(
+            timing: SolubleReactionSettings.firstReactionTiming,
+            previous: nil,
+            solubilityCurve: model.selectedReaction.solubility,
+            setColor: { _ in },
+            reaction: model.selectedReaction
+        )
+        while(addIons.canPerform(action: .dissolved)) {
+            addIons.solutePerformed(action: .dissolved)
+        }
+
+        model.componentsWrapper = AddAcidComponentsWrapper(
+            previous: addIons,
+            timing: SolubleReactionSettings.secondReactionTiming,
+            solubilityCurve: model.selectedReaction.solubility,
+            setColor: { _ in },
+            reaction: model.selectedReaction
+        )
+        while (model.componentsWrapper.canPerform(action: .dissolved)) {
+            model.componentsWrapper.solutePerformed(action: .dissolved)
+        }
+        
+        model.currentTime = SolubleReactionSettings.secondReactionTiming.end
+        model.chartOffset = SolubleReactionSettings.secondReactionTiming.offset
+        model.waterColor = model.selectedReaction.saturatedLiquid.color
+        model.equationState = .showCorrectQuotientFilledIn
+    }
 }

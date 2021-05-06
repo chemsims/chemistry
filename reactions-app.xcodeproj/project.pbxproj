@@ -412,6 +412,7 @@
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
+		57F4160D2642DC32007C8CE8 /* SolubilityPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */; };
 		57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4774F256105620041D406 /* ZeroOrderStatements.swift */; };
 		57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775925616F400041D406 /* BoundedSliderPositioning.swift */; };
 		57F4776025617B240041D406 /* BoundedSliderPositioningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775F25617B240041D406 /* BoundedSliderPositioningTests.swift */; };
@@ -908,6 +909,7 @@
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
 		57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingNumber.swift; sourceTree = "<group>"; };
 		57F337F82578CE7E00EF90A1 /* Tooltip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tooltip.swift; sourceTree = "<group>"; };
+		57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPersistence.swift; sourceTree = "<group>"; };
 		57F477412560FD440041D406 /* Beaky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beaky.swift; sourceTree = "<group>"; };
 		57F477462560FF300041D406 /* NavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
 		57F4774F256105620041D406 /* ZeroOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderStatements.swift; sourceTree = "<group>"; };
@@ -1421,6 +1423,7 @@
 		57473ACB26218DF7009B608D /* solubility */ = {
 			isa = PBXGroup;
 			children = (
+				57F4160B2642DC1E007C8CE8 /* persistence */,
 				5729BC21261D883F000390A0 /* SolubilityChartEquation.swift */,
 				57473AE226218EE2009B608D /* enums */,
 				57473AC426218D74009B608D /* SoluteCounter.swift */,
@@ -2468,6 +2471,14 @@
 			path = quiz;
 			sourceTree = "<group>";
 		};
+		57F4160B2642DC1E007C8CE8 /* persistence */ = {
+			isa = PBXGroup;
+			children = (
+				57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */,
+			);
+			path = persistence;
+			sourceTree = "<group>";
+		};
 		57F4774E256105430041D406 /* statements */ = {
 			isa = PBXGroup;
 			children = (
@@ -3008,6 +3019,7 @@
 				57792CF1261AD69200C26CFF /* SolubleReactionSettings.swift in Sources */,
 				57E902B425ED40B500758300 /* AqueousReactionInputState.swift in Sources */,
 				57D15C002622D62600BE1303 /* BeakerState.swift in Sources */,
+				57F4160D2642DC32007C8CE8 /* SolubilityPersistence.swift in Sources */,
 				57473AC526218D74009B608D /* SoluteCounter.swift in Sources */,
 				57473B0826218FBB009B608D /* SolubilityEquationState.swift in Sources */,
 				57686B0C26027BAE005BD328 /* GaseousReactionSettings.swift in Sources */,

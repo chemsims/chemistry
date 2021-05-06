@@ -273,4 +273,11 @@ struct SolubilityStatements {
         Now you're free to explore the *chemical equilibrium* and the ways to disturb it.
         """
     ]
+
+    static let endOfApp: [TextLine] = [
+        """
+        Now you can explore all parts of equilibrium, just tap the button at the top left corner to \
+        reveal the navigation menu, then choose your favorite part to review it once more!
+        """
+    ]
 }
