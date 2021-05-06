@@ -142,9 +142,13 @@ private class ShowCrossedOutOldQuotient: SolubilityScreenState {
     override func apply(on model: SolubilityViewModel) {
         model.statement = statements.explainQEquation1(solute: model.selectedReaction.products.salt)
         model.highlights.elements = [.quotientToConcentrationDefinition]
-        withAnimation(.easeOut(duration: 0.3)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
             model.equationState = .crossOutOriginalQuotientDenominator
         }
+    }
+
+    private var reduceMotion: Bool {
+        UIAccessibility.isReduceMotionEnabled
     }
 }
 
@@ -167,7 +171,7 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
         model.statement = statements.explainKspRatio1
         model.beakerState.goTo(state: .demoReaction, with: .none)
         model.highlights.clear()
-        withAnimation(.easeOut(duration: 0.3)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
             model.equationState = .showCorrectQuotientNotFilledIn
         }
         model.shakingModel.shouldAddParticle = true
@@ -207,11 +211,19 @@ private class ShowCorrectQuotientAndRunDemo: SolubilityScreenState {
         }
         withAnimation(.easeOut(duration: 0.5)) {
             model.waterColor = RGB.beakerLiquid.color
+            if !reduceMotion {
+                model.equationState = .crossOutOriginalQuotientDenominator
+            }
+        }
+        if reduceMotion {
             model.equationState = .crossOutOriginalQuotientDenominator
-
         }
         model.shakingModel.shouldAddParticle = false
         model.beakerLabel = .clear
+    }
+
+    private var reduceMotion: Bool {
+        UIAccessibility.isReduceMotionEnabled
     }
 }
 

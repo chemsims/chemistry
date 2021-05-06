@@ -18,6 +18,7 @@ struct AddMoleculesView: View {
     let onDrag: () -> Void
     let showShakeText: () -> Void
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     private let manualAddAmount = 5
 
     var body: some View {
