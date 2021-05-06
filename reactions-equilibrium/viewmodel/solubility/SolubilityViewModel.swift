@@ -61,7 +61,6 @@ final class SolubilityViewModel: ObservableObject {
     @Published var milligramsSoluteAdded: CGFloat = 0
 
     @Published var showShakeText = false
-    @Published var canSetCurrentTime = false
     @Published var beakerLabel = SolubilityBeakerAccessibilityLabel.clear
 
     @Published var addVoiceOverParticle = AddManualParticle.none
