@@ -170,7 +170,7 @@ private class RunReaction: GaseousScreenState {
 
         let reactionDirection: ReactionDirection = model.components.equation.direction
 
-        model.reactionDefinitionDirection = AnimatingReactionDefinition.Direction.from(direction: reactionDirection)
+        model.reactionDefinitionDirection = ReactionDefinitionArrowDirection.from(direction: reactionDirection)
         model.currentTime = timing.start
         model.inputState = .none
         model.highlightedElements.clear()
@@ -199,7 +199,7 @@ private class RunReaction: GaseousScreenState {
         func delayedState(
             _ statement: [TextLine],
             _ highlights: [GaseousScreenElement] = [],
-            _ direction: AnimatingReactionDefinition.Direction? = nil
+            _ direction: ReactionDefinitionArrowDirection? = nil
         ) -> DelayedState<GaseousScreenState> {
             DelayedState(
                 state: RunReactionDelayedState(statement: statement, highlights: highlights, reactionDirection: direction),
@@ -222,7 +222,7 @@ private class RunReaction: GaseousScreenState {
         init(
             statement: [TextLine],
             highlights: [GaseousScreenElement],
-            reactionDirection: AnimatingReactionDefinition.Direction?
+            reactionDirection: ReactionDefinitionArrowDirection?
         ) {
             self.statement = statement
             self.highlights = highlights
@@ -231,7 +231,7 @@ private class RunReaction: GaseousScreenState {
 
         let statement: [TextLine]
         let highlights: [GaseousScreenElement]
-        let reactionDirection: AnimatingReactionDefinition.Direction?
+        let reactionDirection: ReactionDefinitionArrowDirection?
 
         override func apply(on model: GaseousReactionViewModel) {
             model.statement = statement

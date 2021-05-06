@@ -7,7 +7,7 @@ import SwiftUI
 struct AnimatingDoubleSidedArrow: View {
 
     let width: CGFloat
-    let direction: AnimatingReactionDefinition.Direction
+    let direction: ReactionDefinitionArrowDirection
 
     private let duration: TimeInterval = 0.75
 

@@ -8,7 +8,7 @@ import ReactionsCore
 struct SolubleReactionDefinitionView: View {
 
     let reaction: SolubleReactionType
-    let direction: AnimatingReactionDefinition.Direction
+    let direction: ReactionDefinitionArrowDirection
     let arrowWidth: CGFloat
     let fontSize: CGFloat
 

@@ -184,7 +184,7 @@ private class RunAnimationState: AqueousScreenState {
             _ statement: [TextLine],
             _ delay: Double,
             _ elements: [AqueousScreenElement] = [],
-            _ direction: AnimatingReactionDefinition.Direction? = nil
+            _ direction: ReactionDefinitionArrowDirection? = nil
         ) -> DelayedState<AqueousScreenState> {
             DelayedState(
                 state: RunReactionDelayedState(
@@ -212,7 +212,7 @@ private class RunAnimationState: AqueousScreenState {
         init(
             statement: [TextLine],
             highlights: [AqueousScreenElement],
-            reactionDirection: AnimatingReactionDefinition.Direction?
+            reactionDirection: ReactionDefinitionArrowDirection?
         ) {
             self.statement = statement
             self.highlights = highlights
@@ -221,7 +221,7 @@ private class RunAnimationState: AqueousScreenState {
 
         let statement: [TextLine]
         let highlights: [AqueousScreenElement]
-        let reactionDirection: AnimatingReactionDefinition.Direction?
+        let reactionDirection: ReactionDefinitionArrowDirection?
 
         override func apply(on model: AqueousReactionViewModel) {
             model.statement = statement

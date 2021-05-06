@@ -8,7 +8,7 @@ import ReactionsCore
 struct AnimatingReactionDefinition: View {
 
     let coefficients: MoleculeValue<Int>
-    let direction: Direction
+    let direction: ReactionDefinitionArrowDirection
 
     let labelPrefix: String?
     let labelSuffix: String?
@@ -21,7 +21,7 @@ struct AnimatingReactionDefinition: View {
     ///
     init(
         coefficients: MoleculeValue<Int>,
-        direction: Direction,
+        direction: ReactionDefinitionArrowDirection,
         labelPrefix: String? = nil,
         labelSuffix: String? = nil
     ) {
@@ -42,39 +42,13 @@ struct AnimatingReactionDefinition: View {
             )
         }
     }
-
-    // TODO move this enum somewhere else
-    enum Direction {
-        case forward, reverse, equilibrium, none
-
-        var runForward: Bool {
-            self == .forward || self == .equilibrium
-        }
-
-        var runReverse: Bool {
-            self == .reverse || self == .equilibrium
-        }
-
-        static func from(direction: ReactionDirection) -> Direction {
-            direction == .forward ? .forward : .reverse
-        }
-
-        var label: String? {
-            switch self {
-            case .equilibrium: return "top arrow is moving to the right and bottom arrow is moving to the left"
-            case .forward: return "top arrow is moving to the right"
-            case .reverse: return "bottom arrow is moving to the left"
-            default: return nil
-            }
-        }
-    }
 }
 
 
 private struct AnimatingReactionDefinitionWithGeometry: View {
 
     let coefficients: MoleculeValue<Int>
-    let direction: AnimatingReactionDefinition.Direction
+    let direction: ReactionDefinitionArrowDirection
     let geometry: GeometryProxy
 
     let labelPrefix: String?
@@ -166,7 +140,7 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
     }
 
     private var moleculeMovementLabel: String {
-        if direction.runForward && direction.runReverse {
+        if direction == .equilibrium {
             return """
             Molecules on the left side are turning into molecules on the right side above the text.
             The reverse motion is happening at the same speed below the text.
