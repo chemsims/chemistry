@@ -305,6 +305,9 @@
 		57B3B962260B4BF500EB9B47 /* NavigationIconRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B961260B4BF500EB9B47 /* NavigationIconRows.swift */; };
 		57B5312626440336002F7247 /* ReactionDefinitionArrowDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5312526440336002F7247 /* ReactionDefinitionArrowDirection.swift */; };
 		57B5312826440813002F7247 /* SolubilityMilligramsSoluteAddedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5312726440813002F7247 /* SolubilityMilligramsSoluteAddedTests.swift */; };
+		57B5312C2644144A002F7247 /* gaseous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57B5312926441449002F7247 /* gaseous-quiz.csv */; };
+		57B5312D2644144A002F7247 /* solubility-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57B5312A2644144A002F7247 /* solubility-quiz.csv */; };
+		57B5312E2644144A002F7247 /* aqueous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57B5312B2644144A002F7247 /* aqueous-quiz.csv */; };
 		57B5781D2639634C008DFAB5 /* AccessibilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5781C2639634C008DFAB5 /* AccessibilityExtensions.swift */; };
 		57B5781F2639953B008DFAB5 /* UniqueGridCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */; };
 		57B57821263995E8008DFAB5 /* UniqueGridCoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */; };
@@ -323,9 +326,6 @@
 		57BDFF5426416AC7001B97CC /* EquilibriumInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF5326416AC7001B97CC /* EquilibriumInjector.swift */; };
 		57BDFF5626416C14001B97CC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5526416C14001B97CC /* GoogleService-Info.plist */; };
 		57BDFF5826416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF5726416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		57BDFF5C2641764A001B97CC /* solubility-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF592641764A001B97CC /* solubility-quiz.csv */; };
-		57BDFF5D2641764A001B97CC /* aqueous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5A2641764A001B97CC /* aqueous-quiz.csv */; };
-		57BDFF5E2641764A001B97CC /* gaseous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5B2641764A001B97CC /* gaseous-quiz.csv */; };
 		57C0A61A261C31D400777E32 /* SolubilityStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A619261C31D400777E32 /* SolubilityStatements.swift */; };
 		57C0A620261C4A3500777E32 /* SolubilityPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */; };
 		57C315B82631B37D0092C454 /* AnimatingReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */; };
@@ -800,6 +800,9 @@
 		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B5312526440336002F7247 /* ReactionDefinitionArrowDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionArrowDirection.swift; sourceTree = "<group>"; };
 		57B5312726440813002F7247 /* SolubilityMilligramsSoluteAddedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityMilligramsSoluteAddedTests.swift; sourceTree = "<group>"; };
+		57B5312926441449002F7247 /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
+		57B5312A2644144A002F7247 /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
+		57B5312B2644144A002F7247 /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
 		57B5781C2639634C008DFAB5 /* AccessibilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityExtensions.swift; sourceTree = "<group>"; };
 		57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinates.swift; sourceTree = "<group>"; };
 		57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinateTests.swift; sourceTree = "<group>"; };
@@ -816,9 +819,6 @@
 		57BDFF5126415E00001B97CC /* dummy-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dummy-quiz.csv"; sourceTree = "<group>"; };
 		57BDFF5326416AC7001B97CC /* EquilibriumInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumInjector.swift; sourceTree = "<group>"; };
 		57BDFF5526416C14001B97CC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		57BDFF592641764A001B97CC /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
-		57BDFF5A2641764A001B97CC /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
-		57BDFF5B2641764A001B97CC /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
 		57C0A619261C31D400777E32 /* SolubilityStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityStatements.swift; sourceTree = "<group>"; };
 		57C0A61F261C4A3500777E32 /* SolubilityPhChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPhChart.swift; sourceTree = "<group>"; };
 		57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingReactionDefinition.swift; sourceTree = "<group>"; };
@@ -2150,9 +2150,9 @@
 		57BDFF4A264153B5001B97CC /* quiz-questions */ = {
 			isa = PBXGroup;
 			children = (
-				57BDFF5A2641764A001B97CC /* aqueous-quiz.csv */,
-				57BDFF5B2641764A001B97CC /* gaseous-quiz.csv */,
-				57BDFF592641764A001B97CC /* solubility-quiz.csv */,
+				57B5312B2644144A002F7247 /* aqueous-quiz.csv */,
+				57B5312926441449002F7247 /* gaseous-quiz.csv */,
+				57B5312A2644144A002F7247 /* solubility-quiz.csv */,
 			);
 			path = "quiz-questions";
 			sourceTree = "<group>";
@@ -2754,10 +2754,10 @@
 				575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */,
 				575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */,
 				57BDFF5626416C14001B97CC /* GoogleService-Info.plist in Resources */,
-				57BDFF5C2641764A001B97CC /* solubility-quiz.csv in Resources */,
+				57B5312D2644144A002F7247 /* solubility-quiz.csv in Resources */,
+				57B5312C2644144A002F7247 /* gaseous-quiz.csv in Resources */,
 				575A88BC25E43CD700AEE448 /* Assets.xcassets in Resources */,
-				57BDFF5D2641764A001B97CC /* aqueous-quiz.csv in Resources */,
-				57BDFF5E2641764A001B97CC /* gaseous-quiz.csv in Resources */,
+				57B5312E2644144A002F7247 /* aqueous-quiz.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3503,7 +3503,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-debug";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8.1;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"reactions-equilibrium/Preview Content\"";
 				DEVELOPMENT_TEAM = 7H845U3D2J;
 				ENABLE_PREVIEWS = YES;
@@ -3526,7 +3526,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8.1;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"reactions-equilibrium/Preview Content\"";
 				DEVELOPMENT_TEAM = 7H845U3D2J;
 				ENABLE_PREVIEWS = YES;
