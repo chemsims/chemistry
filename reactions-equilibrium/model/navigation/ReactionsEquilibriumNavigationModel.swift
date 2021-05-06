@@ -21,6 +21,7 @@ struct ReactionsEquilibriumNavigationModel {
             persistence: injector.screenPersistence,
             analytics: injector.analytics,
             quizPersistence: injector.quizPersistence,
+            reviewPersistence: injector.reviewPersistence,
             allScreens: EquilibriumAppScreen.allCases,
             linearScreens: linearScreens
         )
@@ -54,8 +55,12 @@ private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
         screen == .finalScreen
     }
 
+    func showMenuOn(screen: EquilibriumAppScreen) -> Bool {
+        screen == .finalScreen
+    }
+
     func highlightedNavIcon(for screen: EquilibriumAppScreen) -> EquilibriumAppScreen? {
-        screen == .finalScreen ? .aqueousReaction : nil
+        nil
     }
 
     func getProvider(for screen: EquilibriumAppScreen, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) -> ScreenProvider {

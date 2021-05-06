@@ -22,6 +22,7 @@ struct ReactionRateNavigationModel {
             persistence: injector.screenPersistence,
             analytics: injector.appAnalytics,
             quizPersistence: injector.quizPersistence,
+            reviewPersistence: injector.reviewPersistence,
             allScreens: AppScreen.allCases,
             linearScreens: linearScreens
         )
@@ -62,6 +63,10 @@ private struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
     }
 
     func showReviewPromptOn(screen: AppScreen) -> Bool {
+        screen == .finalAppScreen
+    }
+
+    func showMenuOn(screen: AppScreen) -> Bool {
         screen == .finalAppScreen
     }
 

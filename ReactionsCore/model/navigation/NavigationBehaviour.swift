@@ -17,14 +17,19 @@ public protocol NavigationBehaviour {
     /// Returns whether the review prompt should be triggered when opening this screen.
     ///
     /// - Note:The review prompt is triggered after some delay, not immediately, and subject to
-    /// the conditions in the review prompting logic
+    /// the conditions in the review prompting logic, including the `screen` not being screen opened when the app is open
     func showReviewPromptOn(screen: Screen) -> Bool
+
+    /// Returns whether the menu should be opened when opening this screen
+    func showMenuOn(screen: Screen) -> Bool
 
     /// Returns the screen which should have it's navigation icon highlighted in the main menu
     ///
     /// - Note: The is different to a regular focused screen, and is designed to draw attention to a different
     /// screen altogether in the main menu, using a different color. For example, the last screen on the app may
-    /// tell the user to visit a different screen next, in which case this screen could be highlighted in the menu
+    /// tell the user to visit a different screen next, in which case this screen could be highlighted in the menu.
+    ///
+    /// Returning a non-nil value does not mean the menu will be opened. This is configured separately, in the `showMenuOn` method.
     func highlightedNavIcon(for screen: Screen) -> Screen?
 
     /// Returns a screen provider for this screen
@@ -48,6 +53,7 @@ public class AnyNavigationBehavior<Screen>: NavigationBehaviour {
         self._deferCanSelect = behaviour.deferCanSelect
         self._shouldRestoreState = behaviour.shouldRestoreStateWhenJumpingTo
         self._showReviewPrompt = behaviour.showReviewPromptOn
+        self._showMenu = behaviour.showMenuOn
         self._highlightNavIcon = behaviour.highlightedNavIcon
         self._getProvider = behaviour.getProvider
     }
@@ -55,6 +61,7 @@ public class AnyNavigationBehavior<Screen>: NavigationBehaviour {
     private let _deferCanSelect: (Screen) -> DeferCanSelect<Screen>?
     private let _shouldRestoreState: (Screen) -> Bool
     private let _showReviewPrompt: (Screen) -> Bool
+    private let _showMenu: (Screen) -> Bool
     private let _highlightNavIcon: (Screen) -> Screen?
     private let _getProvider: (Screen, @escaping () -> Void, @escaping () -> Void) -> ScreenProvider
 
@@ -68,6 +75,10 @@ public class AnyNavigationBehavior<Screen>: NavigationBehaviour {
 
     public func showReviewPromptOn(screen: Screen) -> Bool {
         _showReviewPrompt(screen)
+    }
+
+    public func showMenuOn(screen: Screen) -> Bool {
+        _showMenu(screen)
     }
 
     public func highlightedNavIcon(for screen: Screen) -> Screen? {

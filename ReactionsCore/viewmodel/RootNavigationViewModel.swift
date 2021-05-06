@@ -134,8 +134,15 @@ extension RootNavigationViewModel {
         withAnimation(navigationAnimation) {
             view = provider.screen
         }
-        if behaviour.showReviewPromptOn(screen: screen) && !hasOpenedFirstScreen {
-            showMenu = true
+
+        // Only show review prompt or open menu if the app is not the first screen shown when app opens
+        if hasOpenedFirstScreen {
+            if behaviour.showReviewPromptOn(screen: screen) {
+                ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
+            }
+            if behaviour.showMenuOn(screen: screen) {
+                showMenu = true
+            }
         }
         injector.analytics.opened(screen: screen)
         persistence.setLastOpened(screen)

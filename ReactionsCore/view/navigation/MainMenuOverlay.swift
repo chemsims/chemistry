@@ -488,6 +488,7 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         persistence: AnyScreenPersistence(InMemoryScreenPersistence()),
         analytics: AnyAppAnalytics(NoOpAnalytics<Int>()),
         quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence<Int>()),
+        reviewPersistence: InMemoryReviewPromptPersistence(),
         allScreens: [1, 2, 3, 4],
         linearScreens: [1, 2, 3, 4]
     )
@@ -502,6 +503,10 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         }
 
         func showReviewPromptOn(screen: Screen) -> Bool {
+            false
+        }
+
+        func showMenuOn(screen: Screen) -> Bool {
             false
         }
 
