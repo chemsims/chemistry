@@ -8,7 +8,7 @@ import XCTest
 class SolubilityScreenSoluteCounterTests: XCTestCase {
 
     func testFirstReactionSaturatedSolute() {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         let nav = model.navigation!
 
         nav.nextUntil { $0.inputState == .addSolute(type: .primary) }

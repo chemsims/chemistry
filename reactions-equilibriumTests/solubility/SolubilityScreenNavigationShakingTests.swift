@@ -8,7 +8,7 @@ import XCTest
 class SolubilityScreenNavigationShakingTests: XCTestCase {
 
     func testFirstAddSolute() {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         let nav = model.navigation!
 
         nav.nextUntil { $0.inputState == .addSolute(type: .primary) }
@@ -29,7 +29,7 @@ class SolubilityScreenNavigationShakingTests: XCTestCase {
     }
 
     func testFirstAddSaturatedSolute() {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         let nav = model.navigation!
 
         nav.nextUntil { $0.inputState == .addSaturatedSolute }
@@ -50,7 +50,7 @@ class SolubilityScreenNavigationShakingTests: XCTestCase {
     }
 
     func testAddCommonIonSolute() {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         let nav = model.navigation!
 
         nav.nextUntil { $0.inputState == .addSolute(type: .commonIon) }
@@ -72,7 +72,7 @@ class SolubilityScreenNavigationShakingTests: XCTestCase {
     }
 
     func testFirstCommonIonAddSaturatedSolute() {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         let nav = model.navigation!
 
         nav.nextUntil { $0.inputState == .addSaturatedSolute }
@@ -95,7 +95,7 @@ class SolubilityScreenNavigationShakingTests: XCTestCase {
     }
 
     func testAddAcidSolute() {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         let nav = model.navigation!
 
         nav.nextUntil { $0.inputState == .addSolute(type: .acid) }

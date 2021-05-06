@@ -8,7 +8,7 @@ import XCTest
 class SolubilityScreenNavigationBeakerStatesTests: XCTestCase {
 
     func testDemoReactionBeakerActions() throws {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         let nav = model.navigation!
 
         nav.nextUntilStatement(startsWith: "The higher the Ksp, then the higher the amount of ions")
@@ -26,7 +26,7 @@ class SolubilityScreenNavigationBeakerStatesTests: XCTestCase {
     }
 
     func testFirstReaction() {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         let nav = model.navigation!
 
         nav.nextUntil { $0.inputState == .addSolute(type: .primary) }
@@ -80,7 +80,7 @@ class SolubilityScreenNavigationBeakerStatesTests: XCTestCase {
     }
 
     func testSecondReaction() {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         let nav = model.navigation!
 
         // Adding common ion

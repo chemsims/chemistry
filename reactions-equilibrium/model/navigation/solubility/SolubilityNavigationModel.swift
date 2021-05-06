@@ -270,11 +270,11 @@ private class AddSolute: SolubilityScreenState {
 
     override func reapply(on model: SolubilityViewModel) {
         model.componentsWrapper.reset()
-        model.setMilligramsAdded()
         apply(on: model)
     }
 
     private func doApply(on model: SolubilityViewModel) {
+        model.setMilligramsAdded()
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = 0
             model.inputState = .addSolute(type: .primary)

@@ -8,7 +8,7 @@ import XCTest
 class SolubilityScreenDemoToAddSoluteRaceConditionTests: XCTestCase {
 
     func testParticleWaterEntryUsingDemoReactionWithTheBeakerStateHasChanged() {
-        let model = SolubilityViewModel()
+        let model = SolubilityViewModel(persistence: InMemorySolubilityPersistence())
         model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
         model.inputState = .addSolute(type: .primary)
         model.onParticleWaterEntry(soluteType: .primary, onBeakerState: .demoReaction)

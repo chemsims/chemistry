@@ -38,6 +38,20 @@
                ReferencedContainer = "container:reactions-app.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "575A88C725E43CD700AEE448"
+               BuildableName = "reactions-equilibriumTests.xctest"
+               BlueprintName = "reactions-equilibriumTests"
+               ReferencedContainer = "container:reactions-app.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

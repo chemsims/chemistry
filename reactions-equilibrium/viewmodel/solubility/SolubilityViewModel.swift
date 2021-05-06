@@ -58,6 +58,7 @@ final class SolubilityViewModel: ObservableObject {
 
     @Published var componentsWrapper: SolubleComponentsWrapper!
 
+    // Amount milligrams added. This is not a computed property to provide more control over animation
     @Published var milligramsSoluteAdded: CGFloat = 0
 
     @Published var showShakeText = false
@@ -149,6 +150,7 @@ final class SolubilityViewModel: ObservableObject {
             return
         }
         componentsWrapper.solutePerformed(action: .dissolved)
+        setMilligramsAdded()
 
         if inputState == .addSolute(type: .primary) {
             let dissolvedFraction = componentsWrapper.counts.fraction(of: .dissolved)
