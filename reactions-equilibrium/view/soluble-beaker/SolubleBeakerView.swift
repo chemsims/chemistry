@@ -217,7 +217,11 @@ private struct SolubleBeakerViewWithGeometry: View {
     }
 
     private var milligramsLabel: some View {
-        HStack(spacing: 2) {
+        let value = model.activeSolute.value
+        let prev = [model.activeSolute.oldValue].compactMap { $0 }.compactMap { $0 }
+        let solute = value ?? prev.first ?? .primary
+
+        return HStack(spacing: 2) {
             AnimatingNumber(
                 x: model.milligramsSoluteAdded,
                 equation: LinearEquation(m: 1, x1: 0, y1: 0),
@@ -235,9 +239,7 @@ private struct SolubleBeakerViewWithGeometry: View {
         .font(.system(size: settings.milligramLabelFontSize))
         .lineLimit(1)
         .minimumScaleFactor(0.75)
-        .foregroundColor(
-            (model.activeSolute.value ?? .primary).color(for: model.selectedReaction).color
-        )
+        .foregroundColor(solute.color(for: model.selectedReaction).color)
         .background(
             RoundedRectangle(
                 cornerRadius: 0.2 * settings.soluble.containerWidth
