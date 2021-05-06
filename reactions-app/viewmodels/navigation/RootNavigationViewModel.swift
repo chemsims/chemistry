@@ -116,7 +116,7 @@ class RootNavigationViewModel: ObservableObject {
         withAnimation(navigationAnimation) {
             self.view = provider.screen
         }
-        if screen == .finalAppScreen && !hasOpenedFirstScreen {
+        if screen == .finalAppScreen && hasOpenedFirstScreen {
             showMenu = true
             ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
         }

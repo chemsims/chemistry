@@ -7,6 +7,8 @@ import Foundation
 protocol ReviewPromptPersistence {
     func lastPromptedVersion() -> String?
     func setPromptedVersion(version: String)
+
+    var reviewPromptDelay: TimeInterval { get }
 }
 
 class UserDefaultsReviewPromptPersistence: ReviewPromptPersistence {
@@ -20,6 +22,8 @@ class UserDefaultsReviewPromptPersistence: ReviewPromptPersistence {
     func setPromptedVersion(version: String) {
         defaults.setValue(version, forKey: key)
     }
+
+    let reviewPromptDelay: TimeInterval = ReviewPrompter.defaultDelay
 
     private let key = "last-review-prompt-version"
 }
@@ -35,4 +39,6 @@ class InMemoryReviewPromptPersistence: ReviewPromptPersistence {
     func setPromptedVersion(version: String) {
         underlying = version
     }
+
+    let reviewPromptDelay: TimeInterval = ReviewPrompter.defaultDelay
 }
