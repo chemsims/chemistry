@@ -54,7 +54,7 @@ final class SolubilityViewModel: ObservableObject {
     @Published var reactionSelectionToggled = false
     @Published var showSelectedReaction = false
     @Published var highlights = HighlightedElements<SolubleScreenElement>()
-    @Published var highlightForwardReactionArrow = false
+    @Published var reactionArrowDirection = AnimatingReactionDefinition.Direction.none
 
     @Published var componentsWrapper: SolubleComponentsWrapper!
 

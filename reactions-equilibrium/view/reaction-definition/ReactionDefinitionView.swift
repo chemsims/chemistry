@@ -8,7 +8,7 @@ import ReactionsCore
 struct SolubleReactionDefinitionView: View {
 
     let reaction: SolubleReactionType
-    let runForwardArrow: Bool
+    let direction: AnimatingReactionDefinition.Direction
     let arrowWidth: CGFloat
     let fontSize: CGFloat
 
@@ -17,8 +17,7 @@ struct SolubleReactionDefinitionView: View {
             Text(reaction.reactantDisplay)
             AnimatingDoubleSidedArrow(
                 width: arrowWidth,
-                runForward: runForwardArrow,
-                runReverse: false
+                direction: direction
             )
             TextLinesView(lines: [reaction.productText], fontSize: fontSize)
         }
@@ -28,11 +27,7 @@ struct SolubleReactionDefinitionView: View {
     }
 
     private var label: String {
-        var base = "\(reaction.reactantLabel) double-sided arrow \(reaction.productLabel)"
-        if runForwardArrow {
-            base.append(", top arrow is moving to the right")
-        }
-        return base
+        "\(reaction.reactantLabel) double-sided arrow \(reaction.productLabel). \(direction.label ?? "")"
     }
 }
 
@@ -40,7 +35,7 @@ struct AqueousReactionTypeView_Previews: PreviewProvider {
     static var previews: some View {
         SolubleReactionDefinitionView(
             reaction: .A,
-            runForwardArrow: false,
+            direction: .forward,
             arrowWidth: 15,
             fontSize: 15
         )

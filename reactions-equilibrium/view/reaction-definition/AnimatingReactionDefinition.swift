@@ -43,6 +43,7 @@ struct AnimatingReactionDefinition: View {
         }
     }
 
+    // TODO move this enum somewhere else
     enum Direction {
         case forward, reverse, equilibrium, none
 
@@ -56,6 +57,15 @@ struct AnimatingReactionDefinition: View {
 
         static func from(direction: ReactionDirection) -> Direction {
             direction == .forward ? .forward : .reverse
+        }
+
+        var label: String? {
+            switch self {
+            case .equilibrium: return "top arrow is moving to the right and bottom arrow is moving to the left"
+            case .forward: return "top arrow is moving to the right"
+            case .reverse: return "bottom arrow is moving to the left"
+            default: return nil
+            }
         }
     }
 }
@@ -123,8 +133,7 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
             elementSide(.A, .B)
             AnimatingDoubleSidedArrow(
                 width: arrowWidth,
-                runForward: direction.runForward,
-                runReverse: direction.runReverse
+                direction: direction
             )
             elementSide(.C, .D)
         }
@@ -153,14 +162,7 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
     }
 
     private var arrowLabel: String {
-        if direction.runForward && direction.runReverse {
-            return "top arrow is moving to the right and bottom arrow is moving to the left"
-        } else if direction.runForward {
-            return "top arrow is moving to the right"
-        } else if direction.runReverse {
-            return "bottom arrow is moving to the left"
-        }
-        return ""
+        direction.label ?? ""
     }
 
     private var moleculeMovementLabel: String {

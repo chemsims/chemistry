@@ -7,21 +7,17 @@ import SwiftUI
 struct AnimatingDoubleSidedArrow: View {
 
     let width: CGFloat
-    let runForward: Bool
-    let runReverse: Bool
+    let direction: AnimatingReactionDefinition.Direction
 
     private let duration: TimeInterval = 0.75
 
     var body: some View {
         Group {
-            if runForward && runReverse {
-                AnimatingDoubleArrow(width: width, duration: duration)
-            } else if runForward {
-                topArrowRunning
-            } else if runReverse {
-                bottomArrowRunning
-            } else {
-                DoubleArrow(width: width)
+            switch direction {
+            case .equilibrium: AnimatingDoubleArrow(width: width, duration: duration)
+            case .forward: topArrowRunning
+            case .reverse: bottomArrowRunning
+            default: DoubleArrow(width: width)
             }
         }
     }
@@ -143,33 +139,16 @@ private struct SingleArrow: View {
 
 struct DoubleSidedArrow_Previews: PreviewProvider {
     static var previews: some View {
-        ViewWrapper()
-            .font(.system(size: 30))
-    }
-
-    struct ViewWrapper: View {
-        @State private var runForward = true
-        @State private var runReverse = false
-
-        var body: some View {
-            VStack {
-                HStack {
-                    Text("2A + 3B")
-                    AnimatingDoubleSidedArrow(
-                        width: 40,
-                        runForward: runForward,
-                        runReverse: runReverse
-                    )
-                    .frame(width: 40)
-                }
-                Toggle(isOn: $runForward, label: {
-                    Text("Run forward")
-                })
-
-                Toggle(isOn: $runReverse, label: {
-                    Text("Run forward")
-                })
+        VStack {
+            HStack {
+                Text("2A + 3B")
+                AnimatingDoubleSidedArrow(
+                    width: 40,
+                    direction: .forward
+                )
+                .frame(width: 40)
             }
         }
+            .font(.system(size: 30))
     }
 }

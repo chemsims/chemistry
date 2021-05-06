@@ -59,7 +59,7 @@ private struct SolubilityScreenWithSettings: View {
         VStack(spacing: 0) {
             SolubleReactionDefinitionView(
                 reaction: model.selectedReaction,
-                runForwardArrow: model.highlightForwardReactionArrow,
+                direction: model.reactionArrowDirection,
                 arrowWidth: 1.3 * settings.common.shakeTextFontSize,
                 fontSize: 1.3 * settings.common.shakeTextFontSize
             )

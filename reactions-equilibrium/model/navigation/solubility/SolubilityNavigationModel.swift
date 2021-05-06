@@ -279,7 +279,7 @@ private class AddSolute: SolubilityScreenState {
         model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
         model.startShaking()
         model.highlights.clear()
-        model.highlightForwardReactionArrow = true
+        model.reactionArrowDirection = .forward
         model.beakerLabel = .addingSolute
     }
 
@@ -292,7 +292,7 @@ private class AddSolute: SolubilityScreenState {
             model.showShakeText = false
         }
         model.stopShaking()
-        model.highlightForwardReactionArrow = false
+        model.reactionArrowDirection = .none
         model.beakerLabel = .clear
     }
 }
@@ -310,7 +310,7 @@ private class ShowSaturatedSolution: SolubilityScreenState {
 
     private func doApply(on model: SolubilityViewModel, setComponents: Bool) {
         model.stopShaking()
-        model.highlightForwardReactionArrow = false
+        model.reactionArrowDirection = .none
         model.beakerLabel = .saturated
 
         if setComponents {
@@ -388,6 +388,7 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
     private func doApply(on model: SolubilityViewModel) {
         model.statement = statements.instructToAddSaturatedSolute(solute: model.selectedReaction.products.salt)
         model.beakerLabel = .addingSaturatedSolute
+        model.reactionArrowDirection = .equilibrium
 
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.equilibrium
@@ -405,6 +406,7 @@ private class AddSoluteToSaturatedBeaker: SolubilityScreenState {
         }
         model.componentsWrapper.reset()
         model.beakerState.goTo(state: .none, with: .removeSolute(duration: 0.5))
+        model.reactionArrowDirection = .none
     }
 }
 
@@ -423,6 +425,7 @@ private class PostAddingSoluteToSaturatedBeaker: SolubilityScreenState {
             model.activeSolute.setValue(nil)
             model.showShakeText = false
         }
+        model.reactionArrowDirection = .none
         model.beakerLabel = .superSaturated
     }
 }
@@ -535,7 +538,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
         model.statement = statements.instructToAddPrimarySolutePostCommonIon(product: model.selectedReaction.products)
         model.beakerState.goTo(state: .addingSolute(type: .primary), with: .none)
         model.startShaking()
-        model.highlightForwardReactionArrow = true
+        model.reactionArrowDirection = .forward
         if setWrapper {
             model.componentsWrapper = PrimarySoluteComponentsWrapper(
                 soluteToAddForSaturation: model.commonIonSoluteToAddForSaturation,
@@ -557,7 +560,7 @@ private class AddSoluteToCommonIonSolution: SolubilityScreenState {
         withAnimation(.easeOut(duration: 1)) {
             model.currentTime = 0
         }
-        model.highlightForwardReactionArrow = false
+        model.reactionArrowDirection = .none
     }
 }
 
@@ -662,7 +665,7 @@ private class RunAcidReaction: SolubilityScreenState {
             model.currentTime = model.timing.equilibrium
             model.waterColor = model.componentsWrapper.finalColor.color
         }
-        model.highlightForwardReactionArrow = true
+        model.reactionArrowDirection = .forward
         model.beakerLabel = .runningAcidReaction
     }
 
@@ -672,7 +675,7 @@ private class RunAcidReaction: SolubilityScreenState {
             model.currentTime = model.timing.start
             model.waterColor = model.componentsWrapper.initialColor.color
         }
-        model.highlightForwardReactionArrow = false
+        model.reactionArrowDirection = .none
     }
 
     override func delayedStates(model: SolubilityViewModel) -> [DelayedState<SolubilityScreenState>] {
@@ -688,6 +691,7 @@ private class RunAcidReaction: SolubilityScreenState {
     private class CompleteAnimation: SolubilityScreenState {
         override func apply(on model: SolubilityViewModel) {
             model.statement = statements.acidEquilibriumReached(product: model.selectedReaction.products)
+            model.reactionArrowDirection = .equilibrium
             let dt = model.timing.end - model.timing.equilibrium
             withAnimation(.linear(duration: Double(dt))) {
                 model.currentTime = model.timing.end
@@ -704,7 +708,7 @@ private class EndAcidReaction: SolubilityScreenState {
             model.waterColor = model.componentsWrapper.finalColor.incremented(by: 1).color
         }
         model.beakerState.goTo(state: .none, with: .completeReaction)
-        model.highlightForwardReactionArrow = false
+        model.reactionArrowDirection = .none
         model.beakerLabel = .saturated
     }
 }
