@@ -7,7 +7,7 @@ import Foundation
 struct FeedbackSettings {
     private init() { }
 
-    static let toAddress = "reactionsrateapp@gmail.com"
+    static let toAddress = "support@reactionsrateapp.com"
     static let subject = "Reactions Rate Feedback"
     static let body = """
 
