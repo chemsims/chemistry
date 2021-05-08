@@ -18,12 +18,16 @@ struct IntegrationNavigationModel {
         SetReactionType(),
         SetWater(),
         SetStatement(statement: statements.showPreviousEquations, highlights: [.integrationRateDefinitions]),
-        SetStatement(statement: { statements.showRateConstantParts(model: $0) }, highlights: [.integrationRateDefinitions]),
+        SetStatement(statement: { statements.showRateConstantParts(reaction: $0.selectedReaction) }, highlights: [.integrationRateDefinitions]),
         SetStatement(statement: statements.compareRates, highlights: [.integrationRateValues]),
         AddReactants(),
         PrepareForwardReaction(),
         RunForwardReaction(),
-        EndReaction(statement: { statements.equilibriumReached(rate: $0.kf) }),
+        EndReaction(statement: { model in
+            statements.equilibriumReached(
+                rate: model.forwardRate.rate.getY(at: model.timing.end)
+            )
+        }),
         SetCurrentTime(),
         ShiftChart(),
         PrepareReverseReaction(),

@@ -57,8 +57,8 @@ private struct SizedIntegrationEquationView: View {
 
                 KComparison(
                     k: model.selectedReaction.equilibriumConstant,
-                    kForward: model.kf,
-                    kReverse: model.kr
+                    kForward: model.selectedReaction.forwardRateConstant,
+                    kReverse: model.selectedReaction.reverseRateConstant
                 )
             }
             .background(Color.white.padding(-5))

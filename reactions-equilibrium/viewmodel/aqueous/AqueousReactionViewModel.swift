@@ -20,19 +20,11 @@ class IntegrationViewModel: AqueousOrIntegrationReactionViewModel<IntegrationScr
         navigation = IntegrationNavigationModel.model(model: self)
     }
 
-    var kf: CGFloat {
-        selectedReaction.forwardRateConstant
-    }
-
-    var kr: CGFloat {
-        selectedReaction.reverseRateConstant
-    }
-
     var forwardRate: ReactionRateDefinition {
         ReactionRateDefinition(
             firstMolecule: makeReactionRatePart(.A),
             secondMolecule: makeReactionRatePart(.B),
-            k: kf
+            k: selectedReaction.forwardRateConstant
         )
     }
 
@@ -40,7 +32,7 @@ class IntegrationViewModel: AqueousOrIntegrationReactionViewModel<IntegrationScr
         ReactionRateDefinition(
             firstMolecule: makeReactionRatePart(.C),
             secondMolecule: makeReactionRatePart(.D),
-            k: kr
+            k: selectedReaction.reverseRateConstant
         )
     }
 
