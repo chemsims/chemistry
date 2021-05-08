@@ -13,4 +13,8 @@ extension View {
             self
         }
     }
+
+    public func frame(square size: CGFloat) -> some View {
+        self.frame(width: size, height: size)
+    }
 }

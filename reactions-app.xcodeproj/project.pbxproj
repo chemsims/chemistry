@@ -49,7 +49,6 @@
 		571D6A4C255A780900F4E635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A4A255A780900F4E635 /* LaunchScreen.storyboard */; };
 		571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */; };
 		571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E802560483A00A1C45E /* BarChartBar.swift */; };
-		571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
 		5725972325EE3E9400D87964 /* ReactionComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972225EE3E9400D87964 /* ReactionComponentTests.swift */; };
 		5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972925EE3ECE00D87964 /* Extensions.swift */; };
 		5727485F25A5F489000CFA1E /* NavigationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */; };
@@ -263,6 +262,11 @@
 		5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
 		5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
 		5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
+		579EA8F42646871C008461E8 /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F32646871C008461E8 /* BarChart.swift */; };
+		579EA8F5264687AE008461E8 /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
+		579EA8F7264689CD008461E8 /* BarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F6264689CD008461E8 /* BarShape.swift */; };
+		579EA8F9264694E5008461E8 /* BarChartGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F8264694E5008461E8 /* BarChartGeometry.swift */; };
+		579EA8FB264694FB008461E8 /* BarChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8FA264694FB008461E8 /* BarChartData.swift */; };
 		57A119A825B86A1E00A7810B /* EnergyProfileFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */; };
 		57A119AC25B86B5500A7810B /* EnergyProfileFilingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */; };
 		57A119B025B86B9800A7810B /* EnergyProfilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */; };
@@ -758,6 +762,10 @@
 		5797A44925E4069F00991BD9 /* ReactionsCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactionsCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797A45025E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579B5D742632A2D600502B69 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
+		579EA8F32646871C008461E8 /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
+		579EA8F6264689CD008461E8 /* BarShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarShape.swift; sourceTree = "<group>"; };
+		579EA8F8264694E5008461E8 /* BarChartGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGeometry.swift; sourceTree = "<group>"; };
+		579EA8FA264694FB008461E8 /* BarChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartData.swift; sourceTree = "<group>"; };
 		57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingScreen.swift; sourceTree = "<group>"; };
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
 		57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistence.swift; sourceTree = "<group>"; };
@@ -1249,7 +1257,6 @@
 			isa = PBXGroup;
 			children = (
 				571F6E802560483A00A1C45E /* BarChartBar.swift */,
-				571F6E862560486400A1C45E /* BarChartAxis.swift */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
@@ -2015,6 +2022,18 @@
 			path = axis;
 			sourceTree = "<group>";
 		};
+		579EA8F22646870A008461E8 /* bar */ = {
+			isa = PBXGroup;
+			children = (
+				579EA8F32646871C008461E8 /* BarChart.swift */,
+				571F6E862560486400A1C45E /* BarChartAxis.swift */,
+				579EA8F6264689CD008461E8 /* BarShape.swift */,
+				579EA8F8264694E5008461E8 /* BarChartGeometry.swift */,
+				579EA8FA264694FB008461E8 /* BarChartData.swift */,
+			);
+			path = bar;
+			sourceTree = "<group>";
+		};
 		57A1B79625EAA64300878B52 /* scales */ = {
 			isa = PBXGroup;
 			children = (
@@ -2427,6 +2446,7 @@
 		57DDAD4C25E57E2100B535A7 /* chart */ = {
 			isa = PBXGroup;
 			children = (
+				579EA8F22646870A008461E8 /* bar */,
 				57DDAD6E25E57F9600B535A7 /* timechart */,
 			);
 			path = chart;
@@ -2858,7 +2878,6 @@
 				571B3C842565638F0075358B /* OrderedReactionLayoutSettings.swift in Sources */,
 				57DAE4FE2577ED76006D945B /* ReactionInput.swift in Sources */,
 				57D8BA23257B7379006B3C8B /* ReactionComparisonStatements.swift in Sources */,
-				571F6E872560486400A1C45E /* BarChartAxis.swift in Sources */,
 				577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */,
 				57B23325258E94A500128760 /* ReactionFilingScreen.swift in Sources */,
 				577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */,
@@ -3108,9 +3127,11 @@
 				57315EC726401CF500A7D0F9 /* QuizAnswerIconOverlay.swift in Sources */,
 				57B5781D2639634C008DFAB5 /* AccessibilityExtensions.swift in Sources */,
 				5797A48125E40A3600991BD9 /* BeakerShape.swift in Sources */,
+				579EA8F42646871C008461E8 /* BarChart.swift in Sources */,
 				57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */,
 				57315EC326401CF500A7D0F9 /* QuizQuestionCard.swift in Sources */,
 				57B3B92F260B408500EB9B47 /* NavigationIconRow.swift in Sources */,
+				579EA8FB264694FB008461E8 /* BarChartData.swift in Sources */,
 				57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */,
 				575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */,
 				578B17202618751B00D8079F /* MotionDelegates.swift in Sources */,
@@ -3155,6 +3176,7 @@
 				5797A49C25E40A4C00991BD9 /* BeakerBottomShape.swift in Sources */,
 				57438A65260A4177005E3888 /* ScreenPersistence.swift in Sources */,
 				57B5782226399C07008DFAB5 /* FractionedCoordinates.swift in Sources */,
+				579EA8F9264694E5008461E8 /* BarChartGeometry.swift in Sources */,
 				5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */,
 				577A2609262822FF0060EC54 /* ValueWithPrevious.swift in Sources */,
 				57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */,
@@ -3182,6 +3204,7 @@
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
 				574103DF2642966300E6EDCB /* Tooltip.swift in Sources */,
+				579EA8F5264687AE008461E8 /* BarChartAxis.swift in Sources */,
 				57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */,
 				57315EBD26401C0800A7D0F9 /* QuizViewModel.swift in Sources */,
 				57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */,
@@ -3195,6 +3218,7 @@
 				57D2F2EE25EA2D7400AEE0D8 /* EquationPlaceholderView.swift in Sources */,
 				57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */,
 				577A261D262862C00060EC54 /* ReactionEnergyTransfer.swift in Sources */,
+				579EA8F7264689CD008461E8 /* BarShape.swift in Sources */,
 				57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */,
 				57DDAD1D25E5700400B535A7 /* QuadraticEquation.swift in Sources */,
 				57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */,
