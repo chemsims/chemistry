@@ -173,7 +173,7 @@ struct DemoReactionComponentsWrapper: SolubleComponentsWrapper {
     let shouldGoNext: Bool = false
 
     private var colorEquation: RGBEquation {
-        RGBEquation(initialX: 0, finalX: CGFloat(counts.maxAllowed), initialColor: initialColor, finalColor: finalColor)
+        LinearRGBEquation(initialX: 0, finalX: CGFloat(counts.maxAllowed), initialColor: initialColor, finalColor: finalColor)
     }
 
 }
@@ -296,7 +296,7 @@ struct CommonIonComponentsWrapper: SolubleComponentsWrapper {
     }
 
     var initialColor: RGB {
-        RGBEquation(
+        LinearRGBEquation(
             initialX: 0,
             finalX: maxB,
             initialColor: .beakerLiquid,
@@ -362,7 +362,7 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
     }
 
     var initialColor: RGB {
-        RGBEquation(
+        LinearRGBEquation(
             initialX: prevEquilibriumB,
             finalX: minB0,
             initialColor: reaction.saturatedLiquid,

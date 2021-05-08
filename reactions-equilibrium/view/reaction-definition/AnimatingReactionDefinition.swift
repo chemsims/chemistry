@@ -283,29 +283,6 @@ extension AnimatingReactionDefinitionWithGeometry {
     }
 }
 
-struct AnimatableForegroundColor: AnimatableModifier {
-
-    let rgb: GeneralRGBEquation
-    var progress: CGFloat
-
-    var animatableData: CGFloat {
-        get { progress }
-        set { progress = newValue }
-    }
-
-    func body(content: Content) -> some View {
-        content
-            .foregroundColor(rgb.getRgb(at: progress).color)
-    }
-}
-
-// TODO - move to reactions core
-extension View {
-    func foregroundColor(rgb: GeneralRGBEquation, progress: CGFloat) -> some View {
-        self.modifier(AnimatableForegroundColor(rgb: rgb, progress: progress))
-    }
-}
-
 extension AnimatingReactionDefinition {
     static let fontSizeToHeight: CGFloat = 0.21
 }

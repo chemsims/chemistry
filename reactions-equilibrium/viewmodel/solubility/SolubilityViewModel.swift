@@ -206,7 +206,7 @@ final class SolubilityViewModel: ObservableObject {
     }
 
     private func color(at time: CGFloat) -> Color {
-        RGBEquation(
+        LinearRGBEquation(
             initialX: timing.start,
             finalX: timing.equilibrium,
             initialColor: componentsWrapper.initialColor,

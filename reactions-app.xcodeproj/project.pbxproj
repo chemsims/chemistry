@@ -125,7 +125,6 @@
 		57473ADD26218EC9009B608D /* SoluteValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473ADC26218EC9009B608D /* SoluteValues.swift */; };
 		57473AE426218EF8009B608D /* SoluteProductType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473AE326218EF8009B608D /* SoluteProductType.swift */; };
 		57473AF626218F45009B608D /* SoluteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473AF526218F45009B608D /* SoluteType.swift */; };
-		57473AFC26218F87009B608D /* RGBEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473AFB26218F87009B608D /* RGBEquation.swift */; };
 		57473B0226218FAB009B608D /* SolubilityInputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473B0126218FAB009B608D /* SolubilityInputState.swift */; };
 		57473B0826218FBB009B608D /* SolubilityEquationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473B0726218FBB009B608D /* SolubilityEquationState.swift */; };
 		57491BF9263B363200962B92 /* AccessibilityLabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57491BF8263B363200962B92 /* AccessibilityLabelUtil.swift */; };
@@ -269,6 +268,8 @@
 		579EA9042646A69F008461E8 /* IntegrationNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9032646A69F008461E8 /* IntegrationNavigationModel.swift */; };
 		579EA9062646A7CD008461E8 /* IntegrationStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9052646A7CD008461E8 /* IntegrationStatements.swift */; };
 		579EA9082646D3C8008461E8 /* IntegrationEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9072646D3C8008461E8 /* IntegrationEquationView.swift */; };
+		579EA90926472836008461E8 /* RGBEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473AFB26218F87009B608D /* RGBEquation.swift */; };
+		579EA90C264728C5008461E8 /* AnimatableForegroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA90B264728C5008461E8 /* AnimatableForegroundColor.swift */; };
 		57A119A825B86A1E00A7810B /* EnergyProfileFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */; };
 		57A119AC25B86B5500A7810B /* EnergyProfileFilingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */; };
 		57A119B025B86B9800A7810B /* EnergyProfilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */; };
@@ -770,6 +771,7 @@
 		579EA9032646A69F008461E8 /* IntegrationNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationNavigationModel.swift; sourceTree = "<group>"; };
 		579EA9052646A7CD008461E8 /* IntegrationStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationStatements.swift; sourceTree = "<group>"; };
 		579EA9072646D3C8008461E8 /* IntegrationEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationEquationView.swift; sourceTree = "<group>"; };
+		579EA90B264728C5008461E8 /* AnimatableForegroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableForegroundColor.swift; sourceTree = "<group>"; };
 		57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingScreen.swift; sourceTree = "<group>"; };
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
 		57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistence.swift; sourceTree = "<group>"; };
@@ -1941,6 +1943,7 @@
 		5797A47325E4087800991BD9 /* display */ = {
 			isa = PBXGroup;
 			children = (
+				57473AFB26218F87009B608D /* RGBEquation.swift */,
 				571D6A6E255AB25400F4E635 /* Styling.swift */,
 				5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */,
 				57E59A5D25F92E260087F760 /* HighlightedElements.swift */,
@@ -1952,6 +1955,7 @@
 		5797A47A25E4092600991BD9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				579EA90A264728AE008461E8 /* modifiers */,
 				57E7FF8625829DD400A30582 /* quiz */,
 				57B5781B2639633C008DFAB5 /* extensions */,
 				57D15C5E2625B11700BE1303 /* container */,
@@ -2043,6 +2047,14 @@
 				579EA9032646A69F008461E8 /* IntegrationNavigationModel.swift */,
 			);
 			path = integration;
+			sourceTree = "<group>";
+		};
+		579EA90A264728AE008461E8 /* modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				579EA90B264728C5008461E8 /* AnimatableForegroundColor.swift */,
+			);
+			path = modifiers;
 			sourceTree = "<group>";
 		};
 		57A1B79625EAA64300878B52 /* scales */ = {
@@ -2138,7 +2150,6 @@
 			isa = PBXGroup;
 			children = (
 				57B3B953260B4A0900EB9B47 /* FeedbackAndShareSettings.swift */,
-				57473AFB26218F87009B608D /* RGBEquation.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -2981,7 +2992,6 @@
 			files = (
 				57686A962600CFE8005BD328 /* GaseousReactionViewModel.swift in Sources */,
 				57303FE7261DB2FA00045193 /* SolubleComponentsWrapper.swift in Sources */,
-				57473AFC26218F87009B608D /* RGBEquation.swift in Sources */,
 				57A1B7A925EAB4CD00878B52 /* MoleculeConcentration.swift in Sources */,
 				57DDAC7E25E5260400B535A7 /* AqueousReactionSettings.swift in Sources */,
 				57B3B962260B4BF500EB9B47 /* NavigationIconRows.swift in Sources */,
@@ -3166,6 +3176,7 @@
 				57567B422605F156009711D4 /* GridElementSetter.swift in Sources */,
 				57686AC72600E342005BD328 /* BurnerView.swift in Sources */,
 				57DDAD4E25E57E2A00B535A7 /* TimeChartDataLineView.swift in Sources */,
+				579EA90926472836008461E8 /* RGBEquation.swift in Sources */,
 				578B173B2618D14400D8079F /* BeakerSettings.swift in Sources */,
 				5786FAF325E6D8D100AAD8A6 /* TimeChartView.swift in Sources */,
 				575A885F25E435F600AEE448 /* BeakyGeometrySettings.swift in Sources */,
@@ -3225,6 +3236,7 @@
 				57315EBD26401C0800A7D0F9 /* QuizViewModel.swift in Sources */,
 				57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */,
 				57315EC826401D9900A7D0F9 /* SizeAdjuster.swift in Sources */,
+				579EA90C264728C5008461E8 /* AnimatableForegroundColor.swift in Sources */,
 				575A887525E4364500AEE448 /* NavButton.swift in Sources */,
 				5797A4A325E40A5100991BD9 /* MoleculeGrid.swift in Sources */,
 				5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */,
