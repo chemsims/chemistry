@@ -272,6 +272,9 @@ struct SolubilityStatements {
         """
         Now you can explore all parts of equilibrium, just tap the button at the top left corner to \
         reveal the navigation menu, then choose your favorite part to review it once more!
+        """,
+        """
+        Why don't you take a look at the integration between reaction rates and equilibrium?
         """
     ]
 }

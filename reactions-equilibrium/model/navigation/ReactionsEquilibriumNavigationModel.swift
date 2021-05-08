@@ -60,7 +60,7 @@ private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
     }
 
     func highlightedNavIcon(for screen: EquilibriumAppScreen) -> EquilibriumAppScreen? {
-        nil
+        screen ==  .finalScreen ? .integrationActivity : nil
     }
 
     func getProvider(for screen: EquilibriumAppScreen, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) -> ScreenProvider {
