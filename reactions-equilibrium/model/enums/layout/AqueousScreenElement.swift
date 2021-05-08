@@ -12,4 +12,9 @@ enum AqueousScreenElement {
          moleculeContainers,
          reactionDefinition,
          reactionToggle
+
+    // These are actually on the integration screen, but in the interest of reusing the
+    // aqueous view model, they are defined here
+    case integrationRateDefinitions,
+         integrationRateValues
 }
