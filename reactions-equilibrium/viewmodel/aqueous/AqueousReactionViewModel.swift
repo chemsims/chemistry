@@ -18,7 +18,6 @@ class IntegrationViewModel: AqueousOrIntegrationReactionViewModel<IntegrationScr
     override init() {
         super.init()
         navigation = IntegrationNavigationModel.model(model: self)
-        selectedReaction = .B
     }
 
     var kf: CGFloat {
