@@ -23,7 +23,12 @@ struct IntegrationNavigationModel {
         AddReactants(),
         PrepareForwardReaction(),
         RunForwardReaction(),
-        EndForwardReaction()
+        EndReaction(statement: { statements.equilibriumReached(rate: $0.kf) }),
+        SetCurrentTime(),
+        ShiftChart(),
+        PrepareReverseReaction(),
+        RunReverseReaction(),
+        EndReaction(statement: { _ in statements.reverseEquilibrium }, highlightEquilibrium: false)
     ]
 }
 
@@ -157,8 +162,18 @@ private class RunForwardReaction: IntegrationScreenState {
     }
 }
 
-private class EndForwardReaction: IntegrationScreenState {
+private class EndReaction: IntegrationScreenState {
 
+    let statement: (IntegrationViewModel) -> [TextLine]
+    let highlightEquilibrium: Bool
+
+    init(
+        statement: @escaping (IntegrationViewModel) -> [TextLine],
+        highlightEquilibrium: Bool = true
+    ) {
+        self.statement = statement
+        self.highlightEquilibrium = highlightEquilibrium
+    }
 
 
     override func apply(on model: IntegrationViewModel) {
@@ -170,14 +185,14 @@ private class EndForwardReaction: IntegrationScreenState {
     }
 
     private func doApply(on model: IntegrationViewModel, isReapplying: Bool) {
-        model.statement = statements.equilibriumReached(rate: model.kf)
+        model.statement = statement(model)
         model.reactionDefinitionDirection = .equilibrium
-        if isReapplying {
+        if highlightEquilibrium && isReapplying {
             model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
         }
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = model.timing.end * 1.0001
-            if !isReapplying {
+            if highlightEquilibrium && !isReapplying {
                 model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
             }
         }
@@ -186,5 +201,98 @@ private class EndForwardReaction: IntegrationScreenState {
     override func unapply(on model: IntegrationViewModel) {
         model.highlightedElements.clear()
         model.reactionDefinitionDirection = .none
+    }
+}
+
+private class SetCurrentTime: IntegrationScreenState {
+    override func apply(on model: IntegrationViewModel) {
+        model.statement = AqueousStatements.instructToChangeCurrentTime
+        model.highlightedElements.clear()
+        model.canSetCurrentTime = true
+        model.reactionDefinitionDirection = .none
+    }
+
+    override func unapply(on model: IntegrationViewModel) {
+        model.canSetCurrentTime = false
+    }
+}
+
+private class ShiftChart: IntegrationScreenState {
+    override func apply(on model: IntegrationViewModel) {
+        model.statement = AqueousStatements.instructToAddProduct(selected: model.selectedReaction)
+        model.canSetCurrentTime = false
+        model.inputState = .addProducts
+        model.highlightedElements.elements = [.moleculeContainers]
+        model.timing = AqueousReactionSettings.secondReactionTiming
+
+        model.reactionPhase = .second
+        DeferScreenEdgesState.shared.deferEdges = [.top]
+
+        model.componentsWrapper = ReactionComponentsWrapper(
+            previous: model.componentsWrapper,
+            startTime: model.timing.start,
+            equilibriumTime: model.timing.end
+        )
+
+        withAnimation(.easeOut(duration: 1)) {
+            model.chartOffset = model.timing.offset
+            model.currentTime = model.timing.start
+        }
+    }
+
+    override func reapply(on model: IntegrationViewModel) {
+        if let previous = model.componentsWrapper.previous {
+            model.componentsWrapper = previous
+        }
+        apply(on: model)
+    }
+
+    override func unapply(on model: IntegrationViewModel) {
+        model.timing = AqueousReactionSettings.firstReactionTiming
+        withAnimation(.easeOut(duration: 1)) {
+            model.chartOffset = model.timing.offset
+            model.currentTime = model.timing.end
+        }
+        model.canSetCurrentTime = true
+        if let previous = model.componentsWrapper.previous {
+            model.componentsWrapper = previous
+        }
+        model.inputState = .none
+        model.highlightedElements.clear()
+        model.stopShaking()
+        DeferScreenEdgesState.shared.deferEdges = []
+        model.reactionPhase = .first
+    }
+}
+
+private class PrepareReverseReaction: IntegrationScreenState {
+    override func apply(on model: IntegrationViewModel) {
+        model.statement = statements.preReverseReaction
+        DeferScreenEdgesState.shared.deferEdges = []
+        model.stopShaking()
+        model.highlightedElements.clear()
+    }
+}
+
+private class RunReverseReaction: IntegrationScreenState {
+    override func apply(on model: IntegrationViewModel) {
+        model.reactionDefinitionDirection = .reverse
+        let duration = Double(model.timing.end - model.timing.start)
+        withAnimation(.linear(duration: duration)) {
+            model.currentTime = model.timing.end
+        }
+    }
+
+    override func reapply(on model: IntegrationViewModel) {
+        model.currentTime = model.timing.start
+        apply(on: model)
+    }
+
+    override func unapply(on model: IntegrationViewModel) {
+        model.reactionDefinitionDirection = .none
+        withAnimation(.easeOut(duration: Double(0.5))) {
+            model.currentTime = model.timing.start
+            model.highlightedElements.clear()
+        }
     }
 }

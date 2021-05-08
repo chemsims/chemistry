@@ -80,4 +80,21 @@ struct IntegrationStatements {
             """
         ]
     }
+
+    static let preReverseReaction: [TextLine] = [
+        """
+        Awesome! Now the reverse reaction will take place. Notice how at this point the rate \
+        of this reaction is higher than the forward reaction, which means that the reactants are \
+        being produced at a higher rate than the products. This will continue until the \
+        equilibrium state is reached.
+        """
+    ]
+
+    static let reverseEquilibrium: [TextLine] = [
+        """
+        *Awesome!* The equilibrium has been reestablished once again. Equilibrium is restored \
+        when the rate of the forward reaction is equal to the rate of the reverse reaction, which \
+        makes it seem like the whole reaction has stopped at that point.
+        """
+    ]
 }
