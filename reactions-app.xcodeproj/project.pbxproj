@@ -47,8 +47,6 @@
 		571D6A46255A780900F4E635 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A45255A780900F4E635 /* Assets.xcassets */; };
 		571D6A49255A780900F4E635 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A48255A780900F4E635 /* Preview Assets.xcassets */; };
 		571D6A4C255A780900F4E635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 571D6A4A255A780900F4E635 /* LaunchScreen.storyboard */; };
-		571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */; };
-		571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E802560483A00A1C45E /* BarChartBar.swift */; };
 		5725972325EE3E9400D87964 /* ReactionComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972225EE3E9400D87964 /* ReactionComponentTests.swift */; };
 		5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972925EE3ECE00D87964 /* Extensions.swift */; };
 		5727485F25A5F489000CFA1E /* NavigationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */; };
@@ -572,8 +570,6 @@
 		571D6A75255AC27400F4E635 /* TextLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLine.swift; sourceTree = "<group>"; };
 		571D6A7B255AC75C00F4E635 /* BeakerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerShape.swift; sourceTree = "<group>"; };
 		571D6A80255AD40900F4E635 /* EmptyBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBeaker.swift; sourceTree = "<group>"; };
-		571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGeometrySettings.swift; sourceTree = "<group>"; };
-		571F6E802560483A00A1C45E /* BarChartBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartBar.swift; sourceTree = "<group>"; };
 		571F6E862560486400A1C45E /* BarChartAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartAxis.swift; sourceTree = "<group>"; };
 		5725972225EE3E9400D87964 /* ReactionComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComponentTests.swift; sourceTree = "<group>"; };
 		5725972925EE3ECE00D87964 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -1253,14 +1249,6 @@
 			path = beaker;
 			sourceTree = "<group>";
 		};
-		571F6E7F2560482700A1C45E /* shapes */ = {
-			isa = PBXGroup;
-			children = (
-				571F6E802560483A00A1C45E /* BarChartBar.swift */,
-			);
-			path = shapes;
-			sourceTree = "<group>";
-		};
 		5725972825EE3EC000D87964 /* test_util */ = {
 			isa = PBXGroup;
 			children = (
@@ -1293,9 +1281,7 @@
 		572CB93C255C36BA0071C600 /* barchart */ = {
 			isa = PBXGroup;
 			children = (
-				571F6E7F2560482700A1C45E /* shapes */,
 				572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */,
-				571F6E7B2560472200A1C45E /* BarChartGeometrySettings.swift */,
 			);
 			path = barchart;
 			sourceTree = "<group>";
@@ -2873,7 +2859,6 @@
 				57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */,
 				571B3C68256556740075358B /* ReactionState.swift in Sources */,
 				57B2332B258EA93F00128760 /* ReactionFilingViewModel.swift in Sources */,
-				571F6E812560483A00A1C45E /* BarChartBar.swift in Sources */,
 				57D8BA2C257BF17E006B3C8B /* ReactionComparisonScreenElement.swift in Sources */,
 				571B3C842565638F0075358B /* OrderedReactionLayoutSettings.swift in Sources */,
 				57DAE4FE2577ED76006D945B /* ReactionInput.swift in Sources */,
@@ -2883,7 +2868,6 @@
 				577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */,
 				571D6A40255A780700F4E635 /* AppDelegate.swift in Sources */,
 				576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */,
-				571F6E7C2560472200A1C45E /* BarChartGeometrySettings.swift in Sources */,
 				5773B5F425B84EF600889A2E /* Version.swift in Sources */,
 				57D8BA1B257B6AD5006B3C8B /* ReactionComparisonViewModel.swift in Sources */,
 				5783965525A9DB1D009CC8FC /* EnergyProfileChartInput.swift in Sources */,

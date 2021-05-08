@@ -16,125 +16,60 @@ struct ConcentrationBarChart: View {
 
     let display: ReactionPairDisplay
 
-    let settings: BarChartGeometrySettings
+    let settings: BarChartGeometry
 
     var body: some View {
-        VStack {
-            ZStack {
-                BarChartMinorAxisShape(ticks: settings.ticks)
-                    .stroke(lineWidth: 0.3)
-                BarChartAxisShape(ticks: settings.ticks, tickSize: settings.yAxisTickSize)
-                    .stroke(lineWidth: 1.4)
+        BarChart(
+            data: barData,
+            time: currentTime ?? initialTime,
+            settings: settings
+        )
+    }
 
-                barA
-                    .accessibility(label: Text(label(name: display.reactant.name)))
-                    .modifier(
-                        valueModifier(
-                            equation: concentrationA,
-                            defaultValue: initialA
-                        )
-                    )
+    private var barData: [BarChartData] {
+        [barDataA] + [barDataB].compactMap { $0 }
+    }
 
-                barB
-                    .accessibility(label: Text(label(name: display.product.name)))
-                    .modifier(
-                        valueModifier(
-                            equation: concentrationB,
-                            defaultValue: 0
-                        )
-                    )
-            }
-            .frame(width: settings.chartWidth, height: settings.chartWidth)
-            ZStack {
-                drawLabel(molecule: display.reactant, barX: settings.barACenterX)
-                drawLabel(molecule: display.product, barX: settings.barBCenterX)
-            }
-            .accessibility(hidden: true)
+    private var barDataA: BarChartData {
+        if let conA = concentrationA, currentTime != nil {
+            return BarChartData(
+                label: display.reactant.name,
+                equation: conA,
+                color: display.reactant.color,
+                accessibilityLabel: label(name: display.reactant.name),
+                initialValue: .init(value: initialA, color: Styling.barChartEmpty)
+            )
         }
+        return BarChartData(
+            label: display.reactant.name,
+            equation: ConstantEquation(value: initialA),
+            color: display.reactant.color,
+            accessibilityLabel: label(name: display.reactant.name)
+        )
+    }
+
+    private var barDataB: BarChartData? {
+        if let conB = concentrationB, currentTime != nil {
+            return BarChartData(
+                label: display.product.name,
+                equation: conB,
+                color: display.product.color,
+                accessibilityLabel: label(name: display.product.name)
+            )
+        }
+        if currentTime == nil {
+            return BarChartData(
+                label: display.product.name,
+                equation: ConstantEquation(value: 0),
+                color: display.product.color,
+                accessibilityLabel: label(name: display.product.name)
+            )
+        }
+        return nil
     }
 
     private func label(name: String) -> String {
         "Bar chart showing concentration of \(name) in molar"
-    }
-
-    private func valueModifier(
-        equation: Equation?,
-        defaultValue: CGFloat
-    ) -> some ViewModifier {
-        AccessibleValueModifier(
-            x: currentTime ?? initialTime,
-            format: { time in
-                var concentration = defaultValue
-                if let eq = equation {
-                    concentration = eq.getY(at: time)
-                }
-                return concentration.str(decimals: 2)
-            }
-        )
-    }
-
-    private var barA: some View {
-        return ZStack {
-            drawBar(
-                concentration: ConstantEquation(value: initialA),
-                currentTime: 0,
-                barCenterX: settings.barACenterX
-            ).foregroundColor(currentTime == nil ? display.reactant.color : Styling.barChartEmpty)
-
-            if currentTime != nil && concentrationA != nil {
-                drawBar(
-                    concentration: concentrationA!,
-                    currentTime: currentTime!,
-                    barCenterX: settings.barACenterX
-                ).foregroundColor(display.reactant.color)
-            }
-        }
-    }
-
-    private var barB: some View {
-        ZStack {
-            if currentTime == nil {
-                drawBar(
-                    concentration: ConstantEquation(value: 0),
-                    currentTime: 0,
-                    barCenterX: settings.barBCenterX
-                )
-            }
-            if currentTime != nil && concentrationB != nil {
-                drawBar(
-                    concentration: concentrationB!,
-                    currentTime: currentTime!,
-                    barCenterX: settings.barBCenterX
-                )
-            }
-        }.foregroundColor(display.product.color)
-    }
-
-    private func drawBar(
-        concentration: Equation,
-        currentTime: CGFloat,
-        barCenterX: CGFloat
-    ) -> some View {
-        return BarChartBarShape(
-            settings: settings,
-            concentrationEquation: concentration,
-            barCenterX: barCenterX,
-            currentTime: currentTime
-        )
-    }
-
-    private func drawLabel(
-        molecule: ReactionMoleculeDisplay,
-        barX: CGFloat
-    ) -> some View {
-        VStack {
-            Circle()
-                .frame(width: settings.labelDiameter, height: settings.labelDiameter)
-                .foregroundColor(molecule.color)
-
-            Text(molecule.name)
-                .font(.system(size: settings.labelFontSize))
-        }.offset(x: barX - (settings.chartWidth / 2))
     }
 }
 
@@ -148,10 +83,10 @@ struct BarChartAxisShape_Previews: PreviewProvider {
                 concentrationB: equation2,
                 currentTime: nil,
                 display: ReactionType.A.display,
-                settings: BarChartGeometrySettings(
+                settings: BarChartGeometry(
                     chartWidth: 300,
-                    maxConcentration: 1,
-                    minConcentration: 0
+                    minYValue: 0,
+                    maxYValue: 1
                 )
             )
 
@@ -162,10 +97,10 @@ struct BarChartAxisShape_Previews: PreviewProvider {
                 concentrationB: equation2,
                 currentTime: 1.5,
                 display: ReactionType.A.display,
-                settings: BarChartGeometrySettings(
+                settings: BarChartGeometry(
                     chartWidth: 300,
-                    maxConcentration: 1,
-                    minConcentration: 0
+                    minYValue: 0,
+                    maxYValue: 1
                 )
             )
         }

@@ -99,10 +99,10 @@ struct OrderedReactionScreen<Content: View>: View {
                 concentrationB: reaction.input.concentrationB,
                 currentTime: reaction.currentTime,
                 display: reaction.selectedReaction.display,
-                settings: BarChartGeometrySettings(
+                settings: BarChartGeometry(
                     chartWidth: settings.chartSize,
-                    maxConcentration: ReactionSettings.Axis.maxC,
-                    minConcentration: ReactionSettings.Axis.minC
+                    minYValue: ReactionSettings.Axis.minC,
+                    maxYValue: ReactionSettings.Axis.maxC
                 )
             )
             .padding(.horizontal, settings.chartHPadding)
