@@ -58,7 +58,6 @@ struct GeneralFluidBeaker: View {
     let molecules: [BeakerMolecules]
     let animatingMolecules: [AnimatingBeakerMolecules]
     let currentTime: CGFloat
-    let reactionPair: ReactionPairDisplay = ReactionType.A.display
     let outlineColor: Color = Styling.beakerOutline
     let rows: CGFloat
     let fluidColor: Color
