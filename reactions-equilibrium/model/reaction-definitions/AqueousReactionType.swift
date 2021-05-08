@@ -44,4 +44,16 @@ enum AqueousReactionType: Int, ReactionDefinition, CaseIterable {
             )
         }
     }
+
+    var forwardRateConstant: CGFloat {
+        switch self {
+        case .A: return 0.5
+        case .B: return 1.5
+        case .C: return 0.9
+        }
+    }
+
+    var reverseRateConstant: CGFloat {
+        1 / (equilibriumConstant / forwardRateConstant)
+    }
 }

@@ -81,7 +81,7 @@ private struct IntegrationRightStack: View {
 
     private var toggle: some View {
         ReactionDropDownSelection(
-            isToggled: .constant(false),//$model.reactionSelectionIsToggled,
+            isToggled: $model.reactionSelectionIsToggled,
             selection: $model.selectedReaction,
             options: AqueousReactionType.allCases,
             onSelection: model.next,
@@ -95,6 +95,7 @@ private struct IntegrationRightStack: View {
         .disabled(model.inputState != .selectReactionType)
         .opacity(model.inputState == .selectReactionType ? 1 : 0.6)
         .colorMultiply(model.highlightedElements.colorMultiply(for: .reactionToggle))
+        .zIndex(1)
     }
 
     private var equation: some View {

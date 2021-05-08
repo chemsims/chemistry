@@ -25,7 +25,12 @@ private enum NavigationRow: CaseIterable {
                 selectedImage: .core(.quizIconSelected),
                 label: "\(label) quiz"
             ),
-            secondSecondaryIcon: nil
+            secondSecondaryIcon: NavigationIcon( // TODO remove
+                screen: .integrationActivity,
+                image: .core(.filingCabinet),
+                selectedImage: .core(.filingCabinetSelected),
+                label: ""
+            )
         )
     }
 

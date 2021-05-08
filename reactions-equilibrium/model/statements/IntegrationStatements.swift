@@ -34,8 +34,8 @@ struct IntegrationStatements {
     static func showRateConstantParts(model: IntegrationViewModel) -> [TextLine] {
         [
             """
-            For the reaction you previously chose, the forward reaction has kf of *\(model.kf)* and \
-            the reverse reaction has a kr of *\(model.kr)*. (As a side note, take into account that \
+            For the reaction you previously chose, the forward reaction has kf of *\(model.kf.str(decimals: 2))* and \
+            the reverse reaction has a kr of *\(model.kr.str(decimals: 2))*. (As a side note, take into account that \
             for these equations to be true the reaction has to be elementary, which means that it's \
             only that reaction instead of a mechanism of various reactions).
             """

@@ -53,8 +53,10 @@ private struct SizedIntegrationEquationView: View {
                 kReverse: model.kr
             )
         }
-
         .font(.system(size: EquationSizing.fontSize))
+        .id(model.selectedReaction.rawValue)
+        .transition(.identity)
+//        .minimumScaleFactor(0.6)
     }
 }
 
@@ -101,12 +103,12 @@ private struct RateDefinitionBlank: View {
     ) -> some View {
         HStack(spacing: 0) {
             FixedText("[\(term.molecule.rawValue)]")
-            FixedText("\(term.coefficient)")
-                .font(.system(size: EquationSizing.subscriptFontSize))
-                .offset(y: -10)
-                .opacity(term.coefficient == 1 ? 0 : 1)
+            if term.coefficient != 1 {
+                FixedText("\(term.coefficient)")
+                    .font(.system(size: EquationSizing.subscriptFontSize))
+                    .offset(y: -10)
+            }
         }
-        .frame(width: 55)
     }
 }
 
@@ -130,10 +132,11 @@ private struct RateDefinitionFilled: View {
         AnimatingNumber(
             x: time,
             equation: reaction.rate,
-            formatter: { $0.str(decimals: 2) }
+            formatter: tripleDecimalFormatter
         )
         .frame(width: rateLhsWidth, height: EquationSizing.boxHeight)
         .foregroundColor(.orangeAccent)
+        .font(.system(size: EquationSizing.tripleDecimalFontSize))
     }
 
     private func term(_ part: ReactionRateDefinition.Part) -> some View {
@@ -184,28 +187,14 @@ private struct RateComparison: View {
         }
     }
 
-    private func formatEquals(_ ratio: CGFloat) -> String {
-        if ratio < 1 {
-            return "<"
-        } else if ratio > 1 {
-            return ">"
-        }
-        return "="
-    }
-
-    private var equalsEquation: Equation {
-        OperatorEquation(lhs: forwardRate, rhs: reverseRate) { (l, r) in
-            guard r != 0 else {
-                return 0
-            }
-            return l.rounded(decimals: 2) / r.rounded(decimals: 2)
-        }
-    }
-
     private var filled: some View {
         HStack(spacing: equationHSpacing) {
             number(forwardRate)
-            Equals()
+            RatioComparisonSymbol(
+                top: forwardRate,
+                bottom: reverseRate,
+                time: time
+            )
             number(reverseRate)
         }
     }
@@ -214,10 +203,11 @@ private struct RateComparison: View {
         AnimatingNumber(
             x: time,
             equation: equation,
-            formatter: { $0.str(decimals: 2) }
+            formatter: tripleDecimalFormatter
         )
         .frame(width: rateLhsWidth, height: EquationSizing.boxHeight)
         .foregroundColor(.orangeAccent)
+        .font(.system(size: EquationSizing.tripleDecimalFontSize))
     }
 }
 
@@ -274,8 +264,8 @@ private struct RatioComparisonSymbol: View {
 
     private var compareEquation: Equation {
         OperatorEquation(lhs: top, rhs: bottom) { (l, r) in
-            let lRounded = l.rounded(decimals: 2)
-            let rRounded = r.rounded(decimals: 2)
+            let lRounded = l.rounded(decimals: 3)
+            let rRounded = r.rounded(decimals: 3)
 
             if lRounded < rRounded {
                 return -1
@@ -340,8 +330,15 @@ private let equationHSpacing: CGFloat = 7
 private let equationVSpacing: CGFloat = 5
 private let equalsWidth: CGFloat = 18
 
-private let NaturalWidth: CGFloat = 360
+private let NaturalWidth: CGFloat = 382
 private let NaturalHeight: CGFloat = 430
+
+private func tripleDecimalFormatter(_ value: CGFloat) -> String {
+    if value == 0 {
+        return "0"
+    }
+    return value.str(decimals: 3)
+}
 
 struct IntegrationEquationView_Previews: PreviewProvider {
     static var previews: some View {
