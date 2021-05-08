@@ -68,7 +68,7 @@ private struct IntegrationRightStack: View {
     }
 
     private var topRow: some View {
-        HStack(alignment: .top, spacing: 0) {
+        HStack(alignment: .top, spacing: settings.chartEquationSpacing) {
             barChart
             Spacer()
             VStack(alignment:. trailing) {
@@ -81,7 +81,7 @@ private struct IntegrationRightStack: View {
 
     private var toggle: some View {
         ReactionDropDownSelection(
-            isToggled: $model.reactionSelectionIsToggled,
+            isToggled: .constant(false),//$model.reactionSelectionIsToggled,
             selection: $model.selectedReaction,
             options: AqueousReactionType.allCases,
             onSelection: model.next,
@@ -98,7 +98,7 @@ private struct IntegrationRightStack: View {
     }
 
     private var equation: some View {
-        Text("equation")
+        IntegrationEquationView(model: model)
     }
 
     private var barChart: some View {
@@ -137,12 +137,17 @@ struct IntegrationScreenSettings {
         BarChartGeometry(
             chartWidth: common.chartSize,
             minYValue: 0,
-            maxYValue: AqueousReactionSettings.ConcentrationInput.maxAxis
+            maxYValue: AqueousReactionSettings.ConcentrationInput.maxAxis,
+            barWidthFraction: 0.13
         )
     }
 
     var barChartTopPadding: CGFloat {
         common.chartSelectionHeight
+    }
+
+    var chartEquationSpacing: CGFloat {
+        0.05 * common.chartSize
     }
 }
 

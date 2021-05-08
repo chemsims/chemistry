@@ -268,6 +268,7 @@
 		579EA9012646A15E008461E8 /* IntegrationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9002646A15E008461E8 /* IntegrationScreen.swift */; };
 		579EA9042646A69F008461E8 /* IntegrationNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9032646A69F008461E8 /* IntegrationNavigationModel.swift */; };
 		579EA9062646A7CD008461E8 /* IntegrationStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9052646A7CD008461E8 /* IntegrationStatements.swift */; };
+		579EA9082646D3C8008461E8 /* IntegrationEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9072646D3C8008461E8 /* IntegrationEquationView.swift */; };
 		57A119A825B86A1E00A7810B /* EnergyProfileFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */; };
 		57A119AC25B86B5500A7810B /* EnergyProfileFilingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */; };
 		57A119B025B86B9800A7810B /* EnergyProfilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */; };
@@ -768,6 +769,7 @@
 		579EA9002646A15E008461E8 /* IntegrationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationScreen.swift; sourceTree = "<group>"; };
 		579EA9032646A69F008461E8 /* IntegrationNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationNavigationModel.swift; sourceTree = "<group>"; };
 		579EA9052646A7CD008461E8 /* IntegrationStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationStatements.swift; sourceTree = "<group>"; };
+		579EA9072646D3C8008461E8 /* IntegrationEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationEquationView.swift; sourceTree = "<group>"; };
 		57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingScreen.swift; sourceTree = "<group>"; };
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
 		57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistence.swift; sourceTree = "<group>"; };
@@ -2220,6 +2222,7 @@
 			children = (
 				57792CFC261B70E000C26CFF /* solubility */,
 				57D2F2E325EA2C4300AEE0D8 /* AqueousEquationView.swift */,
+				579EA9072646D3C8008461E8 /* IntegrationEquationView.swift */,
 			);
 			path = equation;
 			sourceTree = "<group>";
@@ -3037,6 +3040,7 @@
 				5790A5FF2610C3F800CA2ED7 /* SKSoluteNode.swift in Sources */,
 				57DB304425F74D050070E96F /* AddMoleculeView.swift in Sources */,
 				57952A5225E68184006AB876 /* AqueousNavigationModel.swift in Sources */,
+				579EA9082646D3C8008461E8 /* IntegrationEquationView.swift in Sources */,
 				5745D2882610EFF10040F3CF /* SolubilityViewModel.swift in Sources */,
 				57D2F32725EA86C600AEE0D8 /* EquilibriumGrid.swift in Sources */,
 				57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */,

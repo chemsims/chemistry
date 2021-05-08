@@ -27,8 +27,61 @@ class IntegrationViewModel: AqueousOrIntegrationReactionViewModel<IntegrationScr
     var kr: CGFloat {
         0
     }
+
+    var forwardRate: ReactionRateDefinition {
+        ReactionRateDefinition(
+            firstMolecule: makeReactionRatePart(.A),
+            secondMolecule: makeReactionRatePart(.B),
+            k: kf
+        )
+    }
+
+    var reverseRate: ReactionRateDefinition {
+        ReactionRateDefinition(
+            firstMolecule: makeReactionRatePart(.C),
+            secondMolecule: makeReactionRatePart(.D),
+            k: kr
+        )
+    }
+
+    private func makeReactionRatePart(_ molecule: AqueousMolecule) -> ReactionRateDefinition.Part {
+        ReactionRateDefinition.Part(
+            molecule: molecule,
+            concentration: components.equation.concentration.value(for: molecule),
+            coefficient: components.coefficients.value(for: molecule)
+        )
+    }
 }
 
+struct ReactionRateDefinition {
+    let firstMolecule: Part
+    let secondMolecule: Part
+    let k: CGFloat
+
+    var rate: Equation {
+        RateEquation(firstMolecule: firstMolecule, secondMolecule: secondMolecule, k: k)
+    }
+
+    struct Part {
+        let molecule: AqueousMolecule
+        let concentration: Equation
+        let coefficient: Int
+    }
+}
+
+struct RateEquation: Equation {
+    let firstMolecule: ReactionRateDefinition.Part
+    let secondMolecule: ReactionRateDefinition.Part
+    let k: CGFloat
+
+    func getY(at x: CGFloat) -> CGFloat {
+        func getTerm(_ term: ReactionRateDefinition.Part) -> CGFloat {
+            pow(term.concentration.getY(at: x), CGFloat(term.coefficient))
+        }
+
+        return k * getTerm(firstMolecule) * getTerm(secondMolecule)
+    }
+}
 
 class AqueousOrIntegrationReactionViewModel<NavigationState: ScreenState>: ObservableObject {
 
