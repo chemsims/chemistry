@@ -30,15 +30,15 @@ private struct SizedIntegrationEquationView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 26) {
             RateDefinition(
-                model: model,
                 reaction: model.forwardRate,
-                rateSubscript: "f"
+                rateSubscript: "f",
+                time: model.currentTime
             )
 
             RateDefinition(
-                model: model,
                 reaction: model.reverseRate,
-                rateSubscript: "r"
+                rateSubscript: "r",
+                time: model.currentTime
             )
 
             RateComparison(
@@ -60,19 +60,19 @@ private struct SizedIntegrationEquationView: View {
 
 private struct RateDefinition: View {
 
-    let model: IntegrationViewModel
     let reaction: ReactionRateDefinition
     let rateSubscript: String
+    let time: CGFloat
 
     var body: some View {
         VStack(alignment: .leading, spacing: equationVSpacing) {
             RateDefinitionBlank(
-                reaction: model.forwardRate,
+                reaction: reaction,
                 rateSubscript: rateSubscript
             )
             RateDefinitionFilled(
                 reaction: reaction,
-                time: model.currentTime
+                time: time
             )
         }
     }
@@ -86,7 +86,7 @@ private struct RateDefinitionBlank: View {
     var body: some View {
         HStack(spacing: equationHSpacing) {
             Rate(rateSubscript: rateSubscript)
-            FixedText("=")
+            Equals()
             HStack(spacing: 0) {
                 K(kSubscript: rateSubscript)
                 moleculeTerm(reaction.firstMolecule)
@@ -118,7 +118,7 @@ private struct RateDefinitionFilled: View {
     var body: some View {
         HStack(spacing: equationHSpacing) {
             rate
-            FixedText("=")
+            Equals()
             FixedText(reaction.k.str(decimals: 2))
                 .foregroundColor(.orangeAccent)
             term(reaction.firstMolecule)
@@ -175,15 +175,37 @@ private struct RateComparison: View {
     private var definition: some View {
         HStack(spacing: equationHSpacing) {
             Rate(rateSubscript: "f")
-            FixedText("=")
+            RatioComparisonSymbol(
+                top: forwardRate,
+                bottom: reverseRate,
+                time: time
+            )
             Rate(rateSubscript: "r")
+        }
+    }
+
+    private func formatEquals(_ ratio: CGFloat) -> String {
+        if ratio < 1 {
+            return "<"
+        } else if ratio > 1 {
+            return ">"
+        }
+        return "="
+    }
+
+    private var equalsEquation: Equation {
+        OperatorEquation(lhs: forwardRate, rhs: reverseRate) { (l, r) in
+            guard r != 0 else {
+                return 0
+            }
+            return l.rounded(decimals: 2) / r.rounded(decimals: 2)
         }
     }
 
     private var filled: some View {
         HStack(spacing: equationHSpacing) {
             number(forwardRate)
-            FixedText("=")
+            Equals()
             number(reverseRate)
         }
     }
@@ -216,7 +238,7 @@ private struct KComparison: View {
         HStack(spacing: equationHSpacing) {
             FixedText("K")
                 .frame(width: rateLhsWidth)
-            FixedText("=")
+            Equals()
             K(kSubscript: "f")
             FixedText("/")
             K(kSubscript: "r")
@@ -227,11 +249,50 @@ private struct KComparison: View {
         HStack(spacing: equationHSpacing) {
             FixedText(k.str(decimals: 2))
                 .frame(width: rateLhsWidth)
-            FixedText("=")
+            Equals()
             FixedText(kForward.str(decimals: 2))
             FixedText("/")
             FixedText(kReverse.str(decimals: 2))
         }
+    }
+}
+
+private struct RatioComparisonSymbol: View {
+
+    let top: Equation
+    let bottom: Equation
+    let time: CGFloat
+
+    var body: some View {
+        AnimatingNumber(
+            x: time,
+            equation: compareEquation,
+            formatter: formatEquals
+        )
+        .frame(width: equalsWidth, height: 30)
+    }
+
+    private var compareEquation: Equation {
+        OperatorEquation(lhs: top, rhs: bottom) { (l, r) in
+            let lRounded = l.rounded(decimals: 2)
+            let rRounded = r.rounded(decimals: 2)
+
+            if lRounded < rRounded {
+                return -1
+            } else if lRounded > rRounded {
+                return 1
+            }
+            return 0
+        }
+    }
+
+    private func formatEquals(_ ratio: CGFloat) -> String {
+        if ratio < 0 {
+            return "<"
+        } else if ratio > 0 {
+            return ">"
+        }
+        return "="
     }
 }
 
@@ -240,7 +301,7 @@ private struct Rate: View {
 
     var body: some View {
         SubscriptTerm(base: "Rate", subscriptTerm: rateSubscript)
-        .frame(width: rateLhsWidth)
+            .frame(width: rateLhsWidth)
     }
 }
 
@@ -249,7 +310,7 @@ private struct K: View {
 
     var body: some View {
         SubscriptTerm(base: "k", subscriptTerm: kSubscript)
-        .frame(width: 30)
+            .frame(width: 30)
     }
 }
 
@@ -267,9 +328,17 @@ private struct SubscriptTerm: View {
     }
 }
 
+private struct Equals: View {
+    var body: some View {
+        FixedText("=")
+            .frame(width: equalsWidth)
+    }
+}
+
 private let rateLhsWidth: CGFloat = 70
 private let equationHSpacing: CGFloat = 7
 private let equationVSpacing: CGFloat = 5
+private let equalsWidth: CGFloat = 18
 
 private let NaturalWidth: CGFloat = 360
 private let NaturalHeight: CGFloat = 430
