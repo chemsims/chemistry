@@ -62,7 +62,7 @@ struct IntegrationStatements {
         ]
     }
 
-    static let reactionTakingPlace: [TextLine] = [
+    static let preForwardReaction: [TextLine] = [
         """
         Awesome! Now the forward reaction will take place. Notice how at this point the rate \
         of this reaction is higher than the reverse reaction, which means that the products are \

@@ -108,6 +108,7 @@ private struct IntegrationRightStack: View {
             settings: settings.barChartGeometry
         )
         .padding(.top, settings.barChartTopPadding)
+        .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
     }
 }
 
