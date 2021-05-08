@@ -27,36 +27,47 @@ struct IntegrationEquationView: View {
 private struct SizedIntegrationEquationView: View {
     @ObservedObject var model: IntegrationViewModel
 
+    private let spacing: CGFloat = 26
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 26) {
-            RateDefinition(
-                reaction: model.forwardRate,
-                rateSubscript: "f",
-                time: model.currentTime
-            )
+        VStack(alignment: .leading, spacing: spacing) {
+            VStack(alignment: .leading, spacing: spacing)  {
+                RateDefinition(
+                    reaction: model.forwardRate,
+                    rateSubscript: "f",
+                    time: model.currentTime
+                )
 
-            RateDefinition(
-                reaction: model.reverseRate,
-                rateSubscript: "r",
-                time: model.currentTime
-            )
+                RateDefinition(
+                    reaction: model.reverseRate,
+                    rateSubscript: "r",
+                    time: model.currentTime
+                )
+            }
+            .background(Color.white.padding(-5))
+            .colorMultiply(model.highlightedElements.colorMultiply(for: .integrationRateDefinitions))
 
-            RateComparison(
-                forwardRate: model.forwardRate.rate,
-                reverseRate: model.reverseRate.rate,
-                time: model.currentTime
-            )
 
-            KComparison(
-                k: model.selectedReaction.equilibriumConstant,
-                kForward: model.kf,
-                kReverse: model.kr
-            )
+            VStack(alignment: .leading, spacing: spacing)  {
+                RateComparison(
+                    forwardRate: model.forwardRate.rate,
+                    reverseRate: model.reverseRate.rate,
+                    time: model.currentTime
+                )
+
+                KComparison(
+                    k: model.selectedReaction.equilibriumConstant,
+                    kForward: model.kf,
+                    kReverse: model.kr
+                )
+            }
+            .background(Color.white.padding(-5))
+            .colorMultiply(model.highlightedElements.colorMultiply(for: .integrationRateValues))
         }
         .font(.system(size: EquationSizing.fontSize))
         .id(model.selectedReaction.rawValue)
         .transition(.identity)
-//        .minimumScaleFactor(0.6)
+        .minimumScaleFactor(0.75)
     }
 }
 
