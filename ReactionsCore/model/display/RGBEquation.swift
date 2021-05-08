@@ -3,7 +3,6 @@
 //
 
 import CoreGraphics
-import ReactionsCore
 
 public protocol RGBEquation {
     func getRgb(at x: CGFloat) -> RGB

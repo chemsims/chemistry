@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct MainMenuOverlay<Injector: NavigationInjector>: View {
@@ -230,7 +229,10 @@ extension MainMenuOverlayWithSettings {
     private func navRow(_ row: NavigationIconRow<Injector.Screen>) -> some View {
         HStack(alignment: .bottom, spacing: settings.navRowHSpacing) {
             navIcon(icon: row.primaryIcon)
-                .frame(height: settings.navIconHeight)
+                .frame(
+                    width: settings.navIconWidth,
+                    height: settings.navIconHeight
+                )
 
             if row.firstSecondaryIcon != nil {
                 navIcon(icon: row.firstSecondaryIcon!)
@@ -371,6 +373,10 @@ private struct MainMenuLayoutSettings {
     var navIconHeight: CGFloat {
         let availableHeight = panelContentHeight - (4 * navVStackSpacing)
         return availableHeight / 5
+    }
+
+    var navIconWidth: CGFloat {
+        0.85 * navIconHeight
     }
 
     var totalTopPadding: CGFloat {
