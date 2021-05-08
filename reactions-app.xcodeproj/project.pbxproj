@@ -265,6 +265,8 @@
 		579EA8F7264689CD008461E8 /* BarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F6264689CD008461E8 /* BarShape.swift */; };
 		579EA8F9264694E5008461E8 /* BarChartGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F8264694E5008461E8 /* BarChartGeometry.swift */; };
 		579EA8FB264694FB008461E8 /* BarChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8FA264694FB008461E8 /* BarChartData.swift */; };
+		579EA8FE2646A13C008461E8 /* IntegrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8FD2646A13C008461E8 /* IntegrationViewModel.swift */; };
+		579EA9012646A15E008461E8 /* IntegrationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9002646A15E008461E8 /* IntegrationScreen.swift */; };
 		57A119A825B86A1E00A7810B /* EnergyProfileFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */; };
 		57A119AC25B86B5500A7810B /* EnergyProfileFilingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */; };
 		57A119B025B86B9800A7810B /* EnergyProfilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */; };
@@ -762,6 +764,8 @@
 		579EA8F6264689CD008461E8 /* BarShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarShape.swift; sourceTree = "<group>"; };
 		579EA8F8264694E5008461E8 /* BarChartGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGeometry.swift; sourceTree = "<group>"; };
 		579EA8FA264694FB008461E8 /* BarChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartData.swift; sourceTree = "<group>"; };
+		579EA8FD2646A13C008461E8 /* IntegrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationViewModel.swift; sourceTree = "<group>"; };
+		579EA9002646A15E008461E8 /* IntegrationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationScreen.swift; sourceTree = "<group>"; };
 		57A119A725B86A1E00A7810B /* EnergyProfileFilingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingScreen.swift; sourceTree = "<group>"; };
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
 		57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistence.swift; sourceTree = "<group>"; };
@@ -2020,6 +2024,22 @@
 			path = bar;
 			sourceTree = "<group>";
 		};
+		579EA8FC2646A12B008461E8 /* integration */ = {
+			isa = PBXGroup;
+			children = (
+				579EA8FD2646A13C008461E8 /* IntegrationViewModel.swift */,
+			);
+			path = integration;
+			sourceTree = "<group>";
+		};
+		579EA8FF2646A152008461E8 /* integration */ = {
+			isa = PBXGroup;
+			children = (
+				579EA9002646A15E008461E8 /* IntegrationScreen.swift */,
+			);
+			path = integration;
+			sourceTree = "<group>";
+		};
 		57A1B79625EAA64300878B52 /* scales */ = {
 			isa = PBXGroup;
 			children = (
@@ -2268,6 +2288,7 @@
 		57DDAC0725E4FD6500B535A7 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				579EA8FF2646A152008461E8 /* integration */,
 				5745D27F2610EB690040F3CF /* solubility */,
 				57D6F3682610A1C700AD23AD /* soluble-beaker */,
 				57686AAC2600D222005BD328 /* util */,
@@ -2372,6 +2393,7 @@
 		57DDACE625E552D200B535A7 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				579EA8FC2646A12B008461E8 /* integration */,
 				5745D2862610EFDE0040F3CF /* solubility */,
 				57686A942600CFDC005BD328 /* gaseous */,
 				576A421825F7A7EC00047618 /* molecule-container */,
@@ -2989,6 +3011,7 @@
 				57D15C4B2624267D00BE1303 /* ReactionToggle.swift in Sources */,
 				57DDAC1A25E4FD8100B535A7 /* AqueousReactionScreen.swift in Sources */,
 				57B3B94D260B478800EB9B47 /* ReactionsEquilibriumNavigationModel.swift in Sources */,
+				579EA8FE2646A13C008461E8 /* IntegrationViewModel.swift in Sources */,
 				5729BC22261D883F000390A0 /* SolubilityChartEquation.swift in Sources */,
 				57062DB726072CAC00007BAA /* GaseousNavigationModel.swift in Sources */,
 				57E59A4625F925F60087F760 /* ReactionDefinitionView.swift in Sources */,
@@ -3044,6 +3067,7 @@
 				57DDACDD25E54EF100B535A7 /* AqueousMolecule.swift in Sources */,
 				57BDFF5426416AC7001B97CC /* EquilibriumInjector.swift in Sources */,
 				57BDFF4926413B57001B97CC /* EquilibriumQuizQuestions.swift in Sources */,
+				579EA9012646A15E008461E8 /* IntegrationScreen.swift in Sources */,
 				57B5312626440336002F7247 /* ReactionDefinitionArrowDirection.swift in Sources */,
 				576A420725F77BD400047618 /* ReactionEquilibriumChartsLayoutSettings.swift in Sources */,
 				57567B6526065BA9009711D4 /* ReactionComponents.swift in Sources */,
