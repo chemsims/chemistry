@@ -323,7 +323,6 @@ extension MainMenuOverlayWithSettings {
             .accessibility(label: Text("Open analytics consent settings"))
         }
 
-    // TODO
     private func openMailComposer() {
         if MailComposerView.canSendMail() {
             activeSheet = .mail

@@ -2,10 +2,8 @@
 // Reactions App
 //
 
-
 import Foundation
 
-// TODO move this enum somewhere else
 enum ReactionDefinitionArrowDirection {
     case forward, reverse, equilibrium, none
 
