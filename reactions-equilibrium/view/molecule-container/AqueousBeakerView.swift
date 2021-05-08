@@ -5,9 +5,9 @@
 import SwiftUI
 import ReactionsCore
 
-struct AqueousBeakerView: View {
+struct AqueousBeakerView<Nav: ScreenState>: View {
 
-    @ObservedObject var model: AqueousReactionViewModel
+    @ObservedObject var model: AqueousOrIntegrationReactionViewModel<Nav>
     let settings: AqueousScreenLayoutSettings
 
     var body: some View {

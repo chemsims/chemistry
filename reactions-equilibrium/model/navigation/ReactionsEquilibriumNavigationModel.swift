@@ -102,6 +102,8 @@ fileprivate extension EquilibriumAppScreen {
             return quiz(.gaseous)
         case .solubilityQuiz:
             return quiz(.solubility)
+        case .integrationActivity:
+            return IntegrationScreenProvider()
         case .finalScreen:
             return FinalScreenProvider(persistence: injector.solubilityPersistence, prevScreen: prevScreen)
         }
@@ -172,6 +174,18 @@ private class QuizScreenProvider: ScreenProvider {
 
     var screen: AnyView {
         AnyView(QuizScreen(model: model))
+    }
+}
+
+private class IntegrationScreenProvider: ScreenProvider {
+    init() {
+        self.model = IntegrationViewModel()
+    }
+
+    let model: IntegrationViewModel
+
+    var screen: AnyView {
+        AnyView(IntegrationScreen(model: model))
     }
 
 }

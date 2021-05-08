@@ -11,6 +11,7 @@ enum EquilibriumAppScreen: String, CaseIterable {
          gaseousQuiz,
          solubility,
          solubilityQuiz,
+         integrationActivity,
          finalScreen
 
     var isQuiz: Bool {

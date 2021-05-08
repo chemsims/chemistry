@@ -136,8 +136,8 @@ struct ChartStack: View {
 }
 
 extension ChartStack {
-    init(
-        model: AqueousReactionViewModel,
+    init<Nav>(
+        model: AqueousOrIntegrationReactionViewModel<Nav>,
         currentTime: Binding<CGFloat>,
         settings: AqueousScreenLayoutSettings
     ) {

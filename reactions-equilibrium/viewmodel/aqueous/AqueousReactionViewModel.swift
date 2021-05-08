@@ -5,11 +5,36 @@
 import SwiftUI
 import ReactionsCore
 
-class AqueousReactionViewModel: ObservableObject {
 
-    private(set) var navigation: NavigationModel<AqueousScreenState>?
+class AqueousReactionViewModel: AqueousOrIntegrationReactionViewModel<AqueousScreenState> {
+    override init() {
+        super.init()
+        self.navigation = AqueousNavigationModel.model(model: self)
+    }
+}
 
-    init() {
+class IntegrationViewModel: AqueousOrIntegrationReactionViewModel<IntegrationScreenState> {
+
+    override init() {
+        super.init()
+        navigation = IntegrationNavigationModel.model(model: self)
+    }
+
+    var kf: CGFloat {
+        0
+    }
+
+    var kr: CGFloat {
+        0
+    }
+}
+
+
+class AqueousOrIntegrationReactionViewModel<NavigationState: ScreenState>: ObservableObject {
+
+    var navigation: NavigationModel<NavigationState>?
+
+    fileprivate init() {
         let initialType = AqueousReactionType.A
         let initialRows = AqueousReactionSettings.initialRows
 
@@ -28,7 +53,6 @@ class AqueousReactionViewModel: ObservableObject {
             maxC: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
 
-        self.navigation = AqueousNavigationModel.model(model: self)
         self.addingMoleculesModel = AddingMoleculesViewModel(
             canAddMolecule: { self.componentsWrapper.canIncrement(molecule: $0) },
             addMolecules: { (molecule, num) in self.increment(molecule: molecule, count: num) }
@@ -267,7 +291,7 @@ enum AqueousReactionPhase {
 }
 
 // MARK: Computed vars for input state
-extension AqueousReactionViewModel {
+extension AqueousOrIntegrationReactionViewModel {
 
     var canSetLiquidLevel: Bool {
         inputState == .setLiquidLevel

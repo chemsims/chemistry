@@ -93,7 +93,7 @@ private class SetWater: IntegrationScreenState {
 private class AddReactants: IntegrationScreenState {
     override func apply(on model: IntegrationViewModel) {
         model.statement = statements.instructToAddReactant(selected: model.selectedReaction)
-        model.inputState == .addReactants
+        model.inputState = .addReactants
         model.highlightedElements.elements = [.moleculeContainers]
     }
 
