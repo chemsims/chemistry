@@ -103,11 +103,24 @@ private struct IntegrationRightStack: View {
 
     private var barChart: some View {
         BarChart(
-            data: [],
+            data: model.components.barChartData,
             time: model.currentTime,
             settings: settings.barChartGeometry
         )
         .padding(.top, settings.barChartTopPadding)
+    }
+}
+
+private extension ReactionComponents {
+    var barChartData: [BarChartData] {
+        MoleculeValue(builder: { molecule in
+            BarChartData(
+                label: molecule.rawValue,
+                equation: equation.concentration.value(for: molecule),
+                color: molecule.color,
+                accessibilityLabel: "Bar chart showing concentration of \(molecule.rawValue) in molar"
+            )
+        }).all
     }
 }
 
