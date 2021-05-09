@@ -25,7 +25,7 @@ enum SoluteType {
         case .commonIon:
             return "\(products.commonSalt)(s) ⇌ \(products.third)^+^ + \(products.second)^-^"
         case .acid:
-            return "H^+^ + \(products.second)^-^ ⇌  H\(products.second)(aq)"
+            return "H^+^ + \(products.second)^-^ ➝ H\(products.second)(aq)"
         }
     }
 
@@ -45,7 +45,7 @@ enum SoluteType {
         case .commonIon:
             return "\(products.commonSalt)(s) double-sided-arrow \(positive(products.third)) + \(negative(products.second))"
         case .acid:
-            return "\(positive("H")) + \(negative(products.second)) double-sided-arrow  H\(products.second)(aq)"
+            return "\(positive("H")) + \(negative(products.second)) yields H\(products.second)(aq)"
         }
     }
 
