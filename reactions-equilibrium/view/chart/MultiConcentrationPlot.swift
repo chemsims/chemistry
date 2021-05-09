@@ -55,18 +55,6 @@ struct MultiConcentrationPlot: View {
                     .accessibility(hidden: true)
             }
         }
-        .accessibilityElement(children: .ignore)
-        .accessibility(label: Text(label))
-        .updatingAccessibilityValue(
-            x: currentTime,
-            format: getAccessibilityValue
-        )
-        .accessibilitySetCurrentTimeAction(
-            currentTime: $currentTime,
-            canSetTime: canSetCurrentTime,
-            initialTime: minDragTime ?? 0,
-            finalTime: maxDragTime
-        )
     }
 
     private var labelledChart: some View {
@@ -101,6 +89,17 @@ struct MultiConcentrationPlot: View {
             offset: offset,
             minDragTime: minDragTime,
             activeIndex: activeIndex
+        )
+        .accessibility(label: Text(label))
+        .updatingAccessibilityValue(
+            x: currentTime,
+            format: getAccessibilityValue
+        )
+        .accessibilitySetCurrentTimeAction(
+            currentTime: $currentTime,
+            canSetTime: canSetCurrentTime,
+            initialTime: minDragTime ?? 0,
+            finalTime: maxDragTime
         )
     }
 
