@@ -51,7 +51,7 @@ struct GaseousNavigationModel {
             previousTiming: GaseousReactionSettings.pressureTiming
         ),
         SetTemperature(),
-        SetStatement(statement: GaseousStatements.preHeatReaction),
+        PostSetTemperature(),
         RunReaction(timing: GaseousReactionSettings.heatTiming),
         EndOfReaction(
             statement: GaseousStatements.forwardEquilibriumReached,
@@ -151,6 +151,7 @@ private class PreFirstReaction: GaseousScreenState {
         model.statement = GaseousStatements.preFirstReaction
         model.inputState = .none
         model.showQuotientLine = true
+        model.highlightedElements.clear()
     }
 
     override func unapply(on model: GaseousReactionViewModel) {
@@ -440,5 +441,13 @@ private class SetTemperature: GaseousScreenState {
             model.componentWrapper = previous
         }
         model.reactionPhase = .pressureReaction
+    }
+}
+
+private class PostSetTemperature: GaseousScreenState {
+    override func apply(on model: GaseousReactionViewModel) {
+        model.statement = GaseousStatements.preHeatReaction
+        model.inputState = .none
+        model.highlightedElements.clear()
     }
 }

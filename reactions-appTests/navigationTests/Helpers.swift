@@ -27,26 +27,3 @@ func doTestHighlightedElementsAreReappliedOnBack(
         prevValueKeyPath: \.highlightedElements
     )
 }
-
-private func checkPreviousValueIsReapplied<T: Equatable>(
-    model: ZeroOrderReactionViewModel,
-    navigation: NavigationModel<ReactionState>,
-    prevValueKeyPath: KeyPath<ZeroOrderReactionViewModel, T>
-) {
-    var hasEnded = false
-    navigation.nextScreen = { hasEnded = true }
-
-    func checkCurrentStatementIsReapplied() {
-        let previousValue = model[keyPath: prevValueKeyPath]
-        navigation.next()
-        if !hasEnded {
-            navigation.back()
-            XCTAssertEqual(model[keyPath: prevValueKeyPath], previousValue, model.firstLine)
-        }
-    }
-
-    while !hasEnded {
-        checkCurrentStatementIsReapplied()
-        navigation.next()
-    }
-}

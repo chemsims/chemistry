@@ -303,6 +303,7 @@ private class AddSolute: SolubilityScreenState {
         model.stopShaking()
         model.reactionArrowDirection = .none
         model.beakerLabel = .clear
+        model.equationState = .showCorrectQuotientNotFilledIn
     }
 }
 
