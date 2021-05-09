@@ -53,16 +53,14 @@ struct IntegrationStatements {
     ]
 
     static func instructToAddReactant(selected: AqueousReactionType) -> [TextLine] {
-        let moles = selected.coefficients.molesDisplay
-        return [
-            """
-            The forward reaction is \(moles.reactantA) and \(moles.reactantB) transform into \
-            \(moles.productC) and \(moles.productD).
-            """,
-            "Add the reactants to make it start.",
-            "*Shake them into it*."
-        ]
+        AqueousStatements.instructToAddReactant(selected: selected)
     }
+
+    static let preAddProduct: [TextLine] = [
+        """
+        Now, let's take a look at the reverse reaction.
+        """
+    ]
 
     static let preForwardReaction: [TextLine] = [
         """
@@ -73,7 +71,16 @@ struct IntegrationStatements {
         """
     ]
 
-    static let equilibriumReached: [TextLine] = [
+    static let forwardReactionRunning: [TextLine] = AqueousStatements.runAnimation
+
+    static let reverseReactionRunning: [TextLine] = [
+        """
+        Watch how products are being transformed into reactants. This will continue until the \
+        equilibrium state is reached.
+        """
+    ]
+
+    static let forwardEquilibrium: [TextLine] = [
         """
         Great! Concentrations of all species will be constant now that we have reached equilibrium. \
         Not because the reaction stopped, but because both forward and reverse reactions are going \
@@ -81,6 +88,9 @@ struct IntegrationStatements {
         """
     ]
 
+    static func addProduct(selected: AqueousReactionType) -> [TextLine] {
+        AqueousStatements.instructToAddProduct(selected: selected)
+    }
 
     static let preReverseReaction: [TextLine] = [
         """

@@ -37,6 +37,7 @@ private struct IntegrationScreenWithGeometry: View {
                 model: model,
                 settings: settings.common
             )
+            .zIndex(1)
             Spacer()
             ChartStack(
                 model: model,

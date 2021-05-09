@@ -23,9 +23,10 @@ struct IntegrationNavigationModel {
         AddReactants(),
         PrepareForwardReaction(),
         RunForwardReaction(),
-        EndReaction(statement: statements.equilibriumReached),
+        EndReaction(statement: statements.forwardEquilibrium),
         SetCurrentTime(),
         ShiftChart(),
+        AddProduct(),
         PrepareReverseReaction(),
         RunReverseReaction(),
         EndReaction(statement: statements.reverseEquilibrium, highlightEquilibrium: false)
@@ -176,7 +177,7 @@ private class RunForwardReaction: IntegrationScreenState {
 
     private class EquilibriumState: IntegrationScreenState {
         override func apply(on model: IntegrationViewModel) {
-            model.statement = statements.equilibriumReached
+            model.statement = statements.forwardEquilibrium
             model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
             model.reactionDefinitionDirection = .equilibrium
         }
@@ -241,21 +242,9 @@ private class SetCurrentTime: IntegrationScreenState {
 
 private class ShiftChart: IntegrationScreenState {
     override func apply(on model: IntegrationViewModel) {
-        model.statement = AqueousStatements.instructToAddProduct(selected: model.selectedReaction)
+        model.statement = statements.preAddProduct
         model.canSetCurrentTime = false
-        model.inputState = .addProducts
-        model.highlightedElements.elements = [.moleculeContainers]
         model.timing = AqueousReactionSettings.secondReactionTiming
-
-        model.reactionPhase = .second
-        DeferScreenEdgesState.shared.deferEdges = [.top]
-
-        model.componentsWrapper = ReactionComponentsWrapper(
-            previous: model.componentsWrapper,
-            startTime: model.timing.start,
-            equilibriumTime: model.timing.end
-        )
-
         withAnimation(.easeOut(duration: 1)) {
             model.chartOffset = model.timing.offset
             model.currentTime = model.timing.start
@@ -276,6 +265,33 @@ private class ShiftChart: IntegrationScreenState {
             model.currentTime = model.timing.end
         }
         model.canSetCurrentTime = true
+    }
+}
+
+private class AddProduct: IntegrationScreenState {
+    override func apply(on model: IntegrationViewModel) {
+        model.statement = statements.addProduct(selected: model.selectedReaction)
+        model.inputState = .addProducts
+        model.highlightedElements.elements = [.moleculeContainers]
+
+        model.reactionPhase = .second
+        DeferScreenEdgesState.shared.deferEdges = [.top]
+
+        model.componentsWrapper = ReactionComponentsWrapper(
+            previous: model.componentsWrapper,
+            startTime: model.timing.start,
+            equilibriumTime: model.timing.end
+        )
+    }
+
+    override func reapply(on model: IntegrationViewModel) {
+        if let previous = model.componentsWrapper.previous {
+            model.componentsWrapper = previous
+        }
+        apply(on: model)
+    }
+
+    override func unapply(on model: IntegrationViewModel) {
         if let previous = model.componentsWrapper.previous {
             model.componentsWrapper = previous
         }
