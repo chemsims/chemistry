@@ -7,11 +7,11 @@ import Foundation
 enum EquilibriumAppScreen: String, CaseIterable {
     case aqueousReaction,
          aqueousQuiz,
+         integrationActivity,
          gaseousReaction,
          gaseousQuiz,
          solubility,
          solubilityQuiz,
-         integrationActivity,
          finalScreen
 
     var isQuiz: Bool {
