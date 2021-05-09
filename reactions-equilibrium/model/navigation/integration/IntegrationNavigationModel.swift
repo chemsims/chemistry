@@ -23,16 +23,12 @@ struct IntegrationNavigationModel {
         AddReactants(),
         PrepareForwardReaction(),
         RunForwardReaction(),
-        EndReaction(statement: { model in
-            statements.equilibriumReached(
-                rate: model.forwardRate.rate.getY(at: model.timing.end)
-            )
-        }),
+        EndReaction(statement: statements.equilibriumReached),
         SetCurrentTime(),
         ShiftChart(),
         PrepareReverseReaction(),
         RunReverseReaction(),
-        EndReaction(statement: { _ in statements.reverseEquilibrium }, highlightEquilibrium: false)
+        EndReaction(statement: statements.reverseEquilibrium, highlightEquilibrium: false)
     ]
 }
 
@@ -164,15 +160,37 @@ private class RunForwardReaction: IntegrationScreenState {
             model.highlightedElements.clear()
         }
     }
+
+    override func nextStateAutoDispatchDelay(model: IntegrationViewModel) -> Double? {
+        Double(model.timing.end)
+    }
+
+    override func delayedStates(model: IntegrationViewModel) -> [DelayedState<IntegrationScreenState>] {
+        [
+            DelayedState(
+                state: EquilibriumState(),
+                delay: Double(model.timing.equilibrium)
+            )
+        ]
+    }
+
+    private class EquilibriumState: IntegrationScreenState {
+        override func apply(on model: IntegrationViewModel) {
+            model.statement = statements.equilibriumReached
+            model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
+            model.reactionDefinitionDirection = .equilibrium
+        }
+    }
+
 }
 
 private class EndReaction: IntegrationScreenState {
 
-    let statement: (IntegrationViewModel) -> [TextLine]
+    let statement: [TextLine]
     let highlightEquilibrium: Bool
 
     init(
-        statement: @escaping (IntegrationViewModel) -> [TextLine],
+        statement: [TextLine],
         highlightEquilibrium: Bool = true
     ) {
         self.statement = statement
@@ -189,7 +207,7 @@ private class EndReaction: IntegrationScreenState {
     }
 
     private func doApply(on model: IntegrationViewModel, isReapplying: Bool) {
-        model.statement = statement(model)
+        model.statement = statement
         model.reactionDefinitionDirection = .equilibrium
         if highlightEquilibrium && isReapplying {
             model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
@@ -298,5 +316,9 @@ private class RunReverseReaction: IntegrationScreenState {
             model.currentTime = model.timing.start
             model.highlightedElements.clear()
         }
+    }
+
+    override func nextStateAutoDispatchDelay(model: IntegrationViewModel) -> Double? {
+        Double(model.timing.end - model.timing.start)
     }
 }

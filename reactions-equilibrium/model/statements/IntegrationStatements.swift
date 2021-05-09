@@ -26,7 +26,7 @@ struct IntegrationStatements {
         "Remember these equations?",
         """
         These are rate law equations, one for the forward reaction, with a rate of rate_f_ and a \
-        rate constant of kf. And one for the reverse reaction, with a rate of rate_r_ and a rate \
+        rate constant of k_f_. And one for the reverse reaction, with a rate of rate_r_ and a rate \
         constant of k_r_.
         """
     ]
@@ -36,8 +36,8 @@ struct IntegrationStatements {
     ) -> [TextLine] {
         [
             """
-            For the reaction you previously chose, the forward reaction has kf of *\(reaction.forwardRateConstant.str(decimals: 2))* and \
-            the reverse reaction has a kr of *\(reaction.reverseRateConstant.str(decimals: 2))*. (As a side note, take into account that \
+            For the reaction you previously chose, the forward reaction has k_f_ of *\(reaction.forwardRateConstant.str(decimals: 2))* and \
+            the reverse reaction has a k_r_ of *\(reaction.reverseRateConstant.str(decimals: 2))*. (As a side note, take into account that \
             for these equations to be true the reaction has to be elementary, which means that it's \
             only that reaction instead of a mechanism of various reactions).
             """
@@ -48,7 +48,7 @@ struct IntegrationStatements {
         """
         By comparing both rates, we can know which reaction is going faster, which in other words \
         would mean that it is the reaction being favored. On the other hand, the equilibrium \
-        constant K can also be written as $*K=kf/kr*$, which is how these concepts relate to each other.
+        constant K can also be written as $*K=k_f_/k_r_*$, which is how these concepts relate to each other.
         """
     ]
 
@@ -73,15 +73,14 @@ struct IntegrationStatements {
         """
     ]
 
-    static func equilibriumReached(rate: CGFloat) -> [TextLine] {
-        [
-            """
-            Great! Concentrations of all species will be constant now that we have reached equilibrium. \
-            Not because the reaction stopped, but because both forward and reverse reactions are going \
-            at the same rate of \(rate.str(decimals: 2)) M/s.
-            """
-        ]
-    }
+    static let equilibriumReached: [TextLine] = [
+        """
+        Great! Concentrations of all species will be constant now that we have reached equilibrium. \
+        Not because the reaction stopped, but because both forward and reverse reactions are going \
+        at the same rate.
+        """
+    ]
+
 
     static let preReverseReaction: [TextLine] = [
         """
