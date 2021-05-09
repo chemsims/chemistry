@@ -952,6 +952,7 @@
 		57FD402B264874A200E352C1 /* SolubilityViewModelParameterReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityViewModelParameterReappliedTests.swift; sourceTree = "<group>"; };
 		57FD402D2648765700E352C1 /* QuizTestMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTestMethods.swift; sourceTree = "<group>"; };
 		57FD4031264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumQuizQuestionTests.swift; sourceTree = "<group>"; };
+		57FD4033264878C100E352C1 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationPlaceholderView.swift; sourceTree = "<group>"; };
 		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
@@ -1160,6 +1161,7 @@
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
+				57FD4033264878C100E352C1 /* TestPlan.xctestplan */,
 				571D6A3E255A780700F4E635 /* reactions-app */,
 				57035EE3255BFE5200DB3A19 /* reactions-appTests */,
 				5797A44225E4069F00991BD9 /* ReactionsCore */,

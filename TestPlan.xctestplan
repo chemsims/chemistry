@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "4083EC79-F945-4CC4-9C17-125408C08FB1",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:reactions-app.xcodeproj",
+        "identifier" : "5797A44825E4069F00991BD9",
+        "name" : "ReactionsCoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:reactions-app.xcodeproj",
+        "identifier" : "57035EE1255BFE5200DB3A19",
+        "name" : "reactions-appTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:reactions-app.xcodeproj",
+        "identifier" : "575A88C725E43CD700AEE448",
+        "name" : "reactions-equilibriumTests"
+      }
+    }
+  ],
+  "version" : 1
+}
