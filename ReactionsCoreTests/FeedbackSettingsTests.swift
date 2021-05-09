@@ -3,10 +3,10 @@
 //
 
 import XCTest
-@testable import reactions_app
+@testable import ReactionsCore
 
 class FeedbackSettingsTests: XCTestCase {
     func testMailToUrlIsValid() {
-        XCTAssertNotNil(FeedbackSettings.mailToUrl)
+        XCTAssertNotNil(FeedbackSettings(appName: "Test app").mailToUrl)
     }
 }

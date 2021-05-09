@@ -3,7 +3,7 @@
 //
 
 import XCTest
-@testable import reactions_app
+import ReactionsCore
 
 class ScreenStateTreeNodeTests: XCTestCase {
 
@@ -38,7 +38,9 @@ private class TesterState: ScreenState, SubState {
         self.value = value
     }
 
-    var delayedStates: [DelayedState<TesterState>] = []
+    func delayedStates(model: TesterClass)  -> [DelayedState<TesterState>] {
+        []
+    }
     func apply(on model: TesterClass) { }
 
     func unapply(on model: TesterClass) { }

@@ -3,7 +3,7 @@
 //
 
 import XCTest
-@testable import reactions_app
+import ReactionsCore
 
 class AxisPositionCalculationsTests: XCTestCase {
 

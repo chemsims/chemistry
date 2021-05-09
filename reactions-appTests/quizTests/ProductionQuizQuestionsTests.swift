@@ -3,6 +3,7 @@
 //
 
 import XCTest
+import ReactionsCore
 @testable import reactions_app
 
 // Runs tests on the production quiz questions to catch easy mistakes
@@ -36,11 +37,11 @@ class ProductionQuizQuestionsTests: XCTestCase {
     }
 
     private let questions = [
-        QuizQuestionsList.zeroOrderQuestions,
-        QuizQuestionsList.firstOrderQuestions,
-        QuizQuestionsList.secondOrderQuestions,
-        QuizQuestionsList.reactionComparisonQuizQuestions,
-        QuizQuestionsList.energyProfileQuizQuestions
+        QuizQuestionsList<ReactionsRateQuestionSet>.zeroOrderQuestions,
+        QuizQuestionsList<ReactionsRateQuestionSet>.firstOrderQuestions,
+        QuizQuestionsList<ReactionsRateQuestionSet>.secondOrderQuestions,
+        QuizQuestionsList<ReactionsRateQuestionSet>.reactionComparisonQuizQuestions,
+        QuizQuestionsList<ReactionsRateQuestionSet>.energyProfileQuizQuestions
     ]
 
 }

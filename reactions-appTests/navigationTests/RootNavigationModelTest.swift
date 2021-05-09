@@ -3,6 +3,7 @@
 //
 
 import XCTest
+import ReactionsCore
 @testable import reactions_app
 
 class RootNavigationModelTest: XCTestCase {
@@ -19,9 +20,7 @@ class RootNavigationModelTest: XCTestCase {
         }
     }
 
-    private func newModel() -> RootNavigationViewModel {
-        RootNavigationViewModel(
-            injector: InMemoryInjector.shared
-        )
+    private func newModel() -> RootNavigationViewModel<ConcreteInjector> {
+        ReactionRateNavigationModel.navigationModel(using: InMemoryInjector())
     }
 }

@@ -3,7 +3,7 @@
 //
 
 import XCTest
-@testable import reactions_app
+import ReactionsCore
 
 class NavigationViewModelTests: XCTestCase {
 
@@ -14,7 +14,7 @@ class NavigationViewModelTests: XCTestCase {
         let states = [s1, s2, s3]
 
         let tester = TesterClass()
-        let model = NavigationViewModel(model: tester, states: states)
+        let model = NavigationModel(model: tester, states: states)
 
         XCTAssertEqual(tester.value, s1.value)
 
@@ -35,7 +35,7 @@ class NavigationViewModelTests: XCTestCase {
         let states = [s1, s2, s3]
 
         let tester = TesterClass()
-        let model = NavigationViewModel(model: tester, states: states)
+        let model = NavigationModel(model: tester, states: states)
 
         model.next()
         model.next()
@@ -63,7 +63,7 @@ class NavigationViewModelTests: XCTestCase {
         let s2 = SetValueState(value: 2, expectation: expectation)
 
         let tester = TesterClass()
-        let model = NavigationViewModel(model: tester, states: [s0, s1, s2])
+        let model = NavigationModel(model: tester, states: [s0, s1, s2])
 
         XCTAssertEqual(tester.value, s0.value)
 
@@ -87,7 +87,7 @@ class NavigationViewModelTests: XCTestCase {
         let s3 = SetValueState(value: 3)
 
         let tester = TesterClass()
-        let model = NavigationViewModel(model: tester, states: [s1, s2, s3])
+        let model = NavigationModel(model: tester, states: [s1, s2, s3])
 
         model.next()
         model.next()
@@ -116,7 +116,7 @@ class NavigationViewModelTests: XCTestCase {
         s2Node.staticNextAlternative = s3AlternativeNode
 
         let tester = TesterClass()
-        let model = NavigationViewModel(model: tester, rootNode: s1Node)
+        let model = NavigationModel(model: tester, rootNode: s1Node)
 
         XCTAssertEqual(tester.value, s1.value)
 
@@ -137,7 +137,9 @@ class NavigationViewModelTests: XCTestCase {
 private class TesterClass { var value = 0 }
 
 private class TesterState: ScreenState, SubState {
-    var delayedStates: [DelayedState<TesterState>] = []
+    func delayedStates(model: TesterClass) -> [DelayedState<TesterState>] {
+        []
+    }
     func apply(on model: TesterClass) { }
 
     func unapply(on model: TesterClass) { }

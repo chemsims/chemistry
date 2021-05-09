@@ -3,6 +3,7 @@
 //
 
 import XCTest
+import ReactionsCore
 @testable import reactions_app
 
 class EnergyProfileViewModelTests: XCTestCase {
@@ -209,7 +210,7 @@ class EnergyProfileViewModelTests: XCTestCase {
 
     private func testForwardFromActiveState(
         model: EnergyProfileViewModel,
-        navigation: NavigationViewModel<EnergyProfileState>
+        navigation: NavigationModel<EnergyProfileState>
     ) {
 
     }

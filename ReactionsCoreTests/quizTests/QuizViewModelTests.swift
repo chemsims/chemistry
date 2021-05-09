@@ -3,7 +3,7 @@
 //
 
 import XCTest
-@testable import reactions_app
+@testable import ReactionsCore
 
 class QuizViewModelTests: XCTestCase {
 
@@ -98,13 +98,13 @@ class QuizViewModelTests: XCTestCase {
     }
 
     func testThatTheQuizIsSavedWhenItEnds() {
-        let persistence = InMemoryQuizPersistence()
-        let questionList = QuizQuestionsList(questionSet: .zeroOrder, [makeQuestion(i: 0)])
+        let persistence = InMemoryQuizPersistence<Int>()
+        let questionList = QuizQuestionsList(questionSet: 0, [makeQuestion(i: 0)])
         let model = newModel(questionList, persistence: persistence)
 
         func getAnswers() -> [String: QuizAnswerInput]? {
             persistence.getAnswers(
-                questionSet: .zeroOrder,
+                questionSet: 0,
                 questions: questionList.createQuestions()
             )?.answers
         }
@@ -142,7 +142,7 @@ class QuizViewModelTests: XCTestCase {
     }
 
     func testThatTheQuizStateIsRestoredIfTheQuizWasCompleted() {
-        let persistence = InMemoryQuizPersistence()
+        let persistence = InMemoryQuizPersistence<Int>()
         let questions = makeQuestions(n: 3)
         let model = newModel(questions, persistence: persistence)
 
@@ -201,8 +201,8 @@ class QuizViewModelTests: XCTestCase {
         notShown(QuizOption.allCases)
     }
 
-    private func makeQuestions(n: Int) -> QuizQuestionsList {
-        QuizQuestionsList(questionSet: .zeroOrder, (0..<n).map(makeQuestion))
+    private func makeQuestions(n: Int) -> QuizQuestionsList<Int> {
+        QuizQuestionsList(questionSet: 0, (0..<n).map(makeQuestion))
     }
 
     private func makeQuestion(i: Int) -> QuizQuestionData {
@@ -229,10 +229,14 @@ class QuizViewModelTests: XCTestCase {
     }
 
     func newModel(
-        _ questions: QuizQuestionsList,
-        persistence: QuizPersistence = InMemoryQuizPersistence()
-    ) -> QuizViewModel {
-        QuizViewModel(questions: questions, persistence: persistence, analytics: NoOpAnalytics())
+        _ questions: QuizQuestionsList<Int>,
+        persistence: InMemoryQuizPersistence<Int> = InMemoryQuizPersistence<Int>()
+    ) -> QuizViewModel<InMemoryQuizPersistence<Int>, NoOpAppAnalytics<Int, Int>> {
+        QuizViewModel(
+            questions: questions,
+            persistence: persistence,
+            analytics: NoOpAppAnalytics<Int, Int>()
+        )
     }
 
 }

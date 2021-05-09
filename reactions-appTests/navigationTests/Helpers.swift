@@ -3,11 +3,12 @@
 //
 
 import XCTest
+import ReactionsCore
 @testable import reactions_app
 
 func doTestStatementsAreReappliedOnBack(
     model: ZeroOrderReactionViewModel,
-    navigation: NavigationViewModel<ReactionState>
+    navigation: NavigationModel<ReactionState>
 ) {
     checkPreviousValueIsReapplied(
         model: model,
@@ -18,7 +19,7 @@ func doTestStatementsAreReappliedOnBack(
 
 func doTestHighlightedElementsAreReappliedOnBack(
     model: ZeroOrderReactionViewModel,
-    navigation: NavigationViewModel<ReactionState>
+    navigation: NavigationModel<ReactionState>
 ) {
     checkPreviousValueIsReapplied(
         model: model,
@@ -29,7 +30,7 @@ func doTestHighlightedElementsAreReappliedOnBack(
 
 private func checkPreviousValueIsReapplied<T: Equatable>(
     model: ZeroOrderReactionViewModel,
-    navigation: NavigationViewModel<ReactionState>,
+    navigation: NavigationModel<ReactionState>,
     prevValueKeyPath: KeyPath<ZeroOrderReactionViewModel, T>
 ) {
     var hasEnded = false

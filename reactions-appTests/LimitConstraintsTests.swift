@@ -3,9 +3,10 @@
 //
 
 import XCTest
+import ReactionsCore
 @testable import reactions_app
 
-class BoundedSliderPositioningTest: XCTestCase {
+class LimitConstraintsTests: XCTestCase {
 
     func testAbsoluteBounds() {
         let axis = makeAxis(minPos: 0, maxPos: 10, minValue: 10, maxValue: 30)

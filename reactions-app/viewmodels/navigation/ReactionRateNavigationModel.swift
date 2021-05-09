@@ -6,9 +6,9 @@ import SwiftUI
 import StoreKit
 import ReactionsCore
 
-struct ReactionRateNavigationModel {
+typealias ConcreteInjector = AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>
 
-    typealias ConcreteInjector = AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>
+struct ReactionRateNavigationModel {
 
     static func navigationModel(using injector: Injector) -> RootNavigationViewModel<ConcreteInjector> {
         RootNavigationViewModel(injector: navigationInjector(using: injector))

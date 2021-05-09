@@ -9,7 +9,6 @@ protocol Injector {
     var reactionPersistence: ReactionInputPersistence { get }
     var reviewPersistence: ReviewPromptPersistence { get }
     var energyPersistence: EnergyProfilePersistence { get }
-    var lastOpenedScreenPersistence: LastOpenedScreenPersistence { get }
 
     var quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet> { get }
     var screenPersistence: AnyScreenPersistence<AppScreen> { get }
@@ -26,8 +25,6 @@ class ProductionInjector: Injector {
 
     let energyPersistence: EnergyProfilePersistence = UserDefaultsEnergyProfilePersistence()
 
-    let lastOpenedScreenPersistence: LastOpenedScreenPersistence = UserDefaultsLastOpenedScreenPersistence()
-
     let screenPersistence = AnyScreenPersistence(UserDefaultsScreenPersistence<AppScreen>())
     let appAnalytics = AnyAppAnalytics(GoogleAnalytics<AppScreen, ReactionsRateQuestionSet>())
 }
@@ -42,8 +39,6 @@ class InMemoryInjector: Injector {
     let reviewPersistence: ReviewPromptPersistence = InMemoryReviewPromptPersistence()
 
     let energyPersistence: EnergyProfilePersistence = InMemoryEnergyProfilePersistence()
-
-    let lastOpenedScreenPersistence: LastOpenedScreenPersistence = UserDefaultsLastOpenedScreenPersistence()
 
     let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<AppScreen>())
     let appAnalytics = AnyAppAnalytics(NoOpAppAnalytics<AppScreen, ReactionsRateQuestionSet>())

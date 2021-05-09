@@ -3,7 +3,7 @@
 //
 
 import XCTest
-@testable import reactions_app
+@testable import ReactionsCore
 
 class QuizPersistenceTests: XCTestCase {
 
@@ -73,11 +73,11 @@ class QuizPersistenceTests: XCTestCase {
     }
 
     private func zeroOrderQuestions() -> [QuizQuestion] {
-        QuizQuestionsList.zeroOrderQuestions.createQuestions()
+        QuizQuestionsList<Int>.testQuestions.createQuestions()
     }
 
-    private func newModel() -> QuizPersistence {
-        UserDefaultsQuizPersistence()
+    private func newModel() -> UserDefaultsQuizPersistence<Int> {
+        UserDefaultsQuizPersistence<Int>()
     }
 
     private func questionWithOptions(
@@ -103,10 +103,27 @@ class QuizPersistenceTests: XCTestCase {
     }
 }
 
-fileprivate extension QuizPersistence {
+extension Int: RawRepresentable {
+    public var rawValue: String {
+        "\(self)"
+    }
+
+    public typealias RawValue = String
+
+    public init?(rawValue: String) {
+        guard let i = Int(rawValue) else {
+            return nil
+        }
+        self = i
+    }
+
+
+}
+
+fileprivate extension QuizPersistence where QuestionSet == Int {
     func getAnswers(_ questions: [QuizQuestion]) -> [String: QuizAnswerInput]? {
         getAnswers(
-            questionSet: .zeroOrder,
+            questionSet: 0,
             questions: questions
         )?.answers
     }
@@ -114,11 +131,53 @@ fileprivate extension QuizPersistence {
     func saveAnswers(_ questions: [QuizQuestion], _ answers: [String: QuizAnswerInput]) {
         saveAnswers(
             quiz: SavedQuiz(
-                questionSet: .zeroOrder,
+                questionSet: 0,
                 difficulty: .easy,
                 answers: answers
             ),
             questions: questions
         )
     }
+}
+
+
+private extension QuizQuestionsList where QuestionSet == Int {
+    static let testQuestions = QuizQuestionsList(
+        questionSet: 0,
+        [
+            QuizQuestionData(
+                id: "1",
+                question: "1 + 1?",
+                correctAnswer: QuizAnswerData(answer: "2", explanation: ""),
+                otherAnswers: [
+                    QuizAnswerData(answer: "1", explanation: ""),
+                    QuizAnswerData(answer: "3", explanation: ""),
+                    QuizAnswerData(answer: "4", explanation: ""),
+                ],
+                difficulty: .easy
+            ),
+            QuizQuestionData(
+                id: "2",
+                question: "2 + 2?",
+                correctAnswer: QuizAnswerData(answer: "4", explanation: ""),
+                otherAnswers: [
+                    QuizAnswerData(answer: "1", explanation: ""),
+                    QuizAnswerData(answer: "3", explanation: ""),
+                    QuizAnswerData(answer: "0", explanation: ""),
+                ],
+                difficulty: .medium
+            ),
+            QuizQuestionData(
+                id: "3",
+                question: "3 + 3?",
+                correctAnswer: QuizAnswerData(answer: "6", explanation: ""),
+                otherAnswers: [
+                    QuizAnswerData(answer: "1", explanation: ""),
+                    QuizAnswerData(answer: "3", explanation: ""),
+                    QuizAnswerData(answer: "4", explanation: ""),
+                ],
+                difficulty: .hard
+            )
+        ]
+    )
 }

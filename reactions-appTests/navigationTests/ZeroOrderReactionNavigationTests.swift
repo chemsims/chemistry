@@ -3,6 +3,7 @@
 //
 
 import XCTest
+import ReactionsCore
 @testable import reactions_app
 
 class ZeroOrderReactionNavigationTests: XCTestCase {
@@ -228,7 +229,7 @@ class ZeroOrderReactionNavigationTests: XCTestCase {
 
     private func navModel(
         _ viewModel: ZeroOrderReactionViewModel
-    ) -> NavigationViewModel<ReactionState> {
+    ) -> NavigationModel<ReactionState> {
         let nav = ZeroOrderReactionNavigation.model(
             reaction: viewModel,
             persistence: InMemoryReactionInputPersistence()
