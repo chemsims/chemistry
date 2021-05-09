@@ -85,6 +85,7 @@ private struct RateDefinition: View {
             )
             RateDefinitionFilled(
                 reaction: reaction,
+                rateSubscript: rateSubscript,
                 time: time
             )
         }
@@ -105,8 +106,9 @@ private struct RateDefinitionBlank: View {
                 moleculeTerm(reaction.firstMolecule)
                 moleculeTerm(reaction.secondMolecule)
             }
-
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
     }
 
     private func moleculeTerm(
@@ -121,11 +123,22 @@ private struct RateDefinitionBlank: View {
             }
         }
     }
+
+    private var label: String {
+        func molecule(_ part: ReactionRateDefinition.Part) -> String {
+            let coeff = part.coefficient
+            let coeffString = coeff == 1 ? "" : " to the power of \(coeff)"
+            return "concentration of \(part.molecule.rawValue)\(coeffString)"
+        }
+        let moleculeString = "\(molecule(reaction.firstMolecule)) times \(molecule(reaction.secondMolecule))"
+        return "Rate \(rateSubscript) equals k \(rateSubscript) times \(moleculeString)"
+    }
 }
 
 private struct RateDefinitionFilled: View {
 
     let reaction: ReactionRateDefinition
+    let rateSubscript: String
     let time: CGFloat
 
     var body: some View {
@@ -134,6 +147,8 @@ private struct RateDefinitionFilled: View {
             Equals()
             FixedText(reaction.k.str(decimals: 2))
                 .foregroundColor(.orangeAccent)
+                .accessibility(label: Text("k \(rateSubscript)"))
+                .accessibility(value: Text(reaction.k.str(decimals: 2)))
             term(reaction.firstMolecule)
             term(reaction.secondMolecule)
         }
@@ -148,11 +163,14 @@ private struct RateDefinitionFilled: View {
         .frame(width: rateLhsWidth, height: EquationSizing.boxHeight)
         .foregroundColor(.orangeAccent)
         .font(.system(size: EquationSizing.tripleDecimalFontSize))
+        .accessibility(label: Text("rate \(rateSubscript)"))
     }
 
     private func term(_ part: ReactionRateDefinition.Part) -> some View {
         HStack(spacing: 0) {
             FixedText("(")
+                .accessibility(hidden: true)
+
             AnimatingNumber(
                 x: time,
                 equation: part.concentration,
@@ -163,11 +181,15 @@ private struct RateDefinitionFilled: View {
                 height: EquationSizing.boxHeight
             )
             .foregroundColor(.orangeAccent)
+            .accessibility(label: Text("concentration of \(part.molecule.rawValue)"))
+
             FixedText(")")
+                .accessibility(hidden: true)
             if part.coefficient != 1 {
                 FixedText("\(part.coefficient)")
                     .font(.system(size: EquationSizing.subscriptFontSize))
                     .offset(y: -10)
+                    .accessibility(label: Text("to the power of \(part.coefficient)"))
             }
         }
     }
@@ -196,21 +218,23 @@ private struct RateComparison: View {
             )
             Rate(rateSubscript: "r")
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("rate f equals rate r"))
     }
 
     private var filled: some View {
         HStack(spacing: equationHSpacing) {
-            number(forwardRate)
+            number(forwardRate, "f")
             RatioComparisonSymbol(
                 top: forwardRate,
                 bottom: reverseRate,
                 time: time
             )
-            number(reverseRate)
+            number(reverseRate, "r")
         }
     }
 
-    private func number(_ equation: Equation) -> some View {
+    private func number(_ equation: Equation, _ rateSubscript: String) -> some View {
         AnimatingNumber(
             x: time,
             equation: equation,
@@ -219,6 +243,7 @@ private struct RateComparison: View {
         .frame(width: rateLhsWidth, height: EquationSizing.boxHeight)
         .foregroundColor(.orangeAccent)
         .font(.system(size: EquationSizing.tripleDecimalFontSize))
+        .accessibility(label: Text("rate \(rateSubscript)"))
     }
 }
 
@@ -244,17 +269,26 @@ private struct KComparison: View {
             FixedText("/")
             K(kSubscript: "r")
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("K equals k f divide by k r"))
     }
 
     private var filled: some View {
         HStack(spacing: equationHSpacing) {
-            FixedText(k.str(decimals: 2))
+            filledText(value: k.str(decimals: 2), label: "K")
                 .frame(width: rateLhsWidth)
             Equals()
-            FixedText(kForward.str(decimals: 2))
+            filledText(value: kForward.str(decimals: 2), label: "k f")
             FixedText("/")
-            FixedText(kReverse.str(decimals: 2))
+                .accessibility(label: Text("divide by"))
+            filledText(value: kReverse.str(decimals: 2), label: "k r")
         }
+    }
+
+    private func filledText(value: String, label: String) -> some View {
+        FixedText(value)
+            .accessibility(label: Text(label))
+            .accessibility(value: Text(value))
     }
 }
 

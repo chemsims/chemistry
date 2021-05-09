@@ -71,6 +71,7 @@ private struct IntegrationRightStack: View {
     private var topRow: some View {
         HStack(alignment: .top, spacing: settings.chartEquationSpacing) {
             barChart
+                .accessibility(sortPriority: 1)
             Spacer()
             VStack(alignment:. trailing) {
                 toggle
@@ -78,6 +79,7 @@ private struct IntegrationRightStack: View {
                 equation
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var toggle: some View {
@@ -97,6 +99,8 @@ private struct IntegrationRightStack: View {
         .opacity(model.inputState == .selectReactionType ? 1 : 0.6)
         .colorMultiply(model.highlightedElements.colorMultiply(for: .reactionToggle))
         .zIndex(1)
+        .accessibilityElement(children: .contain)
+        .accessibility(sortPriority: -1)
     }
 
     private var equation: some View {
