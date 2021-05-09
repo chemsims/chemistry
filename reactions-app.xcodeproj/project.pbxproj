@@ -436,6 +436,10 @@
 		57FD40272648703500E352C1 /* AqueousViewModelParametersReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD40262648703500E352C1 /* AqueousViewModelParametersReappliedTests.swift */; };
 		57FD402A264872BD00E352C1 /* GaseousViewModelParametersReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD4029264872BD00E352C1 /* GaseousViewModelParametersReappliedTests.swift */; };
 		57FD402C264874A200E352C1 /* SolubilityViewModelParameterReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402B264874A200E352C1 /* SolubilityViewModelParameterReappliedTests.swift */; };
+		57FD402E2648765700E352C1 /* QuizTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402D2648765700E352C1 /* QuizTestMethods.swift */; };
+		57FD402F264876A400E352C1 /* QuizTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402D2648765700E352C1 /* QuizTestMethods.swift */; };
+		57FD4030264876A500E352C1 /* QuizTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402D2648765700E352C1 /* QuizTestMethods.swift */; };
+		57FD4032264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD4031264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift */; };
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
 		57FDA141255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */; };
 		57FF9EDE25FF6EA800C1C27F /* GridElementBalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FF9EDD25FF6EA800C1C27F /* GridElementBalancer.swift */; };
@@ -946,6 +950,8 @@
 		57FD40262648703500E352C1 /* AqueousViewModelParametersReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousViewModelParametersReappliedTests.swift; sourceTree = "<group>"; };
 		57FD4029264872BD00E352C1 /* GaseousViewModelParametersReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousViewModelParametersReappliedTests.swift; sourceTree = "<group>"; };
 		57FD402B264874A200E352C1 /* SolubilityViewModelParameterReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityViewModelParameterReappliedTests.swift; sourceTree = "<group>"; };
+		57FD402D2648765700E352C1 /* QuizTestMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTestMethods.swift; sourceTree = "<group>"; };
+		57FD4031264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumQuizQuestionTests.swift; sourceTree = "<group>"; };
 		57FDA124255D5CFA00CB8804 /* EquationPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationPlaceholderView.swift; sourceTree = "<group>"; };
 		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
@@ -1328,6 +1334,7 @@
 				5760536F25AE519B0068B533 /* NavigationExtensions.swift */,
 				5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */,
 				57FD402126486F8300E352C1 /* NavigationTestMethods.swift */,
+				57FD402D2648765700E352C1 /* QuizTestMethods.swift */,
 			);
 			path = shared;
 			sourceTree = "<group>";
@@ -1569,6 +1576,7 @@
 				577A260E26283E6E0060EC54 /* GaseousReactionViewModelPumpStatementTests.swift */,
 				577A26262628A62B0060EC54 /* AqueousScalesRotationTests.swift */,
 				577A26302628ACC30060EC54 /* GaseousScalesRotationTests.swift */,
+				57FD4031264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift */,
 			);
 			path = "reactions-equilibriumTests";
 			sourceTree = "<group>";
@@ -2877,6 +2885,7 @@
 				57DD22AD25B780DC003E6842 /* EnergyProfileNavigationTests.swift in Sources */,
 				57FD402326486F9700E352C1 /* NavigationTestMethods.swift in Sources */,
 				5738AD9F25AF1611002D4EB7 /* Helpers.swift in Sources */,
+				57FD402F264876A400E352C1 /* QuizTestMethods.swift in Sources */,
 				5711DFC525C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift in Sources */,
 				5743D9B125C41CD2000C0397 /* ReactionFilingViewModelTests.swift in Sources */,
 				57AA012425A8C635001131A0 /* EnergyProfileViewModelTests.swift in Sources */,
@@ -3120,6 +3129,7 @@
 				57D15C2B2622DC9F00BE1303 /* SoluteCounterTests.swift in Sources */,
 				57686B062602590C005BD328 /* PumpViewModelTests.swift in Sources */,
 				57E902CA25ED6A7800758300 /* MoleculeScalesGeometryTests.swift in Sources */,
+				57FD4030264876A500E352C1 /* QuizTestMethods.swift in Sources */,
 				57BCB4C425F3752800E50923 /* ReactionConvergenceSolverTests.swift in Sources */,
 				5736DC4A25F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift in Sources */,
 				57D15C172622D7ED00BE1303 /* SolubilityScreenSoluteCounterTests.swift in Sources */,
@@ -3130,6 +3140,7 @@
 				57952A3325E66FBD006AB876 /* BalancedReactionEquationTests.swift in Sources */,
 				5725972325EE3E9400D87964 /* ReactionComponentTests.swift in Sources */,
 				57B5312826440813002F7247 /* SolubilityMilligramsSoluteAddedTests.swift in Sources */,
+				57FD4032264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift in Sources */,
 				57FD402426486F9700E352C1 /* NavigationTestMethods.swift in Sources */,
 				57FD402C264874A200E352C1 /* SolubilityViewModelParameterReappliedTests.swift in Sources */,
 				5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */,
@@ -3296,6 +3307,7 @@
 				57FD401626484FA600E352C1 /* QuizDifficultyTests.swift in Sources */,
 				57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */,
 				57FD401426484F9F00E352C1 /* LastOpenedScreenTests.swift in Sources */,
+				57FD402E2648765700E352C1 /* QuizTestMethods.swift in Sources */,
 				57FD400F26484F5100E352C1 /* ScreenStateTreeNodeTests.swift in Sources */,
 				573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */,
 				57FD400D26484F4B00E352C1 /* CGFloatRoundingTests.swift in Sources */,
