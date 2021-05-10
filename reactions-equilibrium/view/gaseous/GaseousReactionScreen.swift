@@ -8,6 +8,7 @@ import SwiftUI
 struct GaseousReactionScreen: View {
 
     @ObservedObject var model: GaseousReactionViewModel
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -19,7 +20,7 @@ struct GaseousReactionScreen: View {
             GeometryReader { geometry in
                 GaseousReactionScreenWithSettings(
                     model: model,
-                    settings: GaseousReactionScreenSettings(geometry: geometry)
+                    settings: GaseousReactionScreenSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
                 )
             }
             .padding(10)
@@ -144,6 +145,7 @@ private struct LeftStack: View {
 
 struct GaseousReactionScreenSettings {
     let geometry: GeometryProxy
+    let verticalSizeClass: UserInterfaceSizeClass?
     var width: CGFloat {
         geometry.size.width
     }
@@ -152,8 +154,8 @@ struct GaseousReactionScreenSettings {
         PressureBeakerSettings(width: 0.3 * width)
     }
 
-    var common: AqueousScreenLayoutSettings {
-        AqueousScreenLayoutSettings(geometry: geometry)
+    var common: EquilibriumAppLayoutSettings {
+        EquilibriumAppLayoutSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
     }
 }
 

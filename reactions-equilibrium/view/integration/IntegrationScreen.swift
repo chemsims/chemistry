@@ -8,6 +8,7 @@ import ReactionsCore
 struct IntegrationScreen: View {
 
     @ObservedObject var model: IntegrationViewModel
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     var body: some View {
         ZStack {
@@ -19,7 +20,7 @@ struct IntegrationScreen: View {
             GeometryReader { geometry in
                 IntegrationScreenWithGeometry(
                     model: model,
-                    settings: IntegrationScreenSettings(geometry: geometry)
+                    settings: IntegrationScreenSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
                 )
             }
             .padding(10)
@@ -134,9 +135,10 @@ private extension ReactionComponents {
 struct IntegrationScreenSettings {
 
     let geometry: GeometryProxy
+    let verticalSizeClass: UserInterfaceSizeClass?
 
-    var common: AqueousScreenLayoutSettings {
-        AqueousScreenLayoutSettings(geometry: geometry)
+    var common: EquilibriumAppLayoutSettings {
+        EquilibriumAppLayoutSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
     }
 
     var barChartGeometry: BarChartGeometry {

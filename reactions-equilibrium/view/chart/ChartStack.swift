@@ -19,7 +19,7 @@ struct ChartStack: View {
     let showConcentrationLines: Bool
     let showQuotientLine: Bool
     let maxQuotient: CGFloat
-    let settings: AqueousScreenLayoutSettings
+    let settings: EquilibriumAppLayoutSettings
     let equilibriumQuotient: CGFloat
 
     let generalElementHighlight: Color
@@ -139,7 +139,7 @@ extension ChartStack {
     init<Nav>(
         model: AqueousOrIntegrationReactionViewModel<Nav>,
         currentTime: Binding<CGFloat>,
-        settings: AqueousScreenLayoutSettings
+        settings: EquilibriumAppLayoutSettings
     ) {
         self.init(
             concentrationData: model.components.concentrationData(),
@@ -168,7 +168,7 @@ extension ChartStack {
     init(
         model: GaseousReactionViewModel,
         currentTime: Binding<CGFloat>,
-        settings: AqueousScreenLayoutSettings
+        settings: EquilibriumAppLayoutSettings
     ) {
         self.init(
             concentrationData: model.components.concentrationData(usePressureForAccessibility: true),
@@ -197,7 +197,7 @@ extension ChartStack {
     init(
         model: SolubilityViewModel,
         currentTime: Binding<CGFloat>,
-        settings: AqueousScreenLayoutSettings
+        settings: EquilibriumAppLayoutSettings
     ) {
         self.init(
             concentrationData: model.components.concentrationData(reaction: model.selectedReaction),

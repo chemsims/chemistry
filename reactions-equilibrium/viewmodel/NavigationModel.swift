@@ -7,16 +7,17 @@ import ReactionsCore
 
 struct ReactionEquilibriumRootView: View {
     @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<EquilibriumAppScreen, EquilibriumQuestionSet>>
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     var body: some View {
         GeometryReader { geo in
             makeView(
-                settings: AqueousScreenLayoutSettings(geometry: geo)
+                settings: EquilibriumAppLayoutSettings(geometry: geo, verticalSizeClass: verticalSizeClass)
             )
         }
     }
 
-    private func makeView(settings: AqueousScreenLayoutSettings) -> some View {
+    private func makeView(settings: EquilibriumAppLayoutSettings) -> some View {
         GeneralRootNavigationView(
             model: model,
             navigationRows: ReactionEquilibriumNavigationRows.rows,
@@ -29,7 +30,7 @@ struct ReactionEquilibriumRootView: View {
     }
 }
 
-extension AqueousScreenLayoutSettings {
+extension EquilibriumAppLayoutSettings {
     var menuSize: CGFloat {
         0.03 * width
     }

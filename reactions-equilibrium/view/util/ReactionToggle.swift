@@ -13,7 +13,7 @@ struct ReactionToggle<Reaction: SelectableReaction>: View {
     let isSelectingReaction: Bool
     let onSelection: (() -> Void)?
     let reactionToggleHighlight: Color
-    let settings: AqueousScreenLayoutSettings
+    let settings: EquilibriumAppLayoutSettings
 
     var body: some View {
         HStack(spacing: 0) {

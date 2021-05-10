@@ -8,6 +8,7 @@ import ReactionsCore
 struct AqueousReactionScreen: View {
 
     @ObservedObject var model: AqueousReactionViewModel
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     var body: some View {
         ZStack {
@@ -19,7 +20,7 @@ struct AqueousReactionScreen: View {
             GeometryReader { geometry in
                 AqueousReactionScreenWithSettings(
                     model: model,
-                    settings: AqueousScreenLayoutSettings(geometry: geometry)
+                    settings: EquilibriumAppLayoutSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
                 )
             }
             .padding(10)
@@ -30,7 +31,7 @@ struct AqueousReactionScreen: View {
 private struct AqueousReactionScreenWithSettings: View {
 
     @ObservedObject var model: AqueousReactionViewModel
-    let settings: AqueousScreenLayoutSettings
+    let settings: EquilibriumAppLayoutSettings
 
     var body: some View {
         HStack(spacing: 0) {
@@ -76,7 +77,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     let formatElementName: (String) -> String
 
     let isPressure: Bool
-    let settings: AqueousScreenLayoutSettings
+    let settings: EquilibriumAppLayoutSettings
 
     var components: ReactionComponents {
         componentWrapper.components
@@ -244,7 +245,7 @@ extension RightStackView {
         selectedReaction: Binding<Reaction>,
         reactions: [Reaction],
         reactionSelectionIsToggled: Binding<Bool>,
-        settings: AqueousScreenLayoutSettings
+        settings: EquilibriumAppLayoutSettings
     ) {
         self.init(
             statement: model.statement,
@@ -280,7 +281,7 @@ extension RightStackView {
         selectedReaction: Binding<Reaction>,
         reactions: [Reaction],
         reactionSelectionIsToggled: Binding<Bool>,
-        settings: AqueousScreenLayoutSettings
+        settings: EquilibriumAppLayoutSettings
     ) {
         self.init(
             statement: model.statement,

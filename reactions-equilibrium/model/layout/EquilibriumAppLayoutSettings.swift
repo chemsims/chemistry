@@ -5,15 +5,17 @@
 import SwiftUI
 import ReactionsCore
 
-struct AqueousScreenLayoutSettings {
+struct EquilibriumAppLayoutSettings {
 
-    init(geometry: GeometryProxy) {
+    init(geometry: GeometryProxy, verticalSizeClass: UserInterfaceSizeClass?) {
         self.width = geometry.size.width
         self.height = geometry.size.height
+        self.verticalSizeClass = verticalSizeClass
     }
 
     let width: CGFloat
     let height: CGFloat
+    let verticalSizeClass: UserInterfaceSizeClass?
 
     var beakerSettings: BeakerSettings {
         BeakerSettings(width: beakerWidth, hasLip: true)
@@ -25,6 +27,10 @@ struct AqueousScreenLayoutSettings {
 
     var beakerHeight: CGFloat {
         beakerWidth * BeakerSettings.heightToWidth
+    }
+
+    var beakerBottomGap: CGFloat {
+        0
     }
 
     var sliderHeight: CGFloat {
@@ -83,7 +89,7 @@ struct AqueousScreenLayoutSettings {
     }
 }
 
-extension AqueousScreenLayoutSettings {
+extension EquilibriumAppLayoutSettings {
     var moleculeContainerWidth: CGFloat {
         0.12 * beakerWidth
     }
@@ -106,7 +112,7 @@ extension AqueousScreenLayoutSettings {
 }
 
 // Right stack
-extension AqueousScreenLayoutSettings {
+extension EquilibriumAppLayoutSettings {
 
     var rightStackWidth: CGFloat {
         0.8 * (width - beakerWidth - chartSize)
@@ -168,7 +174,7 @@ extension AqueousScreenLayoutSettings {
     }
 }
 
-extension AqueousScreenLayoutSettings {
+extension EquilibriumAppLayoutSettings {
     var sliderAxis: AxisPositionCalculations<CGFloat> {
         let innerBeakerWidth = BeakerSettings(width: beakerWidth, hasLip: true).innerBeakerWidth
         let grid = MoleculeGridSettings(totalWidth: innerBeakerWidth)

@@ -488,7 +488,7 @@ struct SolubleBeakerView_Previews: PreviewProvider {
                     persistence: InMemorySolubilityPersistence()
                 ),
                 shakeModel: SoluteBeakerShakingViewModel(),
-                settings: SolubilityScreenLayoutSettings(geometry: geo)
+                settings: SolubilityScreenLayoutSettings(geometry: geo, verticalSizeClass: nil)
             )
         }
         .padding()

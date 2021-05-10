@@ -8,7 +8,7 @@ import ReactionsCore
 struct AqueousBeakerView<Nav: ScreenState>: View {
 
     @ObservedObject var model: AqueousOrIntegrationReactionViewModel<Nav>
-    let settings: AqueousScreenLayoutSettings
+    let settings: EquilibriumAppLayoutSettings
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -136,8 +136,18 @@ struct AqueousBeakerView<Nav: ScreenState>: View {
             )
             .frame(width: settings.beakerWidth, height: settings.beakerHeight)
             .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
-            .modifier(AddReactantsModifier(enabled: model.inputState == .addReactants, doAdd: manualAddMolecule))
-            .modifier(AddProductsModifier(enabled: model.inputState == .addProducts, doAdd: manualAddMolecule))
+            .modifier(
+                AddReactantsAccessibilityModifier(
+                    enabled: model.inputState == .addReactants,
+                    doAdd: manualAddMolecule
+                )
+            )
+            .modifier(
+                AddProductsAccessibilityModifier(
+                    enabled: model.inputState == .addProducts,
+                    doAdd: manualAddMolecule
+                )
+            )
         }
     }
 
@@ -151,7 +161,7 @@ struct AqueousBeakerView<Nav: ScreenState>: View {
     }
 }
 
-private struct AddReactantsModifier: ViewModifier {
+private struct AddReactantsAccessibilityModifier: ViewModifier {
     let enabled: Bool
     let doAdd: (AqueousMolecule, Int) -> Void
 
@@ -162,7 +172,7 @@ private struct AddReactantsModifier: ViewModifier {
     }
 }
 
-private struct AddProductsModifier: ViewModifier {
+private struct AddProductsAccessibilityModifier: ViewModifier {
     let enabled: Bool
     let doAdd: (AqueousMolecule, Int) -> Void
 
@@ -220,7 +230,7 @@ struct AddMoleculeWithLiquidBeaker_Previews: PreviewProvider {
             GeometryReader { geo in
                 AqueousBeakerView(
                     model: model,
-                    settings: AqueousScreenLayoutSettings(geometry: geo)
+                    settings: EquilibriumAppLayoutSettings(geometry: geo, verticalSizeClass: nil)
                 )
             }
         }
