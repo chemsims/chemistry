@@ -71,6 +71,7 @@ private struct SolubilityScreenWithSettings: View {
             )
             .id(model.selectedReaction.rawValue)
             .transition(.identity)
+            .padding(.top, settings.reactionDefinitionTopPadding)
 
             SolubleBeakerView(
                 model: model,
@@ -192,7 +193,17 @@ struct SolubilityScreenLayoutSettings {
     let maxWaterHeightFraction = SolubleReactionSettings.maxWaterHeight
 
     var soluble: SolubleBeakerSettings {
-        SolubleBeakerSettings(common: common)
+        SolubleBeakerSettings(
+            common: common,
+            definitionTopPadding: reactionDefinitionTopPadding
+        )
+    }
+
+    var reactionDefinitionTopPadding: CGFloat {
+        if verticalSizeClass.contains(.regular) {
+            return common.chartSelectionHeight
+        }
+        return 0
     }
 
     var equationWidth: CGFloat {

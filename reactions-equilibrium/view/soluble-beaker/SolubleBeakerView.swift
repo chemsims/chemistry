@@ -416,6 +416,7 @@ private struct SolubleBeakerAccessibilityHostView: View {
 struct SolubleBeakerSettings {
 
     let common: EquilibriumAppLayoutSettings
+    let definitionTopPadding: CGFloat
 
     var beakerWidth: CGFloat {
         common.beakerWidth
@@ -431,7 +432,7 @@ struct SolubleBeakerSettings {
 
     var containerInitY: CGFloat {
         if common.verticalSizeClass.contains(.regular) {
-            return common.chartSize
+            return common.chartSize - definitionTopPadding
         }
         return 1.5 * containerWidth
     }
