@@ -155,7 +155,9 @@ public struct Labelling {
         ("H^-^", "H (charge minus 1)"),
         ("OH", "O H"),
         ("H6^+^", "H6 (charge plus 1)"),
-        ("A_2_", "'A'2")
+        ("A_2_", "'A'2"),
+        ("rate_r_", "rate r"),
+        ("rate_f_","rate f")
     ]
 }
 
