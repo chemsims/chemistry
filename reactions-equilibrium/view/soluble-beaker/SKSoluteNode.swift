@@ -64,7 +64,7 @@ class SKSoluteNode: SKShapeNode {
         let center = CGPoint(x: sideLength, y: halfHeight)
         let angleDelta = (60 * CGFloat.pi) / 180
 
-        for i in 0..<7 {
+        for i in 0..<6 {
             let centerAngle = CGFloat(i) * angleDelta
             let triangleRotation = CGFloat.pi - (CGFloat(i) * angleDelta)
 
