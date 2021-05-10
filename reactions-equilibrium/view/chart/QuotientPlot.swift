@@ -38,6 +38,7 @@ struct QuotientPlot: View {
             VStack(spacing: settings.axisLabelGapFromAxis) {
                 annotatedChart
                 Text("Time")
+                    .frame(height: settings.xAxisLabelHeight)
                     .accessibility(hidden: true)
             }
             Text(kTerm)

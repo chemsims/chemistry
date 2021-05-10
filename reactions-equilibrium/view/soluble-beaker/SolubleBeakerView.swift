@@ -39,8 +39,11 @@ private struct SolubleBeakerViewWithGeometry: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             beaker
+                .padding(.bottom, settings.common.beakerBottomPadding)
+
             shakeText
                 .opacity(model.showShakeText ? 1 : 0)
+                .padding(.bottom, settings.common.beakerBottomPadding)
 
             HStack(spacing: 0) {
                 Spacer()
@@ -48,6 +51,7 @@ private struct SolubleBeakerViewWithGeometry: View {
                 containers
             }
         }
+        .padding(.leading, settings.common.beakerLeftPadding)
     }
 
     private var shakeText: some View {
@@ -147,7 +151,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             SolubleBeakerSceneRepresentable(
                 size: CGSize(
                     width: settings.soluble.beaker.beaker.innerBeakerWidth,
-                    height: geometry.size.height
+                    height: geometry.size.height - settings.common.beakerBottomPadding
                 ),
                 particlePosition: skParticlePosition,
                 soluteWidth: settings.soluble.soluteWidth,
@@ -159,7 +163,7 @@ private struct SolubleBeakerViewWithGeometry: View {
         }
         .frame(
             width: settings.soluble.beaker.beaker.innerBeakerWidth,
-            height: geometry.size.height
+            height: sceneHeight
         )
         .accessibilityElement(children: .combine)
     }
@@ -293,13 +297,13 @@ private struct SolubleBeakerViewWithGeometry: View {
     private func standardContainerLocation(index: Int) -> CGPoint {
         return CGPoint(
             x: CGFloat(index + 1) * settings.soluble.beaker.beaker.innerBeakerWidth / 4,
-            y: settings.soluble.containerWidth * 1.5
+            y: settings.soluble.containerInitY
         )
     }
 
     private var activeContainerLocation: CGPoint {
         let initX = settings.soluble.beaker.beaker.innerBeakerWidth / 2
-        let initY: CGFloat = settings.soluble.containerWidth * 3.5
+        let initY = settings.soluble.containerActiveInitY
         return CGPoint(x: initX, y: initY)
             .offset(
                 dx: (position.xOffset + simulatorOffset.0) * halfXRange,
@@ -320,8 +324,12 @@ private struct SolubleBeakerViewWithGeometry: View {
     private var skParticlePosition: CGPoint {
         CGPoint(
             x: activeContainerLocation.x,
-            y: geometry.size.height - activeContainerLocation.y
+            y: sceneHeight - activeContainerLocation.y
         )
+    }
+
+    private var sceneHeight: CGFloat {
+        geometry.size.height - settings.common.beakerBottomPadding
     }
 
     private var waterHeight: CGFloat {
@@ -407,7 +415,11 @@ private struct SolubleBeakerAccessibilityHostView: View {
 
 struct SolubleBeakerSettings {
 
-    let beakerWidth: CGFloat
+    let common: EquilibriumAppLayoutSettings
+
+    var beakerWidth: CGFloat {
+        common.beakerWidth
+    }
 
     var beaker: FillableBeakerSettings {
         FillableBeakerSettings(beakerWidth: beakerWidth)
@@ -415,6 +427,17 @@ struct SolubleBeakerSettings {
 
     var containerWidth: CGFloat {
         0.13 * beakerWidth
+    }
+
+    var containerInitY: CGFloat {
+        if common.verticalSizeClass.contains(.regular) {
+            return common.chartSize
+        }
+        return 1.5 * containerWidth
+    }
+
+    var containerActiveInitY: CGFloat {
+        containerInitY + 2 * containerWidth
     }
 
     var containerFontSize: CGFloat {
@@ -488,7 +511,11 @@ struct SolubleBeakerView_Previews: PreviewProvider {
                     persistence: InMemorySolubilityPersistence()
                 ),
                 shakeModel: SoluteBeakerShakingViewModel(),
-                settings: SolubilityScreenLayoutSettings(geometry: geo, verticalSizeClass: nil)
+                settings: SolubilityScreenLayoutSettings(
+                    geometry: geo,
+                    verticalSizeClass: nil,
+                    horizontalSizeClass: nil
+                )
             )
         }
         .padding()

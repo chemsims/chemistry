@@ -24,6 +24,7 @@ struct AqueousBeakerView<Nav: ScreenState>: View {
         }
         .frame(height: settings.height)
         .accessibilityElement(children: .contain)
+        .padding(.leading, settings.beakerLeftPadding)
     }
 
     private var shakeText: some View {
@@ -34,7 +35,7 @@ struct AqueousBeakerView<Nav: ScreenState>: View {
                 ShakeText()
                     .font(.system(size: settings.shakeTextFontSize))
                 Spacer()
-                    .frame(height: 1.1 * settings.beakerHeight)
+                    .frame(height: 1.1 * (settings.beakerHeight + settings.beakerBottomPadding))
             }
         }
         .frame(width: settings.beakerSettings.innerBeakerWidth)
@@ -149,6 +150,7 @@ struct AqueousBeakerView<Nav: ScreenState>: View {
                 )
             )
         }
+        .padding(.bottom, settings.beakerBottomPadding)
     }
 
     private func manualAddMolecule(molecule: AqueousMolecule, amount: Int) {
@@ -157,7 +159,7 @@ struct AqueousBeakerView<Nav: ScreenState>: View {
 
     private var topOfWaterPosition: CGFloat {
         let topFromSlider = settings.sliderAxis.getPosition(at: model.rows)
-        return settings.height - settings.sliderHeight + topFromSlider
+        return settings.height - settings.sliderHeight + topFromSlider - settings.beakerBottomPadding
     }
 }
 
@@ -230,7 +232,11 @@ struct AddMoleculeWithLiquidBeaker_Previews: PreviewProvider {
             GeometryReader { geo in
                 AqueousBeakerView(
                     model: model,
-                    settings: EquilibriumAppLayoutSettings(geometry: geo, verticalSizeClass: nil)
+                    settings: EquilibriumAppLayoutSettings(
+                        geometry: geo,
+                        verticalSizeClass: nil,
+                        horizontalSizeClass: nil
+                    )
                 )
             }
         }

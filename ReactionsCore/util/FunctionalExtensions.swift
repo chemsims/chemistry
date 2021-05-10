@@ -12,6 +12,17 @@ extension Optional {
     public func forAll(_ p: (Wrapped) -> Bool) -> Bool {
         self.map { p($0) } ?? true
     }
+
+    /// Applies predicate on value if it exists, or false if empty
+    public func exists(_ p: (Wrapped) -> Bool) -> Bool {
+        self.map { p($0) } ?? false
+    }
+}
+
+extension Optional where Wrapped: Equatable {
+    public func contains(_ other: Wrapped) -> Bool {
+        self.exists { $0 == other }
+    }
 }
 
 extension Array where Element: Collection {

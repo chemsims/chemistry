@@ -9,6 +9,7 @@ struct SolubilityScreen: View {
 
     @ObservedObject var model: SolubilityViewModel
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         ZStack {
@@ -20,7 +21,11 @@ struct SolubilityScreen: View {
             GeometryReader { geometry in
                 SolubilityScreenWithSettings(
                     model: model,
-                    settings: SolubilityScreenLayoutSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
+                    settings: SolubilityScreenLayoutSettings(
+                        geometry: geometry,
+                        verticalSizeClass: verticalSizeClass,
+                        horizontalSizeClass: horizontalSizeClass
+                    )
                 )
             }
             .padding(10)
@@ -165,9 +170,14 @@ private struct SolubilityRightStack: View {
 struct SolubilityScreenLayoutSettings {
     let geometry: GeometryProxy
     let verticalSizeClass: UserInterfaceSizeClass?
+    let horizontalSizeClass: UserInterfaceSizeClass?
 
     var common: EquilibriumAppLayoutSettings {
-        EquilibriumAppLayoutSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
+        EquilibriumAppLayoutSettings(
+            geometry: geometry,
+            verticalSizeClass: verticalSizeClass,
+            horizontalSizeClass: horizontalSizeClass
+        )
     }
 
     var waterHeightAxis: AxisPositionCalculations<CGFloat> {
@@ -183,7 +193,7 @@ struct SolubilityScreenLayoutSettings {
     let maxWaterHeightFraction = SolubleReactionSettings.maxWaterHeight
 
     var soluble: SolubleBeakerSettings {
-        SolubleBeakerSettings(beakerWidth: common.beakerWidth)
+        SolubleBeakerSettings(common: common)
     }
 
     var equationWidth: CGFloat {

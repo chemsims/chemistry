@@ -7,15 +7,21 @@ import ReactionsCore
 
 struct EquilibriumAppLayoutSettings {
 
-    init(geometry: GeometryProxy, verticalSizeClass: UserInterfaceSizeClass?) {
+    init(
+        geometry: GeometryProxy,
+        verticalSizeClass: UserInterfaceSizeClass?,
+        horizontalSizeClass: UserInterfaceSizeClass?
+    ) {
         self.width = geometry.size.width
         self.height = geometry.size.height
         self.verticalSizeClass = verticalSizeClass
+        self.horizontalSizeClass = verticalSizeClass
     }
 
     let width: CGFloat
     let height: CGFloat
     let verticalSizeClass: UserInterfaceSizeClass?
+    let horizontalSizeClass: UserInterfaceSizeClass?
 
     var beakerSettings: BeakerSettings {
         BeakerSettings(width: beakerWidth, hasLip: true)
@@ -29,8 +35,18 @@ struct EquilibriumAppLayoutSettings {
         beakerWidth * BeakerSettings.heightToWidth
     }
 
-    var beakerBottomGap: CGFloat {
-        0
+    var beakerBottomPadding: CGFloat {
+        if verticalSizeClass.contains(.regular) {
+            return chartSettings.xAxisLabelHeight
+        }
+        return 0
+    }
+
+    var beakerLeftPadding: CGFloat {
+        if horizontalSizeClass.contains(.regular) {
+            return 12
+        }
+        return 0
     }
 
     var sliderHeight: CGFloat {
@@ -99,7 +115,10 @@ extension EquilibriumAppLayoutSettings {
     }
 
     var moleculeContainerYPos: CGFloat {
-        (0.75 * moleculeContainerHeight) + reactionDefinitionHeight
+        if verticalSizeClass.contains(.regular) {
+            return chartSize
+        }
+        return (0.75 * moleculeContainerHeight) + reactionDefinitionHeight
     }
 
     var moleculeSize: CGFloat {

@@ -9,6 +9,7 @@ struct AqueousReactionScreen: View {
 
     @ObservedObject var model: AqueousReactionViewModel
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         ZStack {
@@ -20,7 +21,11 @@ struct AqueousReactionScreen: View {
             GeometryReader { geometry in
                 AqueousReactionScreenWithSettings(
                     model: model,
-                    settings: EquilibriumAppLayoutSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
+                    settings: EquilibriumAppLayoutSettings(
+                        geometry: geometry,
+                        verticalSizeClass: verticalSizeClass,
+                        horizontalSizeClass: horizontalSizeClass
+                    )
                 )
             }
             .padding(10)

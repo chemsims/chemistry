@@ -8,11 +8,16 @@ import ReactionsCore
 struct ReactionEquilibriumRootView: View {
     @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<EquilibriumAppScreen, EquilibriumQuestionSet>>
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         GeometryReader { geo in
             makeView(
-                settings: EquilibriumAppLayoutSettings(geometry: geo, verticalSizeClass: verticalSizeClass)
+                settings: EquilibriumAppLayoutSettings(
+                    geometry: geo,
+                    verticalSizeClass: verticalSizeClass,
+                    horizontalSizeClass: horizontalSizeClass
+                )
             )
         }
     }

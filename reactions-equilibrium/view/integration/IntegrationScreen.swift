@@ -9,6 +9,7 @@ struct IntegrationScreen: View {
 
     @ObservedObject var model: IntegrationViewModel
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         ZStack {
@@ -20,7 +21,11 @@ struct IntegrationScreen: View {
             GeometryReader { geometry in
                 IntegrationScreenWithGeometry(
                     model: model,
-                    settings: IntegrationScreenSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
+                    settings: IntegrationScreenSettings(
+                        geometry: geometry,
+                        verticalSizeClass: verticalSizeClass,
+                        horizontalSizeClass: horizontalSizeClass
+                    )
                 )
             }
             .padding(10)
@@ -136,9 +141,14 @@ struct IntegrationScreenSettings {
 
     let geometry: GeometryProxy
     let verticalSizeClass: UserInterfaceSizeClass?
+    let horizontalSizeClass: UserInterfaceSizeClass?
 
     var common: EquilibriumAppLayoutSettings {
-        EquilibriumAppLayoutSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
+        EquilibriumAppLayoutSettings(
+            geometry: geometry,
+            verticalSizeClass: verticalSizeClass,
+            horizontalSizeClass: horizontalSizeClass
+        )
     }
 
     var barChartGeometry: BarChartGeometry {

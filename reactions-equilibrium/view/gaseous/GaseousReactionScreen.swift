@@ -9,6 +9,7 @@ struct GaseousReactionScreen: View {
 
     @ObservedObject var model: GaseousReactionViewModel
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -20,7 +21,11 @@ struct GaseousReactionScreen: View {
             GeometryReader { geometry in
                 GaseousReactionScreenWithSettings(
                     model: model,
-                    settings: GaseousReactionScreenSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
+                    settings: GaseousReactionScreenSettings(
+                        geometry: geometry,
+                        verticalSizeClass: verticalSizeClass,
+                        horizontalSizeClass: horizontalSizeClass
+                    )
                 )
             }
             .padding(10)
@@ -36,6 +41,8 @@ private struct GaseousReactionScreenWithSettings: View {
     var body: some View {
         HStack(spacing: 0) {
             LeftStack(model: model, settings: settings)
+                .zIndex(1) // Workaround for an issue where a white rectangle overlaps content when changing the chart offset sometimes
+
             Spacer()
             ChartStack(
                 model: model,
@@ -64,11 +71,13 @@ private struct LeftStack: View {
             reactionDefinition
                 .id(model.selectedReaction.rawValue)
                 .transition(.identity)
+                .padding(.leading, settings.common.menuSize)
             Spacer()
             PressureBeaker(
                 model: model,
                 settings: settings.pressureBeakerSettings
             )
+            .padding(.bottom, settings.common.beakerBottomPadding)
         }
         .accessibilityElement(children: .contain)
     }
@@ -146,6 +155,7 @@ private struct LeftStack: View {
 struct GaseousReactionScreenSettings {
     let geometry: GeometryProxy
     let verticalSizeClass: UserInterfaceSizeClass?
+    let horizontalSizeClass: UserInterfaceSizeClass?
     var width: CGFloat {
         geometry.size.width
     }
@@ -155,7 +165,11 @@ struct GaseousReactionScreenSettings {
     }
 
     var common: EquilibriumAppLayoutSettings {
-        EquilibriumAppLayoutSettings(geometry: geometry, verticalSizeClass: verticalSizeClass)
+        EquilibriumAppLayoutSettings(
+            geometry: geometry,
+            verticalSizeClass: verticalSizeClass,
+            horizontalSizeClass: horizontalSizeClass
+        )
     }
 }
 

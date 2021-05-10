@@ -248,7 +248,8 @@ struct PressureBeaker_Previews: PreviewProvider {
                 settings: PressureBeakerSettings(
                     width: GaseousReactionScreenSettings(
                         geometry: geo,
-                        verticalSizeClass: nil
+                        verticalSizeClass: nil,
+                        horizontalSizeClass: nil
                     ).pressureBeakerSettings.width
                 )
             )
