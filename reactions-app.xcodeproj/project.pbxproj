@@ -280,6 +280,7 @@
 		57ABDC3925EBF9300078A82B /* AqueousReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */; };
 		57ABDC3F25EBFA230078A82B /* ReactionDropDownSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */; };
 		57ABDC4625EC03E10078A82B /* AqueousStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC4525EC03E10078A82B /* AqueousStatements.swift */; };
+		57AC3B1626496F7800D699B4 /* EquilibriumAppCanBeOpenedByUrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AC3B1526496F7800D699B4 /* EquilibriumAppCanBeOpenedByUrlTests.swift */; };
 		57B23314258E8BCB00128760 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23313258E8BCB00128760 /* AppScreen.swift */; };
 		57B2331F258E93AE00128760 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B2331E258E93AE00128760 /* PageViewController.swift */; };
 		57B23325258E94A500128760 /* ReactionFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23324258E94A500128760 /* ReactionFilingScreen.swift */; };
@@ -804,6 +805,7 @@
 		57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionType.swift; sourceTree = "<group>"; };
 		57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDropDownSelection.swift; sourceTree = "<group>"; };
 		57ABDC4525EC03E10078A82B /* AqueousStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousStatements.swift; sourceTree = "<group>"; };
+		57AC3B1526496F7800D699B4 /* EquilibriumAppCanBeOpenedByUrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumAppCanBeOpenedByUrlTests.swift; sourceTree = "<group>"; };
 		57AD96BB263024FD0027DD0C /* AnalyticsConsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsConsentView.swift; sourceTree = "<group>"; };
 		57B168BF25A7C09200F6668E /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
 		57B23313258E8BCB00128760 /* AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreen.swift; sourceTree = "<group>"; };
@@ -1579,6 +1581,7 @@
 				577A26262628A62B0060EC54 /* AqueousScalesRotationTests.swift */,
 				577A26302628ACC30060EC54 /* GaseousScalesRotationTests.swift */,
 				57FD4031264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift */,
+				57AC3B1526496F7800D699B4 /* EquilibriumAppCanBeOpenedByUrlTests.swift */,
 			);
 			path = "reactions-equilibriumTests";
 			sourceTree = "<group>";
@@ -3140,6 +3143,7 @@
 				577A26272628A62B0060EC54 /* AqueousScalesRotationTests.swift in Sources */,
 				577A260F26283E6E0060EC54 /* GaseousReactionViewModelPumpStatementTests.swift in Sources */,
 				57952A3325E66FBD006AB876 /* BalancedReactionEquationTests.swift in Sources */,
+				57AC3B1626496F7800D699B4 /* EquilibriumAppCanBeOpenedByUrlTests.swift in Sources */,
 				5725972325EE3E9400D87964 /* ReactionComponentTests.swift in Sources */,
 				57B5312826440813002F7247 /* SolubilityMilligramsSoluteAddedTests.swift in Sources */,
 				57FD4032264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift in Sources */,
