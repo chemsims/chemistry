@@ -206,29 +206,28 @@ private class RunAnimationState: AqueousScreenState {
             ),
         ]
     }
+}
 
-    private class RunReactionDelayedState: AqueousScreenState {
+private class RunReactionDelayedState: AqueousScreenState {
+    init(
+        statement: [TextLine],
+        highlights: [AqueousScreenElement],
+        reactionDirection: ReactionDefinitionArrowDirection?
+    ) {
+        self.statement = statement
+        self.highlights = highlights
+        self.reactionDirection = reactionDirection
+    }
 
-        init(
-            statement: [TextLine],
-            highlights: [AqueousScreenElement],
-            reactionDirection: ReactionDefinitionArrowDirection?
-        ) {
-            self.statement = statement
-            self.highlights = highlights
-            self.reactionDirection = reactionDirection
-        }
+    let statement: [TextLine]
+    let highlights: [AqueousScreenElement]
+    let reactionDirection: ReactionDefinitionArrowDirection?
 
-        let statement: [TextLine]
-        let highlights: [AqueousScreenElement]
-        let reactionDirection: ReactionDefinitionArrowDirection?
-
-        override func apply(on model: AqueousReactionViewModel) {
-            model.statement = statement
-            model.highlightedElements.elements = highlights
-            if let direction = reactionDirection {
-                model.reactionDefinitionDirection = direction
-            }
+    override func apply(on model: AqueousReactionViewModel) {
+        model.statement = statement
+        model.highlightedElements.elements = highlights
+        if let direction = reactionDirection {
+            model.reactionDefinitionDirection = direction
         }
     }
 }
@@ -382,15 +381,18 @@ private class RunReverseAnimation: AqueousScreenState {
         let delay = Double(tToConvergence / 2)
         return [
             DelayedState(
-                state: SetStatementState(
-                    statement: AqueousStatements.midReverseReaction
+                state: RunReactionDelayedState(
+                    statement: AqueousStatements.midReverseReaction,
+                    highlights: [],
+                    reactionDirection: nil
                 ),
                 delay: delay
             ),
             DelayedState(
-                state: SetStatementState(
+                state: RunReactionDelayedState(
                     statement: AqueousStatements.reverseEquilibriumReached,
-                    highlights: [.chartEquilibrium]
+                    highlights: [.chartEquilibrium],
+                    reactionDirection: .equilibrium
                 ),
                 delay: delay
             )
