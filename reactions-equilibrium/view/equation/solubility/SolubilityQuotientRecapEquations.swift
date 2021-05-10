@@ -69,7 +69,7 @@ private struct GaseousQuotientRecap: View {
         ) { element in
             HStack(alignment: .bottom, spacing: 0) {
                 FixedText("P")
-                Text(element)
+                FixedText(element)
                     .font(.system(size: EquationSizing.subscriptFontSize))
             }
         }

@@ -245,9 +245,11 @@ struct SolubilityScreenLayoutSettings {
 
 struct SolubilityScreen_Previews: PreviewProvider {
     static var previews: some View {
-        SolubilityScreen(model: SolubilityViewModel(
-            persistence: InMemorySolubilityPersistence()
-        ))
-            .previewLayout(.iPhone8Landscape)
+        SolubilityScreen(
+            model: SolubilityViewModel(
+                persistence: InMemorySolubilityPersistence()
+            )
+        )
+        .previewLayout(.iPadPro12_9Inch)
     }
 }
