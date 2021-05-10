@@ -58,7 +58,7 @@ private struct SolubilityChartWithGeometry: View {
                 .frame(width: yAxisWidth, height: plotHeight)
                 .accessibility(hidden: true)
 
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 2) {
                 plotArea
                 Text("pH")
                     .fixedSize()
