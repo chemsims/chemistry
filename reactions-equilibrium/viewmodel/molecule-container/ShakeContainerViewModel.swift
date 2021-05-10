@@ -31,6 +31,7 @@ class ShakeContainerViewModel: NSObject, ObservableObject {
     }
 
     private let velocity = 200.0 // pts per second
+    private let maxDuration: Double = 1.5
 
     func manualAdd(amount: Int) {
         doManualAdd(remaining: amount)
@@ -61,7 +62,7 @@ class ShakeContainerViewModel: NSObject, ObservableObject {
             molecules.append(molecule)
 
             let dy = bottomY - location.y
-            let duration = Double(dy) / velocity
+            let duration = min(maxDuration, Double(dy) / velocity)
 
             withAnimation(.linear(duration: duration)) {
                 molecules[molecules.count - 1].position = CGPoint(x: molecule.position.x, y: bottomY)
