@@ -34,6 +34,8 @@ private struct SolubleBeakerViewWithGeometry: View {
     let settings: SolubilityScreenLayoutSettings
     let geometry: GeometryProxy
 
+    @GestureState private var simulatorOffset: (CGFloat, CGFloat) = (0, 0)
+
     var body: some View {
         ZStack(alignment: .bottom) {
             beaker
@@ -198,6 +200,9 @@ private struct SolubleBeakerViewWithGeometry: View {
                 model.startShaking()
             }
         }
+        .modifyIf(EquilibriumApp.isSimulator) {
+            $0.gesture(simulatorDragGesture)
+        }
     }
 
     private var containerRightView: some View {
@@ -297,9 +302,17 @@ private struct SolubleBeakerViewWithGeometry: View {
         let initY: CGFloat = settings.soluble.containerWidth * 3.5
         return CGPoint(x: initX, y: initY)
             .offset(
-                dx: position.xOffset * settings.soluble.beaker.beaker.innerBeakerWidth / 2,
-                dy: position.yOffset * settings.soluble.containerWidth
+                dx: (position.xOffset + simulatorOffset.0) * halfXRange,
+                dy: (position.yOffset + simulatorOffset.1) * halfYRange
             )
+    }
+
+    private var halfXRange: CGFloat {
+        settings.soluble.beaker.beaker.innerBeakerWidth / 2
+    }
+
+    private var halfYRange: CGFloat {
+        settings.soluble.containerWidth
     }
 
     // Maps active container location into the SpriteKit frame of reference.
@@ -325,6 +338,20 @@ private struct SolubleBeakerViewWithGeometry: View {
             minValue: settings.waterHeightAxis.minValue,
             maxValue: settings.waterHeightAxis.maxValue
         )
+    }
+
+    private var simulatorDragGesture: some Gesture {
+        DragGesture(minimumDistance: 0)
+            .updating($simulatorOffset) { gesture, offset, _ in
+                let w = gesture.translation.width
+                let h = gesture.translation.height
+
+                let newY = LinearEquation(x1: -halfYRange, y1: -1, x2: halfYRange, y2: 1).getY(at: h).within(min: -1, max: 1)
+                let newX = LinearEquation(x1: -halfXRange, y1: -1, x2: halfXRange, y2: 1).getY(at: w).within(min: -1, max: 1)
+
+                offset.0 = newX
+                offset.1 = newY
+            }
     }
 }
 

@@ -156,6 +156,8 @@ private struct AddMoleculeContainerView: View {
     let halfXRange: CGFloat
     let halfYRange: CGFloat
 
+    @GestureState private var simulatorOffset: (CGFloat, CGFloat) = (0, 0)
+
     var body: some View {
         ZStack {
             ForEach(model.molecules) { molecule in
@@ -177,17 +179,31 @@ private struct AddMoleculeContainerView: View {
             .position(initialLocation)
             .offset(
                 CGSize(
-                    width: position.xOffset * halfXRange,
-                    height: position.yOffset * halfYRange
+                    width: (position.xOffset + simulatorOffset.0) * halfXRange,
+                    height: (position.yOffset + simulatorOffset.1) * halfYRange
                 )
             )
             .onTapGesture {
                 onTap()
             }
+            .modifyIf(EquilibriumApp.isSimulator) {
+                $0.gesture(simulatorDragGesture)
+            }
     }
 
-}
+    private var simulatorDragGesture: some Gesture {
+        DragGesture().updating($simulatorOffset) { gesture, offset, _ in
+            let w = gesture.translation.width
+            let h = gesture.translation.height
 
+            let newY = LinearEquation(x1: -halfYRange, y1: -1, x2: halfYRange, y2: 1).getY(at: h).within(min: -1, max: 1)
+            let newX = LinearEquation(x1: -halfXRange, y1: -1, x2: halfXRange, y2: 1).getY(at: w).within(min: -1, max: 1)
+
+            offset.0 = newX
+            offset.1 = newY
+        }
+    }
+}
 
 struct AddMoleculeView_Previews: PreviewProvider {
     static var previews: some View {
