@@ -5,24 +5,25 @@
 import ReactionsCore
 
 struct ReactionEquilibriumNavigationRows {
-    static let rows = NavigationRow.allCases.map(\.row)
+    static let rows = NavigationRow.allCases.map(\.row) + [integration]
+
+    static let integration = NavigationIconRow(
+        primaryIcon: NavigationIcon<EquilibriumAppScreen>(
+            screen: .integrationActivity,
+            image: .core(.filingCabinet),
+            selectedImage: .core(.filingCabinetSelected),
+            label: "Equilibrium & rates integration"
+        ),
+        firstSecondaryIcon: nil,
+        secondSecondaryIcon: nil
+    )
 }
 
 private enum NavigationRow: CaseIterable {
     case aqueous, gaseous, solubility
 
     var row: NavigationIconRow<EquilibriumAppScreen> {
-        var secondaryIcon: NavigationIcon<EquilibriumAppScreen>? = nil
-        if self == .aqueous {
-            secondaryIcon = NavigationIcon(
-                screen: .integrationActivity,
-                image: .core(.filingCabinet),
-                selectedImage: .core(.filingCabinetSelected),
-                label: "Equilibrium & rates integration"
-            )
-        }
-
-        return NavigationIconRow(
+        NavigationIconRow(
             primaryIcon: NavigationIcon(
                 screen: screen,
                 image: .application(icon),
@@ -35,7 +36,7 @@ private enum NavigationRow: CaseIterable {
                 selectedImage: .core(.quizIconSelected),
                 label: "\(label) quiz"
             ),
-            secondSecondaryIcon: secondaryIcon
+            secondSecondaryIcon: nil
         )
     }
 
