@@ -10,18 +10,21 @@ public struct BarChartGeometry {
         chartWidth: CGFloat,
         minYValue: CGFloat,
         maxYValue: CGFloat,
-        barWidthFraction: CGFloat = 0.15
+        barWidthFraction: CGFloat = 0.15,
+        fontSizeFraction: CGFloat = 0.1
     ) {
         self.chartWidth = chartWidth
         self.minYValue = minYValue
         self.maxYValue = maxYValue
         self.barWidthFraction = barWidthFraction
+        self.fontSizeFraction = fontSizeFraction
     }
 
     let chartWidth: CGFloat
     let minYValue: CGFloat
     let maxYValue: CGFloat
     let barWidthFraction: CGFloat
+    let fontSizeFraction: CGFloat
 
     let ticks = 10
 
@@ -59,7 +62,7 @@ public struct BarChartGeometry {
     }
 
     var labelFontSize: CGFloat {
-        0.1 * chartWidth
+        fontSizeFraction * chartWidth
     }
 
     private var barMinHeight: CGFloat {

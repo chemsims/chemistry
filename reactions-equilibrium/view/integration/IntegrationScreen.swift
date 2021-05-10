@@ -62,7 +62,7 @@ private struct IntegrationRightStack: View {
                 statement: model.statement,
                 next: model.next,
                 back: model.back,
-                nextIsDisabled: false, // TODO
+                nextIsDisabled: false,
                 settings: settings.common.beakySettings
             )
         }
@@ -144,7 +144,8 @@ struct IntegrationScreenSettings {
             chartWidth: common.chartSize,
             minYValue: 0,
             maxYValue: AqueousReactionSettings.ConcentrationInput.maxAxis,
-            barWidthFraction: 0.13
+            barWidthFraction: 0.13,
+            fontSizeFraction: ReactionEquilibriumChartsLayoutSettings.fontSizeToChartWidth
         )
     }
 

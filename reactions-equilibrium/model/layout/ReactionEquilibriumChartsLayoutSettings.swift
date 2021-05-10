@@ -38,8 +38,10 @@ struct ReactionEquilibriumChartsLayoutSettings {
     }
 
     var axisLabelFontSize: CGFloat {
-        0.06 * size
+        Self.fontSizeToChartWidth * size
     }
+
+    static let fontSizeToChartWidth: CGFloat = 0.06
 }
 
 extension ReactionEquilibriumChartsLayoutSettings {
