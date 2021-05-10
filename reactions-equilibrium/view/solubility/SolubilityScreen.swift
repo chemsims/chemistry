@@ -119,13 +119,12 @@ private struct SolubilityRightStack: View {
                 ph: model.componentsWrapper.ph,
                 solubility: model.componentsWrapper.solubility,
                 currentTime: model.currentTime,
-                lineWidth: settings.common.chartSettings.layout.lineWidth,
+                lineWidth: settings.common.chartSettings.axisShapeSettings.lineWidth,
                 indicatorRadius: settings.common.chartSettings.headRadius,
                 haloRadius: settings.common.chartSettings.layout.haloRadius
-
             )
             .frame(width: settings.phPlotWidth, height: settings.phPlotHeight)
-            .font(.system(size: settings.phPlotFontSize))
+            .font(.system(size: settings.common.chartSettings.axisLabelFontSize))
             .opacity(model.equationState == .showOriginalQuotientAndQuotientRecap ? 0 : 1)
 
             Spacer()
@@ -205,7 +204,10 @@ struct SolubilityScreenLayoutSettings {
     }
 
     var phPlotWidth: CGFloat {
-        0.8 * common.equationWidth
+        if horizontalSizeClass.contains(.regular) {
+            return common.equationWidth
+        }
+        return 0.8 * common.equationWidth
     }
 
     var phPlotHeight: CGFloat {
