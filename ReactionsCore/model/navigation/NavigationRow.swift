@@ -4,7 +4,17 @@
 
 import Foundation
 
-public struct NavigationIconRow<Screen> {
+public struct NavigationRows<Screen> {
+    let primary: [NavigationRow<Screen>]
+    let secondary: [NavigationRow<Screen>]
+
+    public init(_ rows: [NavigationRow<Screen>], secondary: [NavigationRow<Screen>] = []) {
+        self.primary = rows
+        self.secondary = secondary
+    }
+}
+
+public struct NavigationRow<Screen> {
     let primaryIcon: NavigationIcon<Screen>
     let firstSecondaryIcon: NavigationIcon<Screen>?
     let secondSecondaryIcon: NavigationIcon<Screen>?

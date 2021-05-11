@@ -5,7 +5,7 @@
 import ReactionsCore
 
 struct ReactionRateNavigationRows {
-    static let rows: [NavigationIconRow<AppScreen>] = TopLevelScreen.allCases.map(\.row)
+    static let rows = NavigationRows(TopLevelScreen.allCases.map(\.row))
 }
 
 private enum TopLevelScreen: CaseIterable {
@@ -15,8 +15,8 @@ private enum TopLevelScreen: CaseIterable {
           reactionComparison,
           energyProfile
 
-    var row: NavigationIconRow<AppScreen> {
-        NavigationIconRow(
+    var row: NavigationRow<AppScreen> {
+        NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: appScreen,
                 image: .application(navImage),

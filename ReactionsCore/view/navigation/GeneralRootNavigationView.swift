@@ -7,7 +7,7 @@ import SwiftUI
 public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
 
     @ObservedObject var model: RootNavigationViewModel<Injector>
-    let navigationRows: [NavigationIconRow<Injector.Screen>]
+    let navigationRows: NavigationRows<Injector.Screen>
     let feedbackSettings: FeedbackSettings
     let shareSettings: ShareSettings
     let menuIconSize: CGFloat
@@ -16,7 +16,7 @@ public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
 
     public init(
         model: RootNavigationViewModel<Injector>,
-        navigationRows: [NavigationIconRow<Injector.Screen>],
+        navigationRows: NavigationRows<Injector.Screen>,
         feedbackSettings: FeedbackSettings,
         shareSettings: ShareSettings,
         menuIconSize: CGFloat,

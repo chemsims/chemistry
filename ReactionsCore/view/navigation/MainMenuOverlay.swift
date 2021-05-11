@@ -6,7 +6,7 @@ import SwiftUI
 
 struct MainMenuOverlay<Injector: NavigationInjector>: View {
 
-    let rows: [NavigationIconRow<Injector.Screen>]
+    let rows: NavigationRows<Injector.Screen>
     @ObservedObject var navigation: RootNavigationViewModel<Injector>
     let feedbackSettings: FeedbackSettings
     let shareSettings: ShareSettings
@@ -61,7 +61,7 @@ struct MainMenuOverlay<Injector: NavigationInjector>: View {
 
 private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
 
-    let rows: [NavigationIconRow<Injector.Screen>]
+    let rows: NavigationRows<Injector.Screen>
     @ObservedObject var navigation: RootNavigationViewModel<Injector>
     let feedbackSettings: FeedbackSettings
     @Binding var activeSheet: ActiveSheet?
@@ -219,14 +219,14 @@ extension MainMenuOverlayWithSettings {
 extension MainMenuOverlayWithSettings {
     private var panelContent: some View {
         VStack(alignment: .leading, spacing: settings.navVStackSpacing) {
-            ForEach(0..<rows.count) { i in
-                navRow(rows[i])
+            ForEach(0..<rows.primary.count) { i in
+                navRow(rows.primary[i])
             }
         }
         .padding(settings.panelContentPadding)
     }
 
-    private func navRow(_ row: NavigationIconRow<Injector.Screen>) -> some View {
+    private func navRow(_ row: NavigationRow<Injector.Screen>) -> some View {
         HStack(alignment: .bottom, spacing: settings.navRowHSpacing) {
             navIcon(icon: row.primaryIcon)
                 .frame(
@@ -442,7 +442,7 @@ private enum ActiveSheet: Int, Identifiable {
 struct MainMenuOverlay_Previews: PreviewProvider {
     static var previews: some View {
         MainMenuOverlay(
-            rows: rows,
+            rows: NavigationRows(rows),
             navigation: model,
             feedbackSettings: FeedbackSettings(toAddress: "", subject: ""),
             shareSettings: ShareSettings(appStoreUrl: "", appName: ""),
@@ -453,8 +453,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         .previewLayout(.iPhoneSELandscape)
     }
 
-    static let rows: [NavigationIconRow<Int>] = [
-        NavigationIconRow(
+    static let rows: [NavigationRow<Int>] = [
+        NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: 1,
                 image: .system("folder.circle"),
@@ -469,7 +469,7 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             ),
             secondSecondaryIcon: nil
         ),
-        NavigationIconRow(
+        NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: 3,
                 image: .system("folder.circle"),

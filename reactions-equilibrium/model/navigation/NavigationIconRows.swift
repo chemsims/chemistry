@@ -5,9 +5,12 @@
 import ReactionsCore
 
 struct ReactionEquilibriumNavigationRows {
-    static let rows = NavigationRow.allCases.map(\.row) + [integration]
+    static let rows = NavigationRows(
+        TopLevelScreen.allCases.map(\.row),
+        secondary: [integration]
+    )
 
-    static let integration = NavigationIconRow(
+    static let integration = NavigationRow(
         primaryIcon: NavigationIcon<EquilibriumAppScreen>(
             screen: .integrationActivity,
             image: .core(.filingCabinet),
@@ -19,11 +22,11 @@ struct ReactionEquilibriumNavigationRows {
     )
 }
 
-private enum NavigationRow: CaseIterable {
+private enum TopLevelScreen: CaseIterable {
     case aqueous, gaseous, solubility
 
-    var row: NavigationIconRow<EquilibriumAppScreen> {
-        NavigationIconRow(
+    var row: NavigationRow<EquilibriumAppScreen> {
+        NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: screen,
                 image: .application(icon),
