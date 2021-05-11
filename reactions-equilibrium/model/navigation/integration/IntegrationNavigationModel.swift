@@ -309,6 +309,7 @@ private class PrepareReverseReaction: IntegrationScreenState {
         DeferScreenEdgesState.shared.deferEdges = []
         model.stopShaking()
         model.highlightedElements.clear()
+        model.inputState = .none
     }
 }
 
