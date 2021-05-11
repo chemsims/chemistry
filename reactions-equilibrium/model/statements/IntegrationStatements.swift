@@ -108,4 +108,13 @@ struct IntegrationStatements {
         makes it seem like the whole reaction has stopped at that point.
         """
     ]
+
+    static let end: [TextLine] = [
+        """
+        Why don't you try *dragging the chart* to scrub through the reaction?
+        """,
+        """
+        When you're done, check out you're favorite part to review them again!
+        """
+    ]
 }

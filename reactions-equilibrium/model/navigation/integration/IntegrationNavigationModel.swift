@@ -29,7 +29,8 @@ struct IntegrationNavigationModel {
         AddProduct(),
         PrepareReverseReaction(),
         RunReverseReaction(),
-        EndReaction(statement: statements.reverseEquilibrium, highlightEquilibrium: false)
+        EndReaction(statement: statements.reverseEquilibrium, highlightEquilibrium: false),
+        FinalState()
     ]
 }
 
@@ -315,6 +316,7 @@ private class PrepareReverseReaction: IntegrationScreenState {
 
 private class RunReverseReaction: IntegrationScreenState {
     override func apply(on model: IntegrationViewModel) {
+        model.statement = statements.reverseReactionRunning
         model.reactionDefinitionDirection = .reverse
         let duration = Double(model.timing.end - model.timing.start)
         withAnimation(.linear(duration: duration)) {
@@ -337,5 +339,18 @@ private class RunReverseReaction: IntegrationScreenState {
 
     override func nextStateAutoDispatchDelay(model: IntegrationViewModel) -> Double? {
         Double(model.timing.end - model.timing.start)
+    }
+}
+
+private class FinalState: IntegrationScreenState {
+    override func apply(on model: IntegrationViewModel) {
+        model.statement = statements.end
+        model.canSetCurrentTime = true
+        model.highlightedElements.clear()
+        model.reactionDefinitionDirection = .none
+    }
+
+    override func unapply(on model: IntegrationViewModel) {
+        model.canSetCurrentTime = false
     }
 }
