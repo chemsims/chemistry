@@ -44,7 +44,7 @@ private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
     let injector: EquilibriumInjector
 
     func deferCanSelect(of screen: EquilibriumAppScreen) -> DeferCanSelect<EquilibriumAppScreen>? {
-        nil
+        screen == .integrationActivity ? .hasCompleted(other: .solubilityQuiz) : nil
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: EquilibriumAppScreen) -> Bool {
