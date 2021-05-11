@@ -13,8 +13,8 @@ struct ReactionEquilibriumNavigationRows {
     static let integration = NavigationRow(
         primaryIcon: NavigationIcon<EquilibriumAppScreen>(
             screen: .integrationActivity,
-            image: .core(.filingCabinet),
-            selectedImage: .core(.filingCabinetSelected),
+            image: .application("integrationicon"),
+            selectedImage: .application("integrationicon-pressed"),
             label: "Equilibrium & rates integration"
         ),
         firstSecondaryIcon: nil,
