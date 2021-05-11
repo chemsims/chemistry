@@ -222,6 +222,13 @@ extension MainMenuOverlayWithSettings {
             ForEach(0..<rows.primary.count) { i in
                 navRow(rows.primary[i])
             }
+            if !rows.secondary.isEmpty {
+                Divider()
+                    .frame(width: settings.dividerWidth(rows: rows))
+            }
+            ForEach(0..<rows.secondary.count) { i in
+                navRow(rows.secondary[i])
+            }
         }
         .padding(settings.panelContentPadding)
     }
@@ -236,12 +243,18 @@ extension MainMenuOverlayWithSettings {
 
             if row.firstSecondaryIcon != nil {
                 navIcon(icon: row.firstSecondaryIcon!)
-                    .frame(height: settings.secondaryIconHeight)
+                    .frame(
+                        width: settings.secondaryIconWidth,
+                        height: settings.secondaryIconHeight
+                    )
             }
 
             if row.secondSecondaryIcon != nil {
                 navIcon(icon: row.secondSecondaryIcon!)
-                    .frame(height: settings.secondaryIconHeight)
+                    .frame(
+                        width: settings.secondaryIconWidth,
+                        height: settings.secondaryIconHeight
+                    )
             }
         }
     }
@@ -405,6 +418,10 @@ private struct MainMenuLayoutSettings {
         0.5 * navIconHeight
     }
 
+    var secondaryIconWidth: CGFloat {
+        1.2 * secondaryIconHeight
+    }
+
     var panelContentPadding: CGFloat {
         0.35 * menuSize
     }
@@ -428,6 +445,13 @@ private struct MainMenuLayoutSettings {
     var panelBorder: CGFloat {
         0.75
     }
+
+    func dividerWidth<T>(rows: NavigationRows<T>) -> CGFloat {
+        let secondaryCount = CGFloat(rows.maxSecondaryIconCount)
+        let secondary = secondaryIconWidth * secondaryCount
+        let spacing = navRowHSpacing * secondaryCount
+        return navIconWidth + secondary + spacing
+    }
 }
 
 private enum ActiveSheet: Int, Identifiable {
@@ -442,7 +466,7 @@ private enum ActiveSheet: Int, Identifiable {
 struct MainMenuOverlay_Previews: PreviewProvider {
     static var previews: some View {
         MainMenuOverlay(
-            rows: NavigationRows(rows),
+            rows: NavigationRows(rows, secondary: secondary),
             navigation: model,
             feedbackSettings: FeedbackSettings(toAddress: "", subject: ""),
             shareSettings: ShareSettings(appStoreUrl: "", appName: ""),
@@ -482,6 +506,24 @@ struct MainMenuOverlay_Previews: PreviewProvider {
                 selectedImage: .system("externaldrive.fill"),
                 label: ""
             ),
+            secondSecondaryIcon: NavigationIcon(
+                screen: 2,
+                image: .system("externaldrive"),
+                selectedImage: .system("externaldrive.fill"),
+                label: ""
+            )
+        )
+    ]
+
+    static let secondary: [NavigationRow<Int>] = [
+        NavigationRow(
+            primaryIcon: NavigationIcon(
+                screen: 4,
+                image: .system("heart.circle"),
+                selectedImage: .system("heart.circle"),
+                label: ""
+            ),
+            firstSecondaryIcon: nil,
             secondSecondaryIcon: nil
         )
     ]
@@ -491,7 +533,7 @@ struct MainMenuOverlay_Previews: PreviewProvider {
     static let injector = AnyNavigationInjector(
         behaviour: AnyNavigationBehavior(EmptyBehaviour()),
         persistence: AnyScreenPersistence(InMemoryScreenPersistence()),
-        analytics: AnyAppAnalytics(NoOpAnalytics<Int>()),
+        analytics: AnyAppAnalytics(NoOpAnalytics()),
         quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence<Int>()),
         reviewPersistence: InMemoryReviewPromptPersistence(),
         allScreens: [1, 2, 3, 4],
@@ -528,8 +570,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         let screen: AnyView = AnyView(EmptyView())
     }
 
-    struct NoOpAnalytics<Screen>: AppAnalytics {
-        typealias Screen = Screen
+    struct NoOpAnalytics: AppAnalytics {
+        typealias Screen = Int
         typealias QuestionSet = Int
 
         func opened(screen: Screen) { }
