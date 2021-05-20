@@ -138,9 +138,11 @@ struct ConcentrationPlotView: View {
             let a = concentrationA.getY(at: t).str(decimals: 2)
 
             let conB = concentrationB?.getY(at: t)
-            let b = conB.map { ", B \($0.str(decimals: 2))" } ?? ""
+            let product = display.product.name
+            let b = conB.map { ", \(product) \($0.str(decimals: 2))" } ?? ""
 
-            return "time \(t.str(decimals: 1)), A \(a)\(b)"
+            let reactant = display.reactant.name
+            return "time \(t.str(decimals: 1)), \(reactant) \(a)\(b)"
         }
     }
 

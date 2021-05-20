@@ -71,7 +71,6 @@ public struct AdjustableBeakerBurner: View {
         .frame(
             height: settings.sliderSettings.handleWidth
         )
-        .disabled(disabled)
         .background(
             Color.white
                 .padding(-settings.sliderTopPadding)
@@ -80,8 +79,8 @@ public struct AdjustableBeakerBurner: View {
         .padding(.top, settings.sliderTopPadding)
         .accessibility(label: Text("Input for temperature in Kelvin"))
         .accessibility(value: Text(sliderAccessibilityValue))
+        .disabled(disabled)
         .colorMultiply(sliderColorMultiply)
-
     }
 }
 
