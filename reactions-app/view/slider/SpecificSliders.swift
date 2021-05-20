@@ -8,6 +8,10 @@ struct ConcentrationValueSlider: View {
 
     @Binding var initialConcentration: CGFloat
     @Binding var finalConcentration: CGFloat?
+
+    /// Disabled both inputs
+    let disabled: Bool
+
     let c1Disabled: Bool
 
     let c1Limits: InputLimits
@@ -28,6 +32,7 @@ struct ConcentrationValueSlider: View {
             orientation: .portrait,
             settings: settings,
             canSetInitialValue: true,
+            disabled: disabled,
             value1Disabled: c1Disabled,
             value1IsLower: false
         )
@@ -40,6 +45,9 @@ struct TimeValueSlider: View {
 
     /// Hides the t1 input entirely
     let canSetInitialTime: Bool
+
+    /// Disabled both inputs
+    let disabled: Bool
 
     /// Disabled changes to the t1 value
     let t1Disabled: Bool
@@ -62,6 +70,7 @@ struct TimeValueSlider: View {
             orientation: .landscape,
             settings: settings,
             canSetInitialValue: canSetInitialTime,
+            disabled: disabled,
             value1Disabled: t1Disabled,
             value1IsLower: true
         )

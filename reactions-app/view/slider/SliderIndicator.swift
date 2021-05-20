@@ -31,13 +31,14 @@ struct SliderIndicator: View {
         CustomSlider(
             value: .constant(value),
             axis: axis,
-            handleThickness: settings.indicatorThickness,
-            handleColor: disabled ? Color.gray : Color.orangeAccent,
-            handleCornerRadius: 0,
-            barThickness: 0,
-            barColor: .black,
             orientation: orientation,
-            includeFill: false
-        ).disabled(true)
+            includeFill: false,
+            settings: settings.indicatorSettings,
+            disabled: false,
+            handleColor: disabled ? Color.gray : Color.orangeAccent,
+            barColor: .black,
+            useHaptics: false
+        )
+        .disabled(true)
     }
 }

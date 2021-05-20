@@ -24,38 +24,6 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     let formatAccessibilityValue: (Value) -> String
 
-    @available(*, deprecated, message: "Use other initialiser")
-    public init(
-        value: Binding<Value>,
-        axis: AxisPositionCalculations<Value>,
-        handleThickness: CGFloat,
-        handleColor: Color,
-        handleCornerRadius: CGFloat,
-        barThickness: CGFloat,
-        barColor: Color,
-        orientation: Orientation,
-        includeFill: Bool,
-        useHaptics: Bool = true,
-        formatAccessibilityValue: @escaping (Value) -> String = { $0.str(decimals: 2) }
-    ) {
-        self._value = value
-        self.axis = axis
-        self.handleThickness = handleThickness
-        self.handleColor = handleColor
-        self.handleCornerRadius = handleCornerRadius
-        self.barThickness = barThickness
-        self.barColor = barColor
-        self.orientation = orientation
-        self.includeFill = includeFill
-        self.useHaptics = useHaptics
-        self.disabled = false
-        self.hapticHandler = SliderHapticsHandler(
-            axis: axis,
-            impactGenerator: UIImpactFeedbackGenerator(style: .light)
-        )
-        self.formatAccessibilityValue = formatAccessibilityValue
-    }
-
     public init(
         value: Binding<Value>,
         axis: AxisPositionCalculations<Value>,

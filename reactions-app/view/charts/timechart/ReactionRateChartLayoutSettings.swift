@@ -35,27 +35,31 @@ struct ReactionRateChartLayoutSettings {
     var sliderHandleWidth: CGFloat {
         ReactionRateChartLayoutSettings.sliderHandleWidthFactor * chartSize
     }
-    var sliderHandleThickness: CGFloat {
-        0.16 * chartSize
-    }
+
     var sliderMaxValuePadding: CGFloat {
         0.28 * chartSize
     }
+
+    var sliderSettings: SliderGeometrySettings {
+        SliderGeometrySettings(handleWidth: sliderHandleWidth)
+    }
+
+    var indicatorSettings: SliderGeometrySettings {
+        SliderGeometrySettings(
+            handleWidth: indicatorWidth,
+            handleThickness: indicatorThickness,
+            handleCornerRadius: 0,
+            barThickness: 0
+        )
+    }
+
     var yLabelWidth: CGFloat {
         ReactionRateChartLayoutSettings.yLabelWidthFactor * chartSize
     }
     var xLabelHeight: CGFloat {
         ReactionRateChartLayoutSettings.xLabelHeightFactor * chartSize
     }
-    var handleThickness: CGFloat {
-        0.08 * chartSize
-    }
-    var handleCornerRadius: CGFloat {
-        handleThickness * 0.25
-    }
-    var barThickness: CGFloat {
-        0.015 * chartSize
-    }
+
     var labelFontSize: CGFloat {
         0.1 * chartSize
     }
@@ -109,7 +113,7 @@ struct ReactionRateChartLayoutSettings {
 
     /// Minimum spacing between two inputs
     var inputSpacing: CGFloat {
-        1.1 * handleThickness
+        1.1 * sliderSettings.handleThickness
     }
 
     static let chartHStackFactor: CGFloat = 0.03

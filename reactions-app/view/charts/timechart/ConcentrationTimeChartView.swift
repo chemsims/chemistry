@@ -308,6 +308,7 @@ struct GeneralTimeChartView: View {
         ConcentrationValueSlider(
             initialConcentration: $initialConcentration,
             finalConcentration: canSetC2 ? $finalConcentration : .constant(nil),
+            disabled: currentTime != nil,
             c1Disabled: finalConcentration != nil,
             c1Limits: limits.c1Limits,
             c2Limits: limits.c2Limits,
@@ -317,8 +318,6 @@ struct GeneralTimeChartView: View {
         .frame(
             width: settings.sliderHandleWidth,
             height: settings.chartSize
-        ).modifier(
-            DisabledSliderModifier(disabled: currentTime != nil)
         )
     }
 
@@ -327,6 +326,7 @@ struct GeneralTimeChartView: View {
             t1: $initialTime,
             t2: canSetT2 ? $finalTime : .constant(nil),
             canSetInitialTime: canSetInitialTime,
+            disabled: currentTime != nil,
             t1Disabled: finalTime != nil,
             t1Limits: limits.t1Limits,
             t2Limits: limits.t2Limits,
@@ -334,7 +334,7 @@ struct GeneralTimeChartView: View {
         ).frame(
             width: settings.chartSize,
             height: settings.sliderHandleWidth
-        ).modifier(DisabledSliderModifier(disabled: currentTime != nil))
+        )
     }
 
     private var animatingTime: some View {

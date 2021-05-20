@@ -21,6 +21,7 @@ struct DualValueSlider: View {
     let settings: ReactionRateChartLayoutSettings
     let canSetInitialValue: Bool
 
+    let disabled: Bool
     let value1Disabled: Bool
     let value1IsLower: Bool
 
@@ -47,6 +48,9 @@ struct DualValueSlider: View {
                 .accessibility(label: Text(value2Label))
             }
         }
+        .modifier(
+            DisabledSliderModifier(disabled: disabled)
+        )
     }
 
     private func slider(
@@ -55,16 +59,21 @@ struct DualValueSlider: View {
         disabled: Bool,
         showBar: Bool
     ) -> some View {
-        CustomSlider(
+        let baseSettings = settings.sliderSettings
+        let adjustedSettings = showBar ? baseSettings : baseSettings.updating(barThickness: 0)
+
+        // Pass in disabled: false as we handle disabled styling for both sliders
+        // combined
+        return CustomSlider(
             value: binding,
             axis: axis,
-            handleThickness: settings.handleThickness,
-            handleColor: disabled ? Color.gray : Color.orangeAccent,
-            handleCornerRadius: settings.handleCornerRadius,
-            barThickness: showBar ? settings.barThickness : 0,
-            barColor: Color.black,
             orientation: orientation,
-            includeFill: false
+            includeFill: false,
+            settings: adjustedSettings,
+            disabled: false,
+            handleColor: disabled ? Color.gray : Color.orangeAccent,
+            barColor: Color.black,
+            useHaptics: true
         )
         .disabled(disabled)
     }
