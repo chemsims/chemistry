@@ -29,7 +29,7 @@ public struct PlaceholderTerm: View {
 
     public var body: some View {
         if value != nil {
-            FixedText(value!)
+            Text(value!)
                 .modifier(PlaceholderFraming(boxWidth: boxWidth, boxHeight: boxHeight))
                 .animation(.none)
                 .foregroundColor(emphasise ? .orangeAccent : .black)
