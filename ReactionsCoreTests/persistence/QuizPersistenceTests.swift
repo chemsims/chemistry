@@ -21,6 +21,9 @@ class QuizPersistenceTests: XCTestCase {
         ]
         model.saveAnswers(questions, answers)
         XCTAssertEqual(model.getAnswers(questions), answers)
+
+        // Use a new model too to check results are not just in memory
+        XCTAssertEqual(newModel().getAnswers(questions), answers)
     }
 
     func testGettingAnAnswerWithOneOptionWhenTheOptionOrderingChanges() {
@@ -37,6 +40,7 @@ class QuizPersistenceTests: XCTestCase {
         let firstQuestionDifferentOrder = questionWithCorrectOption(.B)
         let expected = ["0": QuizAnswerInput(firstAnswer: .B)]
         XCTAssertEqual(model.getAnswers([firstQuestionDifferentOrder]), expected)
+        XCTAssertEqual(newModel().getAnswers([firstQuestionDifferentOrder]), expected)
     }
 
     func testGettingAnAnswersWithMultipleOptionsAndQuestions() {
@@ -52,6 +56,7 @@ class QuizPersistenceTests: XCTestCase {
         model.saveAnswers(questions, answers)
 
         XCTAssertEqual(model.getAnswers(questions), answers)
+        XCTAssertEqual(newModel().getAnswers(questions), answers)
     }
 
     func testGettingAnAnswerWithMultipleOptionsWhenTheOptionOrderingChanges() {
@@ -64,12 +69,14 @@ class QuizPersistenceTests: XCTestCase {
         model.saveAnswers([q1], answers)
 
         XCTAssertEqual(model.getAnswers([q1]), answers)
+        XCTAssertEqual(newModel().getAnswers([q1]), answers)
 
         let shuffledQ1 = questionWithOptions([.D, .C, .B, .A], correctOption: .D)
         let expected = [
             "0": QuizAnswerInput(firstAnswer: .C, otherAnswers: [.D, .B, .A])
         ]
         XCTAssertEqual(model.getAnswers([shuffledQ1]), expected)
+        XCTAssertEqual(newModel().getAnswers([shuffledQ1]), expected)
     }
 
     private func zeroOrderQuestions() -> [QuizQuestion] {

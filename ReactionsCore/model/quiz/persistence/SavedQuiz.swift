@@ -5,16 +5,26 @@
 import Foundation
 
 public struct SavedQuiz<QuestionSet> {
-    let questionSet: QuestionSet
-    let difficulty: QuizDifficulty
-    let answers: [String : QuizAnswerInput]
+    public let questionSet: QuestionSet
+    public let difficulty: QuizDifficulty
+    public let answers: [String : QuizAnswerInput]
+
+    public init(
+        questionSet: QuestionSet,
+        difficulty: QuizDifficulty,
+        answers: [String : QuizAnswerInput]
+    ) {
+        self.questionSet = questionSet
+        self.difficulty = difficulty
+        self.answers = answers
+    }
 }
 
 public struct QuizAnswerInput: Equatable {
     let firstAnswer: QuizOption
     let otherAnswers: [QuizOption]
 
-    init(firstAnswer: QuizOption, otherAnswers: [QuizOption] = []) {
+    public init(firstAnswer: QuizOption, otherAnswers: [QuizOption] = []) {
         self.firstAnswer = firstAnswer
         self.otherAnswers = otherAnswers
     }
