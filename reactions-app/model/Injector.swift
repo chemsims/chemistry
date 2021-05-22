@@ -19,7 +19,7 @@ class ProductionInjector: Injector {
 
     let reactionPersistence: ReactionInputPersistence = UserDefaultsReactionInputPersistence()
 
-    let quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet> = AnyQuizPersistence(InMemoryQuizPersistence<ReactionsRateQuestionSet>())
+    let quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet> = AnyQuizPersistence(UserDefaultsQuizPersistence<ReactionsRateQuestionSet>())
 
     let reviewPersistence: ReviewPromptPersistence = UserDefaultsReviewPromptPersistence()
 

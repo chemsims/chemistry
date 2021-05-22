@@ -17,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
 
         let devMode = CommandLine.arguments.contains("-DevMode")
+        print("Running in \(devMode ? "Dev" : "Prod") mode")
         let injector: Injector = devMode ? InMemoryInjector() : ProductionInjector()
 
         let contentView = ReactionsRateRootView(
