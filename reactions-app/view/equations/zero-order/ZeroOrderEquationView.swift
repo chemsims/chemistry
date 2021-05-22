@@ -107,6 +107,7 @@ private struct UnscaledZeroOrderEquationView: View {
                     isShowingToolip: $isShowingTooltip
                 )
                 BlankHalfLife(
+                    reactant: reactant,
                     a0: concentration?.a0.str(decimals: 2),
                     halfLife: concentration?.halfLife.str(decimals: 2),
                     rate: concentration?.rateConstant.str(decimals: 2),
@@ -308,7 +309,7 @@ private struct FilledHalfLife: View {
         .accessibilityElement()
         .accessibility(label:
             Text(
-                "'T' 1/2 equals A0, divided by 2 times k"
+                "'T' 1/2 equals \(reactant)0, divided by 2 times k"
             )
         )
     }
@@ -353,6 +354,7 @@ private struct A0WithTooltip: View {
 
 private struct BlankHalfLife: View {
 
+    let reactant: String
     let a0: String?
     let halfLife: String?
     let rate: String?
@@ -364,7 +366,7 @@ private struct BlankHalfLife: View {
                 .accessibility(label: Text("'T' 1/2"))
             FixedText("=")
             Placeholder(value: a0, emphasise: emphasise)
-                .accessibility(label: Text("A0"))
+                .accessibility(label: Text("\(reactant)0"))
 
             FixedText("/")
                 .accessibility(label: Text("Divide by"))
