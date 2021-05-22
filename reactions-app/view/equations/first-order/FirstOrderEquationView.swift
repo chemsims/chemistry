@@ -64,6 +64,7 @@ private struct UnscaledFirstOrderReactionEquationView: View {
         VStack(alignment: .leading, spacing: 30) {
             VStack(alignment: .leading, spacing: 0) {
                 FirstOrderRateFilled(reactant: reactant)
+                    .accessibility(addTraits: .isHeader)
                 FirstOrderRateBlank(
                     emphasise: emphasise,
                     rate: concentration?.rateConstant.str(decimals: 2),
@@ -144,7 +145,7 @@ private struct FirstOrderRateFilled: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibility(label: Text("K = natural log of A0 minus natural log of A at time T, divide by T"))
+        .accessibility(label: Text("K = natural log of \(reactant)0 minus natural log of \(reactant) at time T, divide by T"))
     }
 
     private func lnA<Content: View>(aTerm: () -> Content) -> some View {
@@ -245,7 +246,7 @@ private struct FirstOrderHalfLifeBlank: View {
                 FixedText("/")
                     .accessibility(label: Text("divide by"))
                 Placeholder(value: rate, emphasise: emphasise)
-                    .accessibility(label: Text("rate"))
+                    .accessibility(label: Text("k"))
             }
         }
     }

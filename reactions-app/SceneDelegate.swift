@@ -36,3 +36,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 }
+
+
+struct SceneDelegate_Previews: PreviewProvider {
+    static var previews: some View {
+        ReactionsRateRootView(
+            model: ReactionRateNavigationModel.navigationModel(
+                using: InMemoryInjector()
+            )
+        )
+        .previewLayout(.iPadAirLandscape)
+    }
+}

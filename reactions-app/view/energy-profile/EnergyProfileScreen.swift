@@ -103,7 +103,7 @@ struct EnergyProfileScreen: View {
             Spacer()
             HStack(spacing: 0) {
                 Spacer()
-                    .frame(width: settings.beakerWidth)
+                    .frame(width: settings.beakerTotalWidth)
                 EnergyProfileRateEquation(
                     k1: model.k1,
                     k2: model.k2,
@@ -175,8 +175,9 @@ private struct EnergyProfileLayoutSettings {
         orderLayoutSettings.topPadding
     }
     var equationWidth: CGFloat {
-        0.9 * (geometry.size.width - beakerTotalWidth - orderLayoutSettings.beakyBoxTotalWidth)
+        0.95 * availableEquationWidth
     }
+
     var equationHeight: CGFloat {
         geometry.size.height / 2.3
     }
@@ -187,21 +188,34 @@ private struct EnergyProfileLayoutSettings {
         0.95 * geometry.size.height
     }
     var beakerTotalWidth: CGFloat {
-        beakerWidth + beakerLeadingPadding
+        beakerWidth + beakerLeadingPadding + orderLayoutSettings.menuSize
     }
     var beakerLeadingPadding: CGFloat {
         0.01 * geometry.size.width
     }
     var equationLeadingPadding: CGFloat {
-        0.1 * equationWidth
+        0.025 * availableEquationWidth
     }
     var selectOrderHeight: CGFloat {
         0.15 * chartsSize
+    }
+
+    private var availableEquationWidth: CGFloat {
+        geometry.size.width - beakerTotalWidth - orderLayoutSettings.beakyBoxTotalWidth
     }
 }
 
 struct EnergyProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
+
+        
+        EnergyProfileScreen(
+            navigation: EnergyProfileNavigationViewModel.model(
+                EnergyProfileViewModel(),
+                persistence: InMemoryEnergyProfilePersistence()
+            )
+        )
+        .previewLayout(.iPadAirLandscape)
 
         // iPhone 11
         EnergyProfileScreen(

@@ -65,7 +65,9 @@ private struct UnscaledSecondOrderEquationView: View {
         VStack(alignment: .leading, spacing: 30) {
             VStack(spacing: 0) {
                 SecondOrderRateFilled(reactant: reactant)
+                    .accessibility(addTraits: .isHeader)
                 SecondOrderRateBlank(
+                    reactant: reactant,
                     emphasise: emphasise,
                     rateConstant: concentration?.rateConstant.str(decimals: 2),
                     invA0: invStr(c1),
@@ -79,6 +81,7 @@ private struct UnscaledSecondOrderEquationView: View {
             VStack(alignment: .leading, spacing: 0) {
                 SecondOrderHalfLifeFilled(reactant: reactant)
                 SecondOrderHalfLifeBlank(
+                    reactant: reactant,
                     emphasise: emphasise,
                     halfLife: concentration?.halfLife.str(decimals: 2),
                     rateConstant: concentration?.rateConstant.str(decimals: 2),
@@ -141,7 +144,7 @@ private struct SecondOrderRateFilled: View {
         .accessibilityElement(children: .ignore)
         .accessibility(
             label: Text(
-                "k equals, inverse A T minus inverse A0, divide by T"
+                "k equals, inverse \(reactant) T minus inverse \(reactant)0, divide by T"
             )
         )
     }
@@ -159,6 +162,7 @@ private struct SecondOrderRateFilled: View {
 
 private struct SecondOrderRateBlank: View {
 
+    let reactant: String
     let emphasise: Bool
     let rateConstant: String?
     let invA0: String?
@@ -179,7 +183,7 @@ private struct SecondOrderRateBlank: View {
                     Placeholder(value: invAt, emphasise: emphasise)
                         .frame(width: 100)
                         .accessibility(sortPriority: 8)
-                        .accessibility(label: Text("inverse A T"))
+                        .accessibility(label: Text("inverse \(reactant) T"))
 
                     FixedText("-")
                         .accessibility(sortPriority: 7)
@@ -188,7 +192,7 @@ private struct SecondOrderRateBlank: View {
                     Placeholder(value: invA0, emphasise: invAt == nil)
                         .frame(width: 100)
                         .accessibility(sortPriority: 6)
-                        .accessibility(label: Text("inverse A0"))
+                        .accessibility(label: Text("inverse \(reactant)0"))
                 }
 
                 Rectangle()
@@ -221,12 +225,13 @@ private struct SecondOrderHalfLifeFilled: View {
             FixedText(")")
         }
         .accessibilityElement(children: .ignore)
-        .accessibility(label: Text("'T' 1/2 equals 1, divide by k times A0"))
+        .accessibility(label: Text("'T' 1/2 equals 1, divide by k times \(reactant)0"))
     }
 }
 
 private struct SecondOrderHalfLifeBlank: View {
 
+    let reactant: String
     let emphasise: Bool
     let halfLife: String?
     let rateConstant: String?
@@ -253,7 +258,7 @@ private struct SecondOrderHalfLifeBlank: View {
                     .frame(width: EquationSettings.boxWidth * 0.8)
                     .minimumScaleFactor(0.5)
                     .foregroundColor(rateConstant == nil ? .orangeAccent : .black)
-                    .accessibility(label: Text("A0"))
+                    .accessibility(label: Text("\(reactant)0"))
                     .accessibility(value: Text(a0))
                 FixedText(")")
                     .accessibility(label: Text(Labels.closedParen))
@@ -275,8 +280,8 @@ struct SecondOrderEquationView2_Previews: PreviewProvider {
             c1: 1.23,
             c2: 0.34,
             t: 1.4,
-            currentTime: nil,
-            concentration: nil,
+            currentTime: 5,
+            concentration: SecondOrderConcentration(a0: 0.5, rateConstant: 0.1),
             reactionHasStarted: false,
             rateConstantColor: .white,
             halfLifeColor: .white,
