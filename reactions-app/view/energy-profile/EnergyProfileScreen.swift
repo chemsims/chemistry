@@ -175,10 +175,7 @@ private struct EnergyProfileLayoutSettings {
         orderLayoutSettings.topPadding
     }
     var equationWidth: CGFloat {
-        let width = geometry.size.width
-        let availableWidth = width - beakerTotalWidth - orderLayoutSettings.beakyBoxTotalWidth
-
-        return 0.9 * availableWidth
+        0.95 * availableEquationWidth
     }
 
     var equationHeight: CGFloat {
@@ -197,10 +194,14 @@ private struct EnergyProfileLayoutSettings {
         0.01 * geometry.size.width
     }
     var equationLeadingPadding: CGFloat {
-        0.1 * equationWidth
+        0.025 * availableEquationWidth
     }
     var selectOrderHeight: CGFloat {
         0.15 * chartsSize
+    }
+
+    private var availableEquationWidth: CGFloat {
+        geometry.size.width - beakerTotalWidth - orderLayoutSettings.beakyBoxTotalWidth
     }
 }
 
