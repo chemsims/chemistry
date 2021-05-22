@@ -99,7 +99,7 @@ struct FilledRate: View {
                 formatter: { $0.str(decimals: 2) },
                 alignment: .leading
             )
-            .frame(width: EquationSettings.boxWidth)
+            .frame(width: EquationSettings.boxWidth, height: EquationSettings.boxHeight)
             .minimumScaleFactor(0.5)
         )
     }
