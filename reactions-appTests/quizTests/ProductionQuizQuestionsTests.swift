@@ -17,6 +17,30 @@ class ProductionQuizQuestionsTests: XCTestCase {
         testUniqueQuestionOptions(questions: allQuestions)
     }
 
+    func testTheProductionInjectorIsNotPersistingInMemory() {
+        let model = ProductionInjector().quizPersistence
+        let questions = QuizQuestionsList<ReactionsRateQuestionSet>.zeroOrderQuestions.createQuestions()
+
+        var answers = [String:QuizAnswerInput]()
+        questions.forEach { question in
+            answers[question.id] = QuizAnswerInput(firstAnswer: .A)
+        }
+
+        let savedQuiz = SavedQuiz(
+            questionSet: ReactionsRateQuestionSet.zeroOrder,
+            difficulty: .hard,
+            answers: answers
+        )
+        model.saveAnswers(quiz: savedQuiz, questions: questions)
+
+        let model2 = ProductionInjector().quizPersistence
+        XCTAssert(model !== model2)
+
+        let retrievedQuiz = model2.getAnswers(questionSet: ReactionsRateQuestionSet.zeroOrder, questions: questions)
+        XCTAssertNotNil(retrievedQuiz)
+        XCTAssertEqual(retrievedQuiz!.answers, answers)
+    }
+
     private var allQuestions: [QuizQuestion] {
         questions.flatMap { $0.createQuestions() }
     }
