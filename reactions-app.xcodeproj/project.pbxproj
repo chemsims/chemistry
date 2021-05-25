@@ -122,6 +122,7 @@
 		5745D2812610EB760040F3CF /* SolubilityScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745D2802610EB760040F3CF /* SolubilityScreen.swift */; };
 		5745D2882610EFF10040F3CF /* SolubilityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745D2872610EFF10040F3CF /* SolubilityViewModel.swift */; };
 		5745D2932610F08C0040F3CF /* SolubilityNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745D2922610F08C0040F3CF /* SolubilityNavigationModel.swift */; };
+		57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57466616265D81FC003FC6E3 /* AcidConcentration.swift */; };
 		57473AC526218D74009B608D /* SoluteCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473AC426218D74009B608D /* SoluteCounter.swift */; };
 		57473AD126218E5D009B608D /* SolubleReactionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473AD026218E5D009B608D /* SolubleReactionEquation.swift */; };
 		57473AD726218E9A009B608D /* SolubilityQuotientEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473AD626218E9A009B608D /* SolubilityQuotientEquation.swift */; };
@@ -696,6 +697,7 @@
 		5745D2802610EB760040F3CF /* SolubilityScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityScreen.swift; sourceTree = "<group>"; };
 		5745D2872610EFF10040F3CF /* SolubilityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityViewModel.swift; sourceTree = "<group>"; };
 		5745D2922610F08C0040F3CF /* SolubilityNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityNavigationModel.swift; sourceTree = "<group>"; };
+		57466616265D81FC003FC6E3 /* AcidConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidConcentration.swift; sourceTree = "<group>"; };
 		57473AC426218D74009B608D /* SoluteCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoluteCounter.swift; sourceTree = "<group>"; };
 		57473AD026218E5D009B608D /* SolubleReactionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleReactionEquation.swift; sourceTree = "<group>"; };
 		57473AD626218E9A009B608D /* SolubilityQuotientEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityQuotientEquation.swift; sourceTree = "<group>"; };
@@ -1197,6 +1199,7 @@
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57466616265D81FC003FC6E3 /* AcidConcentration.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3103,6 +3106,7 @@
 			files = (
 				570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
+				57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */,
 				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,
 				570ABA07265A736C008EC8CC /* ContentView.swift in Sources */,
 			);
@@ -3664,7 +3668,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"acids-bases/Preview Content\"";
-				DEVELOPMENT_TEAM = 6XY6E46P4H;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "acids-bases/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
@@ -3672,7 +3676,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.omarfahmy.acids-bases";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reaction.acid-bases";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3686,7 +3690,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"acids-bases/Preview Content\"";
-				DEVELOPMENT_TEAM = 6XY6E46P4H;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "acids-bases/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
@@ -3694,7 +3698,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.omarfahmy.acids-bases";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reaction.acid-bases";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3707,6 +3711,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
 				INFOPLIST_FILE = "acids-basesTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3728,6 +3733,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
 				INFOPLIST_FILE = "acids-basesTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
