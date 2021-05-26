@@ -23,39 +23,9 @@ class IntroScreenComponentsTests: XCTestCase {
         XCTAssertEqual(model.fractionSubstanceAdded, 1)
     }
 
-    func testStrongAcidPrimaryIonConcentration() {
-        var model = newModel(substance: .strongAcid(name: "", secondaryIon: .A))
-        var hydrogen: PrimaryIonConcentration {
-            model.concentration(ofIon: .hydrogen)
-        }
-        var hydroxide: PrimaryIonConcentration {
-            model.concentration(ofIon: .hydroxide)
-        }
-
-        // MARK: Strong acid: initial ion concentrations
-        XCTAssertEqual(hydrogen.concentration, 1e-7)
-        XCTAssertEqual(hydrogen.p, 7)
-        XCTAssertEqual(hydroxide.concentration, 1e-7)
-        XCTAssertEqual(hydroxide.p, 7)
-
-        // MARK: Strong acid: mid-point ion concentrations
-        model.increment(count: model.maxSubstanceCount / 2)
-        let expectedMidPointHConcentration: CGFloat = (1e-7 + 1e-1) / 2
-        let expectedMidPointPH = -log10(expectedMidPointHConcentration)
-        let expectedMidPointPOH: CGFloat = 14 - expectedMidPointPH
-        let expectedMidPointOHConcentration = pow(10, -expectedMidPointPOH)
-
-        XCTAssertEqual(hydrogen.concentration, expectedMidPointHConcentration)
-        XCTAssertEqual(hydrogen.p, expectedMidPointPH)
-        XCTAssertEqual(hydroxide.concentration, expectedMidPointOHConcentration)
-        XCTAssertEqual(hydroxide.p, expectedMidPointPOH)
-
-        // MARK: Strong acid: end ion concentrations
-        model.increment(count: model.maxSubstanceCount / 2)
-        XCTAssertEqual(hydrogen.concentration, 1e-1)
-        XCTAssertEqual(hydrogen.p, 1)
-        XCTAssertEqual(hydroxide.concentration, 1e-13)
-        XCTAssertEqual(hydroxide.p, 13)
+    func testStrongAcidPrimaryIonsConcentration() {
+        let acid = AcidOrBase.strongAcid(name: "", secondaryIon: .A)
+        doTestAcidPrimaryIonConcentration(substance: acid)
     }
 
     func testStrongAcidCoords() {
@@ -71,48 +41,13 @@ class IntroScreenComponentsTests: XCTestCase {
         XCTAssertEqual(model.coords.secondaryIonValue.coords.count, 1)
     }
 
-    func testWeakAcidPrimaryIonConcentration() {
+    func testWeakAcidPrimaryIonsConcentration() {
         let acid = AcidOrBase.weakAcid(
             name: "",
             secondaryIon: .A,
             substanceAddedPerIon: NonZeroPositiveInt(5)!
         )
-        var model = newModel(substance: acid)
-        var hydrogen: PrimaryIonConcentration {
-            model.concentration(ofIon: .hydrogen)
-        }
-        var hydroxide: PrimaryIonConcentration {
-            model.concentration(ofIon: .hydroxide)
-        }
-
-        // MARK: Strong acid: initial ion concentrations
-        XCTAssertEqual(hydrogen.concentration, 1e-7)
-        XCTAssertEqual(hydrogen.p, 7)
-        XCTAssertEqual(hydroxide.concentration, 1e-7)
-        XCTAssertEqual(hydroxide.p, 7)
-
-        // MARK: Strong acid: mid-point ion concentrations
-        model.increment(count: model.maxSubstanceCount / 2)
-        let expectedMidPointHConcentration: CGFloat = (1e-7 + acid.concentrationAtMaxSubstance) / 2
-        let expectedMidPointPH = -log10(expectedMidPointHConcentration)
-        let expectedMidPointPOH: CGFloat = 14 - expectedMidPointPH
-        let expectedMidPointOHConcentration = pow(10, -expectedMidPointPOH)
-
-        XCTAssertEqual(hydrogen.concentration, expectedMidPointHConcentration)
-        XCTAssertEqual(hydrogen.p, expectedMidPointPH)
-        XCTAssertEqual(hydroxide.concentration, expectedMidPointOHConcentration)
-        XCTAssertEqual(hydroxide.p, expectedMidPointPOH)
-
-        // MARK: Strong acid: end ion concentrations
-        model.increment(count: model.maxSubstanceCount / 2)
-        let expectedFinalHConcentration = acid.concentrationAtMaxSubstance
-        let expectedFinalPH = -log10(expectedFinalHConcentration)
-        let expectedFinalPOH = 14 - expectedFinalPH
-        let expectedFinalOHConcentration = pow(10, -expectedFinalPOH)
-        XCTAssertEqual(hydrogen.concentration, expectedFinalHConcentration)
-        XCTAssertEqual(hydrogen.p, expectedFinalPH)
-        XCTAssertEqual(hydroxide.concentration, expectedFinalOHConcentration)
-        XCTAssertEqual(hydroxide.p, expectedFinalPOH)
+        doTestAcidPrimaryIonConcentration(substance: acid)
     }
 
     func testWeakAcidCoords() {
@@ -136,6 +71,59 @@ class IntroScreenComponentsTests: XCTestCase {
         XCTAssertEqual(model.coords.substanceValue.coords.count, 5)
         XCTAssertEqual(model.coords.primaryIonValue.coords.count, 1)
         XCTAssertEqual(model.coords.secondaryIonValue.coords.count, 1)
+    }
+
+    func testStrongBasePrimaryIonsConcentration() {
+        let base = AcidOrBase.strongBase(name: "", secondaryIon: .A)
+        doTestAcidPrimaryIonConcentration(substance: base)
+    }
+
+    func testWeakBasePrimaryIonsConcentration() {
+        let base = AcidOrBase.weakBase(
+            name: "",
+            secondaryIon: .A,
+            substanceAddedPerIon: NonZeroPositiveInt(4)!
+        )
+        doTestAcidPrimaryIonConcentration(substance: base)
+    }
+
+    private func doTestAcidPrimaryIonConcentration(
+        substance: AcidOrBase
+    ) {
+        var model = newModel(substance: substance)
+        var increasingIon: PrimaryIonConcentration {
+            model.concentration(ofIon: substance.primary)
+        }
+        var decreasingIon: PrimaryIonConcentration {
+            model.concentration(ofIon: substance.primary.complement)
+        }
+
+        XCTAssertEqual(increasingIon.concentration, 1e-7)
+        XCTAssertEqual(increasingIon.p, 7)
+        XCTAssertEqual(decreasingIon.concentration, 1e-7)
+        XCTAssertEqual(decreasingIon.p, 7)
+
+        let finalIncreasingConcentration = substance.concentrationAtMaxSubstance
+
+        model.increment(count: model.maxSubstanceCount / 2)
+        let expectedMidPointIncreasingConcentration: CGFloat = (1e-7 + finalIncreasingConcentration) / 2
+        let expectedMidPointPIncreasing = -log10(expectedMidPointIncreasingConcentration)
+        let expectedMidPointPDecreasing: CGFloat = 14 - expectedMidPointPIncreasing
+        let expectedMidPointDecreasingConcentration = pow(10, -expectedMidPointPDecreasing)
+
+        XCTAssertEqual(increasingIon.concentration, expectedMidPointIncreasingConcentration)
+        XCTAssertEqual(increasingIon.p, expectedMidPointPIncreasing)
+        XCTAssertEqual(decreasingIon.concentration, expectedMidPointDecreasingConcentration)
+        XCTAssertEqual(decreasingIon.p, expectedMidPointPDecreasing)
+
+        model.increment(count: model.maxSubstanceCount / 2)
+        let expectedFinalPIncreasing = -log10(finalIncreasingConcentration)
+        let expectedFinalPDecreasing = 14 - expectedFinalPIncreasing
+        let expectedFinalIncreasingConcentration = pow(10, -expectedFinalPDecreasing)
+        XCTAssertEqual(increasingIon.concentration, finalIncreasingConcentration)
+        XCTAssertEqual(increasingIon.p, expectedFinalPIncreasing)
+        XCTAssertEqual(decreasingIon.concentration, expectedFinalIncreasingConcentration)
+        XCTAssertEqual(decreasingIon.p, expectedFinalPDecreasing)
     }
 
     private func newModel(substance: AcidOrBase) -> IntroScreenComponents {

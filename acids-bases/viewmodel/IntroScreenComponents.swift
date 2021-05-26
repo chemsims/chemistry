@@ -148,6 +148,20 @@ struct AcidOrBase: Equatable {
         )
     }
 
+    /// Returns a strong base substance
+    static func strongBase(
+        name: String,
+        secondaryIon: SecondaryIon
+    ) -> AcidOrBase {
+        AcidOrBase(
+            name: name,
+            substanceAddedPerIon: PositiveInt(0)!,
+            primary: .hydroxide,
+            secondary: secondaryIon,
+            concentrationAtMaxSubstance: 0.1
+        )
+    }
+
     /// Returns a weak acid substance
     static func weakAcid(
         name: String,
@@ -158,6 +172,21 @@ struct AcidOrBase: Equatable {
             name: name,
             substanceAddedPerIon: substanceAddedPerIon.positiveInt,
             primary: .hydrogen,
+            secondary: secondaryIon,
+            concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value)
+        )
+    }
+
+    /// Returns a weak base substance
+    static func weakBase(
+        name: String,
+        secondaryIon: SecondaryIon,
+        substanceAddedPerIon: NonZeroPositiveInt
+    ) -> AcidOrBase {
+        AcidOrBase(
+            name: name,
+            substanceAddedPerIon: substanceAddedPerIon.positiveInt,
+            primary: .hydroxide,
             secondary: secondaryIon,
             concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value)
         )
@@ -177,6 +206,13 @@ struct SubstanceValue<Value> {
 enum PrimaryIon {
     case hydrogen
     case hydroxide
+
+    var complement: PrimaryIon {
+        switch self {
+        case .hydrogen: return .hydroxide
+        case .hydroxide: return .hydrogen
+        }
+    }
 }
 
 enum SecondaryIon {
