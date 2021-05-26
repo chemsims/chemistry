@@ -37,6 +37,8 @@
 		5711DFCB25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFCA25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift */; };
 		5711E00325C4840D00B28E45 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5711E00225C4840D00B28E45 /* GoogleService-Info.plist */; };
 		5712155E258103A600E92A99 /* Rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5712155D258103A600E92A99 /* Rates.swift */; };
+		571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */; };
+		571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */; };
 		571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */; };
 		571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C41256405490075358B /* OrderedReactionScreen.swift */; };
 		571B3C4F256555460075358B /* ZeroOrderReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C4E256555460075358B /* ZeroOrderReactionViewModel.swift */; };
@@ -607,6 +609,8 @@
 		5711E00225C4840D00B28E45 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		571215552580DCD000E92A99 /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		5712155D258103A600E92A99 /* Rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rates.swift; sourceTree = "<group>"; };
+		571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidSubstanceBeakerCoords.swift; sourceTree = "<group>"; };
+		571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidSubstanceBeakerCoordsTests.swift; sourceTree = "<group>"; };
 		571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderStatements.swift; sourceTree = "<group>"; };
 		571B3C41256405490075358B /* OrderedReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedReactionScreen.swift; sourceTree = "<group>"; };
 		571B3C4E256555460075358B /* ZeroOrderReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionViewModel.swift; sourceTree = "<group>"; };
@@ -1192,6 +1196,7 @@
 			children = (
 				570ABA1B265A736D008EC8CC /* Info.plist */,
 				570ABA3A265A7ACB008EC8CC /* IntroScreenComponentsTests.swift */,
+				571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */,
 			);
 			path = "acids-basesTests";
 			sourceTree = "<group>";
@@ -1200,6 +1205,7 @@
 			isa = PBXGroup;
 			children = (
 				57466616265D81FC003FC6E3 /* AcidConcentration.swift */,
+				571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3107,6 +3113,7 @@
 				570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
 				57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */,
+				571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */,
 				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,
 				570ABA07265A736C008EC8CC /* ContentView.swift in Sources */,
 			);
@@ -3117,6 +3124,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */,
+				571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

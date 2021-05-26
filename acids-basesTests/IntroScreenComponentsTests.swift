@@ -66,9 +66,12 @@ class IntroScreenComponentsTests: XCTestCase {
         }
 
         model.increment(count: 1)
+        XCTAssert(model.coords.substanceValue.coords.isEmpty)
+        XCTAssertEqual(model.coords.primaryIonValue.coords.count, 1)
+        XCTAssertEqual(model.coords.secondaryIonValue.coords.count, 1)
     }
 
-    private func newModel(substance: Substance) -> IntroScreenComponents {
+    private func newModel(substance: AcidSubstance) -> IntroScreenComponents {
         GeneralScreenComponents(
             substance: substance,
             cols: 10,

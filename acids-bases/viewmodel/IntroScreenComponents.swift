@@ -9,7 +9,7 @@ protocol IntroScreenComponents {
 
     var cols: Int { get }
     var rows: Int { get set }
-    var substance: Substance { get }
+    var substance: AcidSubstance { get }
 
     mutating func increment(count: Int)
 
@@ -33,11 +33,19 @@ extension IntroScreenComponents {
 }
 
 struct GeneralScreenComponents: IntroScreenComponents {
-    let substance: Substance
+    let substance: AcidSubstance
     let cols: Int
     var rows: Int
 
+    init(substance: AcidSubstance, cols: Int, rows: Int) {
+        self.substance = substance
+        self.cols = cols
+        self.rows = rows
+        self.underlyingCoords = AcidSubstanceBeakerCoords(substance: substance)
+    }
+
     private(set) var substanceAdded: Int = 0
+    private var underlyingCoords: AcidSubstanceBeakerCoords
 
     mutating func increment(count: Int) {
         guard count > 0 else {
@@ -45,6 +53,7 @@ struct GeneralScreenComponents: IntroScreenComponents {
         }
         let maxToAdd = min(maxSubstanceCount - substanceAdded, count)
         substanceAdded += maxToAdd
+        underlyingCoords.update(substanceCount: substanceAdded, cols: cols, rows: rows)
     }
 
     func concentration(ofIon ion: PrimaryIon) -> PrimaryIonConcentration {
@@ -61,9 +70,21 @@ struct GeneralScreenComponents: IntroScreenComponents {
 
     var coords: SubstanceValue<BeakerMolecules> {
         SubstanceValue(
-            substanceValue: BeakerMolecules(coords: [], color: .black, label: ""),
-            primaryIonValue: BeakerMolecules(coords: [], color: .black, label: ""),
-            secondaryIonValue: BeakerMolecules(coords: [], color: .black, label: "")
+            substanceValue: BeakerMolecules(
+                coords: underlyingCoords.coords.substanceValue,
+                color: .red,
+                label: ""
+            ),
+            primaryIonValue: BeakerMolecules(
+                coords: underlyingCoords.coords.primaryIonValue,
+                color: .blue,
+                label: ""
+            ),
+            secondaryIonValue: BeakerMolecules(
+                coords: underlyingCoords.coords.secondaryIonValue,
+                color: .purple,
+                label: ""
+            )
         )
     }
 
@@ -82,7 +103,7 @@ struct GeneralScreenComponents: IntroScreenComponents {
     }
 }
 
-struct Substance: Equatable {
+struct AcidSubstance: Equatable {
     /// Display name of the substance
     let name: String
 
@@ -99,8 +120,8 @@ struct Substance: Equatable {
     static func strongAcid(
         name: String,
         secondaryIon: SecondaryIon
-    ) -> Substance {
-        Substance(
+    ) -> AcidSubstance {
+        AcidSubstance(
             name: name,
             substanceAddedPerIon: 0,
             primary: .hydrogen,
