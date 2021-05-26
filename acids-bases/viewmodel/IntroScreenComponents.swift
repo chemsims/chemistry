@@ -9,7 +9,7 @@ protocol IntroScreenComponents {
 
     var cols: Int { get }
     var rows: Int { get set }
-    var substance: AcidSubstance { get }
+    var substance: AcidOrBase { get }
 
     mutating func increment(count: Int)
 
@@ -33,11 +33,11 @@ extension IntroScreenComponents {
 }
 
 struct GeneralScreenComponents: IntroScreenComponents {
-    let substance: AcidSubstance
+    let substance: AcidOrBase
     let cols: Int
     var rows: Int
 
-    init(substance: AcidSubstance, cols: Int, rows: Int) {
+    init(substance: AcidOrBase, cols: Int, rows: Int) {
         self.substance = substance
         self.cols = cols
         self.rows = rows
@@ -104,7 +104,7 @@ struct GeneralScreenComponents: IntroScreenComponents {
     }
 }
 
-struct AcidSubstance: Equatable {
+struct AcidOrBase: Equatable {
 
     init(
         name: String,
@@ -138,8 +138,8 @@ struct AcidSubstance: Equatable {
     static func strongAcid(
         name: String,
         secondaryIon: SecondaryIon
-    ) -> AcidSubstance {
-        AcidSubstance(
+    ) -> AcidOrBase {
+        AcidOrBase(
             name: name,
             substanceAddedPerIon: PositiveInt(0)!,
             primary: .hydrogen,
@@ -153,8 +153,8 @@ struct AcidSubstance: Equatable {
         name: String,
         secondaryIon: SecondaryIon,
         substanceAddedPerIon: NonZeroPositiveInt
-    ) -> AcidSubstance {
-        AcidSubstance(
+    ) -> AcidOrBase {
+        AcidOrBase(
             name: name,
             substanceAddedPerIon: substanceAddedPerIon.positiveInt,
             primary: .hydrogen,

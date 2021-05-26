@@ -6,9 +6,9 @@ import ReactionsCore
 
 struct AcidSubstanceBeakerCoords {
 
-    let substance: AcidSubstance
+    let substance: AcidOrBase
 
-    init(substance: AcidSubstance) {
+    init(substance: AcidOrBase) {
         self.substance = substance
     }
 

@@ -72,7 +72,7 @@ class IntroScreenComponentsTests: XCTestCase {
     }
 
     func testWeakAcidPrimaryIonConcentration() {
-        let acid = AcidSubstance.weakAcid(
+        let acid = AcidOrBase.weakAcid(
             name: "",
             secondaryIon: .A,
             substanceAddedPerIon: NonZeroPositiveInt(5)!
@@ -116,7 +116,7 @@ class IntroScreenComponentsTests: XCTestCase {
     }
 
     func testWeakAcidCoords() {
-        let acid = AcidSubstance.weakAcid(
+        let acid = AcidOrBase.weakAcid(
             name: "",
             secondaryIon: .A,
             substanceAddedPerIon: NonZeroPositiveInt(5)!
@@ -138,7 +138,7 @@ class IntroScreenComponentsTests: XCTestCase {
         XCTAssertEqual(model.coords.secondaryIonValue.coords.count, 1)
     }
 
-    private func newModel(substance: AcidSubstance) -> IntroScreenComponents {
+    private func newModel(substance: AcidOrBase) -> IntroScreenComponents {
         GeneralScreenComponents(
             substance: substance,
             cols: 10,
