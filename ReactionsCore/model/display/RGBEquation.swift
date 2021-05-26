@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-import CoreGraphics
+import SwiftUI
 
 public protocol RGBEquation {
     func getRgb(at x: CGFloat) -> RGB
@@ -60,5 +60,9 @@ public struct RGBGradientEquation: RGBEquation {
             initialColor: startColor,
             finalColor: endColor
         ).getRgb(at: x)
+    }
+
+    public var gradient: Gradient {
+        Gradient(colors: colors.map(\.color))
     }
 }

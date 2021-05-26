@@ -124,6 +124,9 @@ struct AcidOrBase: Equatable {
     let name: String
 
     /// Number of substance molecules added for each pair of ions which are produced
+    ///
+    /// When this is 0 then substance immediately ionizes and also does not remain in the liquid
+    ///
     /// - Examples:
     ///     - 0: Substance ionizes when entering liquid with no substance remaining in liquid
     ///     - 1: Substance ionizes when entering liquid, while also remaining in the liquid
