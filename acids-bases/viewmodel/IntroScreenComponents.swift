@@ -59,7 +59,8 @@ struct GeneralScreenComponents: IntroScreenComponents {
     func concentration(ofIon ion: PrimaryIon) -> PrimaryIonConcentration {
         if substance.primary == ion {
             return PrimaryIonConcentration.varyingPWithSubstance(
-                fractionSubstanceAdded: fractionSubstanceAdded
+                fractionSubstanceAdded: fractionSubstanceAdded,
+                finalConcentration: substance.concentrationAtMaxSubstance
             )
         }
         return PrimaryIonConcentration.addingToPh14(
@@ -109,12 +110,14 @@ struct AcidSubstance: Equatable {
         name: String,
         substanceAddedPerIon: PositiveInt,
         primary: PrimaryIon,
-        secondary: SecondaryIon
+        secondary: SecondaryIon,
+        concentrationAtMaxSubstance: CGFloat
     ) {
         self.name = name
         self.substanceAddedPerIon = substanceAddedPerIon
         self.primary = primary
         self.secondary = secondary
+        self.concentrationAtMaxSubstance = concentrationAtMaxSubstance
     }
 
     /// Display name of the substance
@@ -129,6 +132,7 @@ struct AcidSubstance: Equatable {
 
     let primary: PrimaryIon
     let secondary: SecondaryIon
+    let concentrationAtMaxSubstance: CGFloat
 
     /// Returns a strong acid substance
     static func strongAcid(
@@ -139,7 +143,8 @@ struct AcidSubstance: Equatable {
             name: name,
             substanceAddedPerIon: PositiveInt(0)!,
             primary: .hydrogen,
-            secondary: secondaryIon
+            secondary: secondaryIon,
+            concentrationAtMaxSubstance: 0.1
         )
     }
 
@@ -153,7 +158,8 @@ struct AcidSubstance: Equatable {
             name: name,
             substanceAddedPerIon: substanceAddedPerIon.positiveInt,
             primary: .hydrogen,
-            secondary: secondaryIon
+            secondary: secondaryIon,
+            concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value)
         )
     }
 }
