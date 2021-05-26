@@ -47,6 +47,42 @@ class AcidSubstanceBeakerCoordsTests: XCTestCase {
         checkNoOverlap(coords)
     }
 
+    func testWeakAcidCoords() {
+        var model = AcidSubstanceBeakerCoords(
+            substance: .weakAcid(
+                name: "",
+                secondaryIon: .A,
+                substanceAddedPerIon: NonZeroPositiveInt(5)!
+            )
+        )
+        var coords: SubstanceValue<[GridCoordinate]> {
+            model.coords
+        }
+
+        model.update(substanceCount: 4, cols: 10, rows: 10)
+        checkCounts(coords.substanceValue, 4)
+        checkCounts(coords.primaryIonValue, 0)
+        checkCounts(coords.secondaryIonValue, 0)
+
+        model.update(substanceCount: 5, cols: 10, rows: 10)
+        checkCounts(coords.substanceValue, 5)
+        checkCounts(coords.primaryIonValue, 1)
+        checkCounts(coords.secondaryIonValue, 1)
+        checkNoOverlap(coords)
+
+        model.update(substanceCount: 6, cols: 10, rows: 10)
+        checkCounts(coords.substanceValue, 6)
+        checkCounts(coords.primaryIonValue, 1)
+        checkCounts(coords.secondaryIonValue, 1)
+        checkNoOverlap(coords)
+
+        model.update(substanceCount: 20, cols: 10, rows: 10)
+        checkCounts(coords.substanceValue, 20)
+        checkCounts(coords.primaryIonValue, 4)
+        checkCounts(coords.secondaryIonValue, 4)
+        checkNoOverlap(coords)
+    }
+
     private func checkNoOverlap(
         _ coords: SubstanceValue<[GridCoordinate]>
     ) {

@@ -366,6 +366,7 @@
 		57D2F31225EA389C00AEE0D8 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
 		57D2F31925EA601B00AEE0D8 /* ICETable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F31825EA601B00AEE0D8 /* ICETable.swift */; };
 		57D2F32725EA86C600AEE0D8 /* EquilibriumGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */; };
+		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
 		57D6F3782610A20000AD23AD /* SKSolubleBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D6F3772610A20000AD23AD /* SKSolubleBeakerScene.swift */; };
 		57D79824256D869E005BE551 /* EnergyProfileRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */; };
 		57D79828256E5430005BE551 /* EnergyProfileStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D79827256E5430005BE551 /* EnergyProfileStatements.swift */; };
@@ -928,6 +929,7 @@
 		57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationSizing.swift; sourceTree = "<group>"; };
 		57D2F31825EA601B00AEE0D8 /* ICETable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICETable.swift; sourceTree = "<group>"; };
 		57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumGrid.swift; sourceTree = "<group>"; };
+		57D60151265EAD0100017E25 /* PositiveInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveInt.swift; sourceTree = "<group>"; };
 		57D6F3772610A20000AD23AD /* SKSolubleBeakerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSolubleBeakerScene.swift; sourceTree = "<group>"; };
 		57D79823256D869E005BE551 /* EnergyProfileRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateChart.swift; sourceTree = "<group>"; };
 		57D79827256E5430005BE551 /* EnergyProfileStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileStatements.swift; sourceTree = "<group>"; };
@@ -2044,6 +2046,7 @@
 		5797A45E25E406FC00991BD9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57D60150265EACF300017E25 /* validation */,
 				578B1714261874CC00D8079F /* motion */,
 				57B3B8F9260B280600EB9B47 /* analytics */,
 				57438A55260A3237005E3888 /* persistence */,
@@ -2405,6 +2408,14 @@
 				57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */,
 			);
 			path = grid;
+			sourceTree = "<group>";
+		};
+		57D60150265EACF300017E25 /* validation */ = {
+			isa = PBXGroup;
+			children = (
+				57D60151265EAD0100017E25 /* PositiveInt.swift */,
+			);
+			path = validation;
 			sourceTree = "<group>";
 		};
 		57D6F3682610A1C700AD23AD /* soluble-beaker */ = {
@@ -3380,6 +3391,7 @@
 			files = (
 				57438A56260A3242005E3888 /* ReviewPromptPersistence.swift in Sources */,
 				57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */,
+				57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */,
 				573E1B2B263AACE000379A1D /* StringUtil.swift in Sources */,
 				5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */,
 				57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */,

@@ -48,14 +48,15 @@ struct AcidSubstanceBeakerCoords {
             )
         }
 
-        let desiredSubstance = substance.substanceAddedPerIon > 0 ? substanceCount : 0
+        let perIon = substance.substanceAddedPerIon.value
+        let desiredSubstance = perIon > 0 ? substanceCount : 0
         substanceCoords = updateCoords(
             substanceCoords,
             desiredSubstance,
             [primaryIonCoords, secondaryIonCoords]
         )
 
-        let perIon = substance.substanceAddedPerIon
+
         let ionCount = perIon <= 0 ? substanceCount : substanceCount / perIon
 
         primaryIonCoords = updateCoords(
