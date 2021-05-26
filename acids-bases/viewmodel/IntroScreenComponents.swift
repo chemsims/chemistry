@@ -15,9 +15,9 @@ protocol IntroScreenComponents {
 
     func concentration(ofIon ion: PrimaryIon) -> PrimaryIonConcentration
 
-    var coords: [BeakerMolecules] { get }
+    var coords: SubstanceValue<BeakerMolecules> { get }
 
-    var barChart: [BarChartData] { get }
+    var barChart: SubstanceValue<BarChartData> { get }
 
     var substanceAdded: Int { get }
 }
@@ -58,17 +58,29 @@ struct GeneralScreenComponents: IntroScreenComponents {
         )
     }
 
-    var coords: [BeakerMolecules] {
-        []
+
+    var coords: SubstanceValue<BeakerMolecules> {
+        SubstanceValue(
+            substanceValue: BeakerMolecules(coords: [], color: .black, label: ""),
+            primaryIonValue: BeakerMolecules(coords: [], color: .black, label: ""),
+            secondaryIonValue: BeakerMolecules(coords: [], color: .black, label: "")
+        )
     }
 
-    var barChart: [BarChartData] {
-        []
+    var barChart: SubstanceValue<BarChartData> {
+        let tempData = BarChartData(
+            label: "",
+            equation: ConstantEquation(value: 0),
+            color: .black,
+            accessibilityLabel: ""
+        )
+        return SubstanceValue(
+            substanceValue: tempData,
+            primaryIonValue: tempData,
+            secondaryIonValue: tempData
+        )
     }
 }
-
-
-
 
 struct Substance: Equatable {
     /// Display name of the substance
@@ -94,6 +106,16 @@ struct Substance: Equatable {
             primary: .hydrogen,
             secondary: secondaryIon
         )
+    }
+}
+
+struct SubstanceValue<Value> {
+    let substanceValue: Value
+    let primaryIonValue: Value
+    let secondaryIonValue: Value
+
+    var all: [Value] {
+        [substanceValue, primaryIonValue, secondaryIonValue]
     }
 }
 
