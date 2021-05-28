@@ -51,7 +51,7 @@ public struct Tooltip: View {
     }
 
     public enum ArrowPosition {
-        case left, bottom
+        case top, left, bottom
     }
 
     public enum ArrowLocation {
@@ -108,6 +108,28 @@ private struct TooltipShape: Shape {
             to: geometry.topLeft.offset(dx: geometry.cornerRadius, dy: 0),
             control: geometry.topLeft
         )
+
+        // Top arrow
+        if geometry.arrowPosition == .top {
+            path.addLine(
+                to: CGPoint(
+                    x: (rect.width - geometry.arrowWidth) / 2,
+                    y: geometry.topEdge
+                )
+            )
+            path.addLine(
+                to: CGPoint(
+                    x: rect.width / 2,
+                    y: geometry.topEdge - geometry.arrowHeight
+                )
+            )
+            path.addLine(
+                to: CGPoint(
+                    x: (rect.width + geometry.arrowWidth) / 2,
+                    y: geometry.topEdge
+                )
+            )
+        }
 
         // Top edge
         path.addLine(to: geometry.topRight.offset(dx: -geometry.cornerRadius, dy: 0))
@@ -190,11 +212,11 @@ private struct TooltipGeometry {
     }
 
     var topLeft: CGPoint {
-        CGPoint(x: leftEdge, y: 0)
+        CGPoint(x: leftEdge, y: topEdge)
     }
 
     var topRight: CGPoint {
-        CGPoint(x: size.width, y: 0)
+        CGPoint(x: size.width, y: topEdge)
     }
 
     var bottomRight: CGPoint {
@@ -217,6 +239,13 @@ private struct TooltipGeometry {
             return size.height - arrowHeight
         }
         return size.height
+    }
+
+    var topEdge: CGFloat {
+        if arrowPosition == .top && arrowLocation == .inside {
+            return arrowHeight
+        }
+        return 0
     }
 
     var textWidth: CGFloat {
@@ -288,6 +317,30 @@ struct Tooltip_Previews: PreviewProvider {
                 fontSize: 15,
                 arrowPosition: .left,
                 arrowLocation: .outside
+            )
+            .foregroundColor(.white)
+            .frame(width: width, height: height)
+
+            Tooltip(
+                text: "Hello, world!!",
+                color: .black,
+                background: .gray,
+                border: .darkGray,
+                fontSize: 15,
+                arrowPosition: .top,
+                arrowLocation: .outside
+            )
+            .foregroundColor(.white)
+            .frame(width: width, height: height)
+
+            Tooltip(
+                text: "Hello, world!!",
+                color: .black,
+                background: .gray,
+                border: .darkGray,
+                fontSize: 15,
+                arrowPosition: .top,
+                arrowLocation: .inside
             )
             .foregroundColor(.white)
             .frame(width: width, height: height)
