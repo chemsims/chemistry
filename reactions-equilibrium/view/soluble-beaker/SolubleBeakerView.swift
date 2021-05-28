@@ -271,8 +271,9 @@ private struct SolubleBeakerViewWithGeometry: View {
         }
 
         let solute = activeSolute ?? .commonIon
+        let text = solute.reaction(for: model.selectedReaction)
         return Tooltip(
-            text: solute.reaction(for: model.selectedReaction),
+            text: TextLine(stringLiteral: text),
             color: .black,
             background: solute.tooltipBackground(for: model.selectedReaction),
             border: solute.tooltipBorder(for: model.selectedReaction),

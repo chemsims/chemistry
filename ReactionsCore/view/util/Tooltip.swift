@@ -7,7 +7,7 @@ import SwiftUI
 public struct Tooltip: View {
 
     public init(
-        text: String,
+        text: TextLine,
         color: Color,
         background: Color,
         border: Color,
@@ -24,7 +24,7 @@ public struct Tooltip: View {
         self.arrowLocation = arrowLocation
     }
 
-    let text: String
+    let text: TextLine
     let color: Color
     let background: Color
     let border: Color
@@ -61,7 +61,7 @@ public struct Tooltip: View {
 
 private struct TooltipWithGeometry: View {
 
-    let text: String
+    let text: TextLine
     let color: Color
     let background: Color
     let border: Color
@@ -77,7 +77,7 @@ private struct TooltipWithGeometry: View {
 
     private var textView: some View {
         TextLinesView(
-            line: TextLine(stringLiteral: text),
+            line: text,
             fontSize: fontSize,
             color: color
         )
@@ -253,11 +253,11 @@ private struct TooltipGeometry {
     }
 
     var textHeight: CGFloat {
-        bottomEdge
+        bottomEdge - topEdge
     }
 
     var textYOffset: CGFloat {
-        -(size.height - bottomEdge) / 2
+        -(size.height - bottomEdge - topEdge) / 2
     }
 
     var textXOffset: CGFloat {
@@ -271,79 +271,33 @@ struct Tooltip_Previews: PreviewProvider {
     static let width: CGFloat = 120
     static let height: CGFloat = 40
 
+    static var arrowPositions: [Tooltip.ArrowPosition] = [.top, .left, .bottom]
+    static var arrowLocations: [Tooltip.ArrowLocation] = [.inside, .outside]
+
+    static var arrows: [(Tooltip.ArrowPosition, Tooltip.ArrowLocation)] {
+        arrowPositions.flatMap { pos in
+            arrowLocations.map { loc in
+                (pos, loc)
+            }
+        }
+    }
+
     static var previews: some View {
         VStack(spacing: 50) {
-            Tooltip(
-                text: "Hello, world!!",
-                color: .black,
-                background: .gray,
-                border: .darkGray,
-                fontSize: 15,
-                arrowPosition: .bottom,
-                arrowLocation: .outside
-            )
-            .foregroundColor(.white)
-            .frame(width: width, height: height)
-
-            Tooltip(
-                text: "Hello, world!!",
-                color: .black,
-                background: .gray,
-                border: .darkGray,
-                fontSize: 15,
-                arrowPosition: .bottom,
-                arrowLocation: .inside
-            )
-            .foregroundColor(.white)
-            .frame(width: width, height: height)
-
-            Tooltip(
-                text: "Hello, world!!",
-                color: .black,
-                background: .gray,
-                border: .darkGray,
-                fontSize: 15,
-                arrowPosition: .left,
-                arrowLocation: .inside
-            )
-            .foregroundColor(.white)
-            .frame(width: width, height: height)
-
-            Tooltip(
-                text: "Hello, world!!",
-                color: .black,
-                background: .gray,
-                border: .darkGray,
-                fontSize: 15,
-                arrowPosition: .left,
-                arrowLocation: .outside
-            )
-            .foregroundColor(.white)
-            .frame(width: width, height: height)
-
-            Tooltip(
-                text: "Hello, world!!",
-                color: .black,
-                background: .gray,
-                border: .darkGray,
-                fontSize: 15,
-                arrowPosition: .top,
-                arrowLocation: .outside
-            )
-            .foregroundColor(.white)
-            .frame(width: width, height: height)
-
-            Tooltip(
-                text: "Hello, world!!",
-                color: .black,
-                background: .gray,
-                border: .darkGray,
-                fontSize: 15,
-                arrowPosition: .top,
-                arrowLocation: .inside
-            )
-            .foregroundColor(.white)
-            .frame(width: width, height: height)
+            ForEach(arrows.indices) { i in
+                Tooltip(
+                    text: "Hello, world!!",
+                    color: .black,
+                    background: .gray,
+                    border: .darkGray,
+                    fontSize: 15,
+                    arrowPosition: arrows[i].0,
+                    arrowLocation: arrows[i].1
+                )
+                .frame(width: width, height: height)
+            }
         }
+        .padding(50)
+        .previewLayout(.sizeThatFits)
     }
 }
