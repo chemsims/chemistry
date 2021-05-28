@@ -3,37 +3,46 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-class ShakeContainerViewModel: NSObject, ObservableObject {
+/// A view model to handle shaking molecules from a container, and performing some action when entering the water
+public class ShakeContainerViewModel: NSObject, ObservableObject {
 
-    let motion: CoreMotionShakingViewModel
-    @Published var molecules = [FallingMolecule]()
-
-    let canAddMolecule: () -> Bool
-    let addMolecules: (Int) -> Void
-
-    var initialLocation: CGPoint?
-    var bottomY: CGFloat?
-
-    var halfXRange: CGFloat?
-    var halfYRange: CGFloat?
-
-    init(
+    /// Creates a new model
+    ///
+    /// - Parameters:
+    ///     - canAddMolecule: A closure to configure whether the container can emit new molecules
+    ///     - addMolecules: A closure called when molecules enter the water. The integer passed to the
+    ///                     closure will be the number of molecules entering the water. Note that this may be
+    ///                     greater than 1.
+    public init(
         canAddMolecule: @escaping () -> Bool,
         addMolecules: @escaping (Int) -> Void
     ) {
-        self.motion = CoreMotionShakingViewModel(settings: .defaultBehavior)
+        self.motion = CoreMotionShakingViewModel(
+            settings: .defaultBehavior
+        )
         self.canAddMolecule = canAddMolecule
         self.addMolecules = addMolecules
         super.init()
         self.motion.delegate = self
     }
 
+    public let motion: CoreMotionShakingViewModel
+    @Published public var molecules = [MovingPoint]()
+
+    public let canAddMolecule: () -> Bool
+    public let addMolecules: (Int) -> Void
+
+    public var initialLocation: CGPoint?
+    public var bottomY: CGFloat?
+
+    public var halfXRange: CGFloat?
+    public var halfYRange: CGFloat?
+
     private let velocity = 200.0 // pts per second
     private let maxDuration: Double = 1.5
 
-    func manualAdd(amount: Int) {
+    public func manualAdd(amount: Int) {
         doManualAdd(remaining: amount)
     }
 
@@ -53,7 +62,7 @@ class ShakeContainerViewModel: NSObject, ObservableObject {
             return
         }
         if let location = initialLocation, let bottomY = bottomY {
-            let molecule = FallingMolecule(
+            let molecule = MovingPoint(
                 position: CGPoint(
                     x: location.x + (motion.position.xOffset * (halfXRange ?? 0)),
                     y: location.y + (motion.position.yOffset * (halfYRange ?? 0))
@@ -79,11 +88,10 @@ class ShakeContainerViewModel: NSObject, ObservableObject {
         }
         addMolecules(1)
     }
-
 }
 
 extension ShakeContainerViewModel: CoreMotionShakingDelegate {
-    func didShake() {
+    public func didShake() {
         DispatchQueue.main.async { [weak self] in
             self?.doAdd()
         }
