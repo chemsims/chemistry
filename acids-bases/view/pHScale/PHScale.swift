@@ -9,7 +9,20 @@ struct PHScale: View {
 
     /// The tick labels on the top of the bar
     /// These will also be reversed and placed along the bottom
-    let topLabels: [TextLine]
+    let topTicks: [TextLine]
+
+    /// Label for the top axis
+    let topLabel: ColoredText
+
+    /// Label for the bottom axis
+    let bottomLabel: ColoredText
+
+    /// Label for the left side of the bar
+    let leftLabel: ColoredText
+
+    /// Label for the right side of the bar
+    let rightLabel: ColoredText
+
 
     /// Value of the top indicator
     let topIndicatorValue: IndicatorValue
@@ -28,11 +41,15 @@ struct PHScale: View {
             PHScaleWithGeometry(
                 geometry: PHScaleGeometry(
                     geometry: geo,
-                    tickCount: topLabels.count,
+                    tickCount: topTicks.count,
                     topTickMinValue: topMinTickValue,
                     topTickMaxValue: topMaxTickValue
                 ),
-                topLabels: topLabels,
+                topTicks: topTicks,
+                topLabel: topLabel,
+                bottomLabel: bottomLabel,
+                leftLabel: leftLabel,
+                rightLabel: rightLabel,
                 topIndicatorValue: topIndicatorValue,
                 bottomIndicatorValue: bottomIndicatorValue
             )
@@ -41,8 +58,7 @@ struct PHScale: View {
 
     struct IndicatorValue {
         let value: CGFloat
-        let formatted: TextLine
-        let fontColor: Color
+        let text: ColoredText
         let background: Color
     }
 }
@@ -50,15 +66,80 @@ struct PHScale: View {
 private struct PHScaleWithGeometry: View {
 
     let geometry: PHScaleGeometry
-    let topLabels: [TextLine]
+    let topTicks: [TextLine]
+    let topLabel: ColoredText
+    let bottomLabel: ColoredText
+    let leftLabel: ColoredText
+    let rightLabel: ColoredText
     let topIndicatorValue: PHScale.IndicatorValue
     let bottomIndicatorValue: PHScale.IndicatorValue
 
     var body: some View {
         ZStack {
             bar
+
+            labelAboveBar(leftLabel, isLeft: true)
+            labelAboveBar(rightLabel, isLeft: false)
+
+            labelBesideBar(topLabel, isLeft: true)
+            labelBesideBar(bottomLabel, isLeft: false)
+
             topIndicator
             bottomIndicator
+        }
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
+    }
+
+    private func labelAboveBar(_ label: ColoredText, isLeft: Bool) -> some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                Spacer()
+                    .modifyIf(isLeft) { $0.frame(width: geometry.barHorizontalSpacing) }
+
+                TextLinesView(
+                    line: label.text,
+                    fontSize: geometry.labelsFontSize,
+                    color: label.color
+                )
+                .frame(height: geometry.barVerticalSpacing, alignment: .bottom)
+
+                Spacer()
+                    .modifyIf(!isLeft) {
+                        $0.frame(width: geometry.barHorizontalSpacing)
+                    }
+            }
+            Spacer()
+        }
+    }
+
+    private func labelBesideBar(_ label: ColoredText, isLeft: Bool) -> some View {
+        VStack(spacing: 0) {
+            Spacer()
+                .modifyIf(isLeft) { $0.frame(height: geometry.barVerticalSpacing) }
+
+            HStack(spacing: 0) {
+                if !isLeft {
+                    Spacer()
+                }
+
+                TextLinesView(
+                    line: label.text,
+                    fontSize: geometry.labelsFontSize,
+                    color: label.color
+                )
+                .frame(
+                    width: geometry.barHorizontalSpacing,
+                    height: geometry.sideLabelsHeight
+                )
+
+                if isLeft {
+                    Spacer()
+                }
+            }
+
+            Spacer()
+                .modifyIf(!isLeft) { $0.frame(height: geometry.barVerticalSpacing) }
         }
     }
 
@@ -69,7 +150,7 @@ private struct PHScaleWithGeometry: View {
                 Spacer()
                 PHScaleBar(
                     geometry: geometry,
-                    topLabels: topLabels
+                    topTicks: topTicks
                 )
                 .frame(size: geometry.barSize)
                 Spacer()
@@ -105,11 +186,11 @@ private struct PHScaleWithGeometry: View {
             }
 
             Tooltip(
-                text: indicator.formatted,
-                color: indicator.fontColor,
+                text: indicator.text.text,
+                color: indicator.text.color,
                 background: indicator.background,
                 border: .gray,
-                fontSize: 10,
+                fontSize: geometry.indicatorFontSize,
                 arrowPosition: position == .top ? .bottom : .top,
                 arrowLocation: .inside,
                 hasShadow: false
@@ -130,27 +211,54 @@ private struct PHScaleWithGeometry: View {
 struct PHScale_Previews: PreviewProvider {
 
     static var previews: some View {
+        bar
+            .previewLayout(.fixed(width: 400, height: 110))
+
+        bar
+            .previewLayout(.fixed(width: 300, height: 80))
+
+        bar
+            .previewLayout(.fixed(width: 700, height: 120))
+
+        bar
+            .previewLayout(.fixed(width: 200, height: 100))
+    }
+
+    private static var bar: some View {
         PHScale(
-            topLabels: labels,
+            topTicks: ticks,
+            topLabel: ColoredText(
+                text: "[H]",
+                color: RGB.hydrogenDarker.color
+            ),
+            bottomLabel: ColoredText(
+                text: "[OH^-^]",
+                color: RGB.hydroxideDarker.color
+            ),
+            leftLabel: ColoredText(
+                text: "Acid",
+                color: RGB.hydrogenDarker.color
+            ),
+            rightLabel: ColoredText(
+                text: "Basic",
+                color: RGB.hydroxideDarker.color
+            ),
             topIndicatorValue: .init(
                 value: 3,
-                formatted: "[H] = 10^1^",
-                fontColor: .white,
+                text: ColoredText(text: "[H]^+^ = 1x10^-1^", color: .white),
                 background: RGB.hydrogen.color
             ),
             bottomIndicatorValue: .init(
                 value: 7,
-                formatted: "[OH] = 10^2^",
-                fontColor: .white,
+                text: ColoredText(text: "[OH] = 10^2^", color: .white),
                 background: RGB.hydroxide.color
             ),
             topMinTickValue: 0,
             topMaxTickValue: 14
         )
-        .previewLayout(.fixed(width: 400, height: 110))
     }
 
-    private static let labels: [TextLine] =
+    private static let ticks: [TextLine] =
         stride(
             from: 0,
             through: -14,

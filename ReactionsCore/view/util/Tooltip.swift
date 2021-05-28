@@ -213,6 +213,9 @@ private struct TooltipGeometry {
         }
         return min(ideal, 0.5 * size.width)
     }
+
+    let lineWidth: CGFloat = 1
+
     var cornerRadius: CGFloat {
         min(size.width / 4, 5)
     }
@@ -255,11 +258,11 @@ private struct TooltipGeometry {
     }
 
     var textWidth: CGFloat {
-        size.width - leftEdge
+        size.width - leftEdge - (2 * lineWidth)
     }
 
     var textHeight: CGFloat {
-        bottomEdge - topEdge
+        bottomEdge - topEdge - (2 * lineWidth)
     }
 
     var textYOffset: CGFloat {

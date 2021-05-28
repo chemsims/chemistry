@@ -21,7 +21,7 @@ struct PHScaleGeometry {
 
     var barSize: CGSize {
         CGSize(
-            width: 0.86 * width,
+            width: 0.84 * width,
             height: 0.47 * height
         )
     }
@@ -32,6 +32,18 @@ struct PHScaleGeometry {
 
     var barHorizontalSpacing: CGFloat {
         (width - barSize.width) / 2
+    }
+}
+
+// MARK: Label geometry
+extension PHScaleGeometry {
+
+    var labelsFontSize: CGFloat {
+        1.5 * tickLabelFontSize
+    }
+
+    var sideLabelsHeight: CGFloat {
+        4 * tickHeight
     }
 }
 
@@ -61,6 +73,10 @@ extension PHScaleGeometry {
             width: 0.167 * width,
             height: barVerticalSpacing
         )
+    }
+
+    var indicatorFontSize: CGFloat {
+        labelsFontSize
     }
 
     var topIndicatorAxis: AxisPositionCalculations<CGFloat> {

@@ -431,6 +431,7 @@
 		57FA3AB12660D4450073A29B /* PHScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB02660D4450073A29B /* PHScale.swift */; };
 		57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */; };
 		57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */; };
+		57FA3AB92660F27B0073A29B /* ColoredText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB82660F27B0073A29B /* ColoredText.swift */; };
 		57FD400726484DCF00E352C1 /* FeedbackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD400626484DCF00E352C1 /* FeedbackSettings.swift */; };
 		57FD400926484F2E00E352C1 /* FeedbackSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */; };
 		57FD400B26484F4400E352C1 /* sliderCalculationsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */; };
@@ -1012,6 +1013,7 @@
 		57FA3AB02660D4450073A29B /* PHScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScale.swift; sourceTree = "<group>"; };
 		57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScaleGeometry.swift; sourceTree = "<group>"; };
 		57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesStyling.swift; sourceTree = "<group>"; };
+		57FA3AB82660F27B0073A29B /* ColoredText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredText.swift; sourceTree = "<group>"; };
 		57FD400626484DCF00E352C1 /* FeedbackSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSettings.swift; sourceTree = "<group>"; };
 		57FD402126486F8300E352C1 /* NavigationTestMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTestMethods.swift; sourceTree = "<group>"; };
 		57FD40262648703500E352C1 /* AqueousViewModelParametersReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousViewModelParametersReappliedTests.swift; sourceTree = "<group>"; };
@@ -1631,6 +1633,7 @@
 			children = (
 				572CBEAB25C0657A00CE6007 /* Labels.swift */,
 				571D6A75255AC27400F4E635 /* TextLine.swift */,
+				57FA3AB82660F27B0073A29B /* ColoredText.swift */,
 			);
 			path = text;
 			sourceTree = "<group>";
@@ -3542,6 +3545,7 @@
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
 				574103DF2642966300E6EDCB /* Tooltip.swift in Sources */,
 				579EA8F5264687AE008461E8 /* BarChartAxis.swift in Sources */,
+				57FA3AB92660F27B0073A29B /* ColoredText.swift in Sources */,
 				57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */,
 				57315EBD26401C0800A7D0F9 /* QuizViewModel.swift in Sources */,
 				57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */,

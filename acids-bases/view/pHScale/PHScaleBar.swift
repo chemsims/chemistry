@@ -12,16 +12,16 @@ import ReactionsCore
 struct PHScaleBar: View {
 
     let geometry: PHScaleGeometry
-    let topLabels: [TextLine]
-    var bottomLabels: [TextLine] {
-        topLabels.reversed()
+    let topTicks: [TextLine]
+    var bottomTicks: [TextLine] {
+        topTicks.reversed()
     }
 
     var body: some View {
         ZStack(alignment: .leading) {
             PHScaleBarBackground()
-            row(elements: topLabels, position: .top)
-            row(elements: bottomLabels, position: .bottom)
+            row(elements: topTicks, position: .top)
+            row(elements: bottomTicks, position: .bottom)
         }
     }
 
