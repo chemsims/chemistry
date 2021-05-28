@@ -5,23 +5,13 @@
 import SwiftUI
 import ReactionsCore
 
+/// A bar showing a PH scale, with custom labels
+///
+/// The `topLabels` will be spaced out evenly along the bar, with spacing on either end.
+/// These will also be reversed and used on the bottom row
 struct PHScaleBar: View {
 
-    let topLabels: [TextLine]
-
-    var body: some View {
-        GeometryReader { geo in
-            PHScaleBarWithGeometry(
-                geometry: geo,
-                topLabels: topLabels
-            )
-        }
-    }
-}
-
-private struct PHScaleBarWithGeometry: View {
-
-    let geometry: GeometryProxy
+    let geometry: PHScaleGeometry
     let topLabels: [TextLine]
     var bottomLabels: [TextLine] {
         topLabels.reversed()
@@ -61,44 +51,28 @@ private struct PHScaleBarWithGeometry: View {
     ) -> some View {
         // The offset for the index, adjusted to take into account
         // the element width
-        let indexOffset = CGFloat(index + 1) * elementXSpacing
-        let adjustedOffset = indexOffset - (elementWidth / 2)
+        let indexOffset = CGFloat(index + 1) * geometry.tickXSpacing
+        let adjustedOffset = indexOffset - (geometry.tickLabelWidth / 2)
 
         return VStack(spacing: 1) {
             if position == .top {
                 Rectangle()
-                    .frame(width: 1, height: tickSize)
+                    .frame(width: 1, height: geometry.tickHeight)
             }
 
-            TextLinesView(line: content, fontSize: fontSize)
+            TextLinesView(line: content, fontSize: geometry.tickLabelFontSize)
 
             if position == .bottom {
                 Rectangle()
-                    .frame(width: 1, height: tickSize)
+                    .frame(width: 1, height: geometry.tickHeight)
             }
         }
         .lineLimit(1)
         .minimumScaleFactor(0.1)
-        .frame(width: elementWidth)
+        .frame(width: geometry.tickLabelWidth)
         .offset(
             x: adjustedOffset
         )
-    }
-
-    private var elementXSpacing: CGFloat {
-        geometry.size.width / CGFloat((topLabels.count + 1))
-    }
-
-    private var elementWidth: CGFloat {
-        0.8 * elementXSpacing
-    }
-
-    private var fontSize: CGFloat {
-        geometry.size.width * 0.021
-    }
-
-    private var tickSize: CGFloat {
-        geometry.size.height * 0.06
     }
 
     enum LabelPosition {
@@ -128,15 +102,5 @@ private struct PHScaleBarBackground: View {
 
     private func cornerRadius(_ geo: GeometryProxy) -> CGFloat {
         geo.size.height * 0.1
-    }
-}
-
-struct PHScaleBar_Previews: PreviewProvider {
-    static var previews: some View {
-        PHScaleBar(
-            topLabels: stride(from: 0, through: -14, by: -1).map { "10^\($0)^" }
-        )
-        .previewLayout(.fixed(width: 400, height: 120))
-        .padding()
     }
 }

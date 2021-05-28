@@ -18,6 +18,10 @@ extension View {
         self.frame(width: size, height: size)
     }
 
+    public func frame(size: CGSize) -> some View {
+        self.frame(width: size.width, height: size.height)
+    }
+
     public func foregroundColor(rgb: RGBEquation, progress: CGFloat) -> some View {
         self.modifier(AnimatableForegroundColor(rgb: rgb, progress: progress))
     }

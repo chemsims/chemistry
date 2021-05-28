@@ -13,7 +13,8 @@ public struct Tooltip: View {
         border: Color,
         fontSize: CGFloat,
         arrowPosition: ArrowPosition,
-        arrowLocation: ArrowLocation
+        arrowLocation: ArrowLocation,
+        hasShadow: Bool = true
     ) {
         self.text = text
         self.color = color
@@ -22,6 +23,7 @@ public struct Tooltip: View {
         self.fontSize = fontSize
         self.arrowPosition = arrowPosition
         self.arrowLocation = arrowLocation
+        self.hasShadow = hasShadow
     }
 
     let text: TextLine
@@ -31,6 +33,7 @@ public struct Tooltip: View {
     let fontSize: CGFloat
     let arrowPosition: ArrowPosition
     let arrowLocation: ArrowLocation
+    let hasShadow: Bool
 
     public var body: some View {
         GeometryReader { geo in
@@ -40,6 +43,7 @@ public struct Tooltip: View {
                 background: background,
                 border: border,
                 fontSize: fontSize,
+                hasShadow: hasShadow,
                 geometry: TooltipGeometry(
                     size: geo.size,
                     arrowPosition: arrowPosition,
@@ -66,6 +70,7 @@ private struct TooltipWithGeometry: View {
     let background: Color
     let border: Color
     let fontSize: CGFloat
+    let hasShadow: Bool
     let geometry: TooltipGeometry
 
     var body: some View {
@@ -92,7 +97,8 @@ private struct TooltipWithGeometry: View {
             TooltipShape(geometry: geometry)
                 .stroke()
                 .foregroundColor(border)
-        }.shadow(radius: 2)
+        }
+        .shadow(radius: hasShadow ? 2 : 0)
     }
 }
 
