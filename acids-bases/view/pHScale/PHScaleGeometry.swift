@@ -76,7 +76,7 @@ extension PHScaleGeometry {
     }
 
     var indicatorFontSize: CGFloat {
-        labelsFontSize
+        0.9 * labelsFontSize
     }
 
     var topIndicatorAxis: AxisPositionCalculations<CGFloat> {

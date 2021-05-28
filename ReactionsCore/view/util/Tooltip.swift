@@ -74,7 +74,7 @@ private struct TooltipWithGeometry: View {
     let geometry: TooltipGeometry
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             card
             textView
         }
@@ -95,7 +95,7 @@ private struct TooltipWithGeometry: View {
             TooltipShape(geometry: geometry)
                 .foregroundColor(background)
             TooltipShape(geometry: geometry)
-                .stroke()
+                .stroke(lineWidth: geometry.lineWidth)
                 .foregroundColor(border)
         }
         .shadow(radius: hasShadow ? 2 : 0)
@@ -257,20 +257,36 @@ private struct TooltipGeometry {
         return 0
     }
 
+    var textVerticalPadding: CGFloat {
+        3 * lineWidth
+    }
+
+    var textHorizontalPadding: CGFloat {
+        lineWidth
+    }
+
     var textWidth: CGFloat {
-        size.width - leftEdge - (2 * lineWidth)
+        size.width - leftEdge - (2 * textHorizontalPadding)
     }
 
     var textHeight: CGFloat {
-        bottomEdge - topEdge - (2 * lineWidth)
+        bottomEdge - topEdge - (2 * textVerticalPadding)
+    }
+
+    var bubbleCenterX: CGFloat {
+        (size.width + leftEdge) / 2
+    }
+
+    var bubbleCenterY: CGFloat {
+        (bottomEdge + topEdge) / 2
     }
 
     var textYOffset: CGFloat {
-        -(size.height - bottomEdge - topEdge) / 2
+        bubbleCenterY - (textHeight / 2)
     }
 
     var textXOffset: CGFloat {
-        leftEdge / 2
+        bubbleCenterX - (textWidth / 2)
     }
 }
 
@@ -278,7 +294,7 @@ private struct TooltipGeometry {
 struct Tooltip_Previews: PreviewProvider {
 
     static let width: CGFloat = 120
-    static let height: CGFloat = 40
+    static let height: CGFloat = 30
 
     static var arrowPositions: [Tooltip.ArrowPosition] = [.top, .left, .bottom]
     static var arrowLocations: [Tooltip.ArrowLocation] = [.inside, .outside]
@@ -296,10 +312,10 @@ struct Tooltip_Previews: PreviewProvider {
             ForEach(arrows.indices) { i in
                 Tooltip(
                     text: "Hello, world!!",
-                    color: .black,
-                    background: .gray,
+                    color: .white,
+                    background: .purple,
                     border: .darkGray,
-                    fontSize: 15,
+                    fontSize: 20,
                     arrowPosition: arrows[i].0,
                     arrowLocation: arrows[i].1
                 )
@@ -308,5 +324,6 @@ struct Tooltip_Previews: PreviewProvider {
         }
         .padding(50)
         .previewLayout(.sizeThatFits)
+        .minimumScaleFactor(0.5)
     }
 }
