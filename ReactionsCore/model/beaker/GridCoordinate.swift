@@ -2,7 +2,7 @@
 // ReactionsCore
 //
 
-import Foundation
+import CoreGraphics
 
 /// Represents a position in a grid
 public struct GridCoordinate: Identifiable, Equatable, Hashable {
@@ -36,6 +36,14 @@ public struct GridCoordinate: Identifiable, Equatable, Hashable {
 }
 
 public struct GridCoordinateList {
+
+    /// Returns an integer number of rows available for the given fraction of rows visible
+    public static func availableRows(for rows: CGFloat) -> Int {
+        if rows - rows.rounded(.down) > 0.4 {
+            return Int(ceil(rows))
+        }
+        return Int(rows)
+    }
 
     /// Adds `count` random elements to `grid`, returning a new grid
     public static func addingRandomElementsTo(

@@ -35,7 +35,7 @@ public struct BeakyGeometrySettings {
         self.bubbleStemWidth = bubbleStemWidth
     }
 
-    /// Returns default geometry for the given width & height
+    /// Returns default geometry for the given width and height of the enclosing box
     public init(
         width: CGFloat,
         height: CGFloat
