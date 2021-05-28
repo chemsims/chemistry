@@ -259,6 +259,7 @@
 		5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
 		5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
 		5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
+		579CDA1D2661656D00143809 /* AdjustableFluidBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA1C2661656D00143809 /* AdjustableFluidBeaker.swift */; };
 		579EA8F42646871C008461E8 /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F32646871C008461E8 /* BarChart.swift */; };
 		579EA8F5264687AE008461E8 /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
 		579EA8F7264689CD008461E8 /* BarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F6264689CD008461E8 /* BarShape.swift */; };
@@ -840,6 +841,7 @@
 		5797A44925E4069F00991BD9 /* ReactionsCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactionsCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797A45025E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579B5D742632A2D600502B69 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
+		579CDA1C2661656D00143809 /* AdjustableFluidBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustableFluidBeaker.swift; sourceTree = "<group>"; };
 		579EA8F32646871C008461E8 /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
 		579EA8F6264689CD008461E8 /* BarShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarShape.swift; sourceTree = "<group>"; };
 		579EA8F8264694E5008461E8 /* BarChartGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGeometry.swift; sourceTree = "<group>"; };
@@ -1430,6 +1432,7 @@
 				57686AF32601F5CF005BD328 /* FilledAirBeaker.swift */,
 				57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */,
 				578B174A2618D22B00D8079F /* FillableBeaker.swift */,
+				579CDA1C2661656D00143809 /* AdjustableFluidBeaker.swift */,
 			);
 			path = beaker;
 			sourceTree = "<group>";
@@ -3531,6 +3534,7 @@
 				575A883A25E431E500AEE448 /* Strings.swift in Sources */,
 				57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */,
 				57567B422605F156009711D4 /* GridElementSetter.swift in Sources */,
+				579CDA1D2661656D00143809 /* AdjustableFluidBeaker.swift in Sources */,
 				57686AC72600E342005BD328 /* BurnerView.swift in Sources */,
 				57DDAD4E25E57E2A00B535A7 /* TimeChartDataLineView.swift in Sources */,
 				579EA90926472836008461E8 /* RGBEquation.swift in Sources */,

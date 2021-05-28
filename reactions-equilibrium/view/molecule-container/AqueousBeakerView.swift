@@ -107,49 +107,28 @@ struct AqueousBeakerView<Nav: ScreenState>: View {
     }
 
     private var beaker: some View {
-        HStack(alignment: .bottom, spacing: 0) {
-            CustomSlider(
-                value: $model.rows,
-                axis: settings.sliderAxis,
-                orientation: .portrait,
-                includeFill: true,
-                settings: settings.sliderSettings,
-                disabled: !model.canSetLiquidLevel,
-                useHaptics: true
+        AdjustableFluidBeaker(
+            rows: $model.rows,
+            molecules: [],
+            animatingMolecules: model.components.beakerMolecules.map(\.animatingMolecules),
+            currentTime: model.currentTime,
+            settings: AdjustableFluidBeakerSettings(
+                minRows: AqueousReactionSettings.minRows,
+                maxRows: AqueousReactionSettings.maxRows,
+                beakerWidth: settings.beakerWidth,
+                beakerHeight: settings.beakerHeight,
+                sliderSettings: settings.sliderSettings,
+                sliderHeight: settings.sliderHeight
+            ),
+            canSetLevel: model.canSetLiquidLevel,
+            beakerColorMultiply: model.highlightedElements.colorMultiply(for: nil),
+            sliderColorMultiply: model.highlightedElements.colorMultiply(for: .waterSlider),
+            beakerModifier: AddMoleculesAccessibilityModifier(
+                reactantsEnabled: model.inputState == .addReactants,
+                productsEnabled: model.inputState == .addProducts,
+                doAdd: manualAddMolecule
             )
-            .frame(
-                width: settings.sliderSettings.handleWidth,
-                height: settings.sliderHeight
-            )
-            .background(
-                Color.white
-                    .padding(.horizontal, -0.2 * settings.sliderSettings.handleWidth)
-                    .padding(.top, -0.2 * settings.sliderSettings.handleWidth)
-            )
-            .colorMultiply(model.highlightedElements.colorMultiply(for: .waterSlider))
-            .accessibility(label: Text("Slider for number of rows of molecules in beaker"))
-
-            FilledBeaker(
-                molecules: [],
-                animatingMolecules: model.components.beakerMolecules.map(\.animatingMolecules),
-                currentTime: model.currentTime,
-                rows: model.rows
-            )
-            .frame(width: settings.beakerWidth, height: settings.beakerHeight)
-            .colorMultiply(model.highlightedElements.colorMultiply(for: nil))
-            .modifier(
-                AddReactantsAccessibilityModifier(
-                    enabled: model.inputState == .addReactants,
-                    doAdd: manualAddMolecule
-                )
-            )
-            .modifier(
-                AddProductsAccessibilityModifier(
-                    enabled: model.inputState == .addProducts,
-                    doAdd: manualAddMolecule
-                )
-            )
-        }
+        )
         .padding(.bottom, settings.beakerBottomPadding)
     }
 
@@ -160,6 +139,28 @@ struct AqueousBeakerView<Nav: ScreenState>: View {
     private var topOfWaterPosition: CGFloat {
         let topFromSlider = settings.sliderAxis.getPosition(at: model.rows)
         return settings.height - settings.sliderHeight + topFromSlider - settings.beakerBottomPadding
+    }
+}
+
+private struct AddMoleculesAccessibilityModifier: ViewModifier {
+    let reactantsEnabled: Bool
+    let productsEnabled: Bool
+    let doAdd: (AqueousMolecule, Int) -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .modifier(
+                AddReactantsAccessibilityModifier(
+                    enabled: reactantsEnabled,
+                    doAdd: doAdd
+                )
+            )
+            .modifier(
+                AddProductsAccessibilityModifier(
+                    enabled: productsEnabled,
+                    doAdd: doAdd
+                )
+            )
     }
 }
 
