@@ -13,6 +13,8 @@ public struct Beaky: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
     }
+
+    static let widthToHeight: CGFloat = 0.542
 }
 
 struct Beaky_Previews: PreviewProvider {

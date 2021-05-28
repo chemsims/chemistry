@@ -120,6 +120,16 @@ struct BeakyBox_Previews: PreviewProvider {
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
         .previewLayout(.fixed(width: 568, height: 320))
+
+        box(
+            BeakyGeometrySettings(
+                width: 205,
+                height: 148
+            )
+        )
+        .previewLayout(.fixed(width: 568, height: 320))
+        
+
     }
 
     private static func box(_ settings:  BeakyGeometrySettings) -> some View {
