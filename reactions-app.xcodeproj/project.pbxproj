@@ -17,7 +17,6 @@
 		57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */; };
 		570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA02265A736C008EC8CC /* AppDelegate.swift */; };
 		570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA04265A736C008EC8CC /* SceneDelegate.swift */; };
-		570ABA07265A736C008EC8CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA06265A736C008EC8CC /* ContentView.swift */; };
 		570ABA09265A736C008EC8CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA08265A736C008EC8CC /* Assets.xcassets */; };
 		570ABA0C265A736C008EC8CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA0B265A736C008EC8CC /* Preview Assets.xcassets */; };
 		570ABA0F265A736D008EC8CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA0D265A736D008EC8CC /* LaunchScreen.storyboard */; };
@@ -260,6 +259,8 @@
 		5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
 		5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
 		579CDA1D2661656D00143809 /* AdjustableFluidBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA1C2661656D00143809 /* AdjustableFluidBeaker.swift */; };
+		579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA1E26616E5C00143809 /* IntroBeaker.swift */; };
+		579CDA212661707600143809 /* AcidAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA202661707600143809 /* AcidAppSettings.swift */; };
 		579EA8F42646871C008461E8 /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F32646871C008461E8 /* BarChart.swift */; };
 		579EA8F5264687AE008461E8 /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
 		579EA8F7264689CD008461E8 /* BarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F6264689CD008461E8 /* BarShape.swift */; };
@@ -600,7 +601,6 @@
 		570ABA00265A736C008EC8CC /* acids-bases.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "acids-bases.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		570ABA02265A736C008EC8CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		570ABA04265A736C008EC8CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		570ABA06265A736C008EC8CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		570ABA08265A736C008EC8CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		570ABA0B265A736C008EC8CC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		570ABA0E265A736D008EC8CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -842,6 +842,8 @@
 		5797A45025E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579B5D742632A2D600502B69 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
 		579CDA1C2661656D00143809 /* AdjustableFluidBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustableFluidBeaker.swift; sourceTree = "<group>"; };
+		579CDA1E26616E5C00143809 /* IntroBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroBeaker.swift; sourceTree = "<group>"; };
+		579CDA202661707600143809 /* AcidAppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppSettings.swift; sourceTree = "<group>"; };
 		579EA8F32646871C008461E8 /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
 		579EA8F6264689CD008461E8 /* BarShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarShape.swift; sourceTree = "<group>"; };
 		579EA8F8264694E5008461E8 /* BarChartGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartGeometry.swift; sourceTree = "<group>"; };
@@ -1200,7 +1202,6 @@
 				570ABA30265A7603008EC8CC /* model */,
 				570ABA02265A736C008EC8CC /* AppDelegate.swift */,
 				570ABA04265A736C008EC8CC /* SceneDelegate.swift */,
-				570ABA06265A736C008EC8CC /* ContentView.swift */,
 				570ABA08265A736C008EC8CC /* Assets.xcassets */,
 				570ABA0D265A736D008EC8CC /* LaunchScreen.storyboard */,
 				570ABA10265A736D008EC8CC /* Info.plist */,
@@ -1236,6 +1237,7 @@
 				570ABA38265A765A008EC8CC /* IntroScreenComponents.swift */,
 				57466616265D81FC003FC6E3 /* AcidConcentration.swift */,
 				571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */,
+				579CDA202661707600143809 /* AcidAppSettings.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2785,6 +2787,7 @@
 			children = (
 				57FA3ABE266104A60073A29B /* IntroScreen.swift */,
 				57FA3AC326610D760073A29B /* IntroScreenBeaker.swift */,
+				579CDA1E26616E5C00143809 /* IntroBeaker.swift */,
 			);
 			path = introScreen;
 			sourceTree = "<group>";
@@ -3207,11 +3210,13 @@
 			files = (
 				57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */,
 				57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */,
+				579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */,
 				57FA3AB12660D4450073A29B /* PHScale.swift in Sources */,
 				57D60158265ECA7B00017E25 /* PHScaleColors.swift in Sources */,
 				570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */,
 				57FA3AC426610D760073A29B /* IntroScreenBeaker.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
+				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
 				57FA3AC2266104D00073A29B /* AcidBasesGeneralScreenLayout.swift in Sources */,
 				57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */,
 				571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */,
@@ -3219,7 +3224,6 @@
 				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,
 				57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */,
 				57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */,
-				570ABA07265A736C008EC8CC /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

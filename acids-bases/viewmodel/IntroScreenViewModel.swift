@@ -16,15 +16,18 @@ class IntroScreenViewModel: ObservableObject {
     @Published var substance: AcidOrBase
 
     init() {
-        let initialRows = 10
+        let initialRows = AcidAppSettings.initialRows
         let initialSubstance = AcidOrBase.strongAcid(name: "", secondaryIon: .A)
         self.substance = initialSubstance
         self.rows = CGFloat(initialRows)
         self.components = GeneralScreenComponents(
             substance: initialSubstance,
-            cols: 10,
+            cols: MoleculeGridSettings.cols,
             rows: initialRows
         )
     }
 
+    func increment() {
+        components.increment(count: 1)
+    }
 }

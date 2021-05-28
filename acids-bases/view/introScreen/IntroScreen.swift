@@ -14,7 +14,7 @@ struct IntroScreen: View {
         GeometryReader { geo in
             IntroScreenWithSettings(
                 model: model,
-                layout: IntroScreenLayout(general: layout)
+                layout: IntroScreenLayout(common: layout)
             )
         }
     }
@@ -26,13 +26,13 @@ struct IntroScreenWithSettings: View {
     let layout: IntroScreenLayout
 
     var body: some View {
-        Text("foo")
+        IntroBeaker(model: model, layout: layout)
     }
 
 }
 
 struct IntroScreenLayout {
-    let general: AcidBasesGeneralScreenLayout
+    let common: AcidBasesGeneralScreenLayout
     
 }
 

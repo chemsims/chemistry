@@ -53,7 +53,11 @@ struct GeneralScreenComponents: IntroScreenComponents {
         }
         let maxToAdd = min(maxSubstanceCount - substanceAdded, count)
         substanceAdded += maxToAdd
-        underlyingCoords.update(substanceCount: substanceAdded, cols: cols, rows: rows)
+        underlyingCoords.update(
+            substanceCount: substanceAdded,
+            cols: cols,
+            rows: rows
+        )
     }
 
     func concentration(ofIon ion: PrimaryIon) -> PrimaryIonConcentration {

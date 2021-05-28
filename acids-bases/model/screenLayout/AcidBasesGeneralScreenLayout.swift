@@ -44,8 +44,23 @@ struct AcidBasesGeneralScreenLayout {
             height: beakyBoxHeight
         )
     }
+}
 
+// MARK: Beaker/slider geometry
+extension AcidBasesGeneralScreenLayout {
+    var beakerWidth: CGFloat {
+        0.7 * leftColumnWidth
+    }
 
+    var beakerHeight: CGFloat {
+        beakerWidth * BeakerSettings.heightToWidth
+    }
 
+    var sliderSettings: SliderGeometrySettings {
+        SliderGeometrySettings(handleWidth: 0.13 * beakerWidth)
+    }
 
+    var sliderHeight: CGFloat {
+        0.8 * beakerHeight
+    }
 }
