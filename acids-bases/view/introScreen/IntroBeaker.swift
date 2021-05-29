@@ -25,6 +25,10 @@ struct IntroBeaker: View {
         .frame(height: layout.common.height)
     }
 
+    private var containers: some View {
+        Text("foo")
+    }
+
     private var beaker: some View {
         AdjustableFluidBeaker(
             rows: $model.rows,

@@ -28,13 +28,24 @@ public struct ParticleContainer: View {
 public struct ParticleContainerSettings {
     let containerColor: Color
     let labelColor: Color
-    let label: String?
+    let label: String
+    let labelFontColor: Color
     let strokeColor: Color
     let strokeLineWidth: CGFloat
 
+    /// Creates a new settings instance
+    ///
+    /// - Parameters:
+    ///     - labelColor: Color of the label
+    ///     - label: String on the label
+    ///     - labelFontColor: Color of the label string
+    ///     - containerColor: Color of the container
+    ///     - strokeColor: Color of the container stroke
+    ///     - strokeLineWidth: Line width of the container stroke
     public init(
         labelColor: Color,
-        label: String?,
+        label: String,
+        labelFontColor: Color,
         containerColor: Color = Color.white,
         strokeColor: Color = Color.black,
         strokeLineWidth: CGFloat = 3
@@ -42,6 +53,7 @@ public struct ParticleContainerSettings {
         self.containerColor = containerColor
         self.labelColor = labelColor
         self.label = label
+        self.labelFontColor = labelFontColor
         self.strokeColor = strokeColor
         self.strokeLineWidth = strokeLineWidth
     }
@@ -64,6 +76,7 @@ private struct EmptyParticleContainer: View {
                     .stroke(settings.strokeColor, lineWidth: settings.strokeLineWidth)
             }
         }
+        .compositingGroup()
     }
 
     private var label: some View {
@@ -71,11 +84,10 @@ private struct EmptyParticleContainer: View {
             Rectangle()
                 .foregroundColor(settings.labelColor)
 
-            if settings.label != nil {
-                Text(settings.label!)
-                    .fixedSize()
-                    .rotationEffect(.degrees(-90))
-            }
+            Text(settings.label)
+                .fixedSize()
+                .rotationEffect(.degrees(-90))
+                .foregroundColor(settings.labelFontColor)
         }
         .frame(width: geometry.width, height: geometry.labelHeight)
         .clipped()
@@ -166,11 +178,11 @@ struct ParticleContainer_Previews: PreviewProvider {
         ParticleContainer(
             settings: ParticleContainerSettings(
                 labelColor: .purple,
-                label: "AB"
+                label: "AB",
+                labelFontColor: .white
             )
         )
         .padding()
         .font(.system(size: 300))
-        .foregroundColor(.white)
     }
 }

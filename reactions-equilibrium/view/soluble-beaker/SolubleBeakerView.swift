@@ -175,14 +175,13 @@ private struct SolubleBeakerViewWithGeometry: View {
             settings: ParticleContainerSettings(
                 labelColor: solute.color(for: model.selectedReaction).color,
                 label: labelName(for: solute),
+                labelFontColor: .white,
                 strokeLineWidth: 0.4
             )
         )
-        .compositingGroup()
         .colorMultiply(isActive ? .white : Styling.inactiveContainerMultiply)
         .animation(nil)
         .shadow(radius: isActive ? 3 : 0)
-        .foregroundColor(.white)
         .font(.system(size: settings.soluble.containerFontSize))
         .frame(width: settings.soluble.containerWidth)
         .rotationEffect(isActive ? .degrees(135) : .zero)

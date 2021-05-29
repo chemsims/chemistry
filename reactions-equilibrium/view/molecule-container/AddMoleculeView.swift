@@ -138,6 +138,7 @@ struct AddMoleculesView: View {
     }
 }
 
+// TODO - replace this with `ShakingContainerView`
 private struct AddMoleculeContainerView: View {
 
     @ObservedObject var model: ShakeContainerViewModel
