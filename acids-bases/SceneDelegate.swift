@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let contentView = GeometryReader { geo in
             IntroScreen(
-                layout: AcidBasesGeneralScreenLayout(
+                layout: AcidBasesScreenLayout(
                     geometry: geo,
                     verticalSizeClass: nil,
                     horizontalSizeClass: nil

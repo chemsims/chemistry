@@ -64,7 +64,7 @@ struct IntroBeaker_Previews: PreviewProvider {
             IntroBeaker(
                 model: IntroScreenViewModel(),
                 layout: IntroScreenLayout(
-                    common: AcidBasesGeneralScreenLayout(
+                    common: AcidBasesScreenLayout(
                         geometry: geo,
                         verticalSizeClass: nil,
                         horizontalSizeClass: nil

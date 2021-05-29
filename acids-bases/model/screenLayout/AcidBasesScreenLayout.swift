@@ -5,7 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
-struct AcidBasesGeneralScreenLayout {
+struct AcidBasesScreenLayout {
     let geometry: GeometryProxy
     let verticalSizeClass: UserInterfaceSizeClass?
     let horizontalSizeClass: UserInterfaceSizeClass?
@@ -47,7 +47,7 @@ struct AcidBasesGeneralScreenLayout {
 }
 
 // MARK: Beaker/slider geometry
-extension AcidBasesGeneralScreenLayout {
+extension AcidBasesScreenLayout {
     var beakerWidth: CGFloat {
         0.7 * leftColumnWidth
     }
@@ -62,5 +62,13 @@ extension AcidBasesGeneralScreenLayout {
 
     var sliderHeight: CGFloat {
         0.8 * beakerHeight
+    }
+
+    // TODO - when bar chart is added, return x axis label height instead of 0
+    var beakerBottomPadding: CGFloat {
+        if verticalSizeClass.contains(.regular) {
+            return 0 // chartSettings.xAxisLabelHeight
+        }
+        return 0
     }
 }

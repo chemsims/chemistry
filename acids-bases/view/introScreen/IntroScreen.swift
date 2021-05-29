@@ -7,7 +7,7 @@ import SwiftUI
 
 struct IntroScreen: View {
 
-    let layout: AcidBasesGeneralScreenLayout
+    let layout: AcidBasesScreenLayout
     @ObservedObject var model: IntroScreenViewModel
 
     var body: some View {
@@ -32,7 +32,7 @@ struct IntroScreenWithSettings: View {
 }
 
 struct IntroScreenLayout {
-    let common: AcidBasesGeneralScreenLayout
+    let common: AcidBasesScreenLayout
     
 }
 
@@ -40,7 +40,7 @@ struct IntroScreen_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
             IntroScreen(
-                layout: AcidBasesGeneralScreenLayout(
+                layout: AcidBasesScreenLayout(
                     geometry: geo,
                     verticalSizeClass: nil,
                     horizontalSizeClass: nil

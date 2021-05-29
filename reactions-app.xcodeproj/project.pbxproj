@@ -438,7 +438,7 @@
 		57FA3AB92660F27B0073A29B /* ColoredText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB82660F27B0073A29B /* ColoredText.swift */; };
 		57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3ABB266102EB0073A29B /* IntroScreenViewModel.swift */; };
 		57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3ABE266104A60073A29B /* IntroScreen.swift */; };
-		57FA3AC2266104D00073A29B /* AcidBasesGeneralScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AC1266104D00073A29B /* AcidBasesGeneralScreenLayout.swift */; };
+		57FA3AC2266104D00073A29B /* AcidBasesScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AC1266104D00073A29B /* AcidBasesScreenLayout.swift */; };
 		57FA3AC426610D760073A29B /* IntroScreenBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AC326610D760073A29B /* IntroScreenBeaker.swift */; };
 		57FD400726484DCF00E352C1 /* FeedbackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD400626484DCF00E352C1 /* FeedbackSettings.swift */; };
 		57FD400926484F2E00E352C1 /* FeedbackSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */; };
@@ -1028,7 +1028,7 @@
 		57FA3AB82660F27B0073A29B /* ColoredText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredText.swift; sourceTree = "<group>"; };
 		57FA3ABB266102EB0073A29B /* IntroScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreenViewModel.swift; sourceTree = "<group>"; };
 		57FA3ABE266104A60073A29B /* IntroScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreen.swift; sourceTree = "<group>"; };
-		57FA3AC1266104D00073A29B /* AcidBasesGeneralScreenLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesGeneralScreenLayout.swift; sourceTree = "<group>"; };
+		57FA3AC1266104D00073A29B /* AcidBasesScreenLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesScreenLayout.swift; sourceTree = "<group>"; };
 		57FA3AC326610D760073A29B /* IntroScreenBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreenBeaker.swift; sourceTree = "<group>"; };
 		57FD400626484DCF00E352C1 /* FeedbackSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSettings.swift; sourceTree = "<group>"; };
 		57FD402126486F8300E352C1 /* NavigationTestMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTestMethods.swift; sourceTree = "<group>"; };
@@ -2798,7 +2798,7 @@
 		57FA3AC0266104B40073A29B /* screenLayout */ = {
 			isa = PBXGroup;
 			children = (
-				57FA3AC1266104D00073A29B /* AcidBasesGeneralScreenLayout.swift */,
+				57FA3AC1266104D00073A29B /* AcidBasesScreenLayout.swift */,
 			);
 			path = screenLayout;
 			sourceTree = "<group>";
@@ -3220,7 +3220,7 @@
 				57FA3AC426610D760073A29B /* IntroScreenBeaker.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
 				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
-				57FA3AC2266104D00073A29B /* AcidBasesGeneralScreenLayout.swift in Sources */,
+				57FA3AC2266104D00073A29B /* AcidBasesScreenLayout.swift in Sources */,
 				57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */,
 				571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */,
 				57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */,
