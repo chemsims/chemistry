@@ -56,6 +56,8 @@ private struct IntroBeakerContainers: View {
     @ObservedObject var model: IntroScreenViewModel
     let layout: IntroScreenLayout
 
+    @GestureState private var pHMeterOffset = CGSize.zero
+
     var body: some View {
         ZStack {
             phMeter
@@ -69,11 +71,20 @@ private struct IntroBeakerContainers: View {
 
     private var phMeter: some View {
         PHMeter(
-            content: "pH: 12",
+            content: pHMeterIntersectingWater ? "pH: 12" : "",
             fontSize: common.phMeterFontSize
         )
         .frame(size: common.phMeterSize)
         .position(x: phMeterX, y: layout.containerRowYPos)
+        .offset(pHMeterOffset)
+        .contentShape(Rectangle())
+        .gesture(
+            DragGesture()
+                .updating($pHMeterOffset) { gesture, offset, _ in
+                    offset = gesture.translation
+                }
+        )
+        .animation(.easeOut(duration: 0.25))
     }
 
     private func container(_ index: Int) -> some View {
@@ -109,7 +120,7 @@ private struct IntroBeakerContainers: View {
                 Rectangle()
                     .frame(
                         width: common.beakerWidth + (2 * common.containerSize.height),
-                        height: 100
+                        height: topOfWater
                     )
                 Spacer()
             }
@@ -149,6 +160,31 @@ private struct IntroBeakerContainers: View {
     private var totalBeakerWidth: CGFloat {
         common.beakerWidth + common.sliderSettings.handleWidth
     }
+
+    private var topOfWater: CGFloat {
+        common.topOfWaterPosition(rows: model.rows)
+    }
+
+    private var pHMeterIntersectingWater: Bool {
+        let waterHeight = common.waterHeight(rows: model.rows)
+        let centerWaterX = common.sliderSettings.handleWidth + (common.beakerWidth / 2)
+        let centerWaterY = common.height - (waterHeight / 2)
+
+        let pHCenterX = phMeterX + pHMeterOffset.width
+        let phCenterY = layout.containerRowYPos + pHMeterOffset.height
+
+        return PHMeter.tipOverlapsArea(
+            meterSize: common.phMeterSize,
+            areaSize: CGSize(
+                width: common.beakerSettings.innerBeakerWidth,
+                height: waterHeight
+            ),
+            meterCenterFromAreaCenter: CGSize(
+                width: pHCenterX - centerWaterX,
+                height: phCenterY - centerWaterY
+            )
+        )
+    }
 }
 
 struct AddMoleculesAccessibilityModifier: ViewModifier {
@@ -173,5 +209,6 @@ struct IntroBeaker_Previews: PreviewProvider {
             )
         }
         .previewLayout(.iPhoneSELandscape)
+        .padding()
     }
 }

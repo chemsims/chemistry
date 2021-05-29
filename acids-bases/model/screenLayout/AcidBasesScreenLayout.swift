@@ -79,6 +79,26 @@ extension AcidBasesScreenLayout {
     var moleculeSize: CGFloat {
         beakerSettings.innerBeakerWidth / CGFloat(MoleculeGridSettings.cols)
     }
+
+    /// Returns the y position of the top of the water for the given number of `rows`, from the top of the screen
+    func topOfWaterPosition(rows: CGFloat) -> CGFloat {
+        let topFromSlider = sliderAxis.getPosition(at: rows)
+        return height - sliderHeight + topFromSlider - beakerBottomPadding
+    }
+
+    /// Returns the water height for the given number of `rows`
+    func waterHeight(rows: CGFloat) -> CGFloat {
+        sliderHeight - sliderAxis.getPosition(at: rows)
+    }
+
+    private var sliderAxis: AxisPositionCalculations<CGFloat> {
+        BeakerLiquidSliderAxis.axis(
+            minRows: AcidAppSettings.minBeakerRows,
+            maxRows: AcidAppSettings.maxBeakerRows,
+            beakerWidth: beakerWidth,
+            sliderHeight: sliderHeight
+        )
+    }
 }
 
 // MARK: PHScale geometry
