@@ -83,9 +83,7 @@ private struct PHMeterWithGeometry: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             stalk
-
             indicator
-
         }
     }
 
@@ -109,12 +107,18 @@ private struct PHMeterWithGeometry: View {
 
     private var stalk: some View {
         ZStack(alignment: .leading) {
-            Rectangle()
-                .stroke(lineWidth: geometry.lineWidth)
-                .frame(
-                    width: geometry.stalkWidth,
-                    height: geometry.height - geometry.capHeight
+            Group {
+                BlurView(
+                    style: .systemUltraThinMaterialLight
                 )
+
+                Rectangle()
+                    .stroke(lineWidth: geometry.lineWidth)
+            }
+            .frame(
+                width: geometry.stalkWidth,
+                height: geometry.height - geometry.capHeight
+            )
 
             stalkTip
                 .stroke(lineWidth: geometry.lineWidth)
@@ -192,11 +196,15 @@ struct PHMeterGeometry {
 
 struct PHMeter_Previews: PreviewProvider {
     static var previews: some View {
-        PHMeter(
-            content: "pH: 12",
-            fontSize: 20
-        )
-        .frame(width: 100, height: 140)
-        .padding()
+        ZStack {
+            Circle()
+                .foregroundColor(.blue)
+            PHMeter(
+                content: "pH: 12",
+                fontSize: 20
+            )
+            .frame(width: 100, height: 140)
+            .padding()
+        }
     }
 }

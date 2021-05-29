@@ -74,10 +74,10 @@ private struct IntroBeakerContainers: View {
             content: pHMeterIntersectingWater ? "pH: 12" : "",
             fontSize: common.phMeterFontSize
         )
+        .contentShape(Rectangle())
         .frame(size: common.phMeterSize)
         .position(x: phMeterX, y: layout.containerRowYPos)
         .offset(pHMeterOffset)
-        .contentShape(Rectangle())
         .gesture(
             DragGesture()
                 .updating($pHMeterOffset) { gesture, offset, _ in
