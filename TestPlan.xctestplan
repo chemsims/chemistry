@@ -32,6 +32,13 @@
         "identifier" : "575A88C725E43CD700AEE448",
         "name" : "reactions-equilibriumTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:reactions-app.xcodeproj",
+        "identifier" : "570ABA14265A736D008EC8CC",
+        "name" : "acids-basesTests"
+      }
     }
   ],
   "version" : 1
