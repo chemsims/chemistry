@@ -168,6 +168,7 @@
 		575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 575A88BE25E43CD700AEE448 /* Preview Assets.xcassets */; };
 		575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 575A88C025E43CD700AEE448 /* LaunchScreen.storyboard */; };
 		575C90E026628969001DCD17 /* ShakingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90DF26628969001DCD17 /* ShakingContainerView.swift */; };
+		575C90E326629775001DCD17 /* PHMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E226629775001DCD17 /* PHMeter.swift */; };
 		5760536B25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */; };
 		5760537025AE519B0068B533 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
 		57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */; };
@@ -751,6 +752,7 @@
 		575A88C825E43CD700AEE448 /* reactions-equilibriumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "reactions-equilibriumTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		575A88CE25E43CD700AEE448 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		575C90DF26628969001DCD17 /* ShakingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakingContainerView.swift; sourceTree = "<group>"; };
+		575C90E226629775001DCD17 /* PHMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHMeter.swift; sourceTree = "<group>"; };
 		5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionNavigationTests.swift; sourceTree = "<group>"; };
 		5760536F25AE519B0068B533 /* NavigationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationExtensions.swift; sourceTree = "<group>"; };
 		57631763259B66CF00D7CE2C /* QuizTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTable.swift; sourceTree = "<group>"; };
@@ -1755,6 +1757,14 @@
 			path = "reactions-equilibriumTests";
 			sourceTree = "<group>";
 		};
+		575C90E126629768001DCD17 /* ph */ = {
+			isa = PBXGroup;
+			children = (
+				575C90E226629775001DCD17 /* PHMeter.swift */,
+			);
+			path = ph;
+			sourceTree = "<group>";
+		};
 		5760536E25AE518E0068B533 /* util */ = {
 			isa = PBXGroup;
 			children = (
@@ -2139,6 +2149,7 @@
 		5797A47A25E4092600991BD9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				575C90E126629768001DCD17 /* ph */,
 				579EA90A264728AE008461E8 /* modifiers */,
 				57E7FF8625829DD400A30582 /* quiz */,
 				57B5781B2639633C008DFAB5 /* extensions */,
@@ -3546,6 +3557,7 @@
 				57DDAD4E25E57E2A00B535A7 /* TimeChartDataLineView.swift in Sources */,
 				579EA90926472836008461E8 /* RGBEquation.swift in Sources */,
 				578B173B2618D14400D8079F /* BeakerSettings.swift in Sources */,
+				575C90E326629775001DCD17 /* PHMeter.swift in Sources */,
 				5786FAF325E6D8D100AAD8A6 /* TimeChartView.swift in Sources */,
 				575A885F25E435F600AEE448 /* BeakyGeometrySettings.swift in Sources */,
 				57A5F076263EA066002F23DE /* QuizQuestionReader.swift in Sources */,
