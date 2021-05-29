@@ -56,6 +56,10 @@ extension AcidBasesScreenLayout {
         beakerWidth * BeakerSettings.heightToWidth
     }
 
+    var beakerSettings: BeakerSettings {
+        BeakerSettings(width: beakerWidth, hasLip: true)
+    }
+
     var sliderSettings: SliderGeometrySettings {
         SliderGeometrySettings(handleWidth: 0.13 * beakerWidth)
     }
@@ -70,5 +74,49 @@ extension AcidBasesScreenLayout {
             return 0 // chartSettings.xAxisLabelHeight
         }
         return 0
+    }
+
+    var moleculeSize: CGFloat {
+        beakerSettings.innerBeakerWidth / CGFloat(MoleculeGridSettings.cols)
+    }
+}
+
+// MARK: PHScale geometry
+extension AcidBasesScreenLayout {
+    var phMeterSize: CGSize {
+        CGSize(
+            width: 0.3 * beakerWidth,
+            height: 0.35 * beakerWidth
+        )
+    }
+
+    var phMeterFontSize: CGFloat {
+        0.06 * beakerWidth
+    }
+}
+
+// MARK: Container geometry
+extension AcidBasesScreenLayout {
+    var containerSize: CGSize {
+        let width = 0.1 * beakerWidth
+        return CGSize(
+            width: width,
+            height: ParticleContainer.heightToWidth * width
+        )
+    }
+
+    var containerFontSize: CGFloat {
+        0.8 * containerSize.width
+    }
+}
+
+// MARK: Beaker tools geometry
+extension AcidBasesScreenLayout {
+    var beakerToolsLeadingPadding: CGFloat {
+        0.05 * beakerWidth
+    }
+
+    var beakerToolsSpacing: CGFloat {
+        0.07 * beakerWidth
     }
 }

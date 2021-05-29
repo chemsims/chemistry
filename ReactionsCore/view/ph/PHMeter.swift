@@ -4,12 +4,20 @@
 
 import SwiftUI
 
-struct PHMeter: View {
+public struct PHMeter: View {
+
+    public init(
+        content: TextLine,
+        fontSize: CGFloat
+    ) {
+        self.content = content
+        self.fontSize = fontSize
+    }
 
     let content: TextLine
     let fontSize: CGFloat
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geo in
             PHMeterWithGeometry(
                 geometry: geo,
@@ -43,12 +51,13 @@ private struct PHMeterWithGeometry: View {
                 .foregroundColor(indicatorColor)
 
             RoundedRectangle(cornerRadius: indicatorCornerRadius)
-                .stroke()
+                .stroke(lineWidth: lineWidth)
                 .foregroundColor(stalkTipColor)
 
             TextLinesView(line: content, fontSize: fontSize)
                 .padding(.vertical, textVerticalPadding)
                 .padding(.horizontal, textHorizontalPadding)
+                .frame(height: indicatorHeight)
         }
         .frame(height: indicatorHeight)
         .minimumScaleFactor(0.5)
@@ -57,14 +66,14 @@ private struct PHMeterWithGeometry: View {
     private var stalk: some View {
         ZStack(alignment: .leading) {
             Rectangle()
-                .stroke()
+                .stroke(lineWidth: lineWidth)
                 .frame(
                     width: stalkWidth,
                     height: height - capHeight
                 )
 
             stalkTip
-                .stroke()
+                .stroke(lineWidth: lineWidth)
 
             stalkTip
         }
@@ -87,7 +96,10 @@ private struct PHMeterWithGeometry: View {
     private var height: CGFloat {
         geometry.size.height
     }
-    
+
+    private var lineWidth: CGFloat {
+        min(0.5, 0.015 * geometry.size.width)
+    }
 
     // Height of the indicator which shows the content
     private var indicatorHeight: CGFloat {
@@ -117,7 +129,7 @@ private struct PHMeterWithGeometry: View {
     }
 
     private var stalkWidth: CGFloat {
-        min(10, 0.1 * geometry.size.width)
+        0.08 * geometry.size.width
     }
 
     private var stalkLeadingPadding: CGFloat {

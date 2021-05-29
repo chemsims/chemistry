@@ -7,14 +7,6 @@ import ReactionsCore
 
 class IntroScreenViewModel: ObservableObject {
 
-    @Published var components: IntroScreenComponents
-    @Published var rows: CGFloat {
-        didSet {
-            components.rows = GridCoordinateList.availableRows(for: rows)
-        }
-    }
-    @Published var substance: AcidOrBase
-
     init() {
         let initialRows = AcidAppSettings.initialRows
         let initialSubstance = AcidOrBase.strongAcid(name: "", secondaryIon: .A)
@@ -25,7 +17,22 @@ class IntroScreenViewModel: ObservableObject {
             cols: MoleculeGridSettings.cols,
             rows: initialRows
         )
+        self.addMoleculesModel = ShakeContainerViewModel(
+            canAddMolecule: { true },
+            addMolecules: { _ in }
+        )
     }
+
+    @Published var components: IntroScreenComponents
+    @Published var rows: CGFloat {
+        didSet {
+            components.rows = GridCoordinateList.availableRows(for: rows)
+        }
+    }
+    @Published var substance: AcidOrBase
+
+    private(set) var addMoleculesModel: ShakeContainerViewModel!
+
 
     func increment() {
         components.increment(count: 1)

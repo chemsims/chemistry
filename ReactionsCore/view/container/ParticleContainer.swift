@@ -21,8 +21,9 @@ public struct ParticleContainer: View {
         }
         .frame(idealWidth: 43, idealHeight: 100)
         .aspectRatio(contentMode: .fit)
-
     }
+
+    public static let heightToWidth: CGFloat = 2.33
 }
 
 public struct ParticleContainerSettings {

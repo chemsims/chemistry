@@ -33,7 +33,14 @@ struct IntroScreenWithSettings: View {
 
 struct IntroScreenLayout {
     let common: AcidBasesScreenLayout
-    
+}
+
+
+// MARK: Left stack layout
+extension IntroScreenLayout {
+    var containerRowYPos: CGFloat {
+        50
+    }
 }
 
 struct IntroScreen_Previews: PreviewProvider {
