@@ -65,9 +65,7 @@ struct AddMoleculesView: View {
             moleculeSize: moleculeSize,
             moleculeColor: molecule.color,
             imageName: molecule.imageName,
-            rotation: model.activeMolecule == molecule ? .degrees(135) : .zero,
-            halfXRange: width / 2,
-            halfYRange: containerHeight
+            rotation: model.activeMolecule == molecule ? .degrees(135) : .zero
         )
         .zIndex(model.activeMolecule == molecule ? 1 : 0)
         .disabled(!isActive)
@@ -154,9 +152,6 @@ private struct AddMoleculeContainerView: View {
     let imageName: String
     let rotation: Angle
 
-    let halfXRange: CGFloat
-    let halfYRange: CGFloat
-
     @GestureState private var simulatorOffset: (CGFloat, CGFloat) = (0, 0)
 
     var body: some View {
@@ -203,6 +198,14 @@ private struct AddMoleculeContainerView: View {
             offset.0 = newX
             offset.1 = newY
         }
+    }
+
+    private var halfXRange: CGFloat {
+        model.halfXRange ?? 0
+    }
+
+    private var halfYRange: CGFloat {
+        model.halfYRange ?? 0
     }
 }
 

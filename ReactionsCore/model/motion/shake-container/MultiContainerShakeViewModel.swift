@@ -24,6 +24,10 @@ public class MultiContainerShakeViewModel<MoleculeType>: ObservableObject
 
     public let models: EnumMap<MoleculeType, ShakeContainerViewModel>
 
+    public func model(for molecule: MoleculeType) -> ShakeContainerViewModel {
+        models.value(for: molecule)
+    }
+
     public func start(
         for molecule: MoleculeType,
         at location: CGPoint,

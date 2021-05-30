@@ -17,9 +17,9 @@ class IntroScreenViewModel: ObservableObject {
             cols: MoleculeGridSettings.cols,
             rows: initialRows
         )
-        self.addMoleculesModel = ShakeContainerViewModel(
-            canAddMolecule: { true },
-            addMolecules: { _ in }
+        self.addMoleculesModel = MultiContainerShakeViewModel(
+            canAddMolecule: { _ in true },
+            addMolecules: { _, _ in self.components.increment(count: 1) }
         )
     }
 
@@ -31,7 +31,7 @@ class IntroScreenViewModel: ObservableObject {
     }
     @Published var substance: AcidOrBase
 
-    private(set) var addMoleculesModel: ShakeContainerViewModel!
+    private(set) var addMoleculesModel: MultiContainerShakeViewModel<AcidOrBaseType>!
 
 
     func increment() {

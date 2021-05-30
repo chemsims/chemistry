@@ -21,6 +21,7 @@ struct IntroBeaker: View {
     private var containers: some View {
         IntroBeakerContainers(
             model: model,
+            shakeModel: model.addMoleculesModel,
             layout: layout
         )
     }
@@ -54,6 +55,7 @@ struct IntroBeaker: View {
 private struct IntroBeakerContainers: View {
 
     @ObservedObject var model: IntroScreenViewModel
+    @ObservedObject var shakeModel: MultiContainerShakeViewModel<AcidOrBaseType>
     let layout: IntroScreenLayout
 
     @GestureState private var pHMeterOffset = CGSize.zero
@@ -61,17 +63,17 @@ private struct IntroBeakerContainers: View {
     var body: some View {
         ZStack {
             phMeter
-            container(0)
-            container(1)
-            container(2)
-            container(3)
+            container(.strongAcid, 0)
+            container(.strongBase, 1)
+            container(.weakAcid, 2)
+            container(.weakBase, 3)
         }
         .frame(width: totalBeakerWidth)
     }
 
     private var phMeter: some View {
         PHMeter(
-            content: pHMeterIntersectingWater ? "pH: 12" : "",
+            content: pHMeterIntersectingWater ? phString : "",
             fontSize: common.phMeterFontSize
         )
         .contentShape(Rectangle())
@@ -87,15 +89,18 @@ private struct IntroBeakerContainers: View {
         .animation(.easeOut(duration: 0.25))
     }
 
-    private func container(_ index: Int) -> some View {
-        ShakingContainerView(
-            model: model.addMoleculesModel,
-            position: model.addMoleculesModel.motion.position,
-            onTap: { },
-            initialLocation: CGPoint(
-                x: containerX(index),
-                y: layout.containerRowYPos
-            ),
+    private func container(
+        _ type: AcidOrBaseType,
+        _ index: Int
+    ) -> some View {
+        let addModel = shakeModel.model(for: type)
+        let isActive = shakeModel.activeMolecule == type
+        let isEnabled = true
+        return ShakingContainerView(
+            model: addModel,
+            position: addModel.motion.position,
+            onTap: { didTapContainer(type, index) },
+            initialLocation: containerLocation(type, index),
             containerWidth: common.containerSize.width,
             containerSettings: ParticleContainerSettings(
                 labelColor: .red,
@@ -103,13 +108,13 @@ private struct IntroBeakerContainers: View {
                 labelFontColor: .white,
                 strokeLineWidth: 0.4
             ),
-            moleculeSize: 10,
+            moleculeSize: common.moleculeSize,
             moleculeColor: .red,
-            rotation: .zero,
-            halfXRange: 10,
-            halfYRange: 10,
-            isSimulator: false
+            rotation: isActive ? .degrees(135) : .zero,
+            isSimulator: AcidBasesApp.isSimulator
         )
+        .zIndex(isActive ? 1 : 0)
+        .disabled(!isEnabled)
         .font(.system(size: common.containerFontSize))
         .minimumScaleFactor(0.7)
         .frame(
@@ -183,6 +188,52 @@ private struct IntroBeakerContainers: View {
                 width: pHCenterX - centerWaterX,
                 height: phCenterY - centerWaterY
             )
+        )
+    }
+
+    private var phString: TextLine {
+        let ph = model.components.concentration(ofIon: .hydrogen).p
+        return "pH: \(ph.rounded(decimals: 0))"
+    }
+
+
+    private func containerLocation(
+        _ element: AcidOrBaseType,
+        _ index: Int
+    ) -> CGPoint {
+        if model.addMoleculesModel.activeMolecule == element {
+            return CGPoint(
+                x: moleculesAreaWidth / 2,
+                y: layout.activeContainerYPos
+            )
+        }
+        return CGPoint(
+            x: containerX(index),
+            y: layout.containerRowYPos
+        )
+    }
+}
+
+extension IntroBeakerContainers {
+    private func didTapContainer(
+        _ element: AcidOrBaseType,
+        _ index: Int
+    ) {
+        guard shakeModel.activeMolecule != element else {
+            shakeModel.model(for: element).manualAdd(amount: 5)
+            return
+        }
+
+        withAnimation(.easeOut(duration: 0.25)) {
+            shakeModel.activeMolecule = element
+        }
+        shakeModel.start(
+            for: element,
+            at: containerLocation(element, index),
+            bottomY: layout.common
+                .topOfWaterPosition(rows: model.rows),
+            halfXRange: moleculesAreaWidth / 2,
+            halfYRange: layout.common.containerShakeHalfYRange
         )
     }
 }

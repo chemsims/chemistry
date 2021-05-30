@@ -128,6 +128,10 @@ extension AcidBasesScreenLayout {
     var containerFontSize: CGFloat {
         0.8 * containerSize.width
     }
+
+    var containerShakeHalfYRange: CGFloat {
+        2 * containerSize.height
+    }
 }
 
 // MARK: Beaker tools geometry

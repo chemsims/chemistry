@@ -41,6 +41,10 @@ extension IntroScreenLayout {
     var containerRowYPos: CGFloat {
         50
     }
+
+    var activeContainerYPos: CGFloat {
+        containerRowYPos + common.containerSize.height
+    }
 }
 
 struct IntroScreen_Previews: PreviewProvider {
