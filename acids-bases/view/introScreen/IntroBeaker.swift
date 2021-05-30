@@ -117,9 +117,6 @@ private struct IntroBeakerContainers: View {
         .disabled(!isEnabled)
         .font(.system(size: common.containerFontSize))
         .minimumScaleFactor(0.7)
-        .frame(
-            width: common.beakerSettings.innerBeakerWidth
-        )
         .mask(
             VStack(spacing: 0) {
                 Rectangle()
@@ -142,24 +139,13 @@ private struct IntroBeakerContainers: View {
         let spacing = common.beakerToolsSpacing
         let containerWidth = common.containerSize.width
         let endOfPh = phMeterX + (common.phMeterSize.width / 2)
-        let containerStartX = (totalBeakerWidth - moleculesAreaWidth) / 2
-
-        // The ph scale uses the entire beaker width, whereas the containers
-        // may only use the inner beaker width, so we must shift the x position
-        // of the ph scale into the container frame of reference
-        let endOfPhFromContainerStart = endOfPh - containerStartX
-
-        let firstContainerX = endOfPhFromContainerStart + spacing + (containerWidth / 2)
+        let firstContainerX = endOfPh + spacing + (containerWidth / 2)
 
         return firstContainerX + (CGFloat(index) * (spacing + containerWidth))
     }
 
     private var common: AcidBasesScreenLayout {
         layout.common
-    }
-
-    private var moleculesAreaWidth: CGFloat {
-        common.beakerSettings.innerBeakerWidth
     }
 
     private var totalBeakerWidth: CGFloat {
@@ -172,7 +158,6 @@ private struct IntroBeakerContainers: View {
 
     private var pHMeterIntersectingWater: Bool {
         let waterHeight = common.waterHeight(rows: model.rows)
-        let centerWaterX = common.sliderSettings.handleWidth + (common.beakerWidth / 2)
         let centerWaterY = common.height - (waterHeight / 2)
 
         let pHCenterX = phMeterX + pHMeterOffset.width
@@ -193,9 +178,8 @@ private struct IntroBeakerContainers: View {
 
     private var phString: TextLine {
         let ph = model.components.concentration(ofIon: .hydrogen).p
-        return "pH: \(ph.rounded(decimals: 0))"
+        return "pH: \(ph.rounded(decimals: 1))"
     }
-
 
     private func containerLocation(
         _ element: AcidOrBaseType,
@@ -203,7 +187,7 @@ private struct IntroBeakerContainers: View {
     ) -> CGPoint {
         if model.addMoleculesModel.activeMolecule == element {
             return CGPoint(
-                x: moleculesAreaWidth / 2,
+                x: centerWaterX,
                 y: layout.activeContainerYPos
             )
         }
@@ -211,6 +195,10 @@ private struct IntroBeakerContainers: View {
             x: containerX(index),
             y: layout.containerRowYPos
         )
+    }
+
+    private var centerWaterX: CGFloat {
+         common.sliderSettings.handleWidth + (common.beakerWidth / 2)
     }
 }
 
@@ -232,8 +220,8 @@ extension IntroBeakerContainers {
             at: containerLocation(element, index),
             bottomY: layout.common
                 .topOfWaterPosition(rows: model.rows),
-            halfXRange: moleculesAreaWidth / 2,
-            halfYRange: layout.common.containerShakeHalfYRange
+            halfXRange: common.containerShakeHalfXRange,
+            halfYRange: common.containerShakeHalfYRange
         )
     }
 }

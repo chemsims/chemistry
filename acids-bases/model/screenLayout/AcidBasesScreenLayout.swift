@@ -130,7 +130,11 @@ extension AcidBasesScreenLayout {
     }
 
     var containerShakeHalfYRange: CGFloat {
-        2 * containerSize.height
+        2 * containerSize.width
+    }
+
+    var containerShakeHalfXRange: CGFloat {
+        (beakerSettings.innerBeakerWidth - moleculeSize) / 2
     }
 }
 
