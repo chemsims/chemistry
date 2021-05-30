@@ -35,7 +35,6 @@ public struct ShakingContainerView: View {
         self.isSimulator = isSimulator
     }
 
-
     @ObservedObject var model: ShakeContainerViewModel
     @ObservedObject var position: CoreMotionPositionViewModel
 
@@ -51,7 +50,6 @@ public struct ShakingContainerView: View {
     let isSimulator: Bool
 
     @GestureState private var simulatorOffset: (CGFloat, CGFloat) = (0, 0)
-
 
     public var body: some View {
         ZStack {
