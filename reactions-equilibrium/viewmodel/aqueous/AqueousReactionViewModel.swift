@@ -98,13 +98,13 @@ class AqueousOrIntegrationReactionViewModel<NavigationState: ScreenState>: Obser
             maxC: AqueousReactionSettings.ConcentrationInput.maxInitial
         )
 
-        self.addingMoleculesModel = AddingMoleculesViewModel(
+        self.addingMoleculesModel = MultiContainerShakeViewModel(
             canAddMolecule: { self.componentsWrapper.canIncrement(molecule: $0) },
             addMolecules: { (molecule, num) in self.increment(molecule: molecule, count: num) }
         )
     }
 
-    private(set) var addingMoleculesModel: AddingMoleculesViewModel! = nil
+    private(set) var addingMoleculesModel: MultiContainerShakeViewModel<AqueousMolecule>! = nil
 
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat = CGFloat(AqueousReactionSettings.initialRows) {

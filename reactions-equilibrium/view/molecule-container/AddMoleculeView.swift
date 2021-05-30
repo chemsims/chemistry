@@ -7,7 +7,7 @@ import ReactionsCore
 
 struct AddMoleculesView: View {
 
-    @ObservedObject var model: AddingMoleculesViewModel
+    @ObservedObject var model: MultiContainerShakeViewModel<AqueousMolecule>
     let inputState: AqueousReactionInputState
     let topRowHeight: CGFloat
     let containerWidth: CGFloat
@@ -211,7 +211,7 @@ struct AddMoleculeView_Previews: PreviewProvider {
         GeometryReader { geo in
             ZStack(alignment: .bottom) {
                 AddMoleculesView(
-                    model: AddingMoleculesViewModel(
+                    model: MultiContainerShakeViewModel(
                         canAddMolecule: { _ in true },
                         addMolecules: { (_, _) in }
                     ),

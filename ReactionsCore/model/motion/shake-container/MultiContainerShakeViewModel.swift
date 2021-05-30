@@ -4,16 +4,25 @@
 
 import SwiftUI
 
-/// A protocol to handle multiple containers where at most 1 container is active at a time
-public protocol MultiContainerShakeViewModel: ObservableObject {
-    associatedtype MoleculeType
+/// A view model to handle multiple containers where at most 1 container is active at a time
+public class MultiContainerShakeViewModel<MoleculeType>: ObservableObject
+    where MoleculeType : CaseIterable, MoleculeType : Hashable {
 
-    var activeMolecule: MoleculeType? { get set }
-    var allModels: [ShakeContainerViewModel] { get }
-    func model(for molecule: MoleculeType) -> ShakeContainerViewModel
-}
+    @Published public var activeMolecule: MoleculeType?
 
-extension MultiContainerShakeViewModel {
+    public init(
+        canAddMolecule: @escaping (MoleculeType) -> Bool,
+        addMolecules: @escaping (MoleculeType, Int) -> Void
+    ) {
+        self.models = EnumMap { molecule in
+            ShakeContainerViewModel(
+                canAddMolecule: { canAddMolecule(molecule) },
+                addMolecules: { addMolecules(molecule, $0) }
+            )
+        }
+    }
+
+    public let models: EnumMap<MoleculeType, ShakeContainerViewModel>
 
     public func start(
         for molecule: MoleculeType,
@@ -23,7 +32,7 @@ extension MultiContainerShakeViewModel {
         halfYRange: CGFloat
     ) {
         stopShaking()
-        let model = model(for: molecule)
+        let model = models.value(for: molecule)
         model.initialLocation = location
         model.halfXRange = halfXRange
         model.halfYRange = halfYRange
@@ -39,6 +48,6 @@ extension MultiContainerShakeViewModel {
     }
 
     private func stopShaking() {
-        allModels.forEach { $0.motion.position.stop() }
+        models.all.forEach { $0.motion.position.stop() }
     }
 }
