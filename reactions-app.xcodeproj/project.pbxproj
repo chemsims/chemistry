@@ -221,6 +221,8 @@
 		5783965525A9DB1D009CC8FC /* EnergyProfileChartInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783965425A9DB1D009CC8FC /* EnergyProfileChartInput.swift */; };
 		5783965925A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783965825A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift */; };
 		5784F44B2663F5A100513B2A /* MultiContainerShakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */; };
+		5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44D2664062200513B2A /* AcidOrBaseType.swift */; };
+		5784F4502664075400513B2A /* EnumMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44F2664075400513B2A /* EnumMap.swift */; };
 		5786F798261C24CF00E918FC /* SolubilityQuotientRecapEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786F797261C24CF00E918FC /* SolubilityQuotientRecapEquations.swift */; };
 		5786FAAB25E6908D00AAD8A6 /* DisabledSliderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */; };
 		5786FADA25E6B60B00AAD8A6 /* ReactionsRateBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAD925E6B60B00AAD8A6 /* ReactionsRateBeaker.swift */; };
@@ -819,6 +821,8 @@
 		5783965425A9DB1D009CC8FC /* EnergyProfileChartInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChartInput.swift; sourceTree = "<group>"; };
 		5783965825A9DB6F009CC8FC /* EnergyProfileChartInputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChartInputTests.swift; sourceTree = "<group>"; };
 		5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiContainerShakeViewModel.swift; sourceTree = "<group>"; };
+		5784F44D2664062200513B2A /* AcidOrBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBaseType.swift; sourceTree = "<group>"; };
+		5784F44F2664075400513B2A /* EnumMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumMap.swift; sourceTree = "<group>"; };
 		5786F797261C24CF00E918FC /* SolubilityQuotientRecapEquations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityQuotientRecapEquations.swift; sourceTree = "<group>"; };
 		5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledSliderModifier.swift; sourceTree = "<group>"; };
 		5786FAD925E6B60B00AAD8A6 /* ReactionsRateBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsRateBeaker.swift; sourceTree = "<group>"; };
@@ -1241,6 +1245,7 @@
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5784F44C2664061200513B2A /* enums */,
 				57FA3AC0266104B40073A29B /* screenLayout */,
 				57FA3AB42660EFAA0073A29B /* styling */,
 				57D60156265ECA6A00017E25 /* phScale */,
@@ -1962,6 +1967,14 @@
 			path = "animatable-modifiers";
 			sourceTree = "<group>";
 		};
+		5784F44C2664061200513B2A /* enums */ = {
+			isa = PBXGroup;
+			children = (
+				5784F44D2664062200513B2A /* AcidOrBaseType.swift */,
+			);
+			path = enums;
+			sourceTree = "<group>";
+		};
 		5786FAD825E6B5FD00AAD8A6 /* beaker */ = {
 			isa = PBXGroup;
 			children = (
@@ -2181,6 +2194,7 @@
 				57035EF0255C09B500DB3A19 /* Orientation.swift */,
 				577A261C262862C00060EC54 /* ReactionEnergyTransfer.swift */,
 				57BDFF4D26415540001B97CC /* ImageType.swift */,
+				5784F44F2664075400513B2A /* EnumMap.swift */,
 			);
 			path = enums;
 			sourceTree = "<group>";
@@ -3240,6 +3254,7 @@
 				57FA3AC426610D760073A29B /* IntroScreenBeaker.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
 				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
+				5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */,
 				57FA3AC2266104D00073A29B /* AcidBasesScreenLayout.swift in Sources */,
 				57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */,
 				571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */,
@@ -3634,6 +3649,7 @@
 				5797A4A325E40A5100991BD9 /* MoleculeGrid.swift in Sources */,
 				5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */,
 				57952A4225E67F83006AB876 /* ScreenStateTree.swift in Sources */,
+				5784F4502664075400513B2A /* EnumMap.swift in Sources */,
 				57686AE72601D541005BD328 /* SliderHapticsHandler.swift in Sources */,
 				57BDFF4E26415540001B97CC /* ImageType.swift in Sources */,
 				57D2F2EE25EA2D7400AEE0D8 /* EquationPlaceholderView.swift in Sources */,

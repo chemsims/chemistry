@@ -2,11 +2,10 @@
 // Reactions App
 //
 
-
 import SwiftUI
 import ReactionsCore
 
-enum SoluteProductType: String {
+enum SoluteProductType: String, CaseIterable {
     case A, B
 
     var color: Color {
