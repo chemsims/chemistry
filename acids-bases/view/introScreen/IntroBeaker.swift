@@ -8,6 +8,7 @@ import ReactionsCore
 struct IntroBeaker: View {
 
     @ObservedObject var model: IntroScreenViewModel
+    @ObservedObject var components: IntroScreenComponents
     let layout: IntroScreenLayout
 
     var body: some View {
@@ -21,6 +22,7 @@ struct IntroBeaker: View {
     private var containers: some View {
         IntroBeakerContainers(
             model: model,
+            components: components,
             shakeModel: model.addMoleculesModel,
             layout: layout
         )
@@ -31,7 +33,7 @@ struct IntroBeaker: View {
             Spacer()
             AdjustableFluidBeaker(
                 rows: $model.rows,
-                molecules: model.components.coords.all,
+                molecules: components.coords.all,
                 animatingMolecules: [],
                 currentTime: 0,
                 settings: AdjustableFluidBeakerSettings(
@@ -55,6 +57,7 @@ struct IntroBeaker: View {
 private struct IntroBeakerContainers: View {
 
     @ObservedObject var model: IntroScreenViewModel
+    @ObservedObject var components: IntroScreenComponents
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<AcidOrBaseType>
     let layout: IntroScreenLayout
 
@@ -161,7 +164,7 @@ private struct IntroBeakerContainers: View {
     }
 
     private var phString: TextLine {
-        let ph = model.components.concentration(ofIon: .hydrogen).p
+        let ph = components.concentration(ofIon: .hydrogen).p
         return "pH: \(ph.rounded(decimals: 1))"
     }
 
@@ -222,6 +225,7 @@ struct IntroBeaker_Previews: PreviewProvider {
         GeometryReader { geo in
             IntroBeaker(
                 model: IntroScreenViewModel(),
+                components: IntroScreenViewModel().components,
                 layout: IntroScreenLayout(
                     common: AcidBasesScreenLayout(
                         geometry: geo,

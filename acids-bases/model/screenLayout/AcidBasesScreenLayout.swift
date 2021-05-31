@@ -173,3 +173,10 @@ extension AcidBasesScreenLayout {
         return min(idealWidth, idealHeight)
     }
 }
+
+// MARK: toggle geometry
+extension AcidBasesScreenLayout {
+    var toggleHeight: CGFloat {
+        0.05 * height
+    }
+}

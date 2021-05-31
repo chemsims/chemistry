@@ -8,24 +8,50 @@ import ReactionsCore
 struct IntroRightStack: View {
 
     @ObservedObject var model: IntroScreenViewModel
+    @ObservedObject var components: IntroScreenComponents
     let layout: IntroScreenLayout
 
     var body: some View {
         VStack(spacing: 0) {
+            topRow
+            phScale
+            bottomRow
+        }
+        .frame(width: layout.common.rightColumnWidth)
+    }
+
+    private var topRow: some View {
+        HStack {
+            Spacer()
             IntroEquationView(
-                concentration: model.components.concentrations,
+                concentration: components.concentrations,
                 showValues: true
             )
             .frame(size: layout.equationSize)
-            phScale
-           bottomRow
+            Spacer()
+            toggle
         }
-        .frame(width: layout.common.rightColumnWidth)
+    }
+
+    private var toggle: some View {
+        DropDownSelectionView(
+            title: "Choose a substance",
+            options: model.availableSubstances,
+            isToggled: model.inputState.isChoosingSubstance ? .constant(true) : .constant(false),
+            selection: model.chooseSubstanceBinding,
+            height: layout.common.toggleHeight,
+            animation: .easeOut(duration: 0.5),
+            displayString: { $0.symbol },
+            label: { _ in "" }, // TODO
+            disabledOptions: [],
+            onSelection: model.next
+        )
     }
 
     private var phScale: some View {
         PHOrConcentrationBar(
             model: model,
+            components: components,
             layout: layout
         )
     }
@@ -41,8 +67,8 @@ struct IntroRightStack: View {
 
     private var barChart: some View {
         BarChart(
-            data: model.components.barChart.all,
-            time: model.components.fractionSubstanceAdded,
+            data: components.barChart.all,
+            time: components.fractionSubstanceAdded,
             settings: layout.common.barChartSettings
         )
     }
@@ -61,6 +87,7 @@ struct IntroRightStack: View {
 private struct PHOrConcentrationBar: View {
 
     @ObservedObject var model: IntroScreenViewModel
+    @ObservedObject var components: IntroScreenComponents
     let layout: IntroScreenLayout
 
     @State private var isViewingPh = false
@@ -77,7 +104,7 @@ private struct PHOrConcentrationBar: View {
     }
 
     private var toggle: some View {
-        HStack(spacing: 5) {
+        HStack(spacing: layout.phToggleHeight) {
             SelectionToggleText(
                 text: "Concentration",
                 isSelected: !isViewingPh,
@@ -126,8 +153,8 @@ private struct PHOrConcentrationBar: View {
         formatValue: (CGFloat) -> TextLine
     ) -> some View {
 
-        let h = model.components.concentration(ofIon: .hydrogen)
-        let oh = model.components.concentration(ofIon: .hydroxide)
+        let h = components.concentration(ofIon: .hydrogen)
+        let oh = components.concentration(ofIon: .hydroxide)
 
         let hValue = h[keyPath: indicatorLabelValue]
         let ohValue = oh[keyPath: indicatorLabelValue]
@@ -189,6 +216,7 @@ struct IntroRightStack_Previews: PreviewProvider {
                 Spacer()
                 IntroRightStack(
                     model: IntroScreenViewModel(),
+                    components: IntroScreenViewModel().components,
                     layout: IntroScreenLayout(
                         common: AcidBasesScreenLayout(
                             geometry: geo,

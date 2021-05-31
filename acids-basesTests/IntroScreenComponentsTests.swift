@@ -9,7 +9,7 @@ import ReactionsCore
 class IntroScreenComponentsTests: XCTestCase {
 
     func testStrongAcidSubstanceAdded() {
-        var model = newModel(substance: .strongAcid(secondaryIon: .A, color: .blue))
+        let model = newModel(substance: .strongAcid(secondaryIon: .A, color: .blue))
 
         XCTAssertEqual(model.substanceAdded, 0)
         XCTAssertEqual(model.fractionSubstanceAdded, 0)
@@ -29,7 +29,7 @@ class IntroScreenComponentsTests: XCTestCase {
     }
 
     func testStrongAcidCoords() {
-        var model = newModel(substance: .strongAcid(secondaryIon: .A, color: .blue))
+        let model = newModel(substance: .strongAcid(secondaryIon: .A, color: .blue))
 
         model.coords.all.forEach { coord in
             XCTAssert(coord.coords.isEmpty)
@@ -56,7 +56,7 @@ class IntroScreenComponentsTests: XCTestCase {
             substanceAddedPerIon: NonZeroPositiveInt(5)!,
             color: .blue
         )
-        var model = newModel(substance: acid)
+        let model = newModel(substance: acid)
 
         model.coords.all.forEach { coord in
             XCTAssert(coord.coords.isEmpty)
@@ -125,7 +125,7 @@ class IntroScreenComponentsTests: XCTestCase {
     private func doTestAcidPrimaryIonConcentration(
         substance: AcidOrBase
     ) {
-        var model = newModel(substance: substance)
+        let model = newModel(substance: substance)
         var increasingIon: PrimaryIonConcentration {
             model.concentration(ofIon: substance.primary)
         }
@@ -162,10 +162,11 @@ class IntroScreenComponentsTests: XCTestCase {
     }
 
     private func newModel(substance: AcidOrBase) -> IntroScreenComponents {
-        GeneralScreenComponents(
+        IntroScreenComponents(
             substance: substance,
             cols: 10,
-            rows: 10
+            rows: 10,
+            maxSubstanceCountDivisor: 2
         )
     }
 }

@@ -5,7 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
-struct AcidOrBase: Equatable {
+struct AcidOrBase: Equatable, Identifiable {
 
     init(
         substanceAddedPerIon: PositiveInt,
@@ -19,6 +19,10 @@ struct AcidOrBase: Equatable {
         self.secondary = secondary
         self.concentrationAtMaxSubstance = concentrationAtMaxSubstance
         self.color = color
+    }
+
+    var id: String {
+        symbol
     }
 
     var symbol: String {
@@ -104,4 +108,23 @@ struct AcidOrBase: Equatable {
             color: color
         )
     }
+}
+
+// MARK: Default substances
+extension AcidOrBase {
+
+    static let strongAcids = [
+        AcidOrBase.strongAcid(
+            secondaryIon: .A,
+            color: .blue
+        ),
+        AcidOrBase.strongAcid(
+            secondaryIon: .Cl,
+            color: .red
+        ),
+        AcidOrBase.strongAcid(
+            secondaryIon: .Br,
+            color: .purple
+        )
+    ]
 }

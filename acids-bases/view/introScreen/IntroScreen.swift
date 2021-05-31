@@ -8,7 +8,7 @@ import SwiftUI
 struct IntroScreen: View {
 
     let layout: AcidBasesScreenLayout
-    @ObservedObject var model: IntroScreenViewModel
+    var model: IntroScreenViewModel
 
     var body: some View {
         GeometryReader { geo in
@@ -27,9 +27,17 @@ struct IntroScreenWithSettings: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            IntroBeaker(model: model, layout: layout)
+            IntroBeaker(
+                model: model,
+                components: model.components,
+                layout: layout
+            )
             Spacer()
-            IntroRightStack(model: model, layout: layout)
+            IntroRightStack(
+                model: model,
+                components: model.components,
+                layout: layout
+            )
         }
     }
 }
@@ -91,9 +99,14 @@ extension IntroScreenLayout {
 // MARK: Equation layout
 extension IntroScreenLayout {
     var equationSize: CGSize {
+
+        let availableHeight = common.height - common.bottomRightTotalHeight - phAreaTotalHeight
+
+        let availableWidth = common.rightColumnWidth - common.toggleHeight
+
         return CGSize(
-            width: 0.9 * common.rightColumnWidth,
-            height: 0.9 * (common.height - common.bottomRightTotalHeight - phAreaTotalHeight)
+            width: 0.9 * availableWidth,
+            height: 0.9 * availableHeight
         )
     }
 }

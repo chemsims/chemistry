@@ -2,59 +2,47 @@
 // Reactions App
 //
 
-import CoreGraphics
+import SwiftUI
 import ReactionsCore
 
-protocol IntroScreenComponents {
+class IntroScreenComponents: ObservableObject {
 
-    var cols: Int { get }
-    var rows: Int { get set }
-    var substance: AcidOrBase { get }
-
-    mutating func increment(count: Int)
-
-    func concentration(ofIon ion: PrimaryIon) -> PrimaryIonConcentration
-
-    var concentrations: PrimaryIonValue<PrimaryIonConcentration> { get }
-
-    var coords: SubstanceValue<BeakerMolecules> { get }
-
-    var barChart: SubstanceValue<BarChartData> { get }
-
-    var substanceAdded: Int { get }
-}
-
-extension IntroScreenComponents {
-    var maxSubstanceCount: Int {
-        (cols * rows) / 2
+    init(
+        substance: AcidOrBase,
+        cols: Int,
+        rows: Int,
+        maxSubstanceCountDivisor: Int = 3
+    ) {
+        self.substance = substance
+        self.cols = cols
+        self.rows = rows
+        self.maxSubstanceCountDivisor = maxSubstanceCountDivisor
+        self.underlyingCoords = AcidSubstanceBeakerCoords(substance: substance)
     }
 
-    var fractionSubstanceAdded: CGFloat {
-        CGFloat(substanceAdded) / CGFloat(maxSubstanceCount)
-    }
-}
-
-struct GeneralScreenComponents: IntroScreenComponents {
     let substance: AcidOrBase
     let cols: Int
     var rows: Int
 
-    init(substance: AcidOrBase, cols: Int, rows: Int) {
-        self.substance = substance
-        self.cols = cols
-        self.rows = rows
-        self.underlyingCoords = AcidSubstanceBeakerCoords(substance: substance)
+    private let maxSubstanceCountDivisor: Int
+
+    @Published private(set) var substanceAdded: Int = 0
+    @Published private var underlyingCoords: AcidSubstanceBeakerCoords
+    @Published private(set) var fractionSubstanceAdded: CGFloat = 0
+
+    var maxSubstanceCount: Int {
+        (cols * rows) / maxSubstanceCountDivisor
     }
 
-    private(set) var substanceAdded: Int = 0
-    private var underlyingCoords: AcidSubstanceBeakerCoords
-
-    mutating func increment(count: Int) {
+    func increment(count: Int) {
         guard count > 0 else {
             return
         }
         let maxToAdd = min(maxSubstanceCount - substanceAdded, count)
-        substanceAdded += maxToAdd
+        withAnimation(.easeOut(duration: 1)) {
+            substanceAdded += maxToAdd
+            fractionSubstanceAdded = CGFloat(substanceAdded) / CGFloat(maxSubstanceCount)
+        }
         underlyingCoords.update(
             substanceCount: substanceAdded,
             cols: cols,

@@ -15,7 +15,7 @@ class IntroScreenViewModel: ObservableObject {
         )
         self.substance = initialSubstance
         self.rows = CGFloat(initialRows)
-        self.components = GeneralScreenComponents(
+        self.components = IntroScreenComponents(
             substance: initialSubstance,
             cols: MoleculeGridSettings.cols,
             rows: initialRows
@@ -37,13 +37,26 @@ class IntroScreenViewModel: ObservableObject {
     }
     @Published var substance: AcidOrBase
     @Published var selectedSubstances = AcidOrBaseMap<AcidOrBase?>.constant(nil)
-
+    @Published var availableSubstances = AcidOrBase.strongAcids
+    @Published var inputState = InputState.none
 
     private(set) var addMoleculesModel: MultiContainerShakeViewModel<AcidOrBaseType>!
 
 
     func increment() {
         components.increment(count: 1)
+    }
+
+    enum InputState {
+        case chooseSubstance(type: AcidOrBaseType)
+        case none, setWaterLevel, addSubstance
+
+        var isChoosingSubstance: Bool {
+            if case .chooseSubstance = self {
+                return true
+            }
+            return false
+        }
     }
 }
 
@@ -55,5 +68,29 @@ extension IntroScreenViewModel {
 
     func back() {
         navigation?.back()
+    }
+}
+
+// MARK: Substance selection
+extension IntroScreenViewModel {
+    var chooseSubstanceBinding: Binding<AcidOrBase> {
+
+        let defaultSubstance = availableSubstances.first!
+        if case let .chooseSubstance(type) = inputState {
+            return Binding(
+                get: { [self] in
+                    selectedSubstances.value(for: type) ?? defaultSubstance
+                },
+                set: { [self] in
+                    selectedSubstances = selectedSubstances.updating(with: $0, for: type)
+                }
+            )
+        }
+
+        // Return a dummy binding
+        return Binding(
+            get: { defaultSubstance },
+            set: { _ in }
+        )
     }
 }
