@@ -334,6 +334,8 @@
 		57B5782226399C07008DFAB5 /* FractionedCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
 		57B92EBA2665258A00023E7C /* SelectionToggleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AAD2600D22C005BD328 /* SelectionToggleText.swift */; };
+		57B92EBD2665356600023E7C /* TextLineUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBC2665356600023E7C /* TextLineUtil.swift */; };
+		57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBE266537F900023E7C /* TextLineUtilTests.swift */; };
 		57BB21EA260BA62600250FB3 /* ReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */; };
 		57BB21F8260BA66B00250FB3 /* GaseousReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */; };
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
@@ -924,6 +926,8 @@
 		57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinates.swift; sourceTree = "<group>"; };
 		57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinateTests.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
+		57B92EBC2665356600023E7C /* TextLineUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineUtil.swift; sourceTree = "<group>"; };
+		57B92EBE266537F900023E7C /* TextLineUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineUtilTests.swift; sourceTree = "<group>"; };
 		57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinition.swift; sourceTree = "<group>"; };
 		57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousReactionType.swift; sourceTree = "<group>"; };
 		57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonLinearEquationSolver.swift; sourceTree = "<group>"; };
@@ -2125,6 +2129,7 @@
 				57A5F077263EA0C8002F23DE /* QuizQuestionReaderTests.swift */,
 				57315ECF2640311200A7D0F9 /* CsvParserTests.swift */,
 				575C90E42662CE6A001DCD17 /* PHMeterTests.swift */,
+				57B92EBE266537F900023E7C /* TextLineUtilTests.swift */,
 			);
 			path = ReactionsCoreTests;
 			sourceTree = "<group>";
@@ -2642,6 +2647,7 @@
 				57491BF8263B363200962B92 /* AccessibilityLabelUtil.swift */,
 				57FD400626484DCF00E352C1 /* FeedbackSettings.swift */,
 				575C90E62662DAA1001DCD17 /* BlurView.swift */,
+				57B92EBC2665356600023E7C /* TextLineUtil.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -3582,6 +3588,7 @@
 				57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */,
 				57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */,
 				575A880F25E4310700AEE448 /* QuizOption.swift in Sources */,
+				57B92EBD2665356600023E7C /* TextLineUtil.swift in Sources */,
 				57DDAD5B25E57E9300B535A7 /* ChartLine.swift in Sources */,
 				575A889525E438CD00AEE448 /* BundleExtension.swift in Sources */,
 				57315EC726401CF500A7D0F9 /* QuizAnswerIconOverlay.swift in Sources */,
@@ -3727,6 +3734,7 @@
 				57FD401526484FA600E352C1 /* QuizViewModelTests.swift in Sources */,
 				57FD402226486F8300E352C1 /* NavigationTestMethods.swift in Sources */,
 				57FD401B2648506300E352C1 /* NavigationViewModelTests.swift in Sources */,
+				57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */,
 				57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */,
 				572BCF2C26036F3000CE3FE0 /* ArrayExtensionTests.swift in Sources */,
 				57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */,
