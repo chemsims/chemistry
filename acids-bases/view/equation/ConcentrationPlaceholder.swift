@@ -27,7 +27,7 @@ struct ConcentrationPlaceholder: View {
         }
         .font(.system(size: EquationSizing.fontSize))
         .frame(
-            width: 1.4 * EquationSizing.boxWidth,
+            width: 1.5 * EquationSizing.boxWidth,
             height: EquationSizing.boxHeight,
             alignment: .leading
         )
@@ -39,11 +39,11 @@ struct ConcentrationPlaceholder: View {
     }
 
     private func filledValue(parts: (String, String)) -> some View {
-        HStack(spacing: 0) {
-            FixedText(parts.0)
-            FixedText(parts.1)
+        Group {
+            Text(parts.0) +
+            Text(parts.1)
                 .font(.system(size: EquationSizing.subscriptFontSize))
-                .offset(y: -10)
+                .baselineOffset(10)
         }
         .foregroundColor(.orangeAccent)
     }
@@ -53,11 +53,13 @@ struct ConcentrationPlaceholder_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             ConcentrationPlaceholder(
-                concentration: 1.23e-4, showValue: true
+                concentration: 1.23e-120, showValue: true
             )
+            .minimumScaleFactor(0.5)
+
 
             ConcentrationPlaceholder(
-                concentration: 1e-4, showValue: false
+                concentration: 1e-120, showValue: false
             )
         }
     }

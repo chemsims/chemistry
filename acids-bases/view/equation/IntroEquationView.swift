@@ -28,9 +28,10 @@ struct IntroEquationView: View {
     }
 }
 
-private let NaturalWidth: CGFloat = 735
-private let NaturalHeight: CGFloat = 105
-private let vSpacing: CGFloat = 15
+private let NaturalWidth: CGFloat = 800
+private let NaturalHeight: CGFloat = 115
+private let vSpacing: CGFloat = 25
+private let equalsTrailingSpacing: CGFloat = 5
 
 private struct SizedIntroEquationView: View {
 
@@ -38,7 +39,7 @@ private struct SizedIntroEquationView: View {
     let showValues: Bool
 
     var body: some View {
-        HStack(spacing: 20) {
+        HStack(spacing: 30) {
             PLogEquationView(
                 symbol: "H",
                 charge: "+",
@@ -53,10 +54,10 @@ private struct SizedIntroEquationView: View {
                 showValues: showValues
             )
 
-
             phSum
         }
         .font(.system(size: EquationSizing.fontSize))
+        .minimumScaleFactor(0.5)
     }
 
     private var phSum: some View {
@@ -74,6 +75,7 @@ private struct SizedIntroEquationView: View {
             FixedText("pOH")
                 .frame(width: EquationSizing.boxWidth)
             FixedText("=")
+                .padding(.trailing, equalsTrailingSpacing)
             FixedText("14")
         }
     }
@@ -90,6 +92,7 @@ private struct SizedIntroEquationView: View {
                 emphasise: true
             )
             FixedText("=")
+                .padding(.trailing, equalsTrailingSpacing)
             FixedText("14")
         }
     }
@@ -115,6 +118,7 @@ private struct PLogEquationView: View {
             FixedText("p\(symbol)")
                 .frame(width: EquationSizing.boxWidth)
             FixedText("=")
+                .padding(.trailing, equalsTrailingSpacing)
             FixedText("-log[")
             FixedText(symbol)
             FixedText(charge)
@@ -130,12 +134,14 @@ private struct PLogEquationView: View {
                 value: showValues ? concentration.p.str(decimals: 1) : nil,
                 emphasise: true
             )
-            FixedText("=")
-            FixedText("-log")
-            ConcentrationPlaceholder(
-                concentration: concentration.concentration,
-                showValue: showValues
-            )
+            HStack(spacing: equalsTrailingSpacing) {
+                FixedText("=")
+                FixedText("-log")
+                ConcentrationPlaceholder(
+                    concentration: concentration.concentration,
+                    showValue: showValues
+                )
+            }
         }
     }
 }

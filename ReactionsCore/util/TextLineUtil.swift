@@ -12,6 +12,7 @@ public struct TextLineUtil {
         let formatter = NumberFormatter()
         formatter.numberStyle = .scientific
         formatter.maximumSignificantDigits = 2
+        formatter.minimumSignificantDigits = 2
         formatter.exponentSymbol = "x10"
         return formatter
     }()
