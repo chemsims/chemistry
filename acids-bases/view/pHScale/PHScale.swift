@@ -40,7 +40,8 @@ struct PHScale: View {
         GeometryReader { geo in
             PHScaleWithGeometry(
                 geometry: PHScaleGeometry(
-                    geometry: geo,
+                    width: geo.size.width,
+                    height: geo.size.height,
                     tickCount: topTicks.count,
                     topTickMinValue: topMinTickValue,
                     topTickMaxValue: topMaxTickValue

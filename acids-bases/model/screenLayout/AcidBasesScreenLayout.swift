@@ -154,8 +154,8 @@ extension AcidBasesScreenLayout {
     var barChartSettings: BarChartGeometry {
         BarChartGeometry(
             chartWidth: chartSize,
-            minYValue: 1e-7,
-            maxYValue: 0.11
+            minYValue: 0,
+            maxYValue: 1
         )
     }
 

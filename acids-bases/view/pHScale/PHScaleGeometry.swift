@@ -6,18 +6,25 @@ import SwiftUI
 import ReactionsCore
 
 struct PHScaleGeometry {
-    let geometry: GeometryProxy
+    init(
+        width: CGFloat,
+        height: CGFloat,
+        tickCount: Int,
+        topTickMinValue: CGFloat,
+        topTickMaxValue: CGFloat
+    ) {
+        self.width = width
+        self.height = height
+        self.tickCount = tickCount
+        self.topTickMinValue = topTickMinValue
+        self.topTickMaxValue = topTickMaxValue
+    }
+
+    let width: CGFloat
+    let height: CGFloat
     let tickCount: Int
     let topTickMinValue: CGFloat
     let topTickMaxValue: CGFloat
-
-    var width: CGFloat {
-        geometry.size.width
-    }
-
-    var height: CGFloat {
-        geometry.size.height
-    }
 
     var barSize: CGSize {
         CGSize(

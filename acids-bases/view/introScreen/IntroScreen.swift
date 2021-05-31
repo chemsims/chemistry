@@ -50,6 +50,27 @@ extension IntroScreenLayout {
     }
 }
 
+// MARK: PH bar layout
+extension IntroScreenLayout {
+    var phScaleSize: CGSize {
+        CGSize(
+            width: 0.95 * common.rightColumnWidth,
+            height: 0.5 * (common.height - common.beakyBoxHeight)
+        )
+    }
+
+    var phToggleFontSize: CGFloat {
+        let phGeometry = PHScaleGeometry(
+            width: phScaleSize.width,
+            height: phScaleSize.height,
+            tickCount: 14,
+            topTickMinValue: 0,
+            topTickMaxValue: 1
+        )
+        return phGeometry.labelsFontSize
+    }
+}
+
 struct IntroScreen_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
