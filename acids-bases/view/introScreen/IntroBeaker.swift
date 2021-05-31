@@ -93,35 +93,14 @@ private struct IntroBeakerContainers: View {
         _ type: AcidOrBaseType,
         _ index: Int
     ) -> some View {
-        let addModel = shakeModel.model(for: type)
-        let isActive = shakeModel.activeMolecule == type
-        let isEnabled = true
-        let substance = model.selectedSubstances.value(for: type)
-
-        let label = substance?.name ?? ""
-        let color = substance?.color ?? RGB.placeholderContainer.color
-
-        return ShakingContainerView(
-            model: addModel,
-            position: addModel.motion.position,
+        AcidAppShakingContainerView(
+            models: shakeModel,
+            layout: layout.common,
             onTap: { didTapContainer(type, index) },
             initialLocation: containerLocation(type, index),
-            containerWidth: common.containerSize.width,
-            containerSettings: ParticleContainerSettings(
-                labelColor: color,
-                label: label,
-                labelFontColor: .white,
-                strokeLineWidth: 0.4
-            ),
-            moleculeSize: common.moleculeSize,
-            moleculeColor: color,
-            rotation: isActive ? .degrees(135) : .zero,
-            isSimulator: AcidBasesApp.isSimulator
+            type: type,
+            substance: model.selectedSubstances.value(for: type)
         )
-        .zIndex(isActive ? 1 : 0)
-        .disabled(!isEnabled)
-        .font(.system(size: common.containerFontSize))
-        .minimumScaleFactor(0.7)
         .mask(
             VStack(spacing: 0) {
                 Rectangle()
