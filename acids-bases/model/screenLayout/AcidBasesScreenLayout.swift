@@ -148,3 +148,24 @@ extension AcidBasesScreenLayout {
         0.07 * beakerWidth
     }
 }
+
+// MARK: Chart geometry
+extension AcidBasesScreenLayout {
+    var barChartSettings: BarChartGeometry {
+        BarChartGeometry(
+            chartWidth: chartSize,
+            minYValue: 1e-7,
+            maxYValue: 0.11
+        )
+    }
+
+    var chartSize: CGFloat {
+        let totalAvailableWidth = chartColumnWidth
+        let totalAvailableHeight = beakyBoxHeight
+
+        let idealWidth = 0.9 * totalAvailableWidth
+        let idealHeight = 0.9 * totalAvailableHeight
+
+        return min(idealWidth, idealHeight)
+    }
+}

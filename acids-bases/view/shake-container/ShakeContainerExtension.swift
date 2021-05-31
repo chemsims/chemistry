@@ -17,7 +17,7 @@ struct AcidAppShakingContainerView: View {
     var body: some View {
         let addModel = models.model(for: type)
         let isActive = models.activeMolecule == type
-        let label = substance?.name ?? ""
+        let label = substance?.symbol ?? ""
         let color = substance?.color ?? RGB.placeholderContainer.color
 
         return ShakingContainerView(

@@ -100,27 +100,28 @@ struct GeneralScreenComponents: IntroScreenComponents {
 
         let ionEquation = LinearEquation(x1: 0, y1: 0, x2: 1, y2: finalIonFraction).within(min: 0, max: 1)
 
+        // TODO - accessibility labels
         return SubstanceValue(
             substanceValue: BarChartData(
-                label: "",
+                label: substance.symbol,
                 equation: LinearEquation(
                     m: finalSubstanceFraction,
                     x1: 0,
                     y1: 0
                 ).within(min: 0, max: 1),
-                color: .blue,
+                color: substance.color,
                 accessibilityLabel: ""
             ),
             primaryIonValue: BarChartData(
-                label: "",
+                label: substance.primary.rawValue,
                 equation: ionEquation,
-                color: .red,
+                color: substance.primary.color,
                 accessibilityLabel: ""
             ),
             secondaryIonValue: BarChartData(
-                label: "",
+                label: substance.secondary.rawValue,
                 equation: ionEquation,
-                color: .red,
+                color: substance.secondary.color,
                 accessibilityLabel: ""
             )
         )

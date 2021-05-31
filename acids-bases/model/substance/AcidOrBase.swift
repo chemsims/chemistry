@@ -8,14 +8,12 @@ import ReactionsCore
 struct AcidOrBase: Equatable {
 
     init(
-        name: String,
         substanceAddedPerIon: PositiveInt,
         primary: PrimaryIon,
         secondary: SecondaryIon,
         concentrationAtMaxSubstance: CGFloat,
         color: Color
     ) {
-        self.name = name
         self.substanceAddedPerIon = substanceAddedPerIon
         self.primary = primary
         self.secondary = secondary
@@ -23,8 +21,12 @@ struct AcidOrBase: Equatable {
         self.color = color
     }
 
-    /// Display name of the substance
-    let name: String
+    var symbol: String {
+        if primary == .hydrogen {
+            return "\(primary.rawValue)\(secondary.rawValue)"
+        }
+        return "\(secondary.rawValue)\(primary.rawValue)"
+    }
 
     /// Number of substance molecules added for each pair of ions which are produced
     ///
@@ -47,12 +49,10 @@ struct AcidOrBase: Equatable {
 
     /// Returns a strong acid substance
     static func strongAcid(
-        name: String,
         secondaryIon: SecondaryIon,
         color: Color
     ) -> AcidOrBase {
         AcidOrBase(
-            name: name,
             substanceAddedPerIon: PositiveInt(0)!,
             primary: .hydrogen,
             secondary: secondaryIon,
@@ -63,12 +63,10 @@ struct AcidOrBase: Equatable {
 
     /// Returns a strong base substance
     static func strongBase(
-        name: String,
         secondaryIon: SecondaryIon,
         color: Color
     ) -> AcidOrBase {
         AcidOrBase(
-            name: name,
             substanceAddedPerIon: PositiveInt(0)!,
             primary: .hydroxide,
             secondary: secondaryIon,
@@ -79,13 +77,11 @@ struct AcidOrBase: Equatable {
 
     /// Returns a weak acid substance
     static func weakAcid(
-        name: String,
         secondaryIon: SecondaryIon,
         substanceAddedPerIon: NonZeroPositiveInt,
         color: Color
     ) -> AcidOrBase {
         AcidOrBase(
-            name: name,
             substanceAddedPerIon: substanceAddedPerIon.positiveInt,
             primary: .hydrogen,
             secondary: secondaryIon,
@@ -96,13 +92,11 @@ struct AcidOrBase: Equatable {
 
     /// Returns a weak base substance
     static func weakBase(
-        name: String,
         secondaryIon: SecondaryIon,
         substanceAddedPerIon: NonZeroPositiveInt,
         color: Color
     ) -> AcidOrBase {
         AcidOrBase(
-            name: name,
             substanceAddedPerIon: substanceAddedPerIon.positiveInt,
             primary: .hydroxide,
             secondary: secondaryIon,

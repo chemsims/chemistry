@@ -20,9 +20,18 @@ struct IntroRightStack: View {
 
     private var bottomRow: some View {
         HStack(spacing: 0) {
+            barChart
             Spacer()
             beaky
         }
+    }
+
+    private var barChart: some View {
+        BarChart(
+            data: model.components.barChart.all,
+            time: model.components.fractionSubstanceAdded,
+            settings: layout.common.barChartSettings
+        )
     }
 
     private var beaky: some View {
@@ -39,16 +48,20 @@ struct IntroRightStack: View {
 struct IntroRightStack_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
-            IntroRightStack(
-                model: IntroScreenViewModel(),
-                layout: IntroScreenLayout(
-                    common: AcidBasesScreenLayout(
-                        geometry: geo,
-                        verticalSizeClass: nil,
-                        horizontalSizeClass: nil
+            HStack(spacing: 0) {
+                Spacer()
+                IntroRightStack(
+                    model: IntroScreenViewModel(),
+                    layout: IntroScreenLayout(
+                        common: AcidBasesScreenLayout(
+                            geometry: geo,
+                            verticalSizeClass: nil,
+                            horizontalSizeClass: nil
+                        )
                     )
                 )
-            )
+            }
+            .padding(5)
         }
         .previewLayout(.iPhone8Landscape)
     }
