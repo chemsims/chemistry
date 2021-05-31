@@ -94,16 +94,35 @@ struct GeneralScreenComponents: IntroScreenComponents {
     }
 
     var barChart: SubstanceValue<BarChartData> {
-        let tempData = BarChartData(
-            label: "",
-            equation: ConstantEquation(value: 0),
-            color: .black,
-            accessibilityLabel: ""
-        )
+        let addedIsAboveZero = substance.substanceAddedPerIon.value > 0
+        let finalIonFraction = addedIsAboveZero ? 1 / CGFloat(substance.substanceAddedPerIon.value) : 1
+        let finalSubstanceFraction: CGFloat = addedIsAboveZero ? 1 : 0
+
+        let ionEquation = LinearEquation(x1: 0, y1: 0, x2: 1, y2: finalIonFraction).within(min: 0, max: 1)
+
         return SubstanceValue(
-            substanceValue: tempData,
-            primaryIonValue: tempData,
-            secondaryIonValue: tempData
+            substanceValue: BarChartData(
+                label: "",
+                equation: LinearEquation(
+                    m: finalSubstanceFraction,
+                    x1: 0,
+                    y1: 0
+                ).within(min: 0, max: 1),
+                color: .blue,
+                accessibilityLabel: ""
+            ),
+            primaryIonValue: BarChartData(
+                label: "",
+                equation: ionEquation,
+                color: .red,
+                accessibilityLabel: ""
+            ),
+            secondaryIonValue: BarChartData(
+                label: "",
+                equation: ionEquation,
+                color: .red,
+                accessibilityLabel: ""
+            )
         )
     }
 }

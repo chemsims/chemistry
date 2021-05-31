@@ -90,6 +90,41 @@ class IntroScreenComponentsTests: XCTestCase {
         doTestAcidPrimaryIonConcentration(substance: base)
     }
 
+    func testStrongAcidBarChart() {
+        let acid = AcidOrBase.strongAcid(name: "", secondaryIon: .A, color: .blue)
+        doTestBarChartData(substance: acid, finalSubstanceAmount: 0, finalIonAmount: 1)
+    }
+
+    func testStrongBaseBarChart() {
+        let base = AcidOrBase.strongBase(name: "", secondaryIon: .A, color: .blue)
+        doTestBarChartData(substance: base, finalSubstanceAmount: 0, finalIonAmount: 1)
+    }
+
+    func testWeakAcidBarChart() {
+        let acid = AcidOrBase.weakAcid(name: "", secondaryIon: .A, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .red)
+        doTestBarChartData(substance: acid, finalSubstanceAmount: 1, finalIonAmount: 0.5)
+    }
+
+    func testWeakBaseBarChart() {
+        let acid = AcidOrBase.weakAcid(name: "", secondaryIon: .A, substanceAddedPerIon: NonZeroPositiveInt(5)!, color: .red)
+        doTestBarChartData(substance: acid, finalSubstanceAmount: 1, finalIonAmount: 0.2)
+    }
+
+    private func doTestBarChartData(
+        substance: AcidOrBase,
+        finalSubstanceAmount: CGFloat,
+        finalIonAmount: CGFloat
+    ) {
+        let model = newModel(substance: substance)
+        model.barChart.all.forEach { data in
+            XCTAssertEqual(data.equation.getY(at: 0), 0)
+        }
+
+        XCTAssertEqual(model.barChart.substanceValue.equation.getY(at: 1), finalSubstanceAmount)
+        XCTAssertEqual(model.barChart.primaryIonValue.equation.getY(at: 1), finalIonAmount)
+        XCTAssertEqual(model.barChart.secondaryIonValue.equation.getY(at: 1), finalIonAmount)
+    }
+
     private func doTestAcidPrimaryIonConcentration(
         substance: AcidOrBase
     ) {
