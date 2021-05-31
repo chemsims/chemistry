@@ -423,6 +423,8 @@
 		57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5D25F92E260087F760 /* HighlightedElements.swift */; };
 		57E59A6425F93D5D0087F760 /* ConvergenceHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A6325F93D5D0087F760 /* ConvergenceHighlight.swift */; };
 		57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */; };
+		57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD292664AD1500661D74 /* AcidOrBase.swift */; };
+		57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD2B2664AD3200661D74 /* Ions.swift */; };
 		57E7FF6E2582831000A30582 /* ConcentrationTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF6D2582831000A30582 /* ConcentrationTable.swift */; };
 		57E7FF7F25828E0500A30582 /* ReactionRateNavigationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF7E25828E0500A30582 /* ReactionRateNavigationRows.swift */; };
 		57E902B425ED40B500758300 /* AqueousReactionInputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902B325ED40B500758300 /* AqueousReactionInputState.swift */; };
@@ -1008,6 +1010,8 @@
 		57E59A5D25F92E260087F760 /* HighlightedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedElements.swift; sourceTree = "<group>"; };
 		57E59A6325F93D5D0087F760 /* ConvergenceHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvergenceHighlight.swift; sourceTree = "<group>"; };
 		57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
+		57E7CD292664AD1500661D74 /* AcidOrBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBase.swift; sourceTree = "<group>"; };
+		57E7CD2B2664AD3200661D74 /* Ions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ions.swift; sourceTree = "<group>"; };
 		57E7FF692582307A00A30582 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		57E7FF6D2582831000A30582 /* ConcentrationTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationTable.swift; sourceTree = "<group>"; };
 		57E7FF71258289B200A30582 /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
@@ -1243,7 +1247,7 @@
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
-				5784F44C2664061200513B2A /* enums */,
+				57E7CD282664AD0A00661D74 /* substance */,
 				57FA3AC0266104B40073A29B /* screenLayout */,
 				57FA3AB42660EFAA0073A29B /* styling */,
 				57D60156265ECA6A00017E25 /* phScale */,
@@ -1955,14 +1959,6 @@
 				57812A8D25EABA950099D720 /* AnimatableRotation.swift */,
 			);
 			path = "animatable-modifiers";
-			sourceTree = "<group>";
-		};
-		5784F44C2664061200513B2A /* enums */ = {
-			isa = PBXGroup;
-			children = (
-				5784F44D2664062200513B2A /* AcidOrBaseType.swift */,
-			);
-			path = enums;
 			sourceTree = "<group>";
 		};
 		5786FAD825E6B5FD00AAD8A6 /* beaker */ = {
@@ -2748,6 +2744,16 @@
 			path = "reaction-definition";
 			sourceTree = "<group>";
 		};
+		57E7CD282664AD0A00661D74 /* substance */ = {
+			isa = PBXGroup;
+			children = (
+				5784F44D2664062200513B2A /* AcidOrBaseType.swift */,
+				57E7CD292664AD1500661D74 /* AcidOrBase.swift */,
+				57E7CD2B2664AD3200661D74 /* Ions.swift */,
+			);
+			path = substance;
+			sourceTree = "<group>";
+		};
 		57E7FF8625829DD400A30582 /* quiz */ = {
 			isa = PBXGroup;
 			children = (
@@ -3238,6 +3244,7 @@
 				57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */,
 				579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */,
 				57FA3AB12660D4450073A29B /* PHScale.swift in Sources */,
+				57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */,
 				57D60158265ECA7B00017E25 /* PHScaleColors.swift in Sources */,
 				570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */,
 				57FA3AC426610D760073A29B /* IntroScreenBeaker.swift in Sources */,
@@ -3248,6 +3255,7 @@
 				57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */,
 				571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */,
 				57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */,
+				57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */,
 				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,
 				57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */,
 				57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */,
