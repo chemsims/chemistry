@@ -69,6 +69,20 @@ extension IntroScreenLayout {
         )
         return phGeometry.labelsFontSize
     }
+
+    var phToggleHeight: CGFloat {
+        1.2 * phToggleFontSize
+    }
+}
+
+// MARK: Equation layout
+extension IntroScreenLayout {
+    var equationSize: CGSize {
+        return CGSize(
+            width: 0.9 * common.rightColumnWidth,
+            height: 0.9 * (common.height - common.bottomRightTotalHeight - phScaleSize.height - phToggleHeight)
+        )
+    }
 }
 
 struct IntroScreen_Previews: PreviewProvider {

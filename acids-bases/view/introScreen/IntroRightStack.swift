@@ -12,9 +12,12 @@ struct IntroRightStack: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Spacer()
+            IntroEquationView(
+                concentration: model.components.concentrations,
+                showValues: true
+            )
+            .frame(size: layout.equationSize)
             phScale
-            Spacer()
            bottomRow
         }
         .frame(width: layout.common.rightColumnWidth)
@@ -70,6 +73,24 @@ private struct PHOrConcentrationBar: View {
                 concentrationBar
             }
         }
+    }
+
+    private var toggle: some View {
+        HStack(spacing: 5) {
+            SelectionToggleText(
+                text: "Concentration",
+                isSelected: !isViewingPh,
+                action: { isViewingPh = false }
+            )
+
+            SelectionToggleText(
+                text: "pH Scale",
+                isSelected: isViewingPh,
+                action: { isViewingPh = true }
+            )
+        }
+        .font(.system(size: layout.phToggleFontSize))
+        .frame(height: layout.phToggleHeight)
     }
 
     private var pHBar: some View {
@@ -155,23 +176,6 @@ private struct PHOrConcentrationBar: View {
             topRightTickValue: 14
         )
         .frame(size: layout.phScaleSize)
-    }
-
-    private var toggle: some View {
-        HStack(spacing: 5) {
-            SelectionToggleText(
-                text: "Concentration",
-                isSelected: !isViewingPh,
-                action: { isViewingPh = false }
-            )
-
-            SelectionToggleText(
-                text: "pH Scale",
-                isSelected: isViewingPh,
-                action: { isViewingPh = true }
-            )
-        }
-        .font(.system(size: layout.phToggleFontSize))
     }
 }
 

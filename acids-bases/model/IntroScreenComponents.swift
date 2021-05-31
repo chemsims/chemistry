@@ -15,6 +15,8 @@ protocol IntroScreenComponents {
 
     func concentration(ofIon ion: PrimaryIon) -> PrimaryIonConcentration
 
+    var concentrations: PrimaryIonValue<PrimaryIonConcentration> { get }
+
     var coords: SubstanceValue<BeakerMolecules> { get }
 
     var barChart: SubstanceValue<BarChartData> { get }
@@ -69,6 +71,13 @@ struct GeneralScreenComponents: IntroScreenComponents {
         }
         return PrimaryIonConcentration.addingToPh14(
             otherIonPh: concentration(ofIon: substance.primary).p
+        )
+    }
+
+    var concentrations: PrimaryIonValue<PrimaryIonConcentration> {
+        PrimaryIonValue(
+            hydrogen: concentration(ofIon: .hydrogen),
+            hydroxide: concentration(ofIon: .hydroxide)
         )
     }
 

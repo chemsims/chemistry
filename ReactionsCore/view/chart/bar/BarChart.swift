@@ -93,11 +93,21 @@ public struct BarChart: View {
                 .foregroundColor(data.color)
             Text(data.label)
                 .font(.system(size: settings.labelFontSize))
+                .frame(height: settings.labelTextHeight)
+                .minimumScaleFactor(0.75)
         }
     }
 }
 
 struct BarChart_Previews: PreviewProvider {
+
+    private static let geometry = BarChartGeometry(
+        chartWidth: 200,
+        minYValue: 0,
+        maxYValue: 1,
+        barWidthFraction: 0.13
+    )
+
     static var previews: some View {
         BarChart(
             data: [
@@ -128,12 +138,7 @@ struct BarChart_Previews: PreviewProvider {
                 )
             ],
             time: 0,
-            settings: BarChartGeometry(
-                chartWidth: 200,
-                minYValue: 0,
-                maxYValue: 1,
-                barWidthFraction: 0.13
-            )
+            settings: geometry
         )
     }
 }

@@ -44,6 +44,10 @@ struct AcidBasesScreenLayout {
             height: beakyBoxHeight
         )
     }
+
+    var bottomRightTotalHeight: CGFloat {
+        max(barChartSettings.totalHeight, beakyBoxHeight)
+    }
 }
 
 // MARK: Beaker/slider geometry
