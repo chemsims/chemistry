@@ -31,10 +31,10 @@ struct PHScale: View {
     let bottomIndicatorValue: IndicatorValue
 
     /// Minimum tick value on the ticks along the top of the bar
-    let topMinTickValue: CGFloat
+    let topLeftTickValue: CGFloat
 
     /// Maximum tick value on the ticks along the top of the bar
-    let topMaxTickValue: CGFloat
+    let topRightTickValue: CGFloat
 
     var body: some View {
         GeometryReader { geo in
@@ -43,8 +43,8 @@ struct PHScale: View {
                     width: geo.size.width,
                     height: geo.size.height,
                     tickCount: topTicks.count,
-                    topTickMinValue: topMinTickValue,
-                    topTickMaxValue: topMaxTickValue
+                    topLeftTickValue: topLeftTickValue,
+                    topRightTickValue: topRightTickValue
                 ),
                 topTicks: topTicks,
                 topLabel: topLabel,
@@ -245,17 +245,17 @@ struct PHScale_Previews: PreviewProvider {
                 color: RGB.hydroxideDarker.color
             ),
             topIndicatorValue: .init(
-                value: 3,
-                text: ColoredText(text: "[H]^+^ = 1x10^-1^", color: .white),
+                value: 1e-3,
+                text: ColoredText(text: "[H]^+^ = 1x10^-3^", color: .white),
                 background: RGB.hydrogen.color
             ),
             bottomIndicatorValue: .init(
-                value: 7,
-                text: ColoredText(text: "[OH] = 10^2^", color: .white),
+                value: 1e-7,
+                text: ColoredText(text: "[OH] = 10^-7^", color: .white),
                 background: RGB.hydroxide.color
             ),
-            topMinTickValue: 0,
-            topMaxTickValue: 14
+            topLeftTickValue: 1e-14,
+            topRightTickValue: 1e-0
         )
     }
 

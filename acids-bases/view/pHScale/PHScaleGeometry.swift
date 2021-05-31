@@ -10,21 +10,21 @@ struct PHScaleGeometry {
         width: CGFloat,
         height: CGFloat,
         tickCount: Int,
-        topTickMinValue: CGFloat,
-        topTickMaxValue: CGFloat
+        topLeftTickValue: CGFloat,
+        topRightTickValue: CGFloat
     ) {
         self.width = width
         self.height = height
         self.tickCount = tickCount
-        self.topTickMinValue = topTickMinValue
-        self.topTickMaxValue = topTickMaxValue
+        self.topLeftTickValue = topLeftTickValue
+        self.topRightTickValue = topRightTickValue
     }
 
     let width: CGFloat
     let height: CGFloat
     let tickCount: Int
-    let topTickMinValue: CGFloat
-    let topTickMaxValue: CGFloat
+    let topLeftTickValue: CGFloat
+    let topRightTickValue: CGFloat
 
     var barSize: CGSize {
         CGSize(
@@ -87,22 +87,28 @@ extension PHScaleGeometry {
     }
 
     var topIndicatorAxis: AxisPositionCalculations<CGFloat> {
-        indicatorAxis(minValue: topTickMinValue, maxValue: topTickMaxValue)
+        indicatorAxis(
+            leftValue: topLeftTickValue,
+            rightValue: topRightTickValue
+        )
     }
 
     var bottomIndicatorAxis: AxisPositionCalculations<CGFloat> {
-        indicatorAxis(minValue: topTickMaxValue, maxValue: topTickMinValue)
+        indicatorAxis(
+            leftValue: topRightTickValue,
+            rightValue: topLeftTickValue
+        )
     }
 
     private func indicatorAxis(
-        minValue: CGFloat,
-        maxValue: CGFloat
+        leftValue: CGFloat,
+        rightValue: CGFloat
     ) -> AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
             minValuePosition: barHorizontalSpacing + tickXSpacing,
             maxValuePosition: width - barHorizontalSpacing - tickXSpacing,
-            minValue: minValue,
-            maxValue: maxValue
+            minValue: leftValue,
+            maxValue: rightValue
         )
     }
 }

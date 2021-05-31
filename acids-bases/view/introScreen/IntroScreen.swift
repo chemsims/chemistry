@@ -64,8 +64,8 @@ extension IntroScreenLayout {
             width: phScaleSize.width,
             height: phScaleSize.height,
             tickCount: 14,
-            topTickMinValue: 0,
-            topTickMaxValue: 1
+            topLeftTickValue: 0,
+            topRightTickValue: 1
         )
         return phGeometry.labelsFontSize
     }

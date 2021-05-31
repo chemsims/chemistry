@@ -59,56 +59,72 @@ private struct PHOrConcentrationBar: View {
     @ObservedObject var model: IntroScreenViewModel
     let layout: IntroScreenLayout
 
-    @State private var isViewingPh = true
+    @State private var isViewingPh = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             toggle
-            pHBar
+            if isViewingPh {
+                pHBar
+            } else {
+                concentrationBar
+            }
         }
     }
 
     private var pHBar: some View {
         generalBar(
-            topTicks: (0...14).map { "\($0)" },
-            formattedLabel: { "p\($0.rawValue)" },
-            indicatorValue: \.p,
-            formattedValue: { TextLine($0.str(decimals: 1)) },
-            minTickValue: 0,
-            maxTickValue: 14
+            formatTickValue: { "\($0)" },
+            formatLabel: { "p\($0.rawValue)" },
+            indicatorLabelValue: \.p,
+            formatValue: { TextLine($0.str(decimals: 1)) }
         )
     }
 
+    private var concentrationBar: some View {
+        generalBar(
+            formatTickValue: { "10^-\($0)^"},
+            formatLabel: { "[\($0.rawValue)]" },
+            indicatorLabelValue: \.concentration,
+            formatValue: TextLineUtil.scientific
+        )
+    }
+
+    /// Returns a bar to use for both pH and concentration.
+    ///
+    /// - Parameters:
+    ///     - formatTickValue: Format the tick values, which run from 0 to 14
+    ///     - formatLabel: Format axis label for the given ion
+    ///     - indicatorLabelValue: The value to use for the indicator label
+    ///     - formatValue: Formats the value for use on the indicator label
     private func generalBar(
-        topTicks: [TextLine],
-        formattedLabel: (PrimaryIon) -> TextLine,
-        indicatorValue: KeyPath<PrimaryIonConcentration, CGFloat>,
-        formattedValue: (CGFloat) -> TextLine,
-        minTickValue: CGFloat,
-        maxTickValue: CGFloat
+        formatTickValue: (Int) -> TextLine,
+        formatLabel: (PrimaryIon) -> TextLine,
+        indicatorLabelValue: KeyPath<PrimaryIonConcentration, CGFloat>,
+        formatValue: (CGFloat) -> TextLine
     ) -> some View {
 
         let h = model.components.concentration(ofIon: .hydrogen)
         let oh = model.components.concentration(ofIon: .hydroxide)
 
-        let hValue = h[keyPath: indicatorValue]
-        let ohValue = oh[keyPath: indicatorValue]
+        let hValue = h[keyPath: indicatorLabelValue]
+        let ohValue = oh[keyPath: indicatorLabelValue]
 
         func indicatorLabel(_ ion: PrimaryIon, _ value: TextLine) -> TextLine {
-            formattedLabel(ion) + ": " + value
+            formatLabel(ion) + ": " + value
         }
 
-        let hLabel = indicatorLabel(.hydrogen, formattedValue(hValue))
-        let ohLabel = indicatorLabel(.hydroxide, formattedValue(ohValue))
+        let hLabel = indicatorLabel(.hydrogen, formatValue(hValue))
+        let ohLabel = indicatorLabel(.hydroxide, formatValue(ohValue))
 
         return PHScale(
-            topTicks: topTicks,
+            topTicks: (0...14).map(formatTickValue),
             topLabel: ColoredText(
-                text: formattedLabel(.hydrogen),
+                text: formatLabel(.hydrogen),
                 color: RGB.hydrogenDarker.color
             ),
             bottomLabel: ColoredText(
-                text: formattedLabel(.hydroxide),
+                text: formatLabel(.hydroxide),
                 color: RGB.hydroxideDarker.color
             ),
             leftLabel: ColoredText(
@@ -120,7 +136,7 @@ private struct PHOrConcentrationBar: View {
                 color: RGB.hydroxideDarker.color
             ),
             topIndicatorValue: .init(
-                value: hValue,
+                value: h.p,
                 text: ColoredText(
                     text: hLabel,
                     color: .white
@@ -128,15 +144,15 @@ private struct PHOrConcentrationBar: View {
                 background: RGB.hydrogen.color
             ),
             bottomIndicatorValue: .init(
-                value: ohValue,
+                value: oh.p,
                 text: ColoredText(
                     text: ohLabel,
                     color: .white
                 ),
                 background: RGB.hydroxide.color
             ),
-            topMinTickValue: minTickValue,
-            topMaxTickValue: maxTickValue
+            topLeftTickValue: 0,
+            topRightTickValue: 14
         )
         .frame(size: layout.phScaleSize)
     }
