@@ -26,9 +26,12 @@ struct IntroScreenWithSettings: View {
     let layout: IntroScreenLayout
 
     var body: some View {
-        IntroBeaker(model: model, layout: layout)
+        HStack(spacing: 0) {
+            IntroBeaker(model: model, layout: layout)
+            Spacer()
+            IntroRightStack(model: model, layout: layout)
+        }
     }
-
 }
 
 struct IntroScreenLayout {
