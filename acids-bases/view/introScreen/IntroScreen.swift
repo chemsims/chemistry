@@ -52,11 +52,24 @@ extension IntroScreenLayout {
 
 // MARK: PH bar layout
 extension IntroScreenLayout {
+
     var phScaleSize: CGSize {
         CGSize(
             width: 0.95 * common.rightColumnWidth,
             height: 0.5 * (common.height - common.beakyBoxHeight)
         )
+    }
+
+    var phBarBottomPadding: CGFloat {
+        0.05 * phScaleSize.height
+    }
+
+    var phBarTopPadding: CGFloat {
+        phBarBottomPadding
+    }
+
+    var phAreaTotalHeight: CGFloat {
+        phScaleSize.height + phBarTopPadding + phBarBottomPadding + phToggleHeight
     }
 
     var phToggleFontSize: CGFloat {
@@ -80,7 +93,7 @@ extension IntroScreenLayout {
     var equationSize: CGSize {
         return CGSize(
             width: 0.9 * common.rightColumnWidth,
-            height: 0.9 * (common.height - common.bottomRightTotalHeight - phScaleSize.height - phToggleHeight)
+            height: 0.9 * (common.height - common.bottomRightTotalHeight - phAreaTotalHeight)
         )
     }
 }

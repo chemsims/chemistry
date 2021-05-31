@@ -32,6 +32,7 @@ struct IntroRightStack: View {
 
     private var bottomRow: some View {
         HStack(spacing: 0) {
+            Spacer()
             barChart
             Spacer()
             beaky
@@ -176,6 +177,8 @@ private struct PHOrConcentrationBar: View {
             topRightTickValue: 14
         )
         .frame(size: layout.phScaleSize)
+        .padding(.bottom, layout.phBarBottomPadding)
+        .padding(.top, layout.phBarTopPadding)
     }
 }
 
