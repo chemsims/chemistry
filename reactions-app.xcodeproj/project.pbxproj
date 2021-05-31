@@ -108,6 +108,8 @@
 		5738ADAF25AF2907002D4EB7 /* ReactionModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADAE25AF2907002D4EB7 /* ReactionModelExtensions.swift */; };
 		5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0AC2664B2CD0007B09A /* ShakeContainerExtension.swift */; };
 		5739D0AF2664B65A0007B09A /* IntroRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0AE2664B65A0007B09A /* IntroRightStack.swift */; };
+		5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */; };
+		5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0B52664B83C0007B09A /* IntroStatements.swift */; };
 		573E1B2B263AACE000379A1D /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2A263AACE000379A1D /* StringUtil.swift */; };
 		573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2C263AADBD00379A1D /* StringUtilTests.swift */; };
 		573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2E263AB81D00379A1D /* ViewExtensions.swift */; };
@@ -707,6 +709,8 @@
 		5738ADAE25AF2907002D4EB7 /* ReactionModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionModelExtensions.swift; sourceTree = "<group>"; };
 		5739D0AC2664B2CD0007B09A /* ShakeContainerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeContainerExtension.swift; sourceTree = "<group>"; };
 		5739D0AE2664B65A0007B09A /* IntroRightStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroRightStack.swift; sourceTree = "<group>"; };
+		5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroNavigationModel.swift; sourceTree = "<group>"; };
+		5739D0B52664B83C0007B09A /* IntroStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroStatements.swift; sourceTree = "<group>"; };
 		573E1B2A263AACE000379A1D /* StringUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		573E1B2C263AADBD00379A1D /* StringUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtilTests.swift; sourceTree = "<group>"; };
 		573E1B2E263AB81D00379A1D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -1249,6 +1253,8 @@
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5739D0B42664B8270007B09A /* statements */,
+				5739D0B02664B7740007B09A /* navigation */,
 				57E7CD282664AD0A00661D74 /* substance */,
 				57FA3AC0266104B40073A29B /* screenLayout */,
 				57FA3AB42660EFAA0073A29B /* styling */,
@@ -1566,6 +1572,22 @@
 				5739D0AC2664B2CD0007B09A /* ShakeContainerExtension.swift */,
 			);
 			path = "shake-container";
+			sourceTree = "<group>";
+		};
+		5739D0B02664B7740007B09A /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */,
+			);
+			path = navigation;
+			sourceTree = "<group>";
+		};
+		5739D0B42664B8270007B09A /* statements */ = {
+			isa = PBXGroup;
+			children = (
+				5739D0B52664B83C0007B09A /* IntroStatements.swift */,
+			);
+			path = statements;
 			sourceTree = "<group>";
 		};
 		573F169B2584C028001CE039 /* quiz */ = {
@@ -3253,7 +3275,9 @@
 			files = (
 				57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */,
 				57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */,
+				5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */,
 				579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */,
+				5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */,
 				57FA3AB12660D4450073A29B /* PHScale.swift in Sources */,
 				57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */,
 				57D60158265ECA7B00017E25 /* PHScaleColors.swift in Sources */,

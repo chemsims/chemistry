@@ -27,9 +27,9 @@ struct IntroRightStack: View {
 
     private var beaky: some View {
         BeakyBox(
-            statement: [],
-            next: { },
-            back: { },
+            statement: model.statement,
+            next: model.next,
+            back: model.back,
             nextIsDisabled: false,
             settings: layout.common.beakySettings
         )
