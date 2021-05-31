@@ -97,6 +97,10 @@ private struct IntroBeakerContainers: View {
         let isActive = shakeModel.activeMolecule == type
         let isEnabled = true
         let substance = model.selectedSubstances.value(for: type)
+
+        let label = substance?.name ?? ""
+        let color = substance?.color ?? RGB.placeholderContainer.color
+
         return ShakingContainerView(
             model: addModel,
             position: addModel.motion.position,
@@ -104,13 +108,13 @@ private struct IntroBeakerContainers: View {
             initialLocation: containerLocation(type, index),
             containerWidth: common.containerSize.width,
             containerSettings: ParticleContainerSettings(
-                labelColor: .red,
-                label: "\(substance?.name ?? "")",
+                labelColor: color,
+                label: label,
                 labelFontColor: .white,
                 strokeLineWidth: 0.4
             ),
             moleculeSize: common.moleculeSize,
-            moleculeColor: .red,
+            moleculeColor: color,
             rotation: isActive ? .degrees(135) : .zero,
             isSimulator: AcidBasesApp.isSimulator
         )
