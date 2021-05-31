@@ -9,7 +9,7 @@ import ReactionsCore
 class IntroScreenComponentsTests: XCTestCase {
 
     func testStrongAcidSubstanceAdded() {
-        var model = newModel(substance: .strongAcid(name: "", secondaryIon: .A))
+        var model = newModel(substance: .strongAcid(name: "", secondaryIon: .A, color: .blue))
 
         XCTAssertEqual(model.substanceAdded, 0)
         XCTAssertEqual(model.fractionSubstanceAdded, 0)
@@ -24,12 +24,12 @@ class IntroScreenComponentsTests: XCTestCase {
     }
 
     func testStrongAcidPrimaryIonsConcentration() {
-        let acid = AcidOrBase.strongAcid(name: "", secondaryIon: .A)
+        let acid = AcidOrBase.strongAcid(name: "", secondaryIon: .A, color: .blue)
         doTestAcidPrimaryIonConcentration(substance: acid)
     }
 
     func testStrongAcidCoords() {
-        var model = newModel(substance: .strongAcid(name: "", secondaryIon: .A))
+        var model = newModel(substance: .strongAcid(name: "", secondaryIon: .A, color: .blue))
 
         model.coords.all.forEach { coord in
             XCTAssert(coord.coords.isEmpty)
@@ -45,7 +45,8 @@ class IntroScreenComponentsTests: XCTestCase {
         let acid = AcidOrBase.weakAcid(
             name: "",
             secondaryIon: .A,
-            substanceAddedPerIon: NonZeroPositiveInt(5)!
+            substanceAddedPerIon: NonZeroPositiveInt(5)!,
+            color: .blue
         )
         doTestAcidPrimaryIonConcentration(substance: acid)
     }
@@ -54,7 +55,8 @@ class IntroScreenComponentsTests: XCTestCase {
         let acid = AcidOrBase.weakAcid(
             name: "",
             secondaryIon: .A,
-            substanceAddedPerIon: NonZeroPositiveInt(5)!
+            substanceAddedPerIon: NonZeroPositiveInt(5)!,
+            color: .blue
         )
         var model = newModel(substance: acid)
 
@@ -74,7 +76,7 @@ class IntroScreenComponentsTests: XCTestCase {
     }
 
     func testStrongBasePrimaryIonsConcentration() {
-        let base = AcidOrBase.strongBase(name: "", secondaryIon: .A)
+        let base = AcidOrBase.strongBase(name: "", secondaryIon: .A, color: .blue)
         doTestAcidPrimaryIonConcentration(substance: base)
     }
 
@@ -82,7 +84,8 @@ class IntroScreenComponentsTests: XCTestCase {
         let base = AcidOrBase.weakBase(
             name: "",
             secondaryIon: .A,
-            substanceAddedPerIon: NonZeroPositiveInt(4)!
+            substanceAddedPerIon: NonZeroPositiveInt(4)!,
+            color: .blue
         )
         doTestAcidPrimaryIonConcentration(substance: base)
     }

@@ -9,7 +9,11 @@ class IntroScreenViewModel: ObservableObject {
 
     init() {
         let initialRows = AcidAppSettings.initialRows
-        let initialSubstance = AcidOrBase.strongAcid(name: "", secondaryIon: .A)
+        let initialSubstance = AcidOrBase.strongAcid(
+            name: "",
+            secondaryIon: .A,
+            color: .blue
+        )
         self.substance = initialSubstance
         self.rows = CGFloat(initialRows)
         self.components = GeneralScreenComponents(
@@ -30,6 +34,7 @@ class IntroScreenViewModel: ObservableObject {
         }
     }
     @Published var substance: AcidOrBase
+    @Published var selectedSubstances = AcidOrBaseMap<AcidOrBase?>.constant(nil)
 
     private(set) var addMoleculesModel: MultiContainerShakeViewModel<AcidOrBaseType>!
 

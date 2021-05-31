@@ -96,6 +96,7 @@ private struct IntroBeakerContainers: View {
         let addModel = shakeModel.model(for: type)
         let isActive = shakeModel.activeMolecule == type
         let isEnabled = true
+        let substance = model.selectedSubstances.value(for: type)
         return ShakingContainerView(
             model: addModel,
             position: addModel.motion.position,
@@ -104,7 +105,7 @@ private struct IntroBeakerContainers: View {
             containerWidth: common.containerSize.width,
             containerSettings: ParticleContainerSettings(
                 labelColor: .red,
-                label: "A",
+                label: "\(substance?.name ?? "")",
                 labelFontColor: .white,
                 strokeLineWidth: 0.4
             ),

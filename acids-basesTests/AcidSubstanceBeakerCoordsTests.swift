@@ -9,7 +9,7 @@ import ReactionsCore
 class AcidSubstanceBeakerCoordsTests: XCTestCase {
 
     func testStrongAcidCoords() {
-        var model = AcidSubstanceBeakerCoords(substance: .strongAcid(name: "", secondaryIon: .A))
+        var model = AcidSubstanceBeakerCoords(substance: .strongAcid(name: "", secondaryIon: .A, color: .blue))
         var coords: SubstanceValue<[GridCoordinate]> {
             model.coords
         }
@@ -52,7 +52,8 @@ class AcidSubstanceBeakerCoordsTests: XCTestCase {
             substance: .weakAcid(
                 name: "",
                 secondaryIon: .A,
-                substanceAddedPerIon: NonZeroPositiveInt(5)!
+                substanceAddedPerIon: NonZeroPositiveInt(5)!,
+                color: .blue
             )
         )
         var coords: SubstanceValue<[GridCoordinate]> {

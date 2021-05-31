@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-import CoreGraphics
+import SwiftUI
 import ReactionsCore
 
 struct AcidOrBase: Equatable {
@@ -12,13 +12,15 @@ struct AcidOrBase: Equatable {
         substanceAddedPerIon: PositiveInt,
         primary: PrimaryIon,
         secondary: SecondaryIon,
-        concentrationAtMaxSubstance: CGFloat
+        concentrationAtMaxSubstance: CGFloat,
+        color: Color
     ) {
         self.name = name
         self.substanceAddedPerIon = substanceAddedPerIon
         self.primary = primary
         self.secondary = secondary
         self.concentrationAtMaxSubstance = concentrationAtMaxSubstance
+        self.color = color
     }
 
     /// Display name of the substance
@@ -40,31 +42,38 @@ struct AcidOrBase: Equatable {
     /// The maximum ion concentration
     let concentrationAtMaxSubstance: CGFloat
 
+    /// Color of the substance
+    let color: Color
+
     /// Returns a strong acid substance
     static func strongAcid(
         name: String,
-        secondaryIon: SecondaryIon
+        secondaryIon: SecondaryIon,
+        color: Color
     ) -> AcidOrBase {
         AcidOrBase(
             name: name,
             substanceAddedPerIon: PositiveInt(0)!,
             primary: .hydrogen,
             secondary: secondaryIon,
-            concentrationAtMaxSubstance: 0.1
+            concentrationAtMaxSubstance: 0.1,
+            color: color
         )
     }
 
     /// Returns a strong base substance
     static func strongBase(
         name: String,
-        secondaryIon: SecondaryIon
+        secondaryIon: SecondaryIon,
+        color: Color
     ) -> AcidOrBase {
         AcidOrBase(
             name: name,
             substanceAddedPerIon: PositiveInt(0)!,
             primary: .hydroxide,
             secondary: secondaryIon,
-            concentrationAtMaxSubstance: 0.1
+            concentrationAtMaxSubstance: 0.1,
+            color: color
         )
     }
 
@@ -72,14 +81,16 @@ struct AcidOrBase: Equatable {
     static func weakAcid(
         name: String,
         secondaryIon: SecondaryIon,
-        substanceAddedPerIon: NonZeroPositiveInt
+        substanceAddedPerIon: NonZeroPositiveInt,
+        color: Color
     ) -> AcidOrBase {
         AcidOrBase(
             name: name,
             substanceAddedPerIon: substanceAddedPerIon.positiveInt,
             primary: .hydrogen,
             secondary: secondaryIon,
-            concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value)
+            concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value),
+            color: color
         )
     }
 
@@ -87,14 +98,16 @@ struct AcidOrBase: Equatable {
     static func weakBase(
         name: String,
         secondaryIon: SecondaryIon,
-        substanceAddedPerIon: NonZeroPositiveInt
+        substanceAddedPerIon: NonZeroPositiveInt,
+        color: Color
     ) -> AcidOrBase {
         AcidOrBase(
             name: name,
             substanceAddedPerIon: substanceAddedPerIon.positiveInt,
             primary: .hydroxide,
             secondary: secondaryIon,
-            concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value)
+            concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value),
+            color: color
         )
     }
 }
