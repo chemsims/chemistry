@@ -5,7 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
-enum PrimaryIon: String {
+enum PrimaryIon: String, CaseIterable {
     case hydrogen = "H"
     case hydroxide = "OH"
 
@@ -42,5 +42,29 @@ enum SecondaryIon: String {
 
     var color: Color {
         rgb.color
+    }
+}
+
+typealias PrimaryIonValue<Value> = EnumMap<PrimaryIon, Value>
+extension EnumMap where Key == PrimaryIon {
+
+    init(
+        hydrogen: Value,
+        hydroxide: Value
+    ) {
+        self.init(builder: { element in
+            switch element {
+            case .hydrogen: return hydrogen
+            case .hydroxide: return hydroxide
+            }
+        })
+    }
+
+    var hydrogen: Value {
+        value(for: .hydrogen)
+    }
+
+    var hydroxide: Value {
+        value(for: .hydroxide)
     }
 }

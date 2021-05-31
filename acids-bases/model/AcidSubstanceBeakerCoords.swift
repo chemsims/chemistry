@@ -37,7 +37,7 @@ struct AcidSubstanceBeakerCoords {
         ) -> [GridCoordinate] {
             let toAdd = desiredCount - coords.count
             if toAdd < 0 {
-                return Array(coords.dropFirst(toAdd))
+                return Array(coords.dropFirst(abs(toAdd)))
             }
             return GridCoordinateList.addingRandomElementsTo(
                 grid: coords,

@@ -16,42 +16,55 @@ public struct TextLineUtil {
         return formatter
     }()
 
+    /// Returns `value` parsed into scientific representation of the form `Ax10^B`, with
+    /// a superscript `TextLineSegment` for `B`
+    ///
+    /// - Note: In the case parsing fails, `value` will be returned to 2 decimal places
     public static func scientific(
         value: CGFloat
     ) -> TextLine {
-        if let scientificValue = numberFormatter.string(for: value) {
-            return parseScientificValue(value: scientificValue)
+        guard let (firstPart, secondPart) = scientificComponents(value: value) else {
+            return TextLine(value.str(decimals: 2))
         }
-
-        return TextLine(value.str(decimals: 2))
+        return TextLine("\(firstPart)^\(secondPart)^")
     }
+
+    /// Returns components for a String representation of `value` in the form Ax10^
+    public static func scientificComponents(
+        value: CGFloat
+    ) -> (String, String)? {
+        guard let scientificValue = numberFormatter.string(for: value) else {
+            return nil
+        }
+        return parseScientificValue(value: scientificValue)
+    }
+
+
 
     private static func parseScientificValue(
         value: String
-    ) -> TextLine {
-        let defaultValue = TextLine(value)
+    ) -> (String, String)? {
         guard let xIndex = value.firstIndex(of: "x") else {
-            return defaultValue
+            return nil
         }
         let zeroIndex = value.index(xIndex, offsetBy: 2)
         guard zeroIndex < value.endIndex else {
-            return defaultValue
+            return nil
         }
 
         let xToZero = value[xIndex...zeroIndex]
         guard xToZero == "x10" else {
-            return defaultValue
+            return nil
         }
 
         let powerIndex = value.index(after: zeroIndex)
         guard powerIndex < value.endIndex else {
-            return defaultValue
+            return nil
         }
 
-        let firstPart = value[..<powerIndex]
-        let endPart = value[powerIndex...]
+        let firstPart = String(value[..<powerIndex])
+        let endPart = String(value[powerIndex...])
 
-        return TextLine("\(firstPart)^\(endPart)^")
+        return (firstPart, endPart)
     }
-
 }

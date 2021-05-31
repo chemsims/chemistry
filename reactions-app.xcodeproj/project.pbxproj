@@ -115,6 +115,8 @@
 		573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2E263AB81D00379A1D /* ViewExtensions.swift */; };
 		573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16A625852D5D001CE039 /* BeakerReactionState.swift */; };
 		574103DF2642966300E6EDCB /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F82578CE7E00EF90A1 /* Tooltip.swift */; };
+		574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574386D926654C6700B11C34 /* IntroEquationView.swift */; };
+		574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574386DB2665518100B11C34 /* ConcentrationPlaceholder.swift */; };
 		57438A3D260A26DB005E3888 /* RootNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */; };
 		57438A42260A2DC7005E3888 /* ScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23319258E8BD900128760 /* ScreenProvider.swift */; };
 		57438A48260A3004005E3888 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A47260A3004005E3888 /* Version.swift */; };
@@ -721,6 +723,8 @@
 		573F16972584B277001CE039 /* QuizOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizOption.swift; sourceTree = "<group>"; };
 		573F169C2584C035001CE039 /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
 		573F16A625852D5D001CE039 /* BeakerReactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerReactionState.swift; sourceTree = "<group>"; };
+		574386D926654C6700B11C34 /* IntroEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroEquationView.swift; sourceTree = "<group>"; };
+		574386DB2665518100B11C34 /* ConcentrationPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlaceholder.swift; sourceTree = "<group>"; };
 		57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationViewModel.swift; sourceTree = "<group>"; };
 		57438A47260A3004005E3888 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		57438A64260A4177005E3888 /* ScreenPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenPersistence.swift; sourceTree = "<group>"; };
@@ -1274,6 +1278,7 @@
 		570ABA31265A7608008EC8CC /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57B92EC026654C0600023E7C /* equation */,
 				5739D0AB2664B2C00007B09A /* shake-container */,
 				57FA3ABD2661049C0073A29B /* introScreen */,
 				57D60153265ECA2800017E25 /* pHScale */,
@@ -2411,6 +2416,15 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
+		57B92EC026654C0600023E7C /* equation */ = {
+			isa = PBXGroup;
+			children = (
+				574386D926654C6700B11C34 /* IntroEquationView.swift */,
+				574386DB2665518100B11C34 /* ConcentrationPlaceholder.swift */,
+			);
+			path = equation;
+			sourceTree = "<group>";
+		};
 		57BB21E7260BA60B00250FB3 /* reactions */ = {
 			isa = PBXGroup;
 			children = (
@@ -3290,11 +3304,13 @@
 				570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
 				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
+				574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */,
 				5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */,
 				57FA3AC2266104D00073A29B /* AcidBasesScreenLayout.swift in Sources */,
 				57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */,
 				5739D0AF2664B65A0007B09A /* IntroRightStack.swift in Sources */,
 				571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */,
+				574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */,
 				57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */,
 				57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */,
 				5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */,
