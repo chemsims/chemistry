@@ -112,15 +112,25 @@ private class ChooseSubstance: IntroScreenState {
 
     override func apply(on model: IntroScreenViewModel) {
         let substances = AcidOrBase.substances(forType: type)
+        model.addNewComponents(type: type)
+        model.setSubstance(substances.first, type: type)
+        doApply(on: model)
+    }
+
+    override func reapply(on model: IntroScreenViewModel) {
+        doApply(on: model)
+    }
+
+    private func doApply(on model: IntroScreenViewModel) {
         model.statement = statement
         model.availableSubstances = AcidOrBase.substances(forType: type)
-        model.setSubstance(substances.first, type: type)
         model.inputState = .chooseSubstance(type: type)
     }
 
     override func unapply(on model: IntroScreenViewModel) {
         model.inputState = .none
         model.setSubstance(nil, type: type)
+        model.popLastComponent()
     }
 }
 
@@ -196,11 +206,11 @@ private class PostAddSubstance: SetStatement {
 }
 
 extension IntroScreenViewModel {
-    func substance(forType type: AcidOrBaseType) -> AcidOrBase {
-        selectedSubstances.value(for: type) ?? AcidOrBase.strongAcid(
-            secondaryIon: .A,
-            color: .black
-        )
+    fileprivate func substance(forType type: AcidOrBaseType) -> AcidOrBase {
+        if let substance = selectedSubstances.value(for: type) {
+            return substance
+        }
+        return availableSubstances.first!
     }
 }
 

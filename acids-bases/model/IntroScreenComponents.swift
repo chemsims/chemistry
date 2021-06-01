@@ -20,7 +20,11 @@ class IntroScreenComponents: ObservableObject {
         self.underlyingCoords = AcidSubstanceBeakerCoords(substance: substance)
     }
 
-    let substance: AcidOrBase
+    var substance: AcidOrBase {
+        didSet {
+            underlyingCoords.substance = substance
+        }
+    }
     let cols: Int
     var rows: Int
 
@@ -123,6 +127,42 @@ class IntroScreenComponents: ObservableObject {
                 accessibilityLabel: ""
             )
         )
+    }
+}
+
+// MARK: Restoring state
+extension IntroScreenComponents {
+
+    var state: State {
+        State(
+            rows: rows,
+            substance: substance,
+            substanceAdded: substanceAdded,
+            coords: underlyingCoords,
+            fractionSubstanceAdded: fractionSubstanceAdded
+        )
+    }
+
+    func restore(from state: State) {
+        self.rows = state.rows
+        self.substance = state.substance
+        self.substanceAdded = state.substanceAdded
+        self.underlyingCoords = state.coords
+        self.fractionSubstanceAdded = state.fractionSubstanceAdded
+    }
+
+    struct State {
+        let rows: Int
+        let substance: AcidOrBase
+        let substanceAdded: Int
+        let coords: AcidSubstanceBeakerCoords
+        let fractionSubstanceAdded: CGFloat
+    }
+
+    func reset() {
+        self.substanceAdded = 0
+        self.fractionSubstanceAdded = 0
+        self.underlyingCoords.reset()
     }
 }
 

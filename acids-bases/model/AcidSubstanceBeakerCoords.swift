@@ -6,7 +6,7 @@ import ReactionsCore
 
 struct AcidSubstanceBeakerCoords {
 
-    let substance: AcidOrBase
+    var substance: AcidOrBase
 
     init(substance: AcidOrBase) {
         self.substance = substance
@@ -72,4 +72,9 @@ struct AcidSubstanceBeakerCoords {
         )
     }
 
+    mutating func reset() {
+        substanceCoords.removeAll()
+        primaryIonCoords.removeAll()
+        secondaryIonCoords.removeAll()
+    }
 }

@@ -13,7 +13,6 @@ class IntroScreenViewModel: ObservableObject {
             secondaryIon: .A,
             color: .blue
         )
-        self.substance = initialSubstance
         self.rows = CGFloat(initialRows)
         self.components = IntroScreenComponents(
             substance: initialSubstance,
@@ -35,13 +34,11 @@ class IntroScreenViewModel: ObservableObject {
             components.rows = GridCoordinateList.availableRows(for: rows)
         }
     }
-    @Published var substance: AcidOrBase
     @Published var selectedSubstances = AcidOrBaseMap<AcidOrBase?>.constant(nil)
     @Published var availableSubstances = AcidOrBase.strongAcids
     @Published var inputState = InputState.none
 
     private(set) var addMoleculesModel: MultiContainerShakeViewModel<AcidOrBaseType>!
-
 
     func increment() {
         components.increment(count: 1)
@@ -59,6 +56,10 @@ class IntroScreenViewModel: ObservableObject {
             return false
         }
     }
+
+    private let cols = MoleculeGridSettings.cols
+
+    private var componentStates = [IntroScreenComponents.State]()
 }
 
 // MARK: Navigation
@@ -75,8 +76,35 @@ extension IntroScreenViewModel {
 // MARK: Substance selection
 extension IntroScreenViewModel {
 
+    func addNewComponents(type: AcidOrBaseType) {
+        let substance = selectedSubstances.value(for: type) ?? AcidOrBase.substances(forType: type).first!
+        let currentState = components.state
+
+        componentStates.append(currentState)
+
+        withAnimation(.easeOut(duration: 0.5)) {
+            components.substance = substance
+            components.reset()
+            rows = CGFloat(AcidAppSettings.initialRows)
+        }
+    }
+
+    func popLastComponent() {
+        guard !componentStates.isEmpty else {
+            return
+        }
+        let lastState = componentStates.removeLast()
+        withAnimation(.easeOut(duration: 0.5)) {
+            components.restore(from: lastState)
+            rows = CGFloat(components.rows)
+        }
+    }
+
     func setSubstance(_ substance: AcidOrBase?, type: AcidOrBaseType) {
         self.selectedSubstances = selectedSubstances.updating(with: substance, for: type)
+        if let substance = substance {
+            self.components.substance = substance
+        }
     }
 
     var chooseSubstanceBinding: Binding<AcidOrBase> {
