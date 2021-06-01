@@ -86,7 +86,11 @@ private struct EmptyParticleContainer: View {
                 .foregroundColor(settings.labelColor)
 
             Text(settings.label)
-                .fixedSize()
+                .frame(
+                    width: geometry.labelHeight,
+                    height: geometry.width
+                )
+                .lineLimit(1)
                 .rotationEffect(.degrees(-90))
                 .foregroundColor(settings.labelFontColor)
         }
@@ -179,11 +183,12 @@ struct ParticleContainer_Previews: PreviewProvider {
         ParticleContainer(
             settings: ParticleContainerSettings(
                 labelColor: .purple,
-                label: "AB",
+                label: "ABCDEF",
                 labelFontColor: .white
             )
         )
         .padding()
         .font(.system(size: 300))
+        .minimumScaleFactor(0.4)
     }
 }

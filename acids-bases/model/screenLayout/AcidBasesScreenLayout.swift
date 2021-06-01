@@ -130,7 +130,7 @@ extension AcidBasesScreenLayout {
     }
 
     var containerFontSize: CGFloat {
-        0.8 * containerSize.width
+        0.45 * containerSize.width
     }
 
     var containerShakeHalfYRange: CGFloat {

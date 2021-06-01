@@ -39,7 +39,7 @@ struct AcidAppShakingContainerView: View {
             isSimulator: AcidBasesApp.isSimulator
         )
         .font(.system(size: layout.containerFontSize))
-        .minimumScaleFactor(0.7)
+        .minimumScaleFactor(0.1)
         .zIndex(isActive ? 1 : 0)
         .disabled(disabled)
         .colorMultiply(disabled ? Styling.inactiveContainerMultiply : .white)
