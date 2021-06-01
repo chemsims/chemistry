@@ -125,6 +125,9 @@ private class ChooseSubstance: IntroScreenState {
         model.statement = statement
         model.availableSubstances = AcidOrBase.substances(forType: type)
         model.inputState = .chooseSubstance(type: type)
+        withAnimation(.easeOut(duration: 0.35)) {
+            model.addMoleculesModel.activeMolecule = nil
+        }
     }
 
     override func unapply(on model: IntroScreenViewModel) {
@@ -191,6 +194,7 @@ private class AddSubstance: IntroScreenState {
     override func unapply(on model: IntroScreenViewModel) {
         withAnimation(.easeOut(duration: 0.35)) {
             model.addMoleculesModel.activeMolecule = nil
+            model.components.reset()
         }
     }
 }

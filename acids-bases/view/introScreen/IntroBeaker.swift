@@ -90,6 +90,7 @@ private struct IntroBeakerContainers: View {
                 }
         )
         .animation(.easeOut(duration: 0.25))
+        .zIndex(1)
     }
 
     private func container(

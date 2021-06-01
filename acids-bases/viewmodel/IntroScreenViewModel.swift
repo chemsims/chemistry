@@ -20,8 +20,8 @@ class IntroScreenViewModel: ObservableObject {
             rows: initialRows
         )
         self.addMoleculesModel = MultiContainerShakeViewModel(
-            canAddMolecule: { _ in true },
-            addMolecules: { _, _ in self.components.increment(count: 1) }
+            canAddMolecule: { _ in self.canAddMolecule },
+            addMolecules: { _, _ in self.increment(count: 1) }
         )
         self.navigation = IntroNavigationModel.model(self)
     }
@@ -40,8 +40,9 @@ class IntroScreenViewModel: ObservableObject {
 
     private(set) var addMoleculesModel: MultiContainerShakeViewModel<AcidOrBaseType>!
 
-    func increment() {
-        components.increment(count: 1)
+    private func increment(count: Int) {
+        components.increment(count: count)
+        handlePostIncrementStatement()
     }
 
     enum InputState: Equatable {
@@ -55,21 +56,57 @@ class IntroScreenViewModel: ObservableObject {
             }
             return false
         }
+
+        var isAddingSubstance: Bool {
+            if case .addSubstance = self {
+                return true
+            }
+            return false
+        }
     }
 
     private let cols = MoleculeGridSettings.cols
 
     private var componentStates = [IntroScreenComponents.State]()
+
+    private var canAddMolecule: Bool {
+        components.fractionSubstanceAdded < 1
+    }
 }
 
 // MARK: Navigation
 extension IntroScreenViewModel {
     func next() {
+        guard canGoNext else {
+            return
+        }
         navigation?.next()
     }
 
     func back() {
         navigation?.back()
+    }
+
+    private func handlePostIncrementStatement() {
+        if case let .addSubstance(type) = inputState,
+           components.fractionSubstanceAdded >= 0.5 {
+            let substance = getSubstance(forType: type)
+            let statement: [TextLine]
+            switch type {
+            case .strongAcid: statement = IntroStatements.midAddingStrongAcid(substance: substance)
+            case .strongBase: statement = IntroStatements.midAddingStrongBase(substance: substance)
+            case .weakAcid: statement = IntroStatements.midAddingWeakAcid(substance: substance)
+            case .weakBase: statement = IntroStatements.midAddingWeakBase(substance: substance)
+            }
+            self.statement = statement
+        }
+    }
+
+    var canGoNext: Bool {
+        if inputState.isAddingSubstance {
+            return components.fractionSubstanceAdded >= 0.5
+        }
+        return true
     }
 }
 
@@ -77,13 +114,12 @@ extension IntroScreenViewModel {
 extension IntroScreenViewModel {
 
     func addNewComponents(type: AcidOrBaseType) {
-        let substance = selectedSubstances.value(for: type) ?? AcidOrBase.substances(forType: type).first!
         let currentState = components.state
 
         componentStates.append(currentState)
 
         withAnimation(.easeOut(duration: 0.5)) {
-            components.substance = substance
+            components.substance = getSubstance(forType: type)
             components.reset()
             rows = CGFloat(AcidAppSettings.initialRows)
         }
@@ -105,6 +141,10 @@ extension IntroScreenViewModel {
         if let substance = substance {
             self.components.substance = substance
         }
+    }
+
+    private func getSubstance(forType type: AcidOrBaseType) -> AcidOrBase {
+        selectedSubstances.value(for: type) ?? AcidOrBase.substances(forType: type).first!
     }
 
     var chooseSubstanceBinding: Binding<AcidOrBase> {
