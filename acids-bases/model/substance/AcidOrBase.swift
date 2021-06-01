@@ -26,6 +26,9 @@ struct AcidOrBase: Equatable, Identifiable {
     }
 
     var symbol: String {
+        if type == .weakBase {
+            return "\(secondary.rawValue)"
+        }
         if primary == .hydrogen {
             return "\(primary.rawValue)\(secondary.rawValue)"
         }
