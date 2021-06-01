@@ -114,21 +114,21 @@ struct AcidOrBase: Equatable, Identifiable {
 extension AcidOrBase {
 
     static func substances(forType type: AcidOrBaseType) -> [AcidOrBase] {
-        return strongAcids
+        switch type {
+        case .strongAcid: return strongAcids
+        default: return strongBases
+        }
     }
 
     static let strongAcids = [
-        AcidOrBase.strongAcid(
-            secondaryIon: .A,
-            color: .blue
-        ),
-        AcidOrBase.strongAcid(
-            secondaryIon: .Cl,
-            color: .red
-        ),
-        AcidOrBase.strongAcid(
-            secondaryIon: .Br,
-            color: .purple
-        )
+        AcidOrBase.strongAcid(secondaryIon: .A, color: .blue),
+        AcidOrBase.strongAcid(secondaryIon: .Cl, color: .red),
+        AcidOrBase.strongAcid(secondaryIon: .Br, color: .purple)
+    ]
+
+    static let strongBases = [
+        AcidOrBase.strongBase(secondaryIon: .K, color: .orange),
+        AcidOrBase.strongBase(secondaryIon: .Na, color: .green),
+        AcidOrBase.strongBase(secondaryIon: .Ba, color: .pink)
     ]
 }

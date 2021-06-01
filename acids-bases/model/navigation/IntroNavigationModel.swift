@@ -2,6 +2,7 @@
 // Reactions App
 //
 
+import SwiftUI
 import ReactionsCore
 
 private let statements = IntroStatements.self
@@ -38,9 +39,8 @@ struct IntroNavigationModel {
         SetWaterLevel(type: .strongBase),
         AddSubstance(type: .strongBase),
         PostAddSubstance(statements.showPhVsMolesGraph),
-        AddSubstance(type: .weakAcid),
-        PostAddSubstance(statements.explainWeakAcid, type: .weakAcid),
-        SetStatement(statements.explainHEquivalence),
+        ChooseSubstance(statements.chooseWeakAcid, .weakAcid),
+        PostChooseSubstance(statements.explainHEquivalence),
         SetStatement(statements.explainDoubleArrow, type: .weakAcid),
         SetStatement(statements.explainEquilibrium),
         SetWaterLevel(type: .weakAcid),
@@ -177,12 +177,21 @@ private class AddSubstance: IntroScreenState {
         model.statement = statements.addSubstance(type)
         model.inputState = .addSubstance(type: type)
     }
+
+    override func unapply(on model: IntroScreenViewModel) {
+        withAnimation(.easeOut(duration: 0.35)) {
+            model.addMoleculesModel.activeMolecule = nil
+        }
+    }
 }
 
 private class PostAddSubstance: SetStatement {
     override func apply(on model: IntroScreenViewModel) {
         super.apply(on: model)
         model.inputState = .none
+        withAnimation(.easeOut(duration: 0.35)) {
+            model.addMoleculesModel.activeMolecule = nil
+        }
     }
 }
 
