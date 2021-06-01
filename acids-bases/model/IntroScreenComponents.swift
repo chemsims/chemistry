@@ -97,10 +97,7 @@ class IntroScreenComponents: ObservableObject {
 
     var barChart: SubstanceValue<BarChartData> {
         let addedIsAboveZero = substance.substanceAddedPerIon.value > 0
-        let finalIonFraction = addedIsAboveZero ? 1 / CGFloat(substance.substanceAddedPerIon.value) : 1
         let finalSubstanceFraction: CGFloat = addedIsAboveZero ? 1 : 0
-
-        let ionEquation = LinearEquation(x1: 0, y1: 0, x2: 1, y2: finalIonFraction).within(min: 0, max: 1)
 
         // TODO - accessibility labels
         return SubstanceValue(
@@ -116,24 +113,64 @@ class IntroScreenComponents: ObservableObject {
             ),
             primaryIonValue: BarChartData(
                 label: substance.primary.rawValue,
-                equation: ionEquation,
+                equation: ionFraction,
                 color: substance.primary.color,
                 accessibilityLabel: ""
             ),
             secondaryIonValue: BarChartData(
                 label: substance.secondary.rawValue,
-                equation: ionEquation,
+                equation: ionFraction,
                 color: substance.secondary.color,
                 accessibilityLabel: ""
             )
         )
     }
 
-    var phLine: LinearEquation {
-        let isAcid = substance.type.isAcid
-        return LinearEquation(m: isAcid ? -1 : 1, x1: 0, y1: isAcid ? 1 : 0)
+    private var ionFraction: Equation {
+        let addedIsAboveZero = substance.substanceAddedPerIon.value > 0
+        let finalIonFraction = addedIsAboveZero ? 1 / CGFloat(substance.substanceAddedPerIon.value) : 1
+        return LinearEquation(x1: 0, y1: 0, x2: 1, y2: finalIonFraction).within(min: 0, max: 1)
+    }
+
+    private var hConcentration: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: 1e-7,
+            x2: 1,
+            y2: substance.type.isAcid ? 1e-1 : 1e-14
+        )
+    }
+
+    var phLine: Equation {
+        if substance.primary == .hydrogen {
+            return PrimaryPhEquation(substance: substance)
+        }
+        return ComplementPhEquation(substance: substance)
     }
 }
+
+private struct PrimaryPhEquation: Equation {
+    let substance: AcidOrBase
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let p = PrimaryIonConcentration.varyingPWithSubstance(
+            fractionSubstanceAdded: x,
+            finalConcentration: substance.concentrationAtMaxSubstance
+        ).p
+        assert(!p.isNaN)
+        return p
+    }
+}
+
+private struct ComplementPhEquation: Equation {
+    let substance: AcidOrBase
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let otherP = PrimaryPhEquation(substance: substance).getY(at: x)
+        return 14 - otherP
+    }
+}
+
 
 // MARK: Restoring state
 extension IntroScreenComponents {
