@@ -113,6 +113,10 @@ struct AcidOrBase: Equatable, Identifiable {
 // MARK: Default substances
 extension AcidOrBase {
 
+    static func substances(forType type: AcidOrBaseType) -> [AcidOrBase] {
+        return strongAcids
+    }
+
     static let strongAcids = [
         AcidOrBase.strongAcid(
             secondaryIon: .A,

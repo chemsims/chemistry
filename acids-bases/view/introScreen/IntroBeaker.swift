@@ -44,7 +44,7 @@ struct IntroBeaker: View {
                     sliderSettings: layout.common.sliderSettings,
                     sliderHeight: layout.common.sliderHeight
                 ),
-                canSetLevel: true,
+                canSetLevel: model.inputState == .setWaterLevel,
                 beakerColorMultiply: .white,
                 sliderColorMultiply: .white,
                 beakerModifier: AddMoleculesAccessibilityModifier()
@@ -102,7 +102,8 @@ private struct IntroBeakerContainers: View {
             onTap: { didTapContainer(type, index) },
             initialLocation: containerLocation(type, index),
             type: type,
-            substance: model.selectedSubstances.value(for: type)
+            substance: model.selectedSubstances.value(for: type),
+            disabled: model.inputState != .addSubstance(type: type)
         )
         .mask(
             VStack(spacing: 0) {

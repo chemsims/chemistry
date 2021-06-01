@@ -24,7 +24,7 @@ struct IntroNavigationModel {
         SetStatement(statements.explainBronstedLowry),
         SetStatement(statements.explainLewis),
         SetStatement(statements.explainSimpleDefinition),
-        SetStatement(statements.chooseStrongAcid)
+        ChooseSubstance(statements.chooseStrongAcid, .strongAcid)
     ]
 
 }
@@ -62,5 +62,28 @@ private class SetStatement: IntroScreenState {
 
     override func apply(on model: IntroScreenViewModel) {
         model.statement = statement
+    }
+}
+
+private class ChooseSubstance: IntroScreenState {
+
+    init(_ statement: [TextLine], _ type: AcidOrBaseType) {
+        self.statement = statement
+        self.type = type
+    }
+
+    let statement: [TextLine]
+    let type: AcidOrBaseType
+
+    override func apply(on model: IntroScreenViewModel) {
+        let substances = AcidOrBase.substances(forType: type)
+        model.availableSubstances = AcidOrBase.substances(forType: type)
+        model.setSubstance(substances.first, type: type)
+        model.inputState = .chooseSubstance(type: type)
+    }
+
+    override func unapply(on model: IntroScreenViewModel) {
+        model.inputState = .none
+        model.setSubstance(nil, type: type)
     }
 }

@@ -63,6 +63,7 @@ public struct ShakingContainerView: View {
 
     private var container: some View {
         ParticleContainer(settings: containerSettings)
+            .animation(nil)
             .rotationEffect(rotation)
             .frame(width: containerWidth)
             .position(initialLocation)

@@ -47,9 +47,10 @@ class IntroScreenViewModel: ObservableObject {
         components.increment(count: 1)
     }
 
-    enum InputState {
+    enum InputState: Equatable {
         case chooseSubstance(type: AcidOrBaseType)
-        case none, setWaterLevel, addSubstance
+        case addSubstance(type: AcidOrBaseType)
+        case none, setWaterLevel
 
         var isChoosingSubstance: Bool {
             if case .chooseSubstance = self {
@@ -73,8 +74,12 @@ extension IntroScreenViewModel {
 
 // MARK: Substance selection
 extension IntroScreenViewModel {
-    var chooseSubstanceBinding: Binding<AcidOrBase> {
 
+    func setSubstance(_ substance: AcidOrBase?, type: AcidOrBaseType) {
+        self.selectedSubstances = selectedSubstances.updating(with: substance, for: type)
+    }
+
+    var chooseSubstanceBinding: Binding<AcidOrBase> {
         let defaultSubstance = availableSubstances.first!
         if case let .chooseSubstance(type) = inputState {
             return Binding(
@@ -82,7 +87,7 @@ extension IntroScreenViewModel {
                     selectedSubstances.value(for: type) ?? defaultSubstance
                 },
                 set: { [self] in
-                    selectedSubstances = selectedSubstances.updating(with: $0, for: type)
+                    setSubstance($0, type: type)
                 }
             )
         }

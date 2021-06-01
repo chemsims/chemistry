@@ -13,6 +13,7 @@ struct AcidAppShakingContainerView: View {
     let initialLocation: CGPoint
     let type: AcidOrBaseType
     let substance: AcidOrBase?
+    let disabled: Bool
 
     var body: some View {
         let addModel = models.model(for: type)
@@ -40,6 +41,8 @@ struct AcidAppShakingContainerView: View {
         .font(.system(size: layout.containerFontSize))
         .minimumScaleFactor(0.7)
         .zIndex(isActive ? 1 : 0)
+        .disabled(disabled)
+        .colorMultiply(disabled ? Styling.inactiveContainerMultiply : .white)
     }
 
 }
