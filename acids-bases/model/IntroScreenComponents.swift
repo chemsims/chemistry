@@ -154,10 +154,9 @@ private struct PrimaryPhEquation: Equation {
 
     func getY(at x: CGFloat) -> CGFloat {
         let p = PrimaryIonConcentration.varyingPWithSubstance(
-            fractionSubstanceAdded: x,
+            fractionSubstanceAdded: x.within(min: 0, max: 1),
             finalConcentration: substance.concentrationAtMaxSubstance
-        ).p
-        assert(!p.isNaN)
+        ).p.within(min: 0, max: 14)
         return p
     }
 }

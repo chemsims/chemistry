@@ -132,7 +132,10 @@ public struct TimeChartDataLineView: View {
 
     public var body: some View {
         ZStack {
-            dataLine(time: finalTime + offset, color: filledBarColor)
+            if data.showFilledLine {
+                dataLine(time: finalTime + offset, color: filledBarColor)
+            }
+
             dataLine(time: currentTime, color: data.headColor)
             if highlightLhs {
                 highlightLine(startTime: initialTime, endTime: (initialTime + finalTime) / 2)

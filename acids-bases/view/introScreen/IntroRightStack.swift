@@ -157,12 +157,13 @@ private struct BarChartOrPhChart: View {
                     equation: components.phLine,
                     headColor: components.substance.type.isAcid ?  RGB.hydrogen.color : RGB.hydroxide.color,
                     haloColor: nil,
-                    headRadius: layout.common.chartHeadRadius
+                    headRadius: layout.common.chartHeadRadius,
+                    showFilledLine: false
                 )
             ],
             initialTime: 0,
             currentTime: .constant(components.fractionSubstanceAdded),
-            finalTime: components.fractionSubstanceAdded,
+            finalTime: 1,
             canSetCurrentTime: false,
             settings: layout.common.phChartSettings,
             axisSettings: layout.common.phAxis
