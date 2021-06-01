@@ -116,7 +116,9 @@ extension AcidOrBase {
     static func substances(forType type: AcidOrBaseType) -> [AcidOrBase] {
         switch type {
         case .strongAcid: return strongAcids
-        default: return strongBases
+        case .strongBase: return strongBases
+        case .weakAcid: return weakAcids
+        case .weakBase: return weakBases
         }
     }
 
@@ -130,5 +132,17 @@ extension AcidOrBase {
         AcidOrBase.strongBase(secondaryIon: .K, color: .orange),
         AcidOrBase.strongBase(secondaryIon: .Na, color: .green),
         AcidOrBase.strongBase(secondaryIon: .Ba, color: .pink)
+    ]
+
+    static let weakAcids = [
+        AcidOrBase.weakAcid(secondaryIon: .Ba, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .black),
+        AcidOrBase.weakAcid(secondaryIon: .Na, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .gray),
+        AcidOrBase.weakAcid(secondaryIon: .K, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .black),
+    ]
+
+    static let weakBases = [
+        AcidOrBase.weakBase(secondaryIon: .A, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .orange),
+        AcidOrBase.weakBase(secondaryIon: .Br, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .orange),
+        AcidOrBase.weakBase(secondaryIon: .Cl, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .orange),
     ]
 }
