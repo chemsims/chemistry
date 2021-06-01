@@ -21,7 +21,7 @@ class IntroScreenViewModel: ObservableObject {
         )
         self.addMoleculesModel = MultiContainerShakeViewModel(
             canAddMolecule: { _ in self.canAddMolecule },
-            addMolecules: { _, _ in self.increment(count: 1) }
+            addMolecules: self.increment
         )
         self.navigation = IntroNavigationModel.model(self)
     }
@@ -41,7 +41,11 @@ class IntroScreenViewModel: ObservableObject {
 
     private(set) var addMoleculesModel: MultiContainerShakeViewModel<AcidOrBaseType>!
 
-    private func increment(count: Int) {
+    private func increment(type: AcidOrBaseType, count: Int) {
+        guard components.substance.type == type,
+              inputState == .addSubstance(type: type) else {
+            return
+        }
         components.increment(count: count)
         handlePostIncrementStatement()
     }

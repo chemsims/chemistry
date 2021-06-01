@@ -110,7 +110,7 @@ struct AcidOrBase: Equatable, Identifiable {
     }
 
     var type: AcidOrBaseType {
-        let isStrong = substanceAddedPerIon.value > 0
+        let isStrong = substanceAddedPerIon.value == 0
         switch primary {
         case .hydrogen where isStrong: return .strongAcid
         case .hydrogen: return .weakAcid
