@@ -57,13 +57,11 @@ public struct EnumMap<Key, Value> where Key : CaseIterable, Key : Hashable {
         }
     }
 
-    /// Returns all values
+    /// Returns all values in the same order as `Key.allCases`
     public var all: [Value] {
-        Array(values.values)
+        Key.allCases.map(value)
     }
 }
-
-
 
 extension EnumMap where Key: Equatable {
     /// Returns a new map where `element` has the value `newValue`
