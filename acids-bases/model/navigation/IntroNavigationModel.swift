@@ -48,7 +48,7 @@ struct IntroNavigationModel {
         ChooseSubstance(statements.chooseWeakBase, .weakBase),
         SetWeakBaseWaterLevel(),
         AddSubstance(type: .weakBase),
-        PostAddSubstance(statements.end)
+        PostAddSubstance(statements.end, showPhChart: false)
     ]
 
 }
@@ -198,11 +198,23 @@ private class AddSubstance: IntroScreenState {
     }
 }
 
-private class PostAddSubstance: SetStatement {
+private class PostAddSubstance: IntroScreenState {
+
+    let showPhChart: Bool
+    let statement: [TextLine]
+    init(_ statement: [TextLine], showPhChart: Bool = true) {
+        self.statement = statement
+        self.showPhChart = showPhChart
+    }
+
     override func apply(on model: IntroScreenViewModel) {
-        super.apply(on: model)
+        model.statement = statement
         model.inputState = .none
         model.addMoleculesModel.stopAll()
+        if showPhChart {
+            model.graphView = .ph
+        }
+
     }
 }
 
