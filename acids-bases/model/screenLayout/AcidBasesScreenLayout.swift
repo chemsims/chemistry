@@ -172,6 +172,41 @@ extension AcidBasesScreenLayout {
 
         return min(idealWidth, idealHeight)
     }
+
+    var phChartSettings: TimeChartLayoutSettings {
+        TimeChartLayoutSettings(
+            xAxis: AxisPositionCalculations<CGFloat>(
+                minValuePosition: 0.1 * chartSize,
+                maxValuePosition: 0.9 * chartSize,
+                minValue: 0,
+                maxValue: 1
+            ),
+            yAxis: AxisPositionCalculations<CGFloat>(
+                minValuePosition: 0.1 * chartSize,
+                maxValuePosition: 0.9 * chartSize,
+                minValue: 0,
+                maxValue: 1
+            ),
+            haloRadius: 2 * chartHeadRadius,
+            lineWidth: 0.3 * chartHeadRadius
+        )
+    }
+
+    var phYAxisWidth: CGFloat {
+        0.12 * chartSize
+    }
+
+    var phYAxisSpacing: CGFloat {
+        0.03 * chartSize
+    }
+
+    var phAxis: ChartAxisShapeSettings {
+        ChartAxisShapeSettings(chartSize: chartSize)
+    }
+
+    var chartHeadRadius: CGFloat {
+        0.018 * chartSize
+    }
 }
 
 // MARK: toggle geometry

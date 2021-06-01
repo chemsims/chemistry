@@ -64,7 +64,7 @@ extension IntroScreenLayout {
     var phScaleSize: CGSize {
         CGSize(
             width: 0.95 * common.rightColumnWidth,
-            height: 0.5 * (common.height - common.beakyBoxHeight)
+            height: 0.3 * common.height
         )
     }
 
@@ -77,10 +77,10 @@ extension IntroScreenLayout {
     }
 
     var phAreaTotalHeight: CGFloat {
-        phScaleSize.height + phBarTopPadding + phBarBottomPadding + phToggleHeight
+        phScaleSize.height + phBarTopPadding + phBarBottomPadding + toggleHeight
     }
 
-    var phToggleFontSize: CGFloat {
+    var toggleFontSize: CGFloat {
         let phGeometry = PHScaleGeometry(
             width: phScaleSize.width,
             height: phScaleSize.height,
@@ -91,8 +91,27 @@ extension IntroScreenLayout {
         return phGeometry.labelsFontSize
     }
 
-    var phToggleHeight: CGFloat {
-        1.2 * phToggleFontSize
+    var toggleHeight: CGFloat {
+        1.2 * toggleFontSize
+    }
+}
+
+// MARK: Chart layout
+extension IntroScreenLayout {
+    var chartToggleSpacing: CGFloat {
+        5
+    }
+
+    var chartAreaTotalHeight: CGFloat {
+        max(barChartTotalHeight, common.beakyBoxHeight)
+    }
+
+    var chartTotalWidth: CGFloat {
+        common.chartSize + common.phYAxisWidth + common.phYAxisSpacing
+    }
+
+    private var barChartTotalHeight: CGFloat {
+        common.barChartSettings.totalHeight + chartToggleSpacing + toggleHeight
     }
 }
 
@@ -100,13 +119,13 @@ extension IntroScreenLayout {
 extension IntroScreenLayout {
     var equationSize: CGSize {
 
-        let availableHeight = common.height - common.bottomRightTotalHeight - phAreaTotalHeight
+        let availableHeight = common.height - chartAreaTotalHeight - phAreaTotalHeight
 
         let availableWidth = common.rightColumnWidth - common.toggleHeight
 
         return CGSize(
             width: 0.9 * availableWidth,
-            height: 0.9 * availableHeight
+            height: availableHeight
         )
     }
 }

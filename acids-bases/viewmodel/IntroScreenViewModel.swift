@@ -37,12 +37,21 @@ class IntroScreenViewModel: ObservableObject {
     @Published var selectedSubstances = AcidOrBaseMap<AcidOrBase?>.constant(nil)
     @Published var availableSubstances = AcidOrBase.strongAcids
     @Published var inputState = InputState.none
+    @Published var graphView = GraphView.concentration
 
     private(set) var addMoleculesModel: MultiContainerShakeViewModel<AcidOrBaseType>!
 
     private func increment(count: Int) {
         components.increment(count: count)
         handlePostIncrementStatement()
+    }
+
+    private let cols = MoleculeGridSettings.cols
+
+    private var componentStates = [IntroScreenComponents.State]()
+
+    private var canAddMolecule: Bool {
+        components.fractionSubstanceAdded < 1
     }
 
     enum InputState: Equatable {
@@ -65,12 +74,8 @@ class IntroScreenViewModel: ObservableObject {
         }
     }
 
-    private let cols = MoleculeGridSettings.cols
-
-    private var componentStates = [IntroScreenComponents.State]()
-
-    private var canAddMolecule: Bool {
-        components.fractionSubstanceAdded < 1
+    enum GraphView {
+        case ph, concentration
     }
 }
 

@@ -66,10 +66,10 @@ struct IntroRightStack: View {
     }
 
     private var barChart: some View {
-        BarChart(
-            data: components.barChart.all,
-            time: components.fractionSubstanceAdded,
-            settings: layout.common.barChartSettings
+        BarChartOrPhChart(
+            model: model,
+            components: components,
+            layout: layout
         )
     }
 
@@ -81,6 +81,94 @@ struct IntroRightStack: View {
             nextIsDisabled: !model.canGoNext,
             settings: layout.common.beakySettings
         )
+    }
+}
+
+private struct BarChartOrPhChart: View {
+
+    @ObservedObject var model: IntroScreenViewModel
+    @ObservedObject var components: IntroScreenComponents
+    let layout: IntroScreenLayout
+
+    var body: some View {
+        VStack(spacing: layout.chartToggleSpacing) {
+            toggle
+            if model.graphView == .concentration {
+                barChart
+            } else {
+                phChart
+            }
+        }
+    }
+
+    private var toggle: some View {
+        HStack(spacing: 8) {
+            SelectionToggleText(
+                text: "Concentration",
+                isSelected: model.graphView == .concentration,
+                action: {
+                    model.graphView = .concentration
+                }
+            )
+
+            SelectionToggleText(
+                text: "pH graph",
+                isSelected: model.graphView == .ph,
+                action: {
+                    model.graphView = .ph
+                }
+            )
+        }
+        .font(.system(size: layout.toggleFontSize))
+        .minimumScaleFactor(0.5)
+        .frame(height: layout.toggleHeight)
+    }
+
+    private var barChart: some View {
+        BarChart(
+            data: components.barChart.all,
+            time: components.fractionSubstanceAdded,
+            settings: layout.common.barChartSettings
+        )
+        .frame(width: layout.chartTotalWidth, alignment: .trailing)
+    }
+
+    private var phChart: some View {
+        let barGeo = layout.common.barChartSettings
+        return HStack(spacing: layout.common.phYAxisSpacing) {
+            Text("pH")
+                .frame(height: layout.common.phYAxisWidth)
+                .rotationEffect(.degrees(-90))
+
+            VStack(spacing: barGeo.chartToAxisSpacing) {
+                phChartArea
+                Text("Moles added")
+                    .frame(height: barGeo.totalAxisHeight)
+            }
+        }
+        .font(.system(size: barGeo.labelFontSize))
+        .minimumScaleFactor(0.7)
+    }
+
+    private var phChartArea: some View {
+        TimeChartView(
+            data: [
+                TimeChartDataLine(
+                    equation: components.phLine,
+                    headColor: components.substance.type.isAcid ?  RGB.hydrogen.color : RGB.hydroxide.color,
+                    haloColor: nil,
+                    headRadius: layout.common.chartHeadRadius
+                )
+            ],
+            initialTime: 0,
+            currentTime: .constant(components.fractionSubstanceAdded),
+            finalTime: components.fractionSubstanceAdded,
+            canSetCurrentTime: false,
+            settings: layout.common.phChartSettings,
+            axisSettings: layout.common.phAxis
+        )
+        .frame(square: layout.common.chartSize)
+        .animation(nil, value: components.substance)
     }
 }
 
@@ -104,7 +192,7 @@ private struct PHOrConcentrationBar: View {
     }
 
     private var toggle: some View {
-        HStack(spacing: layout.phToggleHeight) {
+        HStack(spacing: layout.toggleHeight) {
             SelectionToggleText(
                 text: "Concentration",
                 isSelected: !isViewingPh,
@@ -117,8 +205,8 @@ private struct PHOrConcentrationBar: View {
                 action: { isViewingPh = true }
             )
         }
-        .font(.system(size: layout.phToggleFontSize))
-        .frame(height: layout.phToggleHeight)
+        .font(.system(size: layout.toggleFontSize))
+        .frame(height: layout.toggleHeight)
     }
 
     private var pHBar: some View {
@@ -226,8 +314,8 @@ struct IntroRightStack_Previews: PreviewProvider {
                     )
                 )
             }
-            .padding(5)
         }
+        .padding(5)
         .previewLayout(.iPhone8Landscape)
     }
 }

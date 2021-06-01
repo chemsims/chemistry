@@ -108,6 +108,16 @@ struct AcidOrBase: Equatable, Identifiable {
             color: color
         )
     }
+
+    var type: AcidOrBaseType {
+        let isStrong = substanceAddedPerIon.value > 0
+        switch primary {
+        case .hydrogen where isStrong: return .strongAcid
+        case .hydrogen: return .weakAcid
+        case .hydroxide where isStrong: return .strongBase
+        case .hydroxide: return .weakBase
+        }
+    }
 }
 
 // MARK: Default substances

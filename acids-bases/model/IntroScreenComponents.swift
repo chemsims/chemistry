@@ -128,6 +128,11 @@ class IntroScreenComponents: ObservableObject {
             )
         )
     }
+
+    var phLine: LinearEquation {
+        let isAcid = substance.type.isAcid
+        return LinearEquation(m: isAcid ? -1 : 1, x1: 0, y1: isAcid ? 1 : 0)
+    }
 }
 
 // MARK: Restoring state
