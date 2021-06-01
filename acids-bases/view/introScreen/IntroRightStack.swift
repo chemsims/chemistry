@@ -112,7 +112,7 @@ private struct BarChartOrPhChart: View {
             )
 
             SelectionToggleText(
-                text: "pH graph",
+                text: "pH",
                 isSelected: model.graphView == .ph,
                 action: {
                     model.graphView = .ph
