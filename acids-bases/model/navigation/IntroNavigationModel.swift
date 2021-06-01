@@ -24,7 +24,31 @@ struct IntroNavigationModel {
         SetStatement(statements.explainBronstedLowry),
         SetStatement(statements.explainLewis),
         SetStatement(statements.explainSimpleDefinition),
-        ChooseSubstance(statements.chooseStrongAcid, .strongAcid)
+        ChooseSubstance(statements.chooseStrongAcid, .strongAcid),
+        PostChooseSubstance(statements.showPhScale),
+        SetStatement(statements.explainPHConcept),
+        SetStatement(statements.explainPOHConcept),
+        SetStatement(statements.explainPRelation),
+        SetStatement(statements.explainPConcentrationRelation1),
+        SetStatement(statements.explainPConcentrationRelation2),
+        SetWaterLevel(type: .strongAcid),
+        AddSubstance(type: .strongAcid),
+        PostAddSubstance(statements.showPhVsMolesGraph),
+        ChooseSubstance(statements.chooseStrongBase, .strongBase),
+        SetWaterLevel(type: .strongBase),
+        AddSubstance(type: .strongBase),
+        PostAddSubstance(statements.showPhVsMolesGraph),
+        AddSubstance(type: .weakAcid),
+        PostAddSubstance(statements.explainWeakAcid, type: .weakAcid),
+        SetStatement(statements.explainHEquivalence),
+        SetStatement(statements.explainDoubleArrow, type: .weakAcid),
+        SetStatement(statements.explainEquilibrium),
+        SetWaterLevel(type: .weakAcid),
+        AddSubstance(type: .weakAcid),
+        ChooseSubstance(statements.chooseWeakBase, .weakBase),
+        SetWeakBaseWaterLevel(),
+        AddSubstance(type: .weakBase),
+        PostAddSubstance(statements.end)
     ]
 
 }
@@ -55,13 +79,24 @@ class IntroScreenState: ScreenState, SubState {
 
 private class SetStatement: IntroScreenState {
 
-    let statement: [TextLine]
-    init(_ statement: [TextLine]) {
+    let statement: (IntroScreenViewModel) -> [TextLine]
+
+    init(_ statement: @escaping (IntroScreenViewModel) -> [TextLine]) {
         self.statement = statement
     }
 
+    convenience init(_ statement: [TextLine]) {
+        self.init { _ in statement }
+    }
+
+    convenience init(_ statement: @escaping (AcidOrBase) -> [TextLine], type: AcidOrBaseType) {
+        self.init { model in
+            statement(model.substance(forType: type))
+        }
+    }
+
     override func apply(on model: IntroScreenViewModel) {
-        model.statement = statement
+        model.statement = statement(model)
     }
 }
 
@@ -77,6 +112,7 @@ private class ChooseSubstance: IntroScreenState {
 
     override func apply(on model: IntroScreenViewModel) {
         let substances = AcidOrBase.substances(forType: type)
+        model.statement = statement
         model.availableSubstances = AcidOrBase.substances(forType: type)
         model.setSubstance(substances.first, type: type)
         model.inputState = .chooseSubstance(type: type)
@@ -87,3 +123,75 @@ private class ChooseSubstance: IntroScreenState {
         model.setSubstance(nil, type: type)
     }
 }
+
+private class PostChooseSubstance: IntroScreenState {
+    let statement: [TextLine]
+    init(_ statement: [TextLine]) {
+        self.statement = statement
+    }
+
+    override func apply(on model: IntroScreenViewModel) {
+        model.statement = statement
+        model.inputState = .none
+    }
+}
+
+private class SetWaterLevel: IntroScreenState {
+
+    let type: AcidOrBaseType
+    init(type: AcidOrBaseType) {
+        self.type = type
+    }
+
+    override func apply(on model: IntroScreenViewModel) {
+        model.statement = statements.setWaterLevel(
+            substance: model.substance(forType: type)
+        )
+        model.inputState = .setWaterLevel
+    }
+
+    override func unapply(on model: IntroScreenViewModel) {
+        model.inputState = .none
+    }
+}
+
+private class SetWeakBaseWaterLevel: IntroScreenState {
+    override func apply(on model: IntroScreenViewModel) {
+        let substance = model.substance(forType: .weakBase)
+        model.statement = statements.setWeakBaseWaterLevel(substance: substance)
+        model.inputState = .setWaterLevel
+    }
+
+    override func unapply(on model: IntroScreenViewModel) {
+        model.inputState = .none
+    }
+}
+
+private class AddSubstance: IntroScreenState {
+    let type: AcidOrBaseType
+    init(type: AcidOrBaseType) {
+        self.type = type
+    }
+
+    override func apply(on model: IntroScreenViewModel) {
+        model.statement = statements.addSubstance(type)
+        model.inputState = .addSubstance(type: type)
+    }
+}
+
+private class PostAddSubstance: SetStatement {
+    override func apply(on model: IntroScreenViewModel) {
+        super.apply(on: model)
+        model.inputState = .none
+    }
+}
+
+extension IntroScreenViewModel {
+    func substance(forType type: AcidOrBaseType) -> AcidOrBase {
+        selectedSubstances.value(for: type) ?? AcidOrBase.strongAcid(
+            secondaryIon: .A,
+            color: .black
+        )
+    }
+}
+
