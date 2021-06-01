@@ -74,22 +74,22 @@ class IntroScreenComponents: ObservableObject {
         )
     }
 
-
+    // TODO - accessibility labels
     var coords: SubstanceValue<BeakerMolecules> {
         SubstanceValue(
             substanceValue: BeakerMolecules(
                 coords: underlyingCoords.coords.substanceValue,
-                color: .red,
+                color: substance.color,
                 label: ""
             ),
             primaryIonValue: BeakerMolecules(
                 coords: underlyingCoords.coords.primaryIonValue,
-                color: .blue,
+                color: substance.primary.color,
                 label: ""
             ),
             secondaryIonValue: BeakerMolecules(
                 coords: underlyingCoords.coords.secondaryIonValue,
-                color: .purple,
+                color: substance.secondary.color,
                 label: ""
             )
         )
