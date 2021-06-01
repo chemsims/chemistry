@@ -188,7 +188,7 @@ extension AcidBasesScreenLayout {
                 maxValue: 14
             ),
             haloRadius: 2 * chartHeadRadius,
-            lineWidth: 0.3 * chartHeadRadius
+            lineWidth: 0.7 * chartHeadRadius
         )
     }
 
