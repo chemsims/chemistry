@@ -136,6 +136,7 @@ class QuizQuestionReaderTests: XCTestCase {
         QuizQuestionReader.read(
             from: file,
             questionSet: 0,
+            headerCols: 0,
             bundle: Bundle(for: type(of: self))
         )
     }

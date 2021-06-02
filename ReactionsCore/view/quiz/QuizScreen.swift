@@ -52,6 +52,11 @@ private struct QuizScreenWithSettings<QP: QuizPersistence, Analytics: AppAnalyti
                     progressBar
                         .zIndex(2)
                         .accessibility(sortPriority: 0.5)
+                        .modifyIf(isDebug) {
+                            $0.onTapGesture(count: 5) {
+                                model.runDebugMode.toggle()
+                            }
+                        }
                 }
 
                 if model.quizState == .running {
@@ -239,6 +244,14 @@ private struct QuizScreenWithSettings<QP: QuizPersistence, Analytics: AppAnalyti
 
     private var labelLhs: String {
         "\(model.currentIndex + 1)"
+    }
+
+    private var isDebug: Bool {
+        #if DEBUG
+        return true
+        #else
+        return false
+        #endif
     }
 }
 

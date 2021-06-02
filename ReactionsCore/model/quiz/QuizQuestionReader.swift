@@ -20,6 +20,7 @@ public struct QuizQuestionReader {
     public static func readOptional<QuestionSet>(
         from fileName: String,
         questionSet: QuestionSet,
+        headerCols: Int,
         bundle: Bundle = Bundle.main
     ) -> QuizQuestionsList<QuestionSet>? {
         os_signpost(.begin, log: pointsOfInterest, name: "Read quiz")
@@ -27,7 +28,12 @@ public struct QuizQuestionReader {
             os_signpost(.end, log: pointsOfInterest, name: "Read quiz")
         }
 
-        let result = read(from: fileName, questionSet: questionSet, bundle: bundle)
+        let result = read(
+            from: fileName,
+            questionSet: questionSet,
+            headerCols: headerCols,
+            bundle: bundle
+        )
         if let quiz = result.option {
             return quiz
         }
@@ -41,12 +47,13 @@ public struct QuizQuestionReader {
     public static func read<QuestionSet>(
         from fileName: String,
         questionSet: QuestionSet,
+        headerCols: Int,
         bundle: Bundle = Bundle.main
     ) -> ReadResult<QuizQuestionsList<QuestionSet>> {
         if let path = bundle.path(forResource: fileName, ofType: fileType) {
             do {
                 let contents = try String(contentsOfFile: path)
-                let rows = Array(parseCsv(contents: contents).dropFirst(headerRows))
+                let rows = Array(parseCsv(contents: contents, headerCols: headerCols).dropFirst(headerRows))
                 return parseLines(rows: rows).map { questions in
                     QuizQuestionsList(
                        questionSet: questionSet,
@@ -61,11 +68,12 @@ public struct QuizQuestionReader {
     }
 
     private static func parseCsv(
-        contents: String
+        contents: String,
+        headerCols: Int
     ) -> [CsvRow] {
         let parsed = CsvParser.parse(content: contents)
         return parsed.indices.map { i in
-            CsvRow(underlying: parsed[i], index: i)
+            CsvRow(underlying: Array(parsed[i].dropFirst(headerCols)), index: i)
         }
     }
 
