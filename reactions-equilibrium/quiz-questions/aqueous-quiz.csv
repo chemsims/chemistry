@@ -1,17 +1,359 @@
-Question,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,
-id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position
-aqueous_placeholder_1,Question 1,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_2,Question 2,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_3,Question 3,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_4,Question 4,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_5,Question 5,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_6,Question 6,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_7,Question 7,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_8,Question 8,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_9,Question 9,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_10,Question 10,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_11,Question 11,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_12,Question 12,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_13,Question 13,medium,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_14,Question 14,medium ,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-aqueous_placeholder_15,Question 15,hard,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
+Question,,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,,
+number,id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position,source
+1,AQUEOUS-01,"Consider the following reaction:
+
+$A_2_B + 2C$ ⇄ $2A + BC_2_$
+
+The reaction is at equilibrium right now, and the concentrations for all the compounds involved are the following:
+$[A_2_B] = 0.10 M$, $[C] = 0.05 M$, $[A] = 0.02 M$ and $[BC_2_] = 0.01$.
+
+What would the equilibrium constant K be for this reaction?",easy,,,,0.016 M,"Calculate the equilibrium constant using writing the equation for this reaction:
+$K = [products]/[reactants]$
+$K = [A]^2^[BC_2_]/[A_2_B][C]^2^$
+$K = (0.02)^2^(0.01)/(0.10)(0.05)^2^$
+$K = 0.016$",,0.040 M,You may have forgotten elevate to their coefficients the concentrations of C and A when calculating the equilibrium constant K.,,25 M,"You may have used the equation inverted: $K = [reactants]/[products]$, which would be the K for the reverse reaction. Besides that, remember to elevate the correspondant species to their coefficients in the equation.",,62.5 M,"Remember the equation for the equilibrium constant is:
+$K = [products]/[reactants]$.
+
+You may have used the equation inverted: 
+$K = [reactants]/[products]$, which would be the K for the reverse reaction.",,Ap Collage Board 2008 (Q 55)
+2,AQUEOUS-02,"Consider the following reaction:
+
+$3A_(aq)_$ ⇄ $B_(aq)_$
+
+The solution in which the reaction is taking place is in a vessel with which the volume is measured as 2.0 L. At equilibrium, there are 2 moles of B and 5 moles of A. What is a true statement in regards to the equilibrium constant for this reaction?",medium,,,,K < 1,"K is definitely smaller than 1. The concentrations of the substances is given in M or which is the same, mol/L. If the solution has a volume of 2.0L, then we just have to calculate the concentration of both A and B: $[A] = 5/2.0 = 2.5 M;$ $[B] = 2/2.0 = 1.0 M$. Substituing these values in the K equation we get: $K = [B]/[A]^3^$ $K = (1.0/2.5^3^)$ $K = 0.064$ making $K < 1$",,K > 1,"Without making any calculations, it can be inferred that K is probably smaller than 1, since $K = [products]/[reactants]$ at equilibrium and there is more of A (reactant) than B (products) at equilibrium.",,K < 0,"Since $K = [products]/[reactants]$, and concentrations are always positive values, then K would never be smaller than 0.",,Cannot be determined with this info,It can be determined given that having the moles and the volume of the substances you can calculate their concentrations with which you can determine the equilibrium constant.,,Ap Collage Board 2008 (Q 59)
+3,AQUEOUS-03,"Consider the following reaction taking place in a reactor:
+
+$A + 2B$ ⇄ $3C + D ΔH = 100.0 kJ$
+
+The reaction is at equilibrium, but if you would want to increase the $ratio = [products]/[reactants]$ at the equilibrium state, what would you do?",easy,,,,Heighten the temperature,"Basically $ratio = [products]/[reactants]$ is fundamentally what the equilibrium constant K is. Being this an endothermic reaction, heat is considered to be a reactant. In order to shift the reaction to the products side (right), heightening the temperature would add a reactant to the system (heat), which will ultimately result in more products to be formed.",,Using a catalyst to increase the rate fo the reaction,"The usage of a catalyst will do little to nothing about increasing the $ratio = [products]/[reactants]$. A catalyst increases the rate of both forward and reverse reaction, so if anything the reaction would reach equilibrium faster, but since it's already at equilibrium, nothing will change.",,Reducing the temperature,"Basically $ratio = [products]/[reactants]$ is fundamentally what the equilibrium constant K is. Being this an endothermic reaction, heat is considered to be a reactant. So reducing the temperature is like removing a reactant from the reaction, which will ultimately make the reaction shift to the left, consuming the products and therefore reducing the $[products]/[reactants]$ ratio.",,Increasing the pressure,"Pressure can affect a reversible reaction but only for gaseous reactions. For this particular reaction where the state of matter of the species is not being specified, changing the pressure won't result in any significant change in the [products]/[reactants] ratio.",,Ap Collage Board 2002 (Q 37)
+4,AQUEOUS-04,"Consider the following reaction:
+
+A_(g)_ ⇄ 2B_(g)_
+
+At a temperature of 273K, the equilibrium constant for the forward reaction is 30. What would the constant be for the reverse reaction?",medium,,,,0.033,"The equilibrium constant equation for this particular reaction is $K = [B]^2^/[A] = 30$. If we were to write the reverse balanced reaction, it would written like: $2B_(g)_ ⇄ A_(g)_$. From this perspective, B is the reactant while A is the product, so $K = [A]/[B]^2^$. These equilibrium constants can be related to each other since: $K_reverse_ = 1/K_forward_$. Calculating the K for the reaction we get: $K_reverse_ = 1/30 = 0.033.$",,-30,"This would be the equilibrium constant if $K_reverse_ = -K_forward_$, which is not the case whatsoever. Try to understand how the equilibrium constants are related to each other.",,15,This value is not related in any way to the equilibrium constant of neither the forward or reverse reaction.,,Cannot be determined with this info,It can be determined since both equilibrium constants are related to each other in this way: $K_reverse_ = 1/K_forward_$,,Ap Collage Board 2002 (Q 42)
+5,AQUEOUS-05,"Consider the following reaction:
+
+$A_(aq)_$ ⇄ $B_(aq)_ + C_(aq)_$
+
+The reaction is at equilibrium, but this is disturbed by adding more of C, making its concentration to go up. After the equilibrium is restored once again, which of the species definitely had more moles per liter in the first state of equilibrium compared to the most recent state of equilibrium?",medium,,,,B,"After equilibrium is reached the first time, when adding more C (a product) the equilibrium shifts to the left, consuming both B and C to produce A. This means that whatever the concentration of B was at the beginning, it went down since B was consumed until equilibrium was restored once again, making [B] lower now.",,A,"After equilibrium is reached the first time, the addition of products make A to be produced even more, so its concentration in the original state of equilibrium is definitely lower than its concentration now.",,C,"After C is added, it is consumed to produce more of A, but since for each mol of C that's consumed a mol of B is also consumed, they are reduced by the same amount. Being this the case, what is definitely true is that the concentration of B is lower now than at the first state of equilibrium.",,They all decreased,"After equilibrium is reached the first time, the addition of products make A to be produced even more, for example.",,Ap Collage Board 1999 (Q41)
+6,AQUEOUS-06,"Consider the following reaction:
+
+$3A_(g)_ + B_(g)_$ ⇄ $2C_(g)_ + 4D_(g)_$
+
+The exact same number of moles for A, B, C and D are injected into a rigid vessel for them to react and eventually reach equilibrium. Assuming that the forward reaction is the one that took place, what would be the order from higher to lower of the concentrations of each species?",medium,,,,[A] < [B] < [C] < [D],"Whatever the initial concentrations of all the involved species are, if the forward reaction took place, than an amount we'll call X was consumed and produced in the following manner: $[A]_o_ - 3X = [A],$ $[B]_o_ - X = [B],$ $[C]_o_ + 2X = [C],$ and $[D]_o_ + 4X = [D].$ It doesn't matter what number X is, if the initial concentrations are all the same then: $[A] < [B] < [C] < [D].$",,[D] < [C] < [B] < [A],D is a product of the forward reaction so it's impossible for it to be lower than A or B that were consumed.,,[A] < [C] < [B] < [D],C is a product of the forward reaction so it's impossible for it to be lower than B that was consumed.,,Cannot be determined with this info,It can be determined. Think about how all involved species are related to each other based on their stoichiometric coefficients.,,Ap Collage Board 1994 (Q51)
+7,AQUEOUS-07,"Consider the following reaction:
+
+$A + 2B ⇄ 3C$
+
+Initially, 1.0 g of A and 2.0 g of B are weighted and then mixed in with water to create a 250 ml solution in a beaker. When equilibrium is reached, there are now 0.10 moles of C in the solution. What is the value for the equilibrium constant for this reaction? Note: molar mass of A is 100 g/mol and of B is 60 g/mol. ",hard,,,,33,"Initially there are 1 g of A and 2 g of B dissolved in a 250 ml solution, so to determine their moles let's divide the mass for their molar mass:
+
+$Moles of A = 1/100 = 0.010 moles$
+$Moles of B = 2/60 = 0.033 moles$ 
+
+Calculate their initial concentrations: 
+
+$[A] = 0.10/0.250 = 0.04 M$ 
+$[B] = 0.033/0.250 = 0.132 M$
+
+If at equilibrium 0.10 M of C are produced, that means that the concentrations at equilibrium of A and B are the following:
+
+$[A] = 0.04 - (0.10/3) = 0.007$ 
+$[B] = 0.132 - ((0.10 x 2)/3) = 0.066$ 
+
+Substituing in the equation for K:
+
+$K = [C]^3^/[A][B]^2^$ 
+$K = (0.10)^3^/(0.007)(0.066)^2^ = 33$",,216,You probably forgot to elevate the concentrations of the species to their coefficients in the equation for the equilibrium constant.,,19,You probably used the K equation using the initial concentrations of A and B instead of their concentrations in the equilibrium state.,,1.43,Take into account how A and B are consumed given the quantity of C that was produced and use the equilibrium constant equation that goes as: $K = [C]^3^/[A][B]^2^$,,Ap Collage Board 1994 (Q73)
+8,AQUEOUS-08,"Take into account the following reactions:
+
+Reaction 1: $2A + B_2_C$ ⇄ $2AB + C K_1_$
+Reaction 2: $AB + D$ ⇄ $AD + B K_2_$
+Reaction 3: $B_2_C + D$ ⇄ $CD + 2B K_3_$
+
+Which one would be the constant K for the following reaction?
+
+Final reaction: $2A + B + CD$ ⇄ $AB + AD + C$
+",hard,,,,K_1_K_2_/K_3_,"Going step by step to get to the final reaction, let's first revert reaction 3:
+
+$CD + 2B ⇄ B_2_C + D$ which K is: 
+$K_1/3_ = [B_2_C][D]/[CD][B]^2^$
+$K_1/3_ = 1/K_3_$ 
+
+Then by summing it up with reaction 2 we obtain a new reaction we can call reaction 4:
+$AB + CD + B ⇄ AD + B_2_C$ which K results from the multiplication of both reactions' K constants, like this:
+
+$K_1/3_K_2$_ = $[B_2_C][AD][B][D]/[AB][D][CD][B]^2^$
+
+Cancelling all equal terms:
+$K_1/3_K_2$_ = $[B_2_C][AD]/[AB][CD][B]$
+
+Substituing with the original K values:
+$K_4_$ = $K_2_/K_3_$
+
+Finally, by summing this 4th reaction with reaction 1, we get the desired reaction:
+$2A + B + CD ⇄ AB + AD + C$ which K results from the multiplication of both reactions' K constants, like this:
+
+$K_4_K_1_$ = $[B_2_C][AD][AB]^2^[C]/[AB][CD][B][B_2_C][A]^2^$
+
+Cancelling all equal terms:
+$K_4_K_1_$ = $[AD][AB][C]/[CD][B][A]^2^$
+
+Substituing with the original K values:
+$K = K_1_K_2_/K_3_$
+
+",,K_1/_K_2_K_3_,"This is not how the equilibrium constants are actually related to each other in that final reaction. Take into account that, simply put, when reactions are summed up their constants are multiplied.",,K_1_K_2_K_3_,"This is not how the equilibrium constants are actually related to each other in that final reaction. Take into account that, simply put, to get the constant K of the reverse reaction, the new K is the inverse of the K for the forward reaction. $K_f_ = 1/K_r_$",,K_1_K_2_,"Take into account that, simply put, when reactions are summed up their constants are multiplied and to get the constant K of the reverse reaction, the new K is the inverse of the K for the forward reaction. $K_f_ = 1/K_r_$",,"Albert.io ""Kc from Reactions"""
+9,AQUEOUS-09,"An acid is introduced to a beaker with water for it to get dissociated like this:
+
+$HA + H_2_O ⇄ H_3_O^+^ + A^-^$
+
+How is the rate of the forward and reverse reactions related to the concentration of [HA] and the pH?
+",medium,,,,"When the forward reaction is taking place, its rate is going down while both [HA] and the pH are going down as well.","If the forward reaction is the predominant reaction that's taking place, this means that its rate is higher than the rate of the reverse reaction at that moment. To reach equilibrium, the rate of the forward reaction has to continue decreasing until $rate_forward_ = rate_reverse_$. 
+
+As the forward reaction is taking place, HA is being consumed so its concentration is going down while H^+^ (or H_3_O^+^) is being produced, which will heighten its concentration, which translates into a lower pH since $pH = -log[H^+^].$",,"When the forward reaction is taking place, the rate of the reverse reaction is going down while both [HA] and the pH are going down as well.","If the forward reaction is the predominant reaction that's taking place, this means that its rate is higher than the rate of the reverse reaction at that moment. To reach equilibrium, the rate of the forward reaction has to continue decreasing and the rate of the reverse reaction has to continue increasing until they're equal.",,"When the forward reaction is taking place, its rate is going up while both [HA] and the pH are going up as well.","If the forward reaction is the predominant reaction that's taking place, this means that its rate is higher than the rate of the reverse reaction at that moment. To reach equilibrium, the rate of the forward reaction has to continue decreasing until $rate_forward_ = rate_reverse_$. Besides that, HA is being consumed so its concentration is getting lowered.",,"When the forward reaction is taking place, its rate is going down while both [HA] is going down as well but the pH is going down up.","[H^+^] (or [H_3_O^+^]) is going up as the forward reaction is taking place, which will ultimately translate into a lower pH since $pH = -log[H^+^]$. Remember that low values of pH mean the acidity is high. ",,"Albert.io ""Kinetics and Equilibrium of Vitamin C"""
+10,AQUEOUS-10,"The initial concentrations of some substances involved in a reaction are given:
+
+$3A +  2B ⇄ 4C + D$
+
+$[A] = 0.012 M$, $[B] = 0.020 M$, $[C] = 0.018 M$ and $[D] = 0.005 M$
+
+The reaction is allowed to reach equilibrium, at which the concentration of A got doubled. What would be true of the following at equilibrium? ",medium,,,,$[C] = 2 x [D]$,"Given that [A] got doubled, this means that its concetration at equilibrium is $2 x 0.012 =.0.024 M.$ This implies that the reverse reaction is the one that took place in order for the system to reach equilibrium. Having this as a guide, we can calculate the rest of the concentrations at equilibrium:
+
+$[B] = 0.020 + 0.012(2)/3 = 0.028 M$
+$[C] = 0.018 - 0.012(4)/3 = 0.002 M$
+$[D] = 0.005 - 0.012/3 = 0.001 M$
+
+Knowing this, it's true that $[C] = 2 x [D]$ at equilibrium.",,C and D are the products of the reaction that took place.,"Given that [A] got doubled, this means that its concetration at equilibrium is $2 x 0.012 =.0.024 M.$ This implies that the reverse reaction is the one that took place in order for the system to reach equilibrium.",,$[A] > [B]$,This is not the case at equilibrium. Try calculating the concentrations of each species at equilibrium and see how they related to each other,,$[A] > 0.024 M$,"Given that [A] got doubled, this means that its concetration at equilibrium is $2 x 0.012 =.0.024 M$ and not higher than that. ",,"Albert.io ""Moles at Equilibrium"""
+11,AQUEOUS-11,"Take the following hypothetical reaction into account:
+
+$2A_(aq)_ + 4B(s) + 3C_(g)_$ ⇄ $4D_(aq)_ + E_(s)_$
+
+If you were to write the expression for the Q quotient for this particular reaction, which one would it be?",medium,,,,$Q = [D]^4^/[A]^2^[C]^3^$,"The Q quotient is fundamentally a ratio of [products]/[reactants] at any given time of the reaction. It is often compared to the value of K to determine whether the reaction is at equilibrium or not. For this particular reaction, $Q = [D]^4^/[A]^2^[C]^3^$",,$Q = [D]^4^[E]/[A]^2^[B]^4^[C]^3^$,"The Q quotient is fundamentally a ratio of [products]/[reactants] at any given time of the reaction. It is often compared to the value of K to determine whether the reaction is at equilibrium or not. Beware that some of the involved species in the reaction are in a solid state of matter, whose concentrations are not considered when calculating Q or K.",,$Q = (4[D])^4^/(2[A])^2^(3[C])^3^$,"The Q quotient is fundamentally a ratio of [products]/[reactants] at any given time of the reaction. It is often compared to the value of K to determine whether the reaction is at equilibrium or not. The concentrations of the species are elevated to their coefficients, but these are not inclued within the concentration expressions.",,$Q = [A]^2^[C]^3^/[D]^4^$,The Q quotient is fundamentally a ratio of [products]/[reactants] at any given time of the reaction and not [reactants]/[products]. $Q = [A]^2^[C]^3^/[D]^4^$ would be the quotient you calculate for the reverse reaction.,,"Albert.io ""Brønsted–Lowry Reaction Quotients"""
+12,AQUEOUS-12,"Consider a simple reaction that goes like this:
+
+$A ⇄ B$
+
+The reaction was at equilibrium when a student adds A (at 3 seconds) to the substance, which disturbs the equilibrium. Which of the following statement is true about the graph?",medium,,,,"The red line represents [A], which starts going down after its addition while [B] goes up until the equilibrium is reached once again.","Since A is added abruptly, [A] goes up inmeadiately at 3 seconds, but this shifts the equilibrium to the right, making the forward reaction to start, which consumes A and produces B until the equilibrium is reached again. The red line represents [A] then.",,"The blue line represents [A], which starts going up after its addition while [B] goes down until the equilibrium is reached once again.","The red line is the one that represents [A] and not the blue one. Take into account when some species is suddenly added to the system, it goes up inmediately at that point in time, but then the excess of A makes the system to consume it to produce B to reestablish equilibrium.",,"The blue line represents [A], which starts going up after its addition while [B] goes up as well until the equilibrium is reached once again.","[B] goes up after adding A, but [A] starts going down inmediately after its addition.",,There is not enough info to determine which line represents which reactant,It's possible to determine which line represents which reactant by taking into account how the equilibrium is disturbed by the addition of A.,,"Albert.io ""Graphs and Stress"""
+13,AQUEOUS-13,"How would you describe the relationship between the following equilibrium constants:
+
+$K_1_ = [P]/[R]$
+$K_2_ = [P]^3^/[R]^3^$",easy,,,,$K_2_ = K_1_^3^$,"When reactions are summed up, to get the equilibrium constant of the resultant reaction, their Ks are multiplied. This is because $([P]/[R])([P]/[R])([P]/[R]) = ([P]/[R])^3^$ so in other words: $K_2_ = K_1_^3^$",,$K_1_ = K_2_^3^$,Try to relate the concentrations expressions from both reactions to understand how their constants are related to each other,,$K_2_ = 3K_1_$,This assumes that K_2_ is just 3 times K_1_ only because of their coeffiecients which is not true.,,$K_2_ = K_1_$,This assumes that both reactions have the same equilibrium constant but when the coefficients of the reaction change then the constant K changes as well.,,"Albert.io ""Equilibrium: The Meaning of a Constant"""
+14,AQUEOUS-14,"How would you describe the relationship between the equilibrium constants of the following reactions:
+
+$A ⇄ B  K_1_$
+$B ⇄ A  K_2_$",easy,,,,$K_1_ = 1/K_2_$,"The second reaction is the reverse reaction of the first reaction. Given that $K_1_ = [B]/[A]$ and $K_2_ = [A]/[B]$, K_1_ is the inverse of K_2_ and viceversa: $K_1_ = 1/K_2_$
+",,$K_1_ = K_2_$,"This assumes that the equilibrium constant K is the same one for the forward reaction and reverse reaction, which is not the case.",,$K_1_ = -K_2_$,"This assumes that the equilibrium constant for the reverse reaction is the same as the forward reaction but negative, which is not the case, especially because the equilibrium constant can never be a negative number.",,$K_1_ = K_2_^2^$,This is not how the equilibrium constants are related to each other. Try to write the expressions for each K and then notice how they are related to each other.,,"Albert.io ""Manipulations of the Equilibrium Constant"""
+15,AQUEOUS-15,"Take the following hypothetical reactions into account:
+
+$A ⇄ B  K_1_$
+$B ⇄ C + D  K_2_$
+
+What would the value of the equilibrium constant K_3_ for this reaction be?
+
+$C + D ⇄ A  K_3_$
+
+",medium,,,,$K_3_ = 1/K_1_K_2_$,"By summing up the reactions we get the reaction:
+$A ⇄ C + D.$ The constant K of this reaction would be both constants multiplied: K_1_K_2_. B, being in the product side in one reaction and in the reactant side in the other, it is considered an intermediate and it's not included in this overall reaction. The reaction of which we want to calculate the equilibrium constant K_3_ is the reverse reaction:
+$C + D ⇄ A  K_3_.$ Making $K_3_ = 1/K_1_K_2_$
+
+",,$K_3_ = K_1_K_2_$,This would be the equilibrium constant for the reverse reaction of the desired reaction.,,$K_3_ = K_1_/K_2_$,"K_1_ and K_2_ when summing up both reactions get multiplied instead, so one being divided by the other wouldn't make sense in this case. ",,$K_3_ = K_1_^2^$,Try writing the expressions of each constant with the respective concentrations to ultimately determine K_3_.,,"Albert.io ""Equilibrium Constant of a Two-Step Reaction"""
+16,AQUEOUS-16,"Take this reaction into consideration:
+
+$3A_(aq)_ + 2B_(g)_$ ⇄ $C_(s)_ + 4D_(aq)_$
+
+How would you write the K expression for the formation of A and B?",medium,,,,$K = [A]^3^[B]^2^/[D]^4^$,"The reverse reaction is the one that produces A and B, so we would have to write the K expression for it: $K = [A]^3^[B]^2^/[D]^4^$ without including C which is in solid state.",,$K = [D]^4^/[A]^3^[B]^2^$,"This would be the K for the forward reaction which instead of producing A and B, it consumes them.",,$K = [C][D]^4^/[A]^3^[B]^2^$,"Remember $K = [products]/[reactants]$. Since we're asked to get the expression for the reaction that produces A and B, that would be the reverse reaction and not the forward reaction. Besides that, C shall not be included in the expression since it's in solid state.",,$K = [A]^3^[B]^2^/[C][D]^4^$,"This would be correct but C, since it's in solid state, it's not included in the equation.",,"Albert.io ""K in a Reversible Reaction"""
+17,AQUEOUS-17,"There is a system in equilibrium with this reaction:
+
+$AB ⇄ A + B$
+
+Then, a substance that dissociates completely like this:
+$CB → C + B$ is added into the system. 
+
+What happens to the equilibrium?",medium,,,,Equilibrium gets disturbed and it shifts to the left (starts producing more of AB),"Since more of B was indirectly added to the system, there are more products now, what makes the system shift so they get consumed now, which ends up producing more of AB.",,Equilibrium gets disturbed and it shifts to the right (starts consuming more of AB),"The equilibrium wouldn't shift to the right because there are now more products than reactants in comparison to their ratio at equilibrium, which means that AB would be produced instead of consumed now.",,Equilibrium stays undisturbed since the substance added has nothing to do with the reaction at equilibrium,"Equilibrium gets disturbed because of the presence of B, a common ion between both reactions.",,There is no way to tell what will happen,It can be inferred how the equilibrium will be disturbed by taking into account the common ion effect and the Le Chatelier's law.,,"Albert.io ""Q vs. K: Le Châtelier's Principle"""
+18,AQUEOUS-18,"Analyze the following reaction:
+
+$3A +  2B ⇄ 4C + D$
+
+If at equilibrium all the concentrations of the species are 0.10 M, which combination of concentrations would imply that the system has shifted to the right?",medium,,,,"$[A] = 0.09 M,$ $[B] = 0.09 M,$ $[C] = 0.08 M$ and $[D] = 0.11 M$","A shift to the right implies that more products are getting produced, in which case Q < K at the moment. 
+
+Given the concentrations at equilibrium:
+$K = [C]^4^[D]/[A]^3^[B]^2^$ replacing we get: 
+$K = (0.10)^4^(0.10)/(0.10)^3^(0.10)^2^$ 
+$K = 1$. 
+
+If we calculate Q with the combination of concentrations we get:
+Q = $(0.08)^4^(0.11)/(0.09)^3^(0.09)^2^$ 
+Q = 0.76
+
+and since $0.76 < 1$ it is said that the equilibrium has shifted to the right.",,"$[A] = 0.08 M,$ $[B] = 0.09 M,$ $[C] = 0.10 M$ and $[D] = 0.10 M$","A shift to the right implies that more products are getting produced, in which case Q < K at the moment. 
+
+Given the concentrations at equilibrium:
+$K = [C]^4^[D]/[A]^3^[B]^2^$ replacing we get:
+K = $(0.10)^4^(0.10)/(0.10)^3^(0.10)^2^$ 
+$K = 1$. 
+
+If we calculate Q with the combination of concentrations we get:
+Q = $(0.10)^4^(0.10)/(0.08)^3^(0.09)^2^$ 
+Q = 2.41
+
+and since $2.41 > 1$ with this combination of concentrations the equilibrium is not shifted to the right.",,"$[A] = 0.20 M,$ $[B] = 0.20 M,$ $[C] = 0.20 M$ and $[D] = 0.20 M$","A shift to the right implies that more products are getting produced, in which case Q < K at the moment. 
+
+Given the concentrations at equilibrium:
+$K = [C]^4^[D]/[A]^3^[B]^2^$ replacing we get: 
+K =$ (0.10)^4^(0.10)/(0.10)^3^(0.10)^2^$
+K = 1
+
+If we calculate Q with the combination of concentrations we get:
+Q = $(0.20)^4^(0.20)/(0.20)^3^(0.20)^2^$ 
+Q = 1
+
+and since $Q = K$ with this combination of concentrations the reaction is at equilibrium.",,"$[A] = 0.14 M,$ $[B] = 0.20 M,$ $[C] = 0.18 M$ and $[D] = 0.12 M$","A shift to the right implies that more products are getting produced, in which case Q < K at the moment. 
+
+Given the concentrations at equilibrium:
+$K = [C]^4^[D]/[A]^3^[B]^2^$ replacing we get: 
+K = $(0.10)^4^(0.10)/(0.10)^3^(0.10)^2^$
+K = 1
+
+If we calculate Q with the combination of concentrations we get:
+Q = $(0.18)^4^(0.12)/(0.14)^3^(0.20)^2^$
+Q = 1.14
+
+and since $1.14 > 1$ with this combination of concentrations the equilibrium is not shifted to the right.",,"Albert.io ""Data at Equilibrium"""
+19,AQUEOUS-19,"Take this reaction into consideration: 
+
+$A + B ⇄ C$
+
+The Concentration vs Time graph below shows how the reaction started being at equilibrium but then shifted at some point because of the addition of A. Which side did the reaction shifted to? Which line is B? At what time did the equilibrium was restored?",easy,,,,"The system shifted to the right to produce C, the green line is B and the equilibrium was restored at 6 seconds","At 2 seconds an amount of A was added to the system, and since it's a reactant, the system will move to consume it, shifting the equilibrium to the right, producing more of C and consuming both A and B (represented by the green line). At 6 seconds, equilibrium is reestablished, since from that point on all concentrations remain seemingly constant.",,"The system shifted to the right to produce C, the red line is B and the equilibrium was restored at 7 seconds","Even though C is being produced, the red line represents [A] and not [B] (given how at 2 seconds it's noticeable the sudden increment of A when it was added to the system). More than that, at 7 seconds the equilibrium was already restored.",,"The system shifted to the left to produce C, the green line is B and the equilibrium was restored at 6 seconds","The system produces C, so it is said that the equilibrium shifted to the right (to the products' side) and not to the left.",,"The system shifted to the left to produce C, the red line is B and the equilibrium was restored at 7 seconds","Part from the fact that A was added at 2 seconds, which is a way to identify which line is [A] and therefore identify the rest by discard.",,"Albert.io ""Defining Equilibrium"""
+20,AQUEOUS-20,"Below there is a reaction at equilibrium:
+
+$A + 2B + Heat ⇄ 3C + D$
+
+If you wanted to increase the production of B what could be done to accomplish that?",easy,,,,Decreasing the temperature,"Since the reverse reaction is the one that produces B and it's an exothermic reaction (because it produces Heat as well), the temperature is a way to basically remove it Heat from the system, making the system to move to compensate the lack of heat by producing more of it alongside A and B.",,Adding more B,"Even though this might increase the amount of B there is in the system, it doesn't improve the production of B, if anything it makes it get consumed now since adding B shifts the equilibrium to the right, making the forward reaction to take place.",,Adding more A,The addition of A will ultimately have the opposite result.,,Increasing the temperature,"By adding Heat to the system, you're making the equilibrium shift to the right, producing more of C and D while consuming A and B.",,"Albert.io ""Le Châtelier's Principle"""
+21,AQUEOUS-21,"Analyze the following equilibrium system:
+
+$A_3_ ⇄ 3A$
+
+The two substances (A_3_ and A) are at equilibrium, but at 2 seconds (as shown in the graph below) one of the two substances is suddenly added, disturbing the equilibrium until it's reached once again at 6 seconds. Which of the two substances is the one that was added?",easy,,,,"The blue line represents A, which started to get produced after A_3_ was added to the system, until equilibrium was reached once again.","A_3_ was the substance added to the system because in the graph it's shown that the concentration of the substance that was produced went up much more in comparison to how much of the added substance was consumed. Since the reaction is $A_3_ ⇄ 3A,$ when A_3_ is added to the system, it starts getting consumed to produce A. For each mole of A_3_ that's consumed, 3 moles of A are produced, so the ""change"" for [A] is three times as much.",,"The blue line represents A_3_, which started to get produced after A was added to the system, until equilibrium was reached once again.",A couldn't be the substance added because [A_3_] wouldn't be produced as much as the graph shows if it really were A_3_.,,"The red line represents A, which started to get produced after A_3_ was added to the system, until equilibrium was reached once again.","After the addition of the substance, the red line is going down which means that it's the one getting consumed in the reaction that's taking place.",,Cannot be determined solely on this information.,It can be determined if you take into account the stoichiometry of the reaction and the coefficients of both A_3_ and A.,,"Albert.io ""Concentration vs. Time Graphs and Equilibrium Expressions"""
+22,AQUEOUS-22,Consider the graph below in which a reaction is being represented at equilibrium. What is true about it?,easy,,,,"The blue line is the product being produced and the red line is the reactant being consumed over time. At some point before reaching equilibrium, the concentration of the product gets higher than the concentration of the reactant.","In the graph, the blue line is the one which concentration gets higher over time making it the product. Before reaching equilibrium, the concentration does get higher than the reactants', and then equilibrium is reached once the concentrations stay constant.",,"The blue line is the reactant being consumed and the red line is the product being produced over time. At some point before reaching equilibrium, the concentration of the reactant gets higher than the concentration of the reactant.",The blue line cannot be representing the reactant because its concentration is getting higher over the course of the reaction.,,"The blue line is the reactant being consumed and the red line is the product being produced over time. At some point after reaching equilibrium, the concentration of the product gets higher than the concentration of the reactant.",After reaching equilibrium the concentrations stay the same.,,The blue line is the product being produced and the red line is the reactant being consumed over time. Equilibrium is never reached since the lines don't get intersected afterwards.,Equilibrium is reached at some point given how the concentrations stay the same over time.,,"Albert.io ""Forward/Reverse 3"""
+23,AQUEOUS-23,Which reaction would be the one that would result in a higher pH if the basic solutions were at 0.25 M?,hard,,,,$2B + 2H_2_O ⇌ 2BH + 2OH^-^$ $Kb = 3.02x10^-6^$,"To determine the value of the pH, let's calculate the [OH^-^] in the solution at equilibrium.
+
+The initial concentration for the base is 0.25 M and an X amount of it is dissociated into ions.
+
+Given that $Kb = [BH]^2^[OH^-^]^2^/[B]^2^$ we replace the values: 
+$Kb = (2X)^2^(2X)^2^/(0.25 - 2X)^2^$. $0.25 - 2X$ can be assumed to be just 0.25 because of how small X probably is. 
+
+After that, solve for X:  $X = 0.010 M$.  $[OH^-^] = 2(0.010);$  $[OH^-^] = 0.020 M$.
+
+Calculate for pH: 
+$pH = 14 - (-log[OH^-^])$
+$pH = 14 - (-log(0.020))$
+
+$pH = 12.3$ being this the highest value of all the options.",,$B + H_2_O ⇌ BH + OH^-^$ $Kb = 2.64x10^-4^$,"To determine the value of the pH, let's calculate the [OH^-^] in the solution at equilibrium.
+
+The initial concentration for the base is 0.25 M and an X amount of it is dissociated into ions.
+
+Given that $Kb = [BH]^2^[OH^-^]^2^/[B]^2^$ we replace the values: 
+$Kb = (X)(X)/(0.25 - X)$. $0.25 - X$ can be assumed to be just 0.25 because of how small X probably is. 
+
+After that, solve for X: $X = 0.008 M$. $[OH^-^] = 0.008 M$.
+
+Calculate for pH: 
+$pH = 14 - (-log[OH^-^])$
+$pH = 14 - (-log(0.008))$ 
+$pH = 11.9$ 
+
+This value is not the highest in comparison.",,$2B + 2H_2_O ⇌ 2BH + 2OH^-^$ $Kb = 1.74x10^-7^$,"To determine the value of the pH, let's calculate the [OH^-^] in the solution at equilibrium.
+
+The initial concentration for the base is 0.25 M and an X amount of it is dissociated into ions.
+
+Given that $Kb = [BH]^2^[OH^-^]^2^/[B]^2^$ we replace the values: 
+$Kb = (2X)^2^(2X)^2^/(0.25 - 2X)^2^$. $0.25 - 2X$ can be assumed to be just 0.25 because of how small X probably is. 
+
+After that, solve for X: $X = 0.005 M$. $[OH^-^] = 2(0.005);$ $[OH^-^] = 0.010 M$.
+
+Calculate for pH: 
+$pH = 14 - (-log[OH^-^])$
+$pH = 14 - (-log(0.010))$
+$pH = 12$
+
+This value is not the highest of all the options.",,$B + H_2_O ⇌ BH + OH^-^$ $Kb = 6.05x10^-4^$,"To determine the value of the pH, let's calculate the [OH^-^] in the solution at equilibrium.
+
+The initial concentration for the base is 0.25 M and an X amount of it is dissociated into ions.
+
+Given that $Kb = [BH]^2^[OH^-^]^2^/[B]^2^$ we replace the values: 
+$Kb = (X)(X)/(0.25 - X)$. $0.25 - X$ can be assumed to be just 0.25 because of how small X probably is.
+
+After that, solve for X: $X = 0.012 M$. $[OH^-^] = 0.012 M$.
+
+Calculate for pH: 
+$pH = 14 - (-log[OH^-^])$
+$pH = 14 - (-log(0.012))$
+$pH = 12.1$
+
+This value is not the highest in comparison.",,"Albert.io ""pH and Ka"""
+24,AQUEOUS-24,"Analyze the following reaction:
+
+$2A +  4B$ ⇄ $C + 3D$ $K = 3.7x10^-4^$
+
+Which of the following reactions would have the lowest equilibrium constant?",easy,,,,$3A + 6B ⇄ 3/2C + 9/2D$,"Compared to the original reaction, all coefficients are multiplied by 3/2. Given that $K = 3.7x10^-4^,$ let's calculate this new K like: $K = (3.7x10^-4^)^3/2^$ $K = 7.11x10^-6^$ Being this the lowest value for the equilibrium constant in comparison.",,$4/3A + 8/3B ⇄ 2/3C + 2D$,"Compared to the original reaction, all coefficients are multiplied by 2/3. Given that $K = 3.7x10^-4^,$ let's calculate this new K like: $K = (3.7x10^-4^)^2/3^$ $K = 5.15x10^-3^$ Since this isn't the smallest value in comparison, it's incorrect.",,$2A + 4B ⇄ C + 3D$,"This is the original reaction, which has a K of 3.7x10^-4^. Since there are other options which result in smaller K, then this is not correct.",,$2/3A + 4/3B ⇄ 1/3C + D$,"Compared to the original reaction, all coefficients are multiplied by 1/3. Given that $K = 3.7x10^-4^,$ let's calculate this new K like: $K = (3.7x10^-4^)^1/3^$ $K = 7.18x10^-2^$ Since this isn't the highest value for K there is within the options, it's definitely not the right answer.",,"Albert.io ""Highest Keq for NOCl"""
+25,AQUEOUS-25,"Consider a reaction that goes like this:
+
+$A_(aq)_$ ⇄ $B_(aq)_ + 2C_(aq)_$
+
+As represented in the figure, A is added into the beaker to let it react until the reaction reaches equilibrium. What would be the position of the equilibrium? Match all colors to their respective substance.",medium,,,,"Position: Left
+Blue: A
+Green: B
+Red: C","The equilibrium is positioned to the left since there is more reactant than products at equilibrium. Since A is the reactant, it's represented by the blue molecules, while B is represented by the green ones and C by the red ones (given how there are double the red molecules compared to the green ones, as the coefficients suggests should be).",,"Position: Right
+Blue: A
+Green: B
+Red: C","If the equilibrium were positioned to the right, the blue molecules that represent the reactant A wouldn't be more than the products at equilibrium.",,"Position: Left
+Blue: A
+Green: C
+Red: B","Even though the reaction's equilibrium is positioned to the left given the [products]/[reactants] ratio, the red molecules are actually C and not B, given how they are twice as many as the green ones, and for each mole of B that's produced, 2 moles of C are formed.",,"Position: Right
+Blue: C
+Green: A
+Red: B","If the equilibrium were positioned to the right, the blue molecules that represent the reactant A (and not C) wouldn't be more than the products at equilibrium. Try to use the coefficients in the reaction as guidance.",,"Albert.io ""Modeling Equilibrium: Electrolyte in Water"""
+26,AQUEOUS-26,"Take into consideration this reaction:
+
+$A_2_B$ ⇄ $2A + B$ $K = 9.0$
+
+Which of the following reactions would have a value of K of 0.33?",medium,,,,$A + 1/2B ⇄ 1/2A_2_B$,"Compared to the original reaction, this would be the reverse reaction multiplied by 1/2. For the reverse reaction, the K is inverted like this: $K = 1/9$, but since it's multiplied by 1/2, it's elevated to that value too, so we calculate: $K = (1/9)^1/2^$ $K = 0.33$ ",,$2A + B ⇄ A_2_B$,"Compared to the original reaction, this would be the reverse reaction multiplied by 1/2. For the reverse reaction, the K is inverted like this: $K = 1/9$ $K = 0.11$ which is different from the 0.33 value that we're looking for.",,$2/3A + 1/3B ⇄ 1/3A_2_B$,"Compared to the original reaction, this would be the reverse reaction multiplied by 1/3. For the reverse reaction, the K is inverted like this: $K = 1/9$, but since it's multiplied by 1/3, it's elevated to that value too, so we calculate: $K = (1/9)^1/3^$ $K = 0.48$ which is different from the 0.33 value that we're looking for.",,$3A + 3/2B ⇄ 3/2A_2_B$,"Compared to the original reaction, this would be the reverse reaction multiplied by 3/2. For the reverse reaction, the K is inverted like this: $K = 1/9$, but since it's multiplied by 3/2, it's elevated to that value too, so we calculate: $K = (1/9)^3/2^$ $K = 0.037$ which is different from the 0.33 value that we're looking for.",,"Albert.io ""Manipulating Equilibrium Constants"""
+27,AQUEOUS-27,"Take this reaction into consideration: 
+
+$2A_(aq)_ + 3B_(aq)_$ ⇄ $4C_(aq)_ + D_(aq)_$ $K = 1.2x10^-2^$
+
+At some point in time, their concentrations are the following:
+
+$[A] =  0.15 M$, $[B] = 0.12 M$, $[C] = 0.10 M$ and $[D] = 0.14 M$.
+
+How will the reaction proceed from that point on?",easy,,,,"Given those concentrations, the reaction hasn't reached equilibrium yet and will continue producing C and D until it does.","Knowing that $K = 9$, we can calculate Q to understand the position at that point:
+
+Q = $[C]^4^[D]/[A]^2^[B]^3^$
+Q = $(0.10)^4^(0.14)/(0.15)^2^(0.12)^3^$
+Q = 0.36
+
+Since $Q < K$ the products C and B are going to continue growing in concentration until $Q = K$ and equilibrium is reached.",,"Given those concentrations, the reaction has reached equilibrium and both forward and reverse reaction should be at the same rate.","Knowing that $K = 9$, we can calculate Q to understand the position at that point:
+
+Q = $[C]^4^[D]/[A]^2^[B]^3^$
+Q = $(0.10)^4^(0.14)/(0.15)^2^(0.12)^3^$
+Q = 0.36
+
+Since Q is different from K, it's not at equilibrium yet.",,"Given those concentrations, the reaction hasn't reached equilibrium yet and will continue producing A and B until it does.","Knowing that $K = 9$, we can calculate Q to understand the position at that point:
+
+Q = $[C]^4^[D]/[A]^2^[B]^3^$
+Q = $(0.10)^4^(0.14)/(0.15)^2^(0.12)^3^$
+Q = 0.36
+
+Since $Q < K$ reactants cannot keep growing in concentration because that would only result in a smaller Q when it should be getting bigger to pursue K.",,"Given those concentrations, it cannot be determined what will happen.","It can be determined, try calculating Q with the given concentrations.",,"Albert.io ""Equilibrium: Predicting Equilibrium"""
+28,AQUEOUS-28,"In the case of any reversible reaction, if at some point in time $Q > K$, what describes better what happens from that point on until equilibrium is established?",medium,,,,"From that point on, the rate of the reverse reaction is going to get lower while the rate of the forward reaction is going to get higher until at equilibrium they're both the same.","Since $Q > K$, the concentrations of the reactants has to keep going up until equilibrium is reached. Both forward and reverse reactions are happening at the same time at all times, but to make these concentrations to go up, at this point the $rate of the reverse reaction > rate of the forward reaction$, and it'll continue to go down while the rate of the forward reaction goes up until they're equal.",,"From that point on, the rate of the forward reaction is going to get lower while the rate of the reverse reaction is going to get higher until at equilibrium they're both the same.","Since $Q > K$, the concentrations of the reactants has to keep going up until equilibrium is reached. Both forward and reverse reactions are happening at the same time at all times, but to make these concentrations to go up, at this point the $rate of the reverse reaction > rate of the forward reaction$. If the rate of reverse reaction were to continue growing while the rate of the forward reaction goes down, they would never actually be the same and equilibrium would never be reached.",,"From that point on, the reverse reaction will be the one taking place until it stops when equilibrium is reached.","Even though it could seem like the reverse reaction is the only one taking place, this is not the case. Both forward and reverse reactions are happening at the same time at all times, but to make these concentrations to go up, at this point the $rate of the reverse reaction > rate of the forward reaction$.",,"From that point on, the forward reaction will be the one taking place until it stops when equilibrium is reached.","Since $Q > K$ if the concentrations fo the products were to continue growing, Q would never be equal to K and equilibrium would never be reached.",,"Albert.io ""Formation of Phosporic Acid"""
+29,AQUEOUS-29,"Take the following hypothetical reactions into account:
+$A ⇄ B  K_1_ = 0.65$
+$B ⇄ C  K_2_ = 0.34$
+
+What would be the equilibrium constant for:
+$A ⇄ C$
+",easy,,,,0.22,"Summing up the first two reactions we get the asked reaction. Since they're getting summed up, the equilibrium constants get multiplied, so calculating the new K: $K = (0.65)(0.34)$ $K = 0.22$",,0.99,"Summing up the first two reactions we get the asked reaction. Since they're getting summed up, the equilibrium constants get multiplied so this would be incorrect.",,1.91,This was obstained by assuming that $K = K_1_/K_2_$ which is not the case.,,Cannot be determined because it's a new reaction,It can be determined by using Hess's Law to obtain the asked reaction.,,"Albert.io ""Malonic Acid Equilibrium Constant"""
+30,AQUEOUS-30,"An acid is introduced to a beaker with water for it to get dissociated like this: 
+
+$HA ⇄ H^+^ + A^-^$
+
+What is true about the pH and the equilibrium constant K?",medium,,,,"At equilibrium, the higher is the equilibrium constant then the lower is the pH.","For an acid, when the K is really big, this means that it dissociates into a lot of H^+^ ions. Since the higher [H^+^] the lower is the pH, then this statement is correct.",,"At equilibrium, the higher is the equilibrium constant then the higher is the pH.","For an acid, when the K is really big, this means that it dissociates into a lot of H^+^ ions. But remember that the higher is [H^+^] then the lower is the pH.",,"At equilibrium, the lower is the equilibrium constant then the lower is the pH.","For an acid, when the K is really small, this means that it barely dissociates into H^+^ ions, in which case the result is low [H^+^] that ultimately means high value of pH.",,"At equilibrium, the higher is the equilibrium constant then the lower is the [H^+^].","For an acid, when the K is really big, this means that it dissociates into a lot of H^+^ ions. Try to understand how [H^+^] and pH are related to each other.",,"Albert.io ""Ka and HCl"""
