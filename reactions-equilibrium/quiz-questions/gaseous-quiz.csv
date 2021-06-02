@@ -1,17 +1,364 @@
-Question,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,
-id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position
-gaseous_placeholder_1,Question 1,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_2,Question 2,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_3,Question 3,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_4,Question 4,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_5,Question 5,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_6,Question 6,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_7,Question 7,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_8,Question 8,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_9,Question 9,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_10,Question 10,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_11,Question 11,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_12,Question 12,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_13,Question 13,medium,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_14,Question 14,medium ,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-gaseous_placeholder_15,Question 15,hard,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
+Question,,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,,
+number,id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position,
+1,GASEOUS-01,"Consider the following reaction:
+
+$A_(g)_ + 2B_(g)_$ ⇄ $3C_(g)_ ΔH$ = $-50.0 kJ$
+
+What actions can you take that results in an increment on the amount of A when at equilibrium?",easy,,,,Adding C and lowering the temperature,"By adding C, a reactant of the reverse reaction, you're allowing it to take place for the system to compensate by producing more of A and B. When lowering the temperature, you're actually removing a product of the reverse reaction, heat, which also contributes to the equilibrium shifting left.",,Adding B and lowering the temperature,"When lowering the temperature, you're actually removing a product of the reverse reaction, heat, which also contributes to the equilibrium shifting left. But if you're adding B, a reactant of the forward reaction, this will not make A get produced, but on the contrary, it might shift the equilibrium to the right and make A decrease even more by reacting with B to form C.",,Adding B and increasing the temperature,"If you're adding B, a reactant of the forward reaction, this will not make A get produced, but on the contrary, it will shift the equilibrium to the right and make A decrease even more by reacting with B to form C. Besides that, if you're also increasing the temperature, this would be the equivalent to adding heat, a reactant of the forward reaction too, shifting the equilibrium further to the right.",,Adding C and increasing the temperature the temperature,"If you're increasing the temperature, this would be the equivalent to adding heat, a reactant of the forward reaction too, shifting the equilibrium to the right.",,AP Collage Board 2008 (Q 35)
+2,GASEOUS-02,"Consider the following reaction:
+ 
+$A_(g)_ + B_(g)_$ ⇄ $C_(g)_ ΔH$ = $-50.0 kJ$
+
+What can you do to increase the value of the equilibrium constant K for the reverse reaction?",medium,,,,Reducing the temperature,"Since the forward reaction is an endothermic reaction, the reverse reaction is an exothermic reaction (meaning that heat could be considered one of its products). By reducing the temperature, you're basically removing this product, making the equilibrium shift to the left, because of how its related to the equilibrium constant. This will ultimately make the equilibrium constant bigger for the reverse reaction, allowing more products of that reaction to be formed at equilibrium.",,Elevating the temperature,"Since the forward reaction is an endothermic reaction, the reverse reaction is an exothermic reaction (meaning that heat could be considered one of its products). Elevating the temperature will actually accomplish the total opposite by decreasing the value of the equilibrium constant for the reverse reaction.",,Adding C to the system,"Adding C to the system will shift the equilibrium to the left, but not by increasing the equilibrium constant value.",,Adding A to the system,Adding A to the system would do nothing regarding the equilibrium constant for any reaction.,,AP Collage Board 1999 (Q54)
+3,GASEOUS-03,"Analyze the following reaction:
+
+$A_(aq)_$ ⇄ $B_(aq)_$ $K = 3.7x10^-12^$
+
+What would be true about this system at equilibrium?",easy,,,,"When at equilibrium, there is barely any B present in the system.","Since the K for the reaction is almost 0, and at the same time $K = [B]/[A]$, then that indicates that at equilibrium $[B] ≈ 0$, especially compared to [A].",,"When at equilibrium, there is barely any A present in the system.","Being $K = [products]/[reactants]$, at equilibrium there should be much more A than B given how small is the equilibrium constant value.",,"When at equilibrium, there are equal amounts of A and B in the system.","Equilibrium is often mistaken to mean $[products] = [reactants]$, which is not the case whatsoever. A K that small indicates that at equilibrium there is a major lack of products compared to the reactants present in the system",,There is not enough information to determine the [products]/[reactants] ratio at equilibrium.,"K in the most fundamental way is a ratio of [products]/[reactants]. Its value is indicative of how much of products or reactants are compared to the other. In this case, a K that small implies a very small amount of products compared to the reactants.",,AP Collage Board 1999 (Q62)
+4,GASEOUS-04,"Consider the following reaction that's taking place in a tank:
+
+$3A_(g)_ + 5B_(g)_$ ⇄ $C_(g)_ ΔH$ = $10.0 kJ$ 
+
+What can you do to increase the amount of C there is at equilibrium?",easy,,,,Decrease the volume of the tank while increasing the temperature.,"Decreasing the volume would result in an increment in the pressure which will disturb the equilibrium by shifting the system to the right, producing more of C because there is fewer gas moles on the right side of the reaction (1 mole) compared to the left side (8 moles). On top of that, increasing the temperature will make the equilibrium constant bigger for the forward reaction given its endothermic nature, also contributing to the production of C.",,Decrease the pressure of the tank while decreasing the temperature.,"Decreasing the pressure will disturb the equilibrium by shifting the system to the left, consuming more of C because there is fewer gas moles on the right side of the reaction (1 mole) compared to the left side (8 moles), instead of producing it. On top of that, decreasing the temperature will make the equilibrium constant smaller for the forward reaction given its endothermic nature, also contributing to the consumption of C.",,Decrease the pressure of the tank while removing some of A and B,"Decreasing the pressure will disturb the equilibrium by shifting the system to the left, consuming more of C because there is fewer gas moles on the right side of the reaction (1 mole) compared to the left side (8 moles), instead of producing it. On top of that, removing A and B would only make the system go further to the left to compensate the lack of these substances.",,Decrease the volume of the tank while decreasing the temperature.,"Decreasing the volume would result in an increment in the pressure which will disturb the equilibrium by shifting the system to the right, producing more of C because there is fewer gas moles on the right side of the reaction (1 mole) compared to the left side (8 moles), but decreasing the temperature would counteract this by reducing the value of the equilibrium constant for the forward reaction.",,Ap Collage Board 1994 (Q48)
+5,GASEOUS-05,"Analyze the following reaction that's taking place at 275K:
+
+$A_(g)_ + B_(s)_$ ⇄ $C_(g)_  + 2D_(g)_$ $Kc = 1.3x10^-1^$
+
+What would be the value for Kp for the forward reaction?",medium,,,,66.1,"Kp is just another way to represent the equilibrium constant for gaseous mixtures. 
+
+In this case, to calculate Kp: $Kp = Kc(RT)^Δn^$ where Kc is the equilibrium constant expressed in terms of concentration 1.3x10^-1^, R is the gas constant 0.082 L⋅atm⋅K^−1^⋅mol^−1^, T is the temperature 275 K and finally Δn is the change in gaseous molecules (gaseous moles of products - gaseous moles of reactants) which is $3 - 1$.
+
+We just replace with the values:
+Kp = $(1.3x10^-1^)(0.082 x 275)^(3-1)^$
+Kp = 66.1",,2.93,"Kp is just another way to represent the equilibrium constant for gaseous mixtures. 
+
+In this case, to calculate Kp: $Kp = Kc(RT)^Δn^$ where Kc is the equilibrium constant express in terms of concentration 1.3x10^-1^, R is the gas constant 0.082 L⋅atm⋅K^−1^⋅mol^−1^, T is the temperature 275 K and finally Δn is the change in gaseous molecules (gaseous moles of products - gaseous moles of reactants) which is $3 - 1$.
+
+This is probably the value you would obtain if you took into account the moles of B when calculating Δn which is incorrect because Δn is only the change of gaseous molecules.",,1.3x10^-1^,"You're assuming that $Kp = Kc$ which is not the case. Kp is just another way to represent the equilibrium constant for gaseous mixtures. In this case, to calculate Kp: $Kp = Kc(RT)^Δn^$",,2.55x10^-4^,"Kp is just another way to represent the equilibrium constant for gaseous mixtures.
+
+In this case, to calculate Kp: $Kp = Kc(RT)^Δn^$ where Kc is the equilibrium constant express in terms of concentration 1.3x10^-1^, R is the gas constant 0.082 L⋅atm⋅K^−1^⋅mol^−1^, T is the temperature 275 K and finally Δn is the change in gaseous molecules (gaseous moles of products - gaseous moles of reactants) which is $3 - 1$.
+
+This is probably the value you would obtain if you calculated Δn like $(gaseous moles of reactants - gaseous moles of products)$ instead of the other way around.",,"Albert.io ""Equilibrium Stresses"""
+6,GASEOUS-06,"Consider the following reaction:
+
+$A_2_B_(g)_$ ⇄ $2A_(g)_ + B_(g)_$
+
+A_2_B decomposes into 2 moles of A and 1 mole of B. A_2_B is added to a rigid tank with an initial partial pressure of 2 atm and is left to be decomposed into its products until equilibrium. At equilibrium the total pressure of the mixture is 4 atm. What would the Kp for the reaction be?",hard,,,,Kp = 4.0,"Before A_2_B was added to the tank, this one was empty, so let's first know the initial partial pressures for all substances: $P_A2B_ = 2 atm,$ $P_A_ = 0 atm,$ and $P_B_ = 0 atm.$
+
+Knowing that the total pressure for a mixture is the sum of all partial pressures within it: $P_total_ = P_A2B_  + P_A_ + P_B_$ and assuming X as the change in the partial pressures until equilibrium and given the equilibrium total pressure: $4 = (2 - X) + (2X) + (X)$ solving for X we get: $X = 1$.
+
+We then just have to replace in the Kp expression:
+Kp = $P_A_^2^P_B_/P_A2B_$
+Kp = $(2)^2^(1)/(2-1)$
+Kp = 4",,Kp = 2.0,This is the value you would obtain if you forgot to elevate P_A_ to its coefficient in the Kp expression.,,Kp = 1.0,This is in no way related to the Kp of this particular reaction whatosever.,,Cannot be determined with this information,It can be determined. Part from the fact that the sum of all the partial pressures is equal to the total pressure of a gaseous mixture: $P_total_ = P_A_ + P_B_ + P_A2B_$,,"Albert.io ""Evaluating K for Gaseous Equilibria"""
+7,GASEOUS-07,"How would you describe the relationship between the equilibrium constants of the following reactions:
+
+$A_(g)$ ⇄ $B_(g)  Kp_1_$
+$2B(g)$ ⇄ $2A(g)  Kp_2_$",easy,,,,$Kp_1_ = 1/(Kp_2_)^2^$,"The second reaction is the reverse reaction of the first reaction multiplied by 2. Given that $Kp_1_ = P_B_/P_A_$ and $Kp_2_ = P_A_^2^/P_B_^2^$, Kp_1_ is the inverse of Kp_2_ squared: $K_1_ = 1/(K_2_)^2^$
+",,$K_1_ = K_2_$,"This assumes that the equilibrium constant Kp is the same one for the forward reaction and reverse reaction, which is not the case.",,$Kp_1_ = -2Kp_2_$,"This assumes that the equilibrium constant for the reverse reaction is the same as the forward reaction but negative, which is not the case, especially because the equilibrium constant can never be a negative number. It also assumes that if the reaction is multiplied by 2 then the constant should to, but that's not the case neither.",,$Kp_1_ = Kp_2_^2^$,"This assumes that Kp for the forward reaction is equal to the Kp for the reverse one, but that's not the case. $Kp_forward_ = 1/Kp_reverse_$",,"Albert.io ""K and the Coefficients"""
+8,GASEOUS-08,"Consider the following reaction that's taking place in a tank:
+
+$3A_(g)_ + 2B_(g)_$ ⇄ $C_(g)_ ΔH$ = $-40.0 kJ$ 
+
+What can you do to increase the amount of B there is at equilibrium without changing the equilibrium constant of the reaction?",medium,,,,Increasing the volume of the tank,"Increasing the volume would result in a decrease in the pressure which will disturb the equilibrium by shifting the system to the left, consuming more of C because there is fewer gas moles on the right side of the reaction (1 mole) compared to the left side (5 moles), producing more B in the process.",,Increasing the pressure,"Increasing the pressure will disturb the equilibrium by shifting the system to the right, producing more of C because there is fewer gas moles on the right side of the reaction (1 mole) compared to the left side (8 moles), consuming B instead of producing it.",,Increasing the temperature,"Increasing the temperature will ultimately produce more of B, but by altering the equilibrium constant and not the concentrations or pressures of the substances.",,Decreasing the temperature,Decreasing the temperature will not result in an increment in the production of B and will also alter the equilibrium constant.,,"Albert.io ""Stressing the system"""
+9,GASEOUS-09,"Analyze the following reaction that's taking place at 400K:
+
+$3A_(aq)_ + 2B_(aq)_$ ⇄ $C_(aq)_$ $Kc = 15$
+
+An amount of C is added to an empty vessel. The reaction proceeds until it reaches equilibrium, at which $[A] = 0.36 M.$ What would be the initial concentration of C when it was first added?",hard,,,,0.16 M,"When C was first added to the vessel it had an X concentration.
+
+At equilibrium 0.36 M of A were produced, which means that 0.24 M of B were produced (since $0.36 x 2/3 = 0.24)$ and 0.12 M of C were consumed (since $0.36 x 1/3 = 0.12).$
+
+We can write the expression for the equilibrium constant of the reaction: $K = [A]^3^[B]^2^/[C]$ in which $K = 1/15$ $K = 0.066$ given that it's the reverse reaction of the equilibrium constant given.
+
+We then just replace the values: $0.066 = (0.36)^3^(0.24)^2^/(X - 0.12)$ and solve for X: $X = 0.16.$",,0.12 M,"This is the value you would obtain if you assumed that the equilibrium constant for the forward reaction is the same as the equilibrium constant for the reverse reaction, which is not true.",,1.43 M,This is the value you would obtain if you forgot to elevate the concentrations to their coeffiecients in the reaction.,,0.45 M,"This is the value you would obtain if you assumed that 0.36 M of C were consumed to produce 0.36 M of A and 0.36 M of B, which is not the case given their coefficients.",,"Albert.io ""Concentration at Equilibrium"""
+10,GASEOUS-10,"Consider the following reaction: 
+
+$A_2_B_3__(g)_$ ⇄ $2A_(g)_ + 3B_(g)_$
+
+When at equilibrium, all concentrations are the same. There is information about the equilibrium constant for another reaction:
+
+$2A_2_B_3__(g)_$ ⇄ $3A_(g)_ + 6B_(g)_ K$ = $3.9x10^-3^$
+
+What are the concentrations at equilibrium of the first reaction?",hard,,,,0.5 M,"Knowing the equilibrium constant of the last reaction, we can determine the K for the first one: $K = (3.9x10^-3^)^1/2^$ $K = 0.0625$.
+
+Writing the expression for the K of the first reaction: $K = [A]^2^[B]^3^/[C]$.
+
+Replacing the values: $0.0625 = (X)^2^(X)^3^/(X)$.
+
+Solving for X: $X = (0.0625)^1/4^$ $X = 0.5 M$.",,0.25,"This is the value you would obtain if you assumed that the equilibrium constant for the first reaction is the same as the one for the last reaction, which is not the case. Since that last reaction is multiplied by 2, to determine the K for the first one you would have to calculate the square root of that equilibrium constant.",,0.21,"When a reaction is multiply by 2, the new K would be its value squared. In this case, the first reaction is the last one divided by 2, so to calculate its K you'd have to calculate it by getting the square root of the given K, and not just dividing it by 2.",,0.063,This is not the value for the concentrations at equilibrium. Try first calculating the equilibrium constant for the first reaction.,,"Albert.io ""Equilibrium Trials"""
+11,GASEOUS-11,"Consider the following reaction: 
+
+$A_(g)_ + 2B_(g)_$ ⇄ $4C_(g)_$
+
+3 moles of A, 4 moles of B and 2 moles of C are at equilibrium in a $5 L$ rigid tank. What would the value of the equilibrium constant K be?",medium,,,,0.066,"Since the species of the reactions are in gaseous state, they occupy all of whichever vessel their in.
+
+In this case, to calculate the concentration for all reactants and products: $[A] = (3/5) = 0.6 M$, $[B] = (4/5) = 0.8 M$ and $[C] = (2/5) = 0.4 M$.
+
+Knowing this, we just write the expression for K: $K = [C]^4^/[A][B]^2^$ and replace all values
+$K = (0.4)^4^/(0.6)(0.8)^2^$
+$K = 0.066$.",,0.33,"This is the value you would obtain if you assumed $moles = concentration$, which is not the case. You have to calculate the concentration of each gas by dividing its moles by the volume of the tank.",,0.83,This is the value you would obtain if you forgot to elevate the concentrations to their coeffiecients in the reaction.,,0.16,This is the value you would obtain if you forgot to elevate the concentrations to their coeffiecients in the reaction and also assumed the moles given are their concentrations.,,"Albert.io ""Match K to Moles"""
+12,GASEOUS-12,"A_2_B_3_  reacts to produce A and B. To make this happen, a student adds 2 moles of A_2_B_3_, 3 moles of A and 4 moles of B into a 4 L vessel. After the reaction has reached equilibrium, the student is able to measure $0.70 M$ of A_2_B_3_. What would be the value for th equilibrium constant of the formation of A and B?",hard,,,,0.0112,"First let's write the equation for the reaction: $A_2_B_3_ ⇄ 2A + 3B$.
+
+Now we can calculate the initial concentrations for each involved substance, knowing that the vessel has a volume of 4 L: $[A_2_B_3_] = (2/4) = 0.50 M$, $[A] = (3/4) = 0.75 M$ and $[B] = (4/4) = 1.00 M$.
+
+Since [A_2_B_3_] went from 0.50 M to 0.70 M, it was produced, meaning that the reverse reaction was the one that took place to reach equilibrium. Having changed $0.20 M$, this means that [A] changed by $-0.40 M$ and [B] changed by $-0.60 M$ given the stoichiometry of the reaction.
+
+Now we just replace in the K expression for the formation of A_2_B_3_:
+
+K = $[A_2_B_3_]/[A]^2^[B]^3^$
+K = $(0.70)/(0.35)^2^(0.40)^3^$
+K = 89.3
+
+But since the equilibrium constant asked is for the formation of A and B:
+
+K = 1/89.3
+K = 0.0112",,89.3,This is the value for the equilibrium constant of the formation of A_2_B_3_ but the one asked is for the forward reaction.,,0.2,This is the value you would obtain if you forgot to elevate the concentrations to their coeffiecients in the reaction.,,0.62,"This is the value you would obtain if you assumed the change in concentration for all species is the same, whic is not correct.",,"Albert.io ""Determining Equilibrium Constant"""
+13,GASEOUS-13,"A_3_B_2_  reacts to produce A and B. Initial concentrations and equilibrium concentrations are gathered in the following table:
+What is the value for the equilibrium constant K for the formation of A and B?",hard,,,"Compound | Initial | Concentration
+A_3_B_2_ | 0.040 | 1.15x10^-5^
+A | 0.030 | ?
+B | 0.020 | ?",1.15x10^-5^,"First let's write the equation for the reaction: $A_3_B_2_ ⇄ 3A + 2B$. 
+
+Since [A_3_B_2_] went from 0.040 M to 0.030 M, it was consumed, meaning that the forward reaction was the one that took place to reach equilibrium.
+
+Having changed $0.010 M$, this means that [A] changed by $0.030 M$ and [B] changed by $0.020 M$ given the stoichiometry of the reaction
+
+Now we just replace in the K expression for the formation of A and B: 
+
+K = $[A]^3^[B]^2^/[A_3_B_2_]$
+K = $(0.0)/(0.35)^2^(0.40)^3^$
+K = 89.3
+
+But since the equilibrium constant asked is for the formation of A and B: 
+
+K = 1/89.3
+K = 0.0112",,0.04,"This is the value you would obtain if you assumed the change in concentration for all species is the same, whic is not correct.",,0.08,This is the value you would obtain if you forgot to elevate the concentrations to their coeffiecients in the reaction.,,1.15x10^-3^,This is not the right value. Try writing first the balanced equation for the reaction.,,"Albert.io ""Solving for K"""
+14,GASEOUS-14,"Analyze the following reaction that's taking place at 235K:
+
+$A_(g)_ ⇄ 2B_(g)_ $
+
+The reaction is at equilibrium and their partial pressures are $P_A_ = 0.50 atm$ and $P_B_ = 1.11 atm$. The pressure is increased in a way that makes both partial pressures to go up by 20% at 235K. What would be the partial pressure for A when equilibrium is reached once again?",hard,,,,0.696,"First let's calculate Kp for the reaction: 
+
+Kp = P_B_^2^/P_A_
+Kp = (0.95)^2^/(0.55)
+Kp = 1.64
+
+If the partial pressures went up by 20%, this means the new initial partial pressures are: 
+
+P_A_ = $(0.95 + 0.95x0.20)$ = $1.14 atm$
+P_B_ = $(0.55 + 0.55x0.20)$ = $0.66 atm$
+
+To know how the reaction will proceed, let's calculate Qp: 
+
+Qp = P_B_^2^/P_A_
+Qp = (1.14)^2^/(0.66)
+Qp = 1.97
+
+Since $Qp > Kp$ then the reaction that'll be taking place is the reverse reaction, producing A and consuming B.
+
+Knowing that the Kp for the reverse reaction (we can call it K'p) is just $K'p = 1/Kp$.
+
+Writing the expression for the new equilibrium system, being X the change in pressure:
+
+1/Kp = $P_A_/P_B_^2^$
+1/1.64 = $(0.66 + X)/(1.14 - 2X)^2^$
+
+At this point you could either substitute X for all values to check which one's right or just solve for X (careful, you'll get two solutions): $X = 0.036 atm.$ The partial pressure of A at equilibrium is: $P_A_ = (0.66 + 0.036) = 0.696 atm$.",,2.17,"This is the value you'd get if you solved for X (being X the change in pressure) and got $1.51 atm$ as a solution. Even though it's mathematically correct, it's impossible for that to be the change, among other reasons, because it's greater than the other solution $0.036 atm$, so the equilibrium would be reached first with this last value.",,1.069,This is the partial pressure for B and not for A.,,0.55,"This assumes that the partial pressure for A in the new equilibrium system is the same one as in the previous equilibrium system, which is not the case.",,"Albert.io ""Initial Moles"""
+15,GASEOUS-15,"Take the following hypothetical reactions into account:
+
+X ⇄ Y + Z  K_1_
+Y ⇄ Z +  W K_2_
+
+What would the value of the equilibrium constant K_3_ for this reaction be?
+
+X ⇄ 2Z + W K_3_",easy,,,,$K_3_ = K_1_K_2_$,"By summing up the reactions we get the reaction:
+$X ⇄ 2Z + W K_3_$ The constant K of this reaction would be both constants multiplied: K_1_K_2_.
+
+",,$K_3_ = 1/K_1_K_2_$,This would be the equilibrium constant for the reverse reaction of the desired reaction.,,$K_3_ = K_1_/K_2_$,"K_1_ and K_2_ when summing up both reactions get multiplied instead, so one being divided by the other wouldn't make sense in this case. ",,$K_3_ = K_1_^2^$,Try writing the expressions of each constant with the respective concentrations to ultimately determine K_3_.,,"Albert.io ""Equilibrium of the Overall Reaction"""
+16,GASEOUS-16,"Analyze the following reactions that are in equilibrium:
+
+$I A_(g)_$ ⇄ $3B_(g)_ $
+$II 4C_(g)_$ ⇄ $3D_(g)_ + E_(s)_$
+$III 2F_(g)_$ ⇄ $G_(g)_ + H_(g)_$
+$IV 3I_(g)_$ ⇄ $J_(g)_ + 3K_(g)_$
+
+Which one of their equilibrium wouldn't be disturbed by a change on the volume or pressure of the vessel?
+",hard,,,,III,The equilibrium of the reaction $2F_(g)_ ⇄ G_(g)_ + H_(g)_$ wouldn't be disturbed if the pressure is modified because the number of gaseous moles is the same in both sides (2).,,II,"For the reaction $4C_(g)_ ⇄ 3D_(g)_ + E_(s)_$ even if there are the same number of moles on each side, only the gaseous ones are important when it comes to Kp or the equilibrium system of a reaction involving gaseous compounds. In this case there are 4 gaseous moles on the reactants side and 3 on the products side, so altering the pressure would ultimately disturb the equilibrium.",,I,"For the reaction $A_(g)_ ⇄ 3B_(g)_ $, if the pressure were raised, the equilibrium would shift to consume B and produce A. If the pressure got reduced instead, the equilibrium would shift to consume A and produce B to compensate the lack of gaseous moles in the system.",,IV,"For the reaction $3I_(g)_ ⇄ J_(g)_ + 3K_(g)_$, if the pressure were raised, the equilibrium would shift to consume J and K to produce I. If the pressure got reduced instead, the equilibrium would shift to consume I and produce J and K to compensate the lack of gaseous moles in the system.",,"Albert.io ""Equalities"""
+17,GASEOUS-17,"The reaction that produces a compound X has an equilibrium constant of $K_eq_ = 22.22$. In a vessel, consider the reaction:
+
+$X_(g)_$ ⇄ $2A_(g)_ + 3B_(g)_$
+
+All concentrations are measured: $[X] = 0.10 M$, $[A] = 0.35 M$, $[B] = 0.40 M$.  At this point, is the reaction at equilibrium?",medium,,,,The system is not at equilbrium. The reverse reaction will keep going until $Q = K$.,"Writing the Q expression for this particular reaction:
+
+Q = $[A]^2^[B]^3^/[X]$
+
+If we replace those with all the values:
+Q = $(0.35)^2^(0.40)^3^/(0.10)$
+Q = 0.078
+
+If we compare this to the equilibrium constant for the reaction, which is the inverse of the one for the reverse reaction:
+K = 1/22.22
+K = 0.045
+
+Since $Q > K$ the revese reaction is the one that's going to step up until $Q = 0.045$.",,"The system is at equilbrium. At this point, $Q = K$.","Writing the Q expression for this particular reaction:
+
+Q = $[A]^2^[B]^3^/[X]$
+
+If we replace those with all the values:
+Q = $(0.35)^2^(0.40)^3^/(0.10)$
+Q = 0.078
+
+If we compare this to the equilibrium constant for the reaction, which is the inverse of the one for the reverse reaction:
+K = 1/22.22
+K = 0.045
+
+Since Q is different from K, the reaction is not at equilibrium.",,The system is not at equilbrium. The forward reaction will keep going until $Q = K$.,"Writing the Q expression for this particular reaction:
+
+Q = $[A]^2^[B]^3^/[X]$
+
+If we replace those with all the values:
+Q = $(0.35)^2^(0.40)^3^/(0.10)$
+Q = 0.078
+
+When compared to the equilibrium constant K, the reaction that's going to step up is not the forward reaction.",,The system is not at equilbrium. The reaction will stop at this point.,"When a system is not at equilibrium, the reaction won't stop until it's reached.",,"Albert.io ""Equilibrium of Ammonia"""
+18,GASEOUS-18,"Analyze the following reaction:
+
+$A + B ⇄ C$ $Kp = X$
+
+What would be the Kc for this reaction:
+
+2C ⇄ A + B",medium,,,,$Kc = 1/X^2^(RT)^Δn^$,"Since Kp and Kc are related like this: $Kp = Kc(RT)^Δn^$ then let's find out first the Kp expression for the last reaction. Since the last reaction is the first one reversed and multiplied by 2, we get that: $Kp = 1/X^2^$ Solving for Kc in the expression they're related in: $Kc = 1/X^2^(RT)^Δn^$.",,$Kc = X^2^(RT)^Δn^$,"Remember that since the last reaction is not only multiplied by 2 but also reversed, then its equilibrium constant is also the inverse of the original one: $Kp = 1/X$.",,$Kc = 1/X(RT)^Δn^$,"Remember that since the last reaction is not only reversed, but also mutiplied by 2. then its equilibrium constant is also squared: $Kp = X^2^$.",,$Kc = X(RT)^Δn^$,Try to understand how Kp and Kc are related to each other first.,,"Albert.io ""Kp for Reaction"""
+19,GASEOUS-19,Consider the graph above in which the yellow line represents the forward reaction and the blue one the reverse reaction of an equilibrium system. What would best describe what could have happened at points 1 and 2 of the graph?,medium,,,,At point 1 the equilibrium has been reached and at point 2 a catalyst was added to accelerate both reactions' rates.,"At point 1 the equilibrium is established given how both reaction's rates are equal from that point on, while at point 2 both of the rates go up without any disturbance happening to the equilibrium, which would most likely be caused by the addition of a catalyst, which would accelerate not one but both reactions by the same amount.",,At point 1 the equilibrium has been reached and at point 2 the equilibrium is disturbed once again.,"Even though at point 1 the equilibrium is in fact reached, at point 2 the equilibrium is not disturbed because both reactions' rates remain equal.",,At point 1 reactions stopped and at point 2 they keep going.,"The reactions don't stop at any time. The reactions' rates from point 1 until point 2 remain constant, which doesn't mean they're 0.",,"At point 1 reactions stopped and at point 2 a catalyst was added to accelerate both reactions rates. Besides that, ","Even though at point 2 a catalyst was in fact added to the system, the reactions don't stop at any time. The reactions' rates from point 1 until point 2 remain constant, which doesn't mean they're 0. ",,"Albert.io ""Catalysts and the Equilibrium State"""
+20,GASEOUS-20,Consider the figure above. Both are closed vessels with an equilibrium gaseous reaction within. What can explain what happened from image 1 to image 2?,medium,,,,"The equilibrium shifted because of the increment of the pressure, consuming the blue molecules and producing the red ones as a counteract to maintain equilibrium.","By pushing down the lid into the vessel, the volume of the system is decreasing, increasing the pressure. This makes the system to shift and react in order to relief this pressure somehow. In this case, the blue molecules are consumed and the red ones are produced.
+
+With this information we could determine that $4Blue_(g)_ ⇋ 4Red_(g)_$, meaning that by consuming the blue molecules and producing the red ones, the gaseous molecules within the system will decrease, to preserve equilibrium as much as possible.",,"The equilibrium shifted because of the decrease of the pressure, consuming the blue molecules and producing the red ones as a counteract to maintain equilibrium.","By pushing down the lid into the vessel, the volume of the system is decreasing, increasing the pressure, not decreasing it.",,They must be two different vessels because molecules in the closed system couldn't have changed.,There is no information that could indicate that these are different vessels. Molecules in a chemical system can change.,,Blue molecules were extracted and red molecules injected into the system somehow.,No molecules were extracted nor injected into the vessel whatsoever since it's an enclosed system. Any change that occured must have happened by a reaction taking place.,,"Albert.io ""Description of Reaction"""
+21,GASEOUS-21,"Consider the following unbalanced reaction with ""[ ]"" where the coefficients should be: 
+
+$2A_(g)_$⇄ $[ ]B_(g)_  + C_(g)_$
+
+The reaction is represented in the figure above, in which the beaker 1 has the initial mixture and the beaker 2 the system at equilibrium. What would be the equilibrium constant for the formation of 2 moles of A? Assume each ball or molecule makes up for 1 mole of the substance.",medium,,,,0.8,"First of all, given how the beaker 1 has only one type of substance and then it reacts to form 2 other different compounds, we can assume that the blue molecules are for A in the reaction.
+
+Parting from that, seeing how 10 moles reacted to form 10 of the red molecules and 5 of the green ones, you could write the equation as: $2A_(g)_⇄ 2B_(g)_  + C_(g)_$ for which the expression for the equilibrium constant is: $K = [B]^2^[C]/[A]^2^$ and replacing the values at equilibrium:
+
+K = $(10/1)^2^(5/1)/(20/1)^2^$
+K = 1.25
+
+Since the asked constant is for the formation of 2 moles of A, that would tbe the K for the reverse reaction:
+K = 1/1.25
+K = 0.8
+",,1.25,"Remember the asked equilibrium constant is the one for the formation of 2 moles of A, not just for the balanced equation. The equilibrium constant for the reverse reaction would be the inverse of K: $K_r_ = 1/K_f_$",,0.4,"Given how the beaker 1 has only one type of substance and then it reacts to form 2 other different compounds, we can assume that the blue molecules are for A in the reaction. Parting from that, seeing how 10 moles reacted to form 10 of the red molecules and 5 of the green ones, it's confirmed that the equation wasn't originally balanced, so if you assumed all the coeffiecients being 1, it's incorrect.",,2.5,Try to determine first how the molecules change from image 1 to 2 and then count the moles within the beaker to determine the balanced equation to ultimately calculate the equilibrium constant.,,"Albert.io ""Equilibrium Constant for System"""
+22,GASEOUS-22,"Analyze the following reaction: 
+
+$A_(g)_$ ⇄ $B_(g)_ $
+
+At some point in time, the reaction is at equilibrium, but a sudden addition of B disturbs it. What would describe better what happens afterwards?",easy,,,,The reverse reaction's rate will start declining while the forward reaction's rate increases until the equilibrium is reached.,"Even though an additiong of B will certainly make the reverse reaction's rate to be at its peak, after that it will keep decreasing until $rate forward = rate reverse$.",,The forward reaction's rate will start declining while the reverse reaction's rate increases until the equilibrium is reached.,"Even though an additiong of B will certainly make the reverse reaction's rate to be at its peak, it will not continue increasing but decreasing from that point on.",,Both reaction's rates would increase in order for the equilibrium to be reestablished.,The rate of the forward reaction would decrease in comparison to the rate of the reverse reaction because the equilibrium has to be restored by consuming B and producing A.,,The forward reaction will stop and the reverse reaction's rate will increase until equilibrium is reached.,"Both forward and reverse reaction are active at all times, even at equilibrium.",,"Albert.io ""Using Reaction Rate to Assess the Equilibrium State"""
+23,GASEOUS-23,"Take the following hypothetical reactions into account:
+
+X ⇄ $Y_(g)_ + Z_(g)_ ΔH$ > 0
+
+What actions could you take to increase the formation of Y and Z?",easy,,,,All of the above,All the previous actions are valid to increase the production of Y and Z for this reaction in particular.,D,Injecting more X to the system,Adding more X will increase its concentration which will make the equilibrium shift to consume it and ultimately produce more of Y and Z.,,Increasing the temperature of the system,"Given this is an endothermic reaction, increasing the temperature will increase the equilibrium constant value, resulting in more products forming than previously.",,Decreasing the pressure of the system,"Given there are 2 gaseous moles on the right of the reaction and just 1 mole on the left, decreasing the pressure would make the equilibrium shift to compensate the excess of space and produce more gaseous moles.",,"Albert.io ""Shift in Equilibrium Causing More Products to Form"""
+24,GASEOUS-24,"Analyze the following reaction: 
+
+$3A + 2B$ ⇄ $C K = 1.5$
+
+Under the current conditions, it is known that Q > K. Which combination of concentrations would make sense at this point?",medium,,,,"$[A] = 0.3 M$
+$[B] = 0.9 M$
+$[C] = 0.8 M$","Writing the expression for Q for this reaction:
+
+Q = $[C]/[A]^3^[B]^2^$
+
+Replacing the values with these concentrations:
+
+Q = $(0.8)/(0.3)^3^(0.9)^2^$
+Q = 36.6
+
+And since $K = 1.5$ Q is in fact much greater than K at this point $Q > K$.",,"$[A] = 1.1 M$
+$[B] = 1.0 M$
+$[C] = 1.5 M$","Writing the expression for Q for this reaction:
+
+Q = $[C]/[A]^3^[B]^2^$
+
+Replacing the values with these concentrations:
+
+Q = $(1.5)/(1.1)^3^(1.0)^2^$
+Q = 1.1
+
+And since $K = 1.5$ Q is not greater than K, but in fact smaller.",,"$[A] = 1.1 M$
+$[B] = 0.9 M$
+$[C] = 1.6 M$","Writing the expression for Q for this reaction:
+
+$Q = [C]/[A]^3^[B]^2^$
+
+Replacing the values with these concentrations:
+
+Q = $(1.6)/(1.1)^3^(0.9)^2^$
+Q = 1.5
+
+And since $K = 1.5$ Q at this point is actually equal to K, so it would be at equilibrium.",,"$[A] = 1.6 M$
+$[B] = 1.5 M$
+$[C] = 6.0 M$","Writing the expression for Q for this reaction:
+
+Q = $[C]/[A]^3^[B]^2^$
+
+Replacing the values with these concentrations: 
+
+Q = $(6.0)/(1.6)^3^(1.5)^2^$
+Q = 0.6
+
+And since $K = 1.5$ Q is far smaller than K at this point.",,"Albert.io ""Keq Comparisons Using Initial and Equilibrium Concentrations"""
+25,GASEOUS-25,"Analyze the following reaction that's taking place at 275K:
+
+$3A_(g)_$ ⇄ $B_(g)_  +3C_(g)_$
+
+The vessel is initially injected with only A. The initial total pressure is 4 atm and at equilibrium it ends up being 5 atm. What would be the equilibrium constant Kp of the reaction?",hard,,,,27,"Since at the beginning the pressure in the vessel is composed entirely by the partial pressure for A, so that could be counted as the initial pressure for A: $4 atm$.
+
+Considering X as the change on pressure, the partial pressures at equilibrium should be: $P_A_ = 4 - 3X$, $P_B_ = X$ and $P_C_ = 3X$.
+
+Given that the total pressure of $5 atm$ is composed by these partial pressures:
+
+P = $P_A_ + P_B_ + P_C_$
+5 = $(4 - 3X) + (X) + (3X)$
+
+Solving for X: $X = 1 atm$. So at equilibrium: $P_A_ = 1 atm$, $P_B_ = 1 atm$ and $P_C_ = 3 atm$. Calculating Kp for the equation:
+
+Kp = $P_B_P_C_/P_A_$
+Kp = $(1)(3)^3^/(1)^3^$
+Kp = 27",,3,"When calculating Kp for this reaction, take into account the coefficients in the balanced equation when elevating the partial pressures in the expression.",,0.04,The asked Kp is for the reaction: $3A_(g)_ ⇄ B_(g)_  +3C_(g)_$ while 0.04 would be closer to the Kp for the reverse reaction.,,It cannot be determined with this information only.,There is enough information. The total pressure for the system is equal to the sum of all the partial pressures within.,,"Albert.io ""Gaseous Equilbrium"""
+26,GASEOUS-26,"Take the following gaseous reactions into account:
+
+$A_(g)_$ ⇄ $2B_(g)_$
+$2C_(g)_ + D_(g)_$ ⇄ $E_(g)_ + 3F_(g)_$
+$G_(g)_ + H_(g)_$ ⇄ $4I_(g)_$
+$J_(g)_$ ⇄ $4K_(g)_$
+
+In which one of the previous would an increment in the pressure probably affect the most the formation of the products?",medium,,,,$J_(g)_ ⇄ 4K_(g)_$,"Given there are 4 gaseous moles in the product's side and just 1 mole in the reactant's side, the difference of 3 moles would most likely make this reaction to be the most affected if the pressure were to be increased.",,$A_(g)_ ⇄ 2B_(g)_$,"Given there are 2 gaseous moles in the product's side and just 1 mole in the reactant's side, the difference of only 1 gaseous mole is not enough for an increment of pressure to make an impact in the formation of products.",,$2C_(g)_ + D_(g)_ ⇄ E_(g)_ + 3F_(g)_$,"Given there are 3 gaseous moles in the product's side and 4 moles in the reactant's side, the difference of only 1 gaseous mole is not enough for an increment of pressure to make an impact in the formation of products.",,$G_(g)_ + H_(g)_ ⇄ 4I_(g)_$,"Given there are 2 gaseous moles in the product's side and 4 moles in the reactant's side, the difference of 2 gaseous mole is not the greatest difference in comparison to other options.",,"Albert.io ""Equilibrium Distribution"""
+27,GASEOUS-27,"Take the following reactions into account: 
+
+A ⇄ $B ΔH = X$ 
+C ⇄ $D ΔH = -X$ 
+E ⇄ $F ΔH = 5X$
+G ⇄ $H ΔH = -10X$
+
+In which one of the previous would a decrease in the temperature probably increase the most the formation of the products?",easy,,,,$G ⇄ H ΔH = -10X$,"Given that this reaction has the lowest value for the enthalpy change, it would be the most exothermic reaction of the options, so decreasing the temperature would most likely increase the formation of products for this reaction the most.",,$A ⇄ B ΔH = X$,"Given that this reaction has a positive value for the enthalpy change, this means it's an endothermic reaction, so decreasing the temperature would not increase the formation of the products but on the contrary, it would shift the equilibrium to consume the products.",,$C ⇄ D ΔH = -X$,"Given that this reaction has a negative value for the enthalpy change, it is in fact an exothermic reaction but it's not the most exothermic one of the options, so decreasing the temperature would most likely increase the formation of products for this reaction but not as much as for others.",,$E ⇄ F ΔH = 5X$,"Given that this reaction has the greatest value for the enthalpy change, this means it's the most endothermic reaction of the options, so decreasing the temperature would not increase the formation of the products but on the contrary, it would shift the equilibrium to consume the products.",,"Albert.io ""Volume Effects on Gaseous Equilibria"""
+28,GASEOUS-28,"Take the following gaseous reactions into account:
+
+$A_(g)_$ ⇄ $2B_(g)_$
+$2C_(g)_ + D_(g)_$ ⇄ $E_(g)_ + 3F_(g)_$
+$G_(g)_ + H_(g)_$ ⇄ $4I_(g)_$
+$J_(g)_$ ⇄ $4K_(g)_$
+
+In which one of the previous would an increment in the volume probably increase the most the formation of the products?",medium,,,,$J_(g)_ ⇄ 4K_(g)_$,"When a vessel's volume increases, the pressure decreases because there is more space for the gases to fill in. Given there are 4 gaseous moles in the product's side and just 1 mole in the reactant's side, the difference of 3 moles would most likely make this reaction to be the most favored if the volume were increased.",,$A_(g)_ ⇄ 2B_(g)_$,"Given there are 2 gaseous moles in the product's side and just 1 mole in the reactant's side, the difference of only 1 gaseous mole is not enough for an increment of volume to make an impact in the formation of products.",,$2C_(g)_ + D_(g)_ ⇄ E_(g)_ + 3F_(g)_$,"Given there are 3 gaseous moles in the product's side and 4 moles in the reactant's side, the difference of only 1 gaseous mole is not enough for an increment in the volume to make an impact in the formation of products.",,$G_(g)_ + H_(g)_ ⇄ 4I_(g)_$,"Given there are 2 gaseous moles in the product's side and 4 moles in the reactant's side, the difference of 2 gaseous mole is not the greatest difference in comparison to other options.",,"Albert.io ""Volume and Partial Pressure"""
+29,GASEOUS-29,"Take the following gaseous reactions into account:
+
+$A_(g)_$ ⇄ $3B_(g)_ + 2C_(g)_$
+$D_(g)_$ ⇄ $E_(g)_ + F_(g)_$
+$3G_(g)_ + H_(g)_$ ⇄ $2I_(g)_$
+$J_(g)_$ ⇄ $2K_(g)_$
+
+In which one of the previous would a decrease in the volume probably affect the most the formation of the products?",medium,,,,$A_(g)_ ⇄ 3B_(g)_ + 2C_(g)_$,"When a vessel's volume decreases, the pressure increases because of the lack of space for the gases to fill in. Given there are 5 gaseous moles in the product's side and just 1 mole in the reactant's side, the difference of 4 moles would most likely make this reaction to be the most affected if the pressure were to be increased.",,$D_(g)_ ⇄ E_(g)_ + F_(g)_$,"Given there are 2 gaseous moles in the product's side and just 1 mole in the reactant's side, the difference of only 1 gaseous mole is not enough for a decrease in the volume to make a big impact in the formation of products.",,$3G_(g)_ + H_(g)_ ⇄ 2I_(g)_$,"Given there are 3 gaseous moles in the product's side and 3 moles in the reactant's side, there is no difference in the number of gaseous moles so altering the pressure won't have any effect when it comes to its equilibrium.",,$J_(g)_ ⇄ 2K_(g)_$,"Given there are 2 gaseous moles in the product's side and just 1 mole in the reactant's side, the difference of 1 gaseous mole is not enough for a decrease in the volume to make a big impact in the formation of products.",,"Albert.io ""The Magnitude of K"""
+30,GASEOUS-30,"Consider the following reaction: 
+
+$A_(g)_$ ⇄ $2B_(g)_ ΔH > 0$
+
+If the temperature were raised, what would happen to the value for Kp of this reaction?",medium,,,,The Kp would increase,"For this endothermic reaction, if the temperature is raised, the value for Kp would actually go up which is what ultaimtely results in the formation of more products than in the previous equilibrium system.",,The Kp would decrease,"This would be true for an exothermic reaction, but since $ΔH > 0$, then energy is absorbed, which makes this an endothermic reaction that's favored by the increment of the temperature.",,The Kp stays constant,"Even though the Kp is the equilibrium constant, this one can actually vary when the temperature is altered and will depend on the energetic nature of the reaction.",,Not enough information,"There is enough information. Try determining if this is an endothermic or exothermic reaction first, and see how that relates to the temperature.",,"Albert.io ""ΔH and K"""

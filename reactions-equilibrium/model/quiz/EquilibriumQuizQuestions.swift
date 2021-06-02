@@ -25,7 +25,7 @@ struct EquilibriumQuizQuestions {
     private(set) fileprivate static var solubility: QuizQuestionsList<EquilibriumQuestionSet>!
 
     private static func read(_ file: String, _ questionSet: EquilibriumQuestionSet) -> QuizQuestionsList<EquilibriumQuestionSet> {
-        let headerCols = file.starts(with: "aqueous") ? 1 : 0
+        let headerCols = file.starts(with: "solubility") ? 0 : 1
         return QuizQuestionReader.readOptional(
             from: file,
             questionSet: questionSet,

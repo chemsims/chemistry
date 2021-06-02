@@ -256,7 +256,7 @@ private struct CsvRow {
     }
 
     func getOptional(index: Int) -> String? {
-        if let result = underlying[safe: index]?.trimmingCharacters(in: .whitespaces),
+        if let result = underlying[safe: index]?.trimmingCharacters(in: .whitespacesAndNewlines),
            !result.isEmpty {
             return result
         }
