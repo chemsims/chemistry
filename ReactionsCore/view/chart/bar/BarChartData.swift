@@ -39,14 +39,14 @@ public struct BarChartData {
         self.accessibilityValue = accessibilityValue
     }
 
-    let label: String
-    let equation: Equation
-    let color: Color
+    public let label: String
+    public let equation: Equation
+    public let color: Color
 
-    let initialValue: InitialValue?
+    public let initialValue: InitialValue?
 
-    let accessibilityLabel: String
-    let accessibilityValue: (CGFloat) -> String
+    public let accessibilityLabel: String
+    public let accessibilityValue: (CGFloat) -> String
 
     public struct InitialValue {
         let value: CGFloat

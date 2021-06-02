@@ -80,7 +80,6 @@ extension TextLine {
     public func prepending(_ other: TextSegment) -> TextLine {
         TextLine(content: [other] + content)
     }
-
 }
 
 extension Array where Element == TextLine {

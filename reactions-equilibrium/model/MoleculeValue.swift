@@ -3,68 +3,40 @@
 //
 
 import Foundation
+import ReactionsCore
 
-/// Provides a value of type `value` for each molecule
-struct MoleculeValue<Value> {
-    let reactantA: Value
-    let reactantB: Value
-    let productC: Value
-    let productD: Value
+typealias MoleculeValue<Value> = EnumMap<AqueousMolecule, Value>
 
+extension EnumMap where Key == AqueousMolecule {
     init(
         reactantA: Value,
         reactantB: Value,
         productC: Value,
         productD: Value
     ) {
-        self.reactantA = reactantA
-        self.reactantB = reactantB
-        self.productC = productC
-        self.productD = productD
-    }
-
-    init(builder: (AqueousMolecule) -> Value) {
-        self.init(
-            reactantA: builder(.A),
-            reactantB: builder(.B),
-            productC: builder(.C),
-            productD: builder(.D)
-        )
-    }
-
-    func map<MappedValue>(_ f: (Value) -> MappedValue) -> MoleculeValue<MappedValue> {
-        MoleculeValue<MappedValue>(builder: { f(value(for: $0)) })
-    }
-
-    func combine<OtherValue, MappedValue>(
-        with other: MoleculeValue<OtherValue>,
-        using combiner: (Value, OtherValue) -> MappedValue
-    ) -> MoleculeValue<MappedValue> {
-        MoleculeValue<MappedValue>(builder: { molecule in
-            let lhs = value(for: molecule)
-            let rhs = other.value(for: molecule)
-            return combiner(lhs, rhs)
+        self.init(builder: { element in
+            switch element {
+            case .A: return reactantA
+            case .B: return reactantB
+            case .C: return productC
+            case .D: return productD
+            }
         })
     }
 
-    func value(for molecule: AqueousMolecule) -> Value {
-        switch molecule {
-        case .A: return reactantA
-        case .B: return reactantB
-        case .C: return productC
-        case .D: return productD
-        }
+    var reactantA: Value {
+        value(for: .A)
     }
 
-    func updating(with newValue: Value, for molecule: AqueousMolecule) -> MoleculeValue<Value> {
-        MoleculeValue(builder: {
-            $0 == molecule ? newValue : value(for: $0)
-        })
+    var reactantB: Value {
+        value(for: .B)
     }
-}
 
-extension MoleculeValue {
-    var all: [Value] {
-        [reactantA, reactantB, productC, productD]
+    var productC: Value {
+        value(for: .C)
+    }
+
+    var productD: Value {
+        value(for: .D)
     }
 }

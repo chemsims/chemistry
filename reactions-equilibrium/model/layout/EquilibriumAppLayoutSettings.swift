@@ -195,21 +195,11 @@ extension EquilibriumAppLayoutSettings {
 
 extension EquilibriumAppLayoutSettings {
     var sliderAxis: AxisPositionCalculations<CGFloat> {
-        let innerBeakerWidth = BeakerSettings(width: beakerWidth, hasLip: true).innerBeakerWidth
-        let grid = MoleculeGridSettings(totalWidth: innerBeakerWidth)
-
-        func posForRows(_ rows: CGFloat) -> CGFloat {
-            sliderHeight - grid.height(for: CGFloat(rows))
-        }
-
-        let minRow = CGFloat(AqueousReactionSettings.minRows)
-        let maxRow = CGFloat(AqueousReactionSettings.maxRows)
-
-        return AxisPositionCalculations(
-            minValuePosition: posForRows(minRow),
-            maxValuePosition: posForRows(maxRow),
-            minValue: minRow,
-            maxValue: maxRow
+        BeakerLiquidSliderAxis.axis(
+            minRows: AqueousReactionSettings.minRows,
+            maxRows: AqueousReactionSettings.maxRows,
+            beakerWidth: beakerWidth,
+            sliderHeight: sliderHeight
         )
     }
 }

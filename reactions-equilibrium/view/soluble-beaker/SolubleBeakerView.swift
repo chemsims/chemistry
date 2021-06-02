@@ -175,14 +175,13 @@ private struct SolubleBeakerViewWithGeometry: View {
             settings: ParticleContainerSettings(
                 labelColor: solute.color(for: model.selectedReaction).color,
                 label: labelName(for: solute),
+                labelFontColor: .white,
                 strokeLineWidth: 0.4
             )
         )
-        .compositingGroup()
         .colorMultiply(isActive ? .white : Styling.inactiveContainerMultiply)
         .animation(nil)
         .shadow(radius: isActive ? 3 : 0)
-        .foregroundColor(.white)
         .font(.system(size: settings.soluble.containerFontSize))
         .frame(width: settings.soluble.containerWidth)
         .rotationEffect(isActive ? .degrees(135) : .zero)
@@ -271,8 +270,9 @@ private struct SolubleBeakerViewWithGeometry: View {
         }
 
         let solute = activeSolute ?? .commonIon
+        let text = solute.reaction(for: model.selectedReaction)
         return Tooltip(
-            text: solute.reaction(for: model.selectedReaction),
+            text: TextLine(stringLiteral: text),
             color: .black,
             background: solute.tooltipBackground(for: model.selectedReaction),
             border: solute.tooltipBorder(for: model.selectedReaction),

@@ -55,9 +55,7 @@ public struct BarChart: View {
     private var labels: some View {
         HStack(spacing: 0) {
             ForEach(data.indices, id: \.self) { i in
-                Spacer()
                 label(data[i])
-                Spacer()
             }
         }.frame(width: settings.chartWidth)
     }
@@ -93,16 +91,35 @@ public struct BarChart: View {
                 .foregroundColor(data.color)
             Text(data.label)
                 .font(.system(size: settings.labelFontSize))
+                .frame(height: settings.labelTextHeight)
+                .minimumScaleFactor(0.75)
+                .animation(nil)
         }
+        .frame(width: labelTextWidth)
+    }
+
+    private var labelTextWidth: CGFloat {
+        guard !data.isEmpty else {
+            return 0
+        }
+        return settings.chartWidth / CGFloat(data.count)
     }
 }
 
 struct BarChart_Previews: PreviewProvider {
+
+    private static let geometry = BarChartGeometry(
+        chartWidth: 200,
+        minYValue: 0,
+        maxYValue: 1,
+        barWidthFraction: 0.13
+    )
+
     static var previews: some View {
         BarChart(
             data: [
                 BarChartData(
-                    label: "A",
+                    label: "ABC",
                     equation: LinearEquation(m: 1, x1: 0, y1: 0),
                     color: .red,
                     accessibilityLabel: "",
@@ -128,12 +145,7 @@ struct BarChart_Previews: PreviewProvider {
                 )
             ],
             time: 0,
-            settings: BarChartGeometry(
-                chartWidth: 200,
-                minYValue: 0,
-                maxYValue: 1,
-                barWidthFraction: 0.13
-            )
+            settings: geometry
         )
     }
 }

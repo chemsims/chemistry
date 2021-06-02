@@ -28,6 +28,10 @@ public struct BarChartGeometry {
 
     let ticks = 10
 
+    public var totalHeight: CGFloat {
+        chartWidth + chartToAxisSpacing + totalAxisHeight
+    }
+
     var yAxisTickSize: CGFloat {
         0.05 * chartWidth
     }
@@ -53,7 +57,7 @@ public struct BarChartGeometry {
         0.67 * barWidth
     }
 
-    var chartToAxisSpacing: CGFloat {
+    public var chartToAxisSpacing: CGFloat {
         0.03 * chartWidth
     }
 
@@ -61,8 +65,16 @@ public struct BarChartGeometry {
         0.2 * labelDiameter
     }
 
-    var labelFontSize: CGFloat {
+    public var labelFontSize: CGFloat {
         fontSizeFraction * chartWidth
+    }
+
+    var labelTextHeight: CGFloat {
+        1.1 * labelFontSize
+    }
+
+    public var totalAxisHeight: CGFloat {
+        labelDiameter + labelToCircleSpacing + labelTextHeight
     }
 
     private var barMinHeight: CGFloat {
