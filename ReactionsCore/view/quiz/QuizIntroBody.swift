@@ -62,7 +62,7 @@ struct QuizIntroBody<QP: QuizPersistence, Analytics: AppAnalytics>: View where Q
                 .foregroundColor(
                     isSelected ? Styling.Quiz.selectedDifficultyBorder : .black
                 )
-            questionCount(difficulty.quizLength)
+            questionCount(difficulty.quizLimit ?? model.maxQuizLength)
                 .foregroundColor(
                     isSelected ? Styling.Quiz.selectedDifficultyBorder : Styling.Quiz.unselectedDifficultyCount
                 )
@@ -72,7 +72,7 @@ struct QuizIntroBody<QP: QuizPersistence, Analytics: AppAnalytics>: View where Q
         .accessibilityElement()
         .accessibility(addTraits: .isButton)
         .accessibility(addTraits: isSelected ? .isSelected : [])
-        .accessibility(label: Text("\(difficulty.displayName), \(difficulty.quizLength) questions"))
+        .accessibility(label: Text("\(difficulty.displayName), \(model.quizLength) questions"))
     }
 
     private func questionCount(_ count: Int) -> some View {

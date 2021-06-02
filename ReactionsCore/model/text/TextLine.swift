@@ -222,9 +222,33 @@ public struct TextLineGenerator {
         }
         addIfNonEmpty()
 
-        assert(allowBreaks && !buildingEmphasis && scriptType == .none,
-               "String '\(str)' did not close all control characters")
+        reportErrors(
+            allowBreaks: allowBreaks,
+            buildingEmphasis: buildingEmphasis,
+            scriptType: scriptType,
+            content: str
+        )
         return TextLine(content: segments)
+    }
+
+    private static func reportErrors(
+        allowBreaks: Bool,
+        buildingEmphasis: Bool,
+        scriptType: ScriptType?,
+        content: String
+    ) {
+        var errors = [String]()
+        if !allowBreaks {
+            errors.append("allow breaks")
+        }
+        if buildingEmphasis {
+            errors.append("emphasis")
+        }
+        if scriptType != nil {
+            errors.append("script \(scriptType!)")
+        }
+
+        assert(errors.isEmpty, "Found errors when parsing \(content): \(errors.joined(separator: ", "))")
     }
 
     private static func charToScript(_ c: Character) -> ScriptType? {

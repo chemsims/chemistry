@@ -56,6 +56,12 @@ public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: Observ
     @Published var quizDifficulty = QuizDifficulty.medium
     @Published var showNotification = false
 
+    /// Runs the debug mode quiz, where the explanation will always be shown
+    /// and the user can go next without selecting the correct answer.
+    ///
+    /// - Note: This flag will only take effect for debug builds
+    @Published var runDebugMode = false
+
     // MARK: Public computed properties
     var selectedAnswer: QuizAnswerInput? {
         answers[currentQuestion.id]
@@ -88,6 +94,10 @@ public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: Observ
         availableQuestions.count
     }
 
+    var maxQuizLength: Int {
+        allQuestions.count
+    }
+
     var currentIndex: Int {
         let i = availableQuestions.firstIndex { $0.id == currentQuestion.id }
         assert(i != nil)
@@ -111,7 +121,10 @@ public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: Observ
     }
 
     var nextIsDisabled: Bool {
-        quizState == .running && !hasSelectedCorrectOption
+        if runDebugMode && isDebug {
+            return false
+        }
+        return quizState == .running && !hasSelectedCorrectOption
     }
 
     // MARK: Private variables
@@ -146,6 +159,9 @@ public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: Observ
     }
 
     func showExplanation(option: QuizOption) -> Bool {
+        if runDebugMode && isDebug {
+            return true
+        }
         guard let answer = selectedAnswer?.allAnswers else {
             return false
         }
@@ -236,6 +252,14 @@ extension QuizViewModel {
     func skip() {
         nextScreen?()
     }
+
+    private var isDebug: Bool {
+        #if DEBUG
+        return true
+        #else
+        return false
+        #endif
+    }
 }
 
 // MARK: Animation methods
@@ -278,7 +302,7 @@ fileprivate extension QuizViewModel {
         analytics.completedQuiz(
             questionSet: questionSet,
             difficulty: quizDifficulty,
-            percentCorrect: (Double(correctCount) / Double(quizDifficulty.quizLength)) * 100
+            percentCorrect: (Double(correctCount) / Double(quizLength)) * 100
         )
         hasLoggedQuizCompletion = true
     }

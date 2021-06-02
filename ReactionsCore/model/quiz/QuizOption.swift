@@ -27,11 +27,11 @@ public enum QuizDifficulty: Int, CaseIterable, Comparable, Codable {
 
     case easy, medium, hard
 
-    public var quizLength: Int {
+    public var quizLimit: Int? {
         switch self {
         case .easy: return 5
         case .medium: return 10
-        case .hard: return 20
+        case .hard: return nil
         }
     }
 
@@ -63,11 +63,14 @@ extension QuizDifficulty {
         at difficulty: QuizDifficulty,
         questions: [QuizQuestion]
     ) -> [QuizQuestion] {
+        guard let limit = difficulty.quizLimit else {
+            return questions
+        }
 
         func loop(_ diffToInclude: QuizDifficulty) -> [QuizQuestion] {
             let available = questions.filter { $0.difficulty <= diffToInclude }
-            let filtered = Array(available.prefix(difficulty.quizLength))
-            let requiresMore = filtered.count < difficulty.quizLength
+            let filtered = Array(available.prefix(limit))
+            let requiresMore = filtered.count < limit
             if requiresMore,
                let nextDiff = QuizDifficulty.allCases.element(after: diffToInclude) {
                 return loop(nextDiff)
