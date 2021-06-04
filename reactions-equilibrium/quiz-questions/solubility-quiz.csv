@@ -1,17 +1,449 @@
-Question,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,
-id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position
-solubility_placeholder_1,Question 1,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_2,Question 2,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_3,Question 3,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_4,Question 4,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_5,Question 5,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_6,Question 6,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_7,Question 7,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_8,Question 8,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_9,Question 9,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_10,Question 10,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_11,Question 11,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_12,Question 12,easy,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_13,Question 13,medium,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_14,Question 14,medium ,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
-solubility_placeholder_15,Question 15,hard,,,,Correct answer,Explanation for correct answer,,Incorrect 1,Explanation for incorrect 1,,Incorrect 2,Explanation for incorrect 2,,Incorrect 3,Explanation for incorrect 3,
+Question,,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,,
+number,id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position,source
+1,SOLUBILITY-01,"A student adds a salt M_2_A_3_ into a beaker with water, in which the substance gets ionized into M^+3^ and A^-2^. Once the solution gets saturated, the student stops adding the salt and measures the concentration of the A^-2^ ions which turn to be $0.075 M$. What is the value for the Ksp of the salt?",medium,,,,1.05x10^-6^,"Let's first determine the reaction that would take place:
+
+M_2_A_3__(s)_ ⇄ $2M^+3^_(aq)_ + 3A^-2^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction:
+
+Ksp = $[A^-2^]^3^[M^+3^]^2^$
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions:
+
+Ksp = $(3X)^3^(2X)^2^$
+
+Since we know that $[A^-2^] = 0.075 M$ and that $[A^-2^] = 3X$ then $3X = 0.075$ and solving for X: $X = 0.025$.
+
+Replacing the values in the Ksp equation:
+Ksp = $(3(0.025))^3^(2(0.025))^2^$
+Ksp = 1.05x10^-6^",,5.63x10^-3^,"Let's first determine the reaction that would take place:
+
+M_2_A_3__(s)_ ⇄ $2M^+3^_(aq)_ + 3A^-2^_(aq)_$
+
+If you didn't balance the equation you might have ended up with this value, which is not correct.",,2.4x10^-6^,"Let's first determine the reaction that would take place:
+
+M_2_A_3__(s)_ ⇄ $2M^+3^_(aq)_ + 3A^-2^_(aq)_$
+
+Remember that these coeffiecients are very important to take into account when writing the expression for Ksp. For each mole of M_2_A_3__(s)_ that gets dissolved, 2 moles of M^+3^_(aq)_ and 3 moles of A^-2^_(aq)_ get produced. ",,0.034,Remember to elevate the concentrations to their species' coefficient in the balanced equation for the respective reaction.,,AP Collage Board 2002 (Q75)
+2,SOLUBILITY-02,How many moles of a salt MA could you dissolve in 5 L of water knowing that the Ksp for its ionization in water is 1.2x10^-3^.,medium,,,,0.15,"Let's first determine the reaction that would take place:
+
+MA_(s)_ ⇄ $M^+^_(aq)_ + A^-^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction:
+
+Ksp = [A^-^][M^+^]
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions:
+
+Ksp = (X)(X)
+
+Replacing the Ksp value: $1.2x10^-3^ = X^2^$
+
+Solving for X: $X = 0.03 M$.
+
+Knowing the maximum concentration this salt can reach in water, better known as the molar solubility, we just calculate the actual moles that could fit into $5 L$: 
+
+Moles of MA(s) = 0.03 x 5
+Moles of MA(s) = 0.15 moles",,0.03,"The molar solubility could be defined as the maximum concentration this salt can reach in water, but what is asked for in this question are the actual moles of the substance that could be dissolved into $5 L$ of water.",,1.2x10^-3^,"This is just the Ksp value for the reaction, not the moles of MA_(s)_ that can be dissolved in $5 L$ of water.",,6x10^-3^,"Knowing that only $0.03 M$ of MA_(s)_ can be dissolved into the water to make a saturated dissolution, it only takes to know the volume in which we would like to fit the moles and calculate them: $Moles of MA_(s)_ = Molarity x Volume$",,AP Collage Board 1999 (Q67)
+3,SOLUBILITY-03,"Consider a salt that dissociates like this:
+
+$M_2_A_(s)_ ⇄ 2M^+^_(aq)_ + A^-2^_(aq)_ Ksp = 4.6x10^-9^$
+
+M_2_A_(s)_ is added to a solution that has 2.5 moles of A^-2^ ions dissolved in $10 L$ of water. How much of the salt can be dissolved into this solution?",easy,,,,$6.8x10^-5^$,"Let''s first write the expression for the Ksp for this particular reaction:
+
+Ksp = $[M^+^]^2^[A^-2^]$
+
+Considering there is an initial amount of the common ion A^-2^ already dissolved, let's calculate its initial concentration like: 
+[A^-2^]_o_ = 2.5 / 10
+[A^-2^]_o_ = 0.25 M
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (2X)^2^(X + 0.25)$.
+
+Because of how small the Ksp is, we can assume X <<< 0.25, so in the expression $(X + 0.25)$, X can be assumed as 0 to make the calculation easier.
+
+Replacing the values: $4.6x10^-9^ = (2X)^2^(0.25)$.
+
+Solving for X: $X = 6.8x10^-5^ M$.",,1.05x10^-3^,"This is the amount of salt that could be dissolved if there weren't any common ions already dissolved into the solution. The common ion effect is the result of there being, as the name indicates, a common ion in the solution, which makes the salt less soluble in the dissolution.",,7.36x10^-8^ M,The common ion is A^-2^ and not M^+^.,,1.84x10^-8^ M,You have to take into account the coefficients in the balanced equation for the reaction.,,"Albert.io ""Molar Solubility with a Salt"""
+4,SOLUBILITY-04,"If you wanted to increase the solubility (Ksp) of a substance, what action could yo take to achieve that?",medium,,,,It depends if it's an endothermic or exothermic reaction,"Dissolving a salt could be an endothermic reaction or exothermic reaction. Changing the temperature would affect differently in each case. If the temperature is increased for endothermic reactions, the solubility of the salt would increase, whereas if the temperature is increased for exothermic reactions, the solubility fo the salt would decrease.",,Increasing the temperature,Increasing the temperature would result in an increment in the solubility of the salts but only if it's an endothermic reaction.,,Decreasing the temperature,Decreasing the temperature would result in an increment in the solubility of the salts but only if it's an endothermic reaction.,,Assuring the tempereature stays perfectly constant,"Altering the temperature could be a way to manipulate the solubilty of a particular salt, and leaving it constant won't have an impact on it.",,"Albert.io ""Factors Changing Ksp"""
+5,SOLUBILITY-05,"Consider the following reaction:
+
+MA_(s)_ ⇄ $M^+^_(aq)_ + A^-^_(aq)_$
+
+If you wanted to prepare a solution in which the salt MA_(s)_ is the least soluble, which one of the following substances would you use to prepare it? (Assume they all have the same Ksp value and molarity)
+",medium,,,,ZA_3__(s)_,"Let's first determine the reaction that would take place: $ZA_3__(s)_ ⇄ Z^+3^_(aq)_ + 3A^-^_(aq)_$. So in comparison to the other options, this one would be the one that would produce the most of A^-^ ions, which translates into more presence of the common ion in the solution, making the salt MA_(s)_ less soluble.",,YA_2__(s)_,"Let's first determine the reaction that would take place: $YA_2__(s)_ ⇄ Z^+2^_(aq)_ + 2A^-^_(aq)_$. Compared to other options, the amount of A^-^ ions this reaction would produce is not enough to make the salt the least soluble.",,XA_(s)_,"Even though dissolving XA_(s)_ would result in an increment in the concentration of the common ion A^-^, it's not the option that would make the salt the least soluble.",,None,"If you added the salt to just water, by there not being any common ion, the salt would actually dissolve the most.",,"Albert.io ""pH and Solubility of ScF3"""
+6,SOLUBILITY-06,"After adding 1.2x10^-4^ moles of a salt M_3_A_4__(s)_ to a beaker with $0.2 L$ of water, the solution created is saturated. Knowing that, what would the Ksp value be for M_3_A_4_(s)?",medium,,,,1.93x10^-19^,"Let's first determine the reaction that would take place:
+
+M_3_A_4__(s)_ ⇄ $3M^+4^_(aq)_ + 4A^-3^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction:
+
+Ksp = $[A^-3^]^4^[M^+4^]^3^$
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions:
+
+Ksp = $(3X)^3^(4X)^4^$
+
+Knowing the moles added and the volume, let's calculate the molar solubility:
+
+Molar Solubility (X) = $1.2x10^-4^ / 0.2$
+Molar Solubility (X) = 6x10^-4^
+
+Replacing the values in the Ksp equation:
+
+Ksp = $(3(6x10^-4^))^3^(4(6x10^-4^))^4^$
+Ksp = 1.93x10^-19^",,3.6x10^-7^,"Let's first determine the reaction that would take place:
+
+M_3_A_4__(s)_ ⇄ $3M^+4^_(aq)_ + 4A^-3^_(aq)_$
+
+If you didn't balance the equation you might have ended up with this value, which is not correct.",,2.80x10^-23^,"Let's first determine the reaction that would take place:
+
+$M_3_A_4__(s)_ ⇄ 3M^+4^_(aq)_ + 4A^-3^_(aq)_$
+
+Remember that these coeffiecients are very important to take into account when writing the expression for Ksp. For each mole of M_3_A_4__(s)_ that gets dissolved, 3 moles of M^+4^_(aq)_ and 4 moles of A^-3^_(aq)_ get produced. ",,4.32x10^-6^,Remember to elevate the concentrations to their species' coefficient in the balanced equation for the respective reaction.,,"Albert.io ""Molar Solubility and Ksp"""
+7,SOLUBILITY-07,Consider a salt MA_2(s)_ that has a Ksp of 8.3x10^-7^. What would the concentration of A^-^ ions would be in a saturated solution of this salt?,medium,,,,0.01184,"Let's first determine the reaction that would take place:
+
+MA_2(s)_ ⇄ $M^+2^_(aq)_ + 2A^-^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction:
+
+Ksp = [A^-^]^2^[M^+2^]
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions:
+
+Ksp = (2X)^2^(X)
+
+Replacing the Ksp value: $8.3x10^-7^ = (2X)^2^(X)$.
+
+Solving for X: $X = 5.92x10^-3^ M$. Knowing this, we just calculate the concentration of A^-^: 
+
+[A^-^] = 2x5.92x10^-3^
+[A^-^] = 0.01184 M",,4.6x10^-4^,Remember to elevate the concentrations in the Ksp expression to their respective coefficients.,,8.3x10^-7^,"This is just the Ksp value for the reaction, not the concentration of A^-^ ions in the saturated solution.",,5.92x10^-3^,"This would be the molar solubility of the salt, but since for each mole of salt dissolved, 2 moles of A^-^ ions are produced, then its concentration wouldn't be the same.",,"Albert.io ""Ion Concentration"""
+8,SOLUBILITY-08,"Take into consideration the following salts dissolving in water:
+
+I XA_2(s)_ ⇄ $X^+2^_(aq)_ + 2A^-^_(aq)_$ $Ksp = 1.7x10^-7^$
+II Y_2_B_3(s)_ ⇄ $2Y^+3^_(aq)_ + 3B^-2^_(aq)_$ $Ksp = 9.5x10^-9^$
+III ZC_(s)_ ⇄ $Z^+^_(aq)_ + C^-^_(aq)_$ $Ksp = 2.2x10^-7^$
+
+Which of the options have the highest molar solubility?",easy,,,,II,"Let's first determine the reaction that would take place:
+
+Y_2_B_3(s)_ ⇄ $2Y^+3^_(aq)_ + 3B^-2^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [Y^+3^]^2^[B^-2^]^3^$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (2X)^2^(3X)^3^$.
+
+Replacing the Ksp value: $9.5x10^-9^ = (2X)^2^(3X)^3^$.
+
+Solving for X: $X = 9.7x10^-3^ M$. Being this one the highest molar solubility of all the options.",,I,"Let's first determine the reaction that would take place: $XA_2(s)_ ⇄ X^+2^_(aq)_ + 2A^-^_(aq)_$.
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [X^+2^][A^-^]^2^$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (X)(2X)^2^$.
+
+Replacing the Ksp value: $1.7x10^-7^ = (X)(2X)^2^$.
+
+Solving for X: $X = 3.5x10^-3^ M$. Since this is not the highest value compared to other options, this is incorrect.",,III,"Let's first determine the reaction that would take place: $ZC_(s)_ ⇄ Z^+^_(aq)_ + C^-^_(aq)_$.
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [Z^+^][C^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (X)(X)$.
+
+Replacing the Ksp value: $2.2x10^-7^ = (X)^2^$.
+
+Solving for X: $X = 4.7x10^-4^ M$. This would actually be the smallest molar solubility of all the options.",,There is not enough information to determine,There is enough information to calculate the molar solubility for each reaction given and compare them.,,"Albert.io ""Ksp Ranking"""
+9,SOLUBILITY-09,"A saturated solution is prepared with a salt MA_(s)_ that has a Ksp of 0.05. Another salt, NA_(s)_ is then added until it reaches a molar solubility of $1x10^-4^ M$. If more of NA_(s)_ were added to the mixture, what would happen?",medium,,,,It would get dissolved because its molar solubility in that solution is of 1.9x10^-4^,"Let's first determine the first reaction that would take place: $MA_(s)_ ⇄ M^+^_(aq)_ + A^-^_(aq)_$.
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [M^+^][A^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (X)(X)$.
+
+Replacing the Ksp value: $0.05 = (X)^2^$. Solving for X: $X = 0.22 M$.
+
+This means that before the other salt is added, there is an initial amount of A^-^ ions already in the solution, with a concentration of $0.22 M$.
+
+Knowing this, we can proceed to the other reaction: $NA_(s)_ ⇄ N^+^_(aq)_ + A^-^_(aq)_$.
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [N^+^][A^-^]$. Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (X)(X + 0.22)$.
+
+Because of how small the Ksp is, we can assume X <<< 0.22, so in the expression $(X + 0.22)$, X can be assumed as 0 to make the calculation easier.
+
+Replacing the values: $4.2x10^-5^ = (X)(0.25)$. Solving for X: $X = 1.90x10^-4^ M$, being this the maximum amount of NA_(s)_ that could be dissolved in this solution.",,It would get dissolved because its molar solubility in that solution is of 6.5x10^-3^,"This would be the molar solubility of the salt if it were added just in water, but because of the presence of a common ion (A^-^) that would alter the solubility fo the salt, this is incorrect.",,It wouldn't get dissolved because the concentration of A^-^ ions is too high.,"Despite of the concentration of the A^-^ ions in the solution, at least a very small amount of the salt would be dissolved.",,It wouldn't get dissolved because the concentration of A^-^ ions is too low.,"If anything, a low presence of A^-^ ions in the solution, being the common ion, would actually make the salt more soluble. ",,"Albert.io ""Different Concentrations"""
+10,SOLUBILITY-10,What does a really high value of a Ksp indicate for an ionic salt?,medium,,,,"It means that when at equilibrium, a high amount of the salt would be dissolved into ions compared to the amount that remains undissolved.","Since fundamentally $Ksp = [Dissolved Ions]$ at equilibrium, then the higher the value is, the more of the salt would be dissolved into ions when added to water or aqueous solution.",,"It means that when at equilibrium, a high amount of the salt would remain undissolved compared to the part that gets dissolved into ions.","Since fundamentally $Ksp = [Dissolved Ions]$ at equilibrium, then it actually means the opposite.",,"It means that when at equilibrium, a low amount of the salt would be dissolved into ions compared to the amount that remains undissolved.","Since fundamentally $Ksp = [Dissolved Ions]$ at equilibrium, this means that the greater is the value of the Ksp for a particular salt, then the more dissolved ions can it produce when added to water.",,It's not indicative of anything,"In general, Ksp actually indicates how soluble a salt can be, that's why Ksp is also referred to as the solubility product constant.",,"Albert.io ""Solubility of ZnS"""
+11,SOLUBILITY-11,"If you wanted to dissolve $15 g$ a substance MA_(s)_, with a molar mass of $50 g/mol$, what would the minimum volume of water in the vessel need to be to accomplish that? Take into account that the Ksp for that salt is 2.25.",medium,,,,0.2,"Let's first determine the first reaction that would take place: $MA_(s)_ ⇄ M^+^_(aq)_ + A^-^_(aq)_$.
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [M^+^][A^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (X)(X)$.
+
+Replacing the Ksp value: $2.25 = (X)^2^$. Solving for X: $X = 1.5 M$.
+
+Being this the maximum concentration that could be dissolved in water of this salt. Then, we just have to calculate how many moles are in $15 g$ using the molar mass:
+
+Moles of MA_(s)_ = 15 / 50
+Moles of MA_(s)_ = 0.3 moles
+
+To determine the volume:
+
+Volume = 0.3 / 1.5
+Volume = 0.2 L",,1.5,"This would be the molar solubility of the salt if it were added just in water, but because of the presence of a common ion (A^-^) that would alter the solubility fo the salt, this is incorrect.",,0.3,"This would be the number of moles that are needed to be dissolved, but not the value for the volume.",,2.25,This is just the Ksp value for this reaction. Try first calculating the molar solubility of that salt.,,"Albert.io ""Identify Unknown Metal"""
+12,SOLUBILITY-12,"Take into account an hypothetical reaction like this:
+
+4A_(s)_ ⇋ $3B_(aq)_ + 2C_2(g)_ + D_(s)_$
+
+What would the quotient Q expression be for this reaction?",easy,,,,Q = [B]^3^[C_2_]^2^,"In the Q expression the solids are not taken into account, and since both A and D are in solid state, the final equation is: $Q = [B]^3^[C_2_]^2^$",,Q = [B]^3^[C_2_]^2^[D],"In the Q expression the solids are not taken into account, and since D is in solid state, this is incorrect.",,Q = [B]^3^[C_2_]^2^[D]/[A],"In the Q expression the solids are not taken into account, and since both A and D are in solid state, this is incorrect.",,Q = [B]^3^[C]^2^,"C is not a real species produced in this reaction, it would be C_2_.",,"Albert.io ""Reaction Quotient Expression"""
+13,SOLUBILITY-13,"Take into consideration the following salts dissolving in a $0.20 M$ A^-^ of aqueous:
+
+I XA_2(s)_ ⇄ $X^+^_(aq)_ + 2A^-^_(aq)_$ $Ksp = 3.4x10^-6^$
+II Y_2_A_(s)_ ⇄ $2Y^+^_(aq)_ + A^-^_(aq)_$ $Ksp = 7.1x10^-8^$
+III ZA_(s)_ ⇄ $Z^+^_(aq)_ + A^-^_(aq)_$ $Ksp = 6.0x10^-6^$
+IV WA_(s)_ ⇄ $W^+^_(aq)_ + A^-^_(aq)_$ $Ksp = 1.5x10^-7^$
+
+Which of the options have the lowest molar solubility?",medium,,,,IV,"Let's first determine the reaction that would take place: 
+
+WA_(s)_ ⇄ $W^+^_(aq)_ + A^-^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [W^+^][A^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M and $0.20 M$ as the initial concentration of A^-^, let's replace the concentration expressions: $Ksp = (X)(X + 0.20)$.
+
+Because of how small the Ksp is, we can assume X <<< 0.20, so in the expression $(X + 0.20)$ X can be assumed as 0 to make the calculation easier.
+
+Replacing the Ksp value: $1.5x10^-7^ = (X)(0.20)$. Solving for X: $X = 7.5x10^-7^ M$. Being this one the lowest molar solubility of all the options.",,I,"Let's first determine the reaction that would take place:
+
+XA_2(s)_ ⇄$ X^+^_(aq)_ + 2A^-^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [X^+^][A^-^]^2^$. Assuming ""X"" as the amount of the salt that gets dissolved in M and $0.20 M$ as the initial concentration of A^-^, let's replace the concentration expressions: $Ksp = (X)(2X + 0.20)^2^$.
+
+Because of how small the Ksp is, we can assume 2X <<< 0.20, so in the expression $(2X + 0.20)$ X can be assumed as 0 to make the calculation easier.
+
+Replacing the Ksp value: $3.4x10^-6^ = (X)(0.20)^2^$. Solving for X: $X = 8.5x10^-5^ M$. This would not be the lowest molar solubility of all the options.",,II,"Let's first determine the reaction that would take place:
+
+Y_2_A_(s)_ ⇄ $2Y^+^_(aq)_ + A^-^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [Y^+^]^2^[A^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M and $0.20 M$ as the initial concentration of A^-^, let's replace the concentration expressions: $Ksp = (2X)(X + 0.20)$.
+
+Because of how small the Ksp is, we can assume X <<< 0.20, so in the expression $(X + 0.20)$ X can be assumed as 0 to make the calculation easier.
+
+Replacing the Ksp value: $7.1x10^-7^ = (2X)^2^(0.20)$. Solving for X: $X = 1.3x10^-4^ M$. This would actually be the highest molar solubility.",,III,"Let's first determine the reaction that would take place:
+
+ZA_(s)_ ⇄ $Z^+^_(aq)_ + A^-^_(aq)_$ $Ksp = 6.0x10^-6^$
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [Z^+^][A^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M and $0.20 M$ as the initial concentration of A^-^, let's replace the concentration expressions: $Ksp = (X)(X + 0.20)$.
+
+Because of how small the Ksp is, we can assume X <<< 0.20, so in the expression $(X + 0.20)$, X can be assumed as 0 to make the calculation easier.
+
+Replacing the Ksp value: $6.0x10^-6^ = (X)(0.20)$. Solving for X: $X = 3.0x10^-5^ M$. This would not be the lowest molar solubility of all the options.",,"Albert.io ""Molar Solubility"""
+14,SOLUBILITY-14,"Consider the following reaction:
+
+MX_(s)_ ⇄ $M^+^_(aq)_ + X^-^_(aq)_$ $Ksp = 0.5$
+
+What would be the Ksp for this reaction:
+
+3MX_(s)_ ⇄ $3M^+^_(aq)_ + 3X^-^_(aq)_$",easy,,,,0.125,"Since the second reaction is the same one as the original but multiplied by 3, then the Ksp can be determined by: $Ksp = 0.5^3^$ $Ksp = 0.125$",,1.5,"This assumes that the new Ksp is the original one multiplied by 3, which is incorrect.",,3.5,This assumes that the new Ksp is the original one plus 3 which is incorrect.,,0.5,"This assumes that the new Ksp is equal to the original Ksp, which is not the case.",,"Albert.io ""Manipulations of Qsp"""
+15,SOLUBILITY-15,"Consider the following reaction for an ionic salt in water:
+
+MX_(s)_ ⇄ $M^+^_(aq)_ + X^-^_(aq)_$ $Ksp = 2.0$
+
+What would be the equilibrium constant for this reaction:
+
+$2M^+^_(aq)_ + 2X^-^_(aq)_$ ⇄ 2MX_(s)_
+",easy,,,,0.25,"Since the second reaction is the reverse reaction of the original and multiplied by 2, then the Ksp can be determined by: $Ksp = 1/2.0^2^$ $Ksp = 0.25$",,0.5,Remember that when the reaction is multiplied by a number (in this case 2) the new K value is elevated to that number.,,4,"Remember that for a reverse reaction, its K value is the inverse of the original one 1/K.",,2,"This assumes that the new Ksp is equal to the original Ksp, which is not the case.",,"Albert.io ""K in a Reversible Reaction"""
+16,SOLUBILITY-16,"Take into account a salt that dissociates virtually entirely in water like this:
+
+$MX_(s)_ → M^+^_(aq)_ + X^-^_(aq)_$
+
+A $0.10 M$ solution of MX_(s)_ is prepared, and then a low solubility salt, NX_(s)_, is added until it reaches a molar solubility of $1x10^-4^ M$. How much more could you add of NX_(s)_ without it precipitating considering its Ksp is 5x10^-5^ and the vessel's volume is 1L?",hard,,,,4x10^-4^ moles,"Let's first determine the first reaction that would take place: $NX_(s)_ ⇄ N^+^_(aq)_ + X^-^_(aq)_$.
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [N^+^][X^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M and $0.10 M$ as the initial concentration of X^-^, let's replace the concentration expressions: $Ksp = (X)(X + 0.10)$.
+
+Because of how small the Ksp is, we can assume X <<< 0.20, so in the expression $(X + 0.10)$ X can be assumed as 0 to make the calculation easier.
+
+Replacing the Ksp value: $5x10^-5^ = (X)(0.10)$.
+
+Solving for X: $X = 5x10^-4^ M$.
+
+Being this the maximum concentration that could be dissolved in water of this salt.
+
+Then, we just have to calculate how many moles are the maximum that can be dissolved in $1 L$ of water:
+
+Max Moles = (5x10^-4^)(1)
+Max Moles = 5x10^-4^ moles
+
+Similarly, we determine the moles added:
+
+Moles Added = (1x10^-4^)(1)
+Moles Added = 1x10^-4^ moles
+
+Knowing this, the difference is the number of moles that can still be added before it precipitates:
+
+Moles to be Added = 5x10^-4^ - 1x10^-4^
+Moles to be Added = 4x10^-4^ moles",,5x10^-4^ moles,"This would be the maximum amount of moles that can be added to water, but given the presence of a common ion X^-^, the molar solubility will be lower.",,1x10^-4^ moles,This is the amount of moles already added but that doesn't mean it's what can be added until saturation.,,It can't be added anymore,"More can be still added, try calculating the molar solubility of this particular salt in the prepared solution.",,"Albert.io ""Precipitation of Calcium Hydroxide"""
+17,SOLUBILITY-17,"Consider the following reaction for an acid salt in water that dissociates into hidronium ions:
+
+HX_(s)_ ⇄ $H^+^_(aq)_ + X^-^_(aq)_$
+
+What is true about the relationship between the Ksp and the pH of a solution prepared with this acid?",easy,,,,The higher the Ksp is then the lower the pH will be,"The higher the Ksp is, the more of the salt can be dissociated or dissolved into ions, which results in the production of more ions. In this case, the higher the Ksp then higher would be the presence of H^+^ ions, and when the concentration of hidronium ions goes up, the pH goes down since $pH = -log[H^+^]$",,The higher the Ksp is then the higher the pH will be,"Even though in this case a high value of Ksp would indicate a high presence of H^+^ ions in the solution, remember that the pH gets lower with high concentrations of H^+^.",,The lower the Ksp is then the lower the pH will be,"Even though in this case a low value of Ksp would indicate a low presence of H^+^ ions in the solution, remember that the pH gets higher with low concentrations of H^+^.",,Ksp and pH has nothing to do with each other,In this case they are related because the product is H^+^ ions which are directly related to the pH of a solution.,,"Albert.io ""pH and Solubility of Ca(OH)2"""
+18,SOLUBILITY-18,"A student dissolved $0.5 g$  of a substance MA_(s)_, with a molar mass of $12 g/mol$ into $0.4 L$ of water. Considering its Ksp is 0.05, is the solution?",medium,,,,Unsaturated,"Let's first determine the first reaction that would take place:
+
+MA_(s)_ ⇄ $M^+^_(aq)_ + A^-^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [M^+^][A^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (X)(X)$.
+
+Replacing the Ksp value: $0.05 = (X)^2^$. Solving for X: $X = 0.22 M$.
+
+Being this the maximum concentration that could be dissolved in water of this salt. Then, we just have to calculate how many moles are the maximum that can be dissolved in $0.4 L$ of water:
+
+Max Moles = (0.22)(0.4)
+Max Moles = 0.09 moles
+
+Then, we just have to calculate how many grams are those using the molar mass:
+
+Mass of MA_(s)_ = 0.09 x 12
+Mass of MA_(s)_ = 1.0 g
+
+Since only $0.5 g$ were added, the solution is not yet saturated.",,Saturated,Not enough grams were added to prepare a saturated solution.,,Supersaturated,Not enough grams were added to prepare a supersaturated solution.,,More information is required,It's enough information to proceed. Try first calculating the molar solubility of this particular salt and then transforming it into mass.,,"Albert.io ""When Q does not equal K"""
+19,SOLUBILITY-19,What type of solution is the one with a reaction with $Qsp < Ksp$?,easy,,,,Unsaturated,"Since Qsp is the solubility product quotient and it's given by its expression, that's fundamentally: $Qsp = [Products]$ at any given time. When the concentration of the products is lower than their concentration at equilibrium, then that means that if there is more solute to be dissolved, it will until $Qsp = Ksp$.",,Saturated,"If the solution were saturated, Qsp would be equal to Ksp, which is not the case.",,Supersaturated,"If the solution were supersaturated, Qsp would be greater than Ksp, which is not the case.",,More information is required,It's enough information to proceed. Qsp is an indicator of the state of the solution.,,"Albert.io ""Reaction Rate for a Disturbed Equilibrium"""
+20,SOLUBILITY-20,"Consider the following reaction: 
+
+MX_(s)_ ⇄ $M^+^_(aq)_ + X^-^_(aq)_$
+
+What type of reaction would the reverse reaction of the previous one be?",easy,,,,Precipitation,Precipitation reactions occur when cations and anions in aqueous solution combine to form an insoluble ionic solid called a precipitate. They can be identified because the product is tagged as a substance in solid state (s).,,Combustion,"A combustion reaction is a reaction in which a substance reacts with oxygen gas, releasing energy in the form of light and heat, which is not this case.",,Single-replacement,"A single-replacement reaction is a reaction in which one element replaces a similar element in a compound, which is not the case because this type of reaction is usually a double replacement reaction.",,Endothermic,"Precipitation reactions can be endothermic or exothermic, it'll vary case by case, and in this one it cannot be determined if it's endothermic or not.",,"Albert.io ""Equilibrium Expression of Bromine and Bromide"""
+21,SOLUBILITY-21,Consider a salt MA_2(s)_ that dissolves partially into M^+2^ and A^-^ ions when in water. A saturated solution of this salt has a $[M^+2^] = 0.05 M$. What would be the concentration of A^-^ ions at equilibrium?,medium,,,,$[A^-^] = 0.10 M$,"Let's first determine the reaction that would take place: $MA_2(s)_ ⇄ M^+2^_(aq)_ + 2A^-^_(aq)_$. So, if at equilibrium the salt dissolved into $0.05 M$ of M^+2^, then the double of that is what got dissolved into A^-^ ions: $[A^-^] = 0.05 x 2$ $[A^-^] = 0.10 M$",,$[A^-^] = 0.05 M$,"This assumes that for each mole that gets dissolved of the salt, one mole of the A^-^ ions get produced, which is not the case. Try balancing the equation.",,$[A^-^] = 0.20 M$,This is no where near the value of the concentration of the A^-^ ions in a saturated solution of this salt.,,The Ksp value is needed to make the proper calculations.,"The Ksp value is not necessary in this case, because just by looking at the balanced equation of the reaction is enough to determine how many moles of each ion are being produced.",,"Albert.io ""Solubility of Ca(OH)2"""
+22,SOLUBILITY-22,"Take into consideration this reaction:
+
+M_2_A_(s)_ ⇄ $2M^+^_(aq)_ + A^-2^_(aq)_$
+
+Knowing the molar solubility is $9.5x10^-2^ M$, what would the equilibrium constant for the precipitation reaction of M_2_A_(s)_ be?
+",medium,,,,291.5,"Let's first determine the reaction that would take place:
+
+M_2_A_(s)_ ⇄ $2M^+^_(aq)_ + A^-2^_(aq)_$
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [M^+^]^2^[A^-2^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (2X)^2^(X)$.
+
+Knowing the molar solubility, we replace the values:
+
+Ksp = $(2x9.5x10^-2^)^2^(9.5x10^-2^)$
+Ksp = 3.43x10^-3^
+
+But the precipitation reaction of the salt would be the reverse reaction, so: 
+
+K = 1/Ksp
+K = 1/3.43x10^-3^
+K = 291.5",,3.43x10^-3^,"This would be the Ksp of the reaction, but the equilibrium constant that is asked for is the one for the formation of the precipitate, in this case the salt, which would be the reverse reaction.",,9.5x10^-2^,This is just the value for the molar solubility and not the equilibrium constant for the precipitation reaction.,,32.4,Remember to balance the equation for the reaction correctly to properly write the expression for the Ksp and equilibrium constant K.,,"Albert.io ""Molar Solubility of Calcium Fluoride"""
+23,SOLUBILITY-23,"Consider a salt that dissociates as the following reaction indicates: 
+
+MX_(s)_ ⇄ $M^+^_(aq)_ + X^-^_(aq)_$
+
+The same amount is added to 3 beakers. One of the beaker is just water, one is a solution of $0.20 M$ of X^-^ ions and the other one is a solution of $0.40 M$ of M^+^ ions. In theory, determine which beaker is each solution.",easy,,,,"1: Water
+2: $0.20 M of X^-^$
+3: $0.40 M of M^+^$","If the same amount of salt was added to each beaker, then the one in which there is more precipitate is the one with higher presence of a common ion, in this case the solution of $0.40 M$ of M^+^. Similarly, the one in which there is less precipitate is the one with no presence of any common ion, in this case the one with only water. In amount of precipitate: Beaker 3 > Beaker 2 > Beaker 1.",,"1: Water
+2: $0.40 M of M^+^$
+3: $0.20 M of X^-^$","Although the one in which there is less precipitate is the one with no presence of any common ion, which in this case is the one with only water. But the one with more precipitate wouldn't be the one with a $0.20 M$ solution of X^-^, because it's not the one with the highest concentration of a common ion.",,"1: $0.40 M of M^+^$
+2: $0.20 M of X^-^$
+3: Water",Beaker 3 cannot be the one with pure water because the lack of common ions would actually make the salt more soluble.,,"1: $0.40 M of M^+^$
+2: $0.20 M of X^-^$
+3: Water",Beaker 1 cannot be the one with a $0.40 M$ solution of M^+^ because the high presence of common ions would make the salt less soluble.,,"Albert.io ""Pb(OH)2(s) Solubility in HCl, NaOH, and H2O"""
+24,SOLUBILITY-24,"Consider a salt that dissociates in a beaker as:
+
+MX_(s)_ ⇄ $M^+^_(aq)_ + X^-^_(aq)_$
+
+The reaction is at equilibrium. What would happen if X^-^ ions would be removed somehow out of the beaker?",medium,,,,"Qsp < Ksp, more of MX_(s)_ would get dissolved until equilibrium is reached","The equation for Qsp for this particular reaction is: $Qsp = [M^+^][X^-^]$ at any given moment, while $Ksp = [M^+^][X^-^]$ at equilibrium.
+
+When the reaction is at equilibrium, $Qsp = Ksp$, so if the amount of product is reduced for some reason, in this case the concentration of X^-^, then the Qsp value would be lower, which would make it smaller than the Ksp value.
+
+In order for Qsp to keep increasing until it's again equal to Ksp, then more ions most be dissolved into the solution, which ultimately means more of the salt would get dissolved.",,"Qsp > Ksp, more of MX_(s)_ would get dissolved until equilibrium is reached","The equation for Qsp for this particular reaction is: $Qsp = [M^+^][X^-^]$ at any given moment, while $Ksp = [M^+^][X^-^]$ at equilibrium. If products are removed, then the Qsp couldn't possibly be higher than the Ksp.",,"Qsp > Ksp, more of MX_(s)_ would ","The equation for Qsp for this particular reaction is: $Qsp = [M^+^][X^-^]$ at any given moment, while $Ksp = [M^+^][X^-^]$ at equilibrium. If products are removed, then the Qsp couldn't possibly be higher than the Ksp. Besides that, the MX_(s)_wouldn't precipitate unless the solution was supersaturated, which is not the case. ",,"Qsp < Ksp, more of MX_(s)_ would precipitate until equilibrium is reached","Qsp < Ksp indicates the solution is unsaturated, so there shouldn't be any precipitate of MX_(s)_, much less if the products are removed.",,"Albert.io ""The Qsp of Ag2CrO4 and Re-establishing Equilibrium"""
+25,SOLUBILITY-25,"A solution is prepared with equal concentrations of $0.0400 M$ of M^+^ and A^-^ ions, that react together to produce a precipitate like this:
+
+$M^+^_(aq)_ + X^-^_(aq)_$ ⇄ MX_(s)_
+
+Knowing that the Ksp for this salt is 8x10^-4^, what would the concentration of the products be at equilibrium?",hard,,,,0.0283 M,"Let's first determine the reaction that would take place: $M^+^_(aq)_ + A^-^_(aq)_ ⇄ MA_(s)_$.
+
+Now let''s write the expression for the equilibrium constant K which would be the inverse of the Ksp of the salt: $1/Ksp = 1/[M^+^][A^-^]$.
+
+Assuming ""X"" as the amount of ions that react to form the salt in M and that the initial concentration of both ions is $0.0400 M$, let's replace the concentration expressions:
+
+1/8x10^-4^ = $1/(0.0400 - X)(0.0400 - X)$.
+
+Solving for X by quadratic: $X = 0.0117 M$.
+
+Knowing this, by calculating the difference we get the concentration at equilibrium of any ion: 
+
+$[M^+^] or [A^-^]$ = $(0.0400 - 0.0117)$
+$[M^+^] or [A^-^] $= $0.0283 M$",,0.0400 M,"This is just the initial concentration of the ions, but because there is an excess of those, they're going to react with each other to form the precipitate until the system reaches equilibrium and $Qsp = Ksp$",,0.0117 M,"This would be the value for the amount of ions that would react until equilibrium is reached, although the equilibrium concentration of any ion is what is asked for.",,Cannot be determined,It can be determined. Remember Ksp would be the inverse of the equilibrium constant of the formation of the precipitate.,,"Albert.io ""Concentration of Hydroxide Ion"""
+26,SOLUBILITY-26,"Consider the following reaction for a basic salt in water that dissociates into hydroxide ions:
+
+MOH_(s)_ ⇄ $M^+^_(aq)_ + OH^-^_(aq)_ Ksp$ = $2.6x10^-3^$
+
+What would be the pH in the saturated solution of this salt?",medium,,,,12.7,"Let's first determine the first reaction that would take place: $MOH_(s)_ ⇄ M^+^_(aq)_ + OH^-^_(aq)_$.
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [M^+^][OH^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (X)(X)$.
+
+Replacing the Ksp value: $2.6x10^-3^ = (X)^2^$. Solving for X: $X = 0.051 M$.
+
+Being this the maximum concentration that could be dissolved in water of this salt.
+
+Then, we just have to calculate the pH of the solution since we already know the $[OH^-^] = 0.051 M$, then:
+pH = 14 - (-log(0.051))
+pH = 12.7",,1.3,"This would be the value of the pOH of the saturated solution, but not of the pH. Remember that $pH = 14 - pOH$",,0.051,"This would be the maximum amount of MOH_(s)_ that would get dissolved in water, and the concentration of the OH^-^ at the equilibrium mixture, but the pH is what is asked for.",,7,"A pH of seven would indicate a neutral solution, which is not the case here because this salt would result in OH^-^ ions dissolving in the water, and the presence of them will increase the pH, making the solution basic.",,"Albert.io ""pH of Calcium Hydroxide"""
+27,SOLUBILITY-27,"Take into account an hypothetical reaction like this:
+
+$A_(s)_  + 2B_(aq)_$ ⇋ $3C_(s)_ + 4D_(g)_$
+
+At equilibrium, what would equilibrium constant expression for this reaction be?",easy,,,,K = [D]^4^/[B]^2^,"In the K expression the solids are not taken into account, and since both A and C are in solid state, the final equation is: $K = [D]^4^/[B]^2^$",,K = [C]^3^[D]^4^/[A][B]^2^,"In the Q expression the solids are not taken into account, and since A and C are in solid state, this is incorrect.",,Q = [D]^4^/[B]^2^,This is incorrect because at equilibrium the constant es represented by K and not Q. Q is the equilibrium quotient which relationship with K is indicative of the state of the reaction with respect to equilibrium.,,K = [D]^4^/[B]^2^,In the equilibrium constant expression the products are at the top and reactant at the bottom.,,"Albert.io ""K for Heterogeneous Equilibria:"
+28,SOLUBILITY-28,"Consider a basic salt that dissociates as the following reaction indicates:
+
+$MOH_(s)_$ ⇄ $M^+^_(aq)_ + OH^-^_(aq)_$
+
+The same amount is added to 3 beakers. One of the beaker is just water, one is a solution of $0.050 M$ of H^-^ hidronium ions and the other one is a solution of $0.100 M$ of H^+^ hidronium ions. In theory, determine which beaker is each solution.",easy,,,,"1: $0.100 M of H^+^$
+2: $0.050 M of H^+^$
+3: $Water$","Take into account this reaction: H^+^ + OH^-^ → H_2_O If the same amount of salt was added to each beaker, then the one in which there is more precipitate is the one with no presence of H^+^ ions that react with the OH^-^ ions to form water, in this case the water. Similarly, the one in which there is less precipitate is the one with more presence of H^+^ ions, in this case the solution of $0.100 M$ of H^+^. In amount of precipitate: Beaker 3 > Beaker 2 > Beaker 1.",,"1:$0.100 M of H^+^$
+2: $Water$
+3: $0.050 M of H^+^$","Although the one in which there is less precipitate is the one with higher presence of H^+^ ions, which in this case is the solution $0.100 M of H^+^$. But the one with more precipitate wouldn't be the one with a $0.050 M$ solution of H^+^, because it's not the one with the lowest concentration of hidronium ions.",,"1: Water
+2: $0.050 M of H^+^$
+3: $0.100 M of H^+^$","Beaker 3 cannot be the one with the highest concentration of hidronium ions because these would actually react with the OH^-^, allowing more salt to dissolve.",,"1: Water
+2: $0.100 M of H^+^$
+3: $0.050 M of H^+^$",Beaker 1 cannot be the one with just water because high concentrations of hidronium ions in the solution would make the salt more soluble.,,"Albert.io ""Solubility of Co(OH)2"""
+29,SOLUBILITY-29,"Consider a salt that dissociates like this:
+
+$M_2_A_(s)_$ ⇄ $2M^+^_(aq)_ + A^-2^_(aq)_$
+
+A solution is prepared with an initial concentration of the salt of $0.050 M$. At saturation, it is said that the salt got 15% dissociated. What would be the Ksp for this reaction?",medium,,,,1.69x10^-6^,"Let's first determine the reaction that would take place: $M_2_A_(s)_ ⇄ 2M^+^_(aq)_ + A^-2^_(aq)_$.
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [M^+^]^2^[A^-2^]$.
+
+Knowing that 15% of the salt got dissociated, which means that 15% of it reacted and got dissolved into ions, we know the concentrations of the ions at equilibrium, so let's replace:
+
+Ksp = $(2x0.15x0.050)^2^(0.15x0.050)$
+Ksp = 1.69x10^-6^",,3.07x10^-4^,"When it is said that 15% of the salt got dissociated, it means that that's the percentage of the total concentration of the salt that got dissolved into ions. This is the value you would obtain if you took it as 15% of the salt was left undissolved instead.",,5.00x10^-4^,"$0.050 M$ is just the initial concentration of the salt, it's not the molar solubility nor the concentration of the ions at equilibrium.",,0.086,Try to determine first how the reaction would take place and balance it to see the coefficients of each species in the equation.,,"Albert.io ""Ion Concentrations"""
+30,SOLUBILITY-30,"Take into account a salt that dissociates partially in water like this:
+
+MA_(s)_ ⇄ $M^+^_(aq)_ + A^-^_(aq)_$
+
+The molar solubility of the salt is 5.6x10^-2^. What would be the K of the precipitation reaction?",easy,,,,318.5,"Let's first determine the reaction that would take place: $MA_(s)_ ⇄ M^+^_(aq)_ + A^-^_(aq)_$.
+
+Now let''s write the expression for the Ksp for this particular reaction: $Ksp = [M^+^][A^-^]$.
+
+Assuming ""X"" as the amount of the salt that gets dissolved in M, let's replace the concentration expressions: $Ksp = (X)(X)$.
+
+Knowing that the molar solubility is 5.6x10^-2^, let's replace:
+
+Ksp = $(5.6x10^-2^)(5.6x10^-2^)$
+Ksp = 3.14x10^-3^
+
+The asked equilibrium constant is for the precipitation reaction, which would be the reverse reaction of the original one, so its K would be the inverse of the Ksp, like this:
+
+K = 1/Ksp
+K = 1/3.14x10^-3^
+K = 318.5",,3.14x10^-3^,"This would be the value of the Ksp of the salt, but the asked equilibrium constant is for the precipitation reaction, which would be the reverse reaction.",,5.6x10^-2^,This is just the value for the molar solubility and not the equilibrium constant for the precipitation reaction.,,17.9,This is just the inverse value of the molar solubility. Try determining first the reaction and calculating the Ksp value.,,"Albert.io ""Molar Solubility of Calcium Fluoride"""

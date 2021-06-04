@@ -205,6 +205,7 @@
 		576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */; };
 		576D5AA52566BAB50062F722 /* FirstOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */; };
 		576D5AAC2566CA900062F722 /* SecondOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */; };
+		576E44B8266AA199004CF2BE /* solubility-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 576E44B7266AA198004CF2BE /* solubility-quiz.csv */; };
 		577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077B42568E318003E750E /* EnergyProfileScreen.swift */; };
 		577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */; };
 		577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* SKBeakerScene.swift */; };
@@ -328,7 +329,6 @@
 		57B3B962260B4BF500EB9B47 /* NavigationIconRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B961260B4BF500EB9B47 /* NavigationIconRows.swift */; };
 		57B5312626440336002F7247 /* ReactionDefinitionArrowDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5312526440336002F7247 /* ReactionDefinitionArrowDirection.swift */; };
 		57B5312826440813002F7247 /* SolubilityMilligramsSoluteAddedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5312726440813002F7247 /* SolubilityMilligramsSoluteAddedTests.swift */; };
-		57B5312D2644144A002F7247 /* solubility-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57B5312A2644144A002F7247 /* solubility-quiz.csv */; };
 		57B5781D2639634C008DFAB5 /* AccessibilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5781C2639634C008DFAB5 /* AccessibilityExtensions.swift */; };
 		57B5781F2639953B008DFAB5 /* UniqueGridCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */; };
 		57B57821263995E8008DFAB5 /* UniqueGridCoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */; };
@@ -807,6 +807,7 @@
 		576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderEquationView.swift; sourceTree = "<group>"; };
 		576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderEquationView.swift; sourceTree = "<group>"; };
 		576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderEquationView.swift; sourceTree = "<group>"; };
+		576E44B7266AA198004CF2BE /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
 		576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDeferEdgeGesturesController.swift; sourceTree = "<group>"; };
 		577077B42568E318003E750E /* EnergyProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreen.swift; sourceTree = "<group>"; };
 		577077BB2568E3E1003E750E /* BeakyOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyOverlay.swift; sourceTree = "<group>"; };
@@ -924,7 +925,6 @@
 		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B5312526440336002F7247 /* ReactionDefinitionArrowDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionArrowDirection.swift; sourceTree = "<group>"; };
 		57B5312726440813002F7247 /* SolubilityMilligramsSoluteAddedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityMilligramsSoluteAddedTests.swift; sourceTree = "<group>"; };
-		57B5312A2644144A002F7247 /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
 		57B5781C2639634C008DFAB5 /* AccessibilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityExtensions.swift; sourceTree = "<group>"; };
 		57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinates.swift; sourceTree = "<group>"; };
 		57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinateTests.swift; sourceTree = "<group>"; };
@@ -2456,7 +2456,7 @@
 			children = (
 				574A3B932667BFA900CAFBC7 /* aqueous-quiz.csv */,
 				57F413302667FFC4000B7EBE /* gaseous-quiz.csv */,
-				57B5312A2644144A002F7247 /* solubility-quiz.csv */,
+				576E44B7266AA198004CF2BE /* solubility-quiz.csv */,
 			);
 			path = "quiz-questions";
 			sourceTree = "<group>";
@@ -3219,10 +3219,10 @@
 				575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */,
 				575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */,
 				57BDFF5626416C14001B97CC /* GoogleService-Info.plist in Resources */,
-				57B5312D2644144A002F7247 /* solubility-quiz.csv in Resources */,
 				57F413312667FFC4000B7EBE /* gaseous-quiz.csv in Resources */,
 				575A88BC25E43CD700AEE448 /* Assets.xcassets in Resources */,
 				574A3B942667BFA900CAFBC7 /* aqueous-quiz.csv in Resources */,
+				576E44B8266AA199004CF2BE /* solubility-quiz.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
