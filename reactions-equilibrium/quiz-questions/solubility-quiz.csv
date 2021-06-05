@@ -348,8 +348,8 @@ The same amount is added to 3 beakers. One of the beaker is just water, one is a
 2: $0.20 M of X^-^$
 3: $0.40 M of M^+^$","If the same amount of salt was added to each beaker, then the one in which there is more precipitate is the one with higher presence of a common ion, in this case the solution of $0.40 M$ of M^+^. Similarly, the one in which there is less precipitate is the one with no presence of any common ion, in this case the one with only water. In amount of precipitate: Beaker 3 > Beaker 2 > Beaker 1.",,"1: Water
 2: $0.40 M of M^+^$
-3: $0.20 M of X^-^$","Although the one in which there is less precipitate is the one with no presence of any common ion, which in this case is the one with only water. But the one with more precipitate wouldn't be the one with a $0.20 M$ solution of X^-^, because it's not the one with the highest concentration of a common ion.",,"1: $0.40 M of M^+^$
-2: $0.20 M of X^-^$
+3: $0.20 M of X^-^$","Although the one in which there is less precipitate is the one with no presence of any common ion, which in this case is the one with only water. But the one with more precipitate wouldn't be the one with a $0.20 M$ solution of X^-^, because it's not the one with the highest concentration of a common ion.",,"1: $0.20 M of X^-^$
+2: $0.40 M of M^+^$
 3: Water",Beaker 3 cannot be the one with pure water because the lack of common ions would actually make the salt more soluble.,,"1: $0.40 M of M^+^$
 2: $0.20 M of X^-^$
 3: Water",Beaker 1 cannot be the one with a $0.40 M$ solution of M^+^ because the high presence of common ions would make the salt less soluble.,,"Albert.io ""Pb(OH)2(s) Solubility in HCl, NaOH, and H2O"""
@@ -401,7 +401,7 @@ pH = 12.7",,1.3,"This would be the value of the pOH of the saturated solution, b
 
 $A_(s)_  + 2B_(aq)_$ ⇋ $3C_(s)_ + 4D_(g)_$
 
-At equilibrium, what would equilibrium constant expression for this reaction be?",easy,,,,K = [D]^4^/[B]^2^,"In the K expression the solids are not taken into account, and since both A and C are in solid state, the final equation is: $K = [D]^4^/[B]^2^$",,K = [C]^3^[D]^4^/[A][B]^2^,"In the Q expression the solids are not taken into account, and since A and C are in solid state, this is incorrect.",,Q = [D]^4^/[B]^2^,This is incorrect because at equilibrium the constant es represented by K and not Q. Q is the equilibrium quotient which relationship with K is indicative of the state of the reaction with respect to equilibrium.,,K = [D]^4^/[B]^2^,In the equilibrium constant expression the products are at the top and reactant at the bottom.,,"Albert.io ""K for Heterogeneous Equilibria:"
+At equilibrium, what would equilibrium constant expression for this reaction be?",easy,,,,K = [D]^4^/[B]^2^,"In the K expression the solids are not taken into account, and since both A and C are in solid state, the final equation is: $K = [D]^4^/[B]^2^$",,K = [C]^3^[D]^4^/[A][B]^2^,"In the Q expression the solids are not taken into account, and since A and C are in solid state, this is incorrect.",,Q = [D]^4^/[B]^2^,This is incorrect because at equilibrium the constant es represented by K and not Q. Q is the equilibrium quotient which relationship with K is indicative of the state of the reaction with respect to equilibrium.,,K = [B]^2^/[D]^4^,In the equilibrium constant expression the products are at the top and reactant at the bottom.,,"Albert.io ""K for Heterogeneous Equilibria:"
 28,SOLUBILITY-28,"Consider a basic salt that dissociates as the following reaction indicates:
 
 $MOH_(s)_$ ⇄ $M^+^_(aq)_ + OH^-^_(aq)_$
