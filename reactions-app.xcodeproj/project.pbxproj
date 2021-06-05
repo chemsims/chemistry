@@ -140,7 +140,9 @@
 		57473B0826218FBB009B608D /* SolubilityEquationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473B0726218FBB009B608D /* SolubilityEquationState.swift */; };
 		57491BF9263B363200962B92 /* AccessibilityLabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57491BF8263B363200962B92 /* AccessibilityLabelUtil.swift */; };
 		5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */; };
-		574A3B942667BFA900CAFBC7 /* aqueous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574A3B932667BFA900CAFBC7 /* aqueous-quiz.csv */; };
+		574E54E3266B652C00D6E05E /* solubility-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E2266B652C00D6E05E /* solubility-quiz.csv */; };
+		574E54E5266B653100D6E05E /* gaseous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E4266B653100D6E05E /* gaseous-quiz.csv */; };
+		574E54E9266B666F00D6E05E /* aqueous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E8266B666F00D6E05E /* aqueous-quiz.csv */; };
 		574F14BC25B4898700EB316C /* InputLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F14BB25B4898700EB316C /* InputLimits.swift */; };
 		574F14C025B48C9200EB316C /* NewDualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F14BF25B48C9200EB316C /* NewDualValueSlider.swift */; };
 		574F14C825B4E2C300EB316C /* ReactionInputLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574F14C725B4E2C300EB316C /* ReactionInputLimits.swift */; };
@@ -205,7 +207,6 @@
 		576D5A8D256674FD0062F722 /* ZeroOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */; };
 		576D5AA52566BAB50062F722 /* FirstOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */; };
 		576D5AAC2566CA900062F722 /* SecondOrderEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */; };
-		576E44B8266AA199004CF2BE /* solubility-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 576E44B7266AA198004CF2BE /* solubility-quiz.csv */; };
 		577077B52568E318003E750E /* EnergyProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077B42568E318003E750E /* EnergyProfileScreen.swift */; };
 		577077CA2568FDAA003E750E /* EnergyProfileBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077C92568FDAA003E750E /* EnergyProfileBeaker.swift */; };
 		577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* SKBeakerScene.swift */; };
@@ -441,7 +442,6 @@
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
-		57F413312667FFC4000B7EBE /* gaseous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57F413302667FFC4000B7EBE /* gaseous-quiz.csv */; };
 		57F4160D2642DC32007C8CE8 /* SolubilityPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */; };
 		57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4774F256105620041D406 /* ZeroOrderStatements.swift */; };
 		57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775925616F400041D406 /* BoundedSliderPositioning.swift */; };
@@ -747,7 +747,9 @@
 		57473B0726218FBB009B608D /* SolubilityEquationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityEquationState.swift; sourceTree = "<group>"; };
 		57491BF8263B363200962B92 /* AccessibilityLabelUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityLabelUtil.swift; sourceTree = "<group>"; };
 		5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationModelTest.swift; sourceTree = "<group>"; };
-		574A3B932667BFA900CAFBC7 /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
+		574E54E2266B652C00D6E05E /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
+		574E54E4266B653100D6E05E /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
+		574E54E8266B666F00D6E05E /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
 		574F14BB25B4898700EB316C /* InputLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLimits.swift; sourceTree = "<group>"; };
 		574F14BF25B48C9200EB316C /* NewDualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDualValueSlider.swift; sourceTree = "<group>"; };
 		574F14C725B4E2C300EB316C /* ReactionInputLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputLimits.swift; sourceTree = "<group>"; };
@@ -807,7 +809,6 @@
 		576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderEquationView.swift; sourceTree = "<group>"; };
 		576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderEquationView.swift; sourceTree = "<group>"; };
 		576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderEquationView.swift; sourceTree = "<group>"; };
-		576E44B7266AA198004CF2BE /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
 		576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDeferEdgeGesturesController.swift; sourceTree = "<group>"; };
 		577077B42568E318003E750E /* EnergyProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreen.swift; sourceTree = "<group>"; };
 		577077BB2568E3E1003E750E /* BeakyOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyOverlay.swift; sourceTree = "<group>"; };
@@ -1042,7 +1043,6 @@
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
 		57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingNumber.swift; sourceTree = "<group>"; };
 		57F337F82578CE7E00EF90A1 /* Tooltip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tooltip.swift; sourceTree = "<group>"; };
-		57F413302667FFC4000B7EBE /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
 		57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPersistence.swift; sourceTree = "<group>"; };
 		57F477412560FD440041D406 /* Beaky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beaky.swift; sourceTree = "<group>"; };
 		57F477462560FF300041D406 /* NavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
@@ -2454,9 +2454,9 @@
 		57BDFF4A264153B5001B97CC /* quiz-questions */ = {
 			isa = PBXGroup;
 			children = (
-				574A3B932667BFA900CAFBC7 /* aqueous-quiz.csv */,
-				57F413302667FFC4000B7EBE /* gaseous-quiz.csv */,
-				576E44B7266AA198004CF2BE /* solubility-quiz.csv */,
+				574E54E8266B666F00D6E05E /* aqueous-quiz.csv */,
+				574E54E4266B653100D6E05E /* gaseous-quiz.csv */,
+				574E54E2266B652C00D6E05E /* solubility-quiz.csv */,
 			);
 			path = "quiz-questions";
 			sourceTree = "<group>";
@@ -3219,10 +3219,10 @@
 				575A88C225E43CD700AEE448 /* LaunchScreen.storyboard in Resources */,
 				575A88BF25E43CD700AEE448 /* Preview Assets.xcassets in Resources */,
 				57BDFF5626416C14001B97CC /* GoogleService-Info.plist in Resources */,
-				57F413312667FFC4000B7EBE /* gaseous-quiz.csv in Resources */,
 				575A88BC25E43CD700AEE448 /* Assets.xcassets in Resources */,
-				574A3B942667BFA900CAFBC7 /* aqueous-quiz.csv in Resources */,
-				576E44B8266AA199004CF2BE /* solubility-quiz.csv in Resources */,
+				574E54E3266B652C00D6E05E /* solubility-quiz.csv in Resources */,
+				574E54E5266B653100D6E05E /* gaseous-quiz.csv in Resources */,
+				574E54E9266B666F00D6E05E /* aqueous-quiz.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

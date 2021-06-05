@@ -119,6 +119,7 @@ public struct Labelling {
         (" which is the same as", ", which is the same as"),
         (" where n is the order", ", where n is the order"),
         ("⇌", "double sided arrow,"),
+        ("⇄", "double sided arrow,"),
         ("0.5X", "0.5 x"),
         (")(", " times ")
     ]
