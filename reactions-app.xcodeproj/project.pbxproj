@@ -16,6 +16,8 @@
 		57064BA225A77787008102CE /* ReactionInputModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57064BA125A77787008102CE /* ReactionInputModel.swift */; };
 		57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */; };
 		570A765B266BC3D9009329FB /* solubility-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 570A765A266BC3D9009329FB /* solubility-quiz.csv */; };
+		570A765D266CBD0B009329FB /* ReactingBeakerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A765C266CBD0B009329FB /* ReactingBeakerPreview.swift */; };
+		570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */; };
 		570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA02265A736C008EC8CC /* AppDelegate.swift */; };
 		570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA04265A736C008EC8CC /* SceneDelegate.swift */; };
 		570ABA09265A736C008EC8CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA08265A736C008EC8CC /* Assets.xcassets */; };
@@ -614,6 +616,8 @@
 		57064BA125A77787008102CE /* ReactionInputModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputModel.swift; sourceTree = "<group>"; };
 		57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreenElement.swift; sourceTree = "<group>"; };
 		570A765A266BC3D9009329FB /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
+		570A765C266CBD0B009329FB /* ReactingBeakerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactingBeakerPreview.swift; sourceTree = "<group>"; };
+		570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactingBeakerViewModel.swift; sourceTree = "<group>"; };
 		570ABA00265A736C008EC8CC /* acids-bases.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "acids-bases.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		570ABA02265A736C008EC8CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		570ABA04265A736C008EC8CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1224,6 +1228,14 @@
 			path = "reaction-input";
 			sourceTree = "<group>";
 		};
+		570A765F266CC2FE009329FB /* beaker */ = {
+			isa = PBXGroup;
+			children = (
+				570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */,
+			);
+			path = beaker;
+			sourceTree = "<group>";
+		};
 		570ABA01265A736C008EC8CC /* acids-bases */ = {
 			isa = PBXGroup;
 			children = (
@@ -1470,6 +1482,7 @@
 				57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */,
 				578B174A2618D22B00D8079F /* FillableBeaker.swift */,
 				579CDA1C2661656D00143809 /* AdjustableFluidBeaker.swift */,
+				570A765C266CBD0B009329FB /* ReactingBeakerPreview.swift */,
 			);
 			path = beaker;
 			sourceTree = "<group>";
@@ -1610,6 +1623,7 @@
 		57438A37260A26BE005E3888 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				570A765F266CC2FE009329FB /* beaker */,
 				573F16912584ACEC001CE039 /* QuizViewModel.swift */,
 				578B170D2618748200D8079F /* motion */,
 				57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */,
@@ -3705,10 +3719,12 @@
 				5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */,
 				57952A4225E67F83006AB876 /* ScreenStateTree.swift in Sources */,
 				5784F4502664075400513B2A /* EnumMap.swift in Sources */,
+				570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */,
 				57686AE72601D541005BD328 /* SliderHapticsHandler.swift in Sources */,
 				57BDFF4E26415540001B97CC /* ImageType.swift in Sources */,
 				57D2F2EE25EA2D7400AEE0D8 /* EquationPlaceholderView.swift in Sources */,
 				57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */,
+				570A765D266CBD0B009329FB /* ReactingBeakerPreview.swift in Sources */,
 				577A261D262862C00060EC54 /* ReactionEnergyTransfer.swift in Sources */,
 				579EA8F7264689CD008461E8 /* BarShape.swift in Sources */,
 				57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */,

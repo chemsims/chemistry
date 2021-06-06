@@ -7,8 +7,8 @@ import SwiftUI
 
 public struct BeakerMolecules {
     
-    public let coords: [GridCoordinate]
-    public let color: Color
+    public var coords: [GridCoordinate]
+    public var color: Color
     public let label: String
 
     public init(
@@ -23,7 +23,7 @@ public struct BeakerMolecules {
 }
 
 public struct AnimatingBeakerMolecules {
-    public let molecules: BeakerMolecules
+    public var molecules: BeakerMolecules
     public let fractionToDraw: Equation
 
     public init(molecules: BeakerMolecules, fractionToDraw: Equation) {
