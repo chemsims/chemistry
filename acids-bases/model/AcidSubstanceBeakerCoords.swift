@@ -18,9 +18,9 @@ struct AcidSubstanceBeakerCoords {
 
     var coords: SubstanceValue<[GridCoordinate]> {
         SubstanceValue(
-            substanceValue: substanceCoords,
-            primaryIonValue: primaryIonCoords,
-            secondaryIonValue: secondaryIonCoords
+            substance: substanceCoords,
+            primaryIon: primaryIonCoords,
+            secondaryIon: secondaryIonCoords
         )
     }
 

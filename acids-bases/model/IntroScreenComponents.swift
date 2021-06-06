@@ -77,18 +77,18 @@ class IntroScreenComponents: ObservableObject {
     // TODO - accessibility labels
     var coords: SubstanceValue<BeakerMolecules> {
         SubstanceValue(
-            substanceValue: BeakerMolecules(
-                coords: underlyingCoords.coords.substanceValue,
+            substance: BeakerMolecules(
+                coords: underlyingCoords.coords.substance,
                 color: substance.color,
                 label: ""
             ),
-            primaryIonValue: BeakerMolecules(
-                coords: underlyingCoords.coords.primaryIonValue,
+            primaryIon: BeakerMolecules(
+                coords: underlyingCoords.coords.primaryIon,
                 color: substance.primary.color,
                 label: ""
             ),
-            secondaryIonValue: BeakerMolecules(
-                coords: underlyingCoords.coords.secondaryIonValue,
+            secondaryIon: BeakerMolecules(
+                coords: underlyingCoords.coords.secondaryIon,
                 color: substance.secondary.color,
                 label: ""
             )
@@ -101,7 +101,7 @@ class IntroScreenComponents: ObservableObject {
 
         // TODO - accessibility labels
         return SubstanceValue(
-            substanceValue: BarChartData(
+            substance: BarChartData(
                 label: substance.symbol,
                 equation: LinearEquation(
                     m: finalSubstanceFraction,
@@ -111,13 +111,13 @@ class IntroScreenComponents: ObservableObject {
                 color: substance.color,
                 accessibilityLabel: ""
             ),
-            primaryIonValue: BarChartData(
+            primaryIon: BarChartData(
                 label: substance.primary.rawValue,
                 equation: ionFraction,
                 color: substance.primary.color,
                 accessibilityLabel: ""
             ),
-            secondaryIonValue: BarChartData(
+            secondaryIon: BarChartData(
                 label: substance.secondary.rawValue,
                 equation: ionFraction,
                 color: substance.secondary.color,
@@ -204,15 +204,5 @@ extension IntroScreenComponents {
         self.substanceAdded = 0
         self.fractionSubstanceAdded = 0
         self.underlyingCoords.reset()
-    }
-}
-
-struct SubstanceValue<Value> {
-    let substanceValue: Value
-    let primaryIonValue: Value
-    let secondaryIonValue: Value
-
-    var all: [Value] {
-        [substanceValue, primaryIonValue, secondaryIonValue]
     }
 }
