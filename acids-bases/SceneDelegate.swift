@@ -10,17 +10,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-
         let contentView = GeometryReader { geo in
-            IntroScreen(
+            BufferScreen(
                 layout: AcidBasesScreenLayout(
                     geometry: geo,
                     verticalSizeClass: nil,
                     horizontalSizeClass: nil
                 ),
-                model: IntroScreenViewModel()
+                model: BufferScreenViewModel()
             )
         }.padding(10)
 

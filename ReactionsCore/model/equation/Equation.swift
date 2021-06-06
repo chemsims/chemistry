@@ -8,8 +8,26 @@ public protocol Equation {
     func getY(at x: CGFloat) -> CGFloat
 }
 
-public func *(lhs: Equation, rhs: Equation) -> Equation {
-    OperatorEquation(lhs: lhs, rhs: rhs, op: { $0 * $1 })
+public func * (lhs: Equation, rhs: Equation) -> Equation {
+    OperatorEquation(lhs: lhs, rhs: rhs, op: *)
+}
+
+public func * (lhs: CGFloat, rhs: Equation) -> Equation {
+    ConstantEquation(value: lhs) * rhs
+}
+
+public func / (lhs: Equation, rhs: Equation) -> Equation {
+    OperatorEquation(lhs: lhs, rhs: rhs) { (l, r) in
+        r == 0 ? 0 : l / r
+    }
+}
+
+public func / (lhs: CGFloat, rhs: Equation) -> Equation {
+    ConstantEquation(value: lhs) * rhs
+}
+
+public func + (lhs: Equation, rhs: Equation) -> Equation {
+    OperatorEquation(lhs: lhs, rhs: rhs, op: +)
 }
 
 public struct LinearEquation: Equation {
@@ -108,6 +126,19 @@ public struct BoundEquation: Equation {
         let value = underlying.getY(at: x)
         let withLowerBound = lowerBound.map { max($0, value) } ?? value
         return upperBound.map { min($0, withLowerBound) } ?? withLowerBound
+    }
+}
+
+public struct LogEquation: Equation {
+    let underlying: Equation
+
+    public init(underlying: Equation) {
+        self.underlying = underlying
+    }
+
+    public func getY(at x: CGFloat) -> CGFloat {
+        let value = underlying.getY(at: x)
+        return value == 0 ? 0 : log(value)
     }
 }
 

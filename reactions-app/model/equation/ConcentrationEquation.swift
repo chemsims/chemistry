@@ -208,18 +208,6 @@ struct InverseEquation: Equation {
     }
 }
 
-struct LogEquation: Equation {
-    let underlying: ConcentrationEquation
-
-    func getY(at x: CGFloat) -> CGFloat {
-        let value = underlying.getConcentration(at: x)
-        if value == 0 {
-            return 0
-        }
-        return log(value)
-    }
-}
-
 struct RateEquation: Equation {
     let concentration: ConcentrationEquation
 

@@ -36,14 +36,7 @@ struct IntroBeaker: View {
                 molecules: components.coords.all,
                 animatingMolecules: [],
                 currentTime: 0,
-                settings: AdjustableFluidBeakerSettings(
-                    minRows: AcidAppSettings.minBeakerRows,
-                    maxRows: AcidAppSettings.maxBeakerRows,
-                    beakerWidth: layout.common.beakerWidth,
-                    beakerHeight: layout.common.beakerHeight,
-                    sliderSettings: layout.common.sliderSettings,
-                    sliderHeight: layout.common.sliderHeight
-                ),
+                settings: layout.common.adjustableBeakerSettings,
                 canSetLevel: model.inputState == .setWaterLevel,
                 beakerColorMultiply: .white,
                 sliderColorMultiply: .white,

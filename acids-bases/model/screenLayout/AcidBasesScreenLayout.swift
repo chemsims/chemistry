@@ -84,6 +84,17 @@ extension AcidBasesScreenLayout {
         beakerSettings.innerBeakerWidth / CGFloat(MoleculeGridSettings.cols)
     }
 
+    var adjustableBeakerSettings: AdjustableFluidBeakerSettings {
+        AdjustableFluidBeakerSettings(
+            minRows: AcidAppSettings.minBeakerRows,
+            maxRows: AcidAppSettings.maxBeakerRows,
+            beakerWidth: beakerWidth,
+            beakerHeight: beakerHeight,
+            sliderSettings: sliderSettings,
+            sliderHeight: sliderHeight
+        )
+    }
+
     /// Returns the y position of the top of the water for the given number of `rows`, from the top of the screen
     func topOfWaterPosition(rows: CGFloat) -> CGFloat {
         let topFromSlider = sliderAxis.getPosition(at: rows)
