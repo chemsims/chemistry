@@ -26,7 +26,7 @@ struct BufferBeaker: View {
                 AddWeakSubstanceBeaker(
                     layout: layout,
                     model: model,
-                    components: model.phase1Model
+                    components: model.weakSubstanceModel
                 )
             case .addSalt:
                 ReactingBeaker(
@@ -75,7 +75,7 @@ private struct AddWeakSubstanceBeaker: View {
     var body: some View {
         AdjustableFluidBeaker(
             rows: $model.rows,
-            molecules: [components.weakAcidCoords],
+            molecules: [components.substanceCoords],
             animatingMolecules: components.ionCoords,
             currentTime: components.progress,
             settings: layout.common.adjustableBeakerSettings,

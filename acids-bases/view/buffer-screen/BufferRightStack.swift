@@ -21,7 +21,7 @@ struct BufferRightStack: View {
     private var terms: some View {
         Group {
             if model.phase == .addWeakSubstance {
-                BufferTerms1(components: model.phase1Model)
+                BufferTerms1(components: model.weakSubstanceModel)
             } else {
                 BufferTerms2(model: model.phase2Model)
             }

@@ -13,14 +13,12 @@ class BufferScreenViewModel: ObservableObject {
 
     @Published var rows = CGFloat(AcidAppSettings.initialRows)
     @Published var phase = Phase.addWeakSubstance
-    @Published var phase1Model = BufferWeakAcidComponents(substance: .weakAcids[1])
+    @Published var weakSubstanceModel = BufferWeakAcidComponents(substance: .weakAcids[1])
     @Published var phase2Model = BufferComponents2(prev: nil)
     @Published var phase3Model = BufferComponents3(prev: nil)
     @Published var statement = [TextLine]()
 
     private(set) var navigation: NavigationModel<BufferScreenState>?
-
-
 }
 
 // MARK: Navigation
@@ -34,7 +32,7 @@ extension BufferScreenViewModel {
     }
 
     func goToPhase2() {
-        phase2Model = BufferComponents2(prev: phase1Model)
+        phase2Model = BufferComponents2(prev: weakSubstanceModel)
         phase = .addSalt
     }
 
@@ -47,7 +45,7 @@ extension BufferScreenViewModel {
 // MARK: Adding molecules
 extension BufferScreenViewModel {
     func incrementWeakSubstance() {
-        phase1Model.incrementWeakAcid(count: 1)
+        weakSubstanceModel.incrementSubstance(count: 1)
     }
 
     func incrementSalt() {

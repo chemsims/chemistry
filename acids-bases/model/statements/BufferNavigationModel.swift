@@ -60,7 +60,7 @@ private class RunWeakAcidReaction: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = ["Running reaction"]
         withAnimation(.linear(duration: 2)) {
-            model.phase1Model.progress = 1
+            model.weakSubstanceModel.progress = 1
         }
     }
 }
@@ -69,7 +69,7 @@ private class EndWeakAcidReaction: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = ["Finished reaction"]
         withAnimation(.easeOut(duration: 0.5)) {
-            model.phase1Model.progress = 1.0001
+            model.weakSubstanceModel.progress = 1.0001
         }
     }
 }
