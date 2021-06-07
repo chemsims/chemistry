@@ -23,11 +23,15 @@ public func / (lhs: Equation, rhs: Equation) -> Equation {
 }
 
 public func / (lhs: CGFloat, rhs: Equation) -> Equation {
-    ConstantEquation(value: lhs) * rhs
+    ConstantEquation(value: lhs) / rhs
 }
 
 public func + (lhs: Equation, rhs: Equation) -> Equation {
     OperatorEquation(lhs: lhs, rhs: rhs, op: +)
+}
+
+public func + (lhs: CGFloat, rhs: Equation) -> Equation {
+    ConstantEquation(value: lhs) + rhs
 }
 
 public struct LinearEquation: Equation {
@@ -39,9 +43,12 @@ public struct LinearEquation: Equation {
         self.c = y1 - (m * x1)
     }
 
+    /// Creates a new instance which passes through the points (`x1`, `y1`) and (`x2`, `y2`).
+    ///
+    /// - Note: When `x1 == x2`, the resulting equation will have a constant value of `y1`.
     public init(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) {
-        assert(x2 != x1)
-        let m = (y2 - y1) / (x2 - x1)
+        let denom = x2 - x1
+        let m = denom == 0 ? 0 : (y2 - y1) / denom
         self.init(m: m, x1: x1, y1: y1)
     }
 
@@ -129,6 +136,8 @@ public struct BoundEquation: Equation {
     }
 }
 
+/// Returns the natural logarithm of `underlying`
+/// Returns 0 for inputs of 0
 public struct LogEquation: Equation {
     let underlying: Equation
 
@@ -139,6 +148,21 @@ public struct LogEquation: Equation {
     public func getY(at x: CGFloat) -> CGFloat {
         let value = underlying.getY(at: x)
         return value == 0 ? 0 : log(value)
+    }
+}
+
+/// Returns log base 10 of `underlying`.
+/// Returns 0 for inputs of 0
+public struct Log10Equation: Equation {
+    let underlying: Equation
+
+    public init(underlying: Equation) {
+        self.underlying = underlying
+    }
+
+    public func getY(at x: CGFloat) -> CGFloat {
+        let value = underlying.getY(at: x)
+        return value == 0 ? 0 : log10(value)
     }
 }
 

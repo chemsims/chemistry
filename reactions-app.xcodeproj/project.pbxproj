@@ -32,6 +32,7 @@
 		570ABA34265A761F008EC8CC /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA38265A765A008EC8CC /* IntroScreenComponents.swift */; };
 		570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA3A265A7ACB008EC8CC /* IntroScreenComponentsTests.swift */; };
+		570AD452266D4CF100B9732E /* BufferRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570AD451266D4CF100B9732E /* BufferRightStack.swift */; };
 		570E4F01256D10CD001EADCB /* EnergyProfileChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */; };
 		570E4F06256D1E78001EADCB /* EnergyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */; };
 		570E4F0C256D288C001EADCB /* Catalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570E4F0B256D288C001EADCB /* Catalyst.swift */; };
@@ -639,6 +640,7 @@
 		570ABA1B265A736D008EC8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		570ABA38265A765A008EC8CC /* IntroScreenComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreenComponents.swift; sourceTree = "<group>"; };
 		570ABA3A265A7ACB008EC8CC /* IntroScreenComponentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreenComponentsTests.swift; sourceTree = "<group>"; };
+		570AD451266D4CF100B9732E /* BufferRightStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferRightStack.swift; sourceTree = "<group>"; };
 		570E4F00256D10CD001EADCB /* EnergyProfileChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChart.swift; sourceTree = "<group>"; };
 		570E4F05256D1E78001EADCB /* EnergyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileViewModel.swift; sourceTree = "<group>"; };
 		570E4F0B256D288C001EADCB /* Catalyst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalyst.swift; sourceTree = "<group>"; };
@@ -1260,6 +1262,7 @@
 			children = (
 				570A766E266CFDD2009329FB /* BufferScreen.swift */,
 				570A7670266CFF0D009329FB /* BufferBeaker.swift */,
+				570AD451266D4CF100B9732E /* BufferRightStack.swift */,
 			);
 			path = "buffer-screen";
 			sourceTree = "<group>";
@@ -3339,6 +3342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */,
+				570AD452266D4CF100B9732E /* BufferRightStack.swift in Sources */,
 				57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */,
 				570A766D266CFCF1009329FB /* BufferNavigationModel.swift in Sources */,
 				5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */,

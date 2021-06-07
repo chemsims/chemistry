@@ -89,5 +89,27 @@ public struct QuadraticEquation: Equation {
         let term2 = (-b - sqrtTerm) / denom
         return (term1, term2)
     }
-}
 
+    /// Returns roots for the quadratic equation of the form `ax^2 + bx + c = 0`.
+    ///
+    /// Nil is returned in the case no roots exist.
+    ///
+    /// - Note: Both roots may be equal, and are returned in no guaranteed order.
+    public static func roots(
+        a: CGFloat,
+        b: CGFloat,
+        c: CGFloat
+    ) -> (CGFloat, CGFloat)? {
+        let termToSqrt = pow(b, 2) - (4 * a * c)
+        let denom = 2 * a
+        guard termToSqrt > 0, denom != 0 else {
+            return nil
+        }
+        let sqrtTerm = sqrt(termToSqrt)
+
+        let numer1 = -b + sqrtTerm
+        let numer2 = -b - sqrtTerm
+
+        return (numer1 / denom, numer2 / denom)
+    }
+}

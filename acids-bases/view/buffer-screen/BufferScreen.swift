@@ -32,12 +32,9 @@ private struct BufferScreenWithSettings: View {
                 model: model
             )
             Spacer()
-            BeakyBox(
-                statement: model.statement,
-                next: model.next,
-                back: model.back,
-                nextIsDisabled: false,
-                settings: layout.common.beakySettings
+            BufferRightStack(
+                layout: layout,
+                model: model
             )
         }
     }
