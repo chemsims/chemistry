@@ -6,17 +6,29 @@ import SwiftUI
 
 public struct ICETable: View {
 
-    public init(columns: [ICETableColumn]) {
+    /// Creates a new ICETable.
+    ///
+    /// - Parameters:
+    ///     - columns: The table columns.
+    ///     - x: The x value to pass into the column equations. A default value of 0 is used. Note that columns
+    ///          can be constructed using constant values, in which case the `x` parameter has no effect.
+    public init(
+        columns: [ICETableColumn],
+        x: CGFloat = 0
+    ) {
         self.columns = columns
+        self.x = x
     }
 
     let columns: [ICETableColumn]
+    let x: CGFloat
 
     public var body: some View {
         GeometryReader { geo in
             SizedICETable(
                 width: geo.size.width,
                 height: geo.size.height,
+                x: x,
                 columns: columns
             )
         }
@@ -24,20 +36,48 @@ public struct ICETable: View {
 }
 
 /// Represents a column in the ICE table.
-///
-/// - Parameters:
-///     - header: String of the header row.
-///     - initialValue: The initial value.
-///     - finalValue: The final value.
-///     - formatInitial: Closure to format initial value as a String.
-///     - formatFinal: Closure to format the final value as a String.
-///     - formatChange: Closure to format the change in value as a String. Note that a '+' will be
-///                     prepended to the String for a positive change.
 public struct ICETableColumn {
+
+    /// Creates a new instance using fixed values
+    ///
+    /// - Parameters:
+    ///     - header: String of the header row.
+    ///     - initialValue: The initial value.
+    ///     - finalValue: The final value.
+    ///     - formatInitial: Closure to format initial value as a String.
+    ///     - formatFinal: Closure to format the final value as a String.
+    ///     - formatChange: Closure to format the change in value as a String. Note that a '+' will be
+    ///                     prepended to the String for a positive change.
     public init(
         header: String,
         initialValue: CGFloat,
         finalValue: CGFloat,
+        formatInitial: @escaping (CGFloat) -> String = { $0.str(decimals: 2) },
+        formatFinal: @escaping (CGFloat) -> String = { $0.str(decimals: 2) },
+        formatChange: @escaping (CGFloat) -> String = { $0.str(decimals: 2) }
+    ) {
+        self.header = header
+        self.initialValue = ConstantEquation(value: initialValue)
+        self.finalValue = ConstantEquation(value: finalValue)
+        self.formatInitial = formatInitial
+        self.formatFinal = formatFinal
+        self.formatChange = formatChange
+    }
+
+    /// Creates a new instance using equations
+    ///
+    /// - Parameters:
+    ///     - header: String of the header row.
+    ///     - initialValue: The initial value.
+    ///     - finalValue: The final value.
+    ///     - formatInitial: Closure to format initial value as a String.
+    ///     - formatFinal: Closure to format the final value as a String.
+    ///     - formatChange: Closure to format the change in value as a String. Note that a '+' will be
+    ///                     prepended to the String for a positive change.
+    public init(
+        header: String,
+        initialValue: Equation,
+        finalValue: Equation,
         formatInitial: @escaping (CGFloat) -> String = { $0.str(decimals: 2) },
         formatFinal: @escaping (CGFloat) -> String = { $0.str(decimals: 2) },
         formatChange: @escaping (CGFloat) -> String = { $0.str(decimals: 2) }
@@ -51,8 +91,8 @@ public struct ICETableColumn {
     }
 
     let header: String
-    let initialValue: CGFloat
-    let finalValue: CGFloat
+    let initialValue: Equation
+    let finalValue: Equation
 
     let formatInitial: (CGFloat) -> String
     let formatFinal: (CGFloat) -> String
@@ -63,6 +103,8 @@ private struct SizedICETable: View {
 
     let width: CGFloat
     let height: CGFloat
+
+    let x: CGFloat
 
     let columns: [ICETableColumn]
 
@@ -93,24 +135,47 @@ private struct SizedICETable: View {
         let initial = columnValue.initialValue
         let final = columnValue.finalValue
 
-        // Sometimes a very small change appears as a negative 0 in the table
-        let change = abs(final - initial) < 0.00001 ? 0 : final - initial
-        let changeSign = change > 0 ? "+" : ""
-        let changeString = "\(changeSign)\(columnValue.formatChange(change))"
+
+        let change = ChangeInValueEquation(initial: initial, final: final)
 
         return VStack(spacing: 0) {
             cell(columnValue.header)
                 .animation(nil)
                 .accessibility(hidden: true)
-            cell(columnValue.formatInitial(initial))
+            cell(initial, formatter: columnValue.formatInitial)
                 .accessibility(label: Text("Initial \(columnValue.header)"))
 
-            cell(changeString, emphasise: true)
+            cell(
+                change,
+                formatter: {
+                    formatChange($0, formatter: columnValue.formatChange)
+                },
+                emphasise: true
+            )
                 .accessibility(label: Text("Change in \(columnValue.header)"))
 
-            cell(columnValue.formatFinal(final), emphasise: true)
+            cell(final, formatter: columnValue.formatFinal
+                 ,emphasise: true)
                 .accessibility(label: Text("Final \(columnValue.header)"))
         }
+    }
+
+    private func cell(
+        _ equation: Equation,
+        formatter: @escaping (CGFloat) -> String,
+        emphasise: Bool = false
+    ) -> some View {
+        AnimatingNumber(
+            x: x,
+            equation: equation,
+            formatter: formatter
+        )
+        .frame(width: width / CGFloat((1 + columns.count)), height: height / 4)
+        .foregroundColor(emphasise ? .orangeAccent : .black)
+        .background(
+            Rectangle()
+                .stroke()
+        )
     }
 
     private func cell(_ text: String, emphasise: Bool = false) -> some View {
@@ -122,6 +187,25 @@ private struct SizedICETable: View {
                     .stroke()
             )
             .accessibility(value: Text(text))
+    }
+
+    // Sometimes a very small change appears as a negative 0 in the table
+    private func formatChange(
+        _ change: CGFloat,
+        formatter: (CGFloat) -> String
+    ) -> String {
+        let sign = change > 0 ? "+" : ""
+        return "\(sign)\(formatter(change))"
+    }
+
+    private struct ChangeInValueEquation: Equation {
+        let initial: Equation
+        let final: Equation
+
+        func getY(at x: CGFloat) -> CGFloat {
+            let delta = final.getY(at: x) - initial.getY(at: x)
+            return abs(delta) < 0.00001 ? 0 : delta
+        }
     }
 }
 
