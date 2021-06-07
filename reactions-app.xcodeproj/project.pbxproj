@@ -125,6 +125,8 @@
 		573F16A725852D5D001CE039 /* BeakerReactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16A625852D5D001CE039 /* BeakerReactionState.swift */; };
 		574103DF2642966300E6EDCB /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F82578CE7E00EF90A1 /* Tooltip.swift */; };
 		5743660D266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660C266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift */; };
+		5743660F266E7CD8007F0410 /* BufferChartStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660E266E7CD8007F0410 /* BufferChartStack.swift */; };
+		57436611266E7EF4007F0410 /* ICETable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F31825EA601B00AEE0D8 /* ICETable.swift */; };
 		574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574386D926654C6700B11C34 /* IntroEquationView.swift */; };
 		574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574386DB2665518100B11C34 /* ConcentrationPlaceholder.swift */; };
 		57438A3D260A26DB005E3888 /* RootNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */; };
@@ -389,7 +391,6 @@
 		57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D32577C2FD006D945B /* FixedText.swift */; };
 		57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */; };
 		57D2F31225EA389C00AEE0D8 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
-		57D2F31925EA601B00AEE0D8 /* ICETable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F31825EA601B00AEE0D8 /* ICETable.swift */; };
 		57D2F32725EA86C600AEE0D8 /* EquilibriumGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */; };
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
@@ -742,6 +743,7 @@
 		573F169C2584C035001CE039 /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
 		573F16A625852D5D001CE039 /* BeakerReactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerReactionState.swift; sourceTree = "<group>"; };
 		5743660C266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferWeakSubstanceComponents.swift; sourceTree = "<group>"; };
+		5743660E266E7CD8007F0410 /* BufferChartStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferChartStack.swift; sourceTree = "<group>"; };
 		574386D926654C6700B11C34 /* IntroEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroEquationView.swift; sourceTree = "<group>"; };
 		574386DB2665518100B11C34 /* ConcentrationPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlaceholder.swift; sourceTree = "<group>"; };
 		57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationViewModel.swift; sourceTree = "<group>"; };
@@ -1266,6 +1268,7 @@
 				570A766E266CFDD2009329FB /* BufferScreen.swift */,
 				570A7670266CFF0D009329FB /* BufferBeaker.swift */,
 				570AD451266D4CF100B9732E /* BufferRightStack.swift */,
+				5743660E266E7CD8007F0410 /* BufferChartStack.swift */,
 			);
 			path = "buffer-screen";
 			sourceTree = "<group>";
@@ -1654,6 +1657,14 @@
 				57778B8425937B5900254262 /* questions */,
 			);
 			path = quiz;
+			sourceTree = "<group>";
+		};
+		57436610266E7D61007F0410 /* table */ = {
+			isa = PBXGroup;
+			children = (
+				57D2F31825EA601B00AEE0D8 /* ICETable.swift */,
+			);
+			path = table;
 			sourceTree = "<group>";
 		};
 		57438A37260A26BE005E3888 /* viewmodel */ = {
@@ -2248,6 +2259,7 @@
 		5797A47A25E4092600991BD9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57436610266E7D61007F0410 /* table */,
 				575C90E126629768001DCD17 /* ph */,
 				579EA90A264728AE008461E8 /* modifiers */,
 				57E7FF8625829DD400A30582 /* quiz */,
@@ -2561,14 +2573,6 @@
 			path = equation;
 			sourceTree = "<group>";
 		};
-		57D2F31725EA5FFA00AEE0D8 /* table */ = {
-			isa = PBXGroup;
-			children = (
-				57D2F31825EA601B00AEE0D8 /* ICETable.swift */,
-			);
-			path = table;
-			sourceTree = "<group>";
-		};
 		57D2F33025EA86D700AEE0D8 /* grid */ = {
 			isa = PBXGroup;
 			children = (
@@ -2654,7 +2658,6 @@
 				57DB304225F74CEC0070E96F /* molecule-container */,
 				57A1B79625EAA64300878B52 /* scales */,
 				57D2F33025EA86D700AEE0D8 /* grid */,
-				57D2F31725EA5FFA00AEE0D8 /* table */,
 				57D2F2DD25EA2C2000AEE0D8 /* equation */,
 				57DDAD2225E5705700B535A7 /* chart */,
 				57DDAC1825E4FD7200B535A7 /* aqueous */,
@@ -3360,6 +3363,7 @@
 				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
 				574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */,
 				5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */,
+				5743660F266E7CD8007F0410 /* BufferChartStack.swift in Sources */,
 				570A7666266CDA0A009329FB /* SubstancePart.swift in Sources */,
 				57FA3AC2266104D00073A29B /* AcidBasesScreenLayout.swift in Sources */,
 				57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */,
@@ -3541,7 +3545,6 @@
 				57D15C0C2622D67F00BE1303 /* BeakerStateTransition.swift in Sources */,
 				57686A8B2600CF65005BD328 /* GaseousReactionScreen.swift in Sources */,
 				57686AEE2601EDB6005BD328 /* PressureBeaker.swift in Sources */,
-				57D2F31925EA601B00AEE0D8 /* ICETable.swift in Sources */,
 				57D2F2C325EA227D00AEE0D8 /* ReactionQuotientEquation.swift in Sources */,
 				57473B0226218FAB009B608D /* SolubilityInputState.swift in Sources */,
 				57D2F2E425EA2C4300AEE0D8 /* AqueousEquationView.swift in Sources */,
@@ -3673,6 +3676,7 @@
 				57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */,
 				57315EC326401CF500A7D0F9 /* QuizQuestionCard.swift in Sources */,
 				57B3B92F260B408500EB9B47 /* NavigationRow.swift in Sources */,
+				57436611266E7EF4007F0410 /* ICETable.swift in Sources */,
 				579EA8FB264694FB008461E8 /* BarChartData.swift in Sources */,
 				57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */,
 				575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */,

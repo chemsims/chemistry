@@ -3,13 +3,16 @@
 //
 
 import SwiftUI
-import ReactionsCore
 
-struct ICETable: View {
+public struct ICETable: View {
+
+    public init(columns: [ICETableColumn]) {
+        self.columns = columns
+    }
 
     let columns: [ICETableColumn]
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geo in
             SizedICETable(
                 width: geo.size.width,
@@ -20,10 +23,40 @@ struct ICETable: View {
     }
 }
 
-struct ICETableColumn {
+/// Represents a column in the ICE table.
+///
+/// - Parameters:
+///     - header: String of the header row.
+///     - initialValue: The initial value.
+///     - finalValue: The final value.
+///     - formatInitial: Closure to format initial value as a String.
+///     - formatFinal: Closure to format the final value as a String.
+///     - formatChange: Closure to format the change in value as a String. Note that a '+' will be
+///                     prepended to the String for a positive change.
+public struct ICETableColumn {
+    public init(
+        header: String,
+        initialValue: CGFloat,
+        finalValue: CGFloat,
+        formatInitial: @escaping (CGFloat) -> String = { $0.str(decimals: 2) },
+        formatFinal: @escaping (CGFloat) -> String = { $0.str(decimals: 2) },
+        formatChange: @escaping (CGFloat) -> String = { $0.str(decimals: 2) }
+    ) {
+        self.header = header
+        self.initialValue = initialValue
+        self.finalValue = finalValue
+        self.formatInitial = formatInitial
+        self.formatFinal = formatFinal
+        self.formatChange = formatChange
+    }
+
     let header: String
     let initialValue: CGFloat
     let finalValue: CGFloat
+
+    let formatInitial: (CGFloat) -> String
+    let formatFinal: (CGFloat) -> String
+    let formatChange: (CGFloat) -> String
 }
 
 private struct SizedICETable: View {
@@ -63,25 +96,21 @@ private struct SizedICETable: View {
         // Sometimes a very small change appears as a negative 0 in the table
         let change = abs(final - initial) < 0.00001 ? 0 : final - initial
         let changeSign = change > 0 ? "+" : ""
-        let changeString = "\(changeSign)\(change.str(decimals: 2))"
+        let changeString = "\(changeSign)\(columnValue.formatChange(change))"
 
         return VStack(spacing: 0) {
             cell(columnValue.header)
                 .animation(nil)
                 .accessibility(hidden: true)
-            cell(initial)
+            cell(columnValue.formatInitial(initial))
                 .accessibility(label: Text("Initial \(columnValue.header)"))
 
             cell(changeString, emphasise: true)
                 .accessibility(label: Text("Change in \(columnValue.header)"))
 
-            cell(final, emphasise: true)
+            cell(columnValue.formatFinal(final), emphasise: true)
                 .accessibility(label: Text("Final \(columnValue.header)"))
         }
-    }
-
-    private func cell(_ value: CGFloat, emphasise: Bool = false) -> some View {
-        cell("\(value.str(decimals: 2))", emphasise: emphasise)
     }
 
     private func cell(_ text: String, emphasise: Bool = false) -> some View {
