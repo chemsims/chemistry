@@ -74,7 +74,7 @@ private struct BufferBarChart: View {
     private var data: [BarChartData] {
         switch phase {
         case .addWeakSubstance: return model1.barChartData
-        default: return model1.barChartData
+        default: return model2.barChartData
         }
     }
 

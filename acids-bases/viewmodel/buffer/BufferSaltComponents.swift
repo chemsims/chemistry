@@ -74,6 +74,40 @@ class BufferSaltComponents: ObservableObject {
 
         self.haFractionInTermsOfPH = HAFractionFromPh(pka: 4.14)
         self.aFractionInTermsOfPH = AFractionFromPh(pka: 4.14)
+
+        // TODO - how does this class know that prev equation reaches a max at 1?
+
+        self.substanceBarChartEquation = SwitchingEquation(
+            thresholdX: prev?.substanceBarEquation.getY(at: 1) ?? 0,
+            underlyingLeft: LinearEquation(
+                x1: 0,
+                y1: initialHAConcentration,
+                x2: initialCount(.substance),
+                y2: finalHAConcentration
+            ),
+            underlyingRight: ConstantEquation(value: finalHAConcentration)
+        )
+        let initialIonBarHeight = prev?.ionBarEquation.getY(at: 1) ?? 0
+        self.primaryIonBarChartEquation = SwitchingEquation(
+            thresholdX: initialCount(.primaryIon),
+            underlyingLeft: LinearEquation(
+                x1: 0,
+                y1: initialIonBarHeight,
+                x2: initialCount(.primaryIon),
+                y2: 0
+            ),
+            underlyingRight: ConstantEquation(value: 0)
+        )
+        self.secondaryIonBarChartEquation = SwitchingEquation(
+            thresholdX: initialCount(.primaryIon),
+            underlyingLeft: ConstantEquation(value: initialIonBarHeight),
+            underlyingRight: LinearEquation(
+                x1: 0,
+                y1: initialIonBarHeight,
+                x2: CGFloat(maxSubstance),
+                y2: finalHAConcentration
+            )
+        )
     }
 
     let reactingModel: ReactingBeakerViewModel<SubstancePart>
@@ -131,7 +165,37 @@ class BufferSaltComponents: ObservableObject {
 
     let haFractionInTermsOfPH: Equation
     let aFractionInTermsOfPH: Equation
+
+
+    // MARK: Bar chart data
+    let substanceBarChartEquation: Equation
+    let primaryIonBarChartEquation: Equation
+    let secondaryIonBarChartEquation: Equation
+
+    var barChartData: [BarChartData] {
+        [
+            BarChartData(
+                label: "", // TODO
+                equation: substanceBarChartEquation,
+                color: .red, // TODO
+                accessibilityLabel: "" // TODO
+            ),
+            BarChartData(
+                label: "", // TODO
+                equation: primaryIonBarChartEquation,
+                color: .purple, // TODO
+                accessibilityLabel: "" // TODO
+            ),
+            BarChartData(
+                label: "", // TODO
+                equation: secondaryIonBarChartEquation,
+                color: .orange, // TODO
+                accessibilityLabel: "" // TODO
+            )
+        ]
+    }
 }
+
 
 struct HAFractionFromPh: Equation {
     let pka: CGFloat

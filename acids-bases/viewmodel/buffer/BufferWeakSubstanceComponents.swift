@@ -175,6 +175,7 @@ extension BufferWeakSubstanceComponents {
         LinearEquation(x1: 0, y1: 0, x2: 1, y2: changeInBarHeight)
     }
 
+    // TODO - store this kind of setting somewhere
     private var changeInBarHeight: CGFloat {
         0.2 * initialSubstanceConcentration
     }
