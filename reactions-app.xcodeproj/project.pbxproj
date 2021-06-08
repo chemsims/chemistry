@@ -17,7 +17,7 @@
 		57080AFC258D2A220077A48C /* EnergyProfileScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */; };
 		570A765B266BC3D9009329FB /* solubility-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 570A765A266BC3D9009329FB /* solubility-quiz.csv */; };
 		570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */; };
-		570A7664266CD900009329FB /* BufferWeakAcidComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7663266CD900009329FB /* BufferWeakAcidComponents.swift */; };
+		570A7664266CD900009329FB /* BufferSaltComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7663266CD900009329FB /* BufferSaltComponents.swift */; };
 		570A7666266CDA0A009329FB /* SubstancePart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7665266CDA0A009329FB /* SubstancePart.swift */; };
 		570A766B266CFC45009329FB /* BufferScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A766A266CFC45009329FB /* BufferScreenViewModel.swift */; };
 		570A766D266CFCF1009329FB /* BufferNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A766C266CFCF1009329FB /* BufferNavigationModel.swift */; };
@@ -625,7 +625,7 @@
 		57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreenElement.swift; sourceTree = "<group>"; };
 		570A765A266BC3D9009329FB /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
 		570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactingBeakerViewModel.swift; sourceTree = "<group>"; };
-		570A7663266CD900009329FB /* BufferWeakAcidComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferWeakAcidComponents.swift; sourceTree = "<group>"; };
+		570A7663266CD900009329FB /* BufferSaltComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferSaltComponents.swift; sourceTree = "<group>"; };
 		570A7665266CDA0A009329FB /* SubstancePart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubstancePart.swift; sourceTree = "<group>"; };
 		570A766A266CFC45009329FB /* BufferScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferScreenViewModel.swift; sourceTree = "<group>"; };
 		570A766C266CFCF1009329FB /* BufferNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferNavigationModel.swift; sourceTree = "<group>"; };
@@ -1255,7 +1255,7 @@
 		570A7662266CD8F2009329FB /* buffer */ = {
 			isa = PBXGroup;
 			children = (
-				570A7663266CD900009329FB /* BufferWeakAcidComponents.swift */,
+				570A7663266CD900009329FB /* BufferSaltComponents.swift */,
 				570A766A266CFC45009329FB /* BufferScreenViewModel.swift */,
 				5743660C266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift */,
 			);
@@ -3374,7 +3374,7 @@
 				57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */,
 				57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */,
 				5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */,
-				570A7664266CD900009329FB /* BufferWeakAcidComponents.swift in Sources */,
+				570A7664266CD900009329FB /* BufferSaltComponents.swift in Sources */,
 				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,
 				570A766B266CFC45009329FB /* BufferScreenViewModel.swift in Sources */,
 				57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */,

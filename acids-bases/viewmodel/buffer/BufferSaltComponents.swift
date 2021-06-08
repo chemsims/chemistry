@@ -5,7 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
-class BufferComponents2: ObservableObject {
+class BufferSaltComponents: ObservableObject {
 
     init(
         prev: BufferWeakSubstanceComponents?
@@ -156,7 +156,7 @@ private struct AFractionFromPh: Equation {
 
 class BufferComponents3: ObservableObject {
     init(
-        prev: BufferComponents2?
+        prev: BufferSaltComponents?
     ) {
         if let prev = prev {
             reactingModel = ReactingBeakerViewModel(

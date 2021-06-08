@@ -31,7 +31,7 @@ struct BufferChartStack: View {
 
 private struct BufferFractionCoords: View {
 
-    @ObservedObject var model: BufferComponents2
+    @ObservedObject var model: BufferSaltComponents
 
     let size: CGFloat = 200
 
@@ -81,7 +81,7 @@ private struct BufferICEStack: View {
 
     let phase: BufferScreenViewModel.Phase
     @ObservedObject var phase1Component: BufferWeakSubstanceComponents
-    @ObservedObject var phase2Component: BufferComponents2
+    @ObservedObject var phase2Component: BufferSaltComponents
 
     var body: some View {
         Group {

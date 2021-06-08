@@ -117,7 +117,7 @@ private struct BufferTerms1: View {
 
 private struct BufferTerms2: View {
 
-    @ObservedObject var model: BufferComponents2
+    @ObservedObject var model: BufferSaltComponents
 
     var body: some View {
         VStack {
