@@ -13,7 +13,7 @@ class BufferScreenViewModel: ObservableObject {
 
     @Published var rows = CGFloat(AcidAppSettings.initialRows)
     @Published var phase = Phase.addWeakSubstance
-    @Published var weakSubstanceModel = BufferWeakAcidComponents(substance: .weakAcids[1])
+    @Published var weakSubstanceModel = BufferWeakSubstanceComponents(substance: .weakAcids[1])
     @Published var phase2Model = BufferComponents2(prev: nil)
     @Published var phase3Model = BufferComponents3(prev: nil)
     @Published var statement = [TextLine]()

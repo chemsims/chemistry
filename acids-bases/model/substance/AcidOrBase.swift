@@ -121,6 +121,14 @@ struct AcidOrBase: Equatable, Identifiable {
         case .hydroxide: return .weakBase
         }
     }
+
+    func symbol(ofPart part: SubstancePart) -> String {
+        switch part {
+        case .substance: return symbol
+        case .primaryIon: return primary.rawValue
+        case .secondaryIon: return secondary.rawValue
+        }
+    }
 }
 
 // MARK: Default substances

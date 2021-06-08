@@ -32,6 +32,11 @@ private struct BufferScreenWithSettings: View {
                 model: model
             )
             Spacer()
+            BufferChartStack(
+                layout: layout,
+                model: model
+            )
+            Spacer()
             BufferRightStack(
                 layout: layout,
                 model: model
@@ -55,6 +60,8 @@ struct BufferScreen_Previews: PreviewProvider {
                 ),
                 model: BufferScreenViewModel()
             )
-        }.previewLayout(.iPhoneSELandscape)
+        }
+        .padding()
+        .previewLayout(.iPhone12ProMaxLandscape)
     }
 }

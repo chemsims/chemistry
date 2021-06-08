@@ -70,7 +70,7 @@ private struct AddWeakSubstanceBeaker: View {
 
     let layout: BufferScreenLayout
     @ObservedObject var model: BufferScreenViewModel
-    @ObservedObject var components: BufferWeakAcidComponents
+    @ObservedObject var components: BufferWeakSubstanceComponents
 
     var body: some View {
         AdjustableFluidBeaker(

@@ -9,7 +9,7 @@ import ReactionsCore
 class BufferComponents2: ObservableObject {
 
     init(
-        prev: BufferWeakAcidComponents?
+        prev: BufferWeakSubstanceComponents?
     ) {
         if let prev = prev {
             reactingModel = ReactingBeakerViewModel(
@@ -26,6 +26,7 @@ class BufferComponents2: ObservableObject {
         let initialHAConcentration = prev?.concentration.substance.getY(at: 1) ?? 0
         let finalHAConcentration = prev?.concentration.substance.getY(at: 0) ?? 0
         let initialAConcentration = prev?.concentration.secondaryIon.getY(at: 1) ?? 0
+        let initialHConcentration = prev?.concentration.primaryIon.getY(at: 1) ?? 0
 
         func initialCountInt(_ part: SubstancePart) -> Int {
             prev?.molecules(for: part).coords.count ?? 0
@@ -56,6 +57,17 @@ class BufferComponents2: ObservableObject {
                 y2: finalHAConcentration
             )
         )
+
+        self.hConcentration = SwitchingEquation(
+            thresholdX: initialCount(.primaryIon),
+            underlyingLeft: LinearEquation(
+                x1: 0,
+                y1: initialHConcentration,
+                x2: initialCount(.primaryIon),
+                y2: 0
+            ),
+            underlyingRight: ConstantEquation(value: 0)
+        )
     }
 
     let reactingModel: ReactingBeakerViewModel<SubstancePart>
@@ -64,6 +76,7 @@ class BufferComponents2: ObservableObject {
 
     let haConcentration: Equation
     let aConcentration: Equation
+    let hConcentration: Equation
 
     private let maxSubstance: Int
 
@@ -87,6 +100,23 @@ class BufferComponents2: ObservableObject {
     var ph: Equation {
         4.14 + Log10Equation(underlying: aConcentration / haConcentration)
     }
+
+    var tableData: [ICETableColumn] {
+        [
+            column("HA", haConcentration),
+            column("H", hConcentration),
+            column("A", aConcentration),
+        ]
+    }
+
+    private func column(_ name: String, _ equation: Equation) -> ICETableColumn {
+        ICETableColumn(
+            header: name,
+            initialValue: ConstantEquation(value: equation.getY(at: 0)),
+            finalValue: equation
+        )
+    }
+
 }
 
 class BufferComponents3: ObservableObject {

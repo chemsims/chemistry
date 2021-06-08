@@ -42,7 +42,7 @@ struct BufferRightStack: View {
 
 private struct BufferTerms1: View {
 
-    @ObservedObject var components: BufferWeakAcidComponents
+    @ObservedObject var components: BufferWeakSubstanceComponents
 
     var body: some View {
         VStack {
