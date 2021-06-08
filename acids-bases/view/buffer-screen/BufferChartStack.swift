@@ -11,7 +11,13 @@ struct BufferChartStack: View {
     @ObservedObject var model: BufferScreenViewModel
 
     var body: some View {
-        iceTable
+        Group {
+            if model.phase == .addWeakSubstance {
+                iceTable
+            } else {
+                BufferFractionCoords(model: model.phase2Model)
+            }
+        }
     }
 
     private var iceTable: some View {
@@ -20,6 +26,54 @@ struct BufferChartStack: View {
             phase1Component: model.weakSubstanceModel,
             phase2Component: model.phase2Model
         )
+    }
+}
+
+private struct BufferFractionCoords: View {
+
+    @ObservedObject var model: BufferComponents2
+
+    let size: CGFloat = 200
+
+    var body: some View {
+        TimeChartView(
+            data: [
+                TimeChartDataLine(
+                    equation: model.haFractionInTermsOfPH,
+                    headColor: .blue,
+                    haloColor: .red,
+                    headRadius: 2
+                ),
+                TimeChartDataLine(
+                    equation: model.aFractionInTermsOfPH,
+                    headColor: .purple,
+                    haloColor: .black,
+                    headRadius: 2
+                )
+            ],
+            initialTime: 0,
+            currentTime: .constant(model.ph.getY(at: CGFloat(model.substanceAdded))),
+            finalTime: max(1, CGFloat(2 * model.finalPH)),
+            canSetCurrentTime: false,
+            settings: TimeChartLayoutSettings(
+                xAxis: AxisPositionCalculations(
+                    minValuePosition: 10,
+                    maxValuePosition: 190,
+                    minValue: 0,
+                    maxValue: max(1, CGFloat(2 * model.finalPH))
+                ),
+                yAxis: AxisPositionCalculations(
+                    minValuePosition: 190,
+                    maxValuePosition: 10,
+                    minValue: 0,
+                    maxValue: 1
+                ),
+                haloRadius: 4,
+                lineWidth: 1
+            ),
+            axisSettings: ChartAxisShapeSettings(chartSize: 200)
+        )
+        .frame(square: size)
     }
 }
 

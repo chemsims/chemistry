@@ -5,7 +5,6 @@
 import SwiftUI
 import ReactionsCore
 
-
 class BufferComponents2: ObservableObject {
 
     init(
@@ -37,7 +36,8 @@ class BufferComponents2: ObservableObject {
 
         let maxSubstance = (initialCountInt(.substance) + initialCountInt(.primaryIon)) - initialCountInt(.secondaryIon)
         self.maxSubstance = maxSubstance
-        self.haConcentration = SwitchingEquation(
+
+        let haConcentration = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
             underlyingLeft: LinearEquation(
                 x1: 0,
@@ -47,7 +47,7 @@ class BufferComponents2: ObservableObject {
             ),
             underlyingRight: ConstantEquation(value: initialHAConcentration)
         )
-        self.aConcentration = SwitchingEquation(
+        let aConcentration = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
             underlyingLeft: ConstantEquation(value: initialAConcentration),
             underlyingRight: LinearEquation(
@@ -57,6 +57,9 @@ class BufferComponents2: ObservableObject {
                 y2: finalHAConcentration
             )
         )
+
+        self.haConcentration = haConcentration
+        self.aConcentration = aConcentration
 
         self.hConcentration = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
@@ -68,6 +71,9 @@ class BufferComponents2: ObservableObject {
             ),
             underlyingRight: ConstantEquation(value: 0)
         )
+
+        self.haFractionInTermsOfPH = HAFractionFromPh(pka: 4.14)
+        self.aFractionInTermsOfPH = AFractionFromPh(pka: 4.14)
     }
 
     let reactingModel: ReactingBeakerViewModel<SubstancePart>
@@ -78,7 +84,7 @@ class BufferComponents2: ObservableObject {
     let aConcentration: Equation
     let hConcentration: Equation
 
-    private let maxSubstance: Int
+    let maxSubstance: Int
 
 
     func incrementSalt() {
@@ -98,7 +104,15 @@ class BufferComponents2: ObservableObject {
     }
 
     var ph: Equation {
-        4.14 + Log10Equation(underlying: aConcentration / haConcentration)
+        pka + Log10Equation(underlying: aConcentration / haConcentration)
+    }
+
+    var finalPH: CGFloat {
+        ph.getY(at: CGFloat(maxSubstance))
+    }
+
+    var pka: CGFloat {
+        4.14
     }
 
     var tableData: [ICETableColumn] {
@@ -117,6 +131,27 @@ class BufferComponents2: ObservableObject {
         )
     }
 
+    let haFractionInTermsOfPH: Equation
+    let aFractionInTermsOfPH: Equation
+}
+
+private struct HAFractionFromPh: Equation {
+    let pka: CGFloat
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let denom = 1 + pow(10, x - pka)
+        return denom == 0 ? 0 : 1 / denom
+    }
+}
+
+private struct AFractionFromPh: Equation {
+    let pka: CGFloat
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let powerTerm = pow(10, x - pka)
+        let denom = powerTerm + 1
+        return denom == 0 ? 0 : powerTerm / denom
+    }
 }
 
 class BufferComponents3: ObservableObject {

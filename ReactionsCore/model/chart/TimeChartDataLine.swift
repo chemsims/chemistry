@@ -13,6 +13,10 @@ public struct TimeChartDataLine {
     let discontinuity: CGPoint?
     let showFilledLine: Bool
 
+    /// Creates a new data line
+    ///
+    /// - Parameters:
+    ///     - equation: Equation which returns the `y` value to plot
     public init(
         equation: Equation,
         headColor: Color,

@@ -47,6 +47,7 @@ public struct QuadraticEquation: Equation {
     // constant term
     private let c: CGFloat
 
+    // TODO - add tests for this
     /// Creates a quadratic equation with a given parabola, and point which the curve passes through
     /// - Parameters:
     ///     - parabola: Coordinate of the curves parabola
@@ -68,6 +69,23 @@ public struct QuadraticEquation: Equation {
         let a = aNumer / aDenom
         let b = -2 * a * xParabola
         let c = yParabola + (a * xPSquared)
+
+        self.a = a
+        self.b = b
+        self.c = c
+    }
+
+    public init(
+        gradient: CGFloat,
+        at p1: CGPoint,
+        through p2: CGPoint
+    ) {
+        let aDenom = pow(p2.x, 2) + pow(p1.x, 2) - (2 * p1.x * p2.x)
+        let aNumer = p2.y - p1.y - (gradient * p2.x) + (gradient * p1.x)
+
+        let a = aDenom == 0 ? 0 : aNumer / aDenom
+        let b = gradient - (2 * a * p1.x)
+        let c = p1.y + (a * pow(p1.x, 2)) - (gradient * p1.x)
 
         self.a = a
         self.b = b

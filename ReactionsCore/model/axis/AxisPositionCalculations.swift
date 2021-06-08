@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-import Foundation
+import CoreGraphics
 
 /// Encapsulates a linear axis, which moves from two positions and two values
 public struct AxisPositionCalculations<Value: BinaryFloatingPoint> {

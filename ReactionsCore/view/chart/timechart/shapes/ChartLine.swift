@@ -42,6 +42,7 @@ public struct ChartLine: Shape {
         xAxis.shift(by: offset)
     }
 
+    // TODO - make this safer by breaking early when the x range is 0
     public func path(in rect: CGRect) -> Path {
         var path = Path()
 
