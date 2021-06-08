@@ -11,12 +11,12 @@ struct BufferPhChart: View {
     @ObservedObject var model: BufferScreenViewModel
 
     var body: some View {
-        HStack(spacing: layout.common.chartXAxisHSpacing) {
+        HStack(spacing: layout.common.chartYAxisHSpacing) {
             Text("pH")
                 .frame(height: layout.common.chartYAxisWidth)
                 .rotationEffect(.degrees(-90))
 
-            VStack(spacing: layout.common.chartYAxisVSpacing) {
+            VStack(spacing: layout.common.chartXAxisVSpacing) {
                 plotArea
 
                 // TODO dynamic label

@@ -207,12 +207,12 @@ extension AcidBasesScreenLayout {
         0.12 * chartSize
     }
 
-    var chartYAxisVSpacing: CGFloat {
+    var chartXAxisVSpacing: CGFloat {
         0.03 * chartSize
     }
 
-    var chartXAxisHSpacing: CGFloat {
-        chartYAxisVSpacing
+    var chartYAxisHSpacing: CGFloat {
+        chartXAxisVSpacing
     }
 
     var chartXAxisHeight: CGFloat {
@@ -234,11 +234,25 @@ extension AcidBasesScreenLayout {
     var chartLabelFontSize: CGFloat {
         barChartSettings.labelFontSize
     }
+
+    /// Chart height including axis & spacing
+    var chartTotalHeight: CGFloat {
+        chartSize + chartXAxisHeight + chartXAxisVSpacing
+    }
+
+    /// Chart width including axis & spacing
+    var chartTotalWidth: CGFloat {
+        chartSize + chartYAxisWidth + chartYAxisHSpacing
+    }
 }
 
 // MARK: toggle geometry
 extension AcidBasesScreenLayout {
     var toggleHeight: CGFloat {
         0.05 * height
+    }
+
+    var toggleFontSize: CGFloat {
+        0.85 * chartLabelFontSize
     }
 }

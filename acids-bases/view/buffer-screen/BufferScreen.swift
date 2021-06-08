@@ -49,7 +49,10 @@ struct BufferScreenLayout {
     let common: AcidBasesScreenLayout
 
     var tableSize: CGSize {
-        CGSize(width: common.chartSize, height: 1.1 * common.chartSize)
+        CGSize(
+            width: common.chartTotalWidth,
+            height: common.chartTotalHeight
+        )
     }
 }
 

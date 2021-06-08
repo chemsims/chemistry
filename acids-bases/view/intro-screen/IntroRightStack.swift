@@ -130,12 +130,12 @@ private struct BarChartOrPhChart: View {
             time: components.fractionSubstanceAdded,
             settings: layout.common.barChartSettings
         )
-        .frame(width: layout.chartTotalWidth, alignment: .trailing)
+        .frame(width: layout.barChartTotalWidth, alignment: .trailing)
     }
 
     private var phChart: some View {
         let barGeo = layout.common.barChartSettings
-        return HStack(spacing: layout.common.chartXAxisHSpacing) {
+        return HStack(spacing: layout.common.chartYAxisHSpacing) {
             Text("pH")
                 .frame(height: layout.common.chartXAxisHeight)
                 .rotationEffect(.degrees(-90))

@@ -102,12 +102,13 @@ extension IntroScreenLayout {
         5
     }
 
+    /// The chart area height - i.e., the larger of the total chart height or the beaky box height
     var chartAreaTotalHeight: CGFloat {
         max(barChartTotalHeight, common.beakyBoxHeight)
     }
 
-    var chartTotalWidth: CGFloat {
-        common.chartSize + common.chartYAxisWidth + common.chartYAxisVSpacing
+    var barChartTotalWidth: CGFloat {
+        common.chartTotalWidth
     }
 
     private var barChartTotalHeight: CGFloat {
