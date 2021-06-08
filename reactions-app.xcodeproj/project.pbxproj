@@ -164,6 +164,8 @@
 		57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */; };
 		57567B6526065BA9009711D4 /* ReactionComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B6426065BA9009711D4 /* ReactionComponents.swift */; };
 		57567B6B26066450009711D4 /* SlidingSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B6A26066450009711D4 /* SlidingSwitch.swift */; };
+		57572DEC266FB8D700A27684 /* BufferPhChartOrTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57572DEB266FB8D700A27684 /* BufferPhChartOrTable.swift */; };
+		57572DEE266FB8FE00A27684 /* BufferBottomCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57572DED266FB8FE00A27684 /* BufferBottomCharts.swift */; };
 		575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A75255AC27400F4E635 /* TextLine.swift */; };
 		575A880125E430C200AEE448 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CBEAB25C0657A00CE6007 /* Labels.swift */; };
 		575A880F25E4310700AEE448 /* QuizOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16972584B277001CE039 /* QuizOption.swift */; };
@@ -781,6 +783,8 @@
 		57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementSetterTests.swift; sourceTree = "<group>"; };
 		57567B6426065BA9009711D4 /* ReactionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComponents.swift; sourceTree = "<group>"; };
 		57567B6A26066450009711D4 /* SlidingSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingSwitch.swift; sourceTree = "<group>"; };
+		57572DEB266FB8D700A27684 /* BufferPhChartOrTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferPhChartOrTable.swift; sourceTree = "<group>"; };
+		57572DED266FB8FE00A27684 /* BufferBottomCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferBottomCharts.swift; sourceTree = "<group>"; };
 		575A884E25E4327800AEE448 /* ReactionsRateQuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsRateQuestionSet.swift; sourceTree = "<group>"; };
 		575A885E25E435F600AEE448 /* BeakyGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyGeometrySettings.swift; sourceTree = "<group>"; };
 		575A888425E436A600AEE448 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1272,6 +1276,8 @@
 				570AD451266D4CF100B9732E /* BufferRightStack.swift */,
 				5743660E266E7CD8007F0410 /* BufferChartStack.swift */,
 				578A1EAE266FA90000D11E22 /* BufferPhChart.swift */,
+				57572DEB266FB8D700A27684 /* BufferPhChartOrTable.swift */,
+				57572DED266FB8FE00A27684 /* BufferBottomCharts.swift */,
 			);
 			path = "buffer-screen";
 			sourceTree = "<group>";
@@ -3354,6 +3360,7 @@
 				570AD452266D4CF100B9732E /* BufferRightStack.swift in Sources */,
 				57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */,
 				570A766D266CFCF1009329FB /* BufferNavigationModel.swift in Sources */,
+				57572DEC266FB8D700A27684 /* BufferPhChartOrTable.swift in Sources */,
 				5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */,
 				579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */,
 				570A766F266CFDD2009329FB /* BufferScreen.swift in Sources */,
@@ -3380,6 +3387,7 @@
 				5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */,
 				570A7664266CD900009329FB /* BufferSaltComponents.swift in Sources */,
 				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,
+				57572DEE266FB8FE00A27684 /* BufferBottomCharts.swift in Sources */,
 				570A766B266CFC45009329FB /* BufferScreenViewModel.swift in Sources */,
 				57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */,
 				5743660D266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift in Sources */,

@@ -129,6 +129,14 @@ struct AcidOrBase: Equatable, Identifiable {
         case .secondaryIon: return secondary.rawValue
         }
     }
+
+    func color(ofPart part: SubstancePart) -> Color {
+        switch part {
+        case .substance: return color
+        case .primaryIon: return primary.color
+        case .secondaryIon: return secondary.color
+        }
+    }
 }
 
 // MARK: Default substances

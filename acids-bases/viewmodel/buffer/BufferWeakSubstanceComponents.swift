@@ -151,3 +151,41 @@ extension BufferWeakSubstanceComponents {
         )
     }
 }
+
+// MARK: Bar chart data
+extension BufferWeakSubstanceComponents {
+    var barChartData: [BarChartData] {
+        [
+            bar(.substance, equation: substanceBarEquation),
+            bar(.primaryIon, equation: ionBarEquation),
+            bar(.secondaryIon, equation: ionBarEquation)
+        ]
+    }
+
+    var substanceBarEquation: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: initialSubstanceConcentration,
+            x2: 1,
+            y2: initialSubstanceConcentration - changeInBarHeight
+        )
+    }
+
+    var ionBarEquation: Equation {
+        LinearEquation(x1: 0, y1: 0, x2: 1, y2: changeInBarHeight)
+    }
+
+    private var changeInBarHeight: CGFloat {
+        0.2 * initialSubstanceConcentration
+    }
+
+    // TODO - put the scaling factor in config somewhere
+    private func bar(_ part: SubstancePart, equation: Equation) -> BarChartData {
+        BarChartData(
+            label: substance.symbol(ofPart: part),
+            equation: equation,
+            color: substance.color(ofPart: part),
+            accessibilityLabel: "" // TODO
+        )
+    }
+}
