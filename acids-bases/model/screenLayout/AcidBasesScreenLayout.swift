@@ -203,20 +203,36 @@ extension AcidBasesScreenLayout {
         )
     }
 
-    var phYAxisWidth: CGFloat {
+    var chartYAxisWidth: CGFloat {
         0.12 * chartSize
     }
 
-    var phYAxisSpacing: CGFloat {
+    var chartYAxisVSpacing: CGFloat {
         0.03 * chartSize
     }
 
-    var phAxis: ChartAxisShapeSettings {
+    var chartXAxisHSpacing: CGFloat {
+        chartYAxisVSpacing
+    }
+
+    var chartXAxisHeight: CGFloat {
+        0.1 * chartSize
+    }
+
+    var chartAxis: ChartAxisShapeSettings {
         ChartAxisShapeSettings(chartSize: chartSize)
     }
 
     var chartHeadRadius: CGFloat {
         0.018 * chartSize
+    }
+
+    var haloRadius: CGFloat {
+        2 * chartHeadRadius
+    }
+
+    var chartLabelFontSize: CGFloat {
+        barChartSettings.labelFontSize
     }
 }
 

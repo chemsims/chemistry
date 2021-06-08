@@ -86,10 +86,8 @@ class BufferSaltComponents: ObservableObject {
 
     let maxSubstance: Int
 
-
     func incrementSalt() {
         guard substanceAdded < maxSubstance else {
-            print("Added enough substance! (\(maxSubstance))")
             return
         }
         reactingModel.add(
@@ -135,7 +133,7 @@ class BufferSaltComponents: ObservableObject {
     let aFractionInTermsOfPH: Equation
 }
 
-private struct HAFractionFromPh: Equation {
+struct HAFractionFromPh: Equation {
     let pka: CGFloat
 
     func getY(at x: CGFloat) -> CGFloat {
@@ -144,7 +142,7 @@ private struct HAFractionFromPh: Equation {
     }
 }
 
-private struct AFractionFromPh: Equation {
+struct AFractionFromPh: Equation {
     let pka: CGFloat
 
     func getY(at x: CGFloat) -> CGFloat {

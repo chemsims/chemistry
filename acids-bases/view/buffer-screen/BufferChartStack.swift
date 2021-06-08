@@ -11,26 +11,33 @@ struct BufferChartStack: View {
     @ObservedObject var model: BufferScreenViewModel
 
     var body: some View {
-        Group {
-            if model.phase == .addWeakSubstance {
-                iceTable
-            } else {
-                BufferFractionCoords(model: model.phase2Model)
-            }
+        VStack(spacing: 0) {
+            iceTable
+                .frame(size: layout.tableSize)
+            Spacer()
+            bottomCharts
         }
     }
 
     private var iceTable: some View {
-        BufferICEStack(
+        BufferICETable(
             phase: model.phase,
             phase1Component: model.weakSubstanceModel,
             phase2Component: model.phase2Model
+        )
+    }
+
+    private var bottomCharts: some View {
+        BufferFractionCoords(
+            layout: layout,
+            model: model.phase2Model
         )
     }
 }
 
 private struct BufferFractionCoords: View {
 
+    let layout: BufferScreenLayout
     @ObservedObject var model: BufferSaltComponents
 
     let size: CGFloat = 200
@@ -42,13 +49,13 @@ private struct BufferFractionCoords: View {
                     equation: model.haFractionInTermsOfPH,
                     headColor: .blue,
                     haloColor: .red,
-                    headRadius: 2
+                    headRadius: layout.common.chartHeadRadius
                 ),
                 TimeChartDataLine(
                     equation: model.aFractionInTermsOfPH,
                     headColor: .purple,
                     haloColor: .black,
-                    headRadius: 2
+                    headRadius: layout.common.chartHeadRadius
                 )
             ],
             initialTime: 0,
@@ -56,28 +63,40 @@ private struct BufferFractionCoords: View {
             finalTime: max(1, CGFloat(2 * model.finalPH)),
             canSetCurrentTime: false,
             settings: TimeChartLayoutSettings(
-                xAxis: AxisPositionCalculations(
-                    minValuePosition: 10,
-                    maxValuePosition: 190,
-                    minValue: 0,
-                    maxValue: max(1, CGFloat(2 * model.finalPH))
-                ),
-                yAxis: AxisPositionCalculations(
-                    minValuePosition: 190,
-                    maxValuePosition: 10,
-                    minValue: 0,
-                    maxValue: 1
-                ),
-                haloRadius: 4,
-                lineWidth: 1
+                xAxis: xAxis,
+                yAxis: yAxis,
+                haloRadius: layout.common.haloRadius,
+                lineWidth: 0.4
             ),
-            axisSettings: ChartAxisShapeSettings(chartSize: 200)
+            axisSettings: layout.common.chartAxis
         )
-        .frame(square: size)
+        .frame(square: layout.common.chartSize)
+    }
+
+    private var xAxis: AxisPositionCalculations<CGFloat> {
+        AxisPositionCalculations(
+            minValuePosition: 0.1 * chartSize,
+            maxValuePosition: 0.9 * chartSize,
+            minValue: 0,
+            maxValue: max(1, CGFloat(2 * model.finalPH))
+        )
+    }
+
+    private var yAxis: AxisPositionCalculations<CGFloat> {
+        AxisPositionCalculations(
+            minValuePosition: 0.9 * chartSize,
+            maxValuePosition: 0.1 * chartSize,
+            minValue: 0,
+            maxValue: 1
+        )
+    }
+
+    private var chartSize: CGFloat {
+        layout.common.chartSize
     }
 }
 
-private struct BufferICEStack: View {
+private struct BufferICETable: View {
 
     let phase: BufferScreenViewModel.Phase
     @ObservedObject var phase1Component: BufferWeakSubstanceComponents

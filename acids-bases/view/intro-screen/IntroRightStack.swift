@@ -135,9 +135,9 @@ private struct BarChartOrPhChart: View {
 
     private var phChart: some View {
         let barGeo = layout.common.barChartSettings
-        return HStack(spacing: layout.common.phYAxisSpacing) {
+        return HStack(spacing: layout.common.chartXAxisHSpacing) {
             Text("pH")
-                .frame(height: layout.common.phYAxisWidth)
+                .frame(height: layout.common.chartXAxisHeight)
                 .rotationEffect(.degrees(-90))
 
             VStack(spacing: barGeo.chartToAxisSpacing) {
@@ -166,7 +166,7 @@ private struct BarChartOrPhChart: View {
             finalTime: 1,
             canSetCurrentTime: false,
             settings: layout.common.phChartSettings,
-            axisSettings: layout.common.phAxis
+            axisSettings: layout.common.chartAxis
         )
         .frame(square: layout.common.chartSize)
         .animation(nil, value: components.substance)

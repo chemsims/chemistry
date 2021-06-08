@@ -47,6 +47,10 @@ private struct BufferScreenWithSettings: View {
 
 struct BufferScreenLayout {
     let common: AcidBasesScreenLayout
+
+    var tableSize: CGSize {
+        CGSize(width: common.chartSize, height: 1.1 * common.chartSize)
+    }
 }
 
 struct BufferScreen_Previews: PreviewProvider {

@@ -107,7 +107,7 @@ extension IntroScreenLayout {
     }
 
     var chartTotalWidth: CGFloat {
-        common.chartSize + common.phYAxisWidth + common.phYAxisSpacing
+        common.chartSize + common.chartYAxisWidth + common.chartYAxisVSpacing
     }
 
     private var barChartTotalHeight: CGFloat {
