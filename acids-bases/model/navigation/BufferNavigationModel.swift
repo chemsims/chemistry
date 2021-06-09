@@ -5,6 +5,8 @@
 import SwiftUI
 import ReactionsCore
 
+private let statements = BufferStatements.self
+
 struct BufferNavigationModel {
     private init() { }
 
@@ -13,7 +15,21 @@ struct BufferNavigationModel {
     }
 
     private static let states = [
-        SetStatement(statement: ["Press next to start reaction"]),
+        SetStatement(statements.intro),
+        SetStatement(statements.explainEquilibriumConstant1),
+        SetStatement(statements.explainEquilibriumConstant2),
+        SetStatement(statements.explainWeakAcid),
+        SetStatement(statements.explainKa),
+        SetStatement(statements.explainHighKa),
+        SetStatement(statements.explainConjugateBase),
+        SetStatement(statements.explainKb),
+        SetStatement(statements.explainKw),
+        SetStatement(statements.explainP14),
+        SetStatement(statements.explainKaKbNaming),
+        SetStatement(statements.explainPKaPKb),
+        SetStatement(statements.explainHendersonHasselbalch),
+        SetWaterLevel(statements.instructToSetWaterLevel1),
+        AddWeakAcid(),
         RunWeakAcidReaction(),
         EndWeakAcidReaction(),
         AddSalt(),
@@ -46,13 +62,40 @@ class BufferScreenState: ScreenState, SubState {
 }
 
 private class SetStatement: BufferScreenState {
-    init(statement: [TextLine]) {
-        self.statement = statement
+    init(_ statement: [TextLine]) {
+        self.statement = { _ in statement }
     }
-    let statement: [TextLine]
+
+    init(_ statement: @escaping (AcidOrBase) -> [TextLine]) {
+        self.statement = { statement($0.substance) }
+    }
+
+    let statement: (BufferScreenViewModel) -> [TextLine]
 
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = statement
+        model.statement = statement(model)
+    }
+}
+
+private class SetWaterLevel: SetStatement {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = statement(model)
+        model.input = .setWaterLevel
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.input = .none
+    }
+}
+
+private class AddWeakAcid: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = statements.instructToAddWeakAcid(model.substance)
+        model.input = .addWeakAcid
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.input = .none
     }
 }
 
@@ -77,7 +120,7 @@ private class EndWeakAcidReaction: BufferScreenState {
 private class AddSalt: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = ["Now, add salt"]
-        model.goToPhase2()
+        model.goToAddSaltPhase()
     }
 }
 

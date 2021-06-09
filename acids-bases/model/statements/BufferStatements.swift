@@ -35,7 +35,7 @@ struct BufferStatements {
         """
     ]
 
-    static func explainWeakAcid(_ substance: AcidOrBase) -> [TextLine] {
+    static func explainWeakAcid(substance: AcidOrBase) -> [TextLine] {
         let symbol = substance.symbol
         let secondary = substance.secondary
         return [
@@ -47,7 +47,7 @@ struct BufferStatements {
         ]
     }
 
-    static func explainKa(_ substance: AcidOrBase) -> [TextLine] {
+    static func explainKa(substance: AcidOrBase) -> [TextLine] {
         [
             """
             The equation for Ka is the same equation as *K = [products]/reactants]*. In \
@@ -121,8 +121,10 @@ struct BufferStatements {
         As Ka and Kb are really small, they get the same treatment and logarithms are used \
         to better relate them:
         """,
-        "*pKa = -log(Ka)*",
-        "*pKb = -log(Kb)*"
+        """
+        *pKa = -log(Ka)*
+        *pKb = -log(Kb)*
+        """
     ]
 
     static let explainHendersonHasselbalch: [TextLine] = [

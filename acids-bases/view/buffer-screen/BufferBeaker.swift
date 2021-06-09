@@ -18,6 +18,9 @@ struct BufferBeaker: View {
         .frame(height: layout.common.height)
     }
 
+    // TODO - try this out with just 1 beaker where all models are passed in, and it
+    // chooses the properties to pass deeper down based on the phase. Rather than have
+    // completely different beaker views
     private var beaker: some View {
         VStack(spacing: 0) {
             Spacer()
@@ -32,7 +35,7 @@ struct BufferBeaker: View {
                 ReactingBeaker(
                     layout: layout,
                     model: model,
-                    components: model.phase2Model.reactingModel
+                    components: model.saltComponents.reactingModel
                 )
             default:
                 ReactingBeaker(
@@ -79,7 +82,7 @@ private struct AddWeakSubstanceBeaker: View {
             animatingMolecules: components.ionCoords,
             currentTime: components.progress,
             settings: layout.common.adjustableBeakerSettings,
-            canSetLevel: true,
+            canSetLevel: model.input == .setWaterLevel,
             beakerColorMultiply: .white,
             sliderColorMultiply: .white,
             beakerModifier: BufferBeakerAccessibilityModifier()
@@ -99,7 +102,7 @@ private struct ReactingBeaker: View {
             animatingMolecules: [],
             currentTime: 0,
             settings: layout.common.adjustableBeakerSettings,
-            canSetLevel: true,
+            canSetLevel: model.input == .setWaterLevel,
             beakerColorMultiply: .white,
             sliderColorMultiply: .white,
             beakerModifier: BufferBeakerAccessibilityModifier()

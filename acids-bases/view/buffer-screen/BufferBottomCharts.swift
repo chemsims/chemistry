@@ -19,7 +19,7 @@ struct BufferBottomCharts: View {
                 layout: layout,
                 phase: model.phase,
                 model1: model.weakSubstanceModel,
-                model2: model.phase2Model
+                model2: model.saltComponents
             )
         }
     }

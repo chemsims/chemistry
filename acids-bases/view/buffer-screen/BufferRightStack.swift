@@ -23,7 +23,7 @@ struct BufferRightStack: View {
             if model.phase == .addWeakSubstance {
                 BufferTerms1(components: model.weakSubstanceModel)
             } else {
-                BufferTerms2(model: model.phase2Model)
+                BufferTerms2(model: model.saltComponents)
             }
         }
         .frame(width: layout.common.beakyBoxWidth)

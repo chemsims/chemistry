@@ -8,15 +8,20 @@ import ReactionsCore
 class BufferScreenViewModel: ObservableObject {
 
     init() {
+        let initialSubstance = AcidOrBase.weakAcids[1]
+        self.substance = initialSubstance
+        self.weakSubstanceModel = BufferWeakSubstanceComponents(substance: initialSubstance)
         self.navigation = BufferNavigationModel.model(self)
     }
 
     @Published var rows = CGFloat(AcidAppSettings.initialRows)
-    @Published var phase = Phase.addWeakSubstance
-    @Published var weakSubstanceModel = BufferWeakSubstanceComponents(substance: .weakAcids[1])
-    @Published var phase2Model = BufferSaltComponents(prev: nil)
-    @Published var phase3Model = BufferComponents3(prev: nil)
     @Published var statement = [TextLine]()
+    @Published var input = InputState.none
+    @Published var phase = Phase.addWeakSubstance
+    @Published var substance: AcidOrBase
+    @Published var weakSubstanceModel: BufferWeakSubstanceComponents
+    @Published var saltComponents = BufferSaltComponents(prev: nil)
+    @Published var phase3Model = BufferComponents3(prev: nil)
 
     private(set) var navigation: NavigationModel<BufferScreenState>?
 }
@@ -31,13 +36,13 @@ extension BufferScreenViewModel {
         navigation?.back()
     }
 
-    func goToPhase2() {
-        phase2Model = BufferSaltComponents(prev: weakSubstanceModel)
+    func goToAddSaltPhase() {
+        saltComponents = BufferSaltComponents(prev: weakSubstanceModel)
         phase = .addSalt
     }
 
     func goToPhase3() {
-        phase3Model = BufferComponents3(prev: phase2Model)
+        phase3Model = BufferComponents3(prev: saltComponents)
         phase = .addStrongSubstance
     }
 }
@@ -49,7 +54,7 @@ extension BufferScreenViewModel {
     }
 
     func incrementSalt() {
-        phase2Model.incrementSalt()
+        saltComponents.incrementSalt()
     }
 
     func incrementStrongSubstance() {
@@ -61,5 +66,9 @@ extension BufferScreenViewModel {
 extension BufferScreenViewModel {
     enum Phase {
         case addWeakSubstance, addSalt, addStrongSubstance
+    }
+
+    enum InputState {
+        case none, setWaterLevel, addWeakAcid
     }
 }
