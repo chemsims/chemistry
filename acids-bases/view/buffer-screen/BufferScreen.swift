@@ -62,6 +62,18 @@ struct BufferScreenLayout {
     var activeContainerYPos: CGFloat {
         containerRowYPos + common.containerSize.height
     }
+
+    var equationSize: CGSize {
+        let availableWidth = common.width -
+            common.beakerWidth -
+            common.sliderSettings.handleWidth -
+            common.chartTotalWidth
+        let availableHeight = common.height - common.beakyBoxHeight
+        return CGSize(
+            width: 0.9 * availableWidth,
+            height: 0.9 * availableHeight
+        )
+    }
 }
 
 struct BufferScreen_Previews: PreviewProvider {

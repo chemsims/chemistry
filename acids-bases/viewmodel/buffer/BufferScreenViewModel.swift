@@ -32,6 +32,7 @@ class BufferScreenViewModel: ObservableObject {
     @Published var phase3Model = BufferComponents3(prev: nil)
 
     @Published var selectedBottomGraph = BottomGraph.bars
+    @Published var equationState = EquationState.weakAcidBlank
 
     private(set) var shakeModel: MultiContainerShakeViewModel<Phase>!
     private(set) var navigation: NavigationModel<BufferScreenState>?
@@ -103,5 +104,18 @@ extension BufferScreenViewModel {
         var name: String {
             self.rawValue.capitalized
         }
+    }
+
+    enum EquationState: String, CaseIterable {
+        case weakAcidBlank,
+             weakAcidWithSubstanceConcentration,
+             weakAcidWithAllConcentration,
+             weakAcidFilled,
+             acidSummary
+        case weakBaseBlank,
+             weakBaseWithSubstanceConcentration,
+             weakBaseWithAllConcentration,
+             weakBaseFilled,
+             baseSummary
     }
 }

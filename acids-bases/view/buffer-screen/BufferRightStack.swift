@@ -19,14 +19,8 @@ struct BufferRightStack: View {
     }
 
     private var terms: some View {
-        Group {
-            if model.phase == .addWeakSubstance {
-                BufferTerms1(components: model.weakSubstanceModel)
-            } else {
-                BufferTerms2(model: model.saltComponents)
-            }
-        }
-        .frame(width: layout.common.beakyBoxWidth)
+        BufferEquationView(state: model.equationState)
+            .frame(size: layout.equationSize)
     }
 
     private var beaker: some View {
@@ -37,117 +31,6 @@ struct BufferRightStack: View {
             nextIsDisabled: false,
             settings: layout.common.beakySettings
         )
-    }
-}
-
-private struct BufferTerms1: View {
-
-    @ObservedObject var components: BufferWeakSubstanceComponents
-
-    var body: some View {
-        VStack {
-            HStack {
-                Text("[H]")
-                AnimatingTextLine(
-                    x: components.progress,
-                    equation: components.concentration.primaryIon,
-                    fontSize: 15,
-                    formatter: TextLineUtil
-                        .scientific
-                )
-            }
-
-            HStack {
-                Text("[A]")
-                AnimatingTextLine(
-                    x: components.progress,
-                    equation: components.concentration.secondaryIon,
-                    fontSize: 15,
-                    formatter: TextLineUtil
-                        .scientific)
-            }
-
-            HStack {
-                Text("[HA]")
-                AnimatingNumber(
-                    x: components.progress,
-                    equation: components.concentration.substance,
-                    formatter: { $0.str(decimals: 2) })
-            }
-
-            HStack {
-                Text("KA")
-                AnimatingTextLine(
-                    x: components.progress,
-                    equation: components.kaEquation,
-                    fontSize: 15,
-                    formatter: TextLineUtil
-                        .scientific)
-            }
-
-            HStack {
-                Text("KB")
-                AnimatingTextLine(
-                    x: components.progress,
-                    equation: components.kb,
-                    fontSize: 15,
-                    formatter: TextLineUtil
-                        .scientific)
-            }
-
-            HStack {
-                Text("PKA")
-                AnimatingNumber(
-                    x: components.progress,
-                    equation: components.pKa,
-                    formatter: { $0.str(decimals: 2) })
-            }
-
-            HStack {
-                Text("pH")
-                AnimatingNumber(
-                    x: components.progress,
-                    equation: components.ph,
-                    formatter: { $0.str(decimals: 2) })
-            }
-        }
-    }
-}
-
-
-private struct BufferTerms2: View {
-
-    @ObservedObject var model: BufferSaltComponents
-
-    var body: some View {
-        VStack {
-            HStack {
-                Text("pH")
-                AnimatingNumber(
-                    x: CGFloat(model.substanceAdded),
-                    equation: model.ph,
-                    formatter: { $0.str(decimals: 2) }
-                )
-            }
-
-            HStack {
-                Text("[A]")
-                AnimatingNumber(
-                    x: CGFloat(model.substanceAdded),
-                    equation: model.aConcentration,
-                    formatter: { $0.str(decimals: 2) }
-                )
-            }
-
-            HStack {
-                Text("[HA]")
-                AnimatingNumber(
-                    x: CGFloat(model.substanceAdded),
-                    equation: model.haConcentration,
-                    formatter: { $0.str(decimals: 2) }
-                )
-            }
-        }
     }
 }
 
