@@ -12,6 +12,10 @@ class BufferScreenViewModel: ObservableObject {
         self.substance = initialSubstance
         self.weakSubstanceModel = BufferWeakSubstanceComponents(substance: initialSubstance)
         self.navigation = BufferNavigationModel.model(self)
+        self.shakeModel = MultiContainerShakeViewModel(
+            canAddMolecule: canAddMolecule,
+            addMolecules: addMolecule
+        )
     }
 
     @Published var rows = CGFloat(AcidAppSettings.initialRows)
@@ -23,6 +27,7 @@ class BufferScreenViewModel: ObservableObject {
     @Published var saltComponents = BufferSaltComponents(prev: nil)
     @Published var phase3Model = BufferComponents3(prev: nil)
 
+    private(set) var shakeModel: MultiContainerShakeViewModel<Phase>!
     private(set) var navigation: NavigationModel<BufferScreenState>?
 }
 
@@ -49,6 +54,19 @@ extension BufferScreenViewModel {
 
 // MARK: Adding molecules
 extension BufferScreenViewModel {
+
+    private func addMolecule(phase: Phase, count: Int) {
+        switch phase {
+        case .addWeakSubstance: weakSubstanceModel.incrementSubstance(count: count)
+        case .addSalt: saltComponents.incrementSalt() // TODO count
+        case .addStrongSubstance: phase3Model.incrementStrongAcid()
+        }
+    }
+
+    private func canAddMolecule(phase: Phase) -> Bool {
+        true // TODO
+    }
+
     func incrementWeakSubstance() {
         weakSubstanceModel.incrementSubstance(count: 1)
     }
@@ -64,11 +82,12 @@ extension BufferScreenViewModel {
 
 // MARK: Enums
 extension BufferScreenViewModel {
-    enum Phase {
+    enum Phase: CaseIterable {
         case addWeakSubstance, addSalt, addStrongSubstance
     }
 
-    enum InputState {
-        case none, setWaterLevel, addWeakAcid
+    enum InputState: Equatable {
+        case none, setWaterLevel
+        case addMolecule(phase: Phase)
     }
 }

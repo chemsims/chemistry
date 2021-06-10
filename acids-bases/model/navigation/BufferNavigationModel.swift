@@ -91,7 +91,7 @@ private class SetWaterLevel: SetStatement {
 private class AddWeakAcid: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.instructToAddWeakAcid(model.substance)
-        model.input = .addWeakAcid
+        model.input = .addMolecule(phase: .addWeakSubstance)
     }
 
     override func unapply(on model: BufferScreenViewModel) {

@@ -11,9 +11,9 @@ struct BufferBeaker: View {
     @ObservedObject var model: BufferScreenViewModel
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            container
+        ZStack(alignment: .bottomLeading) {
             beaker
+            container
         }
         .frame(height: layout.common.height)
     }
@@ -49,25 +49,88 @@ struct BufferBeaker: View {
     }
 
     private var container: some View {
-        VStack {
-            HStack(spacing: 0) {
-                Button(action: model.incrementWeakSubstance) {
-                    Text("HA")
-                }
-                Spacer()
-                Button(action: model.incrementSalt) {
-                    Text("MA")
-                }
-                Spacer()
-                Button(action: model.incrementStrongSubstance) {
-                    Text("HCl")
-                }
-            }
-            .frame(width: layout.common.beakerWidth)
-            Spacer()
-        }
+        BufferMoleculeContainers(
+            layout: layout,
+            model: model,
+            shakeModel: model.shakeModel
+        )
     }
 }
+
+private struct BufferMoleculeContainers: View {
+
+    typealias Phase = BufferScreenViewModel.Phase
+
+    let layout: BufferScreenLayout
+    @ObservedObject var model: BufferScreenViewModel
+    @ObservedObject var shakeModel: MultiContainerShakeViewModel<Phase>
+
+    var body: some View {
+        ZStack {
+            container(phase: .addWeakSubstance, index: 0)
+            container(phase: .addSalt, index: 1)
+            container(phase: .addStrongSubstance, index: 2)
+        }
+        .frame(width: containerAreaWidth)
+        .offset(x: layout.common.sliderSettings.handleWidth)
+    }
+
+    private func container(
+        phase: Phase,
+        index: Int
+    ) -> some View {
+        AcidAppShakingContainerView(
+            models: shakeModel,
+            layout: layout.common,
+            onTap: { didTapContainer(phase: phase, index: index) },
+            initialLocation: containerLocation(phase: phase, index: index),
+            type: phase,
+            label: "",
+            color: .red,
+            rows: model.rows,
+            disabled: model.input != .addMolecule(phase: phase)
+        )
+    }
+
+    private func containerLocation(
+        phase: Phase,
+        index: Int
+    ) -> CGPoint {
+        if shakeModel.activeMolecule == phase {
+            return CGPoint(x: containerAreaWidth / 2, y: layout.activeContainerYPos)
+        }
+
+        let containerX = CGFloat(index + 1) * (containerAreaWidth / 4)
+        return CGPoint(x: containerX, y: layout.containerRowYPos)
+    }
+
+    private var containerAreaWidth: CGFloat {
+        layout.common.beakerWidth
+    }
+
+    private func didTapContainer(
+        phase: Phase,
+        index: Int
+    ) {
+        if shakeModel.activeMolecule == phase {
+            shakeModel.model(for: phase).manualAdd(amount: 5)
+            return
+        }
+
+        withAnimation(.easeOut(duration: 0.25)) {
+            shakeModel.activeMolecule = phase
+        }
+        shakeModel.start(
+            for: phase,
+            at: containerLocation(phase: phase, index: index),
+            bottomY: layout.common
+                .topOfWaterPosition(rows: model.rows),
+            halfXRange: layout.common.containerShakeHalfXRange,
+            halfYRange: layout.common.containerShakeHalfYRange
+        )
+    }
+}
+
 
 private struct AddWeakSubstanceBeaker: View {
 

@@ -90,24 +90,17 @@ private struct IntroBeakerContainers: View {
         _ type: AcidOrBaseType,
         _ index: Int
     ) -> some View {
-        AcidAppShakingContainerView(
+        let substance = model.selectedSubstances.value(for: type)
+        return AcidAppShakingContainerView(
             models: shakeModel,
             layout: layout.common,
             onTap: { didTapContainer(type, index) },
             initialLocation: containerLocation(type, index),
             type: type,
-            substance: model.selectedSubstances.value(for: type),
+            label: substance?.symbol ?? "",
+            color: substance?.color ?? RGB.placeholderContainer.color,
+            rows: model.rows,
             disabled: model.inputState != .addSubstance(type: type)
-        )
-        .mask(
-            VStack(spacing: 0) {
-                Rectangle()
-                    .frame(
-                        width: common.beakerWidth + (2 * common.containerSize.height),
-                        height: topOfWater
-                    )
-                Spacer()
-            }
         )
     }
 
@@ -167,7 +160,7 @@ private struct IntroBeakerContainers: View {
         _ element: AcidOrBaseType,
         _ index: Int
     ) -> CGPoint {
-        if model.addMoleculesModel.activeMolecule == element {
+        if shakeModel.activeMolecule == element {
             return CGPoint(
                 x: centerWaterX,
                 y: layout.activeContainerYPos

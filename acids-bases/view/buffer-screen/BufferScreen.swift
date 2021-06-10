@@ -54,6 +54,14 @@ struct BufferScreenLayout {
             height: common.chartTotalHeight
         )
     }
+
+    var containerRowYPos: CGFloat {
+        50
+    }
+
+    var activeContainerYPos: CGFloat {
+        containerRowYPos + common.containerSize.height
+    }
 }
 
 struct BufferScreen_Previews: PreviewProvider {

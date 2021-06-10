@@ -5,6 +5,16 @@
 import SwiftUI
 
 extension View {
+
+    // TODO - replace usages of this with with Swift 5.5, since we can know conditionally
+    // apply modifiers using compiler flags
+    // e.g.
+    // Text("Hello")
+    //    #if os(iOS)
+    //        .font(.title)
+    //    #else
+    //        .font(.body)
+    //    #endif
     @ViewBuilder
     public func modifyIf<T: View>(_ condition: Bool, apply: (Self) -> T) -> some View {
         if condition {

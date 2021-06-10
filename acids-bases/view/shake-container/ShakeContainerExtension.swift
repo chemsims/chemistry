@@ -5,21 +5,23 @@
 import SwiftUI
 import ReactionsCore
 
-struct AcidAppShakingContainerView: View {
+struct AcidAppShakingContainerView<ContainerType>: View
+where ContainerType : CaseIterable, ContainerType : Hashable
+{
 
-    @ObservedObject var models: MultiContainerShakeViewModel<AcidOrBaseType>
+    @ObservedObject var models: MultiContainerShakeViewModel<ContainerType>
     let layout: AcidBasesScreenLayout
     let onTap: () -> Void
     let initialLocation: CGPoint
-    let type: AcidOrBaseType
-    let substance: AcidOrBase?
+    let type: ContainerType
+    let label: String
+    let color: Color
+    let rows: CGFloat
     let disabled: Bool
 
     var body: some View {
         let addModel = models.model(for: type)
         let isActive = models.activeMolecule == type
-        let label = substance?.symbol ?? ""
-        let color = substance?.color ?? RGB.placeholderContainer.color
 
         return ShakingContainerView(
             model: addModel,
@@ -43,6 +45,15 @@ struct AcidAppShakingContainerView: View {
         .zIndex(isActive ? 1 : 0)
         .disabled(disabled)
         .colorMultiply(disabled ? Styling.inactiveContainerMultiply : .white)
+        .mask(
+            VStack(spacing: 0) {
+                Rectangle()
+                    .frame(
+                        width: layout.beakerWidth + (2 * layout.containerSize.height),
+                        height: layout.topOfWaterPosition(rows: rows)
+                    )
+                Spacer()
+            }
+        )
     }
-
 }
