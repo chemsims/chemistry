@@ -27,7 +27,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
     }
 
     let cols: Int = MoleculeGridSettings.cols
-    let rows: Int = MoleculeGridSettings.rows
+    var rows: Int = MoleculeGridSettings.rows
     private let substance: AcidOrBase
 
     func incrementSubstance(count: Int) {
@@ -128,7 +128,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
         CGFloat(substanceCoords.coords.count) / CGFloat(cols * rows)
     }
 
-    private var ka: CGFloat {
+    var ka: CGFloat {
         7.3e-5
     }
 }

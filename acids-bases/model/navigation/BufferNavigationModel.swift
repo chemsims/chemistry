@@ -31,7 +31,16 @@ struct BufferNavigationModel {
         SetWaterLevel(statements.instructToSetWaterLevel1),
         AddWeakAcid(),
         RunWeakAcidReaction(),
-        EndWeakAcidReaction(),
+        EndOfWeakAcidReaction(),
+        SetStatement(statements.introduceBufferSolutions),
+        SetStatement(statements.explainBufferSolutions),
+        SetStatement(statements.explainBufferSolutions2),
+        SetStatement(statements.explainBufferUses),
+        ShowFractionChart(),
+        SetStatement(statements.explainFractionChartCurrentPosition),
+        SetStatement(statements.explainBufferRange),
+        SetStatement(statements.explainBufferProportions),
+        SetStatement(statements.explainAddingAcidIonizingSalt),
         AddSalt(),
         AddAcid()
     ]
@@ -100,27 +109,51 @@ private class AddWeakAcid: BufferScreenState {
 }
 
 private class RunWeakAcidReaction: BufferScreenState {
+
+    private let reactionDuration = 3.0
+
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = ["Running reaction"]
-        withAnimation(.linear(duration: 2)) {
+        model.statement = statements.runningWeakAcidReaction(model.substance)
+        withAnimation(.linear(duration: reactionDuration)) {
             model.weakSubstanceModel.progress = 1
         }
+
+        withAnimation(.easeOut(duration: 0.35)) {
+            model.input = .none
+            model.shakeModel.activeMolecule = nil
+        }
+    }
+
+    override func nextStateAutoDispatchDelay(model: BufferScreenViewModel) -> Double? {
+        reactionDuration
     }
 }
 
-private class EndWeakAcidReaction: BufferScreenState {
+private class EndOfWeakAcidReaction: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = ["Finished reaction"]
+        model.statement = statements.weakAcidEquilibriumReached(
+            substance: model.substance,
+            ka: model.weakSubstanceModel.ka,
+            pH: model.weakSubstanceModel.ph.getY(at: 1)
+        )
         withAnimation(.easeOut(duration: 0.5)) {
             model.weakSubstanceModel.progress = 1.0001
         }
     }
 }
 
+private class ShowFractionChart: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = statements.explainFractionChart(substance: model.substance)
+        model.selectedBottomGraph = .curve
+    }
+}
+
 private class AddSalt: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = ["Now, add salt"]
+        model.statement = statements.instructToAddSalt
         model.goToAddSaltPhase()
+        model.input = .addMolecule(phase: .addSalt)
     }
 }
 

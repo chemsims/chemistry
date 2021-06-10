@@ -18,7 +18,11 @@ class BufferScreenViewModel: ObservableObject {
         )
     }
 
-    @Published var rows = CGFloat(AcidAppSettings.initialRows)
+    @Published var rows = CGFloat(AcidAppSettings.initialRows) {
+        didSet {
+            weakSubstanceModel.rows = GridCoordinateList.availableRows(for: rows)
+        }
+    }
     @Published var statement = [TextLine]()
     @Published var input = InputState.none
     @Published var phase = Phase.addWeakSubstance
@@ -26,6 +30,8 @@ class BufferScreenViewModel: ObservableObject {
     @Published var weakSubstanceModel: BufferWeakSubstanceComponents
     @Published var saltComponents = BufferSaltComponents(prev: nil)
     @Published var phase3Model = BufferComponents3(prev: nil)
+
+    @Published var selectedBottomGraph = BottomGraph.bars
 
     private(set) var shakeModel: MultiContainerShakeViewModel<Phase>!
     private(set) var navigation: NavigationModel<BufferScreenState>?
@@ -89,5 +95,13 @@ extension BufferScreenViewModel {
     enum InputState: Equatable {
         case none, setWaterLevel
         case addMolecule(phase: Phase)
+    }
+
+    enum BottomGraph: String {
+        case curve, bars, neutralization
+
+        var name: String {
+            self.rawValue.capitalized
+        }
     }
 }

@@ -10,8 +10,6 @@ struct BufferBottomCharts: View {
     let layout: BufferScreenLayout
     @ObservedObject var model: BufferScreenViewModel
 
-    @State private var selected = SelectedGraph.bars
-
     var body: some View {
         VStack(spacing: 0) {
             toggle
@@ -36,23 +34,15 @@ struct BufferBottomCharts: View {
     }
 
     private func text(
-        _ selection: SelectedGraph,
+        _ selection: BufferScreenViewModel.BottomGraph,
         disabled: Bool
     ) -> some View {
         SelectionToggleText(
             text: selection.name,
-            isSelected: selected == selection,
-            action: { selected = selection }
+            isSelected: model.selectedBottomGraph == selection,
+            action: { model.selectedBottomGraph = selection }
         )
         .disabled(disabled)
-    }
-
-    enum SelectedGraph: String {
-        case curve, bars, neutralization
-
-        var name: String {
-            self.rawValue.capitalized
-        }
     }
 }
 
