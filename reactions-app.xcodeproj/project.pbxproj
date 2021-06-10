@@ -371,6 +371,7 @@
 		57C315B82631B37D0092C454 /* AnimatingReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */; };
 		57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315C12631B58A0092C454 /* MoleculeArc.swift */; };
 		57C3A8272563248F00EE753E /* FirstOrderReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */; };
+		57CD325826723ACB00C94109 /* BufferFractionsChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325726723ACB00C94109 /* BufferFractionsChart.swift */; };
 		57CF6FD226123727007F50A7 /* SecondOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FCD26123726007F50A7 /* SecondOrderQuizQuestions.swift */; };
 		57CF6FD526123727007F50A7 /* ZeroOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FD026123727007F50A7 /* ZeroOrderQuizQuestions.swift */; };
 		57CF6FD626123727007F50A7 /* EnergyProfileQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FD126123727007F50A7 /* EnergyProfileQuizQuestions.swift */; };
@@ -977,6 +978,7 @@
 		57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingReactionDefinition.swift; sourceTree = "<group>"; };
 		57C315C12631B58A0092C454 /* MoleculeArc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeArc.swift; sourceTree = "<group>"; };
 		57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionScreen.swift; sourceTree = "<group>"; };
+		57CD325726723ACB00C94109 /* BufferFractionsChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferFractionsChart.swift; sourceTree = "<group>"; };
 		57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastOpenedScreenTests.swift; sourceTree = "<group>"; };
 		57CF6FCD26123726007F50A7 /* SecondOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FD026123727007F50A7 /* ZeroOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZeroOrderQuizQuestions.swift; sourceTree = "<group>"; };
@@ -1280,6 +1282,7 @@
 				578A1EAE266FA90000D11E22 /* BufferPhChart.swift */,
 				57572DEB266FB8D700A27684 /* BufferPhChartOrTable.swift */,
 				57572DED266FB8FE00A27684 /* BufferBottomCharts.swift */,
+				57CD325726723ACB00C94109 /* BufferFractionsChart.swift */,
 			);
 			path = "buffer-screen";
 			sourceTree = "<group>";
@@ -3367,6 +3370,7 @@
 				5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */,
 				579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */,
 				570A766F266CFDD2009329FB /* BufferScreen.swift in Sources */,
+				57CD325826723ACB00C94109 /* BufferFractionsChart.swift in Sources */,
 				5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */,
 				57FA3AB12660D4450073A29B /* PHScale.swift in Sources */,
 				57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */,

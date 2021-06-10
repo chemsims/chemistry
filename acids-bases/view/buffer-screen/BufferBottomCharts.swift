@@ -13,12 +13,27 @@ struct BufferBottomCharts: View {
     var body: some View {
         VStack(spacing: 0) {
             toggle
+            chart
+        }
+    }
+
+    @ViewBuilder
+    private var chart: some View {
+        switch model.selectedBottomGraph {
+        case .bars:
             BufferBarChart(
                 layout: layout,
                 phase: model.phase,
                 model1: model.weakSubstanceModel,
                 model2: model.saltComponents
             )
+        case .curve:
+            BufferFractionsChart(
+                layout: layout,
+                model: model.saltComponents
+            )
+        case .neutralization:
+            Text("neutralization chart")
         }
     }
 
