@@ -18,32 +18,15 @@ struct BufferBeaker: View {
         .frame(height: layout.common.height)
     }
 
-    // TODO - try this out with just 1 beaker where all models are passed in, and it
-    // chooses the properties to pass deeper down based on the phase. Rather than have
-    // completely different beaker views
     private var beaker: some View {
         VStack(spacing: 0) {
             Spacer()
-            switch model.phase {
-            case .addWeakSubstance:
-                AddWeakSubstanceBeaker(
-                    layout: layout,
-                    model: model,
-                    components: model.weakSubstanceModel
-                )
-            case .addSalt:
-                ReactingBeaker(
-                    layout: layout,
-                    model: model,
-                    components: model.saltComponents.reactingModel
-                )
-            default:
-                ReactingBeaker(
-                    layout: layout,
-                    model: model,
-                    components: model.phase3Model.reactingModel
-                )
-            }
+            BufferBeakerWithMolecules(
+                layout: layout,
+                model: model,
+                weakSubstanceModel: model.weakSubstanceModel,
+                saltModelReaction: model.saltComponents.reactingModel
+            )
         }
         .padding(.bottom, layout.common.beakerBottomPadding)
     }
@@ -54,6 +37,50 @@ struct BufferBeaker: View {
             model: model,
             shakeModel: model.shakeModel
         )
+    }
+}
+
+private struct BufferBeakerWithMolecules: View {
+
+    let layout: BufferScreenLayout
+    @ObservedObject var model: BufferScreenViewModel
+    @ObservedObject var weakSubstanceModel: BufferWeakSubstanceComponents
+    @ObservedObject var saltModelReaction: ReactingBeakerViewModel<SubstancePart>
+
+    var body: some View {
+        AdjustableFluidBeaker(
+            rows: $model.rows,
+            molecules: molecules,
+            animatingMolecules: animatingMolecules,
+            currentTime: reactionProgress,
+            settings: layout.common.adjustableBeakerSettings,
+            canSetLevel: model.input == .setWaterLevel,
+            beakerColorMultiply: .white,
+            sliderColorMultiply: .white,
+            beakerModifier: BufferBeakerAccessibilityModifier()
+        )
+    }
+
+    private var molecules: [BeakerMolecules] {
+        switch model.phase {
+        case .addWeakSubstance: return [weakSubstanceModel.substanceCoords]
+        case .addSalt: return saltModelReaction.molecules.map(\.molecules)
+        default: return []
+        }
+    }
+
+    private var animatingMolecules: [AnimatingBeakerMolecules] {
+        switch model.phase {
+        case .addWeakSubstance: return weakSubstanceModel.ionCoords
+        default: return []
+        }
+    }
+
+    private var reactionProgress: CGFloat {
+        switch model.phase {
+        case .addWeakSubstance: return weakSubstanceModel.progress
+        default: return 0
+        }
     }
 }
 
@@ -127,48 +154,6 @@ private struct BufferMoleculeContainers: View {
                 .topOfWaterPosition(rows: model.rows),
             halfXRange: layout.common.containerShakeHalfXRange,
             halfYRange: layout.common.containerShakeHalfYRange
-        )
-    }
-}
-
-
-private struct AddWeakSubstanceBeaker: View {
-
-    let layout: BufferScreenLayout
-    @ObservedObject var model: BufferScreenViewModel
-    @ObservedObject var components: BufferWeakSubstanceComponents
-
-    var body: some View {
-        AdjustableFluidBeaker(
-            rows: $model.rows,
-            molecules: [components.substanceCoords],
-            animatingMolecules: components.ionCoords,
-            currentTime: components.progress,
-            settings: layout.common.adjustableBeakerSettings,
-            canSetLevel: model.input == .setWaterLevel,
-            beakerColorMultiply: .white,
-            sliderColorMultiply: .white,
-            beakerModifier: BufferBeakerAccessibilityModifier()
-        )
-    }
-}
-
-private struct ReactingBeaker: View {
-    let layout: BufferScreenLayout
-    @ObservedObject var model: BufferScreenViewModel
-    @ObservedObject var components: ReactingBeakerViewModel<SubstancePart>
-
-    var body: some View {
-        AdjustableFluidBeaker(
-            rows: $model.rows,
-            molecules: components.molecules.map(\.molecules),
-            animatingMolecules: [],
-            currentTime: 0,
-            settings: layout.common.adjustableBeakerSettings,
-            canSetLevel: model.input == .setWaterLevel,
-            beakerColorMultiply: .white,
-            sliderColorMultiply: .white,
-            beakerModifier: BufferBeakerAccessibilityModifier()
         )
     }
 }
