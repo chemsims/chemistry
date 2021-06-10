@@ -245,14 +245,18 @@ private struct QuotientConcentrationBlank: View {
     }
 
     private func term(_ equation: Equation, parens: Bool = true) -> some View {
-        AnimatingNumberOrPlaceholder(
+        AnimatingNumberPlaceholder(
             showTerm: showValues,
-            currentTime: currentTime,
+            progress: currentTime,
             equation: equation,
             formatter: {
                 let value = $0.str(decimals: 2)
                 return parens ? "(\(value))" : value
             }
+        )
+        .frame(
+            width: EquationSizing.boxWidth,
+            height: EquationSizing.boxHeight
         )
     }
 }
@@ -282,11 +286,15 @@ private struct QuotientKspBlank: View {
     }
 
     private var quotientView: some View {
-        AnimatingNumberOrPlaceholder(
+        AnimatingNumberPlaceholder(
             showTerm: showValues,
-            currentTime: currentTime,
+            progress: currentTime,
             equation: quotient,
             formatter: { $0.str(decimals: 2) }
+        )
+        .frame(
+            width: EquationSizing.boxWidth,
+            height: EquationSizing.boxHeight
         )
     }
 }

@@ -243,11 +243,15 @@ private struct FilledQuotientDefinitionView: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            AnimatingNumberOrPlaceholder(
+            AnimatingNumberPlaceholder(
                 showTerm: showTerms,
-                currentTime: currentTime,
+                progress: currentTime,
                 equation: quotient,
                 formatter: formatQuotient
+            )
+            .frame(
+                width: EquationSizing.boxWidth,
+                height: EquationSizing.boxHeight
             )
             .accessibility(label: Text("Q"))
             .accessibility(sortPriority: 10)
@@ -283,11 +287,15 @@ private struct FilledQuotientDefinitionView: View {
         let coeff = coefficients.value(for: molecule)
         let label = coeff == 1 ? "" : "To the power of \(coeff)"
         return HStack(spacing: 2) {
-            AnimatingNumberOrPlaceholder(
+            AnimatingNumberPlaceholder(
                 showTerm: showTerms,
-                currentTime: currentTime,
+                progress: currentTime,
                 equation: equations.value(for: molecule),
                 formatter: { "(\($0.str(decimals: 2)))" }
+            )
+            .frame(
+                width: EquationSizing.boxWidth,
+                height: EquationSizing.boxHeight
             )
             .accessibility(label: Text("\(propertyAccessibilityLabel) of \(molecule.rawValue)"))
 
@@ -300,7 +308,6 @@ private struct FilledQuotientDefinitionView: View {
                 .accessibility(label: Text(label))
         }
     }
-
 }
 
 private struct FilledQuotientKView: View {
@@ -313,11 +320,15 @@ private struct FilledQuotientKView: View {
 
     var body: some View {
         HStack(spacing: 2) {
-            AnimatingNumberOrPlaceholder(
+            AnimatingNumberPlaceholder(
                 showTerm: showTerms,
-                currentTime: currentTime,
+                progress: currentTime,
                 equation: quotient,
                 formatter: formatQuotient
+            )
+            .frame(
+                width: EquationSizing.boxWidth,
+                height: EquationSizing.boxHeight
             )
             .accessibility(label: Text("Q"))
 
@@ -327,11 +338,15 @@ private struct FilledQuotientKView: View {
                 convergedQuotient: convergedQuotient
             )
 
-            AnimatingNumberOrPlaceholder(
+            AnimatingNumberPlaceholder(
                 showTerm: showTerms,
-                currentTime: currentTime,
+                progress: currentTime,
                 equation: ConstantEquation(value: convergedQuotient),
                 formatter: { $0.str(decimals: 2) }
+            )
+            .frame(
+                width: EquationSizing.boxWidth,
+                height: EquationSizing.boxHeight
             )
             .accessibility(label: Text("\(kTerm)"))
         }
@@ -372,36 +387,6 @@ struct QuotientEqualitySign: View {
             return "<"
         }
         return "="
-    }
-}
-
-struct AnimatingNumberOrPlaceholder: View {
-
-    let showTerm: Bool
-    let currentTime: CGFloat
-    let equation: Equation
-    let formatter: (CGFloat) -> String
-
-    var body: some View {
-        if showTerm {
-            AnimatingNumber(
-                x: currentTime,
-                equation: equation,
-                formatter: formatter
-            )
-            .frame(
-                width: EquationSizing.boxWidth,
-                height: EquationSizing.boxHeight
-            )
-            .minimumScaleFactor(0.5)
-            .foregroundColor(.orangeAccent)
-        } else {
-            PlaceholderTerm(value: nil)
-                .frame(
-                    width: EquationSizing.boxWidth,
-                    height: EquationSizing.boxHeight
-                )
-        }
     }
 }
 

@@ -40,7 +40,11 @@ public struct TextLineUtil {
         return parseScientificValue(value: scientificValue)
     }
 
-
+    public static func scientificString(
+        value: CGFloat
+    ) -> String {
+        numberFormatter.string(for: value) ?? value.str(decimals: 2)
+    }
 
     private static func parseScientificValue(
         value: String
