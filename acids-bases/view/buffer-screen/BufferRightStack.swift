@@ -19,8 +19,13 @@ struct BufferRightStack: View {
     }
 
     private var terms: some View {
-        BufferEquationView(state: model.equationState)
-            .frame(size: layout.equationSize)
+        SwitchingBufferEquationView(
+            model: model,
+            weakSubstanceModel: model.weakSubstanceModel,
+            saltModel: model.saltComponents,
+            strongSubstanceModel: model.phase3Model
+        )
+        .frame(size: layout.equationSize)
     }
 
     private var beaker: some View {
@@ -30,6 +35,45 @@ struct BufferRightStack: View {
             back: model.back,
             nextIsDisabled: false,
             settings: layout.common.beakySettings
+        )
+    }
+}
+
+private struct SwitchingBufferEquationView: View {
+
+    @ObservedObject var model: BufferScreenViewModel
+    @ObservedObject var weakSubstanceModel: BufferWeakSubstanceComponents
+    @ObservedObject var saltModel: BufferSaltComponents
+    @ObservedObject var strongSubstanceModel: BufferComponents3
+
+    var body: some View {
+        BufferEquationView(
+            progress: progress,
+            state: model.equationState,
+            data: data
+        )
+    }
+
+    private var progress: CGFloat {
+        switch model.phase {
+        case .addWeakSubstance: return weakSubstanceModel.progress
+        case .addSalt: return CGFloat(saltModel.substanceAdded)
+        default: return 0
+        }
+    }
+
+    private var data: BufferEquationData {
+        return BufferEquationData(
+            ka: ConstantEquation(value: 0),
+            kb: ConstantEquation(value: 0),
+            concentration: SubstanceValue(builder: {_ in
+                ConstantEquation(value: 0)
+            }),
+            pKa: ConstantEquation(value: 0),
+            pH: ConstantEquation(value: 0),
+            pOH: ConstantEquation(value: 0),
+            fixedKa: 0,
+            fixedKb: 0
         )
     }
 }

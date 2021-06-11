@@ -9,27 +9,48 @@ private typealias EquationState = BufferScreenViewModel.EquationState
 
 struct BufferEquationView: View {
 
+    let progress: CGFloat
     let state: BufferScreenViewModel.EquationState
+    let data: BufferEquationData
 
     var body: some View {
         GeometryReader { geo in
-            SizedBufferEquationView(state: state)
-                .scaledToFit(
-                    inWidth: geo.size.width,
-                    inHeight: geo.size.height,
-                    naturalSize: CGSize(
-                        width: NaturalWidth,
-                        height: NaturalHeight
-                    )
+            SizedBufferEquationView(
+                progress: progress,
+                state: state,
+                data: data
+            )
+            .scaledToFit(
+                inWidth: geo.size.width,
+                inHeight: geo.size.height,
+                naturalSize: CGSize(
+                    width: NaturalWidth,
+                    height: NaturalHeight
                 )
-                .frame(size: geo.size)
+            )
+            .frame(size: geo.size)
         }
     }
 }
 
+struct BufferEquationData {
+    let ka: Equation
+    let kb: Equation
+    let concentration: SubstanceValue<Equation>
+    let pKa: Equation
+
+    let pH: Equation
+    let pOH: Equation
+
+    let fixedKa: CGFloat
+    let fixedKb: CGFloat
+}
+
 private struct SizedBufferEquationView: View {
 
+    let progress: CGFloat
     let state: EquationState
+    let data: BufferEquationData
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -45,8 +66,11 @@ private struct SizedBufferEquationView: View {
 
     private var row0: some View {
         HStack(spacing: 0) {
-            KADefinition(state: state, fixedK: 0.000456)
-                .frame(width: leftColWidth, alignment: .leading)
+            KADefinition(
+                state: state,
+                fixedK: state.isAcid ? data.fixedKa : data.fixedKb
+            )
+            .frame(width: leftColWidth, alignment: .leading)
 
             Spacer()
 
@@ -65,14 +89,10 @@ private struct SizedBufferEquationView: View {
         HStack(spacing: 0) {
             KAFilled(
                 state: state,
-                kaEquation: ConstantEquation(value: 0.003),
-                concentration: SubstanceValue(
-                    builder: { _ in
-                        ConstantEquation(value: 0.05)
-                    }
-                ),
-                progress: 1,
-                fixedK: 1.2
+                kaEquation: data.ka,
+                concentration: data.concentration,
+                progress: progress,
+                fixedK: state.isAcid ? data.fixedKa : data.fixedKb
             )
             .frame(width: leftColWidth, alignment: .leading)
 
@@ -81,9 +101,9 @@ private struct SizedBufferEquationView: View {
             if state.showPKEquations {
                 PKAFilled(
                     showTerms: state.showAllTerms,
-                    progress: 1,
-                    pkaEquation: ConstantEquation(value: 0.01),
-                    kaEquation: ConstantEquation(value: 0.001)
+                    progress: progress,
+                    pkaEquation: data.pKa,
+                    kaEquation: data.ka
                 )
                 .frame(width: rightColWidth, alignment: .leading)
             }
@@ -116,11 +136,11 @@ private struct SizedBufferEquationView: View {
         HStack {
             PHFilled(
                 state: state,
-                progress: 1,
-                pkAEquation: ConstantEquation(value: 0.01),
-                phEquation: ConstantEquation(value: 0.01),
-                secondaryIonConcentration: ConstantEquation(value: 0.01),
-                substanceConcentration: ConstantEquation(value: 0.01)
+                progress: progress,
+                pkAEquation: data.pKa,
+                phEquation: data.pH,
+                secondaryIonConcentration: data.concentration.secondaryIon,
+                substanceConcentration: data.concentration.substance
             )
             .frame(width: leftColWidth, alignment: .leading)
 
@@ -129,9 +149,9 @@ private struct SizedBufferEquationView: View {
             if state.showKwEquations  {
                 KWFilled(
                     showTerms: state.showAllTerms,
-                    progress: 1,
-                    kaEquation: ConstantEquation(value: 0.000323),
-                    kbEquation: ConstantEquation(value: 0.000123)
+                    progress: progress,
+                    kaEquation: data.ka,
+                    kbEquation: data.kb
                 )
                 .frame(width: rightColWidth, alignment: .leading)
             }
@@ -150,9 +170,9 @@ private struct SizedBufferEquationView: View {
     private var phSumFilled: some View {
         PHSumFilled(
             showTerms: state.showAllTerms,
-            progress: 1,
-            pHEquation: ConstantEquation(value: 7),
-            pOHEquation: ConstantEquation(value: 7)
+            progress: progress,
+            pHEquation: data.pH,
+            pOHEquation: data.pOH
         )
         .frame(width: rightColWidth, alignment: .leading)
     }
@@ -586,7 +606,7 @@ private extension EquationState {
         isAcid ? "Ka" : "Kb"
     }
 
-    private var isAcid: Bool {
+    var isAcid: Bool {
         switch self {
         case .weakAcidBlank,
              .weakAcidFilled,
@@ -640,15 +660,30 @@ private let NaturalHeight: CGFloat = 400
 
 struct BufferEquationView_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(BufferScreenViewModel.EquationState.allCases.indices) { i in
+        ForEach(BufferScreenViewModel.EquationState.allCases.indices.prefix(1)) { i in
             let state = BufferScreenViewModel.EquationState.allCases[i]
             VStack(spacing: 5) {
                 Text(state.rawValue)
-                SizedBufferEquationView(state: state)
-                    .previewLayout(.sizeThatFits)
-                    .border(Color.black)
-                    .frame(width: NaturalWidth, height: NaturalHeight)
-                    .border(Color.red)
+                SizedBufferEquationView(
+                    progress: 1,
+                    state: state,
+                    data: BufferEquationData(
+                        ka: ConstantEquation(value: 0.1),
+                        kb: ConstantEquation(value: 0.1),
+                        concentration: SubstanceValue(builder: { _ in
+                            ConstantEquation(value: 0.1)
+                        }),
+                        pKa: ConstantEquation(value: 0.1),
+                        pH: ConstantEquation(value: 0.1),
+                        pOH: ConstantEquation(value: 0.1),
+                        fixedKa: 0.1,
+                        fixedKb: 0.1
+                    )
+                )
+                .previewLayout(.sizeThatFits)
+                .border(Color.black)
+                .frame(width: NaturalWidth, height: NaturalHeight)
+                .border(Color.red)
             }.previewLayout(.sizeThatFits)
         }
     }
