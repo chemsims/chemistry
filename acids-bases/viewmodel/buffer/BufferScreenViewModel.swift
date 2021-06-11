@@ -9,17 +9,22 @@ class BufferScreenViewModel: ObservableObject {
 
     init() {
         let initialSubstance = AcidOrBase.weakAcids[1]
-
-        let weakModel = BufferWeakSubstanceComponents(substance: initialSubstance)
+        let initialRows = AcidAppSettings.initialRows
+        let weakModel = BufferWeakSubstanceComponents(
+            substance: initialSubstance,
+            settings: .standard,
+            cols: MoleculeGridSettings.cols,
+            rows: initialRows
+        )
         let saltModel = BufferSaltComponents(prev: weakModel)
         let strongModel = BufferStrongSubstanceComponents(prev: saltModel)
 
+        self.rows = CGFloat(initialRows)
         self.weakSubstanceModel = weakModel
         self.saltComponents = saltModel
         self.strongSubstanceModel = strongModel
 
         self.substance = initialSubstance
-        self.weakSubstanceModel = BufferWeakSubstanceComponents(substance: initialSubstance)
         self.navigation = BufferNavigationModel.model(self)
         self.shakeModel = MultiContainerShakeViewModel(
             canAddMolecule: canAddMolecule,
@@ -27,7 +32,7 @@ class BufferScreenViewModel: ObservableObject {
         )
     }
 
-    @Published var rows = CGFloat(AcidAppSettings.initialRows) {
+    @Published var rows: CGFloat {
         didSet {
             weakSubstanceModel.rows = GridCoordinateList.availableRows(for: rows)
         }

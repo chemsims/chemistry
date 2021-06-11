@@ -9,7 +9,7 @@ import ReactionsCore
 class IntroScreenComponentsTests: XCTestCase {
 
     func testStrongAcidSubstanceAdded() {
-        let model = newModel(substance: strongAcid())
+        let model = newModel(substance: .strongAcid())
 
         XCTAssertEqual(model.substanceAdded, 0)
         XCTAssertEqual(model.fractionSubstanceAdded, 0)
@@ -24,11 +24,11 @@ class IntroScreenComponentsTests: XCTestCase {
     }
 
     func testStrongAcidPrimaryIonsConcentration() {
-        doTestAcidPrimaryIonConcentration(substance: strongAcid())
+        doTestAcidPrimaryIonConcentration(substance: .strongAcid())
     }
 
     func testStrongAcidCoords() {
-        let model = newModel(substance: strongAcid())
+        let model = newModel(substance: .strongAcid())
 
         model.coords.all.forEach { coord in
             XCTAssert(coord.coords.isEmpty)
@@ -41,12 +41,12 @@ class IntroScreenComponentsTests: XCTestCase {
     }
 
     func testWeakAcidPrimaryIonsConcentration() {
-        let acid = weakAcid(substanceAddedPerIon: NonZeroPositiveInt(5)!)
+        let acid = AcidOrBase.weakAcid(substanceAddedPerIon: NonZeroPositiveInt(5)!)
         doTestAcidPrimaryIonConcentration(substance: acid)
     }
 
     func testWeakAcidCoords() {
-        let acid = weakAcid(substanceAddedPerIon: NonZeroPositiveInt(5)!)
+        let acid = AcidOrBase.weakAcid(substanceAddedPerIon: NonZeroPositiveInt(5)!)
         let model = newModel(substance: acid)
 
         model.coords.all.forEach { coord in
@@ -65,31 +65,31 @@ class IntroScreenComponentsTests: XCTestCase {
     }
 
     func testStrongBasePrimaryIonsConcentration() {
-        doTestAcidPrimaryIonConcentration(substance: strongBase())
+        doTestAcidPrimaryIonConcentration(substance: .strongBase())
     }
 
     func testWeakBasePrimaryIonsConcentration() {
-        let base = weakBase(substanceAddedPerIon: NonZeroPositiveInt(4)!)
+        let base = AcidOrBase.weakBase(substanceAddedPerIon: NonZeroPositiveInt(4)!)
         doTestAcidPrimaryIonConcentration(substance: base)
     }
 
     func testStrongAcidBarChart() {
-        let acid = strongAcid()
+        let acid = AcidOrBase.strongAcid()
         doTestBarChartData(substance: acid, finalSubstanceAmount: 0, finalIonAmount: 1)
     }
 
     func testStrongBaseBarChart() {
-        let base = strongBase()
+        let base = AcidOrBase.strongBase()
         doTestBarChartData(substance: base, finalSubstanceAmount: 0, finalIonAmount: 1)
     }
 
     func testWeakAcidBarChart() {
-        let acid = weakAcid(substanceAddedPerIon: NonZeroPositiveInt(2)!)
+        let acid = AcidOrBase.weakAcid(substanceAddedPerIon: NonZeroPositiveInt(2)!)
         doTestBarChartData(substance: acid, finalSubstanceAmount: 1, finalIonAmount: 0.5)
     }
 
     func testWeakBaseBarChart() {
-        let acid = weakAcid(substanceAddedPerIon: NonZeroPositiveInt(5)!)
+        let acid = AcidOrBase.weakAcid(substanceAddedPerIon: NonZeroPositiveInt(5)!)
         doTestBarChartData(substance: acid, finalSubstanceAmount: 1, finalIonAmount: 0.2)
     }
 
@@ -153,32 +153,6 @@ class IntroScreenComponentsTests: XCTestCase {
             cols: 10,
             rows: 10,
             maxSubstanceCountDivisor: 2
-        )
-    }
-
-    private func strongAcid() -> AcidOrBase {
-        AcidOrBase.strongAcid(secondaryIon: .A, color: .blue, kA: 0)
-    }
-
-    private func strongBase() -> AcidOrBase {
-        AcidOrBase.strongBase(secondaryIon: .A, color: .red, kB: 0)
-    }
-
-    private func weakAcid(substanceAddedPerIon: NonZeroPositiveInt) -> AcidOrBase {
-        AcidOrBase.weakAcid(
-            secondaryIon: .A,
-            substanceAddedPerIon: substanceAddedPerIon,
-            color: .blue,
-            kA: 1
-        )
-    }
-
-    private func weakBase(substanceAddedPerIon: NonZeroPositiveInt) -> AcidOrBase {
-        AcidOrBase.weakBase(
-            secondaryIon: .A,
-            substanceAddedPerIon: substanceAddedPerIon,
-            color: .red,
-            kB: 1
         )
     }
 }

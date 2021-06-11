@@ -104,27 +104,20 @@ extension BufferStrongSubstanceComponents {
 
 // MARK: Bar chart data
 extension BufferStrongSubstanceComponents {
-    var barChartData: [BarChartData] {
-        [
+
+    var barChartMap: SubstanceValue<BarChartData> {
+        SubstanceValue(builder: { part in
             BarChartData(
-                label: substance.symbol, // TODO
-                equation: concentration.substance,
-                color: substance.color,
-                accessibilityLabel: "" // TODO
-            ),
-            BarChartData(
-                label: substance.primary.rawValue, // TODO
-                equation: concentration.primaryIon,
-                color: substance.primary.color,
-                accessibilityLabel: "" // TODO
-            ),
-            BarChartData(
-                label: substance.secondary.rawValue, // TODO
-                equation: concentration.secondaryIon,
-                color: substance.secondary.color,
+                label: substance.symbol(ofPart: part),
+                equation: concentration.value(for: part),
+                color: substance.color(ofPart: part),
                 accessibilityLabel: "" // TODO
             )
-        ]
+        })
+    }
+
+    var barChartData: [BarChartData] {
+        barChartMap.all
     }
 }
 

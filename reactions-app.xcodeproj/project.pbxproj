@@ -289,6 +289,10 @@
 		5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
 		5797DE192673719F003F589F /* BufferStrongSubstanceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE182673719F003F589F /* BufferStrongSubstanceComponents.swift */; };
 		5797DE1C26738615003F589F /* BufferSharedComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE1B26738615003F589F /* BufferSharedComponents.swift */; };
+		5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE1E2673908E003F589F /* BufferWeakComponentsTests.swift */; };
+		5797DE22267390DC003F589F /* AcidOrBaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE21267390DC003F589F /* AcidOrBaseExtensions.swift */; };
+		5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE232673965B003F589F /* BufferSaltComponentTests.swift */; };
+		5797DE2626739D89003F589F /* BufferStrongComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE2526739D89003F589F /* BufferStrongComponentsTests.swift */; };
 		579CDA1D2661656D00143809 /* AdjustableFluidBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA1C2661656D00143809 /* AdjustableFluidBeaker.swift */; };
 		579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA1E26616E5C00143809 /* IntroBeaker.swift */; };
 		579CDA212661707600143809 /* AcidAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA202661707600143809 /* AcidAppSettings.swift */; };
@@ -905,6 +909,10 @@
 		5797A45025E4069F00991BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5797DE182673719F003F589F /* BufferStrongSubstanceComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferStrongSubstanceComponents.swift; sourceTree = "<group>"; };
 		5797DE1B26738615003F589F /* BufferSharedComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferSharedComponents.swift; sourceTree = "<group>"; };
+		5797DE1E2673908E003F589F /* BufferWeakComponentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferWeakComponentsTests.swift; sourceTree = "<group>"; };
+		5797DE21267390DC003F589F /* AcidOrBaseExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBaseExtensions.swift; sourceTree = "<group>"; };
+		5797DE232673965B003F589F /* BufferSaltComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferSaltComponentTests.swift; sourceTree = "<group>"; };
+		5797DE2526739D89003F589F /* BufferStrongComponentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferStrongComponentsTests.swift; sourceTree = "<group>"; };
 		579B5D742632A2D600502B69 /* Flags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flags.swift; sourceTree = "<group>"; };
 		579CDA1C2661656D00143809 /* AdjustableFluidBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustableFluidBeaker.swift; sourceTree = "<group>"; };
 		579CDA1E26616E5C00143809 /* IntroBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroBeaker.swift; sourceTree = "<group>"; };
@@ -1325,6 +1333,8 @@
 		570ABA18265A736D008EC8CC /* acids-basesTests */ = {
 			isa = PBXGroup;
 			children = (
+				5797DE20267390D1003F589F /* util */,
+				5797DE1D26739075003F589F /* buffer-components */,
 				570ABA1B265A736D008EC8CC /* Info.plist */,
 				570ABA3A265A7ACB008EC8CC /* IntroScreenComponentsTests.swift */,
 				571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */,
@@ -2359,6 +2369,24 @@
 				5797DE1B26738615003F589F /* BufferSharedComponents.swift */,
 			);
 			path = components;
+			sourceTree = "<group>";
+		};
+		5797DE1D26739075003F589F /* buffer-components */ = {
+			isa = PBXGroup;
+			children = (
+				5797DE1E2673908E003F589F /* BufferWeakComponentsTests.swift */,
+				5797DE232673965B003F589F /* BufferSaltComponentTests.swift */,
+				5797DE2526739D89003F589F /* BufferStrongComponentsTests.swift */,
+			);
+			path = "buffer-components";
+			sourceTree = "<group>";
+		};
+		5797DE20267390D1003F589F /* util */ = {
+			isa = PBXGroup;
+			children = (
+				5797DE21267390DC003F589F /* AcidOrBaseExtensions.swift */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 		579CDA19266160F600143809 /* shake-container */ = {
@@ -3431,7 +3459,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */,
+				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,
+				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
 				571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */,
+				5797DE2626739D89003F589F /* BufferStrongComponentsTests.swift in Sources */,
+				5797DE22267390DC003F589F /* AcidOrBaseExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

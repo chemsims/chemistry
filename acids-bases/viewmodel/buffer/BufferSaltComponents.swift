@@ -75,19 +75,18 @@ class BufferSaltComponents: ObservableObject {
         self.aFractionInTermsOfPH = BufferSharedComponents.SecondaryIonFractionFromPh(pK: pKA)
 
         // TODO - how does this class know that prev equation reaches a max at 1?
-
-        self.substanceBarChartEquation = SwitchingEquation(
+        let substanceBarChartEquation = SwitchingEquation(
             thresholdX: prev.substanceBarEquation.getY(at: 1),
             underlyingLeft: LinearEquation(
                 x1: 0,
-                y1: initialHAConcentration,
+                y1: prev.substanceBarEquation.getY(at: 1),
                 x2: initialCount(.substance),
                 y2: finalHAConcentration
             ),
             underlyingRight: ConstantEquation(value: finalHAConcentration)
         )
         let initialIonBarHeight = prev.ionBarEquation.getY(at: 1)
-        self.primaryIonBarChartEquation = SwitchingEquation(
+        let primaryIonBarChartEquation = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
             underlyingLeft: LinearEquation(
                 x1: 0,
@@ -97,15 +96,21 @@ class BufferSaltComponents: ObservableObject {
             ),
             underlyingRight: ConstantEquation(value: 0)
         )
-        self.secondaryIonBarChartEquation = SwitchingEquation(
+        let secondaryIonBarChartEquation = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
             underlyingLeft: ConstantEquation(value: initialIonBarHeight),
             underlyingRight: LinearEquation(
-                x1: 0,
+                x1: initialCount(.primaryIon),
                 y1: initialIonBarHeight,
                 x2: CGFloat(maxSubstance),
                 y2: finalHAConcentration
             )
+        )
+
+        self.barChartEquations = SubstanceValue(
+            substance: substanceBarChartEquation,
+            primaryIon: primaryIonBarChartEquation,
+            secondaryIon: secondaryIonBarChartEquation
         )
 
         // TODO - there should be a better way to access final pH from previous model
@@ -189,34 +194,22 @@ class BufferSaltComponents: ObservableObject {
 
 
     // MARK: Bar chart data
-    let substanceBarChartEquation: Equation
-    let primaryIonBarChartEquation: Equation
-    let secondaryIonBarChartEquation: Equation
-
-    var barChartData: [BarChartData] {
-        [
+    let barChartEquations: SubstanceValue<Equation>
+    var barChartMap: SubstanceValue<BarChartData> {
+        SubstanceValue(builder: { part in
             BarChartData(
-                label: substance.symbol,
-                equation: substanceBarChartEquation,
-                color: substance.color,
-                accessibilityLabel: "" // TODO
-            ),
-            BarChartData(
-                label: substance.primary.rawValue,
-                equation: primaryIonBarChartEquation,
-                color: substance.primary.color,
-                accessibilityLabel: "" // TODO
-            ),
-            BarChartData(
-                label: substance.secondary.rawValue,
-                equation: secondaryIonBarChartEquation,
-                color: substance.secondary.color,
+                label: substance.symbol(ofPart: part),
+                equation: barChartEquations.value(for: part),
+                color: substance.color(ofPart: part),
                 accessibilityLabel: "" // TODO
             )
-        ]
+        })
+    }
+
+    var barChartData: [BarChartData] {
+        barChartMap.all
     }
 }
-
 
 
 

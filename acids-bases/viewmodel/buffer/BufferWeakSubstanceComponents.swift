@@ -8,13 +8,21 @@ import ReactionsCore
 // TODO accessibility labels
 class BufferWeakSubstanceComponents: ObservableObject {
 
-    init(substance: AcidOrBase) {
+    init(
+        substance: AcidOrBase,
+        settings: Settings,
+        cols: Int,
+        rows: Int
+    ) {
+        self.cols = cols
+        self.rows = rows
         self.substanceCoords = BeakerMolecules(
             coords: [],
             color: substance.color,
             label: ""
         )
         self.substance = substance
+        self.settings = settings
     }
 
     @Published var substanceCoords: BeakerMolecules
@@ -26,9 +34,11 @@ class BufferWeakSubstanceComponents: ObservableObject {
         ]
     }
 
-    let cols: Int = MoleculeGridSettings.cols
-    var rows: Int = MoleculeGridSettings.rows
+    let cols: Int
+    var rows: Int
     var substance: AcidOrBase
+
+    let settings: Settings
 
     func incrementSubstance(count: Int) {
         substanceCoords.coords = GridCoordinateList.addingRandomElementsTo(
@@ -49,7 +59,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
 
     private func coordForIon(_ color: Color, index: Int) -> AnimatingBeakerMolecules {
         let startCoordIndex = index * finalIonCoordCount
-        let endCoordIndex = (index + 1) * finalIonCoordCount
+        let endCoordIndex = max(startCoordIndex, startCoordIndex + finalIonCoordCount - 1)
 
         var coords = [GridCoordinate]()
         if endCoordIndex < substanceCoords.coords.endIndex {
@@ -67,7 +77,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
     }
 
     var finalIonCoordCount: Int {
-        substanceCoords.coords.count / 5
+        (settings.fractionOfFinalIonMolecules * CGFloat(substanceCoords.coords.count)).roundedInt()
     }
 
     var concentration: SubstanceValue<Equation> {
@@ -144,12 +154,17 @@ extension BufferWeakSubstanceComponents {
 
 // MARK: Bar chart data
 extension BufferWeakSubstanceComponents {
+
+    var barChartMap: SubstanceValue<BarChartData> {
+        SubstanceValue(
+            substance: bar(.substance, equation: substanceBarEquation),
+            primaryIon: bar(.primaryIon, equation: ionBarEquation),
+            secondaryIon: bar(.secondaryIon, equation: ionBarEquation)
+        )
+    }
+
     var barChartData: [BarChartData] {
-        [
-            bar(.substance, equation: substanceBarEquation),
-            bar(.primaryIon, equation: ionBarEquation),
-            bar(.secondaryIon, equation: ionBarEquation)
-        ]
+        barChartMap.all
     }
 
     var substanceBarEquation: Equation {
@@ -165,12 +180,10 @@ extension BufferWeakSubstanceComponents {
         LinearEquation(x1: 0, y1: 0, x2: 1, y2: changeInBarHeight)
     }
 
-    // TODO - store this kind of setting somewhere
     private var changeInBarHeight: CGFloat {
-        0.2 * initialSubstanceConcentration
+        settings.changeInBarHeightAsFractionOfInitialSubstance * initialSubstanceConcentration
     }
 
-    // TODO - put the scaling factor in config somewhere
     private func bar(_ part: SubstancePart, equation: Equation) -> BarChartData {
         BarChartData(
             label: substance.symbol(ofPart: part),
@@ -188,6 +201,22 @@ extension BufferWeakSubstanceComponents {
             substance: substance,
             concentration: concentration,
             pH: pH
+        )
+    }
+}
+
+// MARK: Settings
+extension BufferWeakSubstanceComponents {
+    struct Settings {
+        /// How much should each bar change over reaction, as a fraction of the initial substance concentration
+        let changeInBarHeightAsFractionOfInitialSubstance: CGFloat
+
+        /// The number of ion molecules at the end of the reaction, as a fraction of the number of substance molecules
+        let fractionOfFinalIonMolecules: CGFloat
+
+        static let standard = Settings(
+            changeInBarHeightAsFractionOfInitialSubstance: 0.2,
+            fractionOfFinalIonMolecules: 0.15
         )
     }
 }
