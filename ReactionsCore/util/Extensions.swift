@@ -16,6 +16,9 @@ extension CGFloat {
         let rounded = multiplied.rounded()
         return rounded / power
     }
+
+    /// Dissociation constant of water (Kw) at 25°C
+    public static let waterDissociationConstant: CGFloat = 10e-14
 }
 
 extension BinaryFloatingPoint {

@@ -9,10 +9,7 @@ class IntroScreenViewModel: ObservableObject {
 
     init() {
         let initialRows = AcidAppSettings.initialRows
-        let initialSubstance = AcidOrBase.strongAcid(
-            secondaryIon: .A,
-            color: .blue
-        )
+        let initialSubstance = AcidOrBase.strongAcids.first!
         self.rows = CGFloat(initialRows)
         self.components = IntroScreenComponents(
             substance: initialSubstance,

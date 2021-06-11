@@ -12,13 +12,55 @@ struct AcidOrBase: Equatable, Identifiable {
         primary: PrimaryIon,
         secondary: SecondaryIon,
         concentrationAtMaxSubstance: CGFloat,
-        color: Color
+        color: Color,
+        kA: CGFloat
+    ) {
+        self.init(
+            substanceAddedPerIon: substanceAddedPerIon,
+            primary: primary,
+            secondary: secondary,
+            concentrationAtMaxSubstance: concentrationAtMaxSubstance,
+            color: color,
+            kA: kA,
+            kB: kA == 0 ? 0 : CGFloat.waterDissociationConstant / kA
+        )
+    }
+
+    init(
+        substanceAddedPerIon: PositiveInt,
+        primary: PrimaryIon,
+        secondary: SecondaryIon,
+        concentrationAtMaxSubstance: CGFloat,
+        color: Color,
+        kB: CGFloat
+    ) {
+        self.init(
+            substanceAddedPerIon: substanceAddedPerIon,
+            primary: primary,
+            secondary: secondary,
+            concentrationAtMaxSubstance: concentrationAtMaxSubstance,
+            color: color,
+            kA: kB == 0 ? 0 : CGFloat.waterDissociationConstant / kB,
+            kB: kB
+        )
+    }
+
+    init(
+        substanceAddedPerIon: PositiveInt,
+        primary: PrimaryIon,
+        secondary: SecondaryIon,
+        concentrationAtMaxSubstance: CGFloat,
+        color: Color,
+        kA: CGFloat,
+        kB: CGFloat
     ) {
         self.substanceAddedPerIon = substanceAddedPerIon
         self.primary = primary
         self.secondary = secondary
         self.concentrationAtMaxSubstance = concentrationAtMaxSubstance
         self.color = color
+        self.kA = kA
+        self.kB = kB
     }
 
     var id: String {
@@ -54,31 +96,38 @@ struct AcidOrBase: Equatable, Identifiable {
     /// Color of the substance
     let color: Color
 
+    let kA: CGFloat
+    let kB: CGFloat
+
     /// Returns a strong acid substance
     static func strongAcid(
         secondaryIon: SecondaryIon,
-        color: Color
+        color: Color,
+        kA: CGFloat
     ) -> AcidOrBase {
         AcidOrBase(
             substanceAddedPerIon: PositiveInt(0)!,
             primary: .hydrogen,
             secondary: secondaryIon,
             concentrationAtMaxSubstance: 0.1,
-            color: color
+            color: color,
+            kA: kA
         )
     }
 
     /// Returns a strong base substance
     static func strongBase(
         secondaryIon: SecondaryIon,
-        color: Color
+        color: Color,
+        kB: CGFloat
     ) -> AcidOrBase {
         AcidOrBase(
             substanceAddedPerIon: PositiveInt(0)!,
             primary: .hydroxide,
             secondary: secondaryIon,
             concentrationAtMaxSubstance: 0.1,
-            color: color
+            color: color,
+            kB: kB
         )
     }
 
@@ -86,14 +135,16 @@ struct AcidOrBase: Equatable, Identifiable {
     static func weakAcid(
         secondaryIon: SecondaryIon,
         substanceAddedPerIon: NonZeroPositiveInt,
-        color: Color
+        color: Color,
+        kA: CGFloat
     ) -> AcidOrBase {
         AcidOrBase(
             substanceAddedPerIon: substanceAddedPerIon.positiveInt,
             primary: .hydrogen,
             secondary: secondaryIon,
             concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value),
-            color: color
+            color: color,
+            kA: kA
         )
     }
 
@@ -101,14 +152,16 @@ struct AcidOrBase: Equatable, Identifiable {
     static func weakBase(
         secondaryIon: SecondaryIon,
         substanceAddedPerIon: NonZeroPositiveInt,
-        color: Color
+        color: Color,
+        kB: CGFloat
     ) -> AcidOrBase {
         AcidOrBase(
             substanceAddedPerIon: substanceAddedPerIon.positiveInt,
             primary: .hydroxide,
             secondary: secondaryIon,
             concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value),
-            color: color
+            color: color,
+            kB: kB
         )
     }
 
@@ -152,26 +205,26 @@ extension AcidOrBase {
     }
 
     static let strongAcids = [
-        AcidOrBase.strongAcid(secondaryIon: .A, color: .blue),
-        AcidOrBase.strongAcid(secondaryIon: .Cl, color: .red),
-        AcidOrBase.strongAcid(secondaryIon: .Br, color: .purple)
+        AcidOrBase.strongAcid(secondaryIon: .A, color: .blue, kA: 0),
+        AcidOrBase.strongAcid(secondaryIon: .Cl, color: .red, kA: 0),
+        AcidOrBase.strongAcid(secondaryIon: .Br, color: .purple, kA: 0)
     ]
 
     static let strongBases = [
-        AcidOrBase.strongBase(secondaryIon: .K, color: .orange),
-        AcidOrBase.strongBase(secondaryIon: .Na, color: .green),
-        AcidOrBase.strongBase(secondaryIon: .Ba, color: .pink)
+        AcidOrBase.strongBase(secondaryIon: .K, color: .orange, kB: 0),
+        AcidOrBase.strongBase(secondaryIon: .Na, color: .green, kB: 0),
+        AcidOrBase.strongBase(secondaryIon: .Ba, color: .pink, kB: 0)
     ]
 
     static let weakAcids = [
-        AcidOrBase.weakAcid(secondaryIon: .Ba, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .black),
-        AcidOrBase.weakAcid(secondaryIon: .Na, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .gray),
-        AcidOrBase.weakAcid(secondaryIon: .K, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .black),
+        AcidOrBase.weakAcid(secondaryIon: .Ba, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .black, kA: 7.3e-5),
+        AcidOrBase.weakAcid(secondaryIon: .Na, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .gray, kA: 4.5e-4),
+        AcidOrBase.weakAcid(secondaryIon: .K, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .black, kA: 9e-5),
     ]
 
     static let weakBases = [
-        AcidOrBase.weakBase(secondaryIon: .A, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .orange),
-        AcidOrBase.weakBase(secondaryIon: .Br, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .orange),
-        AcidOrBase.weakBase(secondaryIon: .Cl, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .orange),
+        AcidOrBase.weakBase(secondaryIon: .A, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .orange, kB: 4e-5),
+        AcidOrBase.weakBase(secondaryIon: .Br, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .orange, kB: 1.3e-5),
+        AcidOrBase.weakBase(secondaryIon: .Cl, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .orange, kB: 1e-3),
     ]
 }

@@ -9,7 +9,7 @@ import ReactionsCore
 class AcidSubstanceBeakerCoordsTests: XCTestCase {
 
     func testStrongAcidCoords() {
-        var model = AcidSubstanceBeakerCoords(substance: .strongAcid(secondaryIon: .A, color: .blue))
+        var model = AcidSubstanceBeakerCoords(substance: .strongAcid(secondaryIon: .A, color: .blue, kA: 0))
         var coords: SubstanceValue<[GridCoordinate]> {
             model.coords
         }
@@ -20,30 +20,30 @@ class AcidSubstanceBeakerCoordsTests: XCTestCase {
 
         model.update(substanceCount: 10, cols: 10, rows: 10)
 
-        XCTAssert(coords.substanceValue.isEmpty)
-        let primaryIonFirstValue = coords.primaryIonValue
-        let secondaryIonFirstValue = coords.secondaryIonValue
+        XCTAssert(coords.substance.isEmpty)
+        let primaryIonFirstValue = coords.primaryIon
+        let secondaryIonFirstValue = coords.secondaryIon
         checkCounts(primaryIonFirstValue, 10)
         checkCounts(secondaryIonFirstValue, 10)
         checkNoOverlap(coords)
 
         // Check no change when using same value
         model.update(substanceCount: 10, cols: 10, rows: 10)
-        XCTAssert(coords.substanceValue.isEmpty)
-        XCTAssertEqual(coords.primaryIonValue, primaryIonFirstValue)
-        XCTAssertEqual(coords.secondaryIonValue, secondaryIonFirstValue)
+        XCTAssert(coords.substance.isEmpty)
+        XCTAssertEqual(coords.primaryIon, primaryIonFirstValue)
+        XCTAssertEqual(coords.secondaryIon, secondaryIonFirstValue)
 
         model.update(substanceCount: 50, cols: 10, rows: 10)
-        XCTAssert(coords.substanceValue.isEmpty)
-        checkCounts(coords.primaryIonValue, 50)
-        checkCounts(coords.secondaryIonValue, 50)
+        XCTAssert(coords.substance.isEmpty)
+        checkCounts(coords.primaryIon, 50)
+        checkCounts(coords.secondaryIon, 50)
         checkNoOverlap(coords)
 
         // Try adding too many
         model.update(substanceCount: 500, cols: 10, rows: 10)
-        XCTAssert(coords.substanceValue.isEmpty)
-        checkCounts(coords.primaryIonValue, 50)
-        checkCounts(coords.secondaryIonValue, 50)
+        XCTAssert(coords.substance.isEmpty)
+        checkCounts(coords.primaryIon, 50)
+        checkCounts(coords.secondaryIon, 50)
         checkNoOverlap(coords)
     }
 
@@ -52,7 +52,8 @@ class AcidSubstanceBeakerCoordsTests: XCTestCase {
             substance: .weakAcid(
                 secondaryIon: .A,
                 substanceAddedPerIon: NonZeroPositiveInt(5)!,
-                color: .blue
+                color: .blue,
+                kA: 1
             )
         )
         var coords: SubstanceValue<[GridCoordinate]> {
@@ -60,26 +61,26 @@ class AcidSubstanceBeakerCoordsTests: XCTestCase {
         }
 
         model.update(substanceCount: 4, cols: 10, rows: 10)
-        checkCounts(coords.substanceValue, 4)
-        checkCounts(coords.primaryIonValue, 0)
-        checkCounts(coords.secondaryIonValue, 0)
+        checkCounts(coords.substance, 4)
+        checkCounts(coords.primaryIon, 0)
+        checkCounts(coords.secondaryIon, 0)
 
         model.update(substanceCount: 5, cols: 10, rows: 10)
-        checkCounts(coords.substanceValue, 5)
-        checkCounts(coords.primaryIonValue, 1)
-        checkCounts(coords.secondaryIonValue, 1)
+        checkCounts(coords.substance, 5)
+        checkCounts(coords.primaryIon, 1)
+        checkCounts(coords.secondaryIon, 1)
         checkNoOverlap(coords)
 
         model.update(substanceCount: 6, cols: 10, rows: 10)
-        checkCounts(coords.substanceValue, 6)
-        checkCounts(coords.primaryIonValue, 1)
-        checkCounts(coords.secondaryIonValue, 1)
+        checkCounts(coords.substance, 6)
+        checkCounts(coords.primaryIon, 1)
+        checkCounts(coords.secondaryIon, 1)
         checkNoOverlap(coords)
 
         model.update(substanceCount: 20, cols: 10, rows: 10)
-        checkCounts(coords.substanceValue, 20)
-        checkCounts(coords.primaryIonValue, 4)
-        checkCounts(coords.secondaryIonValue, 4)
+        checkCounts(coords.substance, 20)
+        checkCounts(coords.primaryIon, 4)
+        checkCounts(coords.secondaryIon, 4)
         checkNoOverlap(coords)
     }
 

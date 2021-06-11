@@ -8,27 +8,26 @@ import ReactionsCore
 class BufferSaltComponents: ObservableObject {
 
     init(
-        prev: BufferWeakSubstanceComponents?
+        prev: BufferWeakSubstanceComponents
     ) {
-        if let prev = prev {
-            reactingModel = ReactingBeakerViewModel(
-                initial: SubstanceValue(
-                    substance: prev.substanceCoords,
-                    primaryIon: prev.ionCoords[0].molecules,
-                    secondaryIon: prev.ionCoords[1].molecules
-                )
+        reactingModel = ReactingBeakerViewModel(
+            initial: SubstanceValue(
+                substance: prev.substanceCoords,
+                primaryIon: prev.ionCoords[0].molecules,
+                secondaryIon: prev.ionCoords[1].molecules
             )
-        } else {
-            reactingModel = ReactingBeakerViewModel(initial: .constant(BeakerMolecules(coords: [], color: .black, label: "")))
-        }
+        )
 
-        let initialHAConcentration = prev?.concentration.substance.getY(at: 1) ?? 0
-        let finalHAConcentration = prev?.concentration.substance.getY(at: 0) ?? 0
-        let initialAConcentration = prev?.concentration.secondaryIon.getY(at: 1) ?? 0
-        let initialHConcentration = prev?.concentration.primaryIon.getY(at: 1) ?? 0
+        let initialHAConcentration = prev.concentration.substance.getY(at: 1)
+        let finalHAConcentration = prev.concentration.substance.getY(at: 0)
+        let initialAConcentration = prev.concentration.secondaryIon.getY(at: 1)
+        let initialHConcentration = prev.concentration.primaryIon.getY(at: 1)
+
+
+        self.previous = prev
 
         func initialCountInt(_ part: SubstancePart) -> Int {
-            prev?.molecules(for: part).coords.count ?? 0
+            prev.molecules(for: part).coords.count
         }
         func initialCount(_ part: SubstancePart) -> CGFloat {
             CGFloat(initialCountInt(part))
@@ -78,7 +77,7 @@ class BufferSaltComponents: ObservableObject {
         // TODO - how does this class know that prev equation reaches a max at 1?
 
         self.substanceBarChartEquation = SwitchingEquation(
-            thresholdX: prev?.substanceBarEquation.getY(at: 1) ?? 0,
+            thresholdX: prev.substanceBarEquation.getY(at: 1),
             underlyingLeft: LinearEquation(
                 x1: 0,
                 y1: initialHAConcentration,
@@ -87,7 +86,7 @@ class BufferSaltComponents: ObservableObject {
             ),
             underlyingRight: ConstantEquation(value: finalHAConcentration)
         )
-        let initialIonBarHeight = prev?.ionBarEquation.getY(at: 1) ?? 0
+        let initialIonBarHeight = prev.ionBarEquation.getY(at: 1)
         self.primaryIonBarChartEquation = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
             underlyingLeft: LinearEquation(
@@ -111,6 +110,7 @@ class BufferSaltComponents: ObservableObject {
     }
 
     let reactingModel: ReactingBeakerViewModel<SubstancePart>
+    private let previous: BufferWeakSubstanceComponents
 
     @Published var substanceAdded = 0
 

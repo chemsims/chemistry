@@ -9,6 +9,13 @@ class BufferScreenViewModel: ObservableObject {
 
     init() {
         let initialSubstance = AcidOrBase.weakAcids[1]
+
+        let weakModel = BufferWeakSubstanceComponents(substance: initialSubstance)
+        let saltModel = BufferSaltComponents(prev: weakModel)
+
+        self.weakSubstanceModel = weakModel
+        self.saltComponents = saltModel
+
         self.substance = initialSubstance
         self.weakSubstanceModel = BufferWeakSubstanceComponents(substance: initialSubstance)
         self.navigation = BufferNavigationModel.model(self)
@@ -28,7 +35,7 @@ class BufferScreenViewModel: ObservableObject {
     @Published var phase = Phase.addWeakSubstance
     @Published var substance: AcidOrBase
     @Published var weakSubstanceModel: BufferWeakSubstanceComponents
-    @Published var saltComponents = BufferSaltComponents(prev: nil)
+    @Published var saltComponents: BufferSaltComponents
     @Published var phase3Model = BufferComponents3(prev: nil)
 
     @Published var selectedBottomGraph = BottomGraph.bars
