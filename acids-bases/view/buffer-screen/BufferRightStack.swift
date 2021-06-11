@@ -63,18 +63,10 @@ private struct SwitchingBufferEquationView: View {
     }
 
     private var data: BufferEquationData {
-        return BufferEquationData(
-            ka: ConstantEquation(value: 0),
-            kb: ConstantEquation(value: 0),
-            concentration: SubstanceValue(builder: {_ in
-                ConstantEquation(value: 0)
-            }),
-            pKa: ConstantEquation(value: 0),
-            pH: ConstantEquation(value: 0),
-            pOH: ConstantEquation(value: 0),
-            fixedKa: 0,
-            fixedKb: 0
-        )
+        switch model.phase {
+        case .addWeakSubstance: return weakSubstanceModel.equationData
+        default: return saltModel.equationData
+        }
     }
 }
 

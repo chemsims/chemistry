@@ -102,6 +102,10 @@ class BufferWeakSubstanceComponents: ObservableObject {
         pKa + Log10Equation(underlying: concentration.secondaryIon / concentration.substance)
     }
 
+    var pOH: Equation {
+        ConstantEquation(value: 14) - ph
+    }
+
     var fractionOfSubstance: Equation {
         concentration.substance / (concentration.substance + concentration.secondaryIon)
     }
@@ -187,6 +191,22 @@ extension BufferWeakSubstanceComponents {
             equation: equation,
             color: substance.color(ofPart: part),
             accessibilityLabel: "" // TODO
+        )
+    }
+}
+
+// MARK: Equation data
+extension BufferWeakSubstanceComponents {
+    var equationData: BufferEquationData {
+        BufferEquationData(
+            ka: kaEquation,
+            kb: kb,
+            concentration: concentration,
+            pKa: pKa,
+            pH: ph,
+            pOH: pOH,
+            fixedKa: ka,
+            fixedKb: 0.1 // TODO
         )
     }
 }

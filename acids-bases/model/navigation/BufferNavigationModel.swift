@@ -32,7 +32,7 @@ struct BufferNavigationModel {
         AddWeakAcid(),
         RunWeakAcidReaction(),
         EndOfWeakAcidReaction(),
-        SetStatement(statements.introduceBufferSolutions),
+        PostWeakAcidReaction(),
         SetStatement(statements.explainBufferSolutions),
         SetStatement(statements.explainBufferSolutions2),
         SetStatement(statements.explainBufferUses),
@@ -101,10 +101,12 @@ private class AddWeakAcid: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.instructToAddWeakAcid(model.substance)
         model.input = .addMolecule(phase: .addWeakSubstance)
+        model.equationState = .weakAcidWithSubstanceConcentration
     }
 
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
+        model.equationState = .weakAcidBlank
     }
 }
 
@@ -114,6 +116,7 @@ private class RunWeakAcidReaction: BufferScreenState {
 
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.runningWeakAcidReaction(model.substance)
+        model.equationState = .weakAcidWithAllConcentration
         withAnimation(.linear(duration: reactionDuration)) {
             model.weakSubstanceModel.progress = 1
         }
@@ -136,9 +139,17 @@ private class EndOfWeakAcidReaction: BufferScreenState {
             ka: model.weakSubstanceModel.ka,
             pH: model.weakSubstanceModel.ph.getY(at: 1)
         )
+        model.equationState = .weakAcidFilled
         withAnimation(.easeOut(duration: 0.5)) {
             model.weakSubstanceModel.progress = 1.0001
         }
+    }
+}
+
+private class PostWeakAcidReaction: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = statements.introduceBufferSolutions
+        model.equationState = .acidSummary
     }
 }
 

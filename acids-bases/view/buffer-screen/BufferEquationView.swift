@@ -435,10 +435,16 @@ private struct PHFilled: View {
             FixedText("(")
                 .scaleEffect(y: largeParenScale)
             VStack(spacing: 1) {
-                sizedElement(secondaryIonConcentration, state.showIonConcentration)
+                sizedElement(
+                    secondaryIonConcentration,
+                    state.showIonConcentration
+                )
                 Rectangle()
                     .frame(width: 55, height: 2)
-                sizedElement(substanceConcentration, state.showSubstanceConcentration)
+                sizedElement(
+                    substanceConcentration,
+                    state.showSubstanceConcentration
+                )
             }
             FixedText(")")
                 .scaleEffect(y: largeParenScale)
@@ -454,7 +460,7 @@ private struct PHFilled: View {
         AnimatingNumberPlaceholder(
             showTerm: show,
             progress: progress,
-            equation: phEquation,
+            equation: equation,
             formatter: { $0.str(decimals: 2) }
         )
     }

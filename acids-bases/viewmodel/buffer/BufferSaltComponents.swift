@@ -242,3 +242,23 @@ class BufferComponents3: ObservableObject {
         )
     }
 }
+
+// MARK: Equation data
+extension BufferSaltComponents {
+    var equationData: BufferEquationData {
+        BufferEquationData(
+            ka: ConstantEquation(value: 0.5),
+            kb: ConstantEquation(value: 0.5),
+            concentration: SubstanceValue(
+                substance: haConcentration,
+                primaryIon: hConcentration,
+                secondaryIon: aConcentration
+            ),
+            pKa: ConstantEquation(value: pka),
+            pH: ph,
+            pOH: ConstantEquation(value: 14) - ph,
+            fixedKa: 0.5,   // TODO
+            fixedKb: 0.5    // TODO
+        )
+    }
+}
