@@ -25,7 +25,8 @@ struct BufferBeaker: View {
                 layout: layout,
                 model: model,
                 weakSubstanceModel: model.weakSubstanceModel,
-                saltModelReaction: model.saltComponents.reactingModel
+                saltModelReaction: model.saltComponents.reactingModel,
+                strongSubstanceReaction: model.strongSubstanceModel.reactingModel
             )
         }
         .padding(.bottom, layout.common.beakerBottomPadding)
@@ -46,6 +47,7 @@ private struct BufferBeakerWithMolecules: View {
     @ObservedObject var model: BufferScreenViewModel
     @ObservedObject var weakSubstanceModel: BufferWeakSubstanceComponents
     @ObservedObject var saltModelReaction: ReactingBeakerViewModel<SubstancePart>
+    @ObservedObject var strongSubstanceReaction: ReactingBeakerViewModel<SubstancePart>
 
     var body: some View {
         AdjustableFluidBeaker(
@@ -65,7 +67,7 @@ private struct BufferBeakerWithMolecules: View {
         switch model.phase {
         case .addWeakSubstance: return [weakSubstanceModel.substanceCoords]
         case .addSalt: return saltModelReaction.molecules.map(\.molecules)
-        default: return []
+        case .addStrongSubstance: return strongSubstanceReaction.molecules.map(\.molecules)
         }
     }
 

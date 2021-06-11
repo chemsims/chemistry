@@ -85,7 +85,11 @@ class BufferWeakSubstanceComponents: ObservableObject {
     }
 
     var pH: Equation {
-        substance.pKA + Log10Equation(underlying: concentration.secondaryIon / concentration.substance)
+        BufferSharedComponents.pHEquation(
+            pKa: substance.pKA,
+            substanceConcentration: concentration.substance,
+            secondaryConcentration: concentration.secondaryIon
+        )
     }
 
     var fractionOfSubstance: Equation {

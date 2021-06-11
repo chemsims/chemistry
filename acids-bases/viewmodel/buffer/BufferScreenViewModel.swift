@@ -12,9 +12,11 @@ class BufferScreenViewModel: ObservableObject {
 
         let weakModel = BufferWeakSubstanceComponents(substance: initialSubstance)
         let saltModel = BufferSaltComponents(prev: weakModel)
+        let strongModel = BufferStrongSubstanceComponents(prev: saltModel)
 
         self.weakSubstanceModel = weakModel
         self.saltComponents = saltModel
+        self.strongSubstanceModel = strongModel
 
         self.substance = initialSubstance
         self.weakSubstanceModel = BufferWeakSubstanceComponents(substance: initialSubstance)
@@ -36,7 +38,7 @@ class BufferScreenViewModel: ObservableObject {
     @Published var substance: AcidOrBase
     @Published var weakSubstanceModel: BufferWeakSubstanceComponents
     @Published var saltComponents: BufferSaltComponents
-    @Published var phase3Model = BufferComponents3(prev: nil)
+    @Published var strongSubstanceModel: BufferStrongSubstanceComponents
 
     @Published var selectedBottomGraph = BottomGraph.bars
     @Published var equationState = EquationState.weakAcidBlank
@@ -61,7 +63,7 @@ extension BufferScreenViewModel {
     }
 
     func goToPhase3() {
-        phase3Model = BufferComponents3(prev: saltComponents)
+        strongSubstanceModel = BufferStrongSubstanceComponents(prev: saltComponents)
         phase = .addStrongSubstance
     }
 }
@@ -73,24 +75,12 @@ extension BufferScreenViewModel {
         switch phase {
         case .addWeakSubstance: weakSubstanceModel.incrementSubstance(count: count)
         case .addSalt: saltComponents.incrementSalt() // TODO count
-        case .addStrongSubstance: phase3Model.incrementStrongAcid()
+        case .addStrongSubstance: strongSubstanceModel.incrementStrongSubstance()
         }
     }
 
     private func canAddMolecule(phase: Phase) -> Bool {
         true // TODO
-    }
-
-    func incrementWeakSubstance() {
-        weakSubstanceModel.incrementSubstance(count: 1)
-    }
-
-    func incrementSalt() {
-        saltComponents.incrementSalt()
-    }
-
-    func incrementStrongSubstance() {
-        phase3Model.incrementStrongAcid()
     }
 }
 

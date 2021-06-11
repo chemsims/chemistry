@@ -172,5 +172,6 @@ private class AddAcid: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = ["Now, add strong acid"]
         model.goToPhase3()
+        model.input = .addMolecule(phase: .addStrongSubstance)
     }
 }

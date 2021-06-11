@@ -23,7 +23,7 @@ struct BufferRightStack: View {
             model: model,
             weakSubstanceModel: model.weakSubstanceModel,
             saltModel: model.saltComponents,
-            strongSubstanceModel: model.phase3Model
+            strongSubstanceModel: model.strongSubstanceModel
         )
         .frame(size: layout.equationSize)
     }
@@ -44,7 +44,7 @@ private struct SwitchingBufferEquationView: View {
     @ObservedObject var model: BufferScreenViewModel
     @ObservedObject var weakSubstanceModel: BufferWeakSubstanceComponents
     @ObservedObject var saltModel: BufferSaltComponents
-    @ObservedObject var strongSubstanceModel: BufferComponents3
+    @ObservedObject var strongSubstanceModel: BufferStrongSubstanceComponents
 
     var body: some View {
         BufferEquationView(
@@ -58,14 +58,15 @@ private struct SwitchingBufferEquationView: View {
         switch model.phase {
         case .addWeakSubstance: return weakSubstanceModel.progress
         case .addSalt: return CGFloat(saltModel.substanceAdded)
-        default: return 0
+        case .addStrongSubstance: return CGFloat(strongSubstanceModel.substanceAdded)
         }
     }
 
     private var data: BufferEquationData {
         switch model.phase {
         case .addWeakSubstance: return weakSubstanceModel.equationData
-        default: return saltModel.equationData
+        case .addSalt: return saltModel.equationData
+        case .addStrongSubstance: return strongSubstanceModel.equationData
         }
     }
 }

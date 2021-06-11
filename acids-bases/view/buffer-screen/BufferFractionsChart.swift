@@ -8,26 +8,28 @@ import ReactionsCore
 struct BufferFractionsChart: View {
 
     let layout: BufferScreenLayout
-    @ObservedObject var model: BufferSaltComponents
+    let phase: BufferScreenViewModel.Phase
+    @ObservedObject var saltModel: BufferSaltComponents
+    @ObservedObject var strongModel: BufferStrongSubstanceComponents
 
     var body: some View {
         TimeChartView(
             data: [
                 TimeChartDataLine(
-                    equation: model.haFractionInTermsOfPH,
+                    equation: substanceEquation,
                     headColor: .blue,
                     haloColor: .red,
                     headRadius: layout.common.chartHeadRadius
                 ),
                 TimeChartDataLine(
-                    equation: model.aFractionInTermsOfPH,
+                    equation: secondaryIonEquation,
                     headColor: .purple,
                     haloColor: .black,
                     headRadius: layout.common.chartHeadRadius
                 )
             ],
             initialTime: minPh,
-            currentTime: .constant(model.pH.getY(at: CGFloat(model.substanceAdded))),
+            currentTime: .constant(currentPh),
             finalTime: maxPh,
             canSetCurrentTime: false,
             settings: TimeChartLayoutSettings(
@@ -41,12 +43,33 @@ struct BufferFractionsChart: View {
         .frame(square: layout.common.chartSize)
     }
 
+    private var currentPh: CGFloat {
+        if phase == .addStrongSubstance {
+            return strongModel.pH.getY(at: CGFloat(strongModel.substanceAdded))
+        }
+        return saltModel.pH.getY(at: CGFloat(saltModel.substanceAdded))
+    }
+
+    private var substanceEquation: Equation {
+        if phase == .addStrongSubstance {
+            return strongModel.substanceFractionInTermsOfPh
+        }
+        return saltModel.haFractionInTermsOfPH
+    }
+
+    private var secondaryIonEquation: Equation {
+        if phase == .addStrongSubstance {
+            return strongModel.secondaryIonFractionInTermsOfPh
+        }
+        return saltModel.aFractionInTermsOfPH
+    }
+
     private var minPh: CGFloat {
-        0.9 * model.initialPh
+        0.9 * saltModel.initialPh
     }
 
     private var maxPh: CGFloat {
-        model.finalPH + (model.finalPH - minPh)
+        saltModel.finalPH + (saltModel.finalPH - minPh)
     }
 
     private var xAxis: AxisPositionCalculations<CGFloat> {

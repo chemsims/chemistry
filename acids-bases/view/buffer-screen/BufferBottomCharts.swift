@@ -30,7 +30,9 @@ struct BufferBottomCharts: View {
         case .curve:
             BufferFractionsChart(
                 layout: layout,
-                model: model.saltComponents
+                phase: model.phase,
+                saltModel: model.saltComponents,
+                strongModel: model.strongSubstanceModel
             )
         case .neutralization:
             Text("neutralization chart")

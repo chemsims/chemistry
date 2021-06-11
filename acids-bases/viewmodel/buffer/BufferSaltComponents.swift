@@ -36,7 +36,6 @@ class BufferSaltComponents: ObservableObject {
 
         let maxSubstance = (initialCountInt(.substance) + initialCountInt(.primaryIon)) - initialCountInt(.secondaryIon)
         self.maxSubstance = maxSubstance
-
         let haConcentration = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
             underlyingLeft: LinearEquation(
@@ -72,8 +71,8 @@ class BufferSaltComponents: ObservableObject {
             underlyingRight: ConstantEquation(value: 0)
         )
 
-        self.haFractionInTermsOfPH = HAFractionFromPh(pka: pKA)
-        self.aFractionInTermsOfPH = AFractionFromPh(pka: pKA)
+        self.haFractionInTermsOfPH = BufferSharedComponents.SubstanceFractionFromPh(pK: pKA)
+        self.aFractionInTermsOfPH = BufferSharedComponents.SecondaryIonFractionFromPh(pK: pKA)
 
         // TODO - how does this class know that prev equation reaches a max at 1?
 
@@ -126,6 +125,22 @@ class BufferSaltComponents: ObservableObject {
 
     let initialPh: CGFloat
 
+    var substance: AcidOrBase {
+        previous.substance
+    }
+
+    var concentration: SubstanceValue<Equation> {
+        SubstanceValue(
+            substance: haConcentration,
+            primaryIon: hConcentration,
+            secondaryIon: aConcentration
+        )
+    }
+
+    var finalConcentration: SubstanceValue<CGFloat> {
+        concentration.map { $0.getY(at: CGFloat(maxSubstance)) }
+    }
+
     func incrementSalt() {
         guard substanceAdded < maxSubstance else {
             return
@@ -142,7 +157,11 @@ class BufferSaltComponents: ObservableObject {
     }
 
     var pH: Equation {
-        previous.substance.pKA + Log10Equation(underlying: aConcentration / haConcentration)
+        BufferSharedComponents.pHEquation(
+            pKa: substance.pKA,
+            substanceConcentration: haConcentration,
+            secondaryConcentration: aConcentration
+        )
     }
 
     var finalPH: CGFloat {
@@ -199,24 +218,7 @@ class BufferSaltComponents: ObservableObject {
 }
 
 
-struct HAFractionFromPh: Equation {
-    let pka: CGFloat
 
-    func getY(at x: CGFloat) -> CGFloat {
-        let denom = 1 + pow(10, x - pka)
-        return denom == 0 ? 0 : 1 / denom
-    }
-}
-
-struct AFractionFromPh: Equation {
-    let pka: CGFloat
-
-    func getY(at x: CGFloat) -> CGFloat {
-        let powerTerm = pow(10, x - pka)
-        let denom = powerTerm + 1
-        return denom == 0 ? 0 : powerTerm / denom
-    }
-}
 
 class BufferComponents3: ObservableObject {
     init(
