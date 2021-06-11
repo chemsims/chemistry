@@ -26,9 +26,9 @@ struct BufferFractionsChart: View {
                     headRadius: layout.common.chartHeadRadius
                 )
             ],
-            initialTime: 0,
+            initialTime: minPh,
             currentTime: .constant(model.pH.getY(at: CGFloat(model.substanceAdded))),
-            finalTime: max(1, CGFloat(2 * model.finalPH)),
+            finalTime: maxPh,
             canSetCurrentTime: false,
             settings: TimeChartLayoutSettings(
                 xAxis: xAxis,
@@ -41,12 +41,20 @@ struct BufferFractionsChart: View {
         .frame(square: layout.common.chartSize)
     }
 
+    private var minPh: CGFloat {
+        0.9 * model.initialPh
+    }
+
+    private var maxPh: CGFloat {
+        model.finalPH + (model.finalPH - minPh)
+    }
+
     private var xAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
             minValuePosition: 0.1 * chartSize,
             maxValuePosition: 0.9 * chartSize,
-            minValue: 0,
-            maxValue: max(1, CGFloat(2 * model.finalPH))
+            minValue: 0.9 * minPh,
+            maxValue: 1.1 * maxPh
         )
     }
 
