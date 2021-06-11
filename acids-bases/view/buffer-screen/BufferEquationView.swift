@@ -34,16 +34,25 @@ struct BufferEquationView: View {
 }
 
 struct BufferEquationData {
-    let ka: Equation
-    let kb: Equation
+    let kA: CGFloat
+    let kB: CGFloat
     let concentration: SubstanceValue<Equation>
-    let pKa: Equation
-
+    let pKa: CGFloat
     let pH: Equation
     let pOH: Equation
 
-    let fixedKa: CGFloat
-    let fixedKb: CGFloat
+    init(
+        substance: AcidOrBase,
+        concentration: SubstanceValue<Equation>,
+        pH: Equation
+    ) {
+        self.kA = substance.kA
+        self.kB = substance.kB
+        self.pKa = substance.pKA
+        self.concentration = concentration
+        self.pH = pH
+        self.pOH = ConstantEquation(value: 14) - pH
+    }
 }
 
 private struct SizedBufferEquationView: View {
@@ -68,7 +77,7 @@ private struct SizedBufferEquationView: View {
         HStack(spacing: 0) {
             KADefinition(
                 state: state,
-                fixedK: state.isAcid ? data.fixedKa : data.fixedKb
+                fixedK: state.isAcid ? data.kA : data.kB
             )
             .frame(width: leftColWidth, alignment: .leading)
 
@@ -89,10 +98,9 @@ private struct SizedBufferEquationView: View {
         HStack(spacing: 0) {
             KAFilled(
                 state: state,
-                kaEquation: data.ka,
+                kValue: state.isAcid ? data.kA : data.kB,
                 concentration: data.concentration,
-                progress: progress,
-                fixedK: state.isAcid ? data.fixedKa : data.fixedKb
+                progress: progress
             )
             .frame(width: leftColWidth, alignment: .leading)
 
@@ -101,9 +109,8 @@ private struct SizedBufferEquationView: View {
             if state.showPKEquations {
                 PKAFilled(
                     showTerms: state.showAllTerms,
-                    progress: progress,
-                    pkaEquation: data.pKa,
-                    kaEquation: data.ka
+                    pKAValue: data.pKa,
+                    kaValue: data.kA
                 )
                 .frame(width: rightColWidth, alignment: .leading)
             }
@@ -137,7 +144,7 @@ private struct SizedBufferEquationView: View {
             PHFilled(
                 state: state,
                 progress: progress,
-                pkAEquation: data.pKa,
+                pKAValue: data.pKa,
                 phEquation: data.pH,
                 secondaryIonConcentration: data.concentration.secondaryIon,
                 substanceConcentration: data.concentration.substance
@@ -150,8 +157,8 @@ private struct SizedBufferEquationView: View {
                 KWFilled(
                     showTerms: state.showAllTerms,
                     progress: progress,
-                    kaEquation: data.ka,
-                    kbEquation: data.kb
+                    kAValue: data.kA,
+                    kBValue: data.kB
                 )
                 .frame(width: rightColWidth, alignment: .leading)
             }
@@ -235,10 +242,9 @@ private struct PKADefinition: View {
 
 private struct KAFilled: View {
     let state: EquationState
-    let kaEquation: Equation
+    let kValue: CGFloat
     let concentration: SubstanceValue<Equation>
     let progress: CGFloat
-    let fixedK: CGFloat
 
     var body: some View {
         HStack(spacing: hStackSpacing) {
@@ -246,11 +252,11 @@ private struct KAFilled: View {
                 FixedText(state.kTerm)
                     .leftColElement()
             } else {
-                ka
+                kAView
             }
             FixedText("=")
             if state.isSummary {
-                FixedText(fixedK.str(decimals: 2))
+                FixedText(kValue.str(decimals: 2))
             } else {
                 fraction
             }
@@ -258,11 +264,9 @@ private struct KAFilled: View {
         }
     }
 
-    private var ka: some View {
-        AnimatingScientificText(
-            showTerm: state.showAllTerms,
-            progress: progress,
-            equation: kaEquation
+    private var kAView: some View {
+        PlaceholderTerm(
+            value: state.showAllTerms ? kValue.str(decimals: 2) : nil
         )
     }
 
@@ -302,9 +306,8 @@ private struct KAFilled: View {
 private struct PKAFilled: View {
 
     let showTerms: Bool
-    let progress: CGFloat
-    let pkaEquation: Equation
-    let kaEquation: Equation
+    let pKAValue: CGFloat
+    let kaValue: CGFloat
 
     var body: some View {
         HStack(spacing: hStackSpacing) {
@@ -315,25 +318,16 @@ private struct PKAFilled: View {
     }
 
     private var pka: some View {
-        AnimatingNumberPlaceholder(
-            showTerm: showTerms,
-            progress: progress,
-            equation: pkaEquation,
-            formatter: { $0.str(decimals: 2) }
-        )
-        .frame(
-            width: EquationSizing.boxWidth,
-            height: EquationSizing.boxHeight
+        PlaceholderTerm(
+            value: showTerms ? pKAValue.str(decimals: 2) : nil
         )
     }
 
     private var ka: some View {
         HStack(spacing: 1) {
             FixedText("-log(")
-            AnimatingScientificText(
-                showTerm: showTerms,
-                progress: progress,
-                equation: kaEquation
+            PlaceholderTerm(
+                value: showTerms ? kaValue.str(decimals: 2) : nil
             )
             FixedText(")")
         }
@@ -413,7 +407,7 @@ private struct PHFilled: View {
 
     let state: EquationState
     let progress: CGFloat
-    let pkAEquation: Equation
+    let pKAValue: CGFloat
     let phEquation: Equation
     let secondaryIonConcentration: Equation
     let substanceConcentration: Equation
@@ -423,7 +417,9 @@ private struct PHFilled: View {
             element(phEquation, state.showAllTerms)
                 .leftColElement()
             FixedText("=")
-            sizedElement(pkAEquation, state.showAllTerms)
+            PlaceholderTerm(
+                value: state.showAllTerms ? pKAValue.str(decimals: 2) : nil
+            )
             FixedText("+")
             log
         }
@@ -470,17 +466,17 @@ private struct KWFilled: View {
 
     let showTerms: Bool
     let progress: CGFloat
-    let kaEquation: Equation
-    let kbEquation: Equation
+    let kAValue: CGFloat
+    let kBValue: CGFloat
 
     var body: some View {
         HStack(spacing: hStackSpacing) {
             kw
               .frame(width: EquationSizing.boxWidth)
             FixedText("=")
-            term(kaEquation)
+            term(kAValue)
             FixedText("x")
-            term(kbEquation)
+            term(kBValue)
         }
     }
 
@@ -493,12 +489,8 @@ private struct KWFilled: View {
         }
     }
 
-    private func term(_ equation: Equation) -> some View {
-        AnimatingScientificText(
-            showTerm: showTerms,
-            progress: progress,
-            equation: equation
-        )
+    private func term(_ value: CGFloat) -> some View {
+        PlaceholderTerm(value: showTerms ? value.str(decimals: 2) : nil)
     }
 }
 
@@ -674,16 +666,11 @@ struct BufferEquationView_Previews: PreviewProvider {
                     progress: 1,
                     state: state,
                     data: BufferEquationData(
-                        ka: ConstantEquation(value: 0.1),
-                        kb: ConstantEquation(value: 0.1),
+                        substance: .strongAcids.first!,
                         concentration: SubstanceValue(builder: { _ in
                             ConstantEquation(value: 0.1)
                         }),
-                        pKa: ConstantEquation(value: 0.1),
-                        pH: ConstantEquation(value: 0.1),
-                        pOH: ConstantEquation(value: 0.1),
-                        fixedKa: 0.1,
-                        fixedKb: 0.1
+                        pH: ConstantEquation(value: 7)
                     )
                 )
                 .previewLayout(.sizeThatFits)

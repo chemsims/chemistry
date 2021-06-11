@@ -61,6 +61,7 @@ struct AcidOrBase: Equatable, Identifiable {
         self.color = color
         self.kA = kA
         self.kB = kB
+        self.pKA = kA == 0 ? 0 : -log10(kA)
     }
 
     var id: String {
@@ -98,6 +99,7 @@ struct AcidOrBase: Equatable, Identifiable {
 
     let kA: CGFloat
     let kB: CGFloat
+    let pKA: CGFloat
 
     /// Returns a strong acid substance
     static func strongAcid(

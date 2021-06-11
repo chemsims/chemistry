@@ -28,7 +28,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
 
     let cols: Int = MoleculeGridSettings.cols
     var rows: Int = MoleculeGridSettings.rows
-    private let substance: AcidOrBase
+    var substance: AcidOrBase
 
     func incrementSubstance(count: Int) {
         substanceCoords.coords = GridCoordinateList.addingRandomElementsTo(
@@ -84,26 +84,8 @@ class BufferWeakSubstanceComponents: ObservableObject {
         )
     }
 
-    var kaEquation: Equation {
-        let numerator = concentration.primaryIon * concentration.secondaryIon
-        let denom = concentration.substance
-        return numerator / denom
-    }
-
-    var kb: Equation {
-        10e-14 / kaEquation
-    }
-
-    var pKa: Equation {
-        -1 * Log10Equation(underlying: kaEquation)
-    }
-
-    var ph: Equation {
-        pKa + Log10Equation(underlying: concentration.secondaryIon / concentration.substance)
-    }
-
-    var pOH: Equation {
-        ConstantEquation(value: 14) - ph
+    var pH: Equation {
+        substance.pKA + Log10Equation(underlying: concentration.secondaryIon / concentration.substance)
     }
 
     var fractionOfSubstance: Equation {
@@ -115,7 +97,11 @@ class BufferWeakSubstanceComponents: ObservableObject {
     }
 
     private var changeInConcentration: CGFloat {
-        guard let roots = QuadraticEquation.roots(a: 1, b: ka, c: -(ka * initialSubstanceConcentration)) else {
+        guard let roots = QuadraticEquation.roots(
+            a: 1,
+            b: substance.kA,
+            c: -(substance.kA * initialSubstanceConcentration)
+        ) else {
             return 0
         }
 
@@ -130,10 +116,6 @@ class BufferWeakSubstanceComponents: ObservableObject {
 
     private var initialSubstanceConcentration: CGFloat {
         CGFloat(substanceCoords.coords.count) / CGFloat(cols * rows)
-    }
-
-    var ka: CGFloat {
-        7.3e-5
     }
 }
 
@@ -199,14 +181,9 @@ extension BufferWeakSubstanceComponents {
 extension BufferWeakSubstanceComponents {
     var equationData: BufferEquationData {
         BufferEquationData(
-            ka: kaEquation,
-            kb: kb,
+            substance: substance,
             concentration: concentration,
-            pKa: pKa,
-            pH: ph,
-            pOH: pOH,
-            fixedKa: ka,
-            fixedKb: 0.1 // TODO
+            pH: pH
         )
     }
 }

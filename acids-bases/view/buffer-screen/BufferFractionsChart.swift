@@ -27,7 +27,7 @@ struct BufferFractionsChart: View {
                 )
             ],
             initialTime: 0,
-            currentTime: .constant(model.ph.getY(at: CGFloat(model.substanceAdded))),
+            currentTime: .constant(model.pH.getY(at: CGFloat(model.substanceAdded))),
             finalTime: max(1, CGFloat(2 * model.finalPH)),
             canSetCurrentTime: false,
             settings: TimeChartLayoutSettings(

@@ -23,6 +23,7 @@ class BufferSaltComponents: ObservableObject {
         let initialAConcentration = prev.concentration.secondaryIon.getY(at: 1)
         let initialHConcentration = prev.concentration.primaryIon.getY(at: 1)
 
+        let pKA = prev.substance.pKA
 
         self.previous = prev
 
@@ -71,8 +72,8 @@ class BufferSaltComponents: ObservableObject {
             underlyingRight: ConstantEquation(value: 0)
         )
 
-        self.haFractionInTermsOfPH = HAFractionFromPh(pka: 4.14)
-        self.aFractionInTermsOfPH = AFractionFromPh(pka: 4.14)
+        self.haFractionInTermsOfPH = HAFractionFromPh(pka: pKA)
+        self.aFractionInTermsOfPH = AFractionFromPh(pka: pKA)
 
         // TODO - how does this class know that prev equation reaches a max at 1?
 
@@ -107,6 +108,9 @@ class BufferSaltComponents: ObservableObject {
                 y2: finalHAConcentration
             )
         )
+
+        // TODO - there should be a better way to access final pH from previous model
+        self.initialPh = previous.pH.getY(at: 1)
     }
 
     let reactingModel: ReactingBeakerViewModel<SubstancePart>
@@ -119,6 +123,8 @@ class BufferSaltComponents: ObservableObject {
     let hConcentration: Equation
 
     let maxSubstance: Int
+
+    let initialPh: CGFloat
 
     func incrementSalt() {
         guard substanceAdded < maxSubstance else {
@@ -135,16 +141,12 @@ class BufferSaltComponents: ObservableObject {
         }
     }
 
-    var ph: Equation {
-        pka + Log10Equation(underlying: aConcentration / haConcentration)
+    var pH: Equation {
+        previous.substance.pKA + Log10Equation(underlying: aConcentration / haConcentration)
     }
 
     var finalPH: CGFloat {
-        ph.getY(at: CGFloat(maxSubstance))
-    }
-
-    var pka: CGFloat {
-        4.14
+        pH.getY(at: CGFloat(maxSubstance))
     }
 
     var tableData: [ICETableColumn] {
@@ -247,18 +249,13 @@ class BufferComponents3: ObservableObject {
 extension BufferSaltComponents {
     var equationData: BufferEquationData {
         BufferEquationData(
-            ka: ConstantEquation(value: 0.5),
-            kb: ConstantEquation(value: 0.5),
+            substance: previous.substance,
             concentration: SubstanceValue(
                 substance: haConcentration,
                 primaryIon: hConcentration,
                 secondaryIon: aConcentration
             ),
-            pKa: ConstantEquation(value: pka),
-            pH: ph,
-            pOH: ConstantEquation(value: 14) - ph,
-            fixedKa: 0.5,   // TODO
-            fixedKb: 0.5    // TODO
+            pH: pH
         )
     }
 }
