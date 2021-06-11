@@ -101,6 +101,33 @@ extension BufferStrongSubstanceComponents {
     }
 }
 
+
+// MARK: Bar chart data
+extension BufferStrongSubstanceComponents {
+    var barChartData: [BarChartData] {
+        [
+            BarChartData(
+                label: substance.symbol, // TODO
+                equation: concentration.substance,
+                color: substance.color,
+                accessibilityLabel: "" // TODO
+            ),
+            BarChartData(
+                label: substance.primary.rawValue, // TODO
+                equation: concentration.primaryIon,
+                color: substance.primary.color,
+                accessibilityLabel: "" // TODO
+            ),
+            BarChartData(
+                label: substance.secondary.rawValue, // TODO
+                equation: concentration.secondaryIon,
+                color: substance.secondary.color,
+                accessibilityLabel: "" // TODO
+            )
+        ]
+    }
+}
+
 extension BufferStrongSubstanceComponents {
     private static func changeInConcentration(
         forTargetPh finalPh: CGFloat,

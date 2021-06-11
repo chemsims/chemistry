@@ -196,21 +196,21 @@ class BufferSaltComponents: ObservableObject {
     var barChartData: [BarChartData] {
         [
             BarChartData(
-                label: "", // TODO
+                label: substance.symbol,
                 equation: substanceBarChartEquation,
-                color: .red, // TODO
+                color: substance.color,
                 accessibilityLabel: "" // TODO
             ),
             BarChartData(
-                label: "", // TODO
+                label: substance.primary.rawValue,
                 equation: primaryIonBarChartEquation,
-                color: .purple, // TODO
+                color: substance.primary.color,
                 accessibilityLabel: "" // TODO
             ),
             BarChartData(
-                label: "", // TODO
+                label: substance.secondary.rawValue,
                 equation: secondaryIonBarChartEquation,
-                color: .orange, // TODO
+                color: substance.secondary.color,
                 accessibilityLabel: "" // TODO
             )
         ]

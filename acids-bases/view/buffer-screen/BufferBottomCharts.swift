@@ -24,8 +24,9 @@ struct BufferBottomCharts: View {
             BufferBarChart(
                 layout: layout,
                 phase: model.phase,
-                model1: model.weakSubstanceModel,
-                model2: model.saltComponents
+                weakModel: model.weakSubstanceModel,
+                saltModel: model.saltComponents,
+                strongModel: model.strongSubstanceModel
             )
         case .curve:
             BufferFractionsChart(
@@ -43,7 +44,7 @@ struct BufferBottomCharts: View {
         HStack {
             text(.bars, disabled: false)
             text(.curve, disabled: model.phase == .addWeakSubstance)
-            text(.neutralization, disabled: false)
+            text(.neutralization, disabled: true)
         }
         .font(.system(size: layout.common.toggleFontSize))
         .frame(height: layout.common.toggleHeight)
@@ -67,8 +68,9 @@ private struct BufferBarChart: View {
 
     let layout: BufferScreenLayout
     let phase: BufferScreenViewModel.Phase
-    @ObservedObject var model1: BufferWeakSubstanceComponents
-    @ObservedObject var model2: BufferSaltComponents
+    @ObservedObject var weakModel: BufferWeakSubstanceComponents
+    @ObservedObject var saltModel: BufferSaltComponents
+    @ObservedObject var strongModel: BufferStrongSubstanceComponents
 
     var body: some View {
         BarChart(
@@ -80,15 +82,17 @@ private struct BufferBarChart: View {
 
     private var data: [BarChartData] {
         switch phase {
-        case .addWeakSubstance: return model1.barChartData
-        default: return model2.barChartData
+        case .addWeakSubstance: return weakModel.barChartData
+        case .addSalt: return saltModel.barChartData
+        case .addStrongSubstance: return strongModel.barChartData
         }
     }
 
     private var barCharInput: CGFloat {
         switch phase {
-        case .addWeakSubstance: return model1.progress
-        default: return CGFloat(model2.substanceAdded)
+        case .addWeakSubstance: return weakModel.progress
+        case .addSalt: return CGFloat(saltModel.substanceAdded)
+        case .addStrongSubstance: return CGFloat(strongModel.substanceAdded)
         }
     }
 }
