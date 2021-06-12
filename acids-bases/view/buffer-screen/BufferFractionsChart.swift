@@ -41,6 +41,7 @@ struct BufferFractionsChart: View {
             axisSettings: layout.common.chartAxis
         )
         .frame(square: layout.common.chartSize)
+        .padding(.bottom, layout.common.barChartSettings.totalAxisHeight + layout.common.barChartSettings.chartToAxisSpacing)
     }
 
     private var currentPh: CGFloat {

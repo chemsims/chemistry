@@ -136,10 +136,6 @@ class BufferSaltComponents: ObservableObject {
 
     @Published var substanceAdded = 0
 
-//    let haConcentration: Equation
-//    let aConcentration: Equation
-//    let hConcentration: Equation
-
     let maxSubstance: Int
 
     let initialPh: CGFloat
