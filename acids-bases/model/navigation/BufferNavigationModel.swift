@@ -150,6 +150,7 @@ private class PostWeakAcidReaction: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.introduceBufferSolutions
         model.equationState = .acidSummary
+        model.goToAddSaltPhase()
     }
 }
 
@@ -158,12 +159,17 @@ private class ShowFractionChart: BufferScreenState {
         model.statement = statements.explainFractionChart(substance: model.substance)
         model.selectedBottomGraph = .curve
     }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        if model.selectedBottomGraph == .curve {
+            model.selectedBottomGraph = .bars
+        }
+    }
 }
 
 private class AddSalt: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.instructToAddSalt
-        model.goToAddSaltPhase()
         model.input = .addMolecule(phase: .addSalt)
     }
 }
