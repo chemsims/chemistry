@@ -5,22 +5,24 @@
 import CoreGraphics
 @testable import acids_bases
 
-extension BufferWeakSubstanceComponents.Settings {
+extension BufferComponentSettings {
 
     /// Returns a Settings instance with default values for each parameter
     static func withDefaults(
         changeInBarHeightAsFractionOfInitialSubstance: CGFloat = standard.changeInBarHeightAsFractionOfInitialSubstance,
-        fractionOfFinalIonMolecules: CGFloat = standard.fractionOfFinalIonMolecules,
+        fractionOfFinalIonMolecules: CGFloat = standard.initialIonMoleculeFraction,
         minimumInitialIonCount: Int = standard.minimumInitialIonCount,
         finalSecondaryIonCount: Int = standard.finalSecondaryIonCount,
-        minimumFinalPrimaryIonCount: Int = standard.minimumFinalPrimaryIonCount
-    ) -> BufferWeakSubstanceComponents.Settings {
-        BufferWeakSubstanceComponents.Settings(
+        minimumFinalPrimaryIonCount: Int = standard.minimumFinalPrimaryIonCount,
+        maxFinalBeakerConcentration: CGFloat = 1
+    ) -> BufferComponentSettings {
+        BufferComponentSettings(
             changeInBarHeightAsFractionOfInitialSubstance: changeInBarHeightAsFractionOfInitialSubstance,
-            fractionOfFinalIonMolecules: fractionOfFinalIonMolecules,
+            initialIonMoleculeFraction: fractionOfFinalIonMolecules,
             minimumInitialIonCount: minimumInitialIonCount,
             finalSecondaryIonCount: finalSecondaryIonCount,
-            minimumFinalPrimaryIonCount: minimumFinalPrimaryIonCount
+            minimumFinalPrimaryIonCount: minimumFinalPrimaryIonCount,
+            maxFinalBeakerConcentration: maxFinalBeakerConcentration
         )
     }
 }

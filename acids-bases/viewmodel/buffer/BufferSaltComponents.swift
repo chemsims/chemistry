@@ -148,7 +148,7 @@ class BufferSaltComponents: ObservableObject {
         previous.substance
     }
 
-    var settings: BufferWeakSubstanceComponents.Settings {
+    var settings: BufferComponentSettings {
         previous.settings
     }
 

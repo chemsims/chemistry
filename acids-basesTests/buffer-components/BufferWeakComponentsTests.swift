@@ -131,9 +131,22 @@ class BufferWeakComponentsTests: XCTestCase {
         XCTAssertEqual(model.substanceCoords.coords.count, expectedMax)
     }
 
+    func testInputLimitsForFinalConcentrationBelow1() {
+        let model = newModel(
+            .weakAcid(substanceAddedPerIon: 1),
+            settings: .withDefaults(
+                finalSecondaryIonCount: 5,
+                minimumFinalPrimaryIonCount: 5,
+                maxFinalBeakerConcentration: 0.5
+            )
+        )
+
+        XCTAssertEqual(model.maxSubstanceCount, 16)
+    }
+
     private func newModel(
         _ substance: AcidOrBase,
-        settings: BufferWeakSubstanceComponents.Settings
+        settings: BufferComponentSettings
     ) -> BufferWeakSubstanceComponents {
         BufferWeakSubstanceComponents(
             substance: substance,

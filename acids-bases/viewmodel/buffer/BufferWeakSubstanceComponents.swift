@@ -10,7 +10,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
 
     init(
         substance: AcidOrBase,
-        settings: Settings,
+        settings: BufferComponentSettings,
         cols: Int,
         rows: Int
     ) {
@@ -38,7 +38,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
     var rows: Int
     var substance: AcidOrBase
 
-    let settings: Settings
+    let settings: BufferComponentSettings
 
     func incrementSubstance(count: Int) {
         let maxToAdd = min(remainingCountAvailable, count)
@@ -81,7 +81,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
     }
 
     var finalIonCoordCount: Int {
-        (settings.fractionOfFinalIonMolecules * CGFloat(substanceCoords.coords.count)).roundedInt()
+        (settings.initialIonMoleculeFraction * CGFloat(substanceCoords.coords.count)).roundedInt()
     }
 
     var concentration: SubstanceValue<Equation> {
@@ -141,7 +141,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
 // MARK: Input limits
 extension BufferWeakSubstanceComponents {
     var minSubstanceCount: Int {
-        let denom = settings.fractionOfFinalIonMolecules
+        let denom = settings.initialIonMoleculeFraction
         let numer = CGFloat(settings.minimumInitialIonCount)
         return denom == 0 ? 0 : Int(ceil(numer / denom))
     }
@@ -163,11 +163,11 @@ extension BufferWeakSubstanceComponents {
     /// ions.
     ///
     /// The number of molecules in the beaker then is `2N + (N - S) + P`. This must be
-    /// less than the total grid molecules, `G`, so we have:
+    /// less than the available grid molecules, `G`, so we have:
     /// `3N - S + P < G`
     /// `N < (G - P + S) / 3`
     var maxSubstanceCount: Int {
-        let gridSize = cols * rows
+        let gridSize = Int(settings.maxFinalBeakerConcentration * CGFloat(cols * rows))
         let numer = gridSize - settings.minimumFinalPrimaryIonCount + settings.finalSecondaryIonCount
         return numer / 3
     }
@@ -263,30 +263,32 @@ extension BufferWeakSubstanceComponents {
 }
 
 // MARK: Settings
-extension BufferWeakSubstanceComponents {
-    struct Settings {
-        /// How much should each bar change over reaction, as a fraction of the initial substance concentration
-        let changeInBarHeightAsFractionOfInitialSubstance: CGFloat
+struct BufferComponentSettings {
+    /// How much should each bar change over reaction, as a fraction of the initial substance concentration
+    let changeInBarHeightAsFractionOfInitialSubstance: CGFloat
 
-        /// The number of ion molecules at the end of the reaction, as a fraction of the number of substance molecules
-        let fractionOfFinalIonMolecules: CGFloat
+    /// The number of ion molecules after the phase 1 reaction, as a fraction of the number of substance molecules
+    let initialIonMoleculeFraction: CGFloat
 
-        /// Minimum number of ions which should be in the beaker after the phase 1 reaction has finished running
-        let minimumInitialIonCount: Int
+    /// Minimum number of ions which should be in the beaker after the phase 1 reaction has finished running
+    let minimumInitialIonCount: Int
 
-        /// Number of secondary ions which should be in the beaker at the end of the phase 3 reaction
-        let finalSecondaryIonCount: Int
+    /// Number of secondary ions which should be in the beaker at the end of the phase 3 reaction
+    let finalSecondaryIonCount: Int
 
-        /// Minimum number of primary ions which should be in the beaker at the end of the
-        /// phase 3 reaction
-        let minimumFinalPrimaryIonCount: Int
+    /// Minimum number of primary ions which should be in the beaker at the end of the
+    /// phase 3 reaction
+    let minimumFinalPrimaryIonCount: Int
 
-        static let standard = Settings(
-            changeInBarHeightAsFractionOfInitialSubstance: 0.2,
-            fractionOfFinalIonMolecules: 0.15,
-            minimumInitialIonCount: 2,
-            finalSecondaryIonCount: 3,
-            minimumFinalPrimaryIonCount: 10
-        )
-    }
+    /// Maximum concentration of all molecules combined at the end of phase 3
+    let maxFinalBeakerConcentration: CGFloat
+
+    static let standard = BufferComponentSettings(
+        changeInBarHeightAsFractionOfInitialSubstance: 0.1,
+        initialIonMoleculeFraction: 0.1,
+        minimumInitialIonCount: 2,
+        finalSecondaryIonCount: 3,
+        minimumFinalPrimaryIonCount: 5,
+        maxFinalBeakerConcentration: 0.7
+    )
 }

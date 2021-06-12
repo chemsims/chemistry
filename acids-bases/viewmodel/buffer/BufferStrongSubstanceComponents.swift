@@ -56,7 +56,7 @@ class BufferStrongSubstanceComponents: ObservableObject {
     let maxSubstance: Int
     let concentration: SubstanceValue<Equation>
 
-    var settings: BufferWeakSubstanceComponents.Settings {
+    var settings: BufferComponentSettings {
         previous.settings
     }
 
