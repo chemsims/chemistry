@@ -39,6 +39,35 @@ class BufferStrongComponentsTests: XCTestCase {
         XCTAssertEqual(finalBarChartValue(.primaryIon), 0)
         XCTAssertEqual(finalBarChartValue(.secondaryIon), finalConcentration(.secondaryIon))
     }
+
+    func testCoords() {
+        let weakModel = BufferWeakSubstanceComponents(
+            substance: .weakBase(substanceAddedPerIon: 1),
+            settings: .withDefaults(
+                finalSecondaryIonCount: 5,
+                minimumFinalPrimaryIonCount: 6
+            ),
+            cols: 10,
+            rows: 10
+        )
+
+        // See parameter docs or weak model tests for explanation
+        // of this number
+        let expectedMaxSubstance = 33
+        XCTAssertEqual(weakModel.maxSubstanceCount, expectedMaxSubstance)
+        weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
+
+        let saltModel = BufferSaltComponents(prev: weakModel)
+        let model = BufferStrongSubstanceComponents(prev: saltModel)
+
+        func molecules(_ part: SubstancePart) -> BeakerMolecules {
+            model.reactingModel.consolidated.value(for: part)
+        }
+
+//        XCTAssertEqual(molecules(.substance).coords.count, expectedMaxSubstance)
+//        XCTAssertEqual(molecules(.primaryIon).coords.count, 0)
+//        XCTAssertEqual(molecules(.secondaryIon).coords.count, expectedMaxSubstance)
+    }
 }
 
 private extension BufferStrongSubstanceComponents {

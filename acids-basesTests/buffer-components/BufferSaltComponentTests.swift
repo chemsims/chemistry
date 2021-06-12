@@ -34,5 +34,46 @@ class BufferSaltComponentsTests: XCTestCase {
         XCTAssertEqual(saltModel.barChartEquations.primaryIon.getY(at: CGFloat(saltModel.maxSubstance)), 0)
         XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getY(at: CGFloat(saltModel.maxSubstance)), 0.3)
     }
+
+    func testCoords() {
+        let weakModel = BufferWeakSubstanceComponents(
+            substance: .weakAcid(substanceAddedPerIon: 1),
+            settings: .withDefaults(
+                fractionOfFinalIonMolecules: 0.1,
+                finalSecondaryIonCount: 2,
+                minimumFinalPrimaryIonCount: 12
+            ),
+            cols: 10,
+            rows: 10
+        )
+
+        // See weak model property docs or the tests for explanation of
+        // of this number
+        let expectedMax = 30
+        XCTAssertEqual(weakModel.maxSubstanceCount, expectedMax)
+        weakModel.incrementSubstance(count: expectedMax)
+
+        let model = BufferSaltComponents(prev: weakModel)
+        func molecules(_ part: SubstancePart) -> BeakerMolecules {
+            model.reactingModel.consolidated.value(for: part)
+        }
+        func coordCount(_ part: SubstancePart) -> Int {
+            molecules(part).coords.count
+        }
+
+        XCTAssertEqual(coordCount(.substance), 24)
+        XCTAssertEqual(coordCount(.primaryIon), 3)
+        XCTAssertEqual(coordCount(.secondaryIon), 3)
+
+        model.incrementSalt(count: 3)
+        XCTAssertEqual(coordCount(.substance), 30)
+        XCTAssertEqual(coordCount(.primaryIon), 0)
+        XCTAssertEqual(coordCount(.secondaryIon), 3)
+
+        model.incrementSalt(count: 27)
+        XCTAssertEqual(coordCount(.substance), 30)
+        XCTAssertEqual(coordCount(.primaryIon), 0)
+        XCTAssertEqual(coordCount(.secondaryIon), 30)
+    }
 }
 

@@ -10,9 +10,17 @@ class BufferSaltComponents: ObservableObject {
     init(
         prev: BufferWeakSubstanceComponents
     ) {
+
+        var prevSubstanceCoords = prev.substanceCoords
+
+        let ionCoords = prev.ionCoords.flatMap { $0.molecules.coords }
+
+        let visibleSubstanceCoords = prevSubstanceCoords.coords.filter { !ionCoords.contains($0) }
+        prevSubstanceCoords.coords = visibleSubstanceCoords
+
         reactingModel = ReactingBeakerViewModel(
             initial: SubstanceValue(
-                substance: prev.substanceCoords,
+                substance: prevSubstanceCoords,
                 primaryIon: prev.ionCoords[0].molecules,
                 secondaryIon: prev.ionCoords[1].molecules
             )
@@ -146,7 +154,8 @@ class BufferSaltComponents: ObservableObject {
         concentration.map { $0.getY(at: CGFloat(maxSubstance)) }
     }
 
-    func incrementSalt() {
+    func incrementSalt(count: Int) {
+        // TODO - change this so that limit is not exceeded when big count passed in
         guard substanceAdded < maxSubstance else {
             return
         }
@@ -154,10 +163,11 @@ class BufferSaltComponents: ObservableObject {
             reactant: .secondaryIon,
             reactingWith: .primaryIon,
             producing: .substance,
-            withDuration: 1
+            withDuration: 1,
+            count: count
         )
         withAnimation(.linear(duration: 1)) {
-            substanceAdded += 1
+            substanceAdded += count
         }
     }
 

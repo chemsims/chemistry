@@ -79,8 +79,8 @@ extension BufferScreenViewModel {
     private func addMolecule(phase: Phase, count: Int) {
         switch phase {
         case .addWeakSubstance: weakSubstanceModel.incrementSubstance(count: count)
-        case .addSalt: saltComponents.incrementSalt() // TODO count
-        case .addStrongSubstance: strongSubstanceModel.incrementStrongSubstance()
+        case .addSalt: saltComponents.incrementSalt(count: count)
+        case .addStrongSubstance: strongSubstanceModel.incrementStrongSubstance(count: count)
         }
     }
 
