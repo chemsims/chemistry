@@ -57,22 +57,27 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
     ///
     /// - Parameters:
     ///     - reactant: The reactant to add
-    ///     - otherReactant: The other reactant that will also be turned into `product`
+    ///     - consumedReactant: The other reactant that will also be turned into `product`
     ///     - product: The product molecule to be produced
     ///     - duration: Duration of the reaction
     ///     - count: How many `reactant` molecules to add. If this is greater than the available `otherReactant`
-    ///              molecules, then additional `reactant` molecules will be added
+    ///    molecules, then additional `reactant` molecules will be added
+    ///     - minConsumableReactantCoords: Minimum number of `consumedReactant` which should remain after the
+    ///     reaction. Note that the number of `consumedReactant` coords may already be less than this value, in which
+    ///     case all of `count` is added as `reactant`.
     public func add(
         reactant: Molecule,
         reactingWith consumedReactant: Molecule,
         producing product: Molecule,
         withDuration duration: TimeInterval,
-        count: Int = 1
+        count: Int = 1,
+        minConsumableReactantCoords: Int = 0
     ) {
         let consumedReactantIndex = baseIndices.value(for: consumedReactant)
         let consumedReactantCurrentCoords = molecules[consumedReactantIndex].molecules.coords
 
-        let coordCountToConsume = min(count, consumedReactantCurrentCoords.count)
+        let availableToConsume = consumedReactantCurrentCoords.count - minConsumableReactantCoords
+        let coordCountToConsume = max(0, min(count, availableToConsume))
         let surplusCount = count - coordCountToConsume
 
         if surplusCount > 0 {
