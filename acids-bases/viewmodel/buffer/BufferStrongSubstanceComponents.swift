@@ -12,9 +12,11 @@ class BufferStrongSubstanceComponents: ObservableObject {
         let initialCoords = prev.reactingModel.consolidated
         self.reactingModel = ReactingBeakerViewModel(initial: initialCoords)
 
+        let initialSecondary = initialCoords.value(for: .secondaryIon).coords.count
+        let finalSecondary = prev.settings.finalSecondaryIonCount
+        let finalPrimary = prev.settings.minimumFinalPrimaryIonCount
 
-        let initialSecondary = initialCoords.value(for: .secondaryIon)
-        let maxSubstance = initialSecondary.coords.count - 3
+        let maxSubstance = initialSecondary - finalSecondary + finalPrimary
         self.maxSubstance = maxSubstance
 
         let changeInConcentration = Self.changeInConcentration(
@@ -59,8 +61,8 @@ class BufferStrongSubstanceComponents: ObservableObject {
     }
 
     func incrementStrongSubstance(count: Int) {
-        // TODO - fix case when count passed in > 1 near the limit
-        guard substanceAdded < maxSubstance else {
+        let maxToAdd = min(count, remainingCountAvailable)
+        guard maxToAdd > 0 else {
             return
         }
         reactingModel.add(
@@ -68,11 +70,11 @@ class BufferStrongSubstanceComponents: ObservableObject {
             reactingWith: .secondaryIon,
             producing: .substance,
             withDuration: 1,
-            count: count,
+            count: maxToAdd,
             minConsumableReactantCoords: settings.finalSecondaryIonCount
         )
         withAnimation(.linear(duration: 1)) {
-            substanceAdded += count
+            substanceAdded += maxToAdd
         }
     }
 
@@ -94,6 +96,23 @@ class BufferStrongSubstanceComponents: ObservableObject {
             substanceConcentration: concentration.substance,
             secondaryConcentration: concentration.secondaryIon
         )
+    }
+}
+
+
+// MARK: Input limits
+extension BufferStrongSubstanceComponents {
+
+    var canAddSubstance: Bool {
+        remainingCountAvailable > 0
+    }
+
+    var hasAddedEnoughSubstance: Bool {
+        !canAddSubstance
+    }
+
+    private var remainingCountAvailable: Int {
+        max(0, maxSubstance - substanceAdded)
     }
 }
 

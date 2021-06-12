@@ -79,6 +79,42 @@ class BufferStrongComponentsTests: XCTestCase {
         XCTAssertEqual(molecules(.primaryIon).coords.count, 6)
         XCTAssertEqual(molecules(.secondaryIon).coords.count, 5)
     }
+
+    func testInputLimits() {
+        let weakModel = BufferWeakSubstanceComponents(
+            substance: .weakBase(substanceAddedPerIon: 1),
+            settings: .withDefaults(
+                finalSecondaryIonCount: 5,
+                minimumFinalPrimaryIonCount: 10
+            ),
+            cols: 10,
+            rows: 10
+        )
+
+        // See parameter docs or weak model tests for explanation
+        // of the max substance count
+        XCTAssertEqual(weakModel.maxSubstanceCount, 31)
+        weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
+
+        let saltModel = BufferSaltComponents(prev: weakModel)
+        saltModel.incrementSalt(count: saltModel.maxSubstance)
+        let model = BufferStrongSubstanceComponents(prev: saltModel)
+
+        // at end of phase 3 we have 31 substance and 31 secondary ion molecules
+        // we must add 26 molecules to leave 5 secondary ion molecules, and
+        // then a further 10. So we should add 36 molecules
+        let expectedMax = 36
+        XCTAssertEqual(model.maxSubstance, expectedMax)
+
+        XCTAssert(model.canAddSubstance)
+        XCTAssertFalse(model.hasAddedEnoughSubstance)
+
+        model.incrementStrongSubstance(count: 100)
+
+        XCTAssertFalse(model.canAddSubstance)
+        XCTAssert(model.hasAddedEnoughSubstance)
+        XCTAssertEqual(model.substanceAdded, 36)
+    }
 }
 
 private extension BufferStrongSubstanceComponents {

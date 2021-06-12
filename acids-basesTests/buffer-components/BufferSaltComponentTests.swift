@@ -75,5 +75,32 @@ class BufferSaltComponentsTests: XCTestCase {
         XCTAssertEqual(coordCount(.primaryIon), 0)
         XCTAssertEqual(coordCount(.secondaryIon), 30)
     }
+
+    func testInputLimits() {
+        let weakModel = BufferWeakSubstanceComponents(
+            substance: .weakAcid(substanceAddedPerIon: 1),
+            settings: .withDefaults(
+                fractionOfFinalIonMolecules: 0.1,
+                finalSecondaryIonCount: 2,
+                minimumFinalPrimaryIonCount: 12
+            ),
+            cols: 10,
+            rows: 10
+        )
+        let expectedMax = 30
+        XCTAssertEqual(weakModel.maxSubstanceCount, expectedMax)
+        weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
+
+        let model = BufferSaltComponents(prev: weakModel)
+        XCTAssertEqual(model.maxSubstance, 30)
+
+        XCTAssertFalse(model.hasAddedEnoughSubstance)
+        XCTAssert(model.canAddSubstance)
+
+        model.incrementSalt(count: 100)
+        XCTAssert(model.hasAddedEnoughSubstance)
+        XCTAssertFalse(model.canAddSubstance)
+        XCTAssertEqual(model.substanceAdded, 30)
+    }
 }
 

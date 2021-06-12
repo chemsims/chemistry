@@ -159,8 +159,8 @@ class BufferSaltComponents: ObservableObject {
     }
 
     func incrementSalt(count: Int) {
-        // TODO - change this so that limit is not exceeded when big count passed in
-        guard substanceAdded < maxSubstance else {
+        let maxToAdd = min(count, remainingCountAvailable)
+        guard maxToAdd > 0 else {
             return
         }
         reactingModel.add(
@@ -168,10 +168,10 @@ class BufferSaltComponents: ObservableObject {
             reactingWith: .primaryIon,
             producing: .substance,
             withDuration: 1,
-            count: count
+            count: maxToAdd
         )
         withAnimation(.linear(duration: 1)) {
-            substanceAdded += count
+            substanceAdded += maxToAdd
         }
     }
 
@@ -226,31 +226,19 @@ class BufferSaltComponents: ObservableObject {
 }
 
 
+// MARK: Input limits
+extension BufferSaltComponents {
 
-class BufferComponents3: ObservableObject {
-    init(
-        prev: BufferSaltComponents?
-    ) {
-        if let prev = prev {
-            reactingModel = ReactingBeakerViewModel(
-                initial: prev.reactingModel.consolidated
-            )
-        } else {
-            reactingModel = ReactingBeakerViewModel(
-                initial: .constant(BeakerMolecules(coords: [], color: .black, label: ""))
-            )
-        }
+    var canAddSubstance: Bool {
+        remainingCountAvailable > 0
     }
 
-    let reactingModel: ReactingBeakerViewModel<SubstancePart>
+    var hasAddedEnoughSubstance: Bool {
+        !canAddSubstance
+    }
 
-    func incrementStrongAcid() {
-        reactingModel.add(
-            reactant: .primaryIon,
-            reactingWith: .secondaryIon,
-            producing: .substance,
-            withDuration: 1
-        )
+    private var remainingCountAvailable: Int {
+        max(0, maxSubstance - substanceAdded)
     }
 }
 
