@@ -114,11 +114,27 @@ private struct BufferMoleculeContainers: View {
             onTap: { didTapContainer(phase: phase, index: index) },
             initialLocation: containerLocation(phase: phase, index: index),
             type: phase,
-            label: "",
-            color: .red,
+            label: containerLabel(phase: phase),
+            color: containerColor(phase: phase),
             rows: model.rows,
             disabled: model.input != .addMolecule(phase: phase)
         )
+    }
+
+    private func containerColor(phase: Phase) -> Color {
+        switch phase {
+        case .addWeakSubstance: return model.substance.color
+        case .addSalt: return .red // TODO move to styling
+        case .addStrongSubstance: return .purple // TODO move to styling
+        }
+    }
+
+    private func containerLabel(phase: Phase) -> String {
+        switch phase {
+        case .addWeakSubstance: return model.substance.symbol
+        case .addSalt: return "M\(model.substance.secondary.rawValue)"
+        case .addStrongSubstance: return "HCl"
+        }
     }
 
     private func containerLocation(
