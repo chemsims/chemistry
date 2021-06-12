@@ -178,6 +178,7 @@ public struct TimeChartDataLineView: View {
         ChartIndicatorHead(
             radius: radius,
             equation: data.equation,
+            xEquation: data.xEquation,
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
             x: currentTime,
@@ -220,6 +221,7 @@ public struct TimeChartDataLineView: View {
     ) -> some View {
         let view = ChartLine(
             equation: data.equation,
+            xEquation: data.xEquation,
             yAxis: settings.yAxis,
             xAxis: settings.xAxis,
             startX: startTime,

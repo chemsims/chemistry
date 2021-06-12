@@ -7,6 +7,7 @@ import SwiftUI
 public struct ChartLine: Shape {
 
     let equation: Equation
+    let xEquation: Equation?
 
     let yAxis: AxisPositionCalculations<CGFloat>
     let xAxis: AxisPositionCalculations<CGFloat>
@@ -20,6 +21,7 @@ public struct ChartLine: Shape {
 
     public init(
         equation: Equation,
+        xEquation: Equation? = nil,
         yAxis: AxisPositionCalculations<CGFloat>,
         xAxis: AxisPositionCalculations<CGFloat>,
         startX: CGFloat,
@@ -28,6 +30,7 @@ public struct ChartLine: Shape {
         discontinuity: CGPoint? = nil
     ) {
         self.equation = equation
+        self.xEquation = xEquation
         self.yAxis = yAxis
         self.xAxis = xAxis
         self.startX = startX
@@ -52,7 +55,8 @@ public struct ChartLine: Shape {
         var didStart = false
 
         func addLine(x: CGFloat, y: CGFloat) {
-            let xPosition = shiftedXAxis.getPosition(at: x)
+            let xValue = xEquation?.getY(at: x) ?? x
+            let xPosition = shiftedXAxis.getPosition(at: xValue)
             let yPosition = yAxis.getPosition(at: y)
             if didStart {
                 path.addLine(to: CGPoint(x: xPosition, y: yPosition))
@@ -105,6 +109,7 @@ public struct ChartIndicatorHead: Shape {
 
     let radius: CGFloat
     let equation: Equation
+    let xEquation: Equation?
 
     let yAxis: AxisPositionCalculations<CGFloat>
     let xAxis: AxisPositionCalculations<CGFloat>
@@ -115,6 +120,7 @@ public struct ChartIndicatorHead: Shape {
     public init(
         radius: CGFloat,
         equation: Equation,
+        xEquation: Equation? = nil,
         yAxis: AxisPositionCalculations<CGFloat>,
         xAxis: AxisPositionCalculations<CGFloat>,
         x: CGFloat,
@@ -122,6 +128,7 @@ public struct ChartIndicatorHead: Shape {
     ) {
         self.radius = radius
         self.equation = equation
+        self.xEquation = xEquation
         self.yAxis = yAxis
         self.xAxis = xAxis
         self.x = x
@@ -137,7 +144,8 @@ public struct ChartIndicatorHead: Shape {
         var path = Path()
         let y = equation.getY(at: x)
 
-        let xPosition = shiftedXAxis.getPosition(at: x)
+        let xValue = xEquation?.getY(at: x) ?? x
+        let xPosition = shiftedXAxis.getPosition(at: xValue)
         let yPosition = yAxis.getPosition(at: y)
 
         let containerRect = CGRect(
@@ -233,3 +241,4 @@ struct ChartLine_Previews: PreviewProvider {
         )
     }
 }
+

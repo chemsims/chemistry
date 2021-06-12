@@ -175,10 +175,14 @@ public struct LogEquation: Equation {
     }
 }
 
-/// Returns log base 10 of `underlying`.
+/// Returns log base 10 of either the input `x`, or wraps an `underlying` equation
 /// Returns 0 for inputs of 0
 public struct Log10Equation: Equation {
     let underlying: Equation
+
+    public init() {
+        self.init(underlying: IdentityEquation())
+    }
 
     public init(underlying: Equation) {
         self.underlying = underlying

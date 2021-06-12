@@ -158,7 +158,7 @@ private struct BufferMoleculeContainers: View {
         index: Int
     ) {
         if shakeModel.activeMolecule == phase {
-            shakeModel.model(for: phase).manualAdd(amount: 1)
+            shakeModel.model(for: phase).manualAdd(amount: 5)
             return
         }
 

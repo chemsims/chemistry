@@ -9,6 +9,7 @@ struct BufferPhChart: View {
 
     let layout: BufferScreenLayout
     @ObservedObject var model: BufferScreenViewModel
+    @ObservedObject var strongModel: BufferStrongSubstanceComponents
 
     var body: some View {
         HStack(spacing: layout.common.chartYAxisHSpacing) {
@@ -32,10 +33,14 @@ struct BufferPhChart: View {
             waterLine
 
             TimeChartView(
-                data: [],
-                initialTime: 0,
-                currentTime: .constant(0),
-                finalTime: 1,
+                data: data,
+                initialTime: minSubstance,
+                currentTime: .constant(
+                    safeSubstanceAdded.getY(
+                        at: CGFloat(strongModel.substanceAdded)
+                    )
+                ),
+                finalTime: maxSubstance,
                 canSetCurrentTime: false,
                 settings: TimeChartLayoutSettings(
                     xAxis: xAxis,
@@ -49,37 +54,95 @@ struct BufferPhChart: View {
         .frame(square: chartSize)
     }
 
+    private var data: [TimeChartDataLine] {
+        if model.phase == .addStrongSubstance {
+            return [
+                TimeChartDataLine(
+                    equation: strongModel.pH,
+                    xEquation: Log10Equation(),
+                    headColor: .red,
+                    haloColor: nil,
+                    headRadius: 3
+                )
+            ]
+        }
+        return []
+    }
+
     private var waterLine: some View {
-        ChartLine(
-            equation: LinearEquation(m: -1, x1: 0, y1: 1),
-            yAxis: yAxis,
-            xAxis: xAxis,
-            startX: 0,
-            endX: 1
-        )
+        Path { p in
+            p.move(to: CGPoint(x: minXValuePosition, y: 0.1 * chartSize))
+            p.addLine(to: CGPoint(x: maxXValuePosition, y: 0.9 * chartSize))
+        }
         .stroke(lineWidth: 0.4)
     }
 
     private var yAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
-            minValuePosition: 0.9 * chartSize,
-            maxValuePosition: 0.1 * chartSize,
-            minValue: 0,
-            maxValue: 1
+        let minPh = initialPh == finalPh ? initialPh - 1 : min(initialPh, finalPh)
+        let maxPh = initialPh == finalPh ? initialPh + 1 : max(initialPh, finalPh)
+        let maxValuePosition = 0.5 * (chartSize - deltaPhSize)
+        let minValuePosition = maxValuePosition + deltaPhSize
+        return AxisPositionCalculations(
+            minValuePosition: minValuePosition,
+            maxValuePosition: maxValuePosition,
+            minValue: minPh,
+            maxValue: maxPh
         )
     }
 
     private var xAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
-            minValuePosition: 0.1 * chartSize,
-            maxValuePosition: 0.9 * chartSize,
-            minValue: 0,
-            maxValue: 1
+            minValuePosition: minXValuePosition,
+            maxValuePosition: maxXValuePosition,
+            minValue: log10(minSubstance),
+            maxValue: log10(maxSubstance)
         )
+    }
+
+    private var minXValuePosition: CGFloat {
+        0.1 * chartSize
+    }
+
+    private var maxXValuePosition: CGFloat {
+        0.9 * chartSize
     }
 
     private var chartSize: CGFloat {
         layout.common.chartSize
+    }
+
+    private var initialPh: CGFloat {
+        strongModel.pH.getY(at: 0)
+    }
+
+    private var finalPh: CGFloat {
+        strongModel.pH.getY(at: CGFloat(strongModel.maxSubstance))
+    }
+
+    private var deltaPhSize: CGFloat {
+        0.15 * chartSize
+    }
+
+    private var minSubstance: CGFloat {
+        1
+    }
+
+    private var maxSubstance: CGFloat {
+        CGFloat(strongModel.maxSubstance)
+    }
+
+    // We want to avoid the range 0 to 1 due to large log values, so we
+    // instead start at 1. This way we can keep using a pH equation
+    // in terms of substance added, rather then an equation
+    // in terms of concentration (we would not need to do this
+    // workaround if we had pH in terms of concentration)
+    private var safeSubstanceAdded: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: 1,
+            x2: maxSubstance,
+            y2: maxSubstance
+        )
     }
 }
 
@@ -98,7 +161,8 @@ struct BufferPhChart_Previews: PreviewProvider {
                                 horizontalSizeClass: nil
                             )
                         ),
-                        model: BufferScreenViewModel()
+                        model: BufferScreenViewModel(),
+                        strongModel: BufferScreenViewModel().strongSubstanceModel
                     )
                     Spacer()
                 }

@@ -44,7 +44,8 @@ struct BufferPHChartOrTable: View {
     private var graph: some View {
         BufferPhChart(
             layout: layout,
-            model: model
+            model: model,
+            strongModel: model.strongSubstanceModel
         )
     }
 
