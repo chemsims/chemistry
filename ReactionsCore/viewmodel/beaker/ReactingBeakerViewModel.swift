@@ -60,32 +60,40 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
     ///     - otherReactant: The other reactant that will also be turned into `product`
     ///     - product: The product molecule to be produced
     ///     - duration: Duration of the reaction
+    ///     - count: How many `reactant` molecules to add. If this is greater than the available `otherReactant`
+    ///              molecules, then additional `reactant` molecules will be added
     public func add(
         reactant: Molecule,
-        reactingWith otherReactant: Molecule,
+        reactingWith consumedReactant: Molecule,
         producing product: Molecule,
-        withDuration duration: TimeInterval
+        withDuration duration: TimeInterval,
+        count: Int = 1
     ) {
-        let otherReactantIndex = baseIndices.value(for: otherReactant)
-        guard let otherReactantCoord = molecules[otherReactantIndex].molecules.coords.popLast() else {
-            let reactantCoords = molecules[baseIndices.value(for: reactant)].molecules.coords
-            molecules[baseIndices.value(for: reactant)].molecules.coords = GridCoordinateList.addingRandomElementsTo(
-                grid: reactantCoords,
-                count: 1,
-                cols: cols,
-                rows: rows,
-                avoiding: molecules.flatMap { $0.molecules.coords }
-            )
+        let consumedReactantIndex = baseIndices.value(for: consumedReactant)
+        let consumedReactantCurrentCoords = molecules[consumedReactantIndex].molecules.coords
+
+        let coordCountToConsume = min(count, consumedReactantCurrentCoords.count)
+        let surplusCount = count - coordCountToConsume
+
+        if surplusCount > 0 {
+            addToCoords(molecule: reactant, count: surplusCount)
+        }
+
+        if coordCountToConsume <= 0 {
             return
         }
+
+        let consumedCoords = Array(consumedReactantCurrentCoords.suffix(coordCountToConsume))
+        molecules[consumedReactantIndex].molecules.coords.removeLast(coordCountToConsume)
+
 
         let nextIndex = molecules.endIndex
         molecules.append(
             ReactingMolecules(
                 finalMolecule: product,
                 molecules: BeakerMolecules(
-                    coords: [otherReactantCoord],
-                    color: color(of: otherReactant),
+                    coords: consumedCoords,
+                    color: color(of: consumedReactant),
                     label: ""
                 )
             )
@@ -93,7 +101,7 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
 
         let reactantGrid = GridCoordinateList.addingRandomElementsTo(
             grid: [],
-            count: 1,
+            count: coordCountToConsume,
             cols: cols,
             rows: rows,
             avoiding: molecules.flatMap { $0.molecules.coords }
@@ -132,6 +140,21 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
 
     private func color(of molecule: Molecule) -> Color {
         molecules[baseIndices.value(for: molecule)].molecules.color
+    }
+
+    private func addToCoords(
+        molecule: Molecule,
+        count: Int
+    ) {
+        let index = baseIndices.value(for: molecule)
+        let currentCoords = molecules[index].molecules.coords
+        molecules[index].molecules.coords = GridCoordinateList.addingRandomElementsTo(
+            grid: currentCoords,
+            count: count,
+            cols: cols,
+            rows: rows,
+            avoiding: molecules.flatMap { $0.molecules.coords }
+        )
     }
 }
 
