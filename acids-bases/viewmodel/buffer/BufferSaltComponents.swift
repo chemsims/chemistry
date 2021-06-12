@@ -28,10 +28,10 @@ class BufferSaltComponents: ObservableObject {
             rows: prev.rows
         )
 
-        let initialHAConcentration = prev.concentration.substance.getY(at: 1)
-        let finalHAConcentration = prev.concentration.substance.getY(at: 0)
-        let initialAConcentration = prev.concentration.secondaryIon.getY(at: 1)
-        let initialHConcentration = prev.concentration.primaryIon.getY(at: 1)
+        let initialSubstanceC = prev.concentration.substance.getY(at: 1)
+        let finalSubstanceC = prev.concentration.substance.getY(at: 0)
+        let initialSecondaryC = prev.concentration.secondaryIon.getY(at: 1)
+        let initialPrimaryC = prev.concentration.primaryIon.getY(at: 1)
 
         let pKA = prev.substance.pKA
 
@@ -46,74 +46,78 @@ class BufferSaltComponents: ObservableObject {
 
         let maxSubstance = (initialCountInt(.substance) + initialCountInt(.primaryIon)) - initialCountInt(.secondaryIon)
         self.maxSubstance = maxSubstance
-        let haConcentration = SwitchingEquation(
+        let substanceConcentration = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
             underlyingLeft: LinearEquation(
                 x1: 0,
-                y1: initialHAConcentration,
+                y1: initialSubstanceC,
                 x2: initialCount(.primaryIon),
-                y2: finalHAConcentration
+                y2: finalSubstanceC
             ),
-            underlyingRight: ConstantEquation(value: initialHAConcentration)
+            underlyingRight: ConstantEquation(value: finalSubstanceC)
         )
-        let aConcentration = SwitchingEquation(
+        let secondaryConcentration = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
-            underlyingLeft: ConstantEquation(value: initialAConcentration),
+            underlyingLeft: ConstantEquation(value: initialSecondaryC),
             underlyingRight: LinearEquation(
                 x1: initialCount(.primaryIon),
-                y1: initialAConcentration,
+                y1: initialSecondaryC,
                 x2: CGFloat(maxSubstance),
-                y2: finalHAConcentration
+                y2: finalSubstanceC
             )
         )
 
-        self.haConcentration = haConcentration
-        self.aConcentration = aConcentration
-
-        self.hConcentration = SwitchingEquation(
+        let primaryConcentration = SwitchingEquation(
             thresholdX: initialCount(.primaryIon),
             underlyingLeft: LinearEquation(
                 x1: 0,
-                y1: initialHConcentration,
+                y1: initialPrimaryC,
                 x2: initialCount(.primaryIon),
                 y2: 0
             ),
             underlyingRight: ConstantEquation(value: 0)
+        )
+        self.concentration = SubstanceValue(
+            substance: substanceConcentration,
+            primaryIon: primaryConcentration,
+            secondaryIon: secondaryConcentration
         )
 
         self.haFractionInTermsOfPH = BufferSharedComponents.SubstanceFractionFromPh(pK: pKA)
         self.aFractionInTermsOfPH = BufferSharedComponents.SecondaryIonFractionFromPh(pK: pKA)
 
+        let xThreshold = initialCount(.primaryIon)
+
         // TODO - how does this class know that prev equation reaches a max at 1?
         let substanceBarChartEquation = SwitchingEquation(
-            thresholdX: prev.substanceBarEquation.getY(at: 1),
+            thresholdX: xThreshold,
             underlyingLeft: LinearEquation(
                 x1: 0,
                 y1: prev.substanceBarEquation.getY(at: 1),
-                x2: initialCount(.substance),
-                y2: finalHAConcentration
+                x2: xThreshold,
+                y2: finalSubstanceC
             ),
-            underlyingRight: ConstantEquation(value: finalHAConcentration)
+            underlyingRight: ConstantEquation(value: finalSubstanceC)
         )
         let initialIonBarHeight = prev.ionBarEquation.getY(at: 1)
         let primaryIonBarChartEquation = SwitchingEquation(
-            thresholdX: initialCount(.primaryIon),
+            thresholdX: xThreshold,
             underlyingLeft: LinearEquation(
                 x1: 0,
                 y1: initialIonBarHeight,
-                x2: initialCount(.primaryIon),
+                x2: xThreshold,
                 y2: 0
             ),
             underlyingRight: ConstantEquation(value: 0)
         )
         let secondaryIonBarChartEquation = SwitchingEquation(
-            thresholdX: initialCount(.primaryIon),
+            thresholdX: xThreshold,
             underlyingLeft: ConstantEquation(value: initialIonBarHeight),
             underlyingRight: LinearEquation(
-                x1: initialCount(.primaryIon),
+                x1: xThreshold,
                 y1: initialIonBarHeight,
                 x2: CGFloat(maxSubstance),
-                y2: finalHAConcentration
+                y2: finalSubstanceC
             )
         )
 
@@ -132,9 +136,9 @@ class BufferSaltComponents: ObservableObject {
 
     @Published var substanceAdded = 0
 
-    let haConcentration: Equation
-    let aConcentration: Equation
-    let hConcentration: Equation
+//    let haConcentration: Equation
+//    let aConcentration: Equation
+//    let hConcentration: Equation
 
     let maxSubstance: Int
 
@@ -148,13 +152,7 @@ class BufferSaltComponents: ObservableObject {
         previous.settings
     }
 
-    var concentration: SubstanceValue<Equation> {
-        SubstanceValue(
-            substance: haConcentration,
-            primaryIon: hConcentration,
-            secondaryIon: aConcentration
-        )
-    }
+    let concentration: SubstanceValue<Equation>
 
     var finalConcentration: SubstanceValue<CGFloat> {
         concentration.map { $0.getY(at: CGFloat(maxSubstance)) }
@@ -180,8 +178,8 @@ class BufferSaltComponents: ObservableObject {
     var pH: Equation {
         BufferSharedComponents.pHEquation(
             pKa: substance.pKA,
-            substanceConcentration: haConcentration,
-            secondaryConcentration: aConcentration
+            substanceConcentration: concentration.substance,
+            secondaryConcentration: concentration.secondaryIon
         )
     }
 
@@ -191,9 +189,9 @@ class BufferSaltComponents: ObservableObject {
 
     var tableData: [ICETableColumn] {
         [
-            column("HA", haConcentration),
-            column("H", hConcentration),
-            column("A", aConcentration),
+            column("HA", concentration.substance),
+            column("H", concentration.primaryIon),
+            column("A", concentration.secondaryIon),
         ]
     }
 
@@ -249,11 +247,7 @@ extension BufferSaltComponents {
     var equationData: BufferEquationData {
         BufferEquationData(
             substance: previous.substance,
-            concentration: SubstanceValue(
-                substance: haConcentration,
-                primaryIon: hConcentration,
-                secondaryIon: aConcentration
-            ),
+            concentration: concentration,
             pH: pH
         )
     }

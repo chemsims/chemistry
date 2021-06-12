@@ -24,6 +24,11 @@ class BufferSaltComponentsTests: XCTestCase {
         XCTAssertEqual(saltModel.barChartEquations.primaryIon.getY(at: 0), 0.03)
         XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getY(at: 0), 0.03)
 
+        // One molecule added
+        XCTAssertEqual(saltModel.barChartEquations.substance.getY(at: 1), 0.28)
+        XCTAssertEqual(saltModel.barChartEquations.primaryIon.getY(at: 1), 0.02, accuracy: 0.0001)
+        XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getY(at: 1), 0.03)
+
         // All of primary molecules gone
         XCTAssertEqual(saltModel.barChartEquations.substance.getY(at: 3), 0.3)
         XCTAssertEqual(saltModel.barChartEquations.primaryIon.getY(at: 3), 0)
@@ -101,6 +106,44 @@ class BufferSaltComponentsTests: XCTestCase {
         XCTAssert(model.hasAddedEnoughSubstance)
         XCTAssertFalse(model.canAddSubstance)
         XCTAssertEqual(model.substanceAdded, 30)
+    }
+
+    func testConcentration() {
+        let weakModel = BufferWeakSubstanceComponents(
+            substance: .weakAcid(
+                secondaryIon: .A,
+                substanceAddedPerIon: NonZeroPositiveInt(1)!,
+                color: .red,
+                kA: 1e-3
+            ),
+            settings: .withDefaults(
+                fractionOfFinalIonMolecules: 0.1,
+                finalSecondaryIonCount: 2,
+                minimumFinalPrimaryIonCount: 12
+            ),
+            cols: 10,
+            rows: 10
+        )
+        let expectedMax = 30
+        XCTAssertEqual(weakModel.maxSubstanceCount, expectedMax)
+        weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
+
+        let model = BufferSaltComponents(prev: weakModel)
+        let initialSubstanceConcentration = 0.3 - weakModel.changeInConcentration
+
+        XCTAssertEqual(model.concentration.substance.getY(at: 0), initialSubstanceConcentration)
+        XCTAssertEqual(model.concentration.primaryIon.getY(at: 0), weakModel.changeInConcentration)
+        XCTAssertEqual(model.concentration.secondaryIon.getY(at: 0), weakModel.changeInConcentration)
+
+
+        // All primary ion gone
+        XCTAssertEqual(model.concentration.substance.getY(at: 3), 0.3)
+        XCTAssertEqual(model.concentration.primaryIon.getY(at: 3), 0)
+        XCTAssertEqual(model.concentration.secondaryIon.getY(at: 3), weakModel.changeInConcentration)
+
+        // Equal concentrations
+        XCTAssertEqual(model.finalConcentration.substance, 0.3)
+        XCTAssertEqual(model.finalConcentration.secondaryIon, 0.3)
     }
 }
 

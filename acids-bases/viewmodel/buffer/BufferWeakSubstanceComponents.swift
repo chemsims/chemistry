@@ -114,7 +114,8 @@ class BufferWeakSubstanceComponents: ObservableObject {
         concentration.secondaryIon / (concentration.substance + concentration.secondaryIon)
     }
 
-    private var changeInConcentration: CGFloat {
+    // TODO - add a test for this
+    var changeInConcentration: CGFloat {
         guard let roots = QuadraticEquation.roots(
             a: 1,
             b: substance.kA,
