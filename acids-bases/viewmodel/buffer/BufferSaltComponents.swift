@@ -23,7 +23,9 @@ class BufferSaltComponents: ObservableObject {
                 substance: prevSubstanceCoords,
                 primaryIon: prev.ionCoords[0].molecules,
                 secondaryIon: prev.ionCoords[1].molecules
-            )
+            ),
+            cols: prev.cols,
+            rows: prev.rows
         )
 
         let initialHAConcentration = prev.concentration.substance.getY(at: 1)
@@ -126,7 +128,7 @@ class BufferSaltComponents: ObservableObject {
     }
 
     let reactingModel: ReactingBeakerViewModel<SubstancePart>
-    private let previous: BufferWeakSubstanceComponents
+    let previous: BufferWeakSubstanceComponents
 
     @Published var substanceAdded = 0
 

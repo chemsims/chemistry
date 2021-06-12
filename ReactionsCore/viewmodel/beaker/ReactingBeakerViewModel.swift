@@ -15,8 +15,8 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
     ///     - rows: Number of beaker rows
     public init(
         initial: EnumMap<Molecule, BeakerMolecules>,
-        cols: Int = MoleculeGridSettings.cols,
-        rows: Int = MoleculeGridSettings.rows
+        cols: Int,
+        rows: Int
     ) {
         molecules = Molecule.allCases.map { molecule in
             ReactingMolecules(

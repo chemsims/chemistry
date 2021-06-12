@@ -280,7 +280,7 @@ extension BufferWeakSubstanceComponents {
             fractionOfFinalIonMolecules: 0.15,
             minimumInitialIonCount: 2,
             finalSecondaryIonCount: 3,
-            minimumFinalPrimaryIonCount: 3
+            minimumFinalPrimaryIonCount: 10
         )
     }
 }

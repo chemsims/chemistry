@@ -10,7 +10,7 @@ class BufferStrongSubstanceComponents: ObservableObject {
     init(prev: BufferSaltComponents) {
         self.previous = prev
         let initialCoords = prev.reactingModel.consolidated
-        self.reactingModel = ReactingBeakerViewModel(initial: initialCoords)
+        self.reactingModel = ReactingBeakerViewModel(initial: initialCoords, cols: prev.previous.cols, rows: prev.previous.rows)
 
         let initialSecondary = initialCoords.value(for: .secondaryIon).coords.count
         let finalSecondary = prev.settings.finalSecondaryIonCount
