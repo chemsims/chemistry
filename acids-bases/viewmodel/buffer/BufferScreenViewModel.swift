@@ -48,6 +48,10 @@ class BufferScreenViewModel: ObservableObject {
     @Published var selectedBottomGraph = BottomGraph.bars
     @Published var equationState = EquationState.weakAcidBlank
 
+    // This is published as otherwise the beaky box is not redrawn when the computed
+    // property changes
+    @Published var canGoNext: Bool = true
+
     private(set) var shakeModel: MultiContainerShakeViewModel<Phase>!
     private(set) var navigation: NavigationModel<BufferScreenState>?
 }
@@ -55,11 +59,29 @@ class BufferScreenViewModel: ObservableObject {
 // MARK: Navigation
 extension BufferScreenViewModel {
     func next() {
-        navigation?.next()
+        if canGoNext {
+            navigation?.next()
+            canGoNext = canGoNextComputedProperty
+        }
     }
 
     func back() {
         navigation?.back()
+        canGoNext = true
+    }
+
+    private var canGoNextComputedProperty: Bool {
+        switch input {
+        case .addMolecule(phase: .addWeakSubstance):
+            assert(weakSubstanceModel.limitsAreValid) // TODO - find a better way to handle this
+            return weakSubstanceModel.hasAddedEnoughSubstance
+        case .addMolecule(phase: .addSalt):
+            return saltComponents.hasAddedEnoughSubstance
+        case .addMolecule(phase: .addStrongSubstance):
+            return strongSubstanceModel.hasAddedEnoughSubstance
+        default:
+            return true
+        }
     }
 
     func goToAddSaltPhase() {
@@ -67,7 +89,7 @@ extension BufferScreenViewModel {
         phase = .addSalt
     }
 
-    func goToPhase3() {
+    func goToStrongSubstancePhase() {
         strongSubstanceModel = BufferStrongSubstanceComponents(prev: saltComponents)
         phase = .addStrongSubstance
     }
@@ -82,10 +104,15 @@ extension BufferScreenViewModel {
         case .addSalt: saltComponents.incrementSalt(count: count)
         case .addStrongSubstance: strongSubstanceModel.incrementStrongSubstance(count: count)
         }
+        canGoNext = canGoNextComputedProperty
     }
 
     private func canAddMolecule(phase: Phase) -> Bool {
-        true // TODO
+        switch phase {
+        case .addWeakSubstance: return weakSubstanceModel.canAddSubstance
+        case .addSalt: return saltComponents.canAddSubstance
+        case .addStrongSubstance: return strongSubstanceModel.canAddSubstance
+        }
     }
 }
 

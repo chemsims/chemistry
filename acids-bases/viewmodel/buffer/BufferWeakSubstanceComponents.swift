@@ -179,6 +179,11 @@ extension BufferWeakSubstanceComponents {
         remainingCountAvailable > 0
     }
 
+    /// Returns true if the minimum input is less than the the maximum input
+    var limitsAreValid: Bool {
+        minSubstanceCount < maxSubstanceCount
+    }
+
     private var remainingCountAvailable: Int {
         max(0, maxSubstanceCount - substanceCoords.coords.count)
     }

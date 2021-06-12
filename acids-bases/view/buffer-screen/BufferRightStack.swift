@@ -33,7 +33,7 @@ struct BufferRightStack: View {
             statement: model.statement,
             next: model.next,
             back: model.back,
-            nextIsDisabled: false,
+            nextIsDisabled: !model.canGoNext,
             settings: layout.common.beakySettings
         )
     }
