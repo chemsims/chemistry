@@ -11,7 +11,7 @@ class BufferWeakComponentsTests: XCTestCase {
     func testBarChartData() {
         let model = newModel(
             .weakAcid(substanceAddedPerIon: 1),
-            settings: .init(
+            settings: .withDefaults(
                 changeInBarHeightAsFractionOfInitialSubstance: 0.1,
                 fractionOfFinalIonMolecules: 0.1
             )
@@ -36,7 +36,7 @@ class BufferWeakComponentsTests: XCTestCase {
     func testBeakerCoords() {
         let model = newModel(
             .weakAcid(substanceAddedPerIon: 1),
-            settings: .init(
+            settings: .withDefaults(
                 changeInBarHeightAsFractionOfInitialSubstance: 0.1,
                 fractionOfFinalIonMolecules: 0.1
             )
@@ -58,13 +58,77 @@ class BufferWeakComponentsTests: XCTestCase {
         XCTAssert(intersection.isEmpty)
     }
 
-    private func weakAcid(kA: CGFloat) -> AcidOrBase {
-        AcidOrBase.weakAcid(
-            secondaryIon: .A,
-            substanceAddedPerIon: NonZeroPositiveInt(1)!,
-            color: .red,
-            kA: kA
+    func testInputLimits() {
+        let model = newModel(
+            .weakAcid(substanceAddedPerIon: 1),
+            settings: .withDefaults(
+                fractionOfFinalIonMolecules: 0.25,
+                minimumInitialIonCount: 6,
+                finalSecondaryIonCount: 4,
+                minimumFinalPrimaryIonCount: 5
+            )
         )
+
+        XCTAssertEqual(model.minSubstanceCount, 24)
+
+        // Proof of this max (see also the docs of the property):
+        // Say we start with 33 HA molecules
+        // At the end of phase 2, we have 33 HA and 33 A molecules
+        // We must remove 29 HA molecules, to end up with 4.
+        // We now have 33 + 33 + 29 = 95 molecules in the beaker.
+        //
+        // We then must add an extra 5 to satisfy the min final
+        // primary ion count, which takes us to 99.
+        //
+        // If we had started with 34 HA molecules, then we would have
+        // 34 + 34 + 30 + 5 = 103 molecules, which exceeds the grid size
+        let expectedMax = 33
+        XCTAssertEqual(model.maxSubstanceCount, expectedMax)
+    }
+
+    // Tests input limits where there the fractions produce floating points
+    func testInputLimitsWithRounding() {
+        let model = newModel(
+            .weakAcid(substanceAddedPerIon: 1),
+            settings: .withDefaults(
+                fractionOfFinalIonMolecules: 0.15,
+                minimumInitialIonCount: 4,
+                finalSecondaryIonCount: 8,
+                minimumFinalPrimaryIonCount: 20
+            )
+        )
+
+        XCTAssertEqual(model.minSubstanceCount, 27)
+
+        let expectedMax = 29
+        XCTAssertEqual(model.maxSubstanceCount, expectedMax)
+    }
+
+    func testInputLimitsAreEnforced() {
+        let model = newModel(
+            .weakAcid(substanceAddedPerIon: 1),
+            settings: .withDefaults(
+                fractionOfFinalIonMolecules: 0.25,
+                minimumInitialIonCount: 6,
+                finalSecondaryIonCount: 4,
+                minimumFinalPrimaryIonCount: 5
+            )
+        )
+
+        // Same limits as a previous test
+        let expectedMin = 24
+        let expectedMax = 33
+
+        XCTAssertFalse(model.hasAddedEnoughSubstance)
+        model.incrementSubstance(count: expectedMin)
+        XCTAssert(model.hasAddedEnoughSubstance)
+
+        XCTAssert(model.canAddSubstance)
+        model.incrementSubstance(count: expectedMax - expectedMin)
+        XCTAssertFalse(model.canAddSubstance)
+
+        model.incrementSubstance(count: 10)
+        XCTAssertEqual(model.substanceCoords.coords.count, expectedMax)
     }
 
     private func newModel(

@@ -10,7 +10,7 @@ class BufferSaltComponentsTests: XCTestCase {
 
     func testBarChartData() {
         let acid = AcidOrBase.weakAcid(substanceAddedPerIon: 1)
-        let weakModelSettings = BufferWeakSubstanceComponents.Settings(
+        let weakModelSettings = BufferWeakSubstanceComponents.Settings.withDefaults(
             changeInBarHeightAsFractionOfInitialSubstance: 0.1,
             fractionOfFinalIonMolecules: 0.1
         )

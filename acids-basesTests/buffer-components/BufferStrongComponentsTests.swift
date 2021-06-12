@@ -12,7 +12,7 @@ class BufferStrongComponentsTests: XCTestCase {
     func testBarChartData() {
         let weakModel = BufferWeakSubstanceComponents(
             substance: .weakAcid(substanceAddedPerIon: 1),
-            settings: .init(
+            settings: .withDefaults(
                 changeInBarHeightAsFractionOfInitialSubstance: 0.1,
                 fractionOfFinalIonMolecules: 0.1
             ),
