@@ -142,6 +142,10 @@ class BufferSaltComponents: ObservableObject {
         previous.substance
     }
 
+    var settings: BufferWeakSubstanceComponents.Settings {
+        previous.settings
+    }
+
     var concentration: SubstanceValue<Equation> {
         SubstanceValue(
             substance: haConcentration,

@@ -54,7 +54,12 @@ class BufferStrongSubstanceComponents: ObservableObject {
     let maxSubstance: Int
     let concentration: SubstanceValue<Equation>
 
+    var settings: BufferWeakSubstanceComponents.Settings {
+        previous.settings
+    }
+
     func incrementStrongSubstance(count: Int) {
+        // TODO - fix case when count passed in > 1 near the limit
         guard substanceAdded < maxSubstance else {
             return
         }
@@ -63,7 +68,8 @@ class BufferStrongSubstanceComponents: ObservableObject {
             reactingWith: .secondaryIon,
             producing: .substance,
             withDuration: 1,
-            count: count
+            count: count,
+            minConsumableReactantCoords: settings.finalSecondaryIonCount
         )
         withAnimation(.linear(duration: 1)) {
             substanceAdded += count

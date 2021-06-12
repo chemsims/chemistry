@@ -58,15 +58,26 @@ class BufferStrongComponentsTests: XCTestCase {
         weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
 
         let saltModel = BufferSaltComponents(prev: weakModel)
+        saltModel.incrementSalt(count: saltModel.maxSubstance)
         let model = BufferStrongSubstanceComponents(prev: saltModel)
 
         func molecules(_ part: SubstancePart) -> BeakerMolecules {
             model.reactingModel.consolidated.value(for: part)
         }
 
-//        XCTAssertEqual(molecules(.substance).coords.count, expectedMaxSubstance)
-//        XCTAssertEqual(molecules(.primaryIon).coords.count, 0)
-//        XCTAssertEqual(molecules(.secondaryIon).coords.count, expectedMaxSubstance)
+        XCTAssertEqual(molecules(.substance).coords.count, 33)
+        XCTAssertEqual(molecules(.primaryIon).coords.count, 0)
+        XCTAssertEqual(molecules(.secondaryIon).coords.count, 33)
+
+        model.incrementStrongSubstance(count: 28) // 33 - 5
+        XCTAssertEqual(molecules(.substance).coords.count, 89) // 33 + (2 * 28)
+        XCTAssertEqual(molecules(.primaryIon).coords.count, 0)
+        XCTAssertEqual(molecules(.secondaryIon).coords.count, 5)
+
+        model.incrementStrongSubstance(count: 6)
+        XCTAssertEqual(molecules(.substance).coords.count, 89)
+        XCTAssertEqual(molecules(.primaryIon).coords.count, 6)
+        XCTAssertEqual(molecules(.secondaryIon).coords.count, 5)
     }
 }
 
