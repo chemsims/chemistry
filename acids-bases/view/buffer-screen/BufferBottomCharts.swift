@@ -25,14 +25,14 @@ struct BufferBottomCharts: View {
                 layout: layout,
                 phase: model.phase,
                 weakModel: model.weakSubstanceModel,
-                saltModel: model.saltComponents,
+                saltModel: model.saltModel,
                 strongModel: model.strongSubstanceModel
             )
         case .curve:
             BufferFractionsChart(
                 layout: layout,
                 phase: model.phase,
-                saltModel: model.saltComponents,
+                saltModel: model.saltModel,
                 strongModel: model.strongSubstanceModel
             )
         case .neutralization:

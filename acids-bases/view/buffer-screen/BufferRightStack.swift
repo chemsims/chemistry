@@ -22,7 +22,7 @@ struct BufferRightStack: View {
         SwitchingBufferEquationView(
             model: model,
             weakSubstanceModel: model.weakSubstanceModel,
-            saltModel: model.saltComponents,
+            saltModel: model.saltModel,
             strongSubstanceModel: model.strongSubstanceModel
         )
         .frame(size: layout.equationSize)

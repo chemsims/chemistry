@@ -53,7 +53,7 @@ struct BufferPHChartOrTable: View {
         BufferICETable(
             phase: model.phase,
             weakModel: model.weakSubstanceModel,
-            saltModel: model.saltComponents,
+            saltModel: model.saltModel,
             strongModel: model.strongSubstanceModel
         )
         .frame(size: layout.tableSize)

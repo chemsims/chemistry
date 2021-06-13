@@ -21,7 +21,7 @@ class BufferScreenViewModel: ObservableObject {
 
         self.rows = CGFloat(initialRows)
         self.weakSubstanceModel = weakModel
-        self.saltComponents = saltModel
+        self.saltModel = saltModel
         self.strongSubstanceModel = strongModel
 
         self.substance = initialSubstance
@@ -42,7 +42,7 @@ class BufferScreenViewModel: ObservableObject {
     @Published var phase = Phase.addWeakSubstance
     @Published var substance: AcidOrBase
     @Published var weakSubstanceModel: BufferWeakSubstanceComponents
-    @Published var saltComponents: BufferSaltComponents
+    @Published var saltModel: BufferSaltComponents
     @Published var strongSubstanceModel: BufferStrongSubstanceComponents
 
     @Published var selectedBottomGraph = BottomGraph.bars
@@ -76,7 +76,7 @@ extension BufferScreenViewModel {
             assert(weakSubstanceModel.limitsAreValid) // TODO - find a better way to handle this
             return weakSubstanceModel.hasAddedEnoughSubstance
         case .addMolecule(phase: .addSalt):
-            return saltComponents.hasAddedEnoughSubstance
+            return saltModel.hasAddedEnoughSubstance
         case .addMolecule(phase: .addStrongSubstance):
             return strongSubstanceModel.hasAddedEnoughSubstance
         default:
@@ -85,12 +85,12 @@ extension BufferScreenViewModel {
     }
 
     func goToAddSaltPhase() {
-        saltComponents = BufferSaltComponents(prev: weakSubstanceModel)
+        saltModel = BufferSaltComponents(prev: weakSubstanceModel)
         phase = .addSalt
     }
 
     func goToStrongSubstancePhase() {
-        strongSubstanceModel = BufferStrongSubstanceComponents(prev: saltComponents)
+        strongSubstanceModel = BufferStrongSubstanceComponents(prev: saltModel)
         phase = .addStrongSubstance
     }
 }
@@ -101,7 +101,7 @@ extension BufferScreenViewModel {
     private func addMolecule(phase: Phase, count: Int) {
         switch phase {
         case .addWeakSubstance: weakSubstanceModel.incrementSubstance(count: count)
-        case .addSalt: saltComponents.incrementSalt(count: count)
+        case .addSalt: saltModel.incrementSalt(count: count)
         case .addStrongSubstance: strongSubstanceModel.incrementStrongSubstance(count: count)
         }
         canGoNext = canGoNextComputedProperty
@@ -110,7 +110,7 @@ extension BufferScreenViewModel {
     private func canAddMolecule(phase: Phase) -> Bool {
         switch phase {
         case .addWeakSubstance: return weakSubstanceModel.canAddSubstance
-        case .addSalt: return saltComponents.canAddSubstance
+        case .addSalt: return saltModel.canAddSubstance
         case .addStrongSubstance: return strongSubstanceModel.canAddSubstance
         }
     }

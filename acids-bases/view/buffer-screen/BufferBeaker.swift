@@ -25,7 +25,7 @@ struct BufferBeaker: View {
                 layout: layout,
                 model: model,
                 weakSubstanceModel: model.weakSubstanceModel,
-                saltModelReaction: model.saltComponents.reactingModel,
+                saltModelReaction: model.saltModel.reactingModel,
                 strongSubstanceReaction: model.strongSubstanceModel.reactingModel
             )
         }
