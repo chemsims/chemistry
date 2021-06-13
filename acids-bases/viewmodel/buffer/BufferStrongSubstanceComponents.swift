@@ -27,7 +27,7 @@ class BufferStrongSubstanceComponents: ObservableObject {
             initialSecondaryConcentration: previous.finalConcentration.secondaryIon
         )
 
-        let primaryConcentration = ConstantEquation(value: 0)
+
         let substanceConcentration = LinearEquation(
             x1: 0,
             y1: prev.finalConcentration.substance,
@@ -40,6 +40,7 @@ class BufferStrongSubstanceComponents: ObservableObject {
             x2: CGFloat(maxSubstance),
             y2: prev.finalConcentration.secondaryIon - changeInConcentration
         )
+        let primaryConcentration = (prev.substance.kA * substanceConcentration) / secondaryConcentration
 
         self.concentration = SubstanceValue(
             substance: substanceConcentration,
