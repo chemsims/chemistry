@@ -288,7 +288,7 @@ struct BufferComponentSettings {
         initialIonMoleculeFraction: 0.1,
         minimumInitialIonCount: 2,
         finalSecondaryIonCount: 3,
-        minimumFinalPrimaryIonCount: 5,
+        minimumFinalPrimaryIonCount: 7,
         maxFinalBeakerConcentration: 0.65
     )
 }

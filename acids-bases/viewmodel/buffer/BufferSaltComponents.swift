@@ -183,22 +183,6 @@ class BufferSaltComponents: ObservableObject {
         pH.getY(at: CGFloat(maxSubstance))
     }
 
-    var tableData: [ICETableColumn] {
-        [
-            column("HA", concentration.substance),
-            column("H", concentration.primaryIon),
-            column("A", concentration.secondaryIon),
-        ]
-    }
-
-    private func column(_ name: String, _ equation: Equation) -> ICETableColumn {
-        ICETableColumn(
-            header: name,
-            initialValue: ConstantEquation(value: equation.getY(at: 0)),
-            finalValue: equation
-        )
-    }
-
     let haFractionInTermsOfPH: Equation
     let aFractionInTermsOfPH: Equation
 
@@ -245,6 +229,25 @@ extension BufferSaltComponents {
             substance: previous.substance,
             concentration: concentration,
             pH: pH
+        )
+    }
+}
+
+// MARK: Table data
+extension BufferSaltComponents {
+    var tableData: [ICETableColumn] {
+        [
+            column(.substance),
+            column(.primaryIon),
+            column(.secondaryIon)
+        ]
+    }
+
+    private func column(_ part: SubstancePart) -> ICETableColumn {
+        ICETableColumn(
+            header: substance.symbol(ofPart: part),
+            initialValue: ConstantEquation(value: concentration.value(for: part).getY(at: 0)),
+            finalValue: concentration.value(for: part)
         )
     }
 }

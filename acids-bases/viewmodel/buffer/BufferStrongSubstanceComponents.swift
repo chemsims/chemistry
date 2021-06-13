@@ -143,7 +143,6 @@ extension BufferStrongSubstanceComponents {
     }
 }
 
-
 // MARK: Bar chart data
 extension BufferStrongSubstanceComponents {
 
@@ -160,6 +159,25 @@ extension BufferStrongSubstanceComponents {
 
     var barChartData: [BarChartData] {
         barChartMap.all
+    }
+}
+
+// MARK: Table data
+extension BufferStrongSubstanceComponents {
+    var tableData: [ICETableColumn] {
+        [
+            column(.substance),
+            column(.primaryIon),
+            column(.secondaryIon)
+        ]
+    }
+
+    private func column(_ part: SubstancePart) -> ICETableColumn {
+        ICETableColumn(
+            header: substance.symbol(ofPart: part),
+            initialValue: ConstantEquation(value: concentration.value(for: part).getY(at: 0)),
+            finalValue: concentration.value(for: part)
+        )
     }
 }
 

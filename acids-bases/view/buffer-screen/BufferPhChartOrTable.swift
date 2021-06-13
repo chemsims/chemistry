@@ -52,8 +52,9 @@ struct BufferPHChartOrTable: View {
     private var table: some View {
         BufferICETable(
             phase: model.phase,
-            phase1Component: model.weakSubstanceModel,
-            phase2Component: model.saltComponents
+            weakModel: model.weakSubstanceModel,
+            saltModel: model.saltComponents,
+            strongModel: model.strongSubstanceModel
         )
         .frame(size: layout.tableSize)
     }
@@ -62,22 +63,27 @@ struct BufferPHChartOrTable: View {
 private struct BufferICETable: View {
 
     let phase: BufferScreenViewModel.Phase
-    @ObservedObject var phase1Component: BufferWeakSubstanceComponents
-    @ObservedObject var phase2Component: BufferSaltComponents
+    @ObservedObject var weakModel: BufferWeakSubstanceComponents
+    @ObservedObject var saltModel: BufferSaltComponents
+    @ObservedObject var strongModel: BufferStrongSubstanceComponents
 
     var body: some View {
-        Group {
-            if phase == .addWeakSubstance {
-                ICETable(
-                    columns: phase1Component.tableData,
-                    x: phase1Component.progress
-                )
-            } else {
-                ICETable(
-                    columns: phase2Component.tableData,
-                    x: CGFloat(phase2Component.substanceAdded)
-                )
-            }
+        ICETable(columns: columns, x: progress)
+    }
+
+    private var columns: [ICETableColumn] {
+        switch phase {
+        case .addWeakSubstance: return weakModel.tableData
+        case .addSalt: return saltModel.tableData
+        case .addStrongSubstance: return strongModel.tableData
+        }
+    }
+
+    private var progress: CGFloat {
+        switch phase {
+        case .addWeakSubstance: return weakModel.progress
+        case .addSalt: return CGFloat(saltModel.substanceAdded)
+        case .addStrongSubstance: return CGFloat(strongModel.substanceAdded)
         }
     }
 }
