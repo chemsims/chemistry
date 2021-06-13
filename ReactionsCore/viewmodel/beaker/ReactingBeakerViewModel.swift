@@ -81,7 +81,7 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
         let surplusCount = count - coordCountToConsume
 
         if surplusCount > 0 {
-            addToCoords(molecule: reactant, count: surplusCount)
+            addDirectly(molecule: reactant, count: surplusCount)
         }
 
         if coordCountToConsume <= 0 {
@@ -129,6 +129,26 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
         }
     }
 
+    /// Adds `molecule` directly to the beaker, with no reaction taking place.
+    ///
+    /// - Parameters:
+    ///     - molecule: The molecule to add
+    ///     - count: Number of molecules to add
+    public func addDirectly(
+        molecule: Molecule,
+        count: Int
+    ) {
+        let index = baseIndices.value(for: molecule)
+        let currentCoords = molecules[index].molecules.coords
+        molecules[index].molecules.coords = GridCoordinateList.addingRandomElementsTo(
+            grid: currentCoords,
+            count: count,
+            cols: cols,
+            rows: rows,
+            avoiding: molecules.flatMap { $0.molecules.coords }
+        )
+    }
+
     /// Returns an `EnumMap` of molecule to the beaker molecules which are displayed
     public var consolidated: EnumMap<Molecule, BeakerMolecules> {
         func beakerMolecules(forMolecule molecule: Molecule) -> BeakerMolecules {
@@ -145,21 +165,6 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
 
     private func color(of molecule: Molecule) -> Color {
         molecules[baseIndices.value(for: molecule)].molecules.color
-    }
-
-    private func addToCoords(
-        molecule: Molecule,
-        count: Int
-    ) {
-        let index = baseIndices.value(for: molecule)
-        let currentCoords = molecules[index].molecules.coords
-        molecules[index].molecules.coords = GridCoordinateList.addingRandomElementsTo(
-            grid: currentCoords,
-            count: count,
-            cols: cols,
-            rows: rows,
-            avoiding: molecules.flatMap { $0.molecules.coords }
-        )
     }
 }
 

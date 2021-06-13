@@ -53,8 +53,7 @@ class BufferStrongComponentsTests: XCTestCase {
 
         // See parameter docs or weak model tests for explanation
         // of this number
-        let expectedMaxSubstance = 33
-        XCTAssertEqual(weakModel.maxSubstanceCount, expectedMaxSubstance)
+        XCTAssertEqual(weakModel.maxSubstanceCount, 33)
         weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
 
         let saltModel = BufferSaltComponents(prev: weakModel)
@@ -65,16 +64,39 @@ class BufferStrongComponentsTests: XCTestCase {
             model.reactingModel.consolidated.value(for: part)
         }
 
+        // Before any substance added
         XCTAssertEqual(molecules(.substance).coords.count, 33)
         XCTAssertEqual(molecules(.primaryIon).coords.count, 0)
         XCTAssertEqual(molecules(.secondaryIon).coords.count, 33)
 
-        model.incrementStrongSubstance(count: 28) // 33 - 5
-        XCTAssertEqual(molecules(.substance).coords.count, 89) // 33 + (2 * 28)
-        XCTAssertEqual(molecules(.primaryIon).coords.count, 0)
-        XCTAssertEqual(molecules(.secondaryIon).coords.count, 5)
+        // We should have 5 secondary remaining, so we add 28 (33 - 5) to remove the other
+        // secondary. Then we need to add another 6 primary
+        let expectedMax = 34
+        XCTAssertEqual(model.maxSubstance, expectedMax)
 
-        model.incrementStrongSubstance(count: 6)
+        // We expect that every 5 molecules, the primary coords increase by 1
+
+        // No primary should be present yet
+        model.incrementStrongSubstance(count: 4)
+        XCTAssertEqual(molecules(.substance).coords.count, 41)
+        XCTAssertEqual(molecules(.primaryIon).coords.count, 0)
+        XCTAssertEqual(molecules(.secondaryIon).coords.count, 29)
+
+        // The first primary coord should be added
+        model.incrementStrongSubstance(count: 1)
+        XCTAssertEqual(molecules(.substance).coords.count, 41)
+        XCTAssertEqual(molecules(.primaryIon).coords.count, 1)
+        XCTAssertEqual(molecules(.secondaryIon).coords.count, 29)
+
+        // Increment multiple at once. We expect 8 secondary molecules to react
+        // and 2 primary molecules to be produced
+        model.incrementStrongSubstance(count: 10)
+        XCTAssertEqual(molecules(.substance).coords.count, 57)
+        XCTAssertEqual(molecules(.primaryIon).coords.count, 3)
+        XCTAssertEqual(molecules(.secondaryIon).coords.count, 21)
+
+        // We reached the limit of substance
+        model.incrementStrongSubstance(count: 19)
         XCTAssertEqual(molecules(.substance).coords.count, 89)
         XCTAssertEqual(molecules(.primaryIon).coords.count, 6)
         XCTAssertEqual(molecules(.secondaryIon).coords.count, 5)

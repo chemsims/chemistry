@@ -65,16 +65,32 @@ class BufferStrongSubstanceComponents: ObservableObject {
         guard maxToAdd > 0 else {
             return
         }
-        reactingModel.add(
-            reactant: .primaryIon,
-            reactingWith: .secondaryIon,
-            producing: .substance,
-            withDuration: 1,
-            count: maxToAdd,
-            minConsumableReactantCoords: settings.finalSecondaryIonCount
-        )
+
+        let primaryMoleculeFrequency = Int(Double(maxSubstance) / Double(settings.minimumFinalPrimaryIonCount))
+        let newSubstanceAdded = substanceAdded + maxToAdd
+
+        let currentPrimaryMolecules = Int(Double(substanceAdded) / Double(primaryMoleculeFrequency))
+        let targetPrimaryMolecules = Int(Double(newSubstanceAdded) / Double(primaryMoleculeFrequency))
+
+        let primaryToAdd = targetPrimaryMolecules - currentPrimaryMolecules
+        let moleculesToReact = maxToAdd - primaryToAdd
+
+        if primaryToAdd > 0 {
+            reactingModel.addDirectly(molecule: .primaryIon, count: primaryToAdd)
+        }
+
+        if moleculesToReact > 0 {
+            reactingModel.add(
+                reactant: .primaryIon,
+                reactingWith: .secondaryIon,
+                producing: .substance,
+                withDuration: 1,
+                count: moleculesToReact
+            )
+        }
+
         withAnimation(.linear(duration: 1)) {
-            substanceAdded += maxToAdd
+            substanceAdded = newSubstanceAdded
         }
     }
 

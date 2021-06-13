@@ -57,7 +57,7 @@ public struct GridCoordinateList {
         var builder = grid
 
         func add(_ remaining: Int) {
-            if (remaining == 0 || Set(builder + avoiding).count >= (cols * rows)) {
+            if (remaining <= 0 || Set(builder + avoiding).count >= (cols * rows)) {
                 return
             }
             let coord = GridCoordinate.random(maxCol: cols - 1, maxRow: rows - 1)
