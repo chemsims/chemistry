@@ -69,6 +69,12 @@
 		5725972325EE3E9400D87964 /* ReactionComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972225EE3E9400D87964 /* ReactionComponentTests.swift */; };
 		5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972925EE3ECE00D87964 /* Extensions.swift */; };
 		5729BC22261D883F000390A0 /* SolubilityChartEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5729BC21261D883F000390A0 /* SolubilityChartEquation.swift */; };
+		572B1A712675D01000302B8E /* ReactionProgressChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A702675D01000302B8E /* ReactionProgressChart.swift */; };
+		572B1A732675D3EE00302B8E /* ReactionProgressChartViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A722675D3EE00302B8E /* ReactionProgressChartViewModelTests.swift */; };
+		572B1A762675DC5100302B8E /* ReactionProgressChartGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A752675DC5100302B8E /* ReactionProgressChartGeometryTests.swift */; };
+		572B1A792675DF5B00302B8E /* ReactionProgressChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A782675DF5B00302B8E /* ReactionProgressChartViewModel.swift */; };
+		572B1A7C2675DF9100302B8E /* ReactionProgressChartGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A7B2675DF9100302B8E /* ReactionProgressChartGeometry.swift */; };
+		572B1A802675F42800302B8E /* ReactionProgressChartViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A7F2675F42800302B8E /* ReactionProgressChartViewModelDelegate.swift */; };
 		572BCF212603614000CE3FE0 /* ReactionComponentsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572BCF202603614000CE3FE0 /* ReactionComponentsWrapper.swift */; };
 		572BCF2C26036F3000CE3FE0 /* ArrayExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572BCF2626036E7700CE3FE0 /* ArrayExtensionTests.swift */; };
 		572CB93E255C36DD0071C600 /* ConcentrationBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */; };
@@ -711,6 +717,12 @@
 		5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownSelectionView.swift; sourceTree = "<group>"; };
 		5727487325A61BDD000CFA1E /* ReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionType.swift; sourceTree = "<group>"; };
 		5729BC21261D883F000390A0 /* SolubilityChartEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityChartEquation.swift; sourceTree = "<group>"; };
+		572B1A702675D01000302B8E /* ReactionProgressChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionProgressChart.swift; sourceTree = "<group>"; };
+		572B1A722675D3EE00302B8E /* ReactionProgressChartViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionProgressChartViewModelTests.swift; sourceTree = "<group>"; };
+		572B1A752675DC5100302B8E /* ReactionProgressChartGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionProgressChartGeometryTests.swift; sourceTree = "<group>"; };
+		572B1A782675DF5B00302B8E /* ReactionProgressChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionProgressChartViewModel.swift; sourceTree = "<group>"; };
+		572B1A7B2675DF9100302B8E /* ReactionProgressChartGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionProgressChartGeometry.swift; sourceTree = "<group>"; };
+		572B1A7F2675F42800302B8E /* ReactionProgressChartViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionProgressChartViewModelDelegate.swift; sourceTree = "<group>"; };
 		572BCF202603614000CE3FE0 /* ReactionComponentsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComponentsWrapper.swift; sourceTree = "<group>"; };
 		572BCF2626036E7700CE3FE0 /* ArrayExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensionTests.swift; sourceTree = "<group>"; };
 		572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationBarChart.swift; sourceTree = "<group>"; };
@@ -1583,6 +1595,40 @@
 			path = enums;
 			sourceTree = "<group>";
 		};
+		572B1A6F2675CFF500302B8E /* reaction-progress */ = {
+			isa = PBXGroup;
+			children = (
+				572B1A702675D01000302B8E /* ReactionProgressChart.swift */,
+			);
+			path = "reaction-progress";
+			sourceTree = "<group>";
+		};
+		572B1A742675DC3D00302B8E /* reaction-progress */ = {
+			isa = PBXGroup;
+			children = (
+				572B1A722675D3EE00302B8E /* ReactionProgressChartViewModelTests.swift */,
+				572B1A752675DC5100302B8E /* ReactionProgressChartGeometryTests.swift */,
+			);
+			path = "reaction-progress";
+			sourceTree = "<group>";
+		};
+		572B1A772675DF3900302B8E /* reaction-progress */ = {
+			isa = PBXGroup;
+			children = (
+				572B1A782675DF5B00302B8E /* ReactionProgressChartViewModel.swift */,
+				572B1A7F2675F42800302B8E /* ReactionProgressChartViewModelDelegate.swift */,
+			);
+			path = "reaction-progress";
+			sourceTree = "<group>";
+		};
+		572B1A7A2675DF8700302B8E /* reaction-progress */ = {
+			isa = PBXGroup;
+			children = (
+				572B1A7B2675DF9100302B8E /* ReactionProgressChartGeometry.swift */,
+			);
+			path = "reaction-progress";
+			sourceTree = "<group>";
+		};
 		572CB93B255C36B00071C600 /* timechart */ = {
 			isa = PBXGroup;
 			children = (
@@ -1710,6 +1756,7 @@
 		57438A37260A26BE005E3888 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				572B1A772675DF3900302B8E /* reaction-progress */,
 				570A765F266CC2FE009329FB /* beaker */,
 				573F16912584ACEC001CE039 /* QuizViewModel.swift */,
 				578B170D2618748200D8079F /* motion */,
@@ -2212,6 +2259,7 @@
 		5797A44D25E4069F00991BD9 /* ReactionsCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				572B1A742675DC3D00302B8E /* reaction-progress */,
 				57FD401126484F6800E352C1 /* persistence */,
 				57FD400826484EC700E352C1 /* quizTests */,
 				57A5F087263EBD12002F23DE /* quiz-parsing-test-cases */,
@@ -2244,6 +2292,7 @@
 		5797A45E25E406FC00991BD9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				572B1A7A2675DF8700302B8E /* reaction-progress */,
 				57D60150265EACF300017E25 /* validation */,
 				578B1714261874CC00D8079F /* motion */,
 				57B3B8F9260B280600EB9B47 /* analytics */,
@@ -2300,6 +2349,7 @@
 		5797A47A25E4092600991BD9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				572B1A6F2675CFF500302B8E /* reaction-progress */,
 				57436610266E7D61007F0410 /* table */,
 				575C90E126629768001DCD17 /* ph */,
 				579EA90A264728AE008461E8 /* modifiers */,
@@ -3737,6 +3787,7 @@
 				57315EC626401CF500A7D0F9 /* QuizReviewBody.swift in Sources */,
 				578B1700261864CB00D8079F /* CoreMotionPositionViewModel.swift in Sources */,
 				575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */,
+				572B1A802675F42800302B8E /* ReactionProgressChartViewModelDelegate.swift in Sources */,
 				573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */,
 				57438A42260A2DC7005E3888 /* ScreenProvider.swift in Sources */,
 				57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */,
@@ -3748,6 +3799,7 @@
 				57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */,
 				57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */,
 				575A880F25E4310700AEE448 /* QuizOption.swift in Sources */,
+				572B1A7C2675DF9100302B8E /* ReactionProgressChartGeometry.swift in Sources */,
 				57B92EBD2665356600023E7C /* TextLineUtil.swift in Sources */,
 				57DDAD5B25E57E9300B535A7 /* ChartLine.swift in Sources */,
 				575A889525E438CD00AEE448 /* BundleExtension.swift in Sources */,
@@ -3778,6 +3830,7 @@
 				57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */,
 				57567B422605F156009711D4 /* GridElementSetter.swift in Sources */,
 				579CDA1D2661656D00143809 /* AdjustableFluidBeaker.swift in Sources */,
+				572B1A712675D01000302B8E /* ReactionProgressChart.swift in Sources */,
 				57686AC72600E342005BD328 /* BurnerView.swift in Sources */,
 				57DDAD4E25E57E2A00B535A7 /* TimeChartDataLineView.swift in Sources */,
 				579EA90926472836008461E8 /* RGBEquation.swift in Sources */,
@@ -3841,6 +3894,7 @@
 				579EA8F5264687AE008461E8 /* BarChartAxis.swift in Sources */,
 				57FA3AB92660F27B0073A29B /* ColoredText.swift in Sources */,
 				57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */,
+				572B1A792675DF5B00302B8E /* ReactionProgressChartViewModel.swift in Sources */,
 				5784F44B2663F5A100513B2A /* MultiContainerShakeViewModel.swift in Sources */,
 				57315EBD26401C0800A7D0F9 /* QuizViewModel.swift in Sources */,
 				57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */,
@@ -3898,6 +3952,7 @@
 				57FD401526484FA600E352C1 /* QuizViewModelTests.swift in Sources */,
 				57FD402226486F8300E352C1 /* NavigationTestMethods.swift in Sources */,
 				57FD401B2648506300E352C1 /* NavigationViewModelTests.swift in Sources */,
+				572B1A732675D3EE00302B8E /* ReactionProgressChartViewModelTests.swift in Sources */,
 				57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */,
 				57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */,
 				572BCF2C26036F3000CE3FE0 /* ArrayExtensionTests.swift in Sources */,
@@ -3907,6 +3962,7 @@
 				57FD401E264851CD00E352C1 /* UserDefaultsExtensions.swift in Sources */,
 				575C90E52662CE6A001DCD17 /* PHMeterTests.swift in Sources */,
 				57FD401226484F9400E352C1 /* QuizPersistenceTests.swift in Sources */,
+				572B1A762675DC5100302B8E /* ReactionProgressChartGeometryTests.swift in Sources */,
 				57FD400E26484F4F00E352C1 /* SizeAdjusterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
