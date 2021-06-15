@@ -20,11 +20,8 @@ class BufferStrongSubstanceComponents: ObservableObject {
         self.maxSubstance = maxSubstance
 
         let changeInConcentration = Self.changeInConcentration(
-            forTargetPh: prev.finalPH - 1.5,
-            initialPh: previous.finalPH,
-            pKA: previous.substance.pKA,
-            initialSubstanceConcentration: prev.finalConcentration.substance,
-            initialSecondaryConcentration: previous.finalConcentration.secondaryIon
+            substance: prev.substance,
+            previous: prev
         )
 
         let substanceConcentration = LinearEquation(
@@ -191,14 +188,49 @@ extension BufferStrongSubstanceComponents {
 }
 
 extension BufferStrongSubstanceComponents {
+
     private static func changeInConcentration(
-        forTargetPh finalPh: CGFloat,
-        initialPh: CGFloat,
-        pKA: CGFloat,
+        substance: AcidOrBase,
+        previous: BufferSaltComponents
+    ) -> CGFloat {
+        func getChange(targetP: CGFloat, pK: CGFloat) -> CGFloat {
+            changeInConcentration(
+                forTargetP: targetP,
+                pK: pK,
+                initialSubstanceConcentration: previous.finalConcentration.substance,
+                initialSecondaryConcentration: previous.finalConcentration.secondaryIon
+            )
+        }
+
+        if substance.type.isAcid {
+            return getChange(
+                targetP: previous.finalPH - 1.5,
+                pK: substance.pKA
+            )
+        }
+
+        let initialPOH = 14 - previous.finalPH
+        return getChange(
+            targetP: initialPOH - 1.5,
+            pK: substance.pKB
+        )
+    }
+
+    /// Returns a change in concentration to achieve a target `p`, for the given equation:
+    ///
+    /// p = pK + log(secondaryConcentration / substanceConcentration)
+    ///
+    /// The `substanceConcentration` is assumed to increase, while the `secondaryConcentration` is assumed
+    /// to decrease by the same amount.
+    ///
+    /// i.e., we solve this equation for x: finalP = pK + log(secondaryConcentration - x / substanceConcentration + x)
+    private static func changeInConcentration(
+        forTargetP finalP: CGFloat,
+        pK: CGFloat,
         initialSubstanceConcentration: CGFloat,
         initialSecondaryConcentration: CGFloat
     ) -> CGFloat {
-        let powerTerm = pow(10, finalPh - pKA)
+        let powerTerm = pow(10, finalP - pK)
         let numer = initialSecondaryConcentration - (initialSubstanceConcentration * powerTerm)
         let denom = 1 + powerTerm
         return denom == 0 ? 0 : numer / denom
