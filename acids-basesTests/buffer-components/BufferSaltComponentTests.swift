@@ -145,5 +145,23 @@ class BufferSaltComponentsTests: XCTestCase {
         XCTAssertEqual(model.finalConcentration.substance, 0.3)
         XCTAssertEqual(model.finalConcentration.secondaryIon, 0.3)
     }
+
+    func testPhDecreasesWhenAcidIsAdded() {
+        let model = BufferWeakSubstanceComponents(substance: .weakAcids.first!, settings: .standard, cols: 10, rows: 10)
+        model.incrementSubstance(count: 10)
+
+        let initial = model.pH.getY(at: 0)
+        let final = model.pH.getY(at: 1)
+        XCTAssertLessThan(final, initial)
+    }
+
+    func testPhIncreasesWhenBaseIsAdded() {
+        let model = BufferWeakSubstanceComponents(substance: .weakBases.first!, settings: .standard, cols: 10, rows: 10)
+        model.incrementSubstance(count: 10)
+
+        let initial = model.pH.getY(at: 0)
+        let final = model.pH.getY(at: 1)
+        XCTAssertGreaterThan(final, initial)
+    }
 }
 

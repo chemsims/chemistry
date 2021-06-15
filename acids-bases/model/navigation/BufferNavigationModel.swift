@@ -15,34 +15,37 @@ struct BufferNavigationModel {
     }
 
     private static let states = [
-        SetStatement(statements.intro),
-        SetStatement(statements.explainEquilibriumConstant1),
-        SetStatement(statements.explainEquilibriumConstant2),
-        SetStatement(statements.explainWeakAcid),
-        SetStatement(statements.explainKa),
-        SetStatement(statements.explainHighKa),
-        SetStatement(statements.explainConjugateBase),
-        SetStatement(statements.explainKb),
-        SetStatement(statements.explainKw),
-        SetStatement(statements.explainP14),
-        SetStatement(statements.explainKaKbNaming),
-        SetStatement(statements.explainPKaPKb),
-        SetStatement(statements.explainHendersonHasselbalch),
+//        SetStatement(statements.intro),
+//        SetStatement(statements.explainEquilibriumConstant1),
+//        SetStatement(statements.explainEquilibriumConstant2),
+//        SetStatement(statements.explainWeakAcid),
+//        SetStatement(statements.explainKa),
+//        SetStatement(statements.explainHighKa),
+//        SetStatement(statements.explainConjugateBase),
+//        SetStatement(statements.explainKb),
+//        SetStatement(statements.explainKw),
+//        SetStatement(statements.explainP14),
+//        SetStatement(statements.explainKaKbNaming),
+//        SetStatement(statements.explainPKaPKb),
+//        SetStatement(statements.explainHendersonHasselbalch),
         SetWaterLevel(statements.instructToSetWaterLevel1),
         AddWeakAcid(),
         RunWeakAcidReaction(),
         EndOfWeakAcidReaction(),
         PostWeakAcidReaction(),
-        SetStatement(statements.explainBufferSolutions),
-        SetStatement(statements.explainBufferSolutions2),
-        SetStatement(statements.explainBufferUses),
+//        SetStatement(statements.explainBufferSolutions),
+//        SetStatement(statements.explainBufferSolutions2),
+//        SetStatement(statements.explainBufferUses),
         ShowFractionChart(),
-        SetStatement(statements.explainFractionChartCurrentPosition),
-        SetStatement(statements.explainBufferRange),
-        SetStatement(statements.explainBufferProportions),
-        SetStatement(statements.explainAddingAcidIonizingSalt),
+//        SetStatement(statements.explainFractionChartCurrentPosition),
+//        SetStatement(statements.explainBufferRange),
+//        SetStatement(statements.explainBufferProportions),
+//        SetStatement(statements.explainAddingAcidIonizingSalt),
         AddSalt(),
-        AddAcid()
+        AddAcid(),
+        AddWeakBase(),
+        RunWeakBaseReaction(),
+        EndOfWeakBaseReaction()
     ]
 }
 
@@ -110,13 +113,10 @@ private class AddWeakAcid: BufferScreenState {
     }
 }
 
-private class RunWeakAcidReaction: BufferScreenState {
-
+private class RunWeakSubstanceReaction: BufferScreenState {
     private let reactionDuration = 3.0
 
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.runningWeakAcidReaction(model.substance)
-        model.equationState = .weakAcidWithAllConcentration
         withAnimation(.linear(duration: reactionDuration)) {
             model.weakSubstanceModel.progress = 1
         }
@@ -129,6 +129,14 @@ private class RunWeakAcidReaction: BufferScreenState {
 
     override func nextStateAutoDispatchDelay(model: BufferScreenViewModel) -> Double? {
         reactionDuration
+    }
+}
+
+private class RunWeakAcidReaction: RunWeakSubstanceReaction {
+    override func apply(on model: BufferScreenViewModel) {
+        super.apply(on: model)
+        model.statement = statements.runningWeakAcidReaction(model.substance)
+        model.equationState = .weakAcidWithAllConcentration
     }
 }
 
@@ -179,5 +187,36 @@ private class AddAcid: BufferScreenState {
         model.statement = ["Now, add strong acid"]
         model.goToStrongSubstancePhase()
         model.input = .addMolecule(phase: .addStrongSubstance)
+    }
+}
+
+private class AddWeakBase: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = ["Now, add weak base"]
+        model.goToWeakBufferPhase()
+        model.shakeModel.activeMolecule = nil
+        model.input = .addMolecule(phase: .addWeakSubstance)
+        if model.selectedBottomGraph == .curve {
+            model.selectedBottomGraph = .bars
+        }
+        model.equationState = .weakBaseWithSubstanceConcentration
+    }
+}
+
+private class RunWeakBaseReaction: RunWeakSubstanceReaction {
+    override func apply(on model: BufferScreenViewModel) {
+        super.apply(on: model)
+        model.statement = ["Running weak base reaction"]
+        model.equationState = .weakBaseWithSubstanceConcentration
+    }
+}
+
+private class EndOfWeakBaseReaction: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = ["Reaction is done"]
+        model.equationState = .weakBaseFilled
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.weakSubstanceModel.progress = 1.0001
+        }
     }
 }

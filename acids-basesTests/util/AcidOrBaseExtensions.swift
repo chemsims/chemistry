@@ -24,7 +24,7 @@ extension AcidOrBase {
             secondaryIon: .A,
             substanceAddedPerIon: substanceAddedPerIon,
             color: .blue,
-            kA: 1
+            kA: 1e-5
         )
     }
 

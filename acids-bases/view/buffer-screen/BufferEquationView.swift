@@ -9,6 +9,7 @@ private typealias EquationState = BufferScreenViewModel.EquationState
 
 struct BufferEquationView: View {
 
+    let substance: AcidOrBase
     let progress: CGFloat
     let state: BufferScreenViewModel.EquationState
     let data: BufferEquationData
@@ -16,6 +17,7 @@ struct BufferEquationView: View {
     var body: some View {
         GeometryReader { geo in
             SizedBufferEquationView(
+                substance: substance,
                 progress: progress,
                 state: state,
                 data: data
@@ -57,6 +59,7 @@ struct BufferEquationData {
 
 private struct SizedBufferEquationView: View {
 
+    let substance: AcidOrBase
     let progress: CGFloat
     let state: EquationState
     let data: BufferEquationData
@@ -76,6 +79,7 @@ private struct SizedBufferEquationView: View {
     private var row0: some View {
         HStack(spacing: 0) {
             KADefinition(
+                substance: substance,
                 state: state,
                 fixedK: state.isAcid ? data.kA : data.kB
             )
@@ -187,6 +191,7 @@ private struct SizedBufferEquationView: View {
 
 private struct KADefinition: View {
 
+    let substance: AcidOrBase
     let state: EquationState
     let fixedK: CGFloat
 
@@ -663,6 +668,7 @@ struct BufferEquationView_Previews: PreviewProvider {
             VStack(spacing: 5) {
                 Text(state.rawValue)
                 SizedBufferEquationView(
+                    substance: AcidOrBase.weakBases.first!,
                     progress: 1,
                     state: state,
                     data: BufferEquationData(

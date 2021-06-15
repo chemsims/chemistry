@@ -16,6 +16,15 @@ struct BufferSharedComponents {
         pKa + Log10Equation(underlying: secondaryConcentration / substanceConcentration)
     }
 
+    static func pHEquationForBase(
+        pKb: CGFloat,
+        substanceConcentration: Equation,
+        secondaryConcentration: Equation
+    ) -> Equation {
+        let pOH = pKb + Log10Equation(underlying: secondaryConcentration / substanceConcentration)
+        return 14 - pOH
+    }
+
     struct SubstanceFractionFromPh: Equation {
         let pK: CGFloat
 

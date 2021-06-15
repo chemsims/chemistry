@@ -93,6 +93,17 @@ extension BufferScreenViewModel {
         strongSubstanceModel = BufferStrongSubstanceComponents(prev: saltModel)
         phase = .addStrongSubstance
     }
+
+    func goToWeakBufferPhase() {
+        substance = AcidOrBase.weakBases.first!
+        weakSubstanceModel = BufferWeakSubstanceComponents(
+            substance: .weakBases.first!,
+            settings: .standard,
+            cols: MoleculeGridSettings.cols,
+            rows: AcidAppSettings.initialRows
+        )
+        phase = .addWeakSubstance
+    }
 }
 
 // MARK: Adding molecules

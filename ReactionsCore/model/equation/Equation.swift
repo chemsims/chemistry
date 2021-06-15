@@ -42,6 +42,10 @@ public func - (lhs: Equation, rhs: CGFloat) -> Equation {
     lhs - ConstantEquation(value: rhs)
 }
 
+public func - (lhs: CGFloat, rhs: Equation) -> Equation {
+    ConstantEquation(value: lhs) - rhs
+}
+
 public func pow(_ base: Equation, _ exponent: CGFloat) -> Equation {
     pow(base, ConstantEquation(value: exponent))
 }

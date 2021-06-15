@@ -22,6 +22,7 @@ class BufferStrongComponentsTests: XCTestCase {
         weakModel.incrementSubstance(count: 30)
 
         let saltModel = BufferSaltComponents(prev: weakModel)
+        saltModel.incrementSalt(count: saltModel.maxSubstance)
         let strongModel = BufferStrongSubstanceComponents(prev: saltModel)
 
         func finalBarChartValue(_ part: SubstancePart) -> CGFloat {
@@ -36,7 +37,7 @@ class BufferStrongComponentsTests: XCTestCase {
         XCTAssertEqual(strongModel.barChart(.secondaryIon).equation.getY(at: 0), 0.3, accuracy: 0.00001)
 
         XCTAssertEqual(finalBarChartValue(.substance), finalConcentration(.substance))
-        XCTAssertEqual(finalBarChartValue(.primaryIon), 0)
+        XCTAssertEqual(finalBarChartValue(.primaryIon), finalConcentration(.primaryIon))
         XCTAssertEqual(finalBarChartValue(.secondaryIon), finalConcentration(.secondaryIon))
     }
 

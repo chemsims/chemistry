@@ -29,7 +29,7 @@ enum PrimaryIon: String, CaseIterable {
 }
 
 enum SecondaryIon: String {
-    case A, Cl, Br, K, Na, Ba
+    case A, Cl, Br, K, Na, Ba, B
 
 
     // TODO use color names which correspond with symbol names
@@ -41,6 +41,7 @@ enum SecondaryIon: String {
         case .K: return RGB.moleculeD
         case .Na: return RGB.moleculeE
         case .Ba: return RGB.moleculeF
+        case .B: return RGB.moleculeG
         }
     }
 

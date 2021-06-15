@@ -62,6 +62,7 @@ struct AcidOrBase: Equatable, Identifiable {
         self.kA = kA
         self.kB = kB
         self.pKA = kA == 0 ? 0 : -log10(kA)
+        self.pKB = kB == 0 ? 0 : -log10(kB)
     }
 
     var id: String {
@@ -100,6 +101,7 @@ struct AcidOrBase: Equatable, Identifiable {
     let kA: CGFloat
     let kB: CGFloat
     let pKA: CGFloat
+    let pKB: CGFloat
 
     /// Returns a strong acid substance
     static func strongAcid(
@@ -225,7 +227,7 @@ extension AcidOrBase {
     ]
 
     static let weakBases = [
-        AcidOrBase.weakBase(secondaryIon: .A, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .orange, kB: 4e-5),
+        AcidOrBase.weakBase(secondaryIon: .B, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .orange, kB: 4e-5),
         AcidOrBase.weakBase(secondaryIon: .Br, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .orange, kB: 1.3e-5),
         AcidOrBase.weakBase(secondaryIon: .Cl, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .orange, kB: 1e-3),
     ]
