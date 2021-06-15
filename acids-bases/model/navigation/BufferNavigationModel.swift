@@ -46,7 +46,8 @@ struct BufferNavigationModel {
         AddWeakBase(),
         RunWeakBaseReaction(),
         EndOfWeakBaseReaction(),
-        AddSaltToBase()
+        AddSaltToBase(),
+        AddStrongBase()
     ]
 }
 
@@ -227,5 +228,13 @@ private class AddSaltToBase: BufferScreenState {
         model.statement = ["Now, add salt"]
         model.goToAddSaltPhase()
         model.input = .addMolecule(phase: .addSalt)
+    }
+}
+
+private class AddStrongBase: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = ["Now, add strong base"]
+        model.goToStrongSubstancePhase()
+        model.input = .addMolecule(phase: .addStrongSubstance)
     }
 }

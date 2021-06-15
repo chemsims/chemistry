@@ -14,7 +14,7 @@ struct BufferSharedComponents {
         secondaryConcentration: Equation
     ) -> Equation {
         if substance.type.isAcid {
-            return pHEquation(
+            return pHEquationForAcid(
                 pKa: substance.pKA,
                 substanceConcentration: substanceConcentration,
                 secondaryConcentration: secondaryConcentration
@@ -27,7 +27,7 @@ struct BufferSharedComponents {
         )
     }
 
-    static func pHEquation(
+    private static func pHEquationForAcid(
         pKa: CGFloat,
         substanceConcentration: Equation,
         secondaryConcentration: Equation
@@ -35,7 +35,7 @@ struct BufferSharedComponents {
         pKa + Log10Equation(underlying: secondaryConcentration / substanceConcentration)
     }
 
-    static func pHEquationForBase(
+    private static func pHEquationForBase(
         pKb: CGFloat,
         substanceConcentration: Equation,
         secondaryConcentration: Equation

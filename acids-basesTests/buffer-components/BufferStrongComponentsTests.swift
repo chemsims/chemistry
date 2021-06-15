@@ -138,6 +138,38 @@ class BufferStrongComponentsTests: XCTestCase {
         XCTAssert(model.hasAddedEnoughSubstance)
         XCTAssertEqual(model.substanceAdded, 36)
     }
+
+    func testPhDecreasesWhenAcidIsAdded() {
+        let weakModel = BufferWeakSubstanceComponents(substance: .weakAcids.first!, settings: .standard, cols: 10, rows: 10)
+        weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
+
+        let saltModel = BufferSaltComponents(prev: weakModel)
+        saltModel.incrementSalt(count: saltModel.maxSubstance)
+
+        let model = BufferStrongSubstanceComponents(prev: saltModel)
+
+        let initialPh = model.pH.getY(at: 0)
+        let finalPh = model.pH.getY(at: CGFloat(model.maxSubstance))
+
+        XCTAssertEqual(saltModel.pH.getY(at: CGFloat(saltModel.maxSubstance)), initialPh)
+        XCTAssertLessThan(finalPh, initialPh)
+    }
+
+    func testPhIncreasesWhenBaseIsAdded() {
+        let weakModel = BufferWeakSubstanceComponents(substance: .weakBases.first!, settings: .standard, cols: 10, rows: 10)
+        weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
+
+        let saltModel = BufferSaltComponents(prev: weakModel)
+        saltModel.incrementSalt(count: saltModel.maxSubstance)
+
+        let model = BufferStrongSubstanceComponents(prev: saltModel)
+
+        let initialPh = model.pH.getY(at: 0)
+        let finalPh = model.pH.getY(at: CGFloat(model.maxSubstance))
+
+        XCTAssertEqual(saltModel.pH.getY(at: CGFloat(saltModel.maxSubstance)), initialPh)
+        XCTAssertGreaterThan(finalPh, initialPh)
+    }
 }
 
 private extension BufferStrongSubstanceComponents {
