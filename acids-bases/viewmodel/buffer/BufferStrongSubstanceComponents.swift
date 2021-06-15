@@ -105,11 +105,11 @@ class BufferStrongSubstanceComponents: ObservableObject {
     }
 
     var substanceFractionInTermsOfPh: Equation {
-        BufferSharedComponents.SubstanceFractionFromPh(pK: substance.pKA)
+        BufferSharedComponents.SubstanceFractionFromPh(substance: substance)
     }
 
     var secondaryIonFractionInTermsOfPh: Equation {
-        BufferSharedComponents.SecondaryIonFractionFromPh(pK: substance.pKA)
+        BufferSharedComponents.SecondaryIonFractionFromPh(substance: substance)
     }
 
     var pH: Equation {

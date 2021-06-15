@@ -28,9 +28,9 @@ struct BufferFractionsChart: View {
                     headRadius: layout.common.chartHeadRadius
                 )
             ],
-            initialTime: minPh,
+            initialTime: initialChartPh,
             currentTime: .constant(currentPh),
-            finalTime: maxPh,
+            finalTime: finalChartPh,
             canSetCurrentTime: false,
             settings: TimeChartLayoutSettings(
                 xAxis: xAxis,
@@ -42,6 +42,20 @@ struct BufferFractionsChart: View {
         )
         .frame(square: layout.common.chartSize)
         .padding(.bottom, layout.common.barChartSettings.totalAxisHeight + layout.common.barChartSettings.chartToAxisSpacing)
+    }
+
+    private var initialChartPh: CGFloat {
+        if saltModel.substance.type.isAcid {
+            return minPh
+        }
+        return maxPh
+    }
+
+    private var finalChartPh: CGFloat {
+        if saltModel.substance.type.isAcid {
+            return maxPh
+        }
+        return minPh
     }
 
     private var currentPh: CGFloat {

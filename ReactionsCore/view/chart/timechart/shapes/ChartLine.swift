@@ -50,7 +50,8 @@ public struct ChartLine: Shape {
         var path = Path()
 
         let dxPos = rect.width / CGFloat(maxWidthSteps)
-        let dx = shiftedXAxis.getValue(at: dxPos) - shiftedXAxis.getValue(at: 0)
+        let dx1 = shiftedXAxis.getValue(at: dxPos) - shiftedXAxis.getValue(at: 0)
+        let dx = startX < endX ? dx1 : -dx1
 
         var didStart = false
 
