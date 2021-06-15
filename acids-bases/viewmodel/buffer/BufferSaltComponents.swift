@@ -173,7 +173,7 @@ class BufferSaltComponents: ObservableObject {
 
     var pH: Equation {
         BufferSharedComponents.pHEquation(
-            pKa: substance.pKA,
+            substance: substance,
             substanceConcentration: concentration.substance,
             secondaryConcentration: concentration.secondaryIon
         )

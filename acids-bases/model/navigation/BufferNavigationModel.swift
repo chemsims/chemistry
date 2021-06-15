@@ -28,24 +28,25 @@ struct BufferNavigationModel {
 //        SetStatement(statements.explainKaKbNaming),
 //        SetStatement(statements.explainPKaPKb),
 //        SetStatement(statements.explainHendersonHasselbalch),
-        SetWaterLevel(statements.instructToSetWaterLevel1),
-        AddWeakAcid(),
-        RunWeakAcidReaction(),
-        EndOfWeakAcidReaction(),
-        PostWeakAcidReaction(),
+//        SetWaterLevel(statements.instructToSetWaterLevel1),
+//        AddWeakAcid(),
+//        RunWeakAcidReaction(),
+//        EndOfWeakAcidReaction(),
+//        PostWeakAcidReaction(),
 //        SetStatement(statements.explainBufferSolutions),
 //        SetStatement(statements.explainBufferSolutions2),
 //        SetStatement(statements.explainBufferUses),
-        ShowFractionChart(),
+//        ShowFractionChart(),
 //        SetStatement(statements.explainFractionChartCurrentPosition),
 //        SetStatement(statements.explainBufferRange),
 //        SetStatement(statements.explainBufferProportions),
 //        SetStatement(statements.explainAddingAcidIonizingSalt),
-        AddSalt(),
-        AddAcid(),
+//        AddSalt(),
+//        AddAcid(),
         AddWeakBase(),
         RunWeakBaseReaction(),
-        EndOfWeakBaseReaction()
+        EndOfWeakBaseReaction(),
+        AddSaltToBase()
     ]
 }
 
@@ -194,7 +195,7 @@ private class AddWeakBase: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = ["Now, add weak base"]
         model.goToWeakBufferPhase()
-        model.shakeModel.activeMolecule = nil
+//        model.shakeModel.activeMolecule = nil
         model.input = .addMolecule(phase: .addWeakSubstance)
         if model.selectedBottomGraph == .curve {
             model.selectedBottomGraph = .bars
@@ -218,5 +219,13 @@ private class EndOfWeakBaseReaction: BufferScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.weakSubstanceModel.progress = 1.0001
         }
+    }
+}
+
+private class AddSaltToBase: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = ["Now, add salt"]
+        model.goToAddSaltPhase()
+        model.input = .addMolecule(phase: .addSalt)
     }
 }

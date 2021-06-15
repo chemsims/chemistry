@@ -99,15 +99,8 @@ class BufferWeakSubstanceComponents: ObservableObject {
     }
 
     var pH: Equation {
-        if substance.type.isAcid {
-            return BufferSharedComponents.pHEquation(
-                pKa: substance.pKA,
-                substanceConcentration: concentration.substance,
-                secondaryConcentration: concentration.secondaryIon
-            )
-        }
-        return BufferSharedComponents.pHEquationForBase(
-            pKb: substance.pKB,
+        BufferSharedComponents.pHEquation(
+            substance: substance,
             substanceConcentration: concentration.substance,
             secondaryConcentration: concentration.secondaryIon
         )

@@ -9,6 +9,25 @@ struct BufferSharedComponents {
     private init() { }
 
     static func pHEquation(
+        substance: AcidOrBase,
+        substanceConcentration: Equation,
+        secondaryConcentration: Equation
+    ) -> Equation {
+        if substance.type.isAcid {
+            return pHEquation(
+                pKa: substance.pKA,
+                substanceConcentration: substanceConcentration,
+                secondaryConcentration: secondaryConcentration
+            )
+        }
+        return pHEquationForBase(
+            pKb: substance.pKB,
+            substanceConcentration: substanceConcentration,
+            secondaryConcentration: secondaryConcentration
+        )
+    }
+
+    static func pHEquation(
         pKa: CGFloat,
         substanceConcentration: Equation,
         secondaryConcentration: Equation

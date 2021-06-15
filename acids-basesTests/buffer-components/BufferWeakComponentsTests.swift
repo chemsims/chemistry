@@ -144,6 +144,24 @@ class BufferWeakComponentsTests: XCTestCase {
         XCTAssertEqual(model.maxSubstanceCount, 16)
     }
 
+    func testPhDecreasesWhenAcidIsAdded() {
+        let model = newModel(.weakAcids.first!, settings: .standard)
+        model.incrementSubstance(count: 10)
+
+        let initial = model.pH.getY(at: 0)
+        let final = model.pH.getY(at: 1)
+        XCTAssertLessThan(final, initial)
+    }
+
+    func testPhIncreasesWhenBaseIsAdded() {
+        let model = newModel(.weakBases.first!, settings: .standard)
+        model.incrementSubstance(count: 10)
+
+        let initial = model.pH.getY(at: 0)
+        let final = model.pH.getY(at: 1)
+        XCTAssertGreaterThan(final, initial)
+    }
+
     private func newModel(
         _ substance: AcidOrBase,
         settings: BufferComponentSettings
