@@ -45,21 +45,40 @@ struct BufferSharedComponents {
     }
 
     struct SubstanceFractionFromPh: Equation {
-        let pK: CGFloat
+        let substance: AcidOrBase
 
         func getY(at x: CGFloat) -> CGFloat {
-            let denom = 1 + pow(10, x - pK)
-            return denom == 0 ? 0 : 1 / denom
+            // This is derived from the equation p = pK + log(secondary/substance).
+            // It can be rearranged to give an expression in terms of fraction of substance.
+            func fractionInTermsOfP(p: CGFloat, pK: CGFloat) -> CGFloat {
+                let denom = 1 + pow(10, p - pK)
+                return denom == 0 ? 0 : 1 / denom
+            }
+            if substance.type.isAcid {
+                return fractionInTermsOfP(p: x, pK: substance.pKA)
+            }
+            let pOh = 14 - x
+            return fractionInTermsOfP(p: substance.pKB, pK: pOh)
         }
     }
 
     struct SecondaryIonFractionFromPh: Equation {
-        let pK: CGFloat
+        let substance: AcidOrBase
 
         func getY(at x: CGFloat) -> CGFloat {
-            let powerTerm = pow(10, x - pK)
-            let denom = powerTerm + 1
-            return denom == 0 ? 0 : powerTerm / denom
+            // This is derived from the equation p = pK + log(secondary/substance).
+            // It can be rearranged to give an expression in terms of fraction of substance.
+            func fractionInTermsOfP(p: CGFloat, pK: CGFloat) -> CGFloat {
+                let powerTerm = pow(10, p - pK)
+                let denom = powerTerm + 1
+                return denom == 0 ? 0 : powerTerm / denom
+            }
+
+            if substance.type.isAcid {
+                return fractionInTermsOfP(p: x, pK: substance.pKA)
+            }
+            let pOh = 14 - x
+            return fractionInTermsOfP(p: substance.pKB, pK: pOh)
         }
     }
 }

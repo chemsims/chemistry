@@ -33,8 +33,6 @@ class BufferSaltComponents: ObservableObject {
         let initialSecondaryC = prev.concentration.secondaryIon.getY(at: 1)
         let initialPrimaryC = prev.concentration.primaryIon.getY(at: 1)
 
-        let pKA = prev.substance.pKA
-
         self.previous = prev
 
         func initialCountInt(_ part: SubstancePart) -> Int {
@@ -83,8 +81,9 @@ class BufferSaltComponents: ObservableObject {
             secondaryIon: secondaryConcentration
         )
 
-        self.haFractionInTermsOfPH = BufferSharedComponents.SubstanceFractionFromPh(pK: pKA)
-        self.aFractionInTermsOfPH = BufferSharedComponents.SecondaryIonFractionFromPh(pK: pKA)
+        
+        self.haFractionInTermsOfPH = BufferSharedComponents.SubstanceFractionFromPh(substance: prev.substance)
+        self.aFractionInTermsOfPH = BufferSharedComponents.SecondaryIonFractionFromPh(substance: prev.substance)
 
         let xThreshold = initialCount(.primaryIon)
 

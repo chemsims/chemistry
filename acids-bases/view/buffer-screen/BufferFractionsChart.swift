@@ -66,11 +66,11 @@ struct BufferFractionsChart: View {
     }
 
     private var minPh: CGFloat {
-        0.9 * saltModel.initialPh
+        0.9 * helper.minValue
     }
 
     private var maxPh: CGFloat {
-        saltModel.finalPH + (saltModel.finalPH - minPh)
+        1.1 * helper.maxValue
     }
 
     private var xAxis: AxisPositionCalculations<CGFloat> {
@@ -88,6 +88,14 @@ struct BufferFractionsChart: View {
             maxValuePosition: 0.1 * chartSize,
             minValue: 0,
             maxValue: 1
+        )
+    }
+
+    private var helper: FractionedChartAxisHelper {
+        FractionedChartAxisHelper(
+            initialPh: saltModel.initialPh,
+            middlePh: saltModel.finalPH,
+            minDelta: 1.5 // TODO - make this configurable somewhere
         )
     }
 
