@@ -67,7 +67,8 @@ struct ReactionProgressChart_Previews: PreviewProvider {
                 .border(Color.red)
 
                 Button(action: {
-                    _ = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
+//                    _ = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
+                    _ = model.startReactionFromExisting(consuming: .A, producing: [.B, .C])
                 }) {
                     Text("Start reaction")
                 }

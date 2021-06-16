@@ -134,6 +134,8 @@ private class RunWeakSubstanceReaction: BufferScreenState {
             model.weakSubstanceModel.progress = 1
         }
 
+        model.weakSubstanceModel.runReactionProgressReaction(duration: reactionDuration)
+
         withAnimation(.easeOut(duration: 0.35)) {
             model.input = .none
             model.shakeModel.activeMolecule = nil

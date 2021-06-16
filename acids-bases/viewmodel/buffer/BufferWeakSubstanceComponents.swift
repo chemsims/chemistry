@@ -277,6 +277,17 @@ extension BufferWeakSubstanceComponents {
 
 // MARK: Reaction progress
 extension BufferWeakSubstanceComponents {
+
+    func runReactionProgressReaction(duration: TimeInterval) {
+        let numberOfMoleculesToReact = settings.reactionProgress.initialIonCount
+        reactionProgress.scheduleReactionFromExisting(
+            consuming: .substance,
+            producing: [.primaryIon, .secondaryIon],
+            count: numberOfMoleculesToReact,
+            duration: duration
+        )
+    }
+
     private func incrementReactionProgressIfNeeded() {
         let desiredMolecules = Int(desiredReactionProgressCount.getY(at: CGFloat(initialSubstanceCount)))
         let currentMolecules = reactionProgress.moleculeCounts(ofType: .substance)
@@ -358,7 +369,7 @@ struct BufferComponentSettings {
     struct ReactionProgress {
         let minInitialSubstanceCount: Int
         let maxInitialSubstanceCount: Int
-        let minInitialIonCount: Int
+        let initialIonCount: Int
     }
 
     static let standard = BufferComponentSettings(
@@ -371,7 +382,7 @@ struct BufferComponentSettings {
         reactionProgress: ReactionProgress(
             minInitialSubstanceCount: 3,
             maxInitialSubstanceCount: 5,
-            minInitialIonCount: 1
+            initialIonCount: 1
         )
     )
 }

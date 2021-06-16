@@ -158,7 +158,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
 
         let wasAdded = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
         XCTAssert(wasAdded)
-        let expectation = delegate.addWillAddMoleculeToTopOfColumnExpectation(ofType: .C)
+        let expectation = delegate.addWillAddMoleculeToTopOfColumnExpectation(ofTypes: [.C])
 
         wait(for: [expectation], timeout: 1)
 
@@ -208,7 +208,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         XCTAssert(produceC)
 
         // wait until the new C molecule has been added
-        let producedCExpectation = delegate.addWillAddMoleculeToTopOfColumnExpectation(ofType: .C)
+        let producedCExpectation = delegate.addWillAddMoleculeToTopOfColumnExpectation(ofTypes: [.C])
         wait(for: [producedCExpectation], timeout: 1)
 
         XCTAssertEqual(model.sortedData(.C).count, 1)
@@ -342,16 +342,16 @@ private class TestReactionProgressChartViewModelDelegate: ReactionProgressChartV
         return expectation
     }
 
-    func addWillAddMoleculeToTopOfColumnExpectation(ofType type: TestMolecule) -> XCTestExpectation {
-        let expectation = XCTestExpectation(description: "Will add molecule \(type)")
-        addMoleculeToTopOfColumnExpectations[type] = expectation
+    func addWillAddMoleculeToTopOfColumnExpectation(ofTypes types: [TestMolecule]) -> XCTestExpectation {
+        let expectation = XCTestExpectation(description: "Will add molecule \(types)")
+        addMoleculeToTopOfColumnExpectations[types] = expectation
         return expectation
     }
 
     private var moveToTopOfColumnExpectations = [UUID : XCTestExpectation]()
     private var fadeOutBottomMoleculesExpectations = [[TestMolecule] : XCTestExpectation]()
     private var slideDownColumnsExpectations = [[TestMolecule] : [XCTestExpectation]]()
-    private var addMoleculeToTopOfColumnExpectations = [TestMolecule : XCTestExpectation]()
+    private var addMoleculeToTopOfColumnExpectations = [[TestMolecule] : XCTestExpectation]()
 
     override func willMoveMoleculeToTopOfColumn(withId id: UUID) {
         if let expectation = moveToTopOfColumnExpectations[id] {
@@ -373,8 +373,8 @@ private class TestReactionProgressChartViewModelDelegate: ReactionProgressChartV
         }
     }
 
-    override func willAddMoleculeToTopOfColumn(ofType type: TestMolecule) {
-        if let expectation = addMoleculeToTopOfColumnExpectations[type] {
+    override func willAddMoleculeToTopOfColumn(ofTypes types: [TestMolecule]) {
+        if let expectation = addMoleculeToTopOfColumnExpectations[types] {
             expectation.fulfill()
         }
     }
