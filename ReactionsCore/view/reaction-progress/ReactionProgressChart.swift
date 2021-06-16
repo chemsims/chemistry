@@ -25,6 +25,8 @@ public struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
                 moleculeView(molecule)
             }
         }
+        .frame(square: geometry.chartSize)
+        .border(Color.black, width: 0.4) // TODO - configurable border and remove the top line
     }
 
     private func moleculeView(_ molecule: Molecule) -> some View {

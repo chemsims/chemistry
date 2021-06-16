@@ -36,7 +36,11 @@ struct BufferBottomCharts: View {
                 strongModel: model.strongSubstanceModel
             )
         case .neutralization:
-            Text("neutralization chart")
+            BufferReactionProgressChart(
+                layout: layout,
+                phase: model.phase,
+                weakModel: model.weakSubstanceModel
+            )
         }
     }
 
@@ -44,7 +48,7 @@ struct BufferBottomCharts: View {
         HStack {
             text(.bars, disabled: false)
             text(.curve, disabled: model.phase == .addWeakSubstance)
-            text(.neutralization, disabled: true)
+            text(.neutralization, disabled: false)
         }
         .font(.system(size: layout.common.toggleFontSize))
         .frame(height: layout.common.toggleHeight)
@@ -61,6 +65,24 @@ struct BufferBottomCharts: View {
             action: { model.selectedBottomGraph = selection }
         )
         .disabled(disabled)
+    }
+}
+
+private struct BufferReactionProgressChart: View {
+
+    let layout: BufferScreenLayout
+    let phase: BufferScreenViewModel.Phase
+    let weakModel: BufferWeakSubstanceComponents
+
+    var body: some View {
+        ReactionProgressChart(
+            model: model,
+            geometry: layout.common.reactionProgressGeometry
+        )
+    }
+
+    private var model: ReactionProgressChartViewModel<SubstancePart> {
+        weakModel.reactionProgress
     }
 }
 

@@ -20,6 +20,7 @@ public struct ReactionProgressChartGeometry {
 
         let moleculeSizeForHeight = availableHeight / maxMoleculeFloat
 
+        self.chartSize = chartSize
         self.moleculeSize = min(moleculeSizeForHeight, moleculeSizeForWidth)
 
         let dxColumn = chartSize / CGFloat(colCount + 1)
@@ -40,6 +41,8 @@ public struct ReactionProgressChartGeometry {
 
     // Diameter of a molecule
     let moleculeSize: CGFloat
+
+    let chartSize: CGFloat
 
     private let columnXEquation: Equation
     private let rowYEquation: Equation

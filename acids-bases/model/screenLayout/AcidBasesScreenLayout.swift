@@ -246,6 +246,19 @@ extension AcidBasesScreenLayout {
     }
 }
 
+// MARK: Reaction progress chart geometry
+extension AcidBasesScreenLayout {
+
+    var reactionProgressGeometry: ReactionProgressChartGeometry {
+        ReactionProgressChartGeometry(
+            chartSize: chartSize,
+            colCount: 3,
+            maxMolecules: AcidAppSettings.maxReactionProgressMolecules,
+            topPadding: 0.1 * chartSize
+        )
+    }
+}
+
 // MARK: toggle geometry
 extension AcidBasesScreenLayout {
     var toggleHeight: CGFloat {

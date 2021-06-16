@@ -23,6 +23,8 @@ class BufferWeakSubstanceComponents: ObservableObject {
         )
         self.substance = substance
         self.settings = settings
+
+        self.reactionProgress = Self.initialReactionProgressModel(substance: substance)
     }
 
     @Published var substanceCoords: BeakerMolecules
@@ -36,7 +38,13 @@ class BufferWeakSubstanceComponents: ObservableObject {
 
     let cols: Int
     var rows: Int
-    @Published var substance: AcidOrBase
+    @Published var substance: AcidOrBase {
+        didSet {
+            reactionProgress = Self.initialReactionProgressModel(substance: substance)
+        }
+    }
+
+    private(set) var reactionProgress: ReactionProgressChartViewModel<SubstancePart>
 
     let settings: BufferComponentSettings
 
@@ -259,6 +267,36 @@ extension BufferWeakSubstanceComponents {
             concentration: concentration,
             pH: pH
         )
+    }
+}
+
+// MARK: Reaction progress initial data
+extension BufferWeakSubstanceComponents {
+
+    private static func initialReactionProgressModel(substance: AcidOrBase) -> ReactionProgressChartViewModel<SubstancePart> {
+        .init(
+            molecules: initialReactionProgressMolecules(substance: substance),
+            settings: .init(maxMolecules: AcidAppSettings.maxReactionProgressMolecules),
+            timing: .init()
+        )
+    }
+
+    private static func initialReactionProgressMolecules(substance: AcidOrBase) -> EnumMap<SubstancePart, ReactionProgressChartViewModel<SubstancePart>.MoleculeDefinition> {
+        let indices = EnumMap<SubstancePart, Int> {
+            switch $0 {
+            case .substance: return 0
+            case .primaryIon: return 1
+            case .secondaryIon: return 2
+            }
+        }
+        return .init(builder: { part in
+            .init(
+                name: substance.symbol(ofPart: part),
+                columnIndex: indices.value(for: part),
+                initialCount: 0,
+                color: substance.color(ofPart: part)
+            )
+        })
     }
 }
 
