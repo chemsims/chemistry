@@ -319,6 +319,7 @@ extension BufferWeakSubstanceComponents {
     
 }
 
+// TODO move this to a different file
 // MARK: Settings
 struct BufferComponentSettings {
     /// How much should each bar change over reaction, as a fraction of the initial substance concentration
@@ -346,6 +347,8 @@ struct BufferComponentSettings {
         let minInitialSubstanceCount: Int
         let maxInitialSubstanceCount: Int
         let initialIonCount: Int
+        let finalPrimaryIonCount: Int
+        let finalSecondaryIonCount: Int
     }
 
     static let standard = BufferComponentSettings(
@@ -358,7 +361,9 @@ struct BufferComponentSettings {
         reactionProgress: ReactionProgress(
             minInitialSubstanceCount: 3,
             maxInitialSubstanceCount: 5,
-            initialIonCount: 1
+            initialIonCount: 1,
+            finalPrimaryIonCount: 2,
+            finalSecondaryIonCount: 1
         )
     )
 }

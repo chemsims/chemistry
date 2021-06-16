@@ -52,6 +52,8 @@ class BufferStrongSubstanceComponents: ObservableObject {
             primaryIon: primaryConcentration,
             secondaryIon: secondaryConcentration
         )
+        self.reactionProgress = prev.reactionProgress
+        self.initialProgressCounts = .init(builder: prev.reactionProgress.moleculeCounts)
     }
 
     @Published var substanceAdded = 0
@@ -61,6 +63,9 @@ class BufferStrongSubstanceComponents: ObservableObject {
 
     let maxSubstance: Int
     let concentration: SubstanceValue<Equation>
+
+    let reactionProgress: ReactionProgressChartViewModel<SubstancePart>
+    let initialProgressCounts: EnumMap<SubstancePart, Int>
 
     var settings: BufferComponentSettings {
         previous.settings
@@ -98,6 +103,7 @@ class BufferStrongSubstanceComponents: ObservableObject {
         withAnimation(.linear(duration: 1)) {
             substanceAdded = newSubstanceAdded
         }
+        updateReactionProgress()
     }
 
     var substance: AcidOrBase {
@@ -234,5 +240,48 @@ extension BufferStrongSubstanceComponents {
         let numer = initialSecondaryConcentration - (initialSubstanceConcentration * powerTerm)
         let denom = 1 + powerTerm
         return denom == 0 ? 0 : numer / denom
+    }
+}
+
+// MARK: Reaction progress
+extension BufferStrongSubstanceComponents {
+    func updateReactionProgress() {
+        let desiredSecondary = (secondaryIonReactionProgressCount.getY(at: CGFloat(substanceAdded))).roundedInt()
+        let desiredPrimary = (primaryIonReactionProgressCount.getY(at: CGFloat(substanceAdded))).roundedInt()
+
+        let currentSecondary = reactionProgress.moleculeCounts(ofType: .secondaryIon)
+        let currentPrimary = reactionProgress.moleculeCounts(ofType: .primaryIon)
+
+        let deltaSecondary = currentSecondary - desiredSecondary
+        if deltaSecondary > 0 {
+            for _ in 0..<deltaSecondary {
+                _ = reactionProgress.startReaction(adding: .primaryIon, reactsWith: .secondaryIon, producing: .substance)
+            }
+        }
+
+        let deltaPrimary = desiredPrimary - currentPrimary
+        if deltaPrimary > 0 {
+            for _ in 0..<deltaPrimary {
+                _ = reactionProgress.addMolecule(.primaryIon)
+            }
+        }
+    }
+
+    private var secondaryIonReactionProgressCount: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: CGFloat(initialProgressCounts.value(for: .secondaryIon)),
+            x2: CGFloat(maxSubstance),
+            y2: CGFloat(settings.reactionProgress.finalSecondaryIonCount)
+        )
+    }
+
+    private var primaryIonReactionProgressCount: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: CGFloat(initialProgressCounts.value(for: .primaryIon)),
+            x2: CGFloat(maxSubstance),
+            y2: CGFloat(settings.reactionProgress.finalPrimaryIonCount)
+        )
     }
 }
