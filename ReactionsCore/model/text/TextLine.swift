@@ -57,14 +57,21 @@ extension TextLine {
 
     /// Content as a String
     public var asString: String {
-        content.reduce("") { (acc, next) in
-            acc + next.content
-        }
+        join(from: \.content)
     }
 
     /// Accessibility label for the content
     public var label: String {
         customLabel ?? asString
+    }
+
+    /// Content as markdown
+    public var asMarkdown: String {
+        join(from: \.asMarkdown)
+    }
+
+    private func join(from stringValue: (TextSegment) -> String) -> String {
+        content.map(stringValue).joined()
     }
 }
 
@@ -115,6 +122,25 @@ public struct TextSegment: Equatable {
         self.allowBreaks = allowBreaks
         self.italic = italic
     }
+
+    // TODO add tests for this property
+    /// Returns segment in markdown representation
+    public var asMarkdown: String {
+        var controlChars = ""
+        if emphasised {
+            controlChars.append(TextLineGenerator.emphasis)
+        }
+        switch scriptType {
+        case .superScript: controlChars.append(TextLineGenerator.superScript)
+        case .subScript: controlChars.append(TextLineGenerator.sub)
+        case .none: break
+        }
+        if !allowBreaks {
+            controlChars.append(TextLineGenerator.noBreaks)
+        }
+        let endControlChars = controlChars.reversed()
+        return "\(controlChars)\(content)\(endControlChars)"
+    }
 }
 
 extension TextSegment {
@@ -145,11 +171,11 @@ public enum ScriptType {
 
 public struct TextLineGenerator {
 
-    private static let emphasis = Character("*")
-    private static let sub = Character("_")
-    private static let superScript = Character("^")
-    private static let noBreaks = Character("$")
-    private static let escape = Character("\\")
+    fileprivate static let emphasis = Character("*")
+    fileprivate static let sub = Character("_")
+    fileprivate static let superScript = Character("^")
+    fileprivate static let noBreaks = Character("$")
+    fileprivate static let escape = Character("\\")
 
     /// Creates a `TextLine` by parsing the provided String.
     ///

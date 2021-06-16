@@ -5,8 +5,14 @@
 import CoreGraphics
 import ReactionsCore
 
+private let hydrogen = "H^+^"
+private let hydroxide = "OH^-^"
+private let h3O = "H_3_O^+^"
+
 struct BufferStatements {
     private init() { }
+
+
 
     static let intro: [TextLine] = [
         """
@@ -283,14 +289,19 @@ struct BufferStatements {
         ]
     }
 
-    static let instructToAddSalt: [TextLine] = [
-        """
-        *MA* is a salt that ionizes completely in water, letting *A^-^* \
-        ions free in the solution, the conjugate base of *HA*. In other \
-        words, add *MA* to increase the presence of *A^-^* ions.
-        """,
-        "*Shake it into it!*"
-    ]
+    // TODO - read the salt name from somewhere
+    static func instructToAddSalt(substance: AcidOrBase) -> [TextLine] {
+        let secondary = substance.symbol(ofPart: .secondaryIon)
+        return [
+            """
+            *M\(secondary)* is a salt that ionizes completely in water, \
+            letting *\(secondary)^-^* ions free in the solution, the \
+            conjugate base of *\(substance.symbol)*. In other \
+            words, add *M\(secondary)* to increase the presence of *\(secondary)^-^* ions.
+            """,
+            "*Shake it into it!*"
+        ]
+    }
 
     static func bufferReached(substance: AcidOrBase) -> [TextLine] {
         let secondary = "\(substance.secondary)^-^"
@@ -316,26 +327,25 @@ struct BufferStatements {
         """
     ]
 
-    static let instructToAddStrongAcid: [TextLine] = [
+    static let showPreviousPhLine: [TextLine] = [
         """
-        But what will happen if we added *HCl* to this buffer? Let's find out!
+        Now that the buffer is prepared, we can test it. Remember that graph at the top? That's \
+        right! It's from when we added *HCl* to pure water.
         """,
         """
-        Add HCl which totally dissociates in water into *H^+^* ions.
+        See how pH went down without much resistance.
+        """
+    ]
+
+    static let instructToAddStrongAcid: [TextLine] = [
+        """
+        But what will happen if we add *HCl* to this buffer? Let's find out!
+        """,
+        """
+        Add HCl, which totally dissociates in water into *\(hydrogen)* ions.
         """,
         "*Shake it into it!*"
     ]
-
-    static func midAddingStrongAcid(substance: AcidOrBase) -> [TextLine] {
-        [
-            """
-            Watch how pH decreases. But wait! It doesn't go down immediately \
-            as before. The *\(substance.secondary)^-^* ions in the *buffer* \
-            react with the *H^+^* free ions to make more \(substance.symbol).
-            """,
-            "*Keep adding HCl to test the buffer!*"
-        ]
-    }
 
     static let acidBufferLimitReached: [TextLine] = [
         """
@@ -343,6 +353,65 @@ struct BufferStatements {
         significantly now, but our buffer did a great job maintaining pH \
         constant for that long! Let's try with weak bases now!
         """
+    ]
+
+    static let instructToChooseWeakBase: [TextLine] = [
+        """
+        Let's try now with a weak base and see if we can make a buffer out of it!
+        """,
+        "*Choose a weak base to learn more.*"
+    ]
+
+    static let explainKbOhRelation: [TextLine] = [
+        """
+        The larger K is, the larger the concentrations of products at equilibrium are. \
+        This is why, when comparing weak bases, the one with a *higher Kb* is the one that at \
+        equilibrium, will produce *more \(hydroxide) ions*, making it more basic.
+        """
+    ]
+
+    static let instructToSetWaterLevelForBase: [TextLine] = [
+        """
+        The *Henderson-Hasselbalch* equation has a very unique use to determine pH or pOH for buffers.
+        """,
+        "First of all, let's set the water volume in the beaker.",
+        "*Use the water slider*."
+    ]
+
+    static let explainBufferHasselbalch: [TextLine] = [
+        """
+        Now that we know the Kb, let's use the *Henderson-Hasselbalch* equation for something \
+        very useful:
+        """,
+        """
+        *Buffer solutions*. This time, we'll make one from a weak base and its conjugate salt.
+        """
+    ]
+
+    static let showBasePhWaterLine: [TextLine] = [
+        """
+        Now that the buffer is prepared, we can test it. Remember that graph at the top? That's right! \
+        It's from when we added *KOH* to pure water.
+        """,
+        "See how pH went up without much resistance."
+    ]
+
+    static let instructToAddStrongBase: [TextLine] = [
+        """
+        But what will happen if we add *KOH* to this buffer? Let's find out!
+        """,
+        """
+        Add KOH, which totally dissociates in water into *\(hydroxide)* ions.
+        """,
+        "*Shake it into it!*"
+    ]
+
+    static let baseBufferLimitReached: [TextLine] = [
+        """
+        Finally, the *buffer* has reached it's limit! pH has gone significantly up now, but out \
+        buffer did a great job maintaining pH constant for that long!
+        """,
+        "That was awesome!"
     ]
 
     /// Returns `value` in scientific form as a String with markdown to pass to `TextLine`
@@ -356,4 +425,217 @@ struct BufferStatements {
     }
 }
 
+struct BufferStatementsForSubstance {
 
+    init(substance: AcidOrBase) {
+        let substanceStr = substance.chargedSymbol(ofPart: .substance).text.asMarkdown
+        let primary = substance.chargedSymbol(ofPart: .primaryIon).text.asMarkdown
+        let secondary = substance.chargedSymbol(ofPart: .secondaryIon).text.asMarkdown
+        self.substance = substanceStr
+        self.primary = primary
+        self.secondary = secondary
+
+        self.substanceC = "[\(substance)]"
+        self.primaryC = "[\(primary)]"
+        self.secondaryC = "[\(secondary)]"
+
+        self.underlyingSubstance = substance
+    }
+
+    let underlyingSubstance: AcidOrBase
+    let substance: String
+    let primary: String
+    let secondary: String
+
+    let substanceC: String
+    let primaryC: String
+    let secondaryC: String
+
+    var madeBuffer: [TextLine] {
+        [
+            """
+            Awesome! That's what I call a *buffer!*. There's equal parts of *\(substance)* and *\(secondary)* \
+            now. Notice that *pH went up*, this is because \(secondary) ions trapped the \(primary) ions \
+            that were free in the solution, decreasing the concentration of *\(primary)* in the solution.
+            """
+        ]
+    }
+
+    var midAddingStrongAcid: [TextLine] {
+        [
+            """
+            Watch how pH decreases. But wait! It doesn't go down immediately as before. The *\(secondary)* \
+            ions in the *buffer* react with the \(primary) free ions to make more \(substance).
+            """,
+            """
+            *Keep adding HCl to test the buffer!*
+            """
+        ]
+    }
+
+    var choseWeakBase: [TextLine] {
+        [
+            """
+            You chose *\(substance)*. When \(substance) reacts with water, it dissociates \
+            into \(secondary) and *\(primary)*. The double arrow indicates that this is a \
+            reverse reaction.
+            """
+        ]
+    }
+
+    var explainKbEquation: [TextLine] {
+        [
+            """
+            The equation for Kb is the same equation for *K = [products]/[reactants]*. In this case, \
+            the products are: *\(secondaryC)* and *\(primaryC)*, while the reactant is just \
+            *\(substanceC)*, the base, as water is a pure liquid and it's not included in the equation.
+            """
+        ]
+    }
+
+    var explainConjugateAcidPair: [TextLine] {
+        [
+            """
+            Notice how *\(secondary)* can react with *\(primary)*. In other words, \(primary) \
+            has the ability to donate a proton *(\(hydrogen))*, working as an acid. These products \
+            are called *conjugate acid of the base. \(primary)* is the conjugate acid of *\(substance)*. \
+            \(substance) and \(primary) are called *conjugate acid-base pair*.
+            """
+        ]
+    }
+
+    var explainKa: [TextLine] {
+        [
+            """
+            That's where *Ka* comes from. When *\(primary)* donates \(hydrogen) to water, it releases \
+            *\(h3O)* ions, working as an acid. The equation for Ka is: \
+            $Ka = \(substanceC)\(hydrogen)/\(primary)$. That'll be the Ka for the conjugate acid \
+            \(primary). When *Kb* is large, *Ka* is small and vice versa.
+            """
+        ]
+    }
+
+    var explainBasicHasselbalch: [TextLine] {
+        [
+            """
+            When solving for [\(hydroxide)] in the Kb equation, and applying negative log to both \
+            sides, we get the *Henderson-Hasselbalch* equation for bases:
+            *pOH = pKa + log(\(primaryC)/\(substanceC))*.
+            """
+        ]
+    }
+
+    var instructToAddWeakBase: [TextLine] {
+        [
+            """
+            *Awesome!* Now add the weak base *\(substance)* to see it dissociate into *\(secondary)* \
+            and *\(primary)*.
+            """,
+            "*Shake it into it!*"
+        ]
+    }
+
+    var midAddingWeakBase: [TextLine] {
+        [
+            """
+            *Great!* Add until you're happy with the initial concentration of *\(substance)*.
+            """,
+            "*Keep shaking it!*"
+        ]
+    }
+
+    var runningWeakBaseReaction: [TextLine] {
+        [
+            "Watch how it reacts and dissociates!",
+            """
+            *\(substance)* is now reacting with water and dissociating into *\(secondary)* and \
+            *\(primary)*, and the presence of \(secondary) makes the solution basic.
+            """
+        ]
+    }
+
+    func reachedBaseEquilibrium(pH: CGFloat) -> [TextLine] {
+        let kB = TextLineUtil.scientific(value: underlyingSubstance.kB).asMarkdown
+        return [
+            """
+            Equilibrium has been reached! That means that this is the maximum amount of ions that \
+            can be produced by this weak base. $*Kb = \(kB)*$, and $*pH = \(pH.str(decimals: 2))*$ \
+            making the solution very basic. Notice that there's plenty of *\(substance)* remaining.
+            """
+        ]
+    }
+
+    var explainBufferRange: [TextLine] {
+        [
+            """
+            As seen in the bottom graph, right now there's much more *\(substance)* than *\(secondary)* \
+            in the solution. It's not yet considered a buffer. When within the *buffer range* \
+            (the center of the graph) the solution has buffer properties.
+            """
+        ]
+    }
+
+    var calculateBufferRange: [TextLine] {
+        [
+            """
+            *Henderson-Hasselbalch* let's us calculate pH of the *buffer*. In this case, variations \
+            on the \(primary) and \(substance) ratio will make the pH vary. When \(primary) and \
+            \(substance) are the same, then *pH = pKa*. The *buffer range is ±1 from that point*.
+            """
+        ]
+    }
+
+    var explainEqualProportions: [TextLine] {
+        [
+            """
+            When proportions of \(secondary) and \(substance) are equal, that's when the buffer has \
+            higher effectiveness. This is because at that point, it is able to buffer against \
+            equal amounts of acid *\(hydrogen)* or base *\(hydroxide)* added.
+            """
+        ]
+    }
+
+    var explainSalt: [TextLine] {
+        [
+            """
+            A very common way to add a conjugate acid is by adding its *salt* (one that ionizes \
+            completely in water to *\(secondary)*).
+            """
+        ]
+    }
+
+    // TODO - read salt from somewhere
+    var instructToAddSaltToBase: [TextLine] {
+       [
+        """
+        *\(secondary)X* is a salt that ionizes completely in water, letting *\(secondary)* free in \
+        the solution, the conjugate acid of *\(substance)*. In other words, add *\(secondary)X* to \
+        increase the presence of *\(secondary)* in the solution
+        """,
+        "*Shake it into it!*"
+       ]
+    }
+
+    var reachedBasicBuffer: [TextLine] {
+        [
+            """
+            Awesome! That's what I call a *buffer*. There's equal parts of *\(secondary)* and \
+            *\(substance)* now. Notice that *pOH went up*, this is because the *\(secondary)* \
+            trapped the *\(hydroxide)* ions that were free in the solution, decreasing the \
+            concentration of *\(hydroxide)* in the solution.
+            """
+        ]
+    }
+
+    var midAddingStrongBase: [TextLine] {
+        [
+            """
+            Watch how pH increases. But wait! It doesn't go up immediately as before. The *\(secondary)* \
+            ions in the *buffer* react with the *\(hydroxide)* free ions to make more *\(substance)*.
+            """,
+            """
+            *Keep adding KOH to test the buffer!*
+            """
+        ]
+    }
+}

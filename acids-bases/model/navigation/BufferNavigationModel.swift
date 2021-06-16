@@ -232,7 +232,7 @@ private class ShowFractionChart: BufferScreenState {
 
 private class AddSalt: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.instructToAddSalt
+        model.statement = statements.instructToAddSalt(substance: model.substance)
         model.input = .addMolecule(phase: .addSalt)
     }
 
