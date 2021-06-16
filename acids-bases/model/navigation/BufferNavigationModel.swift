@@ -42,12 +42,12 @@ struct BufferNavigationModel {
         SetStatement(statements.explainBufferSolutions),
         SetStatement(statements.explainBufferSolutions2),
         SetStatement(statements.explainBufferUses),
-        ShowFractionChart(),
+        ShowFractionChart(statements.explainFractionChart),
         SetStatement(statements.explainFractionChartCurrentPosition),
         SetStatement(statements.explainBufferRange),
         SetStatement(statements.explainBufferProportions),
         SetStatement(statements.explainAddingAcidIonizingSalt),
-        AddSaltToAcidBuffer(),
+        AddSalt(statements.instructToAddSalt),
         PostAddSaltToAcidBuffer(),
         SetStatement(statements.showPreviousPhLine),
         AddStrongAcid(),
@@ -64,11 +64,11 @@ struct BufferNavigationModel {
         RunWeakBaseReaction(),
         EndOfWeakBaseReaction(),
         PostWeakBaseReaction(),
-        SetStatement(fromSubstance: \.explainBufferRange),
+        ShowFractionChart(fromSubstance: \.explainBufferRange),
         SetStatement(fromSubstance: \.calculateBufferRange),
         SetStatement(fromSubstance: \.explainEqualProportions),
         SetStatement(fromSubstance: \.explainSalt),
-        AddSaltToBase(),
+        AddSalt(fromSubstance: \.instructToAddSaltToBase),
         SetStatement(fromSubstance: \.reachedBasicBuffer),
         SetStatement(statements.showBasePhWaterLine),
         AddStrongBase(),
@@ -248,9 +248,9 @@ private class PostWeakAcidReaction: BufferScreenState {
     }
 }
 
-private class ShowFractionChart: BufferScreenState {
+private class ShowFractionChart: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.explainFractionChart(substance: model.substance)
+        super.apply(on: model)
         model.selectedBottomGraph = .curve
     }
 
@@ -261,17 +261,24 @@ private class ShowFractionChart: BufferScreenState {
     }
 }
 
-private class AddSaltToAcidBuffer: BufferScreenState {
+private class AddSalt: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.instructToAddSalt(substance: model.substance)
+        super.apply(on: model)
         model.input = .addMolecule(phase: .addSalt)
+    }
+
+    override func reapply(on model: BufferScreenViewModel) {
+        withAnimation(containerInputAnimation) {
+            model.saltModel.reset()
+        }
+        apply(on: model)
     }
 
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
-            model.saltModel.resetCoords()
+            model.saltModel.reset()
         }
     }
 }
@@ -310,6 +317,7 @@ private class AddStrongAcid: BufferScreenState {
             model.shakeModel.stopAll()
             model.strongSubstanceModel.reset()
         }
+        model.phase = .addSalt
     }
 }
 
@@ -361,9 +369,16 @@ private class AddWeakBase: BufferScreenState {
         model.equationState = .baseWithSubstanceConcentration
     }
 
+    override func reapply(on model: BufferScreenViewModel) {
+        model.weakSubstanceModel.resetCoords()
+        apply(on: model)
+    }
+
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
         model.equationState = .baseBlank
+        model.weakSubstanceModel.resetCoords()
+        model.shakeModel.stopAll()
     }
 }
 
@@ -394,14 +409,11 @@ private class PostWeakBaseReaction: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.explainBasicHasselbalch
         model.equationState = .baseSummary
-    }
-}
-
-private class AddSaltToBase: BufferScreenState {
-    override func apply(on model: BufferScreenViewModel) {
-        model.statement = substanceStatements(model).instructToAddSaltToBase
         model.goToSaltPhase()
-        model.input = .addMolecule(phase: .addSalt)
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.phase = .addWeakSubstance
     }
 }
 

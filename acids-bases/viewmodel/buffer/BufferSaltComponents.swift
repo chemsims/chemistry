@@ -299,7 +299,7 @@ extension BufferSaltComponents {
 
 // MARK: Reset state
 extension BufferSaltComponents {
-    func resetCoords() {
+    func reset() {
         substanceAdded = 0
         reactingModel = Self.initialReactingBeakerModel(previous: previous)
         reactionProgress = BufferSharedComponents.reactionProgressModel(substance: substance, counts: initialProgressCounts)
