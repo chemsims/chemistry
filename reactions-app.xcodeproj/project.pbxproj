@@ -238,6 +238,11 @@
 		5773B5F425B84EF600889A2E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5F325B84EF600889A2E /* Version.swift */; };
 		5773BCD6267A2EA500E52C81 /* CircleChartLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */; };
 		5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD8267A5F4500E52C81 /* TextLineTests.swift */; };
+		5773BCDB267A7E6B00E52C81 /* AcidBasesNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCDA267A7E6B00E52C81 /* AcidBasesNavigationModel.swift */; };
+		5773BCDE267A7E9D00E52C81 /* AcidAppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCDD267A7E9D00E52C81 /* AcidAppScreen.swift */; };
+		5773BCE0267A7EBF00E52C81 /* AcidAppQuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCDF267A7EBF00E52C81 /* AcidAppQuestionSet.swift */; };
+		5773BCE2267A811C00E52C81 /* AcidAppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */; };
+		5773BCE4267A81BD00E52C81 /* AcidAppNavigationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */; };
 		57792CF1261AD69200C26CFF /* SolubleReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */; };
 		57792CF7261AD84D00C26CFF /* ReactionTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF6261AD84D00C26CFF /* ReactionTiming.swift */; };
 		57792CFE261B71CD00C26CFF /* SolubilityEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CFD261B71CD00C26CFF /* SolubilityEquationView.swift */; };
@@ -880,6 +885,11 @@
 		5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSettingsTests.swift; sourceTree = "<group>"; };
 		5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleChartLabel.swift; sourceTree = "<group>"; };
 		5773BCD8267A5F4500E52C81 /* TextLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineTests.swift; sourceTree = "<group>"; };
+		5773BCDA267A7E6B00E52C81 /* AcidBasesNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesNavigationModel.swift; sourceTree = "<group>"; };
+		5773BCDD267A7E9D00E52C81 /* AcidAppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppScreen.swift; sourceTree = "<group>"; };
+		5773BCDF267A7EBF00E52C81 /* AcidAppQuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppQuestionSet.swift; sourceTree = "<group>"; };
+		5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppRootView.swift; sourceTree = "<group>"; };
+		5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppNavigationRows.swift; sourceTree = "<group>"; };
 		57778B7E259368B800254262 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		57778B8925937D8C00254262 /* QuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTests.swift; sourceTree = "<group>"; };
 		57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleReactionSettings.swift; sourceTree = "<group>"; };
@@ -1383,6 +1393,7 @@
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5773BCDC267A7E8F00E52C81 /* enums */,
 				5705CB082678E93400F5A63C /* fractioned-chart */,
 				5739D0B42664B8270007B09A /* statements */,
 				5739D0B02664B7740007B09A /* navigation */,
@@ -1406,6 +1417,7 @@
 				5739D0AB2664B2C00007B09A /* shake-container */,
 				57FA3ABD2661049C0073A29B /* intro-screen */,
 				57D60153265ECA2800017E25 /* pHScale */,
+				5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1747,6 +1759,8 @@
 			children = (
 				570A766C266CFCF1009329FB /* BufferNavigationModel.swift */,
 				5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */,
+				5773BCDA267A7E6B00E52C81 /* AcidBasesNavigationModel.swift */,
+				5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -2134,6 +2148,15 @@
 				5773BCD8267A5F4500E52C81 /* TextLineTests.swift */,
 			);
 			path = "text-line";
+			sourceTree = "<group>";
+		};
+		5773BCDC267A7E8F00E52C81 /* enums */ = {
+			isa = PBXGroup;
+			children = (
+				5773BCDD267A7E9D00E52C81 /* AcidAppScreen.swift */,
+				5773BCDF267A7EBF00E52C81 /* AcidAppQuestionSet.swift */,
+			);
+			path = enums;
 			sourceTree = "<group>";
 		};
 		57778B8425937B5900254262 /* questions */ = {
@@ -3501,6 +3524,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */,
+				5773BCDB267A7E6B00E52C81 /* AcidBasesNavigationModel.swift in Sources */,
 				570AD452266D4CF100B9732E /* BufferRightStack.swift in Sources */,
 				57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */,
 				570A766D266CFCF1009329FB /* BufferNavigationModel.swift in Sources */,
@@ -3511,13 +3535,16 @@
 				57CD325826723ACB00C94109 /* BufferFractionsChart.swift in Sources */,
 				5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */,
 				57FA3AB12660D4450073A29B /* PHScale.swift in Sources */,
+				5773BCDE267A7E9D00E52C81 /* AcidAppScreen.swift in Sources */,
 				57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */,
 				578A1EAF266FA90000D11E22 /* BufferPhChart.swift in Sources */,
 				57D60158265ECA7B00017E25 /* PHScaleColors.swift in Sources */,
 				570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
 				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
+				5773BCE4267A81BD00E52C81 /* AcidAppNavigationRows.swift in Sources */,
 				574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */,
+				5773BCE2267A811C00E52C81 /* AcidAppRootView.swift in Sources */,
 				5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */,
 				577C10E926711C6500C5DC9A /* BufferStatements.swift in Sources */,
 				5743660F266E7CD8007F0410 /* BufferChartStack.swift in Sources */,
@@ -3535,6 +3562,7 @@
 				57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */,
 				57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */,
 				5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */,
+				5773BCE0267A7EBF00E52C81 /* AcidAppQuestionSet.swift in Sources */,
 				5705CB0A2678E94900F5A63C /* FractionedChartAxisHelper.swift in Sources */,
 				570A7664266CD900009329FB /* BufferSaltComponents.swift in Sources */,
 				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,

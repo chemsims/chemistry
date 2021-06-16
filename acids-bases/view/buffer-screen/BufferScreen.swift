@@ -7,23 +7,32 @@ import ReactionsCore
 
 struct BufferScreen: View {
 
-    let layout: AcidBasesScreenLayout
     let model: BufferScreenViewModel
+
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         GeometryReader { geo in
             BufferScreenWithSettings(
-                layout: BufferScreenLayout(common: layout),
-                model: model
+                model: model,
+                layout: BufferScreenLayout(
+                    common: AcidBasesScreenLayout(
+                        geometry: geo,
+                        verticalSizeClass: verticalSizeClass,
+                        horizontalSizeClass: horizontalSizeClass
+                    )
+                )
             )
         }
+        .padding(15) // TODO - get rid of this
     }
 }
 
 private struct BufferScreenWithSettings: View {
 
-    let layout: BufferScreenLayout
     @ObservedObject var model: BufferScreenViewModel
+    let layout: BufferScreenLayout
 
     var body: some View {
         HStack(spacing: 0) {
@@ -79,17 +88,8 @@ struct BufferScreenLayout {
 
 struct BufferScreen_Previews: PreviewProvider {
     static var previews: some View {
-        GeometryReader { geo in
-            BufferScreen(
-                layout: AcidBasesScreenLayout(
-                    geometry: geo,
-                    verticalSizeClass: nil,
-                    horizontalSizeClass: nil
-                ),
-                model: BufferScreenViewModel()
-            )
-        }
-        .padding()
-        .previewLayout(.iPhone12ProMaxLandscape)
+        BufferScreen(model: BufferScreenViewModel())
+            .padding()
+            .previewLayout(.iPhone12ProMaxLandscape)
     }
 }

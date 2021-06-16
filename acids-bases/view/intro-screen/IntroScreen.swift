@@ -7,16 +7,25 @@ import SwiftUI
 
 struct IntroScreen: View {
 
-    let layout: AcidBasesScreenLayout
     var model: IntroScreenViewModel
+
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
         GeometryReader { geo in
             IntroScreenWithSettings(
                 model: model,
-                layout: IntroScreenLayout(common: layout)
+                layout: IntroScreenLayout(
+                    common: AcidBasesScreenLayout(
+                        geometry: geo,
+                        verticalSizeClass: verticalSizeClass,
+                        horizontalSizeClass: horizontalSizeClass
+                    )
+                )
             )
         }
+        .padding(15)
     }
 }
 
@@ -133,16 +142,7 @@ extension IntroScreenLayout {
 
 struct IntroScreen_Previews: PreviewProvider {
     static var previews: some View {
-        GeometryReader { geo in
-            IntroScreen(
-                layout: AcidBasesScreenLayout(
-                    geometry: geo,
-                    verticalSizeClass: nil,
-                    horizontalSizeClass: nil
-                ),
-                model: IntroScreenViewModel()
-            )
-        }
-        .previewLayout(.iPhone8Landscape)
+        IntroScreen(model: IntroScreenViewModel())
+            .previewLayout(.iPhone8Landscape)
     }
 }
