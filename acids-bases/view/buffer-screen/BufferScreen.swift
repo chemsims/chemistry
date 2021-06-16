@@ -39,7 +39,8 @@ private struct BufferScreenWithSettings: View {
             Spacer()
             BufferRightStack(
                 layout: layout,
-                model: model
+                model: model,
+                weakModel: model.weakSubstanceModel
             )
         }
     }
@@ -68,7 +69,7 @@ struct BufferScreenLayout {
             common.beakerWidth -
             common.sliderSettings.handleWidth -
             common.chartTotalWidth
-        let availableHeight = common.height - common.beakyBoxHeight
+        let availableHeight = common.height - common.beakyBoxHeight - common.toggleHeight
         return CGSize(
             width: 0.9 * availableWidth,
             height: 0.9 * availableHeight

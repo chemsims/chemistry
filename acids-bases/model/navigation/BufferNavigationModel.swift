@@ -17,7 +17,7 @@ struct BufferNavigationModel {
     private static let states = [
 //        SetStatement(statements.intro),
 //        SetStatement(statements.explainEquilibriumConstant1),
-//        SetStatement(statements.explainEquilibriumConstant2),
+        SelectWeakAcid(),
 //        SetStatement(statements.explainWeakAcid),
 //        SetStatement(statements.explainKa),
 //        SetStatement(statements.explainHighKa),
@@ -29,10 +29,10 @@ struct BufferNavigationModel {
 //        SetStatement(statements.explainPKaPKb),
 //        SetStatement(statements.explainHendersonHasselbalch),
 //        SetWaterLevel(statements.instructToSetWaterLevel1),
-//        AddWeakAcid(),
-//        RunWeakAcidReaction(),
-//        EndOfWeakAcidReaction(),
-//        PostWeakAcidReaction(),
+        AddWeakAcid(),
+        RunWeakAcidReaction(),
+        EndOfWeakAcidReaction(),
+        PostWeakAcidReaction(),
 //        SetStatement(statements.explainBufferSolutions),
 //        SetStatement(statements.explainBufferSolutions2),
 //        SetStatement(statements.explainBufferUses),
@@ -88,6 +88,17 @@ private class SetStatement: BufferScreenState {
 
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statement(model)
+    }
+}
+
+private class SelectWeakAcid: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = statements.explainEquilibriumConstant2
+        model.input = .selectWeakAcid
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.input = .none
     }
 }
 

@@ -36,7 +36,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
 
     let cols: Int
     var rows: Int
-    var substance: AcidOrBase
+    @Published var substance: AcidOrBase
 
     let settings: BufferComponentSettings
 

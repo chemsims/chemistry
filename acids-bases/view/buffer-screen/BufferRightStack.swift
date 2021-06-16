@@ -9,13 +9,33 @@ struct BufferRightStack: View {
 
     let layout: BufferScreenLayout
     @ObservedObject var model: BufferScreenViewModel
+    @ObservedObject var weakModel: BufferWeakSubstanceComponents
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .trailing, spacing: 0) {
+            selectionToggle
+            Spacer(minLength: 0)
             terms
-            Spacer()
+            Spacer(minLength: 0)
             beaker
         }
+    }
+
+    private var selectionToggle: some View {
+        DropDownSelectionView(
+            title: "Choose a substance",
+            options: model.availableSubstances,
+            isToggled: $model.substanceSelectionIsToggled,
+            selection: $weakModel.substance,
+            height: layout.common.toggleHeight,
+            animation: nil,
+            displayString: { $0.symbol },
+            label: { $0.symbol },
+            disabledOptions: [],
+            onSelection: model.next
+        )
+        .frame(height: layout.common.toggleHeight, alignment: .top)
+        .zIndex(1)
     }
 
     private var terms: some View {
@@ -75,16 +95,20 @@ private struct SwitchingBufferEquationView: View {
 struct BufferRightStack_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
-            BufferRightStack(
-                layout: BufferScreenLayout(
-                    common: AcidBasesScreenLayout(
-                        geometry: geo,
-                        verticalSizeClass: nil,
-                        horizontalSizeClass: nil
-                    )
-                ),
-                model: BufferScreenViewModel()
-            )
+            HStack {
+                Spacer()
+                BufferRightStack(
+                    layout: BufferScreenLayout(
+                        common: AcidBasesScreenLayout(
+                            geometry: geo,
+                            verticalSizeClass: nil,
+                            horizontalSizeClass: nil
+                        )
+                    ),
+                    model: BufferScreenViewModel(),
+                    weakModel: BufferScreenViewModel().weakSubstanceModel
+                )
+            }
         }
         .padding()
         .previewLayout(.iPhone8Landscape)

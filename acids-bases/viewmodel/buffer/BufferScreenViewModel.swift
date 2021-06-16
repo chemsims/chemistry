@@ -8,7 +8,8 @@ import ReactionsCore
 class BufferScreenViewModel: ObservableObject {
 
     init() {
-        let initialSubstance = AcidOrBase.weakAcids[1]
+        let initialSubstances = AcidOrBase.weakAcids
+        let initialSubstance = initialSubstances.first!
         let initialRows = AcidAppSettings.initialRows
         let weakModel = BufferWeakSubstanceComponents(
             substance: initialSubstance,
@@ -24,7 +25,7 @@ class BufferScreenViewModel: ObservableObject {
         self.saltModel = saltModel
         self.strongSubstanceModel = strongModel
 
-        self.substance = initialSubstance
+        self.availableSubstances = initialSubstances
         self.navigation = BufferNavigationModel.model(self)
         self.shakeModel = MultiContainerShakeViewModel(
             canAddMolecule: canAddMolecule,
@@ -40,7 +41,6 @@ class BufferScreenViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var input = InputState.none
     @Published var phase = Phase.addWeakSubstance
-    @Published var substance: AcidOrBase
     @Published var weakSubstanceModel: BufferWeakSubstanceComponents
     @Published var saltModel: BufferSaltComponents
     @Published var strongSubstanceModel: BufferStrongSubstanceComponents
@@ -51,6 +51,11 @@ class BufferScreenViewModel: ObservableObject {
     // This is published as otherwise the beaky box is not redrawn when the computed
     // property changes
     @Published var canGoNext: Bool = true
+    @Published var substanceSelectionIsToggled = false
+    @Published var availableSubstances: [AcidOrBase]
+    var substance: AcidOrBase {
+        weakSubstanceModel.substance
+    }
 
     private(set) var shakeModel: MultiContainerShakeViewModel<Phase>!
     private(set) var navigation: NavigationModel<BufferScreenState>?
@@ -95,7 +100,6 @@ extension BufferScreenViewModel {
     }
 
     func goToWeakBufferPhase() {
-        substance = AcidOrBase.weakBases.first!
         weakSubstanceModel = BufferWeakSubstanceComponents(
             substance: .weakBases.first!,
             settings: .standard,
@@ -134,7 +138,7 @@ extension BufferScreenViewModel {
     }
 
     enum InputState: Equatable {
-        case none, setWaterLevel
+        case none, setWaterLevel, selectWeakAcid, selectWeakBase
         case addMolecule(phase: Phase)
     }
 
