@@ -46,7 +46,7 @@ class BufferScreenViewModel: ObservableObject {
     @Published var strongSubstanceModel: BufferStrongSubstanceComponents
 
     @Published var selectedBottomGraph = BottomGraph.bars
-    @Published var equationState = EquationState.weakAcidBlank
+    @Published var equationState = EquationState.acidBlank
 
     // This is published as otherwise the beaky box is not redrawn when the computed
     // property changes
@@ -151,15 +151,15 @@ extension BufferScreenViewModel {
     }
 
     enum EquationState: String, CaseIterable {
-        case weakAcidBlank,
-             weakAcidWithSubstanceConcentration,
-             weakAcidWithAllConcentration,
-             weakAcidFilled,
+        case acidBlank,
+             acidWithSubstanceConcentration,
+             acidWithAllConcentration,
+             acidFilled,
              acidSummary
-        case weakBaseBlank,
-             weakBaseWithSubstanceConcentration,
-             weakBaseWithAllConcentration,
-             weakBaseFilled,
+        case baseBlank,
+             baseWithSubstanceConcentration,
+             baseWithAllConcentration,
+             baseFilled,
              baseSummary
     }
 }

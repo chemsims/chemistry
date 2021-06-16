@@ -21,36 +21,36 @@ struct BufferNavigationModel {
     }
 
     private static let states = [
-        SetStatement(statements.intro),
-        SetStatement(statements.explainEquilibriumConstant1),
-        SelectWeakAcid(),
-        PostSelectWeakAcid(statements.explainWeakAcid),
-        SetStatement(statements.explainKa),
-        SetStatement(statements.explainHighKa),
-        SetStatement(statements.explainConjugateBase),
-        SetStatement(statements.explainKb),
-        SetStatement(statements.explainKw),
-        SetStatement(statements.explainP14),
-        SetStatement(statements.explainKaKbNaming),
-        SetStatement(statements.explainPKaPKb),
-        SetStatement(statements.explainHendersonHasselbalch),
-        SetWaterLevel(statements.instructToSetWaterLevel1),
-        AddWeakAcid(),
-        RunWeakAcidReaction(),
-        EndOfWeakAcidReaction(),
-        PostWeakAcidReaction(),
-        SetStatement(statements.explainBufferSolutions),
-        SetStatement(statements.explainBufferSolutions2),
-        SetStatement(statements.explainBufferUses),
-        ShowFractionChart(),
-        SetStatement(statements.explainFractionChartCurrentPosition),
-        SetStatement(statements.explainBufferRange),
-        SetStatement(statements.explainBufferProportions),
-        SetStatement(statements.explainAddingAcidIonizingSalt),
-        AddSaltToAcidBuffer(),
-        PostAddSaltToAcidBuffer(),
-        SetStatement(statements.showPreviousPhLine),
-        AddStrongAcid(),
+//        SetStatement(statements.intro),
+//        SetStatement(statements.explainEquilibriumConstant1),
+//        SelectWeakAcid(),
+//        PostSelectWeakAcid(statements.explainWeakAcid),
+//        SetStatement(statements.explainKa),
+//        SetStatement(statements.explainHighKa),
+//        SetStatement(statements.explainConjugateBase),
+//        SetStatement(statements.explainKb),
+//        SetStatement(statements.explainKw),
+//        SetStatement(statements.explainP14),
+//        SetStatement(statements.explainKaKbNaming),
+//        SetStatement(statements.explainPKaPKb),
+//        SetStatement(statements.explainHendersonHasselbalch),
+//        SetWaterLevel(statements.instructToSetWaterLevel1),
+//        AddWeakAcid(),
+//        RunWeakAcidReaction(),
+//        EndOfWeakAcidReaction(),
+//        PostWeakAcidReaction(),
+//        SetStatement(statements.explainBufferSolutions),
+//        SetStatement(statements.explainBufferSolutions2),
+//        SetStatement(statements.explainBufferUses),
+//        ShowFractionChart(),
+//        SetStatement(statements.explainFractionChartCurrentPosition),
+//        SetStatement(statements.explainBufferRange),
+//        SetStatement(statements.explainBufferProportions),
+//        SetStatement(statements.explainAddingAcidIonizingSalt),
+//        AddSaltToAcidBuffer(),
+//        PostAddSaltToAcidBuffer(),
+//        SetStatement(statements.showPreviousPhLine),
+//        AddStrongAcid(),
         PostAddStrongAcid(),
         SelectWeakBase(),
         SetStatement(fromSubstance: \.choseWeakBase),
@@ -161,7 +161,7 @@ private class AddWeakAcid: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.instructToAddWeakAcid(model.substance)
         model.input = .addMolecule(phase: .addWeakSubstance)
-        model.equationState = .weakAcidWithSubstanceConcentration
+        model.equationState = .acidWithSubstanceConcentration
     }
 
     override func reapply(on model: BufferScreenViewModel) {
@@ -171,7 +171,7 @@ private class AddWeakAcid: BufferScreenState {
 
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
-        model.equationState = .weakAcidBlank
+        model.equationState = .acidBlank
         model.weakSubstanceModel.resetCoords()
         model.shakeModel.stopAll()
     }
@@ -213,12 +213,12 @@ private class RunWeakAcidReaction: RunWeakSubstanceReaction {
     override func apply(on model: BufferScreenViewModel) {
         super.apply(on: model)
         model.statement = statements.runningWeakAcidReaction(model.substance)
-        model.equationState = .weakAcidWithAllConcentration
+        model.equationState = .acidWithAllConcentration
     }
 
     override func unapply(on model: BufferScreenViewModel) {
         super.unapply(on: model)
-        model.equationState = .weakAcidWithSubstanceConcentration
+        model.equationState = .acidWithSubstanceConcentration
     }
 }
 
@@ -229,7 +229,7 @@ private class EndOfWeakAcidReaction: BufferScreenState {
             ka: model.weakSubstanceModel.substance.kA,
             pH: model.weakSubstanceModel.pH.getY(at: 1)
         )
-        model.equationState = .weakAcidFilled
+        model.equationState = .acidFilled
         withAnimation(endReactionAnimation) {
             model.weakSubstanceModel.progress = 1.0001
         }
@@ -318,6 +318,7 @@ private class SelectWeakBase: BufferScreenState {
         model.availableSubstances = AcidOrBase.weakBases
         model.goToWeakSubstancePhase()
         model.substanceSelectionIsToggled = true
+        model.equationState = .acidBlank
         if model.selectedBottomGraph == .curve {
             model.selectedBottomGraph = .bars
         }
@@ -328,12 +329,12 @@ private class AddWeakBase: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = substanceStatements(model).instructToAddWeakBase
         model.input = .addMolecule(phase: .addWeakSubstance)
-        model.equationState = .weakBaseWithSubstanceConcentration
+        model.equationState = .baseWithSubstanceConcentration
     }
 
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
-        model.equationState = .weakBaseBlank
+        model.equationState = .baseBlank
     }
 }
 
@@ -341,7 +342,7 @@ private class RunWeakBaseReaction: RunWeakSubstanceReaction {
     override func apply(on model: BufferScreenViewModel) {
         super.apply(on: model)
         model.statement = substanceStatements(model).runningWeakBaseReaction
-        model.equationState = .weakBaseWithSubstanceConcentration
+        model.equationState = .baseWithSubstanceConcentration
         withAnimation(containerInputAnimation) {
             model.input = .none
             model.shakeModel.stopAll()
@@ -353,7 +354,7 @@ private class EndOfWeakBaseReaction: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         let finalPh = model.weakSubstanceModel.pH.getY(at: 1)
         model.statement = substanceStatements(model).reachedBaseEquilibrium(pH: finalPh)
-        model.equationState = .weakBaseFilled
+        model.equationState = .baseFilled
         withAnimation(.easeOut(duration: 0.5)) {
             model.weakSubstanceModel.progress = 1.0001
         }

@@ -103,6 +103,7 @@ private struct SizedBufferEquationView: View {
                 substance: data.substance,
                 state: state,
                 kValue: state.isAcid ? data.kA : data.kB,
+                pKAValue: data.pKa,
                 concentration: data.concentration,
                 progress: progress
             )
@@ -241,20 +242,21 @@ private struct KAFilled: View {
     let substance: AcidOrBase
     let state: EquationState
     let kValue: CGFloat
+    let pKAValue: CGFloat
     let concentration: SubstanceValue<Equation>
     let progress: CGFloat
 
     var body: some View {
         HStack(spacing: hStackSpacing) {
             if state.isSummary {
-                FixedText(state.kTerm)
+                FixedText("pKa")
                     .leftColElement()
             } else {
                 kAView
             }
             FixedText("=")
             if state.isSummary {
-                FixedText(kValue.str(decimals: 2))
+                FixedText(pKAValue.str(decimals: 2))
             } else {
                 fraction
             }
@@ -533,8 +535,8 @@ private extension EquationState {
             return true
         }
         switch self {
-        case .weakAcidWithSubstanceConcentration,
-             .weakBaseWithSubstanceConcentration:
+        case .acidWithSubstanceConcentration,
+             .baseWithSubstanceConcentration:
             return true
         default: return false
         }
@@ -542,12 +544,12 @@ private extension EquationState {
 
     var showIonConcentration: Bool {
         switch self {
-        case .weakAcidWithAllConcentration,
-             .weakAcidFilled,
+        case .acidWithAllConcentration,
+             .acidFilled,
              .acidSummary,
-             .weakBaseFilled,
+             .baseFilled,
              .baseSummary,
-             .weakBaseWithAllConcentration:
+             .baseWithAllConcentration:
             return true
         default: return false
 
@@ -560,14 +562,14 @@ private extension EquationState {
 
     private var showAllAcidTerms: Bool {
         switch self {
-        case .weakAcidFilled, .acidSummary: return true
+        case .acidFilled, .acidSummary: return true
         default: return false
         }
     }
 
     private var showAllBaseTerms: Bool {
         switch self {
-        case .weakBaseFilled, .baseSummary: return true
+        case .baseFilled, .baseSummary: return true
         default: return false
         }
     }
@@ -581,10 +583,10 @@ private extension EquationState {
 
     var showKwEquations: Bool {
         switch self {
-        case .weakAcidBlank,
-             .weakAcidWithSubstanceConcentration,
-             .weakAcidWithAllConcentration,
-             .weakAcidFilled:
+        case .acidBlank,
+             .acidWithSubstanceConcentration,
+             .acidWithAllConcentration,
+             .acidFilled:
             return true
         default: return false
         }
@@ -611,10 +613,10 @@ private extension EquationState {
 
     var isAcid: Bool {
         switch self {
-        case .weakAcidBlank,
-             .weakAcidFilled,
-             .weakAcidWithAllConcentration,
-             .weakAcidWithSubstanceConcentration,
+        case .acidBlank,
+             .acidFilled,
+             .acidWithAllConcentration,
+             .acidWithSubstanceConcentration,
              .acidSummary:
             return true
         default: return false
@@ -665,7 +667,7 @@ struct BufferEquationView_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
             equation(
-                state: .weakAcidFilled,
+                state: .acidSummary,
                 substance: .weakAcids[0]
             )
             equation(
