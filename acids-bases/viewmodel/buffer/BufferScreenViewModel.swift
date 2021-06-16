@@ -72,7 +72,7 @@ extension BufferScreenViewModel {
 
     func back() {
         navigation?.back()
-        canGoNext = true
+        canGoNext = canGoNextComputedProperty
     }
 
     private var canGoNextComputedProperty: Bool {

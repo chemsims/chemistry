@@ -18,7 +18,7 @@ struct BufferNavigationModel {
         SetStatement(statements.intro),
         SetStatement(statements.explainEquilibriumConstant1),
         SelectWeakAcid(),
-        SetStatement(statements.explainWeakAcid),
+        PostSelectWeakAcid(statements.explainWeakAcid),
         SetStatement(statements.explainKa),
         SetStatement(statements.explainHighKa),
         SetStatement(statements.explainConjugateBase),
@@ -104,6 +104,14 @@ private class SelectWeakAcid: BufferScreenState {
     }
 }
 
+private class PostSelectWeakAcid: SetStatement {
+    override func apply(on model: BufferScreenViewModel) {
+        super.apply(on: model)
+        model.substanceSelectionIsToggled = false
+        model.input = .none
+    }
+}
+
 private class SetWaterLevel: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statement(model)
@@ -122,9 +130,16 @@ private class AddWeakAcid: BufferScreenState {
         model.equationState = .weakAcidWithSubstanceConcentration
     }
 
+    override func reapply(on model: BufferScreenViewModel) {
+        model.weakSubstanceModel.resetCoords()
+        apply(on: model)
+    }
+
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
         model.equationState = .weakAcidBlank
+        model.weakSubstanceModel.resetCoords()
+        model.shakeModel.stopAll()
     }
 }
 
@@ -136,11 +151,22 @@ private class RunWeakSubstanceReaction: BufferScreenState {
             model.weakSubstanceModel.progress = 1
         }
 
-        model.weakSubstanceModel.runReactionProgressReaction(duration: reactionDuration)
+        model.weakSubstanceModel.runReactionProgressReaction()
 
         withAnimation(.easeOut(duration: 0.35)) {
             model.input = .none
-            model.shakeModel.activeMolecule = nil
+            model.shakeModel.stopAll()
+        }
+    }
+
+    override func reapply(on model: BufferScreenViewModel) {
+        model.weakSubstanceModel.resetReactionProgress()
+        super.reapply(on: model)
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        withAnimation(.easeOut(duration: 0.35)) {
+            model.weakSubstanceModel.resetReactionProgress()
         }
     }
 
@@ -154,6 +180,11 @@ private class RunWeakAcidReaction: RunWeakSubstanceReaction {
         super.apply(on: model)
         model.statement = statements.runningWeakAcidReaction(model.substance)
         model.equationState = .weakAcidWithAllConcentration
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        super.unapply(on: model)
+        model.equationState = .weakAcidWithSubstanceConcentration
     }
 }
 
@@ -196,6 +227,10 @@ private class AddSalt: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.instructToAddSalt
         model.input = .addMolecule(phase: .addSalt)
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.input = .none
     }
 }
 

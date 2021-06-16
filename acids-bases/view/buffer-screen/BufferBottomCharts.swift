@@ -73,8 +73,8 @@ private struct BufferReactionProgressChart: View {
 
     let layout: BufferScreenLayout
     let phase: BufferScreenViewModel.Phase
-    let weakModel: BufferWeakSubstanceComponents
-    let saltModel: BufferSaltComponents
+    @ObservedObject var weakModel: BufferWeakSubstanceComponents
+    @ObservedObject var saltModel: BufferSaltComponents
 
     var body: some View {
         ReactionProgressChart(

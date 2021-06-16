@@ -87,14 +87,21 @@ struct BufferSharedComponents {
 // MARK: Reaction progress
 extension BufferSharedComponents {
     static func initialReactionProgressModel(substance: AcidOrBase) -> ReactionProgressChartViewModel<SubstancePart> {
+        reactionProgressModel(substance: substance, counts: .constant(0))
+    }
+
+    static func reactionProgressModel(substance: AcidOrBase, counts: EnumMap<SubstancePart, Int>) -> ReactionProgressChartViewModel<SubstancePart> {
         .init(
-            molecules: initialReactionProgressMolecules(substance: substance),
+            molecules: initialReactionProgressMolecules(substance: substance, counts: counts),
             settings: .init(maxMolecules: AcidAppSettings.maxReactionProgressMolecules),
             timing: .init()
         )
     }
 
-    private static func initialReactionProgressMolecules(substance: AcidOrBase) -> EnumMap<SubstancePart, ReactionProgressChartViewModel<SubstancePart>.MoleculeDefinition> {
+    private static func initialReactionProgressMolecules(
+        substance: AcidOrBase,
+        counts: EnumMap<SubstancePart, Int>
+    ) -> EnumMap<SubstancePart, ReactionProgressChartViewModel<SubstancePart>.MoleculeDefinition> {
         let indices = EnumMap<SubstancePart, Int> {
             switch $0 {
             case .substance: return 0
@@ -106,7 +113,7 @@ extension BufferSharedComponents {
             .init(
                 label: substance.chargedSymbol(ofPart: part).text,
                 columnIndex: indices.value(for: part),
-                initialCount: 0,
+                initialCount: counts.value(for: part),
                 color: substance.color(ofPart: part)
             )
         })

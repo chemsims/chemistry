@@ -44,7 +44,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
         }
     }
 
-    private(set) var reactionProgress: ReactionProgressChartViewModel<SubstancePart>
+    @Published private(set) var reactionProgress: ReactionProgressChartViewModel<SubstancePart>
 
     let settings: BufferComponentSettings
 
@@ -278,20 +278,19 @@ extension BufferWeakSubstanceComponents {
 // MARK: Reaction progress
 extension BufferWeakSubstanceComponents {
 
-    func runReactionProgressReaction(duration: TimeInterval) {
+    func runReactionProgressReaction() {
         let numberOfMoleculesToReact = settings.reactionProgress.initialIonCount
-        reactionProgress.scheduleReactionFromExisting(
-            consuming: .substance,
-            producing: [.primaryIon, .secondaryIon],
-            count: numberOfMoleculesToReact,
-            duration: duration
-        )
+        for _ in 0..<numberOfMoleculesToReact {
+            _ = reactionProgress.startReactionFromExisting(
+                consuming: .substance,
+                producing: [.primaryIon, .secondaryIon]
+            )
+        }
     }
 
     private func incrementReactionProgressIfNeeded() {
-        let desiredMolecules = Int(desiredReactionProgressCount.getY(at: CGFloat(initialSubstanceCount)))
         let currentMolecules = reactionProgress.moleculeCounts(ofType: .substance)
-        let delta = desiredMolecules - currentMolecules
+        let delta = initialSubstanceProgressCoords - currentMolecules
         if delta > 0 {
             for _ in 0..<delta {
                 _ = reactionProgress.addMolecule(.substance)
@@ -299,7 +298,7 @@ extension BufferWeakSubstanceComponents {
         }
     }
 
-    private var desiredReactionProgressCount: Equation {
+    private var substanceReactionProgressCoordCount: Equation {
         LinearEquationWithMinIntersection(
             x1: 0,
             y1: 0,
@@ -311,12 +310,33 @@ extension BufferWeakSubstanceComponents {
             )
         )
     }
+
+    private var initialSubstanceProgressCoords: Int {
+        Int(substanceReactionProgressCoordCount.getY(at: CGFloat(initialSubstanceCount)))
+    }
 }
 
-// MARK: Reaction progress initial data
+// MARK: Resetting state
 extension BufferWeakSubstanceComponents {
 
-    
+    func resetCoords() {
+        substanceCoords.coords = []
+        reactionProgress = BufferSharedComponents.initialReactionProgressModel(substance: substance)
+    }
+
+
+    func resetReactionProgress() {
+        progress = 0
+        revertReactionProgressChartToStartOfReaction()
+    }
+
+    /// Undoes the reaction progress
+    private func revertReactionProgressChartToStartOfReaction() {
+        let counts = EnumMap<SubstancePart, Int> {
+            $0 == .substance ? initialSubstanceProgressCoords : 0
+        }
+        reactionProgress = BufferSharedComponents.reactionProgressModel(substance: substance, counts: counts)
+    }
 }
 
 // TODO move this to a different file
