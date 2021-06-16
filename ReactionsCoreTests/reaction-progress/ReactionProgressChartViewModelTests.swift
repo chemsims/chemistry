@@ -38,7 +38,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         let model = newModel(timing: .init(fadeDuration: 0.2))
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
-        let wasAdded = model.addMolecule(.A, reactsWith: .B, producing: .C)
+        let wasAdded = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
         XCTAssert(wasAdded)
 
         XCTAssertEqual(model.sortedData(.A).count, 6)
@@ -58,7 +58,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         model.delegate = delegate
 
         func doAdd() -> XCTestExpectation {
-            let wasAdded = model.addMolecule(.A, reactsWith: .B, producing: .C)
+            let wasAdded = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
             XCTAssert(wasAdded)
             let newId = model.sortedData(.A).last!.id
             return delegate.addWillMoveMoleculeToTopOfColumnExpectation(forId: newId)
@@ -78,7 +78,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
 
-        let wasAdded = model.addMolecule(.C, reactsWith: .B, producing: .A)
+        let wasAdded = model.startReaction(adding: .C, reactsWith: .B, producing: .A)
         XCTAssert(wasAdded)
         let newId = model.sortedData(.C).last!.id
         let expectation = delegate.addWillMoveMoleculeToTopOfColumnExpectation(forId: newId)
@@ -93,7 +93,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
 
-        let wasAdded = model.addMolecule(.A, reactsWith: .B, producing: .C)
+        let wasAdded = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
         XCTAssert(wasAdded)
         let expectation = delegate.addWillFadeoutBottomMoleculesExpectation(molecules: [.A, .B])
 
@@ -114,7 +114,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
 
-        let wasAdded = model.addMolecule(.A, reactsWith: .B, producing: .C)
+        let wasAdded = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
         XCTAssert(wasAdded)
         let expectation = delegate.addWillSlideColumnsDownExpectation(molecules: [.A, .B])
 
@@ -135,8 +135,8 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
 
-        _ = model.addMolecule(.A, reactsWith: .B, producing: .C)
-        _ = model.addMolecule(.A, reactsWith: .B, producing: .C)
+        _ = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
+        _ = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
 
         let firstExpectation = delegate.addWillSlideColumnsDownExpectation(molecules: [.A, .B])
         let secondExpectation = delegate.addWillSlideColumnsDownExpectation(molecules: [.A, .B])
@@ -156,7 +156,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
 
-        let wasAdded = model.addMolecule(.A, reactsWith: .B, producing: .C)
+        let wasAdded = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
         XCTAssert(wasAdded)
         let expectation = delegate.addWillAddMoleculeToTopOfColumnExpectation(ofType: .C)
 
@@ -170,7 +170,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
 
     func testThatMoleculeIsNotAddedWhenThereIsNoConsumableMoleculeLeft() {
         let model = newModel()
-        let wasAdded = model.addMolecule(.A, reactsWith: .C, producing: .B)
+        let wasAdded = model.startReaction(adding: .A, reactsWith: .C, producing: .B)
         XCTAssertFalse(wasAdded)
     }
 
@@ -190,12 +190,12 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         model.delegate = delegate
 
         // We have a C molecule, so we can safely start the A + C -> B reaction
-        let consumeNonEmptyC1 = model.addMolecule(.A, reactsWith: .C, producing: .B)
+        let consumeNonEmptyC1 = model.startReaction(adding: .A, reactsWith: .C, producing: .B)
         XCTAssert(consumeNonEmptyC1)
 
         // Since the only C molecule will be consumed by the above reaction, we
         // expect trying to consume another C will fail
-        let consumeEmptyC = model.addMolecule(.A, reactsWith: .C, producing: .B)
+        let consumeEmptyC = model.startReaction(adding: .A, reactsWith: .C, producing: .B)
         XCTAssertFalse(consumeEmptyC)
 
         // Now, we want to wait for C to be consumed before continuing
@@ -204,7 +204,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
 
 
         // We now produce a C molecule
-        let produceC = model.addMolecule(.A, reactsWith: .B, producing: .C)
+        let produceC = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
         XCTAssert(produceC)
 
         // wait until the new C molecule has been added
@@ -215,7 +215,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
 
         // Since we have 1 C molecule again, we should be able to run another reaction
         // which consumes C
-        let consumeNonEmptyC2 = model.addMolecule(.A, reactsWith: .C, producing: .B)
+        let consumeNonEmptyC2 = model.startReaction(adding: .A, reactsWith: .C, producing: .B)
         XCTAssert(consumeNonEmptyC2)
     }
 
@@ -229,7 +229,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         }
         let model = newModel(definitions: TestMolecule.definitions(withCounts: counts))
 
-        let didAdd = model.addMolecule(.A, reactsWith: .B, producing: .C)
+        let didAdd = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
         XCTAssertFalse(didAdd)
     }
 
@@ -243,7 +243,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         }
         let model = newModel(definitions: TestMolecule.definitions(withCounts: counts))
 
-        let didAdd = model.addMolecule(.B, reactsWith: .C, producing: .A)
+        let didAdd = model.startReaction(adding: .B, reactsWith: .C, producing: .A)
         XCTAssertFalse(didAdd)
     }
 
@@ -257,10 +257,10 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         }
         let model = newModel(definitions: TestMolecule.definitions(withCounts: counts))
 
-        let firstAdd = model.addMolecule(.B, reactsWith: .C, producing: .A)
+        let firstAdd = model.startReaction(adding: .B, reactsWith: .C, producing: .A)
         XCTAssert(firstAdd)
 
-        let secondAdd = model.addMolecule(.B, reactsWith: .C, producing: .A)
+        let secondAdd = model.startReaction(adding: .B, reactsWith: .C, producing: .A)
         XCTAssertFalse(secondAdd)
     }
     

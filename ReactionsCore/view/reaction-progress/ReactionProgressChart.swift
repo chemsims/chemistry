@@ -65,9 +65,19 @@ struct ReactionProgressChart_Previews: PreviewProvider {
                 .border(Color.red)
 
                 Button(action: {
-                    _ = model.addMolecule(.A, reactsWith: .B, producing: .C)
+                    _ = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
                 }) {
-                    Text("button")
+                    Text("Start reaction")
+                }
+
+                HStack {
+                    ForEach(TestMoleculeType.allCases) { molecule in
+                        Button(action: {
+                            _ = model.addMolecule(molecule)
+                        }) {
+                            Text("Add \(molecule.rawValue)")
+                        }
+                    }
                 }
             }
         }
@@ -82,8 +92,12 @@ struct ReactionProgressChart_Previews: PreviewProvider {
         )
     }
 
-    enum TestMoleculeType: String, CaseIterable {
+    enum TestMoleculeType: String, CaseIterable, Identifiable {
         case A, B, C
+
+        var id: String {
+            rawValue
+        }
 
         var data: (col: Int, initCount: Int, color: Color) {
             switch self {

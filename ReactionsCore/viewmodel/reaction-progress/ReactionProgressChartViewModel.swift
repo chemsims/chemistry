@@ -51,7 +51,7 @@ public class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: Observ
 
     private var pendingRemovals = [MoleculeType : Int]()
 
-    private var runningReactions = [Reaction]()
+    private var runningReactions = [ActionSequence]()
 
     func getMolecules(ofType type: MoleculeType) -> [Molecule] {
         molecules.filter { $0.type == type }
@@ -61,22 +61,37 @@ public class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: Observ
 // MARK: Add molecule logic
 extension ReactionProgressChartViewModel {
 
-    /// Adds a `molecule`, which then reacts with `consumedMolecule` to produce `producedMolecule`.
+    /// Triggers a reaction which adds a molecule of type `addedMolecule`, which then reacts with a `consumedMolecule` type to produce
+    /// a molecule of type `producedMolecule`.
     ///
-    /// - Returns: True if the molecule was added, or false if the molecule could not be added. Adding a molecule
+    /// - Returns: True if the reaction was run, or false if the molecule could not be run. Running the reaction
     /// may fail when there are no more molecules of type `consumedMolecule` for example, or if the column of
-    /// `molecule` of `producedMolecule` are already full
-    public func addMolecule(
-        _ molecule: MoleculeType,
+    /// `molecule` or `producedMolecule` are already full.
+    public func startReaction(
+        adding addedMolecule: MoleculeType,
         reactsWith consumedMolecule: MoleculeType,
         producing producedMolecule: MoleculeType
     ) -> Bool {
-        let reaction = Reaction(added: molecule, consumed: consumedMolecule, produced: producedMolecule)
+        let reaction = ActionSequence.reaction(added: addedMolecule, consumed: consumedMolecule, produced: producedMolecule)
         guard canPerform(reaction: reaction) else {
             return false
         }
         runningReactions.append(reaction)
         runNextReactionAction(withId: reaction.id)
+        return true
+    }
+
+    /// Triggers adding a molecule of type `type`.
+    ///
+    /// - Returns: True if the molecule was added, or false if the molecule could not be added. Adding a molecule will fail
+    /// if the column is already full.
+    public func addMolecule(_ type: MoleculeType) -> Bool {
+        let action = ActionSequence.addMolecules(added: type)
+        guard canPerform(reaction: action) else {
+            return false
+        }
+        runningReactions.append(action)
+        runNextReactionAction(withId: action.id)
         return true
     }
 
@@ -129,9 +144,9 @@ extension ReactionProgressChartViewModel {
 // MARK: Reaction validation
 extension ReactionProgressChartViewModel {
     private func canPerform(
-        reaction: Reaction
+        reaction: ActionSequence
     ) -> Bool {
-        canConsume(reaction.consumed) && canAdd(reaction.added) && canAdd(reaction.produced)
+        reaction.added.allSatisfy(canAdd) && reaction.consumed.allSatisfy(canConsume)
     }
 
     private func canAdd(_ moleculeType: MoleculeType) -> Bool {
@@ -377,31 +392,44 @@ extension ReactionProgressChartViewModel {
         case addMolecule(type: MoleculeType)
     }
 
-    private struct Reaction {
+    private struct ActionSequence {
         let id = UUID()
-        let added: MoleculeType
-        let consumed: MoleculeType
-        let produced: MoleculeType
-
+        let added: [MoleculeType]
+        let consumed: [MoleculeType]
         var pendingActions: [ReactionAction]
 
-        init(
+        static func reaction(
             added: MoleculeType,
             consumed: MoleculeType,
             produced: MoleculeType
-        ) {
-            self.added = added
-            self.consumed = consumed
-            self.produced = produced
+        ) -> ActionSequence {
             let newMoleculeId = UUID()
-            self.pendingActions = [
-                .prepareMoleculeForDropping(type: added, id: newMoleculeId),
-                .moveMoleculeToTopOfColumn(id: newMoleculeId),
-                .fadeOutBottomMolecules(types: [added, consumed]),
-                .removeBottomMolecules(types: [added, consumed]),
-                .slideColumnsDown(types: [added, consumed]),
-                .addMolecule(type: produced)
-            ]
+            return ActionSequence(
+                added: [added, produced],
+                consumed: [consumed],
+                pendingActions: [
+                    .prepareMoleculeForDropping(type: added, id: newMoleculeId),
+                    .moveMoleculeToTopOfColumn(id: newMoleculeId),
+                    .fadeOutBottomMolecules(types: [added, consumed]),
+                    .removeBottomMolecules(types: [added, consumed]),
+                    .slideColumnsDown(types: [added, consumed]),
+                    .addMolecule(type: produced)
+                ]
+            )
+        }
+
+        static func addMolecules(
+            added: MoleculeType
+        ) -> ActionSequence {
+            let newMoleculeId = UUID()
+            return ActionSequence(
+                added: [added],
+                consumed: [],
+                pendingActions: [
+                    .prepareMoleculeForDropping(type: added, id: newMoleculeId),
+                    .moveMoleculeToTopOfColumn(id: newMoleculeId)
+                ]
+            )
         }
 
         func willRemoveMolecule(ofType moleculeType: MoleculeType) -> Bool {
