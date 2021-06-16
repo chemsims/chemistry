@@ -198,6 +198,40 @@ public struct Log10Equation: Equation {
     }
 }
 
+/// A linear equation which enforces that the `y` value has a minimum value at a given `x` value.
+///
+/// If the provided linear equation would be lower than the `minIntersection` point, then a switching
+/// equation is instead used with a linear line on the left of the intersection from `x1`, `y1` up to the intersection, and
+/// another linear line on the right of the intersection to `x2`, `y2`.
+public struct LinearEquationWithMinIntersection: Equation {
+    public init(
+        x1: CGFloat,
+        y1: CGFloat,
+        x2: CGFloat,
+        y2: CGFloat,
+        minIntersection: CGPoint
+    ) {
+        let idealEquation = LinearEquation(x1: x1, y1: y1, x2: x2, y2: y2)
+        let yValueAtIntersection = idealEquation.getY(at: minIntersection.x)
+
+        if yValueAtIntersection > minIntersection.y {
+            self.underlying = idealEquation
+        } else {
+            self.underlying = SwitchingEquation(
+                thresholdX: minIntersection.x,
+                underlyingLeft: LinearEquation(x1: x1, y1: y1, x2: minIntersection.x, y2: minIntersection.y),
+                underlyingRight: LinearEquation(x1: minIntersection.x, y1: minIntersection.y, x2: x2, y2: y2)
+            )
+        }
+    }
+
+    let underlying: Equation
+
+    public func getY(at x: CGFloat) -> CGFloat {
+        underlying.getY(at: x)
+    }
+}
+
 extension Equation {
     public func within(min: CGFloat, max: CGFloat) -> Equation {
         BoundEquation(underlying: self, lowerBound: min, upperBound: max)

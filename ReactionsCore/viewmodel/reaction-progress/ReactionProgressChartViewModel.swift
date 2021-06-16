@@ -58,7 +58,7 @@ public class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: Observ
     }
 }
 
-// MARK: Add molecule logic
+// MARK: API
 extension ReactionProgressChartViewModel {
 
     /// Triggers a reaction which adds a molecule of type `addedMolecule`, which then reacts with a `consumedMolecule` type to produce
@@ -73,12 +73,7 @@ extension ReactionProgressChartViewModel {
         producing producedMolecule: MoleculeType
     ) -> Bool {
         let reaction = ActionSequence.reaction(added: addedMolecule, consumed: consumedMolecule, produced: producedMolecule)
-        guard canPerform(reaction: reaction) else {
-            return false
-        }
-        runningReactions.append(reaction)
-        runNextReactionAction(withId: reaction.id)
-        return true
+        return triggerSequence(reaction)
     }
 
     /// Triggers adding a molecule of type `type`.
@@ -86,12 +81,30 @@ extension ReactionProgressChartViewModel {
     /// - Returns: True if the molecule was added, or false if the molecule could not be added. Adding a molecule will fail
     /// if the column is already full.
     public func addMolecule(_ type: MoleculeType) -> Bool {
-        let action = ActionSequence.addMolecules(added: type)
-        guard canPerform(reaction: action) else {
+        let sequence = ActionSequence.addMolecules(added: type)
+        return triggerSequence(sequence)
+    }
+
+    /// Returns the total count of molecules of type `type`, taking into actions which are in-flight
+    public func moleculeCounts(ofType type: MoleculeType) -> Int {
+        let currentMolecules = getMolecules(ofType: type)
+        let pendingAdds = runningReactions.filter { $0.willAddMolecule(ofType: type) }.count
+        let pendingRemovals = runningReactions.filter { $0.willRemoveMolecule(ofType: type) }.count
+
+        return currentMolecules.count + pendingAdds - pendingRemovals
+    }
+}
+
+// MARK: Trigger actions
+extension ReactionProgressChartViewModel {
+
+    /// Triggers the `sequence`, returning true if it could be triggered, or false if it was not triggered
+    private func triggerSequence(_ sequence: ActionSequence) -> Bool {
+        guard canPerform(reaction: sequence) else {
             return false
         }
-        runningReactions.append(action)
-        runNextReactionAction(withId: action.id)
+        runningReactions.append(sequence)
+        runNextReactionAction(withId: sequence.id)
         return true
     }
 
@@ -150,15 +163,11 @@ extension ReactionProgressChartViewModel {
     }
 
     private func canAdd(_ moleculeType: MoleculeType) -> Bool {
-        let currentMolecules = getMolecules(ofType: moleculeType)
-        let pendingAdds = runningReactions.filter { $0.willAddMolecule(ofType: moleculeType) }.count
-        return (currentMolecules.count + pendingAdds) < settings.maxRowIndex + 1
+        moleculeCounts(ofType: moleculeType) < settings.maxRowIndex + 1
     }
 
     private func canConsume(_ moleculeType: MoleculeType) -> Bool {
-        let consumableMolecules = getMolecules(ofType: moleculeType)
-        let pendingRemovals = runningReactions.filter { $0.willRemoveMolecule(ofType: moleculeType) }.count
-        return (consumableMolecules.count - pendingRemovals) > 0
+        moleculeCounts(ofType: moleculeType) > 0
     }
 }
 

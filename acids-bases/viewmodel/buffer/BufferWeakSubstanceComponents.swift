@@ -59,6 +59,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
             cols: cols,
             rows: rows
         )
+        incrementReactionProgressIfNeeded()
     }
 
     func molecules(for substance: SubstancePart) -> BeakerMolecules {
@@ -194,7 +195,11 @@ extension BufferWeakSubstanceComponents {
     }
 
     private var remainingCountAvailable: Int {
-        max(0, maxSubstanceCount - substanceCoords.coords.count)
+        max(0, maxSubstanceCount - initialSubstanceCount)
+    }
+
+    private var initialSubstanceCount: Int {
+        substanceCoords.coords.count
     }
 }
 
@@ -270,6 +275,33 @@ extension BufferWeakSubstanceComponents {
     }
 }
 
+// MARK: Reaction progress
+extension BufferWeakSubstanceComponents {
+    private func incrementReactionProgressIfNeeded() {
+        let desiredMolecules = Int(desiredReactionProgressCount.getY(at: CGFloat(initialSubstanceCount)))
+        let currentMolecules = reactionProgress.moleculeCounts(ofType: .substance)
+        let delta = desiredMolecules - currentMolecules
+        if delta > 0 {
+            for _ in 0..<delta {
+                _ = reactionProgress.addMolecule(.substance)
+            }
+        }
+    }
+
+    private var desiredReactionProgressCount: Equation {
+        LinearEquationWithMinIntersection(
+            x1: 0,
+            y1: 0,
+            x2: CGFloat(maxSubstanceCount),
+            y2: CGFloat(settings.reactionProgress.maxInitialSubstanceCount),
+            minIntersection: CGPoint(
+                x: CGFloat(minSubstanceCount),
+                y: CGFloat(settings.reactionProgress.minInitialSubstanceCount)
+            )
+        )
+    }
+}
+
 // MARK: Reaction progress initial data
 extension BufferWeakSubstanceComponents {
 
@@ -321,12 +353,25 @@ struct BufferComponentSettings {
     /// Maximum concentration of all molecules combined at the end of phase 3
     let maxFinalBeakerConcentration: CGFloat
 
+    let reactionProgress: ReactionProgress
+
+    struct ReactionProgress {
+        let minInitialSubstanceCount: Int
+        let maxInitialSubstanceCount: Int
+        let minInitialIonCount: Int
+    }
+
     static let standard = BufferComponentSettings(
         changeInBarHeightAsFractionOfInitialSubstance: 0.1,
         initialIonMoleculeFraction: 0.1,
         minimumInitialIonCount: 2,
         finalSecondaryIonCount: 3,
         minimumFinalPrimaryIonCount: 7,
-        maxFinalBeakerConcentration: 0.65
+        maxFinalBeakerConcentration: 0.65,
+        reactionProgress: ReactionProgress(
+            minInitialSubstanceCount: 3,
+            maxInitialSubstanceCount: 5,
+            minInitialIonCount: 1
+        )
     )
 }
