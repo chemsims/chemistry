@@ -27,6 +27,7 @@ struct BufferChartStack: View {
 
     private var bottomCharts: some View {
         BufferBottomCharts(layout: layout, model: model)
+            .padding(.leading, layout.common.chartYAxisWidth + layout.common.chartYAxisHSpacing)
     }
 }
 
