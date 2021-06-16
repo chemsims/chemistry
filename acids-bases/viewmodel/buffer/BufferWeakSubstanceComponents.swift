@@ -328,7 +328,7 @@ extension BufferWeakSubstanceComponents {
     func resetReactionProgress() {
         progress = 0
         revertReactionProgressChartToStartOfReaction()
-    }
+    } 
 
     /// Undoes the reaction progress
     private func revertReactionProgressChartToStartOfReaction() {

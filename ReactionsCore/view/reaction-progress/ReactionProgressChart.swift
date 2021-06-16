@@ -57,6 +57,7 @@ extension ReactionProgressChart {
             .foregroundColor(molecule.definition.color)
             .position(molecule.position(using: geometry))
             .opacity(molecule.opacity)
+            .transition(.identity)
     }
 }
 

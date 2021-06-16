@@ -10,23 +10,7 @@ class BufferSaltComponents: ObservableObject {
     init(
         prev: BufferWeakSubstanceComponents
     ) {
-
-        var prevSubstanceCoords = prev.substanceCoords
-
-        let ionCoords = prev.ionCoords.flatMap { $0.molecules.coords }
-
-        let visibleSubstanceCoords = prevSubstanceCoords.coords.filter { !ionCoords.contains($0) }
-        prevSubstanceCoords.coords = visibleSubstanceCoords
-
-        reactingModel = ReactingBeakerViewModel(
-            initial: SubstanceValue(
-                substance: prevSubstanceCoords,
-                primaryIon: prev.ionCoords[0].molecules,
-                secondaryIon: prev.ionCoords[1].molecules
-            ),
-            cols: prev.cols,
-            rows: prev.rows
-        )
+        reactingModel = Self.initialReactingBeakerModel(previous: prev)
 
         let initialSubstanceC = prev.concentration.substance.getY(at: 1)
         let finalSubstanceC = prev.concentration.substance.getY(at: 0)
@@ -135,11 +119,13 @@ class BufferSaltComponents: ObservableObject {
         })
     }
 
-    let reactingModel: ReactingBeakerViewModel<SubstancePart>
-    let previous: BufferWeakSubstanceComponents
-
     @Published var substanceAdded = 0
+    @Published private(set) var reactingModel: ReactingBeakerViewModel<SubstancePart>
+    @Published private(set) var reactionProgress: ReactionProgressChartViewModel<SubstancePart>
 
+    private let initialProgressCounts: EnumMap<SubstancePart, Int>
+
+    let previous: BufferWeakSubstanceComponents
     let maxSubstance: Int
 
     let initialPh: CGFloat
@@ -153,9 +139,6 @@ class BufferSaltComponents: ObservableObject {
     }
 
     let concentration: SubstanceValue<Equation>
-
-    let reactionProgress: ReactionProgressChartViewModel<SubstancePart>
-    private let initialProgressCounts: EnumMap<SubstancePart, Int>
 
     var finalConcentration: SubstanceValue<CGFloat> {
         concentration.map { $0.getY(at: CGFloat(maxSubstance)) }
@@ -311,5 +294,33 @@ extension BufferSaltComponents {
             x2: CGFloat(maxSubstance),
             y2: finalSecondary
         ).within(min: initialSecondary, max: finalSecondary)
+    }
+}
+
+// MARK: Reset state
+extension BufferSaltComponents {
+    func resetCoords() {
+        substanceAdded = 0
+        reactingModel = Self.initialReactingBeakerModel(previous: previous)
+        reactionProgress = BufferSharedComponents.reactionProgressModel(substance: substance, counts: initialProgressCounts)
+    }
+}
+
+extension BufferSaltComponents {
+    static func initialReactingBeakerModel(previous: BufferWeakSubstanceComponents) -> ReactingBeakerViewModel<SubstancePart> {
+        var prevSubstanceCoords = previous.substanceCoords
+        let ionCoords = previous.ionCoords.flatMap { $0.molecules.coords }
+        let visibleSubstanceCoords = prevSubstanceCoords.coords.filter { !ionCoords.contains($0) }
+        prevSubstanceCoords.coords = visibleSubstanceCoords
+
+        return ReactingBeakerViewModel(
+            initial: SubstanceValue(
+                substance: previous.substanceCoords,
+                primaryIon: previous.ionCoords[0].molecules,
+                secondaryIon: previous.ionCoords[1].molecules
+            ),
+            cols: previous.cols,
+            rows: previous.rows
+        )
     }
 }

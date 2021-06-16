@@ -51,6 +51,9 @@ struct BufferNavigationModel {
     ]
 }
 
+private let containerInputAnimation = Animation.easeOut(duration: 0.35)
+private let endReactionAnimation = Animation.easeOut(duration: 0.5)
+
 class BufferScreenState: ScreenState, SubState {
 
     typealias Model = BufferScreenViewModel
@@ -153,7 +156,7 @@ private class RunWeakSubstanceReaction: BufferScreenState {
 
         model.weakSubstanceModel.runReactionProgressReaction()
 
-        withAnimation(.easeOut(duration: 0.35)) {
+        withAnimation(containerInputAnimation) {
             model.input = .none
             model.shakeModel.stopAll()
         }
@@ -165,7 +168,7 @@ private class RunWeakSubstanceReaction: BufferScreenState {
     }
 
     override func unapply(on model: BufferScreenViewModel) {
-        withAnimation(.easeOut(duration: 0.35)) {
+        withAnimation(containerInputAnimation) {
             model.weakSubstanceModel.resetReactionProgress()
         }
     }
@@ -196,7 +199,7 @@ private class EndOfWeakAcidReaction: BufferScreenState {
             pH: model.weakSubstanceModel.pH.getY(at: 1)
         )
         model.equationState = .weakAcidFilled
-        withAnimation(.easeOut(duration: 0.5)) {
+        withAnimation(endReactionAnimation) {
             model.weakSubstanceModel.progress = 1.0001
         }
     }
@@ -207,6 +210,10 @@ private class PostWeakAcidReaction: BufferScreenState {
         model.statement = statements.introduceBufferSolutions
         model.equationState = .acidSummary
         model.goToAddSaltPhase()
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.phase = .addWeakSubstance
     }
 }
 
@@ -231,6 +238,10 @@ private class AddSalt: BufferScreenState {
 
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
+        withAnimation(containerInputAnimation) {
+            model.shakeModel.stopAll()
+            model.saltModel.resetCoords()
+        }
     }
 }
 
