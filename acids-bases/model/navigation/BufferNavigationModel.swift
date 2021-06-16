@@ -15,32 +15,32 @@ struct BufferNavigationModel {
     }
 
     private static let states = [
-//        SetStatement(statements.intro),
-//        SetStatement(statements.explainEquilibriumConstant1),
+        SetStatement(statements.intro),
+        SetStatement(statements.explainEquilibriumConstant1),
         SelectWeakAcid(),
-//        SetStatement(statements.explainWeakAcid),
-//        SetStatement(statements.explainKa),
-//        SetStatement(statements.explainHighKa),
-//        SetStatement(statements.explainConjugateBase),
-//        SetStatement(statements.explainKb),
-//        SetStatement(statements.explainKw),
-//        SetStatement(statements.explainP14),
-//        SetStatement(statements.explainKaKbNaming),
-//        SetStatement(statements.explainPKaPKb),
-//        SetStatement(statements.explainHendersonHasselbalch),
-//        SetWaterLevel(statements.instructToSetWaterLevel1),
+        SetStatement(statements.explainWeakAcid),
+        SetStatement(statements.explainKa),
+        SetStatement(statements.explainHighKa),
+        SetStatement(statements.explainConjugateBase),
+        SetStatement(statements.explainKb),
+        SetStatement(statements.explainKw),
+        SetStatement(statements.explainP14),
+        SetStatement(statements.explainKaKbNaming),
+        SetStatement(statements.explainPKaPKb),
+        SetStatement(statements.explainHendersonHasselbalch),
+        SetWaterLevel(statements.instructToSetWaterLevel1),
         AddWeakAcid(),
         RunWeakAcidReaction(),
         EndOfWeakAcidReaction(),
         PostWeakAcidReaction(),
-//        SetStatement(statements.explainBufferSolutions),
-//        SetStatement(statements.explainBufferSolutions2),
-//        SetStatement(statements.explainBufferUses),
-//        ShowFractionChart(),
-//        SetStatement(statements.explainFractionChartCurrentPosition),
-//        SetStatement(statements.explainBufferRange),
-//        SetStatement(statements.explainBufferProportions),
-//        SetStatement(statements.explainAddingAcidIonizingSalt),
+        SetStatement(statements.explainBufferSolutions),
+        SetStatement(statements.explainBufferSolutions2),
+        SetStatement(statements.explainBufferUses),
+        ShowFractionChart(),
+        SetStatement(statements.explainFractionChartCurrentPosition),
+        SetStatement(statements.explainBufferRange),
+        SetStatement(statements.explainBufferProportions),
+        SetStatement(statements.explainAddingAcidIonizingSalt),
         AddSalt(),
         AddAcid(),
         AddWeakBase(),
@@ -95,10 +95,12 @@ private class SelectWeakAcid: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.explainEquilibriumConstant2
         model.input = .selectWeakAcid
+        model.substanceSelectionIsToggled = true
     }
 
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
+        model.substanceSelectionIsToggled = false
     }
 }
 

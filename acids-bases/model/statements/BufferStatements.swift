@@ -52,7 +52,7 @@ struct BufferStatements {
             """
             The equation for Ka is the same equation as *K = [products]/reactants]*. In \
             this case, the products are the ions: *[\(substance.secondary)^-^]* and \
-            *[H^+^]*, while the reactant is just $[HA]$, the acid, as water is a pure \
+            *[H^+^]*, while the reactant is just $[\(substance.symbol)]$, the acid, as water is a pure \
             liquid and it's not included in the equation.
             """
         ]
@@ -60,7 +60,7 @@ struct BufferStatements {
 
     static let explainHighKa: [TextLine] = [
         """
-        The larger K is, the larger the concentration of products at equilibrium. This is \
+        The larger K is, the larger the concentration of products at equilibrium is. This is \
         why, when comparing weak acids, the one with a *higher Ka* is the one that at \
         equilibrium will produce *more H^+^ ions*, making it more acidic.
         """
@@ -85,7 +85,7 @@ struct BufferStatements {
             """
             That's where *Kb* comes from. When *\(secondary)* traps *H^+^* from water, it \
             releases *OH^-^* ions, working as a base. The equation for Kb is: \
-            *$Kb = [\(substance.symbol)][OH^-^][\(secondary)]$*. That'll be the Kb for the \
+            *$Kb = [\(substance.symbol)][OH^-^]/[\(secondary)]$*. That'll be the Kb for the \
             conjugate base \(secondary). When *Ka* is large, *Kb* is small, and vice versa.
             """
         ]
@@ -112,7 +112,7 @@ struct BufferStatements {
         """
         For the purposes of this unit, *Ka* is usually called acid dissociation constant, \
         *Kb* is called base dissociation constant and *Kw* is the water dissociation constant. \
-        Another way they relate to each other is by *$Kw = Ka \\* Kb$*
+        Another way they relate to each other is by *$Kw = Ka \\* Kb$*.
         """
     ]
 
@@ -120,21 +120,23 @@ struct BufferStatements {
         """
         As Ka and Kb are really small, they get the same treatment and logarithms are used \
         to better relate them:
-        """,
-        """
         *pKa = -log(Ka)*
         *pKb = -log(Kb)*
         """
     ]
 
-    static let explainHendersonHasselbalch: [TextLine] = [
-        """
-        We can obtain a very useful equation for buffers: the *Henderson-Hasselbalch* equation. \
-        This formula is derived algebraically from the equilibrium constant expression for Ka.
-        """,
-        "*pH = pKa + log([A^-^]/[HA])*"
-    ]
+    static func explainHendersonHasselbalch(substance: AcidOrBase) -> [TextLine] {
+        let secondary = substance.symbol(ofPart: .secondaryIon)
+        let substance = substance.symbol
+        return [
+            """
+            We can obtain a very useful equation for buffers: the *Henderson-Hasselbalch* equation. \
+            This formula is derived algebraically from the equilibrium constant expression for Ka.
+            *pH = pKa + log([\(secondary)^-^]/[\(substance)])*
+            """
+        ]
 
+    }
     static let instructToSetWaterLevel1: [TextLine] = [
         """
         The *Henderson-Hasselbalch* equation has a very unique use that we are going to \
