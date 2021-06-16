@@ -663,27 +663,49 @@ private let NaturalHeight: CGFloat = 400
 
 struct BufferEquationView_Previews: PreviewProvider {
     static var previews: some View {
+        VStack {
+            equation(
+                state: .weakAcidBlank,
+                substance: .weakAcids[0]
+            )
+            equation(
+                state: .weakBaseBlank,
+                substance: .weakBases[0]
+            )
+        }
+        .previewLayout(.sizeThatFits)
+    }
+
+    private static var allStates: some View {
         ForEach(BufferScreenViewModel.EquationState.allCases.indices.prefix(1)) { i in
             let state = BufferScreenViewModel.EquationState.allCases[i]
             VStack(spacing: 5) {
                 Text(state.rawValue)
-                SizedBufferEquationView(
-                    substance: AcidOrBase.weakBases.first!,
-                    progress: 1,
-                    state: state,
-                    data: BufferEquationData(
-                        substance: .strongAcids.first!,
-                        concentration: SubstanceValue(builder: { _ in
-                            ConstantEquation(value: 0.1)
-                        }),
-                        pH: ConstantEquation(value: 7)
-                    )
-                )
-                .previewLayout(.sizeThatFits)
-                .border(Color.black)
-                .frame(width: NaturalWidth, height: NaturalHeight)
-                .border(Color.red)
-            }.previewLayout(.sizeThatFits)
+                equation(state: state)
+            }
+            .previewLayout(.sizeThatFits)
         }
+    }
+
+    private static func equation(
+        state: BufferScreenViewModel.EquationState,
+        substance: AcidOrBase = .strongAcids.first!
+    ) -> some View {
+        SizedBufferEquationView(
+            substance: AcidOrBase.weakBases.first!,
+            progress: 1,
+            state: state,
+            data: BufferEquationData(
+                substance: .strongAcids.first!,
+                concentration: SubstanceValue(builder: { _ in
+                    ConstantEquation(value: 0.1)
+                }),
+                pH: ConstantEquation(value: 7)
+            )
+        )
+        .previewLayout(.sizeThatFits)
+        .border(Color.black)
+        .frame(width: NaturalWidth, height: NaturalHeight)
+        .border(Color.red)
     }
 }

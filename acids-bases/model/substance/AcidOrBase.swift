@@ -69,16 +69,6 @@ struct AcidOrBase: Equatable, Identifiable {
         symbol
     }
 
-    var symbol: String {
-        if type == .weakBase {
-            return "\(secondary.rawValue)"
-        }
-        if primary == .hydrogen {
-            return "\(primary.rawValue)\(secondary.rawValue)"
-        }
-        return "\(secondary.rawValue)\(primary.rawValue)"
-    }
-
     /// Number of substance molecules added for each pair of ions which are produced
     ///
     /// When this is 0 then substance immediately ionizes and also does not remain in the liquid
@@ -89,6 +79,8 @@ struct AcidOrBase: Equatable, Identifiable {
     ///     - 2: Every 2nd substance ionizes when entering liquid, while also remaining in the liquid
     let substanceAddedPerIon: PositiveInt
 
+    // TODO - make these private, or remove their conformance to String. Accessing their
+    // labels should be done via the substance, not the ion directly
     let primary: PrimaryIon
     let secondary: SecondaryIon
 
@@ -179,20 +171,45 @@ struct AcidOrBase: Equatable, Identifiable {
         }
     }
 
-    func symbol(ofPart part: SubstancePart) -> String {
-        switch part {
-        case .substance: return symbol
-        case .primaryIon: return primary.rawValue
-        case .secondaryIon: return secondary.rawValue
-        }
-    }
-
     func color(ofPart part: SubstancePart) -> Color {
         switch part {
         case .substance: return color
         case .primaryIon: return primary.color
         case .secondaryIon: return secondary.color
         }
+    }
+}
+
+// MARK: Symbol names
+extension AcidOrBase {
+
+    func symbol(ofPart part: SubstancePart) -> String {
+        switch part {
+        case .substance: return symbol
+        case .primaryIon: return primarySymbol
+        case .secondaryIon: return secondarySymbol
+        }
+    }
+
+    var symbol: String {
+        if type == .weakBase {
+            return "\(secondary.rawValue)"
+        }
+        if primary == .hydrogen {
+            return "\(primary.rawValue)\(secondary.rawValue)"
+        }
+        return "\(secondary.rawValue)\(primary.rawValue)"
+    }
+
+    private var primarySymbol: String {
+        primary.rawValue
+    }
+
+    private var secondarySymbol: String {
+        if type == .weakBase {
+            return "\(secondary.rawValue)H"
+        }
+        return secondary.rawValue
     }
 }
 
