@@ -206,6 +206,7 @@ private struct KADefinition: View {
                 fraction
             }
         }
+        .frame(height: 2 * EquationSizing.boxHeight + 8)
     }
 
     private var fraction: some View {
@@ -258,6 +259,7 @@ private struct KAFilled: View {
                 fraction
             }
         }
+        .frame(height: 2 * EquationSizing.boxHeight + 8)
     }
 
     private var kAView: some View {
@@ -657,17 +659,17 @@ private let spacerWidth: CGFloat = 150
 private let largeParenScale: CGFloat = 2
 
 private let NaturalWidth: CGFloat = 950
-private let NaturalHeight: CGFloat = 400
+private let NaturalHeight: CGFloat = 440
 
 struct BufferEquationView_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
+        HStack {
             equation(
                 state: .weakAcidFilled,
                 substance: .weakAcids[0]
             )
             equation(
-                state: .weakBaseBlank,
+                state: .acidSummary,
                 substance: .weakBases[0]
             )
         }
