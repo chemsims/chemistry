@@ -80,19 +80,19 @@ struct BufferFractionsChart: View {
     }
 
     private var minPh: CGFloat {
-        0.9 * helper.minValue
+        helper.minValue
     }
 
     private var maxPh: CGFloat {
-        1.1 * helper.maxValue
+        helper.maxValue
     }
 
     private var xAxis: AxisPositionCalculations<CGFloat> {
         AxisPositionCalculations(
             minValuePosition: 0.1 * chartSize,
             maxValuePosition: 0.9 * chartSize,
-            minValue: 0.9 * minPh,
-            maxValue: 1.1 * maxPh
+            minValue: minPh,
+            maxValue: maxPh
         )
     }
 

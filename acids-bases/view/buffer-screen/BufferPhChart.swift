@@ -70,9 +70,11 @@ struct BufferPhChart: View {
     }
 
     private var waterLine: some View {
-        Path { p in
-            p.move(to: CGPoint(x: minXValuePosition, y: 0.1 * chartSize))
-            p.addLine(to: CGPoint(x: maxXValuePosition, y: 0.9 * chartSize))
+        let startY = model.substance.type.isAcid ? 0.1 * chartSize : 0.9 * chartSize
+        let endY = chartSize - startY
+        return Path { p in
+            p.move(to: CGPoint(x: minXValuePosition, y: startY))
+            p.addLine(to: CGPoint(x: maxXValuePosition, y: endY))
         }
         .stroke(lineWidth: 0.4)
     }

@@ -667,7 +667,7 @@ struct BufferEquationView_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
             equation(
-                state: .acidSummary,
+                state: .baseWithAllConcentration,
                 substance: .weakAcids[0]
             )
             equation(

@@ -9,7 +9,7 @@ import CoreGraphics
 /// `middlePh` will be in the middle of the axis, while `initialPh` will be contained
 /// within the axis somewhere. The `minDelta` will also be satisfied, such that the
 /// distance from `middlePh` to the axis limits will be the bigger of `minDelta`, or
-/// the `abs(middlePh - initialPh)`.
+/// `abs(middlePh - initialPh)`.
 struct FractionedChartAxisHelper {
     init(
         initialPh: CGFloat,
