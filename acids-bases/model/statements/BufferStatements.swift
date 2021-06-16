@@ -146,9 +146,8 @@ struct BufferStatements {
     static let instructToSetWaterLevel1: [TextLine] = [
         """
         The *Henderson-Hasselbalch* equation has a very unique use that we are going to \
-        learn later.
+        learn later. First of all, let's set the water volume in the beaker.
         """,
-        "First of all, let's set the water volume in the beaker.",
         "*Use the water slider*."
     ]
 
@@ -203,8 +202,8 @@ struct BufferStatements {
         """
         Now that we know Ka, let's use the *Henderson-Hasselbalch* equation for \
         something very useful:
+        *Buffer solutions*
         """,
-        "*Buffer solutions*.",
         "But what are they?"
     ]
 
@@ -372,9 +371,9 @@ struct BufferStatements {
 
     static let instructToSetWaterLevelForBase: [TextLine] = [
         """
-        The *Henderson-Hasselbalch* equation has a very unique use to determine pH or pOH for buffers.
+        The *Henderson-Hasselbalch* equation has a very unique use to determine pH or pOH for buffers. \
+        First of all, let's set the water volume in the beaker.
         """,
-        "First of all, let's set the water volume in the beaker.",
         "*Use the water slider*."
     ]
 
