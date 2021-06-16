@@ -257,14 +257,15 @@ private struct KAFilled: View {
             } else {
                 fraction
             }
-
         }
     }
 
     private var kAView: some View {
-        PlaceholderTerm(
-            value: state.showAllTerms ? kValue.str(decimals: 2) : nil
+        PlaceholderTextLine(
+            value: state.showAllTerms ? TextLineUtil.scientific(value: kValue).emphasised() : nil,
+            expandedWidth: largeBoxWidth
         )
+        .frame(width: largeBoxWidth, alignment: .trailing)
     }
 
     private var fraction: some View {
@@ -324,12 +325,12 @@ private struct PKAFilled: View {
     private var ka: some View {
         HStack(spacing: 1) {
             FixedText("-log(")
-            PlaceholderTerm(
-                value: showTerms ? kaValue.str(decimals: 2) : nil
+            PlaceholderTextLine(
+                value: showTerms ? TextLineUtil.scientific(value: kaValue).emphasised() : nil,
+                expandedWidth: largeBoxWidth
             )
             FixedText(")")
         }
-
     }
 }
 
@@ -489,7 +490,10 @@ private struct KWFilled: View {
     }
 
     private func term(_ value: CGFloat) -> some View {
-        PlaceholderTerm(value: showTerms ? value.str(decimals: 2) : nil)
+        PlaceholderTextLine(
+            value: showTerms ? TextLineUtil.scientific(value: value).emphasised() : nil,
+            expandedWidth: largeBoxWidth
+        )
     }
 }
 
@@ -659,7 +663,7 @@ struct BufferEquationView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             equation(
-                state: .weakAcidBlank,
+                state: .weakAcidFilled,
                 substance: .weakAcids[0]
             )
             equation(

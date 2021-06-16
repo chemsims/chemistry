@@ -42,6 +42,45 @@ public struct PlaceholderTerm: View {
     }
 }
 
+public struct PlaceholderTextLine: View {
+    public init(
+        value: TextLine?,
+        fontSize: CGFloat = EquationSizing.fontSize,
+        expandedWidth: CGFloat = EquationSizing.boxWidth,
+        boxWidth: CGFloat = EquationSizing.boxWidth,
+        boxHeight: CGFloat = EquationSizing.boxHeight,
+        boxPadding: CGFloat = EquationSizing.boxPadding
+    ) {
+        self.value = value
+        self.fontSize = fontSize
+        self.expandedWidth = expandedWidth
+        self.boxWidth = boxWidth
+        self.boxHeight = boxHeight
+        self.boxPadding = boxPadding
+    }
+
+    let value: TextLine?
+    let fontSize: CGFloat
+
+    let expandedWidth: CGFloat
+    let boxWidth: CGFloat
+    let boxHeight: CGFloat
+    let boxPadding: CGFloat
+
+    public var body: some View {
+        if value != nil {
+            TextLinesView(line: value!, fontSize: fontSize)
+                .frame(width: expandedWidth, height: boxHeight)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+        } else {
+            Box(padding: boxPadding)
+                .frame(width: boxWidth, height: boxHeight)
+                .minimumScaleFactor(0.5)
+        }
+    }
+}
+
 private struct PlaceholderFraming: ViewModifier {
 
     let boxWidth: CGFloat
@@ -123,7 +162,14 @@ struct EquationPlaceholderView_Previews: PreviewProvider {
 
             EquationPlaceholderView()
                 .frame(width: 100, height: 70)
+
+            VStack(alignment: .trailing) {
+                PlaceholderTextLine(value: nil)
+                    .frame(width: 2 * EquationSizing.boxWidth, alignment: .trailing)
+
+                PlaceholderTextLine(value: TextLine("1.24x10^-45^"))
+                    .frame(width: 2 * EquationSizing.boxWidth)
+            }
         }
     }
-
 }
