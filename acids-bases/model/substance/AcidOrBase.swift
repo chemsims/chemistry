@@ -183,14 +183,10 @@ struct AcidOrBase: Equatable, Identifiable {
 // MARK: Symbol names
 extension AcidOrBase {
 
+    // TODO - remove the symbol method & param below
     func symbol(ofPart part: SubstancePart) -> String {
-        switch part {
-        case .substance: return symbol
-        case .primaryIon: return primarySymbol
-        case .secondaryIon: return secondarySymbol
-        }
+        chargedSymbol(ofPart: part).symbol
     }
-
     var symbol: String {
         if type == .weakBase {
             return "\(secondary.rawValue)"
@@ -201,15 +197,55 @@ extension AcidOrBase {
         return "\(secondary.rawValue)\(primary.rawValue)"
     }
 
-    private var primarySymbol: String {
-        primary.rawValue
+    var productParts: [SubstancePart] {
+        if type.isAcid {
+            return [.primaryIon, .secondaryIon]
+        }
+        return [.secondaryIon, .primaryIon]
     }
 
-    private var secondarySymbol: String {
-        if type == .weakBase {
-            return "\(secondary.rawValue)H"
+    /// Returns the `ChargedSymbol` of the given `part` of the substance
+    func chargedSymbol(ofPart part: SubstancePart) -> ChargedSymbol {
+        switch part {
+        case .substance: return chargedSymbol
+        case .primaryIon: return primarySymbol
+        case .secondaryIon: return secondarySymbol
         }
-        return secondary.rawValue
+    }
+
+    private var chargedSymbol: ChargedSymbol {
+        if type == .weakBase {
+            return ChargedSymbol(symbol: secondary.rawValue, charge: .negative)
+        }
+
+        let p = primary.rawValue
+        let s = secondary.rawValue
+
+        let name = primary == .hydrogen ? "\(p)\(s)" : "\(s)\(p)"
+        return ChargedSymbol(symbol: name, charge: nil)
+    }
+
+    private var primarySymbol: ChargedSymbol {
+        let charge: ChargedSymbol.Charge = primary == .hydrogen ? .positive : .negative
+        return ChargedSymbol(symbol: primary.rawValue, charge: charge)
+    }
+
+    private var secondarySymbol: ChargedSymbol {
+        if type == .weakBase {
+            return ChargedSymbol(symbol: "\(secondary.rawValue)H", charge: nil)
+        }
+        let charge: ChargedSymbol.Charge = primary == .hydrogen ? .negative : .positive
+        return ChargedSymbol(symbol: secondary.rawValue, charge: charge)
+    }
+
+    struct ChargedSymbol: Equatable {
+        let symbol: String
+        let charge: Charge?
+
+        enum Charge: String {
+            case positive = "+"
+            case negative = "-"
+        }
     }
 }
 

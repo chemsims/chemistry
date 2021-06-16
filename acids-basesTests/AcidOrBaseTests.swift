@@ -8,30 +8,37 @@ import ReactionsCore
 
 class AcidOrBaseTests: XCTestCase {
     func testSymbolNamesForStrongAcid() {
-        let acid = AcidOrBase.strongAcid(secondaryIon: .A, color: .red, kA: 1)
-        XCTAssertEqual(acid.symbol(ofPart: .substance), "HA")
-        XCTAssertEqual(acid.symbol(ofPart: .primaryIon), "H")
-        XCTAssertEqual(acid.symbol(ofPart: .secondaryIon), "A")
+        let acid = AcidOrBase.strongAcid(secondaryIon: .Cl, color: .red, kA: 1)
+
+        XCTAssertEqual(acid.charged(.substance), .init(symbol: "HCl", charge: nil))
+        XCTAssertEqual(acid.charged(.primaryIon), .init(symbol: "H", charge: .positive))
+        XCTAssertEqual(acid.charged(.secondaryIon), .init(symbol: "Cl", charge: .negative))
     }
 
     func testSymbolNamesForStrongBase() {
         let base = AcidOrBase.strongBase(secondaryIon: .K, color: .red, kB: 1)
-        XCTAssertEqual(base.symbol(ofPart: .substance), "KOH")
-        XCTAssertEqual(base.symbol(ofPart: .primaryIon), "OH")
-        XCTAssertEqual(base.symbol(ofPart: .secondaryIon), "K")
+        XCTAssertEqual(base.charged(.substance), .init(symbol: "KOH", charge: nil))
+        XCTAssertEqual(base.charged(.primaryIon), .init(symbol: "OH", charge: .negative))
+        XCTAssertEqual(base.charged(.secondaryIon), .init(symbol: "K", charge: .positive))
     }
 
     func testSymbolNamesForWeakAcid() {
         let acid = AcidOrBase.weakAcid(secondaryIon: .A, substanceAddedPerIon: NonZeroPositiveInt(1)!, color: .red, kA: 1)
-        XCTAssertEqual(acid.symbol(ofPart: .substance), "HA")
-        XCTAssertEqual(acid.symbol(ofPart: .primaryIon), "H")
-        XCTAssertEqual(acid.symbol(ofPart: .secondaryIon), "A")
+        XCTAssertEqual(acid.charged(.substance), .init(symbol: "HA", charge: nil))
+        XCTAssertEqual(acid.charged(.primaryIon), .init(symbol: "H", charge: .positive))
+        XCTAssertEqual(acid.charged(.secondaryIon), .init(symbol: "A", charge: .negative))
     }
 
     func testSymbolNamesForWeakBase() {
         let base = AcidOrBase.weakBase(secondaryIon: .B, substanceAddedPerIon: NonZeroPositiveInt(1)!, color: .red, kB: 1)
-        XCTAssertEqual(base.symbol(ofPart: .substance), "B")
-        XCTAssertEqual(base.symbol(ofPart: .primaryIon), "OH")
-        XCTAssertEqual(base.symbol(ofPart: .secondaryIon), "BH")
+        XCTAssertEqual(base.charged(.substance), .init(symbol: "B", charge: .negative))
+        XCTAssertEqual(base.charged(.primaryIon), .init(symbol: "OH", charge: .negative))
+        XCTAssertEqual(base.charged(.secondaryIon), .init(symbol: "BH", charge: nil))
+    }
+}
+
+private extension AcidOrBase {
+    func charged(_ part: SubstancePart) -> ChargedSymbol {
+        chargedSymbol(ofPart: part)
     }
 }

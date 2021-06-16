@@ -68,7 +68,6 @@ private struct SwitchingBufferEquationView: View {
 
     var body: some View {
         BufferEquationView(
-            substance: model.substance,
             progress: progress,
             state: model.equationState,
             data: data

@@ -9,7 +9,6 @@ private typealias EquationState = BufferScreenViewModel.EquationState
 
 struct BufferEquationView: View {
 
-    let substance: AcidOrBase
     let progress: CGFloat
     let state: BufferScreenViewModel.EquationState
     let data: BufferEquationData
@@ -17,7 +16,6 @@ struct BufferEquationView: View {
     var body: some View {
         GeometryReader { geo in
             SizedBufferEquationView(
-                substance: substance,
                 progress: progress,
                 state: state,
                 data: data
@@ -36,6 +34,7 @@ struct BufferEquationView: View {
 }
 
 struct BufferEquationData {
+    let substance: AcidOrBase
     let kA: CGFloat
     let kB: CGFloat
     let concentration: SubstanceValue<Equation>
@@ -48,6 +47,7 @@ struct BufferEquationData {
         concentration: SubstanceValue<Equation>,
         pH: Equation
     ) {
+        self.substance = substance
         self.kA = substance.kA
         self.kB = substance.kB
         self.pKa = substance.pKA
@@ -59,7 +59,6 @@ struct BufferEquationData {
 
 private struct SizedBufferEquationView: View {
 
-    let substance: AcidOrBase
     let progress: CGFloat
     let state: EquationState
     let data: BufferEquationData
@@ -79,7 +78,7 @@ private struct SizedBufferEquationView: View {
     private var row0: some View {
         HStack(spacing: 0) {
             KADefinition(
-                substance: substance,
+                substance: data.substance,
                 state: state,
                 fixedK: state.isAcid ? data.kA : data.kB
             )
@@ -101,6 +100,7 @@ private struct SizedBufferEquationView: View {
     private var row1: some View {
         HStack(spacing: 0) {
             KAFilled(
+                substance: data.substance,
                 state: state,
                 kValue: state.isAcid ? data.kA : data.kB,
                 concentration: data.concentration,
@@ -127,7 +127,7 @@ private struct SizedBufferEquationView: View {
 
     private var row2: some View {
         HStack(spacing: 0) {
-            PHDefinition(state: state)
+            PHDefinition(substance: data.substance, state: state)
                 .frame(width: leftColWidth, alignment: .leading)
 
             Spacer()
@@ -211,22 +211,13 @@ private struct KADefinition: View {
     private var fraction: some View {
         VStack(spacing: 3) {
             HStack(spacing: 1) {
-                numerTerm("H", "+")
-                numerTerm("A", "-")
+                ForEach(substance.productParts) { part in
+                    ChargedSymbolView(symbol: substance.chargedSymbol(ofPart: part))
+                }
             }
             Rectangle()
                 .frame(width: 110, height: 2)
-            FixedText("[HA]")
-        }
-    }
-
-    private func numerTerm(_ base: String, _ charge: String) -> some View {
-        HStack(spacing: 0) {
-            FixedText("[\(base)")
-            FixedText(charge)
-                .font(.system(size: EquationSizing.subscriptFontSize))
-                .offset(y: -10)
-            FixedText("]")
+            FixedText("[\(substance.symbol)]")
         }
     }
 }
@@ -246,6 +237,7 @@ private struct PKADefinition: View {
 }
 
 private struct KAFilled: View {
+    let substance: AcidOrBase
     let state: EquationState
     let kValue: CGFloat
     let concentration: SubstanceValue<Equation>
@@ -278,17 +270,18 @@ private struct KAFilled: View {
     private var fraction: some View {
         VStack(spacing: 3) {
             HStack(spacing: 3) {
-                concentration(\.primaryIon, state.showIonConcentration)
-                concentration(\.secondaryIon, state.showIonConcentration)
+                ForEach(substance.productParts) { part in
+                    concentration(part, state.showIonConcentration)
+                }
             }
             Rectangle()
                 .frame(width: 150, height: 2)
-            concentration(\.substance, state.showSubstanceConcentration)
+            concentration(.substance, state.showSubstanceConcentration)
         }
     }
 
     private func concentration(
-        _ equationPath: KeyPath<SubstanceValue<Equation>, Equation>,
+        _ part: SubstancePart,
         _ show: Bool
     ) -> some View {
         HStack(spacing: 0) {
@@ -296,7 +289,7 @@ private struct KAFilled: View {
             AnimatingNumberPlaceholder(
                 showTerm: show,
                 progress: progress,
-                equation: concentration[keyPath: equationPath],
+                equation: concentration.value(for: part),
                 formatter: { "\($0.str(decimals: 2))"}
             )
             .frame(
@@ -362,6 +355,7 @@ private struct AnimatingScientificText: View {
 
 private struct PHDefinition: View {
 
+    let substance: AcidOrBase
     let state: EquationState
 
     var body: some View {
@@ -382,11 +376,11 @@ private struct PHDefinition: View {
             FixedText("(")
                 .scaleEffect(y: largeParenScale)
             VStack(spacing: 1) {
-                FixedText("[A]")
+                ChargedSymbolView(symbol: substance.chargedSymbol(ofPart: .secondaryIon))
                     .frame(width: EquationSizing.boxWidth)
                 Rectangle()
                     .frame(width: 55, height: 2)
-                FixedText("[HA]")
+                ChargedSymbolView(symbol: substance.chargedSymbol(ofPart: .substance))
                     .frame(width: EquationSizing.boxWidth)
             }
             FixedText(")")
@@ -692,11 +686,10 @@ struct BufferEquationView_Previews: PreviewProvider {
         substance: AcidOrBase = .strongAcids.first!
     ) -> some View {
         SizedBufferEquationView(
-            substance: AcidOrBase.weakBases.first!,
             progress: 1,
             state: state,
             data: BufferEquationData(
-                substance: .strongAcids.first!,
+                substance: substance,
                 concentration: SubstanceValue(builder: { _ in
                     ConstantEquation(value: 0.1)
                 }),

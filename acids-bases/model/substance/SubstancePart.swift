@@ -5,8 +5,12 @@
 import Foundation
 import ReactionsCore
 
-enum SubstancePart: CaseIterable {
+enum SubstancePart: Int, CaseIterable, Identifiable {
     case substance, primaryIon, secondaryIon
+
+    var id: Int {
+        rawValue
+    }
 }
 typealias SubstanceValue<Value> = EnumMap<SubstancePart, Value>
 extension EnumMap where Key == SubstancePart {
