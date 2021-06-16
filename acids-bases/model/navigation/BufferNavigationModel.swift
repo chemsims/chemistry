@@ -240,7 +240,7 @@ private class PostWeakAcidReaction: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.introduceBufferSolutions
         model.equationState = .acidSummary
-        model.goToAddSaltPhase()
+        model.goToSaltPhase()
     }
 
     override func unapply(on model: BufferScreenViewModel) {
@@ -313,10 +313,19 @@ private class PostAddStrongAcid: BufferScreenState {
 
 private class SelectWeakBase: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.instructToChooseWeakBase
-        model.input = .selectSubstance
+        model.saveAcidModels()
         model.availableSubstances = AcidOrBase.weakBases
         model.goToWeakSubstancePhase()
+        doApply(on: model)
+    }
+
+    override func reapply(on model: BufferScreenViewModel) {
+        doApply(on: model)
+    }
+
+    private func doApply(on model: BufferScreenViewModel) {
+        model.statement = statements.instructToChooseWeakBase
+        model.input = .selectSubstance
         model.substanceSelectionIsToggled = true
         model.equationState = .baseBlank
         if model.selectedBottomGraph == .curve {
@@ -326,6 +335,10 @@ private class SelectWeakBase: BufferScreenState {
 
     override func unapply(on model: BufferScreenViewModel) {
         model.equationState = .acidSummary
+        model.input = .none
+        model.substanceSelectionIsToggled = false
+        model.restoreSavedAcidModels()
+        model.phase = .addStrongSubstance
     }
 }
 
@@ -375,7 +388,7 @@ private class PostWeakBaseReaction: BufferScreenState {
 private class AddSaltToBase: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = substanceStatements(model).instructToAddSaltToBase
-        model.goToAddSaltPhase()
+        model.goToSaltPhase()
         model.input = .addMolecule(phase: .addSalt)
     }
 }

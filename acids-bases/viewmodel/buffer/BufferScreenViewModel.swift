@@ -57,6 +57,11 @@ class BufferScreenViewModel: ObservableObject {
         weakSubstanceModel.substance
     }
 
+
+    private var previousWeakAcidModel: BufferWeakSubstanceComponents?
+    private var previousAcidSaltModel: BufferSaltComponents?
+    private var previousStrongAcidModel: BufferStrongSubstanceComponents?
+
     private(set) var shakeModel: MultiContainerShakeViewModel<Phase>!
     private(set) var navigation: NavigationModel<BufferScreenState>?
 }
@@ -89,7 +94,17 @@ extension BufferScreenViewModel {
         }
     }
 
-    func goToAddSaltPhase() {
+    func goToWeakSubstancePhase() {
+        weakSubstanceModel = BufferWeakSubstanceComponents(
+            substance: .weakBases.first!,
+            settings: .standard,
+            cols: MoleculeGridSettings.cols,
+            rows: AcidAppSettings.initialRows
+        )
+        phase = .addWeakSubstance
+    }
+
+    func goToSaltPhase() {
         saltModel = BufferSaltComponents(prev: weakSubstanceModel)
         phase = .addSalt
     }
@@ -99,14 +114,22 @@ extension BufferScreenViewModel {
         phase = .addStrongSubstance
     }
 
-    func goToWeakSubstancePhase() {
-        weakSubstanceModel = BufferWeakSubstanceComponents(
-            substance: .weakBases.first!,
-            settings: .standard,
-            cols: MoleculeGridSettings.cols,
-            rows: AcidAppSettings.initialRows
-        )
-        phase = .addWeakSubstance
+    func saveAcidModels() {
+        previousWeakAcidModel = weakSubstanceModel
+        previousAcidSaltModel = saltModel
+        previousStrongAcidModel = strongSubstanceModel
+    }
+
+    func restoreSavedAcidModels() {
+        if let weak = previousWeakAcidModel,
+           let salt = previousAcidSaltModel,
+           let strong = previousStrongAcidModel {
+            weakSubstanceModel = weak
+            saltModel = salt
+            strongSubstanceModel = strong
+        } else {
+            assert(false, "Could not restore acid models")
+        }
     }
 }
 
