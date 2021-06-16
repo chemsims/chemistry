@@ -17,14 +17,14 @@ struct BufferFractionsChart: View {
             data: [
                 TimeChartDataLine(
                     equation: substanceEquation,
-                    headColor: .blue,
-                    haloColor: .red,
+                    headColor: saltModel.substance.color(ofPart: .substance),
+                    haloColor: nil,
                     headRadius: layout.common.chartHeadRadius
                 ),
                 TimeChartDataLine(
                     equation: secondaryIonEquation,
-                    headColor: .purple,
-                    haloColor: .black,
+                    headColor: saltModel.substance.color(ofPart: .secondaryIon),
+                    haloColor: nil,
                     headRadius: layout.common.chartHeadRadius
                 )
             ],
