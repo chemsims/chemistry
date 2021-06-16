@@ -40,7 +40,8 @@ struct BufferBottomCharts: View {
                 layout: layout,
                 phase: model.phase,
                 weakModel: model.weakSubstanceModel,
-                saltModel: model.saltModel
+                saltModel: model.saltModel,
+                strongModel: model.strongSubstanceModel
             )
         }
     }
@@ -75,6 +76,7 @@ private struct BufferReactionProgressChart: View {
     let phase: BufferScreenViewModel.Phase
     @ObservedObject var weakModel: BufferWeakSubstanceComponents
     @ObservedObject var saltModel: BufferSaltComponents
+    @ObservedObject var strongModel: BufferStrongSubstanceComponents
 
     var body: some View {
         ReactionProgressChart(
@@ -86,7 +88,8 @@ private struct BufferReactionProgressChart: View {
     private var model: ReactionProgressChartViewModel<SubstancePart> {
         switch phase {
         case .addWeakSubstance: return weakModel.reactionProgress
-        default: return saltModel.reactionProgress
+        case .addSalt: return saltModel.reactionProgress
+        case .addStrongSubstance: return strongModel.reactionProgress
         }
     }
 }

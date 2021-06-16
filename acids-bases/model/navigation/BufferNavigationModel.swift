@@ -288,8 +288,19 @@ private class PostAddSaltToAcidBuffer: BufferScreenState {
 
 private class AddStrongAcid: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.instructToAddStrongAcid
         model.goToStrongSubstancePhase()
+        doApply(on: model)
+    }
+
+    override func reapply(on model: BufferScreenViewModel) {
+        withAnimation(containerInputAnimation) {
+            model.strongSubstanceModel.reset()
+        }
+        doApply(on: model)
+    }
+
+    private func doApply(on model: BufferScreenViewModel) {
+        model.statement = statements.instructToAddStrongAcid
         model.input = .addMolecule(phase: .addStrongSubstance)
     }
 
@@ -297,6 +308,7 @@ private class AddStrongAcid: BufferScreenState {
         withAnimation(containerInputAnimation) {
             model.input = .none
             model.shakeModel.stopAll()
+            model.strongSubstanceModel.reset()
         }
     }
 }

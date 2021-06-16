@@ -52,20 +52,22 @@ class BufferStrongSubstanceComponents: ObservableObject {
             primaryIon: primaryConcentration,
             secondaryIon: secondaryConcentration
         )
-        self.reactionProgress = prev.reactionProgress
-        self.initialProgressCounts = .init(builder: prev.reactionProgress.moleculeCounts)
+
+        let initialProgressCounts = SubstanceValue<Int>(builder: prev.reactionProgress.moleculeCounts)
+        self.reactionProgress = BufferSharedComponents.reactionProgressModel(substance: prev.substance, counts: initialProgressCounts)
+        self.initialProgressCounts = initialProgressCounts
     }
 
     @Published var substanceAdded = 0
+    @Published private(set) var reactingModel: ReactingBeakerViewModel<SubstancePart>
 
-    let reactingModel: ReactingBeakerViewModel<SubstancePart>
     private let previous: BufferSaltComponents
 
     let maxSubstance: Int
     let concentration: SubstanceValue<Equation>
 
-    let reactionProgress: ReactionProgressChartViewModel<SubstancePart>
-    let initialProgressCounts: EnumMap<SubstancePart, Int>
+    @Published private(set) var reactionProgress: ReactionProgressChartViewModel<SubstancePart>
+    let initialProgressCounts: SubstanceValue<Int>
 
     var settings: BufferComponentSettings {
         previous.settings
@@ -283,5 +285,14 @@ extension BufferStrongSubstanceComponents {
             x2: CGFloat(maxSubstance),
             y2: CGFloat(settings.reactionProgress.finalPrimaryIonCount)
         )
+    }
+}
+
+// MARK: Resetting state
+extension BufferStrongSubstanceComponents {
+    func reset() {
+        reactingModel = ReactingBeakerViewModel(initial: previous.reactingModel.consolidated, cols: previous.previous.cols, rows: previous.previous.rows)
+        reactionProgress = BufferSharedComponents.reactionProgressModel(substance: substance, counts: initialProgressCounts)
+        substanceAdded = 0
     }
 }
