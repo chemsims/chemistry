@@ -104,7 +104,7 @@ extension BufferSharedComponents {
         }
         return .init(builder: { part in
             .init(
-                name: substance.symbol(ofPart: part),
+                label: substance.chargedSymbol(ofPart: part).text,
                 columnIndex: indices.value(for: part),
                 initialCount: 0,
                 color: substance.color(ofPart: part)

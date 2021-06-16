@@ -6,6 +6,8 @@ import SwiftUI
 
 public struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
 
+    private typealias MoleculeDefinition = ReactionProgressChartViewModel<MoleculeType>.MoleculeDefinition
+
     public init(
         model: ReactionProgressChartViewModel<MoleculeType>,
         geometry: ReactionProgressChartGeometry
@@ -20,13 +22,32 @@ public struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
     let geometry: ReactionProgressChartGeometry
 
     public var body: some View {
+        VStack(spacing: geometry.chartToAxisSpacing) {
+            plotArea
+            axis
+        }
+    }
+}
+
+// MARK: Molecules
+extension ReactionProgressChart {
+    var plotArea: some View {
         ZStack {
+            Path { p in
+                p.addLines([
+                    .zero,
+                    CGPoint(x: 0, y: geometry.chartSize),
+                    CGPoint(x: geometry.chartSize, y: geometry.chartSize),
+                    CGPoint(x: geometry.chartSize, y: 0)
+                ])
+            }
+            .stroke()
+
             ForEach(model.molecules) { molecule in
                 moleculeView(molecule)
             }
         }
         .frame(square: geometry.chartSize)
-        .border(Color.black, width: 0.4) // TODO - configurable border and remove the top line
     }
 
     private func moleculeView(_ molecule: Molecule) -> some View {
@@ -39,6 +60,21 @@ public struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
     }
 }
 
+// MARK: Label
+extension ReactionProgressChart {
+    private var axis: some View {
+        CircleChartLabel(
+            layout: geometry.axisLayout,
+            labels: model.definitions.all.enumerated().map { (i, data) in
+                .init(
+                    id: i,
+                    label: data.label,
+                    color: data.color
+                )
+            }
+        )
+    }
+}
 
 struct ReactionProgressChart_Previews: PreviewProvider {
     static var previews: some View {
@@ -57,14 +93,12 @@ struct ReactionProgressChart_Previews: PreviewProvider {
                 ReactionProgressChart(
                     model: model,
                     geometry: ReactionProgressChartGeometry(
-                        chartSize: 300,
+                        chartSize: 200,
                         colCount: 3,
                         maxMolecules: 10,
-                        topPadding: 20
+                        topPadding: 0
                     )
                 )
-                .frame(square: 300)
-                .border(Color.red)
 
                 Button(action: {
 //                    _ = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
@@ -88,7 +122,7 @@ struct ReactionProgressChart_Previews: PreviewProvider {
 
     private static func moleculeDefinition(_ molecule: TestMoleculeType) -> ReactionProgressChartViewModel<TestMoleculeType>.MoleculeDefinition {
         .init(
-            name: molecule.rawValue,
+            label: "\(molecule.rawValue)",
             columnIndex: molecule.data.col,
             initialCount: molecule.data.initCount,
             color: molecule.data.color
@@ -111,3 +145,4 @@ struct ReactionProgressChart_Previews: PreviewProvider {
         }
     }
 }
+

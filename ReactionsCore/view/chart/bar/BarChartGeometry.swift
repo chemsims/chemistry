@@ -45,6 +45,8 @@ public struct BarChartGeometry {
         )
     }
 
+    let axisLineWidth: CGFloat = 1
+
     var barWidth: CGFloat {
         barWidthFraction * chartWidth
     }

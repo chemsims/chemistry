@@ -242,6 +242,13 @@ extension AcidOrBase {
         let symbol: String
         let charge: Charge?
 
+        var text: TextLine {
+            if let charge = charge {
+                return TextLine("\(symbol)^\(charge.rawValue)^")
+            }
+            return TextLine(symbol)
+        }
+
         enum Charge: String {
             case positive = "+"
             case negative = "-"

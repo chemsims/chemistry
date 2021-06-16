@@ -9,12 +9,10 @@ public class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: Observ
 
     public init(
         molecules: EnumMap<MoleculeType, MoleculeDefinition>,
-//        geometry: ReactionProgressChartGeometry,
         settings: Settings,
         timing: Timing
     ) {
         self.definitions = molecules
-//        self.geometry = geometry
         self.settings = settings
 
         self.timing = timing
@@ -41,13 +39,12 @@ public class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: Observ
     }
 
     @Published var molecules: [Molecule]
-//    let geometry: ReactionProgressChartGeometry
     let settings: Settings
     let timing: Timing
 
     weak var delegate: ReactionProgressChartViewModelDelegate<MoleculeType>?
 
-    private let definitions: EnumMap<MoleculeType, MoleculeDefinition>
+    let definitions: EnumMap<MoleculeType, MoleculeDefinition>
 
     private var pendingRemovals = [MoleculeType : Int]()
 
@@ -390,14 +387,14 @@ extension ReactionProgressChartViewModel {
     }
 
     public struct MoleculeDefinition {
-        public init(name: String, columnIndex: Int, initialCount: Int, color: Color) {
-            self.name = name
+        public init(label: TextLine, columnIndex: Int, initialCount: Int, color: Color) {
+            self.label = label
             self.columnIndex = columnIndex
             self.initialCount = initialCount
             self.color = color
         }
 
-        let name: String
+        let label: TextLine
         let columnIndex: Int
         let initialCount: Int
         let color: Color

@@ -21,9 +21,10 @@ public struct ReactionProgressChartGeometry {
         let moleculeSizeForHeight = availableHeight / maxMoleculeFloat
 
         self.chartSize = chartSize
-        self.moleculeSize = min(moleculeSizeForHeight, moleculeSizeForWidth)
+        let moleculeSize = min(moleculeSizeForHeight, moleculeSizeForWidth)
+        self.moleculeSize = moleculeSize
 
-        let dxColumn = chartSize / CGFloat(colCount + 1)
+        let dxColumn = chartSize / (2 * CGFloat(colCount))
         self.columnXEquation = LinearEquation(
             x1: 0,
             y1: dxColumn,
@@ -37,12 +38,28 @@ public struct ReactionProgressChartGeometry {
             x2: CGFloat(maxMolecules - 1),
             y2: topPadding + (moleculeSize / 2)
         )
+
+        let barGeometry = BarChartGeometry(chartWidth: chartSize, minYValue: 0, maxYValue: 1)
+        self.axisLineWidth = barGeometry.axisLineWidth
+        self.chartToAxisSpacing = barGeometry.chartToAxisSpacing
+        self.axisLayout = .init(
+            width: chartSize,
+            circleSize: barGeometry.labelDiameter,
+            textHeight: barGeometry.labelTextHeight,
+            fontSize: barGeometry.labelFontSize,
+            circleToTextSpacing: barGeometry.labelToCircleSpacing
+        )
     }
 
     // Diameter of a molecule
     let moleculeSize: CGFloat
 
+    // Length of each side of the chart
     let chartSize: CGFloat
+
+    let axisLineWidth: CGFloat
+    let chartToAxisSpacing: CGFloat
+    let axisLayout: CircleChartLabel.Layout
 
     private let columnXEquation: Equation
     private let rowYEquation: Equation
