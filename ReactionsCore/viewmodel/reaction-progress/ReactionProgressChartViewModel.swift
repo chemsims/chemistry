@@ -5,15 +5,18 @@
 import SwiftUI
 
 // TODO - use weak self in dispatch closures
-class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: ObservableObject {
+public class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: ObservableObject {
 
-    init(
+    public init(
         molecules: EnumMap<MoleculeType, MoleculeDefinition>,
-        geometry: ReactionProgressChartGeometry,
+//        geometry: ReactionProgressChartGeometry,
+        settings: Settings,
         timing: Timing
     ) {
         self.definitions = molecules
-        self.geometry = geometry
+//        self.geometry = geometry
+        self.settings = settings
+
         self.timing = timing
 
         let moleculeMap = EnumMap<MoleculeType, [Molecule]>(builder: { type in
@@ -38,7 +41,8 @@ class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: ObservableObj
     }
 
     @Published var molecules: [Molecule]
-    let geometry: ReactionProgressChartGeometry
+//    let geometry: ReactionProgressChartGeometry
+    let settings: Settings
     let timing: Timing
 
     weak var delegate: ReactionProgressChartViewModelDelegate<MoleculeType>?
@@ -62,7 +66,7 @@ extension ReactionProgressChartViewModel {
     /// - Returns: True if the molecule was added, or false if the molecule could not be added. Adding a molecule
     /// may fail when there are no more molecules of type `consumedMolecule` for example, or if the column of
     /// `molecule` of `producedMolecule` are already full
-    func addMolecule(
+    public func addMolecule(
         _ molecule: MoleculeType,
         reactsWith consumedMolecule: MoleculeType,
         producing producedMolecule: MoleculeType
@@ -133,7 +137,7 @@ extension ReactionProgressChartViewModel {
     private func canAdd(_ moleculeType: MoleculeType) -> Bool {
         let currentMolecules = getMolecules(ofType: moleculeType)
         let pendingAdds = runningReactions.filter { $0.willAddMolecule(ofType: moleculeType) }.count
-        return (currentMolecules.count + pendingAdds) < geometry.maxRowIndex + 1
+        return (currentMolecules.count + pendingAdds) < settings.maxRowIndex + 1
     }
 
     private func canConsume(_ moleculeType: MoleculeType) -> Bool {
@@ -154,7 +158,7 @@ extension ReactionProgressChartViewModel {
             id: id,
             type: type,
             definition: definitions.value(for: type),
-            rowIndex: geometry.maxRowIndex,
+            rowIndex: settings.maxRowIndex,
             scale: 0,
             opacity: 0,
             willMoveDownToTopOfColumn: true
@@ -188,12 +192,13 @@ extension ReactionProgressChartViewModel {
 
         molecules[index].willMoveDownToTopOfColumn = false
 
-        let moveDuration = geometry.moveDuration(
+        let moveDuration = settings.moveDuration(
             from: molecule.rowIndex,
             to: newMoleculeIndex,
-            dropSpeed: timing.dropSpeed
+            moveSpeed: timing.dropSpeed
         )
-        withAnimation(.linear(duration: moveDuration)) {
+        
+        withAnimation(.easeIn(duration: moveDuration)) {
             molecules[index].rowIndex = newMoleculeIndex
         }
 
@@ -238,7 +243,11 @@ extension ReactionProgressChartViewModel {
     ) -> TimeInterval {
         delegate?.willSlideColumnsDown(ofTypes: types)
 
-        let duration = geometry.moveDuration(from: 1, to: 0, dropSpeed: timing.dropSpeed)
+        let duration = settings.moveDuration(
+            from: 1,
+            to: 0,
+            moveSpeed: timing.dropSpeed
+        )
 
         withAnimation(.linear(duration: duration)) {
             for index in molecules.indices {
@@ -301,19 +310,26 @@ extension ReactionProgressChartViewModel {
         }
     }
 
-    struct MoleculeDefinition {
+    public struct MoleculeDefinition {
+        public init(name: String, columnIndex: Int, initialCount: Int, color: Color) {
+            self.name = name
+            self.columnIndex = columnIndex
+            self.initialCount = initialCount
+            self.color = color
+        }
+
         let name: String
         let columnIndex: Int
         let initialCount: Int
         let color: Color
     }
 
-    struct Timing {
+    public struct Timing {
 
         /// Returns a new instance with default values set for each property.
-        init(
+        public init(
             fadeDuration: TimeInterval = 0.5,
-            dropSpeed: Double = 500
+            dropSpeed: Double = 10
         ) {
             self.fadeDuration = fadeDuration
             self.dropSpeed = dropSpeed
@@ -324,8 +340,32 @@ extension ReactionProgressChartViewModel {
         /// When adding a molecule, it immediately drops down once the fade is is complete.
         let fadeDuration: TimeInterval
 
-        /// Speed of molecules dropping, in screen points per second
+        /// Speed of molecules dropping, in rows moved per second
         let dropSpeed: Double
+    }
+
+    public struct Settings {
+        public init(
+            maxMolecules: Int
+        ) {
+            self.maxMolecules = maxMolecules
+        }
+
+        let maxMolecules: Int
+        var maxRowIndex: Int {
+            maxMolecules - 1
+        }
+
+        /// Returns the time to move from the start row to the end row, with the given
+        /// move speed, in terms of rows per time unit
+        func moveDuration(
+            from startRowIndex: Int,
+            to endRowIndex: Int,
+            moveSpeed: Double
+        ) -> Double {
+            let dRow = Double(abs(endRowIndex - startRowIndex))
+            return moveSpeed == 0 ? 0 : dRow / moveSpeed
+        }
     }
 
     private enum ReactionAction {

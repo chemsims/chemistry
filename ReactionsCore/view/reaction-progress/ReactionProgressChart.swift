@@ -4,11 +4,14 @@
 
 import SwiftUI
 
-struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
+public struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
 
-    init(model: ReactionProgressChartViewModel<MoleculeType>) {
+    public init(
+        model: ReactionProgressChartViewModel<MoleculeType>,
+        geometry: ReactionProgressChartGeometry
+    ) {
         self.model = model
-        self.geometry = model.geometry
+        self.geometry = geometry
     }
 
     private typealias Molecule = ReactionProgressChartViewModel<MoleculeType>.Molecule
@@ -16,7 +19,7 @@ struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
     @ObservedObject var model: ReactionProgressChartViewModel<MoleculeType>
     let geometry: ReactionProgressChartGeometry
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             ForEach(model.molecules) { molecule in
                 moleculeView(molecule)
@@ -39,13 +42,8 @@ struct ReactionProgressChart_Previews: PreviewProvider {
     static var previews: some View {
         ViewWrapper(model: ReactionProgressChartViewModel(
             molecules: EnumMap(builder: moleculeDefinition),
-            geometry: ReactionProgressChartGeometry(
-                chartSize: 300,
-                colCount: 3,
-                maxMolecules: 10,
-                topPadding: 20
-            ),
-            timing: .init()
+            settings: .init(maxMolecules: 10),
+            timing: .init(dropSpeed: 11)
         ))
     }
 
@@ -54,9 +52,17 @@ struct ReactionProgressChart_Previews: PreviewProvider {
 
         var body: some View {
             VStack {
-                ReactionProgressChart(model: model)
-                    .frame(square: 300)
-                    .border(Color.red)
+                ReactionProgressChart(
+                    model: model,
+                    geometry: ReactionProgressChartGeometry(
+                        chartSize: 300,
+                        colCount: 3,
+                        maxMolecules: 10,
+                        topPadding: 20
+                    )
+                )
+                .frame(square: 300)
+                .border(Color.red)
 
                 Button(action: {
                     _ = model.addMolecule(.A, reactsWith: .B, producing: .C)
@@ -81,7 +87,7 @@ struct ReactionProgressChart_Previews: PreviewProvider {
 
         var data: (col: Int, initCount: Int, color: Color) {
             switch self {
-            case .A: return (col: 0, initCount: 8, color: .orange)
+            case .A: return (col: 0, initCount: 3, color: .orange)
             case .B: return (col: 1, initCount: 9, color: .purple)
             case .C: return (col: 2, initCount: 5, color: .green)
             }

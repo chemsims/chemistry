@@ -4,9 +4,9 @@
 
 import CoreGraphics
 
-struct ReactionProgressChartGeometry {
+public struct ReactionProgressChartGeometry {
 
-    init(
+    public init(
         chartSize: CGFloat,
         colCount: Int,
         maxMolecules: Int,
@@ -36,13 +36,10 @@ struct ReactionProgressChartGeometry {
             x2: CGFloat(maxMolecules - 1),
             y2: topPadding + (moleculeSize / 2)
         )
-        self.maxRowIndex = maxMolecules - 1
     }
 
     // Diameter of a molecule
     let moleculeSize: CGFloat
-
-    let maxRowIndex: Int
 
     private let columnXEquation: Equation
     private let rowYEquation: Equation
@@ -61,18 +58,5 @@ struct ReactionProgressChartGeometry {
             x: columnXEquation.getY(at: CGFloat(colIndex)),
             y: rowYEquation.getY(at: CGFloat(rowIndex))
         )
-    }
-
-    /// Returns the time to move from the starting to a final row, with the given drop speed
-    func moveDuration(
-        from startRowIndex: Int,
-        to endRowIndex: Int,
-        dropSpeed: Double
-    ) -> TimeInterval {
-        let startY = rowYEquation.getY(at: CGFloat(startRowIndex))
-        let endY = rowYEquation.getY(at: CGFloat(endRowIndex))
-        let dy = Double(abs(endY - startY))
-
-        return dy == 0 ? 0 : dy / dropSpeed
     }
 }

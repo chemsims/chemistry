@@ -4,7 +4,7 @@
 
 import Foundation
 
-typealias EnumMappable = CaseIterable & Hashable
+public typealias EnumMappable = CaseIterable & Hashable
 
 /// A struct which provides a guaranteed map lookup for keys which conform to `CaseIterable`.
 public struct EnumMap<Key, Value> where Key : CaseIterable, Key : Hashable {

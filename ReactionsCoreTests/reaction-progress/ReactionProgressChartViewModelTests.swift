@@ -89,7 +89,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
     }
 
     func testMoleculesFadeOutAfterAddingOne() {
-        let model = newModel(timing: .init(fadeDuration: 0.1, dropSpeed: 500))
+        let model = newModel(timing: .init(fadeDuration: 0.1, dropSpeed: 10))
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
 
@@ -110,7 +110,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
     }
 
     func testMoleculeColumnsMoveDownAfterAddingOne() {
-        let model = newModel(timing: .init(fadeDuration: 0.1, dropSpeed: 500))
+        let model = newModel(timing: .init(fadeDuration: 0.1, dropSpeed: 10))
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
 
@@ -131,7 +131,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
     }
 
     func testMoleculeColumnsMoveDownTwiceAfterAddingTwoMolecules() {
-        let model = newModel(timing: .init(fadeDuration: 0.1, dropSpeed: 500))
+        let model = newModel(timing: .init(fadeDuration: 0.1, dropSpeed: 10))
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
 
@@ -152,7 +152,7 @@ class ReactionProgressChartViewModelTests: XCTestCase {
     }
 
     func testProducedMoleculeIsAddedAfterAddingADifferentMolecule() {
-        let model = newModel(timing: .init(fadeDuration: 0.1, dropSpeed: 500))
+        let model = newModel(timing: .init(fadeDuration: 0.1, dropSpeed: 50))
         let delegate = TestReactionProgressChartViewModelDelegate()
         model.delegate = delegate
 
@@ -270,17 +270,10 @@ class ReactionProgressChartViewModelTests: XCTestCase {
     ) -> ReactionProgressChartViewModel<TestMolecule> {
         ReactionProgressChartViewModel(
             molecules: definitions,
-            geometry: geometry,
+            settings: .init(maxMolecules: 10),
             timing: timing
         )
     }
-
-    private let geometry = ReactionProgressChartGeometry(
-        chartSize: 500,
-        colCount: 3,
-        maxMolecules: 10,
-        topPadding: 0
-    )
 }
 
 
