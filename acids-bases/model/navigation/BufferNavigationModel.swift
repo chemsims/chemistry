@@ -24,7 +24,7 @@ struct BufferNavigationModel {
         SetStatement(statements.intro),
         SetStatement(statements.explainEquilibriumConstant1),
         SelectWeakAcid(),
-        PostSelectWeakAcid(statements.explainWeakAcid),
+        PostSelectSubstance(statements.explainWeakAcid),
         SetStatement(statements.explainKa),
         SetStatement(statements.explainHighKa),
         SetStatement(statements.explainConjugateBase),
@@ -48,12 +48,12 @@ struct BufferNavigationModel {
         SetStatement(statements.explainBufferProportions),
         SetStatement(statements.explainAddingAcidIonizingSalt),
         AddSalt(statements.instructToAddSalt),
-        PostAddSaltToAcidBuffer(),
+        PostAdd(fromSubstance: \.reachedAcidBuffer),
         SetStatement(statements.showPreviousPhLine),
-        AddStrongAcid(),
-        PostAddStrongAcid(),
+        AddStrongSubstance(statements.instructToAddStrongAcid),
+        PostAdd(statements.acidBufferLimitReached),
         SelectWeakBase(),
-        SetStatement(fromSubstance: \.choseWeakBase),
+        PostSelectSubstance(fromSubstance: \.choseWeakBase),
         SetStatement(fromSubstance: \.explainKbEquation),
         SetStatement(statements.explainKbOhRelation),
         SetStatement(fromSubstance: \.explainConjugateAcidPair),
@@ -69,10 +69,10 @@ struct BufferNavigationModel {
         SetStatement(fromSubstance: \.explainEqualProportions),
         SetStatement(fromSubstance: \.explainSalt),
         AddSalt(fromSubstance: \.instructToAddSaltToBase),
-        SetStatement(fromSubstance: \.reachedBasicBuffer),
+        PostAdd(fromSubstance: \.reachedBasicBuffer),
         SetStatement(statements.showBasePhWaterLine),
-        AddStrongBase(),
-        PostAddStrongBase()
+        AddStrongSubstance(statements.instructToAddStrongBase),
+        PostAdd(statements.baseBufferLimitReached)
     ]
 }
 
@@ -138,7 +138,7 @@ private class SelectWeakAcid: BufferScreenState {
     }
 }
 
-private class PostSelectWeakAcid: SetStatement {
+private class PostSelectSubstance: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
         super.apply(on: model)
         model.substanceSelectionIsToggled = false
@@ -245,6 +245,9 @@ private class PostWeakAcidReaction: BufferScreenState {
 
     override func unapply(on model: BufferScreenViewModel) {
         model.phase = .addWeakSubstance
+        if model.selectedBottomGraph == .curve {
+            model.selectedBottomGraph = .bars
+        }
     }
 }
 
@@ -252,12 +255,6 @@ private class ShowFractionChart: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
         super.apply(on: model)
         model.selectedBottomGraph = .curve
-    }
-
-    override func unapply(on model: BufferScreenViewModel) {
-        if model.selectedBottomGraph == .curve {
-            model.selectedBottomGraph = .bars
-        }
     }
 }
 
@@ -283,9 +280,9 @@ private class AddSalt: SetStatement {
     }
 }
 
-private class PostAddSaltToAcidBuffer: BufferScreenState {
+private class PostAdd: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = substanceStatements(model).reachedAcidBuffer
+        super.apply(on: model)
         withAnimation(containerInputAnimation) {
             model.input = .none
             model.shakeModel.stopAll()
@@ -293,7 +290,7 @@ private class PostAddSaltToAcidBuffer: BufferScreenState {
     }
 }
 
-private class AddStrongAcid: BufferScreenState {
+private class AddStrongSubstance: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
         model.goToStrongSubstancePhase()
         doApply(on: model)
@@ -307,7 +304,7 @@ private class AddStrongAcid: BufferScreenState {
     }
 
     private func doApply(on model: BufferScreenViewModel) {
-        model.statement = statements.instructToAddStrongAcid
+        super.apply(on: model)
         model.input = .addMolecule(phase: .addStrongSubstance)
     }
 
@@ -318,16 +315,6 @@ private class AddStrongAcid: BufferScreenState {
             model.strongSubstanceModel.reset()
         }
         model.phase = .addSalt
-    }
-}
-
-private class PostAddStrongAcid: BufferScreenState {
-    override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.acidBufferLimitReached
-        withAnimation(containerInputAnimation) {
-            model.input = .none
-            model.shakeModel.stopAll()
-        }
     }
 }
 
@@ -414,6 +401,9 @@ private class PostWeakBaseReaction: BufferScreenState {
 
     override func unapply(on model: BufferScreenViewModel) {
         model.phase = .addWeakSubstance
+        if model.selectedBottomGraph == .curve {
+            model.selectedBottomGraph = .bars
+        }
     }
 }
 
@@ -422,15 +412,5 @@ private class AddStrongBase: BufferScreenState {
         model.statement = statements.instructToAddStrongBase
         model.goToStrongSubstancePhase()
         model.input = .addMolecule(phase: .addStrongSubstance)
-    }
-}
-
-private class PostAddStrongBase: BufferScreenState {
-    override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.baseBufferLimitReached
-        withAnimation(containerInputAnimation) {
-            model.input = .none
-            model.shakeModel.stopAll()
-        }
     }
 }
