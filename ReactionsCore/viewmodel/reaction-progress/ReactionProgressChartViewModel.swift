@@ -192,7 +192,7 @@ extension ReactionProgressChartViewModel {
             return moveMoleculeToTopOfColumn(withId: id)
         case let .fadeOutBottomMolecules(types: types):
             return fadeOutBottomMolecules(ofTypes: types)
-        case let .removeBottomMolecules(types: types):
+        case let .deleteBottomMolecules(types: types):
             removeBottomMolecules(ofTypes: types)
             return 0
         case let .slideColumnsDown(types):
@@ -451,7 +451,7 @@ extension ReactionProgressChartViewModel {
         case prepareMoleculeForDropping(type: MoleculeType, id: UUID)
         case moveMoleculeToTopOfColumn(id: UUID)
         case fadeOutBottomMolecules(types: [MoleculeType])
-        case removeBottomMolecules(types: [MoleculeType])
+        case deleteBottomMolecules(types: [MoleculeType])
         case slideColumnsDown(types: [MoleculeType])
         case addMolecule(types: [MoleculeType])
     }
@@ -475,7 +475,7 @@ extension ReactionProgressChartViewModel {
                     .prepareMoleculeForDropping(type: added, id: newMoleculeId),
                     .moveMoleculeToTopOfColumn(id: newMoleculeId),
                     .fadeOutBottomMolecules(types: [added, consumed]),
-                    .removeBottomMolecules(types: [added, consumed]),
+                    .deleteBottomMolecules(types: [added, consumed]),
                     .slideColumnsDown(types: [added, consumed]),
                     .addMolecule(types: [produced])
                 ]
@@ -505,6 +505,7 @@ extension ReactionProgressChartViewModel {
                 consumed: [consumed],
                 pendingActions: [
                     .fadeOutBottomMolecules(types: [consumed]),
+                    .deleteBottomMolecules(types: [consumed]),
                     .slideColumnsDown(types: [consumed]),
                     .addMolecule(types: produced)
                 ]
@@ -514,7 +515,7 @@ extension ReactionProgressChartViewModel {
         func willRemoveMolecule(ofType moleculeType: MoleculeType) -> Bool {
             pendingActions.contains { action in
                 switch action {
-                case let .removeBottomMolecules(types): return types.contains(moleculeType)
+                case let .deleteBottomMolecules(types): return types.contains(moleculeType)
                 default: return false
                 }
             }

@@ -128,6 +128,11 @@ class BufferSaltComponents: ObservableObject {
 
         // TODO - there should be a better way to access final pH from previous model
         self.initialPh = previous.pH.getY(at: 1)
+
+        self.reactionProgress = prev.reactionProgress
+        self.initialProgressCounts = .init(builder: { part in
+            prev.reactionProgress.moleculeCounts(ofType: part)
+        })
     }
 
     let reactingModel: ReactingBeakerViewModel<SubstancePart>
@@ -149,6 +154,9 @@ class BufferSaltComponents: ObservableObject {
 
     let concentration: SubstanceValue<Equation>
 
+    let reactionProgress: ReactionProgressChartViewModel<SubstancePart>
+    private let initialProgressCounts: EnumMap<SubstancePart, Int>
+
     var finalConcentration: SubstanceValue<CGFloat> {
         concentration.map { $0.getY(at: CGFloat(maxSubstance)) }
     }
@@ -168,6 +176,7 @@ class BufferSaltComponents: ObservableObject {
         withAnimation(.linear(duration: 1)) {
             substanceAdded += maxToAdd
         }
+        updateReactionProgress()
     }
 
     var pH: Equation {
@@ -201,6 +210,10 @@ class BufferSaltComponents: ObservableObject {
 
     var barChartData: [BarChartData] {
         barChartMap.all
+    }
+
+    private var initialPrimaryIonCoords: CGFloat {
+        CGFloat(previous.molecules(for: .primaryIon).coords.count)
     }
 }
 
@@ -248,5 +261,55 @@ extension BufferSaltComponents {
             initialValue: ConstantEquation(value: concentration.value(for: part).getY(at: 0)),
             finalValue: concentration.value(for: part)
         )
+    }
+}
+
+// MARK: Reaction progress
+extension BufferSaltComponents {
+
+    private func updateReactionProgress() {
+        let desiredPrimary = (primaryIonReactionProgressCounts.getY(at: CGFloat(substanceAdded))).roundedInt()
+        let desiredSecondary = (secondarySubstanceReactionProgressCount.getY(at: CGFloat(substanceAdded))).roundedInt()
+
+        let currentPrimary = reactionProgress.moleculeCounts(ofType: .primaryIon)
+        let currentSecondary = reactionProgress.moleculeCounts(ofType: .secondaryIon)
+
+        // We want primary to go down
+        let deltaPrimary = currentPrimary - desiredPrimary
+        if deltaPrimary > 0 {
+            for _ in 0..<deltaPrimary {
+                _ = reactionProgress.startReaction(adding: .secondaryIon, reactsWith: .primaryIon, producing: .substance)
+            }
+        }
+
+        let deltaSecondary = desiredSecondary - currentSecondary
+        if deltaSecondary > 0 {
+            for _ in 0..<deltaSecondary {
+                _ = reactionProgress.addMolecule(.secondaryIon)
+            }
+        }
+    }
+
+    private var primaryIonReactionProgressCounts: Equation {
+        let initialPrimary = CGFloat(initialProgressCounts.value(for: .primaryIon))
+        return LinearEquation(
+            x1: 0,
+            y1: initialPrimary,
+            x2: initialPrimaryIonCoords,
+            y2: 0
+        ).within(min: 0, max: initialPrimary)
+    }
+
+    private var secondarySubstanceReactionProgressCount: Equation {
+        let initialSecondary = CGFloat(initialProgressCounts.value(for: .secondaryIon))
+        let initialPrimary = initialProgressCounts.value(for: .primaryIon)
+        let initialSubstance = initialProgressCounts.value(for: .substance)
+        let finalSecondary = CGFloat(initialSubstance + initialPrimary)
+        return LinearEquation(
+            x1: initialPrimaryIonCoords,
+            y1: initialSecondary,
+            x2: CGFloat(maxSubstance),
+            y2: finalSecondary
+        ).within(min: initialSecondary, max: finalSecondary)
     }
 }
