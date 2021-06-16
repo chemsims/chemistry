@@ -36,7 +36,7 @@ struct BufferRightStack: View {
         )
         .frame(height: layout.common.toggleHeight, alignment: .top)
         .zIndex(1)
-        .disabled(model.input != .selectWeakAcid)
+        .disabled(model.input != .selectSubstance)
     }
 
     private var terms: some View {

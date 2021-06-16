@@ -6,6 +6,12 @@ import SwiftUI
 import ReactionsCore
 
 private let statements = BufferStatements.self
+private func substanceStatements(_ model: BufferScreenViewModel) -> BufferStatementsForSubstance {
+    substanceStatements(model.substance)
+}
+private func substanceStatements(_ substance: AcidOrBase) -> BufferStatementsForSubstance {
+    BufferStatementsForSubstance(substance: substance)
+}
 
 struct BufferNavigationModel {
     private init() { }
@@ -41,13 +47,32 @@ struct BufferNavigationModel {
         SetStatement(statements.explainBufferRange),
         SetStatement(statements.explainBufferProportions),
         SetStatement(statements.explainAddingAcidIonizingSalt),
-        AddSalt(),
-        AddAcid(),
+        AddSaltToAcidBuffer(),
+        PostAddSaltToAcidBuffer(),
+        SetStatement(statements.showPreviousPhLine),
+        AddStrongAcid(),
+        PostAddStrongAcid(),
+        SelectWeakBase(),
+        SetStatement(fromSubstance: \.choseWeakBase),
+        SetStatement(fromSubstance: \.explainKbEquation),
+        SetStatement(statements.explainKbOhRelation),
+        SetStatement(fromSubstance: \.explainConjugateAcidPair),
+        SetStatement(fromSubstance: \.explainKa),
+        SetStatement(fromSubstance: \.explainBasicHasselbalch),
+        SetWaterLevel(statements.instructToSetWaterLevelForBase),
         AddWeakBase(),
         RunWeakBaseReaction(),
         EndOfWeakBaseReaction(),
+        SetStatement(statements.explainBasicHasselbalch),
+        SetStatement(fromSubstance: \.explainBufferRange),
+        SetStatement(fromSubstance: \.calculateBufferRange),
+        SetStatement(fromSubstance: \.explainEqualProportions),
+        SetStatement(fromSubstance: \.explainSalt),
         AddSaltToBase(),
-        AddStrongBase()
+        SetStatement(fromSubstance: \.reachedBasicBuffer),
+        SetStatement(statements.showBasePhWaterLine),
+        AddStrongBase(),
+        PostAddStrongBase()
     ]
 }
 
@@ -87,6 +112,12 @@ private class SetStatement: BufferScreenState {
         self.statement = { statement($0.substance) }
     }
 
+    init(fromSubstance keyPath: KeyPath<BufferStatementsForSubstance, [TextLine]>) {
+        self.statement = {
+            substanceStatements($0)[keyPath: keyPath]
+        }
+    }
+
     let statement: (BufferScreenViewModel) -> [TextLine]
 
     override func apply(on model: BufferScreenViewModel) {
@@ -97,7 +128,7 @@ private class SetStatement: BufferScreenState {
 private class SelectWeakAcid: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.explainEquilibriumConstant2
-        model.input = .selectWeakAcid
+        model.input = .selectSubstance
         model.substanceSelectionIsToggled = true
     }
 
@@ -230,7 +261,7 @@ private class ShowFractionChart: BufferScreenState {
     }
 }
 
-private class AddSalt: BufferScreenState {
+private class AddSaltToAcidBuffer: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statements.instructToAddSalt(substance: model.substance)
         model.input = .addMolecule(phase: .addSalt)
@@ -245,38 +276,83 @@ private class AddSalt: BufferScreenState {
     }
 }
 
-private class AddAcid: BufferScreenState {
+private class PostAddSaltToAcidBuffer: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = ["Now, add strong acid"]
+        model.statement = substanceStatements(model).reachedAcidBuffer
+        withAnimation(containerInputAnimation) {
+            model.input = .none
+            model.shakeModel.stopAll()
+        }
+    }
+}
+
+private class AddStrongAcid: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = statements.instructToAddStrongAcid
         model.goToStrongSubstancePhase()
         model.input = .addMolecule(phase: .addStrongSubstance)
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        withAnimation(containerInputAnimation) {
+            model.input = .none
+            model.shakeModel.stopAll()
+        }
+    }
+}
+
+private class PostAddStrongAcid: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = statements.acidBufferLimitReached
+        withAnimation(containerInputAnimation) {
+            model.input = .none
+            model.shakeModel.stopAll()
+        }
+    }
+}
+
+private class SelectWeakBase: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = statements.instructToChooseWeakBase
+        model.input = .selectSubstance
+        model.availableSubstances = AcidOrBase.weakBases
+        model.goToWeakSubstancePhase()
+        model.substanceSelectionIsToggled = true
+        if model.selectedBottomGraph == .curve {
+            model.selectedBottomGraph = .bars
+        }
     }
 }
 
 private class AddWeakBase: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = ["Now, add weak base"]
-        model.goToWeakBufferPhase()
-//        model.shakeModel.activeMolecule = nil
+        model.statement = substanceStatements(model).instructToAddWeakBase
         model.input = .addMolecule(phase: .addWeakSubstance)
-        if model.selectedBottomGraph == .curve {
-            model.selectedBottomGraph = .bars
-        }
         model.equationState = .weakBaseWithSubstanceConcentration
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.input = .none
+        model.equationState = .weakBaseBlank
     }
 }
 
 private class RunWeakBaseReaction: RunWeakSubstanceReaction {
     override func apply(on model: BufferScreenViewModel) {
         super.apply(on: model)
-        model.statement = ["Running weak base reaction"]
+        model.statement = substanceStatements(model).runningWeakBaseReaction
         model.equationState = .weakBaseWithSubstanceConcentration
+        withAnimation(containerInputAnimation) {
+            model.input = .none
+            model.shakeModel.stopAll()
+        }
     }
 }
 
 private class EndOfWeakBaseReaction: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = ["Reaction is done"]
+        let finalPh = model.weakSubstanceModel.pH.getY(at: 1)
+        model.statement = substanceStatements(model).reachedBaseEquilibrium(pH: finalPh)
         model.equationState = .weakBaseFilled
         withAnimation(.easeOut(duration: 0.5)) {
             model.weakSubstanceModel.progress = 1.0001
@@ -286,7 +362,7 @@ private class EndOfWeakBaseReaction: BufferScreenState {
 
 private class AddSaltToBase: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = ["Now, add salt"]
+        model.statement = substanceStatements(model).instructToAddSaltToBase
         model.goToAddSaltPhase()
         model.input = .addMolecule(phase: .addSalt)
     }
@@ -294,8 +370,18 @@ private class AddSaltToBase: BufferScreenState {
 
 private class AddStrongBase: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = ["Now, add strong base"]
+        model.statement = statements.instructToAddStrongBase
         model.goToStrongSubstancePhase()
         model.input = .addMolecule(phase: .addStrongSubstance)
+    }
+}
+
+private class PostAddStrongBase: BufferScreenState {
+    override func apply(on model: BufferScreenViewModel) {
+        model.statement = statements.baseBufferLimitReached
+        withAnimation(containerInputAnimation) {
+            model.input = .none
+            model.shakeModel.stopAll()
+        }
     }
 }

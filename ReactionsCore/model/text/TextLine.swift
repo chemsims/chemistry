@@ -123,7 +123,6 @@ public struct TextSegment: Equatable {
         self.italic = italic
     }
 
-    // TODO add tests for this property
     /// Returns segment in markdown representation
     public var asMarkdown: String {
         var controlChars = ""
@@ -138,7 +137,7 @@ public struct TextSegment: Equatable {
         if !allowBreaks {
             controlChars.append(TextLineGenerator.noBreaks)
         }
-        let endControlChars = controlChars.reversed()
+        let endControlChars = String(controlChars.reversed())
         return "\(controlChars)\(content)\(endControlChars)"
     }
 }

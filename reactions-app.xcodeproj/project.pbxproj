@@ -237,6 +237,7 @@
 		5773B5F025B84E4100889A2E /* FeedbackAndShareSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5EF25B84E4100889A2E /* FeedbackAndShareSettings.swift */; };
 		5773B5F425B84EF600889A2E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5F325B84EF600889A2E /* Version.swift */; };
 		5773BCD6267A2EA500E52C81 /* CircleChartLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */; };
+		5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD8267A5F4500E52C81 /* TextLineTests.swift */; };
 		57792CF1261AD69200C26CFF /* SolubleReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */; };
 		57792CF7261AD84D00C26CFF /* ReactionTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF6261AD84D00C26CFF /* ReactionTiming.swift */; };
 		57792CFE261B71CD00C26CFF /* SolubilityEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CFD261B71CD00C26CFF /* SolubilityEquationView.swift */; };
@@ -878,6 +879,7 @@
 		5773B5F325B84EF600889A2E /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSettingsTests.swift; sourceTree = "<group>"; };
 		5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleChartLabel.swift; sourceTree = "<group>"; };
+		5773BCD8267A5F4500E52C81 /* TextLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineTests.swift; sourceTree = "<group>"; };
 		57778B7E259368B800254262 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		57778B8925937D8C00254262 /* QuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTests.swift; sourceTree = "<group>"; };
 		57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleReactionSettings.swift; sourceTree = "<group>"; };
@@ -2125,6 +2127,15 @@
 			path = "energy-profile";
 			sourceTree = "<group>";
 		};
+		5773BCD7267A5F3100E52C81 /* text-line */ = {
+			isa = PBXGroup;
+			children = (
+				57B92EBE266537F900023E7C /* TextLineUtilTests.swift */,
+				5773BCD8267A5F4500E52C81 /* TextLineTests.swift */,
+			);
+			path = "text-line";
+			sourceTree = "<group>";
+		};
 		57778B8425937B5900254262 /* questions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2280,6 +2291,7 @@
 		5797A44D25E4069F00991BD9 /* ReactionsCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				5773BCD7267A5F3100E52C81 /* text-line */,
 				572B1A742675DC3D00302B8E /* reaction-progress */,
 				57FD401126484F6800E352C1 /* persistence */,
 				57FD400826484EC700E352C1 /* quizTests */,
@@ -2304,7 +2316,6 @@
 				57A5F077263EA0C8002F23DE /* QuizQuestionReaderTests.swift */,
 				57315ECF2640311200A7D0F9 /* CsvParserTests.swift */,
 				575C90E42662CE6A001DCD17 /* PHMeterTests.swift */,
-				57B92EBE266537F900023E7C /* TextLineUtilTests.swift */,
 				57FB9ED12674A02B0003E977 /* ReactingBeakerViewModelTests.swift */,
 			);
 			path = ReactionsCoreTests;
@@ -3971,6 +3982,7 @@
 				57FD401426484F9F00E352C1 /* LastOpenedScreenTests.swift in Sources */,
 				57FD402E2648765700E352C1 /* QuizTestMethods.swift in Sources */,
 				57FD400F26484F5100E352C1 /* ScreenStateTreeNodeTests.swift in Sources */,
+				5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */,
 				573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */,
 				57FD400D26484F4B00E352C1 /* CGFloatRoundingTests.swift in Sources */,
 				57FD400926484F2E00E352C1 /* FeedbackSettingsTests.swift in Sources */,

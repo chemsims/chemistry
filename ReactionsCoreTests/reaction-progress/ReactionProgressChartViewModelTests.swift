@@ -312,7 +312,7 @@ private enum TestMolecule: String, CaseIterable {
         count: Int
     )  -> MoleculeDefinition {
         MoleculeDefinition(
-            name: molecule.rawValue,
+            label: "\(molecule.rawValue)",
             columnIndex: molecule.colIndex,
             initialCount: count,
             color: .purple

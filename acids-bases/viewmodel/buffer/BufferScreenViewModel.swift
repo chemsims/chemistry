@@ -99,7 +99,7 @@ extension BufferScreenViewModel {
         phase = .addStrongSubstance
     }
 
-    func goToWeakBufferPhase() {
+    func goToWeakSubstancePhase() {
         weakSubstanceModel = BufferWeakSubstanceComponents(
             substance: .weakBases.first!,
             settings: .standard,
@@ -138,7 +138,7 @@ extension BufferScreenViewModel {
     }
 
     enum InputState: Equatable {
-        case none, setWaterLevel, selectWeakAcid, selectWeakBase
+        case none, setWaterLevel, selectSubstance
         case addMolecule(phase: Phase)
     }
 

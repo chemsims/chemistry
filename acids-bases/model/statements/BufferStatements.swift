@@ -309,8 +309,8 @@ struct BufferStatements {
             """
             Awesome! That's what I called a *buffer!* There's equal parts of \
             *\(substance.symbol)* and *\(secondary)* now. Notice that *pH went \
-            up*, this is because \(secondary) ions trapped the H^+^ ions that \
-            were free in the solution, decreasing the concentration of *H^+^* \
+            up*, this is because \(secondary) ions trapped the \(hydrogen) ions that \
+            were free in the solution, decreasing the concentration of *\(hydrogen)* \
             in the solution.
             """
         ]
@@ -378,7 +378,7 @@ struct BufferStatements {
         "*Use the water slider*."
     ]
 
-    static let explainBufferHasselbalch: [TextLine] = [
+    static let explainBasicHasselbalch: [TextLine] = [
         """
         Now that we know the Kb, let's use the *Henderson-Hasselbalch* equation for something \
         very useful:
@@ -435,7 +435,7 @@ struct BufferStatementsForSubstance {
         self.primary = primary
         self.secondary = secondary
 
-        self.substanceC = "[\(substance)]"
+        self.substanceC = "[\(substanceStr)]"
         self.primaryC = "[\(primary)]"
         self.secondaryC = "[\(secondary)]"
 
@@ -451,7 +451,7 @@ struct BufferStatementsForSubstance {
     let primaryC: String
     let secondaryC: String
 
-    var madeBuffer: [TextLine] {
+    var reachedAcidBuffer: [TextLine] {
         [
             """
             Awesome! That's what I call a *buffer!*. There's equal parts of *\(substance)* and *\(secondary)* \
@@ -509,7 +509,7 @@ struct BufferStatementsForSubstance {
             """
             That's where *Ka* comes from. When *\(primary)* donates \(hydrogen) to water, it releases \
             *\(h3O)* ions, working as an acid. The equation for Ka is: \
-            $Ka = \(substanceC)\(hydrogen)/\(primary)$. That'll be the Ka for the conjugate acid \
+            $Ka = \(substanceC)[\(hydrogen)]/\(primaryC)$. That'll be the Ka for the conjugate acid \
             \(primary). When *Kb* is large, *Ka* is small and vice versa.
             """
         ]
