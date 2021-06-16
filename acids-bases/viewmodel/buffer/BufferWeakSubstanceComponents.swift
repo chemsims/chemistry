@@ -41,6 +41,11 @@ class BufferWeakSubstanceComponents: ObservableObject {
     @Published var substance: AcidOrBase {
         didSet {
             reactionProgress = BufferSharedComponents.initialReactionProgressModel(substance: substance)
+            substanceCoords = BeakerMolecules(
+                coords: [],
+                color: substance.color,
+                label: ""
+            )
         }
     }
 
