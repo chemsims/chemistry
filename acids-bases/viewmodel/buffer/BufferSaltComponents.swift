@@ -315,7 +315,7 @@ extension BufferSaltComponents {
 
         return ReactingBeakerViewModel(
             initial: SubstanceValue(
-                substance: previous.substanceCoords,
+                substance: prevSubstanceCoords,
                 primaryIon: previous.ionCoords[0].molecules,
                 secondaryIon: previous.ionCoords[1].molecules
             ),
