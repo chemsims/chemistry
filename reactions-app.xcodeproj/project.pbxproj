@@ -262,6 +262,8 @@
 		5784F44B2663F5A100513B2A /* MultiContainerShakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */; };
 		5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44D2664062200513B2A /* AcidOrBaseType.swift */; };
 		5784F4502664075400513B2A /* EnumMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44F2664075400513B2A /* EnumMap.swift */; };
+		5786BD02267B224A001A165C /* TitrationComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD01267B224A001A165C /* TitrationComponents.swift */; };
+		5786BD05267B226C001A165C /* TitrationComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD04267B226C001A165C /* TitrationComponentsTests.swift */; };
 		5786F798261C24CF00E918FC /* SolubilityQuotientRecapEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786F797261C24CF00E918FC /* SolubilityQuotientRecapEquations.swift */; };
 		5786FAAB25E6908D00AAD8A6 /* DisabledSliderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */; };
 		5786FADA25E6B60B00AAD8A6 /* ReactionsRateBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAD925E6B60B00AAD8A6 /* ReactionsRateBeaker.swift */; };
@@ -912,6 +914,8 @@
 		5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiContainerShakeViewModel.swift; sourceTree = "<group>"; };
 		5784F44D2664062200513B2A /* AcidOrBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBaseType.swift; sourceTree = "<group>"; };
 		5784F44F2664075400513B2A /* EnumMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumMap.swift; sourceTree = "<group>"; };
+		5786BD01267B224A001A165C /* TitrationComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationComponents.swift; sourceTree = "<group>"; };
+		5786BD04267B226C001A165C /* TitrationComponentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationComponentsTests.swift; sourceTree = "<group>"; };
 		5786F797261C24CF00E918FC /* SolubilityQuotientRecapEquations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityQuotientRecapEquations.swift; sourceTree = "<group>"; };
 		5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledSliderModifier.swift; sourceTree = "<group>"; };
 		5786FAD925E6B60B00AAD8A6 /* ReactionsRateBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsRateBeaker.swift; sourceTree = "<group>"; };
@@ -1379,6 +1383,7 @@
 		570ABA18265A736D008EC8CC /* acids-basesTests */ = {
 			isa = PBXGroup;
 			children = (
+				5786BD03267B2256001A165C /* titration-components */,
 				5797DE20267390D1003F589F /* util */,
 				5797DE1D26739075003F589F /* buffer-components */,
 				570ABA1B265A736D008EC8CC /* Info.plist */,
@@ -1425,6 +1430,7 @@
 		570ABA32265A760E008EC8CC /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				5786BD00267B223B001A165C /* titration */,
 				570A7662266CD8F2009329FB /* buffer */,
 				57FA3ABB266102EB0073A29B /* IntroScreenViewModel.swift */,
 			);
@@ -2204,6 +2210,22 @@
 				57812A8D25EABA950099D720 /* AnimatableRotation.swift */,
 			);
 			path = "animatable-modifiers";
+			sourceTree = "<group>";
+		};
+		5786BD00267B223B001A165C /* titration */ = {
+			isa = PBXGroup;
+			children = (
+				5786BD01267B224A001A165C /* TitrationComponents.swift */,
+			);
+			path = titration;
+			sourceTree = "<group>";
+		};
+		5786BD03267B2256001A165C /* titration-components */ = {
+			isa = PBXGroup;
+			children = (
+				5786BD04267B226C001A165C /* TitrationComponentsTests.swift */,
+			);
+			path = "titration-components";
 			sourceTree = "<group>";
 		};
 		5786FAD825E6B5FD00AAD8A6 /* beaker */ = {
@@ -3570,6 +3592,7 @@
 				570A766B266CFC45009329FB /* BufferScreenViewModel.swift in Sources */,
 				57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */,
 				5743660D266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift in Sources */,
+				5786BD02267B224A001A165C /* TitrationComponents.swift in Sources */,
 				57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3582,6 +3605,7 @@
 				577BC7752679D463005BE5C8 /* AcidOrBaseTests.swift in Sources */,
 				570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */,
 				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,
+				5786BD05267B226C001A165C /* TitrationComponentsTests.swift in Sources */,
 				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
 				5733D80326748CB8007D4459 /* BufferComponentsExtensions.swift in Sources */,
 				571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */,

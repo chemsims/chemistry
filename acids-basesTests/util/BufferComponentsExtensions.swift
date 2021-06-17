@@ -22,7 +22,8 @@ extension BufferComponentSettings {
             minimumInitialIonCount: minimumInitialIonCount,
             finalSecondaryIonCount: finalSecondaryIonCount,
             minimumFinalPrimaryIonCount: minimumFinalPrimaryIonCount,
-            maxFinalBeakerConcentration: maxFinalBeakerConcentration
+            maxFinalBeakerConcentration: maxFinalBeakerConcentration,
+            reactionProgress: standard.reactionProgress
         )
     }
 }
