@@ -8,8 +8,14 @@ import SwiftUI
 /// A test tube container with flat sides and a sloped tip and rounded bottom
 struct TestTubeContainer: Shape {
 
+    /// Height of the tip
     let tipHeightFractionOfHeight: CGFloat
+
+    /// Radius of the bottom of the tube
     let bottomRadiusFractionOfWidth: CGFloat
+
+    /// Sets the corner radius where the sides curves into the tip
+    let slopeEdgeRadiusFractionOfWidth: CGFloat
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -18,7 +24,7 @@ struct TestTubeContainer: Shape {
         let topOfTipY = rect.height - tipHeight
 
         let bottomRadius = bottomRadiusFractionOfWidth * rect.width
-        let edgeRadius = 0.3 * rect.width
+        let edgeRadius = slopeEdgeRadiusFractionOfWidth * rect.width
 
         let circleCenter = CGPoint(x: rect.width / 2, y: rect.height - bottomRadius)
 
@@ -83,7 +89,8 @@ struct TestTubeContainer_Previews: PreviewProvider {
         ZStack {
             TestTubeContainer(
                 tipHeightFractionOfHeight: 0.3,
-                bottomRadiusFractionOfWidth: 0.1
+                bottomRadiusFractionOfWidth: 0.1,
+                slopeEdgeRadiusFractionOfWidth: 0.3
             )
             .stroke()
             .foregroundColor(.red)
@@ -91,7 +98,8 @@ struct TestTubeContainer_Previews: PreviewProvider {
             // Check that it's perfectly symmetrical
             TestTubeContainer(
                 tipHeightFractionOfHeight: 0.3,
-                bottomRadiusFractionOfWidth: 0.1
+                bottomRadiusFractionOfWidth: 0.1,
+                slopeEdgeRadiusFractionOfWidth: 0.3
             )
             .stroke()
             .rotation3DEffect(

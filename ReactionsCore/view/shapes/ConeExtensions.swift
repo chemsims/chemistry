@@ -5,6 +5,16 @@
 
 import SwiftUI
 
+struct ConeShape: Shape {
+    let radius: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addCone(in: rect, radius: radius)
+        return path
+    }
+}
+
 
 extension Path {
 

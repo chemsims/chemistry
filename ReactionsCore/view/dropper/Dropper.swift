@@ -170,7 +170,8 @@ private struct DropperTube: View {
     private var tube: some Shape {
         TestTubeContainer(
             tipHeightFractionOfHeight: 0.2,
-            bottomRadiusFractionOfWidth: 0.15
+            bottomRadiusFractionOfWidth: 0.15,
+            slopeEdgeRadiusFractionOfWidth: 0.3
         )
     }
 
