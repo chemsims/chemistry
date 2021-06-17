@@ -95,7 +95,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
     }
 
     var finalIonCoordCount: Int {
-        (settings.initialIonMoleculeFraction * CGFloat(substanceCoords.coords.count)).roundedInt()
+        Int(settings.initialIonMoleculeFraction * CGFloat(substanceCoords.coords.count))
     }
 
     var concentration: SubstanceValue<Equation> {
