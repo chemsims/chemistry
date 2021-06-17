@@ -23,7 +23,7 @@ struct AcidBasesNavigationModel {
             quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence()),
             reviewPersistence: InMemoryReviewPromptPersistence(),
             allScreens: AcidAppScreen.allCases,
-            linearScreens: AcidAppScreen.allCases
+            linearScreens:  [.buffer]
         )
     }
 }
