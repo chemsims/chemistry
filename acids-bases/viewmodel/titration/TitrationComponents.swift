@@ -28,6 +28,7 @@ class TitrationComponents: ObservableObject {
         )
     }
 
+    @Published private(set) var progress: CGFloat = 0
     @Published private(set) var beakerReaction: ReactingBeakerViewModel<ExtendedSubstancePart>
     @Published private(set) var reactionProgress: ReactionProgressChartViewModel<ExtendedSubstancePart>
     @Published private(set) var substanceCoords: BeakerMolecules
