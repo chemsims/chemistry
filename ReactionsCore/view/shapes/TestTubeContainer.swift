@@ -18,23 +18,36 @@ struct TestTubeContainer: Shape {
         let topOfTipY = rect.height - tipHeight
 
         let bottomRadius = bottomRadiusFractionOfWidth * rect.width
+        let edgeRadius = 0.3 * rect.width
 
-        let angleOfSlopeToVertical = atan((rect.width / 2) / tipHeight)
         let circleCenter = CGPoint(x: rect.width / 2, y: rect.height - bottomRadius)
 
-        let circleCenterToTangentX = bottomRadius * cos(angleOfSlopeToVertical)
-        let circleCenterToTangentY = bottomRadius * sin(angleOfSlopeToVertical)
+        path.move(to: .zero)
+        path.addLine(to: CGPoint(x: 0, y: topOfTipY - edgeRadius))
 
         // Position of the tangent between the left slope and bottom circle
-        let leftTangent = CGPoint(
-            x: circleCenter.x - circleCenterToTangentX,
-            y: circleCenter.y + circleCenterToTangentY
-        )
+        guard let leftTangent = ArcGeometry.tangentOfCircle(
+            withRadius: bottomRadius,
+            center: circleCenter,
+            through: CGPoint(x: 0, y: topOfTipY)
+        ).map({ tangents in
+            tangents.0.x < tangents.1.x ? tangents.0 : tangents.1
+        }) else {
+            print("Could not find tangents to draw curved edge")
+            path.addLines([
+                CGPoint(x: 0, y: topOfTipY - edgeRadius),
+                CGPoint(x: 0, y: topOfTipY),
+                CGPoint(x: rect.width / 2, y: rect.height),
+                CGPoint(x: rect.width, y: topOfTipY),
+                CGPoint(x: rect.width, y: 0),
+            ])
+            return path
+        }
 
-        let edgeRadius = 0.3 * rect.width
-        path.move(to: .zero)
-
-        path.addLine(to: CGPoint(x: 0, y: topOfTipY - edgeRadius))
+        let slopeX = leftTangent.x
+        let slopeY = leftTangent.y - topOfTipY
+        let angleOfSlopeToVertical = atan(slopeX / slopeY)
+        let angleOfSlopeToHorizontal = (Double.pi / 2) - Double(angleOfSlopeToVertical)
 
         // Arcs from the left edge to left slope
         // NB: See this link for a visualisation of how this works https://www.twistedape.me.uk/2013/09/23/what-arctopointdoes/
@@ -45,7 +58,6 @@ struct TestTubeContainer: Shape {
             radius: edgeRadius
         )
 
-        let angleOfSlopeToHorizontal = (Double.pi / 2) - Double(angleOfSlopeToVertical)
         path.addArc(
             center: circleCenter,
             radius: bottomRadius,
@@ -68,16 +80,26 @@ struct TestTubeContainer: Shape {
 
 struct TestTubeContainer_Previews: PreviewProvider {
     static var previews: some View {
-        container
+        ZStack {
+            TestTubeContainer(
+                tipHeightFractionOfHeight: 0.3,
+                bottomRadiusFractionOfWidth: 0.1
+            )
             .stroke()
+            .foregroundColor(.red)
+
+            // Check that it's perfectly symmetrical
+            TestTubeContainer(
+                tipHeightFractionOfHeight: 0.3,
+                bottomRadiusFractionOfWidth: 0.1
+            )
+            .stroke()
+            .rotation3DEffect(
+                .degrees(180),
+                axis: (x: 0.0, y: 1.0, z: 0.0)
+            )
+        }
         .frame(width: 200, height: 400)
         .previewLayout(.fixed(width: 250, height: 440))
-    }
-
-    private static var container: some Shape {
-        TestTubeContainer(
-            tipHeightFractionOfHeight: 0.3,
-            bottomRadiusFractionOfWidth: 0.2
-        )
     }
 }

@@ -123,18 +123,8 @@ struct ArcGeometry {
 
 struct CurvedTriangle_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack {
-            CurvedTriangle()
-                .stroke()
-
-//            CurvedTriangle()
-//                .stroke()
-//                .foregroundColor(.red)
-//                .rotation3DEffect(
-//                    .degrees(180),
-//                    axis: (x: 0, y: 1, z: 0)
-//                )
-
+        Path { p in
+            p.addCone(in: CGRect(x: 0, y: 0, width: 100, height: 100), radius: 40)
         }
         .frame(width: 100, height: 100)
         .border(Color.black)
