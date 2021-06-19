@@ -33,7 +33,13 @@ private struct TitrationScreenWithSettings: View {
     let layout: TitrationScreenLayout
 
     var body: some View {
-        Text("foo")
+        HStack(spacing: 0) {
+            TitrationBeaker(layout: layout, model: model)
+            Spacer(minLength: 0)
+            TitrationChartStack(layout: layout)
+            Spacer(minLength: 0)
+            TitrationRightStack(layout: layout, model: model)
+        }
     }
 }
 
@@ -44,6 +50,7 @@ struct TitrationScreenLayout {
 struct TitrationScreen_Previews: PreviewProvider {
     static var previews: some View {
         TitrationScreen(model: TitrationViewModel())
+            .padding()
             .previewLayout(.iPhone8Landscape)
     }
 }
