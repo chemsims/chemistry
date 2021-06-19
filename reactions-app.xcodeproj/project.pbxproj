@@ -504,7 +504,8 @@
 		57F8885A267E17A800609671 /* TitrationRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88859267E17A800609671 /* TitrationRightStack.swift */; };
 		57F8885C267E188400609671 /* SliderOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885B267E188400609671 /* SliderOverlay.swift */; };
 		57F8885F267E59C000609671 /* DraggablePhMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885E267E59C000609671 /* DraggablePhMeter.swift */; };
-		57F88861267E675B00609671 /* MoleculeEmitterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88860267E675B00609671 /* MoleculeEmitterViewModel.swift */; };
+		57F88861267E675B00609671 /* MoleculeEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88860267E675B00609671 /* MoleculeEmitter.swift */; };
+		57F88864267E6DB900609671 /* MoleculeEmittingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88863267E6DB900609671 /* MoleculeEmittingViewModel.swift */; };
 		57FA3AB12660D4450073A29B /* PHScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB02660D4450073A29B /* PHScale.swift */; };
 		57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */; };
 		57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */; };
@@ -1167,7 +1168,8 @@
 		57F88859267E17A800609671 /* TitrationRightStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationRightStack.swift; sourceTree = "<group>"; };
 		57F8885B267E188400609671 /* SliderOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderOverlay.swift; sourceTree = "<group>"; };
 		57F8885E267E59C000609671 /* DraggablePhMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggablePhMeter.swift; sourceTree = "<group>"; };
-		57F88860267E675B00609671 /* MoleculeEmitterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeEmitterViewModel.swift; sourceTree = "<group>"; };
+		57F88860267E675B00609671 /* MoleculeEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeEmitter.swift; sourceTree = "<group>"; };
+		57F88863267E6DB900609671 /* MoleculeEmittingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeEmittingViewModel.swift; sourceTree = "<group>"; };
 		57FA3AB02660D4450073A29B /* PHScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScale.swift; sourceTree = "<group>"; };
 		57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScaleGeometry.swift; sourceTree = "<group>"; };
 		57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesStyling.swift; sourceTree = "<group>"; };
@@ -3215,7 +3217,8 @@
 			children = (
 				5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */,
 				57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */,
-				57F88860267E675B00609671 /* MoleculeEmitterViewModel.swift */,
+				57F88860267E675B00609671 /* MoleculeEmitter.swift */,
+				57F88863267E6DB900609671 /* MoleculeEmittingViewModel.swift */,
 			);
 			path = "molecule-emitting";
 			sourceTree = "<group>";
@@ -4082,7 +4085,7 @@
 				57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */,
 				57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */,
 				575A886825E435FB00AEE448 /* BeakyBox.swift in Sources */,
-				57F88861267E675B00609671 /* MoleculeEmitterViewModel.swift in Sources */,
+				57F88861267E675B00609671 /* MoleculeEmitter.swift in Sources */,
 				5797A49525E40A4500991BD9 /* BeakerTicks.swift in Sources */,
 				57438A5F260A3371005E3888 /* ReviewPrompter.swift in Sources */,
 				57315EBE26401CEF00A7D0F9 /* QuizScreen.swift in Sources */,
@@ -4100,6 +4103,7 @@
 				57315ECA2640284D00A7D0F9 /* GoogleAnalytics.swift in Sources */,
 				57B3B8FB260B281000EB9B47 /* AppAnalytics.swift in Sources */,
 				57B3B929260B39A600EB9B47 /* ShareSheetView.swift in Sources */,
+				57F88864267E6DB900609671 /* MoleculeEmittingViewModel.swift in Sources */,
 				57315EC026401CF500A7D0F9 /* QuizLayoutSettings.swift in Sources */,
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
