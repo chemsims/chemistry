@@ -5,7 +5,7 @@
 import SwiftUI
 
 /// A view model to handle shaking molecules from a container, and performing some action when entering the water
-public class ShakeContainerViewModel: NSObject, ObservableObject {
+public class ShakeContainerViewModel: NSObject, ObservableObject, MoleculeEmittingContainer {
 
     /// Creates a new model
     ///
@@ -25,10 +25,19 @@ public class ShakeContainerViewModel: NSObject, ObservableObject {
         self.addMolecules = addMolecules
         super.init()
         self.motion.delegate = self
+        self.emitter = MoleculeEmitter(underlyingMolecules: self)
     }
 
     public let motion: CoreMotionShakingViewModel
     @Published public var molecules = [MovingPoint]()
+
+    func canEmitMolecule() -> Bool {
+        motion.position.isUpdating && self.canAddMolecule()
+    }
+
+    func addMolecules(count: Int) {
+        self.addMolecules(1)
+    }
 
     public let canAddMolecule: () -> Bool
     public let addMolecules: (Int) -> Void
@@ -39,54 +48,33 @@ public class ShakeContainerViewModel: NSObject, ObservableObject {
     public var halfXRange: CGFloat?
     public var halfYRange: CGFloat?
 
-    private let velocity = 200.0 // pts per second
-    private let maxDuration: Double = 1.5
+    private var emitter: MoleculeEmitter?
 
     public func manualAdd(amount: Int) {
-        doManualAdd(remaining: amount)
-    }
-
-    private func doManualAdd(remaining: Int) {
-        guard motion.position.isUpdating && remaining > 0 else {
+        guard let emitter = emitter, let location = initialLocation, let bottomY = bottomY else {
             return
         }
-        doAdd()
-        let nextDelay = Double.random(in: 0.05...0.1)
-        DispatchQueue.main.asyncAfter(deadline: .now() + nextDelay) {
-            self.doManualAdd(remaining: remaining - 1)
-        }
+        emitter.manualAdd(amount: amount, at: location, bottomY: bottomY)
     }
 
     private func doAdd() {
+        guard let emitter = self.emitter else {
+            return
+        }
         guard canAddMolecule() else {
             return
         }
         if let location = initialLocation, let bottomY = bottomY {
-            let molecule = MovingPoint(
-                position: CGPoint(
-                    x: location.x + (motion.position.xOffset * (halfXRange ?? 0)),
-                    y: location.y + (motion.position.yOffset * (halfYRange ?? 0))
-                )
+
+            let location = CGPoint(
+                x: location.x + (motion.position.xOffset * (halfXRange ?? 0)),
+                y: location.y + (motion.position.yOffset * (halfYRange ?? 0))
             )
-            molecules.append(molecule)
-
-            let dy = bottomY - location.y
-            let duration = min(maxDuration, Double(dy) / velocity)
-
-            withAnimation(.linear(duration: duration)) {
-                molecules[molecules.count - 1].position = CGPoint(x: molecule.position.x, y: bottomY)
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-                self.moleculeHasHitWater(id: molecule.id)
-            }
+            emitter.doAdd(
+                at: location,
+                bottomY: bottomY
+            )
         }
-    }
-
-    private func moleculeHasHitWater(id: UUID) {
-        if let index = molecules.firstIndex(where: { $0.id == id }) {
-            molecules.remove(at: index)
-        }
-        addMolecules(1)
     }
 }
 
