@@ -91,6 +91,23 @@ private struct TooltipWithGeometry: View {
     }
 
     private var card: some View {
+        BlankTooltip(
+            geometry: geometry,
+            background: background,
+            border: border,
+            hasShadow: hasShadow
+        )
+    }
+}
+
+struct BlankTooltip: View {
+
+    let geometry: TooltipGeometry
+    let background: Color
+    let border: Color
+    let hasShadow: Bool
+
+    var body: some View {
         ZStack {
             TooltipShape(geometry: geometry)
                 .foregroundColor(background)
@@ -194,21 +211,21 @@ private struct TooltipShape: Shape {
     }
 }
 
-private struct TooltipGeometry {
+struct TooltipGeometry {
     let size: CGSize
     let arrowPosition: Tooltip.ArrowPosition
     let arrowLocation: Tooltip.ArrowLocation
 
     var arrowWidth: CGFloat {
-        if arrowPosition == .bottom {
+        if arrowPosition == .bottom || arrowPosition == .top {
             return 0.2 * size.width
         }
-        return 0.5 * size.height
+        return 0.2 * size.height
     }
 
     var arrowHeight: CGFloat {
         let ideal = 0.5 * arrowWidth
-        if arrowPosition == .bottom {
+        if arrowPosition == .bottom || arrowPosition == .top {
             return min(ideal, 0.5 * size.height)
         }
         return min(ideal, 0.5 * size.width)
@@ -293,8 +310,8 @@ private struct TooltipGeometry {
 
 struct Tooltip_Previews: PreviewProvider {
 
-    static let width: CGFloat = 120
-    static let height: CGFloat = 30
+    static let width: CGFloat = 50
+    static let height: CGFloat = 300
 
     static var arrowPositions: [Tooltip.ArrowPosition] = [.top, .left, .bottom]
     static var arrowLocations: [Tooltip.ArrowLocation] = [.inside, .outside]

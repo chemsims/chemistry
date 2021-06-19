@@ -502,6 +502,7 @@
 		57F88856267E16DD00609671 /* TitrationPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88855267E16DD00609671 /* TitrationPhChart.swift */; };
 		57F88858267E170800609671 /* TitrationBarsOrReactionProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */; };
 		57F8885A267E17A800609671 /* TitrationRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88859267E17A800609671 /* TitrationRightStack.swift */; };
+		57F8885C267E188400609671 /* SliderOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885B267E188400609671 /* SliderOverlay.swift */; };
 		57FA3AB12660D4450073A29B /* PHScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB02660D4450073A29B /* PHScale.swift */; };
 		57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */; };
 		57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */; };
@@ -1162,6 +1163,7 @@
 		57F88855267E16DD00609671 /* TitrationPhChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationPhChart.swift; sourceTree = "<group>"; };
 		57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationBarsOrReactionProgress.swift; sourceTree = "<group>"; };
 		57F88859267E17A800609671 /* TitrationRightStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationRightStack.swift; sourceTree = "<group>"; };
+		57F8885B267E188400609671 /* SliderOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderOverlay.swift; sourceTree = "<group>"; };
 		57FA3AB02660D4450073A29B /* PHScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScale.swift; sourceTree = "<group>"; };
 		57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScaleGeometry.swift; sourceTree = "<group>"; };
 		57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesStyling.swift; sourceTree = "<group>"; };
@@ -2556,6 +2558,7 @@
 			children = (
 				57035ED7255BF05100DB3A19 /* CustomSlider.swift */,
 				5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */,
+				57F8885B267E188400609671 /* SliderOverlay.swift */,
 			);
 			path = slider;
 			sourceTree = "<group>";
@@ -4011,6 +4014,7 @@
 				575A880125E430C200AEE448 /* Labels.swift in Sources */,
 				57315EC126401CF500A7D0F9 /* QuizTableView.swift in Sources */,
 				575A883A25E431E500AEE448 /* Strings.swift in Sources */,
+				57F8885C267E188400609671 /* SliderOverlay.swift in Sources */,
 				57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */,
 				57567B422605F156009711D4 /* GridElementSetter.swift in Sources */,
 				579CDA1D2661656D00143809 /* AdjustableFluidBeaker.swift in Sources */,
