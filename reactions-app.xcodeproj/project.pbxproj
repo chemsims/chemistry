@@ -503,6 +503,7 @@
 		57F88858267E170800609671 /* TitrationBarsOrReactionProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */; };
 		57F8885A267E17A800609671 /* TitrationRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88859267E17A800609671 /* TitrationRightStack.swift */; };
 		57F8885C267E188400609671 /* SliderOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885B267E188400609671 /* SliderOverlay.swift */; };
+		57F8885F267E59C000609671 /* DraggablePhMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885E267E59C000609671 /* DraggablePhMeter.swift */; };
 		57FA3AB12660D4450073A29B /* PHScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB02660D4450073A29B /* PHScale.swift */; };
 		57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */; };
 		57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */; };
@@ -1164,6 +1165,7 @@
 		57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationBarsOrReactionProgress.swift; sourceTree = "<group>"; };
 		57F88859267E17A800609671 /* TitrationRightStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationRightStack.swift; sourceTree = "<group>"; };
 		57F8885B267E188400609671 /* SliderOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderOverlay.swift; sourceTree = "<group>"; };
+		57F8885E267E59C000609671 /* DraggablePhMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggablePhMeter.swift; sourceTree = "<group>"; };
 		57FA3AB02660D4450073A29B /* PHScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScale.swift; sourceTree = "<group>"; };
 		57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScaleGeometry.swift; sourceTree = "<group>"; };
 		57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesStyling.swift; sourceTree = "<group>"; };
@@ -1443,6 +1445,7 @@
 		570ABA31265A7608008EC8CC /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57F8885D267E59B400609671 /* ph-meter */,
 				5786BD06267B379A001A165C /* titration-screen */,
 				570A7667266CDDC4009329FB /* buffer-screen */,
 				57B92EC026654C0600023E7C /* equation */,
@@ -3198,6 +3201,14 @@
 			path = charts;
 			sourceTree = "<group>";
 		};
+		57F8885D267E59B400609671 /* ph-meter */ = {
+			isa = PBXGroup;
+			children = (
+				57F8885E267E59C000609671 /* DraggablePhMeter.swift */,
+			);
+			path = "ph-meter";
+			sourceTree = "<group>";
+		};
 		57FA3AB42660EFAA0073A29B /* styling */ = {
 			isa = PBXGroup;
 			children = (
@@ -3653,6 +3664,7 @@
 				57D60158265ECA7B00017E25 /* PHScaleColors.swift in Sources */,
 				570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
+				57F8885F267E59C000609671 /* DraggablePhMeter.swift in Sources */,
 				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
 				5773BCE4267A81BD00E52C81 /* AcidAppNavigationRows.swift in Sources */,
 				574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */,

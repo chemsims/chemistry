@@ -282,7 +282,7 @@ struct Burette_Previews: PreviewProvider {
             style: .init()
         )
         .frame(width: 600, height: 900)
-        .padding()
+        .padding(500)
         .previewLayout(.sizeThatFits)
     }
 }

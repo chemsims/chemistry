@@ -68,22 +68,12 @@ private struct IntroBeakerContainers: View {
     }
 
     private var phMeter: some View {
-        PHMeter(
-            content: pHMeterIntersectingWater ? phString : "",
-            fontSize: common.phMeterFontSize
+        DraggablePhMeter(
+            labelWhenIntersectingWater: phString,
+            layout: layout.common,
+            initialPosition: CGPoint(x: phMeterX, y: layout.containerRowYPos),
+            rows: model.rows
         )
-        .contentShape(Rectangle())
-        .frame(size: common.phMeterSize)
-        .position(x: phMeterX, y: layout.containerRowYPos)
-        .offset(pHMeterOffset)
-        .gesture(
-            DragGesture()
-                .updating($pHMeterOffset) { gesture, offset, _ in
-                    offset = gesture.translation
-                }
-        )
-        .animation(.easeOut(duration: 0.25))
-        .zIndex(1)
     }
 
     private func container(
@@ -125,30 +115,6 @@ private struct IntroBeakerContainers: View {
 
     private var totalBeakerWidth: CGFloat {
         common.beakerWidth + common.sliderSettings.handleWidth
-    }
-
-    private var topOfWater: CGFloat {
-        common.topOfWaterPosition(rows: model.rows)
-    }
-
-    private var pHMeterIntersectingWater: Bool {
-        let waterHeight = common.waterHeight(rows: model.rows)
-        let centerWaterY = common.height - (waterHeight / 2)
-
-        let pHCenterX = phMeterX + pHMeterOffset.width
-        let phCenterY = layout.containerRowYPos + pHMeterOffset.height
-
-        return PHMeter.tipOverlapsArea(
-            meterSize: common.phMeterSize,
-            areaSize: CGSize(
-                width: common.beakerSettings.innerBeakerWidth,
-                height: waterHeight
-            ),
-            meterCenterFromAreaCenter: CGSize(
-                width: pHCenterX - centerWaterX,
-                height: phCenterY - centerWaterY
-            )
-        )
     }
 
     private var phString: TextLine {
