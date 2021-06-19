@@ -12,9 +12,6 @@ struct TitrationBeaker: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-
-            molecules
-
             TitrationBeakerMolecules(
                 layout: layout,
                 model: model,
@@ -25,17 +22,22 @@ struct TitrationBeaker: View {
                 layout: layout,
                 model: model,
                 components: model.components,
-                shakeModel: model.shakeModel
+                shakeModel: model.shakeModel,
+                dropperEmitModel: model.dropperEmitModel
             )
+
+            molecules
         }
     }
 
     private var molecules: some View {
         TitrationToolsMoleculesView(
             layout: layout,
+            rows: model.rows,
             dropperEmitModel: model.dropperEmitModel,
             buretteEmitModel: model.buretteEmitModel
         )
+        .frame(width: layout.toolStackWidth, height: layout.common.height)
     }
 }
 
@@ -45,21 +47,19 @@ private struct TitrationBeakerTools: View {
     @ObservedObject var components: TitrationComponents
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<TitrationViewModel.TempMolecule>
 
+    @ObservedObject var dropperEmitModel: MoleculeEmittingViewModel
+
     var body: some View {
         ZStack {
             phMeter
 
-            Dropper(
-                isActive: true,
-                tubeFill: nil,
-                onTap: { }
-            )
-            .frame(size: layout.dropperSize)
-            .position(layout.dropperPosition)
+            dropper
 
             Burette(
                 fill: nil,
-                indicatorIsActive: true
+                isActive: true,
+                onTap: {
+                }
             )
             .frame(size: layout.buretteSize)
             .position(layout.burettePosition)
@@ -67,6 +67,23 @@ private struct TitrationBeakerTools: View {
             container
         }
         .frame(width: layout.toolStackWidth)
+    }
+
+    private var dropper: some View {
+        Dropper(
+            isActive: true,
+            tubeFill: nil,
+            onTap: {
+                dropperEmitModel.addMolecule(
+                    amount: 5,
+                    at: layout.dropperPosition,
+                    bottomY:
+                        layout.common.topOfWaterPosition(rows: model.rows) + layout.dropperMoleculeSize
+                )
+            }
+        )
+        .frame(size: layout.dropperSize)
+        .position(layout.dropperPosition)
     }
 
     private var phMeter: some View {
@@ -96,6 +113,7 @@ private struct TitrationBeakerTools: View {
 private struct TitrationToolsMoleculesView: View {
 
     let layout: TitrationScreenLayout
+    let rows: CGFloat
     @ObservedObject var dropperEmitModel: MoleculeEmittingViewModel
     @ObservedObject var buretteEmitModel: MoleculeEmittingViewModel
 
@@ -108,6 +126,7 @@ private struct TitrationToolsMoleculesView: View {
 
     private var dropperMolecules: some View {
         molecules(dropperEmitModel, size: layout.dropperMoleculeSize)
+            .foregroundColor(.purple)
     }
 
     private var buretteMolecules: some View {
@@ -124,10 +143,28 @@ private struct TitrationToolsMoleculesView: View {
                 .frame(square: size)
                 .position(molecule.position)
         }
+        .mask(
+            VStack(spacing: 0) {
+                Rectangle()
+                    .frame(
+                        width: layout.common.beakerWidth,
+                        height: layout.common.topOfWaterPosition(rows: rows)
+                    )
+                Spacer()
+            }
+        )
     }
 }
 
 private extension TitrationScreenLayout {
+    var buretteMoleculeSize: CGFloat {
+        0.75 * common.moleculeSize
+    }
+
+    var dropperMoleculeSize: CGFloat {
+        0.65 * common.moleculeSize
+    }
+
     var dropperSize: CGSize {
         let width = 0.35 * availableWidthForDropperAndBurette
         let height = width / Dropper.aspectRatio
