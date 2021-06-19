@@ -4,13 +4,18 @@
 
 import SwiftUI
 
-struct Burette: View {
+public struct Burette: View {
+    public init(fill: Color?, indicatorIsActive: Bool, style: Burette.Style = .init()) {
+        self.fill = fill
+        self.indicatorIsActive = indicatorIsActive
+        self.style = style
+    }
 
     let fill: Color?
     let indicatorIsActive: Bool
     let style: Style
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geo in
             BuretteWithGeometry(
                 fill: fill,
@@ -67,7 +72,7 @@ private struct BuretteTube: View {
             ForEach(0..<5, id: \.self) { _ in
                 Spacer()
                 Rectangle()
-                    .frame(width: 0.5 * geometry.tubeWidth, height: 2)
+                    .frame(width: 0.5 * geometry.tubeWidth, height: geometry.lineWidth)
             }
             Spacer()
         }
@@ -190,7 +195,9 @@ private struct BurettePanelWithGeometry: View {
 
 extension Burette {
 
-    struct Style {
+    public struct Style {
+        public init() { }
+
         private static let defaultDropperStyle = Dropper.Style()
         let lineColor: Color = Self.defaultDropperStyle.capColor
         let activeIndicatorColor: Color = Self.defaultDropperStyle.indicatorColor
@@ -227,6 +234,8 @@ struct Burette_Previews: PreviewProvider {
             indicatorIsActive: true,
             style: .init()
         )
+        .frame(width: 600, height: 900)
+        .padding()
         .previewLayout(.sizeThatFits)
     }
 }

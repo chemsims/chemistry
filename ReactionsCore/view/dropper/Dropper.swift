@@ -6,7 +6,7 @@ import SwiftUI
 
 public struct Dropper: View {
 
-    public init(style: Dropper.Style, showIndicator: Bool, tubeFill: Color?) {
+    public init(style: Dropper.Style = .init(), showIndicator: Bool, tubeFill: Color?) {
         self.style = style
         self.showIndicator = showIndicator
         self.tubeFill = tubeFill
@@ -25,6 +25,7 @@ public struct Dropper: View {
                 tubeFill: tubeFill
             )
         }
+        .aspectRatio(Dropper.aspectRatio, contentMode: .fit)
     }
 }
 
@@ -182,7 +183,7 @@ private struct DropperTube: View {
 
 extension Dropper {
 
-    static let aspectRatio: CGFloat = 0.5
+    public static let aspectRatio: CGFloat = 0.5
 
     public struct Style {
         public init() { }
