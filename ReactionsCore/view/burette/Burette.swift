@@ -56,8 +56,9 @@ private struct BuretteTube: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             container
-                .fill()
                 .foregroundColor(fill ?? .white)
+
+            shading
 
             container
                 .stroke(lineWidth: geometry.lineWidth)
@@ -67,12 +68,44 @@ private struct BuretteTube: View {
         }
     }
 
+    private var shading: some View {
+        ZStack {
+            container
+                .foregroundColor(style.darkTubeShade)
+                .mask(
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.white)
+                        container
+                            .offset(x: -darkShadeWidth)
+                    }
+                    .compositingGroup()
+                    .luminanceToAlpha()
+                )
+
+            container
+                .foregroundColor(style.lightTubeShade)
+                .mask(
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.white)
+                        container
+                            .offset(x: -lightShadeWidth)
+                    }
+                    .compositingGroup()
+                    .luminanceToAlpha()
+                )
+                .offset(x: -darkShadeWidth)
+        }
+        .clipShape(container)
+    }
+
     private var indicators: some View {
         VStack {
             ForEach(0..<5, id: \.self) { _ in
                 Spacer()
                 Rectangle()
-                    .frame(width: 0.5 * geometry.tubeWidth, height: geometry.lineWidth)
+                    .frame(width: tickMarkWidth, height: geometry.lineWidth)
             }
             Spacer()
         }
@@ -86,6 +119,18 @@ private struct BuretteTube: View {
             bottomRadiusFractionOfWidth: 0.15,
             slopeEdgeRadiusFractionOfWidth: 1
         )
+    }
+
+    private var tickMarkWidth: CGFloat {
+        0.5 * geometry.tubeWidth
+    }
+
+    private var darkShadeWidth: CGFloat {
+        0.5 * tickMarkWidth
+    }
+
+    private var lightShadeWidth: CGFloat {
+        tickMarkWidth - darkShadeWidth
     }
 }
 
@@ -202,6 +247,9 @@ extension Burette {
         let lineColor: Color = Self.defaultDropperStyle.capColor
         let activeIndicatorColor: Color = Self.defaultDropperStyle.indicatorColor
         let inactiveIndicatorColor: Color = RGB.gray(base: 230).color
+
+        let darkTubeShade = Color.black.opacity(0.1)
+        let lightTubeShade = Color.black.opacity(0.05)
     }
 
     struct Geometry {
@@ -223,7 +271,6 @@ extension Burette {
         var panelHeight: CGFloat {
             0.4 * height
         }
-
     }
 }
 
