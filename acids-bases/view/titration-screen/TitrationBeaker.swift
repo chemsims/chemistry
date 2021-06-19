@@ -18,15 +18,18 @@ struct TitrationBeaker: View {
                 components: model.components
             )
 
+            molecules
+
             TitrationBeakerTools(
                 layout: layout,
                 model: model,
                 components: model.components,
                 shakeModel: model.shakeModel,
-                dropperEmitModel: model.dropperEmitModel
+                dropperEmitModel: model.dropperEmitModel,
+                buretteEmitModel: model.buretteEmitModel
             )
 
-            molecules
+
         }
     }
 
@@ -47,7 +50,10 @@ private struct TitrationBeakerTools: View {
     @ObservedObject var components: TitrationComponents
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<TitrationViewModel.TempMolecule>
 
-    @ObservedObject var dropperEmitModel: MoleculeEmittingViewModel
+    let dropperEmitModel: MoleculeEmittingViewModel
+    let buretteEmitModel: MoleculeEmittingViewModel
+
+    private let emitAmount: Int = 5
 
     var body: some View {
         ZStack {
@@ -55,35 +61,11 @@ private struct TitrationBeakerTools: View {
 
             dropper
 
-            Burette(
-                fill: nil,
-                isActive: true,
-                onTap: {
-                }
-            )
-            .frame(size: layout.buretteSize)
-            .position(layout.burettePosition)
+            burette
 
             container
         }
         .frame(width: layout.toolStackWidth)
-    }
-
-    private var dropper: some View {
-        Dropper(
-            isActive: true,
-            tubeFill: nil,
-            onTap: {
-                dropperEmitModel.addMolecule(
-                    amount: 5,
-                    at: layout.dropperPosition,
-                    bottomY:
-                        layout.common.topOfWaterPosition(rows: model.rows) + layout.dropperMoleculeSize
-                )
-            }
-        )
-        .frame(size: layout.dropperSize)
-        .position(layout.dropperPosition)
     }
 
     private var phMeter: some View {
@@ -93,6 +75,39 @@ private struct TitrationBeakerTools: View {
             initialPosition: layout.phMeterPosition,
             rows: model.rows
         )
+    }
+
+    private var dropper: some View {
+        Dropper(
+            isActive: true,
+            tubeFill: .purple,
+            onTap: {
+                dropperEmitModel.addMolecule(
+                    amount: emitAmount,
+                    at: layout.dropperMoleculePosition,
+                    bottomY:
+                        layout.common.topOfWaterPosition(rows: model.rows) + layout.dropperMoleculeSize
+                )
+            }
+        )
+        .frame(size: layout.dropperSize)
+        .position(layout.dropperPosition)
+    }
+
+    private var burette: some View {
+        Burette(
+            fill: .red,
+            isActive: true,
+            onTap: {
+                buretteEmitModel.addMolecule(
+                    amount: emitAmount,
+                    at: layout.buretteMoleculePosition,
+                    bottomY: layout.common.topOfWaterPosition(rows: model.rows) + layout.buretteMoleculeSize
+                )
+            }
+        )
+        .frame(size: layout.buretteSize)
+        .position(layout.burettePosition)
     }
 
     private var container: some View {
@@ -193,12 +208,26 @@ private extension TitrationScreenLayout {
         )
     }
 
+    var dropperMoleculePosition: CGPoint {
+        CGPoint(x: dropperPosition.x, y: dropperPosition.y + (dropperSize.height / 2))
+    }
+
     var burettePosition: CGPoint {
         position(
             elementSize: buretteSize,
             previousElementSize: dropperSize,
             previousElementPosition: dropperPosition
         )
+    }
+
+    var buretteMoleculePosition: CGPoint {
+        CGPoint(x: buretteTubeCenterX, y: burettePosition.y + (buretteSize.height / 2))
+    }
+
+    private var buretteTubeCenterX: CGFloat {
+        let buretteLeadingX = burettePosition.x - (buretteSize.width / 2)
+        let tubeXFromLeading = Burette.Geometry.tubeCenterX(frameWidth: buretteSize.width)
+        return buretteLeadingX + tubeXFromLeading
     }
 
     var containerPosition: CGPoint {

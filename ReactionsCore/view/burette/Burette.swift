@@ -271,7 +271,7 @@ extension Burette {
         let lightTubeShade = Color.black.opacity(0.05)
     }
 
-    struct Geometry {
+    public struct Geometry {
         let width: CGFloat
         let height: CGFloat
 
@@ -280,15 +280,25 @@ extension Burette {
         }
 
         var tubeWidth: CGFloat {
-            0.3 * width
+            Self.tubeWidthToWidth * width
         }
 
         var tubeLeadingPadding: CGFloat {
-            0.1 * width
+            Self.tubeLeadingPaddingToWidth * width
         }
 
         var panelHeight: CGFloat {
             0.4 * height
+        }
+
+        private static let tubeLeadingPaddingToWidth: CGFloat = 0.1
+        private static let tubeWidthToWidth: CGFloat = 0.3
+
+        /// Returns the x position of the center of the tube, from the leading edge for the given `frameWidth`
+        public static func tubeCenterX(frameWidth: CGFloat) -> CGFloat {
+            let padding = tubeLeadingPaddingToWidth * frameWidth
+            let tubeWidth = tubeWidthToWidth * frameWidth
+            return padding + (tubeWidth / 2)
         }
     }
 }

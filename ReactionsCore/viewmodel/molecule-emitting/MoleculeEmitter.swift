@@ -38,10 +38,8 @@ class MoleculeEmitter {
             return
         }
         guard underlying.canEmitMolecule() && remaining > 0 else {
-            print("Stopped emitting (remaining \(remaining))")
             return
         }
-        print("Emitting, remaining: \(remaining)")
         doAdd(at: location, bottomY: bottomY)
         let nextDelay = Double.random(in: 0.05...0.1)
         DispatchQueue.main.asyncAfter(deadline: .now() + nextDelay) { [weak self] in
