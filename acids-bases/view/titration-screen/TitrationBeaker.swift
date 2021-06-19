@@ -11,10 +11,14 @@ struct TitrationBeaker: View {
     @ObservedObject var model: TitrationViewModel
 
     var body: some View {
-        VStack {
-            TitrationBeakerTools(layout: layout, components: model.components)
-            Spacer()
+        ZStack(alignment: .bottom) {
             TitrationBeakerMolecules(
+                layout: layout,
+                model: model,
+                components: model.components
+            )
+
+            TitrationBeakerTools(
                 layout: layout,
                 model: model,
                 components: model.components
@@ -25,16 +29,12 @@ struct TitrationBeaker: View {
 
 private struct TitrationBeakerTools: View {
     let layout: TitrationScreenLayout
+    @ObservedObject var model: TitrationViewModel
     @ObservedObject var components: TitrationComponents
 
     var body: some View {
         ZStack {
-            PHMeter(
-                content: "",
-                fontSize: layout.common.phMeterFontSize
-            )
-            .frame(size: layout.common.phMeterSize)
-            .position(layout.phMeterPosition)
+            phMeter
 
             Dropper(
                 showIndicator: true,
@@ -56,6 +56,16 @@ private struct TitrationBeakerTools: View {
 
         }
         .frame(width: layout.toolStackWidth)
+    }
+
+    private var phMeter: some View {
+        DraggablePhMeter(
+            labelWhenIntersectingWater: "pH: 7",
+            layout: layout.common,
+            initialPosition: layout.phMeterPosition,
+            rows: model.rows
+        )
+        .zIndex(1)
     }
 }
 
