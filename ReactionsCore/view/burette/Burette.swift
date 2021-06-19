@@ -5,21 +5,29 @@
 import SwiftUI
 
 public struct Burette: View {
-    public init(fill: Color?, indicatorIsActive: Bool, style: Burette.Style = .init()) {
+    public init(
+        fill: Color?,
+        isActive: Bool,
+        onTap: @escaping () -> Void,
+        style: Burette.Style = .init()
+    ) {
         self.fill = fill
-        self.indicatorIsActive = indicatorIsActive
+        self.onTap = onTap
+        self.isActive = isActive
         self.style = style
     }
 
     let fill: Color?
-    let indicatorIsActive: Bool
+    let isActive: Bool
+    let onTap: () -> Void
     let style: Style
 
     public var body: some View {
         GeometryReader { geo in
             BuretteWithGeometry(
                 fill: fill,
-                indicatorIsActive: indicatorIsActive,
+                isActive: isActive,
+                onTap: onTap,
                 style: style,
                 geometry: Geometry(width: geo.size.width, height: geo.size.height)
             )
@@ -30,13 +38,14 @@ public struct Burette: View {
 private struct BuretteWithGeometry: View {
 
     let fill: Color?
-    let indicatorIsActive: Bool
+    let isActive: Bool
+    let onTap: () -> Void
     let style: Burette.Style
     let geometry: Burette.Geometry
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            BurettePanel(isActive: indicatorIsActive, style: style, geometry: geometry)
+            BurettePanel(isActive: isActive, onTap: onTap, style: style, geometry: geometry)
                 .frame(height: geometry.panelHeight)
 
             BuretteTube(fill: fill, style: style, geometry: geometry)
@@ -137,6 +146,7 @@ private struct BuretteTube: View {
 private struct BurettePanel: View {
 
     let isActive: Bool
+    let onTap: () -> Void
     let style: Burette.Style
     let geometry: Burette.Geometry
     let middlePanelHeightFraction: CGFloat = 0.3
@@ -146,6 +156,7 @@ private struct BurettePanel: View {
         GeometryReader { geo in
             BurettePanelWithGeometry(
                 isActive: isActive,
+                onTap: onTap,
                 style: style,
                 geometry: geometry,
                 width: geo.size.width,
@@ -158,6 +169,7 @@ private struct BurettePanel: View {
 private struct BurettePanelWithGeometry: View {
 
     let isActive: Bool
+    let onTap: () -> Void
     let style: Burette.Style
     let geometry: Burette.Geometry
     let width: CGFloat
@@ -182,13 +194,20 @@ private struct BurettePanelWithGeometry: View {
                 .stroke(lineWidth: geometry.lineWidth)
                 .foregroundColor(style.lineColor)
 
-            Circle()
-                .foregroundColor(isActive ? style.activeIndicatorColor : style.inactiveIndicatorColor)
-                .frame(square: indicatorDiameter)
-                .padding(.trailing, indicatorRightPadding)
+            indicator
         }
         .frame(height: middlePanelHeight)
         .offset(y: clampHandleHeight)
+    }
+
+    private var indicator: some View {
+        Button(action: onTap) {
+            Circle()
+                .foregroundColor(isActive ? style.activeIndicatorColor : style.inactiveIndicatorColor)
+        }
+        .frame(square: indicatorDiameter)
+        .padding(.trailing, indicatorRightPadding)
+        .disabled(!isActive)
     }
 
     private var clampHandle: some View {
@@ -278,11 +297,12 @@ struct Burette_Previews: PreviewProvider {
     static var previews: some View {
         Burette(
             fill: nil,
-            indicatorIsActive: true,
+            isActive: true,
+            onTap: { },
             style: .init()
         )
-        .frame(width: 600, height: 900)
-        .padding(500)
+        .frame(width: 350, height: 600)
+        .padding(400)
         .previewLayout(.sizeThatFits)
     }
 }

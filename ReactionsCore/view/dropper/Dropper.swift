@@ -47,10 +47,8 @@ private struct DropperWithGeometry: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            DropperCapHead(showIndicator: isActive, geometry: geometry, style: style)
+            DropperCapHead(isActive: isActive, onTap: onTap, geometry: geometry, style: style)
                 .frame(width: geometry.capGripHeadWidth, height: geometry.capGripHeadHeight)
-                .onTapGesture(perform: onTap)
-                .disabled(!isActive)
 
             DropperCapGrip(style: style, geometry: geometry)
                 .frame(width: geometry.width, height: geometry.capGripHeight)
@@ -62,7 +60,8 @@ private struct DropperWithGeometry: View {
 }
 
 private struct DropperCapHead: View {
-    let showIndicator: Bool
+    let isActive: Bool
+    let onTap: () -> Void
     let geometry: Dropper.Geometry
     let style: Dropper.Style
 
@@ -72,9 +71,11 @@ private struct DropperCapHead: View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
                 head(geo)
-                if showIndicator {
+                Button(action: onTap) {
                     indicator(geo)
+                        .opacity(isActive ? 1 : 0)
                 }
+                .disabled(!isActive)
             }
         }
     }
