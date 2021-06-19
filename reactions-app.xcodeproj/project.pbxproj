@@ -1839,12 +1839,12 @@
 		57438A37260A26BE005E3888 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				57F88862267E6D8000609671 /* molecule-emitting */,
 				572B1A772675DF3900302B8E /* reaction-progress */,
 				570A765F266CC2FE009329FB /* beaker */,
 				573F16912584ACEC001CE039 /* QuizViewModel.swift */,
 				578B170D2618748200D8079F /* motion */,
 				57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */,
-				57F88860267E675B00609671 /* MoleculeEmitterViewModel.swift */,
 			);
 			path = viewmodel;
 			sourceTree = "<group>";
@@ -2608,8 +2608,6 @@
 		579CDA19266160F600143809 /* shake-container */ = {
 			isa = PBXGroup;
 			children = (
-				57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */,
-				5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */,
 			);
 			path = "shake-container";
 			sourceTree = "<group>";
@@ -3210,6 +3208,16 @@
 				57F8885E267E59C000609671 /* DraggablePhMeter.swift */,
 			);
 			path = "ph-meter";
+			sourceTree = "<group>";
+		};
+		57F88862267E6D8000609671 /* molecule-emitting */ = {
+			isa = PBXGroup;
+			children = (
+				5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */,
+				57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */,
+				57F88860267E675B00609671 /* MoleculeEmitterViewModel.swift */,
+			);
+			path = "molecule-emitting";
 			sourceTree = "<group>";
 		};
 		57FA3AB42660EFAA0073A29B /* styling */ = {
