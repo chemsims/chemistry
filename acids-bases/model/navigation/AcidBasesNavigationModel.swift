@@ -23,7 +23,7 @@ struct AcidBasesNavigationModel {
             quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence()),
             reviewPersistence: InMemoryReviewPromptPersistence(),
             allScreens: AcidAppScreen.allCases,
-            linearScreens:  [.buffer]
+            linearScreens:  [.titration]
         )
     }
 }
@@ -76,6 +76,11 @@ fileprivate extension AcidAppScreen {
                 nextScreen: nextScreen,
                 prevScreen: prevScreen
             )
+        case .titration:
+            return TitrationScreenProvider(
+                nextScreen: nextScreen,
+                prevScreen: prevScreen
+            )
         }
     }
 }
@@ -113,5 +118,20 @@ private class BufferScreenProvider: ScreenProvider {
 
     var screen: AnyView {
         AnyView(BufferScreen(model: model))
+    }
+}
+
+private class TitrationScreenProvider: ScreenProvider {
+    init(
+        nextScreen: @escaping () -> Void,
+        prevScreen: @escaping () -> Void
+    ) {
+        self.model = TitrationViewModel()
+    }
+
+    private let model: TitrationViewModel
+
+    var screen: AnyView {
+        AnyView(TitrationScreen(model: model))
     }
 }

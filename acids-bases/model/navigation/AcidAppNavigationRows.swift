@@ -29,6 +29,16 @@ struct AcidAppNavigationRows {
                 ),
                 firstSecondaryIcon: nil,
                 secondSecondaryIcon: nil
+            ),
+            NavigationRow(
+                primaryIcon: NavigationIcon(
+                    screen: .titration,
+                    image: .application("titration"),
+                    selectedImage: .application("titration-pressed"),
+                    label: ""
+                ),
+                firstSecondaryIcon: nil,
+                secondSecondaryIcon: nil
             )
         ]
     )
