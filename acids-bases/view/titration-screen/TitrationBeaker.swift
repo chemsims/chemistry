@@ -12,6 +12,9 @@ struct TitrationBeaker: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
+
+            molecules
+
             TitrationBeakerMolecules(
                 layout: layout,
                 model: model,
@@ -25,6 +28,14 @@ struct TitrationBeaker: View {
                 shakeModel: model.shakeModel
             )
         }
+    }
+
+    private var molecules: some View {
+        TitrationToolsMoleculesView(
+            layout: layout,
+            dropperEmitModel: model.dropperEmitModel,
+            buretteEmitModel: model.buretteEmitModel
+        )
     }
 }
 
@@ -78,6 +89,40 @@ private struct TitrationBeakerTools: View {
             rows: model.rows,
             disabled: false
         )
+    }
+}
+
+private struct TitrationToolsMoleculesView: View {
+
+    let layout: TitrationScreenLayout
+    @ObservedObject var dropperEmitModel: MoleculeEmittingViewModel
+    @ObservedObject var buretteEmitModel: MoleculeEmittingViewModel
+
+    var body: some View {
+        ZStack {
+            dropperMolecules
+            buretteMolecules
+        }
+    }
+
+    private var dropperMolecules: some View {
+        molecules(dropperEmitModel, size: layout.dropperMoleculeSize)
+    }
+
+    private var buretteMolecules: some View {
+        molecules(buretteEmitModel, size: layout.buretteMoleculeSize)
+            .foregroundColor(.red)
+    }
+
+    private func molecules(
+        _ model: MoleculeEmittingViewModel,
+        size: CGFloat
+    ) -> some View {
+        ForEach(model.molecules) { molecule in
+            Circle()
+                .frame(square: size)
+                .position(molecule.position)
+        }
     }
 }
 

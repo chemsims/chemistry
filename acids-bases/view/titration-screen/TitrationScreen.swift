@@ -45,6 +45,14 @@ private struct TitrationScreenWithSettings: View {
 
 struct TitrationScreenLayout {
     let common: AcidBasesScreenLayout
+
+    var buretteMoleculeSize: CGFloat {
+        0.5 * common.moleculeSize
+    }
+
+    var dropperMoleculeSize: CGFloat {
+        0.25 * common.moleculeSize
+    }
 }
 
 struct TitrationScreen_Previews: PreviewProvider {

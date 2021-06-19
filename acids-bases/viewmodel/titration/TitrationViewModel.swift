@@ -19,6 +19,14 @@ class TitrationViewModel: ObservableObject {
             canAddMolecule: { _ in true },
             addMolecules: { (_, _) in }
         )
+        self.dropperEmitModel = MoleculeEmittingViewModel(
+            canAddMolecule: { true },
+            doAddMolecule: { _ in }
+        )
+        self.buretteEmitModel = MoleculeEmittingViewModel(
+            canAddMolecule: { true },
+            doAddMolecule: { _ in }
+        )
     }
 
     @Published var statement = [TextLine]()
@@ -26,6 +34,8 @@ class TitrationViewModel: ObservableObject {
     let components: TitrationComponents
 
     var shakeModel: MultiContainerShakeViewModel<TempMolecule>!
+    var dropperEmitModel: MoleculeEmittingViewModel!
+    var buretteEmitModel: MoleculeEmittingViewModel!
 
     enum TempMolecule: String, CaseIterable {
         case A
