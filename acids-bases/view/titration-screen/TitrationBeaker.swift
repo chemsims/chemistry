@@ -50,8 +50,9 @@ private struct TitrationBeakerTools: View {
             phMeter
 
             Dropper(
-                showIndicator: true,
-                tubeFill: nil
+                isActive: true,
+                tubeFill: nil,
+                onTap: { }
             )
             .frame(size: layout.dropperSize)
             .position(layout.dropperPosition)

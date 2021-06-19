@@ -6,14 +6,21 @@ import SwiftUI
 
 public struct Dropper: View {
 
-    public init(style: Dropper.Style = .init(), showIndicator: Bool, tubeFill: Color?) {
+    public init(
+        style: Dropper.Style = .init(),
+        isActive: Bool,
+        tubeFill: Color?,
+        onTap: @escaping () -> Void
+    ) {
         self.style = style
-        self.showIndicator = showIndicator
+        self.isActive = isActive
+        self.onTap = onTap
         self.tubeFill = tubeFill
     }
 
     let style: Style
-    let showIndicator: Bool
+    let isActive: Bool
+    let onTap: () -> Void
     let tubeFill: Color?
 
     public var body: some View {
@@ -21,7 +28,8 @@ public struct Dropper: View {
             DropperWithGeometry(
                 style: style,
                 geometry: Geometry(width: geo.size.width, height: geo.size.height),
-                showIndicator: showIndicator,
+                isActive: isActive,
+                onTap: onTap,
                 tubeFill: tubeFill
             )
         }
@@ -33,13 +41,16 @@ private struct DropperWithGeometry: View {
 
     let style: Dropper.Style
     let geometry: Dropper.Geometry
-    let showIndicator: Bool
+    let isActive: Bool
+    let onTap: () -> Void
     let tubeFill: Color?
 
     var body: some View {
         VStack(spacing: 0) {
-            DropperCapHead(showIndicator: showIndicator, geometry: geometry, style: style)
+            DropperCapHead(showIndicator: isActive, geometry: geometry, style: style)
                 .frame(width: geometry.capGripHeadWidth, height: geometry.capGripHeadHeight)
+                .onTapGesture(perform: onTap)
+                .disabled(!isActive)
 
             DropperCapGrip(style: style, geometry: geometry)
                 .frame(width: geometry.width, height: geometry.capGripHeight)
@@ -238,10 +249,27 @@ struct Dropper_Previews: PreviewProvider {
     static let height: CGFloat = 600
 
     static var previews: some View {
-        Dropper(style: .init(), showIndicator: true, tubeFill: .purple)
-            .aspectRatio(Dropper.aspectRatio, contentMode: .fit)
-            .frame(width: width, height: height)
-            .padding()
-            .previewLayout(.sizeThatFits)
+        ViewWrapper()
+    }
+
+    private struct ViewWrapper: View {
+
+        @State var isBlue = true
+
+        var body: some View {
+            Dropper(
+                style: .init(),
+                isActive: true,
+                tubeFill: isBlue ? .blue : .purple,
+                onTap: {
+                    withAnimation {
+                        isBlue.toggle()
+                    }
+                }
+            )
+                .frame(width: width, height: height)
+                .padding()
+                .previewLayout(.sizeThatFits)
+        }
     }
 }
