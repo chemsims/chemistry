@@ -15,9 +15,19 @@ class TitrationViewModel: ObservableObject {
             settings: .standard
         )
         self.rows = CGFloat(initialRows)
+        self.shakeModel = MultiContainerShakeViewModel(
+            canAddMolecule: { _ in true },
+            addMolecules: { (_, _) in }
+        )
     }
 
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat
     let components: TitrationComponents
+
+    var shakeModel: MultiContainerShakeViewModel<TempMolecule>!
+
+    enum TempMolecule: String, CaseIterable {
+        case A
+    }
 }

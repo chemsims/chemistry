@@ -84,8 +84,8 @@ private struct IntroBeakerContainers: View {
         return AcidAppShakingContainerView(
             models: shakeModel,
             layout: layout.common,
-            onTap: { didTapContainer(type, index) },
             initialLocation: containerLocation(type, index),
+            activeLocation: activeContainerLocation,
             type: type,
             label: substance?.symbol ?? "",
             color: substance?.color ?? RGB.placeholderContainer.color,
@@ -98,6 +98,17 @@ private struct IntroBeakerContainers: View {
         let leadingSpacing = common.beakerToolsLeadingPadding
         let phWidth = common.phMeterSize.width
         return leadingSpacing + (phWidth / 2)
+    }
+
+    private func containerLocation(
+        _ element: AcidOrBaseType,
+        _ index: Int
+    ) -> CGPoint {
+        CGPoint(x: containerX(index), y: layout.containerRowYPos)
+    }
+
+    private var activeContainerLocation: CGPoint {
+        CGPoint(x: common.beakerWaterCenterX, y: layout.activeContainerYPos)
     }
 
     private func containerX(_ index: Int) -> CGFloat {
@@ -120,50 +131,6 @@ private struct IntroBeakerContainers: View {
     private var phString: TextLine {
         let ph = components.concentration(ofIon: .hydrogen).p
         return "pH: \(ph.rounded(decimals: 1))"
-    }
-
-    private func containerLocation(
-        _ element: AcidOrBaseType,
-        _ index: Int
-    ) -> CGPoint {
-        if shakeModel.activeMolecule == element {
-            return CGPoint(
-                x: centerWaterX,
-                y: layout.activeContainerYPos
-            )
-        }
-        return CGPoint(
-            x: containerX(index),
-            y: layout.containerRowYPos
-        )
-    }
-
-    private var centerWaterX: CGFloat {
-         common.sliderSettings.handleWidth + (common.beakerWidth / 2)
-    }
-}
-
-extension IntroBeakerContainers {
-    private func didTapContainer(
-        _ element: AcidOrBaseType,
-        _ index: Int
-    ) {
-        guard shakeModel.activeMolecule != element else {
-            shakeModel.model(for: element).manualAdd(amount: 5)
-            return
-        }
-
-        withAnimation(.easeOut(duration: 0.25)) {
-            shakeModel.activeMolecule = element
-        }
-        shakeModel.start(
-            for: element,
-            at: containerLocation(element, index),
-            bottomY: layout.common
-                .topOfWaterPosition(rows: model.rows),
-            halfXRange: common.containerShakeHalfXRange,
-            halfYRange: common.containerShakeHalfYRange
-        )
     }
 }
 

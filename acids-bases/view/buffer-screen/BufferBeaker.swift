@@ -111,8 +111,8 @@ private struct BufferMoleculeContainers: View {
         AcidAppShakingContainerView(
             models: shakeModel,
             layout: layout.common,
-            onTap: { didTapContainer(phase: phase, index: index) },
             initialLocation: containerLocation(phase: phase, index: index),
+            activeLocation: activeContainerLocation,
             type: phase,
             label: containerLabel(phase: phase),
             color: containerColor(phase: phase),
@@ -141,38 +141,16 @@ private struct BufferMoleculeContainers: View {
         phase: Phase,
         index: Int
     ) -> CGPoint {
-        if shakeModel.activeMolecule == phase {
-            return CGPoint(x: containerAreaWidth / 2, y: layout.activeContainerYPos)
-        }
-
         let containerX = CGFloat(index + 1) * (containerAreaWidth / 4)
         return CGPoint(x: containerX, y: layout.containerRowYPos)
     }
 
-    private var containerAreaWidth: CGFloat {
-        layout.common.beakerWidth
+    private var activeContainerLocation: CGPoint {
+        CGPoint(x: containerAreaWidth / 2, y: layout.activeContainerYPos)
     }
 
-    private func didTapContainer(
-        phase: Phase,
-        index: Int
-    ) {
-        if shakeModel.activeMolecule == phase {
-            shakeModel.model(for: phase).manualAdd(amount: 5)
-            return
-        }
-
-        withAnimation(.easeOut(duration: 0.25)) {
-            shakeModel.activeMolecule = phase
-        }
-        shakeModel.start(
-            for: phase,
-            at: containerLocation(phase: phase, index: index),
-            bottomY: layout.common
-                .topOfWaterPosition(rows: model.rows),
-            halfXRange: layout.common.containerShakeHalfXRange,
-            halfYRange: layout.common.containerShakeHalfYRange
-        )
+    private var containerAreaWidth: CGFloat {
+        layout.common.beakerWidth
     }
 }
 

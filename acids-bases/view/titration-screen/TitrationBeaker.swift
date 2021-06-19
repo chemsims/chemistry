@@ -21,7 +21,8 @@ struct TitrationBeaker: View {
             TitrationBeakerTools(
                 layout: layout,
                 model: model,
-                components: model.components
+                components: model.components,
+                shakeModel: model.shakeModel
             )
         }
     }
@@ -31,6 +32,7 @@ private struct TitrationBeakerTools: View {
     let layout: TitrationScreenLayout
     @ObservedObject var model: TitrationViewModel
     @ObservedObject var components: TitrationComponents
+    @ObservedObject var shakeModel: MultiContainerShakeViewModel<TitrationViewModel.TempMolecule>
 
     var body: some View {
         ZStack {
@@ -50,10 +52,7 @@ private struct TitrationBeakerTools: View {
             .frame(size: layout.buretteSize)
             .position(layout.burettePosition)
 
-            ParticleContainer(settings: .init(labelColor: .red, label: "", labelFontColor: .blue))
-                .frame(size: layout.common.containerSize)
-                .position(layout.containerPosition)
-
+            container
         }
         .frame(width: layout.toolStackWidth)
     }
@@ -65,7 +64,20 @@ private struct TitrationBeakerTools: View {
             initialPosition: layout.phMeterPosition,
             rows: model.rows
         )
-        .zIndex(1)
+    }
+
+    private var container: some View {
+        AcidAppShakingContainerView(
+            models: shakeModel,
+            layout: layout.common,
+            initialLocation: layout.containerPosition,
+            activeLocation: layout.activeContainerPosition,
+            type: .A,
+            label: "A",
+            color: .red,
+            rows: model.rows,
+            disabled: false
+        )
     }
 }
 
@@ -80,10 +92,6 @@ private extension TitrationScreenLayout {
         let width = availableWidthForDropperAndBurette - dropperSize.width
         let height = 1.7 * width
         return CGSize(width: width, height: height)
-    }
-
-    var beakerToolsY: CGFloat {
-        50
     }
 
     var phMeterPosition: CGPoint {
@@ -115,6 +123,13 @@ private extension TitrationScreenLayout {
             elementSize: common.containerSize,
             previousElementSize: buretteSize,
             previousElementPosition: burettePosition
+        )
+    }
+
+    var activeContainerPosition: CGPoint {
+        CGPoint(
+            x: common.beakerWaterCenterX,
+            y: toolsBottomY - 10
         )
     }
 

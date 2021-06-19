@@ -72,6 +72,11 @@ extension AcidBasesScreenLayout {
         0.8 * beakerHeight
     }
 
+    /// X position of water center for a beaker with a slider beside it
+    var beakerWaterCenterX: CGFloat {
+        sliderSettings.handleWidth + (beakerWidth / 2)
+    }
+
     // TODO - when bar chart is added, return x axis label height instead of 0
     var beakerBottomPadding: CGFloat {
         if verticalSizeClass.contains(.regular) {

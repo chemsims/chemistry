@@ -11,8 +11,8 @@ where ContainerType : CaseIterable, ContainerType : Hashable
 
     @ObservedObject var models: MultiContainerShakeViewModel<ContainerType>
     let layout: AcidBasesScreenLayout
-    let onTap: () -> Void
     let initialLocation: CGPoint
+    let activeLocation: CGPoint
     let type: ContainerType
     let label: String
     let color: Color
@@ -26,8 +26,8 @@ where ContainerType : CaseIterable, ContainerType : Hashable
         return ShakingContainerView(
             model: addModel,
             position: addModel.motion.position,
-            onTap: onTap,
-            initialLocation: initialLocation,
+            onTap: { didTapContainer(type) },
+            initialLocation: isActive ? activeLocation : initialLocation,
             containerWidth: layout.containerSize.width,
             containerSettings: ParticleContainerSettings(
                 labelColor: color,
@@ -54,6 +54,26 @@ where ContainerType : CaseIterable, ContainerType : Hashable
                     )
                 Spacer()
             }
+        )
+    }
+
+    private func didTapContainer(
+        _ element: ContainerType
+    ) {
+        guard models.activeMolecule != element else {
+            models.model(for: element).manualAdd(amount: 5)
+            return
+        }
+
+        withAnimation(.easeOut(duration: 0.25)) {
+            models.activeMolecule = element
+        }
+        models.start(
+            for: element,
+            at: activeLocation,
+            bottomY: layout.topOfWaterPosition(rows: rows),
+            halfXRange: layout.containerShakeHalfXRange,
+            halfYRange: layout.containerShakeHalfYRange
         )
     }
 }
