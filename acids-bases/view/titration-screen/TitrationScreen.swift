@@ -37,7 +37,7 @@ private struct TitrationScreenWithSettings: View {
         HStack(spacing: 0) {
             TitrationBeaker(layout: layout, model: model)
             Spacer(minLength: 0)
-            TitrationChartStack(layout: layout)
+            TitrationChartStack(layout: layout, model: model)
             Spacer(minLength: 0)
             TitrationRightStack(layout: layout, model: model)
         }
