@@ -5,9 +5,9 @@
 import CoreGraphics
 import ReactionsCore
 
-private let hydrogen = "H^+^"
-private let hydroxide = "OH^-^"
-private let h3O = "H_3_O^+^"
+private let hydrogen = AcidStatementUtil.hydrogen
+private let hydroxide = AcidStatementUtil.hydroxide
+private let h3O = AcidStatementUtil.h3O
 
 struct BufferStatements {
     private init() { }

@@ -257,6 +257,10 @@
 		577C10E926711C6500C5DC9A /* BufferStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C10E826711C6500C5DC9A /* BufferStatements.swift */; };
 		577C5021267F1512003DAD17 /* CommonAcidEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5020267F1511003DAD17 /* CommonAcidEquations.swift */; };
 		577C5023267F1852003DAD17 /* AcidConcentrationEquationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */; };
+		577C5025267F215A003DAD17 /* TitrationPhase2Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5024267F215A003DAD17 /* TitrationPhase2Components.swift */; };
+		577C5027267F37CF003DAD17 /* TitrationScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5026267F37CF003DAD17 /* TitrationScreenState.swift */; };
+		577C5029267F38EC003DAD17 /* TitrationStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5028267F38EC003DAD17 /* TitrationStatements.swift */; };
+		577C502B267F3945003DAD17 /* AcidStatementUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C502A267F3945003DAD17 /* AcidStatementUtil.swift */; };
 		57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8625EAB8450099D720 /* MoleculeScales.swift */; };
 		57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8D25EABA950099D720 /* AnimatableRotation.swift */; };
 		5783964B25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783964A25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift */; };
@@ -926,6 +930,10 @@
 		577C10E826711C6500C5DC9A /* BufferStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferStatements.swift; sourceTree = "<group>"; };
 		577C5020267F1511003DAD17 /* CommonAcidEquations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAcidEquations.swift; sourceTree = "<group>"; };
 		577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidConcentrationEquationsTests.swift; sourceTree = "<group>"; };
+		577C5024267F215A003DAD17 /* TitrationPhase2Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationPhase2Components.swift; sourceTree = "<group>"; };
+		577C5026267F37CF003DAD17 /* TitrationScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationScreenState.swift; sourceTree = "<group>"; };
+		577C5028267F38EC003DAD17 /* TitrationStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStatements.swift; sourceTree = "<group>"; };
+		577C502A267F3945003DAD17 /* AcidStatementUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidStatementUtil.swift; sourceTree = "<group>"; };
 		5780320625B0888300A0F610 /* QuizPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPersistenceTests.swift; sourceTree = "<group>"; };
 		57812A8625EAB8450099D720 /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
 		57812A8D25EABA950099D720 /* AnimatableRotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableRotation.swift; sourceTree = "<group>"; };
@@ -1815,6 +1823,7 @@
 				5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */,
 				5773BCDA267A7E6B00E52C81 /* AcidBasesNavigationModel.swift */,
 				5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */,
+				577C5026267F37CF003DAD17 /* TitrationScreenState.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -1824,6 +1833,8 @@
 			children = (
 				5739D0B52664B83C0007B09A /* IntroStatements.swift */,
 				577C10E826711C6500C5DC9A /* BufferStatements.swift */,
+				577C5028267F38EC003DAD17 /* TitrationStatements.swift */,
+				577C502A267F3945003DAD17 /* AcidStatementUtil.swift */,
 			);
 			path = statements;
 			sourceTree = "<group>";
@@ -2274,6 +2285,7 @@
 			children = (
 				5786BD01267B224A001A165C /* TitrationComponents.swift */,
 				5786BD09267B37C4001A165C /* TitrationViewModel.swift */,
+				577C5024267F215A003DAD17 /* TitrationPhase2Components.swift */,
 			);
 			path = titration;
 			sourceTree = "<group>";
@@ -3673,7 +3685,9 @@
 			files = (
 				5786BD0C267B38FD001A165C /* TitrationBeaker.swift in Sources */,
 				57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */,
+				577C5025267F215A003DAD17 /* TitrationPhase2Components.swift in Sources */,
 				5786BD0A267B37C4001A165C /* TitrationViewModel.swift in Sources */,
+				577C5027267F37CF003DAD17 /* TitrationScreenState.swift in Sources */,
 				5773BCDB267A7E6B00E52C81 /* AcidBasesNavigationModel.swift in Sources */,
 				570AD452266D4CF100B9732E /* BufferRightStack.swift in Sources */,
 				57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */,
@@ -3713,6 +3727,7 @@
 				5797DE1C26738615003F589F /* BufferSharedComponents.swift in Sources */,
 				570A7671266CFF0D009329FB /* BufferBeaker.swift in Sources */,
 				574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */,
+				577C5029267F38EC003DAD17 /* TitrationStatements.swift in Sources */,
 				5786BD08267B37A7001A165C /* TitrationScreen.swift in Sources */,
 				57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */,
 				57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */,
@@ -3726,6 +3741,7 @@
 				57572DEE266FB8FE00A27684 /* BufferBottomCharts.swift in Sources */,
 				570A766B266CFC45009329FB /* BufferScreenViewModel.swift in Sources */,
 				57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */,
+				577C502B267F3945003DAD17 /* AcidStatementUtil.swift in Sources */,
 				5743660D266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift in Sources */,
 				5786BD02267B224A001A165C /* TitrationComponents.swift in Sources */,
 				57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */,

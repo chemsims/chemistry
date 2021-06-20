@@ -7,10 +7,7 @@ import ReactionsCore
 
 private let statements = BufferStatements.self
 private func substanceStatements(_ model: BufferScreenViewModel) -> BufferStatementsForSubstance {
-    substanceStatements(model.substance)
-}
-private func substanceStatements(_ substance: AcidOrBase) -> BufferStatementsForSubstance {
-    BufferStatementsForSubstance(substance: substance)
+    BufferStatementsForSubstance(substance: model.substance)
 }
 
 struct BufferNavigationModel {

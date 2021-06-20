@@ -30,6 +30,8 @@ class TitrationComponents: ObservableObject {
         )
     }
 
+    let volume: CGFloat = 0.1
+
     @Published private(set) var progress: CGFloat = 0
     @Published private(set) var beakerReaction: ReactingBeakerViewModel<ExtendedSubstancePart>
     @Published private(set) var reactionProgress: ReactionProgressChartViewModel<ExtendedSubstancePart>
