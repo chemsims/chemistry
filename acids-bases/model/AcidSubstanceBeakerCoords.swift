@@ -4,6 +4,11 @@
 
 import ReactionsCore
 
+/// Handles adding a substance which produces some ratio of substance, primary and secondary molecules
+/// when entering liquid.
+///
+/// For example, adding the strong acid may produce only secondary & primary ion molecules, while a weak acid
+/// may produce 1 secondary & 1 primary molecule for every 3 substance molecules.
 struct AcidSubstanceBeakerCoords {
 
     var substance: AcidOrBase

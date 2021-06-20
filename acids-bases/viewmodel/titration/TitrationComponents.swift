@@ -141,10 +141,17 @@ extension TitrationComponents {
 struct TitrationSettings {
     let initialIonMoleculeFraction: CGFloat
     let minInitialIonBeakerMolecules: Int
+    let beakerVolumeFromRows: Equation
 
     static let standard = TitrationSettings(
         initialIonMoleculeFraction: 0.1,
-        minInitialIonBeakerMolecules: 1
+        minInitialIonBeakerMolecules: 1,
+        beakerVolumeFromRows: LinearEquation(
+            x1: CGFloat(AcidAppSettings.minBeakerRows),
+            y1: 0.1,
+            x2: CGFloat(AcidAppSettings.maxBeakerRows),
+            y2: 0.6
+        )
     )
 
     var minInitialSubstance: Int {

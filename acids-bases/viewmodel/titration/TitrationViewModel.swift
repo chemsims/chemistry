@@ -9,6 +9,11 @@ class TitrationViewModel: ObservableObject {
 
     init() {
         let initialRows = AcidAppSettings.initialRows
+        self.strongSubstancePhase1Model = TitrationStrongSubstancePhase1Model(
+            cols: MoleculeGridSettings.cols,
+            rows: CGFloat(AcidAppSettings.initialRows),
+            settings: .standard
+        )
         self.components = TitrationComponents(
             substance: .weakAcids.first!,
             cols: MoleculeGridSettings.cols,
@@ -18,7 +23,9 @@ class TitrationViewModel: ObservableObject {
         self.rows = CGFloat(initialRows)
         self.shakeModel = MultiContainerShakeViewModel(
             canAddMolecule: { _ in true },
-            addMolecules: { (_, _) in }
+            addMolecules: { (_, i) in
+                self.incrementSubstance(count: i)
+            }
         )
         self.dropperEmitModel = MoleculeEmittingViewModel(
             canAddMolecule: { true },
@@ -34,7 +41,9 @@ class TitrationViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat
     @Published var inputState = InputState.none
+
     let components: TitrationComponents
+    let strongSubstancePhase1Model: TitrationStrongSubstancePhase1Model
 
     private(set) var navigation: NavigationModel<TitrationScreenState>!
     var shakeModel: MultiContainerShakeViewModel<TempMolecule>!
@@ -58,6 +67,13 @@ extension TitrationViewModel {
 
     var nextIsDisabled: Bool {
         false
+    }
+}
+
+// MARK: Adding molecules
+extension TitrationViewModel {
+    func incrementSubstance(count: Int) {
+        strongSubstancePhase1Model.incrementSubstance(count: count)
     }
 }
 

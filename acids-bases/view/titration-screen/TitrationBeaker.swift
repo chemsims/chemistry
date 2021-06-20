@@ -15,7 +15,7 @@ struct TitrationBeaker: View {
             TitrationBeakerMolecules(
                 layout: layout,
                 model: model,
-                components: model.components
+                phase1Model: model.strongSubstancePhase1Model
             )
 
             molecules
@@ -272,13 +272,13 @@ private struct TitrationBeakerMolecules: View {
 
     let layout: TitrationScreenLayout
     @ObservedObject var model: TitrationViewModel
-    @ObservedObject var components: TitrationComponents
+    @ObservedObject var phase1Model: TitrationStrongSubstancePhase1Model
 
     var body: some View {
         AdjustableFluidBeaker(
             rows: $model.rows,
-            molecules: [components.substanceCoords],
-            animatingMolecules: components.ionCoords,
+            molecules: [phase1Model.primaryIonCoords],
+            animatingMolecules: [],
             currentTime: 0,
             settings: layout.common.adjustableBeakerSettings,
             canSetLevel: model.inputState == .setWaterLevel,
