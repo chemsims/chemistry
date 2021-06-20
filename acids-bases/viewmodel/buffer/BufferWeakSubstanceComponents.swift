@@ -65,6 +65,10 @@ class BufferWeakSubstanceComponents: ObservableObject {
             rows: rows
         )
         incrementReactionProgressIfNeeded()
+        concentration = AcidConcentrationEquations.concentrations(
+            forPartsOf: substance,
+            initialSubstanceConcentration: initialSubstanceConcentration
+        )
     }
 
     func molecules(for substance: SubstancePart) -> BeakerMolecules {
@@ -98,19 +102,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
         Int(settings.initialIonMoleculeFraction * CGFloat(substanceCoords.coords.count))
     }
 
-    var concentration: SubstanceValue<Equation> {
-        let ionConcentration = LinearEquation(x1: 0, y1: 0, x2: 1, y2: changeInConcentration)
-        return SubstanceValue(
-            substance: LinearEquation(
-                x1: 0,
-                y1: initialSubstanceConcentration,
-                x2: 1,
-                y2: initialSubstanceConcentration - changeInConcentration
-            ),
-            primaryIon: ionConcentration,
-            secondaryIon: ionConcentration
-        )
-    }
+    private(set) var concentration: SubstanceValue<Equation> = .constant(ConstantEquation(value: 0))
 
     var pH: Equation {
         BufferSharedComponents.pHEquation(
@@ -126,25 +118,6 @@ class BufferWeakSubstanceComponents: ObservableObject {
 
     var fractionOfSecondaryIon: Equation {
         concentration.secondaryIon / (concentration.substance + concentration.secondaryIon)
-    }
-
-    // TODO - add a test for this
-    var changeInConcentration: CGFloat {
-        guard let roots = QuadraticEquation.roots(
-            a: 1,
-            b: substance.kA,
-            c: -(substance.kA * initialSubstanceConcentration)
-        ) else {
-            return 0
-        }
-
-        guard let validRoot = [roots.0, roots.1].first(where: {
-            $0 > 0 && $0 < (initialSubstanceConcentration / 2)
-        }) else {
-            return 0
-        }
-
-        return validRoot
     }
 
     private var initialSubstanceConcentration: CGFloat {
@@ -327,6 +300,7 @@ extension BufferWeakSubstanceComponents {
     func resetCoords() {
         substanceCoords.coords = []
         reactionProgress = BufferSharedComponents.initialReactionProgressModel(substance: substance)
+        concentration = .constant(ConstantEquation(value: 0))
     }
 
 

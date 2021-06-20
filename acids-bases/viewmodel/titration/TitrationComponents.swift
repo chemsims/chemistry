@@ -8,10 +8,12 @@ import ReactionsCore
 class TitrationComponents: ObservableObject {
 
     init(
+        substance: AcidOrBase,
         cols: Int,
         rows: Int,
         settings: TitrationSettings
     ) {
+        self.substance = substance
         self.settings = settings
         self.cols = cols
         self.rows = rows
@@ -33,9 +35,12 @@ class TitrationComponents: ObservableObject {
     @Published private(set) var reactionProgress: ReactionProgressChartViewModel<ExtendedSubstancePart>
     @Published private(set) var substanceCoords: BeakerMolecules
 
+    let substance: AcidOrBase
     let settings: TitrationSettings
     let cols: Int
     let rows: Int
+
+    var concentration: SubstanceValue<Equation> = .constant(ConstantEquation(value: 0))
 }
 
 // MARK: Beaker coords
@@ -79,6 +84,10 @@ extension TitrationComponents {
             count: count,
             cols: cols,
             rows: rows
+        )
+        concentration = AcidConcentrationEquations.concentrations(
+            forPartsOf: substance,
+            initialSubstanceConcentration: CGFloat(substanceCoords.coords.count) / CGFloat(cols * rows)
         )
     }
 }

@@ -129,17 +129,18 @@ class BufferSaltComponentsTests: XCTestCase {
         weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
 
         let model = BufferSaltComponents(prev: weakModel)
-        let initialSubstanceConcentration = 0.3 - weakModel.changeInConcentration
+        let changeInConcentration = weakModel.concentration.primaryIon.getY(at: 1)
+        let initialSubstanceConcentration = 0.3 - changeInConcentration
 
         XCTAssertEqual(model.concentration.substance.getY(at: 0), initialSubstanceConcentration)
-        XCTAssertEqual(model.concentration.primaryIon.getY(at: 0), weakModel.changeInConcentration)
-        XCTAssertEqual(model.concentration.secondaryIon.getY(at: 0), weakModel.changeInConcentration)
+        XCTAssertEqual(model.concentration.primaryIon.getY(at: 0), changeInConcentration)
+        XCTAssertEqual(model.concentration.secondaryIon.getY(at: 0), changeInConcentration)
 
 
         // All primary ion gone
         XCTAssertEqual(model.concentration.substance.getY(at: 3), 0.3)
         XCTAssertEqual(model.concentration.primaryIon.getY(at: 3), 0)
-        XCTAssertEqual(model.concentration.secondaryIon.getY(at: 3), weakModel.changeInConcentration)
+        XCTAssertEqual(model.concentration.secondaryIon.getY(at: 3), changeInConcentration)
 
         // Equal concentrations
         XCTAssertEqual(model.finalConcentration.substance, 0.3)

@@ -10,6 +10,7 @@ class TitrationViewModel: ObservableObject {
     init() {
         let initialRows = AcidAppSettings.initialRows
         self.components = TitrationComponents(
+            substance: .weakAcids.first!,
             cols: MoleculeGridSettings.cols,
             rows: AcidAppSettings.initialRows,
             settings: .standard

@@ -28,8 +28,6 @@ struct TitrationBeaker: View {
                 dropperEmitModel: model.dropperEmitModel,
                 buretteEmitModel: model.buretteEmitModel
             )
-
-
         }
     }
 

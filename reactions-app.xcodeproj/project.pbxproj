@@ -255,6 +255,8 @@
 		577BC7752679D463005BE5C8 /* AcidOrBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577BC7742679D463005BE5C8 /* AcidOrBaseTests.swift */; };
 		577BC7772679DC79005BE5C8 /* ChargedSymbolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577BC7762679DC79005BE5C8 /* ChargedSymbolView.swift */; };
 		577C10E926711C6500C5DC9A /* BufferStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C10E826711C6500C5DC9A /* BufferStatements.swift */; };
+		577C5021267F1512003DAD17 /* CommonAcidEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5020267F1511003DAD17 /* CommonAcidEquations.swift */; };
+		577C5023267F1852003DAD17 /* AcidConcentrationEquationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */; };
 		57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8625EAB8450099D720 /* MoleculeScales.swift */; };
 		57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8D25EABA950099D720 /* AnimatableRotation.swift */; };
 		5783964B25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783964A25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift */; };
@@ -922,6 +924,8 @@
 		577BC7742679D463005BE5C8 /* AcidOrBaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBaseTests.swift; sourceTree = "<group>"; };
 		577BC7762679DC79005BE5C8 /* ChargedSymbolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargedSymbolView.swift; sourceTree = "<group>"; };
 		577C10E826711C6500C5DC9A /* BufferStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferStatements.swift; sourceTree = "<group>"; };
+		577C5020267F1511003DAD17 /* CommonAcidEquations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAcidEquations.swift; sourceTree = "<group>"; };
+		577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidConcentrationEquationsTests.swift; sourceTree = "<group>"; };
 		5780320625B0888300A0F610 /* QuizPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPersistenceTests.swift; sourceTree = "<group>"; };
 		57812A8625EAB8450099D720 /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
 		57812A8D25EABA950099D720 /* AnimatableRotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableRotation.swift; sourceTree = "<group>"; };
@@ -1423,6 +1427,7 @@
 				571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */,
 				5705CB0B2678E98000F5A63C /* FractionedChartAxisHelperTests.swift */,
 				577BC7742679D463005BE5C8 /* AcidOrBaseTests.swift */,
+				577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */,
 			);
 			path = "acids-basesTests";
 			sourceTree = "<group>";
@@ -1430,6 +1435,7 @@
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				577C501F267F14EF003DAD17 /* reaction-equations */,
 				5773BCDC267A7E8F00E52C81 /* enums */,
 				5705CB082678E93400F5A63C /* fractioned-chart */,
 				5739D0B42664B8270007B09A /* statements */,
@@ -2227,6 +2233,14 @@
 				5786F797261C24CF00E918FC /* SolubilityQuotientRecapEquations.swift */,
 			);
 			path = solubility;
+			sourceTree = "<group>";
+		};
+		577C501F267F14EF003DAD17 /* reaction-equations */ = {
+			isa = PBXGroup;
+			children = (
+				577C5020267F1511003DAD17 /* CommonAcidEquations.swift */,
+			);
+			path = "reaction-equations";
 			sourceTree = "<group>";
 		};
 		578031FF25B0670300A0F610 /* persistence */ = {
@@ -3668,6 +3682,7 @@
 				5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */,
 				579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */,
 				570A766F266CFDD2009329FB /* BufferScreen.swift in Sources */,
+				577C5021267F1512003DAD17 /* CommonAcidEquations.swift in Sources */,
 				57F88856267E16DD00609671 /* TitrationPhChart.swift in Sources */,
 				57CD325826723ACB00C94109 /* BufferFractionsChart.swift in Sources */,
 				5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */,
@@ -3728,6 +3743,7 @@
 				5786BD05267B226C001A165C /* TitrationComponentsTests.swift in Sources */,
 				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
 				5733D80326748CB8007D4459 /* BufferComponentsExtensions.swift in Sources */,
+				577C5023267F1852003DAD17 /* AcidConcentrationEquationsTests.swift in Sources */,
 				571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */,
 				5797DE2626739D89003F589F /* BufferStrongComponentsTests.swift in Sources */,
 				5797DE22267390DC003F589F /* AcidOrBaseExtensions.swift in Sources */,

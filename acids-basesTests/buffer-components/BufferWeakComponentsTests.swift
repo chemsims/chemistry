@@ -162,6 +162,31 @@ class BufferWeakComponentsTests: XCTestCase {
         XCTAssertGreaterThan(final, initial)
     }
 
+    func testConcentration() {
+        let acid = AcidOrBase.weakAcids.first!
+        let model = newModel(acid, settings: .standard)
+
+        model.incrementSubstance(count: 20)
+
+        let substance = model.concentration.substance
+        let primary = model.concentration.primaryIon
+        let secondary = model.concentration.secondaryIon
+
+        let changeInConcentration = primary.getY(at: 1)
+
+        let kA = pow(changeInConcentration, 2) / (0.2 - changeInConcentration)
+        XCTAssertEqual(kA, acid.kA, accuracy: 1e-10)
+
+        XCTAssertEqual(substance.getY(at: 0), 0.2)
+        XCTAssertEqual(substance.getY(at: 1), 0.2 - changeInConcentration)
+
+        XCTAssertEqual(primary.getY(at: 0), 0)
+        XCTAssertEqual(primary.getY(at: 1), changeInConcentration)
+
+        XCTAssertEqual(secondary.getY(at: 0), 0)
+        XCTAssertEqual(secondary.getY(at: 1), changeInConcentration)
+    }
+
     private func newModel(
         _ substance: AcidOrBase,
         settings: BufferComponentSettings
