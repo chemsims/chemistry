@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-
+import SwiftUI
 import ReactionsCore
 
 private let statements = TitrationStatements.self
@@ -15,9 +15,18 @@ struct TitrationNavigationModel {
     }
 
     private static let states: [TitrationScreenState] = [
-        SetStatement(statements.intro)
+        SelectSubstance(statements.intro),
+        PostSelectSubstance(statements.explainNeutralization),
+        SetStatement(statements.explainMolecularIonicEquations),
+        SetStatement(statements.explainTitration),
+        SetStatement(statements.explainEquivalencePoint),
+        SetWaterLevel(statements.explainTitrationCurveAndInstructToSetWaterLevel),
+        AddSubstance(statements.instructToAddStrongAcid)
     ]
 }
+
+private let containerInputAnimation = Animation.easeOut(duration: 0.35)
+private let endReactionAnimation = Animation.easeOut(duration: 0.5)
 
 class TitrationScreenState: ScreenState, SubState {
     typealias Model = TitrationViewModel
@@ -51,5 +60,48 @@ private class SetStatement: TitrationScreenState {
 
     override func apply(on model: TitrationViewModel) {
         model.statement = getStatement(model)
+    }
+}
+
+private class SelectSubstance: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .selectSubstance
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        model.inputState = .none
+    }
+}
+
+private class PostSelectSubstance: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .none
+    }
+}
+
+private class SetWaterLevel: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .setWaterLevel
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        model.inputState = .none
+    }
+}
+
+private class AddSubstance: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .addSubstance
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        model.inputState = .none
+        withAnimation(containerInputAnimation) {
+            model.shakeModel.stopAll()
+        }
     }
 }

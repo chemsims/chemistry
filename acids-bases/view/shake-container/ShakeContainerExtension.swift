@@ -71,7 +71,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
         models.start(
             for: element,
             at: activeLocation,
-            bottomY: layout.topOfWaterPosition(rows: rows),
+            bottomY: layout.topOfWaterPosition(rows: rows) + (layout.moleculeSize / 2),
             halfXRange: layout.containerShakeHalfXRange,
             halfYRange: layout.containerShakeHalfYRange
         )

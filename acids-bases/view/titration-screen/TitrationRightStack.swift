@@ -17,9 +17,9 @@ struct TitrationRightStack: View {
             Spacer(minLength: 0)
             BeakyBox(
                 statement: model.statement,
-                next: { },
-                back: { },
-                nextIsDisabled: false,
+                next: model.next,
+                back: model.back,
+                nextIsDisabled: model.nextIsDisabled,
                 settings: layout.common.beakySettings
             )
         }

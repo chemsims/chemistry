@@ -9,6 +9,7 @@ public class NavigationModel<State: ScreenState> {
     public var nextScreen: (() -> Void)?
     public var prevScreen: (() -> Void)?
 
+    // TODO - make this weak
     public let model: State.Model
 
     private var currentNode: ScreenStateTreeNode<State>

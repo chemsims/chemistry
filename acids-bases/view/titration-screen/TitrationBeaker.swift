@@ -77,8 +77,8 @@ private struct TitrationBeakerTools: View {
 
     private var dropper: some View {
         Dropper(
-            isActive: true,
-            tubeFill: .purple,
+            isActive: model.inputState == .addIndicator,
+            tubeFill: nil,
             onTap: {
                 dropperEmitModel.addMolecule(
                     amount: emitAmount,
@@ -94,8 +94,8 @@ private struct TitrationBeakerTools: View {
 
     private var burette: some View {
         Burette(
-            fill: .red,
-            isActive: true,
+            fill: nil,
+            isActive: model.inputState == .addTitrant,
             onTap: {
                 buretteEmitModel.addMolecule(
                     amount: emitAmount,
@@ -115,10 +115,10 @@ private struct TitrationBeakerTools: View {
             initialLocation: layout.containerPosition,
             activeLocation: layout.activeContainerPosition,
             type: .A,
-            label: "A",
-            color: .red,
+            label: "HCl",
+            color: .purple,
             rows: model.rows,
-            disabled: false
+            disabled: model.inputState != .addSubstance
         )
     }
 }
@@ -281,7 +281,7 @@ private struct TitrationBeakerMolecules: View {
             animatingMolecules: components.ionCoords,
             currentTime: 0,
             settings: layout.common.adjustableBeakerSettings,
-            canSetLevel: true,
+            canSetLevel: model.inputState == .setWaterLevel,
             beakerColorMultiply: .white,
             sliderColorMultiply: .white,
             beakerModifier: BeakerAccessibilityModifier()

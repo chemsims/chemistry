@@ -24,6 +24,7 @@ struct TitrationScreen: View {
                 )
             )
         }
+        .padding(10)
     }
 }
 
