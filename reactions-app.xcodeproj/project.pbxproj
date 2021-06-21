@@ -262,6 +262,23 @@
 		577C5029267F38EC003DAD17 /* TitrationStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5028267F38EC003DAD17 /* TitrationStatements.swift */; };
 		577C502B267F3945003DAD17 /* AcidStatementUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C502A267F3945003DAD17 /* AcidStatementUtil.swift */; };
 		577C502D267F4403003DAD17 /* TitrationStrongSubstancePhase1Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C502C267F4403003DAD17 /* TitrationStrongSubstancePhase1Model.swift */; };
+		577C50302680D004003DAD17 /* TitrationEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C502F2680D004003DAD17 /* TitrationEquationView.swift */; };
+		577C50332680D0DC003DAD17 /* TitrationEquationTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50322680D0DC003DAD17 /* TitrationEquationTerm.swift */; };
+		577C50352680D773003DAD17 /* TitrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50342680D773003DAD17 /* TitrationEquation.swift */; };
+		577C50372680E09E003DAD17 /* TitrationEquationLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50362680E09E003DAD17 /* TitrationEquationLayout.swift */; };
+		577C50392680E0F2003DAD17 /* TitrationEquationMolesToMolarity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50382680E0F2003DAD17 /* TitrationEquationMolesToMolarity.swift */; };
+		577C503B2680E190003DAD17 /* TitrationEquationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C503A2680E190003DAD17 /* TitrationEquationData.swift */; };
+		577C503D2680F98C003DAD17 /* TitrationEquationViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C503C2680F98C003DAD17 /* TitrationEquationViewUtil.swift */; };
+		577C505A26810063003DAD17 /* TitrationEquationConcentrationToVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505926810063003DAD17 /* TitrationEquationConcentrationToVolume.swift */; };
+		577C505C2681081D003DAD17 /* TitrationEquationPLogConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505B2681081D003DAD17 /* TitrationEquationPLogConcentration.swift */; };
+		577C505E26810B2B003DAD17 /* TitrationEquationPhSum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505D26810B2B003DAD17 /* TitrationEquationPhSum.swift */; };
+		577C506026811078003DAD17 /* TitrationEquationKToConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505F26811078003DAD17 /* TitrationEquationKToConcentration.swift */; };
+		577C506226811E52003DAD17 /* TitrationEquationKaKbRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506126811E52003DAD17 /* TitrationEquationKaKbRelation.swift */; };
+		577C506426811FCD003DAD17 /* TitrationEquationMoleSum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506326811FCD003DAD17 /* TitrationEquationMoleSum.swift */; };
+		577C5066268120FD003DAD17 /* TitrationEquationPConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5065268120FD003DAD17 /* TitrationEquationPConcentration.swift */; };
+		577C506826812409003DAD17 /* TitrationEquationMolesToVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506726812409003DAD17 /* TitrationEquationMolesToVolume.swift */; };
+		577C506A26812577003DAD17 /* TitrationEquationConcentrationToMolesOverVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506926812577003DAD17 /* TitrationEquationConcentrationToMolesOverVolume.swift */; };
+		577C506C26812712003DAD17 /* TitrationEquationPhLogOh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506B26812712003DAD17 /* TitrationEquationPhLogOh.swift */; };
 		57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8625EAB8450099D720 /* MoleculeScales.swift */; };
 		57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8D25EABA950099D720 /* AnimatableRotation.swift */; };
 		5783964B25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783964A25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift */; };
@@ -936,6 +953,23 @@
 		577C5028267F38EC003DAD17 /* TitrationStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStatements.swift; sourceTree = "<group>"; };
 		577C502A267F3945003DAD17 /* AcidStatementUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidStatementUtil.swift; sourceTree = "<group>"; };
 		577C502C267F4403003DAD17 /* TitrationStrongSubstancePhase1Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePhase1Model.swift; sourceTree = "<group>"; };
+		577C502F2680D004003DAD17 /* TitrationEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationView.swift; sourceTree = "<group>"; };
+		577C50322680D0DC003DAD17 /* TitrationEquationTerm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationTerm.swift; sourceTree = "<group>"; };
+		577C50342680D773003DAD17 /* TitrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquation.swift; sourceTree = "<group>"; };
+		577C50362680E09E003DAD17 /* TitrationEquationLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationLayout.swift; sourceTree = "<group>"; };
+		577C50382680E0F2003DAD17 /* TitrationEquationMolesToMolarity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationMolesToMolarity.swift; sourceTree = "<group>"; };
+		577C503A2680E190003DAD17 /* TitrationEquationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationData.swift; sourceTree = "<group>"; };
+		577C503C2680F98C003DAD17 /* TitrationEquationViewUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationViewUtil.swift; sourceTree = "<group>"; };
+		577C505926810063003DAD17 /* TitrationEquationConcentrationToVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationConcentrationToVolume.swift; sourceTree = "<group>"; };
+		577C505B2681081D003DAD17 /* TitrationEquationPLogConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationPLogConcentration.swift; sourceTree = "<group>"; };
+		577C505D26810B2B003DAD17 /* TitrationEquationPhSum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationPhSum.swift; sourceTree = "<group>"; };
+		577C505F26811078003DAD17 /* TitrationEquationKToConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationKToConcentration.swift; sourceTree = "<group>"; };
+		577C506126811E52003DAD17 /* TitrationEquationKaKbRelation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationKaKbRelation.swift; sourceTree = "<group>"; };
+		577C506326811FCD003DAD17 /* TitrationEquationMoleSum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationMoleSum.swift; sourceTree = "<group>"; };
+		577C5065268120FD003DAD17 /* TitrationEquationPConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationPConcentration.swift; sourceTree = "<group>"; };
+		577C506726812409003DAD17 /* TitrationEquationMolesToVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationMolesToVolume.swift; sourceTree = "<group>"; };
+		577C506926812577003DAD17 /* TitrationEquationConcentrationToMolesOverVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationConcentrationToMolesOverVolume.swift; sourceTree = "<group>"; };
+		577C506B26812712003DAD17 /* TitrationEquationPhLogOh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationPhLogOh.swift; sourceTree = "<group>"; };
 		5780320625B0888300A0F610 /* QuizPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPersistenceTests.swift; sourceTree = "<group>"; };
 		57812A8625EAB8450099D720 /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
 		57812A8D25EABA950099D720 /* AnimatableRotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableRotation.swift; sourceTree = "<group>"; };
@@ -1445,6 +1479,7 @@
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				577C50312680D0CC003DAD17 /* titration */,
 				577C501F267F14EF003DAD17 /* reaction-equations */,
 				5773BCDC267A7E8F00E52C81 /* enums */,
 				5705CB082678E93400F5A63C /* fractioned-chart */,
@@ -2256,6 +2291,37 @@
 			path = "reaction-equations";
 			sourceTree = "<group>";
 		};
+		577C502E2680CFE9003DAD17 /* equation */ = {
+			isa = PBXGroup;
+			children = (
+				577C502F2680D004003DAD17 /* TitrationEquationView.swift */,
+				577C50382680E0F2003DAD17 /* TitrationEquationMolesToMolarity.swift */,
+				577C503C2680F98C003DAD17 /* TitrationEquationViewUtil.swift */,
+				577C505926810063003DAD17 /* TitrationEquationConcentrationToVolume.swift */,
+				577C505B2681081D003DAD17 /* TitrationEquationPLogConcentration.swift */,
+				577C505D26810B2B003DAD17 /* TitrationEquationPhSum.swift */,
+				577C505F26811078003DAD17 /* TitrationEquationKToConcentration.swift */,
+				577C506126811E52003DAD17 /* TitrationEquationKaKbRelation.swift */,
+				577C506326811FCD003DAD17 /* TitrationEquationMoleSum.swift */,
+				577C5065268120FD003DAD17 /* TitrationEquationPConcentration.swift */,
+				577C506726812409003DAD17 /* TitrationEquationMolesToVolume.swift */,
+				577C506926812577003DAD17 /* TitrationEquationConcentrationToMolesOverVolume.swift */,
+				577C506B26812712003DAD17 /* TitrationEquationPhLogOh.swift */,
+			);
+			path = equation;
+			sourceTree = "<group>";
+		};
+		577C50312680D0CC003DAD17 /* titration */ = {
+			isa = PBXGroup;
+			children = (
+				577C50322680D0DC003DAD17 /* TitrationEquationTerm.swift */,
+				577C50342680D773003DAD17 /* TitrationEquation.swift */,
+				577C50362680E09E003DAD17 /* TitrationEquationLayout.swift */,
+				577C503A2680E190003DAD17 /* TitrationEquationData.swift */,
+			);
+			path = titration;
+			sourceTree = "<group>";
+		};
 		578031FF25B0670300A0F610 /* persistence */ = {
 			isa = PBXGroup;
 			children = (
@@ -2304,6 +2370,7 @@
 		5786BD06267B379A001A165C /* titration-screen */ = {
 			isa = PBXGroup;
 			children = (
+				577C502E2680CFE9003DAD17 /* equation */,
 				57F88854267E16D000609671 /* charts */,
 				5786BD07267B37A7001A165C /* TitrationScreen.swift */,
 				5786BD0B267B38FD001A165C /* TitrationBeaker.swift */,
@@ -3688,6 +3755,7 @@
 			files = (
 				5786BD0C267B38FD001A165C /* TitrationBeaker.swift in Sources */,
 				57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */,
+				577C505E26810B2B003DAD17 /* TitrationEquationPhSum.swift in Sources */,
 				577C5025267F215A003DAD17 /* TitrationPhase2Components.swift in Sources */,
 				5786BD0A267B37C4001A165C /* TitrationViewModel.swift in Sources */,
 				577C5027267F37CF003DAD17 /* TitrationScreenState.swift in Sources */,
@@ -3696,10 +3764,13 @@
 				57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */,
 				570A766D266CFCF1009329FB /* BufferNavigationModel.swift in Sources */,
 				57572DEC266FB8D700A27684 /* BufferPhChartOrTable.swift in Sources */,
+				577C506A26812577003DAD17 /* TitrationEquationConcentrationToMolesOverVolume.swift in Sources */,
 				5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */,
 				579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */,
+				577C5066268120FD003DAD17 /* TitrationEquationPConcentration.swift in Sources */,
 				570A766F266CFDD2009329FB /* BufferScreen.swift in Sources */,
 				577C5021267F1512003DAD17 /* CommonAcidEquations.swift in Sources */,
+				577C50332680D0DC003DAD17 /* TitrationEquationTerm.swift in Sources */,
 				57F88856267E16DD00609671 /* TitrationPhChart.swift in Sources */,
 				57CD325826723ACB00C94109 /* BufferFractionsChart.swift in Sources */,
 				5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */,
@@ -3707,16 +3778,20 @@
 				5773BCDE267A7E9D00E52C81 /* AcidAppScreen.swift in Sources */,
 				57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */,
 				578A1EAF266FA90000D11E22 /* BufferPhChart.swift in Sources */,
+				577C50302680D004003DAD17 /* TitrationEquationView.swift in Sources */,
 				57D60158265ECA7B00017E25 /* PHScaleColors.swift in Sources */,
 				570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
 				57F8885F267E59C000609671 /* DraggablePhMeter.swift in Sources */,
+				577C506C26812712003DAD17 /* TitrationEquationPhLogOh.swift in Sources */,
 				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
 				5773BCE4267A81BD00E52C81 /* AcidAppNavigationRows.swift in Sources */,
 				574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */,
 				5773BCE2267A811C00E52C81 /* AcidAppRootView.swift in Sources */,
+				577C503D2680F98C003DAD17 /* TitrationEquationViewUtil.swift in Sources */,
 				5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */,
 				577C10E926711C6500C5DC9A /* BufferStatements.swift in Sources */,
+				577C50372680E09E003DAD17 /* TitrationEquationLayout.swift in Sources */,
 				5743660F266E7CD8007F0410 /* BufferChartStack.swift in Sources */,
 				5797DE192673719F003F589F /* BufferStrongSubstanceComponents.swift in Sources */,
 				570A7666266CDA0A009329FB /* SubstancePart.swift in Sources */,
@@ -3727,6 +3802,9 @@
 				577BC7772679DC79005BE5C8 /* ChargedSymbolView.swift in Sources */,
 				57F88858267E170800609671 /* TitrationBarsOrReactionProgress.swift in Sources */,
 				571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */,
+				577C506226811E52003DAD17 /* TitrationEquationKaKbRelation.swift in Sources */,
+				577C506426811FCD003DAD17 /* TitrationEquationMoleSum.swift in Sources */,
+				577C505C2681081D003DAD17 /* TitrationEquationPLogConcentration.swift in Sources */,
 				5797DE1C26738615003F589F /* BufferSharedComponents.swift in Sources */,
 				570A7671266CFF0D009329FB /* BufferBeaker.swift in Sources */,
 				574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */,
@@ -3742,13 +3820,19 @@
 				570A7664266CD900009329FB /* BufferSaltComponents.swift in Sources */,
 				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,
 				57572DEE266FB8FE00A27684 /* BufferBottomCharts.swift in Sources */,
+				577C505A26810063003DAD17 /* TitrationEquationConcentrationToVolume.swift in Sources */,
+				577C503B2680E190003DAD17 /* TitrationEquationData.swift in Sources */,
 				577C502D267F4403003DAD17 /* TitrationStrongSubstancePhase1Model.swift in Sources */,
+				577C50352680D773003DAD17 /* TitrationEquation.swift in Sources */,
+				577C50392680E0F2003DAD17 /* TitrationEquationMolesToMolarity.swift in Sources */,
 				570A766B266CFC45009329FB /* BufferScreenViewModel.swift in Sources */,
 				57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */,
 				577C502B267F3945003DAD17 /* AcidStatementUtil.swift in Sources */,
 				5743660D266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift in Sources */,
 				5786BD02267B224A001A165C /* TitrationComponents.swift in Sources */,
 				57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */,
+				577C506826812409003DAD17 /* TitrationEquationMolesToVolume.swift in Sources */,
+				577C506026811078003DAD17 /* TitrationEquationKToConcentration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

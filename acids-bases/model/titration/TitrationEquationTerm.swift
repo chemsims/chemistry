@@ -18,6 +18,11 @@
 
     struct Placeholder<Term> {
 
+        /// Construct a placeholder from a fixed term
+        init(_ term: Term) {
+            self.init(term, isFilled: true)
+        }
+
        init(_ term: Term, isFilled: Bool) {
            self.term = term
            self.isFilled = isFilled
@@ -72,32 +77,10 @@
     }
  }
 
- private extension TitrationEquationData {
-
-    var substanceSymbol: String {
-        substance.chargedSymbol(ofPart: .substance).asString
-    }
-
-    var secondarySymbol: String {
-        substance.chargedSymbol(ofPart: .secondaryIon).asString
-    }
-
-    var plainSubstanceSymbol: String {
-        substance.chargedSymbol(ofPart: .substance).symbol
-    }
-
-    var plainSecondarySymbol: String {
-        substance.chargedSymbol(ofPart: .secondaryIon).symbol
-    }
- }
-
- let hydrogenSymbol = "H+"
- let hydroxideSymbol = "OH-"
-
  extension TitrationEquationTerm.Moles: TitrationEquationLabel, TitrationEquationValue {
     func label(forData data: TitrationEquationData) -> TextLine {
         let field = AnyField.fromMoles(self)
-        return "n_\(field.chargedSymbol(data: data))_"
+        return "n_\(field.fullSymbol(data: data))_"
     }
 
     func value(forData data: TitrationEquationData) -> CGFloat {
@@ -108,7 +91,7 @@
  extension TitrationEquationTerm.Volume: TitrationEquationLabel, TitrationEquationValue {
     func label(forData data: TitrationEquationData) -> TextLine {
         let field = AnyField.fromVolume(self)
-        return "V_\(field.chargedSymbol(data: data))_"
+        return "V_\(field.fullSymbol(data: data))_"
     }
 
     func value(forData data: TitrationEquationData) -> CGFloat {
@@ -119,11 +102,49 @@
  extension TitrationEquationTerm.Molarity: TitrationEquationLabel, TitrationEquationValue {
     func label(forData data: TitrationEquationData) -> TextLine {
         let field = AnyField.fromMolarity(self)
-        return "M_\(field.chargedSymbol(data: data))_"
+        return "M_\(field.fullSymbol(data: data))_"
     }
 
     func value(forData data: TitrationEquationData) -> CGFloat {
         data.molarity.value(for: self)
+    }
+ }
+
+ extension TitrationEquationTerm.Concentration: TitrationEquationLabel, TitrationEquationValue {
+    func label(forData data: TitrationEquationData) -> TextLine {
+        let field = AnyField.fromConcentration(self)
+        let plain = field.plainSymbol(data: data)
+        let charge = field.charge(data: data)
+        let suffix = field.symbolSuffix
+
+        return "[\(plain)^\(charge)^]_\(suffix)_"
+    }
+
+    func value(forData data: TitrationEquationData) -> CGFloat {
+        data.concentration.value(for: self)
+    }
+ }
+
+ extension TitrationEquationTerm.PValue: TitrationEquationLabel, TitrationEquationValue {
+    func label(forData data: TitrationEquationData) -> TextLine {
+        let field = AnyField.fromPValue(self)
+        let plain = field.plainSymbol(data: data)
+        return "p\(plain)"
+    }
+
+    func value(forData data: TitrationEquationData) -> CGFloat {
+        data.pValues.value(for: self)
+    }
+ }
+
+ extension TitrationEquationTerm.KValue: TitrationEquationLabel, TitrationEquationValue {
+    func label(forData data: TitrationEquationData) -> TextLine {
+        let plainSymbol = AnyField.fromKValue(self).plainSymbol(data: data)
+        return TextLine(plainSymbol)
+    }
+
+    func value(forData data: TitrationEquationData) -> CGFloat {
+        data.kValues.value(for: self)
     }
  }
 
@@ -138,18 +159,32 @@
          secondary,
          initialSecondary,
          titrant,
-         equivalencePoint
+         equivalencePoint,
+         kA,
+         kB
 
-    func chargedSymbol(data: TitrationEquationData) -> String {
+    func fullSymbol(data: TitrationEquationData) -> String {
+        let plain = plainSymbol(data: data)
+        let charge = charge(data: data)
+        return "\(plain)\(charge)\(symbolSuffix)"
+    }
+
+    var symbolSuffix: String {
         switch self {
-        case .hydrogen: return "H+"
-        case .hydroxide: return "OH-"
-        case .initialSecondary: return "\(data.secondarySymbol)i"
-        case .initialSubstance: return "\(data.substanceSymbol)i"
-        case .secondary: return data.secondarySymbol
-        case .substance: return data.substanceSymbol
-        case .titrant: return data.titrant
-        case .equivalencePoint: return "E"
+        case .initialSubstance, .initialSecondary: return "i"
+        default: return ""
+        }
+    }
+
+    func charge(data: TitrationEquationData) -> String {
+        switch self {
+        case .hydrogen: return "+"
+        case .hydroxide: return "-"
+        case .secondary, .initialSecondary:
+            return data.substance.chargedSymbol(ofPart: .secondaryIon).charge?.rawValue ?? ""
+        case .substance, .initialSubstance:
+            return data.substance.chargedSymbol(ofPart: .substance).charge?.rawValue ?? ""
+        default: return ""
         }
     }
 
@@ -157,12 +192,14 @@
         switch self {
         case .hydrogen: return "H"
         case .hydroxide: return "OH"
-        case .initialSecondary: return "\(data.plainSecondarySymbol)i"
-        case .initialSubstance: return "\(data.plainSubstanceSymbol)i"
-        case .secondary: return data.plainSecondarySymbol
-        case .substance: return data.plainSubstanceSymbol
+        case .secondary, .initialSecondary:
+            return data.substance.chargedSymbol(ofPart: .secondaryIon).symbol
+        case .substance, .initialSubstance:
+            return data.substance.chargedSymbol(ofPart: .substance).symbol
         case .titrant: return data.titrant
         case .equivalencePoint: return "E"
+        case .kA: return "Ka"
+        case .kB: return "Kb"
         }
     }
 
@@ -193,6 +230,33 @@
         case .hydrogen: return .hydrogen
         case .substance: return .substance
         case .titrant: return .titrant
+        }
+    }
+
+    static func fromConcentration(_ concentration: TitrationEquationTerm.Concentration) -> AnyField {
+        switch concentration {
+        case .hydrogen: return .hydrogen
+        case .hydroxide: return .hydroxide
+        case .initialSecondary: return .initialSecondary
+        case .initialSubstance: return .initialSubstance
+        case .secondary: return .secondary
+        case .substance: return .substance
+        }
+    }
+
+    static func fromPValue(_ pValue: TitrationEquationTerm.PValue) -> AnyField {
+        switch pValue {
+        case .hydrogen: return .hydrogen
+        case .hydroxide: return .hydroxide
+        case .kA: return .kA
+        case .kB: return .kB
+        }
+    }
+
+    static func fromKValue(_ kValue: TitrationEquationTerm.KValue) -> AnyField {
+        switch kValue {
+        case .kA: return .kA
+        case .kB: return .kB
         }
     }
  }

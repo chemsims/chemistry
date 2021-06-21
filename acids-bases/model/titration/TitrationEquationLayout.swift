@@ -14,4 +14,11 @@ struct TitrationEquationLayout {
     let boxWidth: CGFloat = EquationSizing.boxWidth
 
     let termsHSpacing: CGFloat = 5
+    let fractionVSpacing: CGFloat = 3
+
+    let fractionBarHeight: CGFloat = 2
+
+    let minScaleFactor: CGFloat = 0.1
+
+    let fractionParenHeightScaleFactor: CGFloat = 2
 }

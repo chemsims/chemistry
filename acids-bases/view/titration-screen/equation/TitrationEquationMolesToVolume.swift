@@ -2,83 +2,76 @@
 // Reactions App
 //
 
+
 import SwiftUI
 import ReactionsCore
 
-// There is a bug (as of Xcode 12.5) where the preview crashes when referring
-//to the nested type directly from another nested type, even though it
-// compiles and runs fine. These type aliases are defined as a workaround, to
-// avoid using fully qualified names everywhere.
+// See comment in TitrationEquationMolesToMolarity.swift
 private typealias BoxWidthTextLine = TitrationEquationView.BoxWidthTextLine
 private typealias Placeholder = TitrationEquationView.PlaceholderTermView
 
 extension TitrationEquationView {
-    struct MolesToMolarityDefinition: View {
-
+    struct MolesToVolumeDefinition: View {
         let data: TitrationEquationData
         let moles: Term.Moles
+        let concentration: Term.Concentration
         let volume: Term.Volume
-        let molarity: Term.Molarity
-
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 BoxWidthTextLine(data: data, value: moles)
                 FixedText("=")
-                BoxWidthTextLine(data: data, value: volume)
+                BoxWidthTextLine(data: data, value: concentration)
                 FixedText("x")
-                BoxWidthTextLine(data: data, value: molarity)
+                BoxWidthTextLine(data: data, value: volume)
             }
             .font(.system(size: layout.fontSize))
         }
     }
-}
 
-
-extension TitrationEquationView {
-    struct MolesToMolarityFilled: View {
+    struct MolesToVolumeFilled: View {
         let data: TitrationEquationData
-        let moles:  Term.Placeholder<Term.Moles>
+        let moles: Term.Placeholder<Term.Moles>
+        let concentration: Term.Placeholder<Term.Concentration>
         let volume: Term.Placeholder<Term.Volume>
-        let molarity: Term.Placeholder<Term.Molarity>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 Placeholder(data: data, value: moles)
                 FixedText("=")
-                Placeholder(data: data, value: volume)
+                Placeholder(data: data, value: concentration)
                 FixedText("x")
-                Placeholder(data: data, value: molarity)
+                Placeholder(data: data, value: volume)
             }
             .font(.system(size: layout.fontSize))
         }
     }
 }
 
-struct TitrationEquationMolesToMolarity_Previews: PreviewProvider {
+struct TitrationEquationMolesToVolume_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TitrationEquationView.MolesToMolarityDefinition(
+            TitrationEquationView.MolesToVolumeDefinition(
                 data: .preview,
                 moles: .hydrogen,
-                volume: .hydrogen,
-                molarity: .hydrogen
+                concentration: .hydrogen,
+                volume: .hydrogen
             )
 
-            TitrationEquationView.MolesToMolarityFilled(
+            TitrationEquationView.MolesToVolumeFilled(
                 data: .preview,
                 moles: .init(.hydrogen, isFilled: false),
-                volume: .init(.hydrogen, isFilled: false),
-                molarity: .init(.hydrogen, isFilled: false)
+                concentration: .init(.hydrogen, isFilled: false),
+                volume: .init(.hydrogen, isFilled: false)
             )
 
-            TitrationEquationView.MolesToMolarityFilled(
+            TitrationEquationView.MolesToVolumeFilled(
                 data: .preview,
                 moles: .init(.hydrogen, isFilled: true),
-                volume: .init(.hydrogen, isFilled: true),
-                molarity: .init(.hydrogen, isFilled: true)
+                concentration: .init(.hydrogen, isFilled: true),
+                volume: .init(.hydrogen, isFilled: true)
             )
         }
         .previewLayout(.sizeThatFits)
