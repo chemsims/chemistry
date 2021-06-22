@@ -18,11 +18,6 @@
 
     struct Placeholder<Term> {
 
-        /// Construct a placeholder from a fixed term
-        init(_ term: Term) {
-            self.init(term, isFilled: true)
-        }
-
        init(_ term: Term, isFilled: Bool) {
            self.term = term
            self.isFilled = isFilled

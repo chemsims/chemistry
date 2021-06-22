@@ -7,17 +7,26 @@ import ReactionsCore
 
 enum TitrationEquation {
     typealias Term = TitrationEquationTerm
+    typealias Placeholder = Term.Placeholder
 
-    case molesToVolume(moles: Term.Moles, volume: Term.Volume, molarity: Term.Molarity)
 
-    case concentrationToMolesAndVolume(
-            concentration: Term.Placeholder<Term.Concentration>,
-            moles: Term.Placeholder<Term.Moles>,
-            firstVolume: Term.Placeholder<Term.Volume>,
-            secondVolume: Term.Volume
+    case molesToVolume(
+            moles: Placeholder<Term.Moles>,
+            volume: Placeholder<Term.Volume>,
+            molarity: Placeholder<Term.Molarity>
          )
 
-    case pConcentration(pValue: Term.PValue, concentration: Term.Concentration)
+    case concentrationToMolesAndVolume(
+            concentration: Placeholder<Term.Concentration>,
+            moles: Placeholder<Term.Moles>,
+            firstVolume: Placeholder<Term.Volume>,
+            secondVolume: Placeholder<Term.Volume>
+         )
+
+    case pConcentration(
+            pValue: Placeholder<Term.PValue>,
+            concentration: Placeholder<Term.Concentration>
+         )
 
     case pSum(firstPValue: Term.PValue, secondPValue: Term.PValue)
 
@@ -47,14 +56,16 @@ enum TitrationEquation {
          )
 
     case concentrationToMolesOverVolume(
-            concentration: Term.Concentration,
-            subtractingMoles: Term.Concentration,
-            fromMoles: Term.Concentration,
-            firstVolume: Term.Volume,
-            secondVolume: Term.Volume
+            concentration: Term.Placeholder<Term.Concentration>,
+            subtractingMoles: Term.Placeholder<Term.Moles>,
+            fromMoles: Term.Placeholder<Term.Moles>,
+            firstVolume: Term.Placeholder<Term.Volume>,
+            secondVolume: Term.Placeholder<Term.Volume>
          )
 
     case pHToHydroxide(pH: Term.PValue, hydroxideConcentration: Term.Concentration)
+
+    indirect case filled(_ underlying: TitrationEquation)
 }
 
 extension TitrationEquation: Identifiable {
@@ -71,6 +82,7 @@ extension TitrationEquation: Identifiable {
         case .pHToHydroxide: return 8
         case .pKLog: return 9
         case .pSum: return 10
+        case let .filled(underlying): return 11 + underlying.id
         }
     }
 }
