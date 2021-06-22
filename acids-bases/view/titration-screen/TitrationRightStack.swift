@@ -9,11 +9,14 @@ struct TitrationRightStack: View {
 
     let layout: TitrationScreenLayout
     @ObservedObject var model: TitrationViewModel
-
+    @ObservedObject var strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
 
     var body: some View {
         VStack(spacing: 0) {
-            Text("equation")
+            TitrationEquationView(
+                data: strongSubstancePreparationModel.equationData,
+                equationSet: model.equationState.equationSet
+            )
             Spacer(minLength: 0)
             BeakyBox(
                 statement: model.statement,

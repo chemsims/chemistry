@@ -96,12 +96,15 @@ private class AddSubstance: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.inputState = .addSubstance
+        model.equationState = .strongSubstanceAddingSubstance
     }
 
     override func unapply(on model: TitrationViewModel) {
         model.inputState = .none
+        model.equationState = .strongSubstanceBlank
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
         }
     }
 }
+

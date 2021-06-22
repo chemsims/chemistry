@@ -62,4 +62,32 @@ struct AcidConcentrationEquations {
 
         return validRoot
     }
+
+    /// Returns a change in concentration, given the equation of K:
+    /// K = [C1][C2]/[C3]
+    ///
+    /// We assume that C1 and C2 start at 0, and all concentrations change by the same amount, x.
+    /// So we have K = x^2/(C30 - x) where C0 is the initial concentration of the denominator term.
+    ///
+    /// Rearranging, we have x^2 + C30x - KC30 = 0
+    static func changeInConcentration(
+        kValue: CGFloat,
+        initialDenominatorConcentration: CGFloat
+    ) -> CGFloat {
+        guard let roots = QuadraticEquation.roots(
+            a: 1,
+            b: kValue,
+            c: -(kValue * initialDenominatorConcentration)
+        ) else {
+            return 0
+        }
+
+        guard let validRoot = [roots.0, roots.1].first(where: {
+            $0 > 0 && $0 < (initialDenominatorConcentration / 2)
+        }) else {
+            return 0
+        }
+
+        return validRoot
+    }
 }

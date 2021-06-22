@@ -39,7 +39,11 @@ private struct TitrationScreenWithSettings: View {
             Spacer(minLength: 0)
             TitrationChartStack(layout: layout, model: model)
             Spacer(minLength: 0)
-            TitrationRightStack(layout: layout, model: model)
+            TitrationRightStack(
+                layout: layout,
+                model: model,
+                strongSubstancePreparationModel: model.strongSubstancePreparationModel
+            )
         }
     }
 }

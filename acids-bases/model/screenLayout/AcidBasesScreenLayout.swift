@@ -189,7 +189,11 @@ extension AcidBasesScreenLayout {
         return min(idealWidth, idealHeight)
     }
 
+    // TODO - get rid of this variable
     var phChartSettings: TimeChartLayoutSettings {
+        phChartSettings()
+    }
+    func phChartSettings(minX: CGFloat = 0, maxX: CGFloat = 1) ->  TimeChartLayoutSettings {
         TimeChartLayoutSettings(
             xAxis: AxisPositionCalculations<CGFloat>(
                 minValuePosition: 0.1 * chartSize,
@@ -198,8 +202,8 @@ extension AcidBasesScreenLayout {
                 maxValue: 1
             ),
             yAxis: AxisPositionCalculations<CGFloat>(
-                minValuePosition: 0.1 * chartSize,
-                maxValuePosition: 0.9 * chartSize,
+                minValuePosition: 0.9 * chartSize,
+                maxValuePosition: 0.1 * chartSize,
                 minValue: 0,
                 maxValue: 14
             ),

@@ -39,6 +39,7 @@ class TitrationViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat
     @Published var inputState = InputState.none
+    @Published var equationState = EquationState.strongSubstanceBlank
 
     let strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
 
@@ -86,5 +87,28 @@ extension TitrationViewModel {
              addSubstance,
              addIndicator,
              addTitrant
+    }
+
+    enum EquationState {
+        case strongSubstanceBlank,
+            strongSubstanceAddingSubstance
+
+        var equationSet: TitrationEquationSet {
+            switch self {
+            case .strongSubstanceBlank:
+                return .strongAcidPreEP(
+                    fillSubstanceAndHydrogen: false,
+                    fillTitrantMolarity: false,
+                    fillAll: false
+                )
+
+            case .strongSubstanceAddingSubstance:
+                return .strongAcidPreEP(
+                    fillSubstanceAndHydrogen: true,
+                    fillTitrantMolarity: false,
+                    fillAll: false
+                )
+            }
+        }
     }
 }

@@ -43,11 +43,20 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
 
 extension TitrationStrongSubstancePreparationModel {
     var currentSubstanceConcentration: CGFloat {
-        CGFloat(substanceAdded) / CGFloat(cols * rows)
+        primarySubstanceConcentration.getY(at: CGFloat(substanceAdded))
     }
 
     var currentVolume: CGFloat {
         settings.beakerVolumeFromRows.getY(at: exactRows)
+    }
+
+    var primarySubstanceConcentration: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: 1e-7,
+            x2: CGFloat(maxSubstance),
+            y2: CGFloat(maxSubstance) / CGFloat(cols * rows)
+        )
     }
 }
 
@@ -169,7 +178,7 @@ extension TitrationStrongSubstancePreparationModel {
     private var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
         // TODO put this somewhere common
         func safeLog(_ value: CGFloat) -> CGFloat {
-            value <= 0 ? 0 : log10(value)
+            value <= 0 ? 0 : -log10(value)
         }
         return .init {
             switch $0 {

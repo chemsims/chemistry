@@ -6,13 +6,32 @@ import SwiftUI
 import ReactionsCore
 
 struct TitrationEquationView: View {
-
     typealias Term = TitrationEquationTerm
     let data: TitrationEquationData
     let equationSet: TitrationEquationSet
     @Environment(\.titrationEquationLayout) var layout
 
     var body: some View {
+        GeometryReader { geo in
+            ScaledView(
+                naturalWidth: Self.naturalWidth,
+                naturalHeight: Self.naturalHeight,
+                maxWidth: geo.size.width,
+                maxHeight: geo.size.height
+            ) {
+                sizedBody
+            }
+            .frame(size: geo.size)
+        }
+    }
+
+    fileprivate static let naturalWidth: CGFloat = 850
+    fileprivate static let naturalHeight: CGFloat = 600
+}
+
+private extension TitrationEquationView {
+
+    var sizedBody: some View {
         HStack(alignment: .top, spacing:40) {
             column(equations: equationSet.left)
             column(equations: equationSet.right)
@@ -29,6 +48,7 @@ struct TitrationEquationView: View {
         }
     }
 }
+
 
 extension TitrationEquationView {
 
@@ -306,6 +326,8 @@ struct TitrationEquationView_Previews: PreviewProvider {
             data: .preview,
             equationSet: .weakAcidAtEp
         )
-        .previewLayout(.sizeThatFits)
+        .sizedBody // We use the non-scaled view in the preview to check the natural size is correct
+        .border(Color.red)
+        .previewLayout(.fixed(width: TitrationEquationView.naturalWidth, height: TitrationEquationView.naturalHeight))
     }
 }
