@@ -137,12 +137,12 @@ extension TitrationEquationSet {
 
     static let weakAcidAtEp = Self.setWithFilled(
         left: [
-            kBToConcentration(),
+            kBToConcentrationForAcid(),
             pOHLogOH(fillAll: true)
         ],
         right: [
             titrantMoles(fillMolarity: true, fillAll: true),
-            kWToKaAndKb(),
+            kWToKaAndKb,
             secondaryConcentrationToMolesOverVolume(fillVolume: true)
         ]
     )
@@ -165,6 +165,65 @@ extension TitrationEquationSet {
             ]
         )
     }
+}
+
+// MARK: Weak buffer equations
+extension TitrationEquationSet {
+    static func weakBufferInitialReaction(
+        fillSubstance: Bool,
+        fillAll: Bool
+    ) -> TitrationEquationSet {
+        Self.setWithFilled(
+            left: [
+                kBToConcentrationForBase(fillSubstance: fillSubstance, fillAll: fillAll),
+                pOHToPKb(fillSubstance: fillSubstance, fillAll: fillAll)
+            ],
+            right: [
+                pKb(fillAll: fillAll),
+                initialSubstanceMoles(fillAll: fillAll)
+            ]
+        )
+    }
+
+    static func weakBufferPreEp(
+        fillTitrantMolarity: Bool,
+        fillAll: Bool
+    ) -> TitrationEquationSet {
+        Self.setWithFilled(
+            left: [
+                substanceMolesDifference(fillTitrant: fillAll),
+                pOHToPKb(fillSubstance: true, fillAll: true)
+            ],
+            right: [
+                titrantMoles(fillMolarity: fillTitrantMolarity, fillAll: fillAll),
+                substanceConcentrationToMolesOverVolume(fillVolume: fillAll),
+                secondaryConcentrationToMolesOverVolume(fillVolume: fillAll)
+            ]
+        )
+    }
+
+    static let weakBufferAtEp = Self.setWithFilled(
+        left: [
+            kAToConcentration(fillSubstance: true, fillAll: true),
+            pHLogH(fillAll: true)
+        ],
+        right: [
+            titrantMoles(fillMolarity: true, fillAll: true),
+            kWToKaAndKb,
+            secondaryConcentrationToMolesOverVolume(fillVolume: true)
+        ]
+    )
+
+    static let weakBufferPostEp = Self.setWithFilled(
+        left: [
+            titrantMoles(fillMolarity: true, fillAll: true),
+            concentrationToMolesOverVolume(.hydrogen),
+            pHLogH(fillAll: true)
+        ],
+        right: [
+            pHpOHSum(fillAll: true)
+        ]
+    )
 }
 
 // MARK: Common equations
@@ -242,12 +301,24 @@ extension TitrationEquationSet {
         )
     }
 
-    private static func kBToConcentration() -> TitrationEquation {
+    private static func kBToConcentrationForAcid() -> TitrationEquation {
         .kToConcentration(
             kValue: .init(.kB, isFilled: true),
             firstNumeratorConcentration: .init(.hydroxide, isFilled: true),
             secondNumeratorConcentration: .init(.substance, isFilled: true),
             denominatorConcentration: .init(.secondary, isFilled: true)
+        )
+    }
+
+    private static func kBToConcentrationForBase(
+        fillSubstance: Bool,
+        fillAll: Bool
+    ) -> TitrationEquation {
+        .kToConcentration(
+            kValue: .init(.kB, isFilled: fillAll),
+            firstNumeratorConcentration: .init(.hydroxide, isFilled: fillAll),
+            secondNumeratorConcentration: .init(.secondary, isFilled: fillAll),
+            denominatorConcentration: .init(.substance, isFilled: fillSubstance || fillAll)
         )
     }
 
@@ -263,6 +334,18 @@ extension TitrationEquationSet {
         )
     }
 
+    private static func pOHToPKb(
+        fillSubstance: Bool,
+        fillAll: Bool
+    ) -> TitrationEquation {
+        .pKLog(
+            pConcentration: .init(.hydroxide, isFilled: fillAll),
+            pK: .init(.kB, isFilled: fillAll),
+            numeratorConcentration: .init(.secondary, isFilled: fillAll),
+            denominatorConcentration: .init(.substance, isFilled: fillSubstance)
+        )
+    }
+
     private static func pKa(fillAll: Bool) -> TitrationEquation {
         .pToLogK(
             pValue: .init(.kA, isFilled: fillAll),
@@ -270,11 +353,18 @@ extension TitrationEquationSet {
         )
     }
 
+    private static func pKb(fillAll: Bool) -> TitrationEquation {
+        .pToLogK(
+            pValue: .init(.kB, isFilled: fillAll),
+            kValue: .init(.kB, isFilled: fillAll)
+        )
+    }
+
     private static func initialSubstanceMoles(fillAll: Bool) -> TitrationEquation {
         .molesToConcentration(
             moles: .init(.initialSubstance, isFilled: fillAll),
             concentration: .init(.initialSubstance, isFilled: fillAll),
-            volume: .init(.substance, isFilled: true)
+            volume: .init(.initialSubstance, isFilled: true)
         )
     }
 
@@ -308,9 +398,21 @@ extension TitrationEquationSet {
         )
     }
 
-    private static func kWToKaAndKb() -> TitrationEquation {
-        .kW(kA: .init(.kA, isFilled: true), kB: .init(.kB, isFilled: true))
+    private static func concentrationToMolesOverVolume(
+        _ concentration: TitrationEquationTerm.Concentration
+    ) -> TitrationEquation {
+        .concentrationToMolesAndVolume(
+            concentration: .init(concentration, isFilled: true),
+            moles: .init(.titrant, isFilled: true),
+            firstVolume: .init(.equivalencePoint, isFilled: true),
+            secondVolume: .init(.titrant, isFilled: true)
+        )
     }
+
+    private static let kWToKaAndKb = TitrationEquation.kW(
+            kA: .init(.kA, isFilled: true),
+            kB: .init(.kB, isFilled: true)
+        )
 
     private static func pHpOHSum(fillAll: Bool) -> TitrationEquation {
         .pSum(

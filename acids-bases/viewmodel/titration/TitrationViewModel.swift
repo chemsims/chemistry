@@ -9,17 +9,26 @@ class TitrationViewModel: ObservableObject {
 
     init() {
         let initialRows = AcidAppSettings.initialRows
-        self.strongSubstancePhase1Model = TitrationStrongSubstancePhase1Model(
+        let strongSubstancePhase1Model = TitrationStrongSubstancePhase1Model(
             cols: MoleculeGridSettings.cols,
             rows: CGFloat(AcidAppSettings.initialRows),
             settings: .standard
         )
-        self.components = TitrationComponents(
+
+        self.strongSubstancePhase1Model = strongSubstancePhase1Model
+        self.strongSubstancePhase2Model = .init(phase1: strongSubstancePhase1Model)
+        let strongSubstancePhase1 = TitrationComponents(
             substance: .weakAcids.first!,
             cols: MoleculeGridSettings.cols,
             rows: AcidAppSettings.initialRows,
             settings: .standard
         )
+
+        self.components = strongSubstancePhase1
+        self.weakSubstancePhase2Model = .init(
+            phase1: strongSubstancePhase1
+        )
+
         self.rows = CGFloat(initialRows)
         self.shakeModel = MultiContainerShakeViewModel(
             canAddMolecule: { _ in true },
@@ -33,7 +42,7 @@ class TitrationViewModel: ObservableObject {
         )
         self.buretteEmitModel = MoleculeEmittingViewModel(
             canAddMolecule: { true },
-            doAddMolecule: { _ in }
+            doAddMolecule: { i in self.incrementTitrant(count: i) }
         )
         self.navigation = TitrationNavigationModel.model(self)
     }
@@ -44,6 +53,8 @@ class TitrationViewModel: ObservableObject {
 
     let components: TitrationComponents
     let strongSubstancePhase1Model: TitrationStrongSubstancePhase1Model
+    let strongSubstancePhase2Model: TitrationStrongSubstancePhase2Model
+    let weakSubstancePhase2Model: TitrationWeakSubstancePhase2Model
 
     private(set) var navigation: NavigationModel<TitrationScreenState>!
     var shakeModel: MultiContainerShakeViewModel<TempMolecule>!
@@ -74,6 +85,11 @@ extension TitrationViewModel {
 extension TitrationViewModel {
     func incrementSubstance(count: Int) {
         strongSubstancePhase1Model.incrementSubstance(count: count)
+    }
+
+    func incrementTitrant(count: Int) {
+        weakSubstancePhase2Model.incrementSubstance(count: count)
+//        strongSubstancePhase2Model.incrementTitrant(count: count)
     }
 }
 
