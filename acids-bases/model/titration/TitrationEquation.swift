@@ -28,31 +28,39 @@ enum TitrationEquation {
             concentration: Placeholder<Term.Concentration>
          )
 
-    case pSum(firstPValue: Term.PValue, secondPValue: Term.PValue)
+    case pSum(firstPValue: Placeholder<Term.PValue>, secondPValue: Placeholder<Term.PValue>)
 
     case kToConcentration(
-            kValue: Term.KValue,
-            firstNumeratorConcentration: Term.PValue,
-            secondNumeratorConcentration: Term.PValue,
-            denominatorConcentration: Term.Concentration
+            kValue: Placeholder<Term.KValue>,
+            firstNumeratorConcentration: Placeholder<Term.Concentration>,
+            secondNumeratorConcentration: Placeholder<Term.Concentration>,
+            denominatorConcentration: Placeholder<Term.Concentration>
          )
 
-    case kW(kA: Term.KValue, kB: Term.KValue)
+    case kW(kA: Placeholder<Term.KValue>, kB: Placeholder<Term.KValue>)
 
-    // TIL: difference = minuend - subtrahend
-    case molesSum(difference: Term.Moles, subtracting: Term.Moles, from: Term.Moles)
+    case molesDifference(
+            difference: Placeholder<Term.Moles>,
+            subtracting: Placeholder<Term.Moles>,
+            from: Placeholder<Term.Moles>
+         )
 
     case pKLog(
-            pConcentration: Term.PValue,
-            pK: Term.PValue,
-            numeratorConcentration: Term.Concentration,
-            denominatorConcentration: Term.Concentration
+            pConcentration: Placeholder<Term.PValue>,
+            pK: Placeholder<Term.PValue>,
+            numeratorConcentration: Placeholder<Term.Concentration>,
+            denominatorConcentration: Placeholder<Term.Concentration>
+         )
+
+    case pToLogK(
+            pValue: Placeholder<Term.PValue>,
+            kValue: Placeholder<Term.KValue>
          )
 
     case molesToConcentration(
-            moles: Term.Moles,
-            concentration: Term.Concentration,
-            volume: Term.Volume
+            moles: Placeholder<Term.Moles>,
+            concentration: Placeholder<Term.Concentration>,
+            volume: Placeholder<Term.Volume>
          )
 
     case concentrationToMolesOverVolume(
@@ -75,14 +83,15 @@ extension TitrationEquation: Identifiable {
         case .concentrationToMolesOverVolume: return 1
         case .kToConcentration: return 2
         case .kW: return 3
-        case .molesSum: return 4
+        case .molesDifference: return 4
         case .molesToConcentration: return 5
         case .molesToVolume: return 6
         case .pConcentration: return 7
         case .pHToHydroxide: return 8
         case .pKLog: return 9
         case .pSum: return 10
-        case let .filled(underlying): return 11 + underlying.id
+        case .pToLogK: return 11
+        case let .filled(underlying): return 12 + underlying.id
         }
     }
 }

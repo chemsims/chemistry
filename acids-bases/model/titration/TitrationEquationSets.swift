@@ -53,19 +53,16 @@ extension TitrationEquationSet {
         )
     }
 
-    static func strongAcidPostEP(
-    ) -> TitrationEquationSet {
-        Self.setWithFilled(
-            left: [
-                substanceMoles(fillAll: true),
-                concentrationToTitrantMolesOverVolume(.hydrogen, fillAll: true)
-            ],
-            right: [
-                titrantMoles(fillMolarity: true, fillAll: true),
-                pHToHydroxide(fillAll: true)
-            ]
-        )
-    }
+    static let strongAcidPostEP = Self.setWithFilled(
+        left: [
+            substanceMoles(fillAll: true),
+            concentrationToTitrantMolesOverVolume(.hydrogen, fillAll: true)
+        ],
+        right: [
+            titrantMoles(fillMolarity: true, fillAll: true),
+            pHToHydroxide(fillAll: true)
+        ]
+    )
 }
 
 // MARK: Strong buffer equations
@@ -91,16 +88,80 @@ extension TitrationEquationSet {
         )
     }
 
-    static func strongBufferPostEp(
+    static let strongBufferPostEp = Self.setWithFilled(
+        left: [
+            substanceMoles(fillAll: true),
+            concentrationToTitrantMolesOverVolume(.hydroxide, fillAll: true)
+        ],
+        right: [
+            titrantMoles(fillMolarity: true, fillAll: true),
+            pHLogH(fillAll: true)
+        ]
+    )
+}
+
+// MARK: Weak acid equations
+extension TitrationEquationSet {
+    static func weakAcidInitialReaction(
+        fillSubstance: Bool,
+        fillAll: Bool
     ) -> TitrationEquationSet {
         Self.setWithFilled(
             left: [
-                substanceMoles(fillAll: true),
-                concentrationToTitrantMolesOverVolume(.hydroxide, fillAll: true)
+                kAToConcentration(fillSubstance: fillSubstance, fillAll: fillAll),
+                pHToPKa(fillSubstance: fillSubstance, fillAll: fillAll)
             ],
             right: [
+                pKa(fillAll: fillAll),
+                initialSubstanceMoles(fillAll: fillAll)
+            ]
+        )
+    }
+
+    static func weakAcidPreEp(
+        fillTitrantMolarity: Bool,
+        fillAll: Bool
+    ) -> TitrationEquationSet {
+        Self.setWithFilled(
+            left: [
+                substanceMolesDifference(fillTitrant: fillAll),
+                pHToPKa(fillSubstance: fillAll, fillAll: fillAll)
+            ],
+            right: [
+                titrantMoles(fillMolarity: fillTitrantMolarity, fillAll: fillAll),
+                substanceConcentrationToMolesOverVolume(fillVolume: fillAll),
+                secondaryConcentrationToMolesOverVolume(fillVolume: fillAll)
+            ]
+        )
+    }
+
+    static let weakAcidAtEp = Self.setWithFilled(
+        left: [
+            kBToConcentration(),
+            pOHLogOH(fillAll: true)
+        ],
+        right: [
+            titrantMoles(fillMolarity: true, fillAll: true),
+            kWToKaAndKb(),
+            secondaryConcentrationToMolesOverVolume(fillVolume: true)
+        ]
+    )
+
+
+    static func weakAcidPostEp() -> TitrationEquationSet {
+        Self.setWithFilled(
+            left: [
                 titrantMoles(fillMolarity: true, fillAll: true),
-                pHLogH(fillAll: true)
+                .concentrationToMolesAndVolume(
+                    concentration: .init(.hydroxide, isFilled: true),
+                    moles: .init(.titrant, isFilled: true),
+                    firstVolume: .init(.equivalencePoint, isFilled: true),
+                    secondVolume: .init(.titrant, isFilled: true)
+                ),
+                pOHLogOH(fillAll: true)
+            ],
+            right: [
+                pHpOHSum(fillAll: true)
             ]
         )
     }
@@ -158,8 +219,104 @@ extension TitrationEquationSet {
         )
     }
 
+    private static func pOHLogOH(fillAll: Bool) -> TitrationEquation {
+        .pConcentration(
+            pValue: .init(.hydroxide, isFilled: fillAll),
+            concentration: .init(.hydroxide, isFilled: fillAll)
+        )
+    }
+
     private static func pHToHydroxide(fillAll: Bool) -> TitrationEquation {
         .pHToHydroxide(pH: .hydrogen, hydroxideConcentration: .hydroxide)
+    }
+
+    private static func kAToConcentration(
+        fillSubstance: Bool,
+        fillAll: Bool
+    ) -> TitrationEquation {
+        .kToConcentration(
+            kValue: .init(.kA, isFilled: fillAll),
+            firstNumeratorConcentration: .init(.hydrogen, isFilled: fillAll),
+            secondNumeratorConcentration: .init(.secondary, isFilled: fillAll),
+            denominatorConcentration: .init(.substance, isFilled: fillSubstance || fillAll)
+        )
+    }
+
+    private static func kBToConcentration() -> TitrationEquation {
+        .kToConcentration(
+            kValue: .init(.kB, isFilled: true),
+            firstNumeratorConcentration: .init(.hydroxide, isFilled: true),
+            secondNumeratorConcentration: .init(.substance, isFilled: true),
+            denominatorConcentration: .init(.secondary, isFilled: true)
+        )
+    }
+
+    private static func pHToPKa(
+        fillSubstance: Bool,
+        fillAll: Bool
+    ) -> TitrationEquation {
+        .pKLog(
+            pConcentration: .init(.hydrogen, isFilled: fillAll),
+            pK: .init(.kA, isFilled: fillAll),
+            numeratorConcentration: .init(.secondary, isFilled: fillAll),
+            denominatorConcentration: .init(.substance, isFilled: fillSubstance || fillAll)
+        )
+    }
+
+    private static func pKa(fillAll: Bool) -> TitrationEquation {
+        .pToLogK(
+            pValue: .init(.kA, isFilled: fillAll),
+            kValue: .init(.kA, isFilled: fillAll)
+        )
+    }
+
+    private static func initialSubstanceMoles(fillAll: Bool) -> TitrationEquation {
+        .molesToConcentration(
+            moles: .init(.initialSubstance, isFilled: fillAll),
+            concentration: .init(.initialSubstance, isFilled: fillAll),
+            volume: .init(.substance, isFilled: true)
+        )
+    }
+
+    private static func substanceMolesDifference(fillTitrant: Bool) -> TitrationEquation {
+        .molesDifference(
+            difference: .init(.substance, isFilled: true),
+            subtracting: .init(.initialSubstance, isFilled: true),
+            from: .init(.titrant, isFilled: fillTitrant)
+        )
+    }
+
+    private static func substanceConcentrationToMolesOverVolume(
+        fillVolume: Bool
+    ) -> TitrationEquation {
+        .concentrationToMolesAndVolume(
+            concentration: .init(.substance, isFilled: true),
+            moles: .init(.substance, isFilled: true),
+            firstVolume: .init(.initialSubstance, isFilled: true),
+            secondVolume: .init(.titrant, isFilled: fillVolume)
+        )
+    }
+
+    private static func secondaryConcentrationToMolesOverVolume(
+        fillVolume: Bool
+    ) -> TitrationEquation {
+        .concentrationToMolesAndVolume(
+            concentration: .init(.secondary, isFilled: true),
+            moles: .init(.initialSecondary, isFilled: true),
+            firstVolume: .init(.initialSubstance, isFilled: true),
+            secondVolume: .init(.titrant, isFilled: fillVolume)
+        )
+    }
+
+    private static func kWToKaAndKb() -> TitrationEquation {
+        .kW(kA: .init(.kA, isFilled: true), kB: .init(.kB, isFilled: true))
+    }
+
+    private static func pHpOHSum(fillAll: Bool) -> TitrationEquation {
+        .pSum(
+            firstPValue: .init(.hydrogen, isFilled: fillAll),
+            secondPValue: .init(.hydroxide, isFilled: fillAll)
+        )
     }
 }
 
