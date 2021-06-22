@@ -245,6 +245,7 @@
 		5773BCE2267A811C00E52C81 /* AcidAppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */; };
 		5773BCE4267A81BD00E52C81 /* AcidAppNavigationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */; };
 		57783C5D2682112800ACABE6 /* PLogKValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C5C2682112800ACABE6 /* PLogKValue.swift */; };
+		57783C602682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C5F2682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift */; };
 		57792CF1261AD69200C26CFF /* SolubleReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */; };
 		57792CF7261AD84D00C26CFF /* ReactionTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF6261AD84D00C26CFF /* ReactionTiming.swift */; };
 		57792CFE261B71CD00C26CFF /* SolubilityEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CFD261B71CD00C26CFF /* SolubilityEquationView.swift */; };
@@ -938,6 +939,7 @@
 		57778B7E259368B800254262 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		57778B8925937D8C00254262 /* QuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTests.swift; sourceTree = "<group>"; };
 		57783C5C2682112800ACABE6 /* PLogKValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLogKValue.swift; sourceTree = "<group>"; };
+		57783C5F2682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePreparationModel.swift; sourceTree = "<group>"; };
 		57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleReactionSettings.swift; sourceTree = "<group>"; };
 		57792CF6261AD84D00C26CFF /* ReactionTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTiming.swift; sourceTree = "<group>"; };
 		57792CFD261B71CD00C26CFF /* SolubilityEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityEquationView.swift; sourceTree = "<group>"; };
@@ -2278,6 +2280,14 @@
 			path = questions;
 			sourceTree = "<group>";
 		};
+		57783C5E2682157300ACABE6 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				57783C5F2682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
 		57792CFC261B70E000C26CFF /* solubility */ = {
 			isa = PBXGroup;
 			children = (
@@ -2357,6 +2367,7 @@
 		5786BD00267B223B001A165C /* titration */ = {
 			isa = PBXGroup;
 			children = (
+				57783C5E2682157300ACABE6 /* components */,
 				5786BD01267B224A001A165C /* TitrationComponents.swift */,
 				5786BD09267B37C4001A165C /* TitrationViewModel.swift */,
 				577C5024267F215A003DAD17 /* TitrationPhase2Components.swift */,
@@ -3811,6 +3822,7 @@
 				577C506226811E52003DAD17 /* KaKbRelation.swift in Sources */,
 				577C506426811FCD003DAD17 /* MolesDifference.swift in Sources */,
 				577C505C2681081D003DAD17 /* PLogConcentration.swift in Sources */,
+				57783C602682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift in Sources */,
 				5797DE1C26738615003F589F /* BufferSharedComponents.swift in Sources */,
 				570A7671266CFF0D009329FB /* BufferBeaker.swift in Sources */,
 				574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */,

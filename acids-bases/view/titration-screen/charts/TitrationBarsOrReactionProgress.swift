@@ -8,13 +8,12 @@ import ReactionsCore
 struct TitrationBarsOrReactionProgress: View {
 
     let layout: TitrationScreenLayout
-    @ObservedObject var model: TitrationViewModel
-    @ObservedObject var phase1Model: TitrationStrongSubstancePhase1Model
+    @ObservedObject var strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
 
     var body: some View {
         BarChart(
-            data: phase1Model.barChartData,
-            time: CGFloat(phase1Model.substanceAdded),
+            data: strongSubstancePreparationModel.barChartData,
+            time: CGFloat(strongSubstancePreparationModel.substanceAdded),
             settings: layout.common.barChartSettings
         )
     }

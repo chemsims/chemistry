@@ -12,12 +12,13 @@ struct TitrationChartStack: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            TitrationPhChart(layout: layout)
+            TitrationPhChart(
+                layout: layout
+            )
             Spacer(minLength: 0)
             TitrationBarsOrReactionProgress(
                 layout: layout,
-                model: model,
-                phase1Model: model.strongSubstancePhase1Model
+                strongSubstancePreparationModel: model.strongSubstancePreparationModel
             )
         }
     }

@@ -66,7 +66,7 @@ private class SetStatement: TitrationScreenState {
 private class SelectSubstance: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
-        model.inputState = .selectSubstance
+        model.inputState = .addTitrant
     }
 
     override func unapply(on model: TitrationViewModel) {

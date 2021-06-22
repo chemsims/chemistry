@@ -194,7 +194,7 @@ public struct Log10Equation: Equation {
 
     public func getY(at x: CGFloat) -> CGFloat {
         let value = underlying.getY(at: x)
-        return value == 0 ? 0 : log10(value)
+        return value <= 0 ? 0 : log10(value)
     }
 }
 

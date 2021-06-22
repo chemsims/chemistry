@@ -15,7 +15,7 @@ struct TitrationBeaker: View {
             TitrationBeakerMolecules(
                 layout: layout,
                 model: model,
-                phase1Model: model.strongSubstancePhase1Model
+                strongSubstancePreparationModel: model.strongSubstancePreparationModel
             )
 
             molecules
@@ -23,7 +23,6 @@ struct TitrationBeaker: View {
             TitrationBeakerTools(
                 layout: layout,
                 model: model,
-                components: model.components,
                 shakeModel: model.shakeModel,
                 dropperEmitModel: model.dropperEmitModel,
                 buretteEmitModel: model.buretteEmitModel
@@ -45,7 +44,6 @@ struct TitrationBeaker: View {
 private struct TitrationBeakerTools: View {
     let layout: TitrationScreenLayout
     @ObservedObject var model: TitrationViewModel
-    @ObservedObject var components: TitrationComponents
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<TitrationViewModel.TempMolecule>
 
     let dropperEmitModel: MoleculeEmittingViewModel
@@ -272,12 +270,12 @@ private struct TitrationBeakerMolecules: View {
 
     let layout: TitrationScreenLayout
     @ObservedObject var model: TitrationViewModel
-    @ObservedObject var phase1Model: TitrationStrongSubstancePhase1Model
+    @ObservedObject var strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
 
     var body: some View {
         AdjustableFluidBeaker(
             rows: $model.rows,
-            molecules: [phase1Model.primaryIonCoords],
+            molecules: [strongSubstancePreparationModel.primaryIonCoords],
             animatingMolecules: [],
             currentTime: 0,
             settings: layout.common.adjustableBeakerSettings,
