@@ -10,7 +10,7 @@ private typealias BoxWidthTextLine = TitrationEquationView.BoxWidthTextLine
 private typealias Placeholder = TitrationEquationView.PlaceholderTermView
 
 extension TitrationEquationView {
-    struct MoleSumDefinition: View {
+    struct MolesDifferenceDefinition: View {
 
         let data: TitrationEquationData
         let molesDifference: Term.Moles
@@ -30,7 +30,7 @@ extension TitrationEquationView {
         }
     }
 
-    struct MoleSumFilled: View {
+    struct MolesDifferenceFilled: View {
 
         let data: TitrationEquationData
         let molesDifference: Term.Placeholder<Term.Moles>
@@ -54,20 +54,20 @@ extension TitrationEquationView {
 struct TitrationEquationMoleSum_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TitrationEquationView.MoleSumDefinition(
+            TitrationEquationView.MolesDifferenceDefinition(
                 data: .preview,
                 molesDifference: .substance,
                 subtractingMoles: .titrant,
                 fromMoles: .initialSubstance
             )
 
-            TitrationEquationView.MoleSumFilled(
+            TitrationEquationView.MolesDifferenceFilled(
                 data: .preview,
                 molesDifference: .init(.substance, isFilled: false),
                 subtractingMoles: .init(.titrant, isFilled: false),
                 fromMoles: .init(.initialSubstance, isFilled: false)
             )
-            TitrationEquationView.MoleSumFilled(
+            TitrationEquationView.MolesDifferenceFilled(
                 data: .preview,
                 molesDifference: .init(.substance, isFilled: true),
                 subtractingMoles: .init(.titrant, isFilled: true),

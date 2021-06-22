@@ -12,10 +12,10 @@ private typealias Placeholder = TitrationEquationView.PlaceholderTermView
 
 extension TitrationEquationView {
     
-    struct PhLogOHDefinition: View {
+    struct PLogComplementConcentrationDefinition: View {
         let data: TitrationEquationData
         let pH: Term.PValue
-        let pOH: Term.PValue
+        let concentration: Term.Concentration
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
@@ -24,25 +24,34 @@ extension TitrationEquationView {
                 FixedText("=")
                 FixedText("14")
                 FixedText("+")
-                BoxWidthTextLine(data: data, value: pOH)
+                HStack(spacing: 0) {
+                    FixedText("log")
+                    BoxWidthTextLine(data: data, value: concentration)
+                }
             }
             .font(.system(size: layout.fontSize))
+            .minimumScaleFactor(layout.minScaleFactor)
+            .lineLimit(1)
         }
     }
 
-    struct PhLogOHFilled: View {
+    struct PLogComplementConcentrationDefinitionFilled: View {
         let data: TitrationEquationData
-        let pH: Term.Placeholder<Term.PValue>
-        let pOH: Term.Placeholder<Term.PValue>
+        let pValue: Term.Placeholder<Term.PValue>
+        let concentration: Term.Placeholder<Term.Concentration>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
-                Placeholder(data: data, value: pH)
+                Placeholder(data: data, value: pValue)
                 FixedText("=")
                 FixedText("14")
                 FixedText("+")
-                Placeholder(data: data, value: pOH)
+                HStack(spacing: 0) {
+                    FixedText("log(")
+                    Placeholder(data: data, value: concentration)
+                    FixedText(")")
+                }
             }
             .font(.system(size: layout.fontSize))
         }
@@ -52,22 +61,22 @@ extension TitrationEquationView {
 struct TitrationEquationPhLogOh_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TitrationEquationView.PhLogOHDefinition(
+            TitrationEquationView.PLogComplementConcentrationDefinition(
                 data: .preview,
                 pH: .hydrogen,
-                pOH: .hydroxide
+                concentration: .hydroxide
             )
 
-            TitrationEquationView.PhLogOHFilled(
+            TitrationEquationView.PLogComplementConcentrationDefinitionFilled(
                 data: .preview,
-                pH: .init(.hydrogen, isFilled: false),
-                pOH: .init(.hydroxide, isFilled: false)
+                pValue: .init(.hydrogen, isFilled: false),
+                concentration: .init(.hydroxide, isFilled: false)
             )
 
-            TitrationEquationView.PhLogOHFilled(
+            TitrationEquationView.PLogComplementConcentrationDefinitionFilled(
                 data: .preview,
-                pH: .init(.hydrogen, isFilled: true),
-                pOH: .init(.hydroxide, isFilled: true)
+                pValue: .init(.hydrogen, isFilled: true),
+                concentration: .init(.hydroxide, isFilled: true)
             )
         }
         .previewLayout(.sizeThatFits)

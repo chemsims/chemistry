@@ -11,7 +11,7 @@ private typealias BoxWidthTextLine = TitrationEquationView.BoxWidthTextLine
 private typealias Placeholder = TitrationEquationView.PlaceholderTermView
 
 extension TitrationEquationView {
-    struct MolesToVolumeDefinition: View {
+    struct MolesToConcentrationDefinition: View {
         let data: TitrationEquationData
         let moles: Term.Moles
         let concentration: Term.Concentration
@@ -30,7 +30,7 @@ extension TitrationEquationView {
         }
     }
 
-    struct MolesToVolumeFilled: View {
+    struct MolesToConcentrationFilled: View {
         let data: TitrationEquationData
         let moles: Term.Placeholder<Term.Moles>
         let concentration: Term.Placeholder<Term.Concentration>
@@ -53,21 +53,21 @@ extension TitrationEquationView {
 struct TitrationEquationMolesToVolume_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TitrationEquationView.MolesToVolumeDefinition(
+            TitrationEquationView.MolesToConcentrationDefinition(
                 data: .preview,
                 moles: .hydrogen,
                 concentration: .hydrogen,
                 volume: .hydrogen
             )
 
-            TitrationEquationView.MolesToVolumeFilled(
+            TitrationEquationView.MolesToConcentrationFilled(
                 data: .preview,
                 moles: .init(.hydrogen, isFilled: false),
                 concentration: .init(.hydrogen, isFilled: false),
                 volume: .init(.hydrogen, isFilled: false)
             )
 
-            TitrationEquationView.MolesToVolumeFilled(
+            TitrationEquationView.MolesToConcentrationFilled(
                 data: .preview,
                 moles: .init(.hydrogen, isFilled: true),
                 concentration: .init(.hydrogen, isFilled: true),

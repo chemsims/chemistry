@@ -10,13 +10,13 @@ enum TitrationEquation {
     typealias Placeholder = Term.Placeholder
 
 
-    case molesToVolume(
+    case molesToMolarity(
             moles: Placeholder<Term.Moles>,
             volume: Placeholder<Term.Volume>,
             molarity: Placeholder<Term.Molarity>
          )
 
-    case concentrationToMolesAndVolume(
+    case concentrationToMolesOverVolume(
             concentration: Placeholder<Term.Concentration>,
             moles: Placeholder<Term.Moles>,
             firstVolume: Placeholder<Term.Volume>,
@@ -63,7 +63,7 @@ enum TitrationEquation {
             volume: Placeholder<Term.Volume>
          )
 
-    case concentrationToMolesOverVolume(
+    case concentrationToMolesDifferenceOverVolume(
             concentration: Term.Placeholder<Term.Concentration>,
             subtractingMoles: Term.Placeholder<Term.Moles>,
             fromMoles: Term.Placeholder<Term.Moles>,
@@ -71,7 +71,10 @@ enum TitrationEquation {
             secondVolume: Term.Placeholder<Term.Volume>
          )
 
-    case pHToHydroxide(pH: Term.PValue, hydroxideConcentration: Term.Concentration)
+    case pLogComplementConcentration(
+            pValue: Placeholder<Term.PValue>,
+            concentration: Placeholder<Term.Concentration>
+         )
 
     indirect case filled(_ underlying: TitrationEquation)
 }
@@ -79,15 +82,15 @@ enum TitrationEquation {
 extension TitrationEquation: Identifiable {
     var id: Int {
         switch self {
-        case .concentrationToMolesAndVolume: return 0
-        case .concentrationToMolesOverVolume: return 1
+        case .concentrationToMolesOverVolume: return 0
+        case .concentrationToMolesDifferenceOverVolume: return 1
         case .kToConcentration: return 2
         case .kW: return 3
         case .molesDifference: return 4
         case .molesToConcentration: return 5
-        case .molesToVolume: return 6
+        case .molesToMolarity: return 6
         case .pConcentration: return 7
-        case .pHToHydroxide: return 8
+        case .pLogComplementConcentration: return 8
         case .pKLog: return 9
         case .pSum: return 10
         case .pToLogK: return 11

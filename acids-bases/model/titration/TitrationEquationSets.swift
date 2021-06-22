@@ -152,7 +152,7 @@ extension TitrationEquationSet {
         Self.setWithFilled(
             left: [
                 titrantMoles(fillMolarity: true, fillAll: true),
-                .concentrationToMolesAndVolume(
+                .concentrationToMolesOverVolume(
                     concentration: .init(.hydroxide, isFilled: true),
                     moles: .init(.titrant, isFilled: true),
                     firstVolume: .init(.equivalencePoint, isFilled: true),
@@ -229,7 +229,7 @@ extension TitrationEquationSet {
 // MARK: Common equations
 extension TitrationEquationSet {
     private static func substanceMoles(fillAll: Bool) -> TitrationEquation {
-        .molesToVolume(
+        .molesToMolarity(
             moles: .init(.substance, isFilled: fillAll),
             volume: .init(.substance, isFilled: true),
             molarity: .init(.substance, isFilled: fillAll)
@@ -237,7 +237,7 @@ extension TitrationEquationSet {
     }
 
     private static func titrantMoles(fillMolarity: Bool, fillAll: Bool) -> TitrationEquation {
-        .molesToVolume(
+        .molesToMolarity(
             moles: .init(.titrant, isFilled: fillAll),
             volume: .init(.titrant, isFilled: fillMolarity || fillAll),
             molarity: .init(.titrant, isFilled: fillAll)
@@ -249,7 +249,7 @@ extension TitrationEquationSet {
         fillSubstanceAndConcentration: Bool,
         fillTitrant: Bool
     ) -> TitrationEquation {
-        .concentrationToMolesOverVolume(
+        .concentrationToMolesDifferenceOverVolume(
             concentration: .init(concentration, isFilled: fillSubstanceAndConcentration),
             subtractingMoles: .init(.titrant, isFilled: fillTitrant),
             fromMoles: .init(.substance, isFilled: fillSubstanceAndConcentration),
@@ -262,7 +262,7 @@ extension TitrationEquationSet {
         _ concentration: TitrationEquationTerm.Concentration,
         fillAll: Bool
     ) -> TitrationEquation {
-        .concentrationToMolesOverVolume(
+        .concentrationToMolesDifferenceOverVolume(
             concentration: .init(.secondary, isFilled: fillAll),
             subtractingMoles: .init(.substance, isFilled: fillAll),
             fromMoles: .init(.titrant, isFilled: fillAll),
@@ -286,7 +286,10 @@ extension TitrationEquationSet {
     }
 
     private static func pHToHydroxide(fillAll: Bool) -> TitrationEquation {
-        .pHToHydroxide(pH: .hydrogen, hydroxideConcentration: .hydroxide)
+        .pLogComplementConcentration(
+            pValue: .init(.hydrogen, isFilled: fillAll),
+            concentration: .init(.hydroxide, isFilled: fillAll)
+        )
     }
 
     private static func kAToConcentration(
@@ -379,7 +382,7 @@ extension TitrationEquationSet {
     private static func substanceConcentrationToMolesOverVolume(
         fillVolume: Bool
     ) -> TitrationEquation {
-        .concentrationToMolesAndVolume(
+        .concentrationToMolesOverVolume(
             concentration: .init(.substance, isFilled: true),
             moles: .init(.substance, isFilled: true),
             firstVolume: .init(.initialSubstance, isFilled: true),
@@ -390,7 +393,7 @@ extension TitrationEquationSet {
     private static func secondaryConcentrationToMolesOverVolume(
         fillVolume: Bool
     ) -> TitrationEquation {
-        .concentrationToMolesAndVolume(
+        .concentrationToMolesOverVolume(
             concentration: .init(.secondary, isFilled: true),
             moles: .init(.initialSecondary, isFilled: true),
             firstVolume: .init(.initialSubstance, isFilled: true),
@@ -401,7 +404,7 @@ extension TitrationEquationSet {
     private static func concentrationToMolesOverVolume(
         _ concentration: TitrationEquationTerm.Concentration
     ) -> TitrationEquation {
-        .concentrationToMolesAndVolume(
+        .concentrationToMolesOverVolume(
             concentration: .init(concentration, isFilled: true),
             moles: .init(.titrant, isFilled: true),
             firstVolume: .init(.equivalencePoint, isFilled: true),
@@ -450,7 +453,7 @@ struct Foo {
     static let titrantMolesMolarityAllFilled = titrantMoles(fillMolarity: true, fillAll: true)
 
     private static func substanceMoles(fillAll: Bool) -> TitrationEquation {
-        .molesToVolume(
+        .molesToMolarity(
             moles: .init(.substance, isFilled: fillAll),
             volume: .init(.substance, isFilled: true),
             molarity: .init(.substance, isFilled: fillAll)
@@ -458,7 +461,7 @@ struct Foo {
     }
 
     private static func titrantMoles(fillMolarity: Bool, fillAll: Bool) -> TitrationEquation {
-        .molesToVolume(
+        .molesToMolarity(
             moles: .init(.titrant, isFilled: fillAll),
             volume: .init(.titrant, isFilled: fillMolarity || fillAll),
             molarity: .init(.titrant, isFilled: fillAll)
@@ -469,7 +472,7 @@ struct Foo {
         fillSubstanceAndHydrogen: Bool,
         fillTitrant: Bool
     ) -> TitrationEquation {
-        .concentrationToMolesOverVolume(
+        .concentrationToMolesDifferenceOverVolume(
             concentration: .init(.hydrogen, isFilled: fillSubstanceAndHydrogen),
             subtractingMoles: .init(.titrant, isFilled: fillTitrant),
             fromMoles: .init(.substance, isFilled: fillSubstanceAndHydrogen),

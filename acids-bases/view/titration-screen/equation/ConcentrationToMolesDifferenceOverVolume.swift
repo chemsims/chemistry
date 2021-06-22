@@ -10,7 +10,7 @@ private typealias BoxWidthTextLine = TitrationEquationView.BoxWidthTextLine
 private typealias Placeholder = TitrationEquationView.PlaceholderTermView
 
 extension TitrationEquationView {
-    struct ConcentrationToMolesOverVolumeDefinition: View {
+    struct ConcentrationToMolesDifferenceOverVolumeDefinition: View {
 
         let data: TitrationEquationData
         let concentration: Term.Concentration
@@ -43,7 +43,7 @@ extension TitrationEquationView {
         }
     }
 
-    struct ConcentrationToMolesOverVolumeFilled: View {
+    struct ConcentrationToMolesDifferenceOverVolumeFilled: View {
 
         let data: TitrationEquationData
         let concentration: Term.Placeholder<Term.Concentration>
@@ -80,7 +80,7 @@ extension TitrationEquationView {
 struct TitrationEquationConcentrationToMolesOverVolume_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            TitrationEquationView.ConcentrationToMolesOverVolumeDefinition(
+            TitrationEquationView.ConcentrationToMolesDifferenceOverVolumeDefinition(
                 data: .preview,
                 concentration: .hydrogen,
                 subtractingMoles: .hydrogen,
@@ -89,7 +89,7 @@ struct TitrationEquationConcentrationToMolesOverVolume_Previews: PreviewProvider
                 secondVolume: .equivalencePoint
             )
 
-            TitrationEquationView.ConcentrationToMolesOverVolumeFilled(
+            TitrationEquationView.ConcentrationToMolesDifferenceOverVolumeFilled(
                 data: .preview,
                 concentration: .init(.hydrogen, isFilled: false),
                 subtractingMoles: .init(.hydrogen, isFilled: false),
@@ -98,7 +98,7 @@ struct TitrationEquationConcentrationToMolesOverVolume_Previews: PreviewProvider
                 secondVolume: .init(.equivalencePoint, isFilled: false)
             )
 
-            TitrationEquationView.ConcentrationToMolesOverVolumeFilled(
+            TitrationEquationView.ConcentrationToMolesDifferenceOverVolumeFilled(
                 data: .preview,
                 concentration: .init(.hydrogen, isFilled: true),
                 subtractingMoles: .init(.hydrogen, isFilled: true),
