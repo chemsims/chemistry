@@ -11,13 +11,21 @@ class TitrationViewModel: ObservableObject {
         let initialRows = AcidAppSettings.initialRows
         let initialSubstance = AcidOrBase.strongAcids.first!
         self.rows = CGFloat(initialRows)
-        self.strongSubstancePreparationModel = TitrationStrongSubstancePreparationModel(
+
+        let strongSubstancePreparationModel = TitrationStrongSubstancePreparationModel(
             substance: initialSubstance,
             titrant: "KOH",
             cols: MoleculeGridSettings.cols,
             rows: AcidAppSettings.initialRows,
             settings: .standard
         )
+        let strongSubstancePreEPModel = TitrationStrongSubstancePreEPModel(previous: strongSubstancePreparationModel)
+        let strongSubstancePostEPModel = TitrationStrongSubstancePostEPModel(previous: strongSubstancePreEPModel)
+
+        self.strongSubstancePreparationModel = strongSubstancePreparationModel
+        self.strongSubstancePreEPModel = strongSubstancePreEPModel
+        self.strongSubstancePostEPModel = strongSubstancePostEPModel
+
 
         self.shakeModel = MultiContainerShakeViewModel(
             canAddMolecule: { _ in true },
@@ -40,8 +48,11 @@ class TitrationViewModel: ObservableObject {
     @Published var rows: CGFloat
     @Published var inputState = InputState.none
     @Published var equationState = EquationState.strongSubstanceBlank
+    @Published var reactionPhase = ReactionPhase.strongSubstancePreparation
 
-    let strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
+    var strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
+    var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
+    var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
 
     private(set) var navigation: NavigationModel<TitrationScreenState>!
     var shakeModel: MultiContainerShakeViewModel<TempMolecule>!
@@ -75,6 +86,14 @@ extension TitrationViewModel {
     }
 
     func incrementTitrant(count: Int) {
+        switch reactionPhase {
+        case .strongSubstancePreEP:
+            strongSubstancePreEPModel.incrementTitrant(count: count)
+        case .strongSubstancePostEP:
+            strongSubstancePostEPModel.incrementTitrant(count: count)
+        default: break
+        }
+
     }
 }
 
@@ -91,7 +110,9 @@ extension TitrationViewModel {
 
     enum EquationState {
         case strongSubstanceBlank,
-            strongSubstanceAddingSubstance
+             strongSubstanceAddingSubstance,
+             strongSubstancePreEPFilled,
+             strongSubstancePostEP
 
         var equationSet: TitrationEquationSet {
             switch self {
@@ -108,7 +129,22 @@ extension TitrationViewModel {
                     fillTitrantMolarity: false,
                     fillAll: false
                 )
+
+            case .strongSubstancePreEPFilled:
+                return .strongAcidPreEP(
+                    fillSubstanceAndHydrogen: true,
+                    fillTitrantMolarity: true,
+                    fillAll: true
+                )
+
+            case .strongSubstancePostEP: return .strongAcidPostEP
             }
         }
+    }
+
+    enum ReactionPhase {
+        case strongSubstancePreparation,
+             strongSubstancePreEP,
+             strongSubstancePostEP
     }
 }

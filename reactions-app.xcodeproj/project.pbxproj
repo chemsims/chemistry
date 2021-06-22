@@ -246,6 +246,8 @@
 		5773BCE4267A81BD00E52C81 /* AcidAppNavigationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */; };
 		57783C5D2682112800ACABE6 /* PLogKValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C5C2682112800ACABE6 /* PLogKValue.swift */; };
 		57783C602682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C5F2682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift */; };
+		57783C622682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C612682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift */; };
+		57783C6426824CE300ACABE6 /* TitrationStrongSubstancePostEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C6326824CE300ACABE6 /* TitrationStrongSubstancePostEPModel.swift */; };
 		57792CF1261AD69200C26CFF /* SolubleReactionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */; };
 		57792CF7261AD84D00C26CFF /* ReactionTiming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CF6261AD84D00C26CFF /* ReactionTiming.swift */; };
 		57792CFE261B71CD00C26CFF /* SolubilityEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57792CFD261B71CD00C26CFF /* SolubilityEquationView.swift */; };
@@ -940,6 +942,8 @@
 		57778B8925937D8C00254262 /* QuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTests.swift; sourceTree = "<group>"; };
 		57783C5C2682112800ACABE6 /* PLogKValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLogKValue.swift; sourceTree = "<group>"; };
 		57783C5F2682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePreparationModel.swift; sourceTree = "<group>"; };
+		57783C612682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePreEPModel.swift; sourceTree = "<group>"; };
+		57783C6326824CE300ACABE6 /* TitrationStrongSubstancePostEPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePostEPModel.swift; sourceTree = "<group>"; };
 		57792CF0261AD69200C26CFF /* SolubleReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleReactionSettings.swift; sourceTree = "<group>"; };
 		57792CF6261AD84D00C26CFF /* ReactionTiming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionTiming.swift; sourceTree = "<group>"; };
 		57792CFD261B71CD00C26CFF /* SolubilityEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityEquationView.swift; sourceTree = "<group>"; };
@@ -2284,6 +2288,8 @@
 			isa = PBXGroup;
 			children = (
 				57783C5F2682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift */,
+				57783C612682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift */,
+				57783C6326824CE300ACABE6 /* TitrationStrongSubstancePostEPModel.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -3817,6 +3823,7 @@
 				57CD325A26724DBD00C94109 /* BufferEquationView.swift in Sources */,
 				5739D0AF2664B65A0007B09A /* IntroRightStack.swift in Sources */,
 				577BC7772679DC79005BE5C8 /* ChargedSymbolView.swift in Sources */,
+				57783C6426824CE300ACABE6 /* TitrationStrongSubstancePostEPModel.swift in Sources */,
 				57F88858267E170800609671 /* TitrationBarsOrReactionProgress.swift in Sources */,
 				571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */,
 				577C506226811E52003DAD17 /* KaKbRelation.swift in Sources */,
@@ -3829,6 +3836,7 @@
 				577C5029267F38EC003DAD17 /* TitrationStatements.swift in Sources */,
 				5786BD08267B37A7001A165C /* TitrationScreen.swift in Sources */,
 				57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */,
+				57783C622682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift in Sources */,
 				57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */,
 				5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */,
 				5773BCE0267A7EBF00E52C81 /* AcidAppQuestionSet.swift in Sources */,

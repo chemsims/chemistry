@@ -15,7 +15,9 @@ struct TitrationBeaker: View {
             TitrationBeakerMolecules(
                 layout: layout,
                 model: model,
-                strongSubstancePreparationModel: model.strongSubstancePreparationModel
+                strongSubstancePreparationModel: model.strongSubstancePreparationModel,
+                strongSubstancePreEPModel: model.strongSubstancePreEPModel,
+                strongSubstancePostEPModel: model.strongSubstancePostEPModel
             )
 
             molecules
@@ -271,19 +273,46 @@ private struct TitrationBeakerMolecules: View {
     let layout: TitrationScreenLayout
     @ObservedObject var model: TitrationViewModel
     @ObservedObject var strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
+    @ObservedObject var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
+    @ObservedObject var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
 
     var body: some View {
         AdjustableFluidBeaker(
             rows: $model.rows,
-            molecules: [strongSubstancePreparationModel.primaryIonCoords],
-            animatingMolecules: [],
-            currentTime: 0,
+            molecules: molecules,
+            animatingMolecules: animatingMolecules,
+            currentTime: equationInput,
             settings: layout.common.adjustableBeakerSettings,
             canSetLevel: model.inputState == .setWaterLevel,
             beakerColorMultiply: .white,
             sliderColorMultiply: .white,
             beakerModifier: BeakerAccessibilityModifier()
         )
+    }
+
+    private var molecules: [BeakerMolecules] {
+        switch model.reactionPhase {
+        case .strongSubstancePreparation: return [strongSubstancePreparationModel.primaryIonCoords]
+        case .strongSubstancePostEP: return [strongSubstancePostEPModel.titrantMolecules]
+        case .strongSubstancePreEP: return []
+        }
+    }
+
+    private var animatingMolecules: [AnimatingBeakerMolecules] {
+        switch model.reactionPhase {
+        case .strongSubstancePreEP:
+            return [strongSubstancePreEPModel.primaryIonCoords]
+        case .strongSubstancePreparation: return []
+        case .strongSubstancePostEP: return []
+        }
+    }
+
+    private var equationInput: CGFloat {
+        switch model.reactionPhase {
+        case .strongSubstancePreEP: return CGFloat(strongSubstancePreEPModel.substanceAdded)
+        case.strongSubstancePreparation: return 0
+        case .strongSubstancePostEP: return 0
+        }
     }
 }
 

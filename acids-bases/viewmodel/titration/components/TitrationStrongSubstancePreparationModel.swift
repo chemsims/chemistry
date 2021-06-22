@@ -5,6 +5,11 @@
 import SwiftUI
 import ReactionsCore
 
+/// Returns log base 10 of the value if it is above 0, else returns 0
+func safeLog10(_ value: CGFloat) -> CGFloat {
+    value <= 0 ? 0 : log10(value)
+}
+
 class TitrationStrongSubstancePreparationModel: ObservableObject {
 
     init(
@@ -122,7 +127,7 @@ extension TitrationStrongSubstancePreparationModel {
         )
     }
 
-    private var moles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
+    var moles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
         .init {
             switch $0 {
             case .hydrogen: return 0
@@ -137,7 +142,7 @@ extension TitrationStrongSubstancePreparationModel {
         }
     }
 
-    private var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
+    var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
         .init {
             switch $0 {
             case .hydrogen: return 0
@@ -160,7 +165,7 @@ extension TitrationStrongSubstancePreparationModel {
         }
     }
 
-    private var concentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
+    var concentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
         .init {
             switch $0 {
             case .hydrogen:
@@ -176,21 +181,17 @@ extension TitrationStrongSubstancePreparationModel {
     }
 
     private var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        // TODO put this somewhere common
-        func safeLog(_ value: CGFloat) -> CGFloat {
-            value <= 0 ? 0 : -log10(value)
-        }
-        return .init {
+        .init {
             switch $0 {
-            case .hydrogen: return safeLog(concentration.value(for: .hydrogen))
-            case .hydroxide: return safeLog(concentration.value(for: .hydroxide))
+            case .hydrogen: return -safeLog10(concentration.value(for: .hydrogen))
+            case .hydroxide: return -safeLog10(concentration.value(for: .hydroxide))
             case .kA: return substance.pKA
             case .kB: return substance.pKB
             }
         }
     }
 
-    private var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
+    var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
         .init {
             switch $0 {
             case .kA: return substance.kA
