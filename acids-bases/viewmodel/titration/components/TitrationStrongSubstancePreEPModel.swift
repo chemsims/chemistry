@@ -162,6 +162,10 @@ extension TitrationStrongSubstancePreEPModel {
         }
     }
 
+    var pH: Equation {
+        -1 * Log10Equation(underlying: hydrogenConcentrationEquation)
+    }
+
     private var initialSubstanceMolarity: CGFloat {
         previous.molarity.value(for: .substance)
     }
@@ -175,11 +179,16 @@ extension TitrationStrongSubstancePreEPModel {
     }
 
     private var hydrogenConcentration: CGFloat {
+        hydrogenConcentrationEquation
+            .getY(at: CGFloat(substanceAdded))
+    }
+
+    private var hydrogenConcentrationEquation: Equation {
         LinearEquation(
             x1: 0,
             y1: previous.concentration.value(for: .hydrogen),
             x2: CGFloat(maxSubstance),
             y2: 1e-7
-        ).getY(at: CGFloat(substanceAdded))
+        )
     }
 }

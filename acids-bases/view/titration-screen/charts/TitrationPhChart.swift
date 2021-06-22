@@ -8,20 +8,23 @@ import ReactionsCore
 struct TitrationPhChart: View {
 
     let layout: TitrationScreenLayout
+    let phase: TitrationViewModel.ReactionPhase
+    @ObservedObject var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
+    @ObservedObject var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
 
     var body: some View {
         TimeChartView(
             data: [
                 TimeChartDataLine(
-                    equation: ConstantEquation(value: 10),
+                    equation: phEquation,
                     headColor: .purple,
                     haloColor: nil,
                     headRadius: layout.common.chartHeadRadius
                 )
             ],
             initialTime: 0,
-            currentTime: .constant(0.5),
-            finalTime: 1,
+            currentTime: .constant(equationInput),
+            finalTime: maxEquationInput,
             canSetCurrentTime: false,
             settings: .init(
                 xAxis: xAxis,
@@ -48,8 +51,38 @@ struct TitrationPhChart: View {
             minValuePosition: 0.1 * layout.common.chartSize,
             maxValuePosition: 0.9 * layout.common.chartSize,
             minValue: 0,
-            maxValue: 1
+            maxValue: maxEquationInput
         )
+    }
+
+    private var phEquation: Equation {
+        SwitchingEquation(
+            thresholdX: CGFloat(strongSubstancePreEPModel.maxSubstance),
+            underlyingLeft: strongSubstancePreEPModel.pH,
+            underlyingRight: RightHandPhEquation(
+                underlying: strongSubstancePostEPModel.pH,
+                equivalencePointSubstance: strongSubstancePreEPModel.maxSubstance
+            )
+        )
+    }
+
+    private var maxEquationInput: CGFloat {
+        CGFloat(strongSubstancePreEPModel.maxSubstance) + CGFloat(strongSubstancePostEPModel.maxTitrant)
+    }
+
+    private var equationInput: CGFloat {
+        if phase == .strongSubstancePreEP {
+            return CGFloat(strongSubstancePreEPModel.substanceAdded)
+        }
+        return CGFloat(strongSubstancePostEPModel.titrantAdded + strongSubstancePreEPModel.maxSubstance)
     }
 }
 
+private struct RightHandPhEquation: Equation {
+    let underlying: Equation
+    let equivalencePointSubstance: Int
+
+    func getY(at x: CGFloat) -> CGFloat {
+        underlying.getY(at: x - CGFloat(equivalencePointSubstance))
+    }
+}

@@ -195,6 +195,10 @@ extension TitrationStrongSubstancePostEPModel {
     var currentOh: CGFloat {
         ohConcentration.getY(at: CGFloat(maxTitrant))
     }
+
+    var pH: Equation {
+        14 + Log10Equation(underlying: ohConcentration)
+    }
 }
 
 // MARK: Input limits
