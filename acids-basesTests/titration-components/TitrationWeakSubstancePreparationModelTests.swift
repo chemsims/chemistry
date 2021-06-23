@@ -15,9 +15,9 @@ class TitrationWeakSubstancePreparationModelTests: XCTestCase {
             model.concentration.map { $0.getY(at: 0) }
         }
 
-        initialConcentrations.all.forEach { concentration in
-            XCTAssertEqual(concentration, 0)
-        }
+        XCTAssertEqual(initialConcentrations.value(for: .hydrogen), 0)
+        XCTAssertEqual(initialConcentrations.value(for: .secondary), 0)
+        XCTAssertEqual(initialConcentrations.value(for: .substance), 0)
 
         model.incrementSubstance(count: 20)
         XCTAssertEqual(initialConcentrations.value(for: .substance), 0.2)
@@ -44,6 +44,12 @@ class TitrationWeakSubstancePreparationModelTests: XCTestCase {
             finalConcentration.value(for: .initialSubstance),
             finalConcentration.value(for: .substance)
         )
+
+        // Check hydroxide
+        let expectedHydroxide = PrimaryIonConcentration.complementConcentration(
+            primaryConcentration: finalHydrogen
+        )
+        XCTAssertEqualWithTolerance(finalConcentration.value(for: .hydroxide), expectedHydroxide)
     }
 
     func testVolume() {
@@ -112,24 +118,24 @@ class TitrationWeakSubstancePreparationModelTests: XCTestCase {
             )
         )
 
-        model.extendedBarChartData.all.forEach { barChart in
+        model.barChartDataMap.all.forEach { barChart in
             XCTAssertEqual(barChart.equation.getY(at: 0), 0)
             XCTAssertEqual(barChart.equation.getY(at: 1), 0)
         }
 
         model.incrementSubstance(count: 20)
 
-        let substance = model.extendedBarChartData.value(for: .substance).equation
+        let substance = model.barChartDataMap.value(for: .substance).equation
         XCTAssertEqual(substance.getY(at: 0), 0.2)
 
         let changeInHeight: CGFloat = 0.05
         XCTAssertEqual(substance.getY(at: 1), 0.2 - changeInHeight)
 
-        let hydrogen = model.extendedBarChartData.value(for: .hydrogen).equation
+        let hydrogen = model.barChartDataMap.value(for: .hydrogen).equation
         XCTAssertEqual(hydrogen.getY(at: 0), 0)
         XCTAssertEqual(hydrogen.getY(at: 1), changeInHeight)
 
-        let secondary = model.extendedBarChartData.value(for: .secondaryIon).equation
+        let secondary = model.barChartDataMap.value(for: .secondaryIon).equation
         XCTAssertEqual(secondary.getY(at: 0), 0)
         XCTAssertEqual(secondary.getY(at: 1), changeInHeight)
     }

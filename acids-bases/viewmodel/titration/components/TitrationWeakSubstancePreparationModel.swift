@@ -63,7 +63,7 @@ extension TitrationWeakSubstancePreparationModel {
             case .substance, .initialSubstance: return substanceConcentration
             case .secondary, .initialSecondary: return ionConcentration
             case .hydrogen: return ionConcentration
-            case .hydroxide: return ConstantEquation(value: 0)
+            case .hydroxide: return ionConcentration.map(PrimaryIonConcentration.complementConcentration)
             }
         }
     }
@@ -164,7 +164,7 @@ extension TitrationWeakSubstancePreparationModel {
 // MARK: - Bar chart
 extension TitrationWeakSubstancePreparationModel {
     var barChartData: [BarChartData] {
-        let data = extendedBarChartData
+        let data = barChartDataMap
         return [
             data.value(for: .substance),
             data.value(for: .hydroxide),
@@ -173,7 +173,7 @@ extension TitrationWeakSubstancePreparationModel {
         ]
     }
 
-    var extendedBarChartData: EnumMap<ExtendedSubstancePart, BarChartData> {
+    var barChartDataMap: EnumMap<ExtendedSubstancePart, BarChartData> {
         .init {
             switch $0 {
             case .hydrogen: return BarChartData(

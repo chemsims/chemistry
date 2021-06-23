@@ -35,6 +35,7 @@ struct AcidConcentrationEquations {
         )
     }
 
+    // TODO - this should call the other method
     /// Returns a change in concentration, given the equation for Ka:
     /// Ka = [primary][secondary]/[substance]
     ///
