@@ -12,11 +12,13 @@ extension TitrationSettings {
     static func withDefaults(
         initialIonMoleculeFraction: CGFloat = standard.initialIonMoleculeFraction,
         minInitialIonBeakerMolecules: Int = standard.minInitialIonBeakerMolecules,
+        neutralSubstanceBarChartHeight: CGFloat = standard.neutralSubstanceBarChartHeight,
         beakerVolumeFromRows: Equation = standard.beakerVolumeFromRows
     ) -> TitrationSettings {
         self.init(
             initialIonMoleculeFraction: initialIonMoleculeFraction,
             minInitialIonBeakerMolecules: minInitialIonBeakerMolecules,
+            neutralSubstanceBarChartHeight: neutralSubstanceBarChartHeight,
             beakerVolumeFromRows: beakerVolumeFromRows
         )
     }

@@ -139,13 +139,19 @@ extension TitrationComponents {
 }
 
 struct TitrationSettings {
+
     let initialIonMoleculeFraction: CGFloat
     let minInitialIonBeakerMolecules: Int
+
+    /// Height of the bar chart when the solution is neutral. That is, when pH = pOH = 7.
+    let neutralSubstanceBarChartHeight: CGFloat
+
     let beakerVolumeFromRows: Equation
 
     static let standard = TitrationSettings(
         initialIonMoleculeFraction: 0.1,
         minInitialIonBeakerMolecules: 1,
+        neutralSubstanceBarChartHeight: 0.2,
         beakerVolumeFromRows: LinearEquation(
             x1: CGFloat(AcidAppSettings.minBeakerRows),
             y1: 0.1,

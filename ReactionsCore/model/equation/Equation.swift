@@ -122,6 +122,8 @@ public struct ScaledEquation: Equation {
     }
 }
 
+/// An equation which evaluates two equations for the same input, and returns the result of
+/// the provided operator which combines them.
 public struct OperatorEquation: Equation {
     public let lhs: Equation
     public let rhs: Equation
@@ -232,6 +234,34 @@ public struct LinearEquationWithMinIntersection: Equation {
     }
 }
 
+/// An equation which passes the result of the `inner` equation as input to the `outer`
+/// equation.
+///
+/// This equation can be considered as `y(x) = g(f(x))`, where `f` is the inner equation
+/// and `g` is the outer equation.
+public struct ComposedEquation: Equation {
+
+    public init(outer: Equation, inner: Equation) {
+        self.outer = outer
+        self.inner = inner
+    }
+
+    let outer: Equation
+    let inner: Equation
+
+    public func getY(at x: CGFloat) -> CGFloat {
+        outer.getY(at: inner.getY(at: x))
+    }
+}
+
+private struct AnonymousEquation: Equation {
+    let transform: (CGFloat) -> CGFloat
+
+    func getY(at x: CGFloat) -> CGFloat {
+        transform(x)
+    }
+}
+
 extension Equation {
     public func within(min: CGFloat, max: CGFloat) -> Equation {
         BoundEquation(underlying: self, lowerBound: min, upperBound: max)
@@ -245,4 +275,10 @@ extension Equation {
         BoundEquation(underlying: self, lowerBound: min, upperBound: nil)
     }
 
+    public func map(_ transform: @escaping (CGFloat) -> CGFloat) -> Equation {
+        ComposedEquation(
+            outer: AnonymousEquation(transform: transform),
+            inner: self
+        )
+    }
 }
