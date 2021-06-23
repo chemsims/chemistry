@@ -54,13 +54,21 @@ extension PrimaryIonConcentration {
     }
 
     static func pValue(forConcentration concentration: CGFloat) -> CGFloat {
-        guard concentration != 0 else {
-            return 0
-        }
-        return -log10(concentration)
+        -safeLog10(concentration)
     }
 
     static func concentration(forP p: CGFloat) -> CGFloat {
         pow(10, -p)
+    }
+
+
+    /// Returns the concentration of the complement to the primary ion, given the concentration of the primary ion.
+    ///
+    /// For example, if the primary ion is hydrogen and its concentration is `primaryConcentration`, then
+    /// the concentration of hydroxide is returned such that the relation `14 = pH + pOH` is satisfied.
+    static func complementConcentration(primaryConcentration: CGFloat) -> CGFloat {
+        let pPrimary = pValue(forConcentration: primaryConcentration)
+        let pComplement = 14 - pPrimary
+        return concentration(forP: pComplement)
     }
 }

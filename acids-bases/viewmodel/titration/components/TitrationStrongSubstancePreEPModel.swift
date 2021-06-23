@@ -10,7 +10,7 @@ class TitrationStrongSubstancePreEPModel: ObservableObject {
     init(previous: TitrationStrongSubstancePreparationModel) {
         self.previous = previous
         let maxSubstance = 20
-        self.maxSubstance = maxSubstance
+        self.maxTitrant = maxSubstance
         self.primaryIonCoords = AnimatingBeakerMolecules(
             molecules: previous.primaryIonCoords,
             fractionToDraw: LinearEquation(
@@ -23,26 +23,25 @@ class TitrationStrongSubstancePreEPModel: ObservableObject {
     }
 
     let previous: TitrationStrongSubstancePreparationModel
-    @Published var substanceAdded: Int = 0
+    @Published var titrantAdded: Int = 0
     let primaryIonCoords: AnimatingBeakerMolecules
 
     // MARK: Input Limits
-    let maxSubstance: Int
+    let maxTitrant: Int
 
     var substance: AcidOrBase {
         previous.substance
     }
-
 }
 
 // MARK: Incrementing
 extension TitrationStrongSubstancePreEPModel {
     func incrementTitrant(count: Int) {
-        guard substanceAdded < maxSubstance else {
+        guard titrantAdded < maxTitrant else {
             return
         }
         withAnimation(.linear(duration: 1)) {
-            substanceAdded += count
+            titrantAdded += count
         }
     }
 }
@@ -53,13 +52,13 @@ extension TitrationStrongSubstancePreEPModel {
         LinearEquation(
             x1: 0,
             y1: 0,
-            x2: CGFloat(maxSubstance),
+            x2: CGFloat(maxTitrant),
             y2: finalTitrantVolume
         )
     }
 
     var currentTitrantVolume: CGFloat {
-        titrantVolumeAdded.getY(at: CGFloat(substanceAdded))
+        titrantVolumeAdded.getY(at: CGFloat(titrantAdded))
     }
 }
 
@@ -76,7 +75,7 @@ extension TitrationStrongSubstancePreEPModel {
             equation: isZero ? ConstantEquation(value: 0) : LinearEquation(
                 x1: 0,
                 y1: previous.currentSubstanceConcentration,
-                x2: CGFloat(maxSubstance),
+                x2: CGFloat(maxTitrant),
                 y2: 0
             ),
             color: primaryIon.color,
@@ -97,19 +96,23 @@ extension TitrationStrongSubstancePreEPModel {
             molarity: molarity,
             concentration: concentration,
             pValues: pValues,
-            kValues: previous.kValues
+            kValues: kValues
         )
+    }
+
+    var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
+        previous.kValues
     }
 
     var concentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
         .init {
             switch $0 {
             case .hydrogen: return hydrogenConcentration
+            case .hydroxide: return hydroxideConcentration.getY(at: CGFloat(titrantAdded))
             case .initialSecondary: return 0
             case .initialSubstance: return 0
             case .secondary: return 0
             case .substance: return 0
-            case .hydroxide: return 0
             }
         }
     }
@@ -180,15 +183,19 @@ extension TitrationStrongSubstancePreEPModel {
 
     private var hydrogenConcentration: CGFloat {
         hydrogenConcentrationEquation
-            .getY(at: CGFloat(substanceAdded))
+            .getY(at: CGFloat(titrantAdded))
     }
 
     private var hydrogenConcentrationEquation: Equation {
         LinearEquation(
             x1: 0,
             y1: previous.concentration.value(for: .hydrogen),
-            x2: CGFloat(maxSubstance),
+            x2: CGFloat(maxTitrant),
             y2: 1e-7
         )
+    }
+
+    private var hydroxideConcentration: Equation {
+        hydrogenConcentrationEquation.map(PrimaryIonConcentration.complementConcentration)
     }
 }

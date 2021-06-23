@@ -110,10 +110,6 @@ class TitrationStrongSubstancePreparationModelTests: XCTestCase {
 
         model.incrementSubstance(count: 20)
         let expectedHydrogenConcentration = expectedConcentration(afterIncrementing: 20)
-        let expectedPH = -log10(expectedHydrogenConcentration)
-        let expectedPOH = 14 - expectedPH
-        let expectedHydroxideConcentration = PrimaryIonConcentration.concentration(forP: expectedPOH)
-
 
         let expectedFinalHHeight = LinearEquation(
             x1: 1e-7,
@@ -136,10 +132,10 @@ class TitrationStrongSubstancePreparationModelTests: XCTestCase {
 
         let expectedFinalOHHeight = LinearEquation(
             x1: 0,
-            y1: 0,
-            x2: 1e-7,
-            y2: 0.3
-        ).getY(at: expectedHydroxideConcentration)
+            y1: 0.3,
+            x2: CGFloat(model.maxSubstance),
+            y2: 0
+        ).getY(at: 20)
         XCTAssertEqual(
             hydroxideBar.equation.getY(at: 20),
             expectedFinalOHHeight,
@@ -155,23 +151,9 @@ class TitrationStrongSubstancePreparationModelTests: XCTestCase {
     }
 
     private func expectedConcentration(afterIncrementing count: Int) -> CGFloat {
-        LinearEquation(x1: 0, y1: 1e-7, x2: 100, y2: 1).getY(at: CGFloat(count))
-    }
-}
-
-private extension TitrationStrongSubstancePreparationModel {
-
-    // Returns an instance using default arguments, and a 10x10 grid
-    convenience init(
-        substance: AcidOrBase = .strongAcids.first!,
-        settings: TitrationSettings = .standard
-    ) {
-        self.init(
-            substance: substance,
-            titrant: "KOH",
-            cols: 10,
-            rows: 10,
-            settings: settings
+        TitrationStrongSubstancePreparationModel.expectedConcentration(
+            afterIncrementing: count,
+            gridSize: 100
         )
     }
 }

@@ -156,10 +156,7 @@ extension TitrationStrongSubstancePreparationModel {
             x1: 0,
             y1: settings.neutralSubstanceBarChartHeight,
             x2: CGFloat(maxSubstance),
-            y2: barChartHeightFromConcentration
-                .getY(
-                    at: secondarySubstanceConcentration.getY(at: CGFloat(maxSubstance))
-                )
+            y2: 0
         )
     }
 }

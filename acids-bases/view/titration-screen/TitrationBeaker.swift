@@ -309,7 +309,7 @@ private struct TitrationBeakerMolecules: View {
 
     private var equationInput: CGFloat {
         switch model.reactionPhase {
-        case .strongSubstancePreEP: return CGFloat(strongSubstancePreEPModel.substanceAdded)
+        case .strongSubstancePreEP: return CGFloat(strongSubstancePreEPModel.titrantAdded)
         case.strongSubstancePreparation: return 0
         case .strongSubstancePostEP: return 0
         }

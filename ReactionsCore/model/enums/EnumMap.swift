@@ -73,3 +73,6 @@ extension EnumMap where Key: Equatable {
         }
     }
 }
+
+extension EnumMap : Equatable where Key : Equatable, Value : Equatable {
+}

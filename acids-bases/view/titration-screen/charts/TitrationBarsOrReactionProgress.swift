@@ -32,7 +32,7 @@ struct TitrationBarsOrReactionProgress: View {
     private var equationInput: CGFloat {
         switch phase {
         case .strongSubstancePreparation: return CGFloat(strongSubstancePreparationModel.substanceAdded)
-        case .strongSubstancePreEP: return CGFloat(strongSubstancePreEPModel.substanceAdded)
+        case .strongSubstancePreEP: return CGFloat(strongSubstancePreEPModel.titrantAdded)
         case .strongSubstancePostEP: return CGFloat(strongSubstancePostEPModel.titrantAdded)
         }
     }

@@ -57,24 +57,24 @@ struct TitrationPhChart: View {
 
     private var phEquation: Equation {
         SwitchingEquation(
-            thresholdX: CGFloat(strongSubstancePreEPModel.maxSubstance),
+            thresholdX: CGFloat(strongSubstancePreEPModel.maxTitrant),
             underlyingLeft: strongSubstancePreEPModel.pH,
             underlyingRight: RightHandPhEquation(
                 underlying: strongSubstancePostEPModel.pH,
-                equivalencePointSubstance: strongSubstancePreEPModel.maxSubstance
+                equivalencePointSubstance: strongSubstancePreEPModel.maxTitrant
             )
         )
     }
 
     private var maxEquationInput: CGFloat {
-        CGFloat(strongSubstancePreEPModel.maxSubstance) + CGFloat(strongSubstancePostEPModel.maxTitrant)
+        CGFloat(strongSubstancePreEPModel.maxTitrant) + CGFloat(strongSubstancePostEPModel.maxTitrant)
     }
 
     private var equationInput: CGFloat {
         if phase == .strongSubstancePreEP {
-            return CGFloat(strongSubstancePreEPModel.substanceAdded)
+            return CGFloat(strongSubstancePreEPModel.titrantAdded)
         }
-        return CGFloat(strongSubstancePostEPModel.titrantAdded + strongSubstancePreEPModel.maxSubstance)
+        return CGFloat(strongSubstancePostEPModel.titrantAdded + strongSubstancePreEPModel.maxTitrant)
     }
 }
 

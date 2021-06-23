@@ -163,6 +163,12 @@
 		57473B0226218FAB009B608D /* SolubilityInputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473B0126218FAB009B608D /* SolubilityInputState.swift */; };
 		57473B0826218FBB009B608D /* SolubilityEquationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473B0726218FBB009B608D /* SolubilityEquationState.swift */; };
 		57491BF9263B363200962B92 /* AccessibilityLabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57491BF8263B363200962B92 /* AccessibilityLabelUtil.swift */; };
+		574978212683453600EFA71C /* TitrationComponentsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978202683453600EFA71C /* TitrationComponentsExtensions.swift */; };
+		574978232683471800EFA71C /* TitrationStrongSubstancePreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978222683471800EFA71C /* TitrationStrongSubstancePreEPModelTests.swift */; };
+		574978252683498800EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
+		5749782626834A2600EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
+		5749782726834A2700EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
+		5749782826834A2800EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
 		5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */; };
 		574E54E5266B653100D6E05E /* gaseous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E4266B653100D6E05E /* gaseous-quiz.csv */; };
 		574E54E9266B666F00D6E05E /* aqueous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E8266B666F00D6E05E /* aqueous-quiz.csv */; };
@@ -860,6 +866,9 @@
 		57473B0126218FAB009B608D /* SolubilityInputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityInputState.swift; sourceTree = "<group>"; };
 		57473B0726218FBB009B608D /* SolubilityEquationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityEquationState.swift; sourceTree = "<group>"; };
 		57491BF8263B363200962B92 /* AccessibilityLabelUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityLabelUtil.swift; sourceTree = "<group>"; };
+		574978202683453600EFA71C /* TitrationComponentsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationComponentsExtensions.swift; sourceTree = "<group>"; };
+		574978222683471800EFA71C /* TitrationStrongSubstancePreEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePreEPModelTests.swift; sourceTree = "<group>"; };
+		574978242683498800EFA71C /* CommonTestAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTestAssertions.swift; sourceTree = "<group>"; };
 		5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationModelTest.swift; sourceTree = "<group>"; };
 		574E54E4266B653100D6E05E /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
 		574E54E8266B666F00D6E05E /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
@@ -1824,6 +1833,7 @@
 				5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */,
 				57FD402126486F8300E352C1 /* NavigationTestMethods.swift */,
 				57FD402D2648765700E352C1 /* QuizTestMethods.swift */,
+				574978242683498800EFA71C /* CommonTestAssertions.swift */,
 			);
 			path = shared;
 			sourceTree = "<group>";
@@ -2391,6 +2401,7 @@
 			children = (
 				5786BD04267B226C001A165C /* TitrationComponentsTests.swift */,
 				5711603426831A800045CF7A /* TitrationStrongSubstancePreparationModelTests.swift */,
+				574978222683471800EFA71C /* TitrationStrongSubstancePreEPModelTests.swift */,
 			);
 			path = "titration-components";
 			sourceTree = "<group>";
@@ -2728,6 +2739,7 @@
 				5797DE21267390DC003F589F /* AcidOrBaseExtensions.swift */,
 				5733D80226748CB8007D4459 /* BufferComponentsExtensions.swift */,
 				573779E726831DA900BAB6A1 /* TitrationSettingsExtension.swift */,
+				574978202683453600EFA71C /* TitrationComponentsExtensions.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -3764,6 +3776,7 @@
 				57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */,
 				57DD22A125B771A8003E6842 /* ReactionInputLimitsWithoutC2Tests.swift in Sources */,
 				5738ADAF25AF2907002D4EB7 /* ReactionModelExtensions.swift in Sources */,
+				5749782626834A2600EFA71C /* CommonTestAssertions.swift in Sources */,
 				5738ADA325AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift in Sources */,
 				5738ADA725AF2713002D4EB7 /* EnumExtensions.swift in Sources */,
 				5738AD9925AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift in Sources */,
@@ -3875,6 +3888,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5705CB0C2678E98000F5A63C /* FractionedChartAxisHelperTests.swift in Sources */,
+				574978232683471800EFA71C /* TitrationStrongSubstancePreEPModelTests.swift in Sources */,
 				577BC7752679D463005BE5C8 /* AcidOrBaseTests.swift in Sources */,
 				5711603526831A800045CF7A /* TitrationStrongSubstancePreparationModelTests.swift in Sources */,
 				570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */,
@@ -3882,6 +3896,8 @@
 				5786BD05267B226C001A165C /* TitrationComponentsTests.swift in Sources */,
 				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
 				5733D80326748CB8007D4459 /* BufferComponentsExtensions.swift in Sources */,
+				5749782826834A2800EFA71C /* CommonTestAssertions.swift in Sources */,
+				574978212683453600EFA71C /* TitrationComponentsExtensions.swift in Sources */,
 				577C5023267F1852003DAD17 /* AcidConcentrationEquationsTests.swift in Sources */,
 				571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */,
 				573779E826831DA900BAB6A1 /* TitrationSettingsExtension.swift in Sources */,
@@ -4121,6 +4137,7 @@
 				5725972325EE3E9400D87964 /* ReactionComponentTests.swift in Sources */,
 				57B5312826440813002F7247 /* SolubilityMilligramsSoluteAddedTests.swift in Sources */,
 				57FD4032264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift in Sources */,
+				5749782726834A2700EFA71C /* CommonTestAssertions.swift in Sources */,
 				57FD402426486F9700E352C1 /* NavigationTestMethods.swift in Sources */,
 				57FD402C264874A200E352C1 /* SolubilityViewModelParameterReappliedTests.swift in Sources */,
 				5725972A25EE3ECE00D87964 /* Extensions.swift in Sources */,
@@ -4336,6 +4353,7 @@
 				57315ED02640311200A7D0F9 /* CsvParserTests.swift in Sources */,
 				57FD401E264851CD00E352C1 /* UserDefaultsExtensions.swift in Sources */,
 				575C90E52662CE6A001DCD17 /* PHMeterTests.swift in Sources */,
+				574978252683498800EFA71C /* CommonTestAssertions.swift in Sources */,
 				57FD401226484F9400E352C1 /* QuizPersistenceTests.swift in Sources */,
 				572B1A762675DC5100302B8E /* ReactionProgressChartGeometryTests.swift in Sources */,
 				5713D8CC267B7CC2009C65AC /* ArcGeometryTests.swift in Sources */,
