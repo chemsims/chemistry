@@ -129,4 +129,34 @@ class TitrationStrongSubstancePostEPModelTests: XCTestCase {
 
         XCTAssertEqual(model.kValues, secondModel.kValues)
     }
+
+    func testBarChart() {
+        let firstModel = TitrationStrongSubstancePreparationModel(
+            settings: .withDefaults(
+                neutralSubstanceBarChartHeight: 0.4,
+                finalMaxPValue: 12
+            )
+        )
+        firstModel.incrementSubstance(count: 20)
+        let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
+        let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
+
+        var hydroxideBar: Equation { model.barChartData[0].equation }
+        var hydrogenBar: Equation { model.barChartData[1].equation }
+
+        XCTAssertEqualWithTolerance(hydrogenBar.getY(at: 0), 0.4)
+        XCTAssertEqualWithTolerance(hydroxideBar.getY(at: 0), 0.4)
+
+        XCTAssertEqualWithTolerance(hydrogenBar.getY(at: CGFloat(model.maxTitrant)), 0)
+
+        let expectedOHConcentration: CGFloat = 0.01
+        let expectedBarHeight = LinearEquation(
+            x1: 1e-7,
+            y1: 0.4,
+            x2: 1,
+            y2: 1
+        ).getY(at: expectedOHConcentration)
+
+        XCTAssertEqualWithTolerance(hydroxideBar.getY(at: CGFloat(model.maxTitrant)), expectedBarHeight)
+    }
 }

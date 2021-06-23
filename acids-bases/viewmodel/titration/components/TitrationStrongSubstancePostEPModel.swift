@@ -25,6 +25,10 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
     var settings: TitrationSettings {
         previous.settings
     }
+
+    var substance: AcidOrBase {
+        previous.substance
+    }
 }
 
 // MARK: Incrementing titrant
@@ -51,17 +55,48 @@ extension TitrationStrongSubstancePostEPModel {
         [
             BarChartData(
                 label: "OH",
-                equation: ohConcentration,
+                equation: barChartEquation(forIon: .hydroxide),
                 color: RGB.hydroxide.color,
                 accessibilityLabel: ""
             ),
             BarChartData(
                 label: "H",
-                equation: hConcentration,
+                equation: barChartEquation(forIon: .hydrogen),
                 color: RGB.hydroxide.color,
                 accessibilityLabel: ""
             )
         ]
+    }
+
+    private func barChartEquation(forIon primaryIon: PrimaryIon) -> Equation {
+        if substance.primary == primaryIon {
+            return decreasingBarChartEquation
+        }
+        return increasingBarChartEquation
+    }
+
+    private var increasingBarChartEquation: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: settings.neutralSubstanceBarChartHeight,
+            x2: CGFloat(maxTitrant),
+            y2: settings
+                .barChartHeightFromConcentration
+                .getY(at: increasingIonConcentration.getY(at: CGFloat(maxTitrant)))
+        )
+    }
+
+    var increasingIonConcentration: Equation {
+        ohConcentration
+    }
+
+    private var decreasingBarChartEquation: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: settings.neutralSubstanceBarChartHeight,
+            x2: CGFloat(maxTitrant),
+            y2: 0
+        )
     }
 }
 

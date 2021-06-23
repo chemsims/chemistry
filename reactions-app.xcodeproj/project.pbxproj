@@ -170,6 +170,7 @@
 		5749782726834A2700EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
 		5749782826834A2800EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
 		5749782A26836A2600EFA71C /* TitrationStrongSubstancePostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782926836A2600EFA71C /* TitrationStrongSubstancePostEPModelTests.swift */; };
+		5749782C2683748100EFA71C /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782B2683748100EFA71C /* TestView.swift */; };
 		5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */; };
 		574E54E5266B653100D6E05E /* gaseous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E4266B653100D6E05E /* gaseous-quiz.csv */; };
 		574E54E9266B666F00D6E05E /* aqueous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E8266B666F00D6E05E /* aqueous-quiz.csv */; };
@@ -871,6 +872,7 @@
 		574978222683471800EFA71C /* TitrationStrongSubstancePreEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePreEPModelTests.swift; sourceTree = "<group>"; };
 		574978242683498800EFA71C /* CommonTestAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTestAssertions.swift; sourceTree = "<group>"; };
 		5749782926836A2600EFA71C /* TitrationStrongSubstancePostEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePostEPModelTests.swift; sourceTree = "<group>"; };
+		5749782B2683748100EFA71C /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationModelTest.swift; sourceTree = "<group>"; };
 		574E54E4266B653100D6E05E /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
 		574E54E8266B666F00D6E05E /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
@@ -1533,6 +1535,7 @@
 				57FA3ABD2661049C0073A29B /* intro-screen */,
 				57D60153265ECA2800017E25 /* pHScale */,
 				5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */,
+				5749782B2683748100EFA71C /* TestView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -3830,6 +3833,7 @@
 				57F8885F267E59C000609671 /* DraggablePhMeter.swift in Sources */,
 				577C506C26812712003DAD17 /* PLogComplementConcentration.swift in Sources */,
 				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
+				5749782C2683748100EFA71C /* TestView.swift in Sources */,
 				5773BCE4267A81BD00E52C81 /* AcidAppNavigationRows.swift in Sources */,
 				574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */,
 				5773BCE2267A811C00E52C81 /* AcidAppRootView.swift in Sources */,
