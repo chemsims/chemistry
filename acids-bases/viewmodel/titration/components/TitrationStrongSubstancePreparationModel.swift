@@ -152,7 +152,7 @@ extension TitrationStrongSubstancePreparationModel {
         }
     }
 
-    private var volume: EnumMap<TitrationEquationTerm.Volume, CGFloat> {
+    var volume: EnumMap<TitrationEquationTerm.Volume, CGFloat> {
         .init {
             switch $0 {
             case .equivalencePoint: return 0
@@ -168,10 +168,8 @@ extension TitrationStrongSubstancePreparationModel {
     var concentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
         .init {
             switch $0 {
-            case .hydrogen:
-                return substance.primary == .hydrogen ? currentSubstanceConcentration : 0
-            case .hydroxide:
-                return substance.primary == .hydroxide ? currentSubstanceConcentration : 0
+            case .hydrogen: return ionConcentration(forPrimaryIon: .hydrogen).concentration
+            case .hydroxide: return ionConcentration(forPrimaryIon: .hydroxide).concentration
             case .initialSecondary: return 0
             case .initialSubstance: return 0
             case .secondary: return 0
@@ -180,11 +178,11 @@ extension TitrationStrongSubstancePreparationModel {
         }
     }
 
-    private var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
+    var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
         .init {
             switch $0 {
-            case .hydrogen: return -safeLog10(concentration.value(for: .hydrogen))
-            case .hydroxide: return -safeLog10(concentration.value(for: .hydroxide))
+            case .hydrogen: return ionConcentration(forPrimaryIon: .hydrogen).p
+            case .hydroxide: return ionConcentration(forPrimaryIon: .hydroxide).p
             case .kA: return substance.pKA
             case .kB: return substance.pKB
             }
@@ -198,5 +196,22 @@ extension TitrationStrongSubstancePreparationModel {
             case .kB: return substance.kB
             }
         }
+    }
+
+    private func ionConcentration(forPrimaryIon primaryIon: PrimaryIon) -> PrimaryIonConcentration {
+        if substance.primary == primaryIon {
+            return primaryIonConcentration
+        } else {
+            return complementPrimaryIonConcentration
+        }
+    }
+
+    private var primaryIonConcentration: PrimaryIonConcentration {
+        PrimaryIonConcentration(concentration: currentSubstanceConcentration)
+    }
+
+    private var complementPrimaryIonConcentration: PrimaryIonConcentration {
+        PrimaryIonConcentration.addingToPh14(otherIonPh: primaryIonConcentration.p
+        )
     }
 }

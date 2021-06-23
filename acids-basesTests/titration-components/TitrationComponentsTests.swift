@@ -19,7 +19,10 @@ class TitrationComponentsTests: XCTestCase {
             substance: acid,
             cols: 10,
             rows: 10,
-            settings: .init(initialIonMoleculeFraction: 0.1, minInitialIonBeakerMolecules: 1)
+            settings: .withDefaults(
+                initialIonMoleculeFraction: 0.1,
+                minInitialIonBeakerMolecules: 1
+            )
         )
         model.incrementStrongAcid(count: 20)
 
@@ -49,13 +52,13 @@ class TitrationComponentsTests: XCTestCase {
     }
 
     func testInputLimits() {
-        let settings1 = TitrationSettings(
+        let settings1 = TitrationSettings.withDefaults(
             initialIonMoleculeFraction: 0.1,
             minInitialIonBeakerMolecules: 1
         )
         XCTAssertEqual(settings1.minInitialSubstance, 10)
 
-        let settings2 = TitrationSettings(
+        let settings2 = TitrationSettings.withDefaults(
             initialIonMoleculeFraction: 0.11,
             minInitialIonBeakerMolecules: 2
         )

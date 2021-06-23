@@ -43,6 +43,7 @@
 		5710E2162627062A00CF6FBE /* SolubilityScreenNavigationShakingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E2152627062A00CF6FBE /* SolubilityScreenNavigationShakingTests.swift */; };
 		5710E21C2627237E00CF6FBE /* SolubleScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E21B2627237E00CF6FBE /* SolubleScreenElement.swift */; };
 		5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E22126272A3800CF6FBE /* ShakeText.swift */; };
+		5711603526831A800045CF7A /* TitrationStrongSubstancePreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711603426831A800045CF7A /* TitrationStrongSubstancePreparationModelTests.swift */; };
 		5711DFC525C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */; };
 		5711DFCB25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFCA25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift */; };
 		5711E00325C4840D00B28E45 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5711E00225C4840D00B28E45 /* GoogleService-Info.plist */; };
@@ -120,6 +121,7 @@
 		5736DC3025F5007D003FD2B4 /* GridMolecules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC2F25F5007C003FD2B4 /* GridMolecules.swift */; };
 		5736DC3A25F50D1A003FD2B4 /* GridMoleculesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3925F50D1A003FD2B4 /* GridMoleculesTests.swift */; };
 		5736DC4A25F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC4925F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift */; };
+		573779E826831DA900BAB6A1 /* TitrationSettingsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573779E726831DA900BAB6A1 /* TitrationSettingsExtension.swift */; };
 		5738AD9925AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD9825AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift */; };
 		5738AD9F25AF1611002D4EB7 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD9E25AF1611002D4EB7 /* Helpers.swift */; };
 		5738ADA325AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADA225AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift */; };
@@ -732,6 +734,7 @@
 		5710E2152627062A00CF6FBE /* SolubilityScreenNavigationShakingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityScreenNavigationShakingTests.swift; sourceTree = "<group>"; };
 		5710E21B2627237E00CF6FBE /* SolubleScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleScreenElement.swift; sourceTree = "<group>"; };
 		5710E22126272A3800CF6FBE /* ShakeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeText.swift; sourceTree = "<group>"; };
+		5711603426831A800045CF7A /* TitrationStrongSubstancePreparationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePreparationModelTests.swift; sourceTree = "<group>"; };
 		5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistenceTests.swift; sourceTree = "<group>"; };
 		5711DFCA25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionQuizQuestionsTests.swift; sourceTree = "<group>"; };
 		5711E00225C4840D00B28E45 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -814,6 +817,7 @@
 		5736DC3925F50D1A003FD2B4 /* GridMoleculesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridMoleculesTests.swift; sourceTree = "<group>"; };
 		5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FractionedCoordinates.swift; sourceTree = "<group>"; };
 		5736DC4925F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerMoleculeSetterTests.swift; sourceTree = "<group>"; };
+		573779E726831DA900BAB6A1 /* TitrationSettingsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationSettingsExtension.swift; sourceTree = "<group>"; };
 		5738AD9825AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderNavigationModelTests.swift; sourceTree = "<group>"; };
 		5738AD9E25AF1611002D4EB7 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		5738ADA225AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderNavigationModelTests.swift; sourceTree = "<group>"; };
@@ -2386,6 +2390,7 @@
 			isa = PBXGroup;
 			children = (
 				5786BD04267B226C001A165C /* TitrationComponentsTests.swift */,
+				5711603426831A800045CF7A /* TitrationStrongSubstancePreparationModelTests.swift */,
 			);
 			path = "titration-components";
 			sourceTree = "<group>";
@@ -2722,6 +2727,7 @@
 			children = (
 				5797DE21267390DC003F589F /* AcidOrBaseExtensions.swift */,
 				5733D80226748CB8007D4459 /* BufferComponentsExtensions.swift */,
+				573779E726831DA900BAB6A1 /* TitrationSettingsExtension.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -3870,6 +3876,7 @@
 			files = (
 				5705CB0C2678E98000F5A63C /* FractionedChartAxisHelperTests.swift in Sources */,
 				577BC7752679D463005BE5C8 /* AcidOrBaseTests.swift in Sources */,
+				5711603526831A800045CF7A /* TitrationStrongSubstancePreparationModelTests.swift in Sources */,
 				570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */,
 				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,
 				5786BD05267B226C001A165C /* TitrationComponentsTests.swift in Sources */,
@@ -3877,6 +3884,7 @@
 				5733D80326748CB8007D4459 /* BufferComponentsExtensions.swift in Sources */,
 				577C5023267F1852003DAD17 /* AcidConcentrationEquationsTests.swift in Sources */,
 				571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */,
+				573779E826831DA900BAB6A1 /* TitrationSettingsExtension.swift in Sources */,
 				5797DE2626739D89003F589F /* BufferStrongComponentsTests.swift in Sources */,
 				5797DE22267390DC003F589F /* AcidOrBaseExtensions.swift in Sources */,
 			);
