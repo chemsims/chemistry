@@ -160,6 +160,17 @@ class TitrationStrongSubstancePreEPModelTests: XCTestCase {
         XCTAssertEqualWithTolerance(modelHydroxideBar.equation.getY(at: CGFloat(model.maxTitrant)), 0.3)
     }
 
+    func testCoords() {
+        let firstModel = TitrationStrongSubstancePreparationModel()
+        firstModel.incrementSubstance(count: 20)
+        let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
+
+        XCTAssertEqual(model.primaryIonCoords.molecules.coords, firstModel.primaryIonCoords.coords)
+
+        XCTAssertEqual(model.primaryIonCoords.fractionToDraw.getY(at: 0), 1)
+        XCTAssertEqual(model.primaryIonCoords.fractionToDraw.getY(at: CGFloat(model.maxTitrant)), 0)
+    }
+
     private func expectedConcentration(afterIncrementing count: Int) -> CGFloat {
         TitrationStrongSubstancePreparationModel.expectedConcentration(
             afterIncrementing: count,

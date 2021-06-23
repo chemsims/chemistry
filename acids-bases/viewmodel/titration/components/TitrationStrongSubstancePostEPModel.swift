@@ -21,6 +21,10 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
     let previous: TitrationStrongSubstancePreEPModel
     @Published var titrantAdded = 0
     @Published var titrantMolecules: BeakerMolecules
+
+    var settings: TitrationSettings {
+        previous.settings
+    }
 }
 
 // MARK: Incrementing titrant
@@ -71,11 +75,19 @@ extension TitrationStrongSubstancePostEPModel {
             titrant: previous.previous.titrant,
             moles: moles,
             volume: volume,
-            molarity: previous.molarity,
+            molarity: molarity,
             concentration: concentration,
             pValues: pValues,
-            kValues: previous.previous.kValues
+            kValues: kValues
         )
+    }
+
+    var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
+        previous.molarity
+    }
+
+    var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
+        previous.kValues
     }
 
     var moles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
@@ -181,15 +193,15 @@ extension TitrationStrongSubstancePostEPModel {
     }
 
     var finalOH: CGFloat {
-        1e-1
+        PrimaryIonConcentration.concentration(forP: finalPOH)
     }
 
     var finalPOH: CGFloat {
-        -safeLog10(finalOH)
+        14 - finalPh
     }
 
-    var finalHConcentration: CGFloat {
-        PrimaryIonConcentration.concentration(forP: 14 - finalPOH)
+    var finalPh: CGFloat {
+        settings.finalMaxPValue
     }
 
     var currentOh: CGFloat {
@@ -198,6 +210,12 @@ extension TitrationStrongSubstancePostEPModel {
 
     var pH: Equation {
         14 + Log10Equation(underlying: ohConcentration)
+    }
+
+
+
+    var finalHConcentration: CGFloat {
+        PrimaryIonConcentration.concentration(forP: finalPh)
     }
 }
 

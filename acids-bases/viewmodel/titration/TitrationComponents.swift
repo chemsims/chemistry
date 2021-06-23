@@ -146,12 +146,20 @@ struct TitrationSettings {
     /// Height of the bar chart when the solution is neutral. That is, when pH = pOH = 7.
     let neutralSubstanceBarChartHeight: CGFloat
 
+    /// Value for the larger p-value at the end of the reaction
+    /// For example, for an acid titration, this would be the value of pH at the end of the reaction,
+    /// whereas for a basic titration it would be the value of pOH.
+    let finalMaxPValue: CGFloat
+
     let beakerVolumeFromRows: Equation
+
+
 
     static let standard = TitrationSettings(
         initialIonMoleculeFraction: 0.1,
         minInitialIonBeakerMolecules: 1,
         neutralSubstanceBarChartHeight: 0.2,
+        finalMaxPValue: 13,
         beakerVolumeFromRows: LinearEquation(
             x1: CGFloat(AcidAppSettings.minBeakerRows),
             y1: 0.1,
