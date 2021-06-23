@@ -12,6 +12,12 @@ enum SubstancePart: Int, CaseIterable, Identifiable {
         rawValue
     }
 }
+
+// TODO - remove the titration components version
+enum ExtendedSubstancePart: EnumMappable {
+    case substance, secondaryIon, hydrogen, hydroxide
+}
+
 typealias SubstanceValue<Value> = EnumMap<SubstancePart, Value>
 extension EnumMap where Key == SubstancePart {
 

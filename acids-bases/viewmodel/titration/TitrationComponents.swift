@@ -107,6 +107,7 @@ extension TitrationComponents {
 
     typealias MoleculeDefinition = ReactionProgressChartViewModel<ExtendedSubstancePart>.MoleculeDefinition
 
+    // TODO - move this somewhere
     enum ExtendedSubstancePart: String, CaseIterable {
         case substance, secondaryIon, hydrogen, hydroxide
 
@@ -146,6 +147,11 @@ struct TitrationSettings {
     /// Height of the bar chart when the solution is neutral. That is, when pH = pOH = 7.
     let neutralSubstanceBarChartHeight: CGFloat
 
+
+    /// Change in height of bars for the initial weak substance reactions, as a fraction
+    /// of the initial substance bar height.
+    let weakIonChangeInBarHeightFraction: CGFloat
+
     /// Value for the larger p-value at the end of the reaction
     /// For example, for an acid titration, this would be the value of pH at the end of the reaction,
     /// whereas for a basic titration it would be the value of pOH.
@@ -154,11 +160,11 @@ struct TitrationSettings {
     let beakerVolumeFromRows: Equation
 
 
-
     static let standard = TitrationSettings(
         initialIonMoleculeFraction: 0.1,
         minInitialIonBeakerMolecules: 1,
-        neutralSubstanceBarChartHeight: 0.2,
+        neutralSubstanceBarChartHeight: 0.15,
+        weakIonChangeInBarHeightFraction: 0.01,
         finalMaxPValue: 13,
         beakerVolumeFromRows: LinearEquation(
             x1: CGFloat(AcidAppSettings.minBeakerRows),
@@ -176,18 +182,34 @@ struct TitrationSettings {
         return Int(ceil(minInitial / fraction))
     }
 
+    /// Bar chart height for concentration when adding strong substance.
     var barChartHeightFromConcentration: Equation {
+        barChartHeightFromConcentration(
+            concentrationThreshold: 1e-7,
+            heightAtThreshold: neutralSubstanceBarChartHeight
+        )
+    }
+
+    /// Returns an equation for bar chart height in terms of concentration.
+    ///
+    /// The bar chart scales from 0 to `heightAtThreshold` at the
+    /// `concentrationThreshold`. From there, it scales to
+    /// a height of 1 at a concentration of 1.
+    private func barChartHeightFromConcentration(
+        concentrationThreshold: CGFloat,
+        heightAtThreshold: CGFloat
+    ) -> Equation {
         SwitchingEquation(
-            thresholdX: 1e-7,
+            thresholdX: concentrationThreshold,
             underlyingLeft: LinearEquation(
                 x1: 0,
                 y1: 0,
-                x2: 1e-7,
-                y2: neutralSubstanceBarChartHeight
+                x2: concentrationThreshold,
+                y2: heightAtThreshold
             ),
             underlyingRight: LinearEquation(
-                x1: 1e-7,
-                y1: neutralSubstanceBarChartHeight,
+                x1: concentrationThreshold,
+                y1: heightAtThreshold,
                 x2: 1,
                 y2: 1
             )

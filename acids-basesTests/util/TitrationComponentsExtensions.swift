@@ -8,7 +8,7 @@ import ReactionsCore
 
 extension TitrationStrongSubstancePreparationModel {
 
-    // Returns an instance using default arguments, and a 10x10 grid
+    /// Returns an instance using default arguments, and a 10x10 grid
     convenience init(
         substance: AcidOrBase = .strongAcids.first!,
         settings: TitrationSettings = .standard
@@ -32,5 +32,20 @@ extension TitrationStrongSubstancePreparationModel {
             x2: CGFloat(gridSize),
             y2: 1
         ).getY(at: CGFloat(count))
+    }
+}
+
+extension TitrationWeakSubstancePreparationModel {
+    /// Returns an instance using default arguments, and a 10x10 grid
+    convenience init(
+        substance: AcidOrBase = .weakAcids.first!,
+        settings: TitrationSettings = .standard
+    ) {
+        self.init(
+            substance: substance,
+            cols: 10,
+            rows: 10,
+            settings: settings
+        )
     }
 }

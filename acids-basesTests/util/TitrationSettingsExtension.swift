@@ -13,6 +13,7 @@ extension TitrationSettings {
         initialIonMoleculeFraction: CGFloat = standard.initialIonMoleculeFraction,
         minInitialIonBeakerMolecules: Int = standard.minInitialIonBeakerMolecules,
         neutralSubstanceBarChartHeight: CGFloat = standard.neutralSubstanceBarChartHeight,
+        weakIonChangeInBarHeightFraction: CGFloat = standard.weakIonChangeInBarHeightFraction,
         finalMaxPValue: CGFloat = standard.finalMaxPValue,
         beakerVolumeFromRows: Equation = standard.beakerVolumeFromRows
     ) -> TitrationSettings {
@@ -20,6 +21,7 @@ extension TitrationSettings {
             initialIonMoleculeFraction: initialIonMoleculeFraction,
             minInitialIonBeakerMolecules: minInitialIonBeakerMolecules,
             neutralSubstanceBarChartHeight: neutralSubstanceBarChartHeight,
+            weakIonChangeInBarHeightFraction: weakIonChangeInBarHeightFraction,
             finalMaxPValue: finalMaxPValue,
             beakerVolumeFromRows: beakerVolumeFromRows
         )

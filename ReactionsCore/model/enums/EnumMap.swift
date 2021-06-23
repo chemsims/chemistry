@@ -6,7 +6,7 @@ import Foundation
 
 public typealias EnumMappable = CaseIterable & Hashable
 
-/// A struct which provides a guaranteed map lookup for keys which conform to `CaseIterable`.
+/// A struct which provides a guaranteed map lookup for keys which conform to `CaseIterable` & `Hashable `
 public struct EnumMap<Key, Value> where Key : CaseIterable, Key : Hashable {
 
     /// Creates a new map instance with the provided `builder`.
@@ -23,12 +23,12 @@ public struct EnumMap<Key, Value> where Key : CaseIterable, Key : Hashable {
         self.values = values
     }
 
+    private let values: [Key : Value]
+
     /// Creates a new instant using `value` for each element
     public static func constant(_ value: Value) -> EnumMap<Key, Value> {
         EnumMap(builder: { _ in value })
     }
-
-    private let values: [Key : Value]
 
     /// Returns a value for the given element
     public func value(for element: Key) -> Value {
@@ -66,7 +66,7 @@ public struct EnumMap<Key, Value> where Key : CaseIterable, Key : Hashable {
 }
 
 extension EnumMap where Key: Equatable {
-    /// Returns a new map where `element` has the value `newValue`
+    /// Returns a new map where `element` is assigned `newValue`
     public func updating(with newValue: Value, for element: Key) -> EnumMap<Key, Value> {
         EnumMap {
             $0 == element ? newValue : value(for: $0)
