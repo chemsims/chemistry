@@ -43,6 +43,10 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
     var substance: AcidOrBase {
         previous.substance
     }
+
+    var settings: TitrationSettings {
+        previous.settings
+    }
 }
 
 // MARK: - Incrementing
@@ -230,7 +234,8 @@ extension TitrationWeakSubstancePreEPModel {
 
 extension TitrationWeakSubstancePreEPModel {
     var barChartData: [BarChartData] {
-        []
+        let order: [ExtendedSubstancePart] = [.substance, .hydroxide, .hydrogen, .secondaryIon]
+        return order.map(barChartDataMap.value)
     }
 
     var barChartDataMap: EnumMap<ExtendedSubstancePart, BarChartData> {
