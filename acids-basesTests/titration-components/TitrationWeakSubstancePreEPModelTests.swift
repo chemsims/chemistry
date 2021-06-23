@@ -71,7 +71,6 @@ class TitrationWeakSubstancePreEPModelTests: XCTestCase {
         let substanceConcentration = model.currentConcentration.value(for: .substance)
         let pHFromPKaEquation = model.substance.pKA + log10(secondaryConcentration / substanceConcentration)
 
-        XCTExpectFailure("Waiting for clarification from Naim about this")
         XCTAssertEqualWithTolerance(
             finalPValues.value(for: .hydrogen), pHFromPKaEquation
         )
