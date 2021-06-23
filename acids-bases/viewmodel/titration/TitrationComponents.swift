@@ -167,4 +167,22 @@ struct TitrationSettings {
 
         return Int(ceil(minInitial / fraction))
     }
+
+    var barChartHeightFromConcentration: Equation {
+        SwitchingEquation(
+            thresholdX: 1e-7,
+            underlyingLeft: LinearEquation(
+                x1: 0,
+                y1: 0,
+                x2: 1e-7,
+                y2: neutralSubstanceBarChartHeight
+            ),
+            underlyingRight: LinearEquation(
+                x1: 1e-7,
+                y1: neutralSubstanceBarChartHeight,
+                x2: 1,
+                y2: 1
+            )
+        )
+    }
 }

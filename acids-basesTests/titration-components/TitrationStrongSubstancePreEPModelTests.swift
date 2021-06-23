@@ -120,6 +120,46 @@ class TitrationStrongSubstancePreEPModelTests: XCTestCase {
         XCTAssertEqual(firstModel.kValues, model.kValues)
     }
 
+    func testBarChartData() {
+        let firstModel = TitrationStrongSubstancePreparationModel(
+            settings: .withDefaults( neutralSubstanceBarChartHeight: 0.3)
+        )
+        firstModel.incrementSubstance(count: 20)
+        let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
+
+        let firstHydroxideBar = firstModel.barChartData[0]
+        let firstHydrogenBar = firstModel.barChartData[1]
+        var modelHydroxideBar: BarChartData { model.barChartData[0] }
+        var modelHydrogenBar: BarChartData { model.barChartData[1] }
+
+        // Initial heights
+        XCTAssertEqualWithTolerance(
+            modelHydrogenBar.equation.getY(at: 0),
+            firstHydrogenBar.equation.getY(at: 20)
+        )
+        XCTAssertEqualWithTolerance(
+            modelHydroxideBar.equation.getY(at: 0),
+            firstHydroxideBar.equation.getY(at: 20)
+        )
+
+        // Mid heights
+        let expectedMidHHeight = (firstHydrogenBar.equation.getY(at: 20) + 0.3) / 2
+        let expectedMidOHHEight = (firstHydroxideBar.equation.getY(at: 20) + 0.3) / 2
+
+        XCTAssertEqualWithTolerance(
+            modelHydrogenBar.equation.getY(at: CGFloat(model.maxTitrant) / 2),
+            expectedMidHHeight
+        )
+        XCTAssertEqualWithTolerance(
+            modelHydroxideBar.equation.getY(at: CGFloat(model.maxTitrant) / 2),
+            expectedMidOHHEight
+        )
+
+        // Final heights
+        XCTAssertEqualWithTolerance(modelHydrogenBar.equation.getY(at: CGFloat(model.maxTitrant)), 0.3)
+        XCTAssertEqualWithTolerance(modelHydroxideBar.equation.getY(at: CGFloat(model.maxTitrant)), 0.3)
+    }
+
     private func expectedConcentration(afterIncrementing count: Int) -> CGFloat {
         TitrationStrongSubstancePreparationModel.expectedConcentration(
             afterIncrementing: count,

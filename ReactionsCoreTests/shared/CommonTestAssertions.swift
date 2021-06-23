@@ -6,6 +6,8 @@
 import XCTest
 
 /// Asserts two values are equal, within a tolerance percentage of the `expected` value
+/// - Parameters:
+///   - tolerancePercent: A percentage of the expected to allow as tolerance. Defaults to 0.01%
 func XCTAssertEqualWithTolerance<T : BinaryFloatingPoint>(
     _ value: T,
     _ expected: T,

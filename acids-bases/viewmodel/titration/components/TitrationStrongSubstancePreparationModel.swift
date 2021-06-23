@@ -100,42 +100,16 @@ extension TitrationStrongSubstancePreparationModel {
     private func barChartData(forIon primaryIon: PrimaryIon) -> BarChartData {
         BarChartData(
             label: primaryIon.rawValue, // TODO get the charged symbol
-            equation: barChartHeightEquation(forPrimaryIon: primaryIon),
+            equation: barChartHeightEquation.value(for: primaryIon),
             color: primaryIon.color,
             accessibilityLabel: "" // TODO
         )
     }
 
-    private func barChartHeightEquation(forPrimaryIon primaryIon: PrimaryIon) -> Equation {
-        if substance.primary == primaryIon {
-            return increasingBarEquation
-        } else {
-            return decreasingBarEquation
-        }
-    }
-
-    private func barChartHeightFromSubstance(concentration: Equation) -> Equation {
-        ComposedEquation(
-            outer: barChartHeightFromConcentration,
-            inner: concentration
-        )
-    }
-
-    private var barChartHeightFromConcentration: Equation {
-        SwitchingEquation(
-            thresholdX: 1e-7,
-            underlyingLeft: LinearEquation(
-                x1: 0,
-                y1: 0,
-                x2: 1e-7,
-                y2: settings.neutralSubstanceBarChartHeight
-            ),
-            underlyingRight: LinearEquation(
-                x1: 1e-7,
-                y1: settings.neutralSubstanceBarChartHeight,
-                x2: 1,
-                y2: 1
-            )
+    var barChartHeightEquation: PrimaryIonValue<Equation> {
+        PrimaryIonValue(
+            hydrogen: substance.primary == .hydrogen ? increasingBarEquation : decreasingBarEquation,
+            hydroxide: substance.primary == .hydroxide ? increasingBarEquation : decreasingBarEquation
         )
     }
 
@@ -144,7 +118,8 @@ extension TitrationStrongSubstancePreparationModel {
             x1: 0,
             y1: settings.neutralSubstanceBarChartHeight,
             x2: CGFloat(maxSubstance),
-            y2: barChartHeightFromConcentration
+            y2: settings
+                .barChartHeightFromConcentration
                 .getY(
                     at: primarySubstanceConcentration.getY(at: CGFloat(maxSubstance))
                 )

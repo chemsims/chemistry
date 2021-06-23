@@ -32,6 +32,10 @@ class TitrationStrongSubstancePreEPModel: ObservableObject {
     var substance: AcidOrBase {
         previous.substance
     }
+
+    var settings: TitrationSettings {
+        previous.settings
+    }
 }
 
 // MARK: Incrementing
@@ -69,17 +73,21 @@ extension TitrationStrongSubstancePreEPModel {
     }
 
     private func barChartData(forIon primaryIon: PrimaryIon) -> BarChartData {
-        let isZero = previous.substance.primary != primaryIon
-        return BarChartData(
+        BarChartData(
             label: primaryIon.rawValue, // TODO get the charged symbol
-            equation: isZero ? ConstantEquation(value: 0) : LinearEquation(
-                x1: 0,
-                y1: previous.currentSubstanceConcentration,
-                x2: CGFloat(maxTitrant),
-                y2: 0
-            ),
+            equation: barChartEquation(forIon: primaryIon),
             color: primaryIon.color,
             accessibilityLabel: "" // TODO
+        )
+    }
+
+
+    private func barChartEquation(forIon primaryIon: PrimaryIon) -> Equation {
+        LinearEquation(
+            x1: 0,
+            y1: previous.barChartHeightEquation.value(for: primaryIon).getY(at: CGFloat(previous.substanceAdded)),
+            x2: CGFloat(maxTitrant),
+            y2: settings.neutralSubstanceBarChartHeight
         )
     }
 }
