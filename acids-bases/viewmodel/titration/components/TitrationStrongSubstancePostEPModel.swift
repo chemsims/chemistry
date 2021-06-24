@@ -31,7 +31,7 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
     }
 }
 
-// MARK: Incrementing titrant
+// MARK: - Incrementing titrant
 extension TitrationStrongSubstancePostEPModel {
     func incrementTitrant(count: Int) {
         guard titrantAdded < maxTitrant else {
@@ -49,23 +49,24 @@ extension TitrationStrongSubstancePostEPModel {
     }
 }
 
-// MARK: Bar chart data
+// MARK: - Bar chart data
 extension TitrationStrongSubstancePostEPModel {
     var barChartData: [BarChartData] {
-        [
-            BarChartData(
-                label: "OH",
-                equation: barChartEquation(forIon: .hydroxide),
-                color: RGB.hydroxide.color,
-                accessibilityLabel: ""
-            ),
-            BarChartData(
-                label: "H",
-                equation: barChartEquation(forIon: .hydrogen),
-                color: RGB.hydroxide.color,
-                accessibilityLabel: ""
-            )
-        ]
+        let map = barChartDataMap
+        return [map.value(for: .hydroxide), map.value(for: .hydrogen)]
+    }
+
+    var barChartDataMap: EnumMap<PrimaryIon, BarChartData> {
+        .init(builder: barChartData)
+    }
+
+    private func barChartData(forIon primaryIon: PrimaryIon) -> BarChartData {
+        BarChartData(
+            label: primaryIon.rawValue,
+            equation: barChartEquation(forIon: primaryIon),
+            color: primaryIon.color,
+            accessibilityLabel: ""
+        )
     }
 
     private func barChartEquation(forIon primaryIon: PrimaryIon) -> Equation {
@@ -87,7 +88,10 @@ extension TitrationStrongSubstancePostEPModel {
     }
 
     var increasingIonConcentration: Equation {
-        ohConcentration
+        if substance.type.isAcid {
+            return ohConcentration
+        }
+        return hConcentration
     }
 
     private var decreasingBarChartEquation: Equation {
@@ -101,7 +105,7 @@ extension TitrationStrongSubstancePostEPModel {
 }
 
 
-// MARK: Equation data
+// MARK: - Equation data
 extension TitrationStrongSubstancePostEPModel {
 
     var equationData: TitrationEquationData {
@@ -180,11 +184,19 @@ extension TitrationStrongSubstancePostEPModel {
     }
 
     var hConcentration: LinearEquation {
-        LinearEquation(
+        if substance.type.isAcid {
+            return LinearEquation(
+                x1: 0,
+                y1: 1e-7,
+                x2: CGFloat(maxTitrant),
+                y2: finalHConcentration
+            )
+        }
+        return LinearEquation(
             x1: 0,
             y1: 1e-7,
             x2: CGFloat(maxTitrant),
-            y2: finalHConcentration
+            y2: finalOH
         )
     }
 
@@ -219,11 +231,19 @@ extension TitrationStrongSubstancePostEPModel {
     }
 
     var ohConcentration: Equation {
-        LinearEquation(
+        if substance.type.isAcid {
+            return LinearEquation(
+                x1: 0,
+                y1: 1e-7,
+                x2: CGFloat(maxTitrant),
+                y2: finalOH
+            )
+        }
+        return LinearEquation(
             x1: 0,
             y1: 1e-7,
             x2: CGFloat(maxTitrant),
-            y2: finalOH
+            y2: finalHConcentration
         )
     }
 
@@ -254,7 +274,7 @@ extension TitrationStrongSubstancePostEPModel {
     }
 }
 
-// MARK: Input limits
+// MARK: - Input limits
 extension TitrationStrongSubstancePostEPModel {
     var maxTitrant: Int {
         20

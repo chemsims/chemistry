@@ -7,10 +7,18 @@ import CoreGraphics
 import ReactionsCore
 @testable import acids_bases
 
-class TitrationStrongSubstancePostEPModelTests: XCTestCase {
+class TitrationStrongAcidPostEPModelTests: XCTestCase {
+
+    var increasingIon = PrimaryIon.hydrogen
+    var substance = AcidOrBase.strongAcids.first!
+
+    private var decreasingIon: PrimaryIon {
+        increasingIon.complement
+    }
 
     func testConcentration() {
         let firstModel = TitrationStrongSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(finalMaxPValue: 12)
         )
         firstModel.incrementSubstance(count: 20)
@@ -22,18 +30,27 @@ class TitrationStrongSubstancePostEPModelTests: XCTestCase {
 
         model.incrementTitrant(count: model.maxTitrant)
 
-        let finalPH = firstModel.settings.finalMaxPValue
-        let expectedHConcentration = PrimaryIonConcentration.concentration(forP: finalPH)
-        let expectedOHConcentration = PrimaryIonConcentration.complementConcentration(
-            primaryConcentration: expectedHConcentration
+        let finalPIncreasingIon = firstModel.settings.finalMaxPValue
+        let expectedIncreasingIonConcentration = PrimaryIonConcentration.concentration(
+            forP: finalPIncreasingIon
+        )
+        let expectedDecreasingIonConcentration = PrimaryIonConcentration.complementConcentration(
+            primaryConcentration: expectedIncreasingIonConcentration
         )
 
-        XCTAssertEqualWithTolerance(model.concentration.value(for: .hydrogen), expectedHConcentration)
-        XCTAssertEqualWithTolerance(model.concentration.value(for: .hydroxide), expectedOHConcentration)
+        XCTAssertEqualWithTolerance(
+            model.concentration.value(for: increasingIon.concentration),
+            expectedIncreasingIonConcentration
+        )
+        XCTAssertEqualWithTolerance(
+            model.concentration.value(for: decreasingIon.concentration),
+            expectedDecreasingIonConcentration
+        )
     }
 
     func testMolarity() {
         let firstModel = TitrationStrongSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(finalMaxPValue: 12)
         )
         firstModel.incrementSubstance(count: 20)
@@ -45,6 +62,7 @@ class TitrationStrongSubstancePostEPModelTests: XCTestCase {
 
     func testMoles() {
         let firstModel = TitrationStrongSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(finalMaxPValue: 12)
         )
         firstModel.incrementSubstance(count: 20)
@@ -74,6 +92,7 @@ class TitrationStrongSubstancePostEPModelTests: XCTestCase {
 
     func testVolume() {
         let firstModel = TitrationStrongSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(finalMaxPValue: 12)
         )
         firstModel.incrementSubstance(count: 20)
@@ -93,12 +112,16 @@ class TitrationStrongSubstancePostEPModelTests: XCTestCase {
 
         // If the volume & moles are correct, then this equation should be satisfied:
         // [OH] = (n-titrant - n-substance) / (V-titrant + V-substance)
-        let resultingFinalOHConcentration = (titrantMoles - substanceMoles) / (finalTitrantVolume + substanceVolume)
-        XCTAssertEqualWithTolerance(resultingFinalOHConcentration, model.concentration.value(for: .hydroxide))
+        let resultingFinalDecreasingIonConcentration = (titrantMoles - substanceMoles) / (finalTitrantVolume + substanceVolume)
+        XCTAssertEqualWithTolerance(
+            resultingFinalDecreasingIonConcentration,
+            model.concentration.value(for: decreasingIon.concentration)
+        )
     }
 
     func testPValues() {
         let firstModel = TitrationStrongSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(finalMaxPValue: 12)
         )
         firstModel.incrementSubstance(count: 20)
@@ -114,12 +137,15 @@ class TitrationStrongSubstancePostEPModelTests: XCTestCase {
 
         model.incrementTitrant(count: model.maxTitrant)
 
-        XCTAssertEqualWithTolerance(model.pValues.value(for: .hydrogen), 12)
-        XCTAssertEqualWithTolerance(model.pValues.value(for: .hydroxide), 2)
+        XCTAssertEqualWithTolerance(
+            model.pValues.value(for: increasingIon.pValue), 12
+        )
+        XCTAssertEqualWithTolerance(model.pValues.value(for: decreasingIon.pValue), 2)
     }
 
     func testKValues() {
         let firstModel = TitrationStrongSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(finalMaxPValue: 12)
         )
         firstModel.incrementSubstance(count: 20)
@@ -132,6 +158,7 @@ class TitrationStrongSubstancePostEPModelTests: XCTestCase {
 
     func testBarChart() {
         let firstModel = TitrationStrongSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(
                 neutralSubstanceBarChartHeight: 0.4,
                 finalMaxPValue: 12
@@ -141,22 +168,30 @@ class TitrationStrongSubstancePostEPModelTests: XCTestCase {
         let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
-        var hydroxideBar: Equation { model.barChartData[0].equation }
-        var hydrogenBar: Equation { model.barChartData[1].equation }
+        var decreasingIonBar: Equation {
+            model.barChartDataMap.value(for: decreasingIon).equation
 
-        XCTAssertEqualWithTolerance(hydrogenBar.getY(at: 0), 0.4)
-        XCTAssertEqualWithTolerance(hydroxideBar.getY(at: 0), 0.4)
+        }
+        var increasingIonBar: Equation {
+            model.barChartDataMap.value(for: increasingIon).equation
+        }
 
-        XCTAssertEqualWithTolerance(hydrogenBar.getY(at: CGFloat(model.maxTitrant)), 0)
+        XCTAssertEqualWithTolerance(increasingIonBar.getY(at: 0), 0.4)
+        XCTAssertEqualWithTolerance(decreasingIonBar.getY(at: 0), 0.4)
 
-        let expectedOHConcentration: CGFloat = 0.01
-        let expectedBarHeight = LinearEquation(
+        XCTAssertEqualWithTolerance(increasingIonBar.getY(at: CGFloat(model.maxTitrant)), 0)
+
+        let expectedDecreasingIonConcentration: CGFloat = 0.01
+        let expectedDecreasingIonBarHeight = LinearEquation(
             x1: 1e-7,
             y1: 0.4,
             x2: 1,
             y2: 1
-        ).getY(at: expectedOHConcentration)
+        ).getY(at: expectedDecreasingIonConcentration)
 
-        XCTAssertEqualWithTolerance(hydroxideBar.getY(at: CGFloat(model.maxTitrant)), expectedBarHeight)
+        XCTAssertEqualWithTolerance(
+            decreasingIonBar.getY(at: CGFloat(model.maxTitrant)),
+            expectedDecreasingIonBarHeight
+        )
     }
 }
