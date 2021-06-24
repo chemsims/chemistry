@@ -38,7 +38,7 @@ class TitrationStrongSubstancePreEPModel: ObservableObject {
     }
 }
 
-// MARK: Incrementing
+// MARK: - Incrementing
 extension TitrationStrongSubstancePreEPModel {
     func incrementTitrant(count: Int) {
         guard titrantAdded < maxTitrant else {
@@ -50,7 +50,7 @@ extension TitrationStrongSubstancePreEPModel {
     }
 }
 
-// MARK: Titrant volume
+// MARK: - Titrant volume
 extension TitrationStrongSubstancePreEPModel {
     var titrantVolumeAdded: Equation {
         LinearEquation(
@@ -66,10 +66,15 @@ extension TitrationStrongSubstancePreEPModel {
     }
 }
 
-// MARK: Bar chart data
+// MARK: - Bar chart data
 extension TitrationStrongSubstancePreEPModel {
     var barChartData: [BarChartData] {
-        [barChartData(forIon: .hydroxide), barChartData(forIon: .hydrogen)]
+        let map = barChartDataMap
+        return [map.value(for: .hydroxide), map.value(for: .hydrogen)]
+    }
+
+    var barChartDataMap: EnumMap<PrimaryIon, BarChartData> {
+        .init(builder: barChartData)
     }
 
     private func barChartData(forIon primaryIon: PrimaryIon) -> BarChartData {

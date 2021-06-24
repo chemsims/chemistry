@@ -7,9 +7,17 @@ import CoreGraphics
 import ReactionsCore
 @testable import acids_bases
 
-class TitrationStrongSubstancePreEPModelTests: XCTestCase {
+class TitrationStrongAcidPreEPModelTests: XCTestCase {
+
+    var increasingIon: PrimaryIon = .hydrogen
+    var substance = AcidOrBase.strongAcids.first!
+
+    private var decreasingIon: PrimaryIon {
+        increasingIon.complement
+    }
+
     func testConcentration() {
-        let firstModel = TitrationStrongSubstancePreparationModel()
+        let firstModel = TitrationStrongSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
@@ -21,13 +29,13 @@ class TitrationStrongSubstancePreEPModelTests: XCTestCase {
         }
         checkZeroConcentrations()
 
-        let expectedInitialH = expectedConcentration(afterIncrementing: 20)
-        let expectedInitialOH = PrimaryIonConcentration.complementConcentration(primaryConcentration: expectedInitialH)
+        let expectedInitialIncreasing = expectedConcentration(afterIncrementing: 20)
+        let expectedInitialDecreasing = PrimaryIonConcentration.complementConcentration(primaryConcentration: expectedInitialIncreasing)
 
-        XCTAssertEqual(model.concentration.value(for: .hydrogen), expectedInitialH, accuracy: 0.0001)
+        XCTAssertEqualWithTolerance(model.concentration.value(for: increasingIon.concentration), expectedInitialIncreasing)
         XCTAssertEqualWithTolerance(
-            model.concentration.value(for: .hydroxide),
-            expectedInitialOH
+            model.concentration.value(for: decreasingIon.concentration),
+            expectedInitialDecreasing
         )
 
         model.incrementTitrant(count: model.maxTitrant)
@@ -38,7 +46,7 @@ class TitrationStrongSubstancePreEPModelTests: XCTestCase {
     }
 
     func testMolarity() {
-        let firstModel = TitrationStrongSubstancePreparationModel()
+        let firstModel = TitrationStrongSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
@@ -56,7 +64,7 @@ class TitrationStrongSubstancePreEPModelTests: XCTestCase {
     }
 
     func testMoles() {
-        let firstModel = TitrationStrongSubstancePreparationModel()
+        let firstModel = TitrationStrongSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
@@ -85,7 +93,7 @@ class TitrationStrongSubstancePreEPModelTests: XCTestCase {
     }
 
     func testVolume() {
-        let firstModel = TitrationStrongSubstancePreparationModel()
+        let firstModel = TitrationStrongSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
@@ -103,10 +111,17 @@ class TitrationStrongSubstancePreEPModelTests: XCTestCase {
     }
 
     func testPValues() {
-        let firstModel = TitrationStrongSubstancePreparationModel()
+        let firstModel = TitrationStrongSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
-        XCTAssertEqual(firstModel.pValues, model.pValues)
+
+        func checkSamePValues(_ pValue: TitrationEquationTerm.PValue) {
+            let firstPValue = firstModel.pValues.value(for: pValue)
+            let modelPValue = model.pValues.value(for: pValue)
+            XCTAssertEqualWithTolerance(modelPValue, firstPValue)
+        }
+        checkSamePValues(.hydrogen)
+        checkSamePValues(.hydroxide)
 
         model.incrementTitrant(count: model.maxTitrant)
 
@@ -115,53 +130,59 @@ class TitrationStrongSubstancePreEPModelTests: XCTestCase {
     }
 
     func testKValues() {
-        let firstModel = TitrationStrongSubstancePreparationModel()
+        let firstModel = TitrationStrongSubstancePreparationModel(substance: substance)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
         XCTAssertEqual(firstModel.kValues, model.kValues)
     }
 
     func testBarChartData() {
         let firstModel = TitrationStrongSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults( neutralSubstanceBarChartHeight: 0.3)
         )
         firstModel.incrementSubstance(count: 20)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
-        let firstHydroxideBar = firstModel.barChartData[0]
-        let firstHydrogenBar = firstModel.barChartData[1]
-        var modelHydroxideBar: BarChartData { model.barChartData[0] }
-        var modelHydrogenBar: BarChartData { model.barChartData[1] }
+        let firstDecresingBar = firstModel.barChartDataMap.value(for: decreasingIon)
+        let firstIncreasingBar = firstModel.barChartDataMap.value(for: increasingIon)
+        var modelDecreasingBar: BarChartData {
+            model.barChartDataMap.value(for: decreasingIon)
+
+        }
+        var modelHydrogenBar: BarChartData {
+            model.barChartDataMap.value(for: increasingIon)
+        }
 
         // Initial heights
         XCTAssertEqualWithTolerance(
             modelHydrogenBar.equation.getY(at: 0),
-            firstHydrogenBar.equation.getY(at: 20)
+            firstIncreasingBar.equation.getY(at: 20)
         )
         XCTAssertEqualWithTolerance(
-            modelHydroxideBar.equation.getY(at: 0),
-            firstHydroxideBar.equation.getY(at: 20)
+            modelDecreasingBar.equation.getY(at: 0),
+            firstDecresingBar.equation.getY(at: 20)
         )
 
         // Mid heights
-        let expectedMidHHeight = (firstHydrogenBar.equation.getY(at: 20) + 0.3) / 2
-        let expectedMidOHHEight = (firstHydroxideBar.equation.getY(at: 20) + 0.3) / 2
+        let expectedMidHHeight = (firstIncreasingBar.equation.getY(at: 20) + 0.3) / 2
+        let expectedMidOHHEight = (firstDecresingBar.equation.getY(at: 20) + 0.3) / 2
 
         XCTAssertEqualWithTolerance(
             modelHydrogenBar.equation.getY(at: CGFloat(model.maxTitrant) / 2),
             expectedMidHHeight
         )
         XCTAssertEqualWithTolerance(
-            modelHydroxideBar.equation.getY(at: CGFloat(model.maxTitrant) / 2),
+            modelDecreasingBar.equation.getY(at: CGFloat(model.maxTitrant) / 2),
             expectedMidOHHEight
         )
 
         // Final heights
         XCTAssertEqualWithTolerance(modelHydrogenBar.equation.getY(at: CGFloat(model.maxTitrant)), 0.3)
-        XCTAssertEqualWithTolerance(modelHydroxideBar.equation.getY(at: CGFloat(model.maxTitrant)), 0.3)
+        XCTAssertEqualWithTolerance(modelDecreasingBar.equation.getY(at: CGFloat(model.maxTitrant)), 0.3)
     }
 
     func testCoords() {
-        let firstModel = TitrationStrongSubstancePreparationModel()
+        let firstModel = TitrationStrongSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
