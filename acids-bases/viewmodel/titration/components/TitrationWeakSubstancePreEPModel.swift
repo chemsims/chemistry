@@ -66,9 +66,7 @@ extension TitrationWeakSubstancePreEPModel {
     var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> {
         .init {
             switch $0 {
-            case .hydrogen:
-                return hydroxideConcentration
-                    .map(PrimaryIonConcentration.complementConcentration)
+            case .hydrogen: return hydrogenConcentration
             case .hydroxide: return hydroxideConcentration
             case .initialSecondary:
                 return ConstantEquation(value: initialConcentration(of: .secondary))
@@ -84,14 +82,15 @@ extension TitrationWeakSubstancePreEPModel {
         previous.concentration.map { $0.getY(at: 1) }
     }
 
-    private var finalSubstancePreKbBalancing: CGFloat {
+    private var finalSecondaryPreKBalancing: CGFloat {
         initialSubstanceMoles / (initialSubstanceVolume + finalTitrantVolume)
     }
 
-    private var changeInConcentrationToBalanceKb: CGFloat {
-        AcidConcentrationEquations.changeInConcentration(
-            kValue: substance.kB,
-            initialDenominatorConcentration: finalSubstancePreKbBalancing
+    private var changeInConcentrationToBalanceKRelation: CGFloat {
+        let kValue = substance.type.isAcid ? substance.kB : substance.kA
+        return AcidConcentrationEquations.changeInConcentration(
+            kValue: kValue,
+            initialDenominatorConcentration: finalSecondaryPreKBalancing
         )
     }
 
@@ -100,7 +99,7 @@ extension TitrationWeakSubstancePreEPModel {
             x1: 0,
             y1: initialConcentration(of: .secondary),
             x2: CGFloat(maxTitrant),
-            y2: finalSubstancePreKbBalancing - changeInConcentrationToBalanceKb
+            y2: finalSecondaryPreKBalancing - changeInConcentrationToBalanceKRelation
         )
     }
 
@@ -109,16 +108,37 @@ extension TitrationWeakSubstancePreEPModel {
             x1: 0,
             y1: initialConcentration(of: .substance),
             x2: CGFloat(maxTitrant),
-            y2: changeInConcentrationToBalanceKb
+            y2: changeInConcentrationToBalanceKRelation
         )
     }
 
+    private var hydrogenConcentration: Equation {
+        if substance.type.isAcid {
+            return increasingPrimaryIonConcentration
+        }
+        return decreasingPrimaryIonConcentration
+    }
+
     private var hydroxideConcentration: Equation {
-        LinearEquation(
+        if substance.type.isAcid {
+            return decreasingPrimaryIonConcentration
+        }
+        return increasingPrimaryIonConcentration
+    }
+
+    private var increasingPrimaryIonConcentration: Equation {
+        decreasingPrimaryIonConcentration
+            .map(PrimaryIonConcentration.complementConcentration)
+    }
+
+    private var decreasingPrimaryIonConcentration: Equation {
+        let initConcentrationTerm: TitrationEquationTerm.Concentration =
+            substance.type.isAcid ? .hydroxide : .hydrogen
+        return LinearEquation(
             x1: 0,
-            y1: initialConcentration(of: .hydroxide),
+            y1: initialConcentration(of: initConcentrationTerm),
             x2: CGFloat(maxTitrant),
-            y2: changeInConcentrationToBalanceKb
+            y2: changeInConcentrationToBalanceKRelation
         )
     }
 

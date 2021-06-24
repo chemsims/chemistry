@@ -5,7 +5,7 @@
 import XCTest
 @testable import acids_bases
 
-class TitrationWeakBasePreparationModelTests: TitrationWeakAcidPreparationModelTests {
+class TitrationWeakBasePreEPModelTests: TitrationWeakAcidPreEPModelTests {
 
     override func setUp() {
         self.substance = .weakBases.first!

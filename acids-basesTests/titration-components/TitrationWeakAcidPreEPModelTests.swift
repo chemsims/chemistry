@@ -6,9 +6,22 @@ import XCTest
 import ReactionsCore
 @testable import acids_bases
 
-class TitrationWeakSubstancePreEPModelTests: XCTestCase {
+class TitrationWeakAcidPreEPModelTests: XCTestCase {
+
+    var substance = AcidOrBase.weakAcids.first!
+    
+    /// The ion which increases as substance is added to a solution
+    private var increasingIon: PrimaryIon {
+        substance.primary
+    }
+
+    /// The ion which decreases as substance is added to a solution
+    private var decreasingIon: PrimaryIon {
+        increasingIon.complement
+    }
+
     func testConcentration() {
-        let firstModel = TitrationWeakSubstancePreparationModel()
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
 
@@ -21,29 +34,25 @@ class TitrationWeakSubstancePreEPModelTests: XCTestCase {
             )
         }
 
-        XCTAssertEqual(1, 1, "foo")
-
         model.incrementTitrant(count: 20)
         let concentration = model.currentConcentration
 
-        let hydroxide = concentration.value(for: .hydroxide)
+        let decreasingIonConcentration = concentration.value(for: decreasingIon.concentration)
         let substance = concentration.value(for: .substance)
         let secondary = concentration.value(for: .secondary)
 
-        XCTAssertEqualWithTolerance(hydroxide, substance)
+        XCTAssertEqualWithTolerance(decreasingIonConcentration, substance)
 
-        let resultingKb = (hydroxide * substance) / secondary
-        XCTAssertEqualWithTolerance(resultingKb, model.substance.kB)
+        let expectedK = self.substance.type.isAcid ? self.substance.kB : self.substance.kA
+        let resultingK = (decreasingIonConcentration * substance) / secondary
+        XCTAssertEqualWithTolerance(resultingK, expectedK)
     }
 
     func testPValues() {
-        let firstModel = TitrationWeakSubstancePreparationModel()
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         firstModel.reactionProgress = 1
         let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
-
-
-        print("Volume: \(firstModel.volume.value(for: .substance))")
 
         let initialPValues = model.currentPValues
         XCTAssertEqualWithTolerance(
@@ -69,12 +78,15 @@ class TitrationWeakSubstancePreEPModelTests: XCTestCase {
         )
 
         // Check the equation pH = pKa + log([A]/[HA]) holds
+
         let secondaryConcentration = model.currentConcentration.value(for: .secondary)
         let substanceConcentration = model.currentConcentration.value(for: .substance)
-        let pHFromPKaEquation = model.substance.pKA + log10(secondaryConcentration / substanceConcentration)
+
+        let pK = substance.type.isAcid ? substance.pKA : substance.pKB
+        let pIncreasingIonFromPKEquation = pK + log10(secondaryConcentration / substanceConcentration)
 
         XCTAssertEqualWithTolerance(
-            finalPValues.value(for: .hydrogen), pHFromPKaEquation
+            finalPValues.value(for: increasingIon.pValue), pIncreasingIonFromPKEquation
         )
 
         // Check the equation 14 = pH + pOH holds
@@ -85,7 +97,7 @@ class TitrationWeakSubstancePreEPModelTests: XCTestCase {
     }
 
     func testVolume() {
-        let firstModel = TitrationWeakSubstancePreparationModel()
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
 
@@ -106,7 +118,7 @@ class TitrationWeakSubstancePreEPModelTests: XCTestCase {
     }
 
     func testMoles() {
-        let firstModel = TitrationWeakSubstancePreparationModel()
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
 
@@ -137,7 +149,7 @@ class TitrationWeakSubstancePreEPModelTests: XCTestCase {
     }
 
     func testBarChartData() {
-        let firstModel = TitrationWeakSubstancePreparationModel()
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
 

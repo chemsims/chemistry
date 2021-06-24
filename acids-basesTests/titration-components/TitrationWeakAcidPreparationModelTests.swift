@@ -20,22 +20,6 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         increasingIon.complement
     }
 
-    /// The 'primary' K__ property of the substance. This is Ka for acids and Kb for bases.
-    private var primaryK: CGFloat {
-        if substance.type.isAcid {
-            return substance.kA
-        }
-        return substance.kB
-    }
-
-    /// The 'primary' pK__ property of the substance. This is pKa for acids and pKb for bases.
-    private var primaryPK: CGFloat {
-        if substance.type.isAcid {
-            return substance.pKA
-        }
-        return substance.pKB
-    }
-
     func testConcentration() {
         let model = TitrationWeakSubstancePreparationModel(
             substance: substance
@@ -64,7 +48,8 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
 
         // This equation should be satisfied: (for acids) Ka = ([H][A]/[HA])
         let resultingK = (finalIncreasingIon * finalSecondary) / finalSubstance
-        XCTAssertEqualWithTolerance(resultingK, primaryK)
+        let expectedK = substance.type.isAcid ? substance.kA : substance.kB
+        XCTAssertEqualWithTolerance(resultingK, expectedK)
 
         XCTAssertEqual(
             initialConcentrations.value(for: .initialSubstance),
@@ -136,7 +121,10 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         let finalSecondary = model.concentration.value(for: .secondary).getY(at: 1)
         let finalSubstance = model.concentration.value(for: .substance).getY(at: 1)
 
-        let expectedPIncreasingIon = primaryPK + log10(finalSecondary / finalSubstance)
+        // Check we satisfy the equation pH = pKa + log(secondary / substance)
+        // For bases, this is pOH = pKb + log(secondary / substance)
+        let pK = substance.type.isAcid ? substance.pKA : substance.pKB
+        let expectedPIncreasingIon = pK + log10(finalSecondary / finalSubstance)
 
         model.reactionProgress = 1
 
