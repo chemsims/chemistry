@@ -172,7 +172,7 @@ class TitrationStrongSubstancePreEPModelTests: XCTestCase {
     }
 
     private func expectedConcentration(afterIncrementing count: Int) -> CGFloat {
-        TitrationStrongSubstancePreparationModel.expectedConcentration(
+        TitrationStrongSubstancePreparationModel.concentrationOfIncreasingMolecule(
             afterIncrementing: count,
             gridSize: 100
         )

@@ -91,10 +91,15 @@ extension TitrationStrongSubstancePreparationModel {
     }
 }
 
-// MARK: Bar chart
+// MARK: - Bar chart
 extension TitrationStrongSubstancePreparationModel {
     var barChartData: [BarChartData] {
-        [barChartData(forIon: .hydroxide), barChartData(forIon: .hydrogen)]
+        let map = barChartDataMap
+        return [map.hydroxide, map.hydrogen]
+    }
+
+    var barChartDataMap: EnumMap<PrimaryIon, BarChartData> {
+        .init(builder: barChartData)
     }
 
     private func barChartData(forIon primaryIon: PrimaryIon) -> BarChartData {

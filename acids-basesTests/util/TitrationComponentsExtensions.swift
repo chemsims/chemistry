@@ -22,7 +22,7 @@ extension TitrationStrongSubstancePreparationModel {
         )
     }
 
-    static func expectedConcentration(
+    static func concentrationOfIncreasingMolecule(
         afterIncrementing count: Int,
         gridSize: Int
     ) -> CGFloat {
