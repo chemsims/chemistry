@@ -62,8 +62,8 @@ extension TitrationWeakSubstancePreparationModel {
             switch $0 {
             case .substance, .initialSubstance: return substanceConcentration
             case .secondary, .initialSecondary: return ionConcentration
-            case .hydrogen: return ionConcentration
-            case .hydroxide: return ionConcentration.map(PrimaryIonConcentration.complementConcentration)
+            case .hydrogen: return hydrogenConcentration
+            case .hydroxide: return hydroxideConcentration
             }
         }
     }
@@ -84,6 +84,24 @@ extension TitrationWeakSubstancePreparationModel {
             x2: 1,
             y2: changeInConcentration
         )
+    }
+
+    private var complementPrimaryIonConcentration: Equation {
+        ionConcentration.map(PrimaryIonConcentration.complementConcentration)
+    }
+
+    private var hydrogenConcentration: Equation {
+        if substance.type.isAcid {
+            return ionConcentration
+        }
+        return complementPrimaryIonConcentration
+    }
+
+    private var hydroxideConcentration: Equation {
+        if substance.type.isAcid {
+            return complementPrimaryIonConcentration
+        }
+        return ionConcentration
     }
 
     // TODO - might be worth making this not computed
@@ -138,19 +156,16 @@ extension TitrationWeakSubstancePreparationModel {
     var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
         .init {
             switch $0 {
-            case .hydrogen: return pHEquation.getY(at: 1)
-            case .hydroxide: return 14 - pHEquation.getY(at: 1)
+            case .hydrogen: return phFromConcentration(.hydrogen)
+            case .hydroxide: return phFromConcentration(.hydroxide)
             case .kA: return substance.pKA
             case .kB: return substance.pKB
             }
         }
     }
 
-    private var pHEquation: Equation {
-        let secondaryC = concentration.value(for: .secondary)
-        let substanceC = concentration.value(for: .substance)
-
-        return substance.pKA + Log10Equation(underlying: secondaryC / substanceC)
+    private func phFromConcentration(_ term: TitrationEquationTerm.Concentration) -> CGFloat {
+        -1 * safeLog10(concentration.value(for: term).getY(at: reactionProgress))
     }
 }
 
@@ -178,13 +193,13 @@ extension TitrationWeakSubstancePreparationModel {
             switch $0 {
             case .hydrogen: return BarChartData(
                 label: PrimaryIon.hydrogen.rawValue,
-                equation: ionBarChartEquation,
+                equation: hydrogenBarEquation,
                 color: RGB.hydrogen.color,
                 accessibilityLabel: ""
             )
             case .hydroxide: return BarChartData(
                 label: PrimaryIon.hydroxide.rawValue,
-                equation: ConstantEquation(value: 0),
+                equation: hydroxideBarEquation,
                 color: RGB.hydroxide.color,
                 accessibilityLabel: ""
             )
@@ -202,6 +217,20 @@ extension TitrationWeakSubstancePreparationModel {
             )
             }
         }
+    }
+
+    private var hydrogenBarEquation: Equation {
+        if substance.type.isAcid {
+            return ionBarChartEquation
+        }
+        return ConstantEquation(value: 0)
+    }
+
+    private var hydroxideBarEquation: Equation {
+        if substance.type.isAcid {
+            return ConstantEquation(value: 0)
+        }
+        return ionBarChartEquation
     }
 
     private var ionBarChartEquation: Equation {

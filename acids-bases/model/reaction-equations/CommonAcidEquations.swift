@@ -47,21 +47,10 @@ struct AcidConcentrationEquations {
         substance: AcidOrBase,
         initialSubstanceConcentration: CGFloat
     ) -> CGFloat {
-        guard let roots = QuadraticEquation.roots(
-            a: 1,
-            b: substance.kA,
-            c: -(substance.kA * initialSubstanceConcentration)
-        ) else {
-            return 0
-        }
-
-        guard let validRoot = [roots.0, roots.1].first(where: {
-            $0 > 0 && $0 < (initialSubstanceConcentration / 2)
-        }) else {
-            return 0
-        }
-
-        return validRoot
+        changeInConcentration(
+            kValue: substance.type.isAcid ? substance.kA : substance.kB,
+            initialDenominatorConcentration: initialSubstanceConcentration
+        )
     }
 
     /// Returns a change in concentration, given the equation of K:

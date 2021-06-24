@@ -39,7 +39,9 @@ class TitrationWeakSubstancePreEPModelTests: XCTestCase {
     func testPValues() {
         let firstModel = TitrationWeakSubstancePreparationModel()
         firstModel.incrementSubstance(count: 20)
+        firstModel.reactionProgress = 1
         let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
+
 
         print("Volume: \(firstModel.volume.value(for: .substance))")
 

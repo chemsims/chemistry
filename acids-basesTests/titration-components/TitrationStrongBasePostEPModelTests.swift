@@ -9,7 +9,6 @@ import CoreGraphics
 class TitrationStrongBasePostEPModelTests: TitrationStrongAcidPostEPModelTests {
 
     override func setUp() {
-        self.increasingIon = .hydroxide
         self.substance = AcidOrBase.strongBases.first!
     }
 

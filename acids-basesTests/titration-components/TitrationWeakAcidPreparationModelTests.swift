@@ -6,16 +6,46 @@ import XCTest
 import ReactionsCore
 @testable import acids_bases
 
-class TitrationWeakSubstancePreparationModelTests: XCTestCase {
+class TitrationWeakAcidPreparationModelTests: XCTestCase {
+
+    var substance = AcidOrBase.weakAcids.first!
+
+    /// The ion which increases as substance is added to a solution
+    private var increasingIon: PrimaryIon {
+        substance.primary
+    }
+
+    /// The ion which decreases as substance is added to a solution
+    private var decreasingIon: PrimaryIon {
+        increasingIon.complement
+    }
+
+    /// The 'primary' K__ property of the substance. This is Ka for acids and Kb for bases.
+    private var primaryK: CGFloat {
+        if substance.type.isAcid {
+            return substance.kA
+        }
+        return substance.kB
+    }
+
+    /// The 'primary' pK__ property of the substance. This is pKa for acids and pKb for bases.
+    private var primaryPK: CGFloat {
+        if substance.type.isAcid {
+            return substance.pKA
+        }
+        return substance.pKB
+    }
 
     func testConcentration() {
-        let model = TitrationWeakSubstancePreparationModel()
+        let model = TitrationWeakSubstancePreparationModel(
+            substance: substance
+        )
         
         var initialConcentrations: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
             model.concentration.map { $0.getY(at: 0) }
         }
 
-        XCTAssertEqual(initialConcentrations.value(for: .hydrogen), 0)
+        XCTAssertEqual(initialConcentrations.value(for: increasingIon.concentration), 0)
         XCTAssertEqual(initialConcentrations.value(for: .secondary), 0)
         XCTAssertEqual(initialConcentrations.value(for: .substance), 0)
 
@@ -24,17 +54,17 @@ class TitrationWeakSubstancePreparationModelTests: XCTestCase {
 
         let finalConcentration = model.concentration.map { $0.getY(at: 1) }
 
-        let finalHydrogen = finalConcentration.value(for: .hydrogen)
+        let finalIncreasingIon = finalConcentration.value(for: increasingIon.concentration)
         let finalSecondary = finalConcentration.value(for: .secondary)
         let finalSubstance = finalConcentration.value(for: .substance)
 
         // The changes in concentration should be equal
-        XCTAssertEqual(finalHydrogen, finalSecondary)
-        XCTAssertEqualWithTolerance(0.2 - finalSubstance, finalHydrogen)
+        XCTAssertEqual(finalIncreasingIon, finalSecondary)
+        XCTAssertEqualWithTolerance(0.2 - finalSubstance, finalIncreasingIon)
 
-        // This equation should be satisfied: Ka = ([H][A]/[HA]):
-        let resultingKa = (finalHydrogen * finalSecondary) / finalSubstance
-        XCTAssertEqualWithTolerance(resultingKa, model.substance.kA)
+        // This equation should be satisfied: (for acids) Ka = ([H][A]/[HA])
+        let resultingK = (finalIncreasingIon * finalSecondary) / finalSubstance
+        XCTAssertEqualWithTolerance(resultingK, primaryK)
 
         XCTAssertEqual(
             initialConcentrations.value(for: .initialSubstance),
@@ -45,15 +75,19 @@ class TitrationWeakSubstancePreparationModelTests: XCTestCase {
             finalConcentration.value(for: .substance)
         )
 
-        // Check hydroxide
-        let expectedHydroxide = PrimaryIonConcentration.complementConcentration(
-            primaryConcentration: finalHydrogen
+        // Check decreasing ion
+        let expectedDecreasingIon = PrimaryIonConcentration.complementConcentration(
+            primaryConcentration: finalIncreasingIon
         )
-        XCTAssertEqualWithTolerance(finalConcentration.value(for: .hydroxide), expectedHydroxide)
+        XCTAssertEqualWithTolerance(
+            finalConcentration.value(for: decreasingIon.concentration),
+            expectedDecreasingIon
+        )
     }
 
     func testVolume() {
         let model = TitrationWeakSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(
                 beakerVolumeFromRows: LinearEquation(x1: 0, y1: 0, x2: 10, y2: 1)
             )
@@ -67,7 +101,7 @@ class TitrationWeakSubstancePreparationModelTests: XCTestCase {
     }
 
     func testMoles() {
-        let model = TitrationWeakSubstancePreparationModel()
+        let model = TitrationWeakSubstancePreparationModel(substance: substance)
 
         model.moles.all.forEach { mole in
             XCTAssertEqual(mole.getY(at: 0), 0)
@@ -95,24 +129,30 @@ class TitrationWeakSubstancePreparationModelTests: XCTestCase {
     }
 
     func testPValues() {
-        let model = TitrationWeakSubstancePreparationModel()
+        let model = TitrationWeakSubstancePreparationModel(substance: substance)
 
         model.incrementSubstance(count: 20)
 
-        let pKa = model.substance.pKA
         let finalSecondary = model.concentration.value(for: .secondary).getY(at: 1)
         let finalSubstance = model.concentration.value(for: .substance).getY(at: 1)
 
-        let expectedPH = pKa + log10(finalSecondary / finalSubstance)
+        let expectedPIncreasingIon = primaryPK + log10(finalSecondary / finalSubstance)
 
-        XCTAssertEqual(model.pValues.value(for: .hydrogen), expectedPH)
-        XCTAssertEqual(model.pValues.value(for: .hydroxide), 14 - expectedPH)
+        model.reactionProgress = 1
+
+        XCTAssertEqualWithTolerance(
+            model.pValues.value(for: increasingIon.pValue), expectedPIncreasingIon
+        )
+        XCTAssertEqualWithTolerance(
+            model.pValues.value(for: decreasingIon.pValue), 14 - expectedPIncreasingIon
+        )
         XCTAssertEqual(model.pValues.value(for: .kA), model.substance.pKA)
         XCTAssertEqual(model.pValues.value(for: .kB), model.substance.pKB)
     }
 
     func testBarChart() {
         let model = TitrationWeakSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(
                 weakIonChangeInBarHeightFraction: 0.25
             )
@@ -131,13 +171,24 @@ class TitrationWeakSubstancePreparationModelTests: XCTestCase {
         let changeInHeight: CGFloat = 0.05
         XCTAssertEqual(substance.getY(at: 1), 0.2 - changeInHeight)
 
-        let hydrogen = model.barChartDataMap.value(for: .hydrogen).equation
-        XCTAssertEqual(hydrogen.getY(at: 0), 0)
-        XCTAssertEqual(hydrogen.getY(at: 1), changeInHeight)
+        let increasingIonBar = model.barChartDataMap.value(
+            for: increasingIon.extendedSubstancePart
+        ).equation
+        XCTAssertEqual(increasingIonBar.getY(at: 0), 0)
+        XCTAssertEqual(increasingIonBar.getY(at: 1), changeInHeight)
 
         let secondary = model.barChartDataMap.value(for: .secondaryIon).equation
         XCTAssertEqual(secondary.getY(at: 0), 0)
         XCTAssertEqual(secondary.getY(at: 1), changeInHeight)
+    }
+}
+
+extension PrimaryIon {
+    var extendedSubstancePart: ExtendedSubstancePart {
+        switch self {
+        case .hydrogen: return .hydrogen
+        case .hydroxide: return .hydroxide
+        }
     }
 }
 

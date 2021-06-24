@@ -9,7 +9,6 @@ import ReactionsCore
 class TitrationStrongBasePreparationModelTests: TitrationStrongAcidPreparationModelTests {
 
     override func setUp() {
-        self.increasingIon = .hydroxide
         self.substance = AcidOrBase.strongBases.first!
     }
 

@@ -8,7 +8,6 @@ import XCTest
 class TitrationStrongBasePreEPModelTests: TitrationStrongAcidPreEPModelTests {
 
     override func setUp() {
-        self.increasingIon = .hydroxide
         self.substance = .strongBases.first!
     }
 

@@ -9,9 +9,14 @@ import ReactionsCore
 
 class TitrationStrongAcidPostEPModelTests: XCTestCase {
 
-    var increasingIon = PrimaryIon.hydrogen
     var substance = AcidOrBase.strongAcids.first!
 
+    /// The ion which increases as substance is added to a solution
+    private var increasingIon: PrimaryIon {
+        substance.primary
+    }
+
+    /// The ion which decreases as substance is added to a solution
     private var decreasingIon: PrimaryIon {
         increasingIon.complement
     }
