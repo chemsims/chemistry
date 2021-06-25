@@ -75,23 +75,23 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
         XCTAssertEqual(
-            model.moles.value(for: .substance),
-            model.molarity.value(for: .substance) * model.volume.value(for: .substance)
+            model.currentMoles.value(for: .substance),
+            model.molarity.value(for: .substance) * model.currentVolumes.value(for: .substance)
         )
         XCTAssertEqual(
-            model.moles.value(for: .titrant),
-            model.molarity.value(for: .titrant) * model.volume.value(for: .titrant)
+            model.currentMoles.value(for: .titrant),
+            model.molarity.value(for: .titrant) * model.currentVolumes.value(for: .titrant)
         )
 
         model.incrementTitrant(count: model.maxTitrant)
 
         XCTAssertEqual(
-            model.moles.value(for: .substance),
-            model.molarity.value(for: .substance) * model.volume.value(for: .substance)
+            model.currentMoles.value(for: .substance),
+            model.molarity.value(for: .substance) * model.currentVolumes.value(for: .substance)
         )
         XCTAssertEqual(
-            model.moles.value(for: .titrant),
-            model.molarity.value(for: .titrant) * model.volume.value(for: .titrant)
+            model.currentMoles.value(for: .titrant),
+            model.molarity.value(for: .titrant) * model.currentVolumes.value(for: .titrant)
         )
     }
 
@@ -104,15 +104,15 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
-        XCTAssertEqual(model.volume.value(for: .substance), secondModel.currentVolume.value(for: .substance))
-        XCTAssertEqual(model.volume.value(for: .titrant), secondModel.currentVolume.value(for: .titrant))
+        XCTAssertEqual(model.currentVolumes.value(for: .substance), secondModel.currentVolume.value(for: .substance))
+        XCTAssertEqual(model.currentVolumes.value(for: .titrant), secondModel.currentVolume.value(for: .titrant))
 
         model.incrementTitrant(count: model.maxTitrant)
 
-        let finalTitrantVolume = model.volume.value(for: .titrant)
-        let substanceVolume = model.volume.value(for: .substance)
-        let titrantMoles = model.moles.value(for: .titrant)
-        let substanceMoles = model.moles.value(for: .substance)
+        let finalTitrantVolume = model.currentVolumes.value(for: .titrant)
+        let substanceVolume = model.currentVolumes.value(for: .substance)
+        let titrantMoles = model.currentMoles.value(for: .titrant)
+        let substanceMoles = model.currentMoles.value(for: .substance)
 
 
         // If the volume & moles are correct, then this equation should be satisfied:

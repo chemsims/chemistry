@@ -104,22 +104,9 @@ extension TitrationWeakSubstancePostEPModel {
 
 // MARK: - P Values
 extension TitrationWeakSubstancePostEPModel {
-    var pValues: EnumMap<TitrationEquationTerm.PValue, Equation> {
-        equationData.pValues
-//        .init {
-//            switch $0 {
-//            case .hydrogen:
-//                return -1 * Log10Equation(underlying: concentration.value(for: .hydrogen))
-//            case .hydroxide:
-//                return -1 * Log10Equation(underlying: concentration.value(for: .hydroxide))
-//            case .kA: return ConstantEquation(value: substance.pKA)
-//            case .kB: return ConstantEquation(value: substance.kB)
-//            }
-//        }
-    }
 
     var pH: Equation {
-        pValues.value(for: .hydrogen)
+        equationData.pValues.value(for: .hydrogen)
     }
 
     private var finalPH: CGFloat {
@@ -139,7 +126,7 @@ extension TitrationWeakSubstancePostEPModel {
     var volume: EnumMap<TitrationEquationTerm.Volume, Equation> {
         .init {
             switch $0 {
-            case .equivalencePoint: return ConstantEquation(value: epVolume)
+            case .equivalencePoint: return ConstantEquation(value: equivalencePointVolume)
             case .hydrogen: return ConstantEquation(value: 0)
             case .initialSecondary: return ConstantEquation(value: 0)
             case .initialSubstance: return ConstantEquation(value: 0)
@@ -161,12 +148,12 @@ extension TitrationWeakSubstancePostEPModel {
     // V-koh = ([OH]Ve)/(M-koh - OH)
     private var finalTitrantVolume: CGFloat {
         let finalOh = finalOHConcentration
-        let numer = finalOh * epVolume
+        let numer = finalOh * equivalencePointVolume
         let denom = titrantMolarity - finalOh
         return denom == 0 ? 0 : numer / denom
     }
 
-    private var epVolume: CGFloat {
+    private var equivalencePointVolume: CGFloat {
         initialVolume(of: .titrant) + initialVolume(of: .initialSubstance)
     }
 
