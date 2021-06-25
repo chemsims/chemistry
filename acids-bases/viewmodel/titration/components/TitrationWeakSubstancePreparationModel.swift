@@ -43,15 +43,13 @@ extension TitrationWeakSubstancePreparationModel {
         TitrationEquationData(
             substance: substance,
             titrant: "KOH", // TODO
-            moles: moles.map { $0.getY(at: reactionProgress) },
-            volume: volume,
-            molarity: molarity,
-            concentration: concentration.map { $0.getY(at: reactionProgress) },
-            pValues: pValues,
-            kValues:kValues
+            moles: moles,
+            volume: volume.map { ConstantEquation(value: $0) },
+            molarity: molarity.map { ConstantEquation(value: $0) },
+            concentration: concentration
         )
     }
-    
+
     var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
         .init {
             switch $0 {
@@ -179,14 +177,15 @@ extension TitrationWeakSubstancePreparationModel {
 // MARK: - P Values
 extension TitrationWeakSubstancePreparationModel {
     var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        .init {
-            switch $0 {
-            case .hydrogen: return phFromConcentration(.hydrogen)
-            case .hydroxide: return phFromConcentration(.hydroxide)
-            case .kA: return substance.pKA
-            case .kB: return substance.pKB
-            }
-        }
+        equationData.pValues.map { $0.getY(at: reactionProgress) }
+//        .init {
+//            switch $0 {
+//            case .hydrogen: return phFromConcentration(.hydrogen)
+//            case .hydroxide: return phFromConcentration(.hydroxide)
+//            case .kA: return substance.pKA
+//            case .kB: return substance.pKB
+//            }
+//        }
     }
 
     private func phFromConcentration(_ term: TitrationEquationTerm.Concentration) -> CGFloat {

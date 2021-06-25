@@ -104,12 +104,10 @@ extension TitrationStrongSubstancePreEPModel {
         TitrationEquationData(
             substance: previous.substance,
             titrant: previous.titrant,
-            moles: moles,
-            volume: volume,
-            molarity: molarity,
-            concentration: concentration.map { $0.getY(at: CGFloat(titrantAdded)) },
-            pValues: pValues.map { $0.getY(at: CGFloat(titrantAdded)) },
-            kValues: kValues
+            moles: moles.map { ConstantEquation(value: $0) },
+            volume: volume.map { ConstantEquation(value: $0) },
+            molarity: molarity.map { ConstantEquation(value: $0) },
+            concentration: concentration
         )
     }
 }
@@ -201,14 +199,15 @@ extension TitrationStrongSubstancePreEPModel {
     }
 
     var pValues: EnumMap<TitrationEquationTerm.PValue, Equation> {
-        .init {
-            switch $0 {
-            case .hydrogen: return -1 * Log10Equation(underlying: concentration.value(for: .hydrogen))
-            case .hydroxide: return -1 * Log10Equation(underlying: concentration.value(for: .hydroxide))
-            case .kA: return ConstantEquation(value: previous.substance.pKA)
-            case .kB: return ConstantEquation(value: previous.substance.pKB)
-            }
-        }
+        equationData.pValues
+//        .init {
+//            switch $0 {
+//            case .hydrogen: return -1 * Log10Equation(underlying: concentration.value(for: .hydrogen))
+//            case .hydroxide: return -1 * Log10Equation(underlying: concentration.value(for: .hydroxide))
+//            case .kA: return ConstantEquation(value: previous.substance.pKA)
+//            case .kB: return ConstantEquation(value: previous.substance.pKB)
+//            }
+//        }
     }
 
     var pH: Equation {

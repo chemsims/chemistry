@@ -154,12 +154,10 @@ extension TitrationStrongSubstancePreparationModel {
         TitrationEquationData(
             substance: substance,
             titrant: titrant,
-            moles: moles,
-            volume: volume,
-            molarity: molarity,
-            concentration: concentration,
-            pValues: pValues,
-            kValues: kValues
+            moles: moles.map { ConstantEquation(value: $0) },
+            volume: volume.map { ConstantEquation(value: $0) },
+            molarity: molarity.map { ConstantEquation(value: $0) },
+            concentration: concentration.map { ConstantEquation(value: $0) }
         )
     }
 
@@ -215,14 +213,15 @@ extension TitrationStrongSubstancePreparationModel {
     }
 
     var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        .init {
-            switch $0 {
-            case .hydrogen: return ionConcentration(forPrimaryIon: .hydrogen).p
-            case .hydroxide: return ionConcentration(forPrimaryIon: .hydroxide).p
-            case .kA: return substance.pKA
-            case .kB: return substance.pKB
-            }
-        }
+        equationData.pValues.map { $0.getY(at: CGFloat(substanceAdded)) }
+//        .init {
+//            switch $0 {
+//            case .hydrogen: return ionConcentration(forPrimaryIon: .hydrogen).p
+//            case .hydroxide: return ionConcentration(forPrimaryIon: .hydroxide).p
+//            case .kA: return substance.pKA
+//            case .kB: return substance.pKB
+//            }
+//        }
     }
 
     var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {

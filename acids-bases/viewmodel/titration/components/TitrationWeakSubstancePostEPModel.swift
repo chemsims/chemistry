@@ -29,12 +29,10 @@ extension TitrationWeakSubstancePostEPModel {
         TitrationEquationData(
             substance: substance,
             titrant: "KOH",
-            moles: moles.map { $0.getY(at: CGFloat(titrantAdded)) },
-            volume: volume.map { $0.getY(at: CGFloat(titrantAdded)) },
-            molarity: molarity,
-            concentration: concentration.map { $0.getY(at: CGFloat(titrantAdded)) },
-            pValues: pValues.map { $0.getY(at: CGFloat(titrantAdded)) },
-            kValues: previous.kValues
+            moles: moles,
+            volume: volume,
+            molarity: molarity.map { ConstantEquation(value: $0) },
+            concentration: concentration
         )
     }
 }
@@ -107,16 +105,17 @@ extension TitrationWeakSubstancePostEPModel {
 // MARK: - P Values
 extension TitrationWeakSubstancePostEPModel {
     var pValues: EnumMap<TitrationEquationTerm.PValue, Equation> {
-        .init {
-            switch $0 {
-            case .hydrogen:
-                return -1 * Log10Equation(underlying: concentration.value(for: .hydrogen))
-            case .hydroxide:
-                return -1 * Log10Equation(underlying: concentration.value(for: .hydroxide))
-            case .kA: return ConstantEquation(value: substance.pKA)
-            case .kB: return ConstantEquation(value: substance.kB)
-            }
-        }
+        equationData.pValues
+//        .init {
+//            switch $0 {
+//            case .hydrogen:
+//                return -1 * Log10Equation(underlying: concentration.value(for: .hydrogen))
+//            case .hydroxide:
+//                return -1 * Log10Equation(underlying: concentration.value(for: .hydroxide))
+//            case .kA: return ConstantEquation(value: substance.pKA)
+//            case .kB: return ConstantEquation(value: substance.kB)
+//            }
+//        }
     }
 
     var pH: Equation {
@@ -199,7 +198,7 @@ extension TitrationWeakSubstancePostEPModel {
         .init {
             switch $0 {
             case .hydrogen: return 0
-            case .substance: return previous.equationData.molarity.value(for: .substance)
+            case .substance: return previous.equationData.molarity.value(for: .substance).getY(at: CGFloat(previous.titrantAdded))
             case .titrant: return titrantMolarity
             }
         }

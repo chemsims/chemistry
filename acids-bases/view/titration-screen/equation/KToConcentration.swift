@@ -9,6 +9,7 @@ import ReactionsCore
 private typealias BoxWidthTextLine = TitrationEquationView.BoxWidthTextLine
 private typealias PlainLine = TitrationEquationView.PlainLine
 private typealias Placeholder = TitrationEquationView.PlaceholderTermView
+private typealias PlaceholderEquation = TitrationEquationView.PlaceholderEquationView
 
 extension TitrationEquationView {
     struct KToConcentrationDefinition: View {
@@ -54,14 +55,14 @@ extension TitrationEquationView {
                 VStack(spacing: layout.fractionVSpacing) {
                     HStack(spacing: 5) {
                         FixedText("(")
-                        Placeholder(data: data, value: firstNumeratorConcentration)
+                        PlaceholderEquation(data: data, value: firstNumeratorConcentration)
                         FixedText(")(")
-                        Placeholder(data: data, value: secondNumeratorConcentration)
+                        PlaceholderEquation(data: data, value: secondNumeratorConcentration)
                         FixedText(")")
                     }
                     Rectangle()
                         .frame(width: 190, height: layout.fractionBarHeight)
-                    Placeholder(data: data, value: denominatorConcentration)
+                    PlaceholderEquation(data: data, value: denominatorConcentration)
                 }
             }
             .font(.system(size: layout.fontSize))

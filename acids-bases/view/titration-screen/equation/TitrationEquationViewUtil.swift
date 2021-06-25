@@ -61,19 +61,17 @@ extension TitrationEquationView {
     struct PlaceholderEquationView<Label : TitrationEquationTermEquation>: View {
         let data: TitrationEquationData
         let value: Term.Placeholder<Label>
-        let equationInput: CGFloat
+        let equationInput: CGFloat = 0
         let formatter: (CGFloat) -> TextLine
         @Environment(\.titrationEquationLayout) var layout
 
         init(
             data: TitrationEquationData,
             value: Term.Placeholder<Label>,
-            equationInput: CGFloat,
             formatter: @escaping (CGFloat) -> TextLine = defaultFormatter
         ) {
             self.data = data
             self.value = value
-            self.equationInput = equationInput
             self.formatter = formatter
         }
 

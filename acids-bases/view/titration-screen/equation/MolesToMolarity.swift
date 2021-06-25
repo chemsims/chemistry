@@ -11,6 +11,7 @@ import ReactionsCore
 // avoid using fully qualified names everywhere.
 private typealias BoxWidthTextLine = TitrationEquationView.BoxWidthTextLine
 private typealias Placeholder = TitrationEquationView.PlaceholderTermView
+private typealias PlaceholderEquation = TitrationEquationView.PlaceholderEquationView
 
 extension TitrationEquationView {
     struct MolesToMolarityDefinition: View {
@@ -46,11 +47,11 @@ extension TitrationEquationView {
 
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
-                Placeholder(data: data, value: moles)
+                PlaceholderEquation(data: data, value: moles)
                 FixedText("=")
-                Placeholder(data: data, value: volume)
+                PlaceholderEquation(data: data, value: volume)
                 FixedText("x")
-                Placeholder(data: data, value: molarity)
+                PlaceholderEquation(data: data, value: molarity)
             }
             .font(.system(size: layout.fontSize))
         }

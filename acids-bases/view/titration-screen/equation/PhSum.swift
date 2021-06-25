@@ -7,6 +7,8 @@ import ReactionsCore
 
 // See comment in TitrationEquationMolesToMolarity.swift
 private typealias TermOrPlaceholder = TitrationEquationView.BoxWidthTermOrPlaceholder
+private typealias BoxWidthTextLine = TitrationEquationView.BoxWidthTextLine
+private typealias PlaceholderEquation = TitrationEquationView.PlaceholderEquationView
 
 extension TitrationEquationView {
     struct PHSumDefinition: View {
@@ -17,12 +19,14 @@ extension TitrationEquationView {
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
-            TitrationEquationView.PHSumGeneral(
-                data: data,
-                showDefinition: false,
-                firstPValue: .init(firstPValue, isFilled: true),
-                secondPValue: .init(secondPValue, isFilled: true)
-            )
+            HStack(spacing: layout.termsHSpacing) {
+                FixedText("14")
+                FixedText("=")
+                BoxWidthTextLine(data: data, value: firstPValue)
+                FixedText("+")
+                BoxWidthTextLine(data: data, value: secondPValue)
+            }
+            .font(.system(size: layout.fontSize))
         }
     }
 
@@ -34,30 +38,12 @@ extension TitrationEquationView {
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
-            TitrationEquationView.PHSumGeneral(
-                data: data,
-                showDefinition: false,
-                firstPValue: firstPValue,
-                secondPValue: secondPValue
-            )
-        }
-    }
-
-    private struct PHSumGeneral: View {
-
-        let data: TitrationEquationData
-        let showDefinition: Bool
-        let firstPValue: Term.Placeholder<Term.PValue>
-        let secondPValue: Term.Placeholder<Term.PValue>
-        @Environment(\.titrationEquationLayout) var layout
-
-        var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 FixedText("14")
                 FixedText("=")
-                TermOrPlaceholder(data: data, value: firstPValue, showDefinition: showDefinition)
+                PlaceholderEquation(data: data, value: firstPValue)
                 FixedText("+")
-                TermOrPlaceholder(data: data, value: secondPValue, showDefinition: showDefinition)
+                PlaceholderEquation(data: data, value: secondPValue)
             }
             .font(.system(size: layout.fontSize))
         }

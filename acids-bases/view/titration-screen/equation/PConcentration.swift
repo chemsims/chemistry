@@ -8,6 +8,7 @@ import ReactionsCore
 // See comment in TitrationEquationMolesToMolarity.swift
 private typealias BoxWidthTextLine = TitrationEquationView.BoxWidthTextLine
 private typealias Placeholder = TitrationEquationView.PlaceholderTermView
+private typealias PlaceholderEquation = TitrationEquationView.PlaceholderEquationView
 
 extension TitrationEquationView {
     struct PConcentrationDefinition: View {
@@ -56,19 +57,19 @@ extension TitrationEquationView {
 
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
-                Placeholder(data: data, value: resultPValue)
+                PlaceholderEquation(data: data, value: resultPValue)
                 FixedText("=")
-                Placeholder(data: data, value: pkValue)
+                PlaceholderEquation(data: data, value: pkValue)
                 FixedText("+")
                 HStack(spacing: 0) {
                     FixedText("log")
                     FixedText("(")
                         .scaleEffect(y: layout.fractionParenHeightScaleFactor)
                     VStack(spacing: layout.fractionVSpacing) {
-                        Placeholder(data: data, value: numeratorConcentration)
+                        PlaceholderEquation(data: data, value: numeratorConcentration)
                         Rectangle()
                             .frame(width: 80, height: layout.fractionBarHeight)
-                        Placeholder(data: data, value: denominatorConcentration)
+                        PlaceholderEquation(data: data, value: denominatorConcentration)
                     }
                     FixedText(")")
                         .scaleEffect(y: layout.fractionParenHeightScaleFactor)
