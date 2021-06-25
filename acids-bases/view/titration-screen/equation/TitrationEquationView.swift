@@ -9,6 +9,7 @@ struct TitrationEquationView: View {
     typealias Term = TitrationEquationTerm
     let data: TitrationEquationData
     let equationSet: TitrationEquationSet
+    let equationInput: CGFloat
     @Environment(\.titrationEquationLayout) var layout
 
     var body: some View {
@@ -36,8 +37,10 @@ private extension TitrationEquationView {
             column(equations: equationSet.left)
             column(equations: equationSet.right)
         }
+        .font(.system(size: layout.fontSize))
         .minimumScaleFactor(layout.minScaleFactor)
         .lineLimit(1)
+        .environment(\.titrationEquationInput, equationInput)
     }
 
     private func column(equations: [TitrationEquation]) -> some View {
@@ -324,7 +327,8 @@ struct TitrationEquationView_Previews: PreviewProvider {
     static var previews: some View {
         TitrationEquationView(
             data: .preview,
-            equationSet: .weakAcidAtEp
+            equationSet: .weakAcidAtEp,
+            equationInput: 0
         )
         .sizedBody // We use the non-scaled view in the preview to check the natural size is correct
         .border(Color.red)

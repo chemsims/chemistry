@@ -20,7 +20,8 @@ struct TitrationRightStack: View {
         VStack(spacing: 0) {
             TitrationEquationView(
                 data: equationData,
-                equationSet: model.equationState.equationSet
+                equationSet: model.equationState.equationSet,
+                equationInput: equationInput
             )
             Spacer(minLength: 0)
             BeakyBox(
@@ -44,6 +45,20 @@ struct TitrationRightStack: View {
         case .preparation: return weakPreparationModel.equationData
         case .preEP: return weakPreEPModel.equationData
         case .postEP: return weakPostEPModel.equationData
+        }
+    }
+
+    private var equationInput: CGFloat {
+        let isStrong = model.components.state.substance.isStrong
+
+        switch model.components.state.phase {
+        case .preparation where isStrong: return CGFloat(strongSubstancePreparationModel.substanceAdded)
+        case .preEP where isStrong: return CGFloat(strongSubstancePreEPModel.titrantAdded)
+        case .postEP where isStrong: return CGFloat(strongSubstancePostEPModel.titrantAdded)
+
+        case .preparation: return weakPreparationModel.reactionProgress
+        case .preEP: return CGFloat(weakPreEPModel.titrantAdded)
+        case .postEP: return CGFloat(weakPreEPModel.titrantAdded)
         }
     }
 }

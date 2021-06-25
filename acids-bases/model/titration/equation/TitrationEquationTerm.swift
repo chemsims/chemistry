@@ -120,7 +120,7 @@
     }
 
     func equation(forData data: TitrationEquationData) -> Equation {
-        IdentityEquation()
+        data.concentration.value(for: self)
     }
  }
 

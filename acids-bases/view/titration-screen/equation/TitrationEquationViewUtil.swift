@@ -9,10 +9,19 @@ struct TitrationLayoutEnvironmentKey: EnvironmentKey {
     static var defaultValue: TitrationEquationLayout = .init()
 }
 
+struct TitrationEquationInput: EnvironmentKey {
+    static var defaultValue: CGFloat? = nil
+}
+
 extension EnvironmentValues {
     var titrationEquationLayout: TitrationEquationLayout {
         get { self[TitrationLayoutEnvironmentKey.self] }
         set { self[TitrationLayoutEnvironmentKey.self] = newValue }
+    }
+
+    var titrationEquationInput: CGFloat? {
+        get { self[TitrationEquationInput.self] }
+        set { self[TitrationEquationInput.self] = newValue }
     }
 }
 
@@ -37,6 +46,7 @@ extension TitrationEquationView {
         let data: TitrationEquationData
         let value: Term.Placeholder<Label>
         let formatter: (CGFloat) -> TextLine
+        @Environment(\.titrationEquationLayout) var layout
 
         init(
             data: TitrationEquationData,
@@ -47,8 +57,6 @@ extension TitrationEquationView {
             self.value = value
             self.formatter = formatter
         }
-
-        @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
             PlaceholderTextLine(
@@ -61,8 +69,8 @@ extension TitrationEquationView {
     struct PlaceholderEquationView<Label : TitrationEquationTermEquation>: View {
         let data: TitrationEquationData
         let value: Term.Placeholder<Label>
-        let equationInput: CGFloat = 0
         let formatter: (CGFloat) -> TextLine
+        @Environment(\.titrationEquationInput) var equationInput
         @Environment(\.titrationEquationLayout) var layout
 
         init(
@@ -78,7 +86,7 @@ extension TitrationEquationView {
         var body: some View {
             if value.isFilled {
                 AnimatingTextLine(
-                    x: equationInput,
+                    x: equationInput ?? 0,
                     equation: value.term.equation(forData: data),
                     fontSize: layout.fontSize,
                     formatter: formatter
