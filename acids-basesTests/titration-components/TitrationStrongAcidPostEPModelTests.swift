@@ -104,8 +104,8 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
-        XCTAssertEqual(model.volume.value(for: .substance), secondModel.volume.value(for: .substance))
-        XCTAssertEqual(model.volume.value(for: .titrant), secondModel.volume.value(for: .titrant))
+        XCTAssertEqual(model.volume.value(for: .substance), secondModel.currentVolume.value(for: .substance))
+        XCTAssertEqual(model.volume.value(for: .titrant), secondModel.currentVolume.value(for: .titrant))
 
         model.incrementTitrant(count: model.maxTitrant)
 

@@ -50,53 +50,6 @@ extension TitrationStrongSubstancePreEPModel {
     }
 }
 
-// MARK: - Titrant volume
-extension TitrationStrongSubstancePreEPModel {
-    var titrantVolumeAdded: Equation {
-        LinearEquation(
-            x1: 0,
-            y1: 0,
-            x2: CGFloat(maxTitrant),
-            y2: finalTitrantVolume
-        )
-    }
-
-    var currentTitrantVolume: CGFloat {
-        titrantVolumeAdded.getY(at: CGFloat(titrantAdded))
-    }
-}
-
-// MARK: - Bar chart data
-extension TitrationStrongSubstancePreEPModel {
-    var barChartData: [BarChartData] {
-        let map = barChartDataMap
-        return [map.value(for: .hydroxide), map.value(for: .hydrogen)]
-    }
-
-    var barChartDataMap: EnumMap<PrimaryIon, BarChartData> {
-        .init(builder: barChartData)
-    }
-
-    private func barChartData(forIon primaryIon: PrimaryIon) -> BarChartData {
-        BarChartData(
-            label: primaryIon.rawValue, // TODO get the charged symbol
-            equation: barChartEquation(forIon: primaryIon),
-            color: primaryIon.color,
-            accessibilityLabel: "" // TODO
-        )
-    }
-
-
-    private func barChartEquation(forIon primaryIon: PrimaryIon) -> Equation {
-        LinearEquation(
-            x1: 0,
-            y1: previous.barChartHeightEquation.value(for: primaryIon).getY(at: CGFloat(previous.substanceAdded)),
-            x2: CGFloat(maxTitrant),
-            y2: settings.neutralSubstanceBarChartHeight
-        )
-    }
-}
-
 // MARK: - Equation data
 extension TitrationStrongSubstancePreEPModel {
 
@@ -104,8 +57,8 @@ extension TitrationStrongSubstancePreEPModel {
         TitrationEquationData(
             substance: previous.substance,
             titrant: previous.titrant,
-            moles: moles.map { ConstantEquation(value: $0) },
-            volume: volume.map { ConstantEquation(value: $0) },
+            moles: moles,
+            volume: volume,
             molarity: molarity.map { ConstantEquation(value: $0) },
             concentration: concentration
         )
@@ -153,36 +106,107 @@ extension TitrationStrongSubstancePreEPModel {
             y2: 1e-7
         )
     }
+
+    var pH: Equation {
+        equationData.pValues.value(for: .hydrogen)
+    }
 }
 
+
+// MARK: - Bar chart data
+extension TitrationStrongSubstancePreEPModel {
+    var barChartData: [BarChartData] {
+        let map = barChartDataMap
+        return [map.value(for: .hydroxide), map.value(for: .hydrogen)]
+    }
+
+    var barChartDataMap: EnumMap<PrimaryIon, BarChartData> {
+        .init(builder: barChartData)
+    }
+
+    private func barChartData(forIon primaryIon: PrimaryIon) -> BarChartData {
+        BarChartData(
+            label: primaryIon.rawValue, // TODO get the charged symbol
+            equation: barChartEquation(forIon: primaryIon),
+            color: primaryIon.color,
+            accessibilityLabel: "" // TODO
+        )
+    }
+
+
+    private func barChartEquation(forIon primaryIon: PrimaryIon) -> Equation {
+        LinearEquation(
+            x1: 0,
+            y1: previous.barChartHeightEquation.value(for: primaryIon).getY(at: CGFloat(previous.substanceAdded)),
+            x2: CGFloat(maxTitrant),
+            y2: settings.neutralSubstanceBarChartHeight
+        )
+    }
+}
+
+// MARK: - Moles
 extension TitrationStrongSubstancePreEPModel {
 
-    var moles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
+    var moles: EnumMap<TitrationEquationTerm.Moles, Equation> {
         .init {
             switch $0 {
-            case .hydrogen: return 0
-            case .initialSecondary: return 0
-            case .initialSubstance: return initialSubstanceMoles
-            case .secondary: return 0
-            case .substance: return initialSubstanceMoles
+            case .hydrogen: return ConstantEquation(value: 0)
+            case .initialSecondary: return ConstantEquation(value: 0)
+            case .initialSubstance: return ConstantEquation(value: initialSubstanceMoles)
+            case .secondary: return ConstantEquation(value: 0)
+            case .substance: return ConstantEquation(value: initialSubstanceMoles)
             case .titrant:
-                return currentTitrantVolume * molarity.value(for: .titrant)
+                return titrantVolume * ConstantEquation(value: molarity.value(for: .titrant))
             }
         }
     }
 
-    var volume: EnumMap<TitrationEquationTerm.Volume, CGFloat> {
+    var currentMoles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
+        moles.map { $0.getY(at: CGFloat(titrantAdded)) }
+    }
+
+    private var initialSubstanceMoles: CGFloat {
+        previous.currentMoles.value(for: .substance)
+    }
+}
+
+// MARK: - Volume
+extension TitrationStrongSubstancePreEPModel {
+
+    var volume: EnumMap<TitrationEquationTerm.Volume, Equation> {
         .init {
             switch $0 {
-            case .hydrogen: return 0
-            case .substance: return previous.currentVolume
-            case .titrant: return currentTitrantVolume
-            case .initialSubstance: return previous.currentVolume
-            case .initialSecondary: return 0
-            case .equivalencePoint: return 0
+            case .hydrogen: return ConstantEquation(value: 0)
+            case .substance: return ConstantEquation(value: previous.currentVolume)
+            case .titrant: return titrantVolume
+            case .initialSubstance: return ConstantEquation(value: previous.currentVolume)
+            case .initialSecondary: return ConstantEquation(value: 0)
+            case .equivalencePoint: return ConstantEquation(value: 0)
             }
         }
     }
+
+    var currentVolume: EnumMap<TitrationEquationTerm.Volume, CGFloat> {
+        volume.map { $0.getY(at: CGFloat(titrantAdded)) }
+    }
+
+    /// Titrant volume equation in terms of titrant molecules added
+    private var titrantVolume: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: 0,
+            x2: CGFloat(maxTitrant),
+            y2: finalTitrantVolume
+        )
+    }
+
+    private var finalTitrantVolume: CGFloat {
+        initialSubstanceMoles / molarity.value(for: .titrant)
+    }
+}
+
+// MARK: - Molarity
+extension TitrationStrongSubstancePreEPModel {
 
     var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
         .init {
@@ -194,33 +218,7 @@ extension TitrationStrongSubstancePreEPModel {
         }
     }
 
-    var pValues: EnumMap<TitrationEquationTerm.PValue, Equation> {
-        equationData.pValues
-//        .init {
-//            switch $0 {
-//            case .hydrogen: return -1 * Log10Equation(underlying: concentration.value(for: .hydrogen))
-//            case .hydroxide: return -1 * Log10Equation(underlying: concentration.value(for: .hydroxide))
-//            case .kA: return ConstantEquation(value: previous.substance.pKA)
-//            case .kB: return ConstantEquation(value: previous.substance.pKB)
-//            }
-//        }
-    }
-
-    var pH: Equation {
-        pValues.value(for: .hydrogen)
-    }
-
     private var initialSubstanceMolarity: CGFloat {
         previous.currentMolarity.value(for: .substance)
     }
-
-    private var initialSubstanceMoles: CGFloat {
-        previous.currentMoles.value(for: .substance)
-    }
-
-    private var finalTitrantVolume: CGFloat {
-        initialSubstanceMoles / molarity.value(for: .titrant)
-    }
-
-
 }

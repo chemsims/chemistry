@@ -74,25 +74,25 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
         XCTAssertEqualWithTolerance(
-            model.moles.value(for: .substance),
+            model.currentMoles.value(for: .substance),
             firstModel.currentMoles.value(for: .substance)
         )
 
         model.incrementTitrant(count: model.maxTitrant)
 
         XCTAssertEqualWithTolerance(
-            model.moles.value(for: .substance),
+            model.currentMoles.value(for: .substance),
             firstModel.currentMoles.value(for: .substance)
         )
 
         XCTAssertEqualWithTolerance(
-            model.moles.value(for: .titrant),
-            model.volume.value(for: .titrant) * model.molarity.value(for: .titrant)
+            model.currentMoles.value(for: .titrant),
+            model.currentVolume.value(for: .titrant) * model.molarity.value(for: .titrant)
         )
 
         // Titrant moles should be the same as substance moles
         XCTAssertEqualWithTolerance(
-            model.moles.value(for: .titrant),
+            model.currentMoles.value(for: .titrant),
             firstModel.currentMoles.value(for: .substance)
         )
     }
@@ -102,17 +102,15 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
         firstModel.incrementSubstance(count: 20)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
-        XCTAssertEqual(model.currentTitrantVolume, 0)
-        XCTAssertEqual(model.volume.value(for: .titrant), 0)
+        XCTAssertEqual(model.currentVolume.value(for: .titrant), 0)
 
         model.incrementTitrant(count: model.maxTitrant)
 
         let titrantMolarity = model.molarity.value(for: .titrant)
-        let substanceMoles = model.moles.value(for: .substance)
+        let substanceMoles = model.currentMoles.value(for: .substance)
         let expectedVolume = substanceMoles / titrantMolarity
 
-        XCTAssertEqual(model.currentTitrantVolume, expectedVolume)
-        XCTAssertEqual(model.volume.value(for: .titrant), expectedVolume)
+        XCTAssertEqual(model.currentVolume.value(for: .titrant), expectedVolume)
     }
 
     func testPValues() {

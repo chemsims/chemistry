@@ -218,9 +218,9 @@ extension TitrationStrongSubstancePostEPModel {
             switch $0 {
             case .hydrogen: return 0
             case .initialSecondary: return 0
-            case .initialSubstance: return previous.moles.value(for: .initialSubstance)
+            case .initialSubstance: return previous.currentMoles.value(for: .initialSubstance)
             case .secondary: return 0
-            case .substance: return previous.moles.value(for: .substance)
+            case .substance: return previous.currentMoles.value(for: .substance)
             case .titrant: return titrantMoles
             }
         }
@@ -251,7 +251,7 @@ extension TitrationStrongSubstancePostEPModel {
     var finalTitrantMoles: CGFloat {
         let titrantMolarity = previous.molarity.value(for: .titrant)
         let numer1 = finalComplementPrimaryIonConcentration * previous.previous.currentVolume * titrantMolarity
-        let numer2 = previous.moles.value(for: .substance) * titrantMolarity
+        let numer2 = previous.currentMoles.value(for: .substance) * titrantMolarity
         let numerator = numer1 + numer2
         let denominator = titrantMolarity - finalComplementPrimaryIonConcentration
 
@@ -263,7 +263,7 @@ extension TitrationStrongSubstancePostEPModel {
     }
 
     var initialTitrantVolume: CGFloat {
-        previous.volume.value(for: .titrant)
+        previous.currentVolume.value(for: .titrant)
     }
 
     var titrantVolume: Equation {
