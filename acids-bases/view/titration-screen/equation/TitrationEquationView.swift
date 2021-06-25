@@ -26,8 +26,8 @@ struct TitrationEquationView: View {
         }
     }
 
-    fileprivate static let naturalWidth: CGFloat = 1100
-    fileprivate static let naturalHeight: CGFloat = 600
+    fileprivate static let naturalWidth: CGFloat = 1040
+    fileprivate static let naturalHeight: CGFloat = 480
 }
 
 private extension TitrationEquationView {
@@ -44,7 +44,7 @@ private extension TitrationEquationView {
     }
 
     private func column(equations: [TitrationEquation]) -> some View {
-        VStack(spacing: 30) {
+        VStack(alignment: .leading, spacing: 30) {
             ForEach(equations) { equation in
                 getView(forEquation: equation)
             }
@@ -325,13 +325,26 @@ extension TitrationEquationView {
 
 struct TitrationEquationView_Previews: PreviewProvider {
     static var previews: some View {
+        VStack(spacing: 80) {
+            ForEach(TitrationViewModel.EquationState.allCases.indices) { i in
+                equation(forSet: TitrationViewModel.EquationState.allCases[i].equationSet)
+            }
+        }
+        .previewLayout(.sizeThatFits)
+    }
+
+    private static func equation(forSet set: TitrationEquationSet) -> some View {
         TitrationEquationView(
             data: .preview,
-            equationSet: .weakAcidAtEp,
+            equationSet: set,
             equationInput: 0
         )
         .sizedBody // We use the non-scaled view in the preview to check the natural size is correct
         .border(Color.red)
-        .previewLayout(.fixed(width: TitrationEquationView.naturalWidth, height: TitrationEquationView.naturalHeight))
+        .frame(
+            width: TitrationEquationView.naturalWidth,
+            height: TitrationEquationView.naturalHeight
+        )
+        .border(Color.black)
     }
 }

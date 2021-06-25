@@ -49,6 +49,19 @@ private struct TitrationScreenWithSettings: View {
 
 struct TitrationScreenLayout {
     let common: AcidBasesScreenLayout
+
+    var equationSize: CGSize {
+        let beakerWidth = common.beakerWidth + common.sliderSettings.handleWidth
+
+        let chartsWidth = common.chartTotalWidth
+        let availableWidth = common.width - beakerWidth - chartsWidth
+        let availableHeight = common.height - common.beakyBoxHeight
+
+        return CGSize(
+            width: 0.9 * availableWidth,
+            height: 0.9 * availableHeight
+        )
+    }
 }
 
 struct TitrationScreen_Previews: PreviewProvider {

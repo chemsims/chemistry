@@ -106,7 +106,7 @@ extension TitrationViewModel {
              addTitrant
     }
 
-    enum EquationState {
+    enum EquationState: CaseIterable {
         case strongAcidBlank,
              strongAcidAddingSubstance,
              strongAcidPreEPFilled,

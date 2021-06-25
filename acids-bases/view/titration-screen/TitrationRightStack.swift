@@ -23,6 +23,7 @@ struct TitrationRightStack: View {
                 equationSet: model.equationState.equationSet,
                 equationInput: equationInput
             )
+            .frame(size: layout.equationSize)
             Spacer(minLength: 0)
             BeakyBox(
                 statement: model.statement,
