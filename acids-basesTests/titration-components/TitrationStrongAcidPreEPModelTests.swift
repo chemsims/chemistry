@@ -27,26 +27,26 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
         func checkZeroConcentrations() {
-            XCTAssertEqual(model.concentration.value(for: .substance), 0)
-            XCTAssertEqual(model.concentration.value(for: .initialSubstance), 0)
-            XCTAssertEqual(model.concentration.value(for: .secondary), 0)
-            XCTAssertEqual(model.concentration.value(for: .initialSecondary), 0)
+            XCTAssertEqual(model.currentConcentration.value(for: .substance), 0)
+            XCTAssertEqual(model.currentConcentration.value(for: .initialSubstance), 0)
+            XCTAssertEqual(model.currentConcentration.value(for: .secondary), 0)
+            XCTAssertEqual(model.currentConcentration.value(for: .initialSecondary), 0)
         }
         checkZeroConcentrations()
 
         let expectedInitialIncreasing = expectedConcentration(afterIncrementing: 20)
         let expectedInitialDecreasing = PrimaryIonConcentration.complementConcentration(primaryConcentration: expectedInitialIncreasing)
 
-        XCTAssertEqualWithTolerance(model.concentration.value(for: increasingIon.concentration), expectedInitialIncreasing)
+        XCTAssertEqualWithTolerance(model.currentConcentration.value(for: increasingIon.concentration), expectedInitialIncreasing)
         XCTAssertEqualWithTolerance(
-            model.concentration.value(for: decreasingIon.concentration),
+            model.currentConcentration.value(for: decreasingIon.concentration),
             expectedInitialDecreasing
         )
 
         model.incrementTitrant(count: model.maxTitrant)
 
-        XCTAssertEqualWithTolerance(model.concentration.value(for: .hydrogen), 1e-7)
-        XCTAssertEqualWithTolerance(model.concentration.value(for: .hydroxide), 1e-7)
+        XCTAssertEqualWithTolerance(model.currentConcentration.value(for: .hydrogen), 1e-7)
+        XCTAssertEqualWithTolerance(model.currentConcentration.value(for: .hydroxide), 1e-7)
         checkZeroConcentrations()
     }
 
@@ -122,7 +122,7 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
 
         func checkSamePValues(_ pValue: TitrationEquationTerm.PValue) {
             let firstPValue = firstModel.pValues.value(for: pValue)
-            let modelPValue = model.pValues.value(for: pValue)
+            let modelPValue = model.currentPValues.value(for: pValue)
             XCTAssertEqualWithTolerance(modelPValue, firstPValue)
         }
         checkSamePValues(.hydrogen)
@@ -130,8 +130,8 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
 
         model.incrementTitrant(count: model.maxTitrant)
 
-        XCTAssertEqualWithTolerance(model.pValues.value(for: .hydrogen), 7)
-        XCTAssertEqualWithTolerance(model.pValues.value(for: .hydroxide), 7)
+        XCTAssertEqualWithTolerance(model.currentPValues.value(for: .hydrogen), 7)
+        XCTAssertEqualWithTolerance(model.currentPValues.value(for: .hydroxide), 7)
     }
 
     func testKValues() {

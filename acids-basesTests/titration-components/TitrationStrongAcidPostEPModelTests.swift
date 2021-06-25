@@ -137,8 +137,8 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
 
         XCTAssertEqualWithTolerance(model.pValues.value(for: .hydrogen), 7)
         XCTAssertEqualWithTolerance(model.pValues.value(for: .hydroxide), 7)
-        XCTAssertEqual(model.pValues.value(for: .kA), secondModel.pValues.value(for: .kA))
-        XCTAssertEqual(model.pValues.value(for: .kB), secondModel.pValues.value(for: .kB))
+        XCTAssertEqual(model.pValues.value(for: .kA), secondModel.currentPValues.value(for: .kA))
+        XCTAssertEqual(model.pValues.value(for: .kB), secondModel.currentPValues.value(for: .kB))
 
         model.incrementTitrant(count: model.maxTitrant)
 
