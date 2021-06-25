@@ -49,6 +49,96 @@ extension TitrationStrongSubstancePostEPModel {
     }
 }
 
+// MARK: - Concentration
+extension TitrationStrongSubstancePostEPModel {
+    var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> {
+        .init {
+            switch $0 {
+            case .hydrogen: return hConcentration
+            case .hydroxide: return ohConcentration
+            case .initialSecondary: return ConstantEquation(value: 0)
+            case .initialSubstance: return ConstantEquation(value: 0)
+            case .secondary: return ConstantEquation(value: 0)
+            case .substance: return ConstantEquation(value: 0)
+            }
+        }
+    }
+
+    private var hConcentration: Equation {
+        if substance.type.isAcid {
+            return primaryIonConcentration
+        }
+        return complementPrimaryIonConcentration
+    }
+
+    private var ohConcentration: Equation {
+        if substance.type.isAcid {
+            return complementPrimaryIonConcentration
+        }
+        return primaryIonConcentration
+    }
+
+    private var primaryIonConcentration: Equation {
+        complementPrimaryIonConcentration.map(PrimaryIonConcentration.complementConcentration)
+    }
+
+    private var complementPrimaryIonConcentration: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: 1e-7,
+            x2: CGFloat(maxTitrant),
+            y2: finalComplementPrimaryIonConcentration
+        )
+    }
+
+    private var finalPrimaryIonConcentration: CGFloat {
+        PrimaryIonConcentration.concentration(forP: finalComplementPrimaryIonPValue)
+    }
+
+    var finalComplementPrimaryIonConcentration: CGFloat {
+        PrimaryIonConcentration.concentration(forP: finalComplementPrimaryIonPValue)
+    }
+}
+
+// MARK: - P Values
+extension TitrationStrongSubstancePostEPModel {
+
+    var pValues: EnumMap<TitrationEquationTerm.PValue, Equation> {
+        .init {
+            switch $0 {
+            case .hydrogen:
+                return -1 * Log10Equation(underlying: concentration.value(for: .hydrogen))
+            case .hydroxide:
+                return -1 * Log10Equation(underlying: concentration.value(for: .hydroxide))
+            case .kA: return ConstantEquation(value: previous.substance.pKA)
+            case .kB: return ConstantEquation(value: previous.substance.pKB)
+            }
+        }
+    }
+
+    private var finalPH: CGFloat {
+        if substance.type.isAcid {
+            return settings.finalMaxPValue
+        }
+        return 14 - settings.finalMaxPValue
+    }
+
+    private var finalPOH: CGFloat {
+        14 - finalPH
+    }
+
+    /// The p__ value of the complement to the primary ion at the end of the reaction.
+    ///
+    /// For example, for an acid substance, this would be pOH.
+    private var finalComplementPrimaryIonPValue: CGFloat {
+        substance.type.isAcid ? finalPOH : finalPH
+    }
+
+    var pH: Equation {
+        pValues.value(for: .hydrogen)
+    }
+}
+
 // MARK: - Bar chart data
 extension TitrationStrongSubstancePostEPModel {
     var barChartData: [BarChartData] {
@@ -104,7 +194,6 @@ extension TitrationStrongSubstancePostEPModel {
     }
 }
 
-
 // MARK: - Equation data
 extension TitrationStrongSubstancePostEPModel {
 
@@ -115,8 +204,8 @@ extension TitrationStrongSubstancePostEPModel {
             moles: moles,
             volume: volume,
             molarity: molarity,
-            concentration: concentration,
-            pValues: pValues,
+            concentration: concentration.map { $0.getY(at: CGFloat(maxTitrant)) },
+            pValues: pValues.map { $0.getY(at: CGFloat(maxTitrant)) },
             kValues: kValues
         )
     }
@@ -155,60 +244,21 @@ extension TitrationStrongSubstancePostEPModel {
         }
     }
 
-    var concentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
-        .init {
-            switch $0 {
-            case .hydrogen: return hConcentration.getY(at: CGFloat(titrantAdded))
-            case .hydroxide: return ohConcentration.getY(at: CGFloat(titrantAdded))
-            case .initialSecondary: return 0
-            case .initialSubstance: return 0
-            case .secondary: return 0
-            case .substance: return 0
-            }
-        }
-    }
 
-    var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        .init {
-            switch $0 {
-            case .hydrogen: return -safeLog10(concentration.value(for: .hydrogen))
-            case .hydroxide: return -safeLog10(concentration.value(for: .hydroxide))
-            case .kA: return previous.substance.pKA
-            case .kB: return previous.substance.pKB
-            }
-        }
-    }
 
     var titrantMoles: CGFloat {
         volume.value(for: .titrant) * previous.molarity.value(for: .titrant)
     }
 
-    var hConcentration: LinearEquation {
-        if substance.type.isAcid {
-            return LinearEquation(
-                x1: 0,
-                y1: 1e-7,
-                x2: CGFloat(maxTitrant),
-                y2: finalHConcentration
-            )
-        }
-        return LinearEquation(
-            x1: 0,
-            y1: 1e-7,
-            x2: CGFloat(maxTitrant),
-            y2: finalOH
-        )
-    }
-
-    /// Returns final titrant moles to satisfy the equation:
+    /// Returns final titrant moles to satisfy the equation (for a strong acid HCl with a titrant KOH):
     /// [OH] = (nkoh - nhcl) / (Vhcl + Vkoh)
     /// using the relation nkoh = Vkoh * Mkph
     var finalTitrantMoles: CGFloat {
         let titrantMolarity = previous.molarity.value(for: .titrant)
-        let numer1 = finalOH * previous.previous.currentVolume * titrantMolarity
+        let numer1 = finalComplementPrimaryIonConcentration * previous.previous.currentVolume * titrantMolarity
         let numer2 = previous.moles.value(for: .substance) * titrantMolarity
         let numerator = numer1 + numer2
-        let denominator = titrantMolarity - finalOH
+        let denominator = titrantMolarity - finalComplementPrimaryIonConcentration
 
         return denominator == 0 ? 0 : numerator / denominator
     }
@@ -230,47 +280,8 @@ extension TitrationStrongSubstancePostEPModel {
         )
     }
 
-    var ohConcentration: Equation {
-        if substance.type.isAcid {
-            return LinearEquation(
-                x1: 0,
-                y1: 1e-7,
-                x2: CGFloat(maxTitrant),
-                y2: finalOH
-            )
-        }
-        return LinearEquation(
-            x1: 0,
-            y1: 1e-7,
-            x2: CGFloat(maxTitrant),
-            y2: finalHConcentration
-        )
-    }
-
-    var finalOH: CGFloat {
-        PrimaryIonConcentration.concentration(forP: finalPOH)
-    }
-
-    var finalPOH: CGFloat {
-        14 - finalPh
-    }
-
-    var finalPh: CGFloat {
-        settings.finalMaxPValue
-    }
-
     var currentOh: CGFloat {
         ohConcentration.getY(at: CGFloat(maxTitrant))
-    }
-
-    var pH: Equation {
-        14 + Log10Equation(underlying: ohConcentration)
-    }
-
-
-
-    var finalHConcentration: CGFloat {
-        PrimaryIonConcentration.concentration(forP: finalPh)
     }
 }
 

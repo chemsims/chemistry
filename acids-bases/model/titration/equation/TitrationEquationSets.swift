@@ -65,9 +65,9 @@ extension TitrationEquationSet {
     )
 }
 
-// MARK: Strong buffer equations
+// MARK: Strong base equations
 extension TitrationEquationSet {
-    static func strongBufferPreEp(
+    static func strongBasePreEp(
         fillSubstanceAndHydroxide: Bool,
         fillTitrantMolarity: Bool,
         fillAll: Bool
@@ -88,7 +88,7 @@ extension TitrationEquationSet {
         )
     }
 
-    static let strongBufferPostEp = Self.setWithFilled(
+    static let strongBasePostEp = Self.setWithFilled(
         left: [
             substanceMoles(fillAll: true),
             concentrationToTitrantMolesOverVolume(.hydroxide, fillAll: true)
@@ -167,9 +167,9 @@ extension TitrationEquationSet {
     }
 }
 
-// MARK: Weak buffer equations
+// MARK: Weak base equations
 extension TitrationEquationSet {
-    static func weakBufferInitialReaction(
+    static func weakBaseInitialReaction(
         fillSubstance: Bool,
         fillAll: Bool
     ) -> TitrationEquationSet {
@@ -185,7 +185,7 @@ extension TitrationEquationSet {
         )
     }
 
-    static func weakBufferPreEp(
+    static func weakBasePreEp(
         fillTitrantMolarity: Bool,
         fillAll: Bool
     ) -> TitrationEquationSet {

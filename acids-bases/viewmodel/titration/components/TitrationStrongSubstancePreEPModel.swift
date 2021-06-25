@@ -129,17 +129,31 @@ extension TitrationStrongSubstancePreEPModel {
         }
     }
 
+    // Note that we want the primary ion of the substance, to vary linearly to produce
+    // the correct titration curve (the pH vs. substance added chart).
     private var hydrogenConcentration: Equation {
-        LinearEquation(
-            x1: 0,
-            y1: previous.concentration.value(for: .hydrogen),
-            x2: CGFloat(maxTitrant),
-            y2: 1e-7
-        )
+        if substance.type.isAcid {
+            return LinearEquation(
+                x1: 0,
+                y1: previous.concentration.value(for: .hydrogen),
+                x2: CGFloat(maxTitrant),
+                y2: 1e-7
+            )
+        }
+
+        return hydroxideConcentration.map(PrimaryIonConcentration.complementConcentration)
     }
 
     private var hydroxideConcentration: Equation {
-        hydrogenConcentration.map(PrimaryIonConcentration.complementConcentration)
+        if substance.type.isAcid {
+            return hydrogenConcentration.map(PrimaryIonConcentration.complementConcentration)
+        }
+        return LinearEquation(
+            x1: 0,
+            y1: previous.concentration.value(for: .hydroxide),
+            x2: CGFloat(maxTitrant),
+            y2: 1e-7
+        )
     }
 }
 

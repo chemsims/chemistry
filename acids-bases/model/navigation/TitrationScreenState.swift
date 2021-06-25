@@ -23,7 +23,11 @@ struct TitrationNavigationModel {
         SetWaterLevel(statements.explainTitrationCurveAndInstructToSetWaterLevel),
         AddStrongAcid(statements.instructToAddStrongAcid),
         AddStrongAcidTitrantPreEP(["Add titrant"]),
-        AddStrongAcidTitrantPostEP(["Add titrant post EP"])
+        AddStrongAcidTitrantPostEP(["Add titrant post EP"]),
+        SelectStrongBase(["Choose strong base"]),
+        AddStrongBase(["Add strong base"]),
+        AddStrongBaseTitrantPreEP(["Add titrant pre EP"]),
+        AddStrongBaseTitrantPostEP(["Add titrant post EP"])
     ]
 }
 
@@ -68,6 +72,7 @@ private class SetStatement: TitrationScreenState {
 private class SelectSubstance: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
+        model.inputState = .selectSubstance
     }
 
     override func unapply(on model: TitrationViewModel) {
@@ -97,12 +102,12 @@ private class AddStrongAcid: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.inputState = .addSubstance
-        model.equationState = .strongSubstanceAddingSubstance
+        model.equationState = .strongAcidAddingSubstance
     }
 
     override func unapply(on model: TitrationViewModel) {
         model.inputState = .none
-        model.equationState = .strongSubstanceBlank
+        model.equationState = .strongAcidBlank
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
         }
@@ -114,7 +119,7 @@ private class AddStrongAcidTitrantPreEP: SetStatement {
         super.apply(on: model)
         model.components.assertGoTo(state: .init(substance: .strongAcid, phase: .preEP))
         model.inputState = .addTitrant
-        model.equationState = .strongSubstancePreEPFilled
+        model.equationState = .strongAcidPreEPFilled
         model.shakeModel.stopAll()
     }
 }
@@ -122,7 +127,42 @@ private class AddStrongAcidTitrantPreEP: SetStatement {
 private class AddStrongAcidTitrantPostEP: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
-        model.equationState = .strongSubstancePostEP
+        model.equationState = .strongAcidPostEP
         model.components.assertGoTo(state: .init(substance: .strongAcid, phase: .postEP))
+    }
+}
+
+private class SelectStrongBase: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.components.assertGoTo(state: .init(substance: .strongBase, phase: .preparation))
+        model.equationState = .strongBaseBlank
+        model.inputState = .selectSubstance
+    }
+}
+
+private class AddStrongBase: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .addSubstance
+        model.equationState = .strongBaseAddingSubstance
+    }
+}
+
+private class AddStrongBaseTitrantPreEP: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.components.assertGoTo(state: .init(substance: .strongBase, phase: .preEP))
+        model.inputState = .addTitrant
+        model.equationState = .strongBasePreEPFilled
+        model.shakeModel.stopAll()
+    }
+}
+
+private class AddStrongBaseTitrantPostEP: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.components.assertGoTo(state: .init(substance: .strongBase, phase: .postEP))
+        model.equationState = .strongBasePostEP
     }
 }

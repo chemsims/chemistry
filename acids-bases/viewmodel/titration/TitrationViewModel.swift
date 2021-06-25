@@ -38,7 +38,7 @@ class TitrationViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat
     @Published var inputState = InputState.none
-    @Published var equationState = EquationState.strongSubstanceBlank
+    @Published var equationState = EquationState.strongAcidBlank
 
     @Published var components: TitrationComponentState
 
@@ -97,35 +97,63 @@ extension TitrationViewModel {
     }
 
     enum EquationState {
-        case strongSubstanceBlank,
-             strongSubstanceAddingSubstance,
-             strongSubstancePreEPFilled,
-             strongSubstancePostEP
+        case strongAcidBlank,
+             strongAcidAddingSubstance,
+             strongAcidPreEPFilled,
+             strongAcidPostEP,
+             strongBaseBlank,
+             strongBaseAddingSubstance,
+             strongBasePreEPFilled,
+             strongBasePostEP
 
         var equationSet: TitrationEquationSet {
             switch self {
-            case .strongSubstanceBlank:
+            case .strongAcidBlank:
                 return .strongAcidPreEP(
                     fillSubstanceAndHydrogen: false,
                     fillTitrantMolarity: false,
                     fillAll: false
                 )
 
-            case .strongSubstanceAddingSubstance:
+            case .strongAcidAddingSubstance:
                 return .strongAcidPreEP(
                     fillSubstanceAndHydrogen: true,
                     fillTitrantMolarity: false,
                     fillAll: false
                 )
 
-            case .strongSubstancePreEPFilled:
+            case .strongAcidPreEPFilled:
                 return .strongAcidPreEP(
                     fillSubstanceAndHydrogen: true,
                     fillTitrantMolarity: true,
                     fillAll: true
                 )
 
-            case .strongSubstancePostEP: return .strongAcidPostEP
+            case .strongAcidPostEP: return .strongAcidPostEP
+
+            case .strongBaseBlank:
+                return .strongBasePreEp(
+                    fillSubstanceAndHydroxide: false,
+                    fillTitrantMolarity: false,
+                    fillAll: false
+                )
+
+            case .strongBaseAddingSubstance:
+                return .strongBasePreEp(
+                    fillSubstanceAndHydroxide: true,
+                    fillTitrantMolarity: false,
+                    fillAll: false
+                )
+
+
+            case .strongBasePreEPFilled:
+                return .strongBasePreEp(
+                    fillSubstanceAndHydroxide: true,
+                    fillTitrantMolarity: true,
+                    fillAll: true
+                )
+
+            case .strongBasePostEP: return .strongBasePostEp
             }
         }
     }

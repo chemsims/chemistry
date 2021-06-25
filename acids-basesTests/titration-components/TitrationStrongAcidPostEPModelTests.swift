@@ -30,8 +30,8 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
-        XCTAssertEqualWithTolerance(model.concentration.value(for: .hydrogen), 1e-7)
-        XCTAssertEqualWithTolerance(model.concentration.value(for: .hydroxide), 1e-7)
+        XCTAssertEqualWithTolerance(model.currentConcentration.value(for: .hydrogen), 1e-7)
+        XCTAssertEqualWithTolerance(model.currentConcentration.value(for: .hydroxide), 1e-7)
 
         model.incrementTitrant(count: model.maxTitrant)
 
@@ -44,11 +44,11 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         )
 
         XCTAssertEqualWithTolerance(
-            model.concentration.value(for: increasingIon.concentration),
+            model.currentConcentration.value(for: increasingIon.concentration),
             expectedIncreasingIonConcentration
         )
         XCTAssertEqualWithTolerance(
-            model.concentration.value(for: decreasingIon.concentration),
+            model.currentConcentration.value(for: decreasingIon.concentration),
             expectedDecreasingIonConcentration
         )
     }
@@ -120,7 +120,7 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         let resultingFinalDecreasingIonConcentration = (titrantMoles - substanceMoles) / (finalTitrantVolume + substanceVolume)
         XCTAssertEqualWithTolerance(
             resultingFinalDecreasingIonConcentration,
-            model.concentration.value(for: decreasingIon.concentration)
+            model.currentConcentration.value(for: decreasingIon.concentration)
         )
     }
 
@@ -135,17 +135,17 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
 
-        XCTAssertEqualWithTolerance(model.pValues.value(for: .hydrogen), 7)
-        XCTAssertEqualWithTolerance(model.pValues.value(for: .hydroxide), 7)
-        XCTAssertEqual(model.pValues.value(for: .kA), secondModel.currentPValues.value(for: .kA))
-        XCTAssertEqual(model.pValues.value(for: .kB), secondModel.currentPValues.value(for: .kB))
+        XCTAssertEqualWithTolerance(model.currentPValues.value(for: .hydrogen), 7)
+        XCTAssertEqualWithTolerance(model.currentPValues.value(for: .hydroxide), 7)
+        XCTAssertEqual(model.currentPValues.value(for: .kA), secondModel.currentPValues.value(for: .kA))
+        XCTAssertEqual(model.currentPValues.value(for: .kB), secondModel.currentPValues.value(for: .kB))
 
         model.incrementTitrant(count: model.maxTitrant)
 
         XCTAssertEqualWithTolerance(
-            model.pValues.value(for: increasingIon.pValue), 12
+            model.currentPValues.value(for: increasingIon.pValue), 12
         )
-        XCTAssertEqualWithTolerance(model.pValues.value(for: decreasingIon.pValue), 2)
+        XCTAssertEqualWithTolerance(model.currentPValues.value(for: decreasingIon.pValue), 2)
     }
 
     func testKValues() {
