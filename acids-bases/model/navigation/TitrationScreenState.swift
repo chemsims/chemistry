@@ -112,10 +112,9 @@ private class AddSubstance: SetStatement {
 private class AddTitrantPreEP: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
-        model.strongSubstancePreEPModel = .init(previous: model.strongSubstancePreparationModel)
+        model.components.assertGoTo(state: .init(substance: .strongAcid, phase: .preEP))
         model.inputState = .addTitrant
         model.equationState = .strongSubstancePreEPFilled
-        model.reactionPhase = .strongSubstancePreEP
         model.shakeModel.stopAll()
     }
 }
@@ -124,7 +123,6 @@ private class AddTitrantPostEP: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.equationState = .strongSubstancePostEP
-        model.reactionPhase = .strongSubstancePostEP
-        model.strongSubstancePostEPModel = .init(previous: model.strongSubstancePreEPModel)
+        model.components.assertGoTo(state: .init(substance: .strongAcid, phase: .postEP))
     }
 }

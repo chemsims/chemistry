@@ -15,9 +15,9 @@ struct TitrationBeaker: View {
             TitrationBeakerMolecules(
                 layout: layout,
                 model: model,
-                strongSubstancePreparationModel: model.strongSubstancePreparationModel,
-                strongSubstancePreEPModel: model.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.strongSubstancePostEPModel
+                strongSubstancePreparationModel: model.components.strongSubstancePreparationModel,
+                strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
+                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel
             )
 
             molecules
@@ -291,28 +291,31 @@ private struct TitrationBeakerMolecules: View {
     }
 
     private var molecules: [BeakerMolecules] {
-        switch model.reactionPhase {
-        case .strongSubstancePreparation: return [strongSubstancePreparationModel.primaryIonCoords]
-        case .strongSubstancePostEP: return [strongSubstancePostEPModel.titrantMolecules]
-        case .strongSubstancePreEP: return []
+        switch componentState.phase {
+        case .preparation: return [strongSubstancePreparationModel.primaryIonCoords]
+        case .postEP: return [strongSubstancePostEPModel.titrantMolecules]
+        case .preEP: return []
         }
     }
 
     private var animatingMolecules: [AnimatingBeakerMolecules] {
-        switch model.reactionPhase {
-        case .strongSubstancePreEP:
-            return [strongSubstancePreEPModel.primaryIonCoords]
-        case .strongSubstancePreparation: return []
-        case .strongSubstancePostEP: return []
+        switch componentState.phase {
+        case .preEP: return [strongSubstancePreEPModel.primaryIonCoords]
+        case .preparation: return []
+        case .postEP: return []
         }
     }
 
     private var equationInput: CGFloat {
-        switch model.reactionPhase {
-        case .strongSubstancePreEP: return CGFloat(strongSubstancePreEPModel.titrantAdded)
-        case.strongSubstancePreparation: return 0
-        case .strongSubstancePostEP: return 0
+        switch componentState.phase {
+        case .preEP: return CGFloat(strongSubstancePreEPModel.titrantAdded)
+        case .preparation: return 0
+        case .postEP: return 0
         }
+    }
+
+    private var componentState: TitrationComponentState.State {
+        model.components.state
     }
 }
 

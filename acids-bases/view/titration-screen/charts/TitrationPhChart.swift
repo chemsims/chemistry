@@ -8,7 +8,7 @@ import ReactionsCore
 struct TitrationPhChart: View {
 
     let layout: TitrationScreenLayout
-    let phase: TitrationViewModel.ReactionPhase
+    let state: TitrationComponentState.State
     @ObservedObject var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
     @ObservedObject var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
 
@@ -71,7 +71,7 @@ struct TitrationPhChart: View {
     }
 
     private var equationInput: CGFloat {
-        if phase == .strongSubstancePreEP {
+        if state.phase == .preEP {
             return CGFloat(strongSubstancePreEPModel.titrantAdded)
         }
         return CGFloat(strongSubstancePostEPModel.titrantAdded + strongSubstancePreEPModel.maxTitrant)

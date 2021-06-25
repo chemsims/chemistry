@@ -14,17 +14,17 @@ struct TitrationChartStack: View {
         VStack(spacing: 0) {
             TitrationPhChart(
                 layout: layout,
-                phase: model.reactionPhase,
-                strongSubstancePreEPModel: model.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.strongSubstancePostEPModel
+                state: model.components.state,
+                strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
+                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel
             )
             Spacer(minLength: 0)
             TitrationBarsOrReactionProgress(
                 layout: layout,
-                phase: model.reactionPhase,
-                strongSubstancePreparationModel: model.strongSubstancePreparationModel,
-                strongSubstancePreEPModel: model.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.strongSubstancePostEPModel
+                state: model.components.state,
+                strongSubstancePreparationModel: model.components.strongSubstancePreparationModel,
+                strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
+                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel
             )
         }
     }

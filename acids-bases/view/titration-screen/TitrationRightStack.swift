@@ -31,10 +31,10 @@ struct TitrationRightStack: View {
     }
 
     private var equationData: TitrationEquationData {
-        switch model.reactionPhase {
-        case .strongSubstancePreparation: return strongSubstancePreparationModel.equationData
-        case .strongSubstancePreEP: return strongSubstancePreEPModel.equationData
-        case .strongSubstancePostEP:
+        switch model.components.state.phase {
+        case .preparation: return strongSubstancePreparationModel.equationData
+        case .preEP: return strongSubstancePreEPModel.equationData
+        case .postEP:
             return strongSubstancePostEPModel.equationData
         }
     }

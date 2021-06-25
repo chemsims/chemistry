@@ -8,7 +8,7 @@ import ReactionsCore
 struct TitrationBarsOrReactionProgress: View {
 
     let layout: TitrationScreenLayout
-    let phase: TitrationViewModel.ReactionPhase
+    let state: TitrationComponentState.State
     @ObservedObject var strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
     @ObservedObject var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
     @ObservedObject var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
@@ -22,18 +22,18 @@ struct TitrationBarsOrReactionProgress: View {
     }
 
     private var data: [BarChartData] {
-        switch phase {
-        case .strongSubstancePreparation: return strongSubstancePreparationModel.barChartData
-        case .strongSubstancePreEP: return strongSubstancePreEPModel.barChartData
-        case .strongSubstancePostEP: return strongSubstancePostEPModel.barChartData
+        switch state.phase {
+        case .preparation: return strongSubstancePreparationModel.barChartData
+        case .preEP: return strongSubstancePreEPModel.barChartData
+        case .postEP: return strongSubstancePostEPModel.barChartData
         }
     }
 
     private var equationInput: CGFloat {
-        switch phase {
-        case .strongSubstancePreparation: return CGFloat(strongSubstancePreparationModel.substanceAdded)
-        case .strongSubstancePreEP: return CGFloat(strongSubstancePreEPModel.titrantAdded)
-        case .strongSubstancePostEP: return CGFloat(strongSubstancePostEPModel.titrantAdded)
+        switch state.phase {
+        case .preparation: return CGFloat(strongSubstancePreparationModel.substanceAdded)
+        case .preEP: return CGFloat(strongSubstancePreEPModel.titrantAdded)
+        case .postEP: return CGFloat(strongSubstancePostEPModel.titrantAdded)
         }
     }
 }

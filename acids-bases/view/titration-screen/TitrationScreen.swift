@@ -42,9 +42,9 @@ private struct TitrationScreenWithSettings: View {
             TitrationRightStack(
                 layout: layout,
                 model: model,
-                strongSubstancePreparationModel: model.strongSubstancePreparationModel,
-                strongSubstancePreEPModel: model.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.strongSubstancePostEPModel
+                strongSubstancePreparationModel: model.components.strongSubstancePreparationModel,
+                strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
+                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel
             )
         }
     }

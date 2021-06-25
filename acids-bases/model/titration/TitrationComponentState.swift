@@ -100,6 +100,14 @@ extension TitrationComponentState {
 // MARK: - Navigation
 extension TitrationComponentState {
 
+    /// Goes to the provided state, with an assertion that the new state was applied
+    mutating func assertGoTo(state newState: State) {
+        assert(goTo(state: newState))
+    }
+
+    /// Goes to the provided state.
+    ///
+    /// - Returns: True if the state was applied, else false
     mutating func goTo(state newState: State) -> Bool {
         let didGoForward = goForwardTo(state: newState)
         let didGoBackward = !didGoForward && goBackTo(state: newState)

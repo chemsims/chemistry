@@ -9,23 +9,14 @@ class TitrationViewModel: ObservableObject {
 
     init() {
         let initialRows = AcidAppSettings.initialRows
-        let initialSubstance = AcidOrBase.strongAcids.first!
         self.rows = CGFloat(initialRows)
 
-        let strongSubstancePreparationModel = TitrationStrongSubstancePreparationModel(
-            substance: initialSubstance,
-            titrant: "KOH",
+        self.components = TitrationComponentState(
+            strongAcid: .strongAcids.first!,
+            weakAcid: .weakAcids.first!,
             cols: MoleculeGridSettings.cols,
-            rows: AcidAppSettings.initialRows,
-            settings: .standard
+            rows: initialRows
         )
-        let strongSubstancePreEPModel = TitrationStrongSubstancePreEPModel(previous: strongSubstancePreparationModel)
-        let strongSubstancePostEPModel = TitrationStrongSubstancePostEPModel(previous: strongSubstancePreEPModel)
-
-        self.strongSubstancePreparationModel = strongSubstancePreparationModel
-        self.strongSubstancePreEPModel = strongSubstancePreEPModel
-        self.strongSubstancePostEPModel = strongSubstancePostEPModel
-
 
         self.shakeModel = MultiContainerShakeViewModel(
             canAddMolecule: { _ in true },
@@ -48,11 +39,8 @@ class TitrationViewModel: ObservableObject {
     @Published var rows: CGFloat
     @Published var inputState = InputState.none
     @Published var equationState = EquationState.strongSubstanceBlank
-    @Published var reactionPhase = ReactionPhase.strongSubstancePreparation
 
-    var strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
-    var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
-    var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
+    @Published var components: TitrationComponentState
 
     private(set) var navigation: NavigationModel<TitrationScreenState>!
     var shakeModel: MultiContainerShakeViewModel<TempMolecule>!
@@ -82,18 +70,18 @@ extension TitrationViewModel {
 // MARK: Adding molecules
 extension TitrationViewModel {
     func incrementSubstance(count: Int) {
-        strongSubstancePreparationModel.incrementSubstance(count: count)
+        components.strongSubstancePreparationModel.incrementSubstance(count: count)
     }
 
     func incrementTitrant(count: Int) {
-        switch reactionPhase {
-        case .strongSubstancePreEP:
-            strongSubstancePreEPModel.incrementTitrant(count: count)
-        case .strongSubstancePostEP:
-            strongSubstancePostEPModel.incrementTitrant(count: count)
-        default: break
+        switch components.state.phase {
+        case .preEP:
+            components.strongSubstancePreEPModel.incrementTitrant(count: count)
+        case .postEP:
+            components.weakSubstancePostEPModel.incrementTitrant(count: count)
+        default:
+            return
         }
-
     }
 }
 
