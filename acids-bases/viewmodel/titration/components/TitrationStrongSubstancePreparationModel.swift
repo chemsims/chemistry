@@ -36,6 +36,8 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
     @Published var primaryIonCoords: BeakerMolecules
     @Published var substanceAdded: Int = 0
 
+    @Published var titrantMolarity: CGFloat = 0.4
+
     var rows: Int {
         GridCoordinateList.availableRows(for: exactRows)
     }
@@ -229,7 +231,7 @@ extension TitrationStrongSubstancePreparationModel {
             switch $0 {
             case .hydrogen: return ConstantEquation(value: 0)
             case .substance: return substanceConcentration
-            case .titrant: return ConstantEquation(value: 0)
+            case .titrant: return ConstantEquation(value: titrantMolarity)
             }
         }
     }

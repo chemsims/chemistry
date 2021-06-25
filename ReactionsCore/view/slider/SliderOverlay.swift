@@ -19,6 +19,7 @@ extension View {
     ///     - border: Tooltip border color.
     ///     - includeFill: Whether to include fill in the slider
     ///     - useHaptics: Whether to include haptics in the slider
+    ///     - hasShadow: Whether the tooltip has a drop shadow
     public func slider(
         value: Binding<CGFloat>,
         minValue: CGFloat,
@@ -28,7 +29,8 @@ extension View {
         includeFill: Bool = true,
         useHaptics: Bool = true,
         background: Color = RGB.gray(base: 230).color,
-        border: Color = RGB.gray(base: 150).color
+        border: Color = RGB.gray(base: 200).color,
+        hasShadow: Bool = false
     ) -> some View {
         self.modifier(
             SliderOverlayModifier(
@@ -40,7 +42,8 @@ extension View {
                 background: background,
                 border: border,
                 includeFill: includeFill,
-                useHaptics: useHaptics
+                useHaptics: useHaptics,
+                hasShadow: hasShadow
             )
         )
     }
@@ -57,6 +60,7 @@ struct SliderOverlayModifier: ViewModifier {
     let border: Color
     let includeFill: Bool
     let useHaptics: Bool
+    let hasShadow: Bool
 
     public func body(content: Content) -> some View {
         content.overlay(
@@ -69,7 +73,8 @@ struct SliderOverlayModifier: ViewModifier {
                 background: background,
                 border: border,
                 includeFill: includeFill,
-                useHaptics: useHaptics
+                useHaptics: useHaptics,
+                hasShadow: hasShadow
             )
         )
     }
@@ -86,6 +91,7 @@ public struct SliderOverlay: View {
     let border: Color
     let includeFill: Bool
     let useHaptics: Bool
+    let hasShadow: Bool
 
     public var body: some View {
         GeometryReader { geo in
@@ -99,6 +105,7 @@ public struct SliderOverlay: View {
                 border: border,
                 includeFill: includeFill,
                 useHaptics: useHaptics,
+                hasShadow: hasShadow,
                 geometry: geo
             )
         }
@@ -133,6 +140,7 @@ private struct SliderOverlayWithGeometry: View {
     let border: Color
     let includeFill: Bool
     let useHaptics: Bool
+    let hasShadow: Bool
     let geometry: GeometryProxy
 
     var body: some View {
@@ -141,7 +149,7 @@ private struct SliderOverlayWithGeometry: View {
                 geometry: tooltipGeometry,
                 background: RGB.gray(base: 230).color,
                 border: RGB.gray(base: 100).color,
-                hasShadow: true
+                hasShadow: hasShadow
             )
             .frame(size: tooltipSize)
 

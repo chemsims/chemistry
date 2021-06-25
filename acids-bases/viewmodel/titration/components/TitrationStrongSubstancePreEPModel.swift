@@ -213,10 +213,11 @@ extension TitrationStrongSubstancePreEPModel {
             switch $0 {
             case .hydrogen: return 0
             case .substance: return  initialSubstanceMolarity
-            case .titrant: return 0.5
+            case .titrant: return previous.titrantMolarity
             }
         }
     }
+    
 
     private var initialSubstanceMolarity: CGFloat {
         previous.currentMolarity.value(for: .substance)

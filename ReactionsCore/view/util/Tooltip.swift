@@ -231,7 +231,9 @@ struct TooltipGeometry {
         return min(ideal, 0.5 * size.width)
     }
 
-    let lineWidth: CGFloat = 1
+    var lineWidth: CGFloat {
+        0.01 * min(size.width, size.height)
+    }
 
     var cornerRadius: CGFloat {
         min(size.width / 4, 5)

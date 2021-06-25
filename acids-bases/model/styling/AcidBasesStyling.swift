@@ -12,4 +12,6 @@ extension RGB {
     static let hydroxideDarker = RGB(r: 119, g: 128, b: 236)
 
     static let placeholderContainer = RGB.gray(base: 220)
+
+    static let indicator = RGB(r: 224, g: 140, b: 170)
 }

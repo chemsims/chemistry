@@ -16,7 +16,7 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
             color: .purple,
             label: ""
         )
-        self.maxTitrant = previous.titrantAdded
+        self.maxTitrant = previous.maxTitrant
     }
 
     let previous: TitrationStrongSubstancePreEPModel

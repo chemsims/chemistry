@@ -103,7 +103,7 @@ private struct TitrationBeakerTools: View {
     private var dropper: some View {
         Dropper(
             isActive: model.inputState == .addIndicator,
-            tubeFill: nil,
+            tubeFill: model.inputState == .addIndicator ? RGB.indicator.color : nil,
             onTap: {
                 dropperEmitModel.addMolecule(
                     amount: emitAmount,
@@ -130,6 +130,15 @@ private struct TitrationBeakerTools: View {
             }
         )
         .frame(size: layout.buretteSize)
+        .modifyIf(model.inputState == .setTitrantMolarity) {
+            $0
+                .slider(
+                    value: titrantMolarity,
+                    minValue: 0.1,
+                    maxValue: 0.5,
+                    length: 1.4 * layout.buretteSize.width
+                )
+        }
         .position(layout.burettePosition)
     }
 
@@ -145,6 +154,15 @@ private struct TitrationBeakerTools: View {
             rows: model.rows,
             disabled: model.inputState != .addSubstance
         )
+    }
+
+    private var titrantMolarity: Binding<CGFloat> {
+        let isPrep = model.components.state.phase == .preparation
+        let isStrong = model.components.state.substance.isStrong
+        if isPrep && isStrong {
+            return $strongPrepModel.titrantMolarity
+        }
+        return .constant(0)
     }
 
     private var pHString: TextLine {
@@ -216,7 +234,7 @@ private struct TitrationToolsMoleculesView: View {
 
     private var dropperMolecules: some View {
         molecules(dropperEmitModel, size: layout.dropperMoleculeSize)
-            .foregroundColor(.purple)
+            .foregroundColor(RGB.indicator.color)
     }
 
     private var buretteMolecules: some View {

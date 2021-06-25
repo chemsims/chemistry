@@ -49,7 +49,6 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
         let model = TitrationStrongSubstancePreparationModel(substance: substance)
 
         XCTAssertEqual(model.currentMolarity.value(for: .substance), 1e-7)
-        XCTAssertEqual(model.currentMolarity.value(for: .titrant), 0)
 
         model.incrementSubstance(count: 20)
 
@@ -58,7 +57,6 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
             expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20),
             accuracy: 0.001
         )
-        XCTAssertEqual(model.currentMolarity.value(for: .titrant), 0)
     }
 
     func testMoles() {

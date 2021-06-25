@@ -28,7 +28,6 @@ struct TitrationRightStack: View {
                 equationInput: equationInput
             )
             .frame(size: layout.equationSize)
-            .border(Color.red)
 
             Spacer(minLength: 0)
 

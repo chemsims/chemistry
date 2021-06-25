@@ -22,6 +22,11 @@ struct TitrationNavigationModel {
         SetStatement(statements.explainEquivalencePoint),
         SetWaterLevel(statements.explainTitrationCurveAndInstructToSetWaterLevel),
         AddStrongAcid(statements.instructToAddStrongAcid),
+        StopInput(statements.explainTitrationStages),
+        SetStatement(statements.explainMolesOfHydrogen),
+        SetStatement(statements.explainIndicator),
+        AddIndicator(statements.instructToAddIndicatorToStrongAcid),
+        SetStrongAcidTitrantMolarity(statements.instructToSetMolarityOfStrongBaseTitrant),
         AddStrongAcidTitrantPreEP(["Add titrant to strong acid"]),
         AddStrongAcidTitrantPostEP(["Add titrant to strong acid post EP"]),
         SelectStrongBase(["Choose strong base"]),
@@ -267,3 +272,29 @@ private class AddTitrantToWeakBasePostEP: SetStatement {
         model.equationState = .weakAcidPostEP
     }
 }
+
+private class StopInput: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        withAnimation(containerInputAnimation) {
+            model.inputState = .none
+            model.shakeModel.stopAll()
+        }
+    }
+}
+
+private class AddIndicator: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .addIndicator
+    }
+}
+
+private class SetStrongAcidTitrantMolarity: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .setTitrantMolarity
+        model.equationState = .strongAcidPreEPFilled
+    }
+}
+

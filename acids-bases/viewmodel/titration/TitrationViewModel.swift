@@ -43,7 +43,7 @@ class TitrationViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat {
         didSet {
-            components.setRows(rows)
+//            components.setRows(rows)
         }
     }
     @Published var inputState = InputState.none
@@ -120,7 +120,8 @@ extension TitrationViewModel {
              setWaterLevel,
              addSubstance,
              addIndicator,
-             addTitrant
+             addTitrant,
+             setTitrantMolarity
     }
 
     enum EquationState: CaseIterable {
