@@ -70,15 +70,25 @@ extension TitrationViewModel {
 // MARK: Adding molecules
 extension TitrationViewModel {
     func incrementSubstance(count: Int) {
-        components.strongSubstancePreparationModel.incrementSubstance(count: count)
+        if components.state.substance.isStrong {
+            components.strongSubstancePreparationModel.incrementSubstance(count: count)
+        } else {
+            components.weakSubstancePreparationModel.incrementSubstance(count: count)
+        }
     }
 
     func incrementTitrant(count: Int) {
+        let isStrong = components.state.substance.isStrong
         switch components.state.phase {
-        case .preEP:
+        case .preEP where isStrong:
             components.strongSubstancePreEPModel.incrementTitrant(count: count)
-        case .postEP:
+        case .postEP where isStrong:
             components.strongSubstancePostEPModel.incrementTitrant(count: count)
+
+        case .preEP:
+            components.weakSubstancePreEPModel.incrementTitrant(count: count)
+        case .postEP:
+            components.weakSubstancePostEPModel.incrementTitrant(count: count)
         default:
             return
         }
@@ -104,7 +114,13 @@ extension TitrationViewModel {
              strongBaseBlank,
              strongBaseAddingSubstance,
              strongBasePreEPFilled,
-             strongBasePostEP
+             strongBasePostEP,
+             weakAcidBlank,
+             weakAcidAddingSubstance,
+             weakAcidPostInitialReaction,
+             weakAcidPreEPFilled,
+             weakAcidAtEP,
+             weakAcidPostEP
 
         var equationSet: TitrationEquationSet {
             switch self {
@@ -154,6 +170,22 @@ extension TitrationViewModel {
                 )
 
             case .strongBasePostEP: return .strongBasePostEp
+
+            case .weakAcidBlank:
+                return .weakAcidInitialReaction(fillSubstance: false, fillAll: false)
+
+            case .weakAcidAddingSubstance:
+                return .weakAcidInitialReaction(fillSubstance: true, fillAll: false)
+
+            case .weakAcidPostInitialReaction:
+                return .weakAcidInitialReaction(fillSubstance: true, fillAll: true)
+
+            case .weakAcidPreEPFilled:
+                return .weakBasePreEp(fillTitrantMolarity: true, fillAll: true)
+
+            case .weakAcidAtEP: return .weakAcidAtEp
+
+            case .weakAcidPostEP: return .weakAcidPostEp
             }
         }
     }

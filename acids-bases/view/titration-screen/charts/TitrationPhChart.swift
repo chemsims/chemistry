@@ -11,6 +11,8 @@ struct TitrationPhChart: View {
     let state: TitrationComponentState.State
     @ObservedObject var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
     @ObservedObject var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
+    @ObservedObject var weakPreEPModel: TitrationWeakSubstancePreEPModel
+    @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
 
     var body: some View {
         TimeChartView(
@@ -74,7 +76,6 @@ struct TitrationPhChart: View {
         if state.phase == .preEP {
             return CGFloat(strongSubstancePreEPModel.titrantAdded)
         }
-        return CGFloat(strongSubstancePostEPModel.titrantAdded + strongSubstancePreEPModel.maxTitrant)
     }
 }
 

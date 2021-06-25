@@ -41,10 +41,7 @@ private struct TitrationScreenWithSettings: View {
             Spacer(minLength: 0)
             TitrationRightStack(
                 layout: layout,
-                model: model,
-                strongSubstancePreparationModel: model.components.strongSubstancePreparationModel,
-                strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel
+                model: model
             )
         }
     }

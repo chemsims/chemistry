@@ -27,7 +27,11 @@ struct TitrationNavigationModel {
         SelectStrongBase(["Choose strong base"]),
         AddStrongBase(["Add strong base"]),
         AddStrongBaseTitrantPreEP(["Add titrant pre EP"]),
-        AddStrongBaseTitrantPostEP(["Add titrant post EP"])
+        AddStrongBaseTitrantPostEP(["Add titrant post EP"]),
+        SetWeakAcidSubstance(["Choose weak acid"]),
+        AddWeakAcid(["Add weak acid"]),
+        RunWeakAcidInitialReaction(["Running initial reaction"]),
+        AddTitrantToWeakAcidPreEP(["Add titrant to weak acid"])
     ]
 }
 
@@ -164,5 +168,41 @@ private class AddStrongBaseTitrantPostEP: SetStatement {
         super.apply(on: model)
         model.components.assertGoTo(state: .init(substance: .strongBase, phase: .postEP))
         model.equationState = .strongBasePostEP
+    }
+}
+
+
+private class SetWeakAcidSubstance: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.components.assertGoTo(state: .init(substance: .weakAcid, phase: .preparation))
+        model.equationState = .weakAcidBlank
+        model.inputState = .selectSubstance
+    }
+}
+
+private class AddWeakAcid: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .addSubstance
+        model.equationState = .weakAcidAddingSubstance
+    }
+}
+
+private class RunWeakAcidInitialReaction: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        withAnimation(.linear(duration: 2)) {
+            model.components.weakSubstancePreparationModel.reactionProgress = 1
+        }
+    }
+}
+
+private class AddTitrantToWeakAcidPreEP: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.components.assertGoTo(state: .init(substance: .weakAcid, phase: .preEP))
+        model.inputState = .addTitrant
+        model.equationState = .weakAcidPreEPFilled
     }
 }

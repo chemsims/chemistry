@@ -16,15 +16,14 @@ struct TitrationChartStack: View {
                 layout: layout,
                 state: model.components.state,
                 strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel
+                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel,
+                weakPreEPModel: model.components.weakSubstancePreEPModel,
+                weakPostEPModel: model.components.weakSubstancePostEPModel
             )
             Spacer(minLength: 0)
             TitrationBarsOrReactionProgress(
                 layout: layout,
-                state: model.components.state,
-                strongSubstancePreparationModel: model.components.strongSubstancePreparationModel,
-                strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel
+                model: model
             )
         }
     }

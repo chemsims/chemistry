@@ -147,24 +147,21 @@ extension TitrationEquationSet {
         ]
     )
 
-
-    static func weakAcidPostEp() -> TitrationEquationSet {
-        Self.setWithFilled(
-            left: [
-                titrantMoles(fillMolarity: true, fillAll: true),
-                .concentrationToMolesOverVolume(
-                    concentration: .init(.hydroxide, isFilled: true),
-                    moles: .init(.titrant, isFilled: true),
-                    firstVolume: .init(.equivalencePoint, isFilled: true),
-                    secondVolume: .init(.titrant, isFilled: true)
-                ),
-                pOHLogOH(fillAll: true)
-            ],
-            right: [
-                pHpOHSum(fillAll: true)
-            ]
-        )
-    }
+    static let weakAcidPostEp = Self.setWithFilled(
+        left: [
+            titrantMoles(fillMolarity: true, fillAll: true),
+            .concentrationToMolesOverVolume(
+                concentration: .init(.hydroxide, isFilled: true),
+                moles: .init(.titrant, isFilled: true),
+                firstVolume: .init(.equivalencePoint, isFilled: true),
+                secondVolume: .init(.titrant, isFilled: true)
+            ),
+            pOHLogOH(fillAll: true)
+        ],
+        right: [
+            pHpOHSum(fillAll: true)
+        ]
+    )
 }
 
 // MARK: Weak base equations
