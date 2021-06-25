@@ -53,7 +53,7 @@ struct TitrationScreenLayout {
     var equationSize: CGSize {
         let beakerWidth = common.beakerWidth + common.sliderSettings.handleWidth
 
-        let chartsWidth = common.chartTotalWidth
+        let chartsWidth = common.chartSize
         let availableWidth = common.width - beakerWidth - chartsWidth
         let availableHeight = common.height - common.beakyBoxHeight
 

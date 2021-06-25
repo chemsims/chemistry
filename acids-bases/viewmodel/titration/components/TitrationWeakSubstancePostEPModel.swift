@@ -8,11 +8,24 @@ import ReactionsCore
 class TitrationWeakSubstancePostEPModel: ObservableObject {
     init(previous: TitrationWeakSubstancePreEPModel) {
         self.previous = previous
+        let substance = previous.substance
+        self.ionMolecules = BeakerMolecules(
+            coords: [],
+            color: substance.primary.complement.color,
+            label: substance.primary.rawValue
+        )
+        self.secondaryMolecules = BeakerMolecules(
+            coords: previous.beakerReactionModel.consolidated.value(for: .secondaryIon).coords,
+            color: substance.secondary.color,
+            label: substance.secondary.rawValue
+        )
     }
 
     let previous: TitrationWeakSubstancePreEPModel
 
     @Published var titrantAdded = 0
+    @Published var ionMolecules: BeakerMolecules
+    @Published var secondaryMolecules: BeakerMolecules
 
     var settings: TitrationSettings {
         previous.settings
@@ -46,6 +59,13 @@ extension TitrationWeakSubstancePostEPModel {
         withAnimation(.linear(duration: 1)) {
             titrantAdded += count
         }
+        ionMolecules.coords = GridCoordinateList.addingRandomElementsTo(
+            grid: ionMolecules.coords,
+            count: count,
+            cols: previous.previous.cols,
+            rows: previous.previous.rows,
+            avoiding: secondaryMolecules.coords
+        )
     }
 }
 

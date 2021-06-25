@@ -306,7 +306,7 @@ private struct TitrationBeakerMolecules: View {
 
         case .preparation: return [weakPrepModel.substanceCoords]
         case .preEP: return weakPreEPReaction.molecules.map(\.molecules)
-        case .postEP: return []
+        case .postEP: return [weakPostEPModel.ionMolecules, weakPostEPModel.secondaryMolecules]
         }
     }
 
