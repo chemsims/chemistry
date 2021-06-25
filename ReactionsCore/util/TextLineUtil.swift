@@ -17,6 +17,16 @@ public struct TextLineUtil {
         return formatter
     }()
 
+    public static func scientific(
+        value: CGFloat,
+        threshold: CGFloat
+    ) -> TextLine {
+        if value != 0 && value < threshold {
+            return scientific(value: value)
+        }
+        return TextLine(value.str(decimals: 2))
+    }
+
     /// Returns `value` parsed into scientific representation of the form `Ax10^B`, with
     /// a superscript `TextLineSegment` for `B`
     ///

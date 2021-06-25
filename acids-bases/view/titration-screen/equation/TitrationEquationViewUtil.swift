@@ -19,21 +19,21 @@ extension EnvironmentValues {
 extension TitrationEquationView {
 
     static func defaultFormatter(_ value: CGFloat) -> TextLine {
-        TextLine(value.str(decimals: 2)).emphasised()
+        TextLineUtil.scientific(value: value, threshold: 0.01).emphasised()
     }
 
-    struct BoxWidthTextLine<Label : TitrationEquationLabel>: View {
+    struct BoxWidthTextLine<Label : TitrationEquationTermLabel>: View {
         let data: TitrationEquationData
         let value: Label
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
-            PlainLine(line: value.label(forData: data))
+            TitrationEquationView.PlainLine(line: value.label(forData: data))
                 .frame(width: layout.boxWidth)
         }
     }
 
-    struct PlaceholderTermView<Label : TitrationEquationValue>: View {
+    struct PlaceholderTermView<Label : TitrationEquationTermValue>: View {
         let data: TitrationEquationData
         let value: Term.Placeholder<Label>
         let formatter: (CGFloat) -> TextLine
@@ -54,6 +54,42 @@ extension TitrationEquationView {
             PlaceholderTextLine(
                 value: value.isFilled ? formatter(value.term.value(forData: data)) : nil
             )
+            .frame(width: layout.boxWidth)
+        }
+    }
+
+    struct PlaceholderEquationView<Label : TitrationEquationTermEquation>: View {
+        let data: TitrationEquationData
+        let value: Term.Placeholder<Label>
+        let equationInput: CGFloat
+        let formatter: (CGFloat) -> TextLine
+        @Environment(\.titrationEquationLayout) var layout
+
+        init(
+            data: TitrationEquationData,
+            value: Term.Placeholder<Label>,
+            equationInput: CGFloat,
+            formatter: @escaping (CGFloat) -> TextLine = defaultFormatter
+        ) {
+            self.data = data
+            self.value = value
+            self.equationInput = equationInput
+            self.formatter = formatter
+        }
+
+        var body: some View {
+            if value.isFilled {
+                AnimatingTextLine(
+                    x: equationInput,
+                    equation: value.term.equation(forData: data),
+                    fontSize: layout.fontSize,
+                    formatter: formatter
+                )
+                .frame(width: layout.boxWidth, height: layout.boxHeight)
+            } else {
+                PlaceholderTerm(value: nil)
+                    .frame(width: layout.boxWidth, height: layout.boxHeight)
+            }
         }
     }
 
@@ -66,7 +102,7 @@ extension TitrationEquationView {
         }
     }
 
-    struct BoxWidthTermOrPlaceholder<Label : TitrationEquationLabel & TitrationEquationValue>: View {
+    struct BoxWidthTermOrPlaceholder<Label : TitrationEquationTermLabel & TitrationEquationTermValue>: View {
 
         let data: TitrationEquationData
         let value: Term.Placeholder<Label>
@@ -75,9 +111,9 @@ extension TitrationEquationView {
         @ViewBuilder
         var body: some View {
             if showDefinition {
-                BoxWidthTextLine(data: data, value: value.term)
+                TitrationEquationView.BoxWidthTextLine(data: data, value: value.term)
             } else {
-                PlaceholderTermView(data: data, value: value)
+                TitrationEquationView.PlaceholderTermView(data: data, value: value)
             }
         }
     }

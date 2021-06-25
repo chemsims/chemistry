@@ -5,12 +5,16 @@
  import CoreGraphics
  import ReactionsCore
 
- protocol TitrationEquationLabel {
+ protocol TitrationEquationTermLabel {
      func label(forData data: TitrationEquationData) -> TextLine
  }
 
- protocol TitrationEquationValue {
+ protocol TitrationEquationTermValue {
     func value(forData data: TitrationEquationData) -> CGFloat
+ }
+
+ protocol TitrationEquationTermEquation {
+    func equation(forData data: TitrationEquationData) -> Equation
  }
 
  struct TitrationEquationTerm {
@@ -72,7 +76,7 @@
     }
  }
 
- extension TitrationEquationTerm.Moles: TitrationEquationLabel, TitrationEquationValue {
+ extension TitrationEquationTerm.Moles: TitrationEquationTermLabel, TitrationEquationTermValue {
     func label(forData data: TitrationEquationData) -> TextLine {
         let field = AnyField.fromMoles(self)
         return "n_\(field.fullSymbol(data: data))_"
@@ -83,7 +87,7 @@
     }
  }
 
- extension TitrationEquationTerm.Volume: TitrationEquationLabel, TitrationEquationValue {
+ extension TitrationEquationTerm.Volume: TitrationEquationTermLabel, TitrationEquationTermValue {
     func label(forData data: TitrationEquationData) -> TextLine {
         let field = AnyField.fromVolume(self)
         return "V_\(field.fullSymbol(data: data))_"
@@ -94,7 +98,7 @@
     }
  }
 
- extension TitrationEquationTerm.Molarity: TitrationEquationLabel, TitrationEquationValue {
+ extension TitrationEquationTerm.Molarity: TitrationEquationTermLabel, TitrationEquationTermValue {
     func label(forData data: TitrationEquationData) -> TextLine {
         let field = AnyField.fromMolarity(self)
         return "M_\(field.fullSymbol(data: data))_"
@@ -105,7 +109,7 @@
     }
  }
 
- extension TitrationEquationTerm.Concentration: TitrationEquationLabel, TitrationEquationValue {
+ extension TitrationEquationTerm.Concentration: TitrationEquationTermLabel, TitrationEquationTermValue, TitrationEquationTermEquation {
     func label(forData data: TitrationEquationData) -> TextLine {
         let field = AnyField.fromConcentration(self)
         let plain = field.plainSymbol(data: data)
@@ -118,9 +122,13 @@
     func value(forData data: TitrationEquationData) -> CGFloat {
         data.concentration.value(for: self)
     }
+
+    func equation(forData data: TitrationEquationData) -> Equation {
+        IdentityEquation()
+    }
  }
 
- extension TitrationEquationTerm.PValue: TitrationEquationLabel, TitrationEquationValue {
+ extension TitrationEquationTerm.PValue: TitrationEquationTermLabel, TitrationEquationTermValue {
     func label(forData data: TitrationEquationData) -> TextLine {
         let field = AnyField.fromPValue(self)
         let plain = field.plainSymbol(data: data)
@@ -132,7 +140,7 @@
     }
  }
 
- extension TitrationEquationTerm.KValue: TitrationEquationLabel, TitrationEquationValue {
+ extension TitrationEquationTerm.KValue: TitrationEquationTermLabel, TitrationEquationTermValue {
     func label(forData data: TitrationEquationData) -> TextLine {
         let plainSymbol = AnyField.fromKValue(self).plainSymbol(data: data)
         return TextLine(plainSymbol)

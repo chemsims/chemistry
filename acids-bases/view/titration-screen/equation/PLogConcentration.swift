@@ -8,6 +8,7 @@ import ReactionsCore
 // See comment in TitrationEquationMolesToMolarity.swift
 private typealias BoxWidthTextLine = TitrationEquationView.BoxWidthTextLine
 private typealias Placeholder = TitrationEquationView.PlaceholderTermView
+private typealias PlaceholderEquationView = TitrationEquationView.PlaceholderEquationView
 
 extension TitrationEquationView {
     struct PLogConcentrationDefinition: View {
@@ -48,11 +49,17 @@ extension TitrationEquationView {
                     FixedText("-")
                     HStack(spacing: 0) {
                         FixedText("log")
-                        Placeholder(data: data, value: concentration)
+                        PlaceholderEquationView(
+                            data: data,
+                            value: concentration,
+                            equationInput: 0.001
+                        )
                     }
                 }
             }
             .font(.system(size: layout.fontSize))
+            .lineLimit(1)
+            .minimumScaleFactor(layout.minScaleFactor)
         }
     }
 }
@@ -71,6 +78,12 @@ struct TitrationEquationPLogConcentration: PreviewProvider {
                 data: .preview,
                 pValue: .init(.hydrogen, isFilled: false),
                 concentration: .init(.hydrogen, isFilled: false)
+            )
+
+            TitrationEquationView.PLogConcentrationFilled(
+                data: .preview,
+                pValue: .init(.hydrogen, isFilled: true),
+                concentration: .init(.hydrogen, isFilled: true)
             )
         }
         .previewLayout(.sizeThatFits)
