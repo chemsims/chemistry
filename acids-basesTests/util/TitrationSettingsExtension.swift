@@ -15,6 +15,8 @@ extension TitrationSettings {
         neutralSubstanceBarChartHeight: CGFloat = standard.neutralSubstanceBarChartHeight,
         weakIonChangeInBarHeightFraction: CGFloat = standard.weakIonChangeInBarHeightFraction,
         finalMaxPValue: CGFloat = standard.finalMaxPValue,
+        maxInitialStrongConcentration: CGFloat = standard.maxInitialStrongConcentration,
+        minInitialStrongConcentration: CGFloat = standard.minInitialStrongConcentration,
         beakerVolumeFromRows: Equation = standard.beakerVolumeFromRows
     ) -> TitrationSettings {
         self.init(
@@ -23,6 +25,8 @@ extension TitrationSettings {
             neutralSubstanceBarChartHeight: neutralSubstanceBarChartHeight,
             weakIonChangeInBarHeightFraction: weakIonChangeInBarHeightFraction,
             finalMaxPValue: finalMaxPValue,
+            maxInitialStrongConcentration: maxInitialStrongConcentration,
+            minInitialStrongConcentration: minInitialStrongConcentration,
             beakerVolumeFromRows: beakerVolumeFromRows
         )
     }

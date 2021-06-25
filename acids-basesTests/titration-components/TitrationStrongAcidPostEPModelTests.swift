@@ -28,6 +28,7 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         )
         firstModel.incrementSubstance(count: 20)
         let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
+        secondModel.incrementTitrant(count: secondModel.maxTitrant)
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
         XCTAssertEqualWithTolerance(model.currentConcentration.value(for: .hydrogen), 1e-7)
@@ -102,6 +103,7 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         )
         firstModel.incrementSubstance(count: 20)
         let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
+        secondModel.incrementTitrant(count: secondModel.maxTitrant)
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
         XCTAssertEqual(model.currentVolumes.value(for: .substance), secondModel.currentVolume.value(for: .substance))
@@ -171,6 +173,7 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         )
         firstModel.incrementSubstance(count: 20)
         let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
+        secondModel.incrementTitrant(count: secondModel.maxTitrant)
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
         var decreasingIonBar: Equation {
@@ -198,5 +201,22 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
             decreasingIonBar.getY(at: CGFloat(model.maxTitrant)),
             expectedDecreasingIonBarHeight
         )
+    }
+
+    func testInputLimits() {
+        let firstModel = TitrationStrongSubstancePreparationModel()
+        firstModel.incrementSubstance(count: 15)
+        let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
+        secondModel.incrementTitrant(count: 15)
+        let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
+
+        XCTAssert(model.canAddTitrant)
+        XCTAssertFalse(model.hasAddedEnoughTitrant)
+
+        model.incrementTitrant(count: 50)
+        XCTAssertFalse(model.canAddTitrant)
+        XCTAssert(model.hasAddedEnoughTitrant)
+
+        XCTAssertEqual(model.titrantAdded, 15)
     }
 }

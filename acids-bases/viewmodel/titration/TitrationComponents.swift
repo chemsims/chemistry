@@ -157,6 +157,13 @@ struct TitrationSettings {
     /// whereas for a basic titration it would be the value of pOH.
     let finalMaxPValue: CGFloat
 
+    /// Maximum concentration of the initial strong substance
+    let maxInitialStrongConcentration: CGFloat
+
+    /// Minimum concentration of the initial strong substance
+    let minInitialStrongConcentration: CGFloat
+
+
     let beakerVolumeFromRows: Equation
 
     static let standard = TitrationSettings(
@@ -165,6 +172,8 @@ struct TitrationSettings {
         neutralSubstanceBarChartHeight: 0.15,
         weakIonChangeInBarHeightFraction: 0.1,
         finalMaxPValue: 13,
+        maxInitialStrongConcentration: 0.5,
+        minInitialStrongConcentration: 0.3,
         beakerVolumeFromRows: LinearEquation(
             x1: CGFloat(AcidAppSettings.minBeakerRows),
             y1: 0.1,

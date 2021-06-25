@@ -195,6 +195,21 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
         XCTAssertEqual(model.primaryIonCoords.fractionToDraw.getY(at: CGFloat(model.maxTitrant)), 0)
     }
 
+    func testInputLimits() {
+        let firstModel = TitrationStrongSubstancePreparationModel()
+        firstModel.incrementSubstance(count: 15)
+        let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
+
+        XCTAssert(model.canAddTitrant)
+        XCTAssertFalse(model.hasAddedEnoughTitrant)
+
+        model.incrementTitrant(count: 50)
+
+        XCTAssertFalse(model.canAddTitrant)
+        XCTAssert(model.hasAddedEnoughTitrant)
+        XCTAssertEqual(model.titrantAdded, 15)
+    }
+
     private func expectedConcentration(afterIncrementing count: Int) -> CGFloat {
         TitrationStrongSubstancePreparationModel.concentrationOfIncreasingMolecule(
             afterIncrementing: count,

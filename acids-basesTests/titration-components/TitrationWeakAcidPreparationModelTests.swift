@@ -79,7 +79,7 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         )
 
         XCTAssertEqual(model.volume.value(for: .substance), 1)
-        model.rows = 5
+        model.exactRows = 5
         XCTAssertEqual(model.volume.value(for: .substance), 0.5)
 
         XCTAssertEqual(model.volume.value(for: .titrant), 0)

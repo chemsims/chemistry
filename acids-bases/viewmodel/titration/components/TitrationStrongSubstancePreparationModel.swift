@@ -39,6 +39,10 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
     var rows: Int {
         GridCoordinateList.availableRows(for: exactRows)
     }
+
+    private var gridSizeFloat: CGFloat {
+        CGFloat(cols * rows)
+    }
 }
 
 // MARK: - Equation Data
@@ -95,7 +99,7 @@ extension TitrationStrongSubstancePreparationModel {
             x1: 0,
             y1: 1e-7,
             x2: CGFloat(maxSubstance),
-            y2: CGFloat(maxSubstance) / CGFloat(cols * rows)
+            y2: CGFloat(maxSubstance) / gridSizeFloat
         )
     }
 
@@ -107,17 +111,18 @@ extension TitrationStrongSubstancePreparationModel {
 // MARK: Incrementing
 extension TitrationStrongSubstancePreparationModel {
     func incrementSubstance(count: Int) {
-        guard substanceAdded < maxSubstance else {
+        let maxToAdd = min(count, remainingCountAvailable)
+        guard maxToAdd > 0 else {
             return
         }
         primaryIonCoords.coords = GridCoordinateList.addingRandomElementsTo(
             grid: primaryIonCoords.coords,
-            count: count,
+            count: maxToAdd,
             cols: cols,
             rows: rows
         )
         withAnimation(.linear(duration: 1)) {
-            substanceAdded += count
+            substanceAdded += maxToAdd
         }
     }
 }
@@ -175,7 +180,19 @@ extension TitrationStrongSubstancePreparationModel {
 // MARK: - Input limits
 extension TitrationStrongSubstancePreparationModel {
     var maxSubstance: Int {
-        50
+        (settings.maxInitialStrongConcentration * gridSizeFloat).roundedInt()
+    }
+
+    var canAddSubstance: Bool {
+        remainingCountAvailable > 0
+    }
+
+    var hasAddedEnoughSubstance: Bool {
+        !canAddSubstance
+    }
+
+    private var remainingCountAvailable: Int {
+        max(0, maxSubstance - substanceAdded)
     }
 }
 

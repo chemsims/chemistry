@@ -9,7 +9,7 @@ class TitrationStrongSubstancePreEPModel: ObservableObject {
 
     init(previous: TitrationStrongSubstancePreparationModel) {
         self.previous = previous
-        let maxTitrant = 20
+        let maxTitrant = previous.primaryIonCoords.coords.count
         self.maxTitrant = maxTitrant
         self.primaryIonCoords = AnimatingBeakerMolecules(
             molecules: previous.primaryIonCoords,
@@ -26,7 +26,6 @@ class TitrationStrongSubstancePreEPModel: ObservableObject {
     @Published var titrantAdded: Int = 0
     let primaryIonCoords: AnimatingBeakerMolecules
 
-    // MARK: Input Limits
     let maxTitrant: Int
 
     var substance: AcidOrBase {
@@ -41,11 +40,12 @@ class TitrationStrongSubstancePreEPModel: ObservableObject {
 // MARK: - Incrementing
 extension TitrationStrongSubstancePreEPModel {
     func incrementTitrant(count: Int) {
-        guard titrantAdded < maxTitrant else {
+        let maxToAdd = min(count, remainingCountAvailable)
+        guard maxToAdd > 0 else {
             return
         }
         withAnimation(.linear(duration: 1)) {
-            titrantAdded += count
+            titrantAdded += maxToAdd
         }
     }
 }
@@ -220,5 +220,20 @@ extension TitrationStrongSubstancePreEPModel {
 
     private var initialSubstanceMolarity: CGFloat {
         previous.currentMolarity.value(for: .substance)
+    }
+}
+
+// MARK: - Input limits
+extension TitrationStrongSubstancePreEPModel {
+    var canAddTitrant: Bool {
+        remainingCountAvailable > 0
+    }
+
+    var hasAddedEnoughTitrant: Bool {
+        !canAddTitrant
+    }
+
+    private var remainingCountAvailable: Int {
+        max(0, maxTitrant - titrantAdded)
     }
 }

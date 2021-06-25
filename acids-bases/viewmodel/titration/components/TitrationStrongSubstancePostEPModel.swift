@@ -16,11 +16,14 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
             color: .purple,
             label: ""
         )
+        self.maxTitrant = previous.titrantAdded
     }
 
     let previous: TitrationStrongSubstancePreEPModel
     @Published var titrantAdded = 0
     @Published var titrantMolecules: BeakerMolecules
+
+    let maxTitrant: Int
 
     var settings: TitrationSettings {
         previous.settings
@@ -34,17 +37,18 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
 // MARK: - Incrementing titrant
 extension TitrationStrongSubstancePostEPModel {
     func incrementTitrant(count: Int) {
-        guard titrantAdded < maxTitrant else {
+        let maxToAdd = min(remainingCountAvailable, count)
+        guard maxToAdd > 0 else {
             return
         }
         titrantMolecules.coords = GridCoordinateList.addingRandomElementsTo(
             grid: titrantMolecules.coords,
-            count: count,
+            count: maxToAdd,
             cols: previous.previous.cols,
             rows: previous.previous.rows
         )
         withAnimation(.linear(duration: 1)) {
-            titrantAdded += count
+            titrantAdded += maxToAdd
         }
     }
 }
@@ -273,7 +277,15 @@ extension TitrationStrongSubstancePostEPModel {
 
 // MARK: - Input limits
 extension TitrationStrongSubstancePostEPModel {
-    var maxTitrant: Int {
-        20
+    var canAddTitrant: Bool {
+        remainingCountAvailable > 0
+    }
+
+    var hasAddedEnoughTitrant: Bool {
+        !canAddTitrant
+    }
+
+    private var remainingCountAvailable: Int {
+        max(0, maxTitrant - titrantAdded)
     }
 }

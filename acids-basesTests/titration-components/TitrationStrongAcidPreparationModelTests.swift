@@ -176,6 +176,24 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
         )
     }
 
+    func testInputLimits() {
+        let model = TitrationStrongSubstancePreparationModel(
+            settings: .withDefaults(
+                maxInitialStrongConcentration: 0.3,
+                minInitialStrongConcentration: 0.2
+            )
+        )
+
+        XCTAssert(model.canAddSubstance)
+        XCTAssertFalse(model.hasAddedEnoughSubstance)
+
+        model.incrementSubstance(count: 50)
+        XCTAssertFalse(model.canAddSubstance)
+        XCTAssert(model.hasAddedEnoughSubstance)
+
+        XCTAssertEqual(model.substanceAdded, 30)
+    }
+
     private func expectedConcentrationOfIncreasingMolecule(
         afterIncrementing count: Int
     ) -> CGFloat {
