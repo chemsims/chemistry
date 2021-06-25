@@ -32,46 +32,6 @@ struct TitrationPhChart: View {
             )
         }
     }
-
-    private var yAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
-            minValuePosition: 0.9 * layout.common.chartSize,
-            maxValuePosition: 0.1 * layout.common.chartSize,
-            minValue: 0,
-            maxValue: 14
-        )
-    }
-
-    private var xAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
-            minValuePosition: 0.1 * layout.common.chartSize,
-            maxValuePosition: 0.9 * layout.common.chartSize,
-            minValue: 0,
-            maxValue: maxEquationInput
-        )
-    }
-
-    private var phEquation: Equation {
-        SwitchingEquation(
-            thresholdX: CGFloat(strongSubstancePreEPModel.maxTitrant),
-            underlyingLeft: strongSubstancePreEPModel.pH,
-            underlyingRight: PostEquivalencePointPHEquation(
-                underlying: strongSubstancePostEPModel.pH,
-                equivalencePointTitrant: strongSubstancePreEPModel.maxTitrant
-            )
-        )
-    }
-
-    private var maxEquationInput: CGFloat {
-        CGFloat(strongSubstancePreEPModel.maxTitrant) + CGFloat(strongSubstancePostEPModel.maxTitrant)
-    }
-
-    private var equationInput: CGFloat {
-        if state.phase == .preEP {
-            return CGFloat(strongSubstancePreEPModel.titrantAdded)
-        }
-        return CGFloat(strongSubstancePostEPModel.titrantAdded + strongSubstancePreEPModel.maxTitrant)
-    }
 }
 
 private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: TitrationReactionModel>: View {
@@ -83,14 +43,7 @@ private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: Ti
 
     var body: some View {
         TimeChartView(
-            data: [
-                TimeChartDataLine(
-                    equation: phEquation,
-                    headColor: .purple,
-                    haloColor: nil,
-                    headRadius: layout.common.chartHeadRadius
-                )
-            ],
+            data: data,
             initialTime: 0,
             currentTime: .constant(equationInput),
             finalTime: maxEquationInput,
@@ -104,6 +57,20 @@ private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: Ti
             axisSettings: layout.common.chartAxis
         )
         .frame(square: layout.common.chartSize)
+    }
+
+    private var data: [TimeChartDataLine] {
+        if phase == .preEP || phase == .postEP {
+            return [
+                TimeChartDataLine(
+                    equation: phEquation,
+                    headColor: .purple,
+                    haloColor: nil,
+                    headRadius: layout.common.chartHeadRadius
+                )
+            ]
+        }
+        return []
     }
 
     private var yAxis: AxisPositionCalculations<CGFloat> {

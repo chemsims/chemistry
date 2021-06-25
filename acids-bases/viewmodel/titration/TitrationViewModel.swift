@@ -36,7 +36,11 @@ class TitrationViewModel: ObservableObject {
     }
 
     @Published var statement = [TextLine]()
-    @Published var rows: CGFloat
+    @Published var rows: CGFloat {
+        didSet {
+            components.strongSubstancePreparationModel.exactRows = rows
+        }
+    }
     @Published var inputState = InputState.none
     @Published var equationState = EquationState.strongAcidBlank
 
