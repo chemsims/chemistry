@@ -57,11 +57,11 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
         let initialPValues = model.currentPValues
         XCTAssertEqualWithTolerance(
             initialPValues.value(for: .hydrogen),
-            firstModel.pValues.value(for: .hydrogen)
+            firstModel.currentPValues.value(for: .hydrogen)
         )
         XCTAssertEqualWithTolerance(
             initialPValues.value(for: .hydroxide),
-            firstModel.pValues.value(for: .hydroxide)
+            firstModel.currentPValues.value(for: .hydroxide)
         )
 
         model.incrementTitrant(count: model.maxTitrant)
@@ -167,7 +167,7 @@ extension TitrationWeakSubstancePreEPModel {
     }
 
     var currentPValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        pValues.map { $0.getY(at: CGFloat(titrantAdded)) }
+        equationData.pValues.map { $0.getY(at: CGFloat(titrantAdded)) }
     }
 
     var currentVolume: EnumMap<TitrationEquationTerm.Volume, CGFloat> {

@@ -34,11 +34,14 @@ import ReactionsCore
 class TitrationWeakSubstancePreEPModel: ObservableObject {
     init(previous: TitrationWeakSubstancePreparationModel) {
         self.previous = previous
+        self.beakerReactionModel = Self.initialReactingBeakerModel(previous: previous)
     }
 
     let previous: TitrationWeakSubstancePreparationModel
 
     @Published var titrantAdded = 0
+
+    var beakerReactionModel: ReactingBeakerViewModel<ExtendedSubstancePart>
 
     var substance: AcidOrBase {
         previous.substance
@@ -77,6 +80,13 @@ extension TitrationWeakSubstancePreEPModel {
         withAnimation(.linear(duration: 1)) {
             titrantAdded += count
         }
+
+        beakerReactionModel.add(
+            reactant: substance.type.isAcid ? .hydroxide : .hydrogen,
+            reactingWith: .substance,
+            producing: .secondaryIon,
+            withDuration: 1
+        )
     }
 }
 
@@ -175,22 +185,8 @@ extension TitrationWeakSubstancePreEPModel {
 
 // MARK: - P Values
 extension TitrationWeakSubstancePreEPModel {
-    var pValues: EnumMap<TitrationEquationTerm.PValue, Equation> {
-        equationData.pValues
-//        .init {
-//            switch $0 {
-//            case .hydrogen:
-//                return -1 * Log10Equation(underlying: concentration.value(for: .hydrogen))
-//            case .hydroxide:
-//                return -1 * Log10Equation(underlying: concentration.value(for: .hydroxide))
-//            case .kA: return ConstantEquation(value: substance.pKA)
-//            case .kB: return ConstantEquation(value: substance.pKB)
-//            }
-//        }
-    }
-
     var pH: Equation {
-        pValues.value(for: .hydrogen)
+        equationData.pValues.value(for: .hydrogen)
     }
 }
 
@@ -361,5 +357,53 @@ extension TitrationWeakSubstancePreEPModel {
 extension TitrationWeakSubstancePreEPModel {
     var maxTitrant: Int {
         20
+    }
+}
+
+// MARK: - Beaker reaction
+extension TitrationWeakSubstancePreEPModel {
+    func updateReactionProgress() {
+
+    }
+
+}
+
+extension TitrationWeakSubstancePreEPModel {
+
+    // TODO - combine this method with the one in BufferSaltComponents, and move it somewhere shared
+    static func initialReactingBeakerModel(previous: TitrationWeakSubstancePreparationModel) -> ReactingBeakerViewModel<ExtendedSubstancePart> {
+        var prevSubstanceCoords = previous.substanceCoords
+        let ionCoords = previous.ionCoords.flatMap { $0.molecules.coords }
+        let visibleSubstanceCoords = prevSubstanceCoords.coords.filter { !ionCoords.contains($0) }
+        prevSubstanceCoords.coords = visibleSubstanceCoords
+
+        return ReactingBeakerViewModel(
+            initial: .init {
+                switch $0 {
+                case .hydrogen:
+                    if previous.substance.type.isAcid {
+                        return previous.ionCoords[0].molecules
+                    }
+                    return BeakerMolecules(
+                        coords: [],
+                        color: RGB.hydrogen.color,
+                        label: ""
+                    )
+                case .hydroxide:
+                    if previous.substance.type.isAcid {
+                        return BeakerMolecules(
+                            coords: [],
+                            color: RGB.hydroxide.color,
+                            label: ""
+                        )
+                    }
+                    return previous.ionCoords[0].molecules
+                case .secondaryIon: return previous.ionCoords[1].molecules
+                case .substance: return prevSubstanceCoords
+                }
+            },
+            cols: previous.cols,
+            rows: previous.rows
+        )
     }
 }

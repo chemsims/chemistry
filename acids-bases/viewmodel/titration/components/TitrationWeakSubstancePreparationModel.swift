@@ -174,25 +174,6 @@ extension TitrationWeakSubstancePreparationModel {
     }
 }
 
-// MARK: - P Values
-extension TitrationWeakSubstancePreparationModel {
-    var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        equationData.pValues.map { $0.getY(at: reactionProgress) }
-//        .init {
-//            switch $0 {
-//            case .hydrogen: return phFromConcentration(.hydrogen)
-//            case .hydroxide: return phFromConcentration(.hydroxide)
-//            case .kA: return substance.pKA
-//            case .kB: return substance.pKB
-//            }
-//        }
-    }
-
-    private func phFromConcentration(_ term: TitrationEquationTerm.Concentration) -> CGFloat {
-        -1 * safeLog10(concentration.value(for: term).getY(at: reactionProgress))
-    }
-}
-
 // MARK: - Molarity
 extension TitrationWeakSubstancePreparationModel {
     var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
@@ -277,6 +258,39 @@ extension TitrationWeakSubstancePreparationModel {
 
     private var changeInBarHeight: CGFloat {
         initialSubstanceConcentration * settings.weakIonChangeInBarHeightFraction
+    }
+}
+
+// MARK: - Beaker molecules
+extension TitrationWeakSubstancePreparationModel {
+    var ionCoords: [AnimatingBeakerMolecules] {
+        [
+            coordForIon(substance.primary.color, index: 0),
+            coordForIon(substance.color, index: 1)
+        ]
+    }
+
+    private var numberOfIonCoords: Int {
+        settings.minInitialIonBeakerMolecules
+    }
+
+    private func coordForIon(_ color: Color, index: Int) -> AnimatingBeakerMolecules {
+        let startCoordIndex = index * numberOfIonCoords
+        let endCoordIndex = max(startCoordIndex, startCoordIndex + numberOfIonCoords - 1)
+
+        var coords = [GridCoordinate]()
+        if endCoordIndex < substanceCoords.coords.endIndex {
+            coords = Array(substanceCoords.coords[startCoordIndex...endCoordIndex])
+        }
+
+        return AnimatingBeakerMolecules(
+            molecules: BeakerMolecules(
+                coords: coords,
+                color: color,
+                label: ""
+            ),
+            fractionToDraw: LinearEquation(m: 1, x1: 0, y1: 0)
+        )
     }
 }
 

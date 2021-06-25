@@ -129,13 +129,13 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         model.reactionProgress = 1
 
         XCTAssertEqualWithTolerance(
-            model.pValues.value(for: increasingIon.pValue), expectedPIncreasingIon
+            model.currentPValues.value(for: increasingIon.pValue), expectedPIncreasingIon
         )
         XCTAssertEqualWithTolerance(
-            model.pValues.value(for: decreasingIon.pValue), 14 - expectedPIncreasingIon
+            model.currentPValues.value(for: decreasingIon.pValue), 14 - expectedPIncreasingIon
         )
-        XCTAssertEqual(model.pValues.value(for: .kA), model.substance.pKA)
-        XCTAssertEqual(model.pValues.value(for: .kB), model.substance.pKB)
+        XCTAssertEqual(model.currentPValues.value(for: .kA), model.substance.pKA)
+        XCTAssertEqual(model.currentPValues.value(for: .kB), model.substance.pKB)
     }
 
     func testBarChart() {

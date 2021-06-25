@@ -281,7 +281,7 @@ extension AcidOrBase {
     ]
 
     static let weakAcids = [
-        AcidOrBase.weakAcid(secondaryIon: .Ba, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .black, kA: 7.3e-5),
+        AcidOrBase.weakAcid(secondaryIon: .Ba, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .purple, kA: 7.3e-5),
         AcidOrBase.weakAcid(secondaryIon: .Na, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .gray, kA: 4.5e-4),
         AcidOrBase.weakAcid(secondaryIon: .K, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .black, kA: 9e-5),
     ]

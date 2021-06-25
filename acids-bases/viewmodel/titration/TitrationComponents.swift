@@ -159,12 +159,11 @@ struct TitrationSettings {
 
     let beakerVolumeFromRows: Equation
 
-
     static let standard = TitrationSettings(
         initialIonMoleculeFraction: 0.1,
         minInitialIonBeakerMolecules: 1,
         neutralSubstanceBarChartHeight: 0.15,
-        weakIonChangeInBarHeightFraction: 0.5,
+        weakIonChangeInBarHeightFraction: 0.1,
         finalMaxPValue: 13,
         beakerVolumeFromRows: LinearEquation(
             x1: CGFloat(AcidAppSettings.minBeakerRows),

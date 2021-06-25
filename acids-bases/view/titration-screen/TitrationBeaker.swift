@@ -17,7 +17,10 @@ struct TitrationBeaker: View {
                 model: model,
                 strongSubstancePreparationModel: model.components.strongSubstancePreparationModel,
                 strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel
+                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel,
+                weakPrepModel: model.components.weakSubstancePreparationModel,
+                weakPreEPReaction: model.components.weakSubstancePreEPModel.beakerReactionModel,
+                weakPostEPModel: model.components.weakSubstancePostEPModel
             )
 
             molecules
@@ -276,6 +279,10 @@ private struct TitrationBeakerMolecules: View {
     @ObservedObject var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
     @ObservedObject var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
 
+    @ObservedObject var weakPrepModel: TitrationWeakSubstancePreparationModel
+    @ObservedObject var weakPreEPReaction: ReactingBeakerViewModel<ExtendedSubstancePart>
+    @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
+
     var body: some View {
         AdjustableFluidBeaker(
             rows: $model.rows,
@@ -291,25 +298,40 @@ private struct TitrationBeakerMolecules: View {
     }
 
     private var molecules: [BeakerMolecules] {
+        let isStrong = componentState.substance.isStrong
         switch componentState.phase {
-        case .preparation: return [strongSubstancePreparationModel.primaryIonCoords]
-        case .postEP: return [strongSubstancePostEPModel.titrantMolecules]
-        case .preEP: return []
+        case .preparation where isStrong: return [strongSubstancePreparationModel.primaryIonCoords]
+        case .postEP where isStrong: return [strongSubstancePostEPModel.titrantMolecules]
+        case .preEP where isStrong: return []
+
+        case .preparation: return [weakPrepModel.substanceCoords]
+        case .preEP: return weakPreEPReaction.molecules.map(\.molecules)
+        case .postEP: return []
         }
     }
 
     private var animatingMolecules: [AnimatingBeakerMolecules] {
+        let isStrong = componentState.substance.isStrong
         switch componentState.phase {
-        case .preEP: return [strongSubstancePreEPModel.primaryIonCoords]
-        case .preparation: return []
+        case .preparation where isStrong: return []
+        case .preEP where isStrong: return [strongSubstancePreEPModel.primaryIonCoords]
+        case .postEP where isStrong: return []
+
+        case .preparation: return weakPrepModel.ionCoords
+        case .preEP: return []
         case .postEP: return []
         }
     }
 
     private var equationInput: CGFloat {
+        let isStrong = componentState.substance.isStrong
         switch componentState.phase {
-        case .preEP: return CGFloat(strongSubstancePreEPModel.titrantAdded)
-        case .preparation: return 0
+        case .preparation where isStrong: return 0
+        case .preEP where isStrong: return CGFloat(strongSubstancePreEPModel.titrantAdded)
+        case .postEP where isStrong: return 0
+
+        case .preparation: return weakPrepModel.reactionProgress
+        case .preEP: return 0
         case .postEP: return 0
         }
     }

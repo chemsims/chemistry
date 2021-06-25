@@ -154,6 +154,6 @@ extension TitrationWeakSubstancePostEPModel {
     }
 
     var currentPValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        pValues.map { $0.getY(at: CGFloat(titrantAdded)) }
+        equationData.pValues.map { $0.getY(at: CGFloat(titrantAdded)) }
     }
 }

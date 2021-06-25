@@ -48,6 +48,10 @@ extension TitrationWeakSubstancePreparationModel {
             settings: settings
         )
     }
+
+    var currentPValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
+        equationData.pValues.map { $0.getY(at: reactionProgress) }
+    }
 }
 
 extension TitrationStrongSubstancePreparationModel {
