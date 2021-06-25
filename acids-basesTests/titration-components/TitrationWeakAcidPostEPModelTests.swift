@@ -6,9 +6,20 @@ import XCTest
 import ReactionsCore
 @testable import acids_bases
 
-class TitrationAcidSubstancePostEPModelTests: XCTestCase {
+class TitrationWeakAcidPostEPModelTests: XCTestCase {
+
+    var substance = AcidOrBase.weakAcids.first!
+
+    private var primaryIon: PrimaryIon {
+        substance.primary
+    }
+    private var complementIon: PrimaryIon {
+        primaryIon.complement
+    }
+
     func testConcentration() {
         let firstModel = TitrationWeakSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(
                 finalMaxPValue: 12
             )
@@ -21,7 +32,7 @@ class TitrationAcidSubstancePostEPModelTests: XCTestCase {
         func checkTheSameAsPrevious(_ term: TitrationEquationTerm.Concentration) {
             let previous = secondModel.currentConcentration.value(for: term)
             let current = model.currentConcentration.value(for: term)
-            XCTAssertEqual(current, previous)
+            XCTAssertEqualWithTolerance(current, previous)
         }
         checkTheSameAsPrevious(.hydrogen)
         checkTheSameAsPrevious(.hydroxide)
@@ -29,15 +40,16 @@ class TitrationAcidSubstancePostEPModelTests: XCTestCase {
         checkTheSameAsPrevious(.secondary)
 
         model.incrementTitrant(count: model.maxTitrant)
-        let finalHConcentration = model.currentConcentration.value(for: .hydrogen)
-        let finalOHConcentration = model.currentConcentration.value(for: .hydroxide)
+        let finalPrimaryConcentration = model.currentConcentration.value(for: primaryIon.concentration)
+        let finalComplementConcentration = model.currentConcentration.value(for: complementIon.concentration)
 
-        XCTAssertEqual(finalOHConcentration, 1e-2)
-        XCTAssertEqual(finalHConcentration, 1e-12)
+        XCTAssertEqualWithTolerance(finalComplementConcentration, 1e-2)
+        XCTAssertEqualWithTolerance(finalPrimaryConcentration, 1e-12)
     }
 
     func testPValues() {
         let firstModel = TitrationWeakSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(
                 finalMaxPValue: 12
             )
@@ -50,14 +62,14 @@ class TitrationAcidSubstancePostEPModelTests: XCTestCase {
         func checkTheSameAsPrevious(_ term: TitrationEquationTerm.PValue) {
             let previous = secondModel.currentPValues.value(for: term)
             let current = model.currentPValues.value(for: term)
-            XCTAssertEqual(current, previous)
+            XCTAssertEqualWithTolerance(current, previous)
         }
         checkTheSameAsPrevious(.hydrogen)
         checkTheSameAsPrevious(.hydroxide)
 
         model.incrementTitrant(count: model.maxTitrant)
-        XCTAssertEqual(model.currentPValues.value(for: .hydrogen), 12)
-        XCTAssertEqual(model.currentPValues.value(for: .hydroxide), 2)
+        XCTAssertEqualWithTolerance(model.currentPValues.value(for: primaryIon.pValue), 12)
+        XCTAssertEqualWithTolerance(model.currentPValues.value(for: complementIon.pValue), 2)
     }
 
     func testVolume() {

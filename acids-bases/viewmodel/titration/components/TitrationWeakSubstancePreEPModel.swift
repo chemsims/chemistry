@@ -137,12 +137,12 @@ extension TitrationWeakSubstancePreEPModel {
         if substance.type.isAcid {
             return primaryIonConcentration
         }
-        return complementPrimaryIonConcentration
+        return complementIonConcentration
     }
 
     private var hydroxideConcentration: Equation {
         if substance.type.isAcid {
-            return complementPrimaryIonConcentration
+            return complementIonConcentration
         }
         return primaryIonConcentration
     }
@@ -150,18 +150,24 @@ extension TitrationWeakSubstancePreEPModel {
     private var primaryIonConcentration: Equation {
         LinearEquation(
             x1: 0,
-            y1: initialConcentration(of: .hydrogen),
+            y1: initialConcentration(of: substance.primary.concentration),
             x2: CGFloat(maxTitrant),
             y2: finalPrimaryIonConcentration
         )
     }
 
-    private var finalPrimaryIonConcentration: CGFloat {
+    private var complementIonConcentration: Equation {
+        primaryIonConcentration.map(PrimaryIonConcentration.complementConcentration)
+    }
+
+    private var finalComplementIonConcentration: CGFloat {
         changeInConcentrationToBalanceKRelation
     }
 
-    private var complementPrimaryIonConcentration: Equation {
-        primaryIonConcentration.map(PrimaryIonConcentration.complementConcentration)
+    private var finalPrimaryIonConcentration: CGFloat {
+        PrimaryIonConcentration.complementConcentration(
+            primaryConcentration: finalComplementIonConcentration
+        )
     }
 
     private func initialConcentration(of term: TitrationEquationTerm.Concentration) -> CGFloat {

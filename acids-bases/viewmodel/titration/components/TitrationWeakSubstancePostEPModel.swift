@@ -56,10 +56,8 @@ extension TitrationWeakSubstancePostEPModel {
     var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> {
         .init {
             switch $0 {
-            case .hydrogen:
-                return oHConcentration.map(PrimaryIonConcentration.complementConcentration)
-            case .hydroxide:
-                return oHConcentration
+            case .hydrogen: return hydrogenConcentration
+            case .hydroxide: return hydroxideConcentration
             case .secondary, .initialSecondary:
                 return ConstantEquation(value: initialConcentration(of: .secondary))
             case .substance, .initialSubstance:
@@ -68,8 +66,23 @@ extension TitrationWeakSubstancePostEPModel {
         }
     }
 
-    private var oHConcentration: Equation {
-        LinearEquation(
+    private var hydrogenConcentration: Equation {
+        if !substance.type.isAcid {
+            return LinearEquation(
+                x1: 0,
+                y1: initialConcentration(of: .hydrogen),
+                x2: CGFloat(maxTitrant),
+                y2: finalHConcentration
+            )
+        }
+        return hydroxideConcentration.map(PrimaryIonConcentration.complementConcentration)
+    }
+
+    private var hydroxideConcentration: Equation {
+        if !substance.type.isAcid {
+            return hydrogenConcentration.map(PrimaryIonConcentration.complementConcentration)
+        }
+        return LinearEquation(
             x1: 0,
             y1: initialConcentration(of: .hydroxide),
             x2: CGFloat(maxTitrant),
@@ -77,8 +90,12 @@ extension TitrationWeakSubstancePostEPModel {
         )
     }
 
+    private var finalHConcentration: CGFloat {
+        PrimaryIonConcentration.concentration(forP: finalPH)
+    }
+
     private var finalOHConcentration: CGFloat {
-        let finalPOH = 14 - settings.finalMaxPValue
+        let finalPOH = 14 - finalPH
         return PrimaryIonConcentration.concentration(forP: finalPOH)
     }
 
@@ -104,6 +121,17 @@ extension TitrationWeakSubstancePostEPModel {
 
     var pH: Equation {
         pValues.value(for: .hydrogen)
+    }
+
+    private var finalPH: CGFloat {
+        if substance.type.isAcid {
+            return settings.finalMaxPValue
+        }
+        return 14 - settings.finalMaxPValue
+    }
+
+    private var finalPOH: CGFloat {
+        14 - finalPH
     }
 }
 

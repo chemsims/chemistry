@@ -176,7 +176,7 @@
 		574978322683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978312683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift */; };
 		574978342683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978332683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift */; };
 		574978362683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978352683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift */; };
-		574978382683D05000EFA71C /* TitrationWeakSubstancePostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978372683D05000EFA71C /* TitrationWeakSubstancePostEPModelTests.swift */; };
+		574978382683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978372683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift */; };
 		5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */; };
 		574E54E5266B653100D6E05E /* gaseous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E4266B653100D6E05E /* gaseous-quiz.csv */; };
 		574E54E9266B666F00D6E05E /* aqueous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E8266B666F00D6E05E /* aqueous-quiz.csv */; };
@@ -258,6 +258,7 @@
 		577077CF25698CE0003E750E /* SKBeakerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077CE25698CE0003E750E /* SKBeakerScene.swift */; };
 		577077D325698DF2003E750E /* SkBeakerSceneRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577077D225698DF2003E750E /* SkBeakerSceneRepresentable.swift */; };
 		5770953426860F3C005F2981 /* TitrationReactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770953326860F3C005F2981 /* TitrationReactionModel.swift */; };
+		5770953626861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770953526861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift */; };
 		5771BFED2621ACBE0033B807 /* SolubilityScreenNavigationBeakerStatesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5771BFEC2621ACBE0033B807 /* SolubilityScreenNavigationBeakerStatesTests.swift */; };
 		5773B5F025B84E4100889A2E /* FeedbackAndShareSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5EF25B84E4100889A2E /* FeedbackAndShareSettings.swift */; };
 		5773B5F425B84EF600889A2E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5F325B84EF600889A2E /* Version.swift */; };
@@ -892,7 +893,7 @@
 		574978312683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakSubstancePreEPModel.swift; sourceTree = "<group>"; };
 		574978332683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakAcidPreEPModelTests.swift; sourceTree = "<group>"; };
 		574978352683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakSubstancePostEPModel.swift; sourceTree = "<group>"; };
-		574978372683D05000EFA71C /* TitrationWeakSubstancePostEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakSubstancePostEPModelTests.swift; sourceTree = "<group>"; };
+		574978372683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakAcidPostEPModelTests.swift; sourceTree = "<group>"; };
 		5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationModelTest.swift; sourceTree = "<group>"; };
 		574E54E4266B653100D6E05E /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
 		574E54E8266B666F00D6E05E /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
@@ -971,6 +972,7 @@
 		577077CE25698CE0003E750E /* SKBeakerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKBeakerScene.swift; sourceTree = "<group>"; };
 		577077D225698DF2003E750E /* SkBeakerSceneRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkBeakerSceneRepresentable.swift; sourceTree = "<group>"; };
 		5770953326860F3C005F2981 /* TitrationReactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationReactionModel.swift; sourceTree = "<group>"; };
+		5770953526861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakBasePostEPModelTests.swift; sourceTree = "<group>"; };
 		5771BFEC2621ACBE0033B807 /* SolubilityScreenNavigationBeakerStatesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityScreenNavigationBeakerStatesTests.swift; sourceTree = "<group>"; };
 		5773B5EB25B84A9100889A2E /* MailComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerView.swift; sourceTree = "<group>"; };
 		5773B5EF25B84E4100889A2E /* FeedbackAndShareSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackAndShareSettings.swift; sourceTree = "<group>"; };
@@ -2451,12 +2453,13 @@
 				574978222683471800EFA71C /* TitrationStrongAcidPreEPModelTests.swift */,
 				576AF0EB2684BF8A00F300C7 /* TitrationStrongBasePreEPModelTests.swift */,
 				5749782926836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift */,
+				576AF0ED2684C2AB00F300C7 /* TitrationStrongBasePostEPModelTests.swift */,
 				5749782F2683833700EFA71C /* TitrationWeakAcidPreparationModelTests.swift */,
 				576AF0EF2684CD7200F300C7 /* TitrationWeakBasePreparationModelTests.swift */,
 				574978332683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift */,
 				576AF0F12684D51700F300C7 /* TitrationWeakBasePreEPModelTests.swift */,
-				574978372683D05000EFA71C /* TitrationWeakSubstancePostEPModelTests.swift */,
-				576AF0ED2684C2AB00F300C7 /* TitrationStrongBasePostEPModelTests.swift */,
+				574978372683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift */,
+				5770953526861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift */,
 				576AF0F72684F08A00F300C7 /* TitrationComponentStateTests.swift */,
 			);
 			path = "titration-components";
@@ -3969,9 +3972,10 @@
 				5749782A26836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift in Sources */,
 				573779E826831DA900BAB6A1 /* TitrationSettingsExtension.swift in Sources */,
 				576AF0F02684CD7200F300C7 /* TitrationWeakBasePreparationModelTests.swift in Sources */,
+				5770953626861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift in Sources */,
 				576AF0EE2684C2AB00F300C7 /* TitrationStrongBasePostEPModelTests.swift in Sources */,
 				5797DE2626739D89003F589F /* BufferStrongComponentsTests.swift in Sources */,
-				574978382683D05000EFA71C /* TitrationWeakSubstancePostEPModelTests.swift in Sources */,
+				574978382683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift in Sources */,
 				574978342683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift in Sources */,
 				5797DE22267390DC003F589F /* AcidOrBaseExtensions.swift in Sources */,
 				574978302683833700EFA71C /* TitrationWeakAcidPreparationModelTests.swift in Sources */,

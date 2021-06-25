@@ -26,3 +26,12 @@ extension TitrationWeakSubstancePreEPModel: TitrationReactionModel {
 
 extension TitrationWeakSubstancePostEPModel: TitrationReactionModel {
 }
+
+extension PrimaryIon {
+    var concentration: TitrationEquationTerm.Concentration {
+        switch self {
+        case .hydrogen: return .hydrogen
+        case .hydroxide: return .hydroxide
+        }
+    }
+}
