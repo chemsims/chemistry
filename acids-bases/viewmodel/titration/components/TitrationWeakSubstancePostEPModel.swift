@@ -101,6 +101,10 @@ extension TitrationWeakSubstancePostEPModel {
             }
         }
     }
+
+    var pH: Equation {
+        pValues.value(for: .hydrogen)
+    }
 }
 
 // MARK: - Volume

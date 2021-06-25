@@ -14,6 +14,73 @@ struct TitrationPhChart: View {
     @ObservedObject var weakPreEPModel: TitrationWeakSubstancePreEPModel
     @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
 
+    @ViewBuilder
+    var body: some View {
+        if state.substance.isStrong {
+            GeneralTitrationPhChart(
+                layout: layout,
+                phase: state.phase,
+                preEPReaction: strongSubstancePreEPModel,
+                postEPReaction: strongSubstancePostEPModel
+            )
+        } else {
+            GeneralTitrationPhChart(
+                layout: layout,
+                phase: state.phase,
+                preEPReaction: weakPreEPModel,
+                postEPReaction: weakPostEPModel
+            )
+        }
+    }
+
+    private var yAxis: AxisPositionCalculations<CGFloat> {
+        AxisPositionCalculations(
+            minValuePosition: 0.9 * layout.common.chartSize,
+            maxValuePosition: 0.1 * layout.common.chartSize,
+            minValue: 0,
+            maxValue: 14
+        )
+    }
+
+    private var xAxis: AxisPositionCalculations<CGFloat> {
+        AxisPositionCalculations(
+            minValuePosition: 0.1 * layout.common.chartSize,
+            maxValuePosition: 0.9 * layout.common.chartSize,
+            minValue: 0,
+            maxValue: maxEquationInput
+        )
+    }
+
+    private var phEquation: Equation {
+        SwitchingEquation(
+            thresholdX: CGFloat(strongSubstancePreEPModel.maxTitrant),
+            underlyingLeft: strongSubstancePreEPModel.pH,
+            underlyingRight: PostEquivalencePointPHEquation(
+                underlying: strongSubstancePostEPModel.pH,
+                equivalencePointTitrant: strongSubstancePreEPModel.maxTitrant
+            )
+        )
+    }
+
+    private var maxEquationInput: CGFloat {
+        CGFloat(strongSubstancePreEPModel.maxTitrant) + CGFloat(strongSubstancePostEPModel.maxTitrant)
+    }
+
+    private var equationInput: CGFloat {
+        if state.phase == .preEP {
+            return CGFloat(strongSubstancePreEPModel.titrantAdded)
+        }
+        return CGFloat(strongSubstancePostEPModel.titrantAdded + strongSubstancePreEPModel.maxTitrant)
+    }
+}
+
+private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: TitrationReactionModel>: View {
+
+    let layout: TitrationScreenLayout
+    let phase: TitrationComponentState.Phase
+    @ObservedObject var preEPReaction: PreEP
+    @ObservedObject var postEPReaction: PostEP
+
     var body: some View {
         TimeChartView(
             data: [
@@ -59,31 +126,34 @@ struct TitrationPhChart: View {
 
     private var phEquation: Equation {
         SwitchingEquation(
-            thresholdX: CGFloat(strongSubstancePreEPModel.maxTitrant),
-            underlyingLeft: strongSubstancePreEPModel.pH,
-            underlyingRight: RightHandPhEquation(
-                underlying: strongSubstancePostEPModel.pH,
-                equivalencePointSubstance: strongSubstancePreEPModel.maxTitrant
+            thresholdX: CGFloat(preEPReaction.maxTitrant),
+            underlyingLeft: preEPReaction.pH,
+            underlyingRight: PostEquivalencePointPHEquation(
+                underlying: postEPReaction.pH,
+                equivalencePointTitrant: preEPReaction.maxTitrant
             )
         )
     }
 
     private var maxEquationInput: CGFloat {
-        CGFloat(strongSubstancePreEPModel.maxTitrant) + CGFloat(strongSubstancePostEPModel.maxTitrant)
+        CGFloat(preEPReaction.maxTitrant) + CGFloat(postEPReaction.maxTitrant)
     }
 
     private var equationInput: CGFloat {
-        if state.phase == .preEP {
-            return CGFloat(strongSubstancePreEPModel.titrantAdded)
+        if phase == .preEP {
+            return CGFloat(preEPReaction.titrantAdded)
         }
+        return CGFloat(postEPReaction.titrantAdded + preEPReaction.maxTitrant)
     }
 }
 
-private struct RightHandPhEquation: Equation {
+private struct PostEquivalencePointPHEquation: Equation {
     let underlying: Equation
-    let equivalencePointSubstance: Int
+
+    /// Titrant added at the equivalence point
+    let equivalencePointTitrant: Int
 
     func getY(at x: CGFloat) -> CGFloat {
-        underlying.getY(at: x - CGFloat(equivalencePointSubstance))
+        underlying.getY(at: x - CGFloat(equivalencePointTitrant))
     }
 }

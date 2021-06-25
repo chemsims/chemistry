@@ -22,16 +22,22 @@ struct TitrationNavigationModel {
         SetStatement(statements.explainEquivalencePoint),
         SetWaterLevel(statements.explainTitrationCurveAndInstructToSetWaterLevel),
         AddStrongAcid(statements.instructToAddStrongAcid),
-        AddStrongAcidTitrantPreEP(["Add titrant"]),
-        AddStrongAcidTitrantPostEP(["Add titrant post EP"]),
+        AddStrongAcidTitrantPreEP(["Add titrant to strong acid"]),
+        AddStrongAcidTitrantPostEP(["Add titrant to strong acid post EP"]),
         SelectStrongBase(["Choose strong base"]),
         AddStrongBase(["Add strong base"]),
-        AddStrongBaseTitrantPreEP(["Add titrant pre EP"]),
-        AddStrongBaseTitrantPostEP(["Add titrant post EP"]),
+        AddStrongBaseTitrantPreEP(["Add titrant to strong base pre EP"]),
+        AddStrongBaseTitrantPostEP(["Add titrant to strong base post EP"]),
         SetWeakAcidSubstance(["Choose weak acid"]),
         AddWeakAcid(["Add weak acid"]),
-        RunWeakAcidInitialReaction(["Running initial reaction"]),
-        AddTitrantToWeakAcidPreEP(["Add titrant to weak acid"])
+        RunWeakAcidInitialReaction(["Running initial weak acid reaction"]),
+        AddTitrantToWeakAcidPreEP(["Add titrant to weak acid"]),
+        AddTitrantToWeakAcidPostEP(["Add titrant to weak acid post EP"]),
+        SetWeakBaseSubstance(["Choose weak base"]),
+        AddWeakBase(["Add weak base"]),
+        RunWeakBaseInitialReaction(["Running initial weak base reaction"]),
+        AddTitrantToWeakBasePreEP(["Add titrant to weak base"]),
+        AddTitrantToWeakBasePostEP(["Add titrant to weak base post EP"])
     ]
 }
 
@@ -192,6 +198,7 @@ private class AddWeakAcid: SetStatement {
 private class RunWeakAcidInitialReaction: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
+        model.shakeModel.stopAll()
         withAnimation(.linear(duration: 2)) {
             model.components.weakSubstancePreparationModel.reactionProgress = 1
         }
@@ -204,5 +211,59 @@ private class AddTitrantToWeakAcidPreEP: SetStatement {
         model.components.assertGoTo(state: .init(substance: .weakAcid, phase: .preEP))
         model.inputState = .addTitrant
         model.equationState = .weakAcidPreEPFilled
+    }
+}
+
+private class AddTitrantToWeakAcidPostEP: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.components.assertGoTo(state: .init(substance: .weakAcid, phase: .postEP))
+        model.inputState = .addTitrant
+        model.equationState = .weakAcidPostEP
+    }
+}
+
+private class SetWeakBaseSubstance: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.components.assertGoTo(state: .init(substance: .weakBase, phase: .preparation))
+        model.equationState = .weakAcidBlank
+        model.inputState = .selectSubstance
+    }
+}
+
+private class AddWeakBase: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .addSubstance
+        model.equationState = .weakAcidAddingSubstance
+    }
+}
+
+private class RunWeakBaseInitialReaction: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.shakeModel.stopAll()
+        withAnimation(.linear(duration: 2)) {
+            model.components.weakSubstancePreparationModel.reactionProgress = 1
+        }
+    }
+}
+
+private class AddTitrantToWeakBasePreEP: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.components.assertGoTo(state: .init(substance: .weakBase, phase: .preEP))
+        model.inputState = .addTitrant
+        model.equationState = .weakAcidPreEPFilled
+    }
+}
+
+private class AddTitrantToWeakBasePostEP: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.components.assertGoTo(state: .init(substance: .weakBase, phase: .postEP))
+        model.inputState = .addTitrant
+        model.equationState = .weakAcidPostEP
     }
 }

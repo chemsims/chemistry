@@ -135,32 +135,33 @@ extension TitrationWeakSubstancePreEPModel {
 
     private var hydrogenConcentration: Equation {
         if substance.type.isAcid {
-            return increasingPrimaryIonConcentration
+            return primaryIonConcentration
         }
-        return decreasingPrimaryIonConcentration
+        return complementPrimaryIonConcentration
     }
 
     private var hydroxideConcentration: Equation {
         if substance.type.isAcid {
-            return decreasingPrimaryIonConcentration
+            return complementPrimaryIonConcentration
         }
-        return increasingPrimaryIonConcentration
+        return primaryIonConcentration
     }
 
-    private var increasingPrimaryIonConcentration: Equation {
-        decreasingPrimaryIonConcentration
-            .map(PrimaryIonConcentration.complementConcentration)
-    }
-
-    private var decreasingPrimaryIonConcentration: Equation {
-        let initConcentrationTerm: TitrationEquationTerm.Concentration =
-            substance.type.isAcid ? .hydroxide : .hydrogen
-        return LinearEquation(
+    private var primaryIonConcentration: Equation {
+        LinearEquation(
             x1: 0,
-            y1: initialConcentration(of: initConcentrationTerm),
+            y1: initialConcentration(of: .hydrogen),
             x2: CGFloat(maxTitrant),
-            y2: changeInConcentrationToBalanceKRelation
+            y2: finalPrimaryIonConcentration
         )
+    }
+
+    private var finalPrimaryIonConcentration: CGFloat {
+        changeInConcentrationToBalanceKRelation
+    }
+
+    private var complementPrimaryIonConcentration: Equation {
+        primaryIonConcentration.map(PrimaryIonConcentration.complementConcentration)
     }
 
     private func initialConcentration(of term: TitrationEquationTerm.Concentration) -> CGFloat {
@@ -181,6 +182,10 @@ extension TitrationWeakSubstancePreEPModel {
             case .kB: return ConstantEquation(value: substance.pKB)
             }
         }
+    }
+
+    var pH: Equation {
+        pValues.value(for: .hydrogen)
     }
 }
 
