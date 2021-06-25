@@ -78,7 +78,7 @@ extension TitrationViewModel {
         case .preEP:
             components.strongSubstancePreEPModel.incrementTitrant(count: count)
         case .postEP:
-            components.weakSubstancePostEPModel.incrementTitrant(count: count)
+            components.strongSubstancePostEPModel.incrementTitrant(count: count)
         default:
             return
         }

@@ -19,7 +19,7 @@ extension EnvironmentValues {
 extension TitrationEquationView {
 
     static func defaultFormatter(_ value: CGFloat) -> TextLine {
-        TextLine(value.str(decimals: 2))
+        TextLine(value.str(decimals: 2)).emphasised()
     }
 
     struct BoxWidthTextLine<Label : TitrationEquationLabel>: View {

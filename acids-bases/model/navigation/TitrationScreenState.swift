@@ -21,9 +21,9 @@ struct TitrationNavigationModel {
         SetStatement(statements.explainTitration),
         SetStatement(statements.explainEquivalencePoint),
         SetWaterLevel(statements.explainTitrationCurveAndInstructToSetWaterLevel),
-        AddSubstance(statements.instructToAddStrongAcid),
-        AddTitrantPreEP(["Add titrant"]),
-        AddTitrantPostEP(["Add titrant post EP"])
+        AddStrongAcid(statements.instructToAddStrongAcid),
+        AddStrongAcidTitrantPreEP(["Add titrant"]),
+        AddStrongAcidTitrantPostEP(["Add titrant post EP"])
     ]
 }
 
@@ -93,7 +93,7 @@ private class SetWaterLevel: SetStatement {
     }
 }
 
-private class AddSubstance: SetStatement {
+private class AddStrongAcid: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.inputState = .addSubstance
@@ -109,7 +109,7 @@ private class AddSubstance: SetStatement {
     }
 }
 
-private class AddTitrantPreEP: SetStatement {
+private class AddStrongAcidTitrantPreEP: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.components.assertGoTo(state: .init(substance: .strongAcid, phase: .preEP))
@@ -119,7 +119,7 @@ private class AddTitrantPreEP: SetStatement {
     }
 }
 
-private class AddTitrantPostEP: SetStatement {
+private class AddStrongAcidTitrantPostEP: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.equationState = .strongSubstancePostEP
