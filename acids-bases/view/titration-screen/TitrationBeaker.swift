@@ -27,10 +27,7 @@ struct TitrationBeaker: View {
 
             TitrationBeakerTools(
                 layout: layout,
-                model: model,
-                shakeModel: model.shakeModel,
-                dropperEmitModel: model.dropperEmitModel,
-                buretteEmitModel: model.buretteEmitModel
+                model: model
             )
         }
     }
@@ -47,9 +44,34 @@ struct TitrationBeaker: View {
 }
 
 private struct TitrationBeakerTools: View {
+
+    init(
+        layout: TitrationScreenLayout,
+        model: TitrationViewModel
+    ) {
+        self.layout = layout
+        self.model = model
+        self.shakeModel = model.shakeModel
+        self.strongPrepModel = model.components.strongSubstancePreparationModel
+        self.strongPreEPModel = model.components.strongSubstancePreEPModel
+        self.strongPostEPModel = model.components.strongSubstancePostEPModel
+        self.weakPrepModel = model.components.weakSubstancePreparationModel
+        self.weakPreEPModel = model.components.weakSubstancePreEPModel
+        self.weakPostEPModel = model.components.weakSubstancePostEPModel
+        self.dropperEmitModel = model.dropperEmitModel
+        self.buretteEmitModel = model.buretteEmitModel
+    }
+
     let layout: TitrationScreenLayout
     @ObservedObject var model: TitrationViewModel
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<TitrationViewModel.TempMolecule>
+
+    @ObservedObject var strongPrepModel: TitrationStrongSubstancePreparationModel
+    @ObservedObject var strongPreEPModel: TitrationStrongSubstancePreEPModel
+    @ObservedObject var strongPostEPModel: TitrationStrongSubstancePostEPModel
+    @ObservedObject var weakPrepModel: TitrationWeakSubstancePreparationModel
+    @ObservedObject var weakPreEPModel: TitrationWeakSubstancePreEPModel
+    @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
 
     let dropperEmitModel: MoleculeEmittingViewModel
     let buretteEmitModel: MoleculeEmittingViewModel
@@ -71,7 +93,7 @@ private struct TitrationBeakerTools: View {
 
     private var phMeter: some View {
         DraggablePhMeter(
-            labelWhenIntersectingWater: "pH: 7",
+            labelWhenIntersectingWater: pHString,
             layout: layout.common,
             initialPosition: layout.phMeterPosition,
             rows: model.rows
@@ -124,7 +146,59 @@ private struct TitrationBeakerTools: View {
             disabled: model.inputState != .addSubstance
         )
     }
+
+    private var pHString: TextLine {
+        let pH = model.components.currentPH
+        return "pH: \(pH.str(decimals: 1))"
+    }
 }
+
+private extension TitrationBeakerTools {
+    var currentPH: CGFloat {
+        let isStrong = model.components.state.substance.isStrong
+
+        switch model.components.state.phase {
+        case .preparation where isStrong:
+            return currentPH(
+                strongPrepModel.equationData,
+                CGFloat(strongPrepModel.substanceAdded)
+            )
+        case .preEP where isStrong:
+            return currentPH(
+                strongPreEPModel.equationData,
+                CGFloat(strongPreEPModel.titrantAdded)
+            )
+
+        case .postEP where isStrong:
+            return currentPH(
+                strongPostEPModel.equationData,
+                CGFloat(strongPostEPModel.titrantAdded)
+            )
+
+        case .preparation:
+            return currentPH(
+                weakPrepModel.equationData,
+                CGFloat(weakPrepModel.substanceAdded)
+            )
+        case .preEP:
+            return currentPH(
+                weakPreEPModel.equationData,
+                CGFloat(weakPreEPModel.titrantAdded)
+            )
+
+        case .postEP:
+            return currentPH(
+                weakPostEPModel.equationData,
+                CGFloat(weakPostEPModel.titrantAdded)
+            )
+        }
+    }
+
+    private func currentPH(_ equationData: TitrationEquationData, _ input: CGFloat) -> CGFloat {
+        equationData.pValues.value(for: .hydrogen).getY(at: input)
+    }
+}
+
 
 private struct TitrationToolsMoleculesView: View {
 
