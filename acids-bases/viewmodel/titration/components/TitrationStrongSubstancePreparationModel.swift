@@ -5,11 +5,6 @@
 import SwiftUI
 import ReactionsCore
 
-/// Returns log base 10 of the value if it is above 0, else returns 0
-func safeLog10(_ value: CGFloat) -> CGFloat {
-    value <= 0 ? 0 : log10(value)
-}
-
 class TitrationStrongSubstancePreparationModel: ObservableObject {
 
     init(
@@ -46,16 +41,56 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
     }
 }
 
+// MARK: - Equation Data
 extension TitrationStrongSubstancePreparationModel {
-    var currentSubstanceConcentration: CGFloat {
-        primarySubstanceConcentration.getY(at: CGFloat(substanceAdded))
+    var equationData: TitrationEquationData {
+        TitrationEquationData(
+            substance: substance,
+            titrant: titrant,
+            moles: moles,
+            volume: volume,
+            molarity: molarity,
+            concentration: concentration
+        )
+    }
+}
+
+// MARK: - Concentration
+extension TitrationStrongSubstancePreparationModel {
+
+    /// Equation for concentration in terms of substance added
+    var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> {
+        .init {
+            switch $0 {
+            case .hydrogen: return hydrogenConcentration
+            case .hydroxide: return hydroxideConcentration
+            case .initialSecondary: return ConstantEquation(value: 0)
+            case .initialSubstance: return ConstantEquation(value: 0)
+            case .secondary: return ConstantEquation(value: 0)
+            case .substance: return ConstantEquation(value: 0)
+            }
+        }
     }
 
-    var currentVolume: CGFloat {
-        settings.beakerVolumeFromRows.getY(at: exactRows)
+    var currentConcentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
+        concentration.map { $0.getY(at: CGFloat(substanceAdded)) }
     }
 
-    var primarySubstanceConcentration: Equation {
+    private var hydrogenConcentration: Equation {
+        if substance.type.isAcid {
+            return substanceConcentration
+        }
+        return complementaryIonConcentration
+    }
+
+    private var hydroxideConcentration: Equation {
+        if substance.type.isAcid {
+            return complementaryIonConcentration
+        }
+        return substanceConcentration
+    }
+
+    private var substanceConcentration: Equation {
         LinearEquation(
             x1: 0,
             y1: 1e-7,
@@ -64,12 +99,8 @@ extension TitrationStrongSubstancePreparationModel {
         )
     }
 
-    var secondarySubstanceConcentration: Equation {
-        primarySubstanceConcentration.map { concentration in
-            let pValue = -safeLog10(concentration)
-            let currentP = 14 - pValue
-            return PrimaryIonConcentration.concentration(forP: currentP)
-        }
+    private var complementaryIonConcentration: Equation {
+        substanceConcentration.map(PrimaryIonConcentration.complementConcentration)
     }
 }
 
@@ -126,7 +157,7 @@ extension TitrationStrongSubstancePreparationModel {
             y2: settings
                 .barChartHeightFromConcentration
                 .getY(
-                    at: primarySubstanceConcentration.getY(at: CGFloat(maxSubstance))
+                    at: substanceConcentration.getY(at: CGFloat(maxSubstance))
                 )
         )
     }
@@ -141,113 +172,74 @@ extension TitrationStrongSubstancePreparationModel {
     }
 }
 
-// MARK: Input limits
+// MARK: - Input limits
 extension TitrationStrongSubstancePreparationModel {
     var maxSubstance: Int {
         50
     }
 }
 
-// MARK: Equation data
+// MARK: - Moles
 extension TitrationStrongSubstancePreparationModel {
-    var equationData: TitrationEquationData {
-        TitrationEquationData(
-            substance: substance,
-            titrant: titrant,
-            moles: moles.map { ConstantEquation(value: $0) },
-            volume: volume.map { ConstantEquation(value: $0) },
-            molarity: molarity.map { ConstantEquation(value: $0) },
-            concentration: concentration.map { ConstantEquation(value: $0) }
-        )
-    }
 
-    var moles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
+    var moles: EnumMap<TitrationEquationTerm.Moles, Equation> {
         .init {
             switch $0 {
-            case .hydrogen: return 0
-            case .initialSecondary: return 0
+            case .hydrogen: return ConstantEquation(value: 0)
+            case .initialSecondary: return ConstantEquation(value: 0)
+            case .secondary: return ConstantEquation(value: 0)
+            case .titrant: return ConstantEquation(value: 0)
             case .initialSubstance:
                 return molarity.value(for: .substance) * volume.value(for: .substance)
-            case .secondary: return 0
             case .substance:
                 return molarity.value(for: .substance) * volume.value(for: .substance)
-            case .titrant: return 0
+
             }
         }
     }
 
-    var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
+
+    var currentMoles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
+        moles.map { $0.getY(at: CGFloat(substanceAdded)) }
+    }
+}
+
+// MARK: - Molarity
+extension TitrationStrongSubstancePreparationModel {
+
+    var molarity: EnumMap<TitrationEquationTerm.Molarity, Equation> {
         .init {
             switch $0 {
-            case .hydrogen: return 0
-            case .substance: return currentSubstanceConcentration
-            case .titrant: return 0
+            case .hydrogen: return ConstantEquation(value: 0)
+            case .substance: return substanceConcentration
+            case .titrant: return ConstantEquation(value: 0)
             }
         }
     }
 
-    var volume: EnumMap<TitrationEquationTerm.Volume, CGFloat> {
+    var currentMolarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
+        molarity.map { $0.getY(at: CGFloat(substanceAdded)) }
+    }
+
+}
+
+// MARK: - Volume
+extension TitrationStrongSubstancePreparationModel {
+
+    var volume: EnumMap<TitrationEquationTerm.Volume, Equation> {
         .init {
             switch $0 {
-            case .equivalencePoint: return 0
-            case .hydrogen: return 0
-            case .initialSecondary: return 0
-            case .initialSubstance: return currentVolume
-            case .substance: return currentVolume
-            case .titrant: return 0
+            case .equivalencePoint: return ConstantEquation(value: 0)
+            case .hydrogen: return ConstantEquation(value: 0)
+            case .initialSecondary: return ConstantEquation(value: 0)
+            case .initialSubstance: return ConstantEquation(value: currentVolume)
+            case .substance: return ConstantEquation(value: currentVolume)
+            case .titrant: return ConstantEquation(value: 0)
             }
         }
     }
 
-    var concentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
-        .init {
-            switch $0 {
-            case .hydrogen: return ionConcentration(forPrimaryIon: .hydrogen).concentration
-            case .hydroxide: return ionConcentration(forPrimaryIon: .hydroxide).concentration
-            case .initialSecondary: return 0
-            case .initialSubstance: return 0
-            case .secondary: return 0
-            case .substance: return 0
-            }
-        }
-    }
-
-    var pValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        equationData.pValues.map { $0.getY(at: CGFloat(substanceAdded)) }
-//        .init {
-//            switch $0 {
-//            case .hydrogen: return ionConcentration(forPrimaryIon: .hydrogen).p
-//            case .hydroxide: return ionConcentration(forPrimaryIon: .hydroxide).p
-//            case .kA: return substance.pKA
-//            case .kB: return substance.pKB
-//            }
-//        }
-    }
-
-    var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
-        .init {
-            switch $0 {
-            case .kA: return substance.kA
-            case .kB: return substance.kB
-            }
-        }
-    }
-
-    private func ionConcentration(forPrimaryIon primaryIon: PrimaryIon) -> PrimaryIonConcentration {
-        if substance.primary == primaryIon {
-            return primaryIonConcentration
-        } else {
-            return complementPrimaryIonConcentration
-        }
-    }
-
-    private var primaryIonConcentration: PrimaryIonConcentration {
-        let c = primarySubstanceConcentration.getY(at: CGFloat(substanceAdded))
-        return PrimaryIonConcentration(concentration: c)
-    }
-
-    private var complementPrimaryIonConcentration: PrimaryIonConcentration {
-        let c = secondarySubstanceConcentration.getY(at: CGFloat(substanceAdded))
-        return PrimaryIonConcentration(concentration: c)
+    var currentVolume: CGFloat {
+        settings.beakerVolumeFromRows.getY(at: exactRows)
     }
 }

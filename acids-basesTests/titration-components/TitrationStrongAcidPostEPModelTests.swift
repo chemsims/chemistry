@@ -158,7 +158,7 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         secondModel.incrementTitrant(count: secondModel.maxTitrant)
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
-        XCTAssertEqual(model.kValues, secondModel.kValues)
+        XCTAssertEqual(model.equationData.kValues, secondModel.equationData.kValues)
     }
 
     func testBarChart() {

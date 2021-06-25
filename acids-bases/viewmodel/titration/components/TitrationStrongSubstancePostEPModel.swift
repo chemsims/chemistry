@@ -213,10 +213,6 @@ extension TitrationStrongSubstancePostEPModel {
         previous.molarity
     }
 
-    var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
-        previous.kValues
-    }
-
     var moles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
         .init {
             switch $0 {

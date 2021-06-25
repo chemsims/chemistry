@@ -23,9 +23,9 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
     func testConcentration() {
         let model = TitrationStrongSubstancePreparationModel(substance: substance)
 
-        XCTAssertEqual(model.concentration.value(for: .substance), 0)
-        XCTAssertEqual(model.concentration.value(for: .hydrogen), 1e-7)
-        XCTAssertEqual(model.concentration.value(for: .hydroxide), 1e-7)
+        XCTAssertEqual(model.currentConcentration.value(for: .substance), 0)
+        XCTAssertEqual(model.currentConcentration.value(for: .hydrogen), 1e-7)
+        XCTAssertEqual(model.currentConcentration.value(for: .hydroxide), 1e-7)
 
         model.incrementSubstance(count: 20)
 
@@ -35,54 +35,54 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
         )
 
         XCTAssertEqualWithTolerance(
-            model.concentration.value(for: increasingIon.concentration),
+            model.currentConcentration.value(for: increasingIon.concentration),
             expectedIncreasing
         )
         XCTAssertEqualWithTolerance(
-            model.concentration.value(for: decreasingIon.concentration),
+            model.currentConcentration.value(for: decreasingIon.concentration),
             expectedDecreasing
         )
-        XCTAssertEqual(model.concentration.value(for: .substance), 0)
+        XCTAssertEqual(model.currentConcentration.value(for: .substance), 0)
     }
 
     func testMolarity() {
         let model = TitrationStrongSubstancePreparationModel(substance: substance)
 
-        XCTAssertEqual(model.molarity.value(for: .substance), 1e-7)
-        XCTAssertEqual(model.molarity.value(for: .titrant), 0)
+        XCTAssertEqual(model.currentMolarity.value(for: .substance), 1e-7)
+        XCTAssertEqual(model.currentMolarity.value(for: .titrant), 0)
 
         model.incrementSubstance(count: 20)
 
         XCTAssertEqual(
-            model.molarity.value(for: .substance),
+            model.currentMolarity.value(for: .substance),
             expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20),
             accuracy: 0.001
         )
-        XCTAssertEqual(model.molarity.value(for: .titrant), 0)
+        XCTAssertEqual(model.currentMolarity.value(for: .titrant), 0)
     }
 
     func testMoles() {
         let model = TitrationStrongSubstancePreparationModel(substance: substance)
 
-        XCTAssertEqual(model.moles.value(for: .substance), 1e-7 * model.currentVolume)
-        XCTAssertEqual(model.moles.value(for: .titrant), 0)
+        XCTAssertEqual(model.currentMoles.value(for: .substance), 1e-7 * model.currentVolume)
+        XCTAssertEqual(model.currentMoles.value(for: .titrant), 0)
 
         model.incrementSubstance(count: 20)
 
         XCTAssertEqual(
-            model.moles.value(for: .substance),
-            model.volume.value(for: .substance) * model.molarity.value(for: .substance)
+            model.currentMoles.value(for: .substance),
+            model.currentVolumes.value(for: .substance) * model.currentMolarity.value(for: .substance)
         )
-        XCTAssertEqual(model.moles.value(for: .titrant), 0)
+        XCTAssertEqual(model.currentMoles.value(for: .titrant), 0)
     }
 
 
     func testPValues() {
         let model = TitrationStrongSubstancePreparationModel(substance: substance)
-        XCTAssertEqual(model.pValues.value(for: .hydrogen), 7)
-        XCTAssertEqual(model.pValues.value(for: .hydroxide), 7)
-        XCTAssertEqual(model.pValues.value(for: .kA), model.substance.pKA)
-        XCTAssertEqual(model.pValues.value(for: .kB), model.substance.pKB)
+        XCTAssertEqual(model.currentPValues.value(for: .hydrogen), 7)
+        XCTAssertEqual(model.currentPValues.value(for: .hydroxide), 7)
+        XCTAssertEqual(model.currentPValues.value(for: .kA), model.substance.pKA)
+        XCTAssertEqual(model.currentPValues.value(for: .kB), model.substance.pKB)
 
         model.incrementSubstance(count: 20)
         let expectedIncreasingConcentration = expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20)
@@ -90,19 +90,19 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
         let expectedPDecreasingIon = 14 - expectedPIncreasingIon
 
         XCTAssertEqualWithTolerance(
-            model.pValues.value(for: increasingIon.pValue),
+            model.currentPValues.value(for: increasingIon.pValue),
             expectedPIncreasingIon
         )
         XCTAssertEqualWithTolerance(
-            model.pValues.value(for: decreasingIon.pValue),
+            model.currentPValues.value(for: decreasingIon.pValue),
             expectedPDecreasingIon
         )
     }
 
     func testKValues() {
         let model = TitrationStrongSubstancePreparationModel(substance: substance)
-        XCTAssertEqual(model.kValues.value(for: .kA), model.substance.kA)
-        XCTAssertEqual(model.kValues.value(for: .kB), model.substance.kB)
+        XCTAssertEqual(model.equationData.kValues.value(for: .kA), model.substance.kA)
+        XCTAssertEqual(model.equationData.kValues.value(for: .kB), model.substance.kB)
     }
 
     func testVolume() {
@@ -114,12 +114,12 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
         )
 
         XCTAssertEqual(model.currentVolume, 1)
-        XCTAssertEqual(model.volume.value(for: .substance), 1)
+        XCTAssertEqual(model.currentVolumes.value(for: .substance), 1)
 
         model.exactRows = 5
 
         XCTAssertEqual(model.currentVolume, 0.5)
-        XCTAssertEqual(model.volume.value(for: .substance), 0.5)
+        XCTAssertEqual(model.currentVolumes.value(for: .substance), 0.5)
     }
 
     func testBarChartData() {

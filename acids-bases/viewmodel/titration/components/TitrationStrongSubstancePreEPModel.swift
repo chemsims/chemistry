@@ -133,7 +133,7 @@ extension TitrationStrongSubstancePreEPModel {
         if substance.type.isAcid {
             return LinearEquation(
                 x1: 0,
-                y1: previous.concentration.value(for: .hydrogen),
+                y1: previous.currentConcentration.value(for: .hydrogen),
                 x2: CGFloat(maxTitrant),
                 y2: 1e-7
             )
@@ -148,7 +148,7 @@ extension TitrationStrongSubstancePreEPModel {
         }
         return LinearEquation(
             x1: 0,
-            y1: previous.concentration.value(for: .hydroxide),
+            y1: previous.currentConcentration.value(for: .hydroxide),
             x2: CGFloat(maxTitrant),
             y2: 1e-7
         )
@@ -156,10 +156,6 @@ extension TitrationStrongSubstancePreEPModel {
 }
 
 extension TitrationStrongSubstancePreEPModel {
-
-    var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
-        previous.kValues
-    }
 
     var moles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
         .init {
@@ -192,7 +188,7 @@ extension TitrationStrongSubstancePreEPModel {
         .init {
             switch $0 {
             case .hydrogen: return 0
-            case .substance: return  previous.currentSubstanceConcentration
+            case .substance: return  initialSubstanceMolarity
             case .titrant: return 0.5
             }
         }
@@ -215,11 +211,11 @@ extension TitrationStrongSubstancePreEPModel {
     }
 
     private var initialSubstanceMolarity: CGFloat {
-        previous.molarity.value(for: .substance)
+        previous.currentMolarity.value(for: .substance)
     }
 
     private var initialSubstanceMoles: CGFloat {
-        previous.moles.value(for: .substance)
+        previous.currentMoles.value(for: .substance)
     }
 
     private var finalTitrantVolume: CGFloat {

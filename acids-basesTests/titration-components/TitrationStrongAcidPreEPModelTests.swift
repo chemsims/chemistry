@@ -57,14 +57,14 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
 
         XCTAssertEqualWithTolerance(
             model.molarity.value(for: .substance),
-            firstModel.molarity.value(for: .substance)
+            firstModel.currentMolarity.value(for: .substance)
         )
 
         model.incrementTitrant(count: model.maxTitrant)
 
         XCTAssertEqualWithTolerance(
             model.molarity.value(for: .substance),
-            firstModel.molarity.value(for: .substance)
+            firstModel.currentMolarity.value(for: .substance)
         )
     }
 
@@ -75,14 +75,14 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
 
         XCTAssertEqualWithTolerance(
             model.moles.value(for: .substance),
-            firstModel.moles.value(for: .substance)
+            firstModel.currentMoles.value(for: .substance)
         )
 
         model.incrementTitrant(count: model.maxTitrant)
 
         XCTAssertEqualWithTolerance(
             model.moles.value(for: .substance),
-            firstModel.moles.value(for: .substance)
+            firstModel.currentMoles.value(for: .substance)
         )
 
         XCTAssertEqualWithTolerance(
@@ -93,7 +93,7 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
         // Titrant moles should be the same as substance moles
         XCTAssertEqualWithTolerance(
             model.moles.value(for: .titrant),
-            firstModel.moles.value(for: .substance)
+            firstModel.currentMoles.value(for: .substance)
         )
     }
 
@@ -121,7 +121,7 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
 
         func checkSamePValues(_ pValue: TitrationEquationTerm.PValue) {
-            let firstPValue = firstModel.pValues.value(for: pValue)
+            let firstPValue = firstModel.currentPValues.value(for: pValue)
             let modelPValue = model.currentPValues.value(for: pValue)
             XCTAssertEqualWithTolerance(modelPValue, firstPValue)
         }
@@ -137,7 +137,7 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
     func testKValues() {
         let firstModel = TitrationStrongSubstancePreparationModel(substance: substance)
         let model = TitrationStrongSubstancePreEPModel(previous: firstModel)
-        XCTAssertEqual(firstModel.kValues, model.kValues)
+        XCTAssertEqual(firstModel.equationData.kValues, model.equationData.kValues)
     }
 
     func testBarChartData() {
