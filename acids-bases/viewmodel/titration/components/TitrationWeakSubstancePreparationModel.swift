@@ -37,6 +37,31 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
     }
 }
 
+// MARK: - Equation data
+extension TitrationWeakSubstancePreparationModel {
+    var equationData: TitrationEquationData {
+        TitrationEquationData(
+            substance: substance,
+            titrant: "KOH", // TODO
+            moles: moles.map { $0.getY(at: reactionProgress) },
+            volume: volume,
+            molarity: molarity,
+            concentration: concentration.map { $0.getY(at: reactionProgress) },
+            pValues: pValues,
+            kValues:kValues
+        )
+    }
+    
+    var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
+        .init {
+            switch $0 {
+            case .kA: return substance.kA
+            case .kB: return substance.kB
+            }
+        }
+    }
+}
+
 // MARK: Incrementing
 extension TitrationWeakSubstancePreparationModel {
     func incrementSubstance(count: Int) {
@@ -171,7 +196,7 @@ extension TitrationWeakSubstancePreparationModel {
 
 // MARK: - Molarity
 extension TitrationWeakSubstancePreparationModel {
-    var molarity: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
+    var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
         .constant(0)
     }
 }
@@ -255,7 +280,6 @@ extension TitrationWeakSubstancePreparationModel {
         initialSubstanceConcentration * settings.weakIonChangeInBarHeightFraction
     }
 }
-
 
 // MARK: - Input limits
 extension TitrationWeakSubstancePreparationModel  {

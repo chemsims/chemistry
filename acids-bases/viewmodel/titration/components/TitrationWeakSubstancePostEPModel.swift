@@ -23,6 +23,22 @@ class TitrationWeakSubstancePostEPModel: ObservableObject {
     }
 }
 
+// MARK: - Equation data
+extension TitrationWeakSubstancePostEPModel {
+    var equationData: TitrationEquationData {
+        TitrationEquationData(
+            substance: substance,
+            titrant: "KOH",
+            moles: moles.map { $0.getY(at: CGFloat(titrantAdded)) },
+            volume: volume.map { $0.getY(at: CGFloat(titrantAdded)) },
+            molarity: molarity,
+            concentration: concentration.map { $0.getY(at: CGFloat(titrantAdded)) },
+            pValues: pValues.map { $0.getY(at: CGFloat(titrantAdded)) },
+            kValues: previous.kValues
+        )
+    }
+}
+
 // MARK: - Incrementing
 extension TitrationWeakSubstancePostEPModel {
     func incrementTitrant(count: Int) {
@@ -146,6 +162,17 @@ extension TitrationWeakSubstancePostEPModel {
 
 // MARK: Molarity
 extension TitrationWeakSubstancePostEPModel {
+
+    var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
+        .init {
+            switch $0 {
+            case .hydrogen: return 0
+            case .substance: return previous.equationData.molarity.value(for: .substance)
+            case .titrant: return titrantMolarity
+            }
+        }
+    }
+
     var titrantMolarity: CGFloat {
         previous.titrantMolarity
     }
