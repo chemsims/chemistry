@@ -27,7 +27,7 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
         )
     }
 
-    let substance: AcidOrBase
+    var substance: AcidOrBase
     let titrant: String
     let cols: Int
     @Published var exactRows: CGFloat

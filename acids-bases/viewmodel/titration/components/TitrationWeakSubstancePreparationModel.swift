@@ -14,7 +14,7 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
     ) {
         self.substance = substance
         self.cols = cols
-        self.rows = rows
+        self.exactRows = CGFloat(rows)
         self.settings = settings
         self.substanceCoords = BeakerMolecules(
             coords: [],
@@ -23,10 +23,12 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
         )
     }
 
-    let substance: AcidOrBase
+    var substance: AcidOrBase
     let cols: Int
-    var rows: Int
+
     let settings: TitrationSettings
+
+    @Published var exactRows: CGFloat
 
     @Published var substanceCoords: BeakerMolecules
     @Published var reactionProgress: CGFloat = 0
@@ -34,6 +36,10 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
 
     private var gridSizeFloat: CGFloat {
         CGFloat(cols * rows)
+    }
+
+    var rows: Int {
+        GridCoordinateList.availableRows(for: exactRows)
     }
 }
 

@@ -17,7 +17,11 @@ struct TitrationRightStack: View {
     @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .trailing, spacing: 0) {
+            selectionView
+
+            Spacer(minLength: 0)
+
             TitrationEquationView(
                 data: equationData,
                 equationSet: model.equationState.equationSet,
@@ -25,7 +29,9 @@ struct TitrationRightStack: View {
             )
             .frame(size: layout.equationSize)
             .border(Color.red)
+
             Spacer(minLength: 0)
+
             BeakyBox(
                 statement: model.statement,
                 next: model.next,
@@ -34,6 +40,24 @@ struct TitrationRightStack: View {
                 settings: layout.common.beakySettings
             )
         }
+    }
+
+    private var selectionView: some View {
+        DropDownSelectionView(
+            title: "Choose a substance",
+            options: model.availableSubstances,
+            isToggled: $model.substanceSelectionIsToggled,
+            selection: $model.substance,
+            height: layout.common.toggleHeight,
+            animation: nil, // TODO
+            displayString: { $0.symbol },
+            label: { $0.symbol },
+            disabledOptions: [],
+            onSelection: model.next
+        )
+        .frame(height: layout.common.toggleHeight, alignment: .top)
+        .zIndex(1)
+        .disabled(model.inputState != .selectSubstance)
     }
 
     private var equationData: TitrationEquationData {

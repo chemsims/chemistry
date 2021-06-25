@@ -64,6 +64,26 @@ struct TitrationComponentState {
     private var weakBaseSavedState: WeakSubstanceModels?
 }
 
+// MARK: - Set model data
+extension TitrationComponentState {
+    func setRows(_ rows: CGFloat) {
+        if state.phase == .preparation && state.substance.isStrong {
+            strongSubstancePreparationModel.exactRows = rows
+        } else if state.phase == .preparation {
+            weakSubstancePreparationModel.exactRows = rows
+            // TODO rows
+        }
+    }
+
+    func setSubstance(_ substance: AcidOrBase) {
+        if state.phase == .preparation && state.substance.isStrong {
+            strongSubstancePreparationModel.substance = substance
+        } else if state.phase == .preparation {
+            // TODO
+        }
+    }
+}
+
 // MARK: - Data types
 extension TitrationComponentState {
 

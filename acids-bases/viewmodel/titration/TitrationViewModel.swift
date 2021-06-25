@@ -10,9 +10,13 @@ class TitrationViewModel: ObservableObject {
     init() {
         let initialRows = AcidAppSettings.initialRows
         self.rows = CGFloat(initialRows)
+        self.availableSubstances = AcidOrBase.strongAcids
+
+        let initialSubstance =  AcidOrBase.strongAcids.first!
+        self.substance = initialSubstance
 
         self.components = TitrationComponentState(
-            strongAcid: .strongAcids.first!,
+            strongAcid: initialSubstance,
             weakAcid: .weakAcids.first!,
             cols: MoleculeGridSettings.cols,
             rows: initialRows
@@ -32,19 +36,28 @@ class TitrationViewModel: ObservableObject {
             canAddMolecule: { true },
             doAddMolecule: { i in self.incrementTitrant(count: i) }
         )
+        self.availableSubstances = AcidOrBase.strongAcids
         self.navigation = TitrationNavigationModel.model(self)
     }
 
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat {
         didSet {
-            components.strongSubstancePreparationModel.exactRows = rows
+            components.setRows(rows)
         }
     }
     @Published var inputState = InputState.none
     @Published var equationState = EquationState.strongAcidBlank
 
     @Published var components: TitrationComponentState
+
+    @Published var availableSubstances: [AcidOrBase]
+    @Published var substanceSelectionIsToggled: Bool = false 
+    @Published var substance: AcidOrBase {
+        didSet {
+            components.setSubstance(substance)
+        }
+    }
 
     private(set) var navigation: NavigationModel<TitrationScreenState>!
     var shakeModel: MultiContainerShakeViewModel<TempMolecule>!
