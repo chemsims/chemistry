@@ -287,39 +287,6 @@ extension TitrationWeakSubstancePreparationModel {
     }
 }
 
-// MARK: - Beaker molecules
-extension TitrationWeakSubstancePreparationModel {
-    var ionCoords: [AnimatingBeakerMolecules] {
-        [
-            coordForIon(substance.primary.color, index: 0),
-            coordForIon(substance.secondary.color, index: 1)
-        ]
-    }
-
-    private var numberOfIonCoords: Int {
-        settings.minInitialIonBeakerMolecules
-    }
-
-    private func coordForIon(_ color: Color, index: Int) -> AnimatingBeakerMolecules {
-        let startCoordIndex = index * numberOfIonCoords
-        let endCoordIndex = max(startCoordIndex, startCoordIndex + numberOfIonCoords - 1)
-
-        var coords = [GridCoordinate]()
-        if endCoordIndex < substanceCoords.coords.endIndex {
-            coords = Array(substanceCoords.coords[startCoordIndex...endCoordIndex])
-        }
-
-        return AnimatingBeakerMolecules(
-            molecules: BeakerMolecules(
-                coords: coords,
-                color: color,
-                label: ""
-            ),
-            fractionToDraw: LinearEquation(m: 1, x1: 0, y1: 0)
-        )
-    }
-}
-
 // MARK: - Input limits
 extension TitrationWeakSubstancePreparationModel  {
 

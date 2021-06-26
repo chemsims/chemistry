@@ -429,7 +429,7 @@ private struct TitrationBeakerMolecules: View {
         case .preEP where isStrong: return [strongSubstancePreEPModel.primaryIonCoords]
         case .postEP where isStrong: return []
 
-        case .preparation: return weakPrepModel.ionCoords
+        case .preparation: return []
         case .preEP: return []
         case .postEP: return []
         }

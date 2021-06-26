@@ -361,36 +361,29 @@ extension TitrationWeakSubstancePreEPModel {
 
 extension TitrationWeakSubstancePreEPModel {
 
-    // TODO - combine this method with the one in BufferSaltComponents, and move it somewhere shared
     static func initialReactingBeakerModel(previous: TitrationWeakSubstancePreparationModel) -> ReactingBeakerViewModel<ExtendedSubstancePart> {
-        var prevSubstanceCoords = previous.substanceCoords
-        let ionCoords = previous.ionCoords.flatMap { $0.molecules.coords }
-        let visibleSubstanceCoords = prevSubstanceCoords.coords.filter { !ionCoords.contains($0) }
-        prevSubstanceCoords.coords = visibleSubstanceCoords
-
-        return ReactingBeakerViewModel(
+        ReactingBeakerViewModel(
             initial: .init {
                 switch $0 {
                 case .hydrogen:
-                    if previous.substance.type.isAcid {
-                        return previous.ionCoords[0].molecules
-                    }
                     return BeakerMolecules(
                         coords: [],
                         color: RGB.hydrogen.color,
                         label: ""
                     )
                 case .hydroxide:
-                    if previous.substance.type.isAcid {
-                        return BeakerMolecules(
-                            coords: [],
-                            color: RGB.hydroxide.color,
-                            label: ""
-                        )
-                    }
-                    return previous.ionCoords[0].molecules
-                case .secondaryIon: return previous.ionCoords[1].molecules
-                case .substance: return prevSubstanceCoords
+                    return BeakerMolecules(
+                        coords: [],
+                        color: RGB.hydroxide.color,
+                        label: ""
+                    )
+                case .secondaryIon:
+                    return BeakerMolecules(
+                        coords: [],
+                        color: previous.substance.secondary.color,
+                        label: ""
+                    )
+                case .substance: return previous.substanceCoords
                 }
             },
             cols: previous.cols,
