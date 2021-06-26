@@ -17,6 +17,7 @@ extension TitrationSettings {
         finalMaxPValue: CGFloat = standard.finalMaxPValue,
         maxInitialStrongConcentration: CGFloat = standard.maxInitialStrongConcentration,
         minInitialStrongConcentration: CGFloat = standard.minInitialStrongConcentration,
+        minInitialWeakConcentration: CGFloat = standard.minInitialWeakConcentration,
         beakerVolumeFromRows: Equation = standard.beakerVolumeFromRows
     ) -> TitrationSettings {
         self.init(
@@ -27,6 +28,7 @@ extension TitrationSettings {
             finalMaxPValue: finalMaxPValue,
             maxInitialStrongConcentration: maxInitialStrongConcentration,
             minInitialStrongConcentration: minInitialStrongConcentration,
+            minInitialWeakConcentration: minInitialWeakConcentration,
             beakerVolumeFromRows: beakerVolumeFromRows
         )
     }

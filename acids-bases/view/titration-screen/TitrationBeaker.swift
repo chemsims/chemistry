@@ -64,8 +64,8 @@ private struct TitrationBeakerTools: View {
     let dropperEmitModel: MoleculeEmittingViewModel
     let buretteEmitModel: MoleculeEmittingViewModel
 
-    private let emitAmount: Int = 5
-    private let buretteEmitAmount = 10 // TODO - change this back
+    private let dropperEmitAmount: Int = 5
+    private let buretteEmitAmount = 1
 
     var body: some View {
         ZStack {
@@ -108,7 +108,7 @@ private struct TitrationBeakerTools: View {
             tubeFill: model.inputState == .addIndicator ? RGB.indicator.color : nil,
             onTap: {
                 dropperEmitModel.addMolecule(
-                    amount: emitAmount,
+                    amount: dropperEmitAmount,
                     at: layout.dropperMoleculePosition,
                     bottomY:
                         layout.common.topOfWaterPosition(rows: model.rows) + layout.dropperMoleculeSize

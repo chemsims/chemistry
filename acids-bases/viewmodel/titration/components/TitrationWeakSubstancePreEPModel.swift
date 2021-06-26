@@ -35,6 +35,7 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
     init(previous: TitrationWeakSubstancePreparationModel) {
         self.previous = previous
         self.beakerReactionModel = Self.initialReactingBeakerModel(previous: previous)
+        self.maxTitrant = previous.substanceAdded
     }
 
     let previous: TitrationWeakSubstancePreparationModel
@@ -50,6 +51,8 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
     var settings: TitrationSettings {
         previous.settings
     }
+
+    let maxTitrant: Int
 }
 
 // MARK: - Equation data
@@ -74,18 +77,21 @@ extension TitrationWeakSubstancePreEPModel {
 // MARK: - Incrementing
 extension TitrationWeakSubstancePreEPModel {
     func incrementTitrant(count: Int) {
-        guard titrantAdded < maxTitrant else {
+        let maxToAdd = min(count, titrantCountAvailable)
+
+        guard maxToAdd > 0 else {
             return
         }
         withAnimation(.linear(duration: 1)) {
-            titrantAdded += count
+            titrantAdded += maxToAdd
         }
 
         beakerReactionModel.add(
             reactant: substance.type.isAcid ? .hydroxide : .hydrogen,
             reactingWith: .substance,
             producing: .secondaryIon,
-            withDuration: 1
+            withDuration: 1,
+            count: count
         )
     }
 }
@@ -351,13 +357,6 @@ extension TitrationWeakSubstancePreEPModel {
         previous.barChartDataMap.value(for: part).equation.getY(at: 1)
     }
     
-}
-
-// MARK: - Input limits
-extension TitrationWeakSubstancePreEPModel {
-    var maxTitrant: Int {
-        20
-    }
 }
 
 extension TitrationWeakSubstancePreEPModel {

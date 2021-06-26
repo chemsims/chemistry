@@ -74,17 +74,18 @@ extension TitrationWeakSubstancePreparationModel {
 // MARK: Incrementing
 extension TitrationWeakSubstancePreparationModel {
     func incrementSubstance(count: Int) {
-        guard substanceAdded < maxSubstance else {
+        let maxToAdd = min(count, remainingCountAvailable)
+        guard maxToAdd > 0 else {
             return
         }
         substanceCoords.coords = GridCoordinateList.addingRandomElementsTo(
             grid: substanceCoords.coords,
-            count: count,
+            count: maxToAdd,
             cols: cols,
             rows: rows
         )
         withAnimation(.linear(duration: 1)) {
-            substanceAdded += count
+            substanceAdded += maxToAdd
         }
     }
 }
@@ -321,15 +322,39 @@ extension TitrationWeakSubstancePreparationModel {
 
 // MARK: - Input limits
 extension TitrationWeakSubstancePreparationModel  {
+
+    /// Maximum number of substance molecules which can be added.
+    ///
+    /// # Derivation
+    ///
+    /// Say we add N molecules. Then, when adding titrant we will add a further
+    /// N molecules to react with the substance, and we'll have 2N secondary
+    /// ion molecules in the beaker.
+    ///
+    /// In the final stage, we want to end up with an equal number of secondary
+    /// ion and primary ion molecules. So, we add 2N primary ion molecules.
+    ///
+    /// The total we've added therefore is 4N molecules, which must be less than
+    /// the grid size
     var maxSubstance: Int {
-        25
+        Int(ceil(gridSizeFloat / 4))
     }
 
     var canAddSubstance: Bool {
-        true
+        remainingCountAvailable > 0
     }
 
     var hasAddedEnoughSubstance: Bool {
-        true
+        substanceAdded >= minSubstance
+    }
+
+    /// Minimum number of substance molecules which must be added.
+    var minSubstance: Int {
+        Int(ceil(settings.minInitialWeakConcentration * gridSizeFloat))
+    }
+
+
+    private var remainingCountAvailable: Int {
+        max(0, maxSubstance - substanceAdded)
     }
 }

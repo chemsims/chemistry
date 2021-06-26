@@ -43,6 +43,7 @@ extension TitrationWeakSubstancePreparationModel {
     ) {
         self.init(
             substance: substance,
+            titrant: .potassiumHydroxide,
             cols: 10,
             rows: 10,
             settings: settings

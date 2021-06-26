@@ -19,6 +19,7 @@ class TitrationWeakSubstancePostEPModel: ObservableObject {
             color: substance.secondary.color,
             label: substance.secondary.rawValue
         )
+        self.maxTitrant = 2 * previous.maxTitrant
     }
 
     let previous: TitrationWeakSubstancePreEPModel
@@ -26,6 +27,8 @@ class TitrationWeakSubstancePostEPModel: ObservableObject {
     @Published var titrantAdded = 0
     @Published var ionMolecules: BeakerMolecules
     @Published var secondaryMolecules: BeakerMolecules
+
+    let maxTitrant: Int
 
     var settings: TitrationSettings {
         previous.settings
@@ -53,15 +56,16 @@ extension TitrationWeakSubstancePostEPModel {
 // MARK: - Incrementing
 extension TitrationWeakSubstancePostEPModel {
     func incrementTitrant(count: Int) {
-        guard titrantAdded < maxTitrant else {
+        let maxToAdd = min(count, titrantCountAvailable)
+        guard maxToAdd > 0 else {
             return
         }
         withAnimation(.linear(duration: 1)) {
-            titrantAdded += count
+            titrantAdded += maxToAdd
         }
         ionMolecules.coords = GridCoordinateList.addingRandomElementsTo(
             grid: ionMolecules.coords,
-            count: count,
+            count: maxToAdd,
             cols: previous.previous.cols,
             rows: previous.previous.rows,
             avoiding: secondaryMolecules.coords
@@ -273,12 +277,5 @@ extension TitrationWeakSubstancePostEPModel {
 
     private func initialBarHeight(forPart part: ExtendedSubstancePart) -> CGFloat {
         previous.barChartDataMap.value(for: part).equation.getY(at: CGFloat(previous.maxTitrant))
-    }
-}
-
-// MARK: - Input limits
-extension TitrationWeakSubstancePostEPModel {
-    var maxTitrant: Int {
-        25
     }
 }

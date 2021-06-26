@@ -141,12 +141,16 @@ extension TitrationComponents {
 
 struct TitrationSettings {
 
+
+    /// The number of ion molecules of each ion at the end of the initial
+    /// weak substance reaction as a fraction of the substance molecules
     let initialIonMoleculeFraction: CGFloat
+
+    /// Minimum number of each ion molecules for the initial weak substance reaction.
     let minInitialIonBeakerMolecules: Int
 
     /// Height of the bar chart when the solution is neutral. That is, when pH = pOH = 7.
     let neutralSubstanceBarChartHeight: CGFloat
-
 
     /// Change in height of bars for the initial weak substance reactions, as a fraction
     /// of the initial substance bar height.
@@ -163,6 +167,8 @@ struct TitrationSettings {
     /// Minimum concentration of the initial strong substance
     let minInitialStrongConcentration: CGFloat
 
+    /// Minimum concentration of the initial weak substance. Must be less than 0.25.
+    let minInitialWeakConcentration: CGFloat
 
     let beakerVolumeFromRows: Equation
 
@@ -174,6 +180,7 @@ struct TitrationSettings {
         finalMaxPValue: 13,
         maxInitialStrongConcentration: 0.5,
         minInitialStrongConcentration: 0.25,
+        minInitialWeakConcentration: 0.15,
         beakerVolumeFromRows: LinearEquation(
             x1: CGFloat(AcidAppSettings.minBeakerRows),
             y1: 0.1,

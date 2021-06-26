@@ -99,7 +99,7 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
         // check we satisfy the equation:
         // [OH] = n-koh / (V-e + V-koh)
         //      = (V-koh * M-koh) / (V-e + V-koh)
-        let numer = finalTitrantVolume * model.titrantMolarity
+        let numer = finalTitrantVolume * model.molarity.value(for: .titrant)
         let denom = expectedEquivalenceVolume + finalTitrantVolume
         XCTAssertEqual(numer / denom, 1e-2)
     }
@@ -117,7 +117,7 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
 
         XCTAssertEqual(
             model.currentMoles.value(for: .titrant),
-            model.titrantMolarity * model.currentVolume.value(for: .titrant)
+            model.molarity.value(for: .titrant) * model.currentVolume.value(for: .titrant)
         )
     }
 
@@ -137,6 +137,25 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
                 "Failed for \(part)"
             )
         }
+    }
+
+    func testInputLimits() {
+        let firstModel = TitrationWeakSubstancePreparationModel()
+        firstModel.incrementSubstance(count: 20)
+
+        let secondModel = TitrationWeakSubstancePreEPModel(previous: firstModel)
+        secondModel.incrementTitrant(count: secondModel.maxTitrant)
+
+        let model = TitrationWeakSubstancePostEPModel(previous: secondModel)
+
+        XCTAssert(model.canAddTitrant)
+        XCTAssertFalse(model.hasAddedEnoughTitrant)
+
+        model.incrementTitrant(count: 42)
+
+        XCTAssertFalse(model.canAddTitrant)
+        XCTAssert(model.hasAddedEnoughTitrant)
+        XCTAssertEqual(model.titrantAdded, 40)
     }
 }
 

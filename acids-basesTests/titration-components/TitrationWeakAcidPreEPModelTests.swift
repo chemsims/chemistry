@@ -112,7 +112,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
         let finalTitrantVolume = model.currentVolume.value(for: .titrant)
 
         // Check the equation n-initial-substance = V-titrant * M-titrant
-        let resultingMoles = finalTitrantVolume * model.titrantMolarity
+        let resultingMoles = finalTitrantVolume * model.molarity.value(for: .titrant)
         let expectedMoles = firstModel.moles.value(for: .substance).getY(at: 1)
         XCTAssertEqualWithTolerance(resultingMoles, expectedMoles)
     }
@@ -144,8 +144,11 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
         model.incrementTitrant(count: model.maxTitrant)
 
         XCTAssertEqual(model.currentMoles.value(for: .initialSubstance), initialSubstanceMoles)
-        XCTAssertEqual(model.currentMoles.value(for: .substance), 0)
-        XCTAssertEqual(model.currentMoles.value(for: .titrant), initialSubstanceMoles)
+
+        // We expect a value of 0 so can't use tolerance here as is uses a percentage
+        XCTAssertEqual(model.currentMoles.value(for: .substance), 0, accuracy: 1e-10)
+
+        XCTAssertEqualWithTolerance(model.currentMoles.value(for: .titrant), initialSubstanceMoles)
     }
 
     func testBarChartData() {
@@ -158,6 +161,22 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
             let currentBarChart = model.barChartDataMap.value(for: part).equation
             XCTAssertEqual(initialBarChart.getY(at: 1), currentBarChart.getY(at: 0))
         }
+    }
+
+    func testInputLimits() {
+        let firstModel = TitrationWeakSubstancePreparationModel()
+        firstModel.incrementSubstance(count: 20)
+
+        let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
+
+        XCTAssert(model.canAddTitrant)
+        XCTAssertFalse(model.hasAddedEnoughTitrant)
+
+        model.incrementTitrant(count: 50)
+
+        XCTAssertFalse(model.canAddTitrant)
+        XCTAssert(model.hasAddedEnoughTitrant)
+        XCTAssertEqual(model.titrantAdded, 20)
     }
 }
 

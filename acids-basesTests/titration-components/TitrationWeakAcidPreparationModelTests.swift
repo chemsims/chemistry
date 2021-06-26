@@ -169,6 +169,34 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         XCTAssertEqual(secondary.getY(at: 0), 0)
         XCTAssertEqual(secondary.getY(at: 1), changeInHeight)
     }
+
+    func testInputLimits() {
+        let model = TitrationWeakSubstancePreparationModel(
+            settings: .withDefaults(
+                minInitialWeakConcentration: 0.111
+            )
+        )
+
+        XCTAssert(model.canAddSubstance)
+        XCTAssertFalse(model.hasAddedEnoughSubstance)
+
+        // Concentration must be at least 0.111, so expect 12 min molecules
+        XCTAssertEqual(model.minSubstance, 12)
+
+        // We end up with 4 times the original substance molecules,
+        // so must not add more than 25
+        XCTAssertEqual(model.maxSubstance, 25)
+
+        model.incrementSubstance(count: 20)
+        XCTAssert(model.canAddSubstance)
+        XCTAssert(model.hasAddedEnoughSubstance)
+
+        model.incrementSubstance(count: 50)
+        XCTAssertFalse(model.canAddSubstance)
+        XCTAssert(model.hasAddedEnoughSubstance)
+
+        XCTAssertEqual(model.substanceAdded, 25)
+    }
 }
 
 extension PrimaryIon {
