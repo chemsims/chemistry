@@ -10,7 +10,6 @@ extension TitrationSettings {
 
     /// Returns a settings instance using the standard settings for default arguments
     static func withDefaults(
-        initialIonMoleculeFraction: CGFloat = standard.initialIonMoleculeFraction,
         minInitialIonBeakerMolecules: Int = standard.minInitialIonBeakerMolecules,
         neutralSubstanceBarChartHeight: CGFloat = standard.neutralSubstanceBarChartHeight,
         weakIonChangeInBarHeightFraction: CGFloat = standard.weakIonChangeInBarHeightFraction,
@@ -21,7 +20,6 @@ extension TitrationSettings {
         beakerVolumeFromRows: Equation = standard.beakerVolumeFromRows
     ) -> TitrationSettings {
         self.init(
-            initialIonMoleculeFraction: initialIonMoleculeFraction,
             minInitialIonBeakerMolecules: minInitialIonBeakerMolecules,
             neutralSubstanceBarChartHeight: neutralSubstanceBarChartHeight,
             weakIonChangeInBarHeightFraction: weakIonChangeInBarHeightFraction,
