@@ -35,8 +35,8 @@ class TitrationViewModel: ObservableObject {
             doAddMolecule: { [weak self] in self?.addedIndicator(count: $0) }
         )
         self.buretteEmitModel = MoleculeEmittingViewModel(
-            canAddMolecule: { true },
-            doAddMolecule: { i in self.incrementTitrant(count: i) }
+            canAddMolecule: { [weak self] in self?.canAddTitrant ?? false },
+            doAddMolecule: { [weak self] in self?.incrementTitrant(count: $0) }
         )
         self.availableSubstances = AcidOrBase.strongAcids
         self.navigation = TitrationNavigationModel.model(self)
@@ -95,6 +95,8 @@ extension TitrationViewModel {
 // MARK: Adding molecules
 extension TitrationViewModel {
     private func increment(substance: TitrationComponentState.Substance, count: Int) {
+        defer { updateCanGoNext() }
+
         guard substance == components.state.substance else {
             return
         }
@@ -102,24 +104,6 @@ extension TitrationViewModel {
             components.strongSubstancePreparationModel.incrementSubstance(count: count)
         } else {
             components.weakSubstancePreparationModel.incrementSubstance(count: count)
-        }
-        updateCanGoNext()
-    }
-
-    private func incrementTitrant(count: Int) {
-        let isStrong = components.state.substance.isStrong
-        switch components.state.phase {
-        case .preEP where isStrong:
-            components.strongSubstancePreEPModel.incrementTitrant(count: count)
-        case .postEP where isStrong:
-            components.strongSubstancePostEPModel.incrementTitrant(count: count)
-
-        case .preEP:
-            components.weakSubstancePreEPModel.incrementTitrant(count: count)
-        case .postEP:
-            components.weakSubstancePostEPModel.incrementTitrant(count: count)
-        default:
-            return
         }
     }
 
@@ -141,6 +125,7 @@ extension TitrationViewModel {
         switch inputState {
         case .addSubstance: return hasAddedEnoughSubstance
         case .addIndicator: return hasAddedEnoughIndicator
+        case .addTitrant: return hasAddedEnoughTitrant
         default: return true
         }
     }
@@ -149,11 +134,18 @@ extension TitrationViewModel {
     private var hasAddedEnoughSubstance: Bool {
         components.currentPreparationModel?.hasAddedEnoughSubstance ?? true
     }
+
+    /// Returns true if enough titrant has been added, or if model component state is not adding titrant
+    private var hasAddedEnoughTitrant: Bool {
+        components.currentTitrantInputLimits?.hasAddedEnoughTitrant ?? true
+    }
 }
 
 // MARK: Adding indicator
 extension TitrationViewModel {
     private func addedIndicator(count: Int) {
+        defer { updateCanGoNext() }
+
         let maxToAdd = min(remainingIndicatorAvailable, count)
         guard maxToAdd > 0 else {
             return
@@ -161,7 +153,6 @@ extension TitrationViewModel {
         withAnimation(.linear(duration: 1)) {
             indicatorAdded += maxToAdd
         }
-        updateCanGoNext()
     }
 
     private var canAddIndicator: Bool {
@@ -174,6 +165,32 @@ extension TitrationViewModel {
 
     private var remainingIndicatorAvailable: Int {
         max(0, maxIndicator - indicatorAdded)
+    }
+}
+
+// MARK: Adding titrant
+extension TitrationViewModel {
+    private func incrementTitrant(count: Int) {
+        defer { updateCanGoNext() }
+
+        let isStrong = components.state.substance.isStrong
+        switch components.state.phase {
+        case .preEP where isStrong:
+            components.strongSubstancePreEPModel.incrementTitrant(count: count)
+        case .postEP where isStrong:
+            components.strongSubstancePostEPModel.incrementTitrant(count: count)
+
+        case .preEP:
+            components.weakSubstancePreEPModel.incrementTitrant(count: count)
+        case .postEP:
+            components.weakSubstancePostEPModel.incrementTitrant(count: count)
+        default:
+            return
+        }
+    }
+
+    private var canAddTitrant: Bool {
+        components.currentTitrantInputLimits?.canAddTitrant ?? false
     }
 }
 

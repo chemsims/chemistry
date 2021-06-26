@@ -100,6 +100,7 @@ private class PostSelectSubstance: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.inputState = .none
+        model.substanceSelectionIsToggled = false
     }
 }
 

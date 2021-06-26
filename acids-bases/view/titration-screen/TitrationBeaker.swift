@@ -159,8 +159,8 @@ private struct TitrationBeakerTools: View {
             initialLocation: layout.containerPosition,
             activeLocation: layout.activeContainerPosition,
             type: .strongAcid,
-            label: "HCl",
-            color: .purple,
+            label: model.substance.symbol,
+            color: model.substance.color,
             rows: model.rows,
             disabled: model.inputState != .addSubstance
         )

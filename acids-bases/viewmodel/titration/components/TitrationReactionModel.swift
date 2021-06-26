@@ -15,16 +15,35 @@ protocol TitrationReactionModel: ObservableObject {
     var pH: Equation { get }
 }
 
-extension TitrationStrongSubstancePreEPModel: TitrationReactionModel {
+protocol TitrantInputModel {
+    var maxTitrant: Int { get }
+    var titrantAdded: Int { get }
 }
 
-extension TitrationStrongSubstancePostEPModel: TitrationReactionModel {
+extension TitrantInputModel {
+    var canAddTitrant: Bool {
+        titrantCountAvailable > 0
+    }
+
+    var hasAddedEnoughTitrant: Bool {
+        !canAddTitrant
+    }
+
+    var titrantCountAvailable: Int {
+        max(0, maxTitrant - titrantAdded)
+    }
 }
 
-extension TitrationWeakSubstancePreEPModel: TitrationReactionModel {
+extension TitrationStrongSubstancePreEPModel: TitrationReactionModel, TitrantInputModel {
 }
 
-extension TitrationWeakSubstancePostEPModel: TitrationReactionModel {
+extension TitrationStrongSubstancePostEPModel: TitrationReactionModel, TitrantInputModel {
+}
+
+extension TitrationWeakSubstancePreEPModel: TitrationReactionModel, TitrantInputModel {
+}
+
+extension TitrationWeakSubstancePostEPModel: TitrationReactionModel, TitrantInputModel {
 }
 
 extension PrimaryIon {
