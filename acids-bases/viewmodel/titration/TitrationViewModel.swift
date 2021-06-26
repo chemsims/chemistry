@@ -23,16 +23,16 @@ class TitrationViewModel: ObservableObject {
         )
 
         self.shakeModel = MultiContainerShakeViewModel(
-            canAddMolecule: {
-                self.canAdd(substance: $0)
+            canAddMolecule: { [weak self] in
+                self?.canAdd(substance: $0) ?? false
             },
-            addMolecules: {
-                self.increment(substance: $0, count: $1)
+            addMolecules: { [weak self] in
+                self?.increment(substance: $0, count: $1)
             }
         )
         self.dropperEmitModel = MoleculeEmittingViewModel(
-            canAddMolecule: { true },
-            doAddMolecule: { _ in }
+            canAddMolecule: { [weak self] in self?.canAddIndicator ?? false },
+            doAddMolecule: { [weak self] in self?.addedIndicator(count: $0) }
         )
         self.buretteEmitModel = MoleculeEmittingViewModel(
             canAddMolecule: { true },
@@ -65,14 +65,13 @@ class TitrationViewModel: ObservableObject {
     /// notified when it changes rather than reading from a comp
     @Published var canGoNext: Bool = true
 
+    @Published var indicatorAdded = 0
+    private let maxIndicator = 25
+
     private(set) var navigation: NavigationModel<TitrationScreenState>!
     var shakeModel: MultiContainerShakeViewModel<TitrationComponentState.Substance>!
     var dropperEmitModel: MoleculeEmittingViewModel!
     var buretteEmitModel: MoleculeEmittingViewModel!
-
-    enum TempMolecule: String, CaseIterable {
-        case A
-    }
 }
 
 // MARK: Navigation
@@ -130,7 +129,7 @@ extension TitrationViewModel {
     }
 }
 
-// MARK: Navigation validation
+// MARK: Added substance input limits
 extension TitrationViewModel {
     private func updateCanGoNext() {
         canGoNext = canGoNextComputedProperty
@@ -148,9 +147,31 @@ extension TitrationViewModel {
     private var hasAddedEnoughSubstance: Bool {
         components.currentPreparationModel?.hasAddedEnoughSubstance ?? true
     }
+}
+
+// MARK: Adding indicator
+extension TitrationViewModel {
+    private func addedIndicator(count: Int) {
+        let maxToAdd = min(remainingIndicatorAvailable, count)
+        guard maxToAdd > 0 else {
+            return
+        }
+        withAnimation(.linear(duration: 1)) {
+            indicatorAdded += maxToAdd
+        }
+        updateCanGoNext()
+    }
+
+    private var canAddIndicator: Bool {
+        remainingIndicatorAvailable > 0
+    }
 
     private var hasAddedEnoughIndicator: Bool {
-        false
+        !canAddIndicator
+    }
+
+    private var remainingIndicatorAvailable: Int {
+        max(0, maxIndicator - indicatorAdded)
     }
 }
 
