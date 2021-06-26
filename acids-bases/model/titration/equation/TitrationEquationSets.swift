@@ -221,6 +221,34 @@ extension TitrationEquationSet {
             pHpOHSum(fillAll: true)
         ]
     )
+
+    static let weakBaseAtEp = Self.setWithFilled(
+        left: [
+            kAToConcentration(fillSubstance: true, fillAll: true),
+            pHLogH(fillAll: true)
+        ],
+        right: [
+            titrantMoles(fillMolarity: true, fillAll: true),
+            kWToKaAndKb,
+            secondaryConcentrationToMolesOverVolume(fillVolume: true)
+        ]
+    )
+
+    static let weakBasePostEp = Self.setWithFilled(
+        left: [
+            titrantMoles(fillMolarity: true, fillAll: true),
+            .concentrationToMolesOverVolume(
+                concentration: .init(.hydrogen, isFilled: true),
+                moles: .init(.titrant, isFilled: true),
+                firstVolume: .init(.equivalencePoint, isFilled: true),
+                secondVolume: .init(.titrant, isFilled: true)
+            ),
+            pHLogH(fillAll: true)
+        ],
+        right: [
+            pHpOHSum(fillAll: true)
+        ]
+    )
 }
 
 // MARK: Common equations

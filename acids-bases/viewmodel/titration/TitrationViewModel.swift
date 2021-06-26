@@ -225,7 +225,14 @@ extension TitrationViewModel {
              weakAcidPreEPBlank,
              weakAcidPreEPFilled,
              weakAcidAtEP,
-             weakAcidPostEP
+             weakAcidPostEP,
+             weakBaseBlank,
+             weakBaseAddingSubstance,
+             weakBasePostInitialReaction,
+             weakBasePreEPBlank,
+             weakBasePreEPFilled,
+             weakBaseAtEP,
+             weakBasePostEP
 
         var equationSet: TitrationEquationSet {
             switch self {
@@ -286,14 +293,33 @@ extension TitrationViewModel {
                 return .weakAcidInitialReaction(fillSubstance: true, fillAll: true)
 
             case .weakAcidPreEPBlank:
-                return .weakBasePreEp(fillTitrantMolarity: false, fillAll: false)
+                return .weakAcidPreEp(fillTitrantMolarity: false, fillAll: false)
 
             case .weakAcidPreEPFilled:
-                return .weakBasePreEp(fillTitrantMolarity: true, fillAll: true)
+                return .weakAcidPreEp(fillTitrantMolarity: true, fillAll: true)
 
             case .weakAcidAtEP: return .weakAcidAtEp
 
             case .weakAcidPostEP: return .weakAcidPostEp
+
+            case .weakBaseBlank:
+                return .weakBaseInitialReaction(fillSubstance: false, fillAll: false)
+
+            case .weakBaseAddingSubstance:
+                return .weakBaseInitialReaction(fillSubstance: true, fillAll: false)
+
+            case .weakBasePostInitialReaction:
+                return .weakBaseInitialReaction(fillSubstance: true, fillAll: true)
+
+            case .weakBasePreEPBlank:
+                return .weakBasePreEp(fillTitrantMolarity: false, fillAll: false)
+
+            case .weakBasePreEPFilled:
+                return .weakBasePreEp(fillTitrantMolarity: true, fillAll: true)
+
+            case .weakBaseAtEP: return .weakBaseAtEp
+
+            case .weakBasePostEP: return .weakBasePostEp
             }
         }
     }

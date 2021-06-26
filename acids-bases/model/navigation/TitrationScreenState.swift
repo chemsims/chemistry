@@ -15,7 +15,7 @@ struct TitrationNavigationModel {
     }
 
     private static let states: [TitrationScreenState] =
-        strongAcidTitration + strongBaseTitration + weakAcidTitration
+        strongAcidTitration + strongBaseTitration + weakAcidTitration + weakBaseTitration
 
     private static let strongAcidTitration: [TitrationScreenState] = [
         PrepareNewSubstanceModel(statements.intro, substance: .strongAcid),
@@ -83,6 +83,7 @@ struct TitrationNavigationModel {
             },
             equation: .weakAcidPostInitialReaction
         ),
+        SetStatement(statements.explainWeakAcidTitrationStages),
         SetStatement(statements.explainIndicator),
         AddIndicator(
             statements.instructToAddIndicator,
@@ -111,6 +112,56 @@ struct TitrationNavigationModel {
         ),
         AddTitrantPostEP(statements.instructToAddTitrantToWeakAcidPostEP),
         StopInput(statements.endOfWeakAcidTitration)
+    ]
+
+    private static let weakBaseTitration: [TitrationScreenState] = [
+        PrepareNewSubstanceModel(
+            statements.instructToChooseWeakBase,
+            substance: .weakBase,
+            equation: .weakAcidBlank
+        ),
+        SetWaterLevel(statements.instructToSetWaterLevelOfWeakBaseTitration),
+        AddSubstance(statements.instructToAddWeakBase, equation: .weakBaseAddingSubstance),
+        RunWeakSubstanceInitialReaction(statements.runningWeakAcidReaction),
+        EndOfWeakSubstanceInitialReaction(
+            { model in
+                statements.endOfWeakBaseReaction(
+                    kB: model.substance.kB,
+                    pOH: 14 - model.weakPrep.currentPH,
+                    substanceMoles: model.components.weakSubstancePreparationModel.currentSubstanceMoles
+                )
+            },
+            equation: .weakBasePostInitialReaction
+        ),
+        SetStatement(statements.explainWeakBaseTitrationStages),
+        SetStatement(statements.explainIndicator),
+        AddIndicator(
+            statements.instructToAddIndicator,
+            equation: .weakBasePreEPBlank
+        ),
+        SetTitrantMolarity(
+            statements.instructToSetMolarityTitrantOfWeakBaseSolution,
+            equation: .weakBasePreEPFilled
+        ),
+        StopInput(statements.explainWeakBaseBufferRegion),
+        SetStatement(statements.explainWeakBaseHasselbalch),
+        SetStatement(statements.explainWeakBaseBufferMoles),
+        AddTitrantPreEP(statements.instructToAddTitrantToWeakBase),
+        StopInput(
+            { model in
+                statements.reachedWeakBaseEquivalencePoint(
+                    pH: model.weakPreEP.currentPH
+                )
+            }
+        ),
+        SetStatement(statements.explainWeakBaseEP1),
+        SetStatement(
+            { model in
+                statements.explainWeakBasedEP2(pH: model.weakPreEP.currentPH)
+            }
+        ),
+        AddTitrantPostEP(statements.instructToAddTitrantToWeakBasePostEP),
+        StopInput(statements.endOfWeakBaseTitration)
     ]
 }
 

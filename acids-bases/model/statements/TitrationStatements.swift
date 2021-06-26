@@ -410,8 +410,13 @@ struct TitrationStatements {
         "*Shake the A^-^ into the beaker*"
     ]
 
+    static let runningWeakBaseReaction: [TextLine] = [
+        """
+        The reaction is now running, and the concentration of *\(hydroxide)* is increasing!
+        """
+    ]
 
-    static func runningWeakBaseReaction(
+    static func endOfWeakBaseReaction(
         kB: CGFloat,
         pOH: CGFloat,
         substanceMoles: CGFloat
@@ -454,6 +459,14 @@ struct TitrationStatements {
         """
         Until the EP is reached, any mole of *\(hydrogen)* added will react with HA to produce \
         the same amount of *HA* moles, and to consume *A^-^* moles.
+        """
+    ]
+
+    static let explainWeakBaseBufferMoles: [TextLine] = [
+        """
+        That's why at this stage, the moles of *\(hydrogen)* added will be the same as the \
+        moles of HA in the solution. While the moles of A^-^ will be what's already present in \
+        the solution, minus the ones consumed by the added  *\(hydrogen).*
         """
     ]
 

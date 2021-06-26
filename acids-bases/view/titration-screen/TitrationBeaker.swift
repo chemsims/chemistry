@@ -156,7 +156,10 @@ private struct TitrationBeakerTools: View {
     }
 
     private var titrant: Titrant {
-        return strongPrepModel.titrant
+        if model.components.state.substance.isStrong {
+            return strongPrepModel.titrant
+        }
+        return weakPrepModel.titrant
     }
 
     private var container: some View {
@@ -256,7 +259,7 @@ private struct TitrationToolsMoleculesView: View {
 
     private var buretteMolecules: some View {
         molecules(buretteEmitModel, size: layout.buretteMoleculeSize)
-            .foregroundColor(.red)
+            .foregroundColor(buretteColor)
     }
 
     private func molecules(

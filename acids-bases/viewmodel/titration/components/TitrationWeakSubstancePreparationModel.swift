@@ -8,11 +8,13 @@ import ReactionsCore
 class TitrationWeakSubstancePreparationModel: ObservableObject {
     init(
         substance: AcidOrBase,
+        titrant: Titrant,
         cols: Int,
         rows: Int,
         settings: TitrationSettings
     ) {
         self.substance = substance
+        self.titrant = titrant
         self.cols = cols
         self.exactRows = CGFloat(rows)
         self.settings = settings
@@ -24,6 +26,7 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
     }
 
     var substance: AcidOrBase
+    let titrant: Titrant
     let cols: Int
 
     let settings: TitrationSettings
