@@ -15,7 +15,7 @@ extension TitrationStrongSubstancePreparationModel {
     ) {
         self.init(
             substance: substance,
-            titrant: "KOH",
+            titrant: .potassiumHydroxide,
             cols: 10,
             rows: 10,
             settings: settings

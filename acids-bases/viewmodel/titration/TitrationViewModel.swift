@@ -90,6 +90,10 @@ extension TitrationViewModel {
         navigation.back()
         canGoNext = canGoNextComputedProperty
     }
+
+    func resetIndicator() {
+        indicatorAdded = 0
+    }
 }
 
 // MARK: Adding molecules

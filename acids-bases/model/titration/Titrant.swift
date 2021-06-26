@@ -17,4 +17,9 @@ extension Titrant {
         name: "KOH",
         maximumMolarityColor: .hydroxide
     )
+
+    static let hydrogenChloride = Titrant(
+        name: "HCl",
+        maximumMolarityColor: .hydrogen
+    )
 }

@@ -15,36 +15,50 @@ struct TitrationNavigationModel {
     }
 
     private static let states: [TitrationScreenState] = [
-        SelectSubstance(statements.intro),
-        PostSelectSubstance(statements.explainNeutralization),
+
+        // strong acid titration
+        PrepareNewSubstanceModel(statements.intro, substance: .strongAcid),
+        StopInput(statements.explainNeutralization),
         SetStatement(statements.explainMolecularIonicEquations),
         SetStatement(statements.explainTitration),
         SetStatement(statements.explainEquivalencePoint),
         SetWaterLevel(statements.explainTitrationCurveAndInstructToSetWaterLevel),
-        AddStrongAcid(statements.instructToAddStrongAcid),
+        AddSubstance(statements.instructToAddStrongAcid, equation: .strongAcidAddingSubstance),
         StopInput(statements.explainTitrationStages),
         SetStatement(statements.explainMolesOfHydrogen),
         SetStatement(statements.explainIndicator),
-        AddIndicator(statements.instructToAddIndicatorToStrongAcid),
-        SetStrongAcidTitrantMolarity(statements.instructToSetMolarityOfStrongBaseTitrant),
-        AddStrongAcidTitrantPreEP(statements.instructToAddStrongBaseTitrant),
+        AddIndicator(statements.instructToAddIndicator),
+        SetTitrantMolarity(
+            statements.instructToSetMolarityOfStrongBaseTitrant,
+            equation: .strongAcidPreEPFilled
+        ),
+        AddTitrantPreEP(statements.instructToAddStrongBaseTitrant),
         StopInput(statements.reachedStrongAcidEquivalencePoint),
-        AddStrongAcidTitrantPostEP(statements.instructToAddStrongBaseTitrantPostEP),
+        AddTitrantPostEP(statements.instructToAddStrongBaseTitrantPostEP, equation: .strongAcidPostEP),
         StopInput(statements.endOfStrongAcidTitration),
-        SelectStrongBase(["Choose strong base"]),
-        AddStrongBase(["Add strong base"]),
-        AddStrongBaseTitrantPreEP(["Add titrant to strong base pre EP"]),
-        AddStrongBaseTitrantPostEP(["Add titrant to strong base post EP"]),
-        SetWeakAcidSubstance(["Choose weak acid"]),
-        AddWeakAcid(["Add weak acid"]),
-        RunWeakAcidInitialReaction(["Running initial weak acid reaction"]),
-        AddTitrantToWeakAcidPreEP(["Add titrant to weak acid"]),
-        AddTitrantToWeakAcidPostEP(["Add titrant to weak acid post EP"]),
-        SetWeakBaseSubstance(["Choose weak base"]),
-        AddWeakBase(["Add weak base"]),
-        RunWeakBaseInitialReaction(["Running initial weak base reaction"]),
-        AddTitrantToWeakBasePreEP(["Add titrant to weak base"]),
-        AddTitrantToWeakBasePostEP(["Add titrant to weak base post EP"])
+ 
+        // Strong base titration
+        PrepareNewSubstanceModel(
+            statements.instructToChooseStrongBase,
+            substance: .strongBase,
+            equation: .strongBaseBlank
+        ),
+        SetWaterLevel(statements.instructToSetWaterLevelForStrongBaseTitration),
+        AddSubstance(statements.instructToAddStrongBase, equation: .strongBaseAddingSubstance),
+        StopInput(statements.postAddingStrongBaseExplanation1),
+        SetStatement(statements.postAddingStrongBaseExplanation2),
+        AddIndicator(statements.instructToAddIndicator),
+        SetTitrantMolarity(
+            statements.instructToSetMolarityOfStrongBaseTitrant,
+            equation: .strongBasePreEPFilled
+        ),
+        AddTitrantPreEP(statements.instructToAddStrongBaseTitrant),
+        StopInput(statements.reachedStrongAcidEquivalencePoint),
+        AddTitrantPostEP(
+            statements.instructToAddStrongAcidTitrantPostEP,
+            equation: .strongBasePostEP
+        ),
+        StopInput(statements.endOfStrongBaseTitration)
     ]
 }
 
@@ -75,34 +89,118 @@ class TitrationScreenState: ScreenState, SubState {
 }
 
 private class SetStatement: TitrationScreenState {
-    init(_ statement: [TextLine]) {
+    init(_ statement: [TextLine], equation: TitrationViewModel.EquationState? = nil) {
         self.getStatement = { _ in statement }
+        self.equationState = equation
     }
 
     private let getStatement: (TitrationViewModel) -> [TextLine]
+    private let equationState: TitrationViewModel.EquationState?
+
+    private var previousEquationState: TitrationViewModel.EquationState?
 
     override func apply(on model: TitrationViewModel) {
+        if equationState != nil {
+            previousEquationState = model.equationState
+        }
+        doApply(on: model)
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        doApply(on: model)
+    }
+
+    private func doApply(on model: TitrationViewModel) {
         model.statement = getStatement(model)
+        if let eqState = equationState {
+            model.equationState = eqState
+        }
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        if let prevEqState = previousEquationState {
+            model.equationState = prevEqState
+        }
     }
 }
 
-private class SelectSubstance: SetStatement {
+private class PrepareNewSubstanceModel: SetStatement {
+
+    init(
+        _ statement: [TextLine],
+        substance: TitrationComponentState.Substance,
+        equation: TitrationViewModel.EquationState? = nil
+    ) {
+        self.substance = substance
+        super.init(statement, equation: equation)
+    }
+
+    private let substance: TitrationComponentState.Substance
+
+    private var previousSelectedSubstance: AcidOrBase?
+
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
+
+        self.previousSelectedSubstance = model.substance
+
+        // Don't apply state for strong acid since it's the first state
+        if substance != .strongAcid {
+            model.components.assertGoTo(state: .init(substance: substance, phase: .preparation))
+        }
+
+        model.availableSubstances = availableSubstances(forSubstance: substance)
+        model.substance = model.availableSubstances.first!
+        model.resetIndicator()
+        model.showTitrantFill = false
+
+        commonApply(on: model)
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
+        commonApply(on: model)
+    }
+
+    private func commonApply(on model: TitrationViewModel) {
         model.inputState = .selectSubstance
         model.substanceSelectionIsToggled = true
     }
 
     override func unapply(on model: TitrationViewModel) {
+        super.unapply(on: model)
         model.inputState = .none
+        model.showTitrantFill = true
+        if let previousSelectedSubstance = previousSelectedSubstance,
+           let previousSubstance = previousSubstance {
+            model.substance = previousSelectedSubstance
+            model.availableSubstances = availableSubstances(forSubstance: previousSubstance)
+            model.components.assertGoTo(state: .init(substance: previousSubstance, phase: .postEP))
+        }
+    }
+
+    private var previousSubstance: TitrationComponentState.Substance? {
+        TitrationComponentState.Substance.allCases.element(before: substance)
+    }
+
+    private func availableSubstances(forSubstance substance: TitrationComponentState.Substance) -> [AcidOrBase] {
+        switch substance {
+        case .strongAcid: return AcidOrBase.strongAcids
+        case .strongBase: return AcidOrBase.strongBases
+        case .weakAcid: return AcidOrBase.weakAcids
+        case .weakBase: return AcidOrBase.weakBases
+        }
     }
 }
 
-private class PostSelectSubstance: SetStatement {
+private class StopInput: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.inputState = .none
         model.substanceSelectionIsToggled = false
+        withAnimation(containerInputAnimation) {
+            model.shakeModel.stopAll()
+        }
     }
 }
 
@@ -110,178 +208,97 @@ private class SetWaterLevel: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.inputState = .setWaterLevel
+        model.substanceSelectionIsToggled = false
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
+        model.inputState = .setWaterLevel
     }
 
     override func unapply(on model: TitrationViewModel) {
+        super.unapply(on: model)
         model.inputState = .none
     }
 }
 
-private class AddStrongAcid: SetStatement {
+private class AddSubstance: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.inputState = .addSubstance
-        model.equationState = .strongAcidAddingSubstance
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
+        model.inputState = .addSubstance
     }
 
     override func unapply(on model: TitrationViewModel) {
+        super.unapply(on: model)
         model.inputState = .none
-        model.equationState = .strongAcidBlank
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
         }
     }
 }
 
-private class AddStrongAcidTitrantPreEP: SetStatement {
+private class AddTitrantPreEP: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .strongAcid, phase: .preEP))
-        model.inputState = .addTitrant
-        model.equationState = .strongAcidPreEPFilled
-        model.shakeModel.stopAll()
+        let currentSubstance = model.components.state.substance
+        model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
+        applyCommon(on: model)
     }
-}
 
-private class AddStrongAcidTitrantPostEP: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.equationState = .strongAcidPostEP
-        model.components.assertGoTo(state: .init(substance: .strongAcid, phase: .postEP))
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
+        applyCommon(on: model)
     }
-}
 
-private class SelectStrongBase: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .strongBase, phase: .preparation))
-        model.equationState = .strongBaseBlank
-        model.inputState = .selectSubstance
-    }
-}
-
-private class AddStrongBase: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.inputState = .addSubstance
-        model.equationState = .strongBaseAddingSubstance
-    }
-}
-
-private class AddStrongBaseTitrantPreEP: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .strongBase, phase: .preEP))
-        model.inputState = .addTitrant
-        model.equationState = .strongBasePreEPFilled
-        model.shakeModel.stopAll()
-    }
-}
-
-private class AddStrongBaseTitrantPostEP: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .strongBase, phase: .postEP))
-        model.equationState = .strongBasePostEP
-    }
-}
-
-
-private class SetWeakAcidSubstance: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .weakAcid, phase: .preparation))
-        model.equationState = .weakAcidBlank
-        model.inputState = .selectSubstance
-    }
-}
-
-private class AddWeakAcid: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.inputState = .addSubstance
-        model.equationState = .weakAcidAddingSubstance
-    }
-}
-
-private class RunWeakAcidInitialReaction: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.shakeModel.stopAll()
-        withAnimation(.linear(duration: 2)) {
-            model.components.weakSubstancePreparationModel.reactionProgress = 1
-        }
-    }
-}
-
-private class AddTitrantToWeakAcidPreEP: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .weakAcid, phase: .preEP))
-        model.inputState = .addTitrant
-        model.equationState = .weakAcidPreEPFilled
-    }
-}
-
-private class AddTitrantToWeakAcidPostEP: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .weakAcid, phase: .postEP))
-        model.inputState = .addTitrant
-        model.equationState = .weakAcidPostEP
-    }
-}
-
-private class SetWeakBaseSubstance: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .weakBase, phase: .preparation))
-        model.equationState = .weakAcidBlank
-        model.inputState = .selectSubstance
-    }
-}
-
-private class AddWeakBase: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.inputState = .addSubstance
-        model.equationState = .weakAcidAddingSubstance
-    }
-}
-
-private class RunWeakBaseInitialReaction: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.shakeModel.stopAll()
-        withAnimation(.linear(duration: 2)) {
-            model.components.weakSubstancePreparationModel.reactionProgress = 1
-        }
-    }
-}
-
-private class AddTitrantToWeakBasePreEP: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .weakBase, phase: .preEP))
-        model.inputState = .addTitrant
-        model.equationState = .weakAcidPreEPFilled
-    }
-}
-
-private class AddTitrantToWeakBasePostEP: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
-        model.components.assertGoTo(state: .init(substance: .weakBase, phase: .postEP))
-        model.inputState = .addTitrant
-        model.equationState = .weakAcidPostEP
-    }
-}
-
-private class StopInput: SetStatement {
-    override func apply(on model: TitrationViewModel) {
-        super.apply(on: model)
+    private func applyCommon(on model: TitrationViewModel) {
         withAnimation(containerInputAnimation) {
-            model.inputState = .none
+            model.inputState = .addTitrant
+            model.shakeModel.stopAll()
+        }
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        super.unapply(on: model)
+        let currentSubstance = model.components.state.substance
+        model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preparation))
+        model.inputState = .none
+        withAnimation(containerInputAnimation) {
+            model.shakeModel.stopAll()
+        }
+    }
+}
+
+private class AddTitrantPostEP: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        let currentSubstance = model.components.state.substance
+        model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .postEP))
+        applyCommon(on: model)
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
+        applyCommon(on: model)
+    }
+
+    private func applyCommon(on model: TitrationViewModel) {
+        model.inputState = .addTitrant
+        withAnimation(containerInputAnimation) {
+            model.shakeModel.stopAll()
+        }
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        super.unapply(on: model)
+        let currentSubstance = model.components.state.substance
+        model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
+        model.inputState = .none
+        withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
         }
     }
@@ -292,18 +309,37 @@ private class AddIndicator: SetStatement {
         super.apply(on: model)
         model.inputState = .addIndicator
     }
+
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
+        model.inputState = .addIndicator
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        super.unapply(on: model)
+        model.inputState = .none
+        model.resetIndicator()
+    }
 }
 
-private class SetStrongAcidTitrantMolarity: SetStatement {
+private class SetTitrantMolarity: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
+        commonApply(on: model)
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
+        commonApply(on: model)
+    }
+
+    private func commonApply(on model: TitrationViewModel) {
         model.inputState = .setTitrantMolarity
-        model.equationState = .strongAcidPreEPFilled
         model.showTitrantFill = true
     }
 
     override func unapply(on model: TitrationViewModel) {
+        super.unapply(on: model)
         model.showTitrantFill = false
     }
 }
-

@@ -273,7 +273,7 @@ private extension TitrationComponentState {
         case .preparation where substance.isStrong:
             strongSubstancePreparationModel = TitrationStrongSubstancePreparationModel(
                 substance: substance == .strongAcid ? .strongAcids.first! : .strongBases.first!,
-                titrant: .potassiumHydroxide, // TODO
+                titrant: substance == .strongAcid ? .potassiumHydroxide : .hydrogenChloride,
                 cols: initialCols,
                 rows: initialRows,
                 settings: settings

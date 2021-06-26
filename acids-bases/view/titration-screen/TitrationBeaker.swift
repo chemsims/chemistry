@@ -23,23 +23,11 @@ struct TitrationBeaker: View {
                 weakPostEPModel: model.components.weakSubstancePostEPModel
             )
 
-            molecules
-
             TitrationBeakerTools(
                 layout: layout,
                 model: model
             )
         }
-    }
-
-    private var molecules: some View {
-        TitrationToolsMoleculesView(
-            layout: layout,
-            rows: model.rows,
-            dropperEmitModel: model.dropperEmitModel,
-            buretteEmitModel: model.buretteEmitModel
-        )
-        .frame(width: layout.toolStackWidth, height: layout.common.height)
     }
 }
 
@@ -77,10 +65,12 @@ private struct TitrationBeakerTools: View {
     let buretteEmitModel: MoleculeEmittingViewModel
 
     private let emitAmount: Int = 5
-    private let buretteEmitAmount = 1
+    private let buretteEmitAmount = 10 // TODO - change this back
 
     var body: some View {
         ZStack {
+            molecules
+
             phMeter
 
             dropper
@@ -90,6 +80,17 @@ private struct TitrationBeakerTools: View {
             container
         }
         .frame(width: layout.toolStackWidth)
+    }
+
+    private var molecules: some View {
+        TitrationToolsMoleculesView(
+            layout: layout,
+            rows: model.rows,
+            buretteColor: buretteColor,
+            dropperEmitModel: model.dropperEmitModel,
+            buretteEmitModel: model.buretteEmitModel
+        )
+        .frame(width: layout.toolStackWidth, height: layout.common.height)
     }
 
     private var phMeter: some View {
@@ -141,15 +142,21 @@ private struct TitrationBeakerTools: View {
                 )
         }
         .position(layout.burettePosition)
+        .transition(.identity)
     }
 
     private var buretteColor: Color {
-        LinearRGBEquation(
+        let maxColor = titrant.maximumMolarityColor
+        return LinearRGBEquation(
             initialX: AcidAppSettings.minTitrantMolarity,
             finalX: AcidAppSettings.maxTitrantMolarity,
-            initialColor: .hydroxide.withOpacity(0.6),
-            finalColor: .hydroxide
+            initialColor: maxColor.withOpacity(0.5),
+            finalColor: maxColor
         ).getRgb(at: titrantMolarity.wrappedValue).color
+    }
+
+    private var titrant: Titrant {
+        return strongPrepModel.titrant
     }
 
     private var container: some View {
@@ -158,7 +165,7 @@ private struct TitrationBeakerTools: View {
             layout: layout.common,
             initialLocation: layout.containerPosition,
             activeLocation: layout.activeContainerPosition,
-            type: .strongAcid,
+            type: model.components.state.substance,
             label: model.substance.symbol,
             color: model.substance.color,
             rows: model.rows,
@@ -231,6 +238,7 @@ private struct TitrationToolsMoleculesView: View {
 
     let layout: TitrationScreenLayout
     let rows: CGFloat
+    let buretteColor: Color
     @ObservedObject var dropperEmitModel: MoleculeEmittingViewModel
     @ObservedObject var buretteEmitModel: MoleculeEmittingViewModel
 

@@ -61,9 +61,9 @@ struct TitrationStatements {
 
     static let instructToAddStrongAcid: [TextLine] = [
         """
-        Now let's prepare the acidic solution that we're going to titrate. Add the HCl.
+        Now let's prepare the acidic solution that we're going to titrate.
         """,
-        "*Shake it into it!*"
+        "*Shake the HCl into the beaker!*"
     ]
 
     static let midAddingStrongAcid: [TextLine] = [
@@ -102,7 +102,7 @@ struct TitrationStatements {
         """
     ]
 
-    static let instructToAddIndicatorToStrongAcid: [TextLine] = [
+    static let instructToAddIndicator: [TextLine] = [
         """
         If you want to see the effect of the indicator, just set the view of the beaker to \
         macroscopic.
@@ -118,7 +118,7 @@ struct TitrationStatements {
 
     static let instructToAddStrongBaseTitrant: [TextLine] = [
         """
-        Let's just add the titrant now! The titration curve starts at a *very low pH*, as the \
+        Let's add the titrant now! The titration curve starts at a *very low pH*, as the \
         solution is purely acidic now. When KOH is added, it will neutralize the HCl to slowly \
         make it more basic. *Tap to add it.*
         """

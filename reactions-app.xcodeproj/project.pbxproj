@@ -168,7 +168,6 @@
 		574978252683498800EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
 		5749782626834A2600EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
 		5749782726834A2700EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
-		5749782826834A2800EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
 		5749782A26836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782926836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift */; };
 		5749782C2683748100EFA71C /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782B2683748100EFA71C /* TestView.swift */; };
 		5749782E2683831B00EFA71C /* TitrationWeakSubstancePreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782D2683831B00EFA71C /* TitrationWeakSubstancePreparationModel.swift */; };
@@ -550,6 +549,12 @@
 		57F4160D2642DC32007C8CE8 /* SolubilityPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */; };
 		57F467392687009900E294BE /* TitrationPreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F467382687009900E294BE /* TitrationPreparationModel.swift */; };
 		57F4673B268708CB00E294BE /* Titrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4673A268708CB00E294BE /* Titrant.swift */; };
+		57F4673E268741ED00E294BE /* TitrationNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4673D268741EC00E294BE /* TitrationNavigationParametersAreReappliedTests.swift */; };
+		57F4673F2687421800E294BE /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
+		57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402126486F8300E352C1 /* NavigationTestMethods.swift */; };
+		57F467442687421D00E294BE /* QuizTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402D2648765700E352C1 /* QuizTestMethods.swift */; };
+		57F467452687421D00E294BE /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
+		57F467462687421D00E294BE /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */; };
 		57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4774F256105620041D406 /* ZeroOrderStatements.swift */; };
 		57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775925616F400041D406 /* BoundedSliderPositioning.swift */; };
 		57F4D1B8263D71E500449222 /* SolubilityBeakerAccessibilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4D1B7263D71E500449222 /* SolubilityBeakerAccessibilityLabel.swift */; };
@@ -1264,6 +1269,7 @@
 		57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPersistence.swift; sourceTree = "<group>"; };
 		57F467382687009900E294BE /* TitrationPreparationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationPreparationModel.swift; sourceTree = "<group>"; };
 		57F4673A268708CB00E294BE /* Titrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Titrant.swift; sourceTree = "<group>"; };
+		57F4673D268741EC00E294BE /* TitrationNavigationParametersAreReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationNavigationParametersAreReappliedTests.swift; sourceTree = "<group>"; };
 		57F477412560FD440041D406 /* Beaky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beaky.swift; sourceTree = "<group>"; };
 		57F477462560FF300041D406 /* NavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
 		57F4774F256105620041D406 /* ZeroOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderStatements.swift; sourceTree = "<group>"; };
@@ -1524,6 +1530,7 @@
 		570ABA18265A736D008EC8CC /* acids-basesTests */ = {
 			isa = PBXGroup;
 			children = (
+				57F4673C268741D500E294BE /* navigation */,
 				5786BD03267B2256001A165C /* titration-components */,
 				5797DE20267390D1003F589F /* util */,
 				5797DE1D26739075003F589F /* buffer-components */,
@@ -3368,6 +3375,14 @@
 			path = persistence;
 			sourceTree = "<group>";
 		};
+		57F4673C268741D500E294BE /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				57F4673D268741EC00E294BE /* TitrationNavigationParametersAreReappliedTests.swift */,
+			);
+			path = navigation;
+			sourceTree = "<group>";
+		};
 		57F4774E256105430041D406 /* statements */ = {
 			isa = PBXGroup;
 			children = (
@@ -3966,19 +3981,22 @@
 				574978232683471800EFA71C /* TitrationStrongAcidPreEPModelTests.swift in Sources */,
 				577BC7752679D463005BE5C8 /* AcidOrBaseTests.swift in Sources */,
 				5711603526831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift in Sources */,
+				57F4673F2687421800E294BE /* NavigationExtensions.swift in Sources */,
 				570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */,
 				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,
 				5786BD05267B226C001A165C /* TitrationComponentsTests.swift in Sources */,
 				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
+				57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */,
+				57F4673E268741ED00E294BE /* TitrationNavigationParametersAreReappliedTests.swift in Sources */,
 				576AF0F22684D51700F300C7 /* TitrationWeakBasePreEPModelTests.swift in Sources */,
 				5733D80326748CB8007D4459 /* BufferComponentsExtensions.swift in Sources */,
-				5749782826834A2800EFA71C /* CommonTestAssertions.swift in Sources */,
 				574978212683453600EFA71C /* TitrationComponentsExtensions.swift in Sources */,
 				577C5023267F1852003DAD17 /* AcidConcentrationEquationsTests.swift in Sources */,
 				576AF0EC2684BF8A00F300C7 /* TitrationStrongBasePreEPModelTests.swift in Sources */,
 				571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */,
 				5749782A26836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift in Sources */,
 				573779E826831DA900BAB6A1 /* TitrationSettingsExtension.swift in Sources */,
+				57F467452687421D00E294BE /* CommonTestAssertions.swift in Sources */,
 				576AF0F02684CD7200F300C7 /* TitrationWeakBasePreparationModelTests.swift in Sources */,
 				5770953626861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift in Sources */,
 				576AF0EE2684C2AB00F300C7 /* TitrationStrongBasePostEPModelTests.swift in Sources */,
@@ -3987,6 +4005,8 @@
 				574978342683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift in Sources */,
 				5797DE22267390DC003F589F /* AcidOrBaseExtensions.swift in Sources */,
 				574978302683833700EFA71C /* TitrationWeakAcidPreparationModelTests.swift in Sources */,
+				57F467462687421D00E294BE /* UserDefaultsExtensions.swift in Sources */,
+				57F467442687421D00E294BE /* QuizTestMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,9 @@ import ReactionsCore
 public func checkPreviousValueIsReapplied<Model, State, Field: Equatable>(
     model: Model,
     navigation: NavigationModel<State>,
-    prevValueKeyPath: KeyPath<Model, Field>
+    prevValueKeyPath: KeyPath<Model, Field>,
+    file: StaticString = #filePath,
+    line: UInt = #line
 ) {
     var hasEnded = false
     navigation.nextScreen = { hasEnded = true }
@@ -20,7 +22,12 @@ public func checkPreviousValueIsReapplied<Model, State, Field: Equatable>(
         navigation.next()
         if !hasEnded {
             navigation.back()
-            XCTAssertEqual(model[keyPath: prevValueKeyPath], previousValue, "Failed on state \(i)")
+            XCTAssertEqual(
+                model[keyPath: prevValueKeyPath],
+                previousValue, "Failed on state \(i)",
+                file: file,
+                line: line
+            )
         }
         i += 1
     }
