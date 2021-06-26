@@ -349,12 +349,16 @@ private class AddSubstance: SetStatement {
     override func reapply(on model: TitrationViewModel) {
         super.reapply(on: model)
         model.inputState = .addSubstance
+        withAnimation(containerInputAnimation) {
+            model.resetInitialSubstance()
+        }
     }
 
     override func unapply(on model: TitrationViewModel) {
         super.unapply(on: model)
         model.inputState = .none
         withAnimation(containerInputAnimation) {
+            model.resetInitialSubstance()
             model.shakeModel.stopAll()
         }
     }
@@ -371,6 +375,9 @@ private class AddTitrantPreEP: SetStatement {
     override func reapply(on model: TitrationViewModel) {
         super.reapply(on: model)
         applyCommon(on: model)
+        withAnimation(containerInputAnimation) {
+            model.resetPreEPTitrant()
+        }
     }
 
     private func applyCommon(on model: TitrationViewModel) {
@@ -402,6 +409,9 @@ private class AddTitrantPostEP: SetStatement {
     override func reapply(on model: TitrationViewModel) {
         super.reapply(on: model)
         applyCommon(on: model)
+        withAnimation(containerInputAnimation) {
+            model.resetPostEPTitrant()
+        }
     }
 
     private func applyCommon(on model: TitrationViewModel) {
@@ -414,10 +424,11 @@ private class AddTitrantPostEP: SetStatement {
     override func unapply(on model: TitrationViewModel) {
         super.unapply(on: model)
         let currentSubstance = model.components.state.substance
-        model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
+//        model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
         model.inputState = .none
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
+            model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
         }
     }
 }

@@ -8,17 +8,8 @@ import ReactionsCore
 class TitrationWeakSubstancePostEPModel: ObservableObject {
     init(previous: TitrationWeakSubstancePreEPModel) {
         self.previous = previous
-        let substance = previous.substance
-        self.ionMolecules = BeakerMolecules(
-            coords: [],
-            color: substance.primary.complement.color,
-            label: substance.primary.rawValue
-        )
-        self.secondaryMolecules = BeakerMolecules(
-            coords: previous.beakerReactionModel.consolidated.value(for: .secondaryIon).coords,
-            color: substance.secondary.color,
-            label: substance.secondary.rawValue
-        )
+        self.ionMolecules = Self.initialIonMolecules(previous: previous)
+        self.secondaryMolecules = Self.initialSecondaryMolecules(previous: previous)
         self.maxTitrant = 2 * previous.maxTitrant
     }
 
@@ -277,5 +268,23 @@ extension TitrationWeakSubstancePostEPModel {
 
     private func initialBarHeight(forPart part: ExtendedSubstancePart) -> CGFloat {
         previous.barChartDataMap.value(for: part).equation.getY(at: CGFloat(previous.maxTitrant))
+    }
+}
+
+extension TitrationWeakSubstancePostEPModel {
+    static func initialIonMolecules(previous: TitrationWeakSubstancePreEPModel) -> BeakerMolecules {
+        BeakerMolecules(
+            coords: [],
+            color: previous.substance.primary.complement.color,
+            label: previous.substance.primary.rawValue
+        )
+    }
+
+    static func initialSecondaryMolecules(previous: TitrationWeakSubstancePreEPModel) -> BeakerMolecules {
+        BeakerMolecules(
+            coords: previous.beakerReactionModel.consolidated.value(for: .secondaryIon).coords,
+            color: previous.substance.secondary.color,
+            label: previous.substance.secondary.rawValue
+        )
     }
 }

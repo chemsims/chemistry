@@ -18,6 +18,8 @@ protocol TitrationReactionModel: ObservableObject {
 protocol TitrantInputModel {
     var maxTitrant: Int { get }
     var titrantAdded: Int { get }
+
+    func resetState()
 }
 
 extension TitrantInputModel {
@@ -35,15 +37,31 @@ extension TitrantInputModel {
 }
 
 extension TitrationStrongSubstancePreEPModel: TitrationReactionModel, TitrantInputModel {
+    func resetState() {
+        titrantAdded = 0
+    }
 }
 
 extension TitrationStrongSubstancePostEPModel: TitrationReactionModel, TitrantInputModel {
+    func resetState() {
+        titrantAdded = 0
+        self.titrantMolecules.coords.removeAll()
+    }
 }
 
 extension TitrationWeakSubstancePreEPModel: TitrationReactionModel, TitrantInputModel {
+    func resetState() {
+        titrantAdded = 0
+        self.beakerReactionModel = Self.initialReactingBeakerModel(previous: previous)
+    }
 }
 
 extension TitrationWeakSubstancePostEPModel: TitrationReactionModel, TitrantInputModel {
+    func resetState() {
+        titrantAdded = 0
+        self.ionMolecules = Self.initialIonMolecules(previous: previous)
+        self.secondaryMolecules = Self.initialSecondaryMolecules(previous: previous)
+    }
 }
 
 extension PrimaryIon {

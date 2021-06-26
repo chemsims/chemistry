@@ -42,7 +42,7 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
 
     @Published var titrantAdded = 0
 
-    private(set) var beakerReactionModel: ReactingBeakerViewModel<ExtendedSubstancePart>
+    var beakerReactionModel: ReactingBeakerViewModel<ExtendedSubstancePart>
 
     var substance: AcidOrBase {
         previous.substance

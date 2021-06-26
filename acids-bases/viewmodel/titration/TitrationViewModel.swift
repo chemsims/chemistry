@@ -83,16 +83,11 @@ extension TitrationViewModel {
             navigation?.next()
             updateCanGoNext()
         }
-
     }
 
     func back() {
         navigation.back()
         canGoNext = canGoNextComputedProperty
-    }
-
-    func resetIndicator() {
-        indicatorAdded = 0
     }
 }
 
@@ -100,6 +95,9 @@ extension TitrationViewModel {
 extension TitrationViewModel {
     private func increment(substance: TitrationComponentState.Substance, count: Int) {
         defer { updateCanGoNext() }
+        guard inputState == .addSubstance else {
+            return
+        }
 
         guard substance == components.state.substance else {
             return
@@ -119,7 +117,7 @@ extension TitrationViewModel {
     }
 }
 
-// MARK: Added substance input limits
+// MARK: Navigation input limits
 extension TitrationViewModel {
     private func updateCanGoNext() {
         canGoNext = canGoNextComputedProperty
@@ -149,6 +147,9 @@ extension TitrationViewModel {
 extension TitrationViewModel {
     private func addedIndicator(count: Int) {
         defer { updateCanGoNext() }
+        guard inputState == .addIndicator else {
+            return
+        }
 
         let maxToAdd = min(remainingIndicatorAvailable, count)
         guard maxToAdd > 0 else {
@@ -177,6 +178,10 @@ extension TitrationViewModel {
     private func incrementTitrant(count: Int) {
         defer { updateCanGoNext() }
 
+        guard inputState == .addTitrant else {
+            return
+        }
+
         let isStrong = components.state.substance.isStrong
         switch components.state.phase {
         case .preEP where isStrong:
@@ -195,6 +200,25 @@ extension TitrationViewModel {
 
     private var canAddTitrant: Bool {
         components.currentTitrantInputLimits?.canAddTitrant ?? false
+    }
+}
+
+// MARK: Reset state
+extension TitrationViewModel {
+    func resetIndicator() {
+        indicatorAdded = 0
+    }
+
+    func resetInitialSubstance() {
+        components.currentPreparationModel?.resetState()
+    }
+
+    func resetPreEPTitrant() {
+        components.currentPreEPTitrantModel?.resetState()
+    }
+
+    func resetPostEPTitrant() {
+        components.currentPostEPTitrantModel?.resetState()
     }
 }
 

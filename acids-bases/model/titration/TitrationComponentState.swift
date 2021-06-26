@@ -153,6 +153,28 @@ extension TitrationComponentState {
         default: return nil
         }
     }
+
+    var currentPreEPTitrantModel: TitrantInputModel? {
+        let isStrong = state.substance.isStrong
+        let isPreEP = state.phase == .preEP
+        if isPreEP && isStrong {
+            return strongSubstancePreEPModel
+        } else if isPreEP {
+            return weakSubstancePreEPModel
+        }
+        return nil
+    }
+
+    var currentPostEPTitrantModel: TitrantInputModel? {
+        let isStrong = state.substance.isStrong
+        let isPostEP = state.phase == .postEP
+        if isPostEP && isStrong {
+            return strongSubstancePostEPModel
+        } else if isPostEP {
+            return weakSubstancePostEPModel
+        }
+        return nil
+    }
 }
 
 // MARK: - Data types

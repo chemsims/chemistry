@@ -13,7 +13,7 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
         self.previous = previous
         self.titrantMolecules = BeakerMolecules(
             coords: [],
-            color: .purple,
+            color: previous.previous.titrant.maximumMolarityColor.color,
             label: ""
         )
         self.maxTitrant = previous.maxTitrant
