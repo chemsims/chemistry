@@ -262,8 +262,8 @@ private class PrepareNewSubstanceModel: SetStatement {
 
         self.previousSelectedSubstance = model.substance
 
-        // Don't apply state for strong acid since it's the first state
-        if substance != .strongAcid {
+        // Don't apply state if we're already in that state
+        if model.components.state != .init(substance: substance, phase: .preparation) {
             model.components.assertGoTo(state: .init(substance: substance, phase: .preparation))
         }
 

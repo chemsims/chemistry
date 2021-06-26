@@ -33,9 +33,16 @@ import ReactionsCore
 /// it from the final [A] which is the result of the equation in step 3.
 class TitrationWeakSubstancePreEPModel: ObservableObject {
     init(previous: TitrationWeakSubstancePreparationModel) {
+        let maxTitrant = previous.substanceAdded
         self.previous = previous
         self.beakerReactionModel = Self.initialReactingBeakerModel(previous: previous)
-        self.maxTitrant = previous.substanceAdded
+        self.maxTitrant = maxTitrant
+        self.calculations = .init(
+            substance: previous.substance,
+            previous: previous,
+            maxTitrant: maxTitrant,
+            titrantAdded: 0
+        )
     }
 
     let previous: TitrationWeakSubstancePreparationModel
@@ -53,26 +60,52 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
     }
 
     let maxTitrant: Int
-}
 
-// MARK: - Equation data
-extension TitrationWeakSubstancePreEPModel {
+    private var calculations: WeakSubstanceCalculations
+
     var equationData: TitrationEquationData {
-        TitrationEquationData(
-            substance: substance,
-            titrant: "KOH",
-            moles: moles,
-            volume: volume,
-            molarity: molarity.map(ConstantEquation.init),
-            concentration: concentration
+        calculations.equationData
+    }
+
+    var pH: Equation {
+        equationData.pValues.value(for: .hydrogen)
+    }
+
+    var currentPH: CGFloat {
+        pH.getY(at: CGFloat(titrantAdded))
+    }
+
+    var barChartData: [BarChartData] {
+        calculations.barChartData
+    }
+
+    var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
+        calculations.molarity
+    }
+
+    var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> {
+        calculations.concentration
+    }
+
+    var volume: EnumMap<TitrationEquationTerm.Volume, Equation> {
+        calculations.volume
+    }
+
+    var barChartDataMap: EnumMap<ExtendedSubstancePart, BarChartData> {
+        calculations.barChartDataMap
+    }
+
+    func resetState() {
+        titrantAdded = 0
+        self.beakerReactionModel = Self.initialReactingBeakerModel(previous: previous)
+        self.calculations = .init(
+            substance: previous.substance,
+            previous: previous,
+            maxTitrant: maxTitrant,
+            titrantAdded: 0
         )
     }
-
-    var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> {
-        previous.kValues
-    }
 }
-
 
 // MARK: - Incrementing
 extension TitrationWeakSubstancePreEPModel {
@@ -93,12 +126,50 @@ extension TitrationWeakSubstancePreEPModel {
             withDuration: 1,
             count: count
         )
+
+        self.calculations = .init(
+            substance: previous.substance,
+            previous: previous,
+            maxTitrant: maxTitrant,
+            titrantAdded: titrantAdded
+        )
     }
 }
 
-// MARK: - Concentration
-extension TitrationWeakSubstancePreEPModel {
-    var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> {
+
+private class WeakSubstanceCalculations {
+
+    init(
+        substance: AcidOrBase,
+        previous: TitrationWeakSubstancePreparationModel,
+        maxTitrant: Int,
+        titrantAdded: Int
+    ) {
+        self.substance = substance
+        self.previous = previous
+        self.maxTitrant = maxTitrant
+        self.titrantAdded = titrantAdded
+    }
+
+
+    let substance: AcidOrBase
+    let previous: TitrationWeakSubstancePreparationModel
+    let maxTitrant: Int
+    let titrantAdded: Int
+
+    lazy var equationData: TitrationEquationData = TitrationEquationData(
+        substance: substance,
+        titrant: "KOH",
+        moles: moles,
+        volume: volume,
+        molarity: molarity.map(ConstantEquation.init),
+        concentration: concentration
+    )
+
+    lazy var kValues: EnumMap<TitrationEquationTerm.KValue, CGFloat> = previous.kValues
+
+    // MARK: - Concentration
+    lazy var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> =
         .init {
             switch $0 {
             case .hydrogen: return hydrogenConcentration
@@ -111,41 +182,34 @@ extension TitrationWeakSubstancePreEPModel {
             case .substance: return substanceConcentration
             }
         }
-    }
 
-    private var finalPrevious: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
+    private lazy var finalPrevious: EnumMap<TitrationEquationTerm.Concentration, CGFloat> =
         previous.concentration.map { $0.getY(at: 1) }
-    }
 
-    private var finalSecondaryPreKBalancing: CGFloat {
+    private lazy var finalSecondaryPreKBalancing: CGFloat =
         initialSubstanceMoles / (initialSubstanceVolume + finalTitrantVolume)
-    }
 
-    private var changeInConcentrationToBalanceKRelation: CGFloat {
+    private lazy var changeInConcentrationToBalanceKRelation: CGFloat = {
         let kValue = substance.type.isAcid ? substance.kB : substance.kA
         return AcidConcentrationEquations.changeInConcentration(
             kValue: kValue,
             initialDenominatorConcentration: finalSecondaryPreKBalancing
         )
-    }
+    }()
 
-    private var secondaryConcentration: Equation {
-        LinearEquation(
-            x1: 0,
-            y1: initialConcentration(of: .secondary),
-            x2: CGFloat(maxTitrant),
-            y2: finalSecondaryPreKBalancing - changeInConcentrationToBalanceKRelation
-        )
-    }
+    private lazy var secondaryConcentration = LinearEquation(
+        x1: 0,
+        y1: initialConcentration(of: .secondary),
+        x2: CGFloat(maxTitrant),
+        y2: finalSecondaryPreKBalancing - changeInConcentrationToBalanceKRelation
+    )
 
-    private var substanceConcentration: Equation {
-        LinearEquation(
-            x1: 0,
-            y1: initialConcentration(of: .substance),
-            x2: CGFloat(maxTitrant),
-            y2: changeInConcentrationToBalanceKRelation
-        )
-    }
+    private lazy var substanceConcentration = LinearEquation(
+        x1: 0,
+        y1: initialConcentration(of: .substance),
+        x2: CGFloat(maxTitrant),
+        y2: changeInConcentrationToBalanceKRelation
+    )
 
     private var hydrogenConcentration: Equation {
         if substance.type.isAcid {
@@ -161,49 +225,30 @@ extension TitrationWeakSubstancePreEPModel {
         return primaryIonConcentration
     }
 
-    private var primaryIonConcentration: Equation {
-        LinearEquation(
-            x1: 0,
-            y1: initialConcentration(of: substance.primary.concentration),
-            x2: CGFloat(maxTitrant),
-            y2: finalPrimaryIonConcentration
-        )
-    }
+    private lazy var primaryIonConcentration = LinearEquation(
+        x1: 0,
+        y1: initialConcentration(of: substance.primary.concentration),
+        x2: CGFloat(maxTitrant),
+        y2: finalPrimaryIonConcentration
+    )
 
-    private var complementIonConcentration: Equation {
+    private lazy var complementIonConcentration =
         primaryIonConcentration.map(PrimaryIonConcentration.complementConcentration)
-    }
 
-    private var finalComplementIonConcentration: CGFloat {
+    private lazy var finalComplementIonConcentration =
         changeInConcentrationToBalanceKRelation
-    }
 
-    private var finalPrimaryIonConcentration: CGFloat {
-        PrimaryIonConcentration.complementConcentration(
-            primaryConcentration: finalComplementIonConcentration
-        )
-    }
+    private lazy var finalPrimaryIonConcentration = PrimaryIonConcentration.complementConcentration(
+        primaryConcentration: finalComplementIonConcentration
+    )
 
     private func initialConcentration(of term: TitrationEquationTerm.Concentration) -> CGFloat {
         previous.concentration.value(for: term).getY(at: 1)
     }
-}
 
-// MARK: - P Values
-extension TitrationWeakSubstancePreEPModel {
-    var pH: Equation {
-        equationData.pValues.value(for: .hydrogen)
-    }
-
-    var currentPH: CGFloat {
-        pH.getY(at: CGFloat(titrantAdded))
-    }
-}
 
 // MARK: - Molarity
-extension TitrationWeakSubstancePreEPModel {
-
-    var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
+    lazy var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> =
         .init {
             switch $0 {
             case .hydrogen: return 0
@@ -211,14 +256,10 @@ extension TitrationWeakSubstancePreEPModel {
             case .titrant: return previous.molarity.value(for: .titrant)
             }
         }
-    }
-}
 
 
 // MARK: - Volume
-extension TitrationWeakSubstancePreEPModel {
-
-    var volume: EnumMap<TitrationEquationTerm.Volume, Equation> {
+    lazy var volume: EnumMap<TitrationEquationTerm.Volume, Equation> =
         .init {
             switch $0 {
             case .equivalencePoint: return ConstantEquation(value: 0)
@@ -235,25 +276,19 @@ extension TitrationWeakSubstancePreEPModel {
                 )
             }
         }
-    }
 
-    private var finalTitrantVolume: CGFloat {
+    private lazy var finalTitrantVolume: CGFloat =
         initialSubstanceMoles / molarity.value(for: .titrant)
-    }
 
-    private var initialSubstanceVolume: CGFloat {
+    private lazy var initialSubstanceVolume: CGFloat =
         previous.volume.value(for: .initialSubstance)
-    }
 
     private func initialVolume(of term: TitrationEquationTerm.Volume) -> CGFloat {
         previous.volume.value(for: term) 
     }
-}
 
 // MARK: - Moles
-extension TitrationWeakSubstancePreEPModel {
-
-    var moles: EnumMap<TitrationEquationTerm.Moles, Equation> {
+    lazy var moles: EnumMap<TitrationEquationTerm.Moles, Equation> =
         .init {
             switch $0 {
             case .initialSubstance:
@@ -268,11 +303,9 @@ extension TitrationWeakSubstancePreEPModel {
             case .hydrogen: return ConstantEquation(value: 0)
             }
         }
-    }
 
-    private var titrantMoles: Equation {
+    private lazy var titrantMoles: Equation =
         molarity.value(for: .titrant) * volume.value(for: .titrant)
-    }
 
     // Returns concentration for the equation:
     // concentration = moles / (Va + Vb)
@@ -283,26 +316,21 @@ extension TitrationWeakSubstancePreEPModel {
         return concentrationOfTerm * (vInitial + vTitrant)
     }
 
-    private var initialSubstanceMoles: CGFloat {
-        initialMoles(of: .substance)
-    }
+    private lazy var initialSubstanceMoles: CGFloat = initialMoles(of: .substance)
 
-    private var initialSecondaryMoles: CGFloat {
-        initialMoles(of: .secondary)
-    }
+    private lazy var initialSecondaryMoles: CGFloat = initialMoles(of: .secondary)
 
     private func initialMoles(of term: TitrationEquationTerm.Moles) -> CGFloat {
         previous.moles.value(for: term).getY(at: 1)
     }
-}
 
-extension TitrationWeakSubstancePreEPModel {
-    var barChartData: [BarChartData] {
+    // MARK: Bar Chart Data
+    lazy var barChartData: [BarChartData] = {
         let order: [ExtendedSubstancePart] = [.substance, .hydroxide, .hydrogen, .secondaryIon]
         return order.map(barChartDataMap.value)
-    }
+    }()
 
-    var barChartDataMap: EnumMap<ExtendedSubstancePart, BarChartData> {
+    lazy var barChartDataMap: EnumMap<ExtendedSubstancePart, BarChartData> =
         .init {
             switch $0 {
             case .hydrogen: return BarChartData(
@@ -331,7 +359,6 @@ extension TitrationWeakSubstancePreEPModel {
             )
             }
         }
-    }
 
     private func barChartEquation(forPart part: ExtendedSubstancePart) -> Equation {
         LinearEquation(
@@ -356,7 +383,6 @@ extension TitrationWeakSubstancePreEPModel {
     private func initialBarHeight(forPart part: ExtendedSubstancePart) -> CGFloat {
         previous.barChartDataMap.value(for: part).equation.getY(at: 1)
     }
-    
 }
 
 extension TitrationWeakSubstancePreEPModel {

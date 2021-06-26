@@ -194,6 +194,6 @@ extension TitrationWeakSubstancePreEPModel {
     }
 
     var currentMoles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
-        moles.map { $0.getY(at: CGFloat(titrantAdded)) }
+        equationData.moles.map { $0.getY(at: CGFloat(titrantAdded)) }
     }
 }

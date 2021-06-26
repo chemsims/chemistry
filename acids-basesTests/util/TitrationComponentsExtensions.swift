@@ -83,11 +83,11 @@ extension TitrationStrongSubstancePreEPModel {
     }
 
     var currentConcentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
-        concentration.map { $0.getY(at: CGFloat(titrantAdded)) }
+        equationData.concentration.map { $0.getY(at: CGFloat(titrantAdded)) }
     }
 
     var currentMoles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
-        moles.map { $0.getY(at: CGFloat(titrantAdded)) }
+        equationData.moles.map { $0.getY(at: CGFloat(titrantAdded)) }
     }
 }
 

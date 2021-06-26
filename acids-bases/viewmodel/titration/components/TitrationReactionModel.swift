@@ -37,9 +37,6 @@ extension TitrantInputModel {
 }
 
 extension TitrationStrongSubstancePreEPModel: TitrationReactionModel, TitrantInputModel {
-    func resetState() {
-        titrantAdded = 0
-    }
 }
 
 extension TitrationStrongSubstancePostEPModel: TitrationReactionModel, TitrantInputModel {
@@ -50,10 +47,6 @@ extension TitrationStrongSubstancePostEPModel: TitrationReactionModel, TitrantIn
 }
 
 extension TitrationWeakSubstancePreEPModel: TitrationReactionModel, TitrantInputModel {
-    func resetState() {
-        titrantAdded = 0
-        self.beakerReactionModel = Self.initialReactingBeakerModel(previous: previous)
-    }
 }
 
 extension TitrationWeakSubstancePostEPModel: TitrationReactionModel, TitrantInputModel {

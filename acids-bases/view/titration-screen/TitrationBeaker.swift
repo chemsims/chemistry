@@ -64,8 +64,8 @@ private struct TitrationBeakerTools: View {
     let dropperEmitModel: MoleculeEmittingViewModel
     let buretteEmitModel: MoleculeEmittingViewModel
 
-    private let dropperEmitAmount: Int = 5
-    private let buretteEmitAmount = 10
+    private let dropperEmitAmount = 5
+    private let buretteEmitAmount = 1
 
     var body: some View {
         ZStack {
