@@ -14,9 +14,10 @@ struct TitrationNavigationModel {
         NavigationModel(model: viewModel, states: states)
     }
 
-    private static let states: [TitrationScreenState] = [
+    private static let states: [TitrationScreenState] =
+        strongAcidTitration + strongBaseTitration + weakAcidTitration
 
-        // strong acid titration
+    private static let strongAcidTitration: [TitrationScreenState] = [
         PrepareNewSubstanceModel(statements.intro, substance: .strongAcid),
         StopInput(statements.explainNeutralization),
         SetStatement(statements.explainMolecularIonicEquations),
@@ -35,9 +36,10 @@ struct TitrationNavigationModel {
         AddTitrantPreEP(statements.instructToAddStrongBaseTitrant),
         StopInput(statements.reachedStrongAcidEquivalencePoint),
         AddTitrantPostEP(statements.instructToAddStrongBaseTitrantPostEP, equation: .strongAcidPostEP),
-        StopInput(statements.endOfStrongAcidTitration),
- 
-        // Strong base titration
+        StopInput(statements.endOfStrongAcidTitration)
+    ]
+
+    private static let strongBaseTitration: [TitrationScreenState] = [
         PrepareNewSubstanceModel(
             statements.instructToChooseStrongBase,
             substance: .strongBase,
@@ -60,6 +62,65 @@ struct TitrationNavigationModel {
         ),
         StopInput(statements.endOfStrongBaseTitration)
     ]
+
+    private static let weakAcidTitration: [TitrationScreenState] = [
+        PrepareNewSubstanceModel(
+            statements.instructToChooseWeakAcid,
+            substance: .weakAcid,
+            equation: .weakAcidBlank
+        ),
+        SetWaterLevel(statements.instructToSetWeakAcidTitrationWaterLevel),
+        StopInput(statements.explainWeakAcidTitrationReaction),
+        AddSubstance(statements.instructToAddWeakAcid, equation: .weakAcidAddingSubstance),
+        RunWeakSubstanceInitialReaction(statements.runningWeakAcidReaction),
+        EndOfWeakSubstanceInitialReaction(
+            { model in
+                statements.endOfWeakAcidReaction(
+                    kA: model.substance.kA,
+                    pH: model.weakPrep.currentPH,
+                    substanceMoles: model.components.weakSubstancePreparationModel.currentSubstanceMoles
+                )
+            },
+            equation: .weakAcidPostInitialReaction
+        ),
+        SetStatement(statements.explainIndicator),
+        AddIndicator(
+            statements.instructToAddIndicator,
+            equation: .weakAcidPreEPBlank
+        ),
+        SetTitrantMolarity(
+            statements.instructToSetMolarityOfTitrantOfWeakAcidSolution,
+            equation: .weakAcidPreEPFilled
+        ),
+        StopInput(statements.explainWeakAcidBufferRegion),
+        SetStatement(statements.explainWeakAcidHasselbalch),
+        SetStatement(statements.explainWeakAcidBufferMoles),
+        AddTitrantPreEP(statements.instructToAddTitrantToWeakAcid),
+        StopInput(
+            { model in
+                statements.reachedWeakAcidEquivalencePoint(
+                    pH: model.weakPreEP.currentPH
+                )
+            }
+        ),
+        SetStatement(statements.explainWeakAcidEP1),
+        SetStatement(
+            { model in
+                statements.explainWeakAcidEP2(pH: model.weakPreEP.currentPH)
+            }
+        ),
+        AddTitrantPostEP(statements.instructToAddTitrantToWeakAcidPostEP),
+        StopInput(statements.endOfWeakAcidTitration)
+    ]
+}
+
+private extension TitrationViewModel {
+    var weakPrep: TitrationWeakSubstancePreparationModel {
+        components.weakSubstancePreparationModel
+    }
+    var weakPreEP: TitrationWeakSubstancePreEPModel {
+        components.weakSubstancePreEPModel
+    }
 }
 
 private let containerInputAnimation = Animation.easeOut(duration: 0.35)
@@ -89,8 +150,14 @@ class TitrationScreenState: ScreenState, SubState {
 }
 
 private class SetStatement: TitrationScreenState {
+
     init(_ statement: [TextLine], equation: TitrationViewModel.EquationState? = nil) {
         self.getStatement = { _ in statement }
+        self.equationState = equation
+    }
+
+    init(_ statement: @escaping (TitrationViewModel) -> [TextLine], equation: TitrationViewModel.EquationState? = nil) {
+        self.getStatement = statement
         self.equationState = equation
     }
 
@@ -341,5 +408,48 @@ private class SetTitrantMolarity: SetStatement {
     override func unapply(on model: TitrationViewModel) {
         super.unapply(on: model)
         model.showTitrantFill = false
+    }
+}
+
+private class RunWeakSubstanceInitialReaction: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        commonApply(on: model)
+        model.inputState = .none
+        withAnimation(containerInputAnimation) {
+            model.shakeModel.stopAll()
+        }
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
+        model.components.weakSubstancePreparationModel.reactionProgress = 0
+        commonApply(on: model)
+    }
+
+    private func commonApply(on model: TitrationViewModel) {
+        withAnimation(.linear(duration: AcidAppSettings.weakTitrationInitialReactionDuration)) {
+            model.components.weakSubstancePreparationModel.reactionProgress = 1
+        }
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        super.unapply(on: model)
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.components.weakSubstancePreparationModel.reactionProgress = 0
+        }
+    }
+
+    override func nextStateAutoDispatchDelay(model: TitrationViewModel) -> Double? {
+        AcidAppSettings.weakTitrationInitialReactionDuration
+    }
+}
+
+private class EndOfWeakSubstanceInitialReaction: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        withAnimation(.easeOut(duration: 0.5)) {
+            model.components.weakSubstancePreparationModel.reactionProgress = 1.0001
+        }
     }
 }

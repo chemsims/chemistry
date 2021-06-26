@@ -178,7 +178,7 @@ private struct TitrationBeakerTools: View {
         if model.components.state.substance.isStrong {
             return $strongPrepModel.titrantMolarity
         }
-        return .constant(0)
+        return $weakPrepModel.titrantMolarity
     }
 
     private var pHString: TextLine {

@@ -188,6 +188,10 @@ extension TitrationWeakSubstancePreEPModel {
     var pH: Equation {
         equationData.pValues.value(for: .hydrogen)
     }
+
+    var currentPH: CGFloat {
+        pH.getY(at: CGFloat(titrantAdded))
+    }
 }
 
 // MARK: - Molarity
@@ -197,14 +201,10 @@ extension TitrationWeakSubstancePreEPModel {
         .init {
             switch $0 {
             case .hydrogen: return 0
-            case .substance: return previous.equationData.molarity.value(for: .substance).getY(at: previous.reactionProgress)
-            case .titrant: return titrantMolarity
+            case .substance: return previous.molarity.value(for: .substance)
+            case .titrant: return previous.molarity.value(for: .titrant)
             }
         }
-    }
-
-    var titrantMolarity: CGFloat {
-        0.5
     }
 }
 
@@ -232,7 +232,7 @@ extension TitrationWeakSubstancePreEPModel {
     }
 
     private var finalTitrantVolume: CGFloat {
-        initialSubstanceMoles / titrantMolarity
+        initialSubstanceMoles / molarity.value(for: .titrant)
     }
 
     private var initialSubstanceVolume: CGFloat {
@@ -265,7 +265,7 @@ extension TitrationWeakSubstancePreEPModel {
     }
 
     private var titrantMoles: Equation {
-        titrantMolarity * volume.value(for: .titrant)
+        molarity.value(for: .titrant) * volume.value(for: .titrant)
     }
 
     // Returns concentration for the equation:
@@ -358,14 +358,6 @@ extension TitrationWeakSubstancePreEPModel {
     var maxTitrant: Int {
         20
     }
-}
-
-// MARK: - Beaker reaction
-extension TitrationWeakSubstancePreEPModel {
-    func updateReactionProgress() {
-
-    }
-
 }
 
 extension TitrationWeakSubstancePreEPModel {

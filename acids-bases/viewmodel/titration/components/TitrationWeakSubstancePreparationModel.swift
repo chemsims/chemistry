@@ -34,6 +34,8 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
     @Published var reactionProgress: CGFloat = 0
     @Published var substanceAdded = 0
 
+    @Published var titrantMolarity = AcidAppSettings.initialTitrantMolarity
+
     private var gridSizeFloat: CGFloat {
         CGFloat(cols * rows)
     }
@@ -144,6 +146,10 @@ extension TitrationWeakSubstancePreparationModel {
     private var initialSubstanceConcentration: CGFloat {
         CGFloat(substanceCoords.coords.count) / gridSizeFloat
     }
+
+    var currentPH: CGFloat {
+        equationData.pValues.value(for: .hydrogen).getY(at: reactionProgress)
+    }
 }
 
 // MARK: - Volume
@@ -178,12 +184,22 @@ extension TitrationWeakSubstancePreparationModel {
             }
         }
     }
+
+    var currentSubstanceMoles: CGFloat {
+        moles.value(for: .substance).getY(at: reactionProgress)
+    }
 }
 
 // MARK: - Molarity
 extension TitrationWeakSubstancePreparationModel {
     var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
-        .constant(0)
+        .init {
+            switch $0 {
+            case .hydrogen: return concentration.value(for: .hydrogen).getY(at: reactionProgress)
+            case .substance: return concentration.value(for: .substance).getY(at: reactionProgress)
+            case .titrant: return titrantMolarity
+            }
+        }
     }
 }
 
@@ -272,7 +288,7 @@ extension TitrationWeakSubstancePreparationModel {
     var ionCoords: [AnimatingBeakerMolecules] {
         [
             coordForIon(substance.primary.color, index: 0),
-            coordForIon(substance.color, index: 1)
+            coordForIon(substance.secondary.color, index: 1)
         ]
     }
 

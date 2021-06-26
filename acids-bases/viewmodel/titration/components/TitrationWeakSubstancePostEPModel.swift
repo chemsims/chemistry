@@ -169,7 +169,7 @@ extension TitrationWeakSubstancePostEPModel {
     private var finalTitrantVolume: CGFloat {
         let finalOh = finalOHConcentration
         let numer = finalOh * equivalencePointVolume
-        let denom = titrantMolarity - finalOh
+        let denom = molarity.value(for: .titrant) - finalOh
         return denom == 0 ? 0 : numer / denom
     }
 
@@ -187,7 +187,7 @@ extension TitrationWeakSubstancePostEPModel {
     var moles: EnumMap<TitrationEquationTerm.Moles, Equation> {
         .init {
             switch $0 {
-            case .titrant: return titrantMolarity * volume.value(for: .titrant)
+            case .titrant: return molarity.value(for: .titrant) * volume.value(for: .titrant)
             case .hydrogen: return ConstantEquation(value: 0)
             case .initialSecondary: return ConstantEquation(value: 0)
             case .initialSubstance: return ConstantEquation(value: 0)
@@ -206,13 +206,9 @@ extension TitrationWeakSubstancePostEPModel {
             switch $0 {
             case .hydrogen: return 0
             case .substance: return previous.equationData.molarity.value(for: .substance).getY(at: CGFloat(previous.titrantAdded))
-            case .titrant: return titrantMolarity
+            case .titrant: return previous.molarity.value(for: .titrant)
             }
         }
-    }
-
-    var titrantMolarity: CGFloat {
-        previous.titrantMolarity
     }
 }
 

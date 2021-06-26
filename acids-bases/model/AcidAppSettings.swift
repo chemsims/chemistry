@@ -2,8 +2,7 @@
 // Reactions App
 //
 
-import CoreGraphics
-
+import SwiftUI
 
 struct AcidAppSettings {
     static let minBeakerRows = 7
@@ -15,4 +14,6 @@ struct AcidAppSettings {
     static let minTitrantMolarity: CGFloat = 0.1
     static let maxTitrantMolarity: CGFloat = 0.5
     static let initialTitrantMolarity = (minTitrantMolarity + maxTitrantMolarity) / 2
+
+    static let weakTitrationInitialReactionDuration: TimeInterval = 2
 }

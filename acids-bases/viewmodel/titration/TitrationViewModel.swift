@@ -222,6 +222,7 @@ extension TitrationViewModel {
              weakAcidBlank,
              weakAcidAddingSubstance,
              weakAcidPostInitialReaction,
+             weakAcidPreEPBlank,
              weakAcidPreEPFilled,
              weakAcidAtEP,
              weakAcidPostEP
@@ -283,6 +284,9 @@ extension TitrationViewModel {
 
             case .weakAcidPostInitialReaction:
                 return .weakAcidInitialReaction(fillSubstance: true, fillAll: true)
+
+            case .weakAcidPreEPBlank:
+                return .weakBasePreEp(fillTitrantMolarity: false, fillAll: false)
 
             case .weakAcidPreEPFilled:
                 return .weakBasePreEp(fillTitrantMolarity: true, fillAll: true)

@@ -269,7 +269,13 @@ struct TitrationStatements {
         "*Shake the HA into the beaker.*"
     ]
 
-    static func runWeakAcidReaction(
+    static let runningWeakAcidReaction: [TextLine] = [
+        """
+        The reaction is now running, and the concentration of *\(hydrogen)* is increasing!
+        """
+    ]
+
+    static func endOfWeakAcidReaction(
         kA: CGFloat,
         pH: CGFloat,
         substanceMoles: CGFloat
@@ -281,9 +287,9 @@ struct TitrationStatements {
 
         return [
             """
-            The concentration of *\(hydrogen)* is getting a little higher, and the solution is becoming \
+            The concentration of *\(hydrogen)* is now a little higher, and the solution is \
             acidic. Recall the the equations from the previous weak acid-base part. *Ka is \
-            \(kAString), pH is \(pHString) and the initial moles of HA are \(molesString) moles. \
+            \(kAString), pH is \(pHString) and the initial moles of HA are \(molesString) moles*. \
             Let's remember those values!
             """
         ]
@@ -297,7 +303,7 @@ struct TitrationStatements {
         )
 
 
-    static let instructToSetMolarityOfWeakBaseTitrant =
+    static let instructToSetMolarityOfTitrantOfWeakAcidSolution =
         instructToSetMolarityOfSubstanceTitrant(substance: "strong base KOH")
 
     static let explainWeakAcidBufferRegion: [TextLine] =
