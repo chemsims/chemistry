@@ -424,7 +424,6 @@ private class AddTitrantPostEP: SetStatement {
     override func unapply(on model: TitrationViewModel) {
         super.unapply(on: model)
         let currentSubstance = model.components.state.substance
-//        model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
         model.inputState = .none
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()

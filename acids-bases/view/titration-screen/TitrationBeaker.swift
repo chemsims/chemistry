@@ -66,6 +66,7 @@ private struct TitrationBeakerTools: View {
 
     private let dropperEmitAmount = 5
     private let buretteEmitAmount = 1
+    private let buretteFastEmitAmount = 3
 
     var body: some View {
         ZStack {
@@ -123,9 +124,10 @@ private struct TitrationBeakerTools: View {
         Burette(
             fill: model.showTitrantFill ? buretteColor : nil,
             isActive: model.inputState == .addTitrant,
-            onTap: {
+            onTap: { speed in
+                let emitAmount = speed == .fast ? buretteFastEmitAmount : buretteEmitAmount
                 buretteEmitModel.addMolecule(
-                    amount: buretteEmitAmount,
+                    amount: emitAmount,
                     at: layout.buretteMoleculePosition,
                     bottomY: layout.common.topOfWaterPosition(rows: model.rows) + layout.buretteMoleculeSize
                 )

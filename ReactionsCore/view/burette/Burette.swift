@@ -8,7 +8,7 @@ public struct Burette: View {
     public init(
         fill: Color?,
         isActive: Bool,
-        onTap: @escaping () -> Void,
+        onTap: @escaping (Burette.TapSpeed) -> Void,
         style: Burette.Style = .init()
     ) {
         self.fill = fill
@@ -19,7 +19,7 @@ public struct Burette: View {
 
     let fill: Color?
     let isActive: Bool
-    let onTap: () -> Void
+    let onTap: (TapSpeed) -> Void
     let style: Style
 
     public var body: some View {
@@ -33,13 +33,17 @@ public struct Burette: View {
             )
         }
     }
+
+    public enum TapSpeed {
+        case slow, fast
+    }
 }
 
 private struct BuretteWithGeometry: View {
 
     let fill: Color?
     let isActive: Bool
-    let onTap: () -> Void
+    let onTap: (Burette.TapSpeed) -> Void
     let style: Burette.Style
     let geometry: Burette.Geometry
 
@@ -151,7 +155,7 @@ private struct BuretteTube: View {
 private struct BurettePanel: View {
 
     let isActive: Bool
-    let onTap: () -> Void
+    let onTap: (Burette.TapSpeed) -> Void
     let style: Burette.Style
     let geometry: Burette.Geometry
     let middlePanelHeightFraction: CGFloat = 0.3
@@ -174,7 +178,7 @@ private struct BurettePanel: View {
 private struct BurettePanelWithGeometry: View {
 
     let isActive: Bool
-    let onTap: () -> Void
+    let onTap: (Burette.TapSpeed) -> Void
     let style: Burette.Style
     let geometry: Burette.Geometry
     let width: CGFloat
@@ -206,10 +210,11 @@ private struct BurettePanelWithGeometry: View {
     }
 
     private var indicator: some View {
-        Button(action: onTap) {
-            Circle()
-                .foregroundColor(isActive ? style.activeIndicatorColor : style.inactiveIndicatorColor)
-        }
+        Circle()
+            .foregroundColor(
+                isActive ? style.activeIndicatorColor : style.inactiveIndicatorColor
+            )
+            .gesture(indicatorGesture)
         .frame(square: indicatorDiameter)
         .padding(.trailing, indicatorRightPadding)
         .disabled(!isActive)
@@ -260,6 +265,20 @@ private struct BurettePanelWithGeometry: View {
     var indicatorDiameter: CGFloat {
         0.8 * middlePanelHeight
     }
+
+    private var indicatorGesture: some Gesture {
+        let fastGesture = tapGesture(count: 2, speed: .fast)
+        let slowGesture = tapGesture(count: 1, speed: .slow)
+
+        return fastGesture.simultaneously(with: slowGesture)
+    }
+
+    private func tapGesture(count: Int, speed: Burette.TapSpeed) -> some Gesture {
+        TapGesture(count: count)
+            .onEnded {
+                onTap(speed)
+            }
+    }
 }
 
 extension Burette {
@@ -309,15 +328,37 @@ extension Burette {
 }
 
 struct Burette_Previews: PreviewProvider {
+
     static var previews: some View {
-        Burette(
-            fill: nil,
-            isActive: true,
-            onTap: { },
-            style: .init()
-        )
-        .frame(width: 350, height: 600)
-        .padding(400)
-        .previewLayout(.sizeThatFits)
+        ViewWrapper()
+            .previewLayout(.sizeThatFits)
+    }
+
+    private struct ViewWrapper: View {
+        @State private var slowTaps = 0
+        @State private var fastTaps = 0
+
+        var body: some View {
+            VStack {
+                Burette(
+                    fill: nil,
+                    isActive: true,
+                    onTap: { speed in
+                        if speed == .fast {
+                            fastTaps += 1
+                        } else {
+                            slowTaps += 1
+                        }
+                    },
+                    style: .init()
+                )
+                .frame(width: 350, height: 600)
+                .padding(100)
+
+                Text("\(slowTaps) slow taps")
+                Text("\(fastTaps) fast taps")
+            }
+            .font(.system(size: 50))
+        }
     }
 }
