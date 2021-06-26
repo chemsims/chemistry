@@ -84,7 +84,7 @@ extension TitrationComponentState {
     }
 }
 
-// MARK: - Data access
+// MARK: - API Data access
 extension TitrationComponentState {
     var currentPH: CGFloat {
         let isStrong = state.substance.isStrong
@@ -127,6 +127,19 @@ extension TitrationComponentState {
 
     private func currentPH(_ equationData: TitrationEquationData, _ input: CGFloat) -> CGFloat {
         equationData.pValues.value(for: .hydrogen).getY(at: input)
+    }
+}
+
+// MARK: - API Model access
+extension TitrationComponentState {
+    var currentPreparationModel: TitrationPreparationModel? {
+        guard state.phase == .preparation else {
+            return nil
+        }
+        if state.substance.isStrong {
+            return strongSubstancePreparationModel
+        }
+        return weakSubstancePreparationModel
     }
 }
 

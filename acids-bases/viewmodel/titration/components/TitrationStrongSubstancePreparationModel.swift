@@ -47,6 +47,25 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
     }
 }
 
+// MARK: Incrementing
+extension TitrationStrongSubstancePreparationModel {
+    func incrementSubstance(count: Int) {
+        let maxToAdd = min(count, remainingCountAvailable)
+        guard maxToAdd > 0 else {
+            return
+        }
+        primaryIonCoords.coords = GridCoordinateList.addingRandomElementsTo(
+            grid: primaryIonCoords.coords,
+            count: maxToAdd,
+            cols: cols,
+            rows: rows
+        )
+        withAnimation(.linear(duration: 1)) {
+            substanceAdded += maxToAdd
+        }
+    }
+}
+
 // MARK: - Equation Data
 extension TitrationStrongSubstancePreparationModel {
     var equationData: TitrationEquationData {
@@ -110,25 +129,6 @@ extension TitrationStrongSubstancePreparationModel {
     }
 }
 
-// MARK: Incrementing
-extension TitrationStrongSubstancePreparationModel {
-    func incrementSubstance(count: Int) {
-        let maxToAdd = min(count, remainingCountAvailable)
-        guard maxToAdd > 0 else {
-            return
-        }
-        primaryIonCoords.coords = GridCoordinateList.addingRandomElementsTo(
-            grid: primaryIonCoords.coords,
-            count: maxToAdd,
-            cols: cols,
-            rows: rows
-        )
-        withAnimation(.linear(duration: 1)) {
-            substanceAdded += maxToAdd
-        }
-    }
-}
-
 // MARK: - Bar chart
 extension TitrationStrongSubstancePreparationModel {
     var barChartData: [BarChartData] {
@@ -181,8 +181,10 @@ extension TitrationStrongSubstancePreparationModel {
 
 // MARK: - Input limits
 extension TitrationStrongSubstancePreparationModel {
+
+    /// Maximum substance count to ensure the `maxInitialStrongConcentration` is not exceeded.
     var maxSubstance: Int {
-        (settings.maxInitialStrongConcentration * gridSizeFloat).roundedInt()
+        Int(settings.maxInitialStrongConcentration * gridSizeFloat)
     }
 
     var canAddSubstance: Bool {
@@ -190,7 +192,12 @@ extension TitrationStrongSubstancePreparationModel {
     }
 
     var hasAddedEnoughSubstance: Bool {
-        !canAddSubstance
+        substanceAdded >= minSubstance
+    }
+
+    /// Minimum substance count to ensure the `minInitialStrongConcentration` is met
+    private var minSubstance: Int {
+        Int(ceil((settings.minInitialStrongConcentration * gridSizeFloat)))
     }
 
     private var remainingCountAvailable: Int {

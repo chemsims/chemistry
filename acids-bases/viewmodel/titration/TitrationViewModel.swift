@@ -23,9 +23,11 @@ class TitrationViewModel: ObservableObject {
         )
 
         self.shakeModel = MultiContainerShakeViewModel(
-            canAddMolecule: { _ in true },
-            addMolecules: { (_, i) in
-                self.incrementSubstance(count: i)
+            canAddMolecule: {
+                self.canAdd(substance: $0)
+            },
+            addMolecules: {
+                self.increment(substance: $0, count: $1)
             }
         )
         self.dropperEmitModel = MoleculeEmittingViewModel(
@@ -43,7 +45,7 @@ class TitrationViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat {
         didSet {
-//            components.setRows(rows)
+            components.setRows(rows)
         }
     }
     @Published var inputState = InputState.none
@@ -59,8 +61,12 @@ class TitrationViewModel: ObservableObject {
         }
     }
 
+    /// This is published instead of reading from a computer property so that observers of this model will be
+    /// notified when it changes rather than reading from a comp
+    @Published var canGoNext: Bool = true
+
     private(set) var navigation: NavigationModel<TitrationScreenState>!
-    var shakeModel: MultiContainerShakeViewModel<TempMolecule>!
+    var shakeModel: MultiContainerShakeViewModel<TitrationComponentState.Substance>!
     var dropperEmitModel: MoleculeEmittingViewModel!
     var buretteEmitModel: MoleculeEmittingViewModel!
 
@@ -72,29 +78,34 @@ class TitrationViewModel: ObservableObject {
 // MARK: Navigation
 extension TitrationViewModel {
     func next() {
-        navigation?.next()
+        if canGoNext {
+            navigation?.next()
+            updateCanGoNext()
+        }
+
     }
 
     func back() {
         navigation.back()
-    }
-
-    var nextIsDisabled: Bool {
-        false
+        canGoNext = canGoNextComputedProperty
     }
 }
 
 // MARK: Adding molecules
 extension TitrationViewModel {
-    func incrementSubstance(count: Int) {
-        if components.state.substance.isStrong {
+    private func increment(substance: TitrationComponentState.Substance, count: Int) {
+        guard substance == components.state.substance else {
+            return
+        }
+        if substance.isStrong {
             components.strongSubstancePreparationModel.incrementSubstance(count: count)
         } else {
             components.weakSubstancePreparationModel.incrementSubstance(count: count)
         }
+        updateCanGoNext()
     }
 
-    func incrementTitrant(count: Int) {
+    private func incrementTitrant(count: Int) {
         let isStrong = components.state.substance.isStrong
         switch components.state.phase {
         case .preEP where isStrong:
@@ -109,6 +120,37 @@ extension TitrationViewModel {
         default:
             return
         }
+    }
+
+    private func canAdd(substance: TitrationComponentState.Substance) -> Bool {
+        guard substance == components.state.substance else {
+            return false
+        }
+        return components.currentPreparationModel?.canAddSubstance ?? false
+    }
+}
+
+// MARK: Navigation validation
+extension TitrationViewModel {
+    private func updateCanGoNext() {
+        canGoNext = canGoNextComputedProperty
+    }
+
+    private var canGoNextComputedProperty: Bool {
+        switch inputState {
+        case .addSubstance: return hasAddedEnoughSubstance
+        case .addIndicator: return hasAddedEnoughIndicator
+        default: return true
+        }
+    }
+
+    /// Returns true if enough substance has been added, or if model component state is not adding substance
+    private var hasAddedEnoughSubstance: Bool {
+        components.currentPreparationModel?.hasAddedEnoughSubstance ?? true
+    }
+
+    private var hasAddedEnoughIndicator: Bool {
+        false
     }
 }
 

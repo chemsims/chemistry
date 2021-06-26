@@ -185,10 +185,13 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
         XCTAssert(model.canAddSubstance)
         XCTAssertFalse(model.hasAddedEnoughSubstance)
 
-        model.incrementSubstance(count: 50)
-        XCTAssertFalse(model.canAddSubstance)
+        model.incrementSubstance(count: 20)
+        XCTAssert(model.canAddSubstance)
         XCTAssert(model.hasAddedEnoughSubstance)
 
+        model.incrementSubstance(count: 20)
+
+        // We should not exceed the max substance could when incrementing by a larger amount
         XCTAssertEqual(model.substanceAdded, 30)
     }
 

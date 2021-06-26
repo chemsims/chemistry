@@ -173,7 +173,7 @@ struct TitrationSettings {
         weakIonChangeInBarHeightFraction: 0.1,
         finalMaxPValue: 13,
         maxInitialStrongConcentration: 0.5,
-        minInitialStrongConcentration: 0.3,
+        minInitialStrongConcentration: 0.25,
         beakerVolumeFromRows: LinearEquation(
             x1: CGFloat(AcidAppSettings.minBeakerRows),
             y1: 0.1,

@@ -88,6 +88,7 @@ private class SelectSubstance: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.inputState = .selectSubstance
+        model.substanceSelectionIsToggled = true
     }
 
     override func unapply(on model: TitrationViewModel) {

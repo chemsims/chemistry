@@ -548,6 +548,7 @@
 		57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */; };
 		57F10985255E985700834783 /* ConcentrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10984255E985700834783 /* ConcentrationEquation.swift */; };
 		57F4160D2642DC32007C8CE8 /* SolubilityPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */; };
+		57F467392687009900E294BE /* TitrationPreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F467382687009900E294BE /* TitrationPreparationModel.swift */; };
 		57F47750256105620041D406 /* ZeroOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4774F256105620041D406 /* ZeroOrderStatements.swift */; };
 		57F4775A25616F400041D406 /* BoundedSliderPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4775925616F400041D406 /* BoundedSliderPositioning.swift */; };
 		57F4D1B8263D71E500449222 /* SolubilityBeakerAccessibilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4D1B7263D71E500449222 /* SolubilityBeakerAccessibilityLabel.swift */; };
@@ -1260,6 +1261,7 @@
 		57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingNumber.swift; sourceTree = "<group>"; };
 		57F337F82578CE7E00EF90A1 /* Tooltip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tooltip.swift; sourceTree = "<group>"; };
 		57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPersistence.swift; sourceTree = "<group>"; };
+		57F467382687009900E294BE /* TitrationPreparationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationPreparationModel.swift; sourceTree = "<group>"; };
 		57F477412560FD440041D406 /* Beaky.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beaky.swift; sourceTree = "<group>"; };
 		57F477462560FF300041D406 /* NavButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavButton.swift; sourceTree = "<group>"; };
 		57F4774F256105620041D406 /* ZeroOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderStatements.swift; sourceTree = "<group>"; };
@@ -2355,6 +2357,7 @@
 				574978312683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift */,
 				574978352683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift */,
 				5770953326860F3C005F2981 /* TitrationReactionModel.swift */,
+				57F467382687009900E294BE /* TitrationPreparationModel.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -3944,6 +3947,7 @@
 				5786BD02267B224A001A165C /* TitrationComponents.swift in Sources */,
 				57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */,
 				577C506826812409003DAD17 /* MolesToConcentration.swift in Sources */,
+				57F467392687009900E294BE /* TitrationPreparationModel.swift in Sources */,
 				577C506026811078003DAD17 /* KToConcentration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -305,4 +305,12 @@ extension TitrationWeakSubstancePreparationModel  {
     var maxSubstance: Int {
         25
     }
+
+    var canAddSubstance: Bool {
+        true
+    }
+
+    var hasAddedEnoughSubstance: Bool {
+        true
+    }
 }

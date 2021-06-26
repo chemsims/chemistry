@@ -35,7 +35,7 @@ struct TitrationRightStack: View {
                 statement: model.statement,
                 next: model.next,
                 back: model.back,
-                nextIsDisabled: model.nextIsDisabled,
+                nextIsDisabled: !model.canGoNext,
                 settings: layout.common.beakySettings
             )
         }

@@ -64,7 +64,7 @@ private struct TitrationBeakerTools: View {
 
     let layout: TitrationScreenLayout
     @ObservedObject var model: TitrationViewModel
-    @ObservedObject var shakeModel: MultiContainerShakeViewModel<TitrationViewModel.TempMolecule>
+    @ObservedObject var shakeModel: MultiContainerShakeViewModel<TitrationComponentState.Substance>
 
     @ObservedObject var strongPrepModel: TitrationStrongSubstancePreparationModel
     @ObservedObject var strongPreEPModel: TitrationStrongSubstancePreEPModel
@@ -148,7 +148,7 @@ private struct TitrationBeakerTools: View {
             layout: layout.common,
             initialLocation: layout.containerPosition,
             activeLocation: layout.activeContainerPosition,
-            type: .A,
+            type: .strongAcid,
             label: "HCl",
             color: .purple,
             rows: model.rows,
