@@ -58,7 +58,7 @@ extension TitrationStrongSubstancePostEPModel {
     var equationData: TitrationEquationData {
         TitrationEquationData(
             substance: previous.previous.substance,
-            titrant: previous.previous.titrant,
+            titrant: previous.previous.titrant.name,
             moles: moles,
             volume: volume,
             molarity: molarity.map(ConstantEquation.init),

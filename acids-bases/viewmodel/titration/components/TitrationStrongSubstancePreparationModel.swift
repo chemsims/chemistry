@@ -9,7 +9,7 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
 
     init(
         substance: AcidOrBase,
-        titrant: String,
+        titrant: Titrant,
         cols: Int,
         rows: Int,
         settings: TitrationSettings
@@ -28,7 +28,7 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
     }
 
     var substance: AcidOrBase
-    let titrant: String
+    let titrant: Titrant
     let cols: Int
     @Published var exactRows: CGFloat
     let settings: TitrationSettings
@@ -71,7 +71,7 @@ extension TitrationStrongSubstancePreparationModel {
     var equationData: TitrationEquationData {
         TitrationEquationData(
             substance: substance,
-            titrant: titrant,
+            titrant: titrant.name,
             moles: moles,
             volume: volume,
             molarity: molarity,

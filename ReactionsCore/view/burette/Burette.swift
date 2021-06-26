@@ -65,7 +65,12 @@ private struct BuretteTube: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             container
-                .foregroundColor(fill ?? .white)
+                .foregroundColor(.white)
+
+            if fill != nil {
+                container
+                    .foregroundColor(fill!)
+            }
 
             shading
 

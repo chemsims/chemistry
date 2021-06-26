@@ -9,11 +9,13 @@ public struct RGB {
     public let r: Double
     public let g: Double
     public let b: Double
+    public let opacity: Double
 
-    public init(r: Double, g: Double, b: Double) {
+    public init(r: Double, g: Double, b: Double, opacity: Double = 1) {
         self.r = r
         self.g = g
         self.b = b
+        self.opacity = opacity
     }
 
     public static func gray(base: Double) -> RGB {
@@ -21,15 +23,19 @@ public struct RGB {
     }
 
     public var color: Color {
-        Color(red: r / 255, green: g / 255, blue: b / 255)
+        Color(red: r / 255, green: g / 255, blue: b / 255, opacity: opacity)
     }
 
     public var skColor: SKColor {
-        SKColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: 1)
+        SKColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: CGFloat(opacity))
     }
 
     public var uiColor: UIColor {
-        UIColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: 1)
+        UIColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: CGFloat(opacity))
+    }
+
+    public func withOpacity(_ newOpacity: Double) -> RGB {
+        RGB(r: r, g: g, b: b, opacity: newOpacity)
     }
 }
 
@@ -43,7 +49,8 @@ extension RGB {
         return RGB(
             r: interpolateElement(left.r, right.r),
             g: interpolateElement(left.g, right.g),
-            b: interpolateElement(left.b, right.b)
+            b: interpolateElement(left.b, right.b),
+            opacity: interpolateElement(left.opacity, right.opacity)
         )
     }
 }

@@ -77,6 +77,7 @@ private struct TitrationBeakerTools: View {
     let buretteEmitModel: MoleculeEmittingViewModel
 
     private let emitAmount: Int = 5
+    private let buretteEmitAmount = 1
 
     var body: some View {
         ZStack {
@@ -119,11 +120,11 @@ private struct TitrationBeakerTools: View {
 
     private var burette: some View {
         Burette(
-            fill: nil,
+            fill: model.showTitrantFill ? buretteColor : nil,
             isActive: model.inputState == .addTitrant,
             onTap: {
                 buretteEmitModel.addMolecule(
-                    amount: emitAmount,
+                    amount: buretteEmitAmount,
                     at: layout.buretteMoleculePosition,
                     bottomY: layout.common.topOfWaterPosition(rows: model.rows) + layout.buretteMoleculeSize
                 )
@@ -142,6 +143,15 @@ private struct TitrationBeakerTools: View {
         .position(layout.burettePosition)
     }
 
+    private var buretteColor: Color {
+        LinearRGBEquation(
+            initialX: AcidAppSettings.minTitrantMolarity,
+            finalX: AcidAppSettings.maxTitrantMolarity,
+            initialColor: .hydroxide.withOpacity(0.6),
+            finalColor: .hydroxide
+        ).getRgb(at: titrantMolarity.wrappedValue).color
+    }
+
     private var container: some View {
         AcidAppShakingContainerView(
             models: shakeModel,
@@ -156,10 +166,9 @@ private struct TitrationBeakerTools: View {
         )
     }
 
+    // Titrant molarity can only be set in the preparation model, so we always use it as a binding
     private var titrantMolarity: Binding<CGFloat> {
-        let isPrep = model.components.state.phase == .preparation
-        let isStrong = model.components.state.substance.isStrong
-        if isPrep && isStrong {
+        if model.components.state.substance.isStrong {
             return $strongPrepModel.titrantMolarity
         }
         return .constant(0)

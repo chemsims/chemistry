@@ -61,9 +61,11 @@ class TitrationViewModel: ObservableObject {
         }
     }
 
+    @Published var showTitrantFill = false
+
     /// This is published instead of reading from a computer property so that observers of this model will be
     /// notified when it changes rather than reading from a comp
-    @Published var canGoNext: Bool = true
+    @Published var canGoNext = true
 
     @Published var indicatorAdded = 0
     private let maxIndicator = 25

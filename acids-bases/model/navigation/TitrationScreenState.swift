@@ -296,6 +296,11 @@ private class SetStrongAcidTitrantMolarity: SetStatement {
         super.apply(on: model)
         model.inputState = .setTitrantMolarity
         model.equationState = .strongAcidPreEPFilled
+        model.showTitrantFill = true
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        model.showTitrantFill = false
     }
 }
 

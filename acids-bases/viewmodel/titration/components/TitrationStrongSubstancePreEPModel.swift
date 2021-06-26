@@ -56,7 +56,7 @@ extension TitrationStrongSubstancePreEPModel {
     var equationData: TitrationEquationData {
         TitrationEquationData(
             substance: previous.substance,
-            titrant: previous.titrant,
+            titrant: previous.titrant.name,
             moles: moles,
             volume: volume,
             molarity: molarity.map { ConstantEquation(value: $0) },

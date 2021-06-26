@@ -15,7 +15,7 @@ struct TitrationComponentState {
     ) {
         let strongPreparationModel = TitrationStrongSubstancePreparationModel(
             substance: strongAcid,
-            titrant: "KOH", // TODO
+            titrant: .potassiumHydroxide, // TODO
             cols: cols,
             rows: rows,
             settings: settings
@@ -262,7 +262,7 @@ private extension TitrationComponentState {
         case .preparation where substance.isStrong:
             strongSubstancePreparationModel = TitrationStrongSubstancePreparationModel(
                 substance: substance == .strongAcid ? .strongAcids.first! : .strongBases.first!,
-                titrant: substance == .strongAcid ? "KOH" : "HCl", // TODO
+                titrant: .potassiumHydroxide, // TODO
                 cols: initialCols,
                 rows: initialRows,
                 settings: settings

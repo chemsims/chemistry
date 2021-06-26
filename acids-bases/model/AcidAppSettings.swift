@@ -2,7 +2,8 @@
 // Reactions App
 //
 
-import Foundation
+import CoreGraphics
+
 
 struct AcidAppSettings {
     static let minBeakerRows = 7
@@ -10,4 +11,8 @@ struct AcidAppSettings {
     static let initialRows = (minBeakerRows + maxBeakerRows) / 2
 
     static let maxReactionProgressMolecules = 10
+
+    static let minTitrantMolarity: CGFloat = 0.1
+    static let maxTitrantMolarity: CGFloat = 0.5
+    static let initialTitrantMolarity = (minTitrantMolarity + maxTitrantMolarity) / 2
 }
