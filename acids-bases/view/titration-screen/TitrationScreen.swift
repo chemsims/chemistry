@@ -62,6 +62,16 @@ struct TitrationScreenLayout {
             height: 0.9 * availableHeight
         )
     }
+
+    /// Height of the water from the bottom of the beaker
+    func waterHeight(forRows rows: CGFloat) -> CGFloat {
+        common.waterHeight(rows: rows)
+    }
+
+    /// Position of the top of the water from the top of the screen
+    func topOfWaterPosition(forRows rows: CGFloat) -> CGFloat {
+        common.topOfWaterPosition(rows: rows) - common.toggleHeight
+    }
 }
 
 struct TitrationScreen_Previews: PreviewProvider {

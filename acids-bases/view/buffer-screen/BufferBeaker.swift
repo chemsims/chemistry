@@ -116,7 +116,9 @@ private struct BufferMoleculeContainers: View {
             type: phase,
             label: containerLabel(phase: phase),
             color: containerColor(phase: phase),
-            rows: model.rows,
+            topOfWaterPosition: layout.common.topOfWaterPosition(
+                rows: model.rows
+            ),
             disabled: model.input != .addMolecule(phase: phase)
         )
     }

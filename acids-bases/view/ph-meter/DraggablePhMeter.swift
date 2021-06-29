@@ -22,6 +22,8 @@ struct DraggablePhMeter: View {
     /// Number of rows in the beaker
     let rows: CGFloat
 
+    let beakerDistanceFromBottomOfScreen: CGFloat
+
     @GestureState private var pHMeterOffset = CGSize.zero
 
     var body: some View {
@@ -45,7 +47,7 @@ struct DraggablePhMeter: View {
 
     private var isIntersectingWater: Bool {
         let waterHeight = layout.waterHeight(rows: rows)
-        let centerWaterY = layout.height - (waterHeight / 2)
+        let centerWaterY = layout.height - (waterHeight / 2) - beakerDistanceFromBottomOfScreen 
 
         let pHCenterX = initialPosition.x + pHMeterOffset.width
         let phCenterY = initialPosition.y + pHMeterOffset.height

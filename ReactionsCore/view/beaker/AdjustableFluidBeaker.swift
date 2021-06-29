@@ -103,20 +103,20 @@ public struct AdjustableFluidBeakerSettings {
         self.sliderHeight = sliderHeight
     }
 
-    let minRows: Int
-    let maxRows: Int
+    public let minRows: Int
+    public let maxRows: Int
 
-    let beakerWidth: CGFloat
-    let beakerHeight: CGFloat
+    public let beakerWidth: CGFloat
+    public let beakerHeight: CGFloat
 
-    let sliderSettings: SliderGeometrySettings
-    let sliderHeight: CGFloat
+    public let sliderSettings: SliderGeometrySettings
+    public let sliderHeight: CGFloat
 
-    var sliderPadding: CGFloat {
+    public var sliderPadding: CGFloat {
         -0.2 * sliderSettings.handleWidth
     }
 
-    var sliderAxis: AxisPositionCalculations<CGFloat> {
+    public var sliderAxis: AxisPositionCalculations<CGFloat> {
         BeakerLiquidSliderAxis.axis(
             minRows: minRows,
             maxRows: maxRows,

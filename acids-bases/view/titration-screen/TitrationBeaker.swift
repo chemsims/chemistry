@@ -12,15 +12,9 @@ struct TitrationBeaker: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            TitrationBeakerMolecules(
+            TitrationMacroBeaker(
                 layout: layout,
-                model: model,
-                strongSubstancePreparationModel: model.components.strongSubstancePreparationModel,
-                strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel,
-                weakPrepModel: model.components.weakSubstancePreparationModel,
-                weakPreEPReaction: model.components.weakSubstancePreEPModel.beakerReactionModel,
-                weakPostEPModel: model.components.weakSubstancePostEPModel
+                model: model
             )
 
             TitrationBeakerTools(
@@ -91,7 +85,10 @@ private struct TitrationBeakerTools: View {
             dropperEmitModel: model.dropperEmitModel,
             buretteEmitModel: model.buretteEmitModel
         )
-        .frame(width: layout.toolStackWidth, height: layout.common.height)
+        .frame(
+            width: layout.toolStackWidth,
+            height: layout.common.height
+        )
     }
 
     private var phMeter: some View {
@@ -99,7 +96,8 @@ private struct TitrationBeakerTools: View {
             labelWhenIntersectingWater: pHString,
             layout: layout.common,
             initialPosition: layout.phMeterPosition,
-            rows: model.rows
+            rows: model.rows,
+            beakerDistanceFromBottomOfScreen: layout.common.toggleHeight
         )
     }
 
@@ -112,7 +110,7 @@ private struct TitrationBeakerTools: View {
                     amount: dropperEmitAmount,
                     at: layout.dropperMoleculePosition,
                     bottomY:
-                        layout.common.topOfWaterPosition(rows: model.rows) + layout.dropperMoleculeSize
+                        layout.topOfWaterPosition(forRows: model.rows) + layout.dropperMoleculeSize
                 )
             }
         )
@@ -173,7 +171,9 @@ private struct TitrationBeakerTools: View {
             type: model.components.state.substance,
             label: model.substance.symbol,
             color: model.substance.color,
-            rows: model.rows,
+            topOfWaterPosition: layout.topOfWaterPosition(
+                forRows: model.rows
+            ),
             disabled: model.inputState != .addSubstance
         )
     }
@@ -278,7 +278,7 @@ private struct TitrationToolsMoleculesView: View {
                 Rectangle()
                     .frame(
                         width: layout.common.beakerWidth,
-                        height: layout.common.topOfWaterPosition(rows: rows)
+                        height: layout.topOfWaterPosition(forRows: rows)
                     )
                 Spacer()
             }
@@ -382,76 +382,6 @@ private extension TitrationScreenLayout {
 
     private var availableWidthForDropperAndBurette: CGFloat {
         toolStackWidth - (3 * common.beakerToolsSpacing) - common.containerSize.width - common.phMeterSize.width
-    }
-}
-
-private struct TitrationBeakerMolecules: View {
-
-    let layout: TitrationScreenLayout
-    @ObservedObject var model: TitrationViewModel
-    @ObservedObject var strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
-    @ObservedObject var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
-    @ObservedObject var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
-
-    @ObservedObject var weakPrepModel: TitrationWeakSubstancePreparationModel
-    @ObservedObject var weakPreEPReaction: ReactingBeakerViewModel<ExtendedSubstancePart>
-    @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
-
-    var body: some View {
-        AdjustableFluidBeaker(
-            rows: $model.rows,
-            molecules: molecules,
-            animatingMolecules: animatingMolecules,
-            currentTime: equationInput,
-            settings: layout.common.adjustableBeakerSettings,
-            canSetLevel: model.inputState == .setWaterLevel,
-            beakerColorMultiply: .white,
-            sliderColorMultiply: .white,
-            beakerModifier: BeakerAccessibilityModifier()
-        )
-    }
-
-    private var molecules: [BeakerMolecules] {
-        let isStrong = componentState.substance.isStrong
-        switch componentState.phase {
-        case .preparation where isStrong: return [strongSubstancePreparationModel.primaryIonCoords]
-        case .postEP where isStrong: return [strongSubstancePostEPModel.titrantMolecules]
-        case .preEP where isStrong: return []
-
-        case .preparation: return [weakPrepModel.substanceCoords]
-        case .preEP: return weakPreEPReaction.molecules.map(\.molecules)
-        case .postEP: return [weakPostEPModel.ionMolecules, weakPostEPModel.secondaryMolecules]
-        }
-    }
-
-    private var animatingMolecules: [AnimatingBeakerMolecules] {
-        let isStrong = componentState.substance.isStrong
-        switch componentState.phase {
-        case .preparation where isStrong: return []
-        case .preEP where isStrong: return [strongSubstancePreEPModel.primaryIonCoords]
-        case .postEP where isStrong: return []
-
-        case .preparation: return []
-        case .preEP: return []
-        case .postEP: return []
-        }
-    }
-
-    private var equationInput: CGFloat {
-        let isStrong = componentState.substance.isStrong
-        switch componentState.phase {
-        case .preparation where isStrong: return 0
-        case .preEP where isStrong: return CGFloat(strongSubstancePreEPModel.titrantAdded)
-        case .postEP where isStrong: return 0
-
-        case .preparation: return weakPrepModel.reactionProgress
-        case .preEP: return 0
-        case .postEP: return 0
-        }
-    }
-
-    private var componentState: TitrationComponentState.State {
-        model.components.state
     }
 }
 

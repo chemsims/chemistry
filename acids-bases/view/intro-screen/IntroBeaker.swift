@@ -72,7 +72,8 @@ private struct IntroBeakerContainers: View {
             labelWhenIntersectingWater: phString,
             layout: layout.common,
             initialPosition: CGPoint(x: phMeterX, y: layout.containerRowYPos),
-            rows: model.rows
+            rows: model.rows,
+            beakerDistanceFromBottomOfScreen: 0
         )
     }
 
@@ -89,7 +90,9 @@ private struct IntroBeakerContainers: View {
             type: type,
             label: substance?.symbol ?? "",
             color: substance?.color ?? RGB.placeholderContainer.color,
-            rows: model.rows,
+            topOfWaterPosition: layout.common.topOfWaterPosition(
+                rows: model.rows
+            ),
             disabled: model.inputState != .addSubstance(type: type)
         )
     }

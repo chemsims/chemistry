@@ -1,0 +1,220 @@
+//
+// Reactions App
+//
+
+import SwiftUI
+import ReactionsCore
+
+struct TitrationMacroBeaker: View {
+
+    init(
+        layout: TitrationScreenLayout,
+        model: TitrationViewModel
+    ) {
+        self.layout = layout
+        self.model = model
+        self.beakerSettings = layout.common.adjustableBeakerSettings
+    }
+
+    let layout: TitrationScreenLayout
+    let beakerSettings: AdjustableFluidBeakerSettings
+    @ObservedObject var model: TitrationViewModel
+
+    @State private var showMacroscopic = false
+
+    var body: some View {
+        VStack(alignment: .trailing, spacing: 0) {
+            HStack(alignment: .bottom, spacing: 0) {
+                slider
+                if showMacroscopic {
+                    macroscopicBeaker
+                } else {
+                    microscopicBeaker
+                }
+            }
+            toggle
+        }
+    }
+
+    private var toggle: some View {
+        HStack {
+            SelectionToggleText(
+                text: "Microscopic",
+                isSelected: !showMacroscopic,
+                action: { showMacroscopic = false }
+            )
+
+            SelectionToggleText(
+                text: "Macroscopic",
+                isSelected: showMacroscopic,
+                action: { showMacroscopic = true }
+            )
+        }
+        .font(.system(size: layout.common.toggleFontSize))
+        .frame(height: layout.common.toggleHeight)
+        .frame(
+            minWidth: layout.common.beakerWidth,
+            maxWidth: layout.common.beakerWidth + layout.common.sliderSettings.handleWidth
+        )
+        .minimumScaleFactor(0.1)
+        .lineLimit(1)
+    }
+
+    private var slider: some View {
+        CustomSlider(
+            value: $model.rows,
+            axis: beakerSettings.sliderAxis,
+            orientation: .portrait,
+            includeFill: true,
+            settings: beakerSettings.sliderSettings,
+            disabled: model.inputState == .setWaterLevel,
+            useHaptics: true
+        )
+        .frame(
+            width: beakerSettings.sliderSettings.handleWidth,
+            height: beakerSettings.sliderHeight
+        )
+        .background(
+            Color.white
+                .padding(.horizontal, beakerSettings.sliderPadding)
+                .padding(.top, beakerSettings.sliderPadding)
+        )
+        .colorMultiply(.white)
+        .accessibility(
+            label: Text("Slider for number of rows of molecules in beaker")
+        )
+    }
+
+    private var microscopicBeaker: some View {
+        TitrationFilledBeaker(
+            model: model
+        )
+        .frame(
+            width: beakerSettings.beakerWidth,
+            height: beakerSettings.beakerHeight
+        )
+        .colorMultiply(.white)
+    }
+
+    private var macroscopicBeaker: some View {
+        TitrationMacroscopicBeaker(
+            layout: layout,
+            model: model
+        )
+        .frame(
+            width: beakerSettings.beakerWidth,
+            height: beakerSettings.beakerHeight
+        )
+    }
+}
+
+private struct TitrationMacroscopicBeaker: View {
+    let layout: TitrationScreenLayout
+    @ObservedObject var model: TitrationViewModel
+
+    var body: some View {
+        FillableBeaker(
+            waterColor: .red,
+            waterHeight: layout.waterHeight(forRows: model.rows),
+            highlightBeaker: false,
+            settings: .init(beakerWidth: layout.common.beakerWidth)
+        ) {
+            EmptyView()
+        }
+    }
+}
+
+private struct TitrationFilledBeaker: View {
+
+    init(model: TitrationViewModel) {
+        self.model = model
+        self.strongPrepModel = model.components.strongSubstancePreparationModel
+        self.strongPreEPModel = model.components.strongSubstancePreEPModel
+        self.strongPostEPModel = model.components.strongSubstancePostEPModel
+        self.weakPrepModel = model.components.weakSubstancePreparationModel
+        self.weakPreEPReaction = model.components.weakSubstancePreEPModel.beakerReactionModel
+        self.weakPostEPModel = model.components.weakSubstancePostEPModel
+    }
+
+    @ObservedObject var model: TitrationViewModel
+
+    @ObservedObject var strongPrepModel: TitrationStrongSubstancePreparationModel
+    @ObservedObject var strongPreEPModel: TitrationStrongSubstancePreEPModel
+    @ObservedObject var strongPostEPModel: TitrationStrongSubstancePostEPModel
+
+    @ObservedObject var weakPrepModel: TitrationWeakSubstancePreparationModel
+    @ObservedObject var weakPreEPReaction: ReactingBeakerViewModel<ExtendedSubstancePart>
+    @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
+
+
+    var body: some View {
+        FilledBeaker(
+            molecules: molecules,
+            animatingMolecules: animatingMolecules,
+            currentTime: equationInput,
+            rows: model.rows
+        )
+    }
+
+    private var molecules: [BeakerMolecules] {
+        let isStrong = componentState.substance.isStrong
+        switch componentState.phase {
+        case .preparation where isStrong: return [strongPrepModel.primaryIonCoords]
+        case .postEP where isStrong: return [strongPostEPModel.titrantMolecules]
+        case .preEP where isStrong: return []
+
+        case .preparation: return [weakPrepModel.substanceCoords]
+        case .preEP: return weakPreEPReaction.molecules.map(\.molecules)
+        case .postEP: return [weakPostEPModel.ionMolecules, weakPostEPModel.secondaryMolecules]
+        }
+    }
+
+    private var animatingMolecules: [AnimatingBeakerMolecules] {
+        let isStrong = componentState.substance.isStrong
+        switch componentState.phase {
+        case .preparation where isStrong: return []
+        case .preEP where isStrong: return [strongPreEPModel.primaryIonCoords]
+        case .postEP where isStrong: return []
+
+        case .preparation: return []
+        case .preEP: return []
+        case .postEP: return []
+        }
+    }
+
+    private var equationInput: CGFloat {
+        let isStrong = componentState.substance.isStrong
+        switch componentState.phase {
+        case .preparation where isStrong: return 0
+        case .preEP where isStrong: return CGFloat(strongPreEPModel.titrantAdded)
+        case .postEP where isStrong: return 0
+
+        case .preparation: return weakPrepModel.reactionProgress
+        case .preEP: return 0
+        case .postEP: return 0
+        }
+    }
+
+    private var componentState: TitrationComponentState.State {
+        model.components.state
+    }
+}
+
+struct TitrationMacroBeaker_Previews: PreviewProvider {
+    static var previews: some View {
+        GeometryReader { geo in
+            TitrationMacroBeaker(
+                layout: .init(
+                    common: .init(
+                        geometry: geo,
+                        verticalSizeClass: nil,
+                        horizontalSizeClass: nil
+                    )
+                ),
+                model: .init()
+            )
+        }
+        .previewLayout(.iPhone8Landscape)
+        .padding()
+    }
+}

@@ -16,7 +16,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
     let type: ContainerType
     let label: String
     let color: Color
-    let rows: CGFloat
+    let topOfWaterPosition: CGFloat
     let disabled: Bool
 
     var body: some View {
@@ -50,7 +50,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
                 Rectangle()
                     .frame(
                         width: layout.beakerWidth + (2 * layout.containerSize.height),
-                        height: layout.topOfWaterPosition(rows: rows)
+                        height: topOfWaterPosition
                     )
                 Spacer()
             }
@@ -71,7 +71,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
         models.start(
             for: element,
             at: activeLocation,
-            bottomY: layout.topOfWaterPosition(rows: rows) + (layout.moleculeSize / 2),
+            bottomY: topOfWaterPosition + (layout.moleculeSize / 2),
             halfXRange: layout.containerShakeHalfXRange,
             halfYRange: layout.containerShakeHalfYRange
         )
