@@ -204,7 +204,7 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
     }
 
     func testInputLimits() {
-        let firstModel = TitrationStrongSubstancePreparationModel()
+        let firstModel = TitrationStrongSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 15)
         let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
         secondModel.incrementTitrant(count: 15)

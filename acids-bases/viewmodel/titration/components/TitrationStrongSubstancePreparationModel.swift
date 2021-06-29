@@ -12,7 +12,8 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
         titrant: Titrant,
         cols: Int,
         rows: Int,
-        settings: TitrationSettings
+        settings: TitrationSettings,
+        maxReactionProgressMolecules: Int = AcidAppSettings.maxReactionProgressMolecules
     ) {
         self.substance = substance
         self.cols = cols
@@ -24,6 +25,26 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
             coords: [],
             color: substance.primary.color,
             label: "" // TODO
+        )
+        self.reactionModel = ReactionProgressChartViewModel(
+            molecules: .init {
+                switch $0 {
+                case .hydrogen: return .init(
+                    label: "H^+^",
+                    columnIndex: 0,
+                    initialCount: 0,
+                    color: RGB.hydrogen.color
+                )
+                case .hydroxide: return .init(
+                    label: "OH^-^",
+                    columnIndex: 1,
+                    initialCount: 0,
+                    color: RGB.hydroxide.color
+                )
+                }
+            },
+            settings: .init(maxMolecules: maxReactionProgressMolecules),
+            timing: .init()
         )
     }
 
@@ -37,6 +58,8 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
     @Published var substanceAdded: Int = 0
 
     @Published var titrantMolarity: CGFloat = 0.4
+
+    @Published var reactionModel: ReactionProgressChartViewModel<PrimaryIon>
 
     var rows: Int {
         GridCoordinateList.availableRows(for: exactRows)
@@ -63,6 +86,7 @@ extension TitrationStrongSubstancePreparationModel {
         withAnimation(.linear(duration: 1)) {
             substanceAdded += maxToAdd
         }
+        updateReactionProgress()
     }
 }
 
@@ -267,5 +291,30 @@ extension TitrationStrongSubstancePreparationModel {
 
     var currentVolume: CGFloat {
         settings.beakerVolumeFromRows.getY(at: exactRows)
+    }
+}
+
+// MARK: - Reaction progress
+extension TitrationStrongSubstancePreparationModel {
+    private func updateReactionProgress() {
+        let desiredCount = primaryMoleculesFromSubstance.getY(at: CGFloat(substanceAdded)).roundedInt()
+        let currentCount = reactionModel.moleculeCounts(ofType: substance.primary)
+        let delta = desiredCount - currentCount
+
+        assert(delta >= 0, "Delta should not be negative")
+        if delta > 0 {
+            (0..<delta).forEach { _ in
+                _ = reactionModel.addMolecule(substance.primary)
+            }
+        }
+    }
+
+    private var primaryMoleculesFromSubstance: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: 0,
+            x2: CGFloat(maxSubstance),
+            y2: CGFloat(reactionModel.settings.maxMolecules)
+        )
     }
 }

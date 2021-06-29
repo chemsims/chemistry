@@ -39,7 +39,7 @@ public class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: Observ
     }
 
     @Published var molecules: [Molecule]
-    let settings: Settings
+    public let settings: Settings
     let timing: Timing
 
     weak var delegate: ReactionProgressChartViewModelDelegate<MoleculeType>?
@@ -427,7 +427,7 @@ extension ReactionProgressChartViewModel {
             self.maxMolecules = maxMolecules
         }
 
-        let maxMolecules: Int
+        public let maxMolecules: Int
         var maxRowIndex: Int {
             maxMolecules - 1
         }

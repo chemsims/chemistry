@@ -10,15 +10,17 @@ extension TitrationStrongSubstancePreparationModel {
 
     /// Returns an instance using default arguments, and a 10x10 grid
     convenience init(
-        substance: AcidOrBase = .strongAcids.first!,
-        settings: TitrationSettings = .standard
+        substance: AcidOrBase,
+        settings: TitrationSettings = .standard,
+        maxReactionProgressMolecules: Int = AcidAppSettings.maxReactionProgressMolecules
     ) {
         self.init(
             substance: substance,
             titrant: .potassiumHydroxide,
             cols: 10,
             rows: 10,
-            settings: settings
+            settings: settings,
+            maxReactionProgressMolecules: maxReactionProgressMolecules
         )
     }
 

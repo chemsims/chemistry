@@ -8,6 +8,41 @@ import ReactionsCore
 struct TitrationBarsOrReactionProgress: View {
 
     let layout: TitrationScreenLayout
+    @ObservedObject var model: TitrationViewModel
+
+    @State private var showBarChart = true
+
+    var body: some View {
+        VStack(spacing: 0) {
+            TitrationBarChart(layout: layout, model: model)
+            toggle
+        }
+    }
+
+    private var toggle: some View {
+        HStack {
+            SelectionToggleText(
+                text: "Bars",
+                isSelected: showBarChart,
+                action: { showBarChart = true }
+            )
+
+            SelectionToggleText(
+                text: "Neutralization",
+                isSelected: !showBarChart,
+                action: { showBarChart = false }
+            )
+        }
+        .font(.system(size: layout.common.toggleFontSize))
+        .frame(height: layout.common.toggleHeight)
+        .frame(width: layout.common.chartSize)
+        .minimumScaleFactor(0.1)
+        .lineLimit(1)
+    }
+}
+
+private struct TitrationBarChart: View {
+    let layout: TitrationScreenLayout
     let state: TitrationComponentState.State
 
     @ObservedObject var strongSubstancePreparationModel: TitrationStrongSubstancePreparationModel
@@ -53,7 +88,7 @@ struct TitrationBarsOrReactionProgress: View {
     }
 }
 
-extension TitrationBarsOrReactionProgress {
+extension TitrationBarChart {
     init(
         layout: TitrationScreenLayout,
         model: TitrationViewModel

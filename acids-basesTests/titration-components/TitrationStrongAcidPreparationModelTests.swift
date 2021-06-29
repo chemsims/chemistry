@@ -176,6 +176,7 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
 
     func testInputLimits() {
         let model = TitrationStrongSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(
                 maxInitialStrongConcentration: 0.3,
                 minInitialStrongConcentration: 0.2
