@@ -50,10 +50,12 @@ extension ReactionProgressChart {
         .frame(square: geometry.chartSize)
     }
 
+    // NB: Using a scale of 0 results in warnings being printed
+    // in the console, so make sure the scale is above 0
     private func moleculeView(_ molecule: Molecule) -> some View {
         Circle()
             .frame(square: geometry.moleculeSize)
-            .scaleEffect(molecule.scale)
+            .scaleEffect(max(0.001, molecule.scale))
             .foregroundColor(molecule.definition.color)
             .position(molecule.position(using: geometry))
             .opacity(molecule.opacity)
