@@ -13,5 +13,8 @@ extension RGB {
 
     static let placeholderContainer = RGB.gray(base: 220)
 
-    static let indicator = RGB(r: 224, g: 140, b: 170)
+    static let indicator = RGB(r: 125, g: 122, b: 188)
+
+    static let maxIndicator = RGB(r: 125, g: 122, b: 188)
+    static let equivalencePointLiquid = RGB(r: 244, g: 164, b: 167)
 }

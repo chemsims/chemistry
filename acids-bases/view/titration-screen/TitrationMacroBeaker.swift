@@ -20,7 +20,7 @@ struct TitrationMacroBeaker: View {
     let beakerSettings: AdjustableFluidBeakerSettings
     @ObservedObject var model: TitrationViewModel
 
-    @State private var showMacroscopic = false
+    @State private var showMacroscopic = true
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
@@ -67,7 +67,7 @@ struct TitrationMacroBeaker: View {
             orientation: .portrait,
             includeFill: true,
             settings: beakerSettings.sliderSettings,
-            disabled: model.inputState == .setWaterLevel,
+            disabled: model.inputState != .setWaterLevel,
             useHaptics: true
         )
         .frame(
@@ -109,17 +109,52 @@ struct TitrationMacroBeaker: View {
 }
 
 private struct TitrationMacroscopicBeaker: View {
+
+    init(layout: TitrationScreenLayout, model: TitrationViewModel) {
+        self.layout = layout
+        self.model = model
+        self.strongModel = model.components.strongSubstancePreEPModel
+        self.weakModel = model.components.weakSubstancePreEPModel
+    }
+
     let layout: TitrationScreenLayout
     @ObservedObject var model: TitrationViewModel
+    @ObservedObject var strongModel: TitrationStrongSubstancePreEPModel
+    @ObservedObject var weakModel: TitrationWeakSubstancePreEPModel
 
     var body: some View {
         FillableBeaker(
-            waterColor: .red,
+            waterColor: color.getRgb(at: equationInput).color,
             waterHeight: layout.waterHeight(forRows: model.rows),
-            highlightBeaker: false,
+            highlightBeaker: true,
             settings: .init(beakerWidth: layout.common.beakerWidth)
         ) {
             EmptyView()
+        }
+    }
+
+    private var color: RGBEquation {
+        LinearRGBEquation(
+            initialX: 0,
+            finalX: equationMaxInput,
+            initialColor: model.macroBeakerState.startColor,
+            finalColor: model.macroBeakerState.endColor
+        )
+    }
+
+    private var equationMaxInput: CGFloat {
+        switch model.macroBeakerState {
+        case .indicator: return CGFloat(model.maxIndicator)
+        case .strongTitrant: return CGFloat(strongModel.maxTitrant)
+        case .weakTitrant: return CGFloat(weakModel.maxTitrant)
+        }
+    }
+
+    private var equationInput: CGFloat {
+        switch model.macroBeakerState {
+        case .indicator: return CGFloat(model.indicatorAdded)
+        case .strongTitrant: return CGFloat(strongModel.titrantAdded)
+        case .weakTitrant: return CGFloat(weakModel.titrantAdded)
         }
     }
 }

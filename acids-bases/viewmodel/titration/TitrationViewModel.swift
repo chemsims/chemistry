@@ -67,8 +67,10 @@ class TitrationViewModel: ObservableObject {
     /// notified when it changes rather than reading from a comp
     @Published var canGoNext = true
 
-    @Published var indicatorAdded = 0
-    private let maxIndicator = 25
+    @Published private(set) var indicatorAdded = 0
+    let maxIndicator = 25
+
+    @Published var macroBeakerState = MacroBeakerState.indicator
 
     private(set) var navigation: NavigationModel<TitrationScreenState>!
     var shakeModel: MultiContainerShakeViewModel<TitrationComponentState.Substance>!
@@ -352,5 +354,23 @@ extension TitrationViewModel {
         case strongSubstancePreparation,
              strongSubstancePreEP,
              strongSubstancePostEP
+    }
+
+    enum MacroBeakerState {
+        case indicator, strongTitrant, weakTitrant
+
+        var startColor: RGB {
+            switch self {
+            case .indicator: return .beakerLiquid
+            default: return .maxIndicator
+            }
+        }
+
+        var endColor: RGB {
+            switch self {
+            case .indicator: return .maxIndicator
+            default: return .equivalencePointLiquid
+            }
+        }
     }
 }

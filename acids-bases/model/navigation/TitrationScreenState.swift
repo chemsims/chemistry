@@ -283,6 +283,7 @@ private class PrepareNewSubstanceModel: SetStatement {
     private func commonApply(on model: TitrationViewModel) {
         model.inputState = .selectSubstance
         model.substanceSelectionIsToggled = true
+        model.macroBeakerState = .indicator
     }
 
     override func unapply(on model: TitrationViewModel) {
@@ -381,6 +382,11 @@ private class AddTitrantPreEP: SetStatement {
     }
 
     private func applyCommon(on model: TitrationViewModel) {
+        if model.components.state.substance.isStrong {
+            model.macroBeakerState = .strongTitrant
+        } else {
+            model.macroBeakerState = .weakTitrant
+        }
         withAnimation(containerInputAnimation) {
             model.inputState = .addTitrant
             model.shakeModel.stopAll()
@@ -395,6 +401,7 @@ private class AddTitrantPreEP: SetStatement {
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
         }
+        model.macroBeakerState = .indicator
     }
 }
 
@@ -445,8 +452,10 @@ private class AddIndicator: SetStatement {
 
     override func unapply(on model: TitrationViewModel) {
         super.unapply(on: model)
-        model.inputState = .none
-        model.resetIndicator()
+        withAnimation(containerInputAnimation) {
+            model.inputState = .none
+            model.resetIndicator()
+        }
     }
 }
 
