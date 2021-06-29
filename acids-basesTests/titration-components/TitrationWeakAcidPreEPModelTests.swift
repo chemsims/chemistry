@@ -164,7 +164,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
     }
 
     func testInputLimits() {
-        let firstModel = TitrationWeakSubstancePreparationModel()
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
 
         let model = TitrationWeakSubstancePreEPModel(previous: firstModel)

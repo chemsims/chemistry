@@ -172,6 +172,7 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
 
     func testInputLimits() {
         let model = TitrationWeakSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(
                 minInitialWeakConcentration: 0.111
             )

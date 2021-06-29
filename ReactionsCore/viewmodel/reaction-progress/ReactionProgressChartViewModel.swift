@@ -93,26 +93,28 @@ extension ReactionProgressChartViewModel {
         return triggerSequence(reaction)
     }
 
-    /// Schedules a sequence of reactions to take place over the given duration.
+    /// Schedules adding multiple molecules over the given duration.
     ///
-    /// Scheduling reaction does not guarantee that any of them will run, it instead schedules the attempt to start them.
-    /// The attempt to start a reaction may fail if, for example, there are no more molecules of type  `consumedMolecule` left.
-    ///
-    /// The first reaction is run immediately, with all other reactions equally spaced in the available `duration`, with the same
-    /// length gap between the final reaction and the end of the reaction. For example, given a `count` of 4 and a `duration`
-    /// of 1s, then the reactions will be triggered at: 0s, 0.25s 0.5s and 0.75s.
-    ///
-    /// There is no guarantee that reaction will finish before the given `duration`, only that the final reaction will
-    /// be started before the `duration`. The duration of the reaction itself may take longer than the time remaining however,
-    /// in which case it will exceed the duration.
-    public func scheduleReactionFromExisting(
-        consuming consumedMolecule: MoleculeType,
-        producing producedMolecules: [MoleculeType],
-        count: Int,
-        duration: TimeInterval
-    ) {
-        let reaction = ActionSequence.reactionFromExisting(consumed: consumedMolecule, produced: producedMolecules)
-        scheduleSequence(reaction, count: count, duration: duration)
+    /// - Returns: True if all of the reactions were triggers, otherwise false. Note that the reactions will be triggered
+    /// until the first one fails to trigger. This means any reactions will run, prior to the first reaction which was triggered.
+    /// Therefore the provided `count` is not guaranteed to run, in case there is not enough capacity in the column
+    /// for example.
+    public func addMolecules(_ type: MoleculeType, count: Int, duration: TimeInterval) -> Bool {
+        precondition(count > 0, "Count must be above zero")
+        let reaction = ActionSequence.addMolecules(added: type)
+
+        let dt = count == 1 ? 0 : duration / Double(count - 1)
+
+        var didTriggerAll = true
+
+        (0..<count).forEach { i in
+            let reactionWithDelay = reaction.prependingDelay(Double(i) * dt)
+            let didTrigger = triggerSequence(reactionWithDelay)
+            if !didTrigger {
+                didTriggerAll = false
+            }
+        }
+        return didTriggerAll
     }
 
     /// Triggers adding a molecule of type `type`.
@@ -156,21 +158,6 @@ extension ReactionProgressChartViewModel {
 // MARK: Trigger actions
 extension ReactionProgressChartViewModel {
 
-    private func scheduleSequence(_ sequence: ActionSequence, count: Int, duration: TimeInterval) {
-        guard count > 0 else {
-            return
-        }
-
-        let gap = duration / Double(count + 1)
-        (0..<count).forEach { i in
-            let delay = Double(i) * gap
-            let delayMillis = Int(delay * 1000)
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayMillis)) { [weak self] in
-                _ = self?.triggerSequence(sequence)
-            }
-        }
-    }
-
     /// Triggers the `sequence`, returning true if it could be triggered, or false if it was not triggered
     private func triggerSequence(_ sequence: ActionSequence) -> Bool {
         guard canPerform(reaction: sequence) else {
@@ -210,6 +197,7 @@ extension ReactionProgressChartViewModel {
         _ action: ReactionAction
     ) -> TimeInterval {
         switch action {
+        case let .wait(delay): return delay
         case let .prepareMoleculeForDropping(type: type, id: id):
             return prepareMoleculeForDropping(type, id: id)
         case let .moveMoleculeToTopOfColumn(id: id):
@@ -488,6 +476,7 @@ extension ReactionProgressChartViewModel {
         case deleteBottomMolecules(types: [MoleculeType])
         case slideColumnsDown(types: [MoleculeType])
         case addMolecule(types: [MoleculeType])
+        case wait(delay: TimeInterval)
     }
 
     private struct ActionSequence {
@@ -495,6 +484,14 @@ extension ReactionProgressChartViewModel {
         let added: [MoleculeType]
         let consumed: [MoleculeType]
         var pendingActions: [ReactionAction]
+
+        func prependingDelay(_ delay: TimeInterval) -> ActionSequence {
+            ActionSequence(
+                added: added,
+                consumed: consumed,
+                pendingActions: [.wait(delay: delay)] + pendingActions
+            )
+        }
 
         static func reaction(
             added: MoleculeType,
@@ -571,6 +568,7 @@ extension ReactionProgressChartViewModel {
             pendingActions.contains { action in
                 switch action {
                 case let .addMolecule(types): return types.contains(moleculeType)
+                case let .prepareMoleculeForDropping(type, id: _): return type == moleculeType
                 default: return false
                 }
             }

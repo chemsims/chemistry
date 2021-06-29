@@ -541,6 +541,7 @@
 		57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902C325ED585800758300 /* EquatableCounterTests.swift */; };
 		57E902CA25ED6A7800758300 /* MoleculeScalesGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */; };
 		57E9B75D268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9B75C268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift */; };
+		57E9B75F268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9B75E268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift */; };
 		57E9DBF42576551200E3F5A6 /* DoubleHeadedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */; };
 		57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */; };
 		57EEF91B2689976400398A2D /* TitrationMacroBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EEF91A2689976400398A2D /* TitrationMacroBeaker.swift */; };
@@ -1257,6 +1258,7 @@
 		57E902C325ED585800758300 /* EquatableCounterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquatableCounterTests.swift; sourceTree = "<group>"; };
 		57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScalesGeometryTests.swift; sourceTree = "<group>"; };
 		57E9B75C268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstanceReactionProgressChartTests.swift; sourceTree = "<group>"; };
+		57E9B75E268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakSubstanceReactionProgressChartTests.swift; sourceTree = "<group>"; };
 		57E9DBF32576551200E3F5A6 /* DoubleHeadedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleHeadedArrow.swift; sourceTree = "<group>"; };
 		57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalExtensions.swift; sourceTree = "<group>"; };
 		57EEF91A2689976400398A2D /* TitrationMacroBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationMacroBeaker.swift; sourceTree = "<group>"; };
@@ -2470,6 +2472,7 @@
 				5770953526861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift */,
 				576AF0F72684F08A00F300C7 /* TitrationComponentStateTests.swift */,
 				57E9B75C268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift */,
+				57E9B75E268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift */,
 			);
 			path = "titration-components";
 			sourceTree = "<group>";
@@ -3983,6 +3986,7 @@
 				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,
 				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
 				57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */,
+				57E9B75F268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift in Sources */,
 				57F4673E268741ED00E294BE /* TitrationNavigationParametersAreReappliedTests.swift in Sources */,
 				576AF0F22684D51700F300C7 /* TitrationWeakBasePreEPModelTests.swift in Sources */,
 				5733D80326748CB8007D4459 /* BufferComponentsExtensions.swift in Sources */,

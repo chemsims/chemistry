@@ -11,7 +11,8 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
         titrant: Titrant,
         cols: Int,
         rows: Int,
-        settings: TitrationSettings
+        settings: TitrationSettings,
+        maxReactionProgressMolecules: Int = AcidAppSettings.maxReactionProgressMolecules
     ) {
         self.substance = substance
         self.titrant = titrant
@@ -22,6 +23,10 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
             coords: [],
             color: substance.color,
             label: substance.symbol
+        )
+        self.reactionProgressModel = Self.initialReactionProgress(
+            substance: substance,
+            maxMolecules: maxReactionProgressMolecules
         )
     }
 
@@ -39,12 +44,42 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
 
     @Published var titrantMolarity = AcidAppSettings.initialTitrantMolarity
 
+    @Published var reactionProgressModel: ReactionProgressChartViewModel<ExtendedSubstancePart>
+
     private var gridSizeFloat: CGFloat {
         CGFloat(cols * rows)
     }
 
     var rows: Int {
         GridCoordinateList.availableRows(for: exactRows)
+    }
+}
+
+// MARK: - Reaction progress
+extension TitrationWeakSubstancePreparationModel {
+    // Updates reaction progress, ensuring there is always an even number of
+    // substance molecules
+    private func updateReactionProgress() {
+        let currentPairs = reactionProgressModel.moleculeCounts(ofType: .substance) / 2
+        let desiredPairs = reactionProgressMoleculePairCount.getY(at: CGFloat(substanceAdded)).roundedInt()
+
+        let pairsToAdd = desiredPairs - currentPairs
+        assert(pairsToAdd >= 0, "Expected number of pairs to add")
+
+        if pairsToAdd > 0 {
+            (0..<pairsToAdd).forEach { _ in
+                _ = reactionProgressModel.addMolecules(.substance, count: 2, duration: 1)
+            }
+        }
+    }
+
+    private var reactionProgressMoleculePairCount: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: 0,
+            x2: CGFloat(maxSubstance),
+            y2: CGFloat(reactionProgressModel.settings.maxMolecules / 2)
+        )
     }
 }
 
@@ -87,6 +122,7 @@ extension TitrationWeakSubstancePreparationModel {
         withAnimation(.linear(duration: 1)) {
             substanceAdded += maxToAdd
         }
+        updateReactionProgress()
     }
 }
 
@@ -323,5 +359,46 @@ extension TitrationWeakSubstancePreparationModel  {
 
     private var remainingCountAvailable: Int {
         max(0, maxSubstance - substanceAdded)
+    }
+}
+
+// MARK: Initial reaction progress model
+extension TitrationWeakSubstancePreparationModel {
+    static func initialReactionProgress(
+        substance: AcidOrBase,
+        maxMolecules: Int
+    ) -> ReactionProgressChartViewModel<ExtendedSubstancePart> {
+        .init(
+            molecules: .init {
+                switch $0 {
+                case .substance: return .init(
+                    label: substance.chargedSymbol(ofPart: .substance).text,
+                    columnIndex: 3,
+                    initialCount: 0,
+                    color: substance.color(ofPart: .substance)
+                )
+                case .hydroxide: return .init(
+                    label: "OH^-^",
+                    columnIndex: 1,
+                    initialCount: 0,
+                    color: RGB.hydroxide.color
+                )
+                case .secondaryIon: return .init(
+                    label: substance.chargedSymbol(ofPart: .secondaryIon).text,
+                    columnIndex: 2,
+                    initialCount: 0,
+                    color: substance.color(ofPart: .secondaryIon)
+                )
+                case .hydrogen: return .init(
+                    label: "H^+^",
+                    columnIndex: 0,
+                    initialCount: 0,
+                    color: RGB.hydrogen.color
+                )
+                }
+            },
+            settings: .init(maxMolecules: maxMolecules),
+            timing: .init()
+        )
     }
 }

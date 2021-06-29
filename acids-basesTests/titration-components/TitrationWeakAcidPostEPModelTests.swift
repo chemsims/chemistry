@@ -74,6 +74,7 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
 
     func testVolume() {
         let firstModel = TitrationWeakSubstancePreparationModel(
+            substance: substance,
             settings: .withDefaults(
                 finalMaxPValue: 12
             )
@@ -105,7 +106,7 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
     }
 
     func testMoles() {
-        let firstModel = TitrationWeakSubstancePreparationModel()
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let secondModel = TitrationWeakSubstancePreEPModel(previous: firstModel)
         secondModel.incrementTitrant(count: secondModel.maxTitrant)
@@ -122,7 +123,7 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
     }
 
     func testBarChartData() {
-        let firstModel = TitrationWeakSubstancePreparationModel()
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
         let secondModel = TitrationWeakSubstancePreEPModel(previous: firstModel)
         secondModel.incrementTitrant(count: secondModel.maxTitrant)
@@ -140,7 +141,7 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
     }
 
     func testInputLimits() {
-        let firstModel = TitrationWeakSubstancePreparationModel()
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
 
         let secondModel = TitrationWeakSubstancePreEPModel(previous: firstModel)
