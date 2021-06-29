@@ -26,7 +26,7 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
             color: substance.primary.color,
             label: "" // TODO
         )
-        self.reactionModel = ReactionProgressChartViewModel(
+        self.reactionProgress = ReactionProgressChartViewModel(
             molecules: .init {
                 switch $0 {
                 case .hydrogen: return .init(
@@ -59,7 +59,7 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
 
     @Published var titrantMolarity: CGFloat = 0.4
 
-    @Published var reactionModel: ReactionProgressChartViewModel<PrimaryIon>
+    @Published var reactionProgress: ReactionProgressChartViewModel<PrimaryIon>
 
     var rows: Int {
         GridCoordinateList.availableRows(for: exactRows)
@@ -67,6 +67,13 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
 
     private var gridSizeFloat: CGFloat {
         CGFloat(cols * rows)
+    }
+
+    /// Returns a distinct instance of the reaction progress view model.
+    func copyReactionProgress() -> ReactionProgressChartViewModel<PrimaryIon> {
+        let original = reactionProgress
+        self.reactionProgress = reactionProgress.copy()
+        return original
     }
 }
 
@@ -298,13 +305,13 @@ extension TitrationStrongSubstancePreparationModel {
 extension TitrationStrongSubstancePreparationModel {
     private func updateReactionProgress() {
         let desiredCount = primaryMoleculesFromSubstance.getY(at: CGFloat(substanceAdded)).roundedInt()
-        let currentCount = reactionModel.moleculeCounts(ofType: substance.primary)
+        let currentCount = reactionProgress.moleculeCounts(ofType: substance.primary)
         let delta = desiredCount - currentCount
 
         assert(delta >= 0, "Delta should not be negative")
         if delta > 0 {
             (0..<delta).forEach { _ in
-                _ = reactionModel.addMolecule(substance.primary)
+                _ = reactionProgress.addMolecule(substance.primary)
             }
         }
     }
@@ -314,7 +321,7 @@ extension TitrationStrongSubstancePreparationModel {
             x1: 0,
             y1: 0,
             x2: CGFloat(maxSubstance),
-            y2: CGFloat(reactionModel.settings.maxMolecules)
+            y2: CGFloat(reactionProgress.settings.maxMolecules)
         )
     }
 }

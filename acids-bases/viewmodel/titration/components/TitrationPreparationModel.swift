@@ -16,6 +16,7 @@ extension TitrationStrongSubstancePreparationModel: TitrationPreparationModel {
     func resetState() {
         substanceAdded = 0
         primaryIonCoords.coords.removeAll()
+        reactionProgress = reactionProgress.copy(withCounts: .constant(0))
     }
 }
 

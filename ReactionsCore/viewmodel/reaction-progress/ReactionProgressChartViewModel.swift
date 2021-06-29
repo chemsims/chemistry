@@ -85,6 +85,14 @@ extension ReactionProgressChartViewModel {
         return triggerSequence(reaction)
     }
 
+    /// Triggers a reaction which consumes a molecule of type `consumedMolecule`.
+    ///
+    /// - Returns true if the reaction was started, or false if it could not be started
+    public func consume(_ consumedMolecule: MoleculeType) -> Bool {
+        let reaction = ActionSequence.consume(molecule: consumedMolecule)
+        return triggerSequence(reaction)
+    }
+
     /// Schedules a sequence of reactions to take place over the given duration.
     ///
     /// Scheduling reaction does not guarantee that any of them will run, it instead schedules the attempt to start them.
@@ -123,6 +131,25 @@ extension ReactionProgressChartViewModel {
         let pendingRemovals = runningReactions.filter { $0.willRemoveMolecule(ofType: type) }.count
 
         return currentMolecules.count + pendingAdds - pendingRemovals
+    }
+
+    /// Returns a new instance with the same molecule count as the current instance.
+    ///
+    /// Any molecule actions in-flight will not complete with any animations, however, the
+    /// new initial counts of molecules will account for the in-flight actions.
+    public func copy() -> ReactionProgressChartViewModel<MoleculeType> {
+        copy(withCounts: .init(builder: moleculeCounts))
+    }
+
+    /// Returns a new instance, using `newCounts` for the molecule counts.
+    public func copy(withCounts newCounts: EnumMap<MoleculeType, Int>) -> ReactionProgressChartViewModel<MoleculeType> {
+        .init(
+            molecules: .init {
+                definitions.value(for: $0).withInitialCount(newCounts.value(for: $0))
+            },
+            settings: settings,
+            timing: timing
+        )
     }
 }
 
@@ -398,6 +425,16 @@ extension ReactionProgressChartViewModel {
         let columnIndex: Int
         let initialCount: Int
         let color: Color
+
+        /// Returns a new instance with an updated `count` value.
+        func withInitialCount(_ newValue: Int) -> MoleculeDefinition {
+            MoleculeDefinition(
+                label: label,
+                columnIndex: columnIndex,
+                initialCount: newValue,
+                color: color
+            )
+        }
     }
 
     public struct Timing {
@@ -505,6 +542,18 @@ extension ReactionProgressChartViewModel {
                     .deleteBottomMolecules(types: [consumed]),
                     .slideColumnsDown(types: [consumed]),
                     .addMolecule(types: produced)
+                ]
+            )
+        }
+
+        static func consume(molecule: MoleculeType) -> ActionSequence {
+            ActionSequence(
+                added: [],
+                consumed: [molecule],
+                pendingActions: [
+                    .fadeOutBottomMolecules(types: [molecule]),
+                    .deleteBottomMolecules(types: [molecule]),
+                    .slideColumnsDown(types: [molecule])
                 ]
             )
         }

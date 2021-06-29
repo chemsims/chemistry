@@ -14,7 +14,8 @@ struct TitrationBarsOrReactionProgress: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            TitrationBarChart(layout: layout, model: model)
+//            TitrationBarChart(layout: layout, model: model)
+            TitrationReactionProgressChart(layout: layout, model: model)
             toggle
         }
     }
@@ -38,6 +39,34 @@ struct TitrationBarsOrReactionProgress: View {
         .frame(width: layout.common.chartSize)
         .minimumScaleFactor(0.1)
         .lineLimit(1)
+    }
+}
+
+private struct TitrationReactionProgressChart: View {
+
+    let layout: TitrationScreenLayout
+    @ObservedObject var model: TitrationViewModel
+
+    @ObservedObject var strongPrepModel: TitrationStrongSubstancePreparationModel
+    @ObservedObject var strongPreEPModel: TitrationStrongSubstancePreEPModel
+    @ObservedObject var strongPostEPModel: TitrationStrongSubstancePostEPModel
+    @ObservedObject var weakPreparationModel: TitrationWeakSubstancePreparationModel
+    @ObservedObject var weakPreEPModel: TitrationWeakSubstancePreEPModel
+    @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
+
+    var body: some View {
+        ReactionProgressChart(
+            model: reactionProgressModel,
+            geometry: layout.common.reactionProgressGeometry
+        )
+    }
+
+    private var reactionProgressModel: ReactionProgressChartViewModel<PrimaryIon> {
+        switch model.components.state.phase {
+        case .preparation: return strongPrepModel.reactionProgress
+        case .preEP: return strongPreEPModel.reactionProgress
+        case .postEP: return strongPostEPModel.reactionProgress
+        }
     }
 }
 
@@ -85,6 +114,25 @@ private struct TitrationBarChart: View {
         case .preEP: return CGFloat(weakPreEPModel.titrantAdded)
         case .postEP: return CGFloat(weakPostEPModel.titrantAdded)
         }
+    }
+}
+
+
+extension TitrationReactionProgressChart {
+    init(
+        layout: TitrationScreenLayout,
+        model: TitrationViewModel
+    ) {
+        self.init(
+            layout: layout,
+            model: model,
+            strongPrepModel: model.components.strongSubstancePreparationModel,
+            strongPreEPModel: model.components.strongSubstancePreEPModel,
+            strongPostEPModel: model.components.strongSubstancePostEPModel,
+            weakPreparationModel: model.components.weakSubstancePreparationModel,
+            weakPreEPModel: model.components.weakSubstancePreEPModel,
+            weakPostEPModel: model.components.weakSubstancePostEPModel
+        )
     }
 }
 

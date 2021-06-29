@@ -27,11 +27,25 @@ class TitrationStrongSubstancePreEPModel: ObservableObject {
             maxTitrant: maxTitrant,
             settings: previous.settings
         )
+
+        self.reactionProgress = previous.copyReactionProgress()
+
+        let substance = previous.substance
+        self.reactionProgressMoleculeCount = LinearEquation(
+            x1: 0,
+            y1: CGFloat(previous.reactionProgress.moleculeCounts(ofType: substance.primary)),
+            x2: CGFloat(maxTitrant),
+            y2: 0
+        )
     }
 
     let previous: TitrationStrongSubstancePreparationModel
     @Published var titrantAdded: Int = 0
+    @Published var reactionProgress: ReactionProgressChartViewModel<PrimaryIon>
+
     let primaryIonCoords: AnimatingBeakerMolecules
+
+    private let reactionProgressMoleculeCount: Equation
 
     let maxTitrant: Int
 
@@ -82,6 +96,7 @@ class TitrationStrongSubstancePreEPModel: ObservableObject {
             maxTitrant: maxTitrant,
             settings: previous.settings
         )
+        self.reactionProgress = previous.copyReactionProgress()
     }
 }
 
@@ -102,6 +117,7 @@ extension TitrationStrongSubstancePreEPModel {
             maxTitrant: maxTitrant,
             settings: settings
         )
+        updateReactionProgress()
     }
 }
 
@@ -120,7 +136,35 @@ extension TitrationStrongSubstancePreEPModel {
     }
 }
 
+// MARK: Reaction progress chart
+extension TitrationStrongSubstancePreEPModel {
 
+    /// Returns a distinct instance of the reaction progress model.
+    func copyReactionProgress() -> ReactionProgressChartViewModel<PrimaryIon> {
+        // The reason we return the original, is so that any in-flight animations are maintained
+        // in the instance we return. The instance we store in `reactionProgress` has the
+        // correct molecule counts, but won't complete in-flight animations.
+        let original = reactionProgress
+        self.reactionProgress = reactionProgress.copy()
+        return original
+    }
+
+    func updateReactionProgress() {
+        let currentCount = reactionProgress.moleculeCounts(ofType: substance.primary)
+        let desiredCount = reactionProgressMoleculeCount.getY(at: CGFloat(titrantAdded)).roundedInt()
+
+        let toRemove = currentCount - desiredCount
+        assert(toRemove >= 0, "Expected positive molecule count to remove")
+
+        if toRemove > 0 {
+            (0..<toRemove).forEach { _ in
+                _ = reactionProgress.consume(substance.primary)
+            }
+        }
+    }
+}
+
+// MARK: Calculations Wrapper
 private class TitrationStrongSubstancePreEPModelCalculations {
 
     init(

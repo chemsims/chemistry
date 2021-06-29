@@ -17,11 +17,19 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
             label: ""
         )
         self.maxTitrant = previous.maxTitrant
+        self.reactionProgress = previous.copyReactionProgress()
+        self.reactionProgressMoleculeCount = LinearEquation(
+            x1: 0,
+            y1: 0,
+            x2: CGFloat(maxTitrant),
+            y2: CGFloat(previous.reactionProgress.settings.maxMolecules)
+        )
     }
 
     let previous: TitrationStrongSubstancePreEPModel
     @Published var titrantAdded = 0
     @Published var titrantMolecules: BeakerMolecules
+    @Published var reactionProgress: ReactionProgressChartViewModel<PrimaryIon>
 
     let maxTitrant: Int
 
@@ -32,6 +40,8 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
     var substance: AcidOrBase {
         previous.substance
     }
+
+    private let reactionProgressMoleculeCount: Equation
 }
 
 // MARK: - Incrementing titrant
@@ -49,6 +59,23 @@ extension TitrationStrongSubstancePostEPModel {
         )
         withAnimation(.linear(duration: 1)) {
             titrantAdded += maxToAdd
+        }
+        updateReactionProgress()
+    }
+}
+
+// MARK: - Reaction progress chart
+extension TitrationStrongSubstancePostEPModel {
+    func updateReactionProgress() {
+        let currentMolecules = reactionProgress.moleculeCounts(ofType: substance.primary.complement)
+        let desiredMolecules = reactionProgressMoleculeCount.getY(at: CGFloat(titrantAdded)).roundedInt()
+
+        let toAdd = desiredMolecules - currentMolecules
+        assert(toAdd >= 0, "Expected positive molecule count to add")
+        if toAdd > 0 {
+            (0..<toAdd).forEach { _ in
+                _ = reactionProgress.addMolecule(substance.primary.complement)
+            }
         }
     }
 }
