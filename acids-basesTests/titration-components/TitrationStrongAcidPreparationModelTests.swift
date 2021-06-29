@@ -10,14 +10,14 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
 
     var substance = AcidOrBase.strongAcids.first!
 
-    /// The ion which increases as substance is added to a solution
-    private var increasingIon: PrimaryIon {
+    /// The primary ion of the substance
+    private var primaryIon: PrimaryIon {
         substance.primary
     }
 
-    /// The ion which decreases as substance is added to a solution
-    private var decreasingIon: PrimaryIon {
-        increasingIon.complement
+    /// The complement to the primary ion
+    private var complementIon: PrimaryIon {
+        primaryIon.complement
     }
 
     func testConcentration() {
@@ -29,18 +29,18 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
 
         model.incrementSubstance(count: 20)
 
-        let expectedIncreasing = expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20)
-        let expectedDecreasing = PrimaryIonConcentration.complementConcentration(
-            primaryConcentration: expectedIncreasing
+        let expectedPrimary = expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20)
+        let expectedComplement = PrimaryIonConcentration.complementConcentration(
+            primaryConcentration: expectedPrimary
         )
 
         XCTAssertEqualWithTolerance(
-            model.currentConcentration.value(for: increasingIon.concentration),
-            expectedIncreasing
+            model.currentConcentration.value(for: primaryIon.concentration),
+            expectedPrimary
         )
         XCTAssertEqualWithTolerance(
-            model.currentConcentration.value(for: decreasingIon.concentration),
-            expectedDecreasing
+            model.currentConcentration.value(for: complementIon.concentration),
+            expectedComplement
         )
         XCTAssertEqual(model.currentConcentration.value(for: .substance), 0)
     }
@@ -83,17 +83,17 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
         XCTAssertEqual(model.currentPValues.value(for: .kB), model.substance.pKB)
 
         model.incrementSubstance(count: 20)
-        let expectedIncreasingConcentration = expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20)
-        let expectedPIncreasingIon = -log10(expectedIncreasingConcentration)
-        let expectedPDecreasingIon = 14 - expectedPIncreasingIon
+        let expectedPrimaryIonConcentration = expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20)
+        let expectedPPrimaryIon = -log10(expectedPrimaryIonConcentration)
+        let expectedPComplementIon = 14 - expectedPPrimaryIon
 
         XCTAssertEqualWithTolerance(
-            model.currentPValues.value(for: increasingIon.pValue),
-            expectedPIncreasingIon
+            model.currentPValues.value(for: primaryIon.pValue),
+            expectedPPrimaryIon
         )
         XCTAssertEqualWithTolerance(
-            model.currentPValues.value(for: decreasingIon.pValue),
-            expectedPDecreasingIon
+            model.currentPValues.value(for: complementIon.pValue),
+            expectedPComplementIon
         )
     }
 
@@ -126,51 +126,51 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
             settings: .withDefaults(neutralSubstanceBarChartHeight: 0.3)
         )
 
-        var increasingBar: BarChartData {
-            model.barChartDataMap.value(for: increasingIon)
+        var primaryIonBar: BarChartData {
+            model.barChartDataMap.value(for: primaryIon)
         }
-        var decreasingBar: BarChartData {
-            model.barChartDataMap.value(for: decreasingIon)
+        var complementIonBar: BarChartData {
+            model.barChartDataMap.value(for: complementIon)
         }
 
-        XCTAssertEqual(increasingBar.equation.getY(at: 0), 0.3)
-        XCTAssertEqual(decreasingBar.equation.getY(at: 0), 0.3)
+        XCTAssertEqual(primaryIonBar.equation.getY(at: 0), 0.3)
+        XCTAssertEqual(complementIonBar.equation.getY(at: 0), 0.3)
 
         model.incrementSubstance(count: 20)
-        let expectedIncreasingConcentration = expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20)
+        let expectedPrimaryIonConcentration = expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20)
 
-        let expectedFinalIncreasingHeight = LinearEquation(
+        let expectedFinalPrimaryIonHeight = LinearEquation(
             x1: 1e-7,
             y1: 0.3,
             x2: 1,
             y2: 1
-        ).getY(at: expectedIncreasingConcentration)
+        ).getY(at: expectedPrimaryIonConcentration)
         XCTAssertEqualWithTolerance(
-            increasingBar.equation.getY(at: 20),
-            expectedFinalIncreasingHeight
+            primaryIonBar.equation.getY(at: 20),
+            expectedFinalPrimaryIonHeight
         )
 
-        let expectedMidIncreasingHeight = (0.3 + expectedFinalIncreasingHeight) / 2
+        let expectedMidPrimaryIonHeight = (0.3 + expectedFinalPrimaryIonHeight) / 2
         XCTAssertEqualWithTolerance(
-            increasingBar.equation.getY(at: 10),
-            expectedMidIncreasingHeight
+            primaryIonBar.equation.getY(at: 10),
+            expectedMidPrimaryIonHeight
         )
 
-        let expectedFinalDecreasingHeight = LinearEquation(
+        let expectedFinalComplementIonHeight = LinearEquation(
             x1: 0,
             y1: 0.3,
             x2: CGFloat(model.maxSubstance),
             y2: 0
         ).getY(at: 20)
         XCTAssertEqualWithTolerance(
-            decreasingBar.equation.getY(at: 20),
-            expectedFinalDecreasingHeight
+            complementIonBar.equation.getY(at: 20),
+            expectedFinalComplementIonHeight
         )
 
-        let expectedMidDecreasingHeight = (0.3 + expectedFinalDecreasingHeight) / 2
+        let expectedMidComplementIonHeight = (0.3 + expectedFinalComplementIonHeight) / 2
         XCTAssertEqual(
-            decreasingBar.equation.getY(at: 10),
-            expectedMidDecreasingHeight
+            complementIonBar.equation.getY(at: 10),
+            expectedMidComplementIonHeight
         )
     }
 
