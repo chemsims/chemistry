@@ -36,8 +36,31 @@ class TitrationWeakSubstanceReactionProgressChartTests: XCTestCase {
         XCTAssertEqual(prepModel.secondaryIonCount, 0)
         XCTAssertEqual(prepModel.primaryIonCount, 0)
         XCTAssertEqual(prepModel.complementIonCount, 0)
-    }
 
+        let preEPModel = TitrationWeakSubstancePreEPModel(previous: prepModel)
+        XCTAssertEqual(preEPModel.substanceIonCount, 50)
+        XCTAssertEqual(preEPModel.secondaryIonCount, 0)
+        XCTAssertEqual(preEPModel.primaryIonCount, 0)
+        XCTAssertEqual(preEPModel.complementIonCount, 0)
+
+        preEPModel.incrementTitrant(count: preEPModel.maxTitrant)
+        XCTAssertEqual(preEPModel.substanceIonCount, 0)
+        XCTAssertEqual(preEPModel.secondaryIonCount, 50)
+        XCTAssertEqual(preEPModel.primaryIonCount, 0)
+        XCTAssertEqual(preEPModel.complementIonCount, 0)
+
+        let postEPModel = TitrationWeakSubstancePostEPModel(previous: preEPModel)
+        XCTAssertEqual(postEPModel.substanceIonCount, 0)
+        XCTAssertEqual(postEPModel.secondaryIonCount, 50)
+        XCTAssertEqual(postEPModel.primaryIonCount, 0)
+        XCTAssertEqual(postEPModel.complementIonCount, 0)
+
+        postEPModel.incrementTitrant(count: postEPModel.maxTitrant)
+        XCTAssertEqual(postEPModel.substanceIonCount, 0)
+        XCTAssertEqual(postEPModel.secondaryIonCount, 50)
+        XCTAssertEqual(postEPModel.primaryIonCount, 0)
+        XCTAssertEqual(postEPModel.complementIonCount, 50)
+    }
 }
 
 private extension TitrationWeakSubstancePreparationModel {
@@ -59,5 +82,49 @@ private extension TitrationWeakSubstancePreparationModel {
 
     func count(ofPart part: ExtendedSubstancePart) -> Int {
         reactionProgressModel.moleculeCounts(ofType: part)
+    }
+}
+
+private extension TitrationWeakSubstancePreEPModel {
+    var primaryIonCount: Int {
+        count(ofPart: substance.primary.extendedSubstancePart)
+    }
+
+    var complementIonCount: Int {
+        count(ofPart: substance.primary.complement.extendedSubstancePart)
+    }
+
+    var substanceIonCount: Int {
+        count(ofPart: .substance)
+    }
+
+    var secondaryIonCount: Int {
+        count(ofPart: .secondaryIon)
+    }
+
+    func count(ofPart part: ExtendedSubstancePart) -> Int {
+        reactionProgress.moleculeCounts(ofType: part)
+    }
+}
+
+private extension TitrationWeakSubstancePostEPModel {
+    var primaryIonCount: Int {
+        count(ofPart: substance.primary.extendedSubstancePart)
+    }
+
+    var complementIonCount: Int {
+        count(ofPart: substance.primary.complement.extendedSubstancePart)
+    }
+
+    var substanceIonCount: Int {
+        count(ofPart: .substance)
+    }
+
+    var secondaryIonCount: Int {
+        count(ofPart: .secondaryIon)
+    }
+
+    func count(ofPart part: ExtendedSubstancePart) -> Int {
+        reactionProgress.moleculeCounts(ofType: part)
     }
 }

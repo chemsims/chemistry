@@ -43,11 +43,22 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
             maxTitrant: maxTitrant,
             titrantAdded: 0
         )
+        self.reactionProgress = previous.reactionProgressModel
+        self.reactionProgressSecondaryIonCount = LinearEquation(
+            x1: 0,
+            y1: 0,
+            x2: CGFloat(maxTitrant),
+            y2: CGFloat(
+                previous.reactionProgressModel.moleculeCounts(ofType: .substance)
+            )
+        )
     }
 
     let previous: TitrationWeakSubstancePreparationModel
 
     @Published var titrantAdded = 0
+
+    @Published var reactionProgress: ReactionProgressChartViewModel<ExtendedSubstancePart>
 
     var beakerReactionModel: ReactingBeakerViewModel<ExtendedSubstancePart>
 
@@ -105,6 +116,8 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
             titrantAdded: 0
         )
     }
+
+    private let reactionProgressSecondaryIonCount: Equation
 }
 
 // MARK: - Incrementing
@@ -119,6 +132,7 @@ extension TitrationWeakSubstancePreEPModel {
             titrantAdded += maxToAdd
         }
 
+
         beakerReactionModel.add(
             reactant: substance.type.isAcid ? .hydroxide : .hydrogen,
             reactingWith: .substance,
@@ -127,15 +141,50 @@ extension TitrationWeakSubstancePreEPModel {
             count: count
         )
 
+        // TODO - we don't actually need to recompute the calculations
+        // when adding titrant. It is not a function of titrant added.
         self.calculations = .init(
             substance: previous.substance,
             previous: previous,
             maxTitrant: maxTitrant,
             titrantAdded: titrantAdded
         )
+        updateReactionProgress()
     }
 }
 
+// MARK: Reaction Progress Chart
+extension TitrationWeakSubstancePreEPModel {
+
+    func copyReactionProgress() -> ReactionProgressChartViewModel<ExtendedSubstancePart> {
+        let original = reactionProgress
+        self.reactionProgress = reactionProgress.copy()
+        return original
+    }
+
+    private func updateReactionProgress() {
+        let currentCount = reactionProgress.moleculeCounts(ofType: .secondaryIon)
+        let desiredCount = reactionProgressSecondaryIonCount.getY(
+            at: CGFloat(titrantAdded)
+        ).roundedInt()
+
+        let toAdd = desiredCount - currentCount
+        assert(toAdd >= 0, "Expected positive number of molecules to add")
+        if toAdd > 0 {
+            (0..<toAdd).forEach { _ in
+                _ = reactionProgress.startReaction(
+                    adding: reactionProgressAddingMolecule,
+                    reactsWith: .substance,
+                    producing: .secondaryIon
+                )
+            }
+        }
+    }
+
+    private var reactionProgressAddingMolecule: ExtendedSubstancePart {
+        substance.primary == .hydrogen ? .hydrogen : .hydroxide
+    }
+}
 
 private class WeakSubstanceCalculations {
 
@@ -150,7 +199,6 @@ private class WeakSubstanceCalculations {
         self.maxTitrant = maxTitrant
         self.titrantAdded = titrantAdded
     }
-
 
     let substance: AcidOrBase
     let previous: TitrationWeakSubstancePreparationModel

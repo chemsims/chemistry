@@ -11,6 +11,15 @@ class TitrationWeakSubstancePostEPModel: ObservableObject {
         self.ionMolecules = Self.initialIonMolecules(previous: previous)
         self.secondaryMolecules = Self.initialSecondaryMolecules(previous: previous)
         self.maxTitrant = 2 * previous.maxTitrant
+        self.reactionProgress = previous.copyReactionProgress()
+        self.reactionProgressComplementIonCount = LinearEquation(
+            x1: 0,
+            y1: 0,
+            x2: CGFloat(maxTitrant),
+            y2: CGFloat(
+                previous.reactionProgress.moleculeCounts(ofType: .secondaryIon)
+            )
+        )
     }
 
     let previous: TitrationWeakSubstancePreEPModel
@@ -18,6 +27,10 @@ class TitrationWeakSubstancePostEPModel: ObservableObject {
     @Published var titrantAdded = 0
     @Published var ionMolecules: BeakerMolecules
     @Published var secondaryMolecules: BeakerMolecules
+
+    @Published var reactionProgress: ReactionProgressChartViewModel<ExtendedSubstancePart>
+
+    let reactionProgressComplementIonCount: Equation
 
     let maxTitrant: Int
 
@@ -61,6 +74,26 @@ extension TitrationWeakSubstancePostEPModel {
             rows: previous.previous.rows,
             avoiding: secondaryMolecules.coords
         )
+        updateReactionProgress()
+    }
+}
+
+// MARK: - Reaction progress chart
+extension TitrationWeakSubstancePostEPModel {
+    private func updateReactionProgress() {
+        let ion: ExtendedSubstancePart = substance.primary == .hydrogen ? .hydroxide : .hydrogen
+        let currentCount = reactionProgress.moleculeCounts(ofType: ion)
+        let desiredCount = reactionProgressComplementIonCount.getY(
+            at: CGFloat(titrantAdded)
+        ).roundedInt()
+        let toAdd = desiredCount - currentCount
+        assert(toAdd >= 0, "Expected positive number of molecules to add")
+
+        if toAdd > 0 {
+            (0..<toAdd).forEach { _ in
+                _ = reactionProgress.addMolecule(ion)
+            }
+        }
     }
 }
 

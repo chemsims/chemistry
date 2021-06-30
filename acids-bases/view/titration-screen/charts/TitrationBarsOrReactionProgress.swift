@@ -55,17 +55,56 @@ private struct TitrationReactionProgressChart: View {
     @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
 
     var body: some View {
+        Group {
+            if model.components.state.substance.isStrong {
+                strongReactionProgress
+            } else {
+                weakReactionProgress
+            }
+        }
+    }
+
+    private var strongReactionProgress: some View {
+        TitrationSubstanceReactionProgressChart(
+            layout: layout,
+            phase: model.components.state.phase,
+            prepModel: strongPrepModel.reactionProgress,
+            preEPModel: strongPreEPModel.reactionProgress,
+            postEPModel: strongPostEPModel.reactionProgress
+        )
+    }
+
+    private var weakReactionProgress: some View {
+        TitrationSubstanceReactionProgressChart(
+            layout: layout,
+            phase: model.components.state.phase,
+            prepModel: weakPreparationModel.reactionProgressModel,
+            preEPModel: weakPreEPModel.reactionProgress,
+            postEPModel: weakPostEPModel.reactionProgress
+        )
+    }
+}
+
+private struct TitrationSubstanceReactionProgressChart<MoleculeType : EnumMappable>: View {
+
+    let layout: TitrationScreenLayout
+    let phase: TitrationComponentState.Phase
+    @ObservedObject var prepModel: ReactionProgressChartViewModel<MoleculeType>
+    @ObservedObject var preEPModel: ReactionProgressChartViewModel<MoleculeType>
+    @ObservedObject var postEPModel: ReactionProgressChartViewModel<MoleculeType>
+
+    var body: some View {
         ReactionProgressChart(
-            model: reactionProgressModel,
+            model: model,
             geometry: layout.common.reactionProgressGeometry
         )
     }
 
-    private var reactionProgressModel: ReactionProgressChartViewModel<PrimaryIon> {
-        switch model.components.state.phase {
-        case .preparation: return strongPrepModel.reactionProgress
-        case .preEP: return strongPreEPModel.reactionProgress
-        case .postEP: return strongPostEPModel.reactionProgress
+    private var model: ReactionProgressChartViewModel<MoleculeType> {
+        switch phase {
+        case .preparation: return prepModel
+        case .preEP: return preEPModel
+        case .postEP: return postEPModel
         }
     }
 }

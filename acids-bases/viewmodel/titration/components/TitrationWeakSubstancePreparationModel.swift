@@ -57,6 +57,13 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
 
 // MARK: - Reaction progress
 extension TitrationWeakSubstancePreparationModel {
+
+    func copyReactionProgress() -> ReactionProgressChartViewModel<ExtendedSubstancePart> {
+        let original = reactionProgressModel
+        self.reactionProgressModel = reactionProgressModel.copy()
+        return original
+    }
+
     // Updates reaction progress, ensuring there is always an even number of
     // substance molecules
     private func updateReactionProgress() {
@@ -373,25 +380,25 @@ extension TitrationWeakSubstancePreparationModel {
                 switch $0 {
                 case .substance: return .init(
                     label: substance.chargedSymbol(ofPart: .substance).text,
-                    columnIndex: 3,
+                    columnIndex: 0,
                     initialCount: 0,
                     color: substance.color(ofPart: .substance)
                 )
-                case .hydroxide: return .init(
-                    label: "OH^-^",
-                    columnIndex: 1,
-                    initialCount: 0,
-                    color: RGB.hydroxide.color
-                )
                 case .secondaryIon: return .init(
                     label: substance.chargedSymbol(ofPart: .secondaryIon).text,
-                    columnIndex: 2,
+                    columnIndex: 1,
                     initialCount: 0,
                     color: substance.color(ofPart: .secondaryIon)
                 )
+                case .hydroxide: return .init(
+                    label: "OH^-^",
+                    columnIndex: 2,
+                    initialCount: 0,
+                    color: RGB.hydroxide.color
+                )
                 case .hydrogen: return .init(
                     label: "H^+^",
-                    columnIndex: 0,
+                    columnIndex: 3,
                     initialCount: 0,
                     color: RGB.hydrogen.color
                 )

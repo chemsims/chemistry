@@ -76,6 +76,7 @@ extension ReactionProgressChart {
                 )
             }
         )
+        .frame(width: geometry.chartSize)
     }
 }
 
@@ -133,7 +134,7 @@ struct ReactionProgressChart_Previews: PreviewProvider {
     }
 
     enum TestMoleculeType: String, CaseIterable, Identifiable {
-        case A, B, C
+        case A, B, C, D
 
         var id: String {
             rawValue
@@ -144,6 +145,7 @@ struct ReactionProgressChart_Previews: PreviewProvider {
             case .A: return (col: 0, initCount: 3, color: .orange)
             case .B: return (col: 1, initCount: 9, color: .purple)
             case .C: return (col: 2, initCount: 5, color: .green)
+            case .D: return (col: 3, initCount: 5, color: .green)
             }
         }
     }
