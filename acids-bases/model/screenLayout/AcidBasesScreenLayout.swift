@@ -258,10 +258,12 @@ extension AcidBasesScreenLayout {
 // MARK: Reaction progress chart geometry
 extension AcidBasesScreenLayout {
 
-    var reactionProgressGeometry: ReactionProgressChartGeometry {
+    func reactionProgressGeometry<MoleculeType: CaseIterable>(
+        _ type: MoleculeType.Type
+    ) -> ReactionProgressChartGeometry<MoleculeType> {
         ReactionProgressChartGeometry(
             chartSize: chartSize,
-            colCount: 3,
+            moleculeType: type,
             maxMolecules: AcidAppSettings.maxReactionProgressMolecules,
             topPadding: 0.1 * chartSize
         )

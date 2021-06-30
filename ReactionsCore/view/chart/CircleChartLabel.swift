@@ -12,13 +12,13 @@ struct CircleChartLabel: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Spacer(minLength: 0)
-                .frame(width: labelWidth / 2)
+//            Spacer(minLength: 0)
+//                .frame(width: labelWidth / 2)
             ForEach(labels) { label in
                 labelView(label)
             }
-            Spacer(minLength: 0)
-                .frame(width: labelWidth / 2)
+//            Spacer(minLength: 0)
+//                .frame(width: labelWidth / 2)
         }
         .frame(width: layout.width)
     }

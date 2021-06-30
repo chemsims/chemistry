@@ -4,14 +4,15 @@
 
 import CoreGraphics
 
-public struct ReactionProgressChartGeometry {
+public struct ReactionProgressChartGeometry<MoleculeType: CaseIterable> {
 
     public init(
         chartSize: CGFloat,
-        colCount: Int,
+        moleculeType: MoleculeType.Type,
         maxMolecules: Int,
         topPadding: CGFloat
     ) {
+        let colCount = moleculeType.allCases.count
         assert(colCount > 0)
         assert(maxMolecules > 0)
         let maxMoleculeFloat = CGFloat(maxMolecules)

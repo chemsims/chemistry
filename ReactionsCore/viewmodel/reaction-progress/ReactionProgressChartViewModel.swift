@@ -396,7 +396,9 @@ extension ReactionProgressChartViewModel {
         var opacity: Double
         var willMoveDownToTopOfColumn: Bool
 
-        func position(using geometry: ReactionProgressChartGeometry) -> CGPoint {
+        func position(
+            using geometry: ReactionProgressChartGeometry<MoleculeType>
+        ) -> CGPoint {
             geometry.position(colIndex: definition.columnIndex, rowIndex: rowIndex)
         }
     }

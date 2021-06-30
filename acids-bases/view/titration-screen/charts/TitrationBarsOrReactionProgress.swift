@@ -96,7 +96,7 @@ private struct TitrationSubstanceReactionProgressChart<MoleculeType : EnumMappab
     var body: some View {
         ReactionProgressChart(
             model: model,
-            geometry: layout.common.reactionProgressGeometry
+            geometry: layout.common.reactionProgressGeometry(MoleculeType.self)
         )
     }
 

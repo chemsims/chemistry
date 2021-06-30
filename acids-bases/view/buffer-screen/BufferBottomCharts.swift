@@ -81,7 +81,7 @@ private struct BufferReactionProgressChart: View {
     var body: some View {
         ReactionProgressChart(
             model: model,
-            geometry: layout.common.reactionProgressGeometry
+            geometry: layout.common.reactionProgressGeometry(SubstancePart.self)
         )
     }
 

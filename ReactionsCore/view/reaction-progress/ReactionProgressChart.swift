@@ -10,7 +10,7 @@ public struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
 
     public init(
         model: ReactionProgressChartViewModel<MoleculeType>,
-        geometry: ReactionProgressChartGeometry
+        geometry: ReactionProgressChartGeometry<MoleculeType>
     ) {
         self.model = model
         self.geometry = geometry
@@ -19,7 +19,7 @@ public struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
     private typealias Molecule = ReactionProgressChartViewModel<MoleculeType>.Molecule
 
     @ObservedObject var model: ReactionProgressChartViewModel<MoleculeType>
-    let geometry: ReactionProgressChartGeometry
+    let geometry: ReactionProgressChartGeometry<MoleculeType>
 
     public var body: some View {
         VStack(spacing: geometry.chartToAxisSpacing) {
@@ -98,7 +98,7 @@ struct ReactionProgressChart_Previews: PreviewProvider {
                     model: model,
                     geometry: ReactionProgressChartGeometry(
                         chartSize: 200,
-                        colCount: 3,
+                        moleculeType: TestMoleculeType.self,
                         maxMolecules: 10,
                         topPadding: 0
                     )
@@ -134,7 +134,7 @@ struct ReactionProgressChart_Previews: PreviewProvider {
     }
 
     enum TestMoleculeType: String, CaseIterable, Identifiable {
-        case A, B, C, D
+        case A, B, C, D, E
 
         var id: String {
             rawValue
@@ -145,7 +145,8 @@ struct ReactionProgressChart_Previews: PreviewProvider {
             case .A: return (col: 0, initCount: 3, color: .orange)
             case .B: return (col: 1, initCount: 9, color: .purple)
             case .C: return (col: 2, initCount: 5, color: .green)
-            case .D: return (col: 3, initCount: 5, color: .green)
+            case .D: return (col: 3, initCount: 0, color: .blue)
+            case .E: return (col: 3, initCount: 5, color: .black)
             }
         }
     }
