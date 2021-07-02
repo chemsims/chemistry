@@ -473,11 +473,13 @@ private class SetTitrantMolarity: SetStatement {
     private func commonApply(on model: TitrationViewModel) {
         model.inputState = .setTitrantMolarity
         model.showTitrantFill = true
+        DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 
     override func unapply(on model: TitrationViewModel) {
         super.unapply(on: model)
         model.showTitrantFill = false
+        DeferScreenEdgesState.shared.deferEdges = []
     }
 }
 

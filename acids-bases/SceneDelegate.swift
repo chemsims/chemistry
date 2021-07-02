@@ -5,6 +5,7 @@
 
 import UIKit
 import SwiftUI
+import ReactionsCore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,9 +17,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let rootView = AcidAppRootView(model: model)
         let contentView = rootView
 
+        let controller = DeferScreenEdgesHostingController(rootView: contentView)
+        DeferScreenEdgesState.shared.didSetEdgesDelegate = controller.didSetEdges
+
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
+            window.rootViewController = controller
             self.window = window
             window.makeKeyAndVisible()
         }
