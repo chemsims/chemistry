@@ -83,6 +83,26 @@ public struct LinearEquation: Equation {
     public func getX(at y: CGFloat) -> CGFloat {
         m == 0 ? 0 : (y - c) / m
     }
+
+    public func intersectionWith(other: LinearEquation) -> CGPoint? {
+        let numer = other.c - c
+        let denom = m - other.m
+        if denom == 0 {
+            return nil
+        }
+
+        let xIntersect = numer / denom
+        let yIntersect = getY(at: xIntersect)
+        return CGPoint(x: xIntersect, y: yIntersect)
+
+
+        // ya = max + ca
+        // yb = mbx + cb
+        // xi @ intersection
+        // maxi + ca = mbxi + cb
+        // maxi - mbxi = cb - ca
+        // xi = (cb - ca) / (ma - mb)
+    }
 }
 
 public struct IdentityEquation: Equation {

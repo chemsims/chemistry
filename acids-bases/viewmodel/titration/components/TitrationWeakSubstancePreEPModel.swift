@@ -106,6 +106,10 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
         calculations.barChartDataMap
     }
 
+    var equalityTitrant: Int {
+        calculations.equalityTitrant
+    }
+
     func resetState() {
         titrantAdded = 0
         self.beakerReactionModel = Self.initialReactingBeakerModel(previous: previous)
@@ -294,6 +298,22 @@ private class WeakSubstanceCalculations {
         previous.concentration.value(for: term).getY(at: 1)
     }
 
+    private lazy var concentrationIntersect: CGPoint = {
+        guard let intersection = secondaryConcentration.intersectionWith(other: substanceConcentration) else {
+            // Note that this may o
+//            assert(false, "Failed to get intersection of secondary & substance concentration")
+            return .zero
+        }
+        return intersection
+    }()
+
+    lazy var equalityTitrant: Int = {
+        concentrationIntersect.x.roundedInt()
+    }()
+
+    var concentrationAtEquality: CGFloat {
+        concentrationIntersect.y
+    }
 
 // MARK: - Molarity
     lazy var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> =

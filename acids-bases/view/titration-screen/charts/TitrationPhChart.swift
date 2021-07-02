@@ -21,14 +21,18 @@ struct TitrationPhChart: View {
                 layout: layout,
                 phase: state.phase,
                 preEPReaction: strongSubstancePreEPModel,
-                postEPReaction: strongSubstancePostEPModel
+                postEPReaction: strongSubstancePostEPModel,
+                equalityTitrant: nil,
+                showAnnotations: false
             )
         } else {
             GeneralTitrationPhChart(
                 layout: layout,
                 phase: state.phase,
                 preEPReaction: weakPreEPModel,
-                postEPReaction: weakPostEPModel
+                postEPReaction: weakPostEPModel,
+                equalityTitrant: weakPreEPModel.equalityTitrant,
+                showAnnotations: true
             )
         }
     }
@@ -40,27 +44,74 @@ private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: Ti
     let phase: TitrationComponentState.Phase
     @ObservedObject var preEPReaction: PreEP
     @ObservedObject var postEPReaction: PostEP
+    let equalityTitrant: Int?
+    let showAnnotations: Bool
 
     var body: some View {
-        TimeChartView(
-            data: data,
-            initialTime: 0,
-            currentTime: .constant(equationInput),
-            finalTime: maxEquationInput,
-            canSetCurrentTime: false,
-            settings: .init(
-                xAxis: xAxis,
-                yAxis: yAxis,
-                haloRadius: layout.common.haloRadius,
-                lineWidth: 0.4 // TODO
-            ),
-            axisSettings: layout.common.chartAxis
+        plotArea
+            .frame(square: layout.common.chartSize)
+    }
+
+    private var plotArea: some View {
+        ZStack {
+            TimeChartView(
+                data: data,
+                initialTime: 0,
+                currentTime: .constant(equationInput),
+                finalTime: maxEquationInput,
+                canSetCurrentTime: false,
+                settings: .init(
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    haloRadius: layout.common.haloRadius,
+                    lineWidth: 0.4 // TODO
+                ),
+                axisSettings: layout.common.chartAxis
+            )
+
+            annotation
+        }
+    }
+
+    private var titrantAddedDashes: [Int] {
+        if showAnnotations && showData {
+            let mid = preEPReaction.maxTitrant
+            let max = preEPReaction.maxTitrant + postEPReaction.maxTitrant
+            return [equalityTitrant].compactMap(identity) + [mid, max]
+        }
+        return []
+    }
+
+    @ViewBuilder
+    private var annotation: some View {
+        ZStack {
+            ForEach(titrantAddedDashes.indices, id: \.self) { i in
+                dashedLine(at: titrantAddedDashes[i])
+            }
+        }
+    }
+
+    private func dashedLine(at titrantAdded: Int) -> some View {
+        let x = xAxis.getPosition(at: CGFloat(titrantAdded))
+        return Path { p in
+            p.addLines(
+                [
+                    .init(x: x, y: 0),
+                    .init(x: x, y: layout.common.chartSize)
+                ]
+            )
+        }
+        .stroke(
+            style: .init(
+                lineWidth: 0.5,
+                dash: [layout.common.chartSize / 30]
+            )
         )
-        .frame(square: layout.common.chartSize)
+        .foregroundColor(.orangeAccent)
     }
 
     private var data: [TimeChartDataLine] {
-        if phase == .preEP || phase == .postEP {
+        if showData {
             return [
                 TimeChartDataLine(
                     equation: phEquation,
@@ -71,6 +122,10 @@ private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: Ti
             ]
         }
         return []
+    }
+
+    private var showData: Bool {
+        phase == .preEP || phase == .postEP
     }
 
     private var yAxis: AxisPositionCalculations<CGFloat> {

@@ -96,7 +96,7 @@ extension TitrationViewModel {
 
     func back() {
         navigation.back()
-        canGoNext = canGoNextComputedProperty
+        updateCanGoNext()
     }
 }
 
