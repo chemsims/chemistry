@@ -15,8 +15,7 @@ struct TitrationNavigationModel {
     }
 
     private static let states: [TitrationScreenState] =
-        weakAcidTitration
-//        strongAcidTitration + strongBaseTitration + weakAcidTitration + weakBaseTitration
+        strongAcidTitration + strongBaseTitration + weakAcidTitration + weakBaseTitration
 
     private static let strongAcidTitration: [TitrationScreenState] = [
         PrepareNewSubstanceModel(statements.intro, substance: .strongAcid),

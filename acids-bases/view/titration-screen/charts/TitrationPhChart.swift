@@ -48,8 +48,33 @@ private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: Ti
     let showAnnotations: Bool
 
     var body: some View {
-        plotArea
-            .frame(square: layout.common.chartSize)
+        VStack(
+            alignment: .trailing,
+            spacing: layout.common.chartXAxisVSpacing
+        ) {
+            HStack(
+                alignment: .top,
+                spacing: layout.common.chartYAxisHSpacing
+            ) {
+                Text("pH")
+                    .rotationEffect(.degrees(-90))
+                    .frame(
+                        width: layout.common.chartYAxisWidth,
+                        height: layout.common.chartSize
+                    )
+
+                plotArea
+                    .frame(square: layout.common.chartSize)
+            }
+            Text("Titrant added")
+                .frame(
+                    width: layout.common.chartSize,
+                    height: layout.common.chartXAxisHeight
+                )
+        }
+        .font(.system(size: layout.common.chartLabelFontSize))
+        .lineLimit(1)
+        .minimumScaleFactor(0.2)
     }
 
     private var plotArea: some View {
@@ -178,4 +203,37 @@ private struct PostEquivalencePointPHEquation: Equation {
     func getY(at x: CGFloat) -> CGFloat {
         underlying.getY(at: x - CGFloat(equivalencePointTitrant))
     }
+}
+
+
+struct TitrationPhChart_Previews: PreviewProvider {
+
+    static var model = TitrationViewModel()
+    static var components: TitrationComponentState {
+        model.components
+    }
+
+    static var previews: some View {
+        GeometryReader { geo in
+            TitrationPhChart(
+                layout: .init(
+                    common: .init(
+                        geometry: geo,
+                        verticalSizeClass: nil,
+                        horizontalSizeClass: nil
+                    )
+                ),
+                state: .init(
+                    substance: .strongAcid,
+                    phase: .preparation
+                ),
+                strongSubstancePreEPModel: components.strongSubstancePreEPModel,
+                strongSubstancePostEPModel: components.strongSubstancePostEPModel,
+                weakPreEPModel: components.weakSubstancePreEPModel,
+                weakPostEPModel: components.weakSubstancePostEPModel
+            )
+        }
+        .previewLayout(.iPhone8Landscape)
+    }
+
 }
