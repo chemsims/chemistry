@@ -119,6 +119,7 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
             maxTitrant: maxTitrant,
             titrantAdded: 0
         )
+        self.reactionProgress = previous.copyReactionProgress()
     }
 
     private let reactionProgressSecondaryIonCount: Equation

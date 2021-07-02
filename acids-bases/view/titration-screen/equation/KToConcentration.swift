@@ -27,12 +27,24 @@ extension TitrationEquationView {
                 FixedText("=")
                 VStack(spacing: layout.fractionVSpacing) {
                     HStack(spacing: 5) {
-                        PlainLine(line: firstNumeratorConcentration.label(forData: data))
-                        PlainLine(line: secondNumeratorConcentration.label(forData: data))
+                        PlainLine(
+                            line: firstNumeratorConcentration.label(
+                                forData: data
+                            )
+                        )
+                        PlainLine(
+                            line: secondNumeratorConcentration.label(
+                                forData: data
+                            )
+                        )
                     }
                     Rectangle()
                         .frame(width: 130, height: layout.fractionBarHeight)
-                    PlainLine(line: denominatorConcentration.label(forData: data))
+                    PlainLine(
+                        line: denominatorConcentration.label(
+                            forData: data
+                        )
+                    )
                 }
             }
             .font(.system(size: layout.fontSize))

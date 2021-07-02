@@ -33,7 +33,7 @@ struct TitrationComponentState {
         let weakPreEPModel = TitrationWeakSubstancePreEPModel(previous: weakPreparationModel)
         let weakPostEPModel = TitrationWeakSubstancePostEPModel(previous: weakPreEPModel)
 
-        self.state = State(substance: .strongAcid, phase: .preparation)
+        self.state = State(substance: .weakAcid, phase: .preparation)
         self.initialCols = cols
         self.initialRows = rows
         self.settings = settings
@@ -133,10 +133,17 @@ extension TitrationComponentState {
 
 // MARK: - API Model access
 extension TitrationComponentState {
+
+    /// Returns the preparation model, if the current state is in the preparation phase.
     var currentPreparationModel: TitrationPreparationModel? {
         guard state.phase == .preparation else {
             return nil
         }
+        return latestPreparationModel
+    }
+
+    /// Returns the latest preparation model for the current substance.
+    var latestPreparationModel: TitrationPreparationModel {
         if state.substance.isStrong {
             return strongSubstancePreparationModel
         }

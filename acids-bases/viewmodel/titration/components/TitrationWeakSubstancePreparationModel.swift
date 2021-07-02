@@ -75,7 +75,7 @@ extension TitrationWeakSubstancePreparationModel {
 
         if pairsToAdd > 0 {
             (0..<pairsToAdd).forEach { _ in
-                _ = reactionProgressModel.addMolecules(.substance, count: 2, duration: 1)
+                _ = reactionProgressModel.addMolecules(.substance, count: 2, duration: 0.5)
             }
         }
     }

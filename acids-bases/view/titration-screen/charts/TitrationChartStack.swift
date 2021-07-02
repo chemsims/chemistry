@@ -11,7 +11,7 @@ struct TitrationChartStack: View {
     @ObservedObject var model: TitrationViewModel
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .trailing, spacing: 0) {
             TitrationPhChart(
                 layout: layout,
                 state: model.components.state,

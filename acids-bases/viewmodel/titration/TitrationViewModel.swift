@@ -80,7 +80,7 @@ class TitrationViewModel: ObservableObject {
     var reactionDefinition: TitrationReactionDefinition {
         TitrationReactionDefinition(
             substance: substance,
-            titrant: components.currentPreparationModel?.titrant ?? .hydrogenChloride
+            titrant: components.latestPreparationModel.titrant
         )
     }
 }

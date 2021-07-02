@@ -68,7 +68,11 @@ extension ReactionProgressChart {
     private var axis: some View {
         CircleChartLabel(
             layout: geometry.axisLayout,
-            labels: model.definitions.all.enumerated().map { (i, data) in
+            labels: model
+                .definitions
+                .all
+                .sorted(by: { $0.columnIndex < $1.columnIndex})
+                .enumerated().map { (i, data) in
                 .init(
                     id: i,
                     label: data.label,

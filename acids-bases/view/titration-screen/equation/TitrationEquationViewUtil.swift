@@ -105,6 +105,7 @@ extension TitrationEquationView {
 
         var body: some View {
             TextLinesView(line: line, fontSize: layout.fontSize)
+                .fixedSize()
         }
     }
 

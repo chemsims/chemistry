@@ -101,14 +101,12 @@ extension ReactionProgressChartViewModel {
     /// for example.
     public func addMolecules(_ type: MoleculeType, count: Int, duration: TimeInterval) -> Bool {
         precondition(count > 0, "Count must be above zero")
-        let reaction = ActionSequence.addMolecules(added: type)
-
         let dt = count == 1 ? 0 : duration / Double(count - 1)
 
         var didTriggerAll = true
 
         (0..<count).forEach { i in
-            let reactionWithDelay = reaction.prependingDelay(Double(i) * dt)
+            let reactionWithDelay = ActionSequence.addMolecules(added: type, delay: Double(i) * dt)
             let didTrigger = triggerSequence(reactionWithDelay)
             if !didTrigger {
                 didTriggerAll = false
@@ -487,14 +485,6 @@ extension ReactionProgressChartViewModel {
         let consumed: [MoleculeType]
         var pendingActions: [ReactionAction]
 
-        func prependingDelay(_ delay: TimeInterval) -> ActionSequence {
-            ActionSequence(
-                added: added,
-                consumed: consumed,
-                pendingActions: [.wait(delay: delay)] + pendingActions
-            )
-        }
-
         static func reaction(
             added: MoleculeType,
             consumed: MoleculeType,
@@ -516,13 +506,16 @@ extension ReactionProgressChartViewModel {
         }
 
         static func addMolecules(
-            added: MoleculeType
+            added: MoleculeType,
+            delay: TimeInterval? = nil
         ) -> ActionSequence {
             let newMoleculeId = UUID()
+            let waitOpt = delay.map { ReactionAction.wait(delay: $0) }
+            let wait = [waitOpt].compactMap(identity)
             return ActionSequence(
                 added: [added],
                 consumed: [],
-                pendingActions: [
+                pendingActions: wait + [
                     .prepareMoleculeForDropping(type: added, id: newMoleculeId),
                     .moveMoleculeToTopOfColumn(id: newMoleculeId)
                 ]

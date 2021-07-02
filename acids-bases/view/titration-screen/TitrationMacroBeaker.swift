@@ -20,7 +20,7 @@ struct TitrationMacroBeaker: View {
     let beakerSettings: AdjustableFluidBeakerSettings
     @ObservedObject var model: TitrationViewModel
 
-    @State private var showMacroscopic = true
+    @State private var showMacroscopic = false
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {

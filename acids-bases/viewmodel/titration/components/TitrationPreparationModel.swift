@@ -27,5 +27,6 @@ extension TitrationWeakSubstancePreparationModel: TitrationPreparationModel {
         substanceAdded = 0
         reactionProgress = 0
         substanceCoords.coords.removeAll()
+        reactionProgressModel = reactionProgressModel.copy(withCounts: .constant(0))
     }
 }

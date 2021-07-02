@@ -43,6 +43,7 @@ extension TitrationStrongSubstancePostEPModel: TitrationReactionModel, TitrantIn
     func resetState() {
         titrantAdded = 0
         self.titrantMolecules.coords.removeAll()
+        self.reactionProgress = previous.copyReactionProgress()
     }
 }
 
@@ -54,6 +55,7 @@ extension TitrationWeakSubstancePostEPModel: TitrationReactionModel, TitrantInpu
         titrantAdded = 0
         self.ionMolecules = Self.initialIonMolecules(previous: previous)
         self.secondaryMolecules = Self.initialSecondaryMolecules(previous: previous)
+        self.reactionProgress = previous.copyReactionProgress()
     }
 }
 
