@@ -9,6 +9,8 @@ protocol TitrationPreparationModel {
     var hasAddedEnoughSubstance: Bool { get }
     var canAddSubstance: Bool { get }
 
+    var titrant: Titrant { get }
+
     func resetState()
 }
 

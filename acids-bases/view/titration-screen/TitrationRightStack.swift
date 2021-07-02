@@ -18,7 +18,8 @@ struct TitrationRightStack: View {
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
-            selectionView
+            topStack
+                .zIndex(1)
 
             Spacer(minLength: 0)
 
@@ -41,6 +42,23 @@ struct TitrationRightStack: View {
         }
     }
 
+    private var topStack: some View {
+        HStack(alignment: .top, spacing: 0) {
+            reactionDefinition
+            selectionView
+        }
+    }
+
+    private var reactionDefinition: some View {
+        ReactionDefinitionView(
+            leftTerms: model.reactionDefinition.leftTerms,
+            rightTerms: model.reactionDefinition.rightTerms,
+            fontSize: layout.common.reactionDefinitionFontSize,
+            circleSize: layout.common.reactionDefinitionCircleSize
+        )
+        .frame(size: layout.reactionDefinitionSize)
+    }
+
     private var selectionView: some View {
         DropDownSelectionView(
             title: "Choose a substance",
@@ -55,7 +73,6 @@ struct TitrationRightStack: View {
             onSelection: model.next
         )
         .frame(height: layout.common.toggleHeight, alignment: .top)
-        .zIndex(1)
         .disabled(model.inputState != .selectSubstance)
     }
 

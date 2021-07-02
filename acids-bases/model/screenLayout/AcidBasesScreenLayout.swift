@@ -280,3 +280,14 @@ extension AcidBasesScreenLayout {
         0.85 * chartLabelFontSize
     }
 }
+
+// MARK: - Reaction definition geometry
+extension AcidBasesScreenLayout {
+    var reactionDefinitionFontSize: CGFloat {
+        chartLabelFontSize
+    }
+
+    var reactionDefinitionCircleSize: CGFloat {
+        0.75 * reactionDefinitionFontSize
+    }
+}

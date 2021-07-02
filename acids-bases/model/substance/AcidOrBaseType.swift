@@ -13,6 +13,13 @@ enum AcidOrBaseType: CaseIterable {
         default: return false
         }
     }
+
+    var isStrong: Bool {
+        switch self {
+        case .strongAcid, .strongBase: return true
+        default: return false
+        }
+    }
 }
 
 typealias AcidOrBaseMap<Value> = EnumMap<AcidOrBaseType, Value>

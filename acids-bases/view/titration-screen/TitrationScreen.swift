@@ -51,16 +51,25 @@ struct TitrationScreenLayout {
     let common: AcidBasesScreenLayout
 
     var equationSize: CGSize {
-        let beakerWidth = common.beakerWidth + common.sliderSettings.handleWidth
-
-        let chartsWidth = common.chartSize
-        let availableWidth = common.width - beakerWidth - chartsWidth
-        let availableHeight = common.height - common.beakyBoxHeight
-
+        let availableHeight = common.height - common.beakyBoxHeight - reactionDefinitionSize.height
         return CGSize(
-            width: 0.9 * availableWidth,
+            width: 0.9 * availableRightStackWidth,
             height: 0.9 * availableHeight
         )
+    }
+
+    var reactionDefinitionSize: CGSize {
+        CGSize(
+            width: 0.8 * availableRightStackWidth,
+            height: 2 * common.toggleHeight
+        )
+    }
+
+    private var availableRightStackWidth: CGFloat {
+        let beakerWidth = common.beakerWidth + common.sliderSettings.handleWidth
+        let chartsWidth = common.chartSize
+
+        return common.width - beakerWidth - chartsWidth
     }
 
     /// Height of the water from the bottom of the beaker
