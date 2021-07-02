@@ -14,8 +14,11 @@ struct TitrationBarsOrReactionProgress: View {
 
     var body: some View {
         VStack(spacing: 0) {
-//            TitrationBarChart(layout: layout, model: model)
-            TitrationReactionProgressChart(layout: layout, model: model)
+            if showBarChart {
+                TitrationBarChart(layout: layout, model: model)
+            } else {
+                TitrationReactionProgressChart(layout: layout, model: model)
+            }
             toggle
         }
     }
