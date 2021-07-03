@@ -103,19 +103,18 @@ extension TitrationViewModel {
 // MARK: Adding molecules
 extension TitrationViewModel {
     private func increment(substance: TitrationComponentState.Substance, count: Int) {
-        defer { updateCanGoNext() }
-        guard inputState == .addSubstance else {
+        guard substance == components.state.substance,
+              inputState == .addSubstance else {
             return
         }
 
-        guard substance == components.state.substance else {
-            return
-        }
         if substance.isStrong {
             components.strongSubstancePreparationModel.incrementSubstance(count: count)
         } else {
             components.weakSubstancePreparationModel.incrementSubstance(count: count)
         }
+        updateCanGoNext()
+        updateStatementPostSubstanceIncrement()
     }
 
     private func canAdd(substance: TitrationComponentState.Substance) -> Bool {
@@ -185,8 +184,6 @@ extension TitrationViewModel {
 // MARK: Adding titrant
 extension TitrationViewModel {
     private func incrementTitrant(count: Int) {
-        defer { updateCanGoNext() }
-
         guard inputState == .addTitrant else {
             return
         }
@@ -202,9 +199,11 @@ extension TitrationViewModel {
             components.weakSubstancePreEPModel.incrementTitrant(count: count)
         case .postEP:
             components.weakSubstancePostEPModel.incrementTitrant(count: count)
-        default:
-            return
+        default: break
         }
+
+        updateCanGoNext()
+        updateStatementPostTitrantIncrement()
     }
 
     private var canAddTitrant: Bool {
@@ -228,6 +227,72 @@ extension TitrationViewModel {
 
     func resetPostEPTitrant() {
         components.currentPostEPTitrantModel?.resetState()
+    }
+}
+
+// MARK: Updating statement mid adding molecules
+extension TitrationViewModel {
+    private func updateStatementPostSubstanceIncrement() {
+        let shouldUpdateStatement = components.currentPreparationModel?.hasAddedEnoughSubstance ?? false
+        guard shouldUpdateStatement else {
+            return
+        }
+
+        switch components.state.substance {
+        case .strongAcid:
+            statement = TitrationStatements.midAddingStrongAcid
+        case .strongBase:
+            statement = TitrationStatements.midAddingStrongBase
+        default:
+            return
+        }
+    }
+
+    private func updateStatementPostTitrantIncrement() {
+        guard inputState == .addTitrant else {
+            return
+        }
+        if components.state.phase == .preEP {
+            updateStrongSubstancePreEPTitrantStatement()
+        } else if components.state.phase == .postEP {
+            updateStrongSubstancePostEPTitrantStatement()
+        }
+    }
+
+    private func updateStrongSubstancePreEPTitrantStatement() {
+        guard let model = components.currentPreEPTitrantModel else {
+            return
+        }
+        let percentAdded = Double(model.titrantAdded) / Double(model.maxTitrant)
+        let shouldUpdate = percentAdded >= 0.4
+        guard shouldUpdate else {
+            return
+        }
+        switch components.state.substance {
+        case .strongAcid:
+            statement = TitrationStatements.midAddingStrongBaseTitrant
+        case .strongBase:
+            statement = TitrationStatements.midAddingStrongAcidTitrant
+        default: return
+        }
+    }
+
+    private func updateStrongSubstancePostEPTitrantStatement() {
+        guard let model = components.currentPostEPTitrantModel else {
+            return
+        }
+        let percentAdded = Double(model.titrantAdded) / Double(model.maxTitrant)
+        let shouldUpdate = percentAdded >= 0.1
+        guard shouldUpdate else {
+            return
+        }
+        switch components.state.substance {
+        case .strongAcid:
+            statement = TitrationStatements.midAddingStrongBaseTitrantPostEP
+        case .strongBase:
+            statement = TitrationStatements.midAddingStrongAcidTitrantPostEP
+        default: return
+        }
     }
 }
 

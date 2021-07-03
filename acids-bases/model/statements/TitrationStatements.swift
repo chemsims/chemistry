@@ -185,6 +185,17 @@ struct TitrationStatements {
         "*Shake it into it.*"
     ]
 
+    static let midAddingStrongBase: [TextLine] = [
+        """
+        Concentration of *\(hydroxide)* is getting higher! And the pH is also \
+        very high, so this is a very basic solution.
+        """,
+        """
+        *Keep shaking until you're happy with the initial concentration of \
+        \(hydroxide).*
+        """
+    ]
+
     static let postAddingStrongBaseExplanation1: [TextLine] = [
         """
         During a titration, there are stages: before the equivalence point (EP), at the EP \
@@ -214,6 +225,16 @@ struct TitrationStatements {
         """
     ]
 
+    static let midAddingStrongAcidTitrant: [TextLine] = [
+        """
+        At this stage, \(hydroxide) ions are reacting with the \(hydrogen) ions \
+        added to form water. The solution is slowly decreasing its pH.
+        """,
+        """
+        *Keep adding by tapping the burette!*
+        """
+    ]
+
     static let reachedStrongBaseEquivalencePoint: [TextLine] = [
         """
         We've reached the *equivalence point*. As all \(hydroxide) ions have reacted with the \
@@ -229,6 +250,14 @@ struct TitrationStatements {
         solution, making it acidic.
         """,
         "*Keep adding by tapping the burette!*"
+    ]
+
+    static let midAddingStrongAcidTitrantPostEP: [TextLine] = [
+        """
+        At this stage there is no more KOH in the solution to react with \
+        the HCl, so this is fully dissociating into \(hydrogen). The solution is \
+        rapidly decreasing its pH. *Keep adding by tapping the burette!*
+        """
     ]
 
     static let endOfStrongBaseTitration: [TextLine] = [
