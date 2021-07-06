@@ -115,6 +115,7 @@ extension TitrationViewModel {
         }
         updateCanGoNext()
         updateStatementPostSubstanceIncrement()
+        goNextIfNeededPostSubstanceIncrement()
     }
 
     private func canAdd(substance: TitrationComponentState.Substance) -> Bool {
@@ -154,7 +155,6 @@ extension TitrationViewModel {
 // MARK: Adding indicator
 extension TitrationViewModel {
     private func addedIndicator(count: Int) {
-        defer { updateCanGoNext() }
         guard inputState == .addIndicator else {
             return
         }
@@ -166,6 +166,8 @@ extension TitrationViewModel {
         withAnimation(.linear(duration: 1)) {
             indicatorAdded += maxToAdd
         }
+        updateCanGoNext()
+        goNextIfNeededPostIndicatorIncrement()
     }
 
     private var canAddIndicator: Bool {
@@ -204,6 +206,7 @@ extension TitrationViewModel {
 
         updateCanGoNext()
         updateStatementPostTitrantIncrement()
+        goNextIfNeededPostTitrantIncrement()
     }
 
     private var canAddTitrant: Bool {
@@ -292,6 +295,38 @@ extension TitrationViewModel {
         case .strongBase:
             statement = TitrationStatements.midAddingStrongAcidTitrantPostEP
         default: return
+        }
+    }
+}
+
+// MARK: Going next automatically post increment
+extension TitrationViewModel {
+    private func goNextIfNeededPostSubstanceIncrement() {
+        guard inputState == .addSubstance else {
+            return
+        }
+        if let model = components.currentPreparationModel, !model.canAddSubstance {
+            next()
+        }
+    }
+
+    private func goNextIfNeededPostIndicatorIncrement() {
+        guard inputState == .addIndicator else {
+            return
+        }
+        if inputState == .addIndicator && !canAddIndicator {
+            next()
+        }
+    }
+
+    private func goNextIfNeededPostTitrantIncrement() {
+        guard inputState == .addTitrant else {
+            return
+        }
+        if let model = components.currentPreEPTitrantModel, !model.canAddTitrant {
+            next()
+        } else if let model = components.currentPostEPTitrantModel, !model.canAddTitrant {
+            next()
         }
     }
 }

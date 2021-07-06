@@ -79,7 +79,7 @@ struct TitrationStatements {
     static let explainTitrationStages: [TextLine] = [
         """
         During a titration, there are stages: before the equivalence point (EP), at the EP and \
-        finally after the EP. AT this stage, before the EP, there's an excess of *\(hydrogen)* \
+        finally after the EP. At this stage, before the EP, there's an excess of *\(hydrogen)* \
         moles in the solution, making it *acidic*. All moles of *\(hydroxide)* will react to \
         *neutralize moles of \(hydrogen).*
         """
