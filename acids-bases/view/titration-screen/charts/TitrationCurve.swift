@@ -5,12 +5,12 @@
 import SwiftUI
 import ReactionsCore
 
-struct TitrationPhChart: View {
+struct TitrationCurve: View {
 
     let layout: TitrationScreenLayout
     let state: TitrationComponentState.State
-    @ObservedObject var strongSubstancePreEPModel: TitrationStrongSubstancePreEPModel
-    @ObservedObject var strongSubstancePostEPModel: TitrationStrongSubstancePostEPModel
+    @ObservedObject var strongPreEPModel: TitrationStrongSubstancePreEPModel
+    @ObservedObject var strongPostEPModel: TitrationStrongSubstancePostEPModel
     @ObservedObject var weakPreEPModel: TitrationWeakSubstancePreEPModel
     @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
 
@@ -20,8 +20,8 @@ struct TitrationPhChart: View {
             GeneralTitrationPhChart(
                 layout: layout,
                 phase: state.phase,
-                preEPReaction: strongSubstancePreEPModel,
-                postEPReaction: strongSubstancePostEPModel,
+                preEPReaction: strongPreEPModel,
+                postEPReaction: strongPostEPModel,
                 equalityTitrant: nil,
                 showAnnotations: false
             )
@@ -215,7 +215,7 @@ struct TitrationPhChart_Previews: PreviewProvider {
 
     static var previews: some View {
         GeometryReader { geo in
-            TitrationPhChart(
+            TitrationCurve(
                 layout: .init(
                     common: .init(
                         geometry: geo,
@@ -227,8 +227,8 @@ struct TitrationPhChart_Previews: PreviewProvider {
                     substance: .strongAcid,
                     phase: .preparation
                 ),
-                strongSubstancePreEPModel: components.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: components.strongSubstancePostEPModel,
+                strongPreEPModel: components.strongSubstancePreEPModel,
+                strongPostEPModel: components.strongSubstancePostEPModel,
                 weakPreEPModel: components.weakSubstancePreEPModel,
                 weakPostEPModel: components.weakSubstancePostEPModel
             )

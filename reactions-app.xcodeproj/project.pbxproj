@@ -562,7 +562,7 @@
 		57F4D1B8263D71E500449222 /* SolubilityBeakerAccessibilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4D1B7263D71E500449222 /* SolubilityBeakerAccessibilityLabel.swift */; };
 		57F56220258D4F64008B2602 /* CatalystState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F5621F258D4F64008B2602 /* CatalystState.swift */; };
 		57F88853267E16C900609671 /* TitrationChartStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88852267E16C900609671 /* TitrationChartStack.swift */; };
-		57F88856267E16DD00609671 /* TitrationPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88855267E16DD00609671 /* TitrationPhChart.swift */; };
+		57F88856267E16DD00609671 /* TitrationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88855267E16DD00609671 /* TitrationCurve.swift */; };
 		57F88858267E170800609671 /* TitrationBarsOrReactionProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */; };
 		57F8885A267E17A800609671 /* TitrationRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88859267E17A800609671 /* TitrationRightStack.swift */; };
 		57F8885C267E188400609671 /* SliderOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885B267E188400609671 /* SliderOverlay.swift */; };
@@ -1282,7 +1282,7 @@
 		57F4D1B7263D71E500449222 /* SolubilityBeakerAccessibilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityBeakerAccessibilityLabel.swift; sourceTree = "<group>"; };
 		57F5621F258D4F64008B2602 /* CatalystState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystState.swift; sourceTree = "<group>"; };
 		57F88852267E16C900609671 /* TitrationChartStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationChartStack.swift; sourceTree = "<group>"; };
-		57F88855267E16DD00609671 /* TitrationPhChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationPhChart.swift; sourceTree = "<group>"; };
+		57F88855267E16DD00609671 /* TitrationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationCurve.swift; sourceTree = "<group>"; };
 		57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationBarsOrReactionProgress.swift; sourceTree = "<group>"; };
 		57F88859267E17A800609671 /* TitrationRightStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationRightStack.swift; sourceTree = "<group>"; };
 		57F8885B267E188400609671 /* SliderOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderOverlay.swift; sourceTree = "<group>"; };
@@ -3429,7 +3429,7 @@
 			isa = PBXGroup;
 			children = (
 				57F88852267E16C900609671 /* TitrationChartStack.swift */,
-				57F88855267E16DD00609671 /* TitrationPhChart.swift */,
+				57F88855267E16DD00609671 /* TitrationCurve.swift */,
 				57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */,
 			);
 			path = charts;
@@ -3907,7 +3907,7 @@
 				574978362683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift in Sources */,
 				577C5021267F1512003DAD17 /* CommonAcidEquations.swift in Sources */,
 				577C50332680D0DC003DAD17 /* TitrationEquationTerm.swift in Sources */,
-				57F88856267E16DD00609671 /* TitrationPhChart.swift in Sources */,
+				57F88856267E16DD00609671 /* TitrationCurve.swift in Sources */,
 				57CD325826723ACB00C94109 /* BufferFractionsChart.swift in Sources */,
 				574978322683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift in Sources */,
 				5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */,

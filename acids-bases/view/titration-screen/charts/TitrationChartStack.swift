@@ -12,11 +12,11 @@ struct TitrationChartStack: View {
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
-            TitrationPhChart(
+            TitrationCurve(
                 layout: layout,
                 state: model.components.state,
-                strongSubstancePreEPModel: model.components.strongSubstancePreEPModel,
-                strongSubstancePostEPModel: model.components.strongSubstancePostEPModel,
+                strongPreEPModel: model.components.strongSubstancePreEPModel,
+                strongPostEPModel: model.components.strongSubstancePostEPModel,
                 weakPreEPModel: model.components.weakSubstancePreEPModel,
                 weakPostEPModel: model.components.weakSubstancePostEPModel
             )
