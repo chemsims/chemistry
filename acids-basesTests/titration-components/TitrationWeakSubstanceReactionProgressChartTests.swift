@@ -9,10 +9,12 @@ class TitrationWeakSubstanceReactionProgressChartTests: XCTestCase {
 
     func testWeakAcidReactionProgress() {
         doTestMoleculeCounts(substance: .weakAcids.first!)
+        doTestMoleculeCountsAtMaxBufferCapacity(substance: .weakAcids.first!)
     }
 
     func testWeakBaseReactionProgress() {
         doTestMoleculeCounts(substance: .weakBases.first!)
+        doTestMoleculeCountsAtMaxBufferCapacity(substance: .weakBases.first!)
     }
 
     private func doTestMoleculeCounts(substance: AcidOrBase) {
@@ -61,6 +63,46 @@ class TitrationWeakSubstanceReactionProgressChartTests: XCTestCase {
         XCTAssertEqual(postEPModel.secondaryIonCount, 50)
         XCTAssertEqual(postEPModel.primaryIonCount, 0)
         XCTAssertEqual(postEPModel.complementIonCount, 50)
+    }
+
+    private func doTestMoleculeCountsAtMaxBufferCapacity(substance: AcidOrBase) {
+        let prepModel = TitrationWeakSubstancePreparationModel(substance: substance)
+        prepModel.incrementSubstance(count: prepModel.maxSubstance)
+
+        let preEPModel = TitrationWeakSubstancePreEPModel(previous: prepModel)
+
+        let initialCount = preEPModel.substanceIonCount
+        XCTAssertEqual(initialCount % 2, 0)
+        let expectedMidCount = initialCount / 2
+
+        preEPModel.incrementTitrant(count: preEPModel.titrantAtMaxBufferCapacity)
+
+        XCTAssertEqual(preEPModel.substanceIonCount, expectedMidCount)
+        XCTAssertEqual(preEPModel.secondaryIonCount, expectedMidCount)
+    }
+
+    private func doTestResettingMaxBufferCapacityMolecules(substance: AcidOrBase) {
+        let prepModel = TitrationWeakSubstancePreparationModel(substance: substance)
+        prepModel.incrementSubstance(count: prepModel.maxSubstance)
+
+        let preEPModel = TitrationWeakSubstancePreEPModel(previous: prepModel)
+
+        let initialCount = preEPModel.substanceIonCount
+
+
+        preEPModel.titrantLimit = .equivalencePoint
+        preEPModel.incrementTitrant(count: preEPModel.maxTitrant)
+
+        XCTAssertEqual(preEPModel.secondaryIonCount, initialCount)
+        XCTAssertEqual(preEPModel.substanceIonCount, 0)
+
+        preEPModel.resetReactionProgressToMaxBufferCapacity()
+
+        let expectedMidCount = initialCount / 2
+        XCTAssertEqual(preEPModel.secondaryIonCount, expectedMidCount)
+        XCTAssertEqual(preEPModel.substanceIonCount, expectedMidCount)
+
+        // 127,713.96
     }
 }
 

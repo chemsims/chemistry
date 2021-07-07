@@ -420,6 +420,7 @@ private class AddTitrantToWeakSubstancePostMaxBufferCapacity: SetStatement {
         apply(on: model)
         let weakModel = model.components.weakSubstancePreEPModel
         withAnimation(.easeOut(duration: 0.35)) {
+            weakModel.resetReactionProgressToMaxBufferCapacity()
             weakModel.titrantAdded = weakModel.titrantAtMaxBufferCapacity
         }
     }

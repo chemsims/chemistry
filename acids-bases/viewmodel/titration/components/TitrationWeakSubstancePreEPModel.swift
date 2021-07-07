@@ -44,14 +44,6 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
             titrantAdded: 0
         )
         self.reactionProgress = previous.reactionProgressModel
-        self.reactionProgressSecondaryIonCount = LinearEquation(
-            x1: 0,
-            y1: 0,
-            x2: CGFloat(maxTitrant),
-            y2: CGFloat(
-                previous.reactionProgressModel.moleculeCounts(ofType: .substance)
-            )
-        )
     }
 
     let previous: TitrationWeakSubstancePreparationModel
@@ -124,7 +116,34 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
         self.reactionProgress = previous.copyReactionProgress()
     }
 
-    private let reactionProgressSecondaryIonCount: Equation
+    func resetReactionProgressToMaxBufferCapacity() {
+        self.reactionProgress = reactionProgress.copy(
+            withCounts: .init(builder: {
+                switch $0 {
+                case .substance: return maxBufferCapacityReactionProgressCount
+                case .secondaryIon: return maxBufferCapacityReactionProgressCount
+                default: return 0
+                }
+            })
+        )
+    }
+
+    private var reactionProgressSecondaryIonCount: Equation {
+        let previousSubstance = previous.reactionProgressModel.moleculeCounts(ofType: .substance)
+        return SwitchingEquation.linear(
+            initial: .zero,
+            mid: CGPoint(x: CGFloat(titrantAtMaxBufferCapacity), y: CGFloat(maxBufferCapacityReactionProgressCount)),
+            final: CGPoint(
+                x: CGFloat(maxTitrant),
+                y: CGFloat(previousSubstance)
+            )
+        )
+    }
+
+    private var maxBufferCapacityReactionProgressCount: Int {
+        let previousSubstance = previous.reactionProgressModel.moleculeCounts(ofType: .substance)
+        return previousSubstance / 2
+    }
 }
 
 // MARK: - Incrementing
