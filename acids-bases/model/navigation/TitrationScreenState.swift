@@ -151,6 +151,10 @@ struct TitrationNavigationModel {
         SetStatement(statements.explainWeakBaseHasselbalch),
         SetStatement(statements.explainWeakBaseBufferMoles),
         AddTitrantPreEP(statements.instructToAddTitrantToWeakBase),
+        StopInput(statements.reachedWeakBaseMaxBufferCapacity),
+        AddTitrantToWeakSubstancePostMaxBufferCapacity(
+            statements.instructToAddTitrantToWeakBasePostMaxBufferCapacity
+        ),
         StopInput(
             { model in
                 statements.reachedWeakBaseEquivalencePoint(
