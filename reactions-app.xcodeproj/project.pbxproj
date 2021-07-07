@@ -608,6 +608,7 @@
 		57FD4032264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD4031264876EF00E352C1 /* EquilibriumQuizQuestionTests.swift */; };
 		57FDA13D255D6FC800CB8804 /* DualValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */; };
 		57FDA141255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */; };
+		57FDA5042695B24D001F24CA /* TitrationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA5032695B24D001F24CA /* TitrationViewModelTests.swift */; };
 		57FF9EDE25FF6EA800C1C27F /* GridElementBalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FF9EDD25FF6EA800C1C27F /* GridElementBalancer.swift */; };
 		57FF9EE425FF6EC100C1C27F /* GridElementBalancerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FF9EE325FF6EC100C1C27F /* GridElementBalancerTests.swift */; };
 /* End PBXBuildFile section */
@@ -1310,6 +1311,7 @@
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
 		57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionRateChartLayoutSettings.swift; sourceTree = "<group>"; };
 		57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = speechBubbleLineGeneratorTests.swift; sourceTree = "<group>"; };
+		57FDA5032695B24D001F24CA /* TitrationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationViewModelTests.swift; sourceTree = "<group>"; };
 		57FF9EDD25FF6EA800C1C27F /* GridElementBalancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementBalancer.swift; sourceTree = "<group>"; };
 		57FF9EE325FF6EC100C1C27F /* GridElementBalancerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementBalancerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1544,6 +1546,7 @@
 				5705CB0B2678E98000F5A63C /* FractionedChartAxisHelperTests.swift */,
 				577BC7742679D463005BE5C8 /* AcidOrBaseTests.swift */,
 				577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */,
+				57FDA5032695B24D001F24CA /* TitrationViewModelTests.swift */,
 			);
 			path = "acids-basesTests";
 			sourceTree = "<group>";
@@ -3997,6 +4000,7 @@
 				577BC7752679D463005BE5C8 /* AcidOrBaseTests.swift in Sources */,
 				57E9B75D268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift in Sources */,
 				5711603526831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift in Sources */,
+				57FDA5042695B24D001F24CA /* TitrationViewModelTests.swift in Sources */,
 				57F4673F2687421800E294BE /* NavigationExtensions.swift in Sources */,
 				570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */,
 				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,

@@ -102,7 +102,7 @@ extension TitrationViewModel {
 
 // MARK: Adding molecules
 extension TitrationViewModel {
-    private func increment(substance: TitrationComponentState.Substance, count: Int) {
+    func increment(substance: TitrationComponentState.Substance, count: Int) {
         guard substance == components.state.substance,
               inputState == .addSubstance else {
             return
@@ -185,7 +185,7 @@ extension TitrationViewModel {
 
 // MARK: Adding titrant
 extension TitrationViewModel {
-    private func incrementTitrant(count: Int) {
+    func incrementTitrant(count: Int) {
         guard inputState == .addTitrant else {
             return
         }

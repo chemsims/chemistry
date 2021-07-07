@@ -34,6 +34,30 @@ public struct SwitchingEquation: Equation {
         }
         return underlyingRight.getY(at: x)
     }
+
+    /// Returns a switching equation with two linear lines that switch at the
+    /// provided `mid` point.
+    public static func linear(
+        initial: CGPoint,
+        mid: CGPoint,
+        final: CGPoint
+    ) -> SwitchingEquation {
+        SwitchingEquation(
+            thresholdX: mid.x,
+            underlyingLeft: LinearEquation(
+                x1: initial.x,
+                y1: initial.y,
+                x2: mid.x,
+                y2: mid.y
+            ),
+            underlyingRight: LinearEquation(
+                x1: mid.x,
+                y1: mid.y,
+                x2: final.x,
+                y2: final.y
+            )
+        )
+    }
 }
 
 public struct QuadraticEquation: Equation {

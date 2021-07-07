@@ -19,6 +19,9 @@ protocol TitrantInputModel {
     var maxTitrant: Int { get }
     var titrantAdded: Int { get }
 
+    var canAddTitrant: Bool { get }
+    var hasAddedEnoughTitrant: Bool { get }
+
     func resetState()
 }
 

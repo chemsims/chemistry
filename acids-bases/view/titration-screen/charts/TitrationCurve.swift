@@ -31,7 +31,7 @@ struct TitrationCurve: View {
                 phase: state.phase,
                 preEPReaction: weakPreEPModel,
                 postEPReaction: weakPostEPModel,
-                equalityTitrant: weakPreEPModel.equalityTitrant,
+                equalityTitrant: weakPreEPModel.titrantAtMaxBufferCapacity,
                 showAnnotations: true
             )
         }

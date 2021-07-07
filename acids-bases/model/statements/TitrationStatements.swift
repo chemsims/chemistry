@@ -368,6 +368,21 @@ struct TitrationStatements {
         """
     ]
 
+    static let reachedWeakAcidMaxBufferCapacity: [TextLine] = [
+        """
+        This is the point of max buffer capacity, as there's equal amounts of \
+        A^-^ and HA right now. At this point, *$pH = pKA$*. It's the mid-point, half \
+        way through the EP.
+        """
+    ]
+
+    static let instructToAddTitrantToWeakAcidPostMaxBufferCapacity: [TextLine] = [
+        """
+        At this stage, *\(hydroxide)* is reacting with the HA present in the solution \
+        to form A^-^ and water. The solution is slowly increasing its pH (becoming \
+        more basic). *Keep adding by tapping the burette!*
+        """
+    ]
 
     static func reachedWeakAcidEquivalencePoint(pH: CGFloat) -> [TextLine] {
         let pHString = pH.str(decimals: 2)

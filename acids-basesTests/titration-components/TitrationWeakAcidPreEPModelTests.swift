@@ -34,6 +34,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
             )
         }
 
+        model.titrantLimit = .equivalencePoint
         model.incrementTitrant(count: 20)
         let concentration = model.currentConcentration
 
@@ -64,6 +65,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
             firstModel.currentPValues.value(for: .hydroxide)
         )
 
+        model.titrantLimit = .equivalencePoint
         model.incrementTitrant(count: model.maxTitrant)
 
         let finalPValues = model.currentPValues
@@ -108,6 +110,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
         )
         XCTAssertEqual(model.currentVolume.value(for: .titrant), 0)
 
+        model.titrantLimit = .equivalencePoint
         model.incrementTitrant(count: model.maxTitrant)
         let finalTitrantVolume = model.currentVolume.value(for: .titrant)
 
@@ -141,6 +144,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
 
         XCTAssertEqual(model.currentMoles.value(for: .titrant), 0)
 
+        model.titrantLimit = .equivalencePoint
         model.incrementTitrant(count: model.maxTitrant)
 
         XCTAssertEqual(model.currentMoles.value(for: .initialSubstance), initialSubstanceMoles)
@@ -172,11 +176,33 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
         XCTAssert(model.canAddTitrant)
         XCTAssertFalse(model.hasAddedEnoughTitrant)
 
-        model.incrementTitrant(count: 50)
+        model.incrementTitrant(count: model.titrantAtMaxBufferCapacity + 5)
 
         XCTAssertFalse(model.canAddTitrant)
         XCTAssert(model.hasAddedEnoughTitrant)
-        XCTAssertEqual(model.titrantAdded, 20)
+        XCTAssertEqual(model.titrantAdded, model.titrantAtMaxBufferCapacity)
+
+        model.titrantLimit = .equivalencePoint
+        XCTAssert(model.canAddTitrant)
+        XCTAssertFalse(model.hasAddedEnoughTitrant)
+
+        model.incrementTitrant(count: model.maxTitrant)
+        XCTAssertFalse(model.canAddTitrant)
+        XCTAssert(model.hasAddedEnoughTitrant)
+        XCTAssertEqual(model.titrantAdded, model.maxTitrant)
+    }
+
+    func testConcentrationAtMaxBufferCapacity() {
+        let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
+        firstModel.incrementSubstance(count: 20)
+
+        let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
+
+        func getConcentration(_ term: TitrationEquationTerm.Concentration) -> CGFloat {
+            model.concentration.value(for: term).getY(at: CGFloat(model.titrantAtMaxBufferCapacity))
+        }
+
+        XCTAssertEqualWithTolerance(getConcentration(.substance), getConcentration(.secondary))
     }
 }
 

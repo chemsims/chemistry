@@ -60,6 +60,8 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
 
     @Published var reactionProgress: ReactionProgressChartViewModel<ExtendedSubstancePart>
 
+    var titrantLimit: TitrantLimit = .maxBufferCapacity
+
     var beakerReactionModel: ReactingBeakerViewModel<ExtendedSubstancePart>
 
     var substance: AcidOrBase {
@@ -106,8 +108,8 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
         calculations.barChartDataMap
     }
 
-    var equalityTitrant: Int {
-        calculations.equalityTitrant
+    var titrantAtMaxBufferCapacity: Int {
+        calculations.titrantAtMaxBufferCapacity
     }
 
     func resetState() {
@@ -155,6 +157,32 @@ extension TitrationWeakSubstancePreEPModel {
             titrantAdded: titrantAdded
         )
         updateReactionProgress()
+    }
+}
+
+// MARK: Input limits
+extension TitrationWeakSubstancePreEPModel {
+    var canAddTitrant: Bool {
+        titrantCountAvailable > 0
+    }
+
+    var hasAddedEnoughTitrant: Bool {
+        !canAddTitrant
+    }
+
+    var titrantCountAvailable: Int {
+        max(0, maxTitrantForInputStage - titrantAdded)
+    }
+
+    var maxTitrantForInputStage: Int {
+        switch titrantLimit {
+        case .maxBufferCapacity: return titrantAtMaxBufferCapacity
+        case .equivalencePoint: return maxTitrant
+        }
+    }
+
+    enum TitrantLimit {
+        case maxBufferCapacity, equivalencePoint
     }
 }
 
@@ -250,18 +278,21 @@ private class WeakSubstanceCalculations {
         )
     }()
 
-    private lazy var secondaryConcentration = LinearEquation(
-        x1: 0,
-        y1: initialConcentration(of: .secondary),
-        x2: CGFloat(maxTitrant),
-        y2: finalSecondaryPreKBalancing - changeInConcentrationToBalanceKRelation
-    )
+    private lazy var secondaryConcentration =
+        concentrationWithEqualityAtMaxBufferCapacity(
+            initial: initialConcentration(of: .secondary),
+            final: finalSecondaryConcentration
+        )
 
-    private lazy var substanceConcentration = LinearEquation(
-        x1: 0,
-        y1: initialConcentration(of: .substance),
-        x2: CGFloat(maxTitrant),
-        y2: changeInConcentrationToBalanceKRelation
+    private lazy var finalSecondaryConcentration =
+        finalSecondaryPreKBalancing - changeInConcentrationToBalanceKRelation
+
+    private lazy var finalSubstanceConcentration = changeInConcentrationToBalanceKRelation
+
+    private lazy var substanceConcentration =
+        concentrationWithEqualityAtMaxBufferCapacity(
+            initial: initialConcentration(of: .substance),
+            final: finalSubstanceConcentration
     )
 
     private var hydrogenConcentration: Equation {
@@ -300,20 +331,51 @@ private class WeakSubstanceCalculations {
     }
 
     private lazy var concentrationIntersect: CGPoint = {
-        guard let intersection = secondaryConcentration.intersectionWith(other: substanceConcentration) else {
-            // Note that this may o
-//            assert(false, "Failed to get intersection of secondary & substance concentration")
-            return .zero
-        }
-        return intersection
+        let idealSecondary = LinearEquation(
+            x1: 0,
+            y1: initialConcentration(of: .secondary),
+            x2: CGFloat(maxTitrant),
+            y2: finalSecondaryConcentration
+        )
+
+        let idealSubstance = LinearEquation(
+            x1: 0,
+            y1: initialConcentration(of: .substance),
+            x2: CGFloat(maxTitrant),
+            y2: finalSubstanceConcentration
+        )
+
+        let intersection = idealSecondary.intersectionWith(other: idealSubstance)
+
+        // Intersection may be nil when prev concentration is 0
+        return intersection ?? .zero
     }()
 
-    lazy var equalityTitrant: Int = {
+    lazy var titrantAtMaxBufferCapacity: Int = {
         concentrationIntersect.x.roundedInt()
     }()
 
-    var concentrationAtEquality: CGFloat {
+    var concentrationAtMaxBufferCapacity: CGFloat {
         concentrationIntersect.y
+    }
+
+    /// Concentration equation for substances which intersect at the
+    /// max buffer capacity
+    private func concentrationWithEqualityAtMaxBufferCapacity(
+        initial: CGFloat,
+        final: CGFloat
+    ) -> Equation {
+        SwitchingEquation.linear(
+            initial: CGPoint(x: 0, y: initial),
+            mid: CGPoint(
+                x: CGFloat(titrantAtMaxBufferCapacity),
+                y: concentrationAtMaxBufferCapacity
+            ),
+            final: CGPoint(
+                x: CGFloat(maxTitrant),
+                y: final
+            )
+        )
     }
 
 // MARK: - Molarity

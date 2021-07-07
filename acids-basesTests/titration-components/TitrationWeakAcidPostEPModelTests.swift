@@ -25,8 +25,11 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
             )
         )
         firstModel.incrementSubstance(count: 20)
+
         let secondModel = TitrationWeakSubstancePreEPModel(previous: firstModel)
+        secondModel.titrantLimit = .equivalencePoint
         secondModel.incrementTitrant(count: secondModel.maxTitrant)
+
         let model = TitrationWeakSubstancePostEPModel(previous: secondModel)
 
         func checkTheSameAsPrevious(_ term: TitrationEquationTerm.Concentration) {
@@ -55,8 +58,11 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
             )
         )
         firstModel.incrementSubstance(count: 20)
+
         let secondModel = TitrationWeakSubstancePreEPModel(previous: firstModel)
+        secondModel.titrantLimit = .equivalencePoint
         secondModel.incrementTitrant(count: secondModel.maxTitrant)
+
         let model = TitrationWeakSubstancePostEPModel(previous: secondModel)
 
         func checkTheSameAsPrevious(_ term: TitrationEquationTerm.PValue) {
@@ -80,8 +86,11 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
             )
         )
         firstModel.incrementSubstance(count: 20)
+
         let secondModel = TitrationWeakSubstancePreEPModel(previous: firstModel)
+        secondModel.titrantLimit = .equivalencePoint
         secondModel.incrementTitrant(count: secondModel.maxTitrant)
+
         let model = TitrationWeakSubstancePostEPModel(previous: secondModel)
 
         let previousTitrant = secondModel.currentVolume.value(for: .titrant)
@@ -113,8 +122,11 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
     func testMoles() {
         let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
+
         let secondModel = TitrationWeakSubstancePreEPModel(previous: firstModel)
         secondModel.incrementTitrant(count: secondModel.maxTitrant)
+        secondModel.titrantLimit = .equivalencePoint
+        
         let model = TitrationWeakSubstancePostEPModel(previous: secondModel)
 
         XCTAssertEqual(model.currentMoles.value(for: .titrant), 0)
@@ -130,8 +142,11 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
     func testBarChartData() {
         let firstModel = TitrationWeakSubstancePreparationModel(substance: substance)
         firstModel.incrementSubstance(count: 20)
+
         let secondModel = TitrationWeakSubstancePreEPModel(previous: firstModel)
+        secondModel.titrantLimit = .equivalencePoint
         secondModel.incrementTitrant(count: secondModel.maxTitrant)
+
         let model = TitrationWeakSubstancePostEPModel(previous: secondModel)
 
         ExtendedSubstancePart.allCases.forEach { part in

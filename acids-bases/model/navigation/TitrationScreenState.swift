@@ -97,6 +97,10 @@ struct TitrationNavigationModel {
         SetStatement(statements.explainWeakAcidHasselbalch),
         SetStatement(statements.explainWeakAcidBufferMoles),
         AddTitrantPreEP(statements.instructToAddTitrantToWeakAcid),
+        StopInput(statements.reachedWeakAcidMaxBufferCapacity),
+        AddTitrantToWeakSubstancePostMaxBufferCapacity(
+            statements.instructToAddTitrantToWeakAcidPostMaxBufferCapacity
+        ),
         StopInput(
             { model in
                 statements.reachedWeakAcidEquivalencePoint(
@@ -402,6 +406,30 @@ private class AddTitrantPreEP: SetStatement {
             model.shakeModel.stopAll()
         }
         model.macroBeakerState = .indicator
+    }
+}
+
+private class AddTitrantToWeakSubstancePostMaxBufferCapacity: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        model.inputState = .addTitrant
+        model.components.weakSubstancePreEPModel.titrantLimit = .equivalencePoint
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        apply(on: model)
+        let weakModel = model.components.weakSubstancePreEPModel
+        withAnimation(.easeOut(duration: 0.35)) {
+            weakModel.titrantAdded = weakModel.titrantAtMaxBufferCapacity
+        }
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        model.inputState = .none
+        model.components.weakSubstancePreEPModel.titrantLimit = .maxBufferCapacity
+        withAnimation(containerInputAnimation) {
+            model.shakeModel.stopAll()
+        }
     }
 }
 

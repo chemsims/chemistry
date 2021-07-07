@@ -43,6 +43,7 @@ class TitrationWeakSubstanceReactionProgressChartTests: XCTestCase {
         XCTAssertEqual(preEPModel.primaryIonCount, 0)
         XCTAssertEqual(preEPModel.complementIonCount, 0)
 
+        preEPModel.titrantLimit = .equivalencePoint
         preEPModel.incrementTitrant(count: preEPModel.maxTitrant)
         XCTAssertEqual(preEPModel.substanceIonCount, 0)
         XCTAssertEqual(preEPModel.secondaryIonCount, 50)
