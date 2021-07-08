@@ -13,6 +13,7 @@ class TitrationNavigationParametersAreReappliedTests: XCTestCase {
         doTest(\.inputState)
         doTest(\.equationState)
         doTest(\.showTitrantFill)
+        doTest(\.showIndicatorFill)
         doTest(\.availableSubstances)
         doTest(\.substance)
     }

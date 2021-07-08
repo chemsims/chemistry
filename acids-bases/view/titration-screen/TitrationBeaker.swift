@@ -104,7 +104,8 @@ private struct TitrationBeakerTools: View {
     private var dropper: some View {
         Dropper(
             isActive: model.inputState == .addIndicator,
-            tubeFill: model.inputState == .addIndicator ? RGB.indicator.color : nil,
+            tubeFill: model.showIndicatorFill ? RGB.indicator.color : nil,
+            fillPercent: model.dropperFillPercent,
             onTap: {
                 dropperEmitModel.addMolecule(
                     amount: dropperEmitAmount,

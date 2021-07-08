@@ -10,7 +10,7 @@ class ReactionProgressChartGeometryTests: XCTestCase {
     func testGeometry() {
         let model = ReactionProgressChartGeometry(
             chartSize: 500,
-            colCount: 4,
+            moleculeType: TestEnum.self,
             maxMolecules: 10,
             topPadding: 100
         )
@@ -36,5 +36,9 @@ class ReactionProgressChartGeometryTests: XCTestCase {
         XCTAssertEqual(model.position(colIndex: 1, rowIndex: 9), CGPoint(x: expectedColX[1], y: 120))
         XCTAssertEqual(model.position(colIndex: 2, rowIndex: 9), CGPoint(x: expectedColX[2], y: 120))
         XCTAssertEqual(model.position(colIndex: 3, rowIndex: 9), CGPoint(x: expectedColX[3], y: 120))
+    }
+
+    private enum TestEnum: CaseIterable {
+        case A, B, C, D
     }
 }

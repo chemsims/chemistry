@@ -278,6 +278,7 @@ private class PrepareNewSubstanceModel: SetStatement {
         model.availableSubstances = availableSubstances(forSubstance: substance)
         model.substance = model.availableSubstances.first!
         model.resetIndicator()
+        model.showIndicatorFill = false
         model.showTitrantFill = false
 
         commonApply(on: model)
@@ -298,6 +299,7 @@ private class PrepareNewSubstanceModel: SetStatement {
         super.unapply(on: model)
         model.inputState = .none
         model.showTitrantFill = true
+        model.showIndicatorFill = true
         if let previousSelectedSubstance = previousSelectedSubstance,
            let previousSubstance = previousSubstance {
             model.substance = previousSelectedSubstance
@@ -476,11 +478,15 @@ private class AddIndicator: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
         model.inputState = .addIndicator
+        model.showIndicatorFill = true
     }
 
     override func reapply(on model: TitrationViewModel) {
         super.reapply(on: model)
         model.inputState = .addIndicator
+        withAnimation(containerInputAnimation) {
+            model.resetIndicator()
+        }
     }
 
     override func unapply(on model: TitrationViewModel) {
@@ -488,6 +494,7 @@ private class AddIndicator: SetStatement {
         withAnimation(containerInputAnimation) {
             model.inputState = .none
             model.resetIndicator()
+            model.showIndicatorFill = false
         }
     }
 }

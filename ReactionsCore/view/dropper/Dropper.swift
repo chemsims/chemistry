@@ -10,18 +10,21 @@ public struct Dropper: View {
         style: Dropper.Style = .init(),
         isActive: Bool,
         tubeFill: Color?,
+        fillPercent: CGFloat,
         onTap: @escaping () -> Void
     ) {
         self.style = style
         self.isActive = isActive
         self.onTap = onTap
         self.tubeFill = tubeFill
+        self.fillPercent = fillPercent
     }
 
     let style: Style
     let isActive: Bool
     let onTap: () -> Void
     let tubeFill: Color?
+    let fillPercent: CGFloat
 
     public var body: some View {
         GeometryReader { geo in
@@ -30,7 +33,8 @@ public struct Dropper: View {
                 geometry: Geometry(width: geo.size.width, height: geo.size.height),
                 isActive: isActive,
                 onTap: onTap,
-                tubeFill: tubeFill
+                tubeFill: tubeFill,
+                fillPercent: fillPercent
             )
         }
         .aspectRatio(Dropper.aspectRatio, contentMode: .fit)
@@ -44,6 +48,7 @@ private struct DropperWithGeometry: View {
     let isActive: Bool
     let onTap: () -> Void
     let tubeFill: Color?
+    let fillPercent: CGFloat
 
     var body: some View {
         VStack(spacing: 0) {
@@ -53,8 +58,12 @@ private struct DropperWithGeometry: View {
             DropperCapGrip(style: style, geometry: geometry)
                 .frame(width: geometry.width, height: geometry.capGripHeight)
 
-            DropperTube(style: style, geometry: geometry, fillColor: tubeFill)
-                .frame(width: geometry.tubeWidth, height: geometry.tubeHeight)
+            DropperTube(
+                style: style,
+                geometry: geometry,
+                fillColor: tubeFill,
+                fillPercent: fillPercent
+            )
         }
     }
 }
@@ -167,9 +176,10 @@ private struct DropperTube: View {
     let style: Dropper.Style
     let geometry: Dropper.Geometry
     let fillColor: Color?
+    let fillPercent: CGFloat
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             if fillColor != nil {
                 tubeFill(fillColor!)
             }
@@ -178,6 +188,10 @@ private struct DropperTube: View {
                 .stroke(lineWidth: geometry.tubeLineWidth)
                 .foregroundColor(style.capColor)
         }
+        .frame(
+            width: geometry.tubeWidth,
+            height: geometry.tubeHeight
+        )
     }
 
     private var tube: some Shape {
@@ -189,7 +203,14 @@ private struct DropperTube: View {
     }
 
     private func tubeFill(_ color: Color) -> some View {
-        tube.fill(color)
+        tube
+            .fill(color)
+            .frame(height: geometry.tubeHeight)
+            .frame(
+                height: fillPercent * geometry.tubeHeight,
+                alignment: .bottom
+            )
+            .clipped()
     }
 }
 
@@ -256,21 +277,33 @@ struct Dropper_Previews: PreviewProvider {
     private struct ViewWrapper: View {
 
         @State var isBlue = true
+        @State var fillPercent: CGFloat = 1
 
         var body: some View {
-            Dropper(
-                style: .init(),
-                isActive: true,
-                tubeFill: isBlue ? .blue : .purple,
-                onTap: {
-                    withAnimation {
-                        isBlue.toggle()
+            VStack {
+                Dropper(
+                    style: .init(),
+                    isActive: true,
+                    tubeFill: isBlue ? .blue : .purple,
+                    fillPercent: fillPercent,
+                    onTap: {
+                        withAnimation {
+                            isBlue.toggle()
+                        }
                     }
-                }
-            )
+                )
                 .frame(width: width, height: height)
-                .padding()
-                .previewLayout(.sizeThatFits)
+
+                Button(action: {
+                    withAnimation {
+                        fillPercent -= 0.1
+                    }
+                }) {
+                    Text("Use dropper")
+                }
+            }
+            .padding()
+            .previewLayout(.sizeThatFits)
         }
     }
 }

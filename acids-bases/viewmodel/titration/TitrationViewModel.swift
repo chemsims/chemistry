@@ -61,6 +61,7 @@ class TitrationViewModel: ObservableObject {
         }
     }
 
+    @Published var showIndicatorFill = false
     @Published var showTitrantFill = false
 
     /// This is published instead of reading from a computer property so that observers of this model will be
@@ -154,6 +155,16 @@ extension TitrationViewModel {
 
 // MARK: Adding indicator
 extension TitrationViewModel {
+
+    var dropperFillPercent: CGFloat {
+        LinearEquation(
+            x1: 1,
+            y1: 1,
+            x2: CGFloat(maxIndicator),
+            y2: 0
+        ).getY(at: CGFloat(indicatorAdded))
+    }
+
     private func addedIndicator(count: Int) {
         guard inputState == .addIndicator else {
             return
