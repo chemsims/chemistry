@@ -32,6 +32,7 @@ class TitrationViewModel: ObservableObject {
         )
         self.dropperEmitModel = MoleculeEmittingViewModel(
             canAddMolecule: { [weak self] in self?.canAddIndicator ?? false },
+            didEmitMolecules: { [weak self] in self?.didEmitIndicator(count: $0) },
             doAddMolecule: { [weak self] in self?.addedIndicator(count: $0) }
         )
         self.buretteEmitModel = MoleculeEmittingViewModel(
@@ -68,7 +69,9 @@ class TitrationViewModel: ObservableObject {
     /// notified when it changes rather than reading from a comp
     @Published var canGoNext = true
 
+    @Published private(set) var indicatorEmitted = 0
     @Published private(set) var indicatorAdded = 0
+
     let maxIndicator = 25
 
     @Published var macroBeakerState = MacroBeakerState.indicator
@@ -162,18 +165,26 @@ extension TitrationViewModel {
             y1: 1,
             x2: CGFloat(maxIndicator),
             y2: 0
-        ).getY(at: CGFloat(indicatorAdded))
+        ).getY(at: CGFloat(indicatorEmitted))
     }
 
+    private func didEmitIndicator(count: Int) {
+        let maxToAdd = min(remainingIndicatorAvailable, count)
+        guard inputState == .addIndicator, maxToAdd > 0 else {
+            return
+        }
+        withAnimation(.linear(duration: 1)) {
+            indicatorEmitted += maxToAdd
+        }
+    }
+
+
     private func addedIndicator(count: Int) {
-        guard inputState == .addIndicator else {
+        let maxToAdd = min(remainingIndicatorAvailable, count)
+        guard inputState == .addIndicator, maxToAdd > 0 else {
             return
         }
 
-        let maxToAdd = min(remainingIndicatorAvailable, count)
-        guard maxToAdd > 0 else {
-            return
-        }
         withAnimation(.linear(duration: 1)) {
             indicatorAdded += maxToAdd
         }
@@ -229,6 +240,7 @@ extension TitrationViewModel {
 extension TitrationViewModel {
     func resetIndicator() {
         indicatorAdded = 0
+        indicatorEmitted = 0
     }
 
     func resetInitialSubstance() {

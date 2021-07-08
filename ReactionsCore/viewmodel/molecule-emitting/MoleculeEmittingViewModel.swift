@@ -9,9 +9,11 @@ public class MoleculeEmittingViewModel: ObservableObject, MoleculeEmittingContai
 
     public init(
         canAddMolecule: @escaping () -> Bool,
+        didEmitMolecules: @escaping (Int) -> Void = { _ in },
         doAddMolecule: @escaping (Int) -> Void
     ) {
         self.canAddMolecule = canAddMolecule
+        self.didEmitMolecules = didEmitMolecules
         self.doAddMolecule = doAddMolecule
         self.emitter = MoleculeEmitter(underlyingMolecules: self)
     }
@@ -19,6 +21,7 @@ public class MoleculeEmittingViewModel: ObservableObject, MoleculeEmittingContai
     @Published public var molecules = [MovingPoint]()
 
     private let canAddMolecule: () -> Bool
+    private let didEmitMolecules: (Int) -> Void
     private let doAddMolecule: (Int) -> Void
     private var emitter: MoleculeEmitter?
 
@@ -39,6 +42,10 @@ public class MoleculeEmittingViewModel: ObservableObject, MoleculeEmittingContai
 
     func addMolecules(count: Int) {
         doAddMolecule(count)
+    }
+
+    func didEmitMolecules(count: Int) {
+        self.didEmitMolecules(count)
     }
 
 }

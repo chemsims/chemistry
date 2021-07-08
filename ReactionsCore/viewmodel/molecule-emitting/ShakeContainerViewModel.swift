@@ -16,6 +16,7 @@ public class ShakeContainerViewModel: NSObject, ObservableObject, MoleculeEmitti
     ///                     greater than 1.
     public init(
         canAddMolecule: @escaping () -> Bool,
+        didEmitMolecules: @escaping (Int) -> Void = { _ in },
         addMolecules: @escaping (Int) -> Void
     ) {
         self.motion = CoreMotionShakingViewModel(
@@ -23,6 +24,7 @@ public class ShakeContainerViewModel: NSObject, ObservableObject, MoleculeEmitti
         )
         self.canAddMolecule = canAddMolecule
         self.addMolecules = addMolecules
+        self.didEmitMolecules = didEmitMolecules
         super.init()
         self.motion.delegate = self
         self.emitter = MoleculeEmitter(underlyingMolecules: self)
@@ -39,7 +41,12 @@ public class ShakeContainerViewModel: NSObject, ObservableObject, MoleculeEmitti
         self.addMolecules(1)
     }
 
+    func didEmitMolecules(count: Int) {
+        self.didEmitMolecules(count)
+    }
+
     public let canAddMolecule: () -> Bool
+    public let didEmitMolecules: (Int) -> Void
     public let addMolecules: (Int) -> Void
 
     public var initialLocation: CGPoint?

@@ -9,6 +9,7 @@ protocol MoleculeEmittingContainer: AnyObject {
     var molecules: [MovingPoint] { get set }
 
     func canEmitMolecule() -> Bool
+    func didEmitMolecules(count: Int) -> Void
     func addMolecules(count: Int) -> Void
 }
 
@@ -69,6 +70,8 @@ class MoleculeEmitter {
         withAnimation(.linear(duration: duration)) {
             underlying.molecules[newIndex].position = finalPosition
         }
+
+        underlying.didEmitMolecules(count: 1)
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
             self?.moleculeHasHitWater(id: molecule.id)
         }
