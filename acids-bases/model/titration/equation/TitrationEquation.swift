@@ -79,6 +79,12 @@ enum TitrationEquation: Equatable {
     indirect case filled(_ underlying: TitrationEquation)
 }
 
+extension TitrationEquation: Identifiable {
+    var id: String {
+        String(describing: self)
+    }
+}
+
 extension TitrationEquationTerm: CustomDebugStringConvertible {
     var debugDescription: String {
         "\(self)"

@@ -45,8 +45,8 @@ private extension TitrationEquationView {
 
     private func column(equations: [TitrationEquation]) -> some View {
         VStack(alignment: .leading, spacing: 30) {
-            ForEach(equations.indices) { i in
-                getView(forEquation: equations[i])
+            ForEach(equations) { equation in
+                getView(forEquation: equation)
             }
         }
     }
