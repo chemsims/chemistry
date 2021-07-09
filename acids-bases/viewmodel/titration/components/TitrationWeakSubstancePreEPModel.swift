@@ -277,7 +277,7 @@ private class WeakSubstanceCalculations {
             case .initialSecondary:
                 return ConstantEquation(value: initialConcentration(of: .secondary))
             case .initialSubstance:
-                return ConstantEquation(value: initialConcentration(of: .substance))
+                return previous.concentration.value(for: .initialSubstance)
             case .secondary: return secondaryConcentration
             case .substance: return substanceConcentration
             }

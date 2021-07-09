@@ -51,13 +51,18 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         let expectedK = substance.type.isAcid ? substance.kA : substance.kB
         XCTAssertEqualWithTolerance(resultingK, expectedK)
 
+        // Check initial substance
         XCTAssertEqual(
             initialConcentrations.value(for: .initialSubstance),
             initialConcentrations.value(for: .substance)
         )
-        XCTAssertEqual(
+        XCTAssertEqualWithTolerance(
             finalConcentration.value(for: .initialSubstance),
-            finalConcentration.value(for: .substance)
+            initialConcentrations.value(for: .substance)
+        )
+        XCTAssertEqualWithTolerance(
+            initialConcentrations.value(for: .initialSubstance),
+            finalConcentration.value(for: .initialSubstance)
         )
 
         // Check decreasing ion
@@ -102,8 +107,11 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
             substanceMoles.getY(at: 1),
             model.concentration.value(for: .substance).getY(at: 1) * substanceVolume
         )
-        XCTAssertEqual(substanceMoles.getY(at: 0), initialSubstanceMoles.getY(at: 0))
-        XCTAssertEqual(substanceMoles.getY(at: 1), initialSubstanceMoles.getY(at: 1))
+        XCTAssertEqual(
+            initialSubstanceMoles.getY(at: 0),
+            model.concentration.value(for: .initialSubstance).getY(at:0) * substanceVolume
+        )
+        XCTAssertEqual(initialSubstanceMoles.getY(at: 0), initialSubstanceMoles.getY(at: 1))
 
         XCTAssertEqual(model.moles.value(for: .secondary).getY(at: 0), 0)
 

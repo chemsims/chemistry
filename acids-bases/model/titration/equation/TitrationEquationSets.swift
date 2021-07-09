@@ -113,7 +113,7 @@ extension TitrationEquationSet {
             ],
             right: [
                 pKa(fillAll: fillAll),
-                initialSubstanceMoles(fillAll: fillAll)
+                initialSubstanceMoles(fillAll: fillSubstance)
             ]
         )
     }

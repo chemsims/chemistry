@@ -8,7 +8,7 @@ import XCTest
 class TitrationEquationTests: XCTestCase {
 
     func testStrongSubstancePostEP() {
-        let set = equationSet(.strongAcidPostEP)
+        let set = equationSet(.strongBasePostEP)
         let moles = TitrationEquation.molesToMolarity(
             moles: .init(.substance, isFilled: true),
             volume: .init(.substance, isFilled: true),
@@ -23,14 +23,19 @@ class TitrationEquationTests: XCTestCase {
             secondVolume: .filled(.titrant)
         )
 
-        XCTAssertEqual(
-            set.left, [
-                moles,
-                .filled(moles),
-                concentration,
-                .filled(concentration)
-            ]
-        )
+        compareEquations(set.left, [moles, .filled(moles), concentration, .filled(concentration)])
+    }
+
+    // Compares each equation individually, since failures are hard to read when
+    // when comparing the whole array
+    private func compareEquations(
+        _ equations: [TitrationEquation],
+        _ expected: [TitrationEquation]
+    ) {
+        XCTAssertEqual(equations.count, expected.count)
+        for i in equations.indices {
+            XCTAssertEqual(equations[i], expected[i])
+        }
     }
 
     private func equationSet(_ state: TitrationViewModel.EquationState) -> TitrationEquationSet {

@@ -138,7 +138,8 @@ extension TitrationWeakSubstancePreparationModel {
     var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> {
         .init {
             switch $0 {
-            case .substance, .initialSubstance: return substanceConcentration
+            case .substance: return substanceConcentration
+            case .initialSubstance: return ConstantEquation(value: initialSubstanceConcentration)
             case .secondary, .initialSecondary: return ionConcentration
             case .hydrogen: return hydrogenConcentration
             case .hydroxide: return hydroxideConcentration
@@ -222,10 +223,14 @@ extension TitrationWeakSubstancePreparationModel {
     var moles: EnumMap<TitrationEquationTerm.Moles, Equation> {
         .init {
             switch $0 {
-            case .substance, .initialSubstance:
+            case .substance:
                 return volume.value(for: .substance) * concentration.value(for: .substance)
-            case .secondary, .initialSecondary:
+            case .initialSubstance:
+                return volume.value(for: .initialSubstance) * concentration.value(for: .initialSubstance)
+            case .secondary:
                 return volume.value(for: .substance) * concentration.value(for: .secondary)
+            case .initialSecondary:
+                return volume.value(for: .initialSecondary) * concentration.value(for: .initialSecondary)
             case .hydrogen: return ConstantEquation(value: 0)
             case .titrant: return ConstantEquation(value: 0)
             }
