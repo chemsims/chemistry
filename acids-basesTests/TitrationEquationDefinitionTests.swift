@@ -28,6 +28,24 @@ class TitrationEquationDefinitionTests: XCTestCase {
 
     func testWeakSubstancePreEPBlank() {
         let set = equationSet(.weakAcidPreEPBlank)
+
+        // Check left column
+        let molesDiff = TitrationEquation.molesDifference(
+            difference: .filled(.substance),
+            subtracting: .blank(.titrant),
+            from: .filled(.initialSubstance)
+        )
+        let pHPka = TitrationEquation.pKLog(
+            pConcentration: .filled(.hydrogen),
+            pK: .filled(.kA),
+            numeratorConcentration: .filled(.secondary),
+            denominatorConcentration: .filled(.substance)
+        )
+        compareEquations(
+            set.left, [molesDiff, .filled(molesDiff), pHPka, .filled(pHPka)]
+        )
+
+        // Check right column
         let moles = TitrationEquation.molesToMolarity(
             moles: .blank(.titrant),
             volume: .blank(.titrant),
@@ -45,7 +63,6 @@ class TitrationEquationDefinitionTests: XCTestCase {
             firstVolume: .filled(.initialSubstance),
             secondVolume: .blank(.titrant)
         )
-
 
         compareEquations(
             set.right, [

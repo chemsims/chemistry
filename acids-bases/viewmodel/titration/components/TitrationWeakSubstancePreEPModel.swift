@@ -448,7 +448,7 @@ private class WeakSubstanceCalculations {
             case .secondary:
                 return molesEquation(term: .secondary)
             case .substance:
-                return initialSubstanceMoles - titrantMoles
+                return secondaryMoles
             case .titrant: return titrantMoles
             case .hydrogen: return ConstantEquation(value: 0)
             }
@@ -469,6 +469,12 @@ private class WeakSubstanceCalculations {
     private lazy var initialSubstanceMoles: CGFloat = initialMoles(of: .substance)
 
     private lazy var initialSecondaryMoles: CGFloat = initialMoles(of: .secondary)
+
+    private lazy var secondaryMoles: Equation = {
+        let substanceC = concentration.value(for: .substance)
+        let volumeSum = volume.value(for: .substance) + volume.value(for: .titrant)
+        return substanceC * volumeSum
+    }()
 
     private func initialMoles(of term: TitrationEquationTerm.Moles) -> CGFloat {
         previous.moles.value(for: term).getY(at: 1)

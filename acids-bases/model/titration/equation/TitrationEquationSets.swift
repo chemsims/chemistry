@@ -125,7 +125,7 @@ extension TitrationEquationSet {
         Self.setWithFilled(
             left: [
                 substanceMolesDifference(fillTitrant: fillAll),
-                pHToPKa(fillSubstance: fillAll, fillAll: fillAll)
+                pHToPKa(fillSubstance: true, fillAll: true)
             ],
             right: [
                 titrantMoles(fillMolarity: fillTitrantMolarity, fillAll: fillAll),
@@ -399,8 +399,8 @@ extension TitrationEquationSet {
     private static func substanceMolesDifference(fillTitrant: Bool) -> TitrationEquation {
         .molesDifference(
             difference: .init(.substance, isFilled: true),
-            subtracting: .init(.initialSubstance, isFilled: true),
-            from: .init(.titrant, isFilled: fillTitrant)
+            subtracting: .init(.titrant, isFilled: fillTitrant),
+            from: .init(.initialSubstance, isFilled: true)
         )
     }
 

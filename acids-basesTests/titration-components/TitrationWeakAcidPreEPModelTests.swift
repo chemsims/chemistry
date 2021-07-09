@@ -149,9 +149,12 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
 
         XCTAssertEqual(model.currentMoles.value(for: .initialSubstance), initialSubstanceMoles)
 
-        // We expect a value of 0 so can't use tolerance here as is uses a percentage
-        XCTAssertEqual(model.currentMoles.value(for: .substance), 0, accuracy: 1e-10)
+        // We expect this equation to hold [C] = n_c / (V-ci + V-titrant)
+        let finalSubstanceConcentration = model.currentConcentration.value(for: .substance)
+        let volumeSum = model.currentVolume.value(for: .initialSubstance) + model.currentVolume.value(for: .titrant)
+        let expectedMoles = finalSubstanceConcentration * volumeSum
 
+        XCTAssertEqualWithTolerance(model.currentMoles.value(for: .substance), expectedMoles)
         XCTAssertEqualWithTolerance(model.currentMoles.value(for: .titrant), initialSubstanceMoles)
     }
 
