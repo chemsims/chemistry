@@ -31,48 +31,82 @@
        let isFilled: Bool
     }
 
-    enum Volume: String, CaseIterable {
+    enum Volume: String, CaseIterable, CustomDebugStringConvertible {
         case hydrogen,
              substance,
              initialSubstance,
              titrant,
              initialSecondary,
              equivalencePoint
+
+
+        var debugDescription: String {
+            "Volume.\(self.rawValue)"
+        }
     }
 
-    enum Molarity: String, CaseIterable {
+    enum Molarity: String, CaseIterable, CustomDebugStringConvertible {
         case hydrogen,
              substance,
              titrant
+
+        var debugDescription: String {
+            "Molarity.\(self.rawValue)"
+        }
     }
 
-    enum Moles: String, CaseIterable {
+    enum Moles: String, CaseIterable, CustomDebugStringConvertible {
         case hydrogen
         case substance
         case initialSubstance
         case secondary
         case initialSecondary
         case titrant
+
+        var debugDescription: String {
+            "Moles.\(self.rawValue)"
+        }
     }
 
-    enum Concentration: String, CaseIterable {
+    enum Concentration: String, CaseIterable, CustomDebugStringConvertible {
         case hydrogen,
              hydroxide,
              substance,
              initialSubstance,
              secondary,
              initialSecondary
+
+        var debugDescription: String {
+            "Concentration.\(self.rawValue)"
+        }
     }
 
-    enum PValue: String, CaseIterable {
+    enum PValue: String, CaseIterable, CustomDebugStringConvertible {
         case hydrogen,
              hydroxide,
              kA,
              kB
+
+        var debugDescription: String {
+            "PValue.\(self.rawValue)"
+        }
     }
 
-    enum KValue: String, CaseIterable {
+    enum KValue: String, CaseIterable, CustomDebugStringConvertible {
         case kA, kB
+
+        var debugDescription: String {
+            "KValue.\(self.rawValue)"
+        }
+    }
+ }
+
+ extension TitrationEquationTerm.Placeholder: Equatable where Term : Equatable {
+ }
+
+ extension TitrationEquationTerm.Placeholder: CustomDebugStringConvertible {
+    var debugDescription: String {
+        "\(String(reflecting: term)) \(!isFilled ? "not " : "")filled"
     }
  }
 

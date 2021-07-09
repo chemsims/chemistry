@@ -5,7 +5,7 @@
 import Foundation
 import ReactionsCore
 
-enum TitrationEquation {
+enum TitrationEquation: Equatable {
     typealias Term = TitrationEquationTerm
     typealias Placeholder = Term.Placeholder
 
@@ -96,5 +96,11 @@ extension TitrationEquation: Identifiable {
         case .pToLogK: return 11
         case let .filled(underlying): return 12 + underlying.id
         }
+    }
+}
+
+extension TitrationEquationTerm: CustomDebugStringConvertible {
+    var debugDescription: String {
+        "\(self)"
     }
 }

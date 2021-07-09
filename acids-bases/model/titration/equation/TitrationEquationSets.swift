@@ -56,7 +56,7 @@ extension TitrationEquationSet {
     static let strongAcidPostEP = Self.setWithFilled(
         left: [
             substanceMoles(fillAll: true),
-            concentrationToTitrantMolesOverVolume(.hydrogen, fillAll: true)
+            concentrationToTitrantMolesOverVolume(.hydroxide, fillAll: true)
         ],
         right: [
             titrantMoles(fillMolarity: true, fillAll: true),
@@ -91,7 +91,7 @@ extension TitrationEquationSet {
     static let strongBasePostEp = Self.setWithFilled(
         left: [
             substanceMoles(fillAll: true),
-            concentrationToTitrantMolesOverVolume(.hydroxide, fillAll: true)
+            concentrationToTitrantMolesOverVolume(.hydrogen, fillAll: true)
         ],
         right: [
             titrantMoles(fillMolarity: true, fillAll: true),
@@ -288,7 +288,7 @@ extension TitrationEquationSet {
         fillAll: Bool
     ) -> TitrationEquation {
         .concentrationToMolesDifferenceOverVolume(
-            concentration: .init(.secondary, isFilled: fillAll),
+            concentration: .init(concentration, isFilled: fillAll),
             subtractingMoles: .init(.substance, isFilled: fillAll),
             fromMoles: .init(.titrant, isFilled: fillAll),
             firstVolume: .init(.substance, isFilled: fillAll),
