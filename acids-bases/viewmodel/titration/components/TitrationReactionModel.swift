@@ -5,7 +5,7 @@
 import Foundation
 import ReactionsCore
 
-protocol TitrationReactionModel: ObservableObject {
+protocol TitrationReactionModel {
     func incrementTitrant(count: Int)
 
     var titrantAdded: Int { get }

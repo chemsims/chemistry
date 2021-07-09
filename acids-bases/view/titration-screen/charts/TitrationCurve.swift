@@ -14,39 +14,6 @@ struct TitrationCurve: View {
     @ObservedObject var weakPreEPModel: TitrationWeakSubstancePreEPModel
     @ObservedObject var weakPostEPModel: TitrationWeakSubstancePostEPModel
 
-    @ViewBuilder
-    var body: some View {
-        if state.substance.isStrong {
-            GeneralTitrationPhChart(
-                layout: layout,
-                phase: state.phase,
-                preEPReaction: strongPreEPModel,
-                postEPReaction: strongPostEPModel,
-                equalityTitrant: nil,
-                showAnnotations: false
-            )
-        } else {
-            GeneralTitrationPhChart(
-                layout: layout,
-                phase: state.phase,
-                preEPReaction: weakPreEPModel,
-                postEPReaction: weakPostEPModel,
-                equalityTitrant: weakPreEPModel.titrantAtMaxBufferCapacity,
-                showAnnotations: true
-            )
-        }
-    }
-}
-
-private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: TitrationReactionModel>: View {
-
-    let layout: TitrationScreenLayout
-    let phase: TitrationComponentState.Phase
-    @ObservedObject var preEPReaction: PreEP
-    @ObservedObject var postEPReaction: PostEP
-    let equalityTitrant: Int?
-    let showAnnotations: Bool
-
     var body: some View {
         VStack(
             alignment: .trailing,
@@ -107,7 +74,20 @@ private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: Ti
         return []
     }
 
-    @ViewBuilder
+    private var preEPReaction: TitrationReactionModel {
+        if state.substance.isStrong {
+            return strongPreEPModel
+        }
+        return weakPreEPModel
+    }
+
+    private var postEPReaction: TitrationReactionModel {
+        if state.substance.isStrong {
+            return strongPostEPModel
+        }
+        return weakPostEPModel
+    }
+
     private var annotation: some View {
         ZStack {
             ForEach(titrantAddedDashes.indices, id: \.self) { i in
@@ -150,7 +130,7 @@ private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: Ti
     }
 
     private var showData: Bool {
-        phase == .preEP || phase == .postEP
+        state.phase == .preEP || state.phase == .postEP
     }
 
     private var yAxis: AxisPositionCalculations<CGFloat> {
@@ -187,10 +167,18 @@ private struct GeneralTitrationPhChart<PreEP: TitrationReactionModel, PostEP: Ti
     }
 
     private var equationInput: CGFloat {
-        if phase == .preEP {
+        if state.phase == .preEP {
             return CGFloat(preEPReaction.titrantAdded)
         }
         return CGFloat(postEPReaction.titrantAdded + preEPReaction.maxTitrant)
+    }
+
+    private var equalityTitrant: Int? {
+        state.substance.isStrong ? nil : weakPreEPModel.titrantAtMaxBufferCapacity
+    }
+
+    private var showAnnotations: Bool {
+        !state.substance.isStrong
     }
 }
 
