@@ -79,26 +79,6 @@ enum TitrationEquation: Equatable {
     indirect case filled(_ underlying: TitrationEquation)
 }
 
-extension TitrationEquation: Identifiable {
-    var id: Int {
-        switch self {
-        case .concentrationToMolesOverVolume: return 0
-        case .concentrationToMolesDifferenceOverVolume: return 1
-        case .kToConcentration: return 2
-        case .kW: return 3
-        case .molesDifference: return 4
-        case .molesToConcentration: return 5
-        case .molesToMolarity: return 6
-        case .pConcentration: return 7
-        case .pLogComplementConcentration: return 8
-        case .pKLog: return 9
-        case .pSum: return 10
-        case .pToLogK: return 11
-        case let .filled(underlying): return 12 + underlying.id
-        }
-    }
-}
-
 extension TitrationEquationTerm: CustomDebugStringConvertible {
     var debugDescription: String {
         "\(self)"
