@@ -24,8 +24,8 @@ struct TitrationRightStack: View {
             Spacer(minLength: 0)
 
             TitrationEquationView(
+                equationState: model.equationState,
                 data: equationData,
-                equationSet: model.equationState.equationSet,
                 equationInput: equationInput
             )
             .frame(size: layout.equationSize)
@@ -100,7 +100,7 @@ struct TitrationRightStack: View {
 
         case .preparation: return weakPreparationModel.reactionProgress
         case .preEP: return CGFloat(weakPreEPModel.titrantAdded)
-        case .postEP: return CGFloat(weakPreEPModel.titrantAdded)
+        case .postEP: return CGFloat(weakPostEPModel.titrantAdded)
         }
     }
 }

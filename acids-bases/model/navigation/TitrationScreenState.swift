@@ -109,13 +109,13 @@ struct TitrationNavigationModel {
                 )
             }
         ),
-        SetStatement(statements.explainWeakAcidEP1),
+        SetStatement(statements.explainWeakAcidEP1, equation: .weakAcidAtEP),
         SetStatement(
             { model in
                 statements.explainWeakAcidEP2(pH: model.weakPreEP.currentPH)
             }
         ),
-        AddTitrantPostEP(statements.instructToAddTitrantToWeakAcidPostEP),
+        AddTitrantPostEP(statements.instructToAddTitrantToWeakAcidPostEP, equation: .weakAcidPostEP),
         StopInput(statements.endOfWeakAcidTitration)
     ]
 
@@ -163,13 +163,13 @@ struct TitrationNavigationModel {
                 )
             }
         ),
-        SetStatement(statements.explainWeakBaseEP1),
+        SetStatement(statements.explainWeakBaseEP1, equation: .weakBaseAtEP),
         SetStatement(
             { model in
                 statements.explainWeakBasedEP2(pH: model.weakPreEP.currentPH)
             }
         ),
-        AddTitrantPostEP(statements.instructToAddTitrantToWeakBasePostEP),
+        AddTitrantPostEP(statements.instructToAddTitrantToWeakBasePostEP, equation: .weakBasePostEP),
         StopInput(statements.endOfWeakBaseTitration)
     ]
 }

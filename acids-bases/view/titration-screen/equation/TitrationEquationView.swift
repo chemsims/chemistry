@@ -7,8 +7,8 @@ import ReactionsCore
 
 struct TitrationEquationView: View {
     typealias Term = TitrationEquationTerm
+    let equationState: TitrationViewModel.EquationState
     let data: TitrationEquationData
-    let equationSet: TitrationEquationSet
     let equationInput: CGFloat
     @Environment(\.titrationEquationLayout) var layout
 
@@ -28,6 +28,10 @@ struct TitrationEquationView: View {
 
     fileprivate static let naturalWidth: CGFloat = 1040
     fileprivate static let naturalHeight: CGFloat = 480
+
+    private var equationSet: TitrationEquationSet {
+        equationState.equationSet
+    }
 }
 
 private extension TitrationEquationView {
@@ -51,7 +55,6 @@ private extension TitrationEquationView {
         }
     }
 }
-
 
 extension TitrationEquationView {
 
@@ -327,16 +330,18 @@ struct TitrationEquationView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 80) {
             ForEach(TitrationViewModel.EquationState.allCases.indices) { i in
-                equation(forSet: TitrationViewModel.EquationState.allCases[i].equationSet)
+                equation(forState: TitrationViewModel.EquationState.allCases[i])
             }
         }
         .previewLayout(.sizeThatFits)
     }
 
-    private static func equation(forSet set: TitrationEquationSet) -> some View {
+    private static func equation(
+        forState state: TitrationViewModel.EquationState
+    ) -> some View {
         TitrationEquationView(
+            equationState: state,
             data: .preview,
-            equationSet: set,
             equationInput: 0
         )
         .sizedBody // We use the non-scaled view in the preview to check the natural size is correct
