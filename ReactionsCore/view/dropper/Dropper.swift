@@ -207,7 +207,7 @@ private struct DropperTube: View {
             .fill(color)
             .frame(height: geometry.tubeHeight)
             .frame(
-                height: fillPercent * geometry.tubeHeight,
+                height: max(0.1, fillPercent * geometry.tubeHeight),
                 alignment: .bottom
             )
             .clipped()
