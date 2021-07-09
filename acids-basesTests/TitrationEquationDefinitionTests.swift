@@ -5,7 +5,7 @@
 import XCTest
 @testable import acids_bases
 
-class TitrationEquationTests: XCTestCase {
+class TitrationEquationDefinitionTests: XCTestCase {
 
     func testStrongSubstancePostEP() {
         let set = equationSet(.strongBasePostEP)
@@ -24,6 +24,39 @@ class TitrationEquationTests: XCTestCase {
         )
 
         compareEquations(set.left, [moles, .filled(moles), concentration, .filled(concentration)])
+    }
+
+    func testWeakSubstancePreEPBlank() {
+        let set = equationSet(.weakAcidPreEPBlank)
+        let moles = TitrationEquation.molesToMolarity(
+            moles: .blank(.titrant),
+            volume: .blank(.titrant),
+            molarity: .blank(.titrant)
+        )
+        let substanceConcentration = TitrationEquation.concentrationToMolesOverVolume(
+            concentration: .filled(.substance),
+            moles: .filled(.substance),
+            firstVolume: .filled(.initialSubstance),
+            secondVolume: .blank(.titrant)
+        )
+        let secondaryConcentration = TitrationEquation.concentrationToMolesOverVolume(
+            concentration: .filled(.secondary),
+            moles: .filled(.secondary),
+            firstVolume: .filled(.initialSubstance),
+            secondVolume: .blank(.titrant)
+        )
+
+
+        compareEquations(
+            set.right, [
+                moles,
+                .filled(moles),
+                substanceConcentration,
+                .filled(substanceConcentration),
+                secondaryConcentration,
+                .filled(secondaryConcentration)
+            ]
+        )
     }
 
     // Compares each equation individually, since failures are hard to read when
@@ -46,5 +79,9 @@ class TitrationEquationTests: XCTestCase {
 private extension TitrationEquationTerm.Placeholder {
     static func filled(_ term: Term) -> TitrationEquationTerm.Placeholder<Term> {
         .init(term, isFilled: true)
+    }
+
+    static func blank(_ term: Term) -> TitrationEquationTerm.Placeholder<Term> {
+        .init(term, isFilled: false)
     }
 }

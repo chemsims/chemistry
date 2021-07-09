@@ -429,7 +429,6 @@ extension TitrationViewModel {
                     fillAll: false
                 )
 
-
             case .strongBasePreEPFilled:
                 return .strongBasePreEp(
                     fillSubstanceAndHydroxide: true,

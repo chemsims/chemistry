@@ -420,7 +420,7 @@ extension TitrationEquationSet {
     ) -> TitrationEquation {
         .concentrationToMolesOverVolume(
             concentration: .init(.secondary, isFilled: true),
-            moles: .init(.initialSecondary, isFilled: true),
+            moles: .init(.secondary, isFilled: true),
             firstVolume: .init(.initialSubstance, isFilled: true),
             secondVolume: .init(.titrant, isFilled: fillVolume)
         )

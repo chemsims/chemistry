@@ -51,7 +51,7 @@
 		571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */; };
 		571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */; };
 		5713D8CC267B7CC2009C65AC /* ArcGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713D8CB267B7CC2009C65AC /* ArcGeometryTests.swift */; };
-		57190A5D2698557400DD4B86 /* TitrationEquationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57190A5C2698557400DD4B86 /* TitrationEquationTests.swift */; };
+		57190A5D2698557400DD4B86 /* TitrationEquationDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57190A5C2698557400DD4B86 /* TitrationEquationDefinitionTests.swift */; };
 		571B3C2F2563B9D10075358B /* FirstOrderStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */; };
 		571B3C42256405490075358B /* OrderedReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C41256405490075358B /* OrderedReactionScreen.swift */; };
 		571B3C4F256555460075358B /* ZeroOrderReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571B3C4E256555460075358B /* ZeroOrderReactionViewModel.swift */; };
@@ -777,7 +777,7 @@
 		571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidSubstanceBeakerCoords.swift; sourceTree = "<group>"; };
 		571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidSubstanceBeakerCoordsTests.swift; sourceTree = "<group>"; };
 		5713D8CB267B7CC2009C65AC /* ArcGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcGeometryTests.swift; sourceTree = "<group>"; };
-		57190A5C2698557400DD4B86 /* TitrationEquationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationTests.swift; sourceTree = "<group>"; };
+		57190A5C2698557400DD4B86 /* TitrationEquationDefinitionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationEquationDefinitionTests.swift; sourceTree = "<group>"; };
 		571B3C2E2563B9D10075358B /* FirstOrderStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderStatements.swift; sourceTree = "<group>"; };
 		571B3C41256405490075358B /* OrderedReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedReactionScreen.swift; sourceTree = "<group>"; };
 		571B3C4E256555460075358B /* ZeroOrderReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionViewModel.swift; sourceTree = "<group>"; };
@@ -1549,7 +1549,7 @@
 				577BC7742679D463005BE5C8 /* AcidOrBaseTests.swift */,
 				577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */,
 				57FDA5032695B24D001F24CA /* TitrationViewModelTests.swift */,
-				57190A5C2698557400DD4B86 /* TitrationEquationTests.swift */,
+				57190A5C2698557400DD4B86 /* TitrationEquationDefinitionTests.swift */,
 			);
 			path = "acids-basesTests";
 			sourceTree = "<group>";
@@ -4000,7 +4000,7 @@
 				5705CB0C2678E98000F5A63C /* FractionedChartAxisHelperTests.swift in Sources */,
 				576AF0E82684B4A200F300C7 /* TitrationStrongBasePreparationModelTests.swift in Sources */,
 				574978232683471800EFA71C /* TitrationStrongAcidPreEPModelTests.swift in Sources */,
-				57190A5D2698557400DD4B86 /* TitrationEquationTests.swift in Sources */,
+				57190A5D2698557400DD4B86 /* TitrationEquationDefinitionTests.swift in Sources */,
 				577BC7752679D463005BE5C8 /* AcidOrBaseTests.swift in Sources */,
 				57E9B75D268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift in Sources */,
 				5711603526831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift in Sources */,
