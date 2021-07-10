@@ -62,6 +62,8 @@ class TitrationViewModel: ObservableObject {
         }
     }
 
+    @Published var showPhString = true
+
     @Published var showIndicatorFill = false
     @Published var showTitrantFill = false
 

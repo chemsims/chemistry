@@ -188,8 +188,11 @@ private struct TitrationBeakerTools: View {
     }
 
     private var pHString: TextLine {
-        let pH = model.components.currentPH
-        return "pH: \(pH.str(decimals: 1))"
+        if model.showPhString {
+            let pH = model.components.currentPH
+            return "pH: \(pH.str(decimals: 1))"
+        }
+        return ""
     }
 }
 

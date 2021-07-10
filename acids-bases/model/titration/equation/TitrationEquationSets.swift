@@ -86,7 +86,7 @@ extension TitrationEquationSet {
             ],
             right: [
                 titrantMoles(fillMolarity: fillTitrantMolarity, fillAll: fillAll),
-                pHToHydroxide(fillAll: fillAll)
+                pHToHydroxide(fillAll: fillSubstanceAndHydroxide)
             ]
         )
     }

@@ -281,6 +281,10 @@ private class PrepareNewSubstanceModel: SetStatement {
         model.showIndicatorFill = false
         model.showTitrantFill = false
 
+        if !model.components.state.substance.isStrong {
+            model.showPhString = false
+        }
+
         commonApply(on: model)
     }
 
@@ -300,6 +304,7 @@ private class PrepareNewSubstanceModel: SetStatement {
         model.inputState = .none
         model.showTitrantFill = true
         model.showIndicatorFill = true
+        model.showPhString = true
         if let previousSelectedSubstance = previousSelectedSubstance,
            let previousSubstance = previousSubstance {
             model.substance = previousSelectedSubstance
@@ -566,5 +571,10 @@ private class EndOfWeakSubstanceInitialReaction: SetStatement {
         withAnimation(.easeOut(duration: 0.5)) {
             model.components.weakSubstancePreparationModel.reactionProgress = 1.0001
         }
+        model.showPhString = true
+    }
+
+    override func unapply(on model: TitrationViewModel) {
+        model.showPhString = false
     }
 }

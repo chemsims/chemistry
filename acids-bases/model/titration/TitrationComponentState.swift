@@ -111,7 +111,7 @@ extension TitrationComponentState {
         case .preparation:
             return currentPH(
                 weakSubstancePreparationModel.equationData,
-                CGFloat(weakSubstancePreparationModel.substanceAdded)
+                CGFloat(weakSubstancePreparationModel.reactionProgress)
             )
         case .preEP:
             return currentPH(
