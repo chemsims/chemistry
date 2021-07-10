@@ -25,6 +25,7 @@ struct DraggablePhMeter: View {
     let beakerDistanceFromBottomOfScreen: CGFloat
 
     @GestureState private var pHMeterOffset = CGSize.zero
+    @State private var isFixedToBeaker = false
 
     var body: some View {
         PHMeter(
@@ -33,36 +34,85 @@ struct DraggablePhMeter: View {
         )
         .contentShape(Rectangle())
         .frame(size: layout.phMeterSize)
-        .position(initialPosition)
+        .position(currentPosition)
         .offset(pHMeterOffset)
         .gesture(
             DragGesture()
+                .onEnded { _ in
+                    isFixedToBeaker = isIntersectingWater
+                }
                 .updating($pHMeterOffset) { gesture, offset, _ in
                     offset = gesture.translation
                 }
+
         )
-        .animation(.easeOut(duration: 0.25))
+        .animation(.easeOut(duration: 0.25), value: pHMeterOffset)
+        .animation(.easeOut(duration: 0.25), value: isFixedToBeaker)
         .zIndex(1)
+//        .overlay(foo, alignment: .bottom)
+    }
+
+    private var foo: some View {
+        Rectangle()
+            .stroke()
+            .frame(width: waterWidth, height: waterHeight)
+            .position(CGPoint(x: waterCenterX, y: waterCenterY))
+    }
+
+
+    private var currentPosition: CGPoint {
+        isFixedToBeaker ? fixedPosition : initialPosition
+    }
+
+    // Aligns center of ph meter with the top of the water,
+    // and the left edge of the meter with the left edge of the
+    // beaker plus a little padding
+    private var fixedPosition: CGPoint {
+        let topOfWater = waterCenterY - (waterHeight / 2)
+        let waterLeftEdge = waterCenterX - (waterWidth / 2)
+
+        // Make sure tip is inside the beaker
+        let bottomOfWater = waterCenterY + (waterHeight / 2)
+        let maxY = bottomOfWater - (0.5 * layout.phMeterSize.height)
+
+        let phCenterY = min(topOfWater, maxY)
+
+        // Move ph so it's aligned to right edge plus a little padding (hence 0.6 not 0.5)
+        let phCenterX = waterLeftEdge + (0.6 * layout.phMeterSize.width)
+
+        return CGPoint(x: phCenterX, y: phCenterY)
     }
 
     private var isIntersectingWater: Bool {
-        let waterHeight = layout.waterHeight(rows: rows)
-        let centerWaterY = layout.height - (waterHeight / 2) - beakerDistanceFromBottomOfScreen 
-
-        let pHCenterX = initialPosition.x + pHMeterOffset.width
-        let phCenterY = initialPosition.y + pHMeterOffset.height
-        let waterCenterX = layout.sliderSettings.handleWidth + (layout.beakerWidth / 2)
+        let pHCenterX = currentPosition.x + pHMeterOffset.width
+        let phCenterY = currentPosition.y + pHMeterOffset.height
 
         return PHMeter.tipOverlapsArea(
             meterSize: layout.phMeterSize,
             areaSize: CGSize(
-                width: layout.beakerSettings.innerBeakerWidth,
+                width: waterWidth,
                 height: waterHeight
             ),
             meterCenterFromAreaCenter: CGSize(
                 width: pHCenterX - waterCenterX,
-                height: phCenterY - centerWaterY
+                height: phCenterY - waterCenterY
             )
         )
+    }
+
+    private var waterHeight: CGFloat {
+        layout.waterHeight(rows: rows)
+    }
+
+    private var waterCenterY: CGFloat {
+        layout.height - (waterHeight / 2) - beakerDistanceFromBottomOfScreen
+    }
+
+    private var waterCenterX: CGFloat {
+        layout.sliderSettings.handleWidth + (layout.beakerWidth / 2)
+    }
+
+    private var waterWidth: CGFloat {
+        layout.beakerSettings.innerBeakerWidth
     }
 }
