@@ -318,6 +318,10 @@ private class PrepareNewSubstanceModel: SetStatement {
             model.substance = previousSelectedSubstance
             model.availableSubstances = availableSubstances(forSubstance: previousSubstance)
             model.components.assertGoTo(state: .init(substance: previousSubstance, phase: .postEP))
+
+            withAnimation(containerInputAnimation) {
+                model.rows = model.components.latestPreparationModel.exactRows
+            }
         }
     }
 
