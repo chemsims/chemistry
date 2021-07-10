@@ -147,21 +147,25 @@ extension TitrationEquationSet {
         ]
     )
 
-    static let weakAcidPostEp = Self.setWithFilled(
-        left: [
-            titrantMoles(fillMolarity: true, fillAll: true),
-            .concentrationToMolesOverVolume(
-                concentration: .init(.hydroxide, isFilled: true),
-                moles: .init(.titrant, isFilled: true),
-                firstVolume: .init(.equivalencePoint, isFilled: true),
-                secondVolume: .init(.titrant, isFilled: true)
-            ),
-            pOHLogOH(fillAll: true)
-        ],
-        right: [
-            pHpOHSum(fillAll: true)
-        ]
-    )
+    static func weakAcidPostEp(
+        fillMolesAndVolume: Bool
+    ) -> TitrationEquationSet {
+        Self.setWithFilled(
+            left: [
+                titrantMoles(fillMolarity: true, fillAll: fillMolesAndVolume),
+                .concentrationToMolesOverVolume(
+                    concentration: .init(.hydroxide, isFilled: true),
+                    moles: .init(.titrant, isFilled: fillMolesAndVolume),
+                    firstVolume: .init(.equivalencePoint, isFilled: true),
+                    secondVolume: .init(.titrant, isFilled: fillMolesAndVolume)
+                ),
+                pOHLogOH(fillAll: true)
+            ],
+            right: [
+                pHpOHSum(fillAll: true)
+            ]
+        )
+    }
 }
 
 // MARK: Weak base equations
@@ -234,21 +238,23 @@ extension TitrationEquationSet {
         ]
     )
 
-    static let weakBasePostEp = Self.setWithFilled(
-        left: [
-            titrantMoles(fillMolarity: true, fillAll: true),
-            .concentrationToMolesOverVolume(
-                concentration: .init(.hydrogen, isFilled: true),
-                moles: .init(.titrant, isFilled: true),
-                firstVolume: .init(.equivalencePoint, isFilled: true),
-                secondVolume: .init(.titrant, isFilled: true)
-            ),
-            pHLogH(fillAll: true)
-        ],
-        right: [
-            pHpOHSum(fillAll: true)
-        ]
-    )
+    static func weakBasePostEp(fillMolesAndVolume: Bool) -> TitrationEquationSet {
+        Self.setWithFilled(
+            left: [
+                titrantMoles(fillMolarity: true, fillAll: fillMolesAndVolume),
+                .concentrationToMolesOverVolume(
+                    concentration: .init(.hydrogen, isFilled: true),
+                    moles: .init(.titrant, isFilled: fillMolesAndVolume),
+                    firstVolume: .init(.equivalencePoint, isFilled: true),
+                    secondVolume: .init(.titrant, isFilled: fillMolesAndVolume)
+                ),
+                pHLogH(fillAll: true)
+            ],
+            right: [
+                pHpOHSum(fillAll: true)
+            ]
+        )
+    }
 }
 
 // MARK: Common equations
@@ -264,8 +270,8 @@ extension TitrationEquationSet {
     private static func titrantMoles(fillMolarity: Bool, fillAll: Bool) -> TitrationEquation {
         .molesToMolarity(
             moles: .init(.titrant, isFilled: fillAll),
-            volume: .init(.titrant, isFilled: fillMolarity || fillAll),
-            molarity: .init(.titrant, isFilled: fillAll)
+            volume: .init(.titrant, isFilled: fillAll),
+            molarity: .init(.titrant, isFilled: fillMolarity || fillAll)
         )
     }
 

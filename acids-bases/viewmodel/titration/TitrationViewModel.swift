@@ -229,6 +229,7 @@ extension TitrationViewModel {
         updateCanGoNext()
         updateStatementPostTitrantIncrement()
         goNextIfNeededPostTitrantIncrement()
+        updateEquationPostTitrantIncrement()
     }
 
     private var canAddTitrant: Bool {
@@ -352,6 +353,19 @@ extension TitrationViewModel {
             next()
         }
     }
+
+    private func updateEquationPostTitrantIncrement() {
+        guard inputState == .addTitrant,
+              components.state.phase == .postEP else {
+            return
+        }
+
+        if components.state.substance == .weakAcid {
+            equationState = .weakAcidPostEPPostAddingTitrant
+        } else if components.state.substance == .weakBase {
+            equationState = .weakBasePostEPPostAddingTitrant
+        }
+    }
 }
 
 // MARK: Data types
@@ -381,14 +395,16 @@ extension TitrationViewModel {
              weakAcidPreEPBlank,
              weakAcidPreEPFilled,
              weakAcidAtEP,
-             weakAcidPostEP,
+             weakAcidPostEPPreAddingTitrant,
+             weakAcidPostEPPostAddingTitrant,
              weakBaseBlank,
              weakBaseAddingSubstance,
              weakBasePostInitialReaction,
              weakBasePreEPBlank,
              weakBasePreEPFilled,
              weakBaseAtEP,
-             weakBasePostEP
+             weakBasePostEPPreAddingTitrant,
+             weakBasePostEPPostAddingTitrant
 
         var equationSet: TitrationEquationSet {
             switch self {
@@ -455,7 +471,11 @@ extension TitrationViewModel {
 
             case .weakAcidAtEP: return .weakAcidAtEp
 
-            case .weakAcidPostEP: return .weakAcidPostEp
+            case .weakAcidPostEPPreAddingTitrant:
+                return .weakAcidPostEp(fillMolesAndVolume: false)
+
+            case .weakAcidPostEPPostAddingTitrant:
+                return .weakAcidPostEp(fillMolesAndVolume: true)
 
             case .weakBaseBlank:
                 return .weakBaseInitialReaction(fillSubstance: false, fillAll: false)
@@ -474,7 +494,11 @@ extension TitrationViewModel {
 
             case .weakBaseAtEP: return .weakBaseAtEp
 
-            case .weakBasePostEP: return .weakBasePostEp
+            case .weakBasePostEPPreAddingTitrant:
+                return .weakBasePostEp(fillMolesAndVolume: false)
+
+            case .weakBasePostEPPostAddingTitrant:
+                return .weakBasePostEp(fillMolesAndVolume: true)
             }
         }
     }

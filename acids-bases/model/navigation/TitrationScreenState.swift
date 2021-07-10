@@ -115,7 +115,7 @@ struct TitrationNavigationModel {
                 statements.explainWeakAcidEP2(pH: model.weakPreEP.currentPH)
             }
         ),
-        AddTitrantPostEP(statements.instructToAddTitrantToWeakAcidPostEP, equation: .weakAcidPostEP),
+        AddTitrantPostEP(statements.instructToAddTitrantToWeakAcidPostEP, equation: .weakAcidPostEPPreAddingTitrant),
         StopInput(statements.endOfWeakAcidTitration)
     ]
 
@@ -123,7 +123,7 @@ struct TitrationNavigationModel {
         PrepareNewSubstanceModel(
             statements.instructToChooseWeakBase,
             substance: .weakBase,
-            equation: .weakAcidBlank
+            equation: .weakBaseBlank
         ),
         SetWaterLevel(statements.instructToSetWaterLevelOfWeakBaseTitration),
         AddSubstance(statements.instructToAddWeakBase, equation: .weakBaseAddingSubstance),
@@ -169,7 +169,7 @@ struct TitrationNavigationModel {
                 statements.explainWeakBasedEP2(pH: model.weakPreEP.currentPH)
             }
         ),
-        AddTitrantPostEP(statements.instructToAddTitrantToWeakBasePostEP, equation: .weakBasePostEP),
+        AddTitrantPostEP(statements.instructToAddTitrantToWeakBasePostEP, equation: .weakBasePostEPPreAddingTitrant),
         StopInput(statements.endOfWeakBaseTitration)
     ]
 }
