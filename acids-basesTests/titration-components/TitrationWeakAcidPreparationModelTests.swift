@@ -208,12 +208,4 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
     }
 }
 
-extension PrimaryIon {
-    var extendedSubstancePart: ExtendedSubstancePart {
-        switch self {
-        case .hydrogen: return .hydrogen
-        case .hydroxide: return .hydroxide
-        }
-    }
-}
 

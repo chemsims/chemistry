@@ -275,10 +275,9 @@ extension TitrationWeakSubstancePostEPModel {
     }
 
     private func barChartEquation(forPart part: ExtendedSubstancePart) -> Equation {
-        // Secondary ion should end up as the same height as primary complement
-        if part == .secondaryIon {
-            let equalToFinalMolecule = substance.primary.complement.concentration
-            let finalHeight = concentration.value(for: equalToFinalMolecule).getY(at: CGFloat(maxTitrant))
+        // complement ion should end up as the same height as primary complement
+        if part == substance.primary.complement.extendedSubstancePart {
+            let finalHeight = concentration.value(for: .secondary).getY(at: CGFloat(maxTitrant))
 
             return LinearEquation(
                 x1: 0,
@@ -287,14 +286,8 @@ extension TitrationWeakSubstancePostEPModel {
                 y2: finalHeight
             )
         }
-        return LinearEquation(
-            x1: 0,
-            y1: initialBarHeight(forPart: part),
-            x2: CGFloat(maxTitrant),
-            y2: concentration
-                .value(for: concentrationFromPart(part))
-                .getY(at: CGFloat(maxTitrant))
-        )
+
+        return ConstantEquation(value: initialBarHeight(forPart: part))
     }
 
     private func concentrationFromPart(_ part: ExtendedSubstancePart) -> TitrationEquationTerm.Concentration {

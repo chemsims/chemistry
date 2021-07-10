@@ -169,10 +169,17 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
         func finalBarHeight(_ part: ExtendedSubstancePart) -> CGFloat {
             model.barChartDataMap.value(for: part).equation.getY(at: CGFloat(model.maxTitrant))
         }
+        func initialBarHeight(_ part: ExtendedSubstancePart) -> CGFloat {
+            model.barChartDataMap.value(for: part).equation.getY(at: 0)
+        }
+
 
         model.incrementTitrant(count: model.maxTitrant)
 
-        XCTAssertEqualWithTolerance(finalBarHeight(.secondaryIon), finalBarHeight(complementIon.extendedSubstancePart))
+        XCTAssertEqualWithTolerance(finalBarHeight(complementIon.extendedSubstancePart), finalBarHeight(.secondaryIon))
+
+        XCTAssertEqualWithTolerance(initialBarHeight(.secondaryIon), finalBarHeight(.secondaryIon))
+
     }
 
     func testInputLimits() {
