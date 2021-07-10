@@ -6,7 +6,7 @@ import SwiftUI
 
 extension View {
 
-    /// Overlays a slider beside the view.
+    /// Overlays a slider at the edge of the view.
     ///
     /// - Parameters:
     ///     - value: Binding of the value passed to the slider.
@@ -146,30 +146,33 @@ private struct SliderOverlayWithGeometry: View {
     var body: some View {
         ZStack {
             BlankTooltip(
-                geometry: tooltipGeometry,
+                geometry: sliderGeometry.tooltipGeometry,
                 background: RGB.gray(base: 230).color,
                 border: RGB.gray(base: 100).color,
                 hasShadow: hasShadow
             )
-            .frame(size: tooltipSize)
+            .frame(size: sliderGeometry.tooltipSize)
 
             CustomSlider(
                 value: $value,
                 axis: AxisPositionCalculations(
-                    minValuePosition: minValuePosition,
-                    maxValuePosition: maxValuePosition,
+                    minValuePosition: sliderGeometry.minValuePosition,
+                    maxValuePosition: sliderGeometry.maxValuePosition,
                     minValue: minValue,
                     maxValue: maxValue
                 ),
                 orientation: position.orientation,
                 includeFill: includeFill,
-                settings: SliderGeometrySettings(handleWidth: handleWidth),
+                settings: SliderGeometrySettings(handleWidth: sliderGeometry.handleWidth),
                 disabled: false,
                 useHaptics: useHaptics
             )
-            .frame(width: sliderWidth, height: sliderHeight)
+            .frame(width: sliderGeometry.sliderWidth, height: sliderGeometry.sliderHeight)
         }
-        .offset(x: xOffset, y: yOffset)
+        .offset(
+            x: sliderGeometry.xOffset(geometry: geometry),
+            y: sliderGeometry.yOffset(geometry: geometry)
+        )
     }
 
     private var length: CGFloat {
@@ -179,15 +182,24 @@ private struct SliderOverlayWithGeometry: View {
         return position.orientation == .portrait ? geometry.size.height : geometry.size.width
     }
 
-    private var sliderWidth: CGFloat {
+    private var sliderGeometry: SliderOverlayGeometry {
+        .init(length: length, position: position)
+    }
+}
+
+private struct SliderOverlayGeometry {
+    let length: CGFloat
+    let position: SliderOverlay.Position
+
+    var sliderWidth: CGFloat {
         position.orientation == .landscape ? length : handleWidth
     }
 
-    private var sliderHeight: CGFloat {
+    var sliderHeight: CGFloat {
         position.orientation == .portrait ? length : handleWidth
     }
 
-    private var minValuePosition: CGFloat {
+    var minValuePosition: CGFloat {
         let axisLimitsPadding: CGFloat = 0.1
         if position.orientation == .portrait {
             return (1 - axisLimitsPadding) * length
@@ -195,11 +207,11 @@ private struct SliderOverlayWithGeometry: View {
         return axisLimitsPadding * length
     }
 
-    private var maxValuePosition: CGFloat {
+    var maxValuePosition: CGFloat {
         length - minValuePosition
     }
 
-    private var xOffset: CGFloat {
+    func xOffset(geometry: GeometryProxy) -> CGFloat {
         switch position {
         case .top, .bottom:
             return (geometry.size.width - tooltipSize.width) / 2
@@ -208,7 +220,7 @@ private struct SliderOverlayWithGeometry: View {
         }
     }
 
-    private var yOffset: CGFloat {
+    func yOffset(geometry: GeometryProxy) -> CGFloat {
         switch position {
         case .top: return -tooltipSize.height - paddingToElement - tooltipGeometry.arrowHeight
         case .bottom: return geometry.size.height + paddingToElement + tooltipGeometry.arrowHeight
@@ -216,19 +228,19 @@ private struct SliderOverlayWithGeometry: View {
         }
     }
 
-    private var paddingToElement: CGFloat {
+    var paddingToElement: CGFloat {
         0.2 * handleWidth
     }
 
-    private var tooltipInnerPadding: CGFloat {
+    var tooltipInnerPadding: CGFloat {
         0.5 * handleWidth
     }
 
-    private var handleWidth: CGFloat {
+    var handleWidth: CGFloat {
         0.15 * length
     }
 
-    private var tooltipSize: CGSize {
+    var tooltipSize: CGSize {
         let lengthFactor: CGFloat = 1.1
         let depthFactor: CGFloat = 1.5
 
@@ -240,12 +252,26 @@ private struct SliderOverlayWithGeometry: View {
         }
     }
 
-    private var tooltipGeometry: TooltipGeometry {
+    var tooltipGeometry: TooltipGeometry {
         TooltipGeometry(
             size: tooltipSize,
             arrowPosition: position.arrowPosition,
             arrowLocation: .outside
         )
+    }
+}
+
+extension SliderOverlay {
+    /// Returns the total depth of the tooltip, including spacing to the element.
+    ///
+    /// For example, for a `right` position, the depth would be the width of the tooltip, including the padding to the element.
+    /// While for a `top` position, the depth would instead be the height.
+    public static func tooltipDepth(
+        forLength length: CGFloat,
+        position: Position
+    ) -> CGFloat {
+        let geo = SliderOverlayGeometry(length: length, position: position)
+        return geo.tooltipSize.height + geo.tooltipGeometry.arrowHeight + geo.paddingToElement
     }
 }
 

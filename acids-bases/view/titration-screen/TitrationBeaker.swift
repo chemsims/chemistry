@@ -139,7 +139,7 @@ private struct TitrationBeakerTools: View {
                     value: titrantMolarity,
                     minValue: 0.1,
                     maxValue: 0.5,
-                    length: 1.4 * layout.buretteSize.width
+                    length: layout.buretteSliderLengthToBuretteWidth * layout.buretteSize.width
                 )
         }
         .position(layout.burettePosition)
@@ -304,8 +304,19 @@ private extension TitrationScreenLayout {
 
     var buretteSize: CGSize {
         let width = availableWidthForDropperAndBurette - dropperSize.width
-        let height = 1.7 * width
+
+        let sliderLength = buretteSliderLengthToBuretteWidth * width
+        let tooltipHeight = SliderOverlay.tooltipDepth(forLength: sliderLength, position: .top)
+
+        let availableHeight = 0.95 * toolsBottomY
+        let maxBuretteHeight = availableHeight - tooltipHeight
+
+        let height = maxBuretteHeight // min(1.7 * width, maxHeight)
         return CGSize(width: width, height: height)
+    }
+
+    var buretteSliderLengthToBuretteWidth: CGFloat {
+        1.4
     }
 
     var phMeterPosition: CGPoint {
@@ -383,6 +394,10 @@ private extension TitrationScreenLayout {
 
     private var availableWidthForDropperAndBurette: CGFloat {
         toolStackWidth - (3 * common.beakerToolsSpacing) - common.containerSize.width - common.phMeterSize.width
+    }
+
+    private var totalBeakerHeight: CGFloat {
+        common.beakerHeight + common.toggleHeight
     }
 }
 
