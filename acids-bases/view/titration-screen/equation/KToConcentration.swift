@@ -15,10 +15,10 @@ extension TitrationEquationView {
     struct KToConcentrationDefinition: View {
 
         let data: TitrationEquationData
-        let kValue: Term.KValue
-        let firstNumeratorConcentration: Term.Concentration
-        let secondNumeratorConcentration: Term.Concentration
-        let denominatorConcentration: Term.Concentration
+        let kValue: Term.Placeholder<Term.KValue>
+        let firstNumeratorConcentration: Term.Placeholder<Term.Concentration>
+        let secondNumeratorConcentration: Term.Placeholder<Term.Concentration>
+        let denominatorConcentration: Term.Placeholder<Term.Concentration>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
@@ -28,12 +28,12 @@ extension TitrationEquationView {
                 VStack(spacing: layout.fractionVSpacing) {
                     HStack(spacing: 5) {
                         PlainLine(
-                            line: firstNumeratorConcentration.label(
+                            line: firstNumeratorConcentration.term.label(
                                 forData: data
                             )
                         )
                         PlainLine(
-                            line: secondNumeratorConcentration.label(
+                            line: secondNumeratorConcentration.term.label(
                                 forData: data
                             )
                         )
@@ -41,7 +41,7 @@ extension TitrationEquationView {
                     Rectangle()
                         .frame(width: 130, height: layout.fractionBarHeight)
                     PlainLine(
-                        line: denominatorConcentration.label(
+                        line: denominatorConcentration.term.label(
                             forData: data
                         )
                     )
@@ -49,6 +49,8 @@ extension TitrationEquationView {
             }
             .font(.system(size: layout.fontSize))
         }
+
+
     }
 
     struct KToConcentrationFilled: View {
@@ -73,11 +75,21 @@ extension TitrationEquationView {
                         FixedText(")")
                     }
                     Rectangle()
-                        .frame(width: 190, height: layout.fractionBarHeight)
+                        .frame(width: divisorWidth, height: layout.fractionBarHeight)
                     PlaceholderEquation(data: data, value: denominatorConcentration)
                 }
             }
             .font(.system(size: layout.fontSize))
+        }
+
+        private var divisorWidth: CGFloat {
+            let numer1Width = layout.boxWidth(
+                forFormatter: firstNumeratorConcentration.formatter
+            )
+            let numer2Width = layout.boxWidth(forFormatter: secondNumeratorConcentration.formatter
+            )
+
+            return numer1Width + numer2Width + 5
         }
     }
 }
@@ -87,10 +99,10 @@ struct TitrationEquationKToConcentration_Previews: PreviewProvider {
         VStack {
             TitrationEquationView.KToConcentrationDefinition(
                 data: .preview,
-                kValue: .kA,
-                firstNumeratorConcentration: .hydrogen,
-                secondNumeratorConcentration: .secondary,
-                denominatorConcentration: .substance
+                kValue: .init(.kA, isFilled: true),
+                firstNumeratorConcentration: .init(.hydrogen, isFilled: true),
+                secondNumeratorConcentration: .init(.secondary, isFilled: true),
+                denominatorConcentration: .init(.substance, isFilled: true)
             )
 
             TitrationEquationView.KToConcentrationFilled(

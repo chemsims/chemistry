@@ -21,5 +21,15 @@ struct TitrationEquationLayout {
 
     let minScaleFactor: CGFloat = 0.1
 
-    let fractionParenHeightScaleFactor: CGFloat = 2
+    let fractionParenHeightScaleFactor: CGFloat = 2.2
+
+    func boxWidth(forFormatter formatter: EquationTermFormatter) -> CGFloat {
+        switch formatter {
+        case .scientific: return wideBoxWidth
+        case let .decimals(places) where places > 2: return wideBoxWidth
+        default: return EquationSizing.boxWidth
+        }
+    }
+
+    private let wideBoxWidth = 1.5 * EquationSizing.boxWidth
 }

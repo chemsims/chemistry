@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-import Foundation
+import CoreGraphics
 import ReactionsCore
 
 enum TitrationEquation: Equatable {
@@ -88,5 +88,26 @@ extension TitrationEquation: Identifiable {
 extension TitrationEquationTerm: CustomDebugStringConvertible {
     var debugDescription: String {
         "\(self)"
+    }
+}
+
+enum EquationTermFormatter: Equatable {
+    case scientific(
+            threshold: CGFloat = 0.01,
+            nonScientificDecimalPlaces: Int = 3
+         )
+    case decimals(places: Int = 2)
+
+    func format(_ value: CGFloat) -> TextLine {
+        switch self {
+        case let .scientific(threshold, nonScientificDecimalPlaces):
+            return TextLineUtil.scientific(
+                value: value,
+                threshold: threshold,
+                nonScientificDecimalPlaces: nonScientificDecimalPlaces
+            )
+        case let .decimals(places):
+            return TextLine(value.str(decimals: places))
+        }
     }
 }

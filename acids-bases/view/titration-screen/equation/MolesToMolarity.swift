@@ -17,9 +17,9 @@ extension TitrationEquationView {
     struct MolesToMolarityDefinition: View {
 
         let data: TitrationEquationData
-        let moles: Term.Moles
-        let volume: Term.Volume
-        let molarity: Term.Molarity
+        let moles: Term.Placeholder<Term.Moles>
+        let volume: Term.Placeholder<Term.Volume>
+        let molarity: Term.Placeholder<Term.Molarity>
 
         @Environment(\.titrationEquationLayout) var layout
 
@@ -63,9 +63,9 @@ struct TitrationEquationMolesToMolarity_Previews: PreviewProvider {
         VStack {
             TitrationEquationView.MolesToMolarityDefinition(
                 data: .preview,
-                moles: .hydrogen,
-                volume: .hydrogen,
-                molarity: .hydrogen
+                moles: .init(.hydrogen, isFilled: true),
+                volume: .init(.hydrogen, isFilled: true),
+                molarity: .init(.hydrogen, isFilled: true)
             )
 
             TitrationEquationView.MolesToMolarityFilled(

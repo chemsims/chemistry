@@ -19,12 +19,13 @@ public struct TextLineUtil {
 
     public static func scientific(
         value: CGFloat,
-        threshold: CGFloat
+        threshold: CGFloat,
+        nonScientificDecimalPlaces: Int = 2
     ) -> TextLine {
         if value != 0 && value < threshold {
             return scientific(value: value)
         }
-        return TextLine(value.str(decimals: 2))
+        return TextLine(value.str(decimals: nonScientificDecimalPlaces))
     }
 
     /// Returns `value` parsed into scientific representation of the form `Ax10^B`, with

@@ -20,15 +20,22 @@
  struct TitrationEquationTerm {
     private init() { }
 
+    // TODO - change the name of this struct
     struct Placeholder<Term> {
 
-       init(_ term: Term, isFilled: Bool) {
-           self.term = term
-           self.isFilled = isFilled
-       }
+        init(
+            _ term: Term,
+            isFilled: Bool,
+            formatter: EquationTermFormatter = .scientific()
+        ) {
+            self.term = term
+            self.isFilled = isFilled
+            self.formatter = formatter
+        }
 
-       let term: Term
-       let isFilled: Bool
+        let term: Term
+        let isFilled: Bool
+        let formatter: EquationTermFormatter
     }
 
     enum Volume: String, CaseIterable, CustomDebugStringConvertible {
@@ -102,12 +109,6 @@
  }
 
  extension TitrationEquationTerm.Placeholder: Equatable where Term : Equatable {
- }
-
- extension TitrationEquationTerm.Placeholder: CustomDebugStringConvertible {
-    var debugDescription: String {
-        "\(String(reflecting: term)) \(!isFilled ? "not " : "")filled"
-    }
  }
 
  extension TitrationEquationTerm.Moles: TitrationEquationTermLabel, TitrationEquationTermEquation {

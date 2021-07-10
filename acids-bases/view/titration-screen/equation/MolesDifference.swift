@@ -14,9 +14,9 @@ extension TitrationEquationView {
     struct MolesDifferenceDefinition: View {
 
         let data: TitrationEquationData
-        let molesDifference: Term.Moles
-        let subtractingMoles: Term.Moles
-        let fromMoles: Term.Moles
+        let molesDifference: Term.Placeholder<Term.Moles>
+        let subtractingMoles: Term.Placeholder<Term.Moles>
+        let fromMoles: Term.Placeholder<Term.Moles>
         @Environment(\.titrationEquationLayout) var layout
         
         var body: some View {
@@ -57,9 +57,9 @@ struct TitrationEquationMoleSum_Previews: PreviewProvider {
         VStack {
             TitrationEquationView.MolesDifferenceDefinition(
                 data: .preview,
-                molesDifference: .substance,
-                subtractingMoles: .titrant,
-                fromMoles: .initialSubstance
+                molesDifference: .init(.substance, isFilled: true),
+                subtractingMoles: .init(.titrant, isFilled: true),
+                fromMoles: .init(.initialSubstance, isFilled: true)
             )
 
             TitrationEquationView.MolesDifferenceFilled(

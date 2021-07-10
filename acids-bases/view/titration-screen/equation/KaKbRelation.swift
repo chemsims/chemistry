@@ -15,8 +15,8 @@ extension TitrationEquationView {
     struct KaKbRelationDefinition: View {
 
         let data: TitrationEquationData
-        let firstKValue: Term.KValue
-        let secondKValue: Term.KValue
+        let firstKValue: Term.Placeholder<Term.KValue>
+        let secondKValue: Term.Placeholder<Term.KValue>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
@@ -58,8 +58,8 @@ struct TitrationEquationKaKbRelation_Previews: PreviewProvider {
         VStack {
             TitrationEquationView.KaKbRelationDefinition(
                 data: .preview,
-                firstKValue: .kA,
-                secondKValue: .kB
+                firstKValue: .init(.kA, isFilled: true),
+                secondKValue: .init(.kB, isFilled: true)
             )
 
             TitrationEquationView.KaKbRelationFilled(

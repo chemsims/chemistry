@@ -32,13 +32,16 @@ extension TitrationEquationView {
     }
 
     struct BoxWidthTextLine<Label : TitrationEquationTermLabel>: View {
+
         let data: TitrationEquationData
-        let value: Label
+        let value: Term.Placeholder<Label>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
-            TitrationEquationView.PlainLine(line: value.label(forData: data))
-                .frame(width: layout.boxWidth)
+            TitrationEquationView.PlainLine(
+                line: value.term.label(forData: data)
+            )
+            .frame(width: layout.boxWidth(forFormatter: value.formatter))
         }
     }
 
@@ -60,28 +63,22 @@ extension TitrationEquationView {
 
         var body: some View {
             PlaceholderTextLine(
-                value: value.isFilled ? formatter(value.term.value(forData: data)) : nil
+                value: value.isFilled ? formatter(value.term.value(forData: data)) : nil,
+                fontSize: layout.fontSize,
+                expandedWidth: layout.boxWidth(forFormatter: value.formatter)
             )
-            .frame(width: layout.boxWidth)
+            .frame(
+                width: layout.boxWidth(forFormatter: value.formatter),
+                height: layout.boxHeight
+            )
         }
     }
 
     struct PlaceholderEquationView<Label : TitrationEquationTermEquation>: View {
         let data: TitrationEquationData
         let value: Term.Placeholder<Label>
-        let formatter: (CGFloat) -> TextLine
         @Environment(\.titrationEquationInput) var equationInput
         @Environment(\.titrationEquationLayout) var layout
-
-        init(
-            data: TitrationEquationData,
-            value: Term.Placeholder<Label>,
-            formatter: @escaping (CGFloat) -> TextLine = defaultFormatter
-        ) {
-            self.data = data
-            self.value = value
-            self.formatter = formatter
-        }
 
         var body: some View {
             if value.isFilled {
@@ -89,12 +86,20 @@ extension TitrationEquationView {
                     x: equationInput ?? 0,
                     equation: value.term.equation(forData: data),
                     fontSize: layout.fontSize,
-                    formatter: formatter
+                    formatter: { v in
+                        value.formatter.format(v).emphasised()
+                    }
                 )
-                .frame(width: layout.boxWidth, height: layout.boxHeight)
+                .frame(
+                    width: layout.boxWidth(forFormatter: value.formatter),
+                    height: layout.boxHeight
+                )
             } else {
                 PlaceholderTerm(value: nil)
-                    .frame(width: layout.boxWidth, height: layout.boxHeight)
+                    .frame(
+                        width: layout.boxWidth(forFormatter: value.formatter),
+                        height: layout.boxHeight
+                    )
             }
         }
     }
@@ -118,7 +123,7 @@ extension TitrationEquationView {
         @ViewBuilder
         var body: some View {
             if showDefinition {
-                TitrationEquationView.BoxWidthTextLine(data: data, value: value.term)
+                TitrationEquationView.BoxWidthTextLine(data: data, value: value)
             } else {
                 TitrationEquationView.PlaceholderTermView(data: data, value: value)
             }

@@ -14,10 +14,10 @@ extension TitrationEquationView {
     struct PConcentrationDefinition: View {
 
         let data: TitrationEquationData
-        let resultPValue: Term.PValue
-        let pkValue: Term.PValue
-        let numeratorConcentration: Term.Concentration
-        let denominatorConcentration: Term.Concentration
+        let resultPValue: Term.Placeholder<Term.PValue>
+        let pkValue: Term.Placeholder<Term.PValue>
+        let numeratorConcentration: Term.Placeholder<Term.Concentration>
+        let denominatorConcentration: Term.Placeholder<Term.Concentration>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
@@ -30,12 +30,15 @@ extension TitrationEquationView {
                     FixedText("log")
                     FixedText("(")
                         .scaleEffect(y: layout.fractionParenHeightScaleFactor)
+
                     VStack(spacing: layout.fractionVSpacing) {
                         BoxWidthTextLine(data: data, value: numeratorConcentration)
                         Rectangle()
                             .frame(width: 80, height: layout.fractionBarHeight)
                         BoxWidthTextLine(data: data, value: denominatorConcentration)
                     }
+                    .padding(.horizontal, 2)
+
                     FixedText(")")
                         .scaleEffect(y: layout.fractionParenHeightScaleFactor)
                 }
@@ -87,10 +90,10 @@ struct TitrationEquationPConcentration_Previews: PreviewProvider {
         VStack {
             TitrationEquationView.PConcentrationDefinition(
                 data: .preview,
-                resultPValue: .hydrogen,
-                pkValue: .kA,
-                numeratorConcentration: .secondary,
-                denominatorConcentration: .substance
+                resultPValue: .init(.hydrogen, isFilled: true),
+                pkValue: .init(.kA, isFilled: true),
+                numeratorConcentration: .init(.secondary, isFilled: true),
+                denominatorConcentration: .init(.substance, isFilled: true)
             )
 
             TitrationEquationView.PConcentrationFilled(

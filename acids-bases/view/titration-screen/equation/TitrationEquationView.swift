@@ -71,10 +71,10 @@ extension TitrationEquationView {
             secondVolume
         ): ConcentrationToMolesOverVolumeDefinition(
             data: data,
-            concentration: concentration.term,
-            moles: moles.term,
-            firstVolume: firstVolume.term,
-            secondVolume: secondVolume.term
+            concentration: concentration,
+            moles: moles,
+            firstVolume: firstVolume,
+            secondVolume: secondVolume
         )
 
         case let .concentrationToMolesDifferenceOverVolume(
@@ -85,11 +85,11 @@ extension TitrationEquationView {
             secondVolume
         ): ConcentrationToMolesDifferenceOverVolumeDefinition(
             data: data,
-            concentration: concentration.term,
-            subtractingMoles: subtractingMoles.term,
-            fromMoles: fromMoles.term,
-            firstVolume: firstVolume.term,
-            secondVolume: secondVolume.term
+            concentration: concentration,
+            subtractingMoles: subtractingMoles,
+            fromMoles: fromMoles,
+            firstVolume: firstVolume,
+            secondVolume: secondVolume
         )
 
         case let .kToConcentration(
@@ -99,14 +99,14 @@ extension TitrationEquationView {
                 denominatorConcentration
         ): KToConcentrationDefinition(
             data: data,
-            kValue: kValue.term,
-            firstNumeratorConcentration: firstNumeratorConcentration.term,
-            secondNumeratorConcentration: secondNumeratorConcentration.term,
-            denominatorConcentration: denominatorConcentration.term
+            kValue: kValue,
+            firstNumeratorConcentration: firstNumeratorConcentration,
+            secondNumeratorConcentration: secondNumeratorConcentration,
+            denominatorConcentration: denominatorConcentration
         )
 
         case let .kW(kA, kB):
-            KaKbRelationDefinition(data: data, firstKValue: kA.term, secondKValue: kB.term)
+            KaKbRelationDefinition(data: data, firstKValue: kA, secondKValue: kB)
 
         case let .molesDifference(
                 difference,
@@ -114,9 +114,9 @@ extension TitrationEquationView {
                 from
         ): MolesDifferenceDefinition(
             data: data,
-            molesDifference: difference.term,
-            subtractingMoles: subtracting.term,
-            fromMoles: from.term
+            molesDifference: difference,
+            subtractingMoles: subtracting,
+            fromMoles: from
         )
 
         case let .molesToConcentration(
@@ -125,9 +125,9 @@ extension TitrationEquationView {
                 volume
         ): MolesToConcentrationDefinition(
             data: data,
-            moles: moles.term,
-            concentration: concentration.term,
-            volume: volume.term
+            moles: moles,
+            concentration: concentration,
+            volume: volume
         )
 
         case let .molesToMolarity(
@@ -136,9 +136,9 @@ extension TitrationEquationView {
                 molarity
         ): MolesToMolarityDefinition(
             data: data,
-            moles: moles.term,
-            volume: volume.term,
-            molarity: molarity.term
+            moles: moles,
+            volume: volume,
+            molarity: molarity
         )
 
         case let .pConcentration(
@@ -146,8 +146,8 @@ extension TitrationEquationView {
                 concentration
         ): PLogConcentrationDefinition(
             data: data,
-            pValue: pValue.term,
-            concentration: concentration.term
+            pValue: pValue,
+            concentration: concentration
         )
 
         case let .pLogComplementConcentration(
@@ -155,8 +155,8 @@ extension TitrationEquationView {
                 concentration
         ): PLogComplementConcentrationDefinition(
             data: data,
-            pH: pValue.term,
-            concentration: concentration.term
+            pH: pValue,
+            concentration: concentration
         )
 
         case let .pKLog(
@@ -166,24 +166,24 @@ extension TitrationEquationView {
                 denominatorConcentration
         ): PConcentrationDefinition(
             data: data,
-            resultPValue: pConcentration.term,
-            pkValue: pK.term,
-            numeratorConcentration: numeratorConcentration.term,
-            denominatorConcentration: denominatorConcentration.term
+            resultPValue: pConcentration,
+            pkValue: pK,
+            numeratorConcentration: numeratorConcentration,
+            denominatorConcentration: denominatorConcentration
         )
 
         case let .pSum(firstPValue, secondPValue):
             PHSumDefinition(
                 data: data,
-                firstPValue: firstPValue.term,
-                secondPValue: secondPValue.term
+                firstPValue: firstPValue,
+                secondPValue: secondPValue
             )
 
         case let .pToLogK(pValue, kValue):
             PLogKValueDefinition(
                 data: data,
-                pValue: pValue.term,
-                kValue: kValue.term
+                pValue: pValue,
+                kValue: kValue
             )
         }
     }

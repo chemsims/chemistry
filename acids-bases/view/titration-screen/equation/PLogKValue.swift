@@ -14,8 +14,8 @@ extension TitrationEquationView {
     struct PLogKValueDefinition: View {
 
         let data: TitrationEquationData
-        let pValue: Term.PValue
-        let kValue: Term.KValue
+        let pValue: Term.Placeholder<Term.PValue>
+        let kValue: Term.Placeholder<Term.KValue>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
@@ -57,8 +57,8 @@ struct PLogKValue_Previews: PreviewProvider {
         VStack {
             TitrationEquationView.PLogKValueDefinition(
                 data: .preview,
-                pValue: .kA,
-                kValue: .kA
+                pValue: .init(.kA, isFilled: true),
+                kValue: .init(.kA, isFilled: true)
             )
 
             TitrationEquationView.PLogKValueFilled(

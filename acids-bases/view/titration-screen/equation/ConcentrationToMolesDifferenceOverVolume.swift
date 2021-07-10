@@ -14,11 +14,11 @@ extension TitrationEquationView {
     struct ConcentrationToMolesDifferenceOverVolumeDefinition: View {
 
         let data: TitrationEquationData
-        let concentration: Term.Concentration
-        let subtractingMoles: Term.Moles
-        let fromMoles: Term.Moles
-        let firstVolume: Term.Volume
-        let secondVolume: Term.Volume
+        let concentration: Term.Placeholder<Term.Concentration>
+        let subtractingMoles: Term.Placeholder<Term.Moles>
+        let fromMoles: Term.Placeholder<Term.Moles>
+        let firstVolume: Term.Placeholder<Term.Volume>
+        let secondVolume: Term.Placeholder<Term.Volume>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
@@ -83,11 +83,11 @@ struct TitrationEquationConcentrationToMolesOverVolume_Previews: PreviewProvider
         VStack {
             TitrationEquationView.ConcentrationToMolesDifferenceOverVolumeDefinition(
                 data: .preview,
-                concentration: .hydrogen,
-                subtractingMoles: .hydrogen,
-                fromMoles: .initialSecondary,
-                firstVolume: .substance,
-                secondVolume: .equivalencePoint
+                concentration: .init(.hydrogen, isFilled: true),
+                subtractingMoles: .init(.hydrogen, isFilled: true),
+                fromMoles: .init(.initialSecondary, isFilled: true),
+                firstVolume: .init(.substance, isFilled: true),
+                secondVolume: .init(.equivalencePoint, isFilled: true)
             )
 
             TitrationEquationView.ConcentrationToMolesDifferenceOverVolumeFilled(

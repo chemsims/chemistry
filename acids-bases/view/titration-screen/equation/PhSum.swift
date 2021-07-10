@@ -14,8 +14,8 @@ extension TitrationEquationView {
     struct PHSumDefinition: View {
 
         let data: TitrationEquationData
-        let firstPValue: Term.PValue
-        let secondPValue: Term.PValue
+        let firstPValue: Term.Placeholder<Term.PValue>
+        let secondPValue: Term.Placeholder<Term.PValue>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
@@ -55,8 +55,8 @@ struct TitrationEquationPhSum_Previews: PreviewProvider {
         VStack {
             TitrationEquationView.PHSumDefinition(
                 data: .preview,
-                firstPValue: .hydrogen,
-                secondPValue: .hydroxide
+                firstPValue: .init(.hydrogen, isFilled: true),
+                secondPValue: .init(.hydroxide, isFilled: true)
             )
 
             TitrationEquationView.PHSumFilled(

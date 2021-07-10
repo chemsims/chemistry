@@ -47,7 +47,10 @@ extension TitrationEquationSet {
                 )
             ],
             right: [
-                titrantMoles(fillMolarity: fillTitrantMolarity, fillAll: fillAll),
+                titrantMoles(
+                    fillMolarity: fillTitrantMolarity,
+                    fillAll: fillAll
+                ),
                 pHLogH(fillAll: fillSubstanceAndHydrogen)
             ]
         )
@@ -156,8 +159,16 @@ extension TitrationEquationSet {
                 .concentrationToMolesOverVolume(
                     concentration: .init(.hydroxide, isFilled: true),
                     moles: .init(.titrant, isFilled: fillMolesAndVolume),
-                    firstVolume: .init(.equivalencePoint, isFilled: true),
-                    secondVolume: .init(.titrant, isFilled: fillMolesAndVolume)
+                    firstVolume: .init(
+                        .equivalencePoint,
+                        isFilled: true,
+                        formatter: .decimals(places: 2)
+                    ),
+                    secondVolume: .init(
+                        .titrant,
+                        isFilled: fillMolesAndVolume,
+                        formatter: .decimals(places: 2)
+                    )
                 ),
                 pOHLogOH(fillAll: true)
             ],
@@ -262,16 +273,31 @@ extension TitrationEquationSet {
     private static func substanceMoles(fillAll: Bool) -> TitrationEquation {
         .molesToMolarity(
             moles: .init(.substance, isFilled: fillAll),
-            volume: .init(.substance, isFilled: true),
+            volume: .init(
+                .substance,
+                isFilled: true,
+                formatter: .decimals()
+            ),
             molarity: .init(.substance, isFilled: fillAll)
         )
     }
 
     private static func titrantMoles(fillMolarity: Bool, fillAll: Bool) -> TitrationEquation {
         .molesToMolarity(
-            moles: .init(.titrant, isFilled: fillAll),
-            volume: .init(.titrant, isFilled: fillAll),
-            molarity: .init(.titrant, isFilled: fillMolarity || fillAll)
+            moles: .init(
+                .titrant,
+                isFilled: fillAll
+            ),
+            volume: .init(
+                .titrant,
+                isFilled: fillAll,
+                formatter: .decimals(places: 3)
+            ),
+            molarity: .init(
+                .titrant,
+                isFilled: fillMolarity || fillAll,
+                formatter: .decimals(places: 2)
+            )
         )
     }
 
@@ -281,11 +307,27 @@ extension TitrationEquationSet {
         fillTitrant: Bool
     ) -> TitrationEquation {
         .concentrationToMolesDifferenceOverVolume(
-            concentration: .init(concentration, isFilled: fillSubstanceAndConcentration),
-            subtractingMoles: .init(.titrant, isFilled: fillTitrant),
-            fromMoles: .init(.substance, isFilled: fillSubstanceAndConcentration),
-            firstVolume: .init(.substance, isFilled: fillSubstanceAndConcentration),
-            secondVolume: .init(.titrant, isFilled: fillTitrant)
+            concentration: .init(
+                concentration,
+                isFilled: fillSubstanceAndConcentration
+            ),
+            subtractingMoles: .init(
+                .titrant,
+                isFilled: fillTitrant
+            ),
+            fromMoles: .init(
+                .substance, 
+                isFilled: fillSubstanceAndConcentration
+            ),
+            firstVolume: .init(
+                .substance,
+                isFilled: fillSubstanceAndConcentration
+            ),
+            secondVolume: .init(
+                .titrant,
+                isFilled: fillTitrant,
+                formatter: .decimals(places: 3)
+            )
         )
     }
 
@@ -397,8 +439,16 @@ extension TitrationEquationSet {
     private static func initialSubstanceMoles(fillAll: Bool) -> TitrationEquation {
         .molesToConcentration(
             moles: .init(.initialSubstance, isFilled: fillAll),
-            concentration: .init(.initialSubstance, isFilled: fillAll),
-            volume: .init(.initialSubstance, isFilled: true)
+            concentration: .init(
+                .initialSubstance,
+                isFilled: fillAll,
+                formatter: .decimals(places: 2)
+            ),
+            volume: .init(
+                .initialSubstance,
+                isFilled: true,
+                formatter: .decimals(places: 2)
+            )
         )
     }
 
@@ -416,8 +466,16 @@ extension TitrationEquationSet {
         .concentrationToMolesOverVolume(
             concentration: .init(.substance, isFilled: true),
             moles: .init(.substance, isFilled: true),
-            firstVolume: .init(.initialSubstance, isFilled: true),
-            secondVolume: .init(.titrant, isFilled: fillVolume)
+            firstVolume: .init(
+                .initialSubstance,
+                isFilled: true,
+                formatter: .decimals(places: 2)
+            ),
+            secondVolume: .init(
+                .titrant,
+                isFilled: fillVolume,
+                formatter: .decimals(places: 2)
+            )
         )
     }
 
@@ -427,8 +485,16 @@ extension TitrationEquationSet {
         .concentrationToMolesOverVolume(
             concentration: .init(.secondary, isFilled: true),
             moles: .init(.secondary, isFilled: true),
-            firstVolume: .init(.initialSubstance, isFilled: true),
-            secondVolume: .init(.titrant, isFilled: fillVolume)
+            firstVolume: .init(
+                .initialSubstance,
+                isFilled: true,
+                formatter: .decimals(places: 2)
+            ),
+            secondVolume: .init(
+                .titrant,
+                isFilled: fillVolume,
+                formatter: .decimals(places: 2)
+            )
         )
     }
 

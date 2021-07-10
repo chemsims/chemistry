@@ -14,8 +14,8 @@ extension TitrationEquationView {
     struct PLogConcentrationDefinition: View {
 
         let data: TitrationEquationData
-        let pValue: Term.PValue
-        let concentration: Term.Concentration
+        let pValue: Term.Placeholder<Term.PValue>
+        let concentration: Term.Placeholder<Term.Concentration>
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
@@ -69,8 +69,8 @@ struct TitrationEquationPLogConcentration: PreviewProvider {
         VStack {
             TitrationEquationView.PLogConcentrationDefinition(
                 data: .preview,
-                pValue: .hydrogen,
-                concentration: .hydrogen
+                pValue: .init(.hydrogen, isFilled: true),
+                concentration: .init(.hydrogen, isFilled: true)
             )
 
             TitrationEquationView.PLogConcentrationFilled(
