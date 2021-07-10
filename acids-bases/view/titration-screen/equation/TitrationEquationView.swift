@@ -26,7 +26,7 @@ struct TitrationEquationView: View {
         }
     }
 
-    fileprivate static let naturalWidth: CGFloat = 1040
+    fileprivate static let naturalWidth: CGFloat = 940
     fileprivate static let naturalHeight: CGFloat = 480
 
     private var equationSet: TitrationEquationSet {

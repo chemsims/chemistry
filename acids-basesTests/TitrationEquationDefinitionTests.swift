@@ -7,11 +7,11 @@ import XCTest
 
 class TitrationEquationDefinitionTests: XCTestCase {
 
-    func testStrongSubstancePostEP() {
+    func testStrongBasePostEP() {
         let set = equationSet(.strongBasePostEP)
         let moles = TitrationEquation.molesToMolarity(
             moles: .init(.substance, isFilled: true),
-            volume: .init(.substance, isFilled: true),
+            volume: .init(.substance, isFilled: true, formatter: .decimals()),
             molarity: .init(.substance, isFilled: true
             )
         )
@@ -26,7 +26,7 @@ class TitrationEquationDefinitionTests: XCTestCase {
         compareEquations(set.left, [moles, .filled(moles), concentration, .filled(concentration)])
     }
 
-    func testWeakSubstancePreEPBlank() {
+    func testWeakAcidPreEPBlank() {
         let set = equationSet(.weakAcidPreEPBlank)
 
         // Check left column
@@ -36,7 +36,10 @@ class TitrationEquationDefinitionTests: XCTestCase {
             from: .filled(.initialSubstance)
         )
         let pHPka = TitrationEquation.pKLog(
-            pConcentration: .filled(.hydrogen),
+            pConcentration: .filled(
+                .hydrogen,
+                formatter: .decimals(places: 2)
+            ),
             pK: .filled(.kA),
             numeratorConcentration: .filled(.secondary),
             denominatorConcentration: .filled(.substance)
@@ -48,20 +51,20 @@ class TitrationEquationDefinitionTests: XCTestCase {
         // Check right column
         let moles = TitrationEquation.molesToMolarity(
             moles: .blank(.titrant),
-            volume: .blank(.titrant),
-            molarity: .blank(.titrant)
+            volume: .blank(.titrant, formatter: .decimals(places: 3)),
+            molarity: .blank(.titrant, formatter: .decimals(places: 2))
         )
         let substanceConcentration = TitrationEquation.concentrationToMolesOverVolume(
             concentration: .filled(.substance),
             moles: .filled(.substance),
-            firstVolume: .filled(.initialSubstance),
-            secondVolume: .blank(.titrant)
+            firstVolume: .filled(.initialSubstance, formatter: .decimals(places: 2)),
+            secondVolume: .blank(.titrant, formatter: .decimals(places: 2))
         )
         let secondaryConcentration = TitrationEquation.concentrationToMolesOverVolume(
             concentration: .filled(.secondary),
             moles: .filled(.secondary),
-            firstVolume: .filled(.initialSubstance),
-            secondVolume: .blank(.titrant)
+            firstVolume: .filled(.initialSubstance, formatter: .decimals(places: 2)),
+            secondVolume: .blank(.titrant, formatter: .decimals(places: 2))
         )
 
         compareEquations(
@@ -94,11 +97,17 @@ class TitrationEquationDefinitionTests: XCTestCase {
 }
 
 private extension TitrationEquationTerm.Placeholder {
-    static func filled(_ term: Term) -> TitrationEquationTerm.Placeholder<Term> {
-        .init(term, isFilled: true)
+    static func filled(
+        _ term: Term,
+        formatter: EquationTermFormatter = .scientific()
+    ) -> TitrationEquationTerm.Placeholder<Term> {
+        .init(term, isFilled: true, formatter: formatter)
     }
 
-    static func blank(_ term: Term) -> TitrationEquationTerm.Placeholder<Term> {
-        .init(term, isFilled: false)
+    static func blank(
+        _ term: Term,
+        formatter: EquationTermFormatter = .scientific()
+    ) -> TitrationEquationTerm.Placeholder<Term> {
+        .init(term, isFilled: false, formatter: formatter)
     }
 }

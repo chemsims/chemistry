@@ -89,7 +89,7 @@ extension TitrationEquationView {
             let numer2Width = layout.boxWidth(forFormatter: secondNumeratorConcentration.formatter
             )
 
-            return numer1Width + numer2Width + 5
+            return numer1Width + numer2Width + 12
         }
     }
 }

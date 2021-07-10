@@ -346,21 +346,21 @@ extension TitrationEquationSet {
 
     private static func pHLogH(fillAll: Bool) -> TitrationEquation {
         .pConcentration(
-            pValue: .init(.hydrogen, isFilled: fillAll),
+            pValue: pH(filled: fillAll),
             concentration: .init(.hydrogen, isFilled: fillAll)
         )
     }
 
     private static func pOHLogOH(fillAll: Bool) -> TitrationEquation {
         .pConcentration(
-            pValue: .init(.hydroxide, isFilled: fillAll),
+            pValue: pOH(filled: fillAll),
             concentration: .init(.hydroxide, isFilled: fillAll)
         )
     }
 
     private static func pHToHydroxide(fillAll: Bool) -> TitrationEquation {
         .pLogComplementConcentration(
-            pValue: .init(.hydrogen, isFilled: fillAll),
+            pValue: pH(filled: fillAll),
             concentration: .init(.hydroxide, isFilled: fillAll)
         )
     }
@@ -403,7 +403,7 @@ extension TitrationEquationSet {
         fillAll: Bool
     ) -> TitrationEquation {
         .pKLog(
-            pConcentration: .init(.hydrogen, isFilled: fillAll),
+            pConcentration: pH(filled: fillAll),
             pK: .init(.kA, isFilled: fillAll),
             numeratorConcentration: .init(.secondary, isFilled: fillAll),
             denominatorConcentration: .init(.substance, isFilled: fillSubstance || fillAll)
@@ -415,7 +415,7 @@ extension TitrationEquationSet {
         fillAll: Bool
     ) -> TitrationEquation {
         .pKLog(
-            pConcentration: .init(.hydroxide, isFilled: fillAll),
+            pConcentration: pOH(filled: fillAll),
             pK: .init(.kB, isFilled: fillAll),
             numeratorConcentration: .init(.secondary, isFilled: fillAll),
             denominatorConcentration: .init(.substance, isFilled: fillSubstance)
@@ -516,8 +516,16 @@ extension TitrationEquationSet {
 
     private static func pHpOHSum(fillAll: Bool) -> TitrationEquation {
         .pSum(
-            firstPValue: .init(.hydrogen, isFilled: fillAll),
-            secondPValue: .init(.hydroxide, isFilled: fillAll)
+            firstPValue: pH(filled: fillAll),
+            secondPValue: pOH(filled: fillAll)
         )
+    }
+
+    private static func pH(filled: Bool) -> TitrationEquationTerm.Placeholder<TitrationEquationTerm.PValue> {
+        .init(.hydrogen, isFilled: filled, formatter: .decimals(places: 2))
+    }
+
+    private static func pOH(filled: Bool) -> TitrationEquationTerm.Placeholder<TitrationEquationTerm.PValue> {
+        .init(.hydroxide, isFilled: filled, formatter: .decimals(places: 2))
     }
 }

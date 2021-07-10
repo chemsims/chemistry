@@ -22,6 +22,7 @@ extension TitrationEquationView {
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 BoxWidthTextLine(data: data, value: pH)
+                    .frame(width: layout.boxWidth)
                 FixedText("=")
                 FixedText("14")
                 FixedText("+")
@@ -45,6 +46,7 @@ extension TitrationEquationView {
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 PlaceholderEquation(data: data, value: pValue)
+                    .frame(width: layout.boxWidth)
                 FixedText("=")
                 FixedText("14")
                 FixedText("+")

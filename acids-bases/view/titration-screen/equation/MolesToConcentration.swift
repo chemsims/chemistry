@@ -24,9 +24,10 @@ extension TitrationEquationView {
                 BoxWidthTextLine(data: data, value: moles)
                 FixedText("=")
                 BoxWidthTextLine(data: data, value: concentration)
-                    .padding(.trailing, 1)
+                    .frame(width: layout.boxWidth)
                 FixedText("x")
                 BoxWidthTextLine(data: data, value: volume)
+                    .frame(width: layout.boxWidth)
             }
             .font(.system(size: layout.fontSize))
         }
@@ -44,9 +45,10 @@ extension TitrationEquationView {
                 PlaceholderEquation(data: data, value: moles)
                 FixedText("=")
                 PlaceholderEquation(data: data, value: concentration)
-                    .padding(.trailing, 1)
+                    .frame(width: layout.boxWidth)
                 FixedText("x")
                 PlaceholderEquation(data: data, value: volume)
+                    .frame(width: layout.boxWidth)
             }
             .font(.system(size: layout.fontSize))
         }
