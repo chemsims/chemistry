@@ -239,7 +239,7 @@ extension TitrationWeakSubstancePostEPModel {
 extension TitrationWeakSubstancePostEPModel {
 
     var barChartData: [BarChartData] {
-        let order: [ExtendedSubstancePart] = [.substance, .hydroxide, .hydrogen, .secondaryIon]
+        let order: [ExtendedSubstancePart] = [.substance, .hydroxide, .secondaryIon, .hydrogen]
         return order.map(barChartDataMap.value)
     }
 

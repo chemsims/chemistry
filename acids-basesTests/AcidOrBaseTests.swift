@@ -36,6 +36,12 @@ class AcidOrBaseTests: XCTestCase {
         XCTAssertEqual(base.charged(.primaryIon), .init(symbol: "OH", charge: .negative))
         XCTAssertEqual(base.charged(.secondaryIon), .init(symbol: "BH", charge: nil))
     }
+
+    func testSymbolNamesForWeakBaseProducingDoubleHydrogen() {
+        let base = AcidOrBase.weakBaseHS
+        XCTAssertEqual(base.charged(.substance), .init(symbol: "HS", charge: .negative))
+        XCTAssertEqual(base.charged(.secondaryIon), .init(symbol: "H_2_S", charge: nil))
+    }
 }
 
 private extension AcidOrBase {

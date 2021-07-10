@@ -310,9 +310,9 @@ extension TitrationViewModel {
         }
         switch components.state.substance {
         case .strongAcid:
-            statement = TitrationStatements.midAddingStrongBaseTitrantPostEP
+            statement = TitrationSubstanceStatements(substance: substance).midAddingStrongBaseTitrantPostEP
         case .strongBase:
-            statement = TitrationStatements.midAddingStrongAcidTitrantPostEP
+            statement = TitrationSubstanceStatements(substance: substance).midAddingStrongAcidTitrantPostEP
         default: return
         }
     }

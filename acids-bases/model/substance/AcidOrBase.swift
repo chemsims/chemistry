@@ -185,16 +185,10 @@ extension AcidOrBase {
 
     // TODO - remove the symbol method & param below
     func symbol(ofPart part: SubstancePart) -> String {
-        chargedSymbol(ofPart: part).symbol
+        chargedSymbol(ofPart: part).symbol.asString
     }
     var symbol: String {
-        if type == .weakBase {
-            return "\(secondary.rawValue)"
-        }
-        if primary == .hydrogen {
-            return "\(primary.rawValue)\(secondary.rawValue)"
-        }
-        return "\(secondary.rawValue)\(primary.rawValue)"
+        chargedSymbol.symbol.asString
     }
 
     var productParts: [SubstancePart] {
@@ -215,38 +209,45 @@ extension AcidOrBase {
 
     private var chargedSymbol: ChargedSymbol {
         if type == .weakBase {
-            return ChargedSymbol(symbol: secondary.rawValue, charge: .negative)
+            return ChargedSymbol(symbol: TextLine(secondary.rawValue), charge: .negative)
         }
 
         let p = primary.rawValue
         let s = secondary.rawValue
 
         let name = primary == .hydrogen ? "\(p)\(s)" : "\(s)\(p)"
-        return ChargedSymbol(symbol: name, charge: nil)
+        return ChargedSymbol(symbol: TextLine(name), charge: nil)
     }
 
     private var primarySymbol: ChargedSymbol {
         let charge: ChargedSymbol.Charge = primary == .hydrogen ? .positive : .negative
-        return ChargedSymbol(symbol: primary.rawValue, charge: charge)
+        return ChargedSymbol(symbol: TextLine(primary.rawValue), charge: charge)
     }
 
     private var secondarySymbol: ChargedSymbol {
+        if type == .weakBase && secondary.rawValue.contains("H") {
+            assert(secondary.rawValue.filter { $0 == "H"}.count == 1, "Expected no more than 1 H molecule in weak base ion \(secondary.rawValue)")
+            let withoutH = secondary.rawValue.filter { $0 != "H" }
+            return ChargedSymbol(symbol: "H_2_\(withoutH)", charge: nil)
+        }
+
+
         if type == .weakBase {
             return ChargedSymbol(symbol: "\(secondary.rawValue)H", charge: nil)
         }
         let charge: ChargedSymbol.Charge = primary == .hydrogen ? .negative : .positive
-        return ChargedSymbol(symbol: secondary.rawValue, charge: charge)
+        return ChargedSymbol(symbol: TextLine(secondary.rawValue), charge: charge)
     }
 
     struct ChargedSymbol: Equatable {
-        let symbol: String
+        let symbol: TextLine
         let charge: Charge?
 
         var text: TextLine {
             if let charge = charge {
-                return TextLine("\(symbol)^\(charge.rawValue)^")
+                return TextLine("\(symbol.asMarkdown)^\(charge.rawValue)^")
             }
-            return TextLine(symbol)
+            return symbol
         }
 
         enum Charge: String {

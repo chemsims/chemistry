@@ -227,9 +227,9 @@
         case .hydrogen: return "H"
         case .hydroxide: return "OH"
         case .secondary, .initialSecondary:
-            return data.substance.chargedSymbol(ofPart: .secondaryIon).symbol
+            return data.substance.chargedSymbol(ofPart: .secondaryIon).symbol.asString
         case .substance, .initialSubstance:
-            return data.substance.chargedSymbol(ofPart: .substance).symbol
+            return data.substance.chargedSymbol(ofPart: .substance).symbol.asString
         case .titrant: return data.titrant
         case .equivalencePoint: return "E"
         case .kA: return "Ka"

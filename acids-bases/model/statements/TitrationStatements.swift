@@ -59,13 +59,6 @@ struct TitrationStatements {
         """
     ]
 
-    static let instructToAddStrongAcid: [TextLine] = [
-        """
-        Now let's prepare the acidic solution that we're going to titrate.
-        """,
-        "*Shake the HCl into the beaker!*"
-    ]
-
     static let midAddingStrongAcid: [TextLine] = [
         """
         Concentration of *[\(hydrogen)]* is getting higher! And the pH is also very low.
@@ -108,28 +101,18 @@ struct TitrationStatements {
         macroscopic.
         """,
         """
-        Tap on the dropper to let a few drops fall into the solution.
-        """,
-        "*Tap to add it!*"
+        Tap on the dropper to let a few drops fall into the solution. *Tap to add it!*
+        """
     ]
 
     static let instructToSetMolarityOfStrongBaseTitrant =
         instructToSetMolarityOfSubstanceTitrant(substance: "strong base KOH")
 
-    static let instructToAddStrongBaseTitrant: [TextLine] = [
-        """
-        Let's add the titrant now! The titration curve starts at a *very low pH*, as the \
-        solution is purely acidic now. When KOH is added, it will neutralize the HCl to slowly \
-        make it more basic. *Tap to add it.*
-        """
-    ]
-
     static let midAddingStrongBaseTitrant: [TextLine] = [
         """
         At this stage, \(hydrogen) ions are reacting with the \(hydroxide) ions added to form water.
         """,
-        "The solution is slowly increasing its pH.",
-        "*Keep adding by tapping the burette!*"
+        "The solution is slowly increasing its pH. *Keep adding by tapping the burette!*",
     ]
 
     static let reachedStrongAcidEquivalencePoint: [TextLine] = [
@@ -147,14 +130,6 @@ struct TitrationStatements {
         it basic.
         """,
         "*Keep adding by tapping the burette!*"
-    ]
-
-    static let midAddingStrongBaseTitrantPostEP: [TextLine] = [
-        """
-        At this stage there is no more HCl in the solution to react with the KOH, so this \
-        one is fully dissociating into \(hydroxide). The solution is rapidly increasing its \
-        pH. *Keep adding by tapping the burette!*
-        """
     ]
 
     static let endOfStrongAcidTitration: [TextLine] = [
@@ -176,13 +151,6 @@ struct TitrationStatements {
         a strong acid.
         """,
         "*Set the water level. Note: Feel free to use the pH meter whenever.*"
-    ]
-
-    static let instructToAddStrongBase: [TextLine] = [
-        """
-        Now, let's prepare the basic solution that we're going to titrate. Add the KOH.
-        """,
-        "*Shake it into it.*"
     ]
 
     static let midAddingStrongBase: [TextLine] = [
@@ -217,14 +185,6 @@ struct TitrationStatements {
     static let instructToSetMolarityOfStrongAcidTitrant =
         instructToSetMolarityOfSubstanceTitrant(substance: "strong acid HCl")
 
-    static let instructToAddStrongAcidTitrantPreEP: [TextLine] = [
-        """
-        Let's just add the titrant now! The titration curve starts at a *very high pH*, as \
-        the solution is purely basic now. When HCl is added, it will neutralize the KOH to \
-        slowly make it more acidic. *Tap to add it.*
-        """
-    ]
-
     static let midAddingStrongAcidTitrant: [TextLine] = [
         """
         At this stage, \(hydroxide) ions are reacting with the \(hydrogen) ions \
@@ -252,14 +212,6 @@ struct TitrationStatements {
         "*Keep adding by tapping the burette!*"
     ]
 
-    static let midAddingStrongAcidTitrantPostEP: [TextLine] = [
-        """
-        At this stage there is no more KOH in the solution to react with \
-        the HCl, so this is fully dissociating into \(hydrogen). The solution is \
-        rapidly decreasing its pH. *Keep adding by tapping the burette!*
-        """
-    ]
-
     static let endOfStrongBaseTitration: [TextLine] = [
         """
         Awesome! These types of reactions are very useful. But what if were to titrate weak \
@@ -283,125 +235,15 @@ struct TitrationStatements {
         """
     ]
 
-    static let explainWeakAcidTitrationReaction: [TextLine] = [
-        """
-        For this *neutralization* reaction, *K^+^* ions are spectator ions, meaning that they \
-        don't actually take part in the reaction. So, let's just write KOH as *\(hydroxide)* and \
-        HA as *A^-^*.
-        """
-    ]
-
-    static let instructToAddWeakAcid: [TextLine] = [
-        """
-        Now let's prepare the acidic solution that we're going to titrate.
-        """,
-        "*Shake the HA into the beaker.*"
-    ]
-
     static let runningWeakAcidReaction: [TextLine] = [
         """
         The reaction is now running, and the concentration of *\(hydrogen)* is increasing!
         """
     ]
 
-    static func endOfWeakAcidReaction(
-        kA: CGFloat,
-        pH: CGFloat,
-        substanceMoles: CGFloat
-    ) -> [TextLine] {
-
-        let kAString = TextLineUtil.scientific(value: kA).asMarkdown
-        let pHString = pH.str(decimals: 2)
-        let molesString = substanceMoles.str(decimals: 2)
-
-        return [
-            """
-            The concentration of *\(hydrogen)* is now a little higher, and the solution is \
-            acidic. Recall the the equations from the previous weak acid-base part. *Ka is \
-            \(kAString), pH is \(pHString) and the initial moles of HA are \(molesString) moles*. \
-            Let's remember those values!
-            """
-        ]
-    }
-
-    static let explainWeakAcidTitrationStages =
-        explainWeakSubstanceTitrationStages(
-            acidityType: "acids",
-            substance: "HA",
-            primaryIonBeingAdded: hydroxide
-        )
-
-
     static let instructToSetMolarityOfTitrantOfWeakAcidSolution =
         instructToSetMolarityOfSubstanceTitrant(substance: "strong base KOH")
 
-    static let explainWeakAcidBufferRegion: [TextLine] =
-        explainWeakSubstanceBufferRegion(
-            acidityType: "acid",
-            firstMolecule: "HA",
-            secondMolecule: "A^-^"
-        )
-
-    static let explainWeakAcidHasselbalch: [TextLine] = [
-        """
-        That's why the equation of *Henderson-Hasselbalch* can be used in this part.
-        """,
-        """
-        Until the EP is reached, any mole of *\(hydroxide)* added will react with HA to produce \
-        the same amount of *A^-^* moles, and to consume *HA* moles.
-        """
-    ]
-
-    static let explainWeakAcidBufferMoles: [TextLine] = [
-        """
-        That's why at this stage, the moles of *\(hydroxide)* added will be the same as the \
-        moles of HA in the solution. While the moles of A^-^ will be what's already present in \
-        the solution, minus the ones consumed by the added  *\(hydroxide).*
-        """
-    ]
-
-    static let instructToAddTitrantToWeakAcid: [TextLine] = [
-        """
-        Let's add the titrant now! The titration curve starts at a *very low pH*, as the \
-        solution is purely acidic right now. When KOH is added, it will neutralize the HA \
-        to slowly make it more basic. *Tap to add it.*
-        """
-    ]
-
-    static let reachedWeakAcidMaxBufferCapacity: [TextLine] = [
-        """
-        This is the point of max buffer capacity, as there's equal amounts of \
-        A^-^ and HA right now. At this point, *$pH = pKA$*. It's the mid-point, half \
-        way through the EP.
-        """
-    ]
-
-    static let instructToAddTitrantToWeakAcidPostMaxBufferCapacity: [TextLine] = [
-        """
-        At this stage, *\(hydroxide)* is reacting with the HA present in the solution \
-        to form A^-^ and water. The solution is slowly increasing its pH (becoming \
-        more basic). *Keep adding by tapping the burette!*
-        """
-    ]
-
-    static func reachedWeakAcidEquivalencePoint(pH: CGFloat) -> [TextLine] {
-        let pHString = pH.str(decimals: 2)
-        return [
-           """
-           We've reached the *equivalence point.* Unlike strong titrations, in this case the pH isn't
-           7 but \(pHString), being slightly basic. Right now, all of the added *\(hydroxide)* \
-           has neutralized all of the HA, and there's no more of it in the solution.
-           """
-       ]
-    }
-
-    static let explainWeakAcidEP1: [TextLine] = [
-        """
-        As we saw in the previous parts, the A^-^ is the conjugate base of HA. Because there \
-        are so many A^-^ ions in the solution, it produce little amounts of *\(hydroxide)*, making \
-        the solution basic.
-        """
-    ]
 
     static func explainWeakAcidEP2(pH: CGFloat) -> [TextLine] {
         let pHString = pH.str(decimals: 2)
@@ -447,115 +289,14 @@ struct TitrationStatements {
         "*Set the water level.*"
     ]
 
-    static let instructToAddWeakBase: [TextLine] = [
-        """
-        Now, let's prepare the basic solution that we're going to titrate.
-        """,
-        "*Shake the A^-^ into the beaker*"
-    ]
-
     static let runningWeakBaseReaction: [TextLine] = [
         """
         The reaction is now running, and the concentration of *\(hydroxide)* is increasing!
         """
     ]
 
-    static func endOfWeakBaseReaction(
-        kB: CGFloat,
-        pOH: CGFloat,
-        substanceMoles: CGFloat
-    ) -> [TextLine] {
-        let kBString = TextLineUtil.scientific(value: kB).asMarkdown
-        let pOHString = pOH.str(decimals: 2)
-        let molesString = substanceMoles.str(decimals: 2)
-
-        return [
-            """
-            The concentration of *\(hydroxide)* is getting a little higher, so the solution is now \
-            basic. Recall the equations from the previous weak acid-base part. *Kb is
-            \(kBString)*, pOH is \(pOHString) and the initial moles of A^-^ are \(molesString). \
-            Let's remember those values!
-            """
-        ]
-    }
-
-    static let explainWeakBaseTitrationStages =
-        explainWeakSubstanceTitrationStages(
-            acidityType: "bases",
-            substance: "A^-^",
-            primaryIonBeingAdded: hydrogen
-        )
-
     static let instructToSetMolarityTitrantOfWeakBaseSolution =
         instructToSetMolarityOfSubstanceTitrant(substance: "strong acid \(hydrogen)")
-
-    static let explainWeakBaseBufferRegion: [TextLine] =
-        explainWeakSubstanceBufferRegion(
-            acidityType: "base",
-            firstMolecule: "HA",
-            secondMolecule: "A^-^"
-        )
-
-    static let explainWeakBaseHasselbalch: [TextLine] = [
-        """
-        That's why the equation of *Henderson-Hasselbalch* can be used in this part.
-        """,
-        """
-        Until the EP is reached, any mole of *\(hydrogen)* added will react with HA to produce \
-        the same amount of *HA* moles, and to consume *A^-^* moles.
-        """
-    ]
-
-    static let explainWeakBaseBufferMoles: [TextLine] = [
-        """
-        That's why at this stage, the moles of *\(hydrogen)* added will be the same as the \
-        moles of HA in the solution. While the moles of A^-^ will be what's already present in \
-        the solution, minus the ones consumed by the added  *\(hydrogen).*
-        """
-    ]
-
-    static let instructToAddTitrantToWeakBase: [TextLine] = [
-        """
-        Let's add the titrant now! The titration curve starts at a *very high pH*, as the \
-        solution is purely basic right now. When \(hydrogen) is added, it will neutralize the \
-        A^-^ to slowly make it more basic. *Tap to add it.*
-        """
-    ]
-
-    static let reachedWeakBaseMaxBufferCapacity: [TextLine] = [
-        """
-        This is the point of max buffer capacity, as there's equal amounts of \
-        A^-^ and HA right now. At this point, *$pH = pKA$*. It's the mid-point, half \
-        way through the EP.
-        """
-    ]
-
-    static let instructToAddTitrantToWeakBasePostMaxBufferCapacity: [TextLine] = [
-        """
-        At this stage, *\(hydrogen)* is reacting with the A^-^ present in the solution \
-        to form HA and water. The solution is slowly decreasing its pH (becoming \
-        more acidic). *Keep adding by tapping the burette!*
-        """
-    ]
-
-    static func reachedWeakBaseEquivalencePoint(pH: CGFloat) -> [TextLine] {
-        let pHString = pH.str(decimals: 2)
-        return [
-           """
-           We've reached the *equivalence point.* Unlike strong titrations, in this case the pH isn't
-           7 but \(pHString), being slightly acidic. Right now, all of the added *\(hydrogen)* \
-           has neutralized all of the A^-^, and there's no more of it in the solution.
-           """
-       ]
-    }
-
-    static let explainWeakBaseEP1: [TextLine] = [
-        """
-        As we saw in the previous parts, the HA is the conjugate base of A^-^. Because there \
-        are so many A^-^ ions in the solution, it produce little amounts of *\(hydroxide)*, making \
-        the solution basic.
-        """
-    ]
 
     static func explainWeakBasedEP2(pH: CGFloat) -> [TextLine] {
         let pHString = pH.str(decimals: 2)
@@ -597,32 +338,330 @@ extension TitrationStatements {
             """
         ]
     }
+}
 
-    private static func explainWeakSubstanceTitrationStages(
-        acidityType: String,
-        substance: String,
-        primaryIonBeingAdded: String
-    ) -> [TextLine] {
+struct TitrationSubstanceStatements {
+    let substance: AcidOrBase
+
+    private var symbol: String {
+        substance.chargedSymbol(ofPart: .substance).text.asMarkdown
+    }
+    private var secondary: String {
+        substance.chargedSymbol(ofPart: .secondaryIon).text.asMarkdown
+    }
+
+    var instructToAddStrongAcid: [TextLine] {
         [
             """
-            For titrations of weak \(acidityType), there are more stages involved: buffer region \
-            (before the EP), at the EP, and finally after the EP. Before the EP, there's plenty of \
-            \(substance) in the solution, which will react with any moles of \
-            *\(primaryIonBeingAdded)* added.
+            Now let's prepare the acidic solution that we're going to titrate.
+            """,
+            "*Shake the \(symbol) into the beaker!*"
+        ]
+    }
+
+    var instructToAddStrongBaseTitrant: [TextLine] {
+        [
+           """
+           Let's add the titrant now! The titration curve starts at a *very low pH*, as the \
+           solution is purely acidic now. When HCL is added, it will neutralize the \(symbol) \
+           to slowly \
+           make it more basic. *Tap to add it.*
+           """
+       ]
+    }
+
+    var midAddingStrongBaseTitrantPostEP: [TextLine] {
+        [
+            """
+            At this stage there is no more \(symbol) in the solution to react with the KOH, so this \
+            one is fully dissociating into \(hydroxide). The solution is rapidly increasing its \
+            pH. *Keep adding by tapping the burette!*
             """
         ]
     }
 
-    private static func explainWeakSubstanceBufferRegion(
-        acidityType: String,
-        firstMolecule: String,
-        secondMolecule: String
+    var instructToAddStrongBase: [TextLine] {
+        [
+            """
+            Now, let's prepare the basic solution that we're going to titrate. Add the \(symbol).
+            """,
+            "*Shake it into it.*"
+        ]
+    }
+
+    var instructToAddStrongAcidTitrantPreEP: [TextLine] {
+        [
+            """
+            Let's just add the titrant now! The titration curve starts at a *very high pH*, as \
+            the solution is purely basic now. When HCl is added, it will neutralize the \(symbol) to \
+            slowly make it more acidic. *Tap to add it.*
+            """
+        ]
+    }
+
+    var midAddingStrongAcidTitrantPostEP: [TextLine] {
+        [
+            """
+            At this stage there is no more \(symbol) in the solution to react with \
+            the HCl, so this is fully dissociating into \(hydrogen). The solution is \
+            rapidly decreasing its pH. *Keep adding by tapping the burette!*
+            """
+        ]
+    }
+
+    var explainWeakAcidTitrationReaction: [TextLine] {
+        [
+            """
+            For this *neutralization* reaction, *K^+^* ions are spectator ions, meaning that they \
+            don't actually take part in the reaction. So, let's just write KOH as *\(hydroxide)* and \
+            \(symbol) as *\(secondary)*.
+            """
+        ]
+    }
+
+    var instructToAddWeakAcid: [TextLine] {
+        [
+            """
+            Now let's prepare the acidic solution that we're going to titrate.
+            """,
+            "*Shake the \(symbol) into the beaker.*"
+        ]
+    }
+
+    func endOfWeakAcidReaction(
+        kA: CGFloat,
+        pH: CGFloat,
+        substanceMoles: CGFloat
     ) -> [TextLine] {
+
+        let kAString = TextLineUtil.scientific(value: kA).asMarkdown
+        let pHString = pH.str(decimals: 2)
+        let molesString = substanceMoles.str(decimals: 2)
+
+        return [
+            """
+            The concentration of *\(hydrogen)* is now a little higher, and the solution is \
+            acidic. Recall the the equations from the previous weak acid-base part. *Ka is \
+            \(kAString), pH is \(pHString) and the initial moles of \(symbol) are \(molesString) moles*. \
+            Let's remember those values!
+            """
+        ]
+    }
+
+    var explainWeakAcidTitrationStages: [TextLine] {
+        [
+            """
+            For titrations of weak acids, there are more stages involved: buffer region \
+            (before the EP), at the EP, and finally after the EP. Before the EP, there's plenty of \
+            \(symbol) in the solution, which will react with any moles of \
+            *\(hydroxide)* added.
+            """
+        ]
+    }
+
+
+    var explainWeakAcidBufferRegion: [TextLine] {
         [
             """
             Before the equivalence point, in this case, this section is called the *buffer region*, \
-            because the weak \(acidityType) solution will act as a buffer during this stage, due \
-            to the relation between \(firstMolecule) and \(secondMolecule) present in the solution.
+            because the weak acid solution will act as a buffer during this stage, due \
+            to the relation between \(symbol) and \(secondary) present in the solution.
+            """
+        ]
+    }
+
+    var explainWeakAcidHasselbalch: [TextLine] {
+        [
+            """
+            That's why the equation of *Henderson-Hasselbalch* can be used in this part.
+            """,
+            """
+            Until the EP is reached, any mole of *\(hydroxide)* added will react with \(symbol) to produce \
+            the same amount of *\(secondary)* moles, and to consume *\(symbol)* moles.
+            """
+        ]
+    }
+
+    var explainWeakAcidBufferMoles: [TextLine] {
+        [
+           """
+           That's why at this stage, the moles of *\(hydroxide)* added will be the same as the \
+           moles of \(symbol) in the solution. While the moles of \(secondary) will be what's already present in \
+           the solution, minus the ones consumed by the added  *\(hydroxide).*
+           """
+       ]
+    }
+
+    var instructToAddTitrantToWeakAcid: [TextLine] {
+        [
+            """
+            Let's add the titrant now! The titration curve starts at a *very low pH*, as the \
+            solution is purely acidic right now. When KOH is added, it will neutralize the \(symbol) \
+            to slowly make it more basic. *Tap to add it.*
+            """
+        ]
+    }
+
+    var reachedWeakAcidMaxBufferCapacity: [TextLine] {
+        [
+            """
+            This is the point of max buffer capacity, as there's equal amounts of \
+            \(secondary) and \(symbol) right now. At this point, *$pH = pKA$*. It's the mid-point, half \
+            way through the EP.
+            """
+        ]
+    }
+
+    var instructToAddTitrantToWeakAcidPostMaxBufferCapacity: [TextLine] {
+        [
+            """
+            At this stage, *\(hydroxide)* is reacting with the \(symbol) present in the solution \
+            to form \(secondary) and water. The solution is slowly increasing its pH (becoming \
+            more basic). *Keep adding by tapping the burette!*
+            """
+        ]
+    }
+
+    func reachedWeakAcidEquivalencePoint(pH: CGFloat) -> [TextLine] {
+        let pHString = pH.str(decimals: 2)
+        return [
+           """
+           We've reached the *equivalence point.* Unlike strong titrations, in this case the pH isn't
+           7 but \(pHString), being slightly basic. Right now, all of the added *\(hydroxide)* \
+           has neutralized all of the \(symbol), and there's no more of it in the solution.
+           """
+       ]
+    }
+
+    var explainWeakAcidEP1: [TextLine] {
+        [
+            """
+            As we saw in the previous parts, \(secondary) is the conjugate base of \(symbol). Because there \
+            are so many \(secondary) ions in the solution, it produces little amounts of *\(hydroxide)*, making \
+            the solution basic.
+            """
+        ]
+    }
+
+    var instructToAddWeakBase: [TextLine] {
+        [
+            """
+            Now, let's prepare the basic solution that we're going to titrate.
+            """,
+            "*Shake the \(symbol) into the beaker*"
+        ]
+    }
+
+    func endOfWeakBaseReaction(
+        kB: CGFloat,
+        pOH: CGFloat,
+        substanceMoles: CGFloat
+    ) -> [TextLine] {
+        let kBString = TextLineUtil.scientific(value: kB).asMarkdown
+        let pOHString = pOH.str(decimals: 2)
+        let molesString = substanceMoles.str(decimals: 2)
+
+        return [
+            """
+            The concentration of *\(hydroxide)* is getting a little higher, so the solution is now \
+            basic. Recall the equations from the previous weak acid-base part. *Kb is
+            \(kBString)*, pOH is \(pOHString) and the initial moles of \(symbol) are \(molesString). \
+            Let's remember those values!
+            """
+        ]
+    }
+
+    var explainWeakBaseTitrationStages: [TextLine] {
+        [
+            """
+            For titrations of weak bases, there are more stages involved: buffer region \
+            (before the EP), at the EP, and finally after the EP. Before the EP, there's plenty of \
+            \(symbol) in the solution, which will react with any moles of \
+            *\(hydrogen)* added.
+            """
+        ]
+    }
+
+    var explainWeakBaseBufferRegion: [TextLine] {
+        [
+            """
+            Before the equivalence point, in this case, this section is called the *buffer region*, \
+            because the weak base solution will act as a buffer during this stage, due \
+            to the relation between \(secondary) and \(symbol) present in the solution.
+            """
+        ]
+    }
+
+    var explainWeakBaseHasselbalch: [TextLine] {
+        [
+            """
+            That's why the equation of *Henderson-Hasselbalch* can be used in this part.
+            """,
+            """
+            Until the EP is reached, any mole of *\(hydrogen)* added will react with \(secondary) to produce \
+            the same amount of *\(secondary)* moles, and to consume *\(symbol)* moles.
+            """
+        ]
+    }
+
+    var explainWeakBaseBufferMoles: [TextLine] {
+        [
+            """
+            That's why at this stage, the moles of *\(hydrogen)* added will be the same as the \
+            moles of \(secondary) in the solution. While the moles of \(symbol) will be what's already present in \
+            the solution, minus the ones consumed by the added  *\(hydrogen).*
+            """
+        ]
+    }
+
+    var instructToAddTitrantToWeakBase: [TextLine] {
+        [
+            """
+            Let's add the titrant now! The titration curve starts at a *very high pH*, as the \
+            solution is purely basic right now. When \(hydrogen) is added, it will neutralize the \
+            \(symbol) to slowly make it more basic. *Tap to add it.*
+            """
+        ]
+    }
+
+    var reachedWeakBaseMaxBufferCapacity: [TextLine] {
+        [
+            """
+            This is the point of max buffer capacity, as there's equal amounts of \
+            \(symbol) and \(secondary) right now. At this point, *$pH = pKA$*. It's the mid-point, half \
+            way through the EP.
+            """
+        ]
+    }
+
+
+    var instructToAddTitrantToWeakBasePostMaxBufferCapacity: [TextLine] {
+        [
+            """
+            At this stage, *\(hydrogen)* is reacting with the \(symbol) present in the solution \
+            to form \(secondary) and water. The solution is slowly decreasing its pH (becoming \
+            more acidic). *Keep adding by tapping the burette!*
+            """
+        ]
+    }
+
+    func reachedWeakBaseEquivalencePoint(pH: CGFloat) -> [TextLine] {
+        let pHString = pH.str(decimals: 2)
+        return [
+           """
+           We've reached the *equivalence point.* Unlike strong titrations, in this case the pH isn't
+           7 but \(pHString), being slightly acidic. Right now, all of the added *\(hydrogen)* \
+           has neutralized all of the \(symbol), and there's no more of it in the solution.
+           """
+       ]
+    }
+
+    var explainWeakBaseEP1: [TextLine] {
+        [
+            """
+            As we saw in the previous parts, the \(secondary) is the conjugate base of \(symbol). Because there \
+            are so many \(symbol) ions in the solution, it produce little amounts of *\(hydroxide)*, making \
+            the solution basic.
             """
         ]
     }

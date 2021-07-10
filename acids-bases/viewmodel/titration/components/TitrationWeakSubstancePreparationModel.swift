@@ -401,18 +401,19 @@ extension TitrationWeakSubstancePreparationModel {
                     initialCount: 0,
                     color: substance.color(ofPart: .substance)
                 )
-                case .secondaryIon: return .init(
-                    label: substance.chargedSymbol(ofPart: .secondaryIon).text,
-                    columnIndex: 1,
-                    initialCount: 0,
-                    color: substance.color(ofPart: .secondaryIon)
-                )
                 case .hydroxide: return .init(
                     label: "OH^-^",
-                    columnIndex: 2,
+                    columnIndex: 1,
                     initialCount: 0,
                     color: RGB.hydroxide.color
                 )
+                case .secondaryIon: return .init(
+                    label: substance.chargedSymbol(ofPart: .secondaryIon).text,
+                    columnIndex: 2,
+                    initialCount: 0,
+                    color: substance.color(ofPart: .secondaryIon)
+                )
+
                 case .hydrogen: return .init(
                     label: "H^+^",
                     columnIndex: 3,

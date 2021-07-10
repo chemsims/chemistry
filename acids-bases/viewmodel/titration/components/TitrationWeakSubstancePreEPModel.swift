@@ -482,7 +482,7 @@ private class WeakSubstanceCalculations {
 
     // MARK: Bar Chart Data
     lazy var barChartData: [BarChartData] = {
-        let order: [ExtendedSubstancePart] = [.substance, .hydroxide, .hydrogen, .secondaryIon]
+        let order: [ExtendedSubstancePart] = [.substance, .hydroxide, .secondaryIon, .hydrogen]
         return order.map(barChartDataMap.value)
     }()
 
