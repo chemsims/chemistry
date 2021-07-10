@@ -82,13 +82,6 @@ class TitrationViewModel: ObservableObject {
     var shakeModel: MultiContainerShakeViewModel<TitrationComponentState.Substance>!
     var dropperEmitModel: MoleculeEmittingViewModel!
     var buretteEmitModel: MoleculeEmittingViewModel!
-
-    var reactionDefinition: TitrationReactionDefinition {
-        TitrationReactionDefinition(
-            substance: substance,
-            titrant: components.latestPreparationModel.titrant
-        )
-    }
 }
 
 // MARK: Navigation

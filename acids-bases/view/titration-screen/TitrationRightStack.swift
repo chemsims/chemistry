@@ -51,8 +51,7 @@ struct TitrationRightStack: View {
 
     private var reactionDefinition: some View {
         ReactionDefinitionView(
-            leftTerms: model.reactionDefinition.leftTerms,
-            rightTerms: model.reactionDefinition.rightTerms,
+            reaction: model.substance.titrationReactionDefinition,
             fontSize: layout.common.reactionDefinitionFontSize,
             circleSize: layout.common.reactionDefinitionCircleSize
         )

@@ -224,6 +224,7 @@
 		57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */; };
 		5766B71F256EC20200569CB9 /* ShakeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766B71E256EC20200569CB9 /* ShakeExtension.swift */; };
 		5766BC99269A315D0074A04B /* TitrationReactionDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766BC98269A315D0074A04B /* TitrationReactionDefinitionTests.swift */; };
+		5766BC9B269A3CB40074A04B /* AcidReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766BC9A269A3CB40074A04B /* AcidReactionDefinition.swift */; };
 		57686A8B2600CF65005BD328 /* GaseousReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686A8A2600CF65005BD328 /* GaseousReactionScreen.swift */; };
 		57686A962600CFE8005BD328 /* GaseousReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686A952600CFE8005BD328 /* GaseousReactionViewModel.swift */; };
 		57686A9D2600D0F3005BD328 /* GaseousScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686A9C2600D0F3005BD328 /* GaseousScreenElement.swift */; };
@@ -460,7 +461,6 @@
 		57CD325826723ACB00C94109 /* BufferFractionsChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325726723ACB00C94109 /* BufferFractionsChart.swift */; };
 		57CD325A26724DBD00C94109 /* BufferEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325926724DBD00C94109 /* BufferEquationView.swift */; };
 		57CD325C2672549800C94109 /* AnimatingNumberPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */; };
-		57CF09A9268EFFC000A794B4 /* TitrationReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF09A8268EFFC000A794B4 /* TitrationReactionDefinition.swift */; };
 		57CF6FD226123727007F50A7 /* SecondOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FCD26123726007F50A7 /* SecondOrderQuizQuestions.swift */; };
 		57CF6FD526123727007F50A7 /* ZeroOrderQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FD026123727007F50A7 /* ZeroOrderQuizQuestions.swift */; };
 		57CF6FD626123727007F50A7 /* EnergyProfileQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF6FD126123727007F50A7 /* EnergyProfileQuizQuestions.swift */; };
@@ -948,6 +948,7 @@
 		57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileRateEquation.swift; sourceTree = "<group>"; };
 		5766B71E256EC20200569CB9 /* ShakeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeExtension.swift; sourceTree = "<group>"; };
 		5766BC98269A315D0074A04B /* TitrationReactionDefinitionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationReactionDefinitionTests.swift; sourceTree = "<group>"; };
+		5766BC9A269A3CB40074A04B /* AcidReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidReactionDefinition.swift; sourceTree = "<group>"; };
 		57686A8A2600CF65005BD328 /* GaseousReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousReactionScreen.swift; sourceTree = "<group>"; };
 		57686A952600CFE8005BD328 /* GaseousReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousReactionViewModel.swift; sourceTree = "<group>"; };
 		57686A9C2600D0F3005BD328 /* GaseousScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousScreenElement.swift; sourceTree = "<group>"; };
@@ -1177,7 +1178,6 @@
 		57CD325926724DBD00C94109 /* BufferEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferEquationView.swift; sourceTree = "<group>"; };
 		57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingNumberPlaceholder.swift; sourceTree = "<group>"; };
 		57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastOpenedScreenTests.swift; sourceTree = "<group>"; };
-		57CF09A8268EFFC000A794B4 /* TitrationReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationReactionDefinition.swift; sourceTree = "<group>"; };
 		57CF6FCD26123726007F50A7 /* SecondOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FD026123727007F50A7 /* ZeroOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZeroOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FD126123727007F50A7 /* EnergyProfileQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyProfileQuizQuestions.swift; sourceTree = "<group>"; };
@@ -1574,6 +1574,7 @@
 				57466616265D81FC003FC6E3 /* AcidConcentration.swift */,
 				571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */,
 				579CDA202661707600143809 /* AcidAppSettings.swift */,
+				5766BC9A269A3CB40074A04B /* AcidReactionDefinition.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2429,7 +2430,6 @@
 				576AF0F62684ED7C00F300C7 /* equation */,
 				576AF0F42684ED7700F300C7 /* TitrationComponentState.swift */,
 				57F4673A268708CB00E294BE /* Titrant.swift */,
-				57CF09A8268EFFC000A794B4 /* TitrationReactionDefinition.swift */,
 			);
 			path = titration;
 			sourceTree = "<group>";
@@ -3936,7 +3936,6 @@
 				574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */,
 				5773BCE2267A811C00E52C81 /* AcidAppRootView.swift in Sources */,
 				577C503D2680F98C003DAD17 /* TitrationEquationViewUtil.swift in Sources */,
-				57CF09A9268EFFC000A794B4 /* TitrationReactionDefinition.swift in Sources */,
 				5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */,
 				577C10E926711C6500C5DC9A /* BufferStatements.swift in Sources */,
 				5749782E2683831B00EFA71C /* TitrationWeakSubstancePreparationModel.swift in Sources */,
@@ -3967,6 +3966,7 @@
 				57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */,
 				5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */,
 				5773BCE0267A7EBF00E52C81 /* AcidAppQuestionSet.swift in Sources */,
+				5766BC9B269A3CB40074A04B /* AcidReactionDefinition.swift in Sources */,
 				57F88853267E16C900609671 /* TitrationChartStack.swift in Sources */,
 				57C2DEC22681B6590012DBC1 /* TitrationEquationSets.swift in Sources */,
 				57F8885A267E17A800609671 /* TitrationRightStack.swift in Sources */,

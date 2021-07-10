@@ -30,7 +30,19 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
         )
     }
 
-    var substance: AcidOrBase
+    @Published var substance: AcidOrBase {
+        didSet {
+            self.reactionProgressModel = Self.initialReactionProgress(
+                substance: substance,
+                maxMolecules: reactionProgressModel.settings.maxMolecules
+            )
+            self.substanceCoords = BeakerMolecules(
+                coords: [],
+                color: substance.color,
+                label: substance.symbol
+            )
+        }
+    }
     let titrant: Titrant
     let cols: Int
 

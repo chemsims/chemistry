@@ -7,8 +7,7 @@ import ReactionsCore
 
 struct ReactionDefinitionView: View {
 
-    let leftTerms: [Term]
-    let rightTerms: [Term]
+    let reaction: AcidReactionDefinition
     let fontSize: CGFloat
     let circleSize: CGFloat
 
@@ -21,15 +20,15 @@ struct ReactionDefinitionView: View {
 
     private func row(showTerms: Bool = true) -> some View {
         HStack(spacing: 5) {
-            concatTerms(leftTerms, showTerms: showTerms)
+            concatTerms(reaction.leftTerms, showTerms: showTerms)
             arrow
                 .opacity(showTerms ? 1 : 0)
-            concatTerms(rightTerms, showTerms: showTerms)
+            concatTerms(reaction.rightTerms, showTerms: showTerms)
         }
     }
 
     private func concatTerms(
-        _ terms: [Term],
+        _ terms: [AcidReactionDefinition.Term],
         showTerms: Bool = true
     ) -> some View {
         VStack {
@@ -57,14 +56,14 @@ struct ReactionDefinitionView: View {
             .font(.system(size: fontSize))
     }
 
-    private func termView(_ term: Term, showTerm: Bool = true) -> some View {
+    private func termView(_ term: AcidReactionDefinition.Term, showTerm: Bool = true) -> some View {
         TextLinesView(line: term.name, fontSize: fontSize)
             .opacity(showTerm ? 1 : 0)
             .overlay(termOverlay(term, showTerm: showTerm), alignment: .top)
     }
 
     @ViewBuilder
-    private func termOverlay(_ term: Term, showTerm: Bool) -> some View {
+    private func termOverlay(_ term: AcidReactionDefinition.Term, showTerm: Bool) -> some View {
         if showTerm {
             EmptyView()
         } else {
@@ -73,34 +72,21 @@ struct ReactionDefinitionView: View {
                 .frame(square: circleSize)
         }
     }
-
-    struct Term {
-        let name: TextLine
-        let color: Color
-    }
-}
-
-struct AcidReactionDefinition {
-    let leftTerms: [Term]
-    let rightTerms: [Term]
-
-    struct Term {
-        let name: TextLine
-        let color: Color
-    }
 }
 
 struct ReactionDefinitionView_Previews: PreviewProvider {
     static var previews: some View {
         ReactionDefinitionView(
-            leftTerms: [
-                .init(name: "A", color: .red),
-                .init(name: "H_2_O", color: .purple)
-            ],
-            rightTerms: [
-                .init(name: "OH", color: .orange),
-                .init(name: "K", color: .blue)
-            ],
+            reaction: .init(
+                leftTerms: [
+                    .init(name: "A", color: .red),
+                    .init(name: "H_2_O", color: .purple)
+                ],
+                rightTerms: [
+                    .init(name: "OH", color: .orange),
+                    .init(name: "K", color: .blue)
+                ]
+            ),
             fontSize: 20,
             circleSize: 20
         )

@@ -34,7 +34,7 @@ struct TitrationComponentState {
         let weakPreEPModel = TitrationWeakSubstancePreEPModel(previous: weakPreparationModel)
         let weakPostEPModel = TitrationWeakSubstancePostEPModel(previous: weakPreEPModel)
 
-        self.state = State(substance: .strongAcid, phase: .preparation)
+        self.state = State(substance: .weakAcid, phase: .preparation)
         self.initialCols = cols
         self.initialRows = rows
         self.settings = settings
@@ -78,10 +78,14 @@ extension TitrationComponentState {
     }
 
     func setSubstance(_ substance: AcidOrBase) {
-        if state.phase == .preparation && state.substance.isStrong {
+        guard state.phase == .preparation else {
+            return
+        }
+
+        if state.substance.isStrong {
             strongSubstancePreparationModel.substance = substance
-        } else if state.phase == .preparation {
-            // TODO
+        } else {
+            weakSubstancePreparationModel.substance = substance
         }
     }
 }
@@ -202,6 +206,10 @@ extension TitrationComponentState {
 
         var isStrong: Bool {
             self == .strongAcid || self == .strongBase
+        }
+
+        var isAcid: Bool {
+            self == .strongAcid || self == .weakAcid
         }
     }
 

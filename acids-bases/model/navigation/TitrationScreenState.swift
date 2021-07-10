@@ -305,6 +305,7 @@ private class PrepareNewSubstanceModel: SetStatement {
         model.showTitrantFill = true
         model.showIndicatorFill = true
         model.showPhString = true
+        model.substanceSelectionIsToggled = false
         if let previousSelectedSubstance = previousSelectedSubstance,
            let previousSubstance = previousSubstance {
             model.substance = previousSelectedSubstance
