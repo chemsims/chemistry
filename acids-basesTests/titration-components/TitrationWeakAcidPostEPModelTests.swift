@@ -42,6 +42,17 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
         checkTheSameAsPrevious(.substance)
         checkTheSameAsPrevious(.secondary)
 
+        // Check this equation holds: [primary] = n-titrant / (v-ep + v-titrant)
+        model.incrementTitrant(count: model.maxTitrant / 2)
+
+        let midTitrantMoles = model.currentMoles.value(for: .titrant)
+        let midVolumeSum = model.currentVolume.value(for: .titrant) + model.currentVolume.value(for: .equivalencePoint)
+
+        let midComplementC = model.currentConcentration.value(for: complementIon.concentration)
+        let expectedMidComplementC = midTitrantMoles / (midVolumeSum)
+        XCTAssertEqualWithTolerance(midComplementC, expectedMidComplementC)
+
+
         model.incrementTitrant(count: model.maxTitrant)
         let finalPrimaryConcentration = model.currentConcentration.value(for: primaryIon.concentration)
         let finalComplementConcentration = model.currentConcentration.value(for: complementIon.concentration)
@@ -112,10 +123,6 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
         let numer = finalTitrantVolume * model.molarity.value(for: .titrant)
         let denom = expectedEquivalenceVolume + finalTitrantVolume
 
-        // Need to verify the expected volume added here
-        if substance.primary == .hydroxide {
-            XCTExpectFailure("Need to verify the expected volume for bases")
-        }
         XCTAssertEqual(numer / denom, 1e-2)
     }
 

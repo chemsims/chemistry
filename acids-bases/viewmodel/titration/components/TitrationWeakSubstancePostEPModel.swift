@@ -114,12 +114,8 @@ extension TitrationWeakSubstancePostEPModel {
 
     private var hydrogenConcentration: Equation {
         if !substance.type.isAcid {
-            return LinearEquation(
-                x1: 0,
-                y1: initialConcentration(of: .hydrogen),
-                x2: CGFloat(maxTitrant),
-                y2: finalHConcentration
-            )
+            return
+                primaryIonConcentration.atLeast(initialConcentration(of: .hydrogen))
         }
         return hydroxideConcentration.map(PrimaryIonConcentration.complementConcentration)
     }
@@ -128,12 +124,11 @@ extension TitrationWeakSubstancePostEPModel {
         if !substance.type.isAcid {
             return hydrogenConcentration.map(PrimaryIonConcentration.complementConcentration)
         }
-        return LinearEquation(
-            x1: 0,
-            y1: initialConcentration(of: .hydroxide),
-            x2: CGFloat(maxTitrant),
-            y2: finalOHConcentration
-        )
+        return primaryIonConcentration.atLeast(initialConcentration(of: .hydroxide))
+    }
+
+    private var primaryIonConcentration: Equation {
+        moles.value(for: .titrant) / (volume.value(for: .titrant) + volume.value(for: .equivalencePoint))
     }
 
     private var finalHConcentration: CGFloat {
@@ -191,13 +186,13 @@ extension TitrationWeakSubstancePostEPModel {
     }
 
     // Titrant volume which satisfies the equation:
-    // [OH] = n-titrant / (V-e + V-koh)
-    // Rearranging & substituting n-titrant = V-koh * M-koh, we get:
-    // V-koh = ([OH]Ve)/(M-koh - OH)
+    // [complement-ion] = n-titrant / (V-e + V-titrant)
+    // Rearranging & substituting n-titrant = V-titrant * M-titrant, we get:
+    // V-titrant = ([complement-ion]Ve)/(M-titrant - [complement-ion])
     private var finalTitrantVolume: CGFloat {
-        let finalOh = finalOHConcentration
-        let numer = finalOh * equivalencePointVolume
-        let denom = molarity.value(for: .titrant) - finalOh
+        let finalComplement = substance.type.isAcid ? finalOHConcentration : finalHConcentration
+        let numer = finalComplement * equivalencePointVolume
+        let denom = molarity.value(for: .titrant) - finalComplement
         return denom == 0 ? 0 : numer / denom
     }
 
