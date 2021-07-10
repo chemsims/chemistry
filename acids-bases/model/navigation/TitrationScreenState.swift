@@ -327,6 +327,7 @@ private class StopInput: SetStatement {
         super.apply(on: model)
         model.inputState = .none
         model.substanceSelectionIsToggled = false
+        DeferScreenEdgesState.shared.deferEdges = []
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
         }
@@ -380,6 +381,7 @@ private class AddTitrantPreEP: SetStatement {
         super.apply(on: model)
         let currentSubstance = model.components.state.substance
         model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
+        DeferScreenEdgesState.shared.deferEdges = []
         applyCommon(on: model)
     }
 
@@ -467,9 +469,10 @@ private class AddTitrantPostEP: SetStatement {
         super.unapply(on: model)
         let currentSubstance = model.components.state.substance
         model.inputState = .none
+        model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
+
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
-            model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
         }
     }
 }
