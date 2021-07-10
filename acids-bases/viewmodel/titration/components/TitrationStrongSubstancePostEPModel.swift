@@ -61,6 +61,9 @@ extension TitrationStrongSubstancePostEPModel {
             titrantAdded += maxToAdd
         }
         updateReactionProgress()
+
+        // See comment in weak substance pre ep increment method
+        objectWillChange.send()
     }
 }
 

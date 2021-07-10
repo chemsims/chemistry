@@ -154,12 +154,10 @@ extension TitrationWeakSubstancePreEPModel {
         guard maxToAdd > 0 else {
             return
         }
-        let prev = titrantAdded
+
         withAnimation(.linear(duration: 1)) {
             titrantAdded += maxToAdd
         }
-        print("Set titrant from \(prev) to \(titrantAdded)")
-
 
         beakerReactionModel.add(
             reactant: substance.type.isAcid ? .hydroxide : .hydrogen,
@@ -178,6 +176,16 @@ extension TitrationWeakSubstancePreEPModel {
             titrantAdded: titrantAdded
         )
         updateReactionProgress()
+
+        // There is a strange issue where *occasionally*, the titration curve lags behind the
+        // titrant added value. i.e, we increment titrant from 0 to 1, but the view draws for 0
+        // again. It's very noticeable before the EP, since there's a sharp increase in pH on
+        // the very last molecule. Was not able to figure out the root cause, so explicitly
+        // calling this at the end of the method forces a redraw with the correct values.
+        // NB, issue seen as of iOS 14.5, and it's very hard to reproduce since it only
+        // happens occasionally. But when it does occur, it will happen for all increments
+        // until the EP.
+        objectWillChange.send()
     }
 }
 

@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-import Foundation
+import CoreGraphics
 import ReactionsCore
 
 protocol TitrationPreparationModel {
@@ -10,6 +10,8 @@ protocol TitrationPreparationModel {
     var canAddSubstance: Bool { get }
 
     var titrant: Titrant { get }
+
+    var exactRows: CGFloat { get }
 
     func resetState()
 }

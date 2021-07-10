@@ -107,12 +107,9 @@ extension TitrationStrongSubstancePreEPModel {
         guard maxToAdd > 0 else {
             return
         }
-        let prev = titrantAdded
         withAnimation(.linear(duration: 1)) {
             titrantAdded += maxToAdd
         }
-
-        print("Set titrant from \(prev) to \(titrantAdded)")
 
         self.calculations = TitrationStrongSubstancePreEPModelCalculations(
             previous: previous,
@@ -122,6 +119,9 @@ extension TitrationStrongSubstancePreEPModel {
             settings: settings
         )
         updateReactionProgress()
+
+        // See comment in weak substance pre ep increment method
+        objectWillChange.send()
     }
 }
 

@@ -168,7 +168,6 @@ struct TitrationCurve: View {
 
     private var equationInput: CGFloat {
         if state.phase == .preEP {
-            print("Equation input \(preEPReaction.titrantAdded)")
             return CGFloat(preEPReaction.titrantAdded)
         }
         return CGFloat(postEPReaction.titrantAdded + preEPReaction.maxTitrant)

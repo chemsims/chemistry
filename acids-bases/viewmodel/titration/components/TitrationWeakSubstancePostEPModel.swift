@@ -75,6 +75,9 @@ extension TitrationWeakSubstancePostEPModel {
             avoiding: secondaryMolecules.coords
         )
         updateReactionProgress()
+
+        // See comment in weak substance pre ep increment method
+        objectWillChange.send()
     }
 }
 
