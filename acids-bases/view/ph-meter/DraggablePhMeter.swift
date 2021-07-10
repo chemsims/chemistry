@@ -42,21 +42,19 @@ struct DraggablePhMeter: View {
                     isFixedToBeaker = isIntersectingWater
                 }
                 .updating($pHMeterOffset) { gesture, offset, _ in
-                    offset = gesture.translation
+                    let x = min(gesture.translation.width, maxXOffset)
+                    offset = .init(width: x, height: gesture.translation.height)
+//                    offset = gesture.translation
                 }
 
         )
         .animation(.easeOut(duration: 0.25), value: pHMeterOffset)
-        .animation(.easeOut(duration: 0.25), value: isFixedToBeaker)
         .zIndex(1)
-//        .overlay(foo, alignment: .bottom)
     }
 
-    private var foo: some View {
-        Rectangle()
-            .stroke()
-            .frame(width: waterWidth, height: waterHeight)
-            .position(CGPoint(x: waterCenterX, y: waterCenterY))
+    private var maxXOffset: CGFloat {
+        let maxX = waterCenterX + (waterWidth / 2) + (layout.phMeterSize.width / 2)
+        return maxX - currentPosition.x
     }
 
 
