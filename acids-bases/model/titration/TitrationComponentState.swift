@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 /// Handles transitioning between the titration component states
 struct TitrationComponentState {
@@ -87,52 +88,6 @@ extension TitrationComponentState {
         } else {
             weakSubstancePreparationModel.substance = substance
         }
-    }
-}
-
-// MARK: - API Data access
-extension TitrationComponentState {
-    var currentPH: CGFloat {
-        let isStrong = state.substance.isStrong
-        switch state.phase {
-        case .preparation where isStrong:
-            return currentPH(
-                strongSubstancePreparationModel.equationData,
-                CGFloat(strongSubstancePreparationModel.substanceAdded)
-            )
-        case .preEP where isStrong:
-            return currentPH(
-                strongSubstancePreEPModel.equationData,
-                CGFloat(strongSubstancePreEPModel.titrantAdded)
-            )
-
-        case .postEP where isStrong:
-            return currentPH(
-                strongSubstancePostEPModel.equationData,
-                CGFloat(strongSubstancePostEPModel.titrantAdded)
-            )
-
-        case .preparation:
-            return currentPH(
-                weakSubstancePreparationModel.equationData,
-                CGFloat(weakSubstancePreparationModel.reactionProgress)
-            )
-        case .preEP:
-            return currentPH(
-                weakSubstancePreEPModel.equationData,
-                CGFloat(weakSubstancePreEPModel.titrantAdded)
-            )
-
-        case .postEP:
-            return currentPH(
-                weakSubstancePostEPModel.equationData,
-                CGFloat(weakSubstancePostEPModel.titrantAdded)
-            )
-        }
-    }
-
-    private func currentPH(_ equationData: TitrationEquationData, _ input: CGFloat) -> CGFloat {
-        equationData.pValues.value(for: .hydrogen).getY(at: input)
     }
 }
 

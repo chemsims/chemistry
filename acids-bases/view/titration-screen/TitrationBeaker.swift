@@ -93,7 +93,9 @@ private struct TitrationBeakerTools: View {
 
     private var phMeter: some View {
         DraggablePhMeter(
-            labelWhenIntersectingWater: pHString,
+            pHEquation: currentPH.0,
+            pHEquationInput: currentPH.1,
+            shouldShowLabelWhenInWater: model.showPhString,
             layout: layout.common,
             initialPosition: layout.phMeterPosition,
             rows: model.rows,
@@ -186,18 +188,10 @@ private struct TitrationBeakerTools: View {
         }
         return $weakPrepModel.titrantMolarity
     }
-
-    private var pHString: TextLine {
-        if model.showPhString {
-            let pH = model.components.currentPH
-            return "pH: \(pH.str(decimals: 1))"
-        }
-        return ""
-    }
 }
 
 private extension TitrationBeakerTools {
-    var currentPH: CGFloat {
+    var currentPH: (Equation, CGFloat) {
         let isStrong = model.components.state.substance.isStrong
 
         switch model.components.state.phase {
@@ -237,8 +231,8 @@ private extension TitrationBeakerTools {
         }
     }
 
-    private func currentPH(_ equationData: TitrationEquationData, _ input: CGFloat) -> CGFloat {
-        equationData.pValues.value(for: .hydrogen).getY(at: input)
+    private func currentPH(_ equationData: TitrationEquationData, _ input: CGFloat) -> (Equation, CGFloat) {
+        (equationData.pValues.value(for: .hydrogen), input)
     }
 }
 

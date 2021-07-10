@@ -69,7 +69,9 @@ private struct IntroBeakerContainers: View {
 
     private var phMeter: some View {
         DraggablePhMeter(
-            labelWhenIntersectingWater: phString,
+            pHEquation: pHEquation,
+            pHEquationInput: 0,
+            shouldShowLabelWhenInWater: true,
             layout: layout.common,
             initialPosition: CGPoint(x: phMeterX, y: layout.containerRowYPos),
             rows: model.rows,
@@ -131,9 +133,8 @@ private struct IntroBeakerContainers: View {
         common.beakerWidth + common.sliderSettings.handleWidth
     }
 
-    private var phString: TextLine {
-        let ph = components.concentration(ofIon: .hydrogen).p
-        return "pH: \(ph.rounded(decimals: 1))"
+    private var pHEquation: Equation {
+        ConstantEquation(value: components.concentration(ofIon: .hydrogen).p)
     }
 }
 

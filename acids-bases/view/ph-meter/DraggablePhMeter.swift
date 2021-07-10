@@ -10,8 +10,11 @@ import ReactionsCore
 /// This view assumes a beaker with adjustable water height, using the default acid app layout.
 struct DraggablePhMeter: View {
 
-    /// The label to show when the pH meter is intersecting the water
-    let labelWhenIntersectingWater: TextLine
+    let pHEquation: Equation
+
+    let pHEquationInput: CGFloat
+
+    let shouldShowLabelWhenInWater: Bool
 
     /// Acid app layout settings
     let layout: AcidBasesScreenLayout
@@ -29,7 +32,14 @@ struct DraggablePhMeter: View {
 
     var body: some View {
         PHMeter(
-            content: isIntersectingWater ? labelWhenIntersectingWater : "",
+            equation: pHEquation,
+            equationInput: pHEquationInput,
+            formatter: { pH in
+                if isIntersectingWater && shouldShowLabelWhenInWater {
+                    return TextLine("pH: \(pH.str(decimals: 1))")
+                }
+                return ""
+            },
             fontSize: layout.phMeterFontSize
         )
         .contentShape(Rectangle())

@@ -7,14 +7,20 @@ import SwiftUI
 public struct PHMeter: View {
 
     public init(
-        content: TextLine,
+        equation: Equation,
+        equationInput: CGFloat,
+        formatter: @escaping (CGFloat) -> TextLine,
         fontSize: CGFloat
     ) {
-        self.content = content
+        self.equation = equation
+        self.equationInput = equationInput
+        self.formatter = formatter
         self.fontSize = fontSize
     }
 
-    let content: TextLine
+    let equation: Equation
+    let equationInput: CGFloat
+    let formatter: (CGFloat) -> TextLine
     let fontSize: CGFloat
 
     public var body: some View {
@@ -24,7 +30,9 @@ public struct PHMeter: View {
                     width: geo.size.width,
                     height: geo.size.height
                 ),
-                content: content,
+                equation: equation,
+                equationInput: equationInput,
+                formatter: formatter,
                 fontSize: fontSize
             )
         }
@@ -73,8 +81,11 @@ extension PHMeter {
 }
 
 private struct PHMeterWithGeometry: View {
+
     let geometry: PHMeterGeometry
-    let content: TextLine
+    let equation: Equation
+    let equationInput: CGFloat
+    let formatter: (CGFloat) -> TextLine
     let fontSize: CGFloat
 
     private let indicatorColor = RGB.gray(base: 220).color
@@ -96,10 +107,20 @@ private struct PHMeterWithGeometry: View {
                 .stroke(lineWidth: geometry.lineWidth)
                 .foregroundColor(stalkTipColor)
 
-            TextLinesView(line: content, fontSize: fontSize)
-                .padding(.vertical, geometry.textVerticalPadding)
-                .padding(.horizontal, geometry.textHorizontalPadding)
-                .frame(height: geometry.indicatorHeight)
+            AnimatingTextLine(
+                x: equationInput,
+                equation: equation,
+                fontSize: fontSize,
+                formatter: formatter,
+                alignment: .leading
+            )
+            .padding(.vertical, geometry.textVerticalPadding)
+            .padding(.horizontal, geometry.textHorizontalPadding)
+            .frame(
+                width: geometry.width,
+                height: geometry.indicatorHeight,
+                alignment: .leading
+            )
         }
         .frame(height: geometry.indicatorHeight)
         .minimumScaleFactor(0.5)
@@ -196,15 +217,31 @@ struct PHMeterGeometry {
 
 struct PHMeter_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack {
-            Circle()
-                .foregroundColor(.blue)
-            PHMeter(
-                content: "pH: 12",
-                fontSize: 20
-            )
-            .frame(width: 100, height: 140)
-            .padding()
+        ViewWrapper()
+    }
+
+    private struct ViewWrapper: View {
+        @State private var isMax = true
+
+        var body: some View {
+            VStack {
+                PHMeter(
+                    equation: IdentityEquation(),
+                    equationInput: isMax ? 14 : 0,
+                    formatter: { TextLine($0.str(decimals: 2)) },
+                    fontSize: 20
+                )
+                .frame(width: 100, height: 140)
+                .padding()
+
+                Button(action: {
+                    withAnimation(.linear(duration: 2)) {
+                        isMax.toggle()
+                    }
+                }) {
+                    Text("Toggle")
+                }
+            }
         }
     }
 }
