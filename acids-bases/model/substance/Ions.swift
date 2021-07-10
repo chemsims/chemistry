@@ -29,18 +29,26 @@ enum PrimaryIon: String, CaseIterable {
 }
 
 enum SecondaryIon: String {
-    case A, Cl, Br, K, Na, Ba, B
+
+// old cases
+
+    case Cl, A, Na, I, Br, K, Li, F, CN, HS, B
 
 
     // TODO use color names which correspond with symbol names
     var rgb: RGB {
         switch self {
-        case .A: return RGB.moleculeA
         case .Cl: return RGB.moleculeB
+        case .I: return RGB.moleculeD
+        case .Li: return RGB.moleculeI
+        case .F: return RGB.indicator
+        case .CN: return RGB.hydrogenDarker
+        case .HS: return RGB.moleculeA
+
+        case .A: return RGB.moleculeA
         case .Br: return RGB.moleculeC
         case .K: return RGB.moleculeD
         case .Na: return RGB.moleculeE
-        case .Ba: return RGB.moleculeF
         case .B: return RGB.moleculeG
         }
     }

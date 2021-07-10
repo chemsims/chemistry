@@ -575,6 +575,7 @@ private class EndOfWeakSubstanceInitialReaction: SetStatement {
     }
 
     override func unapply(on model: TitrationViewModel) {
+        super.unapply(on: model)
         model.showPhString = false
     }
 }

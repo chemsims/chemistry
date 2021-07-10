@@ -80,6 +80,16 @@ struct ReactionDefinitionView: View {
     }
 }
 
+struct AcidReactionDefinition {
+    let leftTerms: [Term]
+    let rightTerms: [Term]
+
+    struct Term {
+        let name: TextLine
+        let color: Color
+    }
+}
+
 struct ReactionDefinitionView_Previews: PreviewProvider {
     static var previews: some View {
         ReactionDefinitionView(

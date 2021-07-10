@@ -7,6 +7,7 @@ import ReactionsCore
 @testable import acids_bases
 
 class AcidOrBaseTests: XCTestCase {
+    
     func testSymbolNamesForStrongAcid() {
         let acid = AcidOrBase.strongAcid(secondaryIon: .Cl, color: .red, kA: 1)
 

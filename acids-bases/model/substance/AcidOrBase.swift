@@ -254,6 +254,79 @@ extension AcidOrBase {
             case negative = "-"
         }
     }
+
+    var titrant: Titrant {
+        if type.isAcid {
+            return .potassiumHydroxide
+        }
+        return .hydrogenChloride
+    }
+}
+
+// MARK: Reaction definitions
+extension AcidOrBase {
+    var reactionDefinition: AcidReactionDefinition {
+        AcidReactionDefinition(
+            leftTerms: [],
+            rightTerms: []
+        )
+    }
+
+    var titrationReactionDefinition: AcidReactionDefinition {
+        AcidReactionDefinition(
+            leftTerms: [
+                .init(
+                    name: chargedSymbol(ofPart: .substance).text,
+                    color: color(ofPart: .substance)
+                ),
+                .init(
+                    name: titrationDefinitionTitrant,
+                    color: titrant.maximumMolarityColor.color
+                )
+            ],
+            rightTerms: [
+                .init(
+                    name: titrationDefinitionProduct,
+                    color: color(ofPart: .secondaryIon)
+                ),
+                waterTerm
+            ]
+        )
+    }
+
+    private var titrationDefinitionTitrant: TextLine {
+        if type.isStrong {
+            return TextLine(titrant.name)
+        } else if type.isAcid {
+            return TextLine("OH")
+        }
+        return "H_3_O"
+    }
+
+    private var titrationDefinitionProduct: TextLine {
+        let secondarySymbol = symbol(ofPart: .secondaryIon)
+        switch type {
+        case .strongAcid:
+            return "K\(secondarySymbol)"
+        case .strongBase:
+            return "\(secondarySymbol)Cl"
+        case .weakAcid:
+            return "K\(secondarySymbol)"
+        case .weakBase:
+            return "H\(symbol(ofPart: .substance))"
+        }
+    }
+
+    private var waterTerm: AcidReactionDefinition.Term {
+        .init(name: "H_2_O", color: RGB.beakerLiquid.color)
+    }
+
+    private func term(ofPart part: SubstancePart) -> AcidReactionDefinition.Term {
+        .init(
+            name: chargedSymbol(ofPart: part).text,
+            color: color(ofPart: part)
+        )
+    }
 }
 
 // MARK: Default substances
@@ -269,26 +342,92 @@ extension AcidOrBase {
     }
 
     static let strongAcids = [
-        AcidOrBase.strongAcid(secondaryIon: .A, color: .blue, kA: 0),
-        AcidOrBase.strongAcid(secondaryIon: .Cl, color: .red, kA: 0),
-        AcidOrBase.strongAcid(secondaryIon: .Br, color: .purple, kA: 0)
+        hydrogenChloride,
+        hydrogenIodide,
+        hydrogenBromide
     ]
 
     static let strongBases = [
-        AcidOrBase.strongBase(secondaryIon: .K, color: .orange, kB: 0),
-        AcidOrBase.strongBase(secondaryIon: .Na, color: .green, kB: 0),
-        AcidOrBase.strongBase(secondaryIon: .Ba, color: .pink, kB: 0)
+        potassiumHydroxide,
+        lithiumHydroxide,
+        sodiumHydroxide
     ]
 
     static let weakAcids = [
-        AcidOrBase.weakAcid(secondaryIon: .Ba, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .purple, kA: 7.3e-5),
-        AcidOrBase.weakAcid(secondaryIon: .Na, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .gray, kA: 4.5e-4),
-        AcidOrBase.weakAcid(secondaryIon: .K, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .black, kA: 9e-5),
+        weakAcidHA,
+        weakAcidHF,
+        hydrogenCyanide
     ]
 
     static let weakBases = [
-        AcidOrBase.weakBase(secondaryIon: .B, substanceAddedPerIon: NonZeroPositiveInt(3)!, color: .orange, kB: 4e-5),
-        AcidOrBase.weakBase(secondaryIon: .Br, substanceAddedPerIon: NonZeroPositiveInt(4)!, color: .orange, kB: 1.3e-5),
-        AcidOrBase.weakBase(secondaryIon: .Cl, substanceAddedPerIon: NonZeroPositiveInt(2)!, color: .orange, kB: 1e-3),
+        weakBaseB,
+        weakBaseF,
+        weakBaseHS
     ]
+
+    static let hydrogenChloride =
+        AcidOrBase.strongAcid(secondaryIon: .Cl, color: .blue, kA: 0)
+
+    static let hydrogenIodide =
+        AcidOrBase.strongAcid(secondaryIon: .I, color: .red, kA: 0)
+
+    static let hydrogenBromide =
+        AcidOrBase.strongAcid(secondaryIon: .Br, color: .purple, kA: 0)
+
+    static let potassiumHydroxide =
+        AcidOrBase.strongBase(secondaryIon: .K, color: .green, kB: 0)
+
+    static let lithiumHydroxide =
+        AcidOrBase.strongBase(secondaryIon: .Li, color: .black, kB: 0)
+
+    static let sodiumHydroxide =
+        AcidOrBase.strongBase(secondaryIon: .Na, color: .orange, kB: 0)
+
+    static let weakAcidHA =
+        AcidOrBase.weakAcid(
+            secondaryIon: .A,
+            substanceAddedPerIon: NonZeroPositiveInt(2)!,
+            color: .purple,
+            kA: 7.3e-5
+        )
+
+    static let weakAcidHF =
+        AcidOrBase.weakAcid(
+            secondaryIon: .F,
+            substanceAddedPerIon: NonZeroPositiveInt(3)!,
+            color: .gray,
+            kA: 4.5e-4
+        )
+
+    static let hydrogenCyanide =
+        AcidOrBase.weakAcid(
+            secondaryIon: .CN,
+            substanceAddedPerIon: NonZeroPositiveInt(4)!,
+            color: .black,
+            kA: 9e-5
+        )
+
+    static let weakBaseB =
+        AcidOrBase.weakBase(
+            secondaryIon: .B,
+            substanceAddedPerIon: NonZeroPositiveInt(3)!,
+            color: .orange,
+            kB: 4e-5
+        )
+
+    static let weakBaseF =
+        AcidOrBase.weakBase(
+            secondaryIon: .F,
+            substanceAddedPerIon: NonZeroPositiveInt(4)!,
+            color: .yellow,
+            kB: 1.3e-5
+        )
+
+    static let weakBaseHS =
+        AcidOrBase.weakBase(
+            secondaryIon: .HS,
+            substanceAddedPerIon: NonZeroPositiveInt(2)!,
+            color: .orange,
+            kB: 1e-3
+        )
 }
