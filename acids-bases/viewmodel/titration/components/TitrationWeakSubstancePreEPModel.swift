@@ -154,9 +154,11 @@ extension TitrationWeakSubstancePreEPModel {
         guard maxToAdd > 0 else {
             return
         }
+        let prev = titrantAdded
         withAnimation(.linear(duration: 1)) {
             titrantAdded += maxToAdd
         }
+        print("Set titrant from \(prev) to \(titrantAdded)")
 
 
         beakerReactionModel.add(
