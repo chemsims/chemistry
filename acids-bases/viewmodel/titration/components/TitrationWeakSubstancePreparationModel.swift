@@ -107,7 +107,7 @@ extension TitrationWeakSubstancePreparationModel {
     var equationData: TitrationEquationData {
         TitrationEquationData(
             substance: substance,
-            titrant: "KOH", // TODO
+            titrant: titrant.name,
             moles: moles,
             volume: volume.map { ConstantEquation(value: $0) },
             molarity: molarity.map { ConstantEquation(value: $0) },

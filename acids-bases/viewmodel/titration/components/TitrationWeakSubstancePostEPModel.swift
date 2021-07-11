@@ -48,7 +48,7 @@ extension TitrationWeakSubstancePostEPModel {
     var equationData: TitrationEquationData {
         TitrationEquationData(
             substance: substance,
-            titrant: "KOH",
+            titrant: previous.previous.titrant.name,
             moles: moles,
             volume: volume,
             molarity: molarity.map { ConstantEquation(value: $0) },

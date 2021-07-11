@@ -88,6 +88,26 @@ extension TitrationStrongSubstancePostEPModel {
         equationData.pValues.map { $0.getY(at: CGFloat(titrantAdded)) }
     }
 
+    var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> {
+        equationData.concentration
+    }
+
+    var moles: EnumMap<TitrationEquationTerm.Moles, Equation> {
+        equationData.moles
+    }
+
+    var volume: EnumMap<TitrationEquationTerm.Volume, Equation> {
+        equationData.volume
+    }
+
+    // Note molarity doesn't actually change post EP, but we pass in the titrant added to the
+    // equation anyway
+    var currentMolarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
+        equationData.molarity.map {
+            $0.getY(at: CGFloat(titrantAdded))
+        }
+    }
+
     var currentConcentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
         concentration.map { $0.getY(at: CGFloat(titrantAdded)) }
     }

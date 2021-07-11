@@ -63,7 +63,7 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
         let secondModel = TitrationStrongSubstancePreEPModel(previous: firstModel)
         let model = TitrationStrongSubstancePostEPModel(previous: secondModel)
 
-        XCTAssertEqual(model.molarity, secondModel.molarity)
+        XCTAssertEqual(model.currentMolarity, secondModel.molarity)
     }
 
     func testMoles() {
@@ -77,22 +77,22 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
 
         XCTAssertEqual(
             model.currentMoles.value(for: .substance),
-            model.molarity.value(for: .substance) * model.currentVolumes.value(for: .substance)
+            model.currentMolarity.value(for: .substance) * model.currentVolumes.value(for: .substance)
         )
         XCTAssertEqual(
             model.currentMoles.value(for: .titrant),
-            model.molarity.value(for: .titrant) * model.currentVolumes.value(for: .titrant)
+            model.currentMolarity.value(for: .titrant) * model.currentVolumes.value(for: .titrant)
         )
 
         model.incrementTitrant(count: model.maxTitrant)
 
         XCTAssertEqual(
             model.currentMoles.value(for: .substance),
-            model.molarity.value(for: .substance) * model.currentVolumes.value(for: .substance)
+            model.currentMolarity.value(for: .substance) * model.currentVolumes.value(for: .substance)
         )
         XCTAssertEqual(
             model.currentMoles.value(for: .titrant),
-            model.molarity.value(for: .titrant) * model.currentVolumes.value(for: .titrant)
+            model.currentMolarity.value(for: .titrant) * model.currentVolumes.value(for: .titrant)
         )
     }
 

@@ -41,7 +41,8 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
             substance: previous.substance,
             previous: previous,
             maxTitrant: maxTitrant,
-            titrantAdded: 0
+            titrantAdded: 0,
+            titrant: previous.titrant.name
         )
         self.reactionProgress = previous.reactionProgressModel
     }
@@ -111,7 +112,8 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
             substance: previous.substance,
             previous: previous,
             maxTitrant: maxTitrant,
-            titrantAdded: 0
+            titrantAdded: 0,
+            titrant: previous.titrant.name
         )
         self.reactionProgress = previous.copyReactionProgress()
     }
@@ -173,7 +175,8 @@ extension TitrationWeakSubstancePreEPModel {
             substance: previous.substance,
             previous: previous,
             maxTitrant: maxTitrant,
-            titrantAdded: titrantAdded
+            titrantAdded: titrantAdded,
+            titrant: previous.titrant.name
         )
         updateReactionProgress()
 
@@ -254,22 +257,25 @@ private class WeakSubstanceCalculations {
         substance: AcidOrBase,
         previous: TitrationWeakSubstancePreparationModel,
         maxTitrant: Int,
-        titrantAdded: Int
+        titrantAdded: Int,
+        titrant: String
     ) {
         self.substance = substance
         self.previous = previous
         self.maxTitrant = maxTitrant
         self.titrantAdded = titrantAdded
+        self.titrant = titrant
     }
 
     let substance: AcidOrBase
     let previous: TitrationWeakSubstancePreparationModel
     let maxTitrant: Int
     let titrantAdded: Int
+    let titrant: String
 
     lazy var equationData: TitrationEquationData = TitrationEquationData(
         substance: substance,
-        titrant: "KOH",
+        titrant: titrant,
         moles: moles,
         volume: volume,
         molarity: molarity.map(ConstantEquation.init),
