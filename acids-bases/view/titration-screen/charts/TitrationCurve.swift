@@ -223,5 +223,4 @@ struct TitrationPhChart_Previews: PreviewProvider {
         }
         .previewLayout(.iPhone8Landscape)
     }
-
 }

@@ -64,20 +64,8 @@ extension TitrationStrongSubstancePreparationModel {
         equationData.pValues.map { $0.getY(at: CGFloat(substanceAdded)) }
     }
 
-    var currentConcentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
-        concentration.map { $0.getY(at: CGFloat(substanceAdded)) }
-    }
-
-    var currentMolarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
-        molarity.map { $0.getY(at: CGFloat(substanceAdded)) }
-    }
-
-    var currentMoles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
-        moles.map { $0.getY(at: CGFloat(substanceAdded)) }
-    }
-
     var currentVolumes: EnumMap<TitrationEquationTerm.Volume, CGFloat> {
-        volume.map { $0.getY(at: CGFloat(substanceAdded)) }
+        equationData.volume.map { $0.getY(at: CGFloat(substanceAdded)) }
     }
 }
 
