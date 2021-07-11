@@ -128,7 +128,12 @@ extension TitrationViewModel {
 // MARK: Navigation input limits
 extension TitrationViewModel {
     private func updateCanGoNext() {
-        canGoNext = canGoNextComputedProperty
+        let nextComputed = canGoNextComputedProperty
+
+        // Only apply this if it changes to prevent view redraw
+        if canGoNext != nextComputed {
+            canGoNext = nextComputed
+        }
     }
 
     private var canGoNextComputedProperty: Bool {

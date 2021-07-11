@@ -418,8 +418,8 @@ private class WeakSubstanceCalculations {
         .init {
             switch $0 {
             case .hydrogen: return 0
-            case .substance: return previous.molarity.value(for: .substance)
-            case .titrant: return previous.molarity.value(for: .titrant)
+            case .substance: return previous.currentMolarity.value(for: .substance)
+            case .titrant: return previous.currentMolarity.value(for: .titrant)
             }
         }
 
