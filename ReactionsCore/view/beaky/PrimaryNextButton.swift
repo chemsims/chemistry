@@ -2,17 +2,18 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 struct PrimaryNextButton: View {
 
     let action: () -> Void
+    let isDisabled: Bool
 
     var body: some View {
         GeometryReader { geo in
             PrimaryNextButtonWithGeometry(
                 action: action,
+                isDisabled: isDisabled,
                 geometry: geo
             )
         }
@@ -21,6 +22,7 @@ struct PrimaryNextButton: View {
 
 private struct PrimaryNextButtonWithGeometry: View {
     let action: () -> Void
+    let isDisabled: Bool
     let geometry: GeometryProxy
 
     var body: some View {
@@ -29,6 +31,9 @@ private struct PrimaryNextButtonWithGeometry: View {
         }
         .buttonStyle(NavButtonButtonStyle(scaleDelta: 0.02))
         .accessibility(label: Text("Next"))
+        .disabled(isDisabled)
+        .compositingGroup()
+        .opacity(isDisabled ? 0.6 : 1)
     }
 
     private var content: some View {
@@ -45,7 +50,7 @@ private struct PrimaryNextButtonWithGeometry: View {
 
             PillShape()
                 .strokeBorder(lineWidth: lineWidth)
-                .foregroundColor(.orangeAccent)
+                .foregroundColor(accentColor)
         }
 
     }
@@ -56,7 +61,7 @@ private struct PrimaryNextButtonWithGeometry: View {
                 .frame(width: height / 2)
             Text("Next")
                 .frame(width: width - (1.5 * height))
-                .foregroundColor(.orangeAccent)
+                .foregroundColor(accentColor)
                 .font(.system(size: fontSize, weight: .semibold))
                 .minimumScaleFactor(0.5)
             icon
@@ -67,7 +72,7 @@ private struct PrimaryNextButtonWithGeometry: View {
     private var icon: some View {
         ZStack {
             Circle()
-                .foregroundColor(.orangeAccent)
+                .foregroundColor(accentColor)
 
             Image(systemName: "arrowtriangle.right.fill")
                 .resizable()
@@ -76,6 +81,10 @@ private struct PrimaryNextButtonWithGeometry: View {
                 .padding(iconPadding)
         }
         .frame(width: height, height: height)
+    }
+
+    private var accentColor: Color {
+        isDisabled ? RGB.gray(base: 110).color : .orangeAccent
     }
 }
 
@@ -104,7 +113,12 @@ private extension PrimaryNextButtonWithGeometry {
 
 struct PrimaryNextButton_Previews: PreviewProvider {
     static var previews: some View {
-        PrimaryNextButton(action: {})
-            .frame(width: 200, height: 50)
+        VStack {
+            PrimaryNextButton(action: {}, isDisabled: false)
+                .frame(width: 200, height: 50)
+
+            PrimaryNextButton(action: {}, isDisabled: true)
+                .frame(width: 200, height: 50)
+        }
     }
 }

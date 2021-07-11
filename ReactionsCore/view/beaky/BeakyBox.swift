@@ -89,12 +89,9 @@ public struct BeakyBox: View {
                     .frame(width: navButtonSize, height: navButtonSize)
                     .accessibility(sortPriority: 0.8)
                 Spacer()
-                PrimaryNextButton(action: next)
+                PrimaryNextButton(action: next, isDisabled: nextIsDisabled)
                     .frame(width: nextButtonWidth, height: navButtonSize)
                     .accessibility(sortPriority: 0.9)
-                    .disabled(nextIsDisabled)
-                    .compositingGroup()
-                    .opacity(nextIsDisabled ? 0.6 : 1)
             }.frame(width: bubbleWidth - bubbleStemWidth)
         }
     }
