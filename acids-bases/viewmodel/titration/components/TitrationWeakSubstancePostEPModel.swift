@@ -7,10 +7,11 @@ import ReactionsCore
 
 class TitrationWeakSubstancePostEPModel: ObservableObject {
     init(previous: TitrationWeakSubstancePreEPModel) {
+        let maxTitrant = 2 * previous.maxTitrant
         self.previous = previous
         self.ionMolecules = Self.initialIonMolecules(previous: previous)
         self.secondaryMolecules = Self.initialSecondaryMolecules(previous: previous)
-        self.maxTitrant = 2 * previous.maxTitrant
+        self.maxTitrant = maxTitrant
         self.reactionProgress = previous.copyReactionProgress()
         self.reactionProgressComplementIonCount = LinearEquation(
             x1: 0,
@@ -20,6 +21,7 @@ class TitrationWeakSubstancePostEPModel: ObservableObject {
                 previous.reactionProgress.moleculeCounts(ofType: .secondaryIon)
             )
         )
+        self.calculations = Calculations(previous: previous, maxTitrant: maxTitrant)
     }
 
     let previous: TitrationWeakSubstancePreEPModel
@@ -41,20 +43,8 @@ class TitrationWeakSubstancePostEPModel: ObservableObject {
     var substance: AcidOrBase {
         previous.substance
     }
-}
 
-// MARK: - Equation data
-extension TitrationWeakSubstancePostEPModel {
-    var equationData: TitrationEquationData {
-        TitrationEquationData(
-            substance: substance,
-            titrant: previous.previous.titrant.name,
-            moles: moles,
-            volume: volume,
-            molarity: molarity.map { ConstantEquation(value: $0) },
-            concentration: concentration
-        )
-    }
+    private var calculations: Calculations
 }
 
 // MARK: - Incrementing
@@ -100,9 +90,54 @@ extension TitrationWeakSubstancePostEPModel {
     }
 }
 
-// MARK: - Concentration
+// MARK: - Calculation data access
 extension TitrationWeakSubstancePostEPModel {
-    var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> {
+    var equationData: TitrationEquationData {
+        calculations.equationData
+    }
+
+    var barChartData: [BarChartData] {
+        calculations.barChartData
+    }
+
+    var barChartDataMap: EnumMap<ExtendedSubstancePart, BarChartData> {
+        calculations.barChartDataMap
+    }
+
+    var pH: Equation {
+        equationData.pValues.value(for: .hydrogen)
+    }
+}
+
+// MARK: - Calculations
+private class Calculations {
+    init(previous: TitrationWeakSubstancePreEPModel, maxTitrant: Int) {
+        self.previous = previous
+        self.maxTitrant = maxTitrant
+    }
+
+    let previous: TitrationWeakSubstancePreEPModel
+    let maxTitrant: Int
+    private var substance: AcidOrBase {
+        previous.substance
+    }
+    private var settings: TitrationSettings {
+        previous.settings
+    }
+
+    lazy var equationData: TitrationEquationData =
+        TitrationEquationData(
+            substance: substance,
+            titrant: previous.previous.titrant.name,
+            moles: moles,
+            volume: volume,
+            molarity: molarity.map { ConstantEquation(value: $0) },
+            concentration: concentration
+        )
+
+
+    // MARK: - Concentration
+    lazy var concentration: EnumMap<TitrationEquationTerm.Concentration, Equation> =
         .init {
             switch $0 {
             case .hydrogen: return hydrogenConcentration
@@ -113,48 +148,39 @@ extension TitrationWeakSubstancePostEPModel {
                 return ConstantEquation(value: initialConcentration(of: .substance))
             }
         }
-    }
 
-    private var hydrogenConcentration: Equation {
+    private lazy var hydrogenConcentration: Equation = {
         if !substance.type.isAcid {
             return
                 primaryIonConcentration.atLeast(initialConcentration(of: .hydrogen))
         }
         return hydroxideConcentration.map(PrimaryIonConcentration.complementConcentration)
-    }
+    }()
 
-    private var hydroxideConcentration: Equation {
+    private lazy var hydroxideConcentration: Equation = {
         if !substance.type.isAcid {
             return hydrogenConcentration.map(PrimaryIonConcentration.complementConcentration)
         }
         return primaryIonConcentration.atLeast(initialConcentration(of: .hydroxide))
-    }
+    }()
 
-    private var primaryIonConcentration: Equation {
+    private lazy var primaryIonConcentration =
         moles.value(for: .titrant) / (volume.value(for: .titrant) + volume.value(for: .equivalencePoint))
-    }
 
-    private var finalHConcentration: CGFloat {
+
+    private lazy var finalHConcentration: CGFloat =
         PrimaryIonConcentration.concentration(forP: finalPH)
-    }
 
-    private var finalOHConcentration: CGFloat {
+    private lazy var finalOHConcentration: CGFloat = {
         let finalPOH = 14 - finalPH
         return PrimaryIonConcentration.concentration(forP: finalPOH)
-    }
+    }()
 
     private func initialConcentration(of part: TitrationEquationTerm.Concentration) -> CGFloat {
         previous.concentration.value(for: part).getY(at: CGFloat(previous.maxTitrant))
     }
-}
 
-// MARK: - P Values
-extension TitrationWeakSubstancePostEPModel {
-
-    var pH: Equation {
-        equationData.pValues.value(for: .hydrogen)
-    }
-
+    // MARK: - P Values
     private var finalPH: CGFloat {
         if substance.type.isAcid {
             return settings.finalMaxPValue
@@ -165,11 +191,9 @@ extension TitrationWeakSubstancePostEPModel {
     private var finalPOH: CGFloat {
         14 - finalPH
     }
-}
 
-// MARK: - Volume
-extension TitrationWeakSubstancePostEPModel {
-    var volume: EnumMap<TitrationEquationTerm.Volume, Equation> {
+    // MARK: - Volume
+    lazy var volume: EnumMap<TitrationEquationTerm.Volume, Equation> =
         .init {
             switch $0 {
             case .equivalencePoint: return ConstantEquation(value: equivalencePointVolume)
@@ -186,31 +210,27 @@ extension TitrationWeakSubstancePostEPModel {
                 )
             }
         }
-    }
 
     // Titrant volume which satisfies the equation:
     // [complement-ion] = n-titrant / (V-e + V-titrant)
     // Rearranging & substituting n-titrant = V-titrant * M-titrant, we get:
     // V-titrant = ([complement-ion]Ve)/(M-titrant - [complement-ion])
-    private var finalTitrantVolume: CGFloat {
+    private lazy var finalTitrantVolume: CGFloat = {
         let finalComplement = substance.type.isAcid ? finalOHConcentration : finalHConcentration
         let numer = finalComplement * equivalencePointVolume
         let denom = molarity.value(for: .titrant) - finalComplement
         return denom == 0 ? 0 : numer / denom
-    }
+    }()
 
-    private var equivalencePointVolume: CGFloat {
+    private lazy var equivalencePointVolume =
         initialVolume(of: .titrant) + initialVolume(of: .initialSubstance)
-    }
 
     private func initialVolume(of term: TitrationEquationTerm.Volume) -> CGFloat {
         previous.volume.value(for: term).getY(at: CGFloat(previous.maxTitrant))
     }
-}
 
-// MARK: Moles
-extension TitrationWeakSubstancePostEPModel {
-    var moles: EnumMap<TitrationEquationTerm.Moles, Equation> {
+    // MARK: Moles
+    lazy var moles: EnumMap<TitrationEquationTerm.Moles, Equation> =
         .init {
             switch $0 {
             case .titrant: return molarity.value(for: .titrant) * volume.value(for: .titrant)
@@ -221,13 +241,9 @@ extension TitrationWeakSubstancePostEPModel {
             case .substance: return ConstantEquation(value: 0)
             }
         }
-    }
-}
 
-// MARK: Molarity
-extension TitrationWeakSubstancePostEPModel {
-
-    var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
+    // MARK: Molarity
+    lazy var molarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> =
         .init {
             switch $0 {
             case .hydrogen: return 0
@@ -235,18 +251,14 @@ extension TitrationWeakSubstancePostEPModel {
             case .titrant: return previous.molarity.value(for: .titrant)
             }
         }
-    }
-}
 
-// MARK: Bar chart data
-extension TitrationWeakSubstancePostEPModel {
-
-    var barChartData: [BarChartData] {
+    // MARK: Bar chart data
+    lazy var barChartData: [BarChartData] = {
         let order: [ExtendedSubstancePart] = [.substance, .hydroxide, .secondaryIon, .hydrogen]
         return order.map(barChartDataMap.value)
-    }
+    }()
 
-    var barChartDataMap: EnumMap<ExtendedSubstancePart, BarChartData> {
+    lazy var barChartDataMap: EnumMap<ExtendedSubstancePart, BarChartData> =
         .init {
             switch $0 {
             case .hydrogen: return BarChartData(
@@ -275,7 +287,6 @@ extension TitrationWeakSubstancePostEPModel {
             )
             }
         }
-    }
 
     private func barChartEquation(forPart part: ExtendedSubstancePart) -> Equation {
         // complement ion should end up as the same height as primary complement

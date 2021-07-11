@@ -120,7 +120,7 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
         // check we satisfy the equation:
         // [OH] = n-koh / (V-e + V-koh)
         //      = (V-koh * M-koh) / (V-e + V-koh)
-        let numer = finalTitrantVolume * model.molarity.value(for: .titrant)
+        let numer = finalTitrantVolume * model.currentMolarity.value(for: .titrant)
         let denom = expectedEquivalenceVolume + finalTitrantVolume
 
         XCTAssertEqual(numer / denom, 1e-2)
@@ -142,7 +142,7 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
 
         XCTAssertEqual(
             model.currentMoles.value(for: .titrant),
-            model.molarity.value(for: .titrant) * model.currentVolume.value(for: .titrant)
+            model.currentMolarity.value(for: .titrant) * model.currentVolume.value(for: .titrant)
         )
     }
 
@@ -199,23 +199,5 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
         XCTAssertFalse(model.canAddTitrant)
         XCTAssert(model.hasAddedEnoughTitrant)
         XCTAssertEqual(model.titrantAdded, 40)
-    }
-}
-
-extension TitrationWeakSubstancePostEPModel {
-    var currentConcentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
-        concentration.map { $0.getY(at: CGFloat(titrantAdded)) }
-    }
-
-    var currentVolume: EnumMap<TitrationEquationTerm.Volume, CGFloat> {
-        volume.map { $0.getY(at: CGFloat(titrantAdded)) }
-    }
-
-    var currentMoles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
-        moles.map { $0.getY(at: CGFloat(titrantAdded)) }
-    }
-
-    var currentPValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        equationData.pValues.map { $0.getY(at: CGFloat(titrantAdded)) }
     }
 }
