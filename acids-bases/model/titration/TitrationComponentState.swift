@@ -186,7 +186,8 @@ extension TitrationComponentState {
 
     /// Goes to the provided state, with an assertion that the new state was applied
     mutating func assertGoTo(state newState: State) {
-        assert(goTo(state: newState), "Could not go to new state. From: \(state), to: \(newState)")
+        let didGoToState = goTo(state: newState)
+        assert(didGoToState, "Could not go to new state. From: \(state), to: \(newState)")
     }
 
     /// Goes to the provided state.
