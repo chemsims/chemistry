@@ -42,7 +42,9 @@ struct BufferChartStack_Previews: PreviewProvider {
                         horizontalSizeClass: nil
                     )
                 ),
-                model: BufferScreenViewModel()
+                model: BufferScreenViewModel(
+                    namePersistence: InMemoryNamePersistence()
+                )
             )
         }
         .padding()

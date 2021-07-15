@@ -8,6 +8,38 @@ public protocol NamePersistence {
     var name: String? { get set }
 }
 
+extension NamePersistence {
+    /// Returns the name preceded by a comma, or an empty string.
+    ///
+    ///  # Examples
+    ///
+    /// ```
+    /// let persistence: NamePersistence = ...
+    /// persistence.name = "Bob"
+    ///
+    /// "Hello\(persistence.nameWithComma)!" // Hello, Bob!
+    ///
+    /// persistence.name = nil
+    /// "Hello\(persistence.nameWithComma)!" // Hello!
+    /// ```
+    ///  `let persistence: NamePersistence = ...`
+
+    ///  `persistence.name = "Bob"`
+    ///
+    /// `"Hello\(persistence.nameWithComma)!"` // Hello, Bob!
+    ///
+    ///  `persistence.name = nil`
+    ///
+    ///  `"Hello\(persistence.nameWithComma)!"` // Hello!
+    public var nameWithComma: String {
+        name.map { ", \($0)" } ?? ""
+    }
+
+    public static var inMemory: NamePersistence {
+        InMemoryNamePersistence()
+    }
+}
+
 public class InMemoryNamePersistence: NamePersistence {
 
     public init() { }

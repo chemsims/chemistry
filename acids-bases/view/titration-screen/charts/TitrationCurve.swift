@@ -196,7 +196,7 @@ private struct PostEquivalencePointPHEquation: Equation {
 
 struct TitrationPhChart_Previews: PreviewProvider {
 
-    static var model = TitrationViewModel()
+    static var model = TitrationViewModel(namePersistence: InMemoryNamePersistence())
     static var components: TitrationComponentState {
         model.components
     }

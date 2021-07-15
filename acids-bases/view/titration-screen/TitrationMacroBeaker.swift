@@ -246,7 +246,9 @@ struct TitrationMacroBeaker_Previews: PreviewProvider {
                         horizontalSizeClass: nil
                     )
                 ),
-                model: .init()
+                model: .init(
+                    namePersistence: InMemoryNamePersistence()
+                )
             )
         }
         .previewLayout(.iPhone8Landscape)

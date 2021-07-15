@@ -2,8 +2,8 @@
 // Reactions App
 //
 
-
 import SwiftUI
+import ReactionsCore
 
 struct IntroScreen: View {
 
@@ -142,7 +142,11 @@ extension IntroScreenLayout {
 
 struct IntroScreen_Previews: PreviewProvider {
     static var previews: some View {
-        IntroScreen(model: IntroScreenViewModel())
+        IntroScreen(
+            model: IntroScreenViewModel(
+                namePersistence: InMemoryNamePersistence()
+            )
+        )
             .previewLayout(.iPhone8Landscape)
     }
 }

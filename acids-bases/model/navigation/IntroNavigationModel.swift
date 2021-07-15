@@ -10,47 +10,49 @@ private let statements = IntroStatements.self
 struct IntroNavigationModel {
 
     static func model(
-        _ viewModel: IntroScreenViewModel
+        _ viewModel: IntroScreenViewModel,
+        namePersistence: NamePersistence
     ) -> NavigationModel<IntroScreenState> {
         NavigationModel(
             model: viewModel,
-            states: states
+            states: states(namePersistence: namePersistence)
         )
     }
 
-    private static let states: [IntroScreenState] = [
-        SetStatement(statements.intro),
-        SetStatement(statements.explainTexture),
-        SetStatement(statements.explainArrhenius),
-        SetStatement(statements.explainBronstedLowry),
-        SetStatement(statements.explainLewis),
-        SetStatement(statements.explainSimpleDefinition),
-        ChooseSubstance(statements.chooseStrongAcid, .strongAcid),
-        PostChooseSubstance(statements.showPhScale),
-        SetStatement(statements.explainPHConcept),
-        SetStatement(statements.explainPOHConcept),
-        SetStatement(statements.explainPRelation),
-        SetStatement(statements.explainPConcentrationRelation1),
-        SetStatement(statements.explainPConcentrationRelation2),
-        SetWaterLevel(type: .strongAcid),
-        AddSubstance(type: .strongAcid),
-        PostAddSubstance(statements.showPhVsMolesGraph),
-        ChooseSubstance(statements.chooseStrongBase, .strongBase),
-        SetWaterLevel(type: .strongBase),
-        AddSubstance(type: .strongBase),
-        PostAddSubstance(statements.showPhVsMolesGraph),
-        ChooseSubstance(statements.chooseWeakAcid, .weakAcid),
-        PostChooseSubstance(statements.explainHEquivalence),
-        SetStatement(statements.explainDoubleArrow, type: .weakAcid),
-        SetStatement(statements.explainEquilibrium),
-        SetWaterLevel(type: .weakAcid),
-        AddSubstance(type: .weakAcid),
-        ChooseSubstance(statements.chooseWeakBase, .weakBase),
-        SetWeakBaseWaterLevel(),
-        AddSubstance(type: .weakBase),
-        PostAddSubstance(statements.end, showPhChart: false)
-    ]
-
+    private static func states(namePersistence: NamePersistence) -> [IntroScreenState] {
+        [
+            SetStatement(statements.intro),
+            SetStatement(statements.explainTexture),
+            SetStatement(statements.explainArrhenius),
+            SetStatement(statements.explainBronstedLowry),
+            SetStatement(statements.explainLewis),
+            SetStatement(statements.explainSimpleDefinition),
+            ChooseSubstance(statements.chooseStrongAcid, .strongAcid),
+            PostChooseSubstance(statements.showPhScale),
+            SetStatement(statements.explainPHConcept),
+            SetStatement(statements.explainPOHConcept),
+            SetStatement(statements.explainPRelation),
+            SetStatement(statements.explainPConcentrationRelation1),
+            SetStatement(statements.explainPConcentrationRelation2),
+            SetWaterLevel(type: .strongAcid),
+            AddSubstance(type: .strongAcid),
+            PostAddSubstance(statements.showPhVsMolesGraph, namePersistence: namePersistence),
+            ChooseSubstance(statements.chooseStrongBase, .strongBase),
+            SetWaterLevel(type: .strongBase),
+            AddSubstance(type: .strongBase),
+            PostAddSubstance(statements.showPhVsMolesGraph, namePersistence: namePersistence),
+            ChooseSubstance(statements.chooseWeakAcid, .weakAcid),
+            PostChooseSubstance(statements.explainHEquivalence),
+            SetStatement(statements.explainDoubleArrow, type: .weakAcid),
+            SetStatement(statements.explainEquilibrium),
+            SetWaterLevel(type: .weakAcid),
+            AddSubstance(type: .weakAcid),
+            ChooseSubstance(statements.chooseWeakBase, .weakBase),
+            SetWeakBaseWaterLevel(),
+            AddSubstance(type: .weakBase),
+            PostAddSubstance(statements.end, namePersistence: namePersistence, showPhChart: false)
+        ]
+    }
 }
 
 class IntroScreenState: ScreenState, SubState {
@@ -92,6 +94,15 @@ private class SetStatement: IntroScreenState {
     convenience init(_ statement: @escaping (AcidOrBase) -> [TextLine], type: AcidOrBaseType) {
         self.init { model in
             statement(model.substance(forType: type))
+        }
+    }
+
+    convenience init(
+        _ statement: @escaping (NamePersistence) -> [TextLine],
+        namePersistence: NamePersistence
+    ) {
+        self.init { model in
+            statement(namePersistence)
         }
     }
 
@@ -201,20 +212,26 @@ private class AddSubstance: IntroScreenState {
 private class PostAddSubstance: IntroScreenState {
 
     let showPhChart: Bool
-    let statement: [TextLine]
-    init(_ statement: [TextLine], showPhChart: Bool = true) {
-        self.statement = statement
+    let statement: (NamePersistence) -> [TextLine]
+    let namePersistence: NamePersistence
+
+    init(
+        _ statement: @escaping (NamePersistence) -> [TextLine],
+        namePersistence: NamePersistence,
+        showPhChart: Bool = true
+    ) {
         self.showPhChart = showPhChart
+        self.namePersistence = namePersistence
+        self.statement = statement
     }
 
     override func apply(on model: IntroScreenViewModel) {
-        model.statement = statement
+        model.statement = statement(namePersistence)
         model.inputState = .none
         model.addMoleculesModel.stopAll()
         if showPhChart {
             model.graphView = .ph
         }
-
     }
 }
 

@@ -15,22 +15,27 @@ struct AcidBasesNavigationModel {
     }
 
     private static func makeInjector() -> Injector {
-        AnyNavigationInjector(
-            behaviour: AnyNavigationBehavior(AcidAppNavigationBehaviour()),
+        let namePersistence = UserDefaultsNamePersistence()
+        return AnyNavigationInjector(
+            behaviour: AnyNavigationBehavior(
+                AcidAppNavigationBehaviour(namePersistence: namePersistence)
+            ),
             persistence: AnyScreenPersistence(InMemoryScreenPersistence()),
             analytics: AnyAppAnalytics(NoOpAppAnalytics()),
             quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence()),
             reviewPersistence: InMemoryReviewPromptPersistence(),
-            onboardingPersistence: InMemoryOnboardingPersistence(),
-            namePersistence: InMemoryNamePersistence(),
+            onboardingPersistence: UserDefaultsOnboardingPersistence(),
+            namePersistence: namePersistence,
             allScreens: AcidAppScreen.allCases,
-            linearScreens: AcidAppScreen.allCases
+            linearScreens: [.titration]
         )
     }
 }
 
 private struct AcidAppNavigationBehaviour: NavigationBehaviour {
     typealias Screen = AcidAppScreen
+
+    let namePersistence: NamePersistence
 
     func deferCanSelect(of screen: AcidAppScreen) -> DeferCanSelect<AcidAppScreen>? {
        nil
@@ -57,30 +62,34 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) -> ScreenProvider {
-        screen.getProvider(nextScreen: nextScreen, prevScreen: prevScreen)
+        screen.getProvider(nextScreen: nextScreen, prevScreen: prevScreen, namePersistence: namePersistence)
     }
 }
 
 fileprivate extension AcidAppScreen {
     func getProvider(
         nextScreen: @escaping () -> Void,
-        prevScreen: @escaping () -> Void
+        prevScreen: @escaping () -> Void,
+        namePersistence: NamePersistence
     ) -> ScreenProvider {
         switch self {
         case .introduction:
             return IntroductionScreenProvider(
                 nextScreen: nextScreen,
-                prevScreen: prevScreen
+                prevScreen: prevScreen,
+                namePersistence: namePersistence
             )
         case .buffer:
             return BufferScreenProvider(
                 nextScreen: nextScreen,
-                prevScreen: prevScreen
+                prevScreen: prevScreen,
+                namePersistence: namePersistence
             )
         case .titration:
             return TitrationScreenProvider(
                 nextScreen: nextScreen,
-                prevScreen: prevScreen
+                prevScreen: prevScreen,
+                namePersistence: namePersistence
             )
         }
     }
@@ -89,9 +98,10 @@ fileprivate extension AcidAppScreen {
 private class IntroductionScreenProvider: ScreenProvider {
     init(
         nextScreen: @escaping () -> Void,
-        prevScreen: @escaping () -> Void
+        prevScreen: @escaping () -> Void,
+        namePersistence: NamePersistence
     ) {
-        let model = IntroScreenViewModel()
+        let model = IntroScreenViewModel(namePersistence: namePersistence)
         model.navigation?.nextScreen = nextScreen
         model.navigation?.prevScreen = prevScreen
         self.model = model
@@ -107,9 +117,10 @@ private class IntroductionScreenProvider: ScreenProvider {
 private class BufferScreenProvider: ScreenProvider {
     init(
         nextScreen: @escaping () -> Void,
-        prevScreen: @escaping () -> Void
+        prevScreen: @escaping () -> Void,
+        namePersistence: NamePersistence
     ) {
-        let model = BufferScreenViewModel()
+        let model = BufferScreenViewModel(namePersistence: namePersistence)
         model.navigation?.nextScreen = nextScreen
         model.navigation?.prevScreen = prevScreen
         self.model = model
@@ -125,9 +136,10 @@ private class BufferScreenProvider: ScreenProvider {
 private class TitrationScreenProvider: ScreenProvider {
     init(
         nextScreen: @escaping () -> Void,
-        prevScreen: @escaping () -> Void
+        prevScreen: @escaping () -> Void,
+        namePersistence: NamePersistence
     ) {
-        self.model = TitrationViewModel()
+        self.model = TitrationViewModel(namePersistence: namePersistence)
     }
 
     private let model: TitrationViewModel

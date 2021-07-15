@@ -2,8 +2,8 @@
 // Reactions App
 //
 
-
 import SwiftUI
+import ReactionsCore
 
 struct TitrationScreen: View {
 
@@ -85,8 +85,12 @@ struct TitrationScreenLayout {
 
 struct TitrationScreen_Previews: PreviewProvider {
     static var previews: some View {
-        TitrationScreen(model: TitrationViewModel())
-            .padding()
-            .previewLayout(.iPhone8Landscape)
+        TitrationScreen(
+            model: TitrationViewModel(
+                namePersistence: InMemoryNamePersistence()
+            )
+        )
+        .padding()
+        .previewLayout(.iPhone8Landscape)
     }
 }

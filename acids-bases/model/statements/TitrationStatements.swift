@@ -265,13 +265,15 @@ struct TitrationStatements {
         "*Keep adding by tapping the burette!*"
     ]
 
-    static let endOfWeakAcidTitration: [TextLine] = [
-        """
-        Awesome! We ended the titration. Normally, in the laboratory, the titration ends at the \
-        equivalence point, as the goal is usually to determine the concentration of any of the \
-        species. *Let's titrate a weak base now!*
-        """
-    ]
+    static func endOfWeakAcidTitration(namePersistence: NamePersistence)  -> [TextLine] {
+        [
+            """
+            Awesome! We ended the titration. Normally, in the laboratory, the titration ends at the \
+            equivalence point, as the goal is usually to determine the concentration of any of the \
+            species. *Let's titrate a weak base now!*
+            """
+        ]
+    }
 
     static let instructToChooseWeakBase: [TextLine] = [
         """
@@ -318,13 +320,15 @@ struct TitrationStatements {
         "*Keep adding by tapping the burette!*"
     ]
 
-    static let endOfWeakBaseTitration: [TextLine] = [
-        """
-        Awesome! We ended the titration. Normally, in the laboratory, the titration ends at the \
-        equivalence point, as the goal is usually to determine the concentration of any of the \
-        species.
-        """
-    ]
+    static func endOfWeakBaseTitration(namePersistence: NamePersistence) -> [TextLine] {
+        [
+            """
+            Awesome\(namePersistence.nameWithComma)! We ended the titration. Normally, in the \
+            laboratory, the titration ends at the equivalence point, as the goal is usually to \
+            determine the concentration of any of the species.
+            """
+        ]
+    }
 }
 
 // MARK: Common statement methods
@@ -342,6 +346,11 @@ extension TitrationStatements {
 
 struct TitrationSubstanceStatements {
     let substance: AcidOrBase
+    let namePersistence: NamePersistence
+
+    private var name: String {
+        namePersistence.nameWithComma
+    }
 
     private var symbol: String {
         substance.chargedSymbol(ofPart: .substance).text.asMarkdown
@@ -495,7 +504,7 @@ struct TitrationSubstanceStatements {
     var instructToAddTitrantToWeakAcid: [TextLine] {
         [
             """
-            Let's add the titrant now! The titration curve starts at a *very low pH*, as the \
+            Let's add the titrant now\(name)! The titration curve starts at a *very low pH*, as the \
             solution is purely acidic right now. When KOH is added, it will neutralize the \(symbol) \
             to slowly make it more basic. *Tap to add it.*
             """
@@ -617,7 +626,7 @@ struct TitrationSubstanceStatements {
     var instructToAddTitrantToWeakBase: [TextLine] {
         [
             """
-            Let's add the titrant now! The titration curve starts at a *very high pH*, as the \
+            Let's add the titrant now\(name)! The titration curve starts at a *very high pH*, as the \
             solution is purely basic right now. When \(hydrogen) is added, it will neutralize the \
             \(symbol) to slowly make it more basic. *Tap to add it.*
             """

@@ -7,7 +7,7 @@ import ReactionsCore
 
 class IntroScreenViewModel: ObservableObject {
 
-    init() {
+    init(namePersistence: NamePersistence) {
         let initialRows = AcidAppSettings.initialRows
         let initialSubstance = AcidOrBase.strongAcids.first!
         self.rows = CGFloat(initialRows)
@@ -20,7 +20,7 @@ class IntroScreenViewModel: ObservableObject {
             canAddMolecule: { _ in self.canAddMolecule },
             addMolecules: self.increment
         )
-        self.navigation = IntroNavigationModel.model(self)
+        self.navigation = IntroNavigationModel.model(self, namePersistence: namePersistence)
     }
 
     private(set) var navigation: NavigationModel<IntroScreenState>?

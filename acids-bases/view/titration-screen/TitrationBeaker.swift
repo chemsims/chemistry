@@ -416,7 +416,9 @@ struct TitrationBeaker_Previews: PreviewProvider {
                         horizontalSizeClass: nil
                     )
                 ),
-                model: TitrationViewModel()
+                model: TitrationViewModel(
+                    namePersistence: InMemoryNamePersistence()
+                )
             )
         }
         .padding()

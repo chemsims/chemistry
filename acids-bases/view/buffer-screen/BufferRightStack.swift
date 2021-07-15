@@ -105,8 +105,12 @@ struct BufferRightStack_Previews: PreviewProvider {
                             horizontalSizeClass: nil
                         )
                     ),
-                    model: BufferScreenViewModel(),
-                    weakModel: BufferScreenViewModel().weakSubstanceModel
+                    model: BufferScreenViewModel(
+                        namePersistence: InMemoryNamePersistence()
+                    ),
+                    weakModel: BufferScreenViewModel(
+                        namePersistence: InMemoryNamePersistence()
+                    ).weakSubstanceModel
                 )
             }
         }

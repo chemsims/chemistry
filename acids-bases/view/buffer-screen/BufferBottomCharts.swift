@@ -142,7 +142,9 @@ struct BufferBottomCharts_Previews: PreviewProvider {
                                 horizontalSizeClass: nil
                             )
                         ),
-                        model: BufferScreenViewModel()
+                        model: BufferScreenViewModel(
+                            namePersistence: InMemoryNamePersistence()
+                        )
                     )
                     Spacer()
                 }

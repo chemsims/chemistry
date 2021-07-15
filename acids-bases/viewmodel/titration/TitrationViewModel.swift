@@ -7,7 +7,8 @@ import ReactionsCore
 
 class TitrationViewModel: ObservableObject {
 
-    init() {
+    init(namePersistence: NamePersistence) {
+        self.namePersistence = namePersistence
         let initialRows = AcidAppSettings.initialRows
         self.rows = CGFloat(initialRows)
         self.availableSubstances = AcidOrBase.strongAcids
@@ -40,8 +41,10 @@ class TitrationViewModel: ObservableObject {
             doAddMolecule: { [weak self] in self?.incrementTitrant(count: $0) }
         )
         self.availableSubstances = AcidOrBase.strongAcids
-        self.navigation = TitrationNavigationModel.model(self)
+        self.navigation = TitrationNavigationModel.model(self, namePersistence: namePersistence)
     }
+
+    let namePersistence: NamePersistence
 
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat {
@@ -315,9 +318,15 @@ extension TitrationViewModel {
         }
         switch components.state.substance {
         case .strongAcid:
-            statement = TitrationSubstanceStatements(substance: substance).midAddingStrongBaseTitrantPostEP
+            statement = TitrationSubstanceStatements(
+                substance: substance,
+                namePersistence: namePersistence
+            ).midAddingStrongBaseTitrantPostEP
         case .strongBase:
-            statement = TitrationSubstanceStatements(substance: substance).midAddingStrongAcidTitrantPostEP
+            statement = TitrationSubstanceStatements(
+                substance: substance,
+                namePersistence: namePersistence
+            ).midAddingStrongAcidTitrantPostEP
         default: return
         }
     }

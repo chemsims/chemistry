@@ -88,8 +88,12 @@ struct BufferScreenLayout {
 
 struct BufferScreen_Previews: PreviewProvider {
     static var previews: some View {
-        BufferScreen(model: BufferScreenViewModel())
-            .padding()
-            .previewLayout(.iPhone12ProMaxLandscape)
+        BufferScreen(
+            model: BufferScreenViewModel(
+                namePersistence: InMemoryNamePersistence()
+            )
+        )
+        .padding()
+        .previewLayout(.iPhone12ProMaxLandscape)
     }
 }

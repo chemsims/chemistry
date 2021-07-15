@@ -10,12 +10,19 @@ private let statements = TitrationStatements.self
 struct TitrationNavigationModel {
     private init() { }
 
-    static func model(_ viewModel: TitrationViewModel) -> NavigationModel<TitrationScreenState> {
-        NavigationModel(model: viewModel, states: states)
+    static func model(
+        _ viewModel: TitrationViewModel,
+        namePersistence: NamePersistence
+    ) -> NavigationModel<TitrationScreenState> {
+        NavigationModel(model: viewModel, states: states(namePersistence: namePersistence))
     }
 
-    private static let states: [TitrationScreenState] =
-         strongAcidTitration + strongBaseTitration + weakAcidTitration + weakBaseTitration
+    private static func states(namePersistence: NamePersistence) -> [TitrationScreenState] {
+        strongAcidTitration +
+            strongBaseTitration +
+            weakAcidTitration(namePersistence: namePersistence) +
+            weakBaseTitration(namePersistence: namePersistence)
+    }
 
     private static let strongAcidTitration: [TitrationScreenState] = [
         PrepareNewSubstanceModel(statements.intro, substance: .strongAcid),
@@ -63,114 +70,130 @@ struct TitrationNavigationModel {
         StopInput(statements.endOfStrongBaseTitration)
     ]
 
-    private static let weakAcidTitration: [TitrationScreenState] = [
-        PrepareNewSubstanceModel(
-            statements.instructToChooseWeakAcid,
-            substance: .weakAcid,
-            equation: .weakAcidBlank
-        ),
-        SetWaterLevel(statements.instructToSetWeakAcidTitrationWaterLevel),
-        StopInput(\.explainWeakAcidTitrationReaction),
-        AddSubstance(\.instructToAddWeakAcid, equation: .weakAcidAddingSubstance),
-        RunWeakSubstanceInitialReaction(statements.runningWeakAcidReaction),
-        EndOfWeakSubstanceInitialReaction(
-            { model in
-                TitrationSubstanceStatements(substance: model.substance).endOfWeakAcidReaction(
-                    kA: model.substance.kA,
-                    pH: model.weakPrep.currentPH,
-                    substanceMoles: model.components.weakSubstancePreparationModel.currentSubstanceMoles
-                )
-            },
-            equation: .weakAcidPostInitialReaction
-        ),
-        SetStatement(\.explainWeakAcidTitrationStages),
-        SetStatement(statements.explainIndicator),
-        AddIndicator(
-            statements.instructToAddIndicator,
-            equation: .weakAcidPreEPBlank
-        ),
-        SetTitrantMolarity(
-            statements.instructToSetMolarityOfTitrantOfWeakAcidSolution,
-            equation: .weakAcidPreEPFilled
-        ),
-        StopInput(\.explainWeakAcidBufferRegion),
-        SetStatement(\.explainWeakAcidHasselbalch),
-        SetStatement(\.explainWeakAcidBufferMoles),
-        AddTitrantPreEP(\.instructToAddTitrantToWeakAcid),
-        StopInput(\.reachedWeakAcidMaxBufferCapacity),
-        AddTitrantToWeakSubstancePostMaxBufferCapacity(
-            \.instructToAddTitrantToWeakAcidPostMaxBufferCapacity
-        ),
-        StopInput(
-            { model in
-                TitrationSubstanceStatements(substance: model.substance).reachedWeakAcidEquivalencePoint(
-                    pH: model.weakPreEP.currentPH
-                )
-            }
-        ),
-        SetStatement(\.explainWeakAcidEP1, equation: .weakAcidAtEP),
-        SetStatement(
-            { model in
-                statements.explainWeakAcidEP2(pH: model.weakPreEP.currentPH)
-            }
-        ),
-        AddTitrantPostEP(statements.instructToAddTitrantToWeakAcidPostEP, equation: .weakAcidPostEPPreAddingTitrant),
-        StopInput(statements.endOfWeakAcidTitration)
-    ]
+    private static func weakAcidTitration(namePersistence: NamePersistence) -> [TitrationScreenState] {
+        [
+            PrepareNewSubstanceModel(
+                statements.instructToChooseWeakAcid,
+                substance: .weakAcid,
+                equation: .weakAcidBlank
+            ),
+            SetWaterLevel(statements.instructToSetWeakAcidTitrationWaterLevel),
+            StopInput(\.explainWeakAcidTitrationReaction),
+            AddSubstance(\.instructToAddWeakAcid, equation: .weakAcidAddingSubstance),
+            RunWeakSubstanceInitialReaction(statements.runningWeakAcidReaction),
+            EndOfWeakSubstanceInitialReaction(
+                { model in
+                    TitrationSubstanceStatements(
+                        substance: model.substance,
+                        namePersistence: model.namePersistence
+                    ).endOfWeakAcidReaction(
+                        kA: model.substance.kA,
+                        pH: model.weakPrep.currentPH,
+                        substanceMoles: model.components.weakSubstancePreparationModel.currentSubstanceMoles
+                    )
+                },
+                equation: .weakAcidPostInitialReaction
+            ),
+            SetStatement(\.explainWeakAcidTitrationStages),
+            SetStatement(statements.explainIndicator),
+            AddIndicator(
+                statements.instructToAddIndicator,
+                equation: .weakAcidPreEPBlank
+            ),
+            SetTitrantMolarity(
+                statements.instructToSetMolarityOfTitrantOfWeakAcidSolution,
+                equation: .weakAcidPreEPFilled
+            ),
+            StopInput(\.explainWeakAcidBufferRegion),
+            SetStatement(\.explainWeakAcidHasselbalch),
+            SetStatement(\.explainWeakAcidBufferMoles),
+            AddTitrantPreEP(\.instructToAddTitrantToWeakAcid),
+            StopInput(\.reachedWeakAcidMaxBufferCapacity),
+            AddTitrantToWeakSubstancePostMaxBufferCapacity(
+                \.instructToAddTitrantToWeakAcidPostMaxBufferCapacity
+            ),
+            StopInput(
+                { model in
+                    TitrationSubstanceStatements(
+                        substance: model.substance,
+                        namePersistence: model.namePersistence
+                    ).reachedWeakAcidEquivalencePoint(
+                        pH: model.weakPreEP.currentPH
+                    )
+                }
+            ),
+            SetStatement(\.explainWeakAcidEP1, equation: .weakAcidAtEP),
+            SetStatement(
+                { model in
+                    statements.explainWeakAcidEP2(pH: model.weakPreEP.currentPH)
+                }
+            ),
+            AddTitrantPostEP(statements.instructToAddTitrantToWeakAcidPostEP, equation: .weakAcidPostEPPreAddingTitrant),
+            StopInput(statements.endOfWeakAcidTitration, namePersistence: namePersistence)
+        ]
+    }
 
-    private static let weakBaseTitration: [TitrationScreenState] = [
-        PrepareNewSubstanceModel(
-            statements.instructToChooseWeakBase,
-            substance: .weakBase,
-            equation: .weakBaseBlank
-        ),
-        SetWaterLevel(statements.instructToSetWaterLevelOfWeakBaseTitration),
-        AddSubstance(\.instructToAddWeakBase, equation: .weakBaseAddingSubstance),
-        RunWeakSubstanceInitialReaction(statements.runningWeakAcidReaction),
-        EndOfWeakSubstanceInitialReaction(
-            { model in
-                TitrationSubstanceStatements(substance: model.substance).endOfWeakBaseReaction(
-                    kB: model.substance.kB,
-                    pOH: 14 - model.weakPrep.currentPH,
-                    substanceMoles: model.components.weakSubstancePreparationModel.currentSubstanceMoles
-                )
-            },
-            equation: .weakBasePostInitialReaction
-        ),
-        SetStatement(\.explainWeakBaseTitrationStages),
-        SetStatement(statements.explainIndicator),
-        AddIndicator(
-            statements.instructToAddIndicator,
-            equation: .weakBasePreEPBlank
-        ),
-        SetTitrantMolarity(
-            statements.instructToSetMolarityTitrantOfWeakBaseSolution,
-            equation: .weakBasePreEPFilled
-        ),
-        StopInput(\.explainWeakBaseBufferRegion),
-        SetStatement(\.explainWeakBaseHasselbalch),
-        SetStatement(\.explainWeakBaseBufferMoles),
-        AddTitrantPreEP(\.instructToAddTitrantToWeakBase),
-        StopInput(\.reachedWeakBaseMaxBufferCapacity),
-        AddTitrantToWeakSubstancePostMaxBufferCapacity(
-            \.instructToAddTitrantToWeakBasePostMaxBufferCapacity
-        ),
-        StopInput(
-            { model in
-                TitrationSubstanceStatements(substance: model.substance).reachedWeakBaseEquivalencePoint(
-                    pH: model.weakPreEP.currentPH
-                )
-            }
-        ),
-        SetStatement(\.explainWeakBaseEP1, equation: .weakBaseAtEP),
-        SetStatement(
-            { model in
-                statements.explainWeakBasedEP2(pH: model.weakPreEP.currentPH)
-            }
-        ),
-        AddTitrantPostEP(statements.instructToAddTitrantToWeakBasePostEP, equation: .weakBasePostEPPreAddingTitrant),
-        StopInput(statements.endOfWeakBaseTitration)
-    ]
+    private static func weakBaseTitration(namePersistence: NamePersistence) -> [TitrationScreenState] {
+        [
+            PrepareNewSubstanceModel(
+                statements.instructToChooseWeakBase,
+                substance: .weakBase,
+                equation: .weakBaseBlank
+            ),
+            SetWaterLevel(statements.instructToSetWaterLevelOfWeakBaseTitration),
+            AddSubstance(\.instructToAddWeakBase, equation: .weakBaseAddingSubstance),
+            RunWeakSubstanceInitialReaction(statements.runningWeakAcidReaction),
+            EndOfWeakSubstanceInitialReaction(
+                { model in
+                    TitrationSubstanceStatements(
+                        substance: model.substance,
+                        namePersistence: model.namePersistence
+                    ).endOfWeakBaseReaction(
+                        kB: model.substance.kB,
+                        pOH: 14 - model.weakPrep.currentPH,
+                        substanceMoles: model.components.weakSubstancePreparationModel.currentSubstanceMoles
+                    )
+                },
+                equation: .weakBasePostInitialReaction
+            ),
+            SetStatement(\.explainWeakBaseTitrationStages),
+            SetStatement(statements.explainIndicator),
+            AddIndicator(
+                statements.instructToAddIndicator,
+                equation: .weakBasePreEPBlank
+            ),
+            SetTitrantMolarity(
+                statements.instructToSetMolarityTitrantOfWeakBaseSolution,
+                equation: .weakBasePreEPFilled
+            ),
+            StopInput(\.explainWeakBaseBufferRegion),
+            SetStatement(\.explainWeakBaseHasselbalch),
+            SetStatement(\.explainWeakBaseBufferMoles),
+            AddTitrantPreEP(\.instructToAddTitrantToWeakBase),
+            StopInput(\.reachedWeakBaseMaxBufferCapacity),
+            AddTitrantToWeakSubstancePostMaxBufferCapacity(
+                \.instructToAddTitrantToWeakBasePostMaxBufferCapacity
+            ),
+            StopInput(
+                { model in
+                    TitrationSubstanceStatements(
+                        substance: model.substance,
+                        namePersistence: model.namePersistence
+                    ).reachedWeakBaseEquivalencePoint(
+                        pH: model.weakPreEP.currentPH
+                    )
+                }
+            ),
+            SetStatement(\.explainWeakBaseEP1, equation: .weakBaseAtEP),
+            SetStatement(
+                { model in
+                    statements.explainWeakBasedEP2(pH: model.weakPreEP.currentPH)
+                }
+            ),
+            AddTitrantPostEP(statements.instructToAddTitrantToWeakBasePostEP, equation: .weakBasePostEPPreAddingTitrant),
+            StopInput(statements.endOfWeakBaseTitration, namePersistence: namePersistence)
+        ]
+    }
 }
 
 private extension TitrationViewModel {
@@ -222,9 +245,19 @@ private class SetStatement: TitrationScreenState {
 
     init(_ statementKeyPath: KeyPath<TitrationSubstanceStatements, [TextLine]>, equation: TitrationViewModel.EquationState? = nil) {
         self.getStatement = { model in
-            TitrationSubstanceStatements(substance: model.substance)[keyPath: statementKeyPath]
+            TitrationSubstanceStatements(
+                substance: model.substance,
+                namePersistence: model.namePersistence
+            )[keyPath: statementKeyPath]
         }
         self.equationState = equation
+    }
+
+    init(_ statement: @escaping (NamePersistence) -> [TextLine], namePersistence: NamePersistence) {
+        self.getStatement = { model in
+            statement(model.namePersistence)
+        }
+        self.equationState = nil
     }
 
     private let getStatement: (TitrationViewModel) -> [TextLine]

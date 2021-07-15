@@ -174,7 +174,9 @@ struct BufferBeaker_Previews: PreviewProvider {
                         horizontalSizeClass: nil
                     )
                 ),
-                model: BufferScreenViewModel()
+                model: BufferScreenViewModel(
+                    namePersistence: InMemoryNamePersistence()
+                )
             )
         }
         .previewLayout(.iPhone8Landscape)

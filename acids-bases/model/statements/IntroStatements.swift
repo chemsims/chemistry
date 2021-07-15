@@ -145,12 +145,15 @@ struct IntroStatements {
         midAddingStrongSubstance(substance: substance, pHDirection: "decreases")
     }
 
-    static let showPhVsMolesGraph: [TextLine] = [
-        """
-        *Awesome!* Now, this is how it looks when you plot a line for pH vs the moles \
-        of strong acid you added. Let's take a snapshot of that graph, it will help us later.
-        """
-    ]
+    static func showPhVsMolesGraph(namePersistence: NamePersistence) -> [TextLine] {
+        [
+            """
+            *Awesome\(namePersistence.nameWithComma)!* Now, this is how it looks when you plot a \
+            line for pH vs the moles of strong acid you added. Let's take a snapshot of that \
+            graph, it will help us later.
+            """
+        ]
+    }
 
     static let chooseStrongBase: [TextLine] = [
         """
@@ -253,12 +256,14 @@ struct IntroStatements {
         ]
     }
 
-    static let end: [TextLine] = [
-        """
-        *That was great!*  Now, let's get more into this acid-bases equilibria and see how \
-        it works, and what is good for.
-        """
-    ]
+    static func end(namePersistence: NamePersistence) -> [TextLine] {
+        [
+            """
+            *That was great\(namePersistence.nameWithComma)!*  Now, let's get more into this \
+            acid-bases equilibria and see how it works, and what is good for.
+            """
+        ]
+    }
 
     private static func midAddingStrongSubstance(
         substance: AcidOrBase,

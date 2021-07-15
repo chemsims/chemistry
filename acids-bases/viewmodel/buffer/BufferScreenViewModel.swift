@@ -7,7 +7,9 @@ import ReactionsCore
 
 class BufferScreenViewModel: ObservableObject {
 
-    init() {
+    init(
+        namePersistence: NamePersistence
+    ) {
         let initialSubstances = AcidOrBase.weakAcids
         let initialSubstance = initialSubstances.first!
         let initialRows = AcidAppSettings.initialRows
@@ -20,6 +22,7 @@ class BufferScreenViewModel: ObservableObject {
         let saltModel = BufferSaltComponents(prev: weakModel)
         let strongModel = BufferStrongSubstanceComponents(prev: saltModel)
 
+        self.namePersistence = namePersistence
         self.rows = CGFloat(initialRows)
         self.weakSubstanceModel = weakModel
         self.saltModel = saltModel
@@ -57,6 +60,7 @@ class BufferScreenViewModel: ObservableObject {
         weakSubstanceModel.substance
     }
 
+    let namePersistence: NamePersistence
 
     private var previousWeakAcidModel: BufferWeakSubstanceComponents?
     private var previousAcidSaltModel: BufferSaltComponents?

@@ -7,7 +7,7 @@ import ReactionsCore
 
 private let statements = BufferStatements.self
 private func substanceStatements(_ model: BufferScreenViewModel) -> BufferStatementsForSubstance {
-    BufferStatementsForSubstance(substance: model.substance)
+    BufferStatementsForSubstance(substance: model.substance, namePersistence: model.namePersistence)
 }
 
 struct BufferNavigationModel {
@@ -156,7 +156,7 @@ private class SetWaterLevel: SetStatement {
 
 private class AddWeakAcid: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.instructToAddWeakAcid(model.substance)
+        model.statement = substanceStatements(model).instructToAddWeakAcid
         model.input = .addMolecule(phase: .addWeakSubstance)
         model.equationState = .acidWithSubstanceConcentration
     }

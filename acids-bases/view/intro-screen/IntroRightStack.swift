@@ -306,8 +306,12 @@ struct IntroRightStack_Previews: PreviewProvider {
             HStack(spacing: 0) {
                 Spacer()
                 IntroRightStack(
-                    model: IntroScreenViewModel(),
-                    components: IntroScreenViewModel().components,
+                    model: IntroScreenViewModel(
+                        namePersistence: InMemoryNamePersistence()
+                    ),
+                    components: IntroScreenViewModel(
+                        namePersistence: InMemoryNamePersistence()
+                    ).components,
                     layout: IntroScreenLayout(
                         common: AcidBasesScreenLayout(
                             geometry: geo,

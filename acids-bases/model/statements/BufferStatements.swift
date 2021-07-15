@@ -151,16 +151,6 @@ struct BufferStatements {
         "*Use the water slider*."
     ]
 
-    static func instructToAddWeakAcid(_ substance: AcidOrBase) -> [TextLine] {
-        [
-            """
-            *Awesome!* Now add the weak acid *\(substance.symbol)* to see it dissociate \
-            into *H^+^ and \(substance.secondary)^-^*.
-            """,
-            "*Shake it into it!*"
-        ]
-    }
-
     static func midAddingWeakAcid(_ substance: AcidOrBase) -> [TextLine] {
         [
             """
@@ -424,9 +414,14 @@ struct BufferStatements {
     }
 }
 
+
+// MARK: - Substance statements
 struct BufferStatementsForSubstance {
 
-    init(substance: AcidOrBase) {
+    init(
+        substance: AcidOrBase,
+        namePersistence: NamePersistence
+    ) {
         let substanceStr = substance.chargedSymbol(ofPart: .substance).text.asMarkdown
         let primary = substance.chargedSymbol(ofPart: .primaryIon).text.asMarkdown
         let secondary = substance.chargedSymbol(ofPart: .secondaryIon).text.asMarkdown
@@ -438,6 +433,7 @@ struct BufferStatementsForSubstance {
         self.primaryC = "[\(primary)]"
         self.secondaryC = "[\(secondary)]"
 
+        self.namePersistence = namePersistence
         self.underlyingSubstance = substance
     }
 
@@ -449,6 +445,22 @@ struct BufferStatementsForSubstance {
     let substanceC: String
     let primaryC: String
     let secondaryC: String
+
+    private let namePersistence: NamePersistence
+
+    private var name: String {
+        namePersistence.nameWithComma
+    }
+
+    var instructToAddWeakAcid: [TextLine] {
+        [
+            """
+            *Awesome\(name)!* Now add the weak acid *\(substance)* to see \
+            it dissociate into *H^+^ and \(secondary)*.
+            """,
+            "*Shake it into it!*"
+        ]
+    }
 
     var reachedAcidBuffer: [TextLine] {
         [
@@ -527,7 +539,7 @@ struct BufferStatementsForSubstance {
     var instructToAddWeakBase: [TextLine] {
         [
             """
-            *Awesome!* Now add the weak base *\(substance)* to see it dissociate into *\(secondary)* \
+            *Awesome\(name)!* Now add the weak base *\(substance)* to see it dissociate into *\(secondary)* \
             and *\(primary)*.
             """,
             "*Shake it into it!*"

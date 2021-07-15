@@ -163,8 +163,12 @@ struct BufferPhChart_Previews: PreviewProvider {
                                 horizontalSizeClass: nil
                             )
                         ),
-                        model: BufferScreenViewModel(),
-                        strongModel: BufferScreenViewModel().strongSubstanceModel
+                        model: BufferScreenViewModel(
+                            namePersistence: InMemoryNamePersistence()
+                        ),
+                        strongModel: BufferScreenViewModel(
+                            namePersistence: InMemoryNamePersistence()
+                        ).strongSubstanceModel
                     )
                     Spacer()
                 }
