@@ -7,6 +7,7 @@ import SwiftUI
 public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableObject {
 
     @Published public var view: AnyView
+    @Published public var showOnboarding = true
     @Published public var showMenu = false {
         didSet {
             if showMenu {
@@ -30,7 +31,6 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
 
     private var hasOpenedFirstScreen = false
 
-
     public init(
         injector: Injector
     ) {
@@ -46,7 +46,16 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
         self.analyticsConsent = AnalyticsConsentViewModel(service: injector.analytics)
 
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
+
+        self.onboardingModel = OnboardingViewModel()
+        self.onboardingModel?.navigation?.nextScreen = { [weak self] in
+            withAnimation() {
+                self?.showOnboarding = false
+            }
+        }
     }
+
+    public private(set) var onboardingModel: OnboardingViewModel?
 
     let analyticsConsent: AnalyticsConsentViewModel<Injector.Analytics>
 

@@ -308,6 +308,7 @@
 		577C506826812409003DAD17 /* MolesToConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506726812409003DAD17 /* MolesToConcentration.swift */; };
 		577C506A26812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506926812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift */; };
 		577C506C26812712003DAD17 /* PLogComplementConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506B26812712003DAD17 /* PLogComplementConcentration.swift */; };
+		577EDE8126A026B60067F3C1 /* OnboardOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577EDE8026A026B60067F3C1 /* OnboardOverlayView.swift */; };
 		57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8625EAB8450099D720 /* MoleculeScales.swift */; };
 		57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8D25EABA950099D720 /* AnimatableRotation.swift */; };
 		5783964B25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783964A25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift */; };
@@ -436,6 +437,9 @@
 		57B57821263995E8008DFAB5 /* UniqueGridCoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */; };
 		57B5782226399C07008DFAB5 /* FractionedCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3F25F5478F003FD2B4 /* FractionedCoordinates.swift */; };
 		57B80CB7255EAD19006AF3E2 /* ConcentrationPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */; };
+		57B8946526A0378500D71998 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946426A0378500D71998 /* OnboardingViewModel.swift */; };
+		57B8946926A037E400D71998 /* OnboardingNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946826A037E400D71998 /* OnboardingNavigationModel.swift */; };
+		57B8946B26A043F300D71998 /* IgnoresKeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946A26A043F300D71998 /* IgnoresKeyboardModifier.swift */; };
 		57B92EBA2665258A00023E7C /* SelectionToggleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AAD2600D22C005BD328 /* SelectionToggleText.swift */; };
 		57B92EBD2665356600023E7C /* TextLineUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBC2665356600023E7C /* TextLineUtil.swift */; };
 		57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBE266537F900023E7C /* TextLineUtilTests.swift */; };
@@ -1039,6 +1043,7 @@
 		577C506726812409003DAD17 /* MolesToConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MolesToConcentration.swift; sourceTree = "<group>"; };
 		577C506926812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationToMolesDifferenceOverVolume.swift; sourceTree = "<group>"; };
 		577C506B26812712003DAD17 /* PLogComplementConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLogComplementConcentration.swift; sourceTree = "<group>"; };
+		577EDE8026A026B60067F3C1 /* OnboardOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardOverlayView.swift; sourceTree = "<group>"; };
 		5780320625B0888300A0F610 /* QuizPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPersistenceTests.swift; sourceTree = "<group>"; };
 		57812A8625EAB8450099D720 /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
 		57812A8D25EABA950099D720 /* AnimatableRotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableRotation.swift; sourceTree = "<group>"; };
@@ -1154,6 +1159,9 @@
 		57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinates.swift; sourceTree = "<group>"; };
 		57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqueGridCoordinateTests.swift; sourceTree = "<group>"; };
 		57B80CB6255EAD19006AF3E2 /* ConcentrationPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationPlotView.swift; sourceTree = "<group>"; };
+		57B8946426A0378500D71998 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		57B8946826A037E400D71998 /* OnboardingNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNavigationModel.swift; sourceTree = "<group>"; };
+		57B8946A26A043F300D71998 /* IgnoresKeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoresKeyboardModifier.swift; sourceTree = "<group>"; };
 		57B92EBC2665356600023E7C /* TextLineUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineUtil.swift; sourceTree = "<group>"; };
 		57B92EBE266537F900023E7C /* TextLineUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineUtilTests.swift; sourceTree = "<group>"; };
 		57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinition.swift; sourceTree = "<group>"; };
@@ -1980,6 +1988,7 @@
 		57438A37260A26BE005E3888 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				57B8946626A037BB00D71998 /* onboarding */,
 				57F88862267E6D8000609671 /* molecule-emitting */,
 				572B1A772675DF3900302B8E /* reaction-progress */,
 				570A765F266CC2FE009329FB /* beaker */,
@@ -2434,6 +2443,14 @@
 			path = titration;
 			sourceTree = "<group>";
 		};
+		577EDE7F26A026A40067F3C1 /* onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				577EDE8026A026B60067F3C1 /* OnboardOverlayView.swift */,
+			);
+			path = onboarding;
+			sourceTree = "<group>";
+		};
 		578031FF25B0670300A0F610 /* persistence */ = {
 			isa = PBXGroup;
 			children = (
@@ -2572,6 +2589,7 @@
 		57952A3825E67F61006AB876 /* navigation */ = {
 			isa = PBXGroup;
 			children = (
+				57B8946726A037CD00D71998 /* onboarding */,
 				57B23319258E8BD900128760 /* ScreenProvider.swift */,
 				571B3C59256555C40075358B /* NavigationModel.swift */,
 				5727486225A5FB49000CFA1E /* ScreenStateTree.swift */,
@@ -2729,6 +2747,7 @@
 		5797A47A25E4092600991BD9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				577EDE7F26A026A40067F3C1 /* onboarding */,
 				5786BD15267B66BA001A165C /* burette */,
 				5786BD10267B4CA3001A165C /* shapes */,
 				5786BD0D267B45AB001A165C /* dropper */,
@@ -2870,6 +2889,7 @@
 			isa = PBXGroup;
 			children = (
 				579EA90B264728C5008461E8 /* AnimatableForegroundColor.swift */,
+				57B8946A26A043F300D71998 /* IgnoresKeyboardModifier.swift */,
 			);
 			path = modifiers;
 			sourceTree = "<group>";
@@ -2978,6 +2998,22 @@
 				573E1B2E263AB81D00379A1D /* ViewExtensions.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		57B8946626A037BB00D71998 /* onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				57B8946426A0378500D71998 /* OnboardingViewModel.swift */,
+			);
+			path = onboarding;
+			sourceTree = "<group>";
+		};
+		57B8946726A037CD00D71998 /* onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				57B8946826A037E400D71998 /* OnboardingNavigationModel.swift */,
+			);
+			path = onboarding;
 			sourceTree = "<group>";
 		};
 		57B92EC026654C0600023E7C /* equation */ = {
@@ -4319,6 +4355,7 @@
 				57B92EBD2665356600023E7C /* TextLineUtil.swift in Sources */,
 				57DDAD5B25E57E9300B535A7 /* ChartLine.swift in Sources */,
 				575A889525E438CD00AEE448 /* BundleExtension.swift in Sources */,
+				57B8946926A037E400D71998 /* OnboardingNavigationModel.swift in Sources */,
 				57315EC726401CF500A7D0F9 /* QuizAnswerIconOverlay.swift in Sources */,
 				57B5781D2639634C008DFAB5 /* AccessibilityExtensions.swift in Sources */,
 				5797A48125E40A3600991BD9 /* BeakerShape.swift in Sources */,
@@ -4346,6 +4383,7 @@
 				57315EC126401CF500A7D0F9 /* QuizTableView.swift in Sources */,
 				575A883A25E431E500AEE448 /* Strings.swift in Sources */,
 				57F8885C267E188400609671 /* SliderOverlay.swift in Sources */,
+				577EDE8126A026B60067F3C1 /* OnboardOverlayView.swift in Sources */,
 				57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */,
 				57567B422605F156009711D4 /* GridElementSetter.swift in Sources */,
 				579CDA1D2661656D00143809 /* AdjustableFluidBeaker.swift in Sources */,
@@ -4369,6 +4407,7 @@
 				57B3B935260B40C100EB9B47 /* GeneralRootNavigationView.swift in Sources */,
 				57438A3D260A26DB005E3888 /* RootNavigationViewModel.swift in Sources */,
 				57B3B91E260B2F9F00EB9B47 /* MenuButton.swift in Sources */,
+				57B8946526A0378500D71998 /* OnboardingViewModel.swift in Sources */,
 				578B174B2618D22B00D8079F /* FillableBeaker.swift in Sources */,
 				578B1716261874D500D8079F /* CoreMotionShakingBehavior.swift in Sources */,
 				57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */,
@@ -4420,6 +4459,7 @@
 				5784F44B2663F5A100513B2A /* MultiContainerShakeViewModel.swift in Sources */,
 				57315EBD26401C0800A7D0F9 /* QuizViewModel.swift in Sources */,
 				57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */,
+				57B8946B26A043F300D71998 /* IgnoresKeyboardModifier.swift in Sources */,
 				57315EC826401D9900A7D0F9 /* SizeAdjuster.swift in Sources */,
 				579EA90C264728C5008461E8 /* AnimatableForegroundColor.swift in Sources */,
 				575A887525E4364500AEE448 /* NavButton.swift in Sources */,

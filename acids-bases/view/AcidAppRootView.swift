@@ -12,6 +12,17 @@ struct AcidAppRootView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
+        ZStack {
+            mainBody
+                .modifier(BlurredSceneModifier(isBlurred: model.showOnboarding))
+
+            if model.showOnboarding && model.onboardingModel != nil {
+                OnboardOverlayView(model: model.onboardingModel!)
+            }
+        }
+    }
+
+    private var mainBody: some View {
         GeometryReader { geo in
             makeView(
                 settings: AcidBasesScreenLayout(
@@ -21,6 +32,7 @@ struct AcidAppRootView: View {
                 )
             )
         }
+        .ignoresKeyboardSafeArea()
     }
 
     private func makeView(settings: AcidBasesScreenLayout) -> some View {
@@ -33,6 +45,22 @@ struct AcidAppRootView: View {
             menuTopPadding: settings.menuTopPadding,
             menuHPadding: settings.menuHPadding
         )
+    }
+}
+
+private struct BlurredSceneModifier: ViewModifier {
+    let isBlurred: Bool
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if isBlurred {
+            content
+                .brightness(0.1)
+                .overlay(Color.white.opacity(0.7))
+                .blur(radius: 8)
+        } else {
+            content
+        }
     }
 }
 
