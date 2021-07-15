@@ -17,7 +17,7 @@ struct AcidAppRootView: View {
                 .modifier(BlurredSceneModifier(isBlurred: model.showOnboarding))
 
             if model.showOnboarding && model.onboardingModel != nil {
-                OnboardOverlayView(model: model.onboardingModel!)
+                OnboardingView(model: model.onboardingModel!)
             }
         }
     }
@@ -56,8 +56,9 @@ private struct BlurredSceneModifier: ViewModifier {
         if isBlurred {
             content
                 .brightness(0.1)
-                .overlay(Color.white.opacity(0.7))
-                .blur(radius: 8)
+                .overlay(Color.white.opacity(0.6))
+                .blur(radius: 6)
+                .disabled(true)
         } else {
             content
         }
@@ -83,5 +84,15 @@ extension AcidBasesScreenLayout {
 
     var menuTopPadding: CGFloat {
         0.5 * menuSize
+    }
+}
+
+
+struct AcidAppRootView_Previews: PreviewProvider {
+    static var previews: some View {
+        AcidAppRootView(
+            model: AcidBasesNavigationModel.model()
+        )
+        .previewLayout(.iPhoneSELandscape)
     }
 }

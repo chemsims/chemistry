@@ -25,6 +25,10 @@ public protocol NavigationInjector {
     var quizPersistence: QuizP { get }
 
     var reviewPersistence: ReviewPromptPersistence { get }
+
+    var onboardingPersistence: OnboardingPersistence { get set }
+
+    var namePersistence: NamePersistence { get }
 }
 
 public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInjector {
@@ -34,23 +38,29 @@ public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInj
         analytics: AnyAppAnalytics<Screen, QuestionSet>,
         quizPersistence: AnyQuizPersistence<QuestionSet>,
         reviewPersistence: ReviewPromptPersistence,
+        onboardingPersistence: OnboardingPersistence,
+        namePersistence: NamePersistence,
         allScreens: [Screen],
         linearScreens: [Screen]
     ) {
+        self.allScreens = allScreens
+        self.linearScreens = linearScreens
         self.behaviour = behaviour
         self.persistence = persistence
         self.analytics = analytics
         self.quizPersistence = quizPersistence
         self.reviewPersistence = reviewPersistence
-        self.allScreens = allScreens
-        self.linearScreens = linearScreens
+        self.onboardingPersistence = onboardingPersistence
+        self.namePersistence = namePersistence
     }
 
+    public let allScreens: [Screen]
+    public let linearScreens: [Screen]
     public let behaviour: AnyNavigationBehavior<Screen>
     public let persistence: AnyScreenPersistence<Screen>
     public let analytics: AnyAppAnalytics<Screen, QuestionSet>
     public let quizPersistence: AnyQuizPersistence<QuestionSet>
-    public let allScreens: [Screen]
-    public let linearScreens: [Screen]
     public let reviewPersistence: ReviewPromptPersistence
+    public var onboardingPersistence: OnboardingPersistence
+    public var namePersistence: NamePersistence
 }

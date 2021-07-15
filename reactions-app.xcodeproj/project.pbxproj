@@ -308,7 +308,7 @@
 		577C506826812409003DAD17 /* MolesToConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506726812409003DAD17 /* MolesToConcentration.swift */; };
 		577C506A26812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506926812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift */; };
 		577C506C26812712003DAD17 /* PLogComplementConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506B26812712003DAD17 /* PLogComplementConcentration.swift */; };
-		577EDE8126A026B60067F3C1 /* OnboardOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577EDE8026A026B60067F3C1 /* OnboardOverlayView.swift */; };
+		577EDE8126A026B60067F3C1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577EDE8026A026B60067F3C1 /* OnboardingView.swift */; };
 		57812A8725EAB8450099D720 /* MoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8625EAB8450099D720 /* MoleculeScales.swift */; };
 		57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8D25EABA950099D720 /* AnimatableRotation.swift */; };
 		5783964B25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5783964A25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift */; };
@@ -440,6 +440,9 @@
 		57B8946526A0378500D71998 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946426A0378500D71998 /* OnboardingViewModel.swift */; };
 		57B8946926A037E400D71998 /* OnboardingNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946826A037E400D71998 /* OnboardingNavigationModel.swift */; };
 		57B8946B26A043F300D71998 /* IgnoresKeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946A26A043F300D71998 /* IgnoresKeyboardModifier.swift */; };
+		57B8946D26A04FFA00D71998 /* OnboardingPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946C26A04FFA00D71998 /* OnboardingPersistence.swift */; };
+		57B8946F26A0500100D71998 /* NamePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946E26A0500100D71998 /* NamePersistence.swift */; };
+		57B8947126A0542200D71998 /* NamePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8947026A0542200D71998 /* NamePersistenceTests.swift */; };
 		57B92EBA2665258A00023E7C /* SelectionToggleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AAD2600D22C005BD328 /* SelectionToggleText.swift */; };
 		57B92EBD2665356600023E7C /* TextLineUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBC2665356600023E7C /* TextLineUtil.swift */; };
 		57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBE266537F900023E7C /* TextLineUtilTests.swift */; };
@@ -1043,7 +1046,7 @@
 		577C506726812409003DAD17 /* MolesToConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MolesToConcentration.swift; sourceTree = "<group>"; };
 		577C506926812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationToMolesDifferenceOverVolume.swift; sourceTree = "<group>"; };
 		577C506B26812712003DAD17 /* PLogComplementConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLogComplementConcentration.swift; sourceTree = "<group>"; };
-		577EDE8026A026B60067F3C1 /* OnboardOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardOverlayView.swift; sourceTree = "<group>"; };
+		577EDE8026A026B60067F3C1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		5780320625B0888300A0F610 /* QuizPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPersistenceTests.swift; sourceTree = "<group>"; };
 		57812A8625EAB8450099D720 /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
 		57812A8D25EABA950099D720 /* AnimatableRotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableRotation.swift; sourceTree = "<group>"; };
@@ -1162,6 +1165,9 @@
 		57B8946426A0378500D71998 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		57B8946826A037E400D71998 /* OnboardingNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingNavigationModel.swift; sourceTree = "<group>"; };
 		57B8946A26A043F300D71998 /* IgnoresKeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoresKeyboardModifier.swift; sourceTree = "<group>"; };
+		57B8946C26A04FFA00D71998 /* OnboardingPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPersistence.swift; sourceTree = "<group>"; };
+		57B8946E26A0500100D71998 /* NamePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamePersistence.swift; sourceTree = "<group>"; };
+		57B8947026A0542200D71998 /* NamePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamePersistenceTests.swift; sourceTree = "<group>"; };
 		57B92EBC2665356600023E7C /* TextLineUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineUtil.swift; sourceTree = "<group>"; };
 		57B92EBE266537F900023E7C /* TextLineUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineUtilTests.swift; sourceTree = "<group>"; };
 		57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinition.swift; sourceTree = "<group>"; };
@@ -2004,6 +2010,8 @@
 			children = (
 				57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */,
 				57438A64260A4177005E3888 /* ScreenPersistence.swift */,
+				57B8946C26A04FFA00D71998 /* OnboardingPersistence.swift */,
+				57B8946E26A0500100D71998 /* NamePersistence.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -2446,7 +2454,7 @@
 		577EDE7F26A026A40067F3C1 /* onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				577EDE8026A026B60067F3C1 /* OnboardOverlayView.swift */,
+				577EDE8026A026B60067F3C1 /* OnboardingView.swift */,
 			);
 			path = onboarding;
 			sourceTree = "<group>";
@@ -3541,6 +3549,7 @@
 				5780320625B0888300A0F610 /* QuizPersistenceTests.swift */,
 				5743D9C525C45D9D000C0397 /* ReviewPromptPersistenceTests.swift */,
 				57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */,
+				57B8947026A0542200D71998 /* NamePersistenceTests.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -4383,7 +4392,7 @@
 				57315EC126401CF500A7D0F9 /* QuizTableView.swift in Sources */,
 				575A883A25E431E500AEE448 /* Strings.swift in Sources */,
 				57F8885C267E188400609671 /* SliderOverlay.swift in Sources */,
-				577EDE8126A026B60067F3C1 /* OnboardOverlayView.swift in Sources */,
+				577EDE8126A026B60067F3C1 /* OnboardingView.swift in Sources */,
 				57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */,
 				57567B422605F156009711D4 /* GridElementSetter.swift in Sources */,
 				579CDA1D2661656D00143809 /* AdjustableFluidBeaker.swift in Sources */,
@@ -4447,6 +4456,7 @@
 				57315ECA2640284D00A7D0F9 /* GoogleAnalytics.swift in Sources */,
 				57B3B8FB260B281000EB9B47 /* AppAnalytics.swift in Sources */,
 				57B3B929260B39A600EB9B47 /* ShareSheetView.swift in Sources */,
+				57B8946D26A04FFA00D71998 /* OnboardingPersistence.swift in Sources */,
 				57F88864267E6DB900609671 /* MoleculeEmittingViewModel.swift in Sources */,
 				57315EC026401CF500A7D0F9 /* QuizLayoutSettings.swift in Sources */,
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
@@ -4469,6 +4479,7 @@
 				5784F4502664075400513B2A /* EnumMap.swift in Sources */,
 				570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */,
 				57686AE72601D541005BD328 /* SliderHapticsHandler.swift in Sources */,
+				57B8946F26A0500100D71998 /* NamePersistence.swift in Sources */,
 				57BDFF4E26415540001B97CC /* ImageType.swift in Sources */,
 				57D2F2EE25EA2D7400AEE0D8 /* EquationPlaceholderView.swift in Sources */,
 				57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */,
@@ -4509,6 +4520,7 @@
 				5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */,
 				573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */,
 				57FD400D26484F4B00E352C1 /* CGFloatRoundingTests.swift in Sources */,
+				57B8947126A0542200D71998 /* NamePersistenceTests.swift in Sources */,
 				57FD400926484F2E00E352C1 /* FeedbackSettingsTests.swift in Sources */,
 				57FF9EE425FF6EC100C1C27F /* GridElementBalancerTests.swift in Sources */,
 				57FD401026484F5800E352C1 /* LabellingTests.swift in Sources */,

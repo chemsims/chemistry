@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-public struct OnboardOverlayView: View {
+public struct OnboardingView: View {
 
     public init(model: OnboardingViewModel) {
         self.model = model
@@ -15,7 +15,7 @@ public struct OnboardOverlayView: View {
     public var body: some View {
         ZStack {
             GeometryReader { geo in
-                OnboardOverlayWithGeometry(
+                OnboardingViewWithGeometry(
                     model: model,
                     geometry: geo
                 )
@@ -25,11 +25,9 @@ public struct OnboardOverlayView: View {
     }
 }
 
-private struct OnboardOverlayWithGeometry: View {
+private struct OnboardingViewWithGeometry: View {
     @ObservedObject var model: OnboardingViewModel
     let geometry: GeometryProxy
-
-    @State private var isEditing: Bool = false
 
     var body: some View {
         VStack {
@@ -52,18 +50,6 @@ private struct OnboardOverlayWithGeometry: View {
         )
     }
 
-    private var editingName: some View {
-        Text(model.name ?? "")
-            .foregroundColor(.orangeAccent)
-            .font(.system(size: beakySettings.bubbleFontSize))
-            .padding(.horizontal, textInputLeadingInnerPadding)
-            .frame(size: actionSize)
-            .background(roundedRectBackground(withBorder: false))
-            .padding()
-            .transition(.opacity)
-            .animation(.easeOut(duration: 1), value: isEditing)
-    }
-
     private var bubbleWithBeaky: some View {
         HStack(alignment: .bottom, spacing: 0) {
             SpeechBubble(
@@ -81,25 +67,38 @@ private struct OnboardOverlayWithGeometry: View {
     }
 
     private var textInput: some View {
-        TextField("Name", text: model.nameBinding) { isEditing in
-            self.isEditing = isEditing
-        } onCommit: {
-            model.saveName()
-        }
+        TextField(
+            "Name",
+            text: model.nameBinding,
+            onCommit:  {
+                model.saveName()
+            }
+        )
+        .font(.system(size: beakySettings.bubbleFontSize))
         .padding(.horizontal, textInputLeadingInnerPadding)
         .frame(size: actionSize)
         .background(
-            RoundedRectangle(cornerRadius: actionCornerRadius)
-                .stroke()
-                .foregroundColor(.gray)
+            ZStack {
+                RoundedRectangle(cornerRadius: actionCornerRadius)
+                    .foregroundColor(.white)
+
+                RoundedRectangle(cornerRadius: actionCornerRadius)
+                    .stroke()
+                    .foregroundColor(.gray)
+            }
         )
     }
 
     private var next: some View {
         Button(action: model.next) {
             ZStack {
-                roundedRectBackground(withBorder: true)
-
+                RoundedRectangle(cornerRadius: actionCornerRadius)
+                    .foregroundColor(Styling.speechBubble)
+                
+                RoundedRectangle(cornerRadius: actionCornerRadius)
+                    .stroke(lineWidth: 1)
+                    .foregroundColor(.orangeAccent)
+                
                 Text(model.nextText)
                     .foregroundColor(.orangeAccent)
             }
@@ -109,24 +108,11 @@ private struct OnboardOverlayWithGeometry: View {
         .buttonStyle(NavButtonButtonStyle(scaleDelta: 0.02))
     }
 
-    private func roundedRectBackground(withBorder: Bool) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: actionCornerRadius)
-                .foregroundColor(Styling.speechBubble)
-
-            if withBorder {
-                RoundedRectangle(cornerRadius: actionCornerRadius)
-                    .stroke(lineWidth: 1)
-                    .foregroundColor(.orangeAccent)
-            }
-        }
-    }
-
     private let actionColor = Color.gray
 }
 
 // MARK: Onboarding geometry
-extension OnboardOverlayWithGeometry {
+extension OnboardingViewWithGeometry {
     private var beakySettings: BeakyGeometrySettings {
         BeakyGeometrySettings(
             width: 0.5 * geometry.size.width,
@@ -158,17 +144,21 @@ extension OnboardOverlayWithGeometry {
     }
 }
 
-struct OnboardOverlayView_Previews: PreviewProvider {
+struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
             Spacer()
             VStack {
                 Spacer()
-                OnboardOverlayView(model: .init())
+                OnboardingView(
+                    model: .init(
+                        namePersistence: InMemoryNamePersistence()
+                    )
+                )
                 Spacer()
             }
             Spacer()
         }
-            .previewLayout(.iPhone12ProMaxLandscape)
+        .previewLayout(.iPhone12ProMaxLandscape)
     }
 }

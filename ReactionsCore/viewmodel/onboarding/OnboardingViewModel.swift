@@ -6,9 +6,15 @@ import SwiftUI
 
 public class OnboardingViewModel: ObservableObject {
 
-    public init() {
+    public init(
+        namePersistence: NamePersistence
+    ) {
+        self.namePersistence = namePersistence
+        self.name = namePersistence.name
         self.navigation = OnboardingNavigationModel.model(self)
     }
+
+    private var namePersistence: NamePersistence
 
     @Published var statement = [TextLine]()
     @Published var isProvidingName = false
@@ -50,6 +56,6 @@ public class OnboardingViewModel: ObservableObject {
     }
 
     func saveName() {
-        print("Saving name...")
+        namePersistence.name = name?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

@@ -14,7 +14,6 @@ struct AcidBasesNavigationModel {
         RootNavigationViewModel(injector: makeInjector())
     }
 
-
     private static func makeInjector() -> Injector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(AcidAppNavigationBehaviour()),
@@ -22,6 +21,8 @@ struct AcidBasesNavigationModel {
             analytics: AnyAppAnalytics(NoOpAppAnalytics()),
             quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence()),
             reviewPersistence: InMemoryReviewPromptPersistence(),
+            onboardingPersistence: InMemoryOnboardingPersistence(),
+            namePersistence: InMemoryNamePersistence(),
             allScreens: AcidAppScreen.allCases,
             linearScreens: AcidAppScreen.allCases
         )

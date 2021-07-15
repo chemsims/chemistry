@@ -7,7 +7,7 @@ import SwiftUI
 public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableObject {
 
     @Published public var view: AnyView
-    @Published public var showOnboarding = true
+    @Published public var showOnboarding = false
     @Published public var showMenu = false {
         didSet {
             if showMenu {
@@ -22,7 +22,7 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
     private(set) public var currentScreen: Screen
     private(set) public var navigationDirection = NavigationDirection.forward
 
-    private let injector: Injector
+    private var injector: Injector
     private let persistence: Injector.Persistence
     private let behaviour: Injector.Behaviour
     private var models = [Screen: ScreenProvider]()
@@ -47,11 +47,8 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
 
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
 
-        self.onboardingModel = OnboardingViewModel()
-        self.onboardingModel?.navigation?.nextScreen = { [weak self] in
-            withAnimation() {
-                self?.showOnboarding = false
-            }
+        if !injector.onboardingPersistence.hasCompletedOnboarding {
+            doShowOnboarding()
         }
     }
 
@@ -107,6 +104,19 @@ extension RootNavigationViewModel {
                 showMenu = false
             }
             goToExisting(screen: prevScreen)
+        }
+    }
+}
+
+extension RootNavigationViewModel {
+    private func doShowOnboarding() {
+        showOnboarding = true
+        onboardingModel = OnboardingViewModel(namePersistence: injector.namePersistence)
+        onboardingModel?.navigation?.nextScreen = { [weak self] in
+            withAnimation() {
+                self?.showOnboarding = false
+                self?.injector.onboardingPersistence.hasCompletedOnboarding = true
+            }
         }
     }
 }
