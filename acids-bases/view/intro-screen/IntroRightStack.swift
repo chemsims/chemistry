@@ -156,7 +156,7 @@ private struct BarChartOrPhChart: View {
         TimeChartView(
             data: [
                 TimeChartDataLine(
-                    equation: components.phLine,
+                    equation: desiredPHLine,
                     headColor: components.substance.type.isAcid ?  RGB.hydrogen.color : RGB.hydroxide.color,
                     haloColor: nil,
                     headRadius: layout.common.chartHeadRadius,
@@ -164,14 +164,70 @@ private struct BarChartOrPhChart: View {
                 )
             ],
             initialTime: 0,
-            currentTime: .constant(components.fractionSubstanceAdded),
+            currentTime: .constant(
+                chartInput.getY(
+                    at: components.fractionSubstanceAdded
+                )
+            ),
             finalTime: 1,
             canSetCurrentTime: false,
-            settings: layout.common.phChartSettings,
+            settings: layout.common.phChartSettings(
+                minX: 0,
+                maxX: 1
+            ),
             axisSettings: layout.common.chartAxis
         )
         .frame(square: layout.common.chartSize)
         .animation(nil, value: components.substance)
+    }
+
+    // The x-axis represents a log scale, and the pH curve is a linear line.
+    // We know the linear line, and from a given pH value we can find the
+    // correct x position along this line
+    private var chartInput: Equation {
+        PhXAxisEquation(
+            pHEquation: components.phLine,
+            desiredLine: desiredPHLine
+        )
+    }
+
+    private var desiredPHLine: LinearEquation
+    {
+        let startY = components.phLine.getY(at: 0)
+        let endY = components.phLine.getY(at: 1)
+
+        return LinearEquation(
+            x1: 0,
+            y1: startY,
+            x2: 1,
+            y2: endY
+        )
+    }
+
+    private var safeSubstanceAdded: Equation {
+        LinearEquation(
+            x1: 0,
+            y1: 1,
+            x2: CGFloat(components.maxSubstanceCount),
+            y2: CGFloat(components.maxSubstanceCount)
+        )
+    }
+}
+
+// The x-axis represents a log scale, and the pH curve is a linear line.
+// We know the linear line, and from a given pH value we can find the
+// correct x position along this line.
+private struct PhXAxisEquation: Equation {
+
+    // pH as a function of substance added
+    let pHEquation: Equation
+
+    // The linear line to be plotted as a function of substance added
+    let desiredLine: LinearEquation
+
+    func getY(at x: CGFloat) -> CGFloat {
+        let pH = pHEquation.getY(at: x)
+        return desiredLine.getX(at: pH)
     }
 }
 
