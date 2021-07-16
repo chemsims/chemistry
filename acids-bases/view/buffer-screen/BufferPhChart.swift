@@ -30,6 +30,8 @@ struct BufferPhChart: View {
 
     private var plotArea: some View {
         ZStack {
+            labels
+
             waterLine
 
             TimeChartView(
@@ -54,8 +56,47 @@ struct BufferPhChart: View {
         .frame(square: chartSize)
     }
 
+    private var waterLineColor: Color {
+        .black
+    }
+
+    private var bufferLineColor: Color {
+        .red
+    }
+
+    private var labels: some View {
+        VStack(spacing: 0) {
+            if pHIsDecreasing {
+                Spacer()
+            }
+            labelRow(label: "Water", color: waterLineColor)
+            labelRow(label: "Buffer", color: bufferLineColor)
+                .opacity(showBufferLine ? 1 : 0)
+            if !pHIsDecreasing {
+                Spacer()
+            }
+        }
+        .padding(.leading, layout.pHLabelLeadingPadding)
+        .padding(.vertical, layout.phLabelVerticalPadding)
+    }
+    
+
+    private func labelRow(
+        label: String,
+        color: Color
+    ) -> some View {
+        HStack(spacing: layout.phLabelHSpacing) {
+            Circle()
+                .frame(square: layout.phLabelCircleSize)
+                .foregroundColor(color)
+            Text(label)
+                .font(.system(size: layout.pHLabelFontSize))
+            Spacer()
+        }
+    }
+
     private var data: [TimeChartDataLine] {
-        if model.phase == .addStrongSubstance {
+        if showBufferLine {
             return [
                 TimeChartDataLine(
                     equation: strongModel.pH,
@@ -69,14 +110,22 @@ struct BufferPhChart: View {
         return []
     }
 
+    private var showBufferLine: Bool {
+        model.phase == .addStrongSubstance
+    }
+
     private var waterLine: some View {
-        let startY = model.substance.type.isAcid ? 0.1 * chartSize : 0.9 * chartSize
+        let startY = pHIsDecreasing ? 0.1 * chartSize : 0.9 * chartSize
         let endY = chartSize - startY
         return Path { p in
             p.move(to: CGPoint(x: minXValuePosition, y: startY))
             p.addLine(to: CGPoint(x: maxXValuePosition, y: endY))
         }
         .stroke(lineWidth: 0.4)
+    }
+
+    private var pHIsDecreasing: Bool {
+        model.substance.type.isAcid
     }
 
     private var yAxis: AxisPositionCalculations<CGFloat> {
@@ -145,6 +194,32 @@ struct BufferPhChart: View {
             x2: maxSubstance,
             y2: maxSubstance
         )
+    }
+}
+
+private extension BufferScreenLayout {
+    var phLabelCircleSize: CGFloat {
+        0.06 * common.chartSize
+    }
+
+    var phLabelHSpacing: CGFloat {
+        0.3 * phLabelCircleSize
+    }
+
+    var pHLabelFontSize: CGFloat {
+        1.1 * phLabelCircleSize
+    }
+
+    var pHLabelSpacing: CGFloat {
+        0.2 * phLabelCircleSize
+    }
+
+    var pHLabelLeadingPadding: CGFloat {
+        1.5 * common.chartAxis.tickSize
+    }
+
+    var phLabelVerticalPadding: CGFloat {
+        1.5 * common.chartAxis.tickSize
     }
 }
 
