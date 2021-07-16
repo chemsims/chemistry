@@ -175,6 +175,7 @@ private struct SolubleBeakerViewWithGeometry: View {
             settings: ParticleContainerSettings(
                 labelColor: solute.color(for: model.selectedReaction).color,
                 label: labelName(for: solute),
+                labelFontSize: settings.soluble.containerFontSize,
                 labelFontColor: .white,
                 strokeLineWidth: 0.4
             )
@@ -182,7 +183,6 @@ private struct SolubleBeakerViewWithGeometry: View {
         .colorMultiply(isActive ? .white : Styling.inactiveContainerMultiply)
         .animation(nil)
         .shadow(radius: isActive ? 3 : 0)
-        .font(.system(size: settings.soluble.containerFontSize))
         .frame(width: settings.soluble.containerWidth)
         .rotationEffect(isActive ? .degrees(135) : .zero)
         .position(
@@ -286,11 +286,13 @@ private struct SolubleBeakerViewWithGeometry: View {
         )
     }
 
-    private func labelName(for soluteType: SoluteType) -> String {
+    private func labelName(for soluteType: SoluteType) -> TextLine {
         switch soluteType {
-        case .primary: return model.selectedReaction.products.salt
-        case .commonIon: return model.selectedReaction.products.commonSalt
-        case .acid: return "H+"
+        case .primary:
+            return TextLine(model.selectedReaction.products.salt)
+        case .commonIon:
+            return TextLine(model.selectedReaction.products.commonSalt)
+        case .acid: return "H^+^"
         }
     }
 

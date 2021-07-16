@@ -84,13 +84,14 @@ private struct IntroBeakerContainers: View {
         _ index: Int
     ) -> some View {
         let substance = model.selectedSubstances.value(for: type)
+        let label = substance?.chargedSymbol(ofPart: .substance).text ?? ""
         return AcidAppShakingContainerView(
             models: shakeModel,
             layout: layout.common,
             initialLocation: containerLocation(type, index),
             activeLocation: activeContainerLocation,
             type: type,
-            label: substance?.symbol ?? "",
+            label: label,
             color: substance?.color ?? RGB.placeholderContainer.color,
             topOfWaterPosition: layout.common.topOfWaterPosition(
                 rows: model.rows

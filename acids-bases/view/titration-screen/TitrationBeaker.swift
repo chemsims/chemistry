@@ -172,7 +172,7 @@ private struct TitrationBeakerTools: View {
             initialLocation: layout.containerPosition,
             activeLocation: layout.activeContainerPosition,
             type: model.components.state.substance,
-            label: model.substance.symbol,
+            label: model.substance.chargedSymbol(ofPart: .substance).text,
             color: model.substance.color,
             topOfWaterPosition: layout.topOfWaterPosition(
                 forRows: model.rows

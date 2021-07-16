@@ -29,7 +29,8 @@ public struct ParticleContainer: View {
 public struct ParticleContainerSettings {
     let containerColor: Color
     let labelColor: Color
-    let label: String
+    let label: TextLine
+    let labelFontSize: CGFloat
     let labelFontColor: Color
     let strokeColor: Color
     let strokeLineWidth: CGFloat
@@ -39,13 +40,15 @@ public struct ParticleContainerSettings {
     /// - Parameters:
     ///     - labelColor: Color of the label
     ///     - label: String on the label
+    ///     - labelFontSize: Font size of the label
     ///     - labelFontColor: Color of the label string
     ///     - containerColor: Color of the container
     ///     - strokeColor: Color of the container stroke
     ///     - strokeLineWidth: Line width of the container stroke
     public init(
         labelColor: Color,
-        label: String,
+        label: TextLine,
+        labelFontSize: CGFloat,
         labelFontColor: Color,
         containerColor: Color = Color.white,
         strokeColor: Color = Color.black,
@@ -54,6 +57,7 @@ public struct ParticleContainerSettings {
         self.containerColor = containerColor
         self.labelColor = labelColor
         self.label = label
+        self.labelFontSize = labelFontSize
         self.labelFontColor = labelFontColor
         self.strokeColor = strokeColor
         self.strokeLineWidth = strokeLineWidth
@@ -85,14 +89,17 @@ private struct EmptyParticleContainer: View {
             Rectangle()
                 .foregroundColor(settings.labelColor)
 
-            Text(settings.label)
-                .frame(
-                    width: geometry.labelHeight,
-                    height: geometry.width
-                )
-                .lineLimit(1)
-                .rotationEffect(.degrees(-90))
-                .foregroundColor(settings.labelFontColor)
+            TextLinesView(
+                line: settings.label,
+                fontSize: settings.labelFontSize,
+                color: settings.labelFontColor
+            )
+            .frame(
+                width: geometry.labelHeight,
+                height: geometry.width
+            )
+            .lineLimit(1)
+            .rotationEffect(.degrees(-90))
         }
         .frame(width: geometry.width, height: geometry.labelHeight)
         .clipped()
@@ -184,6 +191,7 @@ struct ParticleContainer_Previews: PreviewProvider {
             settings: ParticleContainerSettings(
                 labelColor: .purple,
                 label: "ABCDEF",
+                labelFontSize: 10,
                 labelFontColor: .white
             )
         )

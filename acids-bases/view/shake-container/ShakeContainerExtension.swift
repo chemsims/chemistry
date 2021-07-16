@@ -14,7 +14,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
     let initialLocation: CGPoint
     let activeLocation: CGPoint
     let type: ContainerType
-    let label: String
+    let label: TextLine
     let color: Color
     let topOfWaterPosition: CGFloat
     let disabled: Bool
@@ -32,6 +32,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
             containerSettings: ParticleContainerSettings(
                 labelColor: color,
                 label: label,
+                labelFontSize: layout.containerFontSize,
                 labelFontColor: .white,
                 strokeLineWidth: 0.4
             ),
@@ -40,7 +41,6 @@ where ContainerType : CaseIterable, ContainerType : Hashable
             rotation: isActive ? .degrees(135) : .zero,
             isSimulator: AcidBasesApp.isSimulator
         )
-        .font(.system(size: layout.containerFontSize))
         .minimumScaleFactor(0.1)
         .zIndex(isActive ? 1 : 0)
         .disabled(disabled)

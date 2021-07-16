@@ -131,10 +131,13 @@ private struct BufferMoleculeContainers: View {
         }
     }
 
-    private func containerLabel(phase: Phase) -> String {
+    private func containerLabel(phase: Phase) -> TextLine {
         switch phase {
-        case .addWeakSubstance: return model.substance.symbol
-        case .addSalt: return "M\(model.substance.secondary.rawValue)"
+        case .addWeakSubstance:
+            return model.substance.chargedSymbol(ofPart: .substance).text
+        case .addSalt:
+            let suffix = model.substance.chargedSymbol(ofPart: .secondaryIon).text
+            return suffix.prepending(TextSegment(content: "M"))
         case .addStrongSubstance: return "HCl"
         }
     }
