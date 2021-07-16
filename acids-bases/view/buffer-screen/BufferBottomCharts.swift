@@ -28,6 +28,7 @@ struct BufferBottomCharts: View {
                 saltModel: model.saltModel,
                 strongModel: model.strongSubstanceModel
             )
+            .padding(.leading, leadingPaddingForChartWithoutYAxis)
         case .curve:
             BufferFractionsChart(
                 layout: layout,
@@ -44,7 +45,12 @@ struct BufferBottomCharts: View {
                 saltModel: model.saltModel,
                 strongModel: model.strongSubstanceModel
             )
+            .padding(.leading, leadingPaddingForChartWithoutYAxis)
         }
+    }
+
+    private var leadingPaddingForChartWithoutYAxis: CGFloat {
+        layout.common.chartYAxisWidth + layout.common.chartYAxisHSpacing
     }
 
     private var toggle: some View {

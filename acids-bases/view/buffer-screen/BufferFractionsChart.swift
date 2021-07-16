@@ -14,9 +14,58 @@ struct BufferFractionsChart: View {
     @ObservedObject var strongModel: BufferStrongSubstanceComponents
 
     var body: some View {
-        plotArea
-            .frame(square: layout.common.chartSize)
-            .padding(.bottom, layout.common.barChartSettings.totalAxisHeight + layout.common.barChartSettings.chartToAxisSpacing)
+        VStack(spacing: layout.common.chartXAxisVSpacing) {
+            HStack(spacing: layout.common.chartYAxisHSpacing) {
+                yAxisView
+
+                plotArea
+                    .frame(square: layout.common.chartSize)
+            }
+            .frame(height: layout.common.chartSize)
+
+            xAxisView
+        }
+        .padding(.bottom, bottomPadding)
+    }
+
+    private var bottomPadding: CGFloat {
+        let barChartHeight = layout.common.barChartSettings.totalAxisHeight + layout.common.barChartSettings.chartToAxisSpacing
+        let xAxisHeight = layout.common.chartXAxisHeight + layout.common.chartXAxisVSpacing
+        return max(0, barChartHeight - xAxisHeight)
+    }
+
+    private var yAxisView: some View {
+        VStack {
+            Text("1")
+
+            Spacer()
+
+            Text("Fraction of species")
+                .lineLimit(1)
+                .frame(
+                    width: 0.6 * layout.common.chartSize,
+                    height: layout.common.chartYAxisWidth
+                )
+                .fixedSize()
+                .rotationEffect(.degrees(-90))
+                .frame(width: layout.common.chartYAxisWidth)
+
+            Spacer()
+
+            Text("0")
+        }
+        .font(.system(size: 0.6 * layout.common.chartLabelFontSize))
+        .minimumScaleFactor(0.5)
+    }
+
+    private var xAxisView: some View {
+        Text("pH")
+            .font(.system(size: layout.common.chartLabelFontSize))
+            .minimumScaleFactor(0.5)
+            .frame(
+                width: layout.common.chartSize,
+                height: layout.common.chartXAxisHeight
+            )
     }
 
     private var plotArea: some View {
