@@ -13,10 +13,30 @@ struct IntroBeaker: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
+            stackedReactionDefinition
             beaker
             containers
         }
         .frame(height: layout.common.height)
+    }
+
+    private var stackedReactionDefinition: some View {
+        VStack {
+            reactionDefinition
+            Spacer(minLength: 0)
+        }
+    }
+
+    private var reactionDefinition: some View {
+        ReactionDefinitionView(
+            reaction: components.substance.reactionDefinition,
+            fontSize: layout.reactionDefinitionFontSize,
+            circleSize: layout.reactionDefinitionCircleSize
+        )
+        .frame(size: layout.reactionDefinitionSize)
+        .padding(.leading, layout.reactionDefinitionLeadingPadding)
+        .animation(nil, value: components.substance.reactionDefinition)
+        .minimumScaleFactor(0.5)
     }
 
     private var containers: some View {

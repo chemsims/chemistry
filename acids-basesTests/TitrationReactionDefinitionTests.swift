@@ -137,4 +137,30 @@ class TitrationReactionDefinitionTests: XCTestCase {
         XCTAssertEqual(reaction.rightTerms[1].name, "H_2_O")
     }
 
+    func testFWeakBaseTitrationDefinition() {
+        let base = AcidOrBase.weakBaseF
+        let reaction = base.titrationReactionDefinition
+
+        XCTAssertEqual(reaction.leftTerms.count, 2)
+        XCTAssertEqual(reaction.rightTerms.count, 2)
+
+        XCTAssertEqual(reaction.leftTerms[0].name, "F^-^")
+        XCTAssertEqual(reaction.leftTerms[1].name, "H_3_O")
+        XCTAssertEqual(reaction.rightTerms[0].name, "HF")
+        XCTAssertEqual(reaction.rightTerms[1].name, "H_2_O")
+    }
+
+    func testHSWeakBaseTitrationDefinition() {
+        let base = AcidOrBase.weakBaseHS
+        let reaction = base.titrationReactionDefinition
+
+        XCTAssertEqual(reaction.leftTerms.count, 2)
+        XCTAssertEqual(reaction.rightTerms.count, 2)
+
+        XCTAssertEqual(reaction.leftTerms[0].name, "HS^-^")
+        XCTAssertEqual(reaction.leftTerms[1].name, "H_3_O")
+        XCTAssertEqual(reaction.rightTerms[0].name, "H_2_S")
+        XCTAssertEqual(reaction.rightTerms[1].name, "H_2_O")
+    }
+
 }

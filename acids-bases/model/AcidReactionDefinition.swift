@@ -5,11 +5,11 @@
 import SwiftUI
 import ReactionsCore
 
-struct AcidReactionDefinition {
+struct AcidReactionDefinition: Equatable {
     let leftTerms: [Term]
     let rightTerms: [Term]
 
-    struct Term {
+    struct Term: Equatable {
         let name: TextLine
         let color: Color
     }

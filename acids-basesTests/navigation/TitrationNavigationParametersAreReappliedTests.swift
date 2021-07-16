@@ -19,7 +19,7 @@ class TitrationNavigationParametersAreReappliedTests: XCTestCase {
     }
 
     private func doTest<T: Equatable>(_ path: KeyPath<TitrationViewModel, T>) {
-        let model = TitrationViewModel()
+        let model = TitrationViewModel(namePersistence: InMemoryNamePersistence())
         checkPreviousValueIsReapplied(
             model: model,
             navigation: model.navigation!,

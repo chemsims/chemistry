@@ -50,10 +50,39 @@ struct AcidBasesScreenLayout {
     }
 }
 
+extension AcidBasesScreenLayout {
+    static let topLevelScreenPadding: CGFloat = 10
+
+    var menuScreenOverlap: CGSize {
+        let h = menuHPadding + menuSize - Self.topLevelScreenPadding
+        let v = menuTopPadding + menuSize - Self.topLevelScreenPadding
+
+        return CGSize(
+            width: max(0, h),
+            height: max(0, v)
+        )
+    }
+
+    var menuScreenOverlapWithSpacing: CGSize {
+        CGSize(
+            width: menuScreenOverlap.width + spacingToMenu,
+            height: menuScreenOverlap.height + spacingToMenu
+        )
+    }
+
+    private var spacingToMenu: CGFloat {
+        0.2 * menuSize
+    }
+}
+
 // MARK: Beaker/slider geometry
 extension AcidBasesScreenLayout {
     var beakerWidth: CGFloat {
         0.7 * leftColumnWidth
+    }
+
+    var beakerPlusSliderWidth: CGFloat {
+        beakerWidth + sliderSettings.handleWidth
     }
 
     var beakerHeight: CGFloat {

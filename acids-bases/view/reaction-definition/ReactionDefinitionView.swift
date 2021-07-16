@@ -19,7 +19,7 @@ struct ReactionDefinitionView: View {
     }
 
     private func row(showTerms: Bool = true) -> some View {
-        HStack(spacing: 5) {
+        HStack(alignment: .top, spacing: 5) {
             concatTerms(reaction.leftTerms, showTerms: showTerms)
             arrow
                 .opacity(showTerms ? 1 : 0)
@@ -33,7 +33,7 @@ struct ReactionDefinitionView: View {
     ) -> some View {
         VStack {
             HStack(alignment: .top, spacing : 2) {
-                if terms.count > 1 {
+                if !terms.isEmpty {
                     termView(terms.first!, showTerm: showTerms)
                 }
                 ForEach(terms.indices.dropFirst(1), id: \.self) { i in

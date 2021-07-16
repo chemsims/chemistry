@@ -225,15 +225,13 @@ extension AcidOrBase {
     }
 
     private var secondarySymbol: ChargedSymbol {
-        if type == .weakBase && secondary.rawValue.contains("H") {
-            assert(secondary.rawValue.filter { $0 == "H"}.count == 1, "Expected no more than 1 H molecule in weak base ion \(secondary.rawValue)")
-            let withoutH = secondary.rawValue.filter { $0 != "H" }
-            return ChargedSymbol(symbol: "H_2_\(withoutH)", charge: nil)
-        }
-
-
         if type == .weakBase {
-            return ChargedSymbol(symbol: "\(secondary.rawValue)H", charge: nil)
+            return ChargedSymbol(
+                symbol: TextLine(
+                    Self.prependingHydrogen(to: secondary.rawValue)
+                ),
+                charge: nil
+            )
         }
         let charge: ChargedSymbol.Charge = primary == .hydrogen ? .negative : .positive
         return ChargedSymbol(symbol: TextLine(secondary.rawValue), charge: charge)
@@ -267,19 +265,34 @@ extension AcidOrBase {
 // MARK: Reaction definitions
 extension AcidOrBase {
     var reactionDefinition: AcidReactionDefinition {
-        AcidReactionDefinition(
-            leftTerms: [],
-            rightTerms: []
+
+        let substance = term(ofPart: .substance)
+        let primary = reactionDefinitionPrimaryProduct
+        let secondary = term(ofPart: .secondaryIon)
+
+        let leftTerms = type.isStrong ? [substance] : [substance, waterTerm]
+
+        let rightTerms = type.isAcid ? [primary, secondary] : [secondary, primary]
+
+        return AcidReactionDefinition(
+            leftTerms: leftTerms,
+            rightTerms: rightTerms
         )
+    }
+
+    private var reactionDefinitionPrimaryProduct: AcidReactionDefinition.Term {
+        switch type {
+        case .strongAcid, .strongBase, .weakBase:
+            return term(ofPart: .primaryIon)
+        case .weakAcid:
+            return .init(name: "H_3_O^+^", color: RGB.hydrogen.color)
+        }
     }
 
     var titrationReactionDefinition: AcidReactionDefinition {
         AcidReactionDefinition(
             leftTerms: [
-                .init(
-                    name: chargedSymbol(ofPart: .substance).text,
-                    color: color(ofPart: .substance)
-                ),
+                term(ofPart: .substance),
                 .init(
                     name: titrationDefinitionTitrant,
                     color: titrant.maximumMolarityColor.color
@@ -293,6 +306,10 @@ extension AcidOrBase {
                 waterTerm
             ]
         )
+    }
+
+    private func term(ofPart part: SubstancePart) -> AcidReactionDefinition.Term {
+        .init(name: chargedSymbol(ofPart: part).text, color: color(ofPart: part))
     }
 
     private var titrationDefinitionTitrant: TextLine {
@@ -314,19 +331,38 @@ extension AcidOrBase {
         case .weakAcid:
             return "K\(secondarySymbol)"
         case .weakBase:
-            return "H\(symbol(ofPart: .substance))"
+            return TextLine(Self.prependingHydrogen(to: symbol(ofPart: .substance)))
         }
     }
 
     private var waterTerm: AcidReactionDefinition.Term {
         .init(name: "H_2_O", color: RGB.beakerLiquid.color)
     }
+}
 
-    private func term(ofPart part: SubstancePart) -> AcidReactionDefinition.Term {
-        .init(
-            name: chargedSymbol(ofPart: part).text,
-            color: color(ofPart: part)
+extension AcidOrBase {
+
+    /// Returns `symbol` with `H` prepended. If there is already a hydrogen element
+    /// in the symbol, then we return `H_2_` as a prefix. Note that in this case
+    /// we expect exactly 1 'H' value since we do not support multiple counts,
+    /// and we also assume any H in the element is a hydrogen element, rather than any other
+    /// element containing the letter H. This is since none of our substances support such
+    /// elements.
+    private static func prependingHydrogen(
+        to symbol: String
+    ) -> String {
+
+        let countOfH = symbol.filter { $0 == "H" }.count
+        assert(
+            countOfH < 2,
+            "Expected no more than 1 H value in \(symbol)"
         )
+        if countOfH != 1 {
+            return "H\(symbol)"
+        }
+
+        let withoutH = symbol.filter { $0 != "H" }
+        return "H_2_\(withoutH)"
     }
 }
 

@@ -3,12 +3,13 @@
 //
 
 import XCTest
+import ReactionsCore
 @testable import acids_bases
 
 class TitrationViewModelTests: XCTestCase {
 
     func testNextIsAppliedWhenMaxBufferCapacityIsReached() {
-        let model = TitrationViewModel()
+        let model = TitrationViewModel(namePersistence: InMemoryNamePersistence())
         let nav = model.navigation
         nav?.nextUntil {
             $0.isAtState(
