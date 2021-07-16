@@ -280,7 +280,9 @@ private struct PHOrConcentrationBar: View {
     private var concentrationBar: some View {
         generalBar(
             formatTickValue: { "10^-\($0)^"},
-            formatLabel: { "[\($0.rawValue)]" },
+            formatLabel: {
+                "[\($0.chargedSymbol.text)]"
+            },
             indicatorLabelValue: \.concentration,
             formatValue: TextLineUtil.scientific
         )

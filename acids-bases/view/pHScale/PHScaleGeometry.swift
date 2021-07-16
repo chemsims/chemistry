@@ -77,7 +77,7 @@ extension PHScaleGeometry {
 extension PHScaleGeometry {
     var indicatorSize: CGSize {
         CGSize(
-            width: 0.167 * width,
+            width: 0.18 * width,
             height: barVerticalSpacing
         )
     }
