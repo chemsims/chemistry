@@ -9,10 +9,53 @@ struct BufferFractionsChart: View {
 
     let layout: BufferScreenLayout
     let phase: BufferScreenViewModel.Phase
+    @ObservedObject var model: BufferScreenViewModel
     @ObservedObject var saltModel: BufferSaltComponents
     @ObservedObject var strongModel: BufferStrongSubstanceComponents
 
     var body: some View {
+        plotArea
+            .frame(square: layout.common.chartSize)
+            .padding(.bottom, layout.common.barChartSettings.totalAxisHeight + layout.common.barChartSettings.chartToAxisSpacing)
+    }
+
+    private var plotArea: some View {
+        ZStack {
+            annotations
+            chart
+        }
+    }
+
+    private var annotations: some View {
+        ZStack {
+            bufferRegion
+            pkaLine
+        }
+    }
+
+    private var bufferRegion: some View {
+        let maxP = xAxis.getPosition(at: midPh + 1)
+        let minP = xAxis.getPosition(at: midPh - 1)
+
+        return Rectangle()
+            .frame(width: maxP - minP)
+            .position(x: xAxis.getPosition(at: midPh), y: layout.common.chartSize / 2)
+            .foregroundColor(RGB.gray(base: 230).color)
+            .opacity(0.3)
+    }
+
+    private var pkaLine: some View {
+        Path { p in
+            p.addLines([
+                .init(x: xAxis.getPosition(at: midPh), y: 0),
+                .init(x: xAxis.getPosition(at: midPh), y: layout.common.chartSize)
+            ])
+        }
+        .stroke(style: layout.common.chartDashedLineStyle)
+        .foregroundColor(.orangeAccent)
+    }
+
+    private var chart: some View {
         TimeChartView(
             data: [
                 TimeChartDataLine(
@@ -40,8 +83,6 @@ struct BufferFractionsChart: View {
             ),
             axisSettings: layout.common.chartAxis
         )
-        .frame(square: layout.common.chartSize)
-        .padding(.bottom, layout.common.barChartSettings.totalAxisHeight + layout.common.barChartSettings.chartToAxisSpacing)
     }
 
     private var initialChartPh: CGFloat {
@@ -85,6 +126,10 @@ struct BufferFractionsChart: View {
 
     private var maxPh: CGFloat {
         helper.maxValue
+    }
+
+    private var midPh: CGFloat {
+        model.substance.pKA
     }
 
     private var xAxis: AxisPositionCalculations<CGFloat> {

@@ -106,12 +106,7 @@ struct TitrationCurve: View {
                 ]
             )
         }
-        .stroke(
-            style: .init(
-                lineWidth: 0.5,
-                dash: [layout.common.chartSize / 30]
-            )
-        )
+        .stroke(style: layout.common.chartDashedLineStyle)
         .foregroundColor(.orangeAccent)
     }
 

@@ -32,6 +32,7 @@ struct BufferBottomCharts: View {
             BufferFractionsChart(
                 layout: layout,
                 phase: model.phase,
+                model: model,
                 saltModel: model.saltModel,
                 strongModel: model.strongSubstanceModel
             )

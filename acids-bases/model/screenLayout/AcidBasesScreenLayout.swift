@@ -282,6 +282,13 @@ extension AcidBasesScreenLayout {
     var chartTotalWidth: CGFloat {
         chartSize + chartYAxisWidth + chartYAxisHSpacing
     }
+
+    var chartDashedLineStyle: StrokeStyle {
+        .init(
+            lineWidth: 0.5,
+            dash: [chartSize / 30]
+        )
+    }
 }
 
 // MARK: Reaction progress chart geometry
