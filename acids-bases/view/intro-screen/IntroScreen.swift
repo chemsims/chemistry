@@ -7,25 +7,32 @@ import ReactionsCore
 
 struct IntroScreen: View {
 
-    var model: IntroScreenViewModel
+    @ObservedObject var model: IntroScreenViewModel
 
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
-        GeometryReader { geo in
-            IntroScreenWithSettings(
-                model: model,
-                layout: IntroScreenLayout(
-                    common: AcidBasesScreenLayout(
-                        geometry: geo,
-                        verticalSizeClass: verticalSizeClass,
-                        horizontalSizeClass: horizontalSizeClass
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color.white)
+                .colorMultiply(model.highlights.colorMultiply(for: nil))
+                .edgesIgnoringSafeArea(.all)
+
+            GeometryReader { geo in
+                IntroScreenWithSettings(
+                    model: model,
+                    layout: IntroScreenLayout(
+                        common: AcidBasesScreenLayout(
+                            geometry: geo,
+                            verticalSizeClass: verticalSizeClass,
+                            horizontalSizeClass: horizontalSizeClass
+                        )
                     )
                 )
-            )
+            }
+            .padding(AcidBasesScreenLayout.topLevelScreenPadding)
         }
-        .padding(AcidBasesScreenLayout.topLevelScreenPadding)
     }
 }
 

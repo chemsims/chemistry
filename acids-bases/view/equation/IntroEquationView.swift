@@ -9,6 +9,7 @@ struct IntroEquationView: View {
 
     let concentration: PrimaryIonValue<PrimaryIonConcentration>
     let showValues: Bool
+    let highlights: HighlightedElements<IntroScreenElement>
 
     var body: some View {
         GeometryReader { geo in
@@ -20,7 +21,8 @@ struct IntroEquationView: View {
             ) {
                 SizedIntroEquationView(
                     concentration: concentration,
-                    showValues: showValues
+                    showValues: showValues,
+                    highlights: highlights
                 )
             }
             .frame(width: geo.size.width, height: geo.size.height)
@@ -37,6 +39,7 @@ private struct SizedIntroEquationView: View {
 
     let concentration: PrimaryIonValue<PrimaryIonConcentration>
     let showValues: Bool
+    let highlights: HighlightedElements<IntroScreenElement>
 
     var body: some View {
         HStack(spacing: 30) {
@@ -46,6 +49,8 @@ private struct SizedIntroEquationView: View {
                 concentration: concentration.hydrogen,
                 showValues: showValues
             )
+            .background(equationBackground)
+            .colorMultiply(highlights.colorMultiply(for: .pHEquation))
 
             PLogEquationView(
                 symbol: "OH",
@@ -53,11 +58,17 @@ private struct SizedIntroEquationView: View {
                 concentration: concentration.hydroxide,
                 showValues: showValues
             )
+            .background(equationBackground)
+            .colorMultiply(highlights.colorMultiply(for: .pOHEquation))
 
             phSum
         }
         .font(.system(size: EquationSizing.fontSize))
         .minimumScaleFactor(0.5)
+    }
+
+    private var equationBackground: some View {
+        Color.white.padding(.horizontal, -2)
     }
 
     private var phSum: some View {
@@ -152,10 +163,13 @@ struct IntroEquationView_Previews: PreviewProvider {
             concentration: PrimaryIonValue.constant(
                 PrimaryIonConcentration(concentration: 1e-4)
             ),
-            showValues: true
+            showValues: true,
+            highlights: .init(elements: [.pHEquation])
         )
         .previewLayout(.sizeThatFits)
         .border(Color.red)
         .frame(width: NaturalWidth, height: NaturalHeight)
+        .background(Styling.inactiveScreenElement.padding(-10))
+        .padding(10)
     }
 }

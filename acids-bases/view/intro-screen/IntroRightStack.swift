@@ -25,7 +25,8 @@ struct IntroRightStack: View {
             Spacer()
             IntroEquationView(
                 concentration: components.concentrations,
-                showValues: true
+                showValues: true,
+                highlights: model.highlights
             )
             .frame(size: layout.equationSize)
             Spacer()
@@ -54,6 +55,8 @@ struct IntroRightStack: View {
             components: components,
             layout: layout
         )
+        .background(Color.white)
+        .colorMultiply(model.highlights.colorMultiply(for: .pHScale))
     }
 
     private var bottomRow: some View {
@@ -71,6 +74,10 @@ struct IntroRightStack: View {
             components: components,
             layout: layout
         )
+        .background(
+            Color.white.padding(.trailing, -layout.common.chartYAxisWidth)
+        )
+        .colorMultiply(model.highlights.colorMultiply(for: .phChart))
     }
 
     private var beaky: some View {
@@ -137,10 +144,9 @@ private struct BarChartOrPhChart: View {
         let barGeo = layout.common.barChartSettings
         return HStack(spacing: layout.common.chartYAxisHSpacing) {
             Text("pH")
-                .frame(
-                    height: layout.common.chartXAxisHeight  // TODO - shouldn't this be y axis?
-                )
+                .frame(height: layout.common.chartYAxisWidth)
                 .rotationEffect(.degrees(-90))
+                .frame(width: layout.common.chartYAxisWidth)
 
             VStack(spacing: barGeo.chartToAxisSpacing) {
                 phChartArea

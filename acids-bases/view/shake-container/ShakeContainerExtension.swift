@@ -18,6 +18,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
     let color: Color
     let topOfWaterPosition: CGFloat
     let disabled: Bool
+    let onActivateContainer: (ContainerType) -> Void
 
     var body: some View {
         let addModel = models.model(for: type)
@@ -67,6 +68,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
 
         withAnimation(.easeOut(duration: 0.25)) {
             models.activeMolecule = element
+            onActivateContainer(element)
         }
         models.start(
             for: element,

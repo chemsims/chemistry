@@ -494,6 +494,7 @@
 		57D2F31225EA389C00AEE0D8 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
 		57D2F32725EA86C600AEE0D8 /* EquilibriumGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */; };
 		57D3261626A1DFD80093CD16 /* ReactionDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */; };
+		57D3261926A204F70093CD16 /* IntroScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261826A204F60093CD16 /* IntroScreenElement.swift */; };
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
@@ -1217,6 +1218,7 @@
 		57D2F31825EA601B00AEE0D8 /* ICETable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICETable.swift; sourceTree = "<group>"; };
 		57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumGrid.swift; sourceTree = "<group>"; };
 		57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionTests.swift; sourceTree = "<group>"; };
+		57D3261826A204F60093CD16 /* IntroScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreenElement.swift; sourceTree = "<group>"; };
 		57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeContainerViewModel.swift; sourceTree = "<group>"; };
 		57D3997F26615C4D00443C5A /* MovingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingPoint.swift; sourceTree = "<group>"; };
 		57D60151265EAD0100017E25 /* PositiveInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveInt.swift; sourceTree = "<group>"; };
@@ -2373,6 +2375,7 @@
 		5773BCDC267A7E8F00E52C81 /* enums */ = {
 			isa = PBXGroup;
 			children = (
+				57D3261726A204E50093CD16 /* ui-elements */,
 				5773BCDD267A7E9D00E52C81 /* AcidAppScreen.swift */,
 				5773BCDF267A7EBF00E52C81 /* AcidAppQuestionSet.swift */,
 			);
@@ -3130,6 +3133,14 @@
 				57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */,
 			);
 			path = grid;
+			sourceTree = "<group>";
+		};
+		57D3261726A204E50093CD16 /* ui-elements */ = {
+			isa = PBXGroup;
+			children = (
+				57D3261826A204F60093CD16 /* IntroScreenElement.swift */,
+			);
+			path = "ui-elements";
 			sourceTree = "<group>";
 		};
 		57D60150265EACF300017E25 /* validation */ = {
@@ -4039,6 +4050,7 @@
 				577C506826812409003DAD17 /* MolesToConcentration.swift in Sources */,
 				57F467392687009900E294BE /* TitrationPreparationModel.swift in Sources */,
 				57E9B762268DFF2800DC989B /* ReactionDefinitionView.swift in Sources */,
+				57D3261926A204F70093CD16 /* IntroScreenElement.swift in Sources */,
 				577C506026811078003DAD17 /* KToConcentration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

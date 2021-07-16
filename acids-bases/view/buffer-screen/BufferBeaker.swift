@@ -119,7 +119,8 @@ private struct BufferMoleculeContainers: View {
             topOfWaterPosition: layout.common.topOfWaterPosition(
                 rows: model.rows
             ),
-            disabled: model.input != .addMolecule(phase: phase)
+            disabled: model.input != .addMolecule(phase: phase),
+            onActivateContainer: { _ in }
         )
     }
 

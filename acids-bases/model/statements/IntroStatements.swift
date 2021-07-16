@@ -115,8 +115,8 @@ struct IntroStatements {
 
     static func setWaterLevel(substance: AcidOrBase) -> [TextLine] {
         let symbol = substance.symbol
-        let primary = substance.primary.rawValue
-        let secondary = substance.primary.rawValue
+        let primary = substance.chargedSymbol(ofPart: .primaryIon).text
+        let secondary = substance.chargedSymbol(ofPart: .secondaryIon).text
         return [
             """
             You chose *\(symbol)*. When in water, \(symbol) dissociates completely \

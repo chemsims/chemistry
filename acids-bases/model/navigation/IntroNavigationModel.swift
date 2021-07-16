@@ -28,15 +28,15 @@ struct IntroNavigationModel {
             SetStatement(statements.explainLewis),
             SetStatement(statements.explainSimpleDefinition),
             ChooseSubstance(statements.chooseStrongAcid, .strongAcid),
-            PostChooseSubstance(statements.showPhScale),
-            SetStatement(statements.explainPHConcept),
-            SetStatement(statements.explainPOHConcept),
+            PostChooseSubstance(statements.showPhScale, highlights: [.pHScale]),
+            SetStatement(statements.explainPHConcept, highlights: [.pHEquation]),
+            SetStatement(statements.explainPOHConcept, highlights: [.pOHEquation]),
             SetStatement(statements.explainPRelation),
             SetStatement(statements.explainPConcentrationRelation1),
             SetStatement(statements.explainPConcentrationRelation2),
             SetWaterLevel(type: .strongAcid),
             AddSubstance(type: .strongAcid),
-            PostAddSubstance(statements.showPhVsMolesGraph, namePersistence: namePersistence),
+            PostAddSubstance(statements.showPhVsMolesGraph, namePersistence: namePersistence, highlights: [.phChart]),
             ChooseSubstance(statements.chooseStrongBase, .strongBase),
             SetWaterLevel(type: .strongBase),
             AddSubstance(type: .strongBase),
@@ -82,32 +82,46 @@ class IntroScreenState: ScreenState, SubState {
 private class SetStatement: IntroScreenState {
 
     let statement: (IntroScreenViewModel) -> [TextLine]
+    let highlights: [IntroScreenElement]
 
-    init(_ statement: @escaping (IntroScreenViewModel) -> [TextLine]) {
+    init(_ statement: @escaping (IntroScreenViewModel) -> [TextLine], highlights: [IntroScreenElement] = []) {
         self.statement = statement
+        self.highlights = highlights
     }
 
-    convenience init(_ statement: [TextLine]) {
-        self.init { _ in statement }
+    convenience init(_ statement: [TextLine], highlights: [IntroScreenElement] = []) {
+        self.init({ _ in statement }, highlights: highlights)
     }
 
-    convenience init(_ statement: @escaping (AcidOrBase) -> [TextLine], type: AcidOrBaseType) {
-        self.init { model in
-            statement(model.substance(forType: type))
-        }
+    convenience init(
+        _ statement: @escaping (AcidOrBase) -> [TextLine],
+        type: AcidOrBaseType,
+        highlights: [IntroScreenElement] = []
+    ) {
+        self.init(
+            { model in
+                statement(model.substance(forType: type))
+            },
+            highlights: highlights
+        )
     }
 
     convenience init(
         _ statement: @escaping (NamePersistence) -> [TextLine],
-        namePersistence: NamePersistence
+        namePersistence: NamePersistence,
+        highlights: [IntroScreenElement] = []
     ) {
-        self.init { model in
-            statement(namePersistence)
-        }
+        self.init(
+            { model in
+                statement(namePersistence)
+            },
+            highlights: highlights
+        )
     }
 
     override func apply(on model: IntroScreenViewModel) {
         model.statement = statement(model)
+        model.highlights.elements = highlights
     }
 }
 
@@ -138,24 +152,30 @@ private class ChooseSubstance: IntroScreenState {
         model.availableSubstances = AcidOrBase.substances(forType: type)
         model.inputState = .chooseSubstance(type: type)
         model.addMoleculesModel.stopAll()
+        model.highlights.elements = [.reactionSelection]
     }
 
     override func unapply(on model: IntroScreenViewModel) {
         model.inputState = .none
         model.setSubstance(nil, type: type)
         model.popLastComponent()
+        model.highlights.clear()
     }
 }
 
 private class PostChooseSubstance: IntroScreenState {
     let statement: [TextLine]
-    init(_ statement: [TextLine]) {
+    let highlights: [IntroScreenElement]
+
+    init(_ statement: [TextLine], highlights: [IntroScreenElement] = []) {
         self.statement = statement
+        self.highlights = highlights
     }
 
     override func apply(on model: IntroScreenViewModel) {
         model.statement = statement
         model.inputState = .none
+        model.highlights.elements = highlights
     }
 }
 
@@ -171,10 +191,12 @@ private class SetWaterLevel: IntroScreenState {
             substance: model.substance(forType: type)
         )
         model.inputState = .setWaterLevel
+        model.highlights.elements = [.waterSlider]
     }
 
     override func unapply(on model: IntroScreenViewModel) {
         model.inputState = .none
+        model.highlights.clear()
     }
 }
 
@@ -199,6 +221,7 @@ private class AddSubstance: IntroScreenState {
     override func apply(on model: IntroScreenViewModel) {
         model.statement = statements.addSubstance(type)
         model.inputState = .addSubstance(type: type)
+        model.highlights.elements = [.beakerTools]
     }
 
     override func unapply(on model: IntroScreenViewModel) {
@@ -206,6 +229,7 @@ private class AddSubstance: IntroScreenState {
             model.components.reset()
         }
         model.addMoleculesModel.stopAll()
+        model.highlights.clear()
     }
 }
 
@@ -214,21 +238,25 @@ private class PostAddSubstance: IntroScreenState {
     let showPhChart: Bool
     let statement: (NamePersistence) -> [TextLine]
     let namePersistence: NamePersistence
+    let highlights: [IntroScreenElement]
 
     init(
         _ statement: @escaping (NamePersistence) -> [TextLine],
         namePersistence: NamePersistence,
-        showPhChart: Bool = true
+        showPhChart: Bool = true,
+        highlights: [IntroScreenElement] = []
     ) {
         self.showPhChart = showPhChart
         self.namePersistence = namePersistence
         self.statement = statement
+        self.highlights = highlights
     }
 
     override func apply(on model: IntroScreenViewModel) {
         model.statement = statement(namePersistence)
         model.inputState = .none
         model.addMoleculesModel.stopAll()
+        model.highlights.elements = highlights
         if showPhChart {
             model.graphView = .ph
         }

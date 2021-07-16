@@ -37,6 +37,7 @@ struct IntroBeaker: View {
         .padding(.leading, layout.reactionDefinitionLeadingPadding)
         .animation(nil, value: components.substance.reactionDefinition)
         .minimumScaleFactor(0.5)
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var containers: some View {
@@ -58,8 +59,8 @@ struct IntroBeaker: View {
                 currentTime: 0,
                 settings: layout.common.adjustableBeakerSettings,
                 canSetLevel: model.inputState == .setWaterLevel,
-                beakerColorMultiply: .white,
-                sliderColorMultiply: .white,
+                beakerColorMultiply: model.highlights.colorMultiply(for: nil),
+                sliderColorMultiply: model.highlights.colorMultiply(for: .waterSlider),
                 beakerModifier: AddMoleculesAccessibilityModifier()
             )
         }
@@ -78,6 +79,8 @@ private struct IntroBeakerContainers: View {
 
     var body: some View {
         ZStack {
+            highlight
+
             phMeter
             container(.strongAcid, 0)
             container(.strongBase, 1)
@@ -85,6 +88,17 @@ private struct IntroBeakerContainers: View {
             container(.weakBase, 3)
         }
         .frame(width: totalBeakerWidth)
+        .colorMultiply(model.highlights.colorMultiply(for: .beakerTools))
+    }
+
+    private var highlight: some View {
+        Rectangle()
+            .frame(height: 1.1 * layout.common.phMeterSize.height)
+            .foregroundColor(.white)
+            .position(
+                x: layout.common.beakerPlusSliderWidth / 2,
+                y: layout.containerRowYPos
+            )
     }
 
     private var phMeter: some View {
@@ -116,7 +130,8 @@ private struct IntroBeakerContainers: View {
             topOfWaterPosition: layout.common.topOfWaterPosition(
                 rows: model.rows
             ),
-            disabled: model.inputState != .addSubstance(type: type)
+            disabled: model.inputState != .addSubstance(type: type),
+            onActivateContainer: { _ in model.highlights.clear() }
         )
     }
 

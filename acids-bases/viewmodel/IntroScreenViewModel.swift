@@ -29,12 +29,17 @@ class IntroScreenViewModel: ObservableObject {
     @Published var rows: CGFloat {
         didSet {
             components.rows = GridCoordinateList.availableRows(for: rows)
+            if highlights.elements == [.waterSlider] {
+                highlights.clear()
+            }
         }
     }
     @Published var selectedSubstances = AcidOrBaseMap<AcidOrBase?>.constant(nil)
     @Published var availableSubstances = AcidOrBase.strongAcids
     @Published var inputState = InputState.none
     @Published var graphView = GraphView.concentration
+
+    @Published var highlights = HighlightedElements<IntroScreenElement>()
 
     private(set) var addMoleculesModel: MultiContainerShakeViewModel<AcidOrBaseType>!
 

@@ -177,7 +177,8 @@ private struct TitrationBeakerTools: View {
             topOfWaterPosition: layout.topOfWaterPosition(
                 forRows: model.rows
             ),
-            disabled: model.inputState != .addSubstance
+            disabled: model.inputState != .addSubstance,
+            onActivateContainer: { _ in }
         )
     }
 
