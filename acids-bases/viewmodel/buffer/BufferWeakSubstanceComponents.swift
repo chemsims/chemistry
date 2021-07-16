@@ -234,7 +234,7 @@ extension BufferWeakSubstanceComponents {
 
     private func bar(_ part: SubstancePart, equation: Equation) -> BarChartData {
         BarChartData(
-            label: substance.symbol(ofPart: part),
+            label: substance.chargedSymbol(ofPart: part).text,
             equation: equation,
             color: substance.color(ofPart: part),
             accessibilityLabel: "" // TODO

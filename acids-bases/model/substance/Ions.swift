@@ -26,6 +26,10 @@ enum PrimaryIon: String, CaseIterable {
     var color: Color {
         rgb.color
     }
+
+    var chargedSymbol: AcidOrBase.ChargedSymbol {
+        .init(symbol: TextLine(rawValue), charge: self == .hydrogen ? .positive : .negative)
+    }
 }
 
 enum SecondaryIon: String {

@@ -102,7 +102,7 @@ class IntroScreenComponents: ObservableObject {
         // TODO - accessibility labels
         return SubstanceValue(
             substance: BarChartData(
-                label: substance.symbol,
+                label: substance.chargedSymbol(ofPart: .substance).text,
                 equation: LinearEquation(
                     m: finalSubstanceFraction,
                     x1: 0,
@@ -112,13 +112,13 @@ class IntroScreenComponents: ObservableObject {
                 accessibilityLabel: ""
             ),
             primaryIon: BarChartData(
-                label: substance.primary.rawValue,
+                label: substance.chargedSymbol(ofPart: .primaryIon).text,
                 equation: ionFraction,
                 color: substance.primary.color,
                 accessibilityLabel: ""
             ),
             secondaryIon: BarChartData(
-                label: substance.secondary.rawValue,
+                label: substance.chargedSymbol(ofPart: .secondaryIon).text,
                 equation: ionFraction,
                 color: substance.secondary.color,
                 accessibilityLabel: ""

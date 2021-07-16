@@ -363,25 +363,25 @@ private class Calculations {
         .init {
             switch $0 {
             case .hydrogen: return BarChartData(
-                label: PrimaryIon.hydrogen.rawValue,
+                label: PrimaryIon.hydrogen.chargedSymbol.text,
                 equation: hydrogenBarEquation,
                 color: RGB.hydrogen.color,
                 accessibilityLabel: ""
             )
             case .hydroxide: return BarChartData(
-                label: PrimaryIon.hydroxide.rawValue,
+                label: PrimaryIon.hydroxide.chargedSymbol.text,
                 equation: hydroxideBarEquation,
                 color: RGB.hydroxide.color,
                 accessibilityLabel: ""
             )
             case .secondaryIon: return BarChartData(
-                label: substance.symbol(ofPart: .secondaryIon),
+                label: substance.chargedSymbol(ofPart: .secondaryIon).text,
                 equation: ionBarChartEquation,
                 color: substance.color(ofPart: .secondaryIon),
                 accessibilityLabel: ""
             )
             case .substance: return BarChartData(
-                label: substance.symbol,
+                label: substance.chargedSymbol(ofPart: .substance).text,
                 equation: substanceBarChartEquation,
                 color: substance.color,
                 accessibilityLabel: ""

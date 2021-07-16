@@ -43,13 +43,7 @@ public struct ReactionProgressChartGeometry<MoleculeType: CaseIterable> {
         let barGeometry = BarChartGeometry(chartWidth: chartSize, minYValue: 0, maxYValue: 1)
         self.axisLineWidth = barGeometry.axisLineWidth
         self.chartToAxisSpacing = barGeometry.chartToAxisSpacing
-        self.axisLayout = .init(
-            width: chartSize,
-            circleSize: barGeometry.labelDiameter,
-            textHeight: barGeometry.labelTextHeight,
-            fontSize: barGeometry.labelFontSize,
-            circleToTextSpacing: barGeometry.labelToCircleSpacing
-        )
+        self.axisLayout = barGeometry.axisLayout
     }
 
     // Diameter of a molecule

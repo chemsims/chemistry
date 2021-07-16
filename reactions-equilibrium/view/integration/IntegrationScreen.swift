@@ -128,7 +128,7 @@ private extension ReactionComponents {
     var barChartData: [BarChartData] {
         MoleculeValue(builder: { molecule in
             BarChartData(
-                label: molecule.rawValue,
+                label: TextLine(molecule.rawValue),
                 equation: equation.concentration.value(for: molecule),
                 color: molecule.color,
                 accessibilityLabel: "Bar chart showing concentration of \(molecule.rawValue) in molar"

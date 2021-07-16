@@ -163,7 +163,7 @@ extension BufferStrongSubstanceComponents {
     var barChartMap: SubstanceValue<BarChartData> {
         SubstanceValue(builder: { part in
             BarChartData(
-                label: substance.symbol(ofPart: part),
+                label: substance.chargedSymbol(ofPart: part).text,
                 equation: concentration.value(for: part),
                 color: substance.color(ofPart: part),
                 accessibilityLabel: "" // TODO

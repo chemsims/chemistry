@@ -53,11 +53,16 @@ public struct BarChart: View {
     }
 
     private var labels: some View {
-        HStack(spacing: 0) {
-            ForEach(data.indices, id: \.self) { i in
-                label(data[i])
+        CircleChartLabel(
+            layout: settings.axisLayout,
+            labels: data.enumerated().map { (index, data) in
+                .init(
+                    id: index,
+                    label: data.label,
+                    color: data.color
+                )
             }
-        }.frame(width: settings.chartWidth)
+        )
     }
 
     private func bar(_ data: BarChartData) -> some View {
@@ -82,27 +87,6 @@ public struct BarChart: View {
         .offset(y: -settings.tickDy)
         .accessibility(label: Text(data.accessibilityLabel))
         .updatingAccessibilityValue(x: time, format: data.accessibilityValue)
-    }
-
-    private func label(_ data: BarChartData) -> some View {
-        VStack(spacing: settings.labelToCircleSpacing) {
-            Circle()
-                .frame(square: settings.labelDiameter)
-                .foregroundColor(data.color)
-            Text(data.label)
-                .font(.system(size: settings.labelFontSize))
-                .frame(height: settings.labelTextHeight)
-                .minimumScaleFactor(0.75)
-                .animation(nil)
-        }
-        .frame(width: labelTextWidth)
-    }
-
-    private var labelTextWidth: CGFloat {
-        guard !data.isEmpty else {
-            return 0
-        }
-        return settings.chartWidth / CGFloat(data.count)
     }
 }
 

@@ -7,7 +7,7 @@ import SwiftUI
 public struct BarChartData {
 
     public init(
-        label: String,
+        label: TextLine,
         equation: Equation,
         color: Color,
         accessibilityLabel: String,
@@ -24,7 +24,7 @@ public struct BarChartData {
     }
 
     public init(
-        label: String,
+        label: TextLine,
         equation: Equation,
         color: Color,
         accessibilityLabel: String,
@@ -39,7 +39,7 @@ public struct BarChartData {
         self.accessibilityValue = accessibilityValue
     }
 
-    public let label: String
+    public let label: TextLine
     public let equation: Equation
     public let color: Color
 

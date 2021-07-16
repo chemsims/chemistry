@@ -306,7 +306,7 @@ private class Calculations {
 
     private func barChartData(forIon primaryIon: PrimaryIon) -> BarChartData {
         BarChartData(
-            label: primaryIon.rawValue, // TODO get the charged symbol
+            label: primaryIon.chargedSymbol.text,
             equation: barChartHeightEquation.value(for: primaryIon),
             color: primaryIon.color,
             accessibilityLabel: "" // TODO

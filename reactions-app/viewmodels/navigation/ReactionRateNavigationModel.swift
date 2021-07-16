@@ -23,6 +23,8 @@ struct ReactionRateNavigationModel {
             analytics: injector.appAnalytics,
             quizPersistence: injector.quizPersistence,
             reviewPersistence: injector.reviewPersistence,
+            onboardingPersistence: InMemoryOnboardingPersistence(hasCompletedOnboarding: true),
+            namePersistence: InMemoryNamePersistence(),
             allScreens: AppScreen.allCases,
             linearScreens: linearScreens
         )

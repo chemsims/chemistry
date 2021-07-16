@@ -79,6 +79,16 @@ public struct BarChartGeometry {
         labelDiameter + labelToCircleSpacing + labelTextHeight
     }
 
+    var axisLayout: CircleChartLabel.Layout {
+        CircleChartLabel.Layout(
+            width: chartWidth,
+            circleSize: labelDiameter,
+            textHeight: labelTextHeight,
+            fontSize: labelFontSize,
+            circleToTextSpacing: labelToCircleSpacing
+        )
+    }
+
     private var barMinHeight: CGFloat {
         tickDy / 5
     }

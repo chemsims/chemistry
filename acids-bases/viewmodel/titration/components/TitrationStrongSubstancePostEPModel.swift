@@ -217,7 +217,7 @@ private class Calculations {
 
     private func barChartData(forIon primaryIon: PrimaryIon) -> BarChartData {
         BarChartData(
-            label: primaryIon.rawValue,
+            label: primaryIon.chargedSymbol.text,
             equation: barChartEquation(forIon: primaryIon),
             color: primaryIon.color,
             accessibilityLabel: ""

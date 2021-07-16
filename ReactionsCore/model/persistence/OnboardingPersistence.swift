@@ -10,9 +10,11 @@ public protocol OnboardingPersistence {
 
 public class InMemoryOnboardingPersistence: OnboardingPersistence {
 
-    public init() { }
+    public init(hasCompletedOnboarding: Bool = false) {
+        self.hasCompletedOnboarding = hasCompletedOnboarding
+    }
 
-    public var hasCompletedOnboarding: Bool = false
+    public var hasCompletedOnboarding: Bool
 }
 
 public class UserDefaultsOnboardingPersistence: OnboardingPersistence {

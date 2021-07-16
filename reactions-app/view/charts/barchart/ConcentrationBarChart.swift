@@ -33,7 +33,7 @@ struct ConcentrationBarChart: View {
     private var barDataA: BarChartData {
         if let conA = concentrationA, currentTime != nil {
             return BarChartData(
-                label: display.reactant.name,
+                label: TextLine(display.reactant.name),
                 equation: conA,
                 color: display.reactant.color,
                 accessibilityLabel: label(name: display.reactant.name),
@@ -41,7 +41,7 @@ struct ConcentrationBarChart: View {
             )
         }
         return BarChartData(
-            label: display.reactant.name,
+            label: TextLine(display.reactant.name),
             equation: ConstantEquation(value: initialA),
             color: display.reactant.color,
             accessibilityLabel: label(name: display.reactant.name)
@@ -51,7 +51,7 @@ struct ConcentrationBarChart: View {
     private var barDataB: BarChartData? {
         if let conB = concentrationB, currentTime != nil {
             return BarChartData(
-                label: display.product.name,
+                label: TextLine(display.product.name),
                 equation: conB,
                 color: display.product.color,
                 accessibilityLabel: label(name: display.product.name)
@@ -59,7 +59,7 @@ struct ConcentrationBarChart: View {
         }
         if currentTime == nil {
             return BarChartData(
-                label: display.product.name,
+                label: TextLine(display.product.name),
                 equation: ConstantEquation(value: 0),
                 color: display.product.color,
                 accessibilityLabel: label(name: display.product.name)
