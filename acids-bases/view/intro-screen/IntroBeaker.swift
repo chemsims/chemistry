@@ -30,11 +30,11 @@ struct IntroBeaker: View {
     private var reactionDefinition: some View {
         ReactionDefinitionView(
             reaction: components.substance.reactionDefinition,
-            fontSize: layout.reactionDefinitionFontSize,
-            circleSize: layout.reactionDefinitionCircleSize
+            fontSize: layout.common.reactionDefinitionFontSize,
+            circleSize: layout.common.reactionDefinitionCircleSize
         )
-        .frame(size: layout.reactionDefinitionSize)
-        .padding(.leading, layout.reactionDefinitionLeadingPadding)
+        .frame(size: layout.common.reactionDefinitionSize)
+        .padding(.leading, layout.common.reactionDefinitionLeadingPadding)
         .animation(nil, value: components.substance.reactionDefinition)
         .minimumScaleFactor(0.5)
         .colorMultiply(model.highlights.colorMultiply(for: nil))

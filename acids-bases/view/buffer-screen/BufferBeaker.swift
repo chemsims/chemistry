@@ -12,10 +12,31 @@ struct BufferBeaker: View {
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
+            stackedReactionDefinition
             beaker
             container
         }
         .frame(height: layout.common.height)
+    }
+
+    private var stackedReactionDefinition: some View {
+        VStack {
+            reactionDefinition
+            Spacer(minLength: 0)
+        }
+    }
+
+    private var reactionDefinition: some View {
+        ReactionDefinitionView(
+            reaction: model.substance.reactionDefinition,
+            fontSize: layout.common.reactionDefinitionFontSize,
+            circleSize: layout.common.reactionDefinitionCircleSize
+        )
+        .frame(size: layout.common.reactionDefinitionSize)
+        .padding(.leading, layout.common.reactionDefinitionLeadingPadding)
+        .animation(nil, value: model.substance)
+        .minimumScaleFactor(0.5)
+//        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var beaker: some View {

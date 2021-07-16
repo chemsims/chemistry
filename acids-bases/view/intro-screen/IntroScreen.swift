@@ -66,31 +66,12 @@ struct IntroScreenLayout {
 // MARK: Left stack layout
 extension IntroScreenLayout {
     var containerRowYPos: CGFloat {
-        reactionDefinitionSize.height + (0.6 * common.phMeterSize.height)
+        common.reactionDefinitionSize.height + (0.6 * common.phMeterSize.height)
     }
 
     var activeContainerYPos: CGFloat {
         containerRowYPos + common.containerSize.height
     }
-
-    var reactionDefinitionSize: CGSize {
-        CGSize(
-            width: common.beakerWidth - common.menuScreenOverlapWithSpacing.width,
-            height: 0.7 * common.phMeterSize.height
-        )
-    }
-
-    var reactionDefinitionLeadingPadding: CGFloat {
-        common.menuScreenOverlapWithSpacing.width
-    }
-
-    var reactionDefinitionFontSize: CGFloat {
-        0.3 * reactionDefinitionSize.height
-    }
-
-    var reactionDefinitionCircleSize: CGFloat {
-        0.25 * reactionDefinitionSize.height
-    }    
 }
 
 // MARK: PH bar layout

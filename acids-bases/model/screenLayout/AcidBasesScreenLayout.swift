@@ -312,6 +312,18 @@ extension AcidBasesScreenLayout {
 
 // MARK: - Reaction definition geometry
 extension AcidBasesScreenLayout {
+
+    var reactionDefinitionSize: CGSize {
+        CGSize(
+            width: beakerWidth - menuScreenOverlapWithSpacing.width,
+            height: 0.7 * phMeterSize.height
+        )
+    }
+
+    var reactionDefinitionLeadingPadding: CGFloat {
+        menuScreenOverlapWithSpacing.width
+    }
+
     var reactionDefinitionFontSize: CGFloat {
         chartLabelFontSize
     }

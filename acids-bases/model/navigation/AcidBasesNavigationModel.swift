@@ -27,7 +27,7 @@ struct AcidBasesNavigationModel {
             onboardingPersistence: UserDefaultsOnboardingPersistence(),
             namePersistence: namePersistence,
             allScreens: AcidAppScreen.allCases,
-            linearScreens: AcidAppScreen.allCases
+            linearScreens: [.buffer]
         )
     }
 }
