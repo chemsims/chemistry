@@ -154,6 +154,53 @@ extension BufferScreenViewModel {
     }
 }
 
+// MARK: Substance statements & auto-next
+extension BufferScreenViewModel {
+    private func updateStatementPostAddMolecule(phase: Phase) {
+        switch phase {
+        case .addWeakSubstance where
+                weakSubstanceModel.hasAddedEnoughSubstance:
+            if substance.type.isAcid {
+                statement = substanceStatements.midAddingWeakAcid
+            } else {
+                statement = substanceStatements.midAddingWeakBase
+            }
+
+        case .addStrongSubstance where strongSubstanceModel.fractionSubstanceAdded >= 0.2:
+            if substance.type.isAcid {
+                statement = substanceStatements.midAddingStrongAcid
+            } else {
+                statement = substanceStatements.midAddingStrongBase
+            }
+
+        default:
+            return
+        }
+    }
+
+    private func goNextIfNeededPostAddMolecule(phase: Phase) {
+        switch phase {
+        case .addWeakSubstance where !weakSubstanceModel.canAddSubstance:
+            next()
+        case .addSalt where !saltModel.canAddSubstance:
+            next()
+        case .addStrongSubstance where !strongSubstanceModel.canAddSubstance:
+            next()
+        default:
+            return
+        }
+    }
+
+    var substanceStatements: BufferStatementsForSubstance {
+        BufferStatementsForSubstance(
+            substance: substance,
+            namePersistence: namePersistence,
+            strongAcid: strongAcid,
+            strongBase: strongBase
+        )
+    }
+}
+
 // MARK: Adding molecules
 extension BufferScreenViewModel {
 
@@ -167,6 +214,8 @@ extension BufferScreenViewModel {
         case .addStrongSubstance: strongSubstanceModel.incrementStrongSubstance(count: count)
         }
         canGoNext = canGoNextComputedProperty
+        updateStatementPostAddMolecule(phase: phase)
+        goNextIfNeededPostAddMolecule(phase: phase)
     }
 
     private func canAddMolecule(phase: Phase) -> Bool {

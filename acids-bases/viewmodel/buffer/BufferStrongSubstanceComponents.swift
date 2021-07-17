@@ -141,6 +141,10 @@ extension BufferStrongSubstanceComponents {
         !canAddSubstance
     }
 
+    var fractionSubstanceAdded: CGFloat {
+        CGFloat(substanceAdded) / CGFloat(maxSubstance)
+    }
+
     private var remainingCountAvailable: Int {
         max(0, maxSubstance - substanceAdded)
     }

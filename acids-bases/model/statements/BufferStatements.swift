@@ -419,6 +419,15 @@ struct BufferStatementsForSubstance {
         ]
     }
 
+    var midAddingWeakAcid: [TextLine] {
+        [
+            """
+            *Great!* Keep adding until you're happy with the initial concentration of \(substance).
+            """,
+            "*Keep shaking the container!*"
+        ]
+    }
+
     var reachedAcidBuffer: [TextLine] {
         [
             """
