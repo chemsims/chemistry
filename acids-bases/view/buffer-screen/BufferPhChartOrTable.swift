@@ -10,12 +10,10 @@ struct BufferPHChartOrTable: View {
     let layout: BufferScreenLayout
     @ObservedObject var model: BufferScreenViewModel
 
-    @State private var showingTable = false
-
     var body: some View {
         VStack(spacing: 0) {
             toggle
-            if showingTable {
+            if model.selectedTopView == .table {
                 table
             } else {
                 graph
@@ -27,13 +25,13 @@ struct BufferPHChartOrTable: View {
         HStack {
             SelectionToggleText(
                 text: "Graph",
-                isSelected: !showingTable,
-                action: { showingTable = false }
+                isSelected: model.selectedTopView == .chart,
+                action: { model.selectedTopView = .chart }
             )
             SelectionToggleText(
                 text: "Table",
-                isSelected: showingTable,
-                action: { showingTable = true }
+                isSelected: model.selectedTopView == .table,
+                action: { model.selectedTopView = .table }
             )
         }
         .font(.system(size: layout.common.toggleFontSize))

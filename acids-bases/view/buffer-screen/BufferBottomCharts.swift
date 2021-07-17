@@ -97,6 +97,7 @@ struct BufferBottomCharts: View {
             action: { model.selectedBottomGraph = selection }
         )
         .disabled(disabled)
+        .opacity(disabled ? 0.4 : 1)
     }
 }
 

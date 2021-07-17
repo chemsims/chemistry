@@ -56,6 +56,7 @@ class BufferScreenViewModel: ObservableObject {
     @Published var strongSubstanceModel: BufferStrongSubstanceComponents
 
     @Published var selectedBottomGraph = BottomGraph.bars
+    @Published var selectedTopView = ChartOrTable.chart
     @Published var equationState = EquationState.acidBlank
 
     // This is published as otherwise the beaky box is not redrawn when the computed
@@ -244,6 +245,10 @@ extension BufferScreenViewModel {
         var name: String {
             self.rawValue.capitalized
         }
+    }
+
+    enum ChartOrTable {
+        case chart, table
     }
 
     enum EquationState: String, CaseIterable {

@@ -44,7 +44,7 @@ struct BufferNavigationModel {
         SetStatement(statements.explainAddingAcidIonizingSalt),
         AddSalt(statements.instructToAddSalt),
         PostAdd(fromSubstance: \.reachedAcidBuffer),
-        SetStatement(fromSubstance: \.showPreviousPhLine, highlights: [.topChart]),
+        ShowPhLine(fromSubstance: \.showPreviousPhLine, highlights: [.topChart]),
         AddStrongSubstance(fromSubstance: \.instructToAddStrongAcid),
         PostAdd(statements.acidBufferLimitReached),
 
@@ -67,7 +67,7 @@ struct BufferNavigationModel {
         SetStatement(fromSubstance: \.explainSalt),
         AddSalt(fromSubstance: \.instructToAddSaltToBase),
         PostAdd(fromSubstance: \.reachedBasicBuffer),
-        SetStatement(fromSubstance: \.showBasePhWaterLine, highlights: [.topChart]),
+        ShowPhLine(fromSubstance: \.showBasePhWaterLine, highlights: [.topChart]),
         AddStrongSubstance(fromSubstance: \.instructToAddStrongBase),
         PostAdd(statements.baseBufferLimitReached)
     ]
@@ -439,5 +439,12 @@ private class AddStrongBase: BufferScreenState {
         model.statement = model.substanceStatements.instructToAddStrongBase
         model.goToStrongSubstancePhase()
         model.input = .addMolecule(phase: .addStrongSubstance)
+    }
+}
+
+private class ShowPhLine: SetStatement {
+    override func apply(on model: BufferScreenViewModel) {
+        super.apply(on: model)
+        model.selectedTopView = .chart
     }
 }
