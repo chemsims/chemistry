@@ -500,6 +500,7 @@
 		57D3261F26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */; };
 		57D3262126A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */; };
 		57D3262426A30CE80093CD16 /* AcidBasePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */; };
+		57D3262626A312C20093CD16 /* AcidOrBasePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */; };
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
@@ -1229,6 +1230,7 @@
 		57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferNavigationParametersAreReappliedTests.swift; sourceTree = "<group>"; };
 		57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroNavigationParametersAreReappliedTests.swift; sourceTree = "<group>"; };
 		57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasePersistence.swift; sourceTree = "<group>"; };
+		57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBasePersistenceTests.swift; sourceTree = "<group>"; };
 		57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeContainerViewModel.swift; sourceTree = "<group>"; };
 		57D3997F26615C4D00443C5A /* MovingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingPoint.swift; sourceTree = "<group>"; };
 		57D60151265EAD0100017E25 /* PositiveInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveInt.swift; sourceTree = "<group>"; };
@@ -1582,6 +1584,7 @@
 				57190A5C2698557400DD4B86 /* TitrationEquationDefinitionTests.swift */,
 				5766BC98269A315D0074A04B /* TitrationReactionDefinitionTests.swift */,
 				57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */,
+				57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */,
 			);
 			path = "acids-basesTests";
 			sourceTree = "<group>";
@@ -4100,6 +4103,7 @@
 				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,
 				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
 				57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */,
+				57D3262626A312C20093CD16 /* AcidOrBasePersistenceTests.swift in Sources */,
 				57D3262126A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift in Sources */,
 				57E9B75F268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift in Sources */,
 				57F4673E268741ED00E294BE /* TitrationNavigationParametersAreReappliedTests.swift in Sources */,

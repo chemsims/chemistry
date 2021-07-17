@@ -17,7 +17,10 @@ class IntroNavigationParametersAreReappliedTests: XCTestCase {
     }
 
     private func doTest<T: Equatable>(_ path: KeyPath<IntroScreenViewModel, T>) {
-        let model = IntroScreenViewModel(namePersistence: InMemoryNamePersistence())
+        let model = IntroScreenViewModel(
+            substancePersistence: InMemoryAcidOrBasePersistence(),
+            namePersistence: InMemoryNamePersistence()
+        )
         checkPreviousValueIsReapplied(
             model: model,
             navigation: model.navigation!,

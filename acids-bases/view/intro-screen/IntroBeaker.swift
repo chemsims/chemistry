@@ -186,9 +186,11 @@ struct IntroBeaker_Previews: PreviewProvider {
         GeometryReader { geo in
             IntroBeaker(
                 model: IntroScreenViewModel(
+                    substancePersistence: InMemoryAcidOrBasePersistence(),
                     namePersistence: InMemoryNamePersistence()
                 ),
                 components: IntroScreenViewModel(
+                    substancePersistence: InMemoryAcidOrBasePersistence(),
                     namePersistence: InMemoryNamePersistence()
                 ).components,
                 layout: IntroScreenLayout(

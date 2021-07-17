@@ -7,9 +7,13 @@ import ReactionsCore
 
 class IntroScreenViewModel: ObservableObject {
 
-    init(namePersistence: NamePersistence) {
+    init(
+        substancePersistence: AcidOrBasePersistence,
+        namePersistence: NamePersistence
+    ) {
         let initialRows = AcidAppSettings.initialRows
         let initialSubstance = AcidOrBase.strongAcids.first!
+        self.substancePersistence = substancePersistence
         self.rows = CGFloat(initialRows)
         self.components = IntroScreenComponents(
             substance: initialSubstance,
@@ -22,6 +26,8 @@ class IntroScreenViewModel: ObservableObject {
         )
         self.navigation = IntroNavigationModel.model(self, namePersistence: namePersistence)
     }
+
+    let substancePersistence: AcidOrBasePersistence
 
     private(set) var navigation: NavigationModel<IntroScreenState>?
     @Published var statement: [TextLine] = []
@@ -152,6 +158,12 @@ extension IntroScreenViewModel {
         self.selectedSubstances = selectedSubstances.updating(with: substance, for: type)
         if let substance = substance {
             self.components.substance = substance
+
+            if type == .strongAcid {
+                substancePersistence.saveStrongAcid(substance)
+            } else if type == .strongBase {
+                substancePersistence.saveStrongBase(substance)
+            }
         }
     }
 

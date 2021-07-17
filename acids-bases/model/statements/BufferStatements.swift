@@ -31,9 +31,8 @@ struct BufferStatements {
     ]
 
     static let explainEquilibriumConstant2: [TextLine] = [
-        "Let's refresh our memory!",
         """
-        *K* is the value that relates products and reactants at equilibrium.
+        Let's refresh our memory! *K* is the value that relates products and reactants at equilibrium.
         """,
         """
         K is called *Ka* for an acid dissociating, and *Kb* for a base. *Choose a weak \
@@ -278,15 +277,15 @@ struct BufferStatements {
         ]
     }
 
-    // TODO - read the salt name from somewhere
     static func instructToAddSalt(substance: AcidOrBase) -> [TextLine] {
         let secondary = substance.chargedSymbol(ofPart: .secondaryIon).symbol.asString
+        let salt = substance.saltName
         return [
             """
-            *M\(secondary)* is a salt that ionizes completely in water, \
+            *\(salt)* is a salt that ionizes completely in water, \
             letting *\(secondary)^-^* ions free in the solution, the \
             conjugate base of *\(substance.symbol)*. In other \
-            words, add *M\(secondary)* to increase the presence of *\(secondary)^-^* ions.
+            words, add *\(salt)* to increase the presence of *\(secondary)^-^* ions.
             """,
             "*Shake it into it!*"
         ]
@@ -304,37 +303,6 @@ struct BufferStatements {
             """
         ]
     }
-
-    // TODO - should use the substance added in part 1
-    static let explainWaterPhLine: [TextLine] = [
-        """
-        Now that the buffer is prepared, we can test it. Remember that graph \
-        at the top? That's right! It's from when we added *HCl* to pure water.
-        """,
-        """
-        See how pH went down without much resistance.
-        """
-    ]
-
-    static let showPreviousPhLine: [TextLine] = [
-        """
-        Now that the buffer is prepared, we can test it. Remember that graph at the top? That's \
-        right! It's from when we added *HCl* to pure water.
-        """,
-        """
-        See how pH went down without much resistance.
-        """
-    ]
-
-    static let instructToAddStrongAcid: [TextLine] = [
-        """
-        But what will happen if we add *HCl* to this buffer? Let's find out!
-        """,
-        """
-        Add HCl, which totally dissociates in water into *\(hydrogen)* ions.
-        """,
-        "*Shake it into it!*"
-    ]
 
     static let acidBufferLimitReached: [TextLine] = [
         """
@@ -377,24 +345,6 @@ struct BufferStatements {
         """
     ]
 
-    static let showBasePhWaterLine: [TextLine] = [
-        """
-        Now that the buffer is prepared, we can test it. Remember that graph at the top? That's right! \
-        It's from when we added *KOH* to pure water.
-        """,
-        "See how pH went up without much resistance."
-    ]
-
-    static let instructToAddStrongBase: [TextLine] = [
-        """
-        But what will happen if we add *KOH* to this buffer? Let's find out!
-        """,
-        """
-        Add KOH, which totally dissociates in water into *\(hydroxide)* ions.
-        """,
-        "*Shake it into it!*"
-    ]
-
     static let baseBufferLimitReached: [TextLine] = [
         """
         Finally, the *buffer* has reached it's limit! pH has gone significantly up now, but out \
@@ -420,7 +370,9 @@ struct BufferStatementsForSubstance {
 
     init(
         substance: AcidOrBase,
-        namePersistence: NamePersistence
+        namePersistence: NamePersistence,
+        strongAcid: AcidOrBase,
+        strongBase: AcidOrBase
     ) {
         let substanceStr = substance.chargedSymbol(ofPart: .substance).text.asMarkdown
         let primary = substance.chargedSymbol(ofPart: .primaryIon).text.asMarkdown
@@ -435,6 +387,8 @@ struct BufferStatementsForSubstance {
 
         self.namePersistence = namePersistence
         self.underlyingSubstance = substance
+        self.strongAcid = strongAcid.chargedSymbol(ofPart: .substance).text.asMarkdown
+        self.strongBase = strongBase.chargedSymbol(ofPart: .substance).text.asMarkdown
     }
 
     let underlyingSubstance: AcidOrBase
@@ -445,6 +399,9 @@ struct BufferStatementsForSubstance {
     let substanceC: String
     let primaryC: String
     let secondaryC: String
+
+    let strongAcid: String
+    let strongBase: String
 
     private let namePersistence: NamePersistence
 
@@ -481,6 +438,42 @@ struct BufferStatementsForSubstance {
             """
             *Keep adding HCl to test the buffer!*
             """
+        ]
+    }
+
+    var explainWaterPhLine: [TextLine] {
+        [
+            """
+            Now that the buffer is prepared, we can test it. Remember that graph \
+            at the top? That's right! It's from when we added *\(strongAcid)* to pure water.
+            """,
+            """
+            See how pH went down without much resistance.
+            """
+        ]
+    }
+
+    var showPreviousPhLine: [TextLine] {
+        [
+            """
+            Now that the buffer is prepared, we can test it. Remember that graph at the top? That's \
+            right! It's from when we added *\(strongAcid)* to pure water.
+            """,
+            """
+            See how pH went down without much resistance.
+            """
+        ]
+    }
+
+    var instructToAddStrongAcid: [TextLine] {
+        [
+            """
+            But what will happen if we add *\(strongAcid)* to this buffer? Let's find out!
+            """,
+            """
+            Add \(strongAcid), which totally dissociates in water into *\(hydrogen)* ions.
+            """,
+            "*Shake it into it!*"
         ]
     }
 
@@ -638,6 +631,28 @@ struct BufferStatementsForSubstance {
         ]
     }
 
+    var showBasePhWaterLine: [TextLine] {
+        [
+            """
+            Now that the buffer is prepared, we can test it. Remember that graph at the top? That's right! \
+            It's from when we added *\(strongBase)* to pure water.
+            """,
+            "See how pH went up without much resistance."
+        ]
+    }
+
+    var instructToAddStrongBase: [TextLine] {
+        [
+            """
+            But what will happen if we add *\(strongBase)* to this buffer? Let's find out!
+            """,
+            """
+            Add \(strongBase), which totally dissociates in water into *\(hydroxide)* ions.
+            """,
+            "*Shake it into it!*"
+        ]
+    }
+
     var midAddingStrongBase: [TextLine] {
         [
             """
@@ -645,8 +660,9 @@ struct BufferStatementsForSubstance {
             ions in the *buffer* react with the *\(hydroxide)* free ions to make more *\(substance)*.
             """,
             """
-            *Keep adding KOH to test the buffer!*
+            *Keep adding \(strongBase) to test the buffer!*
             """
         ]
     }
+    
 }

@@ -114,6 +114,11 @@ extension AcidOrBase {
         case .secondaryIon: return secondary.color
         }
     }
+
+    var saltName: String {
+        let plainSecondary = chargedSymbol(ofPart: .secondaryIon).symbol.asString
+        return type.isAcid ? "M\(plainSecondary)" : "\(plainSecondary)X"
+    }
 }
 
 extension AcidOrBase {
@@ -325,7 +330,7 @@ extension AcidOrBase {
     }
 
     private var titrationDefinitionProduct: TextLine {
-        let secondarySymbol = chargedSymbol(ofPart: .secondaryIon).text.asString
+        let secondarySymbol = chargedSymbol(ofPart: .secondaryIon).symbol.asString
         switch type {
         case .strongAcid:
             return "K\(secondarySymbol)"
@@ -334,7 +339,7 @@ extension AcidOrBase {
         case .weakAcid:
             return "K\(secondarySymbol)"
         case .weakBase:
-            let symbolString = chargedSymbol(ofPart: .substance).text.asString
+            let symbolString = chargedSymbol(ofPart: .substance).symbol.asString
             return TextLine(Self.prependingHydrogen(to: symbolString))
         }
     }

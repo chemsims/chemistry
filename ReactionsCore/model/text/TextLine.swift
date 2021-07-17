@@ -87,6 +87,10 @@ extension TextLine {
     public func prepending(_ other: TextSegment) -> TextLine {
         TextLine(content: [other] + content)
     }
+
+    public func appending(_ other: TextSegment) -> TextLine {
+        TextLine(content: content + [other])
+    }
 }
 
 extension Array where Element == TextLine {

@@ -7,7 +7,12 @@ import ReactionsCore
 
 private let statements = BufferStatements.self
 private func substanceStatements(_ model: BufferScreenViewModel) -> BufferStatementsForSubstance {
-    BufferStatementsForSubstance(substance: model.substance, namePersistence: model.namePersistence)
+    BufferStatementsForSubstance(
+        substance: model.substance,
+        namePersistence: model.namePersistence,
+        strongAcid: model.strongAcid,
+        strongBase: model.strongBase
+    )
 }
 
 struct BufferNavigationModel {
@@ -47,8 +52,8 @@ struct BufferNavigationModel {
         SetStatement(statements.explainAddingAcidIonizingSalt),
         AddSalt(statements.instructToAddSalt),
         PostAdd(fromSubstance: \.reachedAcidBuffer),
-        SetStatement(statements.showPreviousPhLine, highlights: [.topChart]),
-        AddStrongSubstance(statements.instructToAddStrongAcid),
+        SetStatement(fromSubstance: \.showPreviousPhLine, highlights: [.topChart]),
+        AddStrongSubstance(fromSubstance: \.instructToAddStrongAcid),
         PostAdd(statements.acidBufferLimitReached),
 
         // MARK: Weak base buffer
@@ -70,8 +75,8 @@ struct BufferNavigationModel {
         SetStatement(fromSubstance: \.explainSalt),
         AddSalt(fromSubstance: \.instructToAddSaltToBase),
         PostAdd(fromSubstance: \.reachedBasicBuffer),
-        SetStatement(statements.showBasePhWaterLine),
-        AddStrongSubstance(statements.instructToAddStrongBase),
+        SetStatement(fromSubstance: \.showBasePhWaterLine, highlights: [.topChart]),
+        AddStrongSubstance(fromSubstance: \.instructToAddStrongBase),
         PostAdd(statements.baseBufferLimitReached)
     ]
 }
@@ -439,7 +444,7 @@ private class PostWeakBaseReaction: BufferScreenState {
 
 private class AddStrongBase: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        model.statement = statements.instructToAddStrongBase
+        model.statement = substanceStatements(model).instructToAddStrongBase
         model.goToStrongSubstancePhase()
         model.input = .addMolecule(phase: .addStrongSubstance)
     }

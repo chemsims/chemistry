@@ -8,6 +8,7 @@ import ReactionsCore
 class BufferScreenViewModel: ObservableObject {
 
     init(
+        substancePersistence: AcidOrBasePersistence,
         namePersistence: NamePersistence
     ) {
         let initialSubstances = AcidOrBase.weakAcids
@@ -22,6 +23,7 @@ class BufferScreenViewModel: ObservableObject {
         let saltModel = BufferSaltComponents(prev: weakModel)
         let strongModel = BufferStrongSubstanceComponents(prev: saltModel)
 
+        self.substancePersistence = substancePersistence
         self.namePersistence = namePersistence
         self.rows = CGFloat(initialRows)
         self.weakSubstanceModel = weakModel
@@ -35,6 +37,8 @@ class BufferScreenViewModel: ObservableObject {
             addMolecules: addMolecule
         )
     }
+
+    let substancePersistence: AcidOrBasePersistence
 
     @Published var rows: CGFloat {
         didSet {
@@ -73,6 +77,14 @@ class BufferScreenViewModel: ObservableObject {
 
     private(set) var shakeModel: MultiContainerShakeViewModel<Phase>!
     private(set) var navigation: NavigationModel<BufferScreenState>?
+
+    var strongAcid: AcidOrBase {
+        substancePersistence.getSavedStrongAcid() ?? AcidOrBase.strongAcids.first!
+    }
+
+    var strongBase: AcidOrBase {
+        substancePersistence.getSavedStrongBase() ?? AcidOrBase.strongBases.first!
+    }
 }
 
 // MARK: Navigation

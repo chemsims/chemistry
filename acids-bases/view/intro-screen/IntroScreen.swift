@@ -151,6 +151,7 @@ struct IntroScreen_Previews: PreviewProvider {
     static var previews: some View {
         IntroScreen(
             model: IntroScreenViewModel(
+                substancePersistence: InMemoryAcidOrBasePersistence(),
                 namePersistence: InMemoryNamePersistence()
             )
         )

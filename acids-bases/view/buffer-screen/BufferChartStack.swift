@@ -42,6 +42,7 @@ struct BufferChartStack_Previews: PreviewProvider {
                     )
                 ),
                 model: BufferScreenViewModel(
+                    substancePersistence: InMemoryAcidOrBasePersistence(),
                     namePersistence: InMemoryNamePersistence()
                 )
             )

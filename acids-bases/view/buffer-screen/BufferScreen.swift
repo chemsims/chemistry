@@ -97,6 +97,7 @@ struct BufferScreen_Previews: PreviewProvider {
     static var previews: some View {
         BufferScreen(
             model: BufferScreenViewModel(
+                substancePersistence: InMemoryAcidOrBasePersistence(),
                 namePersistence: InMemoryNamePersistence()
             )
         )

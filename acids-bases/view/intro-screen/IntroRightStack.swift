@@ -371,9 +371,11 @@ struct IntroRightStack_Previews: PreviewProvider {
                 Spacer()
                 IntroRightStack(
                     model: IntroScreenViewModel(
+                        substancePersistence: InMemoryAcidOrBasePersistence(),
                         namePersistence: InMemoryNamePersistence()
                     ),
                     components: IntroScreenViewModel(
+                        substancePersistence: InMemoryAcidOrBasePersistence(),
                         namePersistence: InMemoryNamePersistence()
                     ).components,
                     layout: IntroScreenLayout(

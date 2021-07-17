@@ -167,7 +167,10 @@ private struct BufferMoleculeContainers: View {
         switch phase {
         case .addWeakSubstance: return model.substance.color
         case .addSalt: return .red // TODO move to styling
-        case .addStrongSubstance: return .purple // TODO move to styling
+        case .addStrongSubstance where model.substance.type.isAcid:
+            return model.strongAcid.color
+        case .addStrongSubstance:
+            return model.strongBase.color
         }
     }
 
@@ -176,9 +179,11 @@ private struct BufferMoleculeContainers: View {
         case .addWeakSubstance:
             return model.substance.chargedSymbol(ofPart: .substance).text
         case .addSalt:
-            let suffix = model.substance.chargedSymbol(ofPart: .secondaryIon).text
-            return suffix.prepending(TextSegment(content: "M"))
-        case .addStrongSubstance: return "HCl"
+            return TextLine(model.substance.saltName)
+        case .addStrongSubstance where model.substance.type.isAcid:
+            return model.strongAcid.chargedSymbol.text
+        case .addStrongSubstance:
+            return model.strongBase.chargedSymbol.text
         }
     }
 
@@ -218,6 +223,7 @@ struct BufferBeaker_Previews: PreviewProvider {
                     )
                 ),
                 model: BufferScreenViewModel(
+                    substancePersistence: InMemoryAcidOrBasePersistence(),
                     namePersistence: InMemoryNamePersistence()
                 )
             )

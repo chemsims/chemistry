@@ -239,9 +239,11 @@ struct BufferPhChart_Previews: PreviewProvider {
                             )
                         ),
                         model: BufferScreenViewModel(
+                            substancePersistence: InMemoryAcidOrBasePersistence(),
                             namePersistence: InMemoryNamePersistence()
                         ),
                         strongModel: BufferScreenViewModel(
+                            substancePersistence: InMemoryAcidOrBasePersistence(),
                             namePersistence: InMemoryNamePersistence()
                         ).strongSubstanceModel
                     )

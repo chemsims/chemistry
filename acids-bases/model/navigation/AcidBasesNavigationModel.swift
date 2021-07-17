@@ -18,7 +18,10 @@ struct AcidBasesNavigationModel {
         let namePersistence = UserDefaultsNamePersistence()
         return AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
-                AcidAppNavigationBehaviour(namePersistence: namePersistence)
+                AcidAppNavigationBehaviour(
+                    namePersistence: namePersistence,
+                    substancePersistence: InMemoryAcidOrBasePersistence()
+                )
             ),
             persistence: AnyScreenPersistence(InMemoryScreenPersistence()),
             analytics: AnyAppAnalytics(NoOpAppAnalytics()),
@@ -27,7 +30,7 @@ struct AcidBasesNavigationModel {
             onboardingPersistence: UserDefaultsOnboardingPersistence(),
             namePersistence: namePersistence,
             allScreens: AcidAppScreen.allCases,
-            linearScreens: [.introduction]
+            linearScreens: [.buffer]
         )
     }
 }
@@ -36,6 +39,7 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
     typealias Screen = AcidAppScreen
 
     let namePersistence: NamePersistence
+    let substancePersistence: AcidOrBasePersistence
 
     func deferCanSelect(of screen: AcidAppScreen) -> DeferCanSelect<AcidAppScreen>? {
        nil
@@ -62,7 +66,12 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) -> ScreenProvider {
-        screen.getProvider(nextScreen: nextScreen, prevScreen: prevScreen, namePersistence: namePersistence)
+        screen.getProvider(
+            nextScreen: nextScreen,
+            prevScreen: prevScreen,
+            namePersistence: namePersistence,
+            substancePersistence: substancePersistence
+        )
     }
 }
 
@@ -70,19 +79,22 @@ fileprivate extension AcidAppScreen {
     func getProvider(
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void,
-        namePersistence: NamePersistence
+        namePersistence: NamePersistence,
+        substancePersistence: AcidOrBasePersistence
     ) -> ScreenProvider {
         switch self {
         case .introduction:
             return IntroductionScreenProvider(
                 nextScreen: nextScreen,
                 prevScreen: prevScreen,
+                substancePersistence: substancePersistence,
                 namePersistence: namePersistence
             )
         case .buffer:
             return BufferScreenProvider(
                 nextScreen: nextScreen,
                 prevScreen: prevScreen,
+                substancePersistence: substancePersistence,
                 namePersistence: namePersistence
             )
         case .titration:
@@ -99,9 +111,13 @@ private class IntroductionScreenProvider: ScreenProvider {
     init(
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void,
+        substancePersistence: AcidOrBasePersistence,
         namePersistence: NamePersistence
     ) {
-        let model = IntroScreenViewModel(namePersistence: namePersistence)
+        let model = IntroScreenViewModel(
+            substancePersistence: substancePersistence,
+            namePersistence: namePersistence
+        )
         model.navigation?.nextScreen = nextScreen
         model.navigation?.prevScreen = prevScreen
         self.model = model
@@ -118,9 +134,13 @@ private class BufferScreenProvider: ScreenProvider {
     init(
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void,
+        substancePersistence: AcidOrBasePersistence,
         namePersistence: NamePersistence
     ) {
-        let model = BufferScreenViewModel(namePersistence: namePersistence)
+        let model = BufferScreenViewModel(
+            substancePersistence: substancePersistence,
+            namePersistence: namePersistence
+        )
         model.navigation?.nextScreen = nextScreen
         model.navigation?.prevScreen = prevScreen
         self.model = model

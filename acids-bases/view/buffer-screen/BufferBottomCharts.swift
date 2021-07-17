@@ -173,6 +173,7 @@ struct BufferBottomCharts_Previews: PreviewProvider {
                             )
                         ),
                         model: BufferScreenViewModel(
+                            substancePersistence: InMemoryAcidOrBasePersistence(),
                             namePersistence: InMemoryNamePersistence()
                         )
                     )
