@@ -277,15 +277,18 @@ private struct KADefinition: View {
 
     private var fraction: some View {
         VStack(spacing: 3) {
-            HStack(spacing: 1) {
+            HStack(alignment: .top, spacing: 1) {
                 ForEach(substance.productParts) { part in
                     ChargedSymbolView(symbol: substance.chargedSymbol(ofPart: part))
                 }
             }
             Rectangle()
                 .frame(width: 115, height: 2)
-            FixedText("[\(substance.symbol)]")
+            ChargedSymbolView(
+                symbol: substance.chargedSymbol(ofPart: .substance)
+            )
         }
+        .frame(height: 100)
     }
 }
 
@@ -438,6 +441,7 @@ private struct PHDefinition: View {
             FixedText("+")
             log
         }
+        .frame(height: 80)
     }
 
     private var log: some View {
@@ -450,8 +454,10 @@ private struct PHDefinition: View {
                     .frame(width: EquationSizing.boxWidth)
                 Rectangle()
                     .frame(width: 55, height: 2)
-                ChargedSymbolView(symbol: substance.chargedSymbol(ofPart: .substance))
-                    .frame(width: EquationSizing.boxWidth)
+                ChargedSymbolView(
+                    symbol: substance.chargedSymbol(ofPart: .substance)
+                )
+                .frame(width: EquationSizing.boxWidth)
             }
             FixedText(")")
                 .scaleEffect(y: largeParenScale)
@@ -736,6 +742,11 @@ struct BufferEquationView_Previews: PreviewProvider {
             equation(
                 state: .baseWithAllConcentration,
                 substance: .weakAcids[0]
+            )
+
+            equation(
+                state: .baseWithAllConcentration,
+                substance: .weakBases[2]
             )
         }
         .previewLayout(.sizeThatFits)

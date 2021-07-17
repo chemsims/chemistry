@@ -10,17 +10,16 @@ struct ChargedSymbolView: View {
     let symbol: AcidOrBase.ChargedSymbol
 
     var body: some View {
-        HStack(spacing: 0) {
-            FixedText("[\(symbol.symbol)")
-            if symbol.charge != nil {
-                FixedText(symbol.charge!.rawValue)
-                    .font(.system(size: EquationSizing.subscriptFontSize))
-                    .offset(y: -10)
-            }
+        TextLinesView(
+            line: text,
+            fontSize: EquationSizing.fontSize
+        )
+        .fixedSize()
+    }
 
-            FixedText("]")
-        }
-        .font(.system(size: EquationSizing.fontSize))
+    private var text: TextLine {
+        let charge = symbol.charge.map { "^\($0.rawValue)^" } ?? ""
+        return "[\(symbol.symbol)\(charge)]"
     }
 }
 
