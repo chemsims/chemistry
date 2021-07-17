@@ -502,6 +502,11 @@
 		57D3262426A30CE80093CD16 /* AcidBasePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */; };
 		57D3262626A312C20093CD16 /* AcidOrBasePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */; };
 		57D3262826A348AE0093CD16 /* TitrationScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262726A348AE0093CD16 /* TitrationScreenElement.swift */; };
+		57D3262B26A35DDB0093CD16 /* AcidQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262A26A35DDB0093CD16 /* AcidQuizQuestions.swift */; };
+		57D3263026A3614E0093CD16 /* AcidAppInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262F26A3614E0093CD16 /* AcidAppInjector.swift */; };
+		57D3264026A36B5F0093CD16 /* introduction-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57D3263F26A36B5F0093CD16 /* introduction-quiz.csv */; };
+		57D3264226A380560093CD16 /* buffer-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57D3264126A380560093CD16 /* buffer-quiz.csv */; };
+		57D3264426A384030093CD16 /* titration-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57D3264326A384030093CD16 /* titration-quiz.csv */; };
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
@@ -1233,6 +1238,11 @@
 		57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasePersistence.swift; sourceTree = "<group>"; };
 		57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBasePersistenceTests.swift; sourceTree = "<group>"; };
 		57D3262726A348AE0093CD16 /* TitrationScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationScreenElement.swift; sourceTree = "<group>"; };
+		57D3262A26A35DDB0093CD16 /* AcidQuizQuestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidQuizQuestions.swift; sourceTree = "<group>"; };
+		57D3262F26A3614E0093CD16 /* AcidAppInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppInjector.swift; sourceTree = "<group>"; };
+		57D3263F26A36B5F0093CD16 /* introduction-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "introduction-quiz.csv"; sourceTree = "<group>"; };
+		57D3264126A380560093CD16 /* buffer-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "buffer-quiz.csv"; sourceTree = "<group>"; };
+		57D3264326A384030093CD16 /* titration-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "titration-quiz.csv"; sourceTree = "<group>"; };
 		57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeContainerViewModel.swift; sourceTree = "<group>"; };
 		57D3997F26615C4D00443C5A /* MovingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingPoint.swift; sourceTree = "<group>"; };
 		57D60151265EAD0100017E25 /* PositiveInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveInt.swift; sourceTree = "<group>"; };
@@ -1548,6 +1558,7 @@
 		570ABA01265A736C008EC8CC /* acids-bases */ = {
 			isa = PBXGroup;
 			children = (
+				57D3262C26A35E950093CD16 /* quiz-questions */,
 				570ABA32265A760E008EC8CC /* viewmodel */,
 				570ABA31265A7608008EC8CC /* view */,
 				570ABA30265A7603008EC8CC /* model */,
@@ -1594,6 +1605,7 @@
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57D3262926A35DB40093CD16 /* quiz */,
 				57D3262226A30CDB0093CD16 /* persistence */,
 				577C50312680D0CC003DAD17 /* titration */,
 				577C501F267F14EF003DAD17 /* reaction-equations */,
@@ -1981,6 +1993,7 @@
 				5773BCDA267A7E6B00E52C81 /* AcidBasesNavigationModel.swift */,
 				5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */,
 				577C5026267F37CF003DAD17 /* TitrationScreenState.swift */,
+				57D3262F26A3614E0093CD16 /* AcidAppInjector.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -3169,6 +3182,24 @@
 			path = persistence;
 			sourceTree = "<group>";
 		};
+		57D3262926A35DB40093CD16 /* quiz */ = {
+			isa = PBXGroup;
+			children = (
+				57D3262A26A35DDB0093CD16 /* AcidQuizQuestions.swift */,
+			);
+			path = quiz;
+			sourceTree = "<group>";
+		};
+		57D3262C26A35E950093CD16 /* quiz-questions */ = {
+			isa = PBXGroup;
+			children = (
+				57D3264126A380560093CD16 /* buffer-quiz.csv */,
+				57D3263F26A36B5F0093CD16 /* introduction-quiz.csv */,
+				57D3264326A384030093CD16 /* titration-quiz.csv */,
+			);
+			path = "quiz-questions";
+			sourceTree = "<group>";
+		};
 		57D60150265EACF300017E25 /* validation */ = {
 			isa = PBXGroup;
 			children = (
@@ -3880,9 +3911,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57D3264426A384030093CD16 /* titration-quiz.csv in Resources */,
 				570ABA0F265A736D008EC8CC /* LaunchScreen.storyboard in Resources */,
 				570ABA0C265A736C008EC8CC /* Preview Assets.xcassets in Resources */,
 				570ABA09265A736C008EC8CC /* Assets.xcassets in Resources */,
+				57D3264026A36B5F0093CD16 /* introduction-quiz.csv in Resources */,
+				57D3264226A380560093CD16 /* buffer-quiz.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3986,6 +4020,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57D3263026A3614E0093CD16 /* AcidAppInjector.swift in Sources */,
 				5786BD0C267B38FD001A165C /* TitrationBeaker.swift in Sources */,
 				57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */,
 				577C505E26810B2B003DAD17 /* PhSum.swift in Sources */,
@@ -4048,6 +4083,7 @@
 				5797DE1C26738615003F589F /* BufferSharedComponents.swift in Sources */,
 				570A7671266CFF0D009329FB /* BufferBeaker.swift in Sources */,
 				574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */,
+				57D3262B26A35DDB0093CD16 /* AcidQuizQuestions.swift in Sources */,
 				577C5029267F38EC003DAD17 /* TitrationStatements.swift in Sources */,
 				57D3262426A30CE80093CD16 /* AcidBasePersistence.swift in Sources */,
 				5786BD08267B37A7001A165C /* TitrationScreen.swift in Sources */,

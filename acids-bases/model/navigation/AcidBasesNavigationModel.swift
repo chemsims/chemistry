@@ -10,27 +10,25 @@ struct AcidBasesNavigationModel {
 
     typealias Injector = AnyNavigationInjector<AcidAppScreen, AcidAppQuestionSet>
 
-    static func model() -> RootNavigationViewModel<Injector> {
-        RootNavigationViewModel(injector: makeInjector())
+    static func model(injector: AcidAppInjector) -> RootNavigationViewModel<Injector> {
+        RootNavigationViewModel(
+            injector: makeInjector(using: injector)
+        )
     }
 
-    private static func makeInjector() -> Injector {
-        let namePersistence = UserDefaultsNamePersistence()
-        return AnyNavigationInjector(
+    private static func makeInjector(using appInjector: AcidAppInjector) -> Injector {
+        AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
-                AcidAppNavigationBehaviour(
-                    namePersistence: namePersistence,
-                    substancePersistence: InMemoryAcidOrBasePersistence()
-                )
+                AcidAppNavigationBehaviour(injector: appInjector)
             ),
-            persistence: AnyScreenPersistence(InMemoryScreenPersistence()),
-            analytics: AnyAppAnalytics(NoOpAppAnalytics()),
-            quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence()),
-            reviewPersistence: InMemoryReviewPromptPersistence(),
-            onboardingPersistence: UserDefaultsOnboardingPersistence(),
-            namePersistence: namePersistence,
+            persistence: appInjector.screenPersistence,
+            analytics: appInjector.analytics,
+            quizPersistence: appInjector.quizPersistence,
+            reviewPersistence: appInjector.reviewPersistence,
+            onboardingPersistence: appInjector.onboardingPersistence,
+            namePersistence: appInjector.namePersistence,
             allScreens: AcidAppScreen.allCases,
-            linearScreens: [.titration]
+            linearScreens: AcidAppScreen.allCases
         )
     }
 }
@@ -38,8 +36,7 @@ struct AcidBasesNavigationModel {
 private struct AcidAppNavigationBehaviour: NavigationBehaviour {
     typealias Screen = AcidAppScreen
 
-    let namePersistence: NamePersistence
-    let substancePersistence: AcidOrBasePersistence
+    let injector: AcidAppInjector
 
     func deferCanSelect(of screen: AcidAppScreen) -> DeferCanSelect<AcidAppScreen>? {
        nil
@@ -69,8 +66,7 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
         screen.getProvider(
             nextScreen: nextScreen,
             prevScreen: prevScreen,
-            namePersistence: namePersistence,
-            substancePersistence: substancePersistence
+            injector: injector
         )
     }
 }
@@ -79,30 +75,49 @@ fileprivate extension AcidAppScreen {
     func getProvider(
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void,
-        namePersistence: NamePersistence,
-        substancePersistence: AcidOrBasePersistence
+        injector: AcidAppInjector
     ) -> ScreenProvider {
+
+        func quiz(_ questions: QuizQuestionsList<AcidAppQuestionSet>) -> ScreenProvider {
+            QuizScreenProvider(
+                questions: questions,
+                persistence: injector.quizPersistence,
+                analytics: injector.analytics,
+                next: nextScreen,
+                prev: prevScreen
+            )
+        }
+
         switch self {
         case .introduction:
             return IntroductionScreenProvider(
                 nextScreen: nextScreen,
                 prevScreen: prevScreen,
-                substancePersistence: substancePersistence,
-                namePersistence: namePersistence
+                substancePersistence: injector.substancePersistence,
+                namePersistence: injector.namePersistence
             )
         case .buffer:
             return BufferScreenProvider(
                 nextScreen: nextScreen,
                 prevScreen: prevScreen,
-                substancePersistence: substancePersistence,
-                namePersistence: namePersistence
+                substancePersistence: injector.substancePersistence,
+                namePersistence: injector.namePersistence
             )
         case .titration:
             return TitrationScreenProvider(
                 nextScreen: nextScreen,
                 prevScreen: prevScreen,
-                namePersistence: namePersistence
+                namePersistence: injector.namePersistence
             )
+
+        case .introductionQuiz:
+            return quiz(.introduction)
+
+        case .bufferQuiz:
+            return quiz(.buffer)
+
+        case .titrationQuiz:
+            return quiz(.titration)
         }
     }
 }
@@ -167,4 +182,32 @@ private class TitrationScreenProvider: ScreenProvider {
     var screen: AnyView {
         AnyView(TitrationScreen(model: model))
     }
+}
+
+private class QuizScreenProvider: ScreenProvider {
+    init(
+        questions: QuizQuestionsList<AcidAppQuestionSet>,
+        persistence: AnyQuizPersistence<AcidAppQuestionSet>,
+        analytics: AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet>,
+        next: @escaping () -> Void,
+        prev: @escaping () -> Void
+    ) {
+        self.model = QuizViewModel(
+            questions: questions,
+            persistence: persistence,
+            analytics: analytics
+        )
+        self.model.nextScreen = next
+        self.model.prevScreen = prev
+    }
+
+    let model: QuizViewModel<
+        AnyQuizPersistence<AcidAppQuestionSet>,
+        AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet>
+    >
+
+    var screen: AnyView {
+        AnyView(QuizScreen(model: model))
+    }
+
 }

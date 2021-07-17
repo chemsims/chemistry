@@ -1,0 +1,168 @@
+Question,,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,,
+number,id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position,source
+1,BUFFER-01,"H_2_CO_3_ is a diprotic acid with a Ka_1_ of 4.5x10^-7^ and for HCO_3_^-^ Ka_2_ of 4.7x10^-11^.
+
+What would be the equilibrium constant for this reaction below?
+
+H_2_CO_3_ ⇄ $2H^+^ + CO_3_^2-^$
+
+
+",medium,,,,2.12x10^-17^,"H_2_CO_3_ ⇄ 2H^+^ + CO_3_^2-^
+
+Would be the overall reaction for the steps:
+
+H_2_CO_3_ ⇄ H^+^ + HCO_3_^-^
+Ka_1_ = 4.5x10^-7^
+
+HCO_3_^-^ ⇄ H^+^ + CO_3_^2-^
+Ka_2_ = 4.7x10^-11^
+
+To know the overall equilibrium constant for any multistep reversible reaction, you can multiply the individual constants like this:
+
+K = 4.5x10^-7^x4.7x10^-11^
+K = 2.12x10^-17^",,4.5x10^-7^,This would just be the same acid constant for the first step of the overall reaction.,,4.7x10^-11^,This would just be the same acid constant for the second step of the overall reaction.,,Cannot be determined with this information,It can be determined with the information. Try analyzing the steps that compose the overall reaction.,,Question 31. AP College Board 1994
+2,BUFFER-02,Which would be the concentration of hydroxide ions for a $0.08 M$ solution of a weak base NaCN (The Kb for CN^-^ is 2.0 x10^-5^),easy,,,,[OH^-^] = 1.26x10^-3^ M,"The dissociation of the weak base CN^-^ in water would go as follows (consider that NaCN as a soluble salt dissociates entirely in water):
+
+CN^-^ + H_2_O ⇄ HCN + OH^-^
+
+Considering ""X"" as the amount of CN^-^ that attracts the H^+^ ions from water, we can write the Kb expression for this weak acid as:
+
+Kb = [HCN][OH^-^]/[CN^-^]
+Kb = (X)(X)/(0.08 - X)
+
+Since X is a very small number, we can assume $(0.08 - X)$ as 0.08. Solving for X: $X = √[CN^-^]Kb$ Replacing the values:
+
+X = √(0.08 x 2x10^-5^)
+X = 1.26x10^-3^ M
+
+This is also the concentration of hydroxide ions that are now dissolved in the solution.",,[OH^-^] = 0.08 M,This would be the concentration of OH^-^ ions if it was a strong base instead.,,[OH^-^] = 1.6x10^-6^ M,This is not the value of the hydroxide concentration.,,[OH^-^] = 2.0 x10^-5^ M,This is just the Kb value of the weak base.,,Question 45. AP College Board 1999
+3,BUFFER-03,"A student prepares 2 solutions of NaOH (strong base). One of them is a $450 mL$ solution at a concentration of $0.120 M$ and the other one is a $200 mL$ solution at a concentration of 0.200 M.
+
+The student proceeds to mix both solutions at add water until it reaches $1 L$. What would be the pH of said mixture?",medium,,,,13.0,"In a $450 mL$ solution of $0.120 M NaOH$, we can determine how many moles of NaOH (or OH^-^ which are the same because it's a strong base) are present initially:
+
+Moles of OH^-^ = 0.450 x 0.120
+Moles of OH^-^ = 0.054 moles
+
+In the other $200 mL$ solution of $0.200 M NaOH$, we can do the same thing:
+
+Moles of OH^-^ = 0.200 x 0.200
+Moles of OH^-^ = 0.040 moles
+
+When mixed together, there is a total amount of moles of:
+
+Total Moles = 0.054 + 0.040
+Total Moles = 0.094 moles
+
+These moles, after adding the water, are in a $1 L$ solution, making up for a concentration of OH^-^ ions of $0.094 M$. Given the pH equation: $pH = 14 -(-log([H^+^]))$, let's just replace
+
+pH = 14 - (-log(0.094))
+pH = 13.0",,13.2,Remember that the student adds water after mixing both solutions.,,1.0,"For a strong base solution, a pH of 1.0 wouldn't make sense since it should be a very basic solution.",,0.8,"For a strong base solution, a pH of 0.8 wouldn't make sense since it should be a very basic solution. Also take into account the student adds more water after mixing both solutions.",,Question 59. AP College Board 1999
+4,BUFFER-04,"Consider the following reaction:
+
+HA + B^-^  ⇄ HB + A^-^
+Keq = 2.1x10^-11^
+
+In which HA and HB are weak acids and B^-^ and A^-^ are weak bases. What statement is true about these compounds?",medium,,,,"In terms of strength:
+HB > HA
+A^-^ > B^-^","With a equilibrium constant so small as 2.1x10^-11^, it can be assumed that when at equilibrium the reverse reaction is the one that's more favored. This implies that HB is a stronger acid than HA and A^-^ is a stronger base than B^-^.",,"In terms of strength:
+HA > HB
+A^-^ > B^-^",HA is not a stronger acid than HB given the equilibrium constant of the reaction.,,"In terms of strength:
+HB > HA
+B^-^ > A^-^",B^-^ is not a stronger base than A^-^ given the equilibrium constant of the reaction.,,"In terms of strength:
+HA > HB
+B^-^ > A^-^",Try taking into account what the equilibrium constant value should mean in terms of which reaction (forward or reverse) is favored at equilibrium.,,Question 62. AP College Board 1999
+5,BUFFER-05,"If you were to prepare a buffer, which pair of substances would you mix in equimolar quantities?",medium,,,,HF and NaF,"Since HF a weak acid and F^-^ its conjugate base, mixing both in equimolar quantities will result in a buffer solution (it will resist the change on pH).",,HClO_3_ and KClO_3_,"Since HClO_3_ is a strong acid, it doesn't matter what you mix it with, it'll dissociate entirely and make an acid solution and not a buffer.",,HI and NaI,"Since HI is a strong acid, it doesn't matter what you mix it with, it'll dissociate entirely and make an acid solution and not a buffer.",,NaOH and NaCl,"NaOH is a strong base while NaCl is a soluble salt without ions that would alter the pH when in water, so a mix of both would just result in a very basic solution and not a buffer.",,Question 63. AP College Board 2002
+6,BUFFER-06,"Consider a hypothetical weak acid H_2_A that is a diprotic acid with a Ka_1_ of 3.2x10^-6^ and for HA^-^ Ka_2_ of 2.9x10^-8^.
+
+The overall dissociation of the acid could be written as:
+
+H_2_A ⇄ A^2-^ + 2H^+^
+
+What would be true about a $0.1 M$ solution of this weak acid?
+
+
+",hard,,,,[H_2_A] > [H^+^] > [HA^-^] > [A^2-^],"The steps for the overall reaction are:
+
+H_2_A ⇄ HA^-^ + H^+^
+HA^-^ ⇄ A^2-^ + H^+^
+
+Without needing to make calculations, we know that a weak acid only dissociates a little, so from the get-go H_2_A should be the substance with higher concentration in the solution. Since the H^+^ is present in both steps as a product, its concentration should be the second highest.
+
+For diprotic acids, the first step is more favored towards its products than the second step, and by looking at the Ka of each step we can determine that [HA^-^] should be higher than [A^2-^], especially since this last one is a product of the dissociation of the HA^-^. ",,[H_2_A] > [HA^-^] > [H^+^] > [A^2-^],[H^+^] should be higher than [HA^-^] given how the H^+^ ions are produced in both steps while the acid HA^-^ gets dissociated in the second step of the reaction.,,[A^2-^] > [H^+^] > [HA^-^] > [H_2_A],[A^2-^] is actually the lowest concentration because it's only a product of a small dissociation of HA^-^ in the second step.,,[H^+^] > [H_2_A] > [HA^-^] > [A^2-^],[H_2_A] is actually the highest concentration because only small parts of weak acids get dissociated into their ions so [H^+^] couldn't possibly be higher.,,Question 64. AP College Board 2002
+7,BUFFER-07,A student wants to prepare a solution of $500 mL$ $0.500 M$ of NaOH with another concentrated solution of $2.0 M of NaOH$. How much of the concentrated solution will the student need?,easy,,,,125 mL,"Let's first determine the moles of NaOH that would be present in the desired solution:
+
+Moles of NaOH = [NaOH] x Volume of Solution
+Moles of NaOH = 0.500 x 0.500
+Moles of NaOH = 0.25 moles
+
+To get that amount of moles from the concentrated solution we calculate the volume instead:
+
+Volume Needed = Moles of NaOH/[NaOH]_c_
+Volume Needed = 0.25/2.0
+Volume Needed = 0.125 mL
+
+The student then completes the solution with water until it reaches $500 mL$.",,500 mL,This would just be the total volume of the desired solution.,,375 mL,This amount of concentrated solution would result in a much more concentrated solution than the desired one.,,1 L,This would be way too much concentrated solution and it's even higher than the max amount of $500 mL$.,,Question 38. AP College Board 2008
+8,BUFFER-08,"HClO is a weak acid for which pKa=7.5. Each of the buffer mixtures below are made with equal volumes, and the concentrations listed. Which of the following mixtures will have the highest pOH value?",hard,,,,[HClO] = 1.0 [KClO] = 0.010,.,,[HClO] = 9.0 [KClO] = 9.0,.,,[HClO] = 0.10 [KClO] = 1.0,.,,[HClO] = 1.0 [KClO] = 0.10,.,,Question Albert.io The Buffer with the Highest pOH
+9,BUFFER-09,Which of the following combinations of equimolar substances could make a buffer?,easy,,,,NH4Cl and NH3,.,,HNO2 and NaNO3,.,,HCl and NaCl,., ,NaOH and HCl,.,,Question Albert.io Making Buffers
+10,BUFFER-10,A 50.0 mL solution of NH3 has a pH of 10.2. Drops of HCl are added to the solution. Which of the following should be added to the solution of NH3(aq) in order to keep the pH at 10.2?,hard,,,,NH2-(aq),.,,NaCl(s),.,,HNO3(aq),.,,NH4Cl,.,,Question Albert.io Making a Buffered Solution
+11,BUFFER-11,"A buffer solution that meets two conditions must be made: The pH must be equal to 5.0. The ratio of concentrations of the basic component to the acidic component of the buffer must be 10:1. Each buffer consists of a monoprotic acid and its K salt.
+
+Which of the following ingredients below combine to form a mixture that satisfies both of these conditions?",medium,,,,"HZ and KZ
+Ka of HZ = 1.0x10^-4^",.,,"HM and KM
+Ka of HM = 4.0x10^-1^",.,,"HQ and KQ
+Ka of HQ= 5.0x10^-1^",.,,"HX and KX
+Ka of HX = 1.0x10^-5^",.,,Question Albert.io Determining Which Buffer Components to Use
+12,BUFFER-12,The water dissociation constant at 30∘C is Kw = 1.471×10−14. What is the pH of water at this temperature?,easy,,,,6.91,.,,5.91,.,,7.91,.,,8.91,.,,Question Albert.io pH of Water at 30°C
+13,BUFFER-13,"20.0 mL of 0.10 M solution of HNO2 is reacted with 10.0 mL of 0.15 M KOH solution. Which of the following is the pH of the resulting solution?
+
+Note: Ka = 8.8×10−5",hard,,,,4.53,.,,1.12,.,,1.82,.,,2.7,.,,Question Albert.io pH of a Buffered Solution
+14,BUFFER-14,A buffer solution is created that consists of [HOBr]=0.100 and [OBr−1]=0.090. Which of the following will increase the overall buffering capacity of this solution?,medium,,,,"Neutralizing a small amount of the H O B r HOBr with a strong base so that [HOBr]=[OBr−1]=0.090. (IMPORTANT NOTE: NOT SURE IF RIGHT ANSWER, CORRECT WHEN REWRITING)",.,,Adding distilled water to increase the overall volume of the buffer,.,,Dissolving an small amount of NaOBr(s),.,,Using distillation to decrease the volume of the solution to increase its concentration,.,,Question Albert.io Buffer Capacity of HOBr with OBr-1
+15,BUFFER-15,"H2O(l) → H+(aq) + OH–(aq)
+
+Consider the equation for the auto-ionization of water, shown above. At 20∘C, the value of Kw, the ion product constant for water, is 1.0×10–14. At 50∘C, the value rises to 5.5×10–14.
+
+Based on this information, which of the following is the CORRECT statement concerning the effect on pH and on pOH after heating a sample of pure water from 20∘C to 50∘C?",hard,,,,Both pH and pOH will decrease,.,,Both pH and pOH will increase,.,,"While pH will decrease, pOH will increase",.,,"Neither pH nor pOH will be affected. It is still pure water, so both pH and pOH will remain at 7.0.",.,,"Question Albert.io Kw, pH, pOH and Temperature"
+16,BUFFER-16,What is the pH at the half-equivalence point between a weak base and strong acid if the Kb=1.0×10−8?,easy,,,,6,.,,8,.,,10,.,,12,.,,Question Albert.io Half-equivalence Point
+17,BUFFER-17,"When creating a buffer, the most effective buffer should have a pH equal to the pKa of the weak acid. Which of the following indicates how is this accomplished?",medium,,,,[HA] = [A-],.,,[HA] > [A-],.,,[HA] < [A-],.,,[H+] = [A-],.,,Question Albert.io Buffer Ratios
+18,BUFFER-18,"Consider a weak acid, H A HA, and its sodium salt, N a A NaA. For H A , K a = 1.0 × 10 − 10 HA, Ka=1.0×10−10. What is the p H pH of a mixture that is 0.800 M 0.800 M in H A HA and 0.100 M 0.100 M in N a A NaA?",medium,,,,9.1,.,,0.097,.,,5,.,,11,.,,Question Albert.io Determining the pH of a Buffer from Molarity and Ka
+19,BUFFER-19,The hydroxide ion concentration of a solution is 4×10−4. What is the solution's pH?,medium,,,,10.6,.,,3.4,.,,5.4,.,,8.6,.,,Question Albert.io Hydroxide to pH
+20,BUFFER-20,Which of the following would make the BEST buffer solution if equal volumes were mixed?,medium,,,,1.0 M CH3COOH mixed with 1.0 M KCH3COO,.,,1.0 M CH3COOH mixed with 1.0 M HCl,.,,1.0 M CH3COOH mixed with 0.10 M HCl,.,,1.0 M CH3COOH mixed with 0.10 M KCH3COO,.,,Question Albert.io Making the Best Buffer Solution
+21,BUFFER-21,"A weak acid is monoprotic and K a = 1.0 × 10 − 4 Ka=1.0×10−4.
+
+Which of the following is the pH of a solution that contains 100.0 mL 100.0 mL of 0.25 M 0.25 M of the weak acid and 75.0 mL 75.0 mL of 0.20 M 0.20 M sodium hydroxide",hard,,,,4.18,.,,5.51,.,,3.83,.,,4,.,,Question Albert.io Calculating the pH of a Mixture
+22,BUFFER-22,Which of the following combinations is the BEST choice to prepare a buffer with a pH = 5?,medium,,,,C5H5N (pKb = 8.76); C5H5NHCl,.,,CH3NH2 (pKb = 3.36); CH3NH3Cl ,.,,HCHO2 (pKa = 3.74); NaCHO2,.,,HClO (pKa = 7.53 ); NaClO,.,,"Question Albert.io ""Making a Buffer"""
+23,BUFFER-23,Which of the following expressions correctly calculates the p O H pOH of 0.20 M H 2 S O 4 ( a q ) 0.20 M H2SO4(aq) at 25 ∘ C 25∘C?,medium,,,,pOH = 14 - (-log(0.4)),.,,pOH = 14 - (-log(0.2)),.,,pOH = 14 - log(0.2),.,,pOH = 14 - log(0.4),.,,Question Albert.io pOH of H2SO4
+24,BUFFER-24,Which of the following will destroy the buffering action of 1.0 L of 0.1 M hydrofluoric acid and 0.05 M sodium fluoride buffer?,easy,,,,Adding 0.06 mol of HCl,.,,Adding 0.06 mol of NaF,.,,Adding 0.06 mol of HF,.,,Adding 0.06 mol of NaOH,.,,Question Albert.io Buffering Action
+25,BUFFER-25,Which of the following is the pH of a 0.25 M CH3COOH solution mixed with 0.10 M CH3COONa when the Ka = 1.8 × 10−5 ?,easy,,,,4.35,.,,2.17,.,,6.53,.,,8.27,.,,Question Albert.io Equilibrium: pH of a Weak Acid and Salt
+26,BUFFER-26,Which of the following is the pH of a 1.55×10−5 M solution of NaOH?,hard,,,,9.2,.,,12.2,.,,8.6,.,,14,.,,Question Albert.io pH and NaOH
+27,BUFFER-27,Consider the following acids: HIO: Ka=2.3×10−11 HCN: Ka=4.9×10−10 Which of the following solutions has the greatest percent ionization?,hard,,,,200 mL of 0.01 M HCN,.,,200 mL of 0.01 M HCN,.,,200 mL of 0.01 M HCN,.,,200 mL of 0.01 M HCN,.,,Question Albert.io Ka and Ionization
+28,BUFFER-28,"""Acids produce H+ in solution and bases produces OH-"".  This definition for acids and bases is attributed to:",easy,,,,Arrhenius,The Arrhenius theory for acids and bases was developed by Svante Arrhenius in 1883. This is the first of the three theories that describe acids and bases behaviour. This is a definition that's the least general and the simplets compared to the other two more sophisticated theories that came after.,,Lewis,The Lewis theory is based on the sharing and acceptance of electron pairs. ,,Brønsted-Lowry,The Brønsted-Lowry theory is based on the sharing and acceptance of protons. ,,It's just a broad definition of acids and bases,"There are three theories that define acids and bases and their interactions with each other and others substances. Arrhenius, Brønsted-Lowry and Lewis theories.",,Question 38. AP College Board 1999
+29,BUFFER-29,What would be the pH of a solution $0.030M$ of $Ba(OH)_2_$?,medium,,,,12.77,"The dissociation of a strong acid like H_2_SO_4_ in water would go as follows:
+
+$Ba(OH)_2_ → 2OH^-^ + Ba^+^$
+
+It dissociates completely in water into its ions. The concentration of [OH^-^] would be doubled the molarity of the strong base.
+
+Given the pH equation in relationship with pOH: $pH = 14 - (-log([OH^-^]))$, let's just replace:
+
+pH = 14 - (-log(0.030 x 2))
+pH = 12.77",,12.47,"This would be the pH if you assumed that $H_2_SO_4_$ dissociates entirely in water into just 1 mole of H^+^ ions, which is incorrect. Ba(OH)_2_ has the equivalent of 2 moles of OH^-^, so when it dissociates in water, it produces twice its moles.",,1.52,"This would be the pOH if you assumed that $H_2_SO_4_$ dissociates entirely in water into just 1 mole of H^+^ ions, which is incorrect. Ba(OH)_2_ has the equivalent of 2 moles of OH^-^, so when it dissociates in water, it produces twice its moles.",,7,This is a neutral pH and it would be impossible for it to be the pH of a solution with a concentration as such of a strong base.,,Question Albert.io pOH and NaOH
+30,BUFFER-30,What would be the pH of a solution prepared with $0.160 M$ CH_3_COOH?. Consider the pKb of its conjugate base as is 9.25.,medium,,,,2.77,"The Ka for the conjugate acid of a base is Kw divided by its Kb, so given CH_3_COOH and CH_3_COO^-^:
+
+Ka = 10^-14^/10^-9.25^
+Ka = 1.78x10^-5^
+
+Considering ""X"" as the amount of CH_3_COO^-^ that attracts H^+^ ions to produce OH^-^ ions, we can write the Kb expression for this weak base as:
+
+Kb = [CH_3_COO^-^]/[CH_3_COOH][OH^-^]
+Kb = (X)(X)/(0.120 - X)
+
+Since X is a very small number, we can assume $(0.120 - X)$ as 0.120. Solving for X: $X = √[CH_3_COOH]Kb$. Replacing the values:
+
+X = √(0.120 x 5.6x10^-10^)
+X = 8.2x10^-6^
+
+This is also the amount of hydroxide ions that are now dissolved in the solution. Given the pH equation: $pH = 14 -(-log([OH^-^]))$, let's just replace:
+
+pH = 14 -(-log(8.2x10^-6^))
+pH = 8.91",,11.23,This would be the pOH of the solution instead of the pH which is what is asked for.,,5.02,This would be the value you've gotten if you used Kb as Ka instead of calculating it from the Kw.,,7,A solution containing a weak acid wouldn't have a pH of 7 which is neutral.,,Question Albert.io pH of Salt Solutions

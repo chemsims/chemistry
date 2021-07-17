@@ -6,6 +6,16 @@ import Foundation
 
 enum AcidAppScreen: String, CaseIterable {
     case introduction,
+         introductionQuiz,
          buffer,
-         titration
+         bufferQuiz,
+         titration,
+         titrationQuiz
+
+    var isQuiz: Bool {
+        switch self {
+        case .introductionQuiz, .bufferQuiz, .titrationQuiz: return true
+        default: return false
+        }
+    }
 }

@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
-        let model = AcidBasesNavigationModel.model()
+        let model = AcidBasesNavigationModel.model(injector: getInjector())
         let rootView = AcidAppRootView(model: model)
         let contentView = rootView
 
@@ -26,6 +26,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
+    }
+
+    private func getInjector() -> AcidAppInjector {
+        InMemoryAcidAppInjector()
     }
 }
 

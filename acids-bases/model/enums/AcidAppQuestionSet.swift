@@ -5,5 +5,5 @@
 import Foundation
 
 enum AcidAppQuestionSet {
-    case introduction, buffer
+    case introduction, buffer, titration
 }

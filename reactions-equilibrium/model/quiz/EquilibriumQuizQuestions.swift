@@ -14,6 +14,7 @@ extension QuizQuestionsList where QuestionSet == EquilibriumQuestionSet {
 struct EquilibriumQuizQuestions {
     private init() { }
 
+    /// Loads all quiz questions into memory
     static func load() {
         aqueous = read("aqueous-quiz", .aqueous)
         gaseous = read("gaseous-quiz", .gaseous)

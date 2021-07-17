@@ -1,0 +1,514 @@
+Question,,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,,
+number,id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position,source
+1,PHSCALE-01,"A student prepares 3 solutions in separate beakers with these soluble salts: KCN, NaCl and KBr.
+
+What is a true statement regarding these solutions and their pH?
+
+(Note: Remember the strong acids are HCl, HBr, HI, HClO_3_, HClO_4_, HNO_3_ and H_2_SO_4_).",easy,,,,The pH of the KCN solution is higher than 7 while the other two are 7.,"Given how in water KCN dissociates into K^+^ and CN^-^ ions entirely, while the K^+^ wouldn't do much, the CN^-^ ions have a weak base property, meaning it will attract some H^+^ from water and ultimately increasing the [OH^-^] in water by a very small amount (enough for the pH to increase as well).
+
+The other two soluble salts also dissociate into their ions, none of which have any weak base or weak acid properties, so the pH of their solutions must remain as 7.",,The pH of the KCN solution is lower than 7 while the other two are 7.,"CN^-^ ions have weak base properties, so it wouldn't make the pH lower when dissolved in a solution but on the contrary it would increase the pH making the solution slightly basic.
+
+Although, it's true that the other two soluble salts also dissociate into their ions, none of which have any weak base or weak acid properties, so the pH of their solutions must remain as 7.",,The pH of the NaCl solution is higher than 7 while the other two are lower than 7.,"The NaCl dissociate into its ions, none of which have any weak base or weak acid properties, so the pH of its solution must remain as 7.",,The pH of the KBr solution is higher than 7 while the other two are higher than 7.,"The KBr dissociate into its ions, none of which have any weak base or weak acid properties, so the pH of its solution must remain as 7.",,Question 64. AP College Board 2008
+2,PHSCALE-02,"Consider this strong acid reaction:
+
+$HCl + H_2_O$ → $H_3_O^+^ + Cl^-^$
+
+How is the behaviour of water better described in this reaction?",medium,,,,It acts as a base,"In this case water does act as a base by attracting H^+^ ions from the strong acid. Water is neutral and it's not considered neither an acid or a base, but it can act as any of those depending on the reaction.",,It acts as an acid,"It doens't act as an acid since in that case it's not donating any H^+^ ions but actually taking it from the strong acid. Water is neutral and it's not considered neither an acid or a base, but it can act as any of those depending on the reaction.",,Water is neutral so it doesn't act as neither an acid or a base,"Water is neutral and it's not considered neither an acid or a base, but it can act as any of those depending on the reaction.",,There is not enough information,It should be enough to determine water's behaviour by looking at the reaction it's involved in.,,Question 22. AP College Board 1994
+3,PHSCALE-03,Which one would be the conjugate base for this compound: H_2_S?,easy,,,,HS^-^,"The dissociation of H_2_S in water would go as follows:
+
+$H_2_S + H_2_O$ ⇄ $HS^-^ + H_3_O^+^$
+
+So by losing an H^+^, the conjugate base for H_2_S would be HS^-^.
+",,S^2-^,"The dissociation of H_2_S in water would go as follows:
+
+$H_2_S + H_2_O$ ⇄ $HS^-^ + H_3_O^+^$
+
+It would need to lose yet another H^+^ to finally result in S^2-^, so it's not its immediate conjugate base.
+",,H_2_SO_4_,"The dissociation of H_2_S in water would go as follows:
+
+H_2_S + H_2_O ⇄ $HS^-^ + H_3_O^+^$
+
+As you can see, H_2_SO_4_ is not the conjugate base of H_2_S.
+",,H_2_SO_3_,"The dissociation of H_2_S in water would go as follows:
+
+$H_2_S + H_2_O$ ⇄ $HS^-^ + H_3_O^+^$
+
+As you can see, H_2_SO_3_ is not the conjugate base of H_2_S.
+",,Question 48. AP College Board 2008
+4,PHSCALE-04,"A student wants to prepare a solution of a strong base ""XOH"". The student proceeds to mix 50 mL of water with 5 mL of XOH 0.05 M. What would the pH be for this particular hypothetical solution?",easy,,,,11.6,"The dissociation of a strong base like XOH in water would go as follows:
+
+XOH → OH^-^ + X^+^
+
+It completely dissociates into its ions. Let's first calculate how many moles of OH^-^ are in the previous solution:
+
+Moles of OH^-^ = Molarity x Volume
+Moles of OH^-^ = 0.05 x 0.005
+Moles of OH^-^ = 0.00025 moles
+
+Knowing this, to know the concentration of OH^-^ in the final solution, we assume the volume is added:
+
+[OH^-^] = Moles of OH^-^/Total Volume
+[OH^-^] = 0.00025 / (0.005 + 0.05)
+[OH^-^] = 0.0045 M
+
+To calculate the pH, we just part from its relationship with pOH
+
+pH = 14 - pOH
+pH = 14 - ( -log(0.0045))
+pH = 11.6
+
+This value makes sense as it's a very basic pH.",,2.3,"The dissociation of a strong base like XOH in water would go as follows:
+
+XOH → $OH^-^ + X^+^$
+
+It completely dissociates into its ions. From the getgo, you can know this pH is far too acidic to be accurate in a solution of a strong base. Remember for basic solutions pH > 7 and pOH < 7. Take into account $pH + pOH = 14$.",,12.7,"The dissociation of a strong base like XOH in water would go as follows:
+
+XOH → $OH^-^ + X^+^$
+
+It completely dissociates into its ions. This would be the pH of the XOH solution prior to its mix with water. When mixing it with water, the concentration of OH^-^ ions would decrease, decreasing the pH as well.",,1.3,This is actually th pOH of the XOH solution prior to its mix with water. Try understanding how a strong base dissociates in water and how the concentration of the OH^-^ ions would affect the pH of a solution.,,Question 68. AP College Board 2008
+5,PHSCALE-05,"If solutions were to be prepared with any one of these soluble salts, which of them would result in the solution with the lowest pOH?",medium,,,,K_2_CO_3_,"Since soluble salts dissociate entirely into water, what we want to focus on is in the resultant ions in the solution. In this case, K^+^ doesn't really affect the pH of a solution, so the important ion would be CO_3_^2-^ which indeed is a weak base (given its conjugate base is a weak acid as well), which will end up increasing the pH.
+
+Given that $pH + pOH = 14$, if the pH increases, the pOH decreases, being this the solution with the lowest pOH of all the options.",,KCl,"Since soluble salts dissociate entirely into water, what we want to focus on is in the resultant ions in the solution. In this case, K^+^ doesn't really affect the pH of a solution and neither does the Cl^-^ so the pH (and the pOH) will remain at 7.",,NaBr,"Since soluble salts dissociate entirely into water, what we want to focus on is in the resultant ions in the solution. In this case, Na^+^ doesn't really affect the pH of a solution and neither does the Br^-^ so the pH (and the pOH) will remain at 7.",,NaNO_3_,"Since soluble salts dissociate entirely into water, what we want to focus on is in the resultant ions in the solution. In this case, Na^+^ doesn't really affect the pH of a solution and neither does the NO_3_^-^ so the pH (and the pOH) will remain at 7.",,Question 61. AP College Board 1994
+6,PHSCALE-06,"$0.05 moles$ of a weak acid (HA) are dissolved in a $400 mL$ solution. For this particular weak acid, its $Ka = 2.5x10^-9^$. What would be the pH for this solution?",medium,,,,4.75,"The dissociation of HA in water would go as follows:
+
+HA ⇄ H^+^ + A^-^
+
+Let's first calculate the initial concentration of HA before dissociation:
+
+[HA] = Moles of HA/ Volume of Solution
+[HA] = 0.05/0.4
+[HA] = 0.125 M
+
+Considering ""X"" as the amount of HA that gets dissociated into its ions, we can write the Ka expression for this weak acid as:
+
+Ka = [H^+^][A^-^]/[HA]
+Ka = (X)(X)/(0.125 - X)
+
+Since X is a very small number, we can assume $(0.125 - X)$ as 0.125. Solving for X: $X = √[HA]Ka$.Replacing the values:
+
+X = √(0.125 x 2.5x10^-9^)
+X = 1.767x10^-5^
+
+This is also the amount of hidronium ions that are now dissolved in the solution. Given the pH equation: $pH = -log([H^+^])$, let's just replace:
+
+pH = -log(1.767x10^-5^)
+pH = 4.75",,0.9,"This would be the pH if you assumed $0.125 M$ to be the concentration of hidronium ions in the solution, which would be true for a strong acid but since this is a weak acid, only a small part of it gets dissociated into H^+^ ions.",,8.6,"Given it's a weak acid, when dissolved in water, the pH of the solution would most probably be lower than 7 because its acidic nature, so a pH of 8.6 wouldn't make sense for an acid solution. This would be the pKa of the weak acid.",,9.5,"Given it's a weak acid, when dissolved in water, the pH of the solution would most probably be lower than 7 because its acidic nature. 9.5 would be the pH of a basic solution instead.",,Question 66. AP College Board 1994
+7,PHSCALE-07,"""Acids can accept an electron pair, while bases can donate an electron pair."" This definition for acids and bases is attributed to:",easy,,,,Lewis,Lewis acids and bases are described as substances that share electron pairs. This is a definition that encompasses much more substances than the other two counterpart theories.,,Brønsted-Lowry,The Brønsted-Lowry theory is based on the sharing and acceptance of protons. ,,Arrhenius,The Arrhenius definition is only based on H^+^ and OH^-^ ions.,,It's just a broad definition of acids and bases,"There are three theories that define acids and bases and their interactions with each other and others substances. Arrhenius, Brønsted-Lowry and Lewis theories.",,Question 38. AP College Board 1999
+8,PHSCALE-08,"A student attempts to prepare an NaOH $2.5x10^-3^ M$ solution. The student weights a sample of solid NaOH $(34 mg)$ and then proceeds to prepare the solution with distilled water until it reaches $500 mL$.
+
+After the solution was mixed throughly, the student measures the pH with a pH meter $(pH = 11.23)$. Did the student succeded in preparing the desired solution?
+
+Note: Consider that the molar weight of NaOH is $40 g/mol$.",easy,,,,"No, they would need to add $16 mg$ more of NaOH.","Parting from a pH of 11.23, we can calculate the concentration of NaOH in the solution by:
+
+[OH^-^] = 10^-(14-11.23)^
+[OH^-^] = 1.7x10^-3^ M
+
+Since this is a lower molarity than the desired, more NaOH would have to be added to the solution. To determine how much more, let's calculate the total amount of NaOH needed for it:
+
+Moles of NaOH = [OH^-^] x Volume of Solution
+Moles of NaOH = 2.5x10^-3^ x 0.5
+Moles of NaOH = 1.25x10^-3^ moles
+
+Knowing the molar mass, we calculate the mass:
+
+Mass of NaOH = Moles of NaOH x Molar Mass of NaOH
+Mass of NaOH = 1.25x10^-3^ x 40
+Mass of NaOH = 0.05 g
+
+or what is the same, 50 mg. If the student already added $34 mg$ to the solution, then the difference is what's needed: $50 - 34 = 16 mg$.",,"No, they would need to add $50 mg$ more of NaOH.","This would be the total mass of NaOH needed to prepare the desired solution, but take into account the student already added $34 mg$ so only the difference would be required.",,"No, they would need to add $16 mg$ more of water.","Parting from a pH of 11.23, we can calculate the concentration of NaOH in the solution by:
+
+[OH^-^] = 10^-(14-11.23)^
+[OH^-^] = 1.7x10^-3^ M
+
+Since this is a lower molarity than the desired, more NaOH would have to be added to the solution. 
+
+If the student were to add more water then the solution would get dilluted and the concentration of NaOH would go down further from its desired value.",,"Yes, it's a 2.5x10^-3^ M solution.","Parting from a pH of 11.23, we can calculate the concentration of NaOH in the solution by:
+
+[OH^-^] = 10^-(14-11.23)^
+[OH^-^] = 1.7x10^-3^ M
+
+This is not the desired concentration of NaOH in the solution.",,Question 44. AP College Board 1999
+9,PHSCALE-09,A $0.005 M$ solution of HCl (strong acid) is prepared. What would be the pH of said solution?,medium,,,,2.3,"Given the pH equation: $pH = -log([H^+^])$, Let's just replace the concentration;
+
+pH = -log(0.005)
+pH = 2.3
+
+It's a very acidic pH.",,4.6,"Although this is an acidic pH, it's not low enough given the concentration of the HCl. Remember the pH equation is: $pH = -log([H^+^])$",,11.7,"This is a very basic pH, and this value wouldn't make sense for such an acidic solution.",,Not enough information,For strong acids it's enough to know their concentration to determine the pH because they dissociate entirely into their ions. In this case $[HCl] = [H^+^]$,,Question Albert.io pH and HNO3
+10,PHSCALE-10,A $0.140 M$ solution of HA (a hypothetical weak acid) is prepared. Its $Ka = 3.5x10^-5^$.  What would be the pOH of said solution?,hard,,,,11.3,"The dissociation of HA in water would go as follows:
+
+HA ⇄ $H^+^ + A^-^$
+
+Considering ""X"" as the amount of HA that gets dissociated into its ions, we can write the Ka expression for this weak acid as:
+
+Ka = [H^+^][A^-^]/[HA]
+Ka = (X)(X)/(0.140 - X)
+
+Since X is a very small number, we can assume $(0.140 - X)$ as 0.140. Solving for X: $X = √[HA]Ka$. Replacing the values:
+
+X = √(0.140 x 3.5x10^-5^)
+X = 2.21x10^-3^
+
+This is also the amount of hidronium ions that are now dissolved in the solution. Given the pOH equation: $pOH = 14 -(-log([H^+^]))$. Let's just replace:
+
+pOH = 14 -(-log(2.21x10^-3^))
+pH = 11.3
+",,0.8,"This is a very basic pOH, and this value wouldn't make sense for such an acidic solution.",,13.2,"This would be the pOH if you assumed $0.140 M$ to be the concentration of hidronium ions in the solution, which would be true for a strong acid but since this is a weak acid, only a small part of it gets dissociated into H^+^ ions.",,4.5,This is actually just the pKa of the weak acid in question. Try to determine the [H^+^] ions into which the acid dissociates to know the pH and therefore the pOH.,,Question Albert.io Estimating pH of a Solution
+11,PHSCALE-11,A solution of HI is prepared. The pH measured is 2. Which one would be the molarity of HI?,easy,,,,0.01 M,"Parting from the pH of 2, for a strong acid $[H^+^] = [HI]$ since it dissociates entirely in water. Given the pH equation, we solve for [HI]:
+
+[HI] = 10^-2^
+[HI] = 0.01 M",,0.02 M,"If this were the molarity of the solution, the pH wouldn't be 2 but 1.7",,0.2 M,"If this were the molarity of the solution, the pH wouldn't be 2 but 0.7",,0.1 M,"If this were the molarity of the solution, the pH wouldn't be 2 but 1.",,Question Albert.io pH and HI
+12,PHSCALE-12,How much mililiters of a concentrated solution $0.95 M NaOH$ would you add to $100 mL$ of water to make a $0.05M$ solution?,hard,,,,5.55 mL,"First, let's part from the desired final concentration of the resultant solution:
+
+[NaOH] = moles of NaOH/(Volume added + Volume of water)
+0.05 = moles of NaOH/(Volume added + 0.1)
+
+Solving for the moles of NaOH we get equation 1:
+
+moles of NaOH = 0.05V + 0.005
+
+where V is the volume added of the solution. The equation for this volume would be:
+
+V = moles of NaOH/[NaOH]c
+V = moles of NaOH/0.95
+
+Solving for the moles of NaOH: $moles of NaOH = 0.95V$.
+
+By writing both equations, we get that: $0.95V = 0.05V + 0.005$. Solving for V: $V = 0.00555 L$, or what is the same, 5.55 mL.",,11.1 mL,If you were to add $11.1 mL$ of the solution you would end up with a $0.095 M NaOH$ solution instead.,,22.2 mL,If you were to add $11.1 mL$ of the solution you would end up with a $0.173 M NaOH$ solution instead.,,44.4 mL,If you were to add $11.1 mL$ of the solution you would end up with a $0.292 M NaOH$ solution instead.,,Question 73. AP College Board 1999
+13,PHSCALE-13,A solution with a pOH of 9 have a concentration of hidronium ions of...,easy,,,,10^-5^ M,"Since $pH + pOH = 14$, we solve for pH:
+
+pH = 14 - 9
+pH = 5
+
+Given the pH equation, we solve for [H^+^]: $[H^+^] = 10^-5^ M$",,10^-9^ M,This would be the concentration of hydroxide ions OH^-^ instead.,,10^-10^ M,This is concentration of H^+^ ions would be far too low given the pOH data.,,10^-7^ M,This is concentration of H^+^ ions would be too low given the pOH data.,,Question 30. AP College Board 2002
+14,PHSCALE-14,What would be the pH of a solution $0.400 M of NaF$ if the Ka of HF is 6.6x10^-4^ (Take into account NaF dissociates entirely into its ions),easy,,,,8.4,"he Kb for the conjugate base of an acid is Kw divided by its Ka, so given HF and F^-^:
+
+Kb = 10^-14^/6.6x10^-4^
+Kb = 1.51x10^-11^
+
+Considering ""X"" as the amount of F^-^ that attracts H^+^ ions to produce OH^-^ ions, we can write the Kb expression for this weak base as:
+
+Kb = [F^-^]/[HF][OH^-^]
+Kb = (X)(X)/(0.400 - X)
+
+Since X is a very small number, we can assume $(0.400 - X)$ as 0.400. Solving for X: $X = √[HA]Kb$. Replacing the values:
+
+X = √(0.400 x 1.51x10^-11^)
+X = 2.46x10^-6^
+
+This is also the amount of hydroxide ions that are now dissolved in the solution. Given the pH equation: $pH = 14 -(-log([OH^-^]))$, let's just replace:
+
+pH = 14 -(-log(2.46x10^-6^))
+pH = 8.4",,5.6,This would be the pOH of the solution instead of the pH which is what is asked for.,,10.8,This is just the pKb of the weak base and not the pH.,,7,A solution containing a weak base wouldn't have a pH of 7 which is neutral.,,Question Albert.io Equilibrium: pH of a Weak Acid
+15,PHSCALE-15,"HF_(aq)_  ⇄ $H^+^_(aq)_ + F^-^_(aq)_$
+Ka = 3.7x10^-7^
+
+Given an acidic solution prepared with HF, what would be a way to increase its pH?
+
+",medium,,,,Adding NaF,"Remember that weak acids and weak bases dissociate into water in the  way of a reversible reaction. By adding NaF (a soluble salt) it dissociates entirely into Na^+^ and F^-^.
+
+This would increase the concentration of [F^-^] in the solution, which would make $Qa > Ka$ because of the increment in the concentration of the products, resulting in the reverse reaction to get favored, consuming both the F^-^ and the H^+^ in the solution to produce HF, decreasing the [H^+^], ultimately increasing the pH.",,Adding HF,"Remember that weak acids and weak bases dissociate into water in the  way of a reversible reaction. By adding more HF this would only result in the forward reaction to get favored, ultimately decreasing the pH instead of increasing it.",,Adding HCl,By adding HCl (a strong acid) the pH would fall further down by a lot instead of increasing.,,There is no way to increase its pH,There are various ways in which the pH can be brought back to neutral or even basic. Treat weak acid and weak bases reactions as reveresible reactions at equilibrium. ,,Question 37. AP College Board 2002
+16,PHSCALE-16,Consider a tank that has a $0.01 M$ solution of HCl. The acidic solution has a total volume of $2 L$. How much water would you need to add to the tank to bring the pH 1 unit above the current pH?,medium,,,,18 L,"The pH of the current solution can be easily calculated by:
+
+pH = -log[H^+^]
+pH = -log(0.01)
+pH = 2
+
+To know how many moles of HCl (or H^+^) are present in the solution, it can be determined by:
+
+Moles of HCl = [HCl] x Volume
+Moles of HCl = 0.01 x 2
+Moles of HCl = 0.02 moles
+
+The desired pH is 3, so the desired concentration is $10^-3^ M$. We use the same formula to determine the volume needed for this moles to make a solution with the desired concentration:
+
+Total Volume = Moles of HCl / [HCl]
+Total Volume = 0.02 / 10^-3^
+Total Volume = 20 L
+
+Since there were already $2 L$ of solution, only 18 L would be needed to prepare it. ",,20 L,"This would be the total volume needed to prepare the desired solution, but take into account there are already $2 L$ of solution, so if you were to add $20 L$, you would end up with a total volume of around $22 L$.",,2 L,"pH values are not linear (take into account its equation of $pH = -log[H^+^]$. Knowing this, to prepare the desired solution it's expected to need much more water than what's already present.",,4 L,This would not be enough water to prepare the desired solution. Try to calculate how many moles are in the solution and how much water would it take to prepare a solution with a pH of 3.,,Question 61. AP College Board 2002
+17,PHSCALE-17,What would be the pH of a solution $0.050M$ of $H_2_SO_4_$? Consider that the Ka for HSO_4_^-^ is 1.3x10^-2^,hard,,,,1.23,"The dissociation of a strong acid like H_2_SO_4_ in water would go as follows:
+
+H_2_SO_4_ → H^+^ + HSO_4_^-^
+
+It dissociates completely in water into its ions ($[H^+^] = 0.05 M$ and $[HSO_4_^-^] = 0.05 M$). But HSO_4_^-^ is also a weak acid, so it also dissociates partially into its ions, like this:
+
+The dissociation of H_2_S in water would go as follows:
+
+HSO_4_^-^ ⇄ H^+^ + SO_4_^2-^
+
+Considering ""X"" as the amount of HSO_4_^-^ that gets dissociated into its ions, we can write the Ka expression for this weak acid as:
+
+Ka = [H^+^][SO_4_^2-^]/[HSO_4_^-^]
+1.3x10^-2^ = (0.05 + X)(X)/(0.05 - X)
+
+X is a very small number, but not by much in comparison, so it's necessary to solve for X (use your preferred method to solve 2nd degree equations). Solving for X: $X = 9.02x10^-3^$.
+
+To determine the amount of hidronium ions that are now dissolved in the solution:
+
+[H^+^] = 9.02x10^-3^ + 0.05
+[H^+^] = 0.059 M
+
+Given the pH equation: $pH = -log([H^+^])$, let's just replace:
+
+pH = -log(0.059)
+pH = 1.23
+",,1,"This would be the pH if you assumed that $H_2_SO_4_$ dissociates entirely in water into 2 moles of H^+^ ions, which is incorrect. It's a diprotic acid, and it dissociates into H^+^ ions and HSO_4_^-^ which is a weak acid in itself.",,1.3,"This would be the pH if you assumed that $H_2_SO_4_$ dissociates entirely in water into just 1 mole of H^+^ ions, which is incorrect. It's a diprotic acid, and it dissociates into H^+^ ions and HSO_4_^-^ which is a weak acid in itself, so you have to take it into account.",,7,This is a neutral pH and it would be impossible for it to be the pH of a solution with a concentration as such of a strong acid.,,Question Albert.io pOH and NaOH
+18,PHSCALE-18,Which one of these solutions can be said it's the most basic one of all the options?,easy,,,,A solution with a concentration of hydronium ions of 9.2x10^-13^,"The pH of a solution with $[H^+^] = 9.2x10^-13^$ is:
+
+pH = -log(9.2x10^-13^)
+pH = 12.04
+
+which is the most basic pH of the options.",,A solution with a concentration of hydroxide ions of 2.8x10^-6^,"The pH of a solution with $[OH^-^] = 2.8x10^-6^$ is:
+
+pH = -log(2.8x10^-6^)
+pH = 8.44
+
+which is a basic pH but not the most basic one.",,A solution with a pH of 5.6,A pH of 5.6 indicates an acidic solution if anything else.,,A solution with a pOH of 7.6,"A pOH of 7.6 indicates an acidic solution given how:
+
+pH = 14 - 7.6
+pH = 6.4
+
+which is lower than 7.",,Question Albert.io Acidity Rank
+19,PHSCALE-19,"A student prepared four $0.01 M$ solutions in different beakers of HI, KOH, NaF and HCN. They forgot to label the beakers, so with the help of pH meters they try to figure out which solution is which. Considering the pH values, which solution is which?",medium,,,,"1: HI
+2: NaF
+3: HCN
+4: KOH","Just by knowing that HI is a strong acid, NaF (F^-^) is a weak base, HCN is a weak acid and KOH is a strong base, should be enough to know which solution is each one.",,"1: HCN
+2: NaF
+3: HI
+4: KOH","Although HCN is acid, it's just a weak acid so a pH of 2.0 doesn't make much sense, especially by comparing it with the HI solution with a pH of 5.6, being this last one a strong acid.",,"1: HI
+2: KOH
+3: HCN
+4: NaF","Although KOH is basic, it's a strong base so a pH of just 7.7 doesn't make much sense, especially by comparing it with the NaF solution with a pH of 12, being this last one just a weak base.",,"1: KOH
+2: HCN
+3: NaF
+4: HI","A strong base like KOH wouldn't produce a solution with an acidic pH of 2.0, a weak acid like HCN wouldn't produce a solution with a basic pH of 7.7, a weak base like NaF wouldn't produce an acidic pH of 5.6 and a strong acid like HI wouldn't produce a solution with a basic pH of 12.",,Question Albert.io Using Strong Acids and Bases to Asses pH Probe Accuracy
+20,PHSCALE-20,"A student prepares a $100 mL$ solution of $0.05 M KOH$ in a beaker and titrates it with $0.02 M HCl$. After the addition of $80 mL$ of the titrant, what would the pH of the solution be?",medium,,,,12.27,"In a $100 mL$ solution of $0.05 M KOH$, we can determine how many moles of KOH (or OH^-^ which is the same because it's a strong base) are present initially:
+
+Moles of OH^-^ = 0.05 x 0.100
+Moles of OH^-^ = 0.005 moles
+
+In the $80 mL$ added of $0.02 M HCl$, we can do the same thing:
+
+Moles of H^+^ = 0.02 x 0.080
+Moles of H^+^ = 0.0016 mole
+
+Because H^+^ and OH^-^ ions react with each other to produce water, it's said that they're neutralized by each other, following this reaction:
+$KOH + HCl → H_2_O + KCl$.
+
+To determine what's left after this reaction:
+
+Moles left = 0.005 - 0.0016
+Moles left of OH^-^ = 0.0034 moles
+
+Let's calculate the concentration of ions in the solution:
+
+[OH^-^] = Moles of OH^-^ / Total Volume
+[OH^-^] = 0.0034 / (0.100 + 0.080)
+[OH^-^] = 0.0188 M
+
+Given the pH equation:
+
+pH = 14 - (-log[OH^-^])
+pH = 14 - (-log(0.0188))
+pH = 12.27",,12.53,"Remember to sum up the volumes together. Initially there was $0.100 L$ of base and then $0.080 L$ was added, coming to a total of $0.180 L$.",,1.7,"This is not the pH of the solution. The hydronium ions produced are also neutralized by the already presente hydroxide ions, so they are all consumed and the pH would have to be calculated based on the moles of ions left after the neutralization reaction.",,12.7,This is not the pH of the solution. The pH would have to be calculated based on the moles of ions left after the neutralization reaction.,,Question Albert.io pH of a Mixture
+21,PHSCALE-21,What would be the pH of a solution prepared with $0.120 M$ CH_3_COONa (salt)?. Consider the pKa for CH_3_COOH is 4.75.,medium,,,,8.91,"The Kb for the conjugate base of an acid is Kw divided by its Ka, so given how CH_3_COOH and CH_3_COO^-^:
+
+Kb = 10^-14^/10^-4.75^
+Kb = 5.6x10^-10^
+
+Considering ""X"" as the amount of CH_3_COOH that gets dissociated into its ions, we can write the Ka expression for this weak acid as:
+
+Ka = [H^+^][CH_3_COO^-^]/[CH_3_COOH]
+Ka = (X)(X)/(0.160 - X)
+
+Since X is a very small number, we can assume $(0.160 - X)$ as 0.160. Solving for X: $X = √[CH_3_COOH]Ka$. Replacing the values: 
+
+X = √(0.160 x 1.78x10^-6^)
+X = 1.69x10^-3^ M
+
+This is also the amount of hidronium ions that are now dissolved in the solution. Given the pH equation: $pH = -log([H^+^])$, let's just replace:
+
+pH = -log(1.69x10^-3^)
+pH = 2.77",,5.08,This would be the pOH of the solution instead of the pH which is what is asked for.,,11.16,This would be the value you've gotten if you used Ka as Kb instead of calculating it from the Kw.,,7,A solution containing a weak base wouldn't have a pH of 7 which is neutral.,,Question Albert.io pH of Salt Solutions
+22,PHSCALE-22,"A student prepares a 0.100L solution of 0.100 M HF (weak acid). After measuring its pH, they realize that they need the pH to be 20% more than what it is at that moment.
+
+How much water would it take to dillute the solution to the desired point?
+
+(Ka = 7.2x10^-4^)",hard,,,,0.450 L,"The dissociation of HF in water would go as follows:
+
+HF ⇄ H^+^ + F^-^
+
+Considering ""X"" as the amount of HF that gets dissociated into its ions, we can write the Ka expression for this weak acid as:
+
+Ka = [H^+^][F^-^]/[HF]
+Ka = (X)(X)/(0.100 - X)
+
+Since X is a very small number, we can assume $(0.100 - X)$ as 0.100. Solving for X: $X = √[HF]Ka$ Replacing the values:
+
+X = √(0.100 x 7.2x10^-4^)
+X = 8.48x10^-3^ M
+
+This is also the concentration of hidronium ions that are now dissolved in the solution. Given the pH equation: $pH = -log([H^+^])$, let's just replace:
+
+pH = -log(8.48x10^-3^)
+pH = 2.07
+
+Knowing this pH value, the desired pH would be 20% more than it:
+
+pH = 2.07 x 1.20
+pH = 2.48
+
+In other words, the desired concentration of hydronium ions would be:
+
+[H^+^] = 10^-2.48^
+[H^+^] = 3.28x10^-3^ M
+
+Once again, if HF were to be dissociated into water, and we take $3.28x10^-3^ M$ as the part of it that gets dissociated, we can assume ""Xo"" as the initial concentration of HF, and write the Ka expression:
+
+Ka = [H^+^][F^-^]/[HF]
+7.2x10^-4^ = $(3.28x10^-3^)(3.28x10^-3^)$/(Xo - 3.28x10^-3^)
+
+Solving for Xo: $Xo = 0.0182 M$
+
+If at the beginning there was $0.100 L$ of water, we can calculate the moles:
+
+Moles of HF = [HF] x Volume
+Moles of HF = 0.100 x 0.100
+Moles of HF = 0.0100 moles
+
+The total volume to get to the desired concentration would be:
+
+Volume = Moles of HF / Xo
+Volume = 0.0100 / 0.0182
+Total Volume = 0.550 L
+
+So to the $0.100 L$ solution, $0.450 L$ of water should be added.",,0.550 L,"This would be the total volume needed to prepare the desired solution, but take into account there are already $0.100 L$ of solution, so if you were to add $0.550 L$, you would end up with a total volume of around $0.650 L$.",,0.200 L,This would not be enough water to get to the desired pH.,,0.020 L,This would not even be near enough water to get to the desired pH.,,Question Albert.io Dilution and Hydronium
+23,PHSCALE-23,A solution of which of these substances would most likely result in the furthest value from 7 for the pH?,easy,,,,NaOH,"Since this a strong base, it would have a pH very high with a value very far from 7.",,HCN,"Although this is an acid, it's a weak one so the resultant pH wouldn't be low enough to be further than other options.",,H_2_O,"This is just water, so on the contrary it would probably result in a pH of 7 or near 7.",,CH_3_COONa,"Although this is a base, it's a weak one so the resultant pH wouldn't be high enough to be further than other options.",,Question Albert.io Strength of Bases
+24,PHSCALE-24,Consider a solution that has a pH of 7.9 at 25 °C. Would you consider this solution to be..?,easy,,,,Basic,It's a basic solution given its pH is greater than 7 at standard conditions.,,Acidic,It's not an acidic solution. The greater the pH value than the more basic is the solution.,,Neutral,"A pH of 7 is considered neutral at standard conditions, and since this pH is different than 7 then it's not neutral.",,Cannot be determined with this information,With the pH it can be determined if the solution is considered acidic or basic.,,Question Albert.io Hydroxide Ion Concentration
+25,PHSCALE-25,"A student prepares a $400 mL$ solution of $0.100 M HBr$ in a beaker and titrates it with $0.200 M NaOH$. After the addition of $200 mL$ of the titrant, what would the pH of the solution be?",medium,,,,7,"In a $400 mL$ solution of $0.100 M HBr$, we can determine how many moles of HBr (or H^+^ which is the same because it's a strong acid) are present initially:
+
+Moles of H^+^ = 0.400 x 0.100
+Moles of H^+^ = 0.04 moles
+
+In the $200 mL$ added of $0.200 M NaOH$, we can do the same thing:
+
+Moles of OH^-^ = 0.200 x 0.200
+Moles of OH^-^ = 0.04 moles
+
+Because H^+^ and OH^-^ ions react with each other to produce water, it's said that they're neutralized by each other, following this reaction:
+
+NaOH + HBr →$ H_2_O + NaBr$
+
+To determine what's left after this reaction:
+
+Moles left = 0.004 - 0.004 = 0
+
+They acid gets neutralized entirely and no more base is added after that, so the solution should remain at this point at a pH of 7 (neutral).",,8,"At that point all strong acid gets neutralized by the strong base, so the solution remaining should be neutral and not basic.",,6,"At that point all strong acid gets neutralized by the strong base, so the solution remaining should be neutral and not acidic.",,1,This is not the pH of the solution. The pH would have to be calculated based on the moles of ions left after the neutralization reaction (if any).,,Question Albert.io Mixture pH
+26,PHSCALE-26,A student prepares 2 solutions of HBr (strong acid). One of them is a $200 mL$ solution at a concentration of $0.06 M$ and the other one is a $600 mL$ solution at a concentration of 0.01M. The student proceeds to mix both solutions at add water until it reaches $1 L$. What would be the pH of said mixture?,medium,,,,1.74,"In a $200 mL$ solution of $0.06 M HBr$, we can determine how many moles of HBr (or H^+^ which is the same because it's a strong acid) are present initially:
+
+Moles of H^+^ = 0.200 x 0.06
+Moles of H^+^ = 0.012 moles
+
+In the other $600 mL$ solution of $0.01 M HBr$, we can do the same thing:
+
+Moles of H^+^ = 0.600 x 0.01
+Moles of H^+^ = 0.006 moles
+
+When mixed together, there is a total amount of moles of:
+
+Total Moles = 0.006 + 0.012
+Total Moles = 0.018 moles
+
+These moles, after adding the water, are in a $1 L$ solution, making up for a concentration of H^+^ ions of $0.018 M$. Given the pH equation: $pH = -log([H^+^])$, let's just replace:
+
+pH = -log(0.018)
+pH = 1.74",,1.64,Take into account that the total volume at the end is 1 liter of solution.,,1.46,"This would be the value you've gotten if you calculated the pH by summing up the concentrations and dividing them by two, which is not the way to do it.",,2,This is not the pH of the solution. Try determining the total moles and volume of the resultant solution to then calculate the pH.,,Question Albert.io pH of HCl(aq) After addition of HCl(g)
+27,PHSCALE-27,The higher is the pKa of a weak acid...,easy,,,,The higher is the pH and the concentration of hydroxide ions,"Given that pKa is -log[Ka], the higher it is then the lower it is the actual Ka of the weak acid. Meaning that if the pKa increases both the pH and [OH^-^] increase as well. ",,The higher is the pOH and the concentration of hydronium ions,"Given that pKa is -log[Ka], the higher it is then the lower it is the actual Ka of the weak acid. Meaning that if the pKa increases, the pOH would instead decrease as well as [H^+^].",,The higher is the pH and the Ka of the weak acid,"Given that pKa is -log[Ka], the higher it is then the lower it is the actual Ka of the weak acid.",,The lower is the pH and the Ka of the weak acid,"If the Ka decreases, this means that the weak acid has less dissociative power, so it dissociates less, resulting in a lower concentration of H^+^ ions and ultimately in a higher pH.",,Question Albert.io pKa and Hydroxide Ion Concentration
+28,PHSCALE-28,"A student prepares a $100 mL$ solution of $0.500 M HA (hypothetical weak acid)$ in a beaker and titrates it with $0.100 M KOH$.
+
+After the addition of $100 mL$ of the titrant, what would the pH of the solution be?
+
+(Note: The Ka of HA is 6.0x10^-5^).",medium,,,,3.6,"In a $100 mL$ solution of $0.500 M HA$, we can determine how many moles of HA are present initially:
+
+Moles of HA = 0.100 x 0.500
+Moles of HA = 0.05 moles
+
+In the $100 mL$ added of $0.100 M KOH$, we can do the same thing:
+
+Moles of OH^-^ = 0.100 x 0.100
+Moles of OH^-^ = 0.01 moles
+
+The acid HA reacts with the strong base KOH and gets neutralized, following this reaction:
+
+KOH + HA → H_2_O + KA
+
+Initially, there are:
+
+Moles of KOH = 0.01 moles
+Moles of HA = 0.05 moles
+Moles of KA (or A^-^) = 0
+
+After the neutralization reaction, what's left is:
+
+Moles of KOH = 0
+Moles of HA = 0.04 moles
+Moles of KA (or A^-^) = 0.01 moles
+
+Knowing this, we consider how the remaining HA dissociates:
+
+HA ⇄ H^+^ + A^-^
+
+Considering ""X"" as the amount of HA that gets dissociated into its ions, we can write the Ka expression for this weak acid as:
+
+Ka = [H^+^][A^-^]/[HA]
+Ka = (X)(0.01 + X)/(0.04 - X)
+
+Since X is a very small number, we can assume $(0.01 + X)$ as 0.01 and $(0.04 - X)$ as 0.04. Solving for X: $X = Ka[HA]/[A^-^]$. Replacing the values:
+
+X = 6x10^-5^(0.01)/(0.04). (Note: In this case since the volumes are equal, the direct values of the moles can be used).
+X = 2.5x10^-4^ M
+
+This is also the amount of hidronium ions that are now dissolved in the solution. Given the pH equation: $pH = -log([H^+^])$. Let's just replace:
+
+pH = -log(2.5x10^-4^)
+pH = 3.6
+
+Another more direct way to calculate it is using directly the Henderson–Hasselbalch equation when there is present of a weak acid/base conjugate pair:
+pH = pKa + log ([A^-^]/[HA])
+pH = -log(6x10^-5^) + log(0.01/0.04)
+pH = 3.6
+ ",,2.5,This the value you've gotten if you calculated the dissociation of what was left of the weak acid without taking into account its conjugate base that's present after the neutralization reaction.,,4.2,This is not the pH of the solution. This is just the pKa of the weak acid.,,0.3,This is the value you've gotten if you calculated the pH just from the molarity of the weak acid which is not correct.,,Question Albert.io pH of a Weak Acid and Weak Base
+29,PHSCALE-29,"A student prepares a solution with a weak acid $(HA, Ka = 10^-6^)$ of which they want to determine its molarity.
+
+According to the pH meter, the pH of said solution is 3.15. Which one would be the molarity of the HA solution?",medium,,,,0.500 M,"The desired concentration of hydronium ions would be:
+
+[H^+^] = 10^-3.15^
+[H^+^] = 7.07x10^-4^ M
+
+If HA were to be dissociated into water, and we take $7.07x10^-4^ M$ as the part of it that gets dissociated, we can assume ""Xo"" as the initial concentration of HA, and write the Ka expression:
+
+Ka = [H^+^][A^-^]/[HA]
+10^-6^ = (7.07x10^-4^)(7.07x10^-4^)/(Xo - 7.07x10^-4^)
+
+Solving for Xo: $Xo = 0.500 M$",,0.400 M,This concentration would result in a higher pH than 3.15,,0.300 M,This concentration would result in a much higher pH than 3.15,,0.600 M,This concentration would result in a lower pH than 3.15,,Question Albert.io Dilution and pH
+30,PHSCALE-30,"If the pKb of an hypothetical weak base (B^-^) is 4, what would be the pH of a $0.2 M$ solution of this base?",easy,,,,11.7,"The dissociation of the weak base B^-^ in water would go as follows:
+
+B^-^ + H_2_O ⇄ BH + OH^-^
+
+Considering ""X"" as the amount of B^-^ that attracts the H^+^ ions from water, we can write the Kb expression for this weak acid as:
+
+Kb = [BH][OH^-^]/[B^-^]
+Kb = (X)(X)/(0.2 - X)
+
+Since X is a very small number, we can assume $(0.2 - X)$ as 0.2. Solving for X: $X = √[B^-^]Kb$. Replacing the values:
+
+X = √(0.2 x 10^-4^)
+X = 4.47x10^-3^ M
+
+This is also the concentration of hydroxide ions that are now dissolved in the solution.
+
+Given the pH equation: $pH = 14 - (-log([H^+^]))$, let's just replace:
+
+pH = 14 -(-log(4.47x10^-3^))
+pH = 11.7
+ ",,2.3,This would be the pOH of the solution instead of the pH which is what is asked for.,,0.7,This would be the value you've gotten if you calculated the pH with the molarity of the solution.,,7,A basic solution wouldn't have a neutral pH of 7.,,Question Albert.io Pyridine

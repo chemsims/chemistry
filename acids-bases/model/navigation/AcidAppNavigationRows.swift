@@ -4,42 +4,62 @@
 
 import ReactionsCore
 
-// TODO - labels
 struct AcidAppNavigationRows {
     private init() { }
     
-    static let rows = NavigationRows<AcidAppScreen>(
-        [
-            NavigationRow(
-                primaryIcon: NavigationIcon(
-                    screen: .introduction,
-                    image: .application("introduction"),
-                    selectedImage: .application("introduction-pressed"),
-                    label: ""
-                ),
-                firstSecondaryIcon: nil,
-                secondSecondaryIcon: nil
+    static let rows = NavigationRows(TopLevelScreen.allCases.map(\.row))
+}
+
+private enum TopLevelScreen: CaseIterable {
+    case introduction, buffer, titration
+
+    var row: NavigationRow<AcidAppScreen> {
+        NavigationRow(
+            primaryIcon: NavigationIcon(
+                screen: screen,
+                image: .application(image),
+                selectedImage: .application("\(image)-pressed"),
+                label: label
             ),
-            NavigationRow(
-                primaryIcon: NavigationIcon(
-                    screen: .buffer,
-                    image: .application("buffer"),
-                    selectedImage: .application("buffer-pressed"),
-                    label: ""
-                ),
-                firstSecondaryIcon: nil,
-                secondSecondaryIcon: nil
+            firstSecondaryIcon: NavigationIcon(
+                screen: quizScreen,
+                image: .core(.quizIcon),
+                selectedImage: .core(.quizIconSelected),
+                label: "\(label) quiz"
             ),
-            NavigationRow(
-                primaryIcon: NavigationIcon(
-                    screen: .titration,
-                    image: .application("titration"),
-                    selectedImage: .application("titration-pressed"),
-                    label: ""
-                ),
-                firstSecondaryIcon: nil,
-                secondSecondaryIcon: nil
-            )
-        ]
-    )
+            secondSecondaryIcon: nil
+        )
+    }
+
+    private var screen: AcidAppScreen {
+        switch self {
+        case .introduction: return .introduction
+        case .buffer: return .buffer
+        case .titration: return .titration
+        }
+    }
+
+    private var quizScreen: AcidAppScreen {
+        switch self {
+        case .introduction: return .introductionQuiz
+        case .buffer: return .bufferQuiz
+        case .titration: return .titrationQuiz
+        }
+    }
+
+    private var image: String {
+        switch self {
+        case .introduction: return "introduction"
+        case .buffer: return "buffer"
+        case .titration: return "titration"
+        }
+    }
+
+    private var label: String {
+        switch self {
+        case .introduction: return "Acid & Bases introduction"
+        case .buffer: return "Buffers"
+        case .titration: return "Titration"
+        }
+    }
 }

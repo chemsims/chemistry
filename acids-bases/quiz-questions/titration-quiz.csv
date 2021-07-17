@@ -1,0 +1,180 @@
+Question,,,,,,,Correct answer,,,Incorrect answer 1,,,Incorrect answer 2,,,Incorrect answer 3,,,
+number,id,text,difficulty,image-name,image-label,table,text,explanation,position,text,explanation,position,text,explanation,position,text,explanation,position,source
+1,TITRATION-01,"Commercial vinegar was titrated with NaOH solution to determine the content of acetic acid, HC2H3O2. For 20.0 mililiters of the vinegar, 26.7 mililiters of 0.600-molar NaOH solution was required.
+
+What was the concentration fo acetic acid in the vinegar if no other acid was present?",medium,,,,0.800 M,.,,1.60 M,.,,0.600 M,.,,0.450 M (and 0.200 M),.,,Question 16. AP College Board 1994
+2,TITRATION-02,What volume of 0.150-molar HCl is required to neutralize 25.0 mililiters of 0.120-molar Ba(OH)2?,medium,,,,40.0 mL,.,,20.0 mL,.,,30.0 mL,.,,60.0 mL (and 80.0 mL),.,,Question 55. AP College Board 1994
+3,TITRATION-03,"The graph below shows the titration curve that results when 100 mL of 0.0250 M acetic acid is titrated with 0.100 M NaOH.
+
+What part of the curve corresponds to the optimum buffer action fo the acetic acid/acetate ion pair?",hard,,,,Point V,"The equivalence point occurs when 25 mL of NaOH has been added. So, when 12.5 mL was added, half of the weak acid was neutralized to form a solution that still contained 1/2 weak acid but also contained 1/2 of its salt (conjugate base).
+
+That’s an ideal buffer with maximum buffering capacity. pH at equivalence pt. is about 9.0. The optimum buffer region occurs when half of the weak acid has been converted to its salt at the 1/2 equivalence point. pH = pKa at that point.",,Point X,.,,Point Z,.,,Along all of section WY (and Along all of section YZ),.,,Question 34. AP College Board  2002
+4,TITRATION-04,"A solution of a weak monprotic acid is titrated
+with a solution of a strong base, KOH. Consider
+the points labeled (A) through (E) on the titration
+curve that results, as shown below. 
+
+4. The point at which the moles of the added strong
+base are equal to the moles of the weak acid
+initially present.
+ 5. The point at which the pH is closest to that of the
+strong base being added.
+ 6. The point at which the concentrations of the weak
+acid and its conjugate base are approximately
+equal.
+",medium,,,,*NOT REALLY A SIMPLE SELECTION ANSWER*,.,,.,.,,.,.,,.,.,,Questions 4-6. AP College Board  2008
+5,TITRATION-05,"A sample of 10.0 mol of butyric acid, HC4H7O2, a
+weak acid, is dissolved in 1000. g of water to make
+a 10.0-molal solution.
+
+Which of the following
+would be the best method to determine the molarity
+of the solution?
+
+(In each case, assume that no
+additional information is available.)",easy,,,,"Measurement of the total volume of the
+solution",.,,Titration of the solution with standard acid,.,,Measurement of the pH with a pH meter (and ,.,,"Determination of the freezing point of the
+solution (and Measurement of the electrical conductivity of
+the solution)",.,,Question 53. AP College Board 2008
+6,TITRATION-06,A 20.0 mL sample of HNO3 is titrated with 10.0 mL of a 0.15 M KOH solution to the equivalence point. What is the concentration of HNO3?,easy,,,,0.075 M,.,,0.15 M,.,,0.23 M,.,,0.30 M,.,,Question Albert.io Concentration of a Strong Acid
+7,TITRATION-07,Which of the following types of ions will most likely be present in solution at Point D on the graph?,hard,,,,OH- and A-,.,,OH-,.,,"HA, A- and OH-",.,,A-,.,,Question Albert.io Predicting Ions Present
+8,TITRATION-08,Which of the following is TRUE about the reactants involved in the titration reaction?,medium,,,,The reaction involved a strong acid and weak base.,.,,The reaction involved a strong acid and strong base.,.,,The reaction involved a weak acid and strong base.,.,,The reaction involved a weak acid and weak base.,.,,Question Albert.io Acid Base Equilibria: Titration Curve
+9,TITRATION-09,"The graph below shows the changes in pH over time as a strong base is added to a weak acid.
+At which point pH = pKa?",hard,,,,12.5 mL,.,,5.0 mL,.,,15 mL,.,,25.0 mL,.,,Question Albert.io pH= pKa on a Titration Curve
+10,TITRATION-10,What is the pH at the half-equivalence point between a weak base and strong acid if the K b = 1.0 × 10 − 8 Kb=1.0×10−8?,easy,,,,6,.,,8,.,,10,.,,12,.,,Question Albert.io Half-equivalence Point
+11,TITRATION-11,A 40.0 mL sample of 0.100 M HNO3 is titrated with 0.200 M NaOH. Which of the following is the volume of base required to reach the equivalence point?,easy,,,,20.0 mL,.,,10.0 mL,.,,30.0 mL,.,,40.0 mL,.,,Question Albert.io Equivalence Point Calculation for a Strong Acid-Base Reaction
+12,TITRATION-12,"You are titrating a solution of ethanoic acid, CH3COOH(aq) (acetic acid), with aqueous sodium hydroxide to a phenolphthalein endpoint. Ethanoic acid is a weak acid.
+
+Which of the following statements BEST describes the principal species (other than water) that are present in solution at the equivalence point of your titration?",hard,,,,"Equal quantities of Na+(aq) and CH3COO–(aq), plus a small quantity of OH–.",.,,Equal quantities of Na+(aq) and CH3COO–(aq),.,,"Equal quantities of Na+(aq), CH3COO–(aq) and OH-",.,,"Equal quantities of Na+(aq), CH3COO–(aq), and OH–.",.,,Question Albert.io Titrating a Weak Acid with a Strong Base
+13,TITRATION-13,"Based on the titration curve below, which one of the following statements is TRUE?",medium,,,,A diprotic weak acid was neutralized by a strong base.,.,,A monoprotic weak acid was neutralized by a strong base.,.,,A diprotic weak base was neutralized by a weak base.,.,,A monoprotic weak acid was neutralized by a weak base.,.,,Question Albert.io Titration Curves
+14,TITRATION-14,Which of the following indicates where the equivalence point is located?,easy,,,,C,.,,A,.,,B,.,,D,.,,Question Albert.io Equivalence Point on Graph
+15,TITRATION-15,Which of the following buffer mixtures will have a pH equal to 4.0 4.0?,medium,,,,100.0 mL of 0.25 M HCOOH mixed with 100.0 mL of 0.50 M NaHCOO.,.,,100.0 mL of 0.50 M HCOOH mixed with 100.0 mL of 0.50 M NaHCOO.,.,,100.0 mL of 0.50 M HCOOH mixed with 100.0 mL of 0.25 M NaHCOO.,.,,100.0 mL of 0.50 M HCOOH mixed with 100.0 mL of 5.0 M NaHCOO.,.,,Question Albert.io Approximating the pH of a HCOOH Buffer
+16,TITRATION-16,"Examine the image below
+The approximate acid dissociation constant, Ka, based on this titration curve, is",medium,,,,1x10^-9^,.,,1x10^-2^,.,,1x10^2^,.,,1x10^12^,.,,Question Albert.io Acid Base Equilibria: Determination of Ka
+17,TITRATION-17,A weak acid of unknown molarity is titrated with N a O H NaOH. The graph above was obtained. At which of the following points on the titration curve is [ A − ] [A−] closest to twice that of [ H A ] [HA]?,hard,,,,C,.,,A,.,,B,.,,D,.,,Question Albert.io Titration Curve for a Weak Acid
+18,TITRATION-18,What is the pH pH at the half-equivalence point between a weak base and strong acid if the K b = 1.0 × 10 − 8 Kb=1.0×10−8?,easy,,,,6,.,,8,.,,10,.,,12,.,,Question Albert.io Half Equivalence Point 
+19,TITRATION-19,Two monoprotic acid solutions (X and Y) are titrated with 0.1 M N a O H 0.1 M NaOH solutions. The volume to reach the equivalence point for Solution X is twice the volume required for Solution Y. The pH at the equivalence point of Solution X is higher than the pH pH at the equivalence point in Solution Y. Which of the following statements is TRUE concerning Solution X and Y?,medium,,,,"The acid in Solution X is more concentrated than in Solution Y, and Solution X is also a weaker acid than Solution Y.",.,,"The acid in Solution X is more concentrated than in Solution Y, and Solution X is also a stronger acid than Solution Y.",.,,"The acid in Solution X is less concentrated than in Solution Y, and Solution X is also a weaker acid than Solution Y.",.,,"The acid in Solution X is less concentrated than in Solution Y, and Solution X is also a stronger acid than Solution Y.",.,,Question Albert.io Comparing Two Acidic Solutions
+20,TITRATION-20,Equal molar and equal volumes of hydrochloric acid and ammonia are mixed. Which of the following species will be present in the resulting solution?,medium,,,,Cl- / NH4+,.,,H+ / Cl- / NH3,.,,HCl / NH4+,.,,HCl / NH3,.,,Question Albert.io Hydrochloric Acid and Ammonia
+21,TITRATION-21,The following titration curve was obtained when 25.0 mL of a diprotic acid was titrated with 0.100 M NaOH.,medium,,,,0.041 M,.,,0.021 M,.,,0.082 M,.,,0.16 M,.,,Question Albert.io Concentration at Second Equivalence Point
+22,TITRATION-22,"In a titration experiment, 0.01 M NaOH is added to a weak, diprotic acid, H2Z. The graph below is generated from the data. Since both the first and second dissociations of the diprotic acid are incomplete, there are various buffers present at different points in this experiment.",medium,,,,After the addition of 10.5 mL of NaOH,.,,After the addition of 3.5 mL of NaOH,.,,After the addition of 7 mL of NaOH,.,,After the addition of 14 mL of NaOH,.,,Question Albert.io Relative Concentrations in a Diprotic Acid Titration
+23,TITRATION-23,"""Acids can release a proton and bases can accept a proton"". This definition for acids and bases is attributed to:",easy,,,,Brønsted-Lowry,Brønsted-Lowry acids are substances that can release a proton and bases are substances that can accept a proton. This is a definition that encompasses more substances than the Arrhenius theory.,,Lewis,The Lewis theory is based on the sharing and acceptance of electron pairs. ,,Arrhenius,The Arrhenius definition is only based on H^+^ and OH^-^ ions.,,It's just a broad definition of acids and bases,"There are three theories that define acids and bases and their interactions with each other and others substances. Arrhenius, Brønsted-Lowry and Lewis theories.",,Question 38. AP College Board 1999
+24,TITRATION-24,"A student prepares a $200 mL$ solution of $0.01 M Ba(OH)_2_$ in a beaker and titrates it with $0.06 M HCl$. After the addition of $100 mL$ of the titrant, what would the pH of the solution?",medium,,,,2.17,"In a $200 mL$ solution of $0.01 M Ba(OH)_2_$, we can determine how many moles of OH^-^ are present initially:
+
+Moles of OH^-^ = 0.05 x 0.100 x 2. Note: Each mole of this strong acid results in 2 moles of OH^-^.
+Moles of OH^-^ = 0.004 moles
+
+In the $100 mL$ added of $0.06 M HCl$, we can do the same thing:
+
+Moles of H^+^ = 0.06 x 0.100
+Moles of H^+^ = 0.006 moles
+
+Because H^+^ and OH^-^ ions react with each other to produce water, it's said that they're neutralized by each other, following this reaction: $OH^-^ + H^+^ → H_2_O$.
+
+To determine what's left after this reaction:
+
+Moles left = 0.006 - 0.004
+Moles left of H^+^ = 0.002 moles
+
+Let's calculate the concentration of ions in the solution:
+
+[H^+^] = Moles of H^+^ / Total Volume
+[H^+^] = 0.002 / (0.100 + 0.200)
+[H^+^] = 0.0066 M
+
+Given the pH equation:
+
+pH = -log[H^+^]
+pH = -log(0.0066)
+pH = 2.17",,2,"Remember to sum up the volumes together. Initially there was $0.200 L$ of base and then $0.100 L$ was added, coming to a total of $0.300 L$.",,1.87,This is not the pH of the solution. Take into account that each mole of the strong base Ba(OH)_2_ results in 2 moles of OH^-^ ions.,,2.22,This is not the pH of the solution. The pH would have to be calculated based on the moles of ions left after the neutralization reaction.,,Question Albert.io pH of a Mixture
+25,TITRATION-25,Consider a solution that has a pOH of 2.4 at 25 °C. Would you consider this solution to be..?,easy,,,,Basic,It's a basic solution given its pOH is smaller than 7 at standard conditions.,,Acidic,It's not an acidic solution. The smaller the pOH value than the more basic is the solution.,,Neutral,"A pH of 7 is considered neutral at standard conditions, and since this pH is different than 7 then it's not neutral.",,Cannot be determined with this information,With the pOH it can be determined if the solution is considered acidic or basic.,,Question Albert.io Hydroxide Ion Concentration
+26,TITRATION-26,The higher is the pKb of a weak base...,easy,,,,The lower is the pH and the concentration of hydroxide ions,"Given that pKb is -log[Kb], the higher it is then the lower it is the actual Kb of the weak base. Meaning that if the pKb increases both the pH and [OH^-^] decrease instead.",,The higher is the pOH and the concentration of hydroxide ions,If the pOH increases the [OH^-^] cannot increase too at the same time.,,The higher is the pH and the Ka of its conjugate acid,Given how $Ka = Kw/Kb$ If the Kb increases then the Ka of its conjugate acid would decrease instead.,,The lower is the pOH and the Kb of the weak base,"If the Kb decreases, this means that the weak base has less dissociative power, so it attracts fewer hydronium ions, resulting in a lower concentration of OH^-^ ions and ultimately in a higher pOH.",,Question Albert.io pKa and Hydroxide Ion Concentration
+27,TITRATION-27,"A student prepares a $200 mL$ solution of $0.300 M HA (hypothetical weak acid)$ in a beaker and titrates it with $0.100 M KOH$. After the addition of $100 mL$ of the titrant, what would the pH of the solution be? (Note: The Ka of HA is 6.0x10^-5^).",medium,,,,3.5,"In a $200 mL$ solution of $0.300 M HA$, we can determine how many moles of HA are present initially:
+
+Moles of HA = 0.200 x 0.300
+Moles of HA = 0.06 moles
+
+In the $100 mL$ added of $0.100 M KOH$, we can do the same thing:
+
+Moles of OH^-^ = 0.100 x 0.100
+Moles of OH^-^ = 0.01 moles
+
+The acid HA reacts with the strong base KOH and gets neutralized, following this reaction:
+
+KOH + HA → H_2_O + KA
+
+Initially, there are:
+
+Moles of KOH = 0.01 moles
+Moles of HA = 0.06 moles
+Moles of KA (or A^-^) = 0
+
+After the neutralization reaction, what's left is:
+
+Moles of KOH = 0
+Moles of HA = 0.05 moles
+Moles of KA (or A^-^) = 0.01 moles
+
+Knowing this, we consider how the remaining HA dissociates:
+
+HA ⇄ H^+^ + A^-^
+
+Considering ""X"" as the amount of HA that gets dissociated into its ions, we can write the Ka expression for this weak acid as:
+
+Ka = [H^+^][A^-^]/[HA]
+Ka = (X)(0.01 + X)/(0.05 - X)
+
+Since X is a very small number, we can assume $(0.01 + X)$ as 0.01 and $(0.05 - X)$ as 0.05. Solving for X: $X = Ka[HA]/[A^-^]$. Replacing the values:
+
+X = 6x10^-5^(0.01)/(0.05) (Note: In this case since the volumes are equal, the direct values of the moles can be used)
+X = 3.2x10^-4^ M
+
+This is also the amount of hidronium ions that are now dissolved in the solution. Given the pH equation: $pH = -log([H^+^])$, let's just replace:
+
+pH = -log(3.2x10^-4^)
+pH = 3.5
+
+Another more direct way to calculate it is using directly the Henderson–Hasselbalch equation when there is present of a weak acid/base conjugate pair:
+
+pH = pKa + log ([A^-^]/[HA])
+pH = -log(6x10^-5^) + log(0.01/0.05)
+pH = 3.5 ",,2.5,This the value you've gotten if you calculated the dissociation of what was left of the weak acid without taking into account its conjugate base that's present after the neutralization reaction.,,4.2,This is not the pH of the solution. This is just the pKa of the weak acid.,,0.5,This is the value you've gotten if you calculated the pH just from the molarity of the weak acid which is not correct.,,Question Albert.io pH of a Weak Acid and Weak Base
+28,TITRATION-28,"Consider a hypothetical weak acid H_2_A that is a diprotic acid with a Ka_1_ of 5.2x10^-10^ and for HA^-^ Ka_2_ of 3.1x10^-13^.  What would be the equilibrium constant for this reaction below?
+$A^2-^ + 2H_2_O ⇄ H_2_A + 2OH^-^$
+
+
+",medium,,,,6.2x10^-7^,"A^2-^ + 2H_2_O ⇄ H_2_A + 2OH^-^
+
+Would be the overall reaction for the steps:
+
+A^2-^ + H_2_O ⇄ HA^-^ + OH^-^
+Ka_1_ = 5.2x10^-10^
+
+HA^-^ + H_2_O ⇄ H_2_A + OH^-^
+Ka_2_ = 3.1x10^-13^
+
+So we first determine the correspondant Kb for each step
+
+Kb_1_ = Kw/Ka_1_
+Kb_1_ = 10^-14^/5.2x10^-10^
+Kb_1_ = 1.92x10^-5^
+
+Kb_2_ = Kw/Ka_2_
+Kb_2_ = 10^-14^/3.1x10^-13^
+Kb_2_ = 0.0322
+
+So for the overall reaction:
+
+K = (1.92x10^-5^)(0.0322)
+K = 6.2x10^-7^",,5.2x10^-10^,This would just be the same acid constant for the first step of the overall reaction.,,3.1x10^-13^,This would just be the same acid constant for the second step of the overall reaction.,,1.61x10^-22^,This would be the equilibrium constant for the overall reaction of the weak acid dissociation and not the base reaction.,,Question 31. AP College Board 1994
+29,TITRATION-29,"Consider the following reaction:
+$HA + B^-^  ⇄ HB + A^-^ Keq = 9.5x10^5^$
+In which HA and HB are weak acids and B^-^ and A^-^ are weak bases. What statement is true about these compounds?",medium,,,,"In terms of strength:
+HA > HB
+B^-^ > A^-^","With a equilibrium constant so big as 9.5x10^5^, it can be assumed that when at equilibrium the forward reaction is the one that's more favored. This implies that HA is a stronger acid than HB and B^-^ is a stronger base than A^-^.",,"In terms of strength:
+HB > HA
+B^-^ > A^-^",HB is not a stronger acid than HA given the equilibrium constant of the reaction.,,"In terms of strength:
+HA > HB
+A^-^ > B^-^",A^-^ is not a stronger base than B^-^ given the equilibrium constant of the reaction.,,"In terms of strength:
+HB > HA
+A^-^ > B^-^",Try taking into account what the equilibrium constant value should mean in terms of which reaction (forward or reverse) is favored at equilibrium.,,Question 62. AP College Board 1999
+30,TITRATION-30,.,hard,,,,.,.,,.,.,,.,.,,.,.,,
