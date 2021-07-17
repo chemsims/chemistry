@@ -370,6 +370,7 @@ private class SelectWeakBase: BufferScreenState {
         model.restoreSavedAcidModels()
         model.phase = .addStrongSubstance
         model.highlights.clear()
+        model.availableSubstances = AcidOrBase.weakAcids
     }
 }
 

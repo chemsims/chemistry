@@ -5,7 +5,7 @@
 import Foundation
 import SwiftUI
 
-public struct HighlightedElements<Value: Equatable> {
+public struct HighlightedElements<Value: Equatable>: Equatable {
 
     public var elements: [Value]
 
