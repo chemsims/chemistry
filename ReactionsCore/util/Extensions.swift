@@ -80,6 +80,14 @@ extension CGPoint {
     }
 }
 
+extension CGSize {
+    public func scaled(by factor: CGFloat) -> CGSize {
+        CGSize(
+            width: width * factor,
+            height: height * factor
+        )
+    }
+}
 
 
 extension TextLine: CustomDebugStringConvertible {

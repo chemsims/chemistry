@@ -7,6 +7,12 @@ import SwiftUI
 
 public struct ShakingContainerView: View {
 
+    /// Creates a ShakingContainerView instance.
+    ///
+    /// - Parameters:
+    ///     - includeContainerBackground: Whether to include a background
+    ///     behind the container. This is useful to highlight the container for example.
+    ///
     public init(
         model: ShakeContainerViewModel,
         position: CoreMotionPositionViewModel,
@@ -16,6 +22,7 @@ public struct ShakingContainerView: View {
         containerSettings: ParticleContainerSettings,
         moleculeSize: CGFloat,
         moleculeColor: Color,
+        includeContainerBackground: Bool,
         rotation: Angle,
         isSimulator: Bool
     ) {
@@ -27,6 +34,7 @@ public struct ShakingContainerView: View {
         self.containerSettings = containerSettings
         self.moleculeSize = moleculeSize
         self.moleculeColor = moleculeColor
+        self.includeContainerBackground = includeContainerBackground
         self.rotation = rotation
         self.isSimulator = isSimulator
     }
@@ -40,6 +48,7 @@ public struct ShakingContainerView: View {
     let containerSettings: ParticleContainerSettings
     let moleculeSize: CGFloat
     let moleculeColor: Color
+    let includeContainerBackground: Bool
     let rotation: Angle
     let isSimulator: Bool
 
@@ -66,6 +75,10 @@ public struct ShakingContainerView: View {
             .animation(nil)
             .rotationEffect(rotation)
             .frame(width: containerWidth)
+            .background(
+                Color.white
+                    .padding(-0.15 * containerWidth).opacity(includeContainerBackground ? 1 : 0)
+            )
             .position(initialLocation)
             .offset(
                 CGSize(

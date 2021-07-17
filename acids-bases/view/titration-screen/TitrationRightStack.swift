@@ -29,6 +29,7 @@ struct TitrationRightStack: View {
                 equationInput: equationInput
             )
             .frame(size: layout.equationSize)
+            .colorMultiply(model.highlights.colorMultiply(for: nil))
 
             Spacer(minLength: 0)
 
@@ -56,6 +57,7 @@ struct TitrationRightStack: View {
             circleSize: layout.common.reactionDefinitionCircleSize
         )
         .frame(size: layout.reactionDefinitionSize)
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var selectionView: some View {

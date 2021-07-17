@@ -16,6 +16,7 @@ class TitrationNavigationParametersAreReappliedTests: XCTestCase {
         doTest(\.showIndicatorFill)
         doTest(\.availableSubstances)
         doTest(\.substance)
+        doTest(\.highlights)
     }
 
     private func doTest<T: Equatable>(_ path: KeyPath<TitrationViewModel, T>) {

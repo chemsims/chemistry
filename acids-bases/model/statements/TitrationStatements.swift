@@ -31,8 +31,7 @@ struct TitrationStatements {
     static let explainMolecularIonicEquations: [TextLine] = [
         """
         For *neutralization* reactions the importance resides on the fact the ions dissociated \
-        more than the molecular compounds. So you can choose between the *molecule equation* or \
-        *ionic equation* which only shows the ions of importance.
+        more than the molecular compounds. The *ionic equation* which only shows the ions of importance.
         """
     ]
 

@@ -20,13 +20,11 @@ struct TitrationMacroBeaker: View {
     let beakerSettings: AdjustableFluidBeakerSettings
     @ObservedObject var model: TitrationViewModel
 
-    @State private var showMacroscopic = false
-
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
             HStack(alignment: .bottom, spacing: 0) {
                 slider
-                if showMacroscopic {
+                if model.beakerState == .macroscopic {
                     macroscopicBeaker
                 } else {
                     microscopicBeaker
@@ -40,14 +38,14 @@ struct TitrationMacroBeaker: View {
         HStack {
             SelectionToggleText(
                 text: "Microscopic",
-                isSelected: !showMacroscopic,
-                action: { showMacroscopic = false }
+                isSelected: model.beakerState == .microscopic,
+                action: { model.beakerState = .microscopic }
             )
 
             SelectionToggleText(
                 text: "Macroscopic",
-                isSelected: showMacroscopic,
-                action: { showMacroscopic = true }
+                isSelected: model.beakerState == .macroscopic,
+                action: { model.beakerState = .macroscopic }
             )
         }
         .font(.system(size: layout.common.toggleFontSize))
@@ -58,6 +56,8 @@ struct TitrationMacroBeaker: View {
         )
         .minimumScaleFactor(0.1)
         .lineLimit(1)
+        .background(Color.white)
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var slider: some View {
@@ -79,7 +79,7 @@ struct TitrationMacroBeaker: View {
                 .padding(.horizontal, beakerSettings.sliderPadding)
                 .padding(.top, beakerSettings.sliderPadding)
         )
-        .colorMultiply(.white)
+        .colorMultiply(model.highlights.colorMultiply(for: .waterSlider))
         .accessibility(
             label: Text("Slider for number of rows of molecules in beaker")
         )
@@ -93,7 +93,7 @@ struct TitrationMacroBeaker: View {
             width: beakerSettings.beakerWidth,
             height: beakerSettings.beakerHeight
         )
-        .colorMultiply(.white)
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var macroscopicBeaker: some View {
@@ -105,6 +105,7 @@ struct TitrationMacroBeaker: View {
             width: beakerSettings.beakerWidth,
             height: beakerSettings.beakerHeight
         )
+        .colorMultiply(model.highlights.colorMultiply(for: .macroscopicBeaker))
     }
 }
 

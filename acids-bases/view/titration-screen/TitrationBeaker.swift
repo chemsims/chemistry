@@ -64,9 +64,17 @@ private struct TitrationBeakerTools: View {
 
     var body: some View {
         ZStack {
-            molecules
+            // We add the backgrounds before the molecules, otherwise the
+            // highlights would cover part of the molecules
+            buretteBackground
+            indicatorBackground
 
-            phMeter
+            Group {
+                molecules
+
+                phMeter
+            }
+            .colorMultiply(model.highlights.colorMultiply(for: nil))
 
             dropper
 
@@ -118,6 +126,7 @@ private struct TitrationBeakerTools: View {
             }
         )
         .frame(size: layout.dropperSize)
+        .colorMultiply(model.highlights.colorMultiply(for: .indicator))
         .position(layout.dropperPosition)
     }
 
@@ -144,8 +153,29 @@ private struct TitrationBeakerTools: View {
                     length: layout.buretteSliderLengthToBuretteWidth * layout.buretteSize.width
                 )
         }
+        .colorMultiply(model.highlights.colorMultiply(for: .burette))
         .position(layout.burettePosition)
         .transition(.identity)
+    }
+
+    private var buretteBackground: some View {
+        elementBackground(.burette, size: layout.buretteSize, position: layout.burettePosition)
+    }
+
+    private var indicatorBackground: some View {
+        elementBackground(.indicator, size: layout.dropperSize, position: layout.dropperPosition)
+    }
+
+    private func elementBackground(
+        _ element: TitrationScreenElement,
+        size: CGSize,
+        position: CGPoint
+    ) -> some View {
+        Rectangle()
+            .foregroundColor(.white)
+            .colorMultiply(model.highlights.colorMultiply(for: element))
+            .frame(size: size.scaled(by: 1.1))
+            .position(position)
     }
 
     private var buretteColor: Color {
@@ -178,8 +208,12 @@ private struct TitrationBeakerTools: View {
                 forRows: model.rows
             ),
             disabled: model.inputState != .addSubstance,
-            onActivateContainer: { _ in }
+            includeContainerBackground: model.highlights.highlight(.container),
+            onActivateContainer: { _ in
+                model.highlights.clear()
+            }
         )
+        .colorMultiply(model.highlights.colorMultiply(for: .container))
     }
 
     // Titrant molarity can only be set in the preparation model, so we always use it as a binding
@@ -301,16 +335,20 @@ private extension TitrationScreenLayout {
     }
 
     var buretteSize: CGSize {
-        let width = availableWidthForDropperAndBurette - dropperSize.width
-
-        let sliderLength = buretteSliderLengthToBuretteWidth * width
-        let tooltipHeight = SliderOverlay.tooltipDepth(forLength: sliderLength, position: .top)
-
         let availableHeight = 0.95 * toolsBottomY
-        let maxBuretteHeight = availableHeight - tooltipHeight
+        let maxBuretteHeight = availableHeight - buretteTooltipHeight
 
-        let height = maxBuretteHeight // min(1.7 * width, maxHeight)
-        return CGSize(width: width, height: height)
+        let height = min(1.7 * buretteWidth, maxBuretteHeight)
+        return CGSize(width: buretteWidth, height: height)
+    }
+
+    private var buretteWidth: CGFloat {
+        availableWidthForDropperAndBurette - dropperSize.width
+    }
+
+    private var buretteTooltipHeight: CGFloat {
+        let sliderLength = buretteSliderLengthToBuretteWidth * buretteWidth
+        return SliderOverlay.tooltipDepth(forLength: sliderLength, position: .top)
     }
 
     var buretteSliderLengthToBuretteWidth: CGFloat {

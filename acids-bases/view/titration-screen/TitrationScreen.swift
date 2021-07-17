@@ -7,24 +7,31 @@ import ReactionsCore
 
 struct TitrationScreen: View {
 
-    let model: TitrationViewModel
+    @ObservedObject var model: TitrationViewModel
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
-        GeometryReader { geo in
-            TitrationScreenWithSettings(
-                model: model,
-                layout: TitrationScreenLayout(
-                    common: AcidBasesScreenLayout(
-                        geometry: geo,
-                        verticalSizeClass: verticalSizeClass,
-                        horizontalSizeClass: horizontalSizeClass
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color.white)
+                .colorMultiply(model.highlights.colorMultiply(for: nil))
+                .edgesIgnoringSafeArea(.all)
+
+            GeometryReader { geo in
+                TitrationScreenWithSettings(
+                    model: model,
+                    layout: TitrationScreenLayout(
+                        common: AcidBasesScreenLayout(
+                            geometry: geo,
+                            verticalSizeClass: verticalSizeClass,
+                            horizontalSizeClass: horizontalSizeClass
+                        )
                     )
                 )
-            )
+            }
+            .padding(AcidBasesScreenLayout.topLevelScreenPadding)
         }
-        .padding(10)
     }
 }
 
@@ -38,6 +45,7 @@ private struct TitrationScreenWithSettings: View {
             TitrationBeaker(layout: layout, model: model)
             Spacer(minLength: 0)
             TitrationChartStack(layout: layout, model: model)
+                .colorMultiply(model.highlights.colorMultiply(for: nil))
             Spacer(minLength: 0)
             TitrationRightStack(
                 layout: layout,

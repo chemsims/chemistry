@@ -157,6 +157,7 @@ private struct BufferMoleculeContainers: View {
                 rows: model.rows
             ),
             disabled: model.input != .addMolecule(phase: phase),
+            includeContainerBackground: false,
             onActivateContainer: { _ in
                 model.highlights.clear()
             }

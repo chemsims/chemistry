@@ -30,7 +30,7 @@ struct AcidBasesNavigationModel {
             onboardingPersistence: UserDefaultsOnboardingPersistence(),
             namePersistence: namePersistence,
             allScreens: AcidAppScreen.allCases,
-            linearScreens: [.buffer]
+            linearScreens: [.titration]
         )
     }
 }

@@ -18,6 +18,9 @@ where ContainerType : CaseIterable, ContainerType : Hashable
     let color: Color
     let topOfWaterPosition: CGFloat
     let disabled: Bool
+
+    /// Whether to include a background behind the container (useful for highlighting purposes)
+    let includeContainerBackground: Bool
     let onActivateContainer: (ContainerType) -> Void
 
     var body: some View {
@@ -39,6 +42,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
             ),
             moleculeSize: layout.moleculeSize,
             moleculeColor: color,
+            includeContainerBackground: includeContainerBackground,
             rotation: isActive ? .degrees(135) : .zero,
             isSimulator: AcidBasesApp.isSimulator
         )

@@ -131,6 +131,7 @@ private struct IntroBeakerContainers: View {
                 rows: model.rows
             ),
             disabled: model.inputState != .addSubstance(type: type),
+            includeContainerBackground: false,
             onActivateContainer: { _ in model.highlights.clear() }
         )
     }

@@ -34,7 +34,7 @@ struct TitrationNavigationModel {
         AddSubstance(\.instructToAddStrongAcid, equation: .strongAcidAddingSubstance),
         StopInput(statements.explainTitrationStages),
         SetStatement(statements.explainMolesOfHydrogen),
-        SetStatement(statements.explainIndicator),
+        ShowMacroscopicBeaker(statements.explainIndicator),
         AddIndicator(statements.instructToAddIndicator),
         SetTitrantMolarity(
             statements.instructToSetMolarityOfStrongBaseTitrant,
@@ -233,17 +233,31 @@ class TitrationScreenState: ScreenState, SubState {
 
 private class SetStatement: TitrationScreenState {
 
-    init(_ statement: [TextLine], equation: TitrationViewModel.EquationState? = nil) {
+    init(
+        _ statement: [TextLine],
+        equation: TitrationViewModel.EquationState? = nil,
+        highlights: [TitrationScreenElement] = []
+    ) {
         self.getStatement = { _ in statement }
         self.equationState = equation
+        self.highlights = highlights
     }
 
-    init(_ statement: @escaping (TitrationViewModel) -> [TextLine], equation: TitrationViewModel.EquationState? = nil) {
+    init(
+        _ statement: @escaping (TitrationViewModel) -> [TextLine],
+        equation: TitrationViewModel.EquationState? = nil,
+        highlights: [TitrationScreenElement] = []
+    ) {
         self.getStatement = statement
         self.equationState = equation
+        self.highlights = highlights
     }
 
-    init(_ statementKeyPath: KeyPath<TitrationSubstanceStatements, [TextLine]>, equation: TitrationViewModel.EquationState? = nil) {
+    init(
+        _ statementKeyPath: KeyPath<TitrationSubstanceStatements, [TextLine]>,
+        equation: TitrationViewModel.EquationState? = nil,
+        highlights: [TitrationScreenElement] = []
+    ) {
         self.getStatement = { model in
             TitrationSubstanceStatements(
                 substance: model.substance,
@@ -251,17 +265,24 @@ private class SetStatement: TitrationScreenState {
             )[keyPath: statementKeyPath]
         }
         self.equationState = equation
+        self.highlights = highlights
     }
 
-    init(_ statement: @escaping (NamePersistence) -> [TextLine], namePersistence: NamePersistence) {
+    init(
+        _ statement: @escaping (NamePersistence) -> [TextLine],
+        namePersistence: NamePersistence,
+        highlights: [TitrationScreenElement] = []
+    ) {
         self.getStatement = { model in
             statement(model.namePersistence)
         }
         self.equationState = nil
+        self.highlights = highlights
     }
 
     private let getStatement: (TitrationViewModel) -> [TextLine]
     private let equationState: TitrationViewModel.EquationState?
+    private let highlights: [TitrationScreenElement]
 
     private var previousEquationState: TitrationViewModel.EquationState?
 
@@ -278,6 +299,7 @@ private class SetStatement: TitrationScreenState {
 
     private func doApply(on model: TitrationViewModel) {
         model.statement = getStatement(model)
+        model.highlights.clear()
         if let eqState = equationState {
             model.equationState = eqState
         }
@@ -337,6 +359,7 @@ private class PrepareNewSubstanceModel: SetStatement {
         model.inputState = .selectSubstance
         model.substanceSelectionIsToggled = true
         model.macroBeakerState = .indicator
+        model.highlights.elements = [.reactionSelection]
     }
 
     override func unapply(on model: TitrationViewModel) {
@@ -387,13 +410,18 @@ private class StopInput: SetStatement {
 private class SetWaterLevel: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
-        model.inputState = .setWaterLevel
-        model.substanceSelectionIsToggled = false
+        doApply(on: model)
     }
 
     override func reapply(on model: TitrationViewModel) {
         super.reapply(on: model)
+        doApply(on: model)
+    }
+
+    private func doApply(on model: TitrationViewModel) {
         model.inputState = .setWaterLevel
+        model.substanceSelectionIsToggled = false
+        model.highlights.elements = [.waterSlider]
     }
 
     override func unapply(on model: TitrationViewModel) {
@@ -405,20 +433,26 @@ private class SetWaterLevel: SetStatement {
 private class AddSubstance: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
-        model.inputState = .addSubstance
+        commonApply(on: model)
     }
 
     override func reapply(on model: TitrationViewModel) {
         super.reapply(on: model)
-        model.inputState = .addSubstance
+        commonApply(on: model)
         withAnimation(containerInputAnimation) {
             model.resetInitialSubstance()
         }
     }
 
+    private func commonApply(on model: TitrationViewModel) {
+        model.inputState = .addSubstance
+        model.highlights.elements = [.container]
+    }
+
     override func unapply(on model: TitrationViewModel) {
         super.unapply(on: model)
         model.inputState = .none
+        model.highlights.clear()
         withAnimation(containerInputAnimation) {
             model.resetInitialSubstance()
             model.shakeModel.stopAll()
@@ -449,6 +483,7 @@ private class AddTitrantPreEP: SetStatement {
         } else {
             model.macroBeakerState = .weakTitrant
         }
+        model.highlights.elements = [.burette]
         withAnimation(containerInputAnimation) {
             model.inputState = .addTitrant
             model.shakeModel.stopAll()
@@ -470,17 +505,22 @@ private class AddTitrantPreEP: SetStatement {
 private class AddTitrantToWeakSubstancePostMaxBufferCapacity: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
-        model.inputState = .addTitrant
-        model.components.weakSubstancePreEPModel.titrantLimit = .equivalencePoint
+        doApply(on: model)
     }
 
     override func reapply(on model: TitrationViewModel) {
-        apply(on: model)
+        super.reapply(on: model)
+        doApply(on: model)
         let weakModel = model.components.weakSubstancePreEPModel
         withAnimation(.easeOut(duration: 0.35)) {
             weakModel.resetReactionProgressToMaxBufferCapacity()
             weakModel.titrantAdded = weakModel.titrantAtMaxBufferCapacity
         }
+    }
+
+    private func doApply(on model: TitrationViewModel) {
+        model.inputState = .addTitrant
+        model.components.weakSubstancePreEPModel.titrantLimit = .equivalencePoint
     }
 
     override func unapply(on model: TitrationViewModel) {
@@ -510,6 +550,7 @@ private class AddTitrantPostEP: SetStatement {
 
     private func applyCommon(on model: TitrationViewModel) {
         model.inputState = .addTitrant
+        model.highlights.elements = [.burette]
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
         }
@@ -520,6 +561,7 @@ private class AddTitrantPostEP: SetStatement {
         let currentSubstance = model.components.state.substance
         model.inputState = .none
         model.components.assertGoTo(state: .init(substance: currentSubstance, phase: .preEP))
+        model.highlights.clear()
 
         withAnimation(containerInputAnimation) {
             model.shakeModel.stopAll()
@@ -527,19 +569,41 @@ private class AddTitrantPostEP: SetStatement {
     }
 }
 
-private class AddIndicator: SetStatement {
+private class ShowMacroscopicBeaker: SetStatement {
     override func apply(on model: TitrationViewModel) {
         super.apply(on: model)
-        model.inputState = .addIndicator
-        model.showIndicatorFill = true
+        doApply(on: model)
     }
 
     override func reapply(on model: TitrationViewModel) {
         super.reapply(on: model)
-        model.inputState = .addIndicator
+        doApply(on: model)
+    }
+
+    private func doApply(on model: TitrationViewModel) {
+        model.highlights.elements = [.macroscopicBeaker]
+        model.beakerState = .macroscopic
+    }
+}
+
+private class AddIndicator: SetStatement {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        commonApply(on: model)
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
+        commonApply(on: model)
         withAnimation(containerInputAnimation) {
             model.resetIndicator()
         }
+    }
+
+    private func commonApply(on model: TitrationViewModel) {
+        model.inputState = .addIndicator
+        model.highlights.elements = [.indicator]
+        model.showIndicatorFill = true
     }
 
     override func unapply(on model: TitrationViewModel) {
@@ -549,6 +613,7 @@ private class AddIndicator: SetStatement {
             model.resetIndicator()
             model.showIndicatorFill = false
         }
+        model.highlights.clear()
     }
 }
 
@@ -566,12 +631,14 @@ private class SetTitrantMolarity: SetStatement {
     private func commonApply(on model: TitrationViewModel) {
         model.inputState = .setTitrantMolarity
         model.showTitrantFill = true
+        model.highlights.elements = [.burette]
         DeferScreenEdgesState.shared.deferEdges = [.top]
     }
 
     override func unapply(on model: TitrationViewModel) {
         super.unapply(on: model)
         model.showTitrantFill = false
+        model.highlights.clear()
         DeferScreenEdgesState.shared.deferEdges = []
     }
 }
@@ -616,6 +683,11 @@ private class EndOfWeakSubstanceInitialReaction: SetStatement {
         withAnimation(.easeOut(duration: 0.5)) {
             model.components.weakSubstancePreparationModel.reactionProgress = 1.0001
         }
+        model.showPhString = true
+    }
+
+    override func reapply(on model: TitrationViewModel) {
+        super.reapply(on: model)
         model.showPhString = true
     }
 

@@ -38,6 +38,7 @@ class TitrationViewModel: ObservableObject {
         )
         self.buretteEmitModel = MoleculeEmittingViewModel(
             canAddMolecule: { [weak self] in self?.canAddTitrant ?? false },
+            didEmitMolecules: { [weak self] (_) in self?.didEmitTitrant() },
             doAddMolecule: { [weak self] in self?.incrementTitrant(count: $0) }
         )
         self.availableSubstances = AcidOrBase.strongAcids
@@ -50,6 +51,9 @@ class TitrationViewModel: ObservableObject {
     @Published var rows: CGFloat {
         didSet {
             components.setRows(rows)
+            if highlights.elements == [.waterSlider] {
+                highlights.clear()
+            }
         }
     }
     @Published var inputState = InputState.none
@@ -80,6 +84,10 @@ class TitrationViewModel: ObservableObject {
     let maxIndicator = 25
 
     @Published var macroBeakerState = MacroBeakerState.indicator
+
+    @Published var highlights = HighlightedElements<TitrationScreenElement>()
+
+    @Published var beakerState = BeakerState.microscopic
 
     private(set) var navigation: NavigationModel<TitrationScreenState>!
     var shakeModel: MultiContainerShakeViewModel<TitrationComponentState.Substance>!
@@ -172,6 +180,9 @@ extension TitrationViewModel {
     }
 
     private func didEmitIndicator(count: Int) {
+        if highlights.elements == [.indicator] {
+            highlights.clear()
+        }
         let maxToAdd = min(remainingIndicatorAvailable, count)
         guard inputState == .addIndicator, maxToAdd > 0 else {
             return
@@ -233,6 +244,12 @@ extension TitrationViewModel {
         updateStatementPostTitrantIncrement()
         goNextIfNeededPostTitrantIncrement()
         updateEquationPostTitrantIncrement()
+    }
+
+    private func didEmitTitrant() {
+        if highlights.elements == [.burette] {
+            highlights.clear()
+        }
     }
 
     private var canAddTitrant: Bool {
@@ -534,5 +551,9 @@ extension TitrationViewModel {
             default: return .equivalencePointLiquid
             }
         }
+    }
+
+    enum BeakerState {
+        case microscopic, macroscopic
     }
 }
