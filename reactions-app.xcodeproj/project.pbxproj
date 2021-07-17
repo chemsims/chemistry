@@ -499,6 +499,7 @@
 		57D3261D26A2D22E0093CD16 /* EdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */; };
 		57D3261F26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */; };
 		57D3262126A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */; };
+		57D3262426A30CE80093CD16 /* AcidBasePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */; };
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
@@ -1227,6 +1228,7 @@
 		57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeInsetsExtension.swift; sourceTree = "<group>"; };
 		57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferNavigationParametersAreReappliedTests.swift; sourceTree = "<group>"; };
 		57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroNavigationParametersAreReappliedTests.swift; sourceTree = "<group>"; };
+		57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasePersistence.swift; sourceTree = "<group>"; };
 		57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeContainerViewModel.swift; sourceTree = "<group>"; };
 		57D3997F26615C4D00443C5A /* MovingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingPoint.swift; sourceTree = "<group>"; };
 		57D60151265EAD0100017E25 /* PositiveInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveInt.swift; sourceTree = "<group>"; };
@@ -1587,6 +1589,7 @@
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57D3262226A30CDB0093CD16 /* persistence */,
 				577C50312680D0CC003DAD17 /* titration */,
 				577C501F267F14EF003DAD17 /* reaction-equations */,
 				5773BCDC267A7E8F00E52C81 /* enums */,
@@ -3152,6 +3155,14 @@
 			path = "ui-elements";
 			sourceTree = "<group>";
 		};
+		57D3262226A30CDB0093CD16 /* persistence */ = {
+			isa = PBXGroup;
+			children = (
+				57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */,
+			);
+			path = persistence;
+			sourceTree = "<group>";
+		};
 		57D60150265EACF300017E25 /* validation */ = {
 			isa = PBXGroup;
 			children = (
@@ -4032,6 +4043,7 @@
 				570A7671266CFF0D009329FB /* BufferBeaker.swift in Sources */,
 				574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */,
 				577C5029267F38EC003DAD17 /* TitrationStatements.swift in Sources */,
+				57D3262426A30CE80093CD16 /* AcidBasePersistence.swift in Sources */,
 				5786BD08267B37A7001A165C /* TitrationScreen.swift in Sources */,
 				57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */,
 				57783C622682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift in Sources */,

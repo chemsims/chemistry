@@ -24,7 +24,7 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
         self.substanceCoords = BeakerMolecules(
             coords: [],
             color: substance.color,
-            label: substance.symbol
+            label: substance.chargedSymbol.symbol.label
         )
         self.reactionProgressModel = Self.initialReactionProgress(
             substance: substance,
@@ -51,7 +51,7 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
             self.substanceCoords = BeakerMolecules(
                 coords: [],
                 color: substance.color,
-                label: substance.symbol
+                label: substance.chargedSymbol.text.label
             )
             updateCalculations()
         }

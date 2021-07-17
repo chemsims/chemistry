@@ -66,7 +66,7 @@ struct AcidOrBase: Equatable, Identifiable {
     }
 
     var id: String {
-        symbol
+        symbol.asString
     }
 
     /// Number of substance molecules added for each pair of ions which are produced
@@ -94,7 +94,29 @@ struct AcidOrBase: Equatable, Identifiable {
     let kB: CGFloat
     let pKA: CGFloat
     let pKB: CGFloat
+}
 
+extension AcidOrBase {
+    var type: AcidOrBaseType {
+        let isStrong = substanceAddedPerIon.value == 0
+        switch primary {
+        case .hydrogen where isStrong: return .strongAcid
+        case .hydrogen: return .weakAcid
+        case .hydroxide where isStrong: return .strongBase
+        case .hydroxide: return .weakBase
+        }
+    }
+
+    func color(ofPart part: SubstancePart) -> Color {
+        switch part {
+        case .substance: return color
+        case .primaryIon: return primary.color
+        case .secondaryIon: return secondary.color
+        }
+    }
+}
+
+extension AcidOrBase {
     /// Returns a strong acid substance
     static func strongAcid(
         secondaryIon: SecondaryIon,
@@ -160,35 +182,15 @@ struct AcidOrBase: Equatable, Identifiable {
             kB: kB
         )
     }
-
-    var type: AcidOrBaseType {
-        let isStrong = substanceAddedPerIon.value == 0
-        switch primary {
-        case .hydrogen where isStrong: return .strongAcid
-        case .hydrogen: return .weakAcid
-        case .hydroxide where isStrong: return .strongBase
-        case .hydroxide: return .weakBase
-        }
-    }
-
-    func color(ofPart part: SubstancePart) -> Color {
-        switch part {
-        case .substance: return color
-        case .primaryIon: return primary.color
-        case .secondaryIon: return secondary.color
-        }
-    }
 }
+
+
 
 // MARK: Symbol names
 extension AcidOrBase {
 
-    // TODO - remove the symbol method & param below
-    func symbol(ofPart part: SubstancePart) -> String {
-        chargedSymbol(ofPart: part).symbol.asString
-    }
-    var symbol: String {
-        chargedSymbol.symbol.asString
+    var symbol: TextLine {
+        chargedSymbol(ofPart: .substance).text
     }
 
     var productParts: [SubstancePart] {
@@ -197,6 +199,7 @@ extension AcidOrBase {
         }
         return [.secondaryIon, .primaryIon]
     }
+    
 
     /// Returns the `ChargedSymbol` of the given `part` of the substance
     func chargedSymbol(ofPart part: SubstancePart) -> ChargedSymbol {
@@ -207,7 +210,7 @@ extension AcidOrBase {
         }
     }
 
-    private var chargedSymbol: ChargedSymbol {
+    var chargedSymbol: ChargedSymbol {
         if type == .weakBase {
             return ChargedSymbol(symbol: TextLine(secondary.rawValue), charge: .negative)
         }
@@ -322,7 +325,7 @@ extension AcidOrBase {
     }
 
     private var titrationDefinitionProduct: TextLine {
-        let secondarySymbol = symbol(ofPart: .secondaryIon)
+        let secondarySymbol = chargedSymbol(ofPart: .secondaryIon).text.asString
         switch type {
         case .strongAcid:
             return "K\(secondarySymbol)"
@@ -331,7 +334,8 @@ extension AcidOrBase {
         case .weakAcid:
             return "K\(secondarySymbol)"
         case .weakBase:
-            return TextLine(Self.prependingHydrogen(to: symbol(ofPart: .substance)))
+            let symbolString = chargedSymbol(ofPart: .substance).text.asString
+            return TextLine(Self.prependingHydrogen(to: symbolString))
         }
     }
 

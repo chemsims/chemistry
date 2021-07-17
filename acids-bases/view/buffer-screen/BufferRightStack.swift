@@ -30,7 +30,7 @@ struct BufferRightStack: View {
             height: layout.common.toggleHeight,
             animation: nil,
             displayString: { $0.symbol },
-            label: { $0.symbol },
+            label: { $0.symbol.label },
             disabledOptions: [],
             onSelection: model.next
         )

@@ -240,7 +240,7 @@ extension BufferSaltComponents {
 
     private func column(_ part: SubstancePart) -> ICETableColumn {
         ICETableColumn(
-            header: substance.symbol(ofPart: part),
+            header: substance.chargedSymbol(ofPart: part).symbol.asString,
             initialValue: ConstantEquation(value: concentration.value(for: part).getY(at: 0)),
             finalValue: concentration.value(for: part)
         )

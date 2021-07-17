@@ -26,7 +26,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         selection: Binding<Data>,
         height: CGFloat,
         animation: Animation?,
-        displayString: @escaping (Data) -> String,
+        displayString: @escaping (Data) -> TextLine,
         label: @escaping (Data) -> String,
         disabledOptions: [Data],
         onSelection: (() -> Void)?
@@ -37,9 +37,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         self._selection = selection
         self.height = height
         self.animation = animation
-        self.displayString = {
-            TextLine(stringLiteral: displayString($0))
-        }
+        self.displayString = displayString
         self.label = label
         self.disabledOptions = disabledOptions
         self.onSelection = onSelection

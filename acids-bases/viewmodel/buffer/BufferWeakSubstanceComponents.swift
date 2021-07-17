@@ -193,7 +193,7 @@ extension BufferWeakSubstanceComponents {
 
     private func column(_ part: SubstancePart) -> ICETableColumn {
         ICETableColumn(
-            header: substance.symbol(ofPart: part),
+            header: substance.chargedSymbol(ofPart: part).text.asString,
             initialValue: ConstantEquation(value: 0),
             finalValue: concentration.value(for: part)
         )

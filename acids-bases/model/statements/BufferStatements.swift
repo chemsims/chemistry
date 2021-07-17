@@ -132,13 +132,13 @@ struct BufferStatements {
     ]
 
     static func explainHendersonHasselbalch(substance: AcidOrBase) -> [TextLine] {
-        let secondary = substance.symbol(ofPart: .secondaryIon)
+        let secondary = substance.chargedSymbol(ofPart: .secondaryIon).text.asMarkdown
         let substance = substance.symbol
         return [
             """
             We can obtain a very useful equation for buffers: the *Henderson-Hasselbalch* equation. \
             This formula is derived algebraically from the equilibrium constant expression for Ka.
-            *pH = pKa + log([\(secondary)^-^]/[\(substance)])*
+            *pH = pKa + log([\(secondary)]/[\(substance)])*
             """
         ]
 
@@ -280,7 +280,7 @@ struct BufferStatements {
 
     // TODO - read the salt name from somewhere
     static func instructToAddSalt(substance: AcidOrBase) -> [TextLine] {
-        let secondary = substance.symbol(ofPart: .secondaryIon)
+        let secondary = substance.chargedSymbol(ofPart: .secondaryIon).symbol.asString
         return [
             """
             *M\(secondary)* is a salt that ionizes completely in water, \

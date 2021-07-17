@@ -67,7 +67,7 @@ struct TitrationRightStack: View {
             height: layout.common.toggleHeight,
             animation: nil, // TODO
             displayString: { $0.symbol },
-            label: { $0.symbol },
+            label: { $0.chargedSymbol.text.label },
             disabledOptions: [],
             onSelection: model.next
         )
