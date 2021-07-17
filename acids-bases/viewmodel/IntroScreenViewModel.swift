@@ -56,6 +56,7 @@ class IntroScreenViewModel: ObservableObject {
         }
         components.increment(count: count)
         handlePostIncrementStatement()
+        goNextIfNeededPostIncrement()
     }
 
     private let cols = MoleculeGridSettings.cols
@@ -116,6 +117,12 @@ extension IntroScreenViewModel {
             case .weakBase: statement = IntroStatements.midAddingWeakBase(substance: substance)
             }
             self.statement = statement
+        }
+    }
+
+    private func goNextIfNeededPostIncrement() {
+        if case .addSubstance(_) = inputState, !components.canAddSubstance {
+            next()
         }
     }
 
