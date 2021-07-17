@@ -205,6 +205,7 @@ private class SetWeakBaseWaterLevel: IntroScreenState {
         let substance = model.substance(forType: .weakBase)
         model.statement = statements.setWeakBaseWaterLevel(substance: substance)
         model.inputState = .setWaterLevel
+        model.highlights.elements = [.waterSlider]
     }
 
     override func unapply(on model: IntroScreenViewModel) {

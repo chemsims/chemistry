@@ -145,6 +145,7 @@ extension IntroScreenViewModel {
             components.restore(from: lastState)
             rows = CGFloat(components.rows)
         }
+        availableSubstances = AcidOrBase.substances(forType: lastState.substance.type)
     }
 
     func setSubstance(_ substance: AcidOrBase?, type: AcidOrBaseType) {

@@ -1,0 +1,27 @@
+//
+// Reactions App
+//
+
+import XCTest
+import ReactionsCore
+@testable import acids_bases
+
+class IntroNavigationParametersAreReappliedTests: XCTestCase {
+
+    func testParametersAreReapplied() {
+        doTest(\.statement)
+        doTest(\.inputState)
+        doTest(\.highlights)
+        doTest(\.availableSubstances)
+        doTest(\.selectedSubstances)
+    }
+
+    private func doTest<T: Equatable>(_ path: KeyPath<IntroScreenViewModel, T>) {
+        let model = IntroScreenViewModel(namePersistence: InMemoryNamePersistence())
+        checkPreviousValueIsReapplied(
+            model: model,
+            navigation: model.navigation!,
+            prevValueKeyPath: path
+        )
+    }
+}

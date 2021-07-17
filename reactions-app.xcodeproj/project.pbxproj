@@ -498,6 +498,7 @@
 		57D3261B26A2C2460093CD16 /* BufferScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261A26A2C2450093CD16 /* BufferScreenElement.swift */; };
 		57D3261D26A2D22E0093CD16 /* EdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */; };
 		57D3261F26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */; };
+		57D3262126A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */; };
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
@@ -1225,6 +1226,7 @@
 		57D3261A26A2C2450093CD16 /* BufferScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferScreenElement.swift; sourceTree = "<group>"; };
 		57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeInsetsExtension.swift; sourceTree = "<group>"; };
 		57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferNavigationParametersAreReappliedTests.swift; sourceTree = "<group>"; };
+		57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroNavigationParametersAreReappliedTests.swift; sourceTree = "<group>"; };
 		57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeContainerViewModel.swift; sourceTree = "<group>"; };
 		57D3997F26615C4D00443C5A /* MovingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingPoint.swift; sourceTree = "<group>"; };
 		57D60151265EAD0100017E25 /* PositiveInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveInt.swift; sourceTree = "<group>"; };
@@ -3469,6 +3471,7 @@
 			children = (
 				57F4673D268741EC00E294BE /* TitrationNavigationParametersAreReappliedTests.swift */,
 				57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */,
+				57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -4085,6 +4088,7 @@
 				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,
 				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
 				57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */,
+				57D3262126A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift in Sources */,
 				57E9B75F268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift in Sources */,
 				57F4673E268741ED00E294BE /* TitrationNavigationParametersAreReappliedTests.swift in Sources */,
 				576AF0F22684D51700F300C7 /* TitrationWeakBasePreEPModelTests.swift in Sources */,
