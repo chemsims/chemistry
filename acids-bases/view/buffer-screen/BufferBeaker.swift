@@ -33,10 +33,11 @@ struct BufferBeaker: View {
             circleSize: layout.common.reactionDefinitionCircleSize
         )
         .frame(size: layout.common.reactionDefinitionSize)
+        .background(Color.white)
         .padding(.leading, layout.common.reactionDefinitionLeadingPadding)
         .animation(nil, value: model.substance)
         .minimumScaleFactor(0.5)
-//        .colorMultiply(model.highlights.colorMultiply(for: nil))
+        .colorMultiply(model.highlights.colorMultiply(for: .reactionDefinition))
     }
 
     private var beaker: some View {
@@ -78,8 +79,8 @@ private struct BufferBeakerWithMolecules: View {
             currentTime: reactionProgress,
             settings: layout.common.adjustableBeakerSettings,
             canSetLevel: model.input == .setWaterLevel,
-            beakerColorMultiply: .white,
-            sliderColorMultiply: .white,
+            beakerColorMultiply: model.highlights.colorMultiply(for: nil),
+            sliderColorMultiply: model.highlights.colorMultiply(for: .waterSlider),
             beakerModifier: BufferBeakerAccessibilityModifier()
         )
     }
@@ -117,12 +118,27 @@ private struct BufferMoleculeContainers: View {
 
     var body: some View {
         ZStack {
+            highlight
+
             container(phase: .addWeakSubstance, index: 0)
             container(phase: .addSalt, index: 1)
             container(phase: .addStrongSubstance, index: 2)
         }
         .frame(width: containerAreaWidth)
         .offset(x: layout.common.sliderSettings.handleWidth)
+        .colorMultiply(model.highlights.colorMultiply(for: .containers))
+    }
+
+    private var highlight: some View {
+        Rectangle()
+            .frame(
+                height: 1.2 * layout.common.containerSize.height
+            )
+            .position(
+                x: containerAreaWidth / 2,
+                y: layout.containerRowYPos
+            )
+            .foregroundColor(.white)
     }
 
     private func container(
@@ -141,7 +157,9 @@ private struct BufferMoleculeContainers: View {
                 rows: model.rows
             ),
             disabled: model.input != .addMolecule(phase: phase),
-            onActivateContainer: { _ in }
+            onActivateContainer: { _ in
+                model.highlights.clear()
+            }
         )
     }
 

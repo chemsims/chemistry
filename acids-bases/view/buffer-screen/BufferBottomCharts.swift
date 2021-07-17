@@ -29,6 +29,8 @@ struct BufferBottomCharts: View {
                 strongModel: model.strongSubstanceModel
             )
             .padding(.leading, leadingPaddingForChartWithoutYAxis)
+            .colorMultiply(model.highlights.colorMultiply(for: nil))
+
         case .curve:
             BufferFractionsChart(
                 layout: layout,
@@ -37,6 +39,17 @@ struct BufferBottomCharts: View {
                 saltModel: model.saltModel,
                 strongModel: model.strongSubstanceModel
             )
+            .background(
+                Color.white
+                    .padding(.trailing, -0.05 * layout.common.chartSize)
+                    .padding(.bottom, fractionChartHighlightBottomPadding)
+
+            )
+            .colorMultiply(
+                model.highlights.colorMultiply(for: .fractionChart)
+            )
+
+
         case .neutralization:
             BufferReactionProgressChart(
                 layout: layout,
@@ -46,7 +59,16 @@ struct BufferBottomCharts: View {
                 strongModel: model.strongSubstanceModel
             )
             .padding(.leading, leadingPaddingForChartWithoutYAxis)
+            .colorMultiply(model.highlights.colorMultiply(for: nil))
         }
+    }
+
+    private var fractionChartHighlightBottomPadding: CGFloat {
+        let barAxisHeight = layout.common.barChartSettings.totalAxisHeight
+        let axisHeight = layout.common.chartXAxisHeight + layout.common.chartXAxisVSpacing
+
+        let difference = barAxisHeight - axisHeight
+        return max(0, difference)
     }
 
     private var leadingPaddingForChartWithoutYAxis: CGFloat {
@@ -62,6 +84,7 @@ struct BufferBottomCharts: View {
         .font(.system(size: layout.common.toggleFontSize))
         .frame(height: layout.common.toggleHeight)
         .minimumScaleFactor(0.5)
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private func text(

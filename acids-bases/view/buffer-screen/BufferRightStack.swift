@@ -71,7 +71,8 @@ private struct SwitchingBufferEquationView: View {
         BufferEquationView(
             progress: progress,
             state: model.equationState,
-            data: data
+            data: data,
+            highlights: model.highlights
         )
     }
 

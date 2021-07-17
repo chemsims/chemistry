@@ -7,25 +7,32 @@ import ReactionsCore
 
 struct BufferScreen: View {
 
-    let model: BufferScreenViewModel
+    @ObservedObject var model: BufferScreenViewModel
 
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
-        GeometryReader { geo in
-            BufferScreenWithSettings(
-                model: model,
-                layout: BufferScreenLayout(
-                    common: AcidBasesScreenLayout(
-                        geometry: geo,
-                        verticalSizeClass: verticalSizeClass,
-                        horizontalSizeClass: horizontalSizeClass
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color.white)
+                .colorMultiply(model.highlights.colorMultiply(for: nil))
+                .edgesIgnoringSafeArea(.all)
+
+            GeometryReader { geo in
+                BufferScreenWithSettings(
+                    model: model,
+                    layout: BufferScreenLayout(
+                        common: AcidBasesScreenLayout(
+                            geometry: geo,
+                            verticalSizeClass: verticalSizeClass,
+                            horizontalSizeClass: horizontalSizeClass
+                        )
                     )
                 )
-            )
+            }
+            .padding(AcidBasesScreenLayout.topLevelScreenPadding)
         }
-        .padding(15) // TODO - get rid of this
     }
 }
 

@@ -68,8 +68,10 @@ where ContainerType : CaseIterable, ContainerType : Hashable
 
         withAnimation(.easeOut(duration: 0.25)) {
             models.activeMolecule = element
-            onActivateContainer(element)
         }
+
+        onActivateContainer(element)
+        
         models.start(
             for: element,
             at: activeLocation,

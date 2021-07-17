@@ -12,13 +12,15 @@ struct BufferEquationView: View {
     let progress: CGFloat
     let state: BufferScreenViewModel.EquationState
     let data: BufferEquationData
+    let highlights: HighlightedElements<BufferScreenElement>
 
     var body: some View {
         GeometryReader { geo in
             SizedBufferEquationView(
                 progress: progress,
                 state: state,
-                data: data
+                data: data,
+                highlights: highlights
             )
             .scaledToFit(
                 inWidth: geo.size.width,
@@ -62,6 +64,7 @@ private struct SizedBufferEquationView: View {
     let progress: CGFloat
     let state: EquationState
     let data: BufferEquationData
+    let highlights: HighlightedElements<BufferScreenElement>
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -82,12 +85,25 @@ private struct SizedBufferEquationView: View {
                 state: state,
                 fixedK: state.isAcid ? data.kA : data.kB
             )
+            .highlighted(
+                element: .kEquation,
+                highlights: highlights,
+                insets: .withDefaults(
+                    leading: largeBoxExtraSize,
+                    trailing: -20
+                )
+            )
             .frame(width: leftColWidth, alignment: .leading)
 
             Spacer()
 
             if state.showPKEquations {
                 PKADefinition(state: state)
+                    .highlighted(
+                        element: .pKEquation,
+                        highlights: highlights,
+                        insets: .withDefaults(trailing: -10)
+                    )
                     .frame(width: rightColWidth, alignment: .leading)
             }
 
@@ -108,6 +124,7 @@ private struct SizedBufferEquationView: View {
                 progress: progress
             )
             .frame(width: leftColWidth, alignment: .leading)
+            .colorMultiply(noHighlight)
 
             Spacer()
 
@@ -118,6 +135,7 @@ private struct SizedBufferEquationView: View {
                     kaValue: data.kA
                 )
                 .frame(width: rightColWidth, alignment: .leading)
+                .colorMultiply(noHighlight)
             }
 
             if state.showPhSumAtTop {
@@ -130,12 +148,22 @@ private struct SizedBufferEquationView: View {
         HStack(spacing: 0) {
             PHDefinition(substance: data.substance, state: state)
                 .frame(width: leftColWidth, alignment: .leading)
+                .highlighted(
+                    element: .hasselbalchEquation,
+                    highlights: highlights,
+                    insets: .withDefaults(leading: largeBoxExtraSize)
+                )
 
             Spacer()
 
             if state.showKwEquations {
                 KWDefinition()
                     .frame(width: rightColWidth, alignment: .leading)
+                    .highlighted(
+                        element: .kWEquation,
+                        highlights: highlights,
+                        insets: .withDefaults(trailing: 220)
+                    )
             }
 
             if state.showPhSumAtBottom {
@@ -155,6 +183,7 @@ private struct SizedBufferEquationView: View {
                 substanceConcentration: data.concentration.substance
             )
             .frame(width: leftColWidth, alignment: .leading)
+            .colorMultiply(noHighlight)
 
             Spacer()
 
@@ -166,6 +195,7 @@ private struct SizedBufferEquationView: View {
                     kBValue: data.kB
                 )
                 .frame(width: rightColWidth, alignment: .leading)
+                .colorMultiply(noHighlight)
             }
 
             if state.showPhSumAtBottom {
@@ -187,6 +217,41 @@ private struct SizedBufferEquationView: View {
             pOHEquation: data.pOH
         )
         .frame(width: rightColWidth, alignment: .leading)
+        .colorMultiply(noHighlight)
+    }
+
+    private var noHighlight: Color {
+        highlights.colorMultiply(for: nil)
+    }
+}
+
+private extension View {
+
+    func highlighted(
+        element: BufferScreenElement?,
+        highlights: HighlightedElements<BufferScreenElement>,
+        insets: EdgeInsets = .withDefaults()
+    ) -> some View {
+        self.modifier(
+            BufferEquationHighlightModifier(
+                element: element,
+                highlights: highlights,
+                insets: insets
+            )
+        )
+    }
+}
+
+private struct BufferEquationHighlightModifier: ViewModifier {
+
+    let element: BufferScreenElement?
+    let highlights: HighlightedElements<BufferScreenElement>
+    let insets: EdgeInsets
+
+    func body(content: Content) -> some View {
+        content
+            .background(Color.white.padding(insets))
+            .colorMultiply(highlights.colorMultiply(for: element))
     }
 }
 
@@ -218,7 +283,7 @@ private struct KADefinition: View {
                 }
             }
             Rectangle()
-                .frame(width: 110, height: 2)
+                .frame(width: 115, height: 2)
             FixedText("[\(substance.symbol)]")
         }
     }
@@ -655,10 +720,12 @@ private struct PHSumFilled: View {
 
 private let hStackSpacing: CGFloat = 5
 private let largeBoxWidth: CGFloat = 2 * EquationSizing.boxWidth
-private let leftColWidth: CGFloat = 350
+private let leftColWidth: CGFloat = 450
 private let rightColWidth: CGFloat = 440
-private let spacerWidth: CGFloat = 150
+private let spacerWidth: CGFloat = 50
 private let largeParenScale: CGFloat = 2
+
+private let largeBoxExtraSize: CGFloat = largeBoxWidth - EquationSizing.boxWidth
 
 private let NaturalWidth: CGFloat = 950
 private let NaturalHeight: CGFloat = 440
@@ -669,10 +736,6 @@ struct BufferEquationView_Previews: PreviewProvider {
             equation(
                 state: .baseWithAllConcentration,
                 substance: .weakAcids[0]
-            )
-            equation(
-                state: .acidSummary,
-                substance: .weakBases[0]
             )
         }
         .previewLayout(.sizeThatFits)
@@ -702,11 +765,13 @@ struct BufferEquationView_Previews: PreviewProvider {
                     ConstantEquation(value: 0.1)
                 }),
                 pH: ConstantEquation(value: 7)
-            )
+            ),
+            highlights: .init(elements: [.hasselbalchEquation])
         )
         .previewLayout(.sizeThatFits)
         .border(Color.black)
         .frame(width: NaturalWidth, height: NaturalHeight)
         .border(Color.red)
+        .background(Styling.inactiveScreenElement)
     }
 }

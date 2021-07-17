@@ -39,6 +39,7 @@ struct BufferPHChartOrTable: View {
         .font(.system(size: layout.common.toggleFontSize))
         .frame(height: layout.common.toggleHeight)
         .minimumScaleFactor(0.5)
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var graph: some View {
@@ -47,6 +48,11 @@ struct BufferPHChartOrTable: View {
             model: model,
             strongModel: model.strongSubstanceModel
         )
+        .background(
+            Color.white
+                .padding(.trailing, -0.05 * layout.common.chartSize)
+        )
+        .colorMultiply(model.highlights.colorMultiply(for: .topChart))
     }
 
     private var table: some View {
@@ -57,6 +63,7 @@ struct BufferPHChartOrTable: View {
             strongModel: model.strongSubstanceModel
         )
         .frame(size: layout.tableSize)
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 }
 

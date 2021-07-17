@@ -39,6 +39,9 @@ class BufferScreenViewModel: ObservableObject {
     @Published var rows: CGFloat {
         didSet {
             weakSubstanceModel.rows = GridCoordinateList.availableRows(for: rows)
+            if highlights.elements == [.waterSlider] {
+                highlights.clear()
+            }
         }
     }
     @Published var statement = [TextLine]()
@@ -59,6 +62,8 @@ class BufferScreenViewModel: ObservableObject {
     var substance: AcidOrBase {
         weakSubstanceModel.substance
     }
+
+    @Published var highlights = HighlightedElements<BufferScreenElement>()
 
     let namePersistence: NamePersistence
 

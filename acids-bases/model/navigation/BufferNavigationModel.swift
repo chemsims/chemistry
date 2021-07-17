@@ -18,19 +18,20 @@ struct BufferNavigationModel {
     }
 
     private static let states = [
+        // MARK: Weak acid buffer
         SetStatement(statements.intro),
         SetStatement(statements.explainEquilibriumConstant1),
         SelectWeakAcid(),
-        PostSelectSubstance(statements.explainWeakAcid),
-        SetStatement(statements.explainKa),
+        PostSelectSubstance(statements.explainWeakAcid, highlights: [.reactionDefinition]),
+        SetStatement(statements.explainKa, highlights: [.kEquation]),
         SetStatement(statements.explainHighKa),
         SetStatement(statements.explainConjugateBase),
         SetStatement(statements.explainKb),
         SetStatement(statements.explainKw),
         SetStatement(statements.explainP14),
-        SetStatement(statements.explainKaKbNaming),
-        SetStatement(statements.explainPKaPKb),
-        SetStatement(statements.explainHendersonHasselbalch),
+        SetStatement(statements.explainKaKbNaming, highlights: [.kWEquation]),
+        SetStatement(statements.explainPKaPKb, highlights: [.pKEquation]),
+        SetStatement(statements.explainHendersonHasselbalch, highlights: [.hasselbalchEquation]),
         SetWaterLevel(statements.instructToSetWaterLevel1),
         AddWeakAcid(),
         RunWeakAcidReaction(),
@@ -46,16 +47,18 @@ struct BufferNavigationModel {
         SetStatement(statements.explainAddingAcidIonizingSalt),
         AddSalt(statements.instructToAddSalt),
         PostAdd(fromSubstance: \.reachedAcidBuffer),
-        SetStatement(statements.showPreviousPhLine),
+        SetStatement(statements.showPreviousPhLine, highlights: [.topChart]),
         AddStrongSubstance(statements.instructToAddStrongAcid),
         PostAdd(statements.acidBufferLimitReached),
+
+        // MARK: Weak base buffer
         SelectWeakBase(),
-        PostSelectSubstance(fromSubstance: \.choseWeakBase),
-        SetStatement(fromSubstance: \.explainKbEquation),
+        PostSelectSubstance(fromSubstance: \.choseWeakBase, highlights: [.reactionDefinition]),
+        SetStatement(fromSubstance: \.explainKbEquation, highlights: [.kEquation]),
         SetStatement(statements.explainKbOhRelation),
         SetStatement(fromSubstance: \.explainConjugateAcidPair),
         SetStatement(fromSubstance: \.explainKa),
-        SetStatement(fromSubstance: \.explainBasicHasselbalch),
+        SetStatement(fromSubstance: \.explainBasicHasselbalch, highlights: [.hasselbalchEquation]),
         SetWaterLevel(statements.instructToSetWaterLevelForBase),
         AddWeakBase(),
         RunWeakBaseReaction(),
@@ -101,24 +104,31 @@ class BufferScreenState: ScreenState, SubState {
 }
 
 private class SetStatement: BufferScreenState {
-    init(_ statement: [TextLine]) {
+
+    init(_ statement: [TextLine], highlights: [BufferScreenElement] = []) {
         self.statement = { _ in statement }
+        self.highlights = highlights
+
     }
 
-    init(_ statement: @escaping (AcidOrBase) -> [TextLine]) {
+    init(_ statement: @escaping (AcidOrBase) -> [TextLine], highlights: [BufferScreenElement] = []) {
         self.statement = { statement($0.substance) }
+        self.highlights = highlights
     }
 
-    init(fromSubstance keyPath: KeyPath<BufferStatementsForSubstance, [TextLine]>) {
+    init(fromSubstance keyPath: KeyPath<BufferStatementsForSubstance, [TextLine]>, highlights: [BufferScreenElement] = []) {
         self.statement = {
             substanceStatements($0)[keyPath: keyPath]
         }
+        self.highlights = highlights
     }
 
     let statement: (BufferScreenViewModel) -> [TextLine]
+    let highlights: [BufferScreenElement]
 
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statement(model)
+        model.highlights.elements = highlights
     }
 }
 
@@ -127,11 +137,13 @@ private class SelectWeakAcid: BufferScreenState {
         model.statement = statements.explainEquilibriumConstant2
         model.input = .selectSubstance
         model.substanceSelectionIsToggled = true
+        model.highlights.elements = [.reactionSelection]
     }
 
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
         model.substanceSelectionIsToggled = false
+        model.highlights.clear()
     }
 }
 
@@ -147,10 +159,12 @@ private class SetWaterLevel: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
         model.statement = statement(model)
         model.input = .setWaterLevel
+        model.highlights.elements = [.waterSlider]
     }
 
     override func unapply(on model: BufferScreenViewModel) {
         model.input = .none
+        model.highlights.clear()
     }
 }
 
@@ -159,6 +173,7 @@ private class AddWeakAcid: BufferScreenState {
         model.statement = substanceStatements(model).instructToAddWeakAcid
         model.input = .addMolecule(phase: .addWeakSubstance)
         model.equationState = .acidWithSubstanceConcentration
+        model.highlights.elements = [.containers]
     }
 
     override func reapply(on model: BufferScreenViewModel) {
@@ -171,6 +186,7 @@ private class AddWeakAcid: BufferScreenState {
         model.equationState = .acidBlank
         model.weakSubstanceModel.resetCoords()
         model.shakeModel.stopAll()
+        model.highlights.clear()
     }
 }
 
@@ -182,6 +198,7 @@ private class RunWeakSubstanceReaction: BufferScreenState {
             model.weakSubstanceModel.progress = 1
         }
 
+        model.highlights.clear()
         model.weakSubstanceModel.runReactionProgressReaction()
 
         withAnimation(containerInputAnimation) {
@@ -252,6 +269,11 @@ private class ShowFractionChart: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
         super.apply(on: model)
         model.selectedBottomGraph = .curve
+        model.highlights.elements = [.fractionChart]
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.highlights.clear()
     }
 }
 
@@ -259,6 +281,7 @@ private class AddSalt: SetStatement {
     override func apply(on model: BufferScreenViewModel) {
         super.apply(on: model)
         model.input = .addMolecule(phase: .addSalt)
+        model.highlights.elements = [.containers]
     }
 
     override func reapply(on model: BufferScreenViewModel) {
@@ -274,6 +297,7 @@ private class AddSalt: SetStatement {
             model.shakeModel.stopAll()
             model.saltModel.reset()
         }
+        model.highlights.clear()
     }
 }
 
@@ -284,6 +308,7 @@ private class PostAdd: SetStatement {
             model.input = .none
             model.shakeModel.stopAll()
         }
+        model.highlights.clear()
     }
 }
 
@@ -303,6 +328,7 @@ private class AddStrongSubstance: SetStatement {
     private func doApply(on model: BufferScreenViewModel) {
         super.apply(on: model)
         model.input = .addMolecule(phase: .addStrongSubstance)
+        model.highlights.elements = [.containers]
     }
 
     override func unapply(on model: BufferScreenViewModel) {
@@ -312,6 +338,7 @@ private class AddStrongSubstance: SetStatement {
             model.strongSubstanceModel.reset()
         }
         model.phase = .addSalt
+        model.highlights.clear()
     }
 }
 
@@ -332,6 +359,7 @@ private class SelectWeakBase: BufferScreenState {
         model.input = .selectSubstance
         model.substanceSelectionIsToggled = true
         model.equationState = .baseBlank
+        model.highlights.elements = [.reactionSelection]
         if model.selectedBottomGraph == .curve {
             model.selectedBottomGraph = .bars
         }
@@ -343,6 +371,7 @@ private class SelectWeakBase: BufferScreenState {
         model.substanceSelectionIsToggled = false
         model.restoreSavedAcidModels()
         model.phase = .addStrongSubstance
+        model.highlights.clear()
     }
 }
 
@@ -351,6 +380,7 @@ private class AddWeakBase: BufferScreenState {
         model.statement = substanceStatements(model).instructToAddWeakBase
         model.input = .addMolecule(phase: .addWeakSubstance)
         model.equationState = .baseWithSubstanceConcentration
+        model.highlights.elements = [.containers]
     }
 
     override func reapply(on model: BufferScreenViewModel) {
@@ -363,6 +393,7 @@ private class AddWeakBase: BufferScreenState {
         model.equationState = .baseBlank
         model.weakSubstanceModel.resetCoords()
         model.shakeModel.stopAll()
+        model.highlights.clear()
     }
 }
 

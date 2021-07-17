@@ -495,6 +495,8 @@
 		57D2F32725EA86C600AEE0D8 /* EquilibriumGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */; };
 		57D3261626A1DFD80093CD16 /* ReactionDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */; };
 		57D3261926A204F70093CD16 /* IntroScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261826A204F60093CD16 /* IntroScreenElement.swift */; };
+		57D3261B26A2C2460093CD16 /* BufferScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261A26A2C2450093CD16 /* BufferScreenElement.swift */; };
+		57D3261D26A2D22E0093CD16 /* EdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */; };
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
@@ -1219,6 +1221,8 @@
 		57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumGrid.swift; sourceTree = "<group>"; };
 		57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionTests.swift; sourceTree = "<group>"; };
 		57D3261826A204F60093CD16 /* IntroScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreenElement.swift; sourceTree = "<group>"; };
+		57D3261A26A2C2450093CD16 /* BufferScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferScreenElement.swift; sourceTree = "<group>"; };
+		57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeInsetsExtension.swift; sourceTree = "<group>"; };
 		57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeContainerViewModel.swift; sourceTree = "<group>"; };
 		57D3997F26615C4D00443C5A /* MovingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingPoint.swift; sourceTree = "<group>"; };
 		57D60151265EAD0100017E25 /* PositiveInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveInt.swift; sourceTree = "<group>"; };
@@ -3139,6 +3143,7 @@
 			isa = PBXGroup;
 			children = (
 				57D3261826A204F60093CD16 /* IntroScreenElement.swift */,
+				57D3261A26A2C2450093CD16 /* BufferScreenElement.swift */,
 			);
 			path = "ui-elements";
 			sourceTree = "<group>";
@@ -3277,6 +3282,7 @@
 				57FD400626484DCF00E352C1 /* FeedbackSettings.swift */,
 				575C90E62662DAA1001DCD17 /* BlurView.swift */,
 				57B92EBC2665356600023E7C /* TextLineUtil.swift */,
+				57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -3969,6 +3975,7 @@
 				57572DEC266FB8D700A27684 /* BufferPhChartOrTable.swift in Sources */,
 				577C506A26812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift in Sources */,
 				5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */,
+				57D3261B26A2C2460093CD16 /* BufferScreenElement.swift in Sources */,
 				579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */,
 				577C5066268120FD003DAD17 /* PConcentration.swift in Sources */,
 				570A766F266CFDD2009329FB /* BufferScreen.swift in Sources */,
@@ -4468,6 +4475,7 @@
 				5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */,
 				57315ECE26402D1900A7D0F9 /* CsvParser.swift in Sources */,
 				575A882D25E4319E00AEE448 /* TextLineView.swift in Sources */,
+				57D3261D26A2D22E0093CD16 /* EdgeInsetsExtension.swift in Sources */,
 				57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */,
 				57315ECA2640284D00A7D0F9 /* GoogleAnalytics.swift in Sources */,
 				57B3B8FB260B281000EB9B47 /* AppAnalytics.swift in Sources */,

@@ -531,7 +531,7 @@ struct BufferStatementsForSubstance {
             """
             When solving for [\(hydroxide)] in the Kb equation, and applying negative log to both \
             sides, we get the *Henderson-Hasselbalch* equation for bases:
-            *pOH = pKa + log(\(primaryC)/\(substanceC))*.
+            *pOH = pKb + log(\(secondaryC)/\(substanceC))*.
             """
         ]
     }
