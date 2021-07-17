@@ -109,8 +109,8 @@ struct ReactionProgressChart_Previews: PreviewProvider {
                 )
 
                 Button(action: {
-//                    _ = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
-                    _ = model.startReactionFromExisting(consuming: .A, producing: [.B, .C])
+                    _ = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
+//                    _ = model.startReactionFromExisting(consuming: .A, producing: [.B, .C])
                 }) {
                     Text("Start reaction")
                 }
@@ -146,9 +146,9 @@ struct ReactionProgressChart_Previews: PreviewProvider {
 
         var data: (col: Int, initCount: Int, color: Color) {
             switch self {
-            case .A: return (col: 0, initCount: 3, color: .orange)
+            case .A: return (col: 0, initCount: 4, color: .orange)
             case .B: return (col: 1, initCount: 9, color: .purple)
-            case .C: return (col: 2, initCount: 5, color: .green)
+            case .C: return (col: 2, initCount: 0, color: .green)
             case .D: return (col: 3, initCount: 0, color: .blue)
             case .E: return (col: 3, initCount: 5, color: .black)
             }

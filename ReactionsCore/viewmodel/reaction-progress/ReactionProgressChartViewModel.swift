@@ -269,11 +269,14 @@ extension ReactionProgressChartViewModel {
 
         let molecule = molecules[index]
         let currentMolecules = getMolecules(ofType: molecule.type)
-        let currentMaxIndex = currentMolecules.filter { !$0.willMoveDownToTopOfColumn }.map(\.rowIndex).max() ?? -1
+        let currentMaxIndex = currentMolecules.filter { !$0.willMoveDownToTopOfColumn
+        }.map(\.rowIndex).max() ?? -1
 
         let newMoleculeIndex = currentMaxIndex + 1
 
         molecules[index].willMoveDownToTopOfColumn = false
+        molecules[index].droppedFromRow = molecules[index].rowIndex
+        molecules[index].startOfDrop = Date()
 
         let moveDuration = settings.moveDuration(
             from: molecule.rowIndex,
@@ -332,9 +335,29 @@ extension ReactionProgressChartViewModel {
             moveSpeed: timing.dropSpeed
         )
 
+        // First animate molecules which are still in transit
+        var moleculesInTransit = Set<UUID>()
+        for index in molecules.indices {
+            let molecule = molecules[index]
+            if types.contains(molecule.type) {
+                if let dropDuration = molecule.durationToMoveToNewTarget(
+                    to: molecule.rowIndex - 1,
+                    timing: timing,
+                    settings: settings
+                ) {
+                    moleculesInTransit.insert(molecule.id)
+                    withAnimation(.linear(duration: dropDuration)) {
+                        molecules[index].rowIndex -= 1
+                    }
+                }
+            }
+        }
+
+        // Then animate the rest of the molecules in the column in 1 go
         withAnimation(.linear(duration: duration)) {
             for index in molecules.indices {
-                if types.contains(molecules[index].type) {
+                let molecule = molecules[index]
+                if types.contains(molecule.type) && !moleculesInTransit.contains(molecule.id) {
                     molecules[index].rowIndex -= 1
                 }
             }
@@ -392,7 +415,56 @@ extension ReactionProgressChartViewModel {
         var rowIndex: Int
         var scale: CGFloat
         var opacity: Double
-        var willMoveDownToTopOfColumn: Bool
+
+        fileprivate var willMoveDownToTopOfColumn: Bool
+
+        /// The time that the molecule was dropped
+        fileprivate var startOfDrop: Date?
+
+        /// The row that the molecule was dropped from
+        fileprivate var droppedFromRow: Int?
+
+        /// Returns a duration to move the molecule from it's current estimated
+        /// position to a new row.
+        fileprivate func durationToMoveToNewTarget(
+            to newTarget: Int,
+            timing: ReactionProgressChartViewModel.Timing,
+            settings: ReactionProgressChartViewModel.Settings
+        ) -> Double? {
+            guard let currentRow = currentEstimatedRow(timing: timing) else {
+                return nil
+            }
+            guard newTarget < rowIndex else {
+                return nil
+            }
+
+            return settings.moveDuration(
+                from: currentRow,
+                to: Double(newTarget),
+                moveSpeed: timing.dropSpeed
+            )
+        }
+
+        /// Returns the estimated row for a molecule which is still in transit after being dropped.
+        /// This does not apply to molecules where the entire column is shifted down.
+        fileprivate func currentEstimatedRow(
+            timing: ReactionProgressChartViewModel.Timing
+        ) -> Double? {
+            guard
+                let start = startOfDrop, let from = droppedFromRow else {
+                return nil
+            }
+
+            let elapsedSeconds = Date().timeIntervalSince(start)
+
+            let rowsMoved = timing.dropSpeed * elapsedSeconds
+            let currentRows = Double(from) - rowsMoved
+            if currentRows <= Double(rowIndex) {
+                return nil
+            }
+
+            return currentRows
+        }
 
         func position(
             using geometry: ReactionProgressChartGeometry<MoleculeType>
@@ -464,7 +536,21 @@ extension ReactionProgressChartViewModel {
             to endRowIndex: Int,
             moveSpeed: Double
         ) -> Double {
-            let dRow = Double(abs(endRowIndex - startRowIndex))
+            moveDuration(
+                from: Double(startRowIndex),
+                to: Double(endRowIndex),
+                moveSpeed: moveSpeed
+            )
+        }
+
+        // Returns the time to move from the start row to the end row, with the given
+        /// move speed, in terms of rows per time unit
+        func moveDuration(
+            from startRowIndex: Double,
+            to endRowIndex: Double,
+            moveSpeed: Double
+        ) -> Double {
+            let dRow = abs(endRowIndex - startRowIndex)
             return moveSpeed == 0 ? 0 : dRow / moveSpeed
         }
     }
