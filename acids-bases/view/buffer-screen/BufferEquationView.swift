@@ -348,7 +348,7 @@ private struct KAFilled: View {
                 }
             }
             Rectangle()
-                .frame(width: 150, height: 2)
+                .frame(width: 270, height: 2)
             concentration(.substance, state.showSubstanceConcentration)
         }
     }
@@ -359,15 +359,10 @@ private struct KAFilled: View {
     ) -> some View {
         HStack(spacing: 0) {
             FixedText("(")
-            AnimatingNumberPlaceholder(
-                showTerm: show,
-                progress: progress,
-                equation: concentration.value(for: part),
-                formatter: { "\($0.str(decimals: 2))"}
-            )
-            .frame(
-                width: EquationSizing.boxWidth,
-                height: EquationSizing.boxHeight
+            ScientificTextLinePlaceholder(
+                showValue: show,
+                equationInput: progress,
+                equation: concentration.value(for: part)
             )
             FixedText(")")
         }
@@ -450,14 +445,14 @@ private struct PHDefinition: View {
             FixedText("(")
                 .scaleEffect(y: largeParenScale)
             VStack(spacing: 1) {
-                ChargedSymbolView(symbol: substance.chargedSymbol(ofPart: .secondaryIon))
-                    .frame(width: EquationSizing.boxWidth)
+                ChargedSymbolView(
+                    symbol: substance.chargedSymbol(ofPart: .secondaryIon)
+                )
                 Rectangle()
                     .frame(width: 55, height: 2)
                 ChargedSymbolView(
                     symbol: substance.chargedSymbol(ofPart: .substance)
                 )
-                .frame(width: EquationSizing.boxWidth)
             }
             FixedText(")")
                 .scaleEffect(y: largeParenScale)
@@ -506,13 +501,13 @@ private struct PHFilled: View {
             FixedText("(")
                 .scaleEffect(y: largeParenScale)
             VStack(spacing: 1) {
-                sizedElement(
+                concentration(
                     secondaryIonConcentration,
                     state.showIonConcentration
                 )
                 Rectangle()
-                    .frame(width: 55, height: 2)
-                sizedElement(
+                    .frame(width: 85, height: 2)
+                concentration(
                     substanceConcentration,
                     state.showSubstanceConcentration
                 )
@@ -522,9 +517,12 @@ private struct PHFilled: View {
         }
     }
 
-    private func sizedElement(_ equation: Equation, _ show: Bool) -> some View {
-        element(equation, show)
-            .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
+    private func concentration(_ equation: Equation, _ show: Bool) -> some View {
+        ScientificTextLinePlaceholder(
+            showValue: show,
+            equationInput: progress,
+            equation: equation
+        )
     }
 
     private func element(_ equation: Equation, _ show: Bool) -> some View {
@@ -724,16 +722,49 @@ private struct PHSumFilled: View {
     }
 }
 
+private struct ScientificTextLinePlaceholder: View {
+
+    let showValue: Bool
+    let equationInput: CGFloat
+    let equation: Equation
+
+    var body: some View {
+        if showValue {
+            AnimatingTextLine(
+                x: equationInput,
+                equation: equation,
+                fontSize: EquationSizing.fontSize,
+                formatter: { v in
+                    EquationTermFormatter.scientific(
+                        threshold: 0.01,
+                        nonScientificDecimalPlaces: 3
+                    ).format(v).emphasised()
+                }
+            )
+            .frame(
+                width: largeBoxWidth,
+                height: EquationSizing.boxHeight
+            )
+        } else {
+            PlaceholderTerm(value: nil)
+                .frame(
+                    width: largeBoxWidth,
+                    height: EquationSizing.boxHeight
+                )
+        }
+    }
+}
+
 private let hStackSpacing: CGFloat = 5
 private let largeBoxWidth: CGFloat = 2 * EquationSizing.boxWidth
-private let leftColWidth: CGFloat = 450
+private let leftColWidth: CGFloat = 510
 private let rightColWidth: CGFloat = 440
 private let spacerWidth: CGFloat = 50
 private let largeParenScale: CGFloat = 2
 
 private let largeBoxExtraSize: CGFloat = largeBoxWidth - EquationSizing.boxWidth
 
-private let NaturalWidth: CGFloat = 950
+private let NaturalWidth: CGFloat = leftColWidth + spacerWidth + rightColWidth
 private let NaturalHeight: CGFloat = 440
 
 struct BufferEquationView_Previews: PreviewProvider {

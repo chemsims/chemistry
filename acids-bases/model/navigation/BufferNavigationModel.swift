@@ -227,12 +227,6 @@ private class RunWeakAcidReaction: RunWeakSubstanceReaction {
     override func apply(on model: BufferScreenViewModel) {
         super.apply(on: model)
         model.statement = statements.runningWeakAcidReaction(model.substance)
-        model.equationState = .acidWithAllConcentration
-    }
-
-    override func unapply(on model: BufferScreenViewModel) {
-        super.unapply(on: model)
-        model.equationState = .acidWithSubstanceConcentration
     }
 }
 
@@ -247,6 +241,10 @@ private class EndOfWeakAcidReaction: BufferScreenState {
         withAnimation(endReactionAnimation) {
             model.weakSubstanceModel.progress = 1.0001
         }
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.equationState = .acidWithSubstanceConcentration
     }
 }
 
@@ -401,7 +399,6 @@ private class RunWeakBaseReaction: RunWeakSubstanceReaction {
     override func apply(on model: BufferScreenViewModel) {
         super.apply(on: model)
         model.statement = substanceStatements(model).runningWeakBaseReaction
-        model.equationState = .baseWithAllConcentration
         withAnimation(containerInputAnimation) {
             model.input = .none
             model.shakeModel.stopAll()
@@ -417,6 +414,10 @@ private class EndOfWeakBaseReaction: BufferScreenState {
         withAnimation(.easeOut(duration: 0.5)) {
             model.weakSubstanceModel.progress = 1.0001
         }
+    }
+
+    override func unapply(on model: BufferScreenViewModel) {
+        model.equationState = .baseWithSubstanceConcentration
     }
 }
 

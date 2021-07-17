@@ -5,6 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
+/// Charged symbol view for use in equations
 struct ChargedSymbolView: View {
 
     let symbol: AcidOrBase.ChargedSymbol
