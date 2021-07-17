@@ -29,7 +29,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func getInjector() -> AcidAppInjector {
-        InMemoryAcidAppInjector()
+        if AcidBasesApp.isDebug {
+            return InMemoryAcidAppInjector()
+        }
+        return ProductionAcidAppInjector()
     }
 }
 

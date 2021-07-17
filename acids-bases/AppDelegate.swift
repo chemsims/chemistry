@@ -2,14 +2,18 @@
 // Reactions App
 //
 
-
 import UIKit
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AcidQuizQuestions.load()
+        print("Running in config: \(AcidBasesApp.isDebug ? "debug" : "release")")
+        if !AcidBasesApp.isDebug {
+            FirebaseApp.configure()
+        }
         return true
     }
 
@@ -25,6 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 struct AcidBasesApp {
     static var isSimulator: Bool {
         #if targetEnvironment(simulator)
+            return true
+        #else
+            return false
+        #endif
+    }
+
+    static var isDebug: Bool {
+        #if DEBUG
             return true
         #else
             return false

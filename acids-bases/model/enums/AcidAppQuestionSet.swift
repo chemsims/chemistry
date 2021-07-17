@@ -4,6 +4,6 @@
 
 import Foundation
 
-enum AcidAppQuestionSet {
+enum AcidAppQuestionSet: String {
     case introduction, buffer, titration
 }

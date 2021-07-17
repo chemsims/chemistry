@@ -43,3 +43,26 @@ class InMemoryAcidAppInjector: AcidAppInjector {
     let namePersistence: NamePersistence =
         InMemoryNamePersistence()
 }
+
+class ProductionAcidAppInjector: AcidAppInjector {
+    let screenPersistence: AnyScreenPersistence<AcidAppScreen> =
+        AnyScreenPersistence(UserDefaultsScreenPersistence())
+
+    let analytics: AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet> =
+        AnyAppAnalytics(GoogleAnalytics())
+
+    let quizPersistence: AnyQuizPersistence<AcidAppQuestionSet> =
+        AnyQuizPersistence(UserDefaultsQuizPersistence())
+
+    let substancePersistence: AcidOrBasePersistence =
+        UserDefaultsAcidOrBasePersistence()
+
+    let reviewPersistence: ReviewPromptPersistence =
+        UserDefaultsReviewPromptPersistence()
+
+    let onboardingPersistence: OnboardingPersistence =
+        UserDefaultsOnboardingPersistence()
+
+    let namePersistence: NamePersistence =
+        UserDefaultsNamePersistence()
+}
