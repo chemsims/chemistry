@@ -60,7 +60,7 @@ private struct TitrationBeakerTools: View {
 
     private let dropperEmitAmount = 5
     private let buretteEmitAmount = 1
-    private let buretteFastEmitAmount = 3
+    private let buretteFastEmitAmount = 6
 
     var body: some View {
         ZStack {
