@@ -26,10 +26,12 @@ extension TitrationEquationView {
                 BoxWidthTextLine(data: data, value: concentration)
                     .frame(width: layout.boxWidth)
                 FixedText("x")
+                    .accessibility(label: Text("times"))
                 BoxWidthTextLine(data: data, value: volume)
                     .frame(width: layout.boxWidth)
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -47,10 +49,12 @@ extension TitrationEquationView {
                 PlaceholderEquation(data: data, value: concentration)
                     .frame(width: layout.boxWidth)
                 FixedText("x")
+                    .accessibility(label: Text("times"))
                 PlaceholderEquation(data: data, value: volume)
                     .frame(width: layout.boxWidth)
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .contain)
         }
     }
 }

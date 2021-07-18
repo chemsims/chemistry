@@ -30,6 +30,7 @@ struct TitrationRightStack: View {
             )
             .frame(size: layout.equationSize)
             .colorMultiply(model.highlights.colorMultiply(for: nil))
+            .accessibilityElement(children: .contain)
 
             Spacer(minLength: 0)
 

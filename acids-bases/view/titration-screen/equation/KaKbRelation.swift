@@ -26,9 +26,11 @@ extension TitrationEquationView {
                 FixedText("=")
                 BoxWidthTextLine(data: data, value: firstKValue)
                 FixedText("x")
+                    .accessibility(label: Text("times"))
                 BoxWidthTextLine(data: data, value: secondKValue)
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -46,9 +48,11 @@ extension TitrationEquationView {
                 FixedText("=")
                 Placeholder(data: data, value: firstKValue)
                 FixedText("x")
+                    .accessibility(label: Text("times"))
                 Placeholder(data: data, value: secondKValue)
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .contain)
         }
     }
 }

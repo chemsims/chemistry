@@ -18,8 +18,8 @@ struct TitrationNavigationModel {
     }
 
     private static func states(namePersistence: NamePersistence) -> [TitrationScreenState] {
-        strongAcidTitration +
-            strongBaseTitration +
+//        strongAcidTitration +
+//            strongBaseTitration +
             weakAcidTitration(namePersistence: namePersistence) +
             weakBaseTitration(namePersistence: namePersistence)
     }

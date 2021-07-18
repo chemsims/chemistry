@@ -27,13 +27,14 @@ extension TitrationEquationView {
                 FixedText("14")
                 FixedText("+")
                 HStack(spacing: 0) {
-                    FixedText("log")
+                    FixedText("log of")
                     BoxWidthTextLine(data: data, value: concentration)
                 }
             }
             .font(.system(size: layout.fontSize))
             .minimumScaleFactor(layout.minScaleFactor)
             .lineLimit(1)
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -52,11 +53,14 @@ extension TitrationEquationView {
                 FixedText("+")
                 HStack(spacing: 0) {
                     FixedText("log(")
+                        .accessibility(label: Text("log"))
                     PlaceholderEquation(data: data, value: concentration)
                     FixedText(")")
+                        .accessibility(hidden: true)
                 }
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .contain)
         }
     }
 }

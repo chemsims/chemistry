@@ -43,9 +43,12 @@ private struct TitrationScreenWithSettings: View {
     var body: some View {
         HStack(spacing: 0) {
             TitrationBeaker(layout: layout, model: model)
+                .accessibilityElement(children: .contain)
             Spacer(minLength: 0)
             TitrationChartStack(layout: layout, model: model)
                 .colorMultiply(model.highlights.colorMultiply(for: nil))
+                .accessibilityElement(children: .contain)
+
             Spacer(minLength: 0)
             TitrationRightStack(
                 layout: layout,

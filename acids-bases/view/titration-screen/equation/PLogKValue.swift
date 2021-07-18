@@ -25,10 +25,13 @@ extension TitrationEquationView {
                 FixedText("=")
                 HStack(spacing: 1) {
                     FixedText("-log(")
+                        .accessibility(label: Text("minus log of"))
                     BoxWidthTextLine(data: data, value: kValue)
                     FixedText(")")
+                        .accessibility(hidden: true)
                 }
             }
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -46,10 +49,15 @@ extension TitrationEquationView {
                 FixedText("=")
                 HStack(spacing: 0) {
                     FixedText("-log(")
+                        .accessibility(label: Text("minus log"))
+
                     Placeholder(data: data, value: kValue)
+
                     FixedText(")")
+                        .accessibility(hidden: true)
                 }
             }
+            .accessibilityElement(children: .contain)
         }
     }
 }

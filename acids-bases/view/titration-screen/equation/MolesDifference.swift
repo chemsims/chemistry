@@ -25,9 +25,11 @@ extension TitrationEquationView {
                 FixedText("=")
                 BoxWidthTextLine(data: data, value: fromMoles)
                 FixedText("-")
+                    .accessibility(label: Text("minus"))
                 BoxWidthTextLine(data: data, value: subtractingMoles)
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -45,9 +47,11 @@ extension TitrationEquationView {
                 FixedText("=")
                 PlaceholderEquation(data: data, value: fromMoles)
                 FixedText("-")
+                    .accessibility(label: Text("minus"))
                 PlaceholderEquation(data: data, value: subtractingMoles)
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .contain)
         }
     }
 }

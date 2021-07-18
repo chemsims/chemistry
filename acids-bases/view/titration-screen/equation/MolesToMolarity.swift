@@ -26,14 +26,20 @@ extension TitrationEquationView {
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 BoxWidthTextLine(data: data, value: moles)
+
                 FixedText("=")
+
                 BoxWidthTextLine(data: data, value: volume)
                     .frame(width: layout.boxWidth)
+
                 FixedText("x")
+                    .accessibility(label: Text("times"))
+
                 BoxWidthTextLine(data: data, value: molarity)
                     .frame(width: layout.boxWidth)
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .combine)
         }
     }
 }
@@ -50,10 +56,15 @@ extension TitrationEquationView {
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 PlaceholderEquation(data: data, value: moles)
+
                 FixedText("=")
+
                 PlaceholderEquation(data: data, value: volume)
                     .frame(width: layout.boxWidth)
+
                 FixedText("x")
+                    .accessibility(label: Text("times"))
+
                 PlaceholderEquation(data: data, value: molarity)
                     .frame(width: layout.boxWidth)
             }

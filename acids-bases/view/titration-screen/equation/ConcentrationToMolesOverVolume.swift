@@ -27,6 +27,7 @@ extension TitrationEquationView {
                 HStack(spacing: lhsTermsHSpacing) {
                     BoxWidthTextLine(data: data, value: moles)
                     FixedText("/")
+                        .accessibility(label: Text("divide by"))
                     FixedText("(")
                     BoxWidthTextLine(data: data, value: firstVolume)
                     FixedText("+")
@@ -35,6 +36,7 @@ extension TitrationEquationView {
                 }
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -54,6 +56,7 @@ extension TitrationEquationView {
                 HStack(spacing: lhsTermsHSpacing) {
                     PlaceholderEquation(data: data, value: moles)
                     FixedText("/")
+                        .accessibility(label: Text("divide by"))
                     FixedText("(")
                     PlaceholderEquation(data: data, value: firstVolume)
                     FixedText("+")
@@ -62,6 +65,7 @@ extension TitrationEquationView {
                 }
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .contain)
         }
     }
 }

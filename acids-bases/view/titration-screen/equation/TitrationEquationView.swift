@@ -39,7 +39,9 @@ private extension TitrationEquationView {
     var sizedBody: some View {
         HStack(alignment: .top, spacing:40) {
             column(equations: equationSet.left)
+                .accessibilityElement(children: .contain)
             column(equations: equationSet.right)
+                .accessibilityElement(children: .contain)
         }
         .font(.system(size: layout.fontSize))
         .minimumScaleFactor(layout.minScaleFactor)

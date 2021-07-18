@@ -45,7 +45,7 @@ extension TitrationEquationView {
         }
     }
 
-    struct PlaceholderTermView<Label : TitrationEquationTermValue>: View {
+    struct PlaceholderTermView<Label : TitrationEquationTermValue & TitrationEquationTermLabel>: View {
         let data: TitrationEquationData
         let value: Term.Placeholder<Label>
         let formatter: (CGFloat) -> TextLine
@@ -71,36 +71,40 @@ extension TitrationEquationView {
                 width: layout.boxWidth(forFormatter: value.formatter),
                 height: layout.boxHeight
             )
+            .accessibility(label: Text(value.term.label(forData: data).label))
         }
     }
 
-    struct PlaceholderEquationView<Label : TitrationEquationTermEquation>: View {
+    struct PlaceholderEquationView<Label : TitrationEquationTermEquation & TitrationEquationTermLabel>: View {
         let data: TitrationEquationData
         let value: Term.Placeholder<Label>
         @Environment(\.titrationEquationInput) var equationInput
         @Environment(\.titrationEquationLayout) var layout
 
         var body: some View {
-            if value.isFilled {
-                AnimatingTextLine(
-                    x: equationInput ?? 0,
-                    equation: value.term.equation(forData: data),
-                    fontSize: layout.fontSize,
-                    formatter: { v in
-                        value.formatter.format(v).emphasised()
-                    }
-                )
-                .frame(
-                    width: layout.boxWidth(forFormatter: value.formatter),
-                    height: layout.boxHeight
-                )
-            } else {
-                PlaceholderTerm(value: nil)
+            Group {
+                if value.isFilled {
+                    AnimatingTextLine(
+                        x: equationInput ?? 0,
+                        equation: value.term.equation(forData: data),
+                        fontSize: layout.fontSize,
+                        formatter: { v in
+                            value.formatter.format(v).emphasised()
+                        }
+                    )
                     .frame(
                         width: layout.boxWidth(forFormatter: value.formatter),
                         height: layout.boxHeight
                     )
+                } else {
+                    PlaceholderTerm(value: nil)
+                        .frame(
+                            width: layout.boxWidth(forFormatter: value.formatter),
+                            height: layout.boxHeight
+                        )
+                }
             }
+            .accessibility(label: Text(value.term.label(forData: data).label))
         }
     }
 

@@ -24,23 +24,45 @@ extension TitrationEquationView {
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 BoxWidthTextLine(data: data, value: concentration)
+                    .accessibility(sortPriority: 10)
+
                 FixedText("=")
+                    .accessibility(sortPriority: 9)
+
                 VStack(spacing: layout.fractionVSpacing) {
                     HStack(spacing: layout.termsHSpacing) {
                         BoxWidthTextLine(data: data, value: fromMoles)
+                            .accessibility(sortPriority: 8)
+
                         FixedText("-")
+                            .accessibility(sortPriority: 7)
+                            .accessibility(label: Text("minus"))
+
                         BoxWidthTextLine(data: data, value: subtractingMoles)
+                            .accessibility(sortPriority: 6)
                     }
+
                     Rectangle()
                         .frame(width: 180, height: layout.fractionBarHeight)
+                        .accessibility(sortPriority: 5)
+                        .accessibility(label: Text("divide by"))
+
                     HStack(spacing: layout.termsHSpacing) {
                         BoxWidthTextLine(data: data, value: firstVolume)
+                            .accessibility(sortPriority: 4)
+
                         FixedText("+")
+                            .accessibility(sortPriority: 3)
+
                         BoxWidthTextLine(data: data, value: secondVolume)
+                            .accessibility(sortPriority: 2)
+
                     }
                 }
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .combine)
+            .accessibility(sortPriority: 0)
         }
     }
 
@@ -57,28 +79,48 @@ extension TitrationEquationView {
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 PlaceholderEquation(data: data, value: concentration)
+                    .accessibility(sortPriority: 10)
+
                 FixedText("=")
+                    .accessibility(sortPriority: 9)
+
                 VStack(spacing: layout.fractionVSpacing) {
                     HStack(spacing: layout.termsHSpacing) {
                         PlaceholderEquation(data: data, value: fromMoles)
+                            .accessibility(sortPriority: 8)
+
                         FixedText("-")
+                            .accessibility(sortPriority: 7)
+                            .accessibility(label: Text("minus"))
+
                         PlaceholderEquation(data: data, value: subtractingMoles)
+                            .accessibility(sortPriority: 6)
                     }
+
                     Rectangle()
                         .frame(width: 180, height: layout.fractionBarHeight)
+                        .accessibility(sortPriority: 5)
+                        .accessibility(label: Text("divide by"))
+
                     HStack(spacing: layout.termsHSpacing) {
                         PlaceholderEquation(data: data, value: firstVolume)
+                            .accessibility(sortPriority: 4)
+
                         FixedText("+")
+                            .accessibility(sortPriority: 3)
+
                         PlaceholderEquation(data: data, value: secondVolume)
+                            .accessibility(sortPriority: 2)
                     }
                 }
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .contain)
         }
     }
 }
 
-struct TitrationEquationConcentrationToMolesOverVolume_Previews: PreviewProvider {
+struct ConcentrationToMolesDifferenceOverVolume_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             TitrationEquationView.ConcentrationToMolesDifferenceOverVolumeDefinition(

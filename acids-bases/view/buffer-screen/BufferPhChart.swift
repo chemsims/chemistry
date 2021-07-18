@@ -84,7 +84,7 @@ struct BufferPhChart: View {
         .padding(.leading, layout.pHLabelLeadingPadding)
         .padding(.vertical, layout.phLabelVerticalPadding)
     }
-    
+
     private func labelRow(
         label: String,
         color: Color,

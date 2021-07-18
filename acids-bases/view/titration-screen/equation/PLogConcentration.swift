@@ -24,14 +24,18 @@ extension TitrationEquationView {
                     BoxWidthTextLine(data: data, value: pValue)
                         .frame(width: layout.boxWidth)
                     FixedText("=")
+
                     FixedText("-")
+                        .accessibility(hidden: true)
                     HStack(spacing: 0) {
                         FixedText("log")
+                            .accessibility(label: Text("minus log of"))
                         BoxWidthTextLine(data: data, value: concentration)
                     }
                 }
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -49,8 +53,10 @@ extension TitrationEquationView {
                         .frame(width: layout.boxWidth)
                     FixedText("=")
                     FixedText("-")
+                        .accessibility(hidden: true)
                     HStack(spacing: 0) {
                         FixedText("log")
+                            .accessibility(label: Text("minus log"))
                         PlaceholderEquation(
                             data: data,
                             value: concentration
@@ -61,6 +67,7 @@ extension TitrationEquationView {
             .font(.system(size: layout.fontSize))
             .lineLimit(1)
             .minimumScaleFactor(layout.minScaleFactor)
+            .accessibilityElement(children: .contain)
         }
     }
 }

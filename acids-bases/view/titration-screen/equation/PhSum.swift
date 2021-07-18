@@ -27,6 +27,7 @@ extension TitrationEquationView {
                 BoxWidthTextLine(data: data, value: secondPValue)
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -46,6 +47,7 @@ extension TitrationEquationView {
                 PlaceholderEquation(data: data, value: secondPValue)
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .contain)
         }
     }
 }

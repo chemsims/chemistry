@@ -22,31 +22,48 @@ extension TitrationEquationView {
 
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
-                BoxWidthTextLine(data: data, value: resultPValue)
-                    .frame(width: layout.boxWidth)
-                FixedText("=")
-                BoxWidthTextLine(data: data, value: pkValue)
-                FixedText("+")
+                Group {
+                    BoxWidthTextLine(data: data, value: resultPValue)
+                        .frame(width: layout.boxWidth)
+
+                    FixedText("=")
+                    BoxWidthTextLine(data: data, value: pkValue)
+
+                    FixedText("+")
+                }
+                .accessibility(sortPriority: 2)
+
+
                 HStack(spacing: 0) {
                     FixedText("log")
+                        .accessibility(label: Text("log of"))
+                        .accessibility(sortPriority: 1)
+
                     FixedText("(")
                         .scaleEffect(y: layout.fractionParenHeightScaleFactor)
+                        .accessibility(hidden: true)
 
                     VStack(spacing: layout.fractionVSpacing) {
                         BoxWidthTextLine(data: data, value: numeratorConcentration)
+
                         Rectangle()
                             .frame(width: 80, height: layout.fractionBarHeight)
+                            .accessibility(label: Text("divide by"))
+
                         BoxWidthTextLine(data: data, value: denominatorConcentration)
                     }
                     .padding(.horizontal, 2)
 
                     FixedText(")")
                         .scaleEffect(y: layout.fractionParenHeightScaleFactor)
+                        .accessibility(hidden: true)
                 }
             }
             .font(.system(size: layout.fontSize))
             .lineLimit(1)
             .minimumScaleFactor(layout.minScaleFactor)
+            .accessibilityElement(children: .combine)
+            .accessibility(sortPriority: 0)
         }
     }
 
@@ -61,28 +78,42 @@ extension TitrationEquationView {
 
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
-                PlaceholderEquation(data: data, value: resultPValue)
-                    .frame(width: layout.boxWidth)
-                FixedText("=")
-                PlaceholderEquation(data: data, value: pkValue)
-                FixedText("+")
+                Group {
+                    PlaceholderEquation(data: data, value: resultPValue)
+                        .frame(width: layout.boxWidth)
+                    FixedText("=")
+                    PlaceholderEquation(data: data, value: pkValue)
+                    FixedText("+")
+                }
+                .accessibility(sortPriority: 3)
+
                 HStack(spacing: 0) {
                     FixedText("log")
+                        .accessibility(sortPriority: 2)
+
                     FixedText("(")
                         .scaleEffect(y: layout.fractionParenHeightScaleFactor)
+                        .accessibility(hidden: true)
+
                     VStack(spacing: layout.fractionVSpacing) {
                         PlaceholderEquation(data: data, value: numeratorConcentration)
+
                         Rectangle()
                             .frame(width: 80, height: layout.fractionBarHeight)
+                            .accessibility(label: Text("divide by"))
+
                         PlaceholderEquation(data: data, value: denominatorConcentration)
                     }
+
                     FixedText(")")
                         .scaleEffect(y: layout.fractionParenHeightScaleFactor)
+                        .accessibility(hidden: true)
                 }
             }
             .font(.system(size: layout.fontSize))
             .lineLimit(1)
             .minimumScaleFactor(layout.minScaleFactor)
+            .accessibilityElement(children: .contain)
         }
     }
 }

@@ -24,32 +24,45 @@ extension TitrationEquationView {
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 BoxWidthTextLine(data: data, value: kValue)
+                    .accessibility(sortPriority: 10)
+
                 FixedText("=")
+                    .accessibility(sortPriority: 9)
+
                 VStack(spacing: layout.fractionVSpacing) {
                     HStack(spacing: 5) {
-                        PlainLine(
-                            line: firstNumeratorConcentration.term.label(
-                                forData: data
-                            )
-                        )
-                        PlainLine(
-                            line: secondNumeratorConcentration.term.label(
-                                forData: data
-                            )
-                        )
+                        PlainLine(line: firstNumeratorLabel)
+                        PlainLine(line: secondNumeratorLabel)
                     }
+                    .accessibilityElement(children: .ignore)
+                    .accessibility(label: Text("\(firstNumeratorLabel.label) times \(secondNumeratorLabel.label)"))
+                    .accessibility(sortPriority: 8)
+
                     Rectangle()
                         .frame(width: 130, height: layout.fractionBarHeight)
+                        .accessibility(label: Text("divide by"))
+                        .accessibility(sortPriority: 7)
+
                     PlainLine(
                         line: denominatorConcentration.term.label(
                             forData: data
                         )
                     )
+                    .accessibility(sortPriority: 6)
                 }
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .combine)
+            .accessibility(sortPriority: 0)
         }
 
+        private var firstNumeratorLabel: TextLine {
+            firstNumeratorConcentration.term.label(forData: data)
+        }
+
+        private var secondNumeratorLabel: TextLine {
+            secondNumeratorConcentration.term.label(forData: data)
+        }
 
     }
 
@@ -65,21 +78,39 @@ extension TitrationEquationView {
         var body: some View {
             HStack(spacing: layout.termsHSpacing) {
                 Placeholder(data: data, value: kValue)
+                    .accessibility(sortPriority: 10)
+
                 FixedText("=")
+                    .accessibility(sortPriority: 9)
+
                 VStack(spacing: layout.fractionVSpacing) {
                     HStack(spacing: 5) {
                         FixedText("(")
+                            .accessibility(hidden: true)
+
                         PlaceholderEquation(data: data, value: firstNumeratorConcentration)
+                            .accessibility(sortPriority: 8)
+
                         FixedText(")(")
+                            .accessibility(hidden: true)
+
                         PlaceholderEquation(data: data, value: secondNumeratorConcentration)
+                            .accessibility(sortPriority: 7)
+
                         FixedText(")")
+                            .accessibility(hidden: true)
                     }
                     Rectangle()
                         .frame(width: divisorWidth, height: layout.fractionBarHeight)
+                        .accessibility(label: Text("divide by"))
+                        .accessibility(sortPriority: 6)
+
                     PlaceholderEquation(data: data, value: denominatorConcentration)
+                        .accessibility(sortPriority: 5)
                 }
             }
             .font(.system(size: layout.fontSize))
+            .accessibilityElement(children: .contain)
         }
 
         private var divisorWidth: CGFloat {
