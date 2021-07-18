@@ -55,7 +55,7 @@ class BufferScreenViewModel: ObservableObject {
     @Published var saltModel: BufferSaltComponents
     @Published var strongSubstanceModel: BufferStrongSubstanceComponents
 
-    @Published var selectedBottomGraph = BottomGraph.curve
+    @Published var selectedBottomGraph = BottomGraph.bars
     @Published var selectedTopView = ChartOrTable.chart
     @Published var equationState = EquationState.acidBlank
 
@@ -158,35 +158,54 @@ extension BufferScreenViewModel {
 // MARK: Substance statements & auto-next
 extension BufferScreenViewModel {
     private func updateStatementPostAddMolecule(phase: Phase) {
+        if let statement = getStatementPostAddMolecule(phase: phase) {
+            if self.statement != statement {
+                self.statement = statement
+                UIAccessibility.post(
+                    notification: .announcement,
+                    argument: statement.label
+                )
+            }
+        }
+    }
+
+    private func getStatementPostAddMolecule(phase: Phase) -> [TextLine]? {
         switch phase {
         case .addWeakSubstance where
                 weakSubstanceModel.hasAddedEnoughSubstance:
             if substance.type.isAcid {
-                statement = substanceStatements.midAddingWeakAcid
-            } else {
-                statement = substanceStatements.midAddingWeakBase
+                return substanceStatements.midAddingWeakAcid
             }
+            return substanceStatements.midAddingWeakBase
 
         case .addStrongSubstance where strongSubstanceModel.fractionSubstanceAdded >= 0.2:
             if substance.type.isAcid {
-                statement = substanceStatements.midAddingStrongAcid
-            } else {
-                statement = substanceStatements.midAddingStrongBase
+                return substanceStatements.midAddingStrongAcid
             }
+            return substanceStatements.midAddingStrongBase
 
         default:
-            return
+            return nil
         }
     }
 
     private func goNextIfNeededPostAddMolecule(phase: Phase) {
+
+        func doGoNext() {
+            next()
+            UIAccessibility.post(
+                notification: .announcement,
+                argument: statement.label
+            )
+        }
+
         switch phase {
         case .addWeakSubstance where !weakSubstanceModel.canAddSubstance:
-            next()
+            doGoNext()
         case .addSalt where !saltModel.canAddSubstance:
-            next()
+            doGoNext()
         case .addStrongSubstance where !strongSubstanceModel.canAddSubstance:
-            next()
+            doGoNext()
         default:
             return
         }
