@@ -206,6 +206,9 @@ extension BufferScreenViewModel {
 extension BufferScreenViewModel {
 
     func addMolecule(phase: Phase, count: Int) {
+        if !highlights.elements.isEmpty {
+            highlights.clear()
+        }
         guard input == .addMolecule(phase: phase) else {
             return
         }

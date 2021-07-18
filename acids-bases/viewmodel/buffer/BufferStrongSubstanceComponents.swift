@@ -175,7 +175,9 @@ extension BufferStrongSubstanceComponents {
                 label: substance.chargedSymbol(ofPart: part).text,
                 equation: concentration.value(for: part),
                 color: substance.color(ofPart: part),
-                accessibilityLabel: "" // TODO
+                accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label,
+                initialValue: nil,
+                accessibilityValue: { self.concentration.value(for: part).getY(at: $0).percentage }
             )
         })
     }

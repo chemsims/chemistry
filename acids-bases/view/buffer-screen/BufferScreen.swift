@@ -55,6 +55,7 @@ private struct BufferScreenWithSettings: View {
                 layout: layout,
                 model: model
             )
+            .accessibilityElement(children: .contain)
 
             Spacer()
 

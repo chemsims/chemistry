@@ -16,16 +16,19 @@ struct BufferPhChart: View {
             Text("pH")
                 .frame(height: layout.common.chartYAxisWidth)
                 .rotationEffect(.degrees(-90))
+                .accessibility(hidden: true)
 
             VStack(spacing: layout.common.chartXAxisVSpacing) {
                 plotArea
 
-                // TODO dynamic label
                 Text("Moles added")
                     .frame(height: layout.common.chartXAxisHeight)
+                    .accessibility(hidden: true)
             }
         }
         .font(.system(size: layout.common.chartLabelFontSize))
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text("Chart showing moles added vs pH"))
     }
 
     private var plotArea: some View {
@@ -69,9 +72,11 @@ struct BufferPhChart: View {
             if pHIsDecreasing {
                 Spacer()
             }
-            labelRow(label: "Water", color: waterLineColor)
-            labelRow(label: "Buffer", color: bufferLineColor)
+            labelRow(label: "Water", color: waterLineColor, accessibilityValue: waterAccessibilityValue)
+
+            labelRow(label: "Buffer", color: bufferLineColor, accessibilityValue: bufferAccessibilityValue)
                 .opacity(showBufferLine ? 1 : 0)
+
             if !pHIsDecreasing {
                 Spacer()
             }
@@ -80,10 +85,10 @@ struct BufferPhChart: View {
         .padding(.vertical, layout.phLabelVerticalPadding)
     }
     
-
     private func labelRow(
         label: String,
-        color: Color
+        color: Color,
+        accessibilityValue: String
     ) -> some View {
         HStack(spacing: layout.phLabelHSpacing) {
             Circle()
@@ -93,6 +98,19 @@ struct BufferPhChart: View {
                 .font(.system(size: layout.pHLabelFontSize))
             Spacer()
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("pH in \(label)"))
+        .accessibility(value: Text(accessibilityValue))
+    }
+
+    private var waterAccessibilityValue: String {
+        let direction = pHIsDecreasing ? "decreases" : "increases"
+        return "linear line where pH \(direction) as moles are added"
+    }
+
+    private var bufferAccessibilityValue: String {
+        let direction = pHIsDecreasing ? "decreases" : "increases"
+        return "line which is mostly flat, until near the end of the x axis where is sharply \(direction)"
     }
 
     private var data: [TimeChartDataLine] {

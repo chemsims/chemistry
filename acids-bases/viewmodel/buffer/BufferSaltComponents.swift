@@ -71,7 +71,6 @@ class BufferSaltComponents: ObservableObject {
 
         let xThreshold = initialCount(.primaryIon)
 
-        // TODO - how does this class know that prev equation reaches a max at 1?
         let substanceBarChartEquation = SwitchingEquation(
             thresholdX: xThreshold,
             underlyingLeft: LinearEquation(
@@ -110,7 +109,6 @@ class BufferSaltComponents: ObservableObject {
             secondaryIon: secondaryIonBarChartEquation
         )
 
-        // TODO - there should be a better way to access final pH from previous model
         self.initialPh = previous.pH.getY(at: 1)
 
         self.reactionProgress = prev.reactionProgress
@@ -186,7 +184,9 @@ class BufferSaltComponents: ObservableObject {
                 label: substance.chargedSymbol(ofPart: part).text,
                 equation: barChartEquations.value(for: part),
                 color: substance.color(ofPart: part),
-                accessibilityLabel: "" // TODO
+                accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label,
+                initialValue: nil,
+                accessibilityValue: { self.barChartEquations.value(for: part).getY(at: $0).percentage }
             )
         })
     }

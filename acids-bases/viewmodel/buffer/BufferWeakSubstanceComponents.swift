@@ -5,7 +5,6 @@
 import SwiftUI
 import ReactionsCore
 
-// TODO accessibility labels
 class BufferWeakSubstanceComponents: ObservableObject {
 
     init(
@@ -44,7 +43,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
             substanceCoords = BeakerMolecules(
                 coords: [],
                 color: substance.color,
-                label: ""
+                label: substance.symbol.label
             )
         }
     }
@@ -240,7 +239,9 @@ extension BufferWeakSubstanceComponents {
             label: substance.chargedSymbol(ofPart: part).text,
             equation: equation,
             color: substance.color(ofPart: part),
-            accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label
+            accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label,
+            initialValue: nil,
+            accessibilityValue: { equation.getY(at: $0).percentage }
         )
     }
 }
@@ -368,4 +369,5 @@ struct BufferComponentSettings {
             finalSecondaryIonCount: 1
         )
     )
+
 }

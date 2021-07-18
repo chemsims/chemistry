@@ -141,7 +141,7 @@ private struct BarChartOrPhChart: View {
         )
         .frame(width: layout.barChartTotalWidth, alignment: .trailing)
         .accessibilityElement(children: .contain)
-        .accessibility(label: Text("Bar chart showing unit-less concentration of molecules as a percentage of the y axis height"))
+        .accessibility(label: Text("Bar chart showing concentration of molecules as a percentage of the y axis height"))
     }
 
     private var phChart: some View {

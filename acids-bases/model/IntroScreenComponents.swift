@@ -132,9 +132,7 @@ class IntroScreenComponents: ObservableObject {
             color: substance.color(ofPart: part),
             accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label,
             initialValue: nil,
-            accessibilityValue: { value in
-                value.percentage
-            }
+            accessibilityValue: { equation.getY(at: $0).percentage }
         )
     }
 

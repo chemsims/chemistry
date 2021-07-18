@@ -139,6 +139,8 @@ private struct BufferBarChart: View {
             time: barCharInput,
             settings: layout.common.barChartSettings
         )
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text("Bar chart showing concentration of molecules as a percentage of the y axis height"))
     }
 
     private var data: [BarChartData] {
