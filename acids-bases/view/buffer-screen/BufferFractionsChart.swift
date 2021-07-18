@@ -17,6 +17,7 @@ struct BufferFractionsChart: View {
         VStack(spacing: layout.common.chartXAxisVSpacing) {
             HStack(spacing: layout.common.chartYAxisHSpacing) {
                 yAxisView
+                    .accessibility(hidden: true)
 
                 plotArea
                     .frame(square: layout.common.chartSize)
@@ -24,9 +25,13 @@ struct BufferFractionsChart: View {
             .frame(height: layout.common.chartSize)
 
             xAxisView
+                .accessibility(hidden: true)
         }
         .padding(.bottom, bottomPadding)
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text("Chart showing pH vs fraction of species added"))
     }
+
 
     private var bottomPadding: CGFloat {
         let barChartHeight = layout.common.barChartSettings.totalAxisHeight + layout.common.barChartSettings.chartToAxisSpacing
@@ -78,8 +83,62 @@ struct BufferFractionsChart: View {
     private var annotations: some View {
         ZStack {
             bufferRegion
+
             pkaLine
+                .accessibility(label: Text("Intersection point of species"))
+                .accessibility(value: Text("pH \(midPh.str(decimals: 2)), fraction of species 0.5"))
+
+            legend
         }
+    }
+
+    private var legend: some View {
+        HStack {
+            legendPill(part: .substance)
+            Spacer()
+            legendPill(part: .secondaryIon)
+        }
+        .padding(.horizontal, layout.fractionLegendHPadding)
+    }
+
+    private func legendPill(
+        part: SubstancePart
+    ) -> some View {
+
+        let textLine = saltModel.substance.chargedSymbol(ofPart: part).text
+        let equation = part == .substance ? substanceEquation : secondaryIonEquation
+
+        let initialFraction = equation.getY(at: initialChartPh)
+
+        let initialVerticalPos = initialFraction > 0.5 ? "top" : "bottom"
+        let finalVerticalPos = initialFraction > 0.5 ? "bottom" : "top"
+
+        let initialHorizontalPos = initialChartPh < midPh ? "left" : "right"
+        let finalHorizontalPos = initialChartPh < midPh ? "right" : "left"
+
+        let initialPos = "\(initialVerticalPos) \(initialHorizontalPos)"
+        let finalPos = "\(finalVerticalPos) \(finalHorizontalPos)"
+
+        let label = """
+        curved line for \(textLine.label) which goes from the \(initialPos) of the chart to the \(finalPos)
+        """
+
+        let currentFraction = equation.getY(at: currentPh)
+        let value = "pH \(currentPh.str(decimals: 2)), fraction of species \(currentFraction.str(decimals: 2))"
+
+        return VStack(spacing: layout.fractionLegendVSpacing) {
+            TextLinesView(
+                line: textLine,
+                fontSize: layout.fractionLegendFontSize
+            )
+            Circle()
+                .foregroundColor(saltModel.substance.color(ofPart: part))
+                .frame(square: layout.fractionLegendCircleSize)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+        .accessibility(value: Text(value))
+        .accessibility(addTraits: .updatesFrequently)
     }
 
     private var bufferRegion: some View {
@@ -209,5 +268,23 @@ struct BufferFractionsChart: View {
 
     private var chartSize: CGFloat {
         layout.common.chartSize
+    }
+}
+
+private extension BufferScreenLayout {
+    var fractionLegendCircleSize: CGFloat {
+        0.06 * common.chartSize
+    }
+
+    var fractionLegendVSpacing: CGFloat {
+        0.2 * fractionLegendCircleSize
+    }
+
+    var fractionLegendFontSize: CGFloat {
+        1.1 * fractionLegendCircleSize
+    }
+
+    var fractionLegendHPadding: CGFloat {
+        2 * common.chartAxis.tickSize
     }
 }

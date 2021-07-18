@@ -55,7 +55,7 @@ class BufferScreenViewModel: ObservableObject {
     @Published var saltModel: BufferSaltComponents
     @Published var strongSubstanceModel: BufferStrongSubstanceComponents
 
-    @Published var selectedBottomGraph = BottomGraph.bars
+    @Published var selectedBottomGraph = BottomGraph.curve
     @Published var selectedTopView = ChartOrTable.chart
     @Published var equationState = EquationState.acidBlank
 
