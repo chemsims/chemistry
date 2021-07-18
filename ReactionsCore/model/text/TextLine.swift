@@ -77,19 +77,31 @@ extension TextLine {
 
 extension TextLine {
     public func italic() -> TextLine {
-        TextLine(content: content.map { c in c.setItalic(true) })
+        TextLine(
+            content: content.map { c in c.setItalic(true) },
+            customLabel: customLabel
+        )
     }
 
     public func emphasised() -> TextLine {
-        TextLine(content: content.map { $0.setEmphasised(true) })
+        TextLine(
+            content: content.map { $0.setEmphasised(true) },
+            customLabel: customLabel
+        )
     }
 
     public func prepending(_ other: TextSegment) -> TextLine {
-        TextLine(content: [other] + content)
+        if customLabel == nil {
+            return TextLine(content: [other] + content)
+        }
+        return TextLine(other.asMarkdown + self.asMarkdown)
     }
 
     public func appending(_ other: TextSegment) -> TextLine {
-        TextLine(content: content + [other])
+        if customLabel == nil {
+            return TextLine(content: [other] + content)
+        }
+        return TextLine(self.asMarkdown + other.asMarkdown)
     }
 }
 

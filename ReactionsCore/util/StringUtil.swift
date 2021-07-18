@@ -39,11 +39,17 @@ public struct StringUtil {
     ///
     /// - Parameter elements: The elements to combine
     public static func combineStrings(_ elements: [String]) -> String {
+        combineStrings(elements, separator: ", ")
+    }
+
+
+    /// Combines strings using the provided separator.
+    public static func combineStrings(_ elements: [String], separator: String) -> String {
         if elements.isEmpty {
             return ""
         }
         return elements.dropFirst().reduce(elements.first!) {
-            $0 + ", \($1)"
+            $0 + "\(separator)\($1)"
         }
     }
 }

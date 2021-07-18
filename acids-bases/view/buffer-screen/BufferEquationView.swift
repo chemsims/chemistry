@@ -94,6 +94,8 @@ private struct SizedBufferEquationView: View {
                 )
             )
             .frame(width: leftColWidth, alignment: .leading)
+            .accessibilityElement(children: .contain)
+            .accessibility(sortPriority: 10)
 
             Spacer()
 
@@ -105,10 +107,13 @@ private struct SizedBufferEquationView: View {
                         insets: .withDefaults(trailing: -10)
                     )
                     .frame(width: rightColWidth, alignment: .leading)
+                    .accessibilityElement(children: .contain)
+                    .accessibility(sortPriority: 5)
             }
 
             if state.showPhSumAtTop {
                 phSumDefinition
+                    .accessibility(sortPriority: 5)
             }
         }
     }
@@ -125,21 +130,26 @@ private struct SizedBufferEquationView: View {
             )
             .frame(width: leftColWidth, alignment: .leading)
             .colorMultiply(noHighlight)
+            .accessibilityElement(children: .contain)
+            .accessibility(sortPriority: 9)
 
             Spacer()
 
             if state.showPKEquations {
                 PKAFilled(
+                    state: state,
                     showTerms: state.showAllTerms,
                     pKAValue: data.pKa,
                     kaValue: data.kA
                 )
                 .frame(width: rightColWidth, alignment: .leading)
                 .colorMultiply(noHighlight)
+                .accessibility(sortPriority: 4)
             }
 
             if state.showPhSumAtTop {
                 phSumFilled
+                    .accessibility(sortPriority: 4)
             }
         }
     }
@@ -153,6 +163,8 @@ private struct SizedBufferEquationView: View {
                     highlights: highlights,
                     insets: .withDefaults(leading: largeBoxExtraSize)
                 )
+                .accessibilityElement(children: .contain)
+                .accessibility(sortPriority: 8)
 
             Spacer()
 
@@ -164,10 +176,13 @@ private struct SizedBufferEquationView: View {
                         highlights: highlights,
                         insets: .withDefaults(trailing: 220)
                     )
+                    .accessibilityElement(children: .contain)
+                    .accessibility(sortPriority: 3)
             }
 
             if state.showPhSumAtBottom {
                 phSumDefinition
+                    .accessibility(sortPriority: 3)
             }
         }
     }
@@ -180,10 +195,13 @@ private struct SizedBufferEquationView: View {
                 pKAValue: data.pKa,
                 phEquation: data.pH,
                 secondaryIonConcentration: data.concentration.secondaryIon,
-                substanceConcentration: data.concentration.substance
+                substanceConcentration: data.concentration.substance,
+                substance: data.substance
             )
             .frame(width: leftColWidth, alignment: .leading)
             .colorMultiply(noHighlight)
+            .accessibilityElement(children: .contain)
+            .accessibility(sortPriority: 7)
 
             Spacer()
 
@@ -196,10 +214,13 @@ private struct SizedBufferEquationView: View {
                 )
                 .frame(width: rightColWidth, alignment: .leading)
                 .colorMultiply(noHighlight)
+                .accessibilityElement(children: .contain)
+                .accessibility(sortPriority: 2)
             }
 
             if state.showPhSumAtBottom {
                 phSumFilled
+                    .accessibility(sortPriority: 2)
             }
         }
     }
@@ -207,6 +228,7 @@ private struct SizedBufferEquationView: View {
     private var phSumDefinition: some View {
         PHSumDefinition()
             .frame(width: rightColWidth, alignment: .leading)
+            .accessibilityElement(children: .contain)
     }
 
     private var phSumFilled: some View {
@@ -218,6 +240,7 @@ private struct SizedBufferEquationView: View {
         )
         .frame(width: rightColWidth, alignment: .leading)
         .colorMultiply(noHighlight)
+        .accessibilityElement(children: .contain)
     }
 
     private var noHighlight: Color {
@@ -267,12 +290,30 @@ private struct KADefinition: View {
                 .leftColElement()
             FixedText("=")
             if state.isSummary {
-                FixedText(TextLineUtil.scientificString(value: fixedK))
+                TextLinesView(line: TextLineUtil.scientific(value: fixedK), fontSize: EquationSizing.fontSize)
+                    .fixedSize()
             } else {
                 fraction
             }
         }
         .frame(height: 2 * EquationSizing.boxHeight + 8)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+    }
+
+    private var label: String {
+        if state.isSummary {
+            return "\(state.kTerm) = \(TextLineUtil.scientific(value: fixedK).label)"
+        }
+        let numeratorLabel = concatLabels(substance.productParts)
+        let denomLabel = substance.symbol.label
+
+        return "\(state.kTerm) = \(numeratorLabel) divided by \(denomLabel)"
+    }
+
+    private func concatLabels(_ parts: [SubstancePart]) -> String {
+        let labels = parts.map { substance.chargedSymbol(ofPart: $0).text.label }
+        return StringUtil.combineStrings(labels, separator: " times ")
     }
 
     private var fraction: some View {
@@ -303,6 +344,8 @@ private struct PKADefinition: View {
             FixedText("=")
             FixedText("-log(\(state.kTerm))")
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityParsedLabel("p\(state.kTerm) = minus log of \(state.kTerm)")
     }
 }
 
@@ -321,15 +364,25 @@ private struct KAFilled: View {
                     .leftColElement()
             } else {
                 kAView
+                    .accessibility(sortPriority: 5)
             }
+
             FixedText("=")
+                .accessibility(sortPriority: 4)
+
             if state.isSummary {
-                FixedText(pKAValue.str(decimals: 2))
+                FixedText(pKAValue.str(decimals: 3))
             } else {
                 fraction
+                    .accessibility(sortPriority: 1)
             }
         }
         .frame(height: 2 * EquationSizing.boxHeight + 8)
+        .modifyIf(state.isSummary) {
+            $0
+                .accessibilityElement(children: .ignore)
+                .accessibilityParsedLabel("pKa = \(pKAValue.str(decimals: 3))")
+        }
     }
 
     private var kAView: some View {
@@ -337,6 +390,7 @@ private struct KAFilled: View {
             value: state.showAllTerms ? TextLineUtil.scientific(value: kValue).emphasised() : nil,
             expandedWidth: largeBoxWidth
         )
+        .accessibilityParsedLabel(state.kTerm)
         .frame(width: largeBoxWidth, alignment: .trailing)
     }
 
@@ -349,6 +403,7 @@ private struct KAFilled: View {
             }
             Rectangle()
                 .frame(width: 270, height: 2)
+                .accessibility(label: Text("divide by"))
             concentration(.substance, state.showSubstanceConcentration)
         }
     }
@@ -359,18 +414,24 @@ private struct KAFilled: View {
     ) -> some View {
         HStack(spacing: 0) {
             FixedText("(")
+                .accessibility(hidden: true)
             ScientificTextLinePlaceholder(
                 showValue: show,
                 equationInput: progress,
                 equation: concentration.value(for: part)
             )
             FixedText(")")
+                .accessibility(hidden: true)
         }
+        .accessibility(
+            label: Text("concentration of \(substance.chargedSymbol(ofPart: part).text.label)")
+        )
     }
 }
 
 private struct PKAFilled: View {
 
+    let state: EquationState
     let showTerms: Bool
     let pKAValue: CGFloat
     let kaValue: CGFloat
@@ -387,16 +448,20 @@ private struct PKAFilled: View {
         PlaceholderTerm(
             value: showTerms ? pKAValue.str(decimals: 2) : nil
         )
+        .accessibilityParsedLabel("p\(state.kTerm)")
     }
 
     private var ka: some View {
         HStack(spacing: 1) {
             FixedText("-log(")
+                .accessibility(label: Text("minus log"))
             PlaceholderTextLine(
                 value: showTerms ? TextLineUtil.scientific(value: kaValue).emphasised() : nil,
                 expandedWidth: largeBoxWidth
             )
+            .accessibilityParsedLabel(state.kTerm)
             FixedText(")")
+                .accessibility(hidden: true)
         }
     }
 }
@@ -437,6 +502,14 @@ private struct PHDefinition: View {
             log
         }
         .frame(height: 80)
+        .accessibilityElement(children: .ignore)
+        .accessibilityParsedLabel(label)
+    }
+
+    private var label: String {
+        let numer = substance.chargedSymbol(ofPart: .secondaryIon).text.label
+        let denom = substance.symbol.label
+        return "pH = p\(state.kTerm) + log of \(numer) divide by \(denom) "
     }
 
     private var log: some View {
@@ -470,6 +543,8 @@ private struct KWDefinition: View {
             FixedText("x")
             FixedText("Kb")
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Kw = Ka times Kb"))
     }
 }
 
@@ -481,16 +556,27 @@ private struct PHFilled: View {
     let phEquation: Equation
     let secondaryIonConcentration: Equation
     let substanceConcentration: Equation
+    let substance: AcidOrBase
 
     var body: some View {
         HStack(spacing: hStackSpacing) {
             element(phEquation, state.showAllTerms)
                 .leftColElement()
+                .accessibilityParsedLabel("pH")
+                .accessibility(sortPriority: 10)
+
             FixedText("=")
+                .accessibility(sortPriority: 9)
+
             PlaceholderTerm(
                 value: state.showAllTerms ? pKAValue.str(decimals: 2) : nil
             )
+            .accessibilityParsedLabel("p\(state.kTerm)")
+            .accessibility(sortPriority: 8)
+
             FixedText("+")
+                .accessibility(sortPriority: 7)
+
             log
         }
     }
@@ -498,22 +584,33 @@ private struct PHFilled: View {
     private var log: some View {
         HStack(spacing: 1) {
             FixedText("log")
+                .accessibility(sortPriority: 7)
+
             FixedText("(")
                 .scaleEffect(y: largeParenScale)
+                .accessibility(hidden: true)
+
             VStack(spacing: 1) {
                 concentration(
                     secondaryIonConcentration,
                     state.showIonConcentration
                 )
+                .accessibility(label: Text("Concentration of \(substance.chargedSymbol(ofPart: .secondaryIon).text.label)"))
+
                 Rectangle()
                     .frame(width: 85, height: 2)
+                    .accessibility(label: Text("divide by"))
+
                 concentration(
                     substanceConcentration,
                     state.showSubstanceConcentration
                 )
+                .accessibility(label: Text("Concentration of \(substance.symbol.label)"))
             }
+
             FixedText(")")
                 .scaleEffect(y: largeParenScale)
+                .accessibility(hidden: true)
         }
     }
 
@@ -546,10 +643,17 @@ private struct KWFilled: View {
         HStack(spacing: hStackSpacing) {
             kw
               .frame(width: EquationSizing.boxWidth)
+
             FixedText("=")
+
             term(kAValue)
+                .accessibility(label: Text("Ka"))
+
             FixedText("x")
+                .accessibility(label: Text("times"))
+
             term(kBValue)
+                .accessibility(label: Text("Kb"))
         }
     }
 
@@ -560,6 +664,9 @@ private struct KWFilled: View {
                 .font(.system(size: EquationSizing.subscriptFontSize))
                 .offset(y: -10)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Kw"))
+        .accessibility(value: Text("10 to the power of minus 14"))
     }
 
     private func term(_ value: CGFloat) -> some View {
@@ -582,6 +689,8 @@ private struct PHSumDefinition: View {
             FixedText("pOH")
                 .frame(width: EquationSizing.boxWidth)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityParsedLabel("14 = pH + pOH")
     }
 }
 
@@ -706,8 +815,10 @@ private struct PHSumFilled: View {
                 .frame(width: EquationSizing.boxWidth)
             FixedText("=")
             term(pHEquation)
+                .accessibilityParsedLabel("pH")
             FixedText("+")
             term(pOHEquation)
+                .accessibilityParsedLabel("pOH")
         }
     }
 
@@ -734,12 +845,7 @@ private struct ScientificTextLinePlaceholder: View {
                 x: equationInput,
                 equation: equation,
                 fontSize: EquationSizing.fontSize,
-                formatter: { v in
-                    EquationTermFormatter.scientific(
-                        threshold: 0.01,
-                        nonScientificDecimalPlaces: 3
-                    ).format(v).emphasised()
-                }
+                formatter: formatter
             )
             .frame(
                 width: largeBoxWidth,
@@ -751,7 +857,15 @@ private struct ScientificTextLinePlaceholder: View {
                     width: largeBoxWidth,
                     height: EquationSizing.boxHeight
                 )
+                .accessibility(value: Text("Place-holder"))
         }
+    }
+
+    private func formatter(value: CGFloat) -> TextLine {
+        EquationTermFormatter.scientific(
+            threshold: 0.01,
+            nonScientificDecimalPlaces: 3
+        ).format(value).emphasised()
     }
 }
 

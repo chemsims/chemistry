@@ -47,17 +47,24 @@ private struct BufferScreenWithSettings: View {
                 layout: layout,
                 model: model
             )
+            .accessibilityElement(children: .contain)
+
             Spacer()
+
             BufferChartStack(
                 layout: layout,
                 model: model
             )
+            .accessibilityElement(children: .contain)
+
             Spacer()
+
             BufferRightStack(
                 layout: layout,
                 model: model,
                 weakModel: model.weakSubstanceModel
             )
+            .accessibilityElement(children: .contain)
         }
     }
 }

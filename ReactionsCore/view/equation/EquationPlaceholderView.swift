@@ -73,10 +73,13 @@ public struct PlaceholderTextLine: View {
                 .frame(width: expandedWidth, height: boxHeight)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
+                .accessibilityElement(children: .ignore)
+                .accessibility(value: Text(value!.label))
         } else {
             Box(padding: boxPadding)
                 .frame(width: boxWidth, height: boxHeight)
                 .minimumScaleFactor(0.5)
+                .accessibility(value: Text("Place-holder"))
         }
     }
 }

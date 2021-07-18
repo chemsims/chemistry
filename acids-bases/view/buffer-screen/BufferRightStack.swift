@@ -74,6 +74,7 @@ private struct SwitchingBufferEquationView: View {
             data: data,
             highlights: model.highlights
         )
+        .accessibilityElement(children: .contain)
     }
 
     private var progress: CGFloat {
