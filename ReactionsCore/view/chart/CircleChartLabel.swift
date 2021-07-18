@@ -31,6 +31,14 @@ struct CircleChartLabel: View {
                 .animation(nil)
         }
         .frame(width: labelWidth)
+        .modifyIf(label.accessibilityLabel != nil) {
+            $0.accessibility(label: Text(label.accessibilityLabel ?? ""))
+        }
+        .modifyIf(label.updatingAccessibilityValue != nil) {
+            $0
+                .accessibility(value: Text(label.updatingAccessibilityValue ?? ""))
+                .accessibility(addTraits: .updatesFrequently)
+        }
     }
 
     private var labelWidth: CGFloat {
@@ -41,9 +49,27 @@ struct CircleChartLabel: View {
     }
 
     struct Label: Identifiable {
+
+        init(
+            id: Int,
+            label: TextLine,
+            color: Color,
+            accessibilityLabel: String? = nil,
+            updatingAccessibilityValue: String? = nil
+        ) {
+            self.id = id
+            self.label = label
+            self.color = color
+            self.accessibilityLabel = accessibilityLabel
+            self.updatingAccessibilityValue = updatingAccessibilityValue
+        }
+
         let id: Int
         let label: TextLine
         let color: Color
+
+        let accessibilityLabel: String?
+        let updatingAccessibilityValue: String?
     }
 
     struct Layout {

@@ -63,6 +63,11 @@ public struct EnumMap<Key, Value> where Key : CaseIterable, Key : Hashable {
     public var all: [Value] {
         Key.allCases.map(value)
     }
+
+    /// Returns all key-value pairs in the same order as `Key.allCases`
+    public var tupled: [(Key, Value)] {
+        Key.allCases.map { k in (k, value(for: k)) }
+    }
 }
 
 extension EnumMap where Key: Equatable {

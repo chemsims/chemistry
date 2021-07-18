@@ -24,8 +24,11 @@ public struct ReactionProgressChart<MoleculeType : EnumMappable>: View {
     public var body: some View {
         VStack(spacing: geometry.chartToAxisSpacing) {
             plotArea
+                .accessibility(hidden: true)
             axis
         }
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text("Chart showing columns of molecules"))
     }
 }
 
@@ -70,17 +73,28 @@ extension ReactionProgressChart {
             layout: geometry.axisLayout,
             labels: model
                 .definitions
-                .all
-                .sorted(by: { $0.columnIndex < $1.columnIndex})
+                .tupled
+                .sorted(by: { $0.1.columnIndex < $1.1.columnIndex})
                 .enumerated().map { (i, data) in
                 .init(
                     id: i,
-                    label: data.label,
-                    color: data.color
+                    label: data.1.label,
+                    color: data.1.color,
+                    accessibilityLabel: accessibilityLabel(forDefinition: data.1),
+                    updatingAccessibilityValue: accessibilityValue(forType: data.0)
                 )
             }
         )
         .frame(width: geometry.chartSize)
+    }
+
+    private func accessibilityLabel(forDefinition definition: MoleculeDefinition) -> String {
+        definition.label.label
+    }
+
+    private func accessibilityValue(forType type: MoleculeType) -> String {
+        let count = model.moleculeCounts(ofType: type)
+        return "\(count) molecules"
     }
 }
 
