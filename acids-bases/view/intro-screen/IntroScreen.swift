@@ -48,7 +48,10 @@ struct IntroScreenWithSettings: View {
                 components: model.components,
                 layout: layout
             )
+            .accessibilityElement(children: .contain)
+
             Spacer()
+            
             IntroRightStack(
                 model: model,
                 components: model.components,

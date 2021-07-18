@@ -78,6 +78,7 @@ private struct PHScaleWithGeometry: View {
     var body: some View {
         ZStack {
             bar
+                .accessibility(sortPriority: 0)
 
             labelAboveBar(leftLabel, isLeft: true)
             labelAboveBar(rightLabel, isLeft: false)
@@ -90,7 +91,10 @@ private struct PHScaleWithGeometry: View {
         }
         .lineLimit(1)
         .minimumScaleFactor(0.5)
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text("pH bar"))
     }
+
 
     private func labelAboveBar(_ label: ColoredText, isLeft: Bool) -> some View {
         VStack(spacing: 0) {
@@ -112,6 +116,9 @@ private struct PHScaleWithGeometry: View {
             }
             Spacer()
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("pH bar \(isLeft ? "left" : "right") legend"))
+        .accessibility(value: Text(label.text.label))
     }
 
     private func labelBesideBar(_ label: ColoredText, isLeft: Bool) -> some View {
@@ -142,6 +149,9 @@ private struct PHScaleWithGeometry: View {
             Spacer()
                 .modifyIf(!isLeft) { $0.frame(height: geometry.barVerticalSpacing) }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("pH bar \(isLeft ? "top" : "bottom") axis legend"))
+        .accessibility(value: Text(label.text.label))
     }
 
     private var bar: some View {
@@ -206,6 +216,10 @@ private struct PHScaleWithGeometry: View {
             x: axis.getPosition(at: indicator.value),
             y: geometry.height / 2
         )
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Indicator at \(position.rawValue) of bar"))
+        .accessibility(value: Text(indicator.text.text.label))
+        .accessibility(addTraits: .updatesFrequently)
     }
 }
 

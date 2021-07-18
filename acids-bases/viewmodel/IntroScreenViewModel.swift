@@ -49,7 +49,10 @@ class IntroScreenViewModel: ObservableObject {
 
     private(set) var addMoleculesModel: MultiContainerShakeViewModel<AcidOrBaseType>!
 
-    private func increment(type: AcidOrBaseType, count: Int) {
+    func increment(type: AcidOrBaseType, count: Int) {
+        if !highlights.elements.isEmpty {
+            highlights.clear()
+        }
         guard components.substance.type == type,
               inputState == .addSubstance(type: type) else {
             return
@@ -106,23 +109,44 @@ extension IntroScreenViewModel {
     }
 
     private func handlePostIncrementStatement() {
+        if let statement = getPostIncrementStatement() {
+            if self.statement != statement {
+                self.statement = statement
+                UIAccessibility.post(
+                    notification: .announcement,
+                    argument: statement.label
+                )
+            }
+        }
+    }
+
+    private func getPostIncrementStatement() -> [TextLine]? {
         if case let .addSubstance(type) = inputState,
            components.fractionSubstanceAdded >= 0.5 {
             let substance = getSubstance(forType: type)
-            let statement: [TextLine]
+
             switch type {
-            case .strongAcid: statement = IntroStatements.midAddingStrongAcid(substance: substance)
-            case .strongBase: statement = IntroStatements.midAddingStrongBase(substance: substance)
-            case .weakAcid: statement = IntroStatements.midAddingWeakAcid(substance: substance)
-            case .weakBase: statement = IntroStatements.midAddingWeakBase(substance: substance)
+            case .strongAcid:
+                return IntroStatements.midAddingStrongAcid(substance: substance)
+            case .strongBase:
+                return IntroStatements.midAddingStrongBase(substance: substance)
+            case .weakAcid:
+                return IntroStatements.midAddingWeakAcid(substance: substance)
+            case .weakBase:
+                return IntroStatements.midAddingWeakBase(substance: substance)
             }
-            self.statement = statement
+
         }
+        return nil
     }
 
     private func goNextIfNeededPostIncrement() {
         if case .addSubstance(_) = inputState, !components.canAddSubstance {
             next()
+            UIAccessibility.post(
+                notification: .announcement,
+                argument: statement.label
+            )
         }
     }
 

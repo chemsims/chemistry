@@ -43,10 +43,12 @@ struct IntroRightStack: View {
             height: layout.common.toggleHeight,
             animation: .easeOut(duration: 0.5),
             displayString: { $0.symbol },
-            label: { _ in "" }, // TODO
+            label: { $0.symbol.label },
             disabledOptions: [],
             onSelection: model.next
         )
+        .disabled(!model.inputState.isChoosingSubstance)
+        .accessibility(sortPriority: 0)
     }
 
     private var phScale: some View {
@@ -138,6 +140,8 @@ private struct BarChartOrPhChart: View {
             settings: layout.common.barChartSettings
         )
         .frame(width: layout.barChartTotalWidth, alignment: .trailing)
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text("Bar chart showing unit-less concentration of molecules as a percentage of the y axis height"))
     }
 
     private var phChart: some View {
@@ -156,6 +160,20 @@ private struct BarChartOrPhChart: View {
         }
         .font(.system(size: barGeo.labelFontSize))
         .minimumScaleFactor(0.7)
+        .accessibilityElement(children: .combine)
+        .accessibility(label: Text("Chart showing moles added vs pH"))
+        .accessibility(value: Text(phChartAccessibilityValue))
+    }
+
+    private var phChartAccessibilityValue: String {
+        if components.fractionSubstanceAdded > 0 {
+            let startPh = desiredPHLine.getY(at: 0)
+            let endPh = desiredPHLine.getY(at: 1)
+            let direction = startPh < endPh ? "increases" : "decreases"
+            return "The line \(direction) linearly as moles are added"
+        }
+
+        return ""
     }
 
     private var phChartArea: some View {
@@ -263,12 +281,14 @@ private struct PHOrConcentrationBar: View {
                 isSelected: !isViewingPh,
                 action: { isViewingPh = false }
             )
+            .accessibility(hint: Text("Shows concentration values on pH bar"))
 
             SelectionToggleText(
                 text: "pH Scale",
                 isSelected: isViewingPh,
                 action: { isViewingPh = true }
             )
+            .accessibility(hint: Text("Shows pH values on pH bar"))
         }
         .font(.system(size: layout.toggleFontSize))
         .frame(height: layout.toggleHeight)

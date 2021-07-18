@@ -196,13 +196,15 @@ private struct TitrationBeakerTools: View {
     }
 
     private var container: some View {
-        AcidAppShakingContainerView(
+        let textLine = model.substance.chargedSymbol(ofPart: .substance).text
+        return AcidAppShakingContainerView(
             models: shakeModel,
             layout: layout.common,
             initialLocation: layout.containerPosition,
             activeLocation: layout.activeContainerPosition,
             type: model.components.state.substance,
-            label: model.substance.chargedSymbol(ofPart: .substance).text,
+            label: textLine,
+            accessibilityName: textLine.label,
             color: model.substance.color,
             topOfWaterPosition: layout.topOfWaterPosition(
                 forRows: model.rows

@@ -78,23 +78,22 @@ class IntroScreenComponents: ObservableObject {
         )
     }
 
-    // TODO - accessibility labels
     var coords: SubstanceValue<BeakerMolecules> {
         SubstanceValue(
             substance: BeakerMolecules(
                 coords: underlyingCoords.coords.substance,
                 color: substance.color,
-                label: ""
+                label: substance.symbol.label
             ),
             primaryIon: BeakerMolecules(
                 coords: underlyingCoords.coords.primaryIon,
                 color: substance.primary.color,
-                label: ""
+                label: substance.chargedSymbol(ofPart: .primaryIon).text.label
             ),
             secondaryIon: BeakerMolecules(
                 coords: underlyingCoords.coords.secondaryIon,
                 color: substance.secondary.color,
-                label: ""
+                label: substance.chargedSymbol(ofPart: .secondaryIon).text.label
             )
         )
     }
@@ -103,30 +102,39 @@ class IntroScreenComponents: ObservableObject {
         let addedIsAboveZero = substance.substanceAddedPerIon.value > 0
         let finalSubstanceFraction: CGFloat = addedIsAboveZero ? 1 : 0
 
-        // TODO - accessibility labels
         return SubstanceValue(
-            substance: BarChartData(
-                label: substance.chargedSymbol(ofPart: .substance).text,
+            substance: barChartData(
+                ofPart: .substance,
                 equation: LinearEquation(
                     m: finalSubstanceFraction,
                     x1: 0,
                     y1: 0
-                ).within(min: 0, max: 1),
-                color: substance.color,
-                accessibilityLabel: ""
+                ).within(min: 0, max: 1)
             ),
-            primaryIon: BarChartData(
-                label: substance.chargedSymbol(ofPart: .primaryIon).text,
-                equation: ionFraction,
-                color: substance.primary.color,
-                accessibilityLabel: ""
+            primaryIon: barChartData(
+                ofPart: .primaryIon,
+                equation: ionFraction
             ),
-            secondaryIon: BarChartData(
-                label: substance.chargedSymbol(ofPart: .secondaryIon).text,
-                equation: ionFraction,
-                color: substance.secondary.color,
-                accessibilityLabel: ""
+            secondaryIon: barChartData(
+                ofPart: .secondaryIon,
+                equation: ionFraction
             )
+        )
+    }
+
+    private func barChartData(
+        ofPart part: SubstancePart,
+        equation: Equation
+    ) -> BarChartData {
+        BarChartData(
+            label: substance.chargedSymbol(ofPart: part).text,
+            equation: equation,
+            color: substance.color(ofPart: part),
+            accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label,
+            initialValue: nil,
+            accessibilityValue: { value in
+                value.percentage
+            }
         )
     }
 

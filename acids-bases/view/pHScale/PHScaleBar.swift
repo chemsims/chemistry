@@ -29,19 +29,31 @@ struct PHScaleBar: View {
         elements: [TextLine],
         position: LabelPosition
     ) -> some View {
-        ForEach(elements.indices) { i in
-            VStack(spacing: 0) {
-                if position == .bottom {
-                    Spacer()
-                }
 
-                element(elements[i], index: i, position: position)
+        var label = ""
+        if !elements.isEmpty {
+            let first = elements.first!.label
+            let last = elements.last!.label
+            label = "\(position.rawValue) axis ranging from \(first) on the left to \(last) on the right"
+        }
 
-                if position == .top {
-                    Spacer()
+        return ZStack {
+            ForEach(elements.indices) { i in
+                VStack(spacing: 0) {
+                    if position == .bottom {
+                        Spacer()
+                    }
+
+                    element(elements[i], index: i, position: position)
+
+                    if position == .top {
+                        Spacer()
+                    }
                 }
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
     }
 
     private func element(
@@ -75,7 +87,7 @@ struct PHScaleBar: View {
         )
     }
 
-    enum LabelPosition {
+    enum LabelPosition: String {
         case top, bottom
     }
 }

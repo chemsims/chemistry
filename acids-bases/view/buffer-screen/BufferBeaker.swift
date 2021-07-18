@@ -152,6 +152,7 @@ private struct BufferMoleculeContainers: View {
             activeLocation: activeContainerLocation,
             type: phase,
             label: containerLabel(phase: phase),
+            accessibilityName: containerLabel(phase: phase).label,
             color: containerColor(phase: phase),
             topOfWaterPosition: layout.common.topOfWaterPosition(
                 rows: model.rows

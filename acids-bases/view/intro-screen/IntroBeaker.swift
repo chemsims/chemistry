@@ -61,7 +61,9 @@ struct IntroBeaker: View {
                 canSetLevel: model.inputState == .setWaterLevel,
                 beakerColorMultiply: model.highlights.colorMultiply(for: nil),
                 sliderColorMultiply: model.highlights.colorMultiply(for: .waterSlider),
-                beakerModifier: AddMoleculesAccessibilityModifier()
+                beakerModifier: AddMoleculesAccessibilityModifier(
+                    model: model
+                )
             )
         }
         .padding(.bottom, layout.common.beakerBottomPadding)
@@ -111,6 +113,8 @@ private struct IntroBeakerContainers: View {
             rows: model.rows,
             beakerDistanceFromBottomOfScreen: 0
         )
+        .accessibility(label: Text("pH meter showing pH of beaker"))
+        .accessibility(value: Text("\(pHEquation.getY(at: 0).str(decimals: 1))"))
     }
 
     private func container(
@@ -118,7 +122,8 @@ private struct IntroBeakerContainers: View {
         _ index: Int
     ) -> some View {
         let substance = model.selectedSubstances.value(for: type)
-        let label = substance?.chargedSymbol(ofPart: .substance).text ?? ""
+        let textLine = substance?.chargedSymbol(ofPart: .substance).text
+        let label = textLine ?? ""
         return AcidAppShakingContainerView(
             models: shakeModel,
             layout: layout.common,
@@ -126,6 +131,7 @@ private struct IntroBeakerContainers: View {
             activeLocation: activeContainerLocation,
             type: type,
             label: label,
+            accessibilityName: textLine?.label,
             color: substance?.color ?? RGB.placeholderContainer.color,
             topOfWaterPosition: layout.common.topOfWaterPosition(
                 rows: model.rows
@@ -176,10 +182,89 @@ private struct IntroBeakerContainers: View {
 }
 
 struct AddMoleculesAccessibilityModifier: ViewModifier {
-    // TODO
+
+    @ObservedObject var model: IntroScreenViewModel
+
     func body(content: Content) -> some View {
         content
+            .modifyIf(inputIsNotNil) {
+                $0.modifier(
+                    AddMultipleCountsToBeaker(
+                        type: currentInputType!,
+                        name: label!,
+                        enabled: true,
+                        doAdd: model.increment
+                    )
+                )
+            }
     }
+
+    private var inputIsNotNil: Bool {
+        currentInputType != nil && label != nil
+    }
+
+    private var currentInputType: AcidOrBaseType? {
+        if case let .addSubstance(type) = model.inputState {
+            return type
+        }
+        return nil
+    }
+
+    private var label: String? {
+        if let inputType = currentInputType,
+           let substance = model.selectedSubstances.value(for: inputType) {
+            return substance.symbol.label
+        }
+        return nil
+    }
+}
+
+
+private struct AddMultipleCountsToBeaker: ViewModifier {
+
+    let type: AcidOrBaseType
+    let name: String
+    let enabled: Bool
+    let doAdd: (AcidOrBaseType, Int) -> Void
+
+    let count1: Int = 5
+    let count2: Int = 15
+
+    func body(content: Content) -> some View {
+        content
+            .modifier(modifier(count1))
+            .modifier(modifier(count2))
+    }
+
+    private func modifier(_ count: Int) -> some ViewModifier {
+        AddSingleCountToBeaker(
+            type: type,
+            name: name,
+            enabled: enabled,
+            count: count,
+            doAdd: doAdd
+        )
+    }
+}
+
+private struct AddSingleCountToBeaker: ViewModifier {
+
+    let type: AcidOrBaseType
+    let name: String
+    let enabled: Bool
+    let count: Int
+    let doAdd: (AcidOrBaseType, Int) -> Void
+
+    func body(content: Content) -> some View {
+        content.modifyIf(enabled) {
+            $0.accessibilityAction(
+                named: Text("Add \(count) molecules of \(name) to the beaker")
+            ) {
+                doAdd(type, count)
+            }
+        }
+    }
+
 }
 
 struct IntroBeaker_Previews: PreviewProvider {

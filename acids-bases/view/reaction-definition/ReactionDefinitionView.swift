@@ -16,6 +16,8 @@ struct ReactionDefinitionView: View {
             row(showTerms: true)
             row(showTerms: false)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(reaction.label))
     }
 
     private func row(showTerms: Bool = true) -> some View {

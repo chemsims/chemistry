@@ -121,7 +121,8 @@ public struct Labelling {
         ("⇌", "double sided arrow,"),
         ("⇄", "double sided arrow,"),
         ("0.5X", "0.5 x"),
-        (")(", " times ")
+        (")(", " times "),
+        ("pOH", "POH")
     ]
 
     private static let preParseReplacements: [(String, String)] = [
@@ -144,21 +145,18 @@ public struct Labelling {
         ("k[AB]^m^", "k, times A B ^m^"),
         ("k[AB][C]", "k, times A B, times C"),
         ("S_2_O_8_^-2^", "S2O8 (charge -2) "),
-        ("I^-^", "I (charge minus 1)"),
         ("SO", "S O"),
-        ("I_3_^-^", "I3 (charge minus 1)"),
         ("ClO", "C L O"),
         ("k[X][Y][Z]", "k, times X, times Y, times Z"),
         ("k[XY][Z]", "k, times XY, times Z"),
         ("k[X][Y][XY]", "k, times X, times Y, times XY"),
         ("E_a_", "EA"),
-        ("H^+^", "H (charge plus 1)"),
-        ("H^-^", "H (charge minus 1)"),
         ("OH", "O H"),
-        ("H6^+^", "H6 (charge plus 1)"),
         ("A_2_", "'A'2"),
         ("rate_r_", "rate r"),
-        ("rate_f_","rate f")
+        ("rate_f_","rate f"),
+        ("^+^", "+"),
+        ("^-^", " minus")
     ]
 }
 

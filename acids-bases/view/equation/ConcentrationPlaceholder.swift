@@ -15,7 +15,7 @@ struct ConcentrationPlaceholder: View {
             if showValue {
                 if parts == nil {
                     PlaceholderTerm(
-                        value: concentration.str(decimals: 2),
+                        value: nonScientificValue,
                         emphasise: true
                     )
                 } else {
@@ -25,6 +25,8 @@ struct ConcentrationPlaceholder: View {
                 PlaceholderTerm(value: nil)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(value: Text(accessibilityValue))
         .font(.system(size: EquationSizing.fontSize))
         .frame(
             width: 1.5 * EquationSizing.boxWidth,
@@ -32,7 +34,20 @@ struct ConcentrationPlaceholder: View {
             alignment: .leading
         )
     }
-    
+
+    private var nonScientificValue: String {
+        concentration.str(decimals: 2)
+    }
+
+    private var accessibilityValue: String {
+        if !showValue {
+            return "Placeholder"
+        }
+        if parts != nil {
+            return TextLineUtil.scientific(value: concentration).label
+        }
+        return nonScientificValue
+    }
 
     private var parts: (String, String)? {
         TextLineUtil.scientificComponents(value: concentration)

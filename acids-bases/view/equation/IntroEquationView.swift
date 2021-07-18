@@ -76,6 +76,7 @@ private struct SizedIntroEquationView: View {
             phSumTop
             phSumBottom
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var phSumTop: some View {
@@ -89,6 +90,8 @@ private struct SizedIntroEquationView: View {
                 .padding(.trailing, equalsTrailingSpacing)
             FixedText("14")
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityParsedLabel("pH + pOH = 14")
     }
 
     private var phSumBottom: some View {
@@ -97,11 +100,13 @@ private struct SizedIntroEquationView: View {
                 value: showValues ? concentration.hydrogen.p.str(decimals: 1) : nil,
                 emphasise: true
             )
+            .accessibilityParsedLabel("pH")
             FixedText("+")
             PlaceholderTerm(
                 value: showValues ? concentration.hydroxide.p.str(decimals: 1) : nil,
                 emphasise: true
             )
+            .accessibilityParsedLabel("pOH")
             FixedText("=")
                 .padding(.trailing, equalsTrailingSpacing)
             FixedText("14")
@@ -122,6 +127,7 @@ private struct PLogEquationView: View {
             definition
             filled
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var definition: some View {
@@ -137,6 +143,20 @@ private struct PLogEquationView: View {
                 .offset(y: -10)
             FixedText("]")
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityParsedLabel("p\(symbol) = minus log(\(concentrationLabel))")
+    }
+
+    private var pString: String {
+        "p\(symbol)"
+    }
+
+    private var pLabel: String {
+        Labelling.stringToLabel("p\(symbol)")
+    }
+
+    private var chargeLabel: String {
+        charge == "+" ? "+" : "minus"
     }
 
     private var filled: some View {
@@ -145,15 +165,23 @@ private struct PLogEquationView: View {
                 value: showValues ? concentration.p.str(decimals: 1) : nil,
                 emphasise: true
             )
+            .accessibilityParsedLabel("p\(symbol)")
+            
             HStack(spacing: equalsTrailingSpacing) {
                 FixedText("=")
                 FixedText("-log")
+                    .accessibility(label: Text("minus log"))
                 ConcentrationPlaceholder(
                     concentration: concentration.concentration,
                     showValue: showValues
                 )
+                .accessibilityParsedLabel("Concentration of \(concentrationLabel)")
             }
         }
+    }
+
+    private var concentrationLabel: String {
+        "\(symbol)^\(charge)^"
     }
 }
 

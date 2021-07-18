@@ -2,8 +2,17 @@
 // Reactions App
 //
 
-import CoreGraphics
+import SwiftUI
 import CoreMotion
+
+extension View {
+
+    /// Adds `value` as a label of the view, after passing it through the labelling function
+    /// to generate a nicer label.
+    public func accessibilityParsedLabel(_ value: String) -> some View {
+        self.accessibility(label: Text(Labelling.stringToLabel(value)))
+    }
+}
 
 extension CGFloat {
     public func str(decimals: Int) -> String {

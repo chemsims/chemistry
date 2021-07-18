@@ -15,6 +15,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
     let activeLocation: CGPoint
     let type: ContainerType
     let label: TextLine
+    let accessibilityName: String?
     let color: Color
     let topOfWaterPosition: CGFloat
     let disabled: Bool
@@ -23,9 +24,15 @@ where ContainerType : CaseIterable, ContainerType : Hashable
     let includeContainerBackground: Bool
     let onActivateContainer: (ContainerType) -> Void
 
+    private let manualAddAmount = 5
+
     var body: some View {
         let addModel = models.model(for: type)
         let isActive = models.activeMolecule == type
+
+        let accessibilityLabel = accessibilityName.map { (name) -> String in
+            "container of \(name) molecules"
+        } ?? "placeholder container"
 
         return ShakingContainerView(
             model: addModel,
@@ -60,6 +67,19 @@ where ContainerType : CaseIterable, ContainerType : Hashable
                 Spacer()
             }
         )
+        .accessibility(label: Text(accessibilityLabel))
+        .accessibility(addTraits: .isButton)
+        .accessibility(hint: Text(getContainerHint(type: type, label: accessibilityName)))
+    }
+
+    private func getContainerHint(type: ContainerType, label: String?) -> String {
+        if let label = label {
+            if models.activeMolecule == type {
+                return "Adds \(manualAddAmount) molecules of \(label) to the beaker"
+            }
+            return "Prepares container to add to beaker"
+        }
+        return ""
     }
 
     private func didTapContainer(
