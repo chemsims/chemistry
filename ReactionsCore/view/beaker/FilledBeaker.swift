@@ -93,7 +93,14 @@ struct GeneralFluidBeaker: View {
             return (label, count)
         }
 
-        let sorted = labelWithCount.sorted(by: { $0.0 < $1.0 })
+        let distinctLabels = Set(labels)
+        let distinctLabelsWithCount = Array(distinctLabels).map { label -> (String, Int) in
+            let counts = labelWithCount.filter { $0.0 == label }.map(\.1)
+            let sum = counts.reduce(0) { $0 + $1 }
+            return (label, sum)
+        }
+
+        let sorted = distinctLabelsWithCount.sorted(by: { $0.0 < $1.0 })
         let counts = sorted.map { (label, count) in
             "\(count) of \(label)"
         }

@@ -412,6 +412,7 @@
 		57ABDC3F25EBFA230078A82B /* ReactionDropDownSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */; };
 		57ABDC4625EC03E10078A82B /* AqueousStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC4525EC03E10078A82B /* AqueousStatements.swift */; };
 		57AC3B1626496F7800D699B4 /* EquilibriumAppCanBeOpenedByUrlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AC3B1526496F7800D699B4 /* EquilibriumAppCanBeOpenedByUrlTests.swift */; };
+		57ADAA8726A4424C0008E8C2 /* BeakerAccessibilityActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ADAA8626A4424C0008E8C2 /* BeakerAccessibilityActions.swift */; };
 		57B23314258E8BCB00128760 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23313258E8BCB00128760 /* AppScreen.swift */; };
 		57B2331F258E93AE00128760 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B2331E258E93AE00128760 /* PageViewController.swift */; };
 		57B23325258E94A500128760 /* ReactionFilingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23324258E94A500128760 /* ReactionFilingScreen.swift */; };
@@ -1152,6 +1153,7 @@
 		57ABDC4525EC03E10078A82B /* AqueousStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousStatements.swift; sourceTree = "<group>"; };
 		57AC3B1526496F7800D699B4 /* EquilibriumAppCanBeOpenedByUrlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumAppCanBeOpenedByUrlTests.swift; sourceTree = "<group>"; };
 		57AD96BB263024FD0027DD0C /* AnalyticsConsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsConsentView.swift; sourceTree = "<group>"; };
+		57ADAA8626A4424C0008E8C2 /* BeakerAccessibilityActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerAccessibilityActions.swift; sourceTree = "<group>"; };
 		57B168BF25A7C09200F6668E /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
 		57B23313258E8BCB00128760 /* AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreen.swift; sourceTree = "<group>"; };
 		57B23319258E8BD900128760 /* ScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProvider.swift; sourceTree = "<group>"; };
@@ -2933,6 +2935,7 @@
 			children = (
 				579EA90B264728C5008461E8 /* AnimatableForegroundColor.swift */,
 				57B8946A26A043F300D71998 /* IgnoresKeyboardModifier.swift */,
+				57ADAA8626A4424C0008E8C2 /* BeakerAccessibilityActions.swift */,
 			);
 			path = modifiers;
 			sourceTree = "<group>";
@@ -4547,6 +4550,7 @@
 				57B8946D26A04FFA00D71998 /* OnboardingPersistence.swift in Sources */,
 				57F88864267E6DB900609671 /* MoleculeEmittingViewModel.swift in Sources */,
 				57315EC026401CF500A7D0F9 /* QuizLayoutSettings.swift in Sources */,
+				57ADAA8726A4424C0008E8C2 /* BeakerAccessibilityActions.swift in Sources */,
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
 				574103DF2642966300E6EDCB /* Tooltip.swift in Sources */,

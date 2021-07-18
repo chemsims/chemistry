@@ -585,7 +585,16 @@ extension TitrationWeakSubstancePreEPModel {
                 }
             },
             cols: previous.cols,
-            rows: previous.rows
+            rows: previous.rows,
+            accessibilityLabel: { part in
+                let substance = previous.substance
+                switch part {
+                case .substance: return substance.symbol.label
+                case .secondaryIon: return substance.chargedSymbol(ofPart: .secondaryIon).text.label
+                case .hydrogen: return TextLine("H^+^").label
+                case .hydroxide: return TextLine("OH^-^").label
+                }
+            }
         )
     }
 }

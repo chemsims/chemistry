@@ -81,7 +81,9 @@ private struct BufferBeakerWithMolecules: View {
             canSetLevel: model.input == .setWaterLevel,
             beakerColorMultiply: model.highlights.colorMultiply(for: nil),
             sliderColorMultiply: model.highlights.colorMultiply(for: .waterSlider),
-            beakerModifier: BufferBeakerAccessibilityModifier()
+            beakerModifier: BufferBeakerAccessibilityModifier(
+                model: model
+            )
         )
     }
 
@@ -151,8 +153,8 @@ private struct BufferMoleculeContainers: View {
             initialLocation: containerLocation(phase: phase, index: index),
             activeLocation: activeContainerLocation,
             type: phase,
-            label: containerLabel(phase: phase),
-            accessibilityName: containerLabel(phase: phase).label,
+            label: model.containerLabel(forPhase: phase),
+            accessibilityName: model.containerLabel(forPhase: phase).label,
             color: containerColor(phase: phase),
             topOfWaterPosition: layout.common.topOfWaterPosition(
                 rows: model.rows
@@ -206,10 +208,47 @@ private struct BufferMoleculeContainers: View {
     }
 }
 
-// TODO
 private struct BufferBeakerAccessibilityModifier: ViewModifier {
+
+    @ObservedObject var model: BufferScreenViewModel
+
+    private let firstCount = 5
+    private let secondCount = 15
+
     func body(content: Content) -> some View {
-        content
+        content.modifyIf(inputsNotNil) {
+            $0.modifier(
+
+                // Even though we check for nil, don't force unwrap optionals, as it can still fail.
+                BeakerAccessibilityAddMultipleCountActions<BufferScreenViewModel.Phase>(
+                    actionName: { count in
+                        "Add \(count) molecules of \(currentLabel ?? "") to the beaker"
+                    },
+                    doAdd: { count in
+                        model.addMolecule(phase: currentInputPhase ?? .addWeakSubstance, count: count)
+                    },
+                    firstCount: firstCount,
+                    secondCount: secondCount
+                )
+            )
+        }
+    }
+
+    private var inputsNotNil: Bool {
+        currentInputPhase != nil && currentLabel != nil
+    }
+
+    private var currentInputPhase: BufferScreenViewModel.Phase? {
+        if case let .addMolecule(phase) = model.input {
+            return phase
+        }
+        return nil
+    }
+
+    private var currentLabel: String? {
+        currentInputPhase.map {
+            model.containerLabel(forPhase: $0).label
+        }
     }
 }
 

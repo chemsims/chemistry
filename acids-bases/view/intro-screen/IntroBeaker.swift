@@ -185,15 +185,24 @@ struct AddMoleculesAccessibilityModifier: ViewModifier {
 
     @ObservedObject var model: IntroScreenViewModel
 
+    private let firstCount = 5
+    private let secondCount = 15
+
     func body(content: Content) -> some View {
         content
             .modifyIf(inputIsNotNil) {
                 $0.modifier(
-                    AddMultipleCountsToBeaker(
-                        type: currentInputType!,
-                        name: label!,
-                        enabled: true,
-                        doAdd: model.increment
+
+                    // Even though we check for nil, don't force unwrap optionals, as it can still fail.
+                    BeakerAccessibilityAddMultipleCountActions<AcidOrBaseType>(
+                        actionName: { count in
+                            "Add \(count) molecules of \(label ?? "") to the beaker"
+                        },
+                        doAdd: { count in
+                            model.increment(type: currentInputType ?? .strongAcid, count: count)
+                        },
+                        firstCount: firstCount,
+                        secondCount: secondCount
                     )
                 )
             }
@@ -217,54 +226,6 @@ struct AddMoleculesAccessibilityModifier: ViewModifier {
         }
         return nil
     }
-}
-
-
-private struct AddMultipleCountsToBeaker: ViewModifier {
-
-    let type: AcidOrBaseType
-    let name: String
-    let enabled: Bool
-    let doAdd: (AcidOrBaseType, Int) -> Void
-
-    let count1: Int = 5
-    let count2: Int = 15
-
-    func body(content: Content) -> some View {
-        content
-            .modifier(modifier(count1))
-            .modifier(modifier(count2))
-    }
-
-    private func modifier(_ count: Int) -> some ViewModifier {
-        AddSingleCountToBeaker(
-            type: type,
-            name: name,
-            enabled: enabled,
-            count: count,
-            doAdd: doAdd
-        )
-    }
-}
-
-private struct AddSingleCountToBeaker: ViewModifier {
-
-    let type: AcidOrBaseType
-    let name: String
-    let enabled: Bool
-    let count: Int
-    let doAdd: (AcidOrBaseType, Int) -> Void
-
-    func body(content: Content) -> some View {
-        content.modifyIf(enabled) {
-            $0.accessibilityAction(
-                named: Text("Add \(count) molecules of \(name) to the beaker")
-            ) {
-                doAdd(type, count)
-            }
-        }
-    }
-
 }
 
 struct IntroBeaker_Previews: PreviewProvider {

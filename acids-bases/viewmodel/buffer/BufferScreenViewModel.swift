@@ -205,7 +205,7 @@ extension BufferScreenViewModel {
 // MARK: Adding molecules
 extension BufferScreenViewModel {
 
-    private func addMolecule(phase: Phase, count: Int) {
+    func addMolecule(phase: Phase, count: Int) {
         guard input == .addMolecule(phase: phase) else {
             return
         }
@@ -224,6 +224,22 @@ extension BufferScreenViewModel {
         case .addWeakSubstance: return weakSubstanceModel.canAddSubstance
         case .addSalt: return saltModel.canAddSubstance
         case .addStrongSubstance: return strongSubstanceModel.canAddSubstance
+        }
+    }
+}
+
+// MARK: Component substances
+extension BufferScreenViewModel {
+    func containerLabel(forPhase phase: Phase) -> TextLine {
+        switch phase {
+        case .addWeakSubstance:
+            return substance.chargedSymbol(ofPart: .substance).text
+        case .addSalt:
+            return TextLine(substance.saltName)
+        case .addStrongSubstance where substance.type.isAcid:
+            return strongAcid.chargedSymbol.text
+        case .addStrongSubstance:
+            return strongBase.chargedSymbol.text
         }
     }
 }

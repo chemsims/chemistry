@@ -320,7 +320,8 @@ extension BufferSaltComponents {
                 secondaryIon: previous.ionCoords[1].molecules
             ),
             cols: previous.cols,
-            rows: previous.rows
+            rows: previous.rows,
+            accessibilityLabel: { previous.substance.chargedSymbol(ofPart: $0).text.label }
         )
     }
 }

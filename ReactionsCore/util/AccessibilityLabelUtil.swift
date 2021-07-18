@@ -27,7 +27,8 @@ struct AccessibilityLabelUtil {
         animatingMolecules: [AnimatingBeakerMolecules]
     ) -> String? {
         let labels = molecules.map(\.label) + animatingMolecules.map(\.molecules.label)
-        let sortedLabels = labels.sorted()
+        let distinctLabels = Set(labels)
+        let sortedLabels = distinctLabels.sorted()
         if sortedLabels.isEmpty {
             return nil
         }

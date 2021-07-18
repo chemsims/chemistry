@@ -10,7 +10,12 @@ class BufferStrongSubstanceComponents: ObservableObject {
     init(prev: BufferSaltComponents) {
         self.previous = prev
         let initialCoords = prev.reactingModel.consolidated
-        self.reactingModel = ReactingBeakerViewModel(initial: initialCoords, cols: prev.previous.cols, rows: prev.previous.rows)
+        self.reactingModel = ReactingBeakerViewModel(
+            initial: initialCoords,
+            cols: prev.previous.cols,
+            rows: prev.previous.rows,
+            accessibilityLabel: prev.reactingModel.accessibilityLabel
+        )
 
         let initialSecondary = initialCoords.value(for: .secondaryIon).coords.count
         let finalSecondary = prev.settings.finalSecondaryIonCount
@@ -295,7 +300,12 @@ extension BufferStrongSubstanceComponents {
 // MARK: Resetting state
 extension BufferStrongSubstanceComponents {
     func reset() {
-        reactingModel = ReactingBeakerViewModel(initial: previous.reactingModel.consolidated, cols: previous.previous.cols, rows: previous.previous.rows)
+        reactingModel = ReactingBeakerViewModel(
+            initial: previous.reactingModel.consolidated,
+            cols: previous.previous.cols,
+            rows: previous.previous.rows,
+            accessibilityLabel: previous.reactingModel.accessibilityLabel
+        )
         reactionProgress = BufferSharedComponents.reactionProgressModel(substance: substance, counts: initialProgressCounts)
         substanceAdded = 0
     }

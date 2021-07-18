@@ -19,7 +19,7 @@ class BufferWeakSubstanceComponents: ObservableObject {
         self.substanceCoords = BeakerMolecules(
             coords: [],
             color: substance.color,
-            label: ""
+            label: substance.symbol.label
         )
         self.substance = substance
         self.settings = settings
@@ -31,8 +31,8 @@ class BufferWeakSubstanceComponents: ObservableObject {
     @Published var progress: CGFloat = 0
     var ionCoords: [AnimatingBeakerMolecules] {
         [
-            coordForIon(substance.primary.color, index: 0),
-            coordForIon(substance.secondary.color, index: 1)
+            coordForIon(part: .primaryIon, index: 0),
+            coordForIon(part: .secondaryIon, index: 1)
         ]
     }
 
@@ -79,7 +79,10 @@ class BufferWeakSubstanceComponents: ObservableObject {
         }
     }
 
-    private func coordForIon(_ color: Color, index: Int) -> AnimatingBeakerMolecules {
+    private func coordForIon(
+        part: SubstancePart,
+        index: Int
+    ) -> AnimatingBeakerMolecules {
         let startCoordIndex = index * finalIonCoordCount
         let endCoordIndex = max(startCoordIndex, startCoordIndex + finalIonCoordCount - 1)
 
@@ -91,8 +94,8 @@ class BufferWeakSubstanceComponents: ObservableObject {
         return AnimatingBeakerMolecules(
             molecules: BeakerMolecules(
                 coords: coords,
-                color: color,
-                label: ""
+                color: substance.color(ofPart: part),
+                label: substance.chargedSymbol(ofPart: part).text.label
             ),
             fractionToDraw: LinearEquation(m: 1, x1: 0, y1: 0)
         )
@@ -237,7 +240,7 @@ extension BufferWeakSubstanceComponents {
             label: substance.chargedSymbol(ofPart: part).text,
             equation: equation,
             color: substance.color(ofPart: part),
-            accessibilityLabel: "" // TODO
+            accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label
         )
     }
 }

@@ -55,7 +55,6 @@ private struct BufferScreenWithSettings: View {
                 layout: layout,
                 model: model
             )
-            .accessibilityElement(children: .contain)
 
             Spacer()
 
@@ -64,7 +63,6 @@ private struct BufferScreenWithSettings: View {
                 model: model,
                 weakModel: model.weakSubstanceModel
             )
-            .accessibilityElement(children: .contain)
         }
     }
 }

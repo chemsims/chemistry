@@ -16,7 +16,8 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
     public init(
         initial: EnumMap<Molecule, BeakerMolecules>,
         cols: Int,
-        rows: Int
+        rows: Int,
+        accessibilityLabel: @escaping (Molecule) -> String
     ) {
         molecules = Molecule.allCases.map { molecule in
             ReactingMolecules(
@@ -24,6 +25,7 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
                 molecules: initial.value(for: molecule)
             )
         }
+        self.accessibilityLabel = accessibilityLabel
         self.cols = cols
         self.rows = rows
 
@@ -40,6 +42,8 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
     /// Note that the size of this array will not be the same as `Molecule.allCases`. If you need access to the
     /// molecules displayed for each molecule type, use the `consolidated` property.
     @Published public var molecules = [ReactingMolecules<Molecule>]()
+
+    public let accessibilityLabel: (Molecule) -> String
 
     private let baseIndices: EnumMap<Molecule, Int>
     private let cols: Int
@@ -99,7 +103,7 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
                 molecules: BeakerMolecules(
                     coords: consumedCoords,
                     color: color(of: consumedReactant),
-                    label: ""
+                    label: accessibilityLabel(product)
                 )
             )
         )
@@ -118,7 +122,7 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
                 molecules: BeakerMolecules(
                     coords: reactantGrid,
                     color: color(of: reactant),
-                    label: ""
+                    label: accessibilityLabel(product)
                 )
             )
         )
