@@ -19,7 +19,7 @@ struct ReactionOrderSelection: View {
             selection: $selection,
             height: height,
             animation: Animation.easeOut(duration: 0.75),
-            displayString: toString,
+            displayString: { TextLine(toString($0)) },
             label: toString,
             disabledOptions: [],
             onSelection: nil

@@ -21,7 +21,7 @@ struct ReactionDropDownSelection<Reaction: SelectableReaction>: View {
             selection: $selection,
             height: height,
             animation: .easeOut(duration: 0.75),
-            displayString: { $0.displayName },
+            displayString: { TextLine($0.displayName) },
             label: { $0.label },
             disabledOptions: [],
             onSelection: onSelection

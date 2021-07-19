@@ -8,11 +8,11 @@ import ReactionsCore
 
 extension AcidOrBase {
     static func strongAcid() -> AcidOrBase {
-        strongAcid(secondaryIon: .A, color: .blue, kA: 0)
+        strongAcid(secondaryIon: .A, color: .black, kA: 0)
     }
 
     static func strongBase() -> AcidOrBase {
-        strongBase(secondaryIon: .A, color: .red, kB: 0)
+        strongBase(secondaryIon: .A, color: .black, kB: 0)
     }
 
     static func weakAcid(substanceAddedPerIon: Int) -> AcidOrBase {
@@ -23,7 +23,7 @@ extension AcidOrBase {
         weakAcid(
             secondaryIon: .A,
             substanceAddedPerIon: substanceAddedPerIon,
-            color: .blue,
+            color: .black,
             kA: 1e-5
         )
     }
@@ -35,7 +35,7 @@ extension AcidOrBase {
         weakBase(
             secondaryIon: .A,
             substanceAddedPerIon: substanceAddedPerIon,
-            color: .red,
+            color: .black,
             kB: 1
         )
     }

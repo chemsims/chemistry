@@ -113,7 +113,7 @@ class BufferSaltComponentsTests: XCTestCase {
             substance: .weakAcid(
                 secondaryIon: .A,
                 substanceAddedPerIon: NonZeroPositiveInt(1)!,
-                color: .red,
+                color: .black,
                 kA: 1e-3
             ),
             settings: .withDefaults(

@@ -118,8 +118,9 @@ class TitrationComponentStateTests: XCTestCase {
 
     private func newModel() -> TitrationComponentState {
         TitrationComponentState(
-            strongAcid: .strongAcids.first!,
-            weakAcid: .weakAcids.first!,
+            initialStrongSubstance: .strongAcids.first!,
+            initialWeakSubstance: .weakAcids.first!,
+            initialTitrant: .potassiumHydroxide,
             cols: 10,
             rows: 10
         )

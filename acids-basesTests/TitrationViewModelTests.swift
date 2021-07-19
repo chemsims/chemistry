@@ -9,7 +9,7 @@ import ReactionsCore
 class TitrationViewModelTests: XCTestCase {
 
     func testNextIsAppliedWhenMaxBufferCapacityIsReached() {
-        let model = TitrationViewModel(namePersistence: InMemoryNamePersistence())
+        let model = TitrationViewModel(titrationPersistence: InMemoryTitrationInputPersistence(), namePersistence: InMemoryNamePersistence())
         let nav = model.navigation
         nav?.nextUntil {
             $0.isAtState(

@@ -8,7 +8,7 @@ import XCTest
 class AcidConcentrationEquationsTests: XCTestCase {
 
     func testChangeInConcentration() {
-        let acid = AcidOrBase.strongAcid(secondaryIon: .A, color: .red, kA: 0.01)
+        let acid = AcidOrBase.strongAcid(secondaryIon: .A, color: .black, kA: 0.01)
 
         let zeroChangeInConcentration = AcidConcentrationEquations.changeInConcentration(
             substance: acid,

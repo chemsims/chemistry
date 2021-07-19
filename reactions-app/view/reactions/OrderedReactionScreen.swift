@@ -132,7 +132,7 @@ struct OrderedReactionScreen<Content: View>: View {
             selection: $reaction.pendingReactionSelection,
             height: settings.tableButtonSize,
             animation: nil,
-            displayString: { $0.name },
+            displayString: { TextLine($0.name) },
             label: { $0.label },
             disabledOptions: Array(reaction.usedReactions),
             onSelection: reaction.forcedNext
