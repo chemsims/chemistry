@@ -162,7 +162,10 @@ extension TitrationStrongSubstancePreEPModel {
 
         if toRemove > 0 {
             (0..<toRemove).forEach { _ in
-                _ = reactionProgress.consume(substance.primary)
+                _ = reactionProgress.startReaction(
+                    adding: substance.primary.complement,
+                    reactsWith: substance.primary
+                )
             }
         }
     }

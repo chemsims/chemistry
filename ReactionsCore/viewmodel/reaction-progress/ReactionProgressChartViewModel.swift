@@ -72,6 +72,17 @@ extension ReactionProgressChartViewModel {
         return triggerSequence(reaction)
     }
 
+    public func startReaction(
+        adding addedMolecule: MoleculeType,
+        reactsWith consumedMolecule: MoleculeType
+    ) -> Bool {
+        let reaction = ActionSequence.reaction(
+            added: addedMolecule,
+            consumed: consumedMolecule
+        )
+        return triggerSequence(reaction)
+    }
+
     /// Triggers a reaction which consumes a molecule of type `consumedMolecule`, and produces molecules
     /// of type `producedMolecule`.
     ///
@@ -586,6 +597,24 @@ extension ReactionProgressChartViewModel {
                     .deleteBottomMolecules(types: [added, consumed]),
                     .slideColumnsDown(types: [added, consumed]),
                     .addMolecule(types: [produced])
+                ]
+            )
+        }
+
+        static func reaction(
+            added: MoleculeType,
+            consumed: MoleculeType
+        ) -> ActionSequence {
+            let newMoleculeId = UUID()
+            return ActionSequence(
+                added: [added],
+                consumed: [consumed],
+                pendingActions: [
+                    .prepareMoleculeForDropping(type: added, id: newMoleculeId),
+                    .moveMoleculeToTopOfColumn(id: newMoleculeId),
+                    .fadeOutBottomMolecules(types: [added, consumed]),
+                    .deleteBottomMolecules(types: [added, consumed]),
+                    .slideColumnsDown(types: [added, consumed])
                 ]
             )
         }
