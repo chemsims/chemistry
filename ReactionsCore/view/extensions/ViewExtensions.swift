@@ -6,8 +6,8 @@ import SwiftUI
 
 extension View {
 
-    // TODO - replace usages of this with with Swift 5.5, since we can know conditionally
-    // apply modifiers using compiler flags
+    // TODO - replace usages of this after updating to Swift 5.5 when
+    // possible using compiler flags
     // e.g.
     // Text("Hello")
     //    #if os(iOS)

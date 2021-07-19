@@ -11,7 +11,7 @@ struct AcidAppSettings {
 
     static let maxReactionProgressMolecules = 10
 
-    static let minTitrantMolarity: CGFloat = 0.1
+    static let minTitrantMolarity: CGFloat = 0.2
     static let maxTitrantMolarity: CGFloat = 0.5
     static let initialTitrantMolarity = (minTitrantMolarity + maxTitrantMolarity) / 2
 

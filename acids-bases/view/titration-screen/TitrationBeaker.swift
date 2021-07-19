@@ -163,8 +163,8 @@ private struct TitrationBeakerTools: View {
             $0
                 .slider(
                     value: titrantMolarity,
-                    minValue: 0.1,
-                    maxValue: 0.5,
+                    minValue: AcidAppSettings.minTitrantMolarity,
+                    maxValue: AcidAppSettings.maxTitrantMolarity,
                     accessibilityLabel: "Slider for titrant molarity",
                     length: layout.buretteSliderLengthToBuretteWidth * layout.buretteSize.width
                 )

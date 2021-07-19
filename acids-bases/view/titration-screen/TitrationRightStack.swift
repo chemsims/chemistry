@@ -68,7 +68,7 @@ struct TitrationRightStack: View {
             isToggled: $model.substanceSelectionIsToggled,
             selection: $model.substance,
             height: layout.common.toggleHeight,
-            animation: nil, // TODO
+            animation: nil,
             displayString: { $0.symbol },
             label: { $0.chargedSymbol.text.label },
             disabledOptions: [],

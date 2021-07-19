@@ -42,8 +42,6 @@ enum PrimaryIon: String, CaseIterable {
 
 enum SecondaryIon: String {
 
-// old cases
-
     case Cl, A, Na, I, Br, K, Li, F, CN, HS, B
 
 

@@ -219,6 +219,7 @@
 		575C90E326629775001DCD17 /* PHMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E226629775001DCD17 /* PHMeter.swift */; };
 		575C90E52662CE6A001DCD17 /* PHMeterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E42662CE6A001DCD17 /* PHMeterTests.swift */; };
 		575C90E72662DAA1001DCD17 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E62662DAA1001DCD17 /* BlurView.swift */; };
+		575FE7DF26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */; };
 		5760536B25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */; };
 		5760537025AE519B0068B533 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
 		57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */; };
@@ -961,6 +962,7 @@
 		575C90E226629775001DCD17 /* PHMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHMeter.swift; sourceTree = "<group>"; };
 		575C90E42662CE6A001DCD17 /* PHMeterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHMeterTests.swift; sourceTree = "<group>"; };
 		575C90E62662DAA1001DCD17 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrantMolarityInputLimitsTests.swift; sourceTree = "<group>"; };
 		5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionNavigationTests.swift; sourceTree = "<group>"; };
 		5760536F25AE519B0068B533 /* NavigationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationExtensions.swift; sourceTree = "<group>"; };
 		57631763259B66CF00D7CE2C /* QuizTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTable.swift; sourceTree = "<group>"; };
@@ -1600,6 +1602,7 @@
 				5766BC98269A315D0074A04B /* TitrationReactionDefinitionTests.swift */,
 				57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */,
 				57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */,
+				575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */,
 			);
 			path = "acids-basesTests";
 			sourceTree = "<group>";
@@ -4144,6 +4147,7 @@
 				57F4673F2687421800E294BE /* NavigationExtensions.swift in Sources */,
 				570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */,
 				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,
+				575FE7DF26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift in Sources */,
 				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
 				57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */,
 				57D3262626A312C20093CD16 /* AcidOrBasePersistenceTests.swift in Sources */,

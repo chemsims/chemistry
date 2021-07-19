@@ -74,7 +74,6 @@ extension TitrationComponentState {
             strongSubstancePreparationModel.exactRows = rows
         } else if state.phase == .preparation {
             weakSubstancePreparationModel.exactRows = rows
-            // TODO rows
         }
     }
 

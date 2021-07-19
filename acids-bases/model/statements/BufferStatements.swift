@@ -409,6 +409,10 @@ struct BufferStatementsForSubstance {
         namePersistence.nameWithComma
     }
 
+    private var salt: String {
+        underlyingSubstance.saltName
+    }
+
     var instructToAddWeakAcid: [TextLine] {
         [
             """
@@ -617,11 +621,10 @@ struct BufferStatementsForSubstance {
         ]
     }
 
-    // TODO - read salt from somewhere
     var instructToAddSaltToBase: [TextLine] {
        [
         """
-        *\(secondary)X* is a salt that ionizes completely in water, letting *\(secondary)* free in \
+        *\(salt)* is a salt that ionizes completely in water, letting *\(secondary)* free in \
         the solution, the conjugate acid of *\(substance)*. In other words, add *\(secondary)X* to \
         increase the presence of *\(secondary)* in the solution
         """,

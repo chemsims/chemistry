@@ -149,8 +149,14 @@ private class Calculations {
             }
         }
 
+
+
     private lazy var hydrogenConcentration: Equation = {
         if !substance.type.isAcid {
+            // We use .atLeast because the concentration returned by 'primaryIonConcentration'
+            // will actually be 0 until the first molecule is added. So we instead just show
+            // the initial concentration. The underlying equations are not perfectly
+            // accurate, hence this discrepancy
             return
                 primaryIonConcentration.atLeast(initialConcentration(of: .hydrogen))
         }
@@ -161,6 +167,11 @@ private class Calculations {
         if !substance.type.isAcid {
             return hydrogenConcentration.map(PrimaryIonConcentration.complementConcentration)
         }
+
+        // We use .atLeast because the concentration returned by 'primaryIonConcentration'
+        // will actually be 0 until the first molecule is added. So we instead just show
+        // the initial concentration. The underlying equations are not perfectly
+        // accurate, hence this discrepancy
         return primaryIonConcentration.atLeast(initialConcentration(of: .hydroxide))
     }()
 

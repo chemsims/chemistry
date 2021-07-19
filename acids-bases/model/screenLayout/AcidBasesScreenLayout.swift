@@ -222,6 +222,7 @@ extension AcidBasesScreenLayout {
     var phChartSettings: TimeChartLayoutSettings {
         phChartSettings()
     }
+    
     func phChartSettings(minX: CGFloat = 0, maxX: CGFloat = 1) ->  TimeChartLayoutSettings {
         TimeChartLayoutSettings(
             xAxis: AxisPositionCalculations<CGFloat>(

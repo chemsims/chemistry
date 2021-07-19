@@ -42,7 +42,6 @@ class IntroScreenComponents: ObservableObject {
         substanceAdded < maxSubstanceCount
     }
 
-    // TODO - the performance of this is laggy
     func increment(count: Int) {
         guard count > 0 else {
             return

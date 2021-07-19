@@ -79,8 +79,6 @@ struct AcidOrBase: Equatable, Identifiable {
     ///     - 2: Every 2nd substance ionizes when entering liquid, while also remaining in the liquid
     let substanceAddedPerIon: PositiveInt
 
-    // TODO - make these private, or remove their conformance to String. Accessing their
-    // labels should be done via the substance, not the ion directly
     let primary: PrimaryIon
     let secondary: SecondaryIon
 

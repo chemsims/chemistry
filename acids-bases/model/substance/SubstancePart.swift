@@ -13,7 +13,6 @@ enum SubstancePart: Int, CaseIterable, Identifiable {
     }
 }
 
-// TODO - remove the titration components version
 enum ExtendedSubstancePart: EnumMappable {
     case substance, secondaryIon, hydrogen, hydroxide
 }

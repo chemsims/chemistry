@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-// TODO - use weak self in dispatch closures
 public class ReactionProgressChartViewModel<MoleculeType : EnumMappable>: ObservableObject {
 
     public init(

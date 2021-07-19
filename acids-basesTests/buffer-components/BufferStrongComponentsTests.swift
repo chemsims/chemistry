@@ -6,7 +6,6 @@ import XCTest
 import ReactionsCore
 @testable import acids_bases
 
-// TODO add tests that final concentration is correct
 class BufferStrongComponentsTests: XCTestCase {
 
     func testBarChartData() {
