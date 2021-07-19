@@ -15,7 +15,7 @@ class TitrationStrongSubstancePostEPModel: ObservableObject {
         self.titrantMolecules = BeakerMolecules(
             coords: [],
             color: previous.previous.titrant.maximumMolarityColor.color,
-            label: ""
+            label: previous.previous.titrant.accessibilityLabel
         )
         self.maxTitrant = maxTitrant
         self.reactionProgress = previous.copyReactionProgress()
@@ -220,7 +220,7 @@ private class Calculations {
             label: primaryIon.chargedSymbol.text,
             equation: barChartEquation(forIon: primaryIon),
             color: primaryIon.color,
-            accessibilityLabel: ""
+            accessibilityLabel: primaryIon.accessibilityLabel
         )
     }
 

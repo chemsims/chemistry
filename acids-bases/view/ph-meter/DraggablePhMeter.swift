@@ -54,12 +54,20 @@ struct DraggablePhMeter: View {
                 .updating($pHMeterOffset) { gesture, offset, _ in
                     let x = min(gesture.translation.width, maxXOffset)
                     offset = .init(width: x, height: gesture.translation.height)
-//                    offset = gesture.translation
                 }
-
         )
         .animation(.easeOut(duration: 0.25), value: pHMeterOffset)
         .zIndex(1)
+        .accessibility(label: Text("pH meter showing pH of beaker"))
+        .accessibility(value: Text(accessibilityValue))
+        .accessibility(addTraits: .updatesFrequently)
+    }
+
+    private var accessibilityValue: String {
+        if shouldShowLabelWhenInWater {
+            return "\(pHEquation.getY(at: pHEquationInput).str(decimals: 1))"
+        }
+        return "no value"
     }
 
     private var maxXOffset: CGFloat {

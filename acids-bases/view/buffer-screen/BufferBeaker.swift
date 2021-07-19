@@ -220,7 +220,7 @@ private struct BufferBeakerAccessibilityModifier: ViewModifier {
             $0.modifier(
 
                 // Even though we check for nil, don't force unwrap optionals, as it can still fail.
-                BeakerAccessibilityAddMultipleCountActions<BufferScreenViewModel.Phase>(
+                BeakerAccessibilityAddMultipleCountActions(
                     actionName: { count in
                         "Add \(count) molecules of \(currentLabel ?? "") to the beaker"
                     },

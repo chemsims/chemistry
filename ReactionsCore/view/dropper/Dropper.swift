@@ -6,6 +6,12 @@ import SwiftUI
 
 public struct Dropper: View {
 
+    /// Creates a new Dropper
+    ///
+    /// - Parameters:
+    ///     - fillPercent: The amount of substance in the dropper, as a fraction
+    ///     of the available height, between 0 and 1.
+    ///
     public init(
         style: Dropper.Style = .init(),
         isActive: Bool,
@@ -38,6 +44,13 @@ public struct Dropper: View {
             )
         }
         .aspectRatio(Dropper.aspectRatio, contentMode: .fit)
+        .accessibility(value: Text(accessibilityValue))
+        .accessibility(addTraits: .updatesFrequently)
+    }
+
+    private var accessibilityValue: String {
+        let percent = tubeFill == nil ? 0 : fillPercent
+        return "\(percent.percentage) full"
     }
 }
 

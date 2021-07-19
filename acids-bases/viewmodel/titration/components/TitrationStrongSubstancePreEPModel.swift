@@ -257,7 +257,7 @@ private class TitrationStrongSubstancePreEPModelCalculations {
             label: primaryIon.chargedSymbol.text,
             equation: barChartEquation(forIon: primaryIon),
             color: primaryIon.color,
-            accessibilityLabel: "" // TODO
+            accessibilityLabel: primaryIon.accessibilityLabel
         )
     }
 

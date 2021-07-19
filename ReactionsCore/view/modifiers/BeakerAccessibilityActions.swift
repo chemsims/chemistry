@@ -5,7 +5,7 @@
 import SwiftUI
 
 /// Adds an accessibility action to run a closure using an integer input twice.
-public struct BeakerAccessibilityAddMultipleCountActions<Molecule>: ViewModifier {
+public struct BeakerAccessibilityAddMultipleCountActions: ViewModifier {
 
     public init(
         actionName: @escaping (Int) -> String,
@@ -31,14 +31,14 @@ public struct BeakerAccessibilityAddMultipleCountActions<Molecule>: ViewModifier
     }
 
     private func modifier(_ count: Int) -> some ViewModifier {
-        BeakerAccessibilityAddSingleCountActions<Any>(
+        BeakerAccessibilityAddSingleCountActions(
             actionName: actionName(count),
             doAdd: { doAdd(count) }
         )
     }
 }
 
-private struct BeakerAccessibilityAddSingleCountActions<Molecule>: ViewModifier {
+private struct BeakerAccessibilityAddSingleCountActions: ViewModifier {
 
     let actionName: String
     let doAdd: () -> Void

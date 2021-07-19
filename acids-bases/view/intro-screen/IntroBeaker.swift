@@ -113,8 +113,6 @@ private struct IntroBeakerContainers: View {
             rows: model.rows,
             beakerDistanceFromBottomOfScreen: 0
         )
-        .accessibility(label: Text("pH meter showing pH of beaker"))
-        .accessibility(value: Text("\(pHEquation.getY(at: 0).str(decimals: 1))"))
     }
 
     private func container(
@@ -194,7 +192,7 @@ struct AddMoleculesAccessibilityModifier: ViewModifier {
                 $0.modifier(
 
                     // Even though we check for nil, don't force unwrap optionals, as it can still fail.
-                    BeakerAccessibilityAddMultipleCountActions<AcidOrBaseType>(
+                    BeakerAccessibilityAddMultipleCountActions(
                         actionName: { count in
                             "Add \(count) molecules of \(label ?? "") to the beaker"
                         },

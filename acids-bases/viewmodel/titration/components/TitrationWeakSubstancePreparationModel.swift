@@ -24,7 +24,7 @@ class TitrationWeakSubstancePreparationModel: ObservableObject {
         self.substanceCoords = BeakerMolecules(
             coords: [],
             color: substance.color,
-            label: substance.chargedSymbol.symbol.label
+            label: substance.chargedSymbol.text.label
         )
         self.reactionProgressModel = Self.initialReactionProgress(
             substance: substance,
@@ -233,7 +233,7 @@ private class Calculations {
     var equationData: TitrationEquationData {
             TitrationEquationData(
                 substance: substance,
-                titrant: "KOH", // TODO
+                titrant: titrant,
                 moles: moles,
                 volume: volume.map { ConstantEquation(value: $0) },
                 molarity: molarity,
@@ -366,25 +366,25 @@ private class Calculations {
                 label: PrimaryIon.hydrogen.chargedSymbol.text,
                 equation: hydrogenBarEquation,
                 color: RGB.hydrogen.color,
-                accessibilityLabel: ""
+                accessibilityLabel: PrimaryIon.hydrogen.accessibilityLabel
             )
             case .hydroxide: return BarChartData(
                 label: PrimaryIon.hydroxide.chargedSymbol.text,
                 equation: hydroxideBarEquation,
                 color: RGB.hydroxide.color,
-                accessibilityLabel: ""
+                accessibilityLabel: PrimaryIon.hydroxide.accessibilityLabel
             )
             case .secondaryIon: return BarChartData(
                 label: substance.chargedSymbol(ofPart: .secondaryIon).text,
                 equation: ionBarChartEquation,
                 color: substance.color(ofPart: .secondaryIon),
-                accessibilityLabel: ""
+                accessibilityLabel: substance.accessibilityLabel(ofPart: .secondaryIon)
             )
             case .substance: return BarChartData(
                 label: substance.chargedSymbol(ofPart: .substance).text,
                 equation: substanceBarChartEquation,
                 color: substance.color,
-                accessibilityLabel: ""
+                accessibilityLabel: substance.accessibilityLabel(ofPart: .substance)
             )
             }
         }

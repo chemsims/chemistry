@@ -24,11 +24,14 @@ struct TitrationMacroBeaker: View {
         VStack(alignment: .trailing, spacing: 0) {
             HStack(alignment: .bottom, spacing: 0) {
                 slider
-                if model.beakerState == .macroscopic {
-                    macroscopicBeaker
-                } else {
-                    microscopicBeaker
+                Group {
+                    if model.beakerState == .macroscopic {
+                        macroscopicBeaker
+                    } else {
+                        microscopicBeaker
+                    }
                 }
+                .modifier(TitrationBeakerActionModifier(model: model))
             }
             toggle
         }
@@ -233,6 +236,65 @@ private struct TitrationFilledBeaker: View {
 
     private var componentState: TitrationComponentState.State {
         model.components.state
+    }
+}
+
+private struct TitrationBeakerActionModifier: ViewModifier {
+
+    @ObservedObject var model: TitrationViewModel
+
+    func body(content: Content) -> some View {
+        content
+            .modifyIf(model.inputState == .addSubstance) {
+                $0.addSubstanceAction(model: model)
+            }
+            .modifyIf(model.inputState == .addIndicator) {
+                $0.addIndicatorAction(model: model)
+            }
+            .modifyIf(model.inputState == .addTitrant) {
+                $0.addTitrantAction(model: model)
+            }
+    }
+}
+
+private extension View {
+    func addIndicatorAction(model: TitrationViewModel) -> some View {
+        self.modifier(
+            BeakerAccessibilityAddMultipleCountActions(
+                actionName: { "Add \($0) indicator molecule to the beaker" },
+                doAdd: model.accessibilityAddIndicator,
+                firstCount: 5,
+                secondCount: 20
+            )
+        )
+    }
+}
+
+private extension View {
+    func addTitrantAction(model: TitrationViewModel) -> some View {
+        self.modifier(
+            BeakerAccessibilityAddMultipleCountActions(
+                actionName: { "Add \($0) titrant molecules to the beaker" },
+                doAdd: model.incrementTitrant,
+                firstCount: 1,
+                secondCount: 20
+            )
+        )
+    }
+}
+
+private extension View {
+    func addSubstanceAction(model: TitrationViewModel) -> some View {
+        let addSubstance = model.components.state.substance
+        let name = model.substance.symbol.label
+        return self.modifier(
+            BeakerAccessibilityAddMultipleCountActions(
+                actionName: { "Add \($0) \(name) molecules to the beaker" },
+                doAdd: { model.increment(substance: addSubstance, count: $0) },
+                firstCount: 5,
+                secondCount: 15
+            )
+        )
     }
 }
 

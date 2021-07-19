@@ -35,7 +35,7 @@ struct TitrationComponentState {
         let weakPreEPModel = TitrationWeakSubstancePreEPModel(previous: weakPreparationModel)
         let weakPostEPModel = TitrationWeakSubstancePostEPModel(previous: weakPreEPModel)
 
-        self.state = State(substance: .weakAcid, phase: .preparation)
+        self.state = State(substance: .strongAcid, phase: .preparation)
         self.initialCols = cols
         self.initialRows = rows
         self.settings = settings

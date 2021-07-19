@@ -265,25 +265,25 @@ private class Calculations {
                 label: PrimaryIon.hydrogen.chargedSymbol.text,
                 equation: barChartEquation(forPart: .hydrogen),
                 color: RGB.hydrogen.color,
-                accessibilityLabel: ""
+                accessibilityLabel: PrimaryIon.hydrogen.accessibilityLabel
             )
             case .hydroxide: return BarChartData(
                 label: PrimaryIon.hydroxide.chargedSymbol.text,
                 equation: barChartEquation(forPart: .hydroxide),
                 color: RGB.hydroxide.color,
-                accessibilityLabel: ""
+                accessibilityLabel: PrimaryIon.hydroxide.accessibilityLabel
             )
             case .secondaryIon: return BarChartData(
                 label: substance.chargedSymbol(ofPart: .secondaryIon).text,
                 equation: barChartEquation(forPart: .secondaryIon),
                 color: substance.color(ofPart: .secondaryIon),
-                accessibilityLabel: ""
+                accessibilityLabel: substance.accessibilityLabel(ofPart: .secondaryIon)
             )
             case .substance: return BarChartData(
                 label: substance.chargedSymbol(ofPart: .substance).text,
                 equation: barChartEquation(forPart: .substance),
                 color: substance.color(ofPart: .substance),
-                accessibilityLabel: ""
+                accessibilityLabel: substance.accessibilityLabel(ofPart: .substance)
             )
             }
         }

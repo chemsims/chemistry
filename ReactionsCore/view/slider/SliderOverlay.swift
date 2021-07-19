@@ -12,6 +12,7 @@ extension View {
     ///     - value: Binding of the value passed to the slider.
     ///     - minValue: Minimum value of the slider.
     ///     - maxValue: Maximum value of the slider.
+    ///     - accessibilityLabel: Accessibility label of the slider
     ///     - position: Position of the slider beside the element.
     ///     - length: Length of the slider if provided. When not provided, the size of the element along the main slider
     ///     axis is used instead. Note that this length if used for the slider itself, while the tooltip will exceed this length.
@@ -24,6 +25,7 @@ extension View {
         value: Binding<CGFloat>,
         minValue: CGFloat,
         maxValue: CGFloat,
+        accessibilityLabel: String,
         position: SliderOverlay.Position = .top,
         length: CGFloat? = nil,
         includeFill: Bool = true,
@@ -37,6 +39,7 @@ extension View {
                 value: value,
                 minValue: minValue,
                 maxValue: maxValue,
+                accessibilityLabel: accessibilityLabel,
                 length: length,
                 position: position,
                 background: background,
@@ -54,6 +57,7 @@ struct SliderOverlayModifier: ViewModifier {
     @Binding var value: CGFloat
     let minValue: CGFloat
     let maxValue: CGFloat
+    let accessibilityLabel: String
     let length: CGFloat?
     let position: SliderOverlay.Position
     let background: Color
@@ -76,6 +80,7 @@ struct SliderOverlayModifier: ViewModifier {
                 useHaptics: useHaptics,
                 hasShadow: hasShadow
             )
+            .accessibility(label: Text(accessibilityLabel))
         )
     }
 }
@@ -297,6 +302,7 @@ struct SliderOverlay_Previews: PreviewProvider {
                     value: $value,
                     minValue: 0.5,
                     maxValue: 1,
+                    accessibilityLabel: "",
                     position: position
                 )
         }

@@ -19,7 +19,7 @@ public struct BarChartData {
             color: color,
             accessibilityLabel: accessibilityLabel,
             initialValue: initialValue,
-            accessibilityValue: { $0.str(decimals: 2) }
+            accessibilityValue: { equation.getY(at: $0).str(decimals: 2) }
         )
     }
 
@@ -37,6 +37,19 @@ public struct BarChartData {
         self.initialValue = initialValue
         self.accessibilityLabel = accessibilityLabel
         self.accessibilityValue = accessibilityValue
+    }
+
+    public func withAccessibilityValue(
+        _ newAccessibilityValue: @escaping (CGFloat) -> String
+    ) -> BarChartData {
+        BarChartData(
+            label: self.label,
+            equation: self.equation,
+            color: self.color,
+            accessibilityLabel: self.accessibilityLabel,
+            initialValue: self.initialValue,
+            accessibilityValue: newAccessibilityValue
+        )
     }
 
     public let label: TextLine

@@ -34,7 +34,7 @@ class TitrationViewModel: ObservableObject {
         self.dropperEmitModel = MoleculeEmittingViewModel(
             canAddMolecule: { [weak self] in self?.canAddIndicator ?? false },
             didEmitMolecules: { [weak self] in self?.didEmitIndicator(count: $0) },
-            doAddMolecule: { [weak self] in self?.addedIndicator(count: $0) }
+            doAddMolecule: { [weak self] in self?.incrementIndicator(count: $0) }
         )
         self.buretteEmitModel = MoleculeEmittingViewModel(
             canAddMolecule: { [weak self] in self?.canAddTitrant ?? false },
@@ -172,11 +172,17 @@ extension TitrationViewModel {
 
     var dropperFillPercent: CGFloat {
         LinearEquation(
-            x1: 1,
+            x1: 0,
             y1: 1,
             x2: CGFloat(maxIndicator),
             y2: 0
         ).getY(at: CGFloat(indicatorEmitted))
+    }
+
+    // Adds indicator from an accessibility action
+    func accessibilityAddIndicator(count: Int) {
+        didEmitIndicator(count: count)
+        incrementIndicator(count: count)
     }
 
     private func didEmitIndicator(count: Int) {
@@ -192,8 +198,7 @@ extension TitrationViewModel {
         }
     }
 
-
-    private func addedIndicator(count: Int) {
+    private func incrementIndicator(count: Int) {
         let maxToAdd = min(remainingIndicatorAvailable, count)
         guard inputState == .addIndicator, maxToAdd > 0 else {
             return

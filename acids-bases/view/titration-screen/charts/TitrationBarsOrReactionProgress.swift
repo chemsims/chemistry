@@ -125,10 +125,20 @@ private struct TitrationBarChart: View {
 
     var body: some View {
         BarChart(
-            data: data,
+            data: dataWithUpdatedAccessibility,
             time: equationInput,
             settings: layout.common.barChartSettings
         )
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text("Bar chart showing concentration of molecules as a percentage of y axis height"))
+    }
+
+    private var dataWithUpdatedAccessibility: [BarChartData] {
+        data.map { data in
+            data.withAccessibilityValue { input in
+                data.equation.getY(at: input).percentage
+            }
+        }
     }
 
     private var data: [BarChartData] {

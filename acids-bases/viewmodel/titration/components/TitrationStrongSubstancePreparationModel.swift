@@ -26,7 +26,7 @@ class TitrationStrongSubstancePreparationModel: ObservableObject {
         self.primaryIonCoords = BeakerMolecules(
             coords: [],
             color: substance.primary.color,
-            label: "" // TODO
+            label: substance.accessibilityLabel(ofPart: .primaryIon)
         )
         self.reactionProgress = ReactionProgressChartViewModel(
             molecules: .init {
@@ -309,7 +309,7 @@ private class Calculations {
             label: primaryIon.chargedSymbol.text,
             equation: barChartHeightEquation.value(for: primaryIon),
             color: primaryIon.color,
-            accessibilityLabel: "" // TODO
+            accessibilityLabel: primaryIon.accessibilityLabel
         )
     }
 

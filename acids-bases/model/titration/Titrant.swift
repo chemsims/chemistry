@@ -10,6 +10,10 @@ struct Titrant {
 
     /// Color of the titrant when it is at its maximum molarity
     let maximumMolarityColor: RGB
+
+    var accessibilityLabel: String {
+        Labelling.stringToLabel(name)
+    }
 }
 
 extension Titrant {

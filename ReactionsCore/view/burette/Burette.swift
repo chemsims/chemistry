@@ -9,17 +9,20 @@ public struct Burette: View {
         fill: Color?,
         isActive: Bool,
         onTap: @escaping (Burette.TapSpeed) -> Void,
+        accessibilityActionName: @escaping (Burette.TapSpeed) -> String,
         style: Burette.Style = .init()
     ) {
         self.fill = fill
         self.onTap = onTap
         self.isActive = isActive
+        self.accessibilityActionName = accessibilityActionName
         self.style = style
     }
 
     let fill: Color?
     let isActive: Bool
     let onTap: (TapSpeed) -> Void
+    let accessibilityActionName: (TapSpeed) -> String
     let style: Style
 
     public var body: some View {
@@ -32,6 +35,13 @@ public struct Burette: View {
                 geometry: Geometry(width: geo.size.width, height: geo.size.height)
             )
         }
+        .accessibility(label: Text("Burette"))
+        .modifyIf(isActive) {
+            $0
+                .accessibilityAction(named: Text(accessibilityActionName(.slow)), { onTap(.slow) })
+                .accessibilityAction(named: Text(accessibilityActionName(.fast)), { onTap(.fast) })
+        }
+        .disabled(!isActive)
     }
 
     public enum TapSpeed {
@@ -350,6 +360,7 @@ struct Burette_Previews: PreviewProvider {
                             slowTaps += 1
                         }
                     },
+                    accessibilityActionName: { _ in "" },
                     style: .init()
                 )
                 .frame(width: 350, height: 600)

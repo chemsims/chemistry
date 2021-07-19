@@ -16,6 +16,14 @@ enum PrimaryIon: String, CaseIterable {
         }
     }
 
+    var accessibilityLabel: String {
+        switch self {
+        case .hydrogen: return Labelling.stringToLabel("H^+^")
+        case .hydroxide: return Labelling.stringToLabel("OH^-^")
+        }
+
+    }
+
     var rgb: RGB {
         switch self {
         case .hydrogen: return .hydrogen

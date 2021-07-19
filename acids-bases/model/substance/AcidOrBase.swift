@@ -215,6 +215,10 @@ extension AcidOrBase {
         }
     }
 
+    func accessibilityLabel(ofPart part: SubstancePart) -> String {
+        chargedSymbol(ofPart: part).text.label
+    }
+
     var chargedSymbol: ChargedSymbol {
         if type == .weakBase {
             return ChargedSymbol(symbol: TextLine(secondary.rawValue), charge: .negative)

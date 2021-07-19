@@ -16,11 +16,13 @@ struct TitrationBeaker: View {
                 layout: layout,
                 model: model
             )
+            .accessibility(sortPriority: 1)
 
             TitrationBeakerTools(
                 layout: layout,
                 model: model
             )
+            .accessibility(sortPriority: 2)
         }
     }
 }
@@ -73,16 +75,21 @@ private struct TitrationBeakerTools: View {
                 molecules
 
                 phMeter
+                    .accessibility(sortPriority: 5)
             }
             .colorMultiply(model.highlights.colorMultiply(for: nil))
 
             dropper
+                .accessibility(sortPriority: 4)
 
             burette
+                .accessibility(sortPriority: 3)
 
             container
+                .accessibility(sortPriority: 2)
         }
         .frame(width: layout.toolStackWidth)
+        .accessibilityElement(children: .contain)
     }
 
     private var molecules: some View {
@@ -128,6 +135,9 @@ private struct TitrationBeakerTools: View {
         .frame(size: layout.dropperSize)
         .colorMultiply(model.highlights.colorMultiply(for: .indicator))
         .position(layout.dropperPosition)
+        .accessibilityElement(children: .combine)
+        .accessibility(label: Text("Indicator dropper"))
+        .accessibility(hint: Text("Adds indicator into the beaker"))
     }
 
     private var burette: some View {
@@ -141,6 +151,11 @@ private struct TitrationBeakerTools: View {
                     at: layout.buretteMoleculePosition,
                     bottomY: layout.common.topOfWaterPosition(rows: model.rows) + layout.buretteMoleculeSize
                 )
+            },
+            accessibilityActionName: { speed in
+                let amount = speed == .fast ? buretteFastEmitAmount : buretteEmitAmount
+                let molecules = amount == 1 ? "molecule" : "molecules"
+                return "Add \(amount) titrant \(molecules) to the beaker"
             }
         )
         .frame(size: layout.buretteSize)
@@ -150,6 +165,7 @@ private struct TitrationBeakerTools: View {
                     value: titrantMolarity,
                     minValue: 0.1,
                     maxValue: 0.5,
+                    accessibilityLabel: "Slider for titrant molarity",
                     length: layout.buretteSliderLengthToBuretteWidth * layout.buretteSize.width
                 )
         }
