@@ -50,7 +50,16 @@ struct IntroBeaker: View {
         )
     }
 
+    @ViewBuilder
     private var beaker: some View {
+        if UIAccessibility.isVoiceOverRunning {
+            beaker(AddMoleculesAccessibilityModifier(model: model))
+        } else {
+            beaker(IdentityViewModifier())
+        }
+    }
+
+    private func beaker<V: ViewModifier>(_ modifier: V) -> some View {
         VStack {
             Spacer()
             AdjustableFluidBeaker(
@@ -62,9 +71,7 @@ struct IntroBeaker: View {
                 canSetLevel: model.inputState == .setWaterLevel,
                 beakerColorMultiply: model.highlights.colorMultiply(for: nil),
                 sliderColorMultiply: model.highlights.colorMultiply(for: .waterSlider),
-                beakerModifier: AddMoleculesAccessibilityModifier(
-                    model: model
-                )
+                beakerModifier: modifier
             )
         }
         .padding(.bottom, layout.common.beakerBottomPadding)

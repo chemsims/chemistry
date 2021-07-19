@@ -219,7 +219,7 @@ private struct BufferMoleculeContainers: View {
     }
 }
 
-private struct IdentityViewModifier: ViewModifier {
+struct IdentityViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
     }

@@ -25,11 +25,20 @@ struct TitrationMacroBeaker: View {
             HStack(alignment: .bottom, spacing: 0) {
                 slider
                 if model.beakerState == .macroscopic {
-                    macroscopicBeaker
-                        .modifier(TitrationBeakerActionModifier(model: model))
+                    if UIAccessibility.isVoiceOverRunning {
+                        macroscopicBeaker
+                            .modifier(TitrationBeakerActionModifier(model: model))
+                    } else {
+                        macroscopicBeaker
+                    }
+
                 } else {
-                    microscopicBeaker
-                        .modifier(TitrationBeakerActionModifier(model: model))
+                    if UIAccessibility.isVoiceOverRunning {
+                        microscopicBeaker
+                            .modifier(TitrationBeakerActionModifier(model: model))
+                    } else {
+                        microscopicBeaker
+                    }
                 }
             }
             toggle
