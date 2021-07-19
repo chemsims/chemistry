@@ -42,8 +42,7 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
     let injector: AcidAppInjector
 
     func deferCanSelect(of screen: AcidAppScreen) -> DeferCanSelect<AcidAppScreen>? {
-        screen == .introduction ? nil : .canSelect(other: .introduction)
-//       nil
+       nil
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: AcidAppScreen) -> Bool {

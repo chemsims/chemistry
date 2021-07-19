@@ -52,7 +52,7 @@ class InMemoryAcidAppInjector: AcidAppInjector {
 
 class ProductionAcidAppInjector: AcidAppInjector {
 
-    // Note: This is stored in-memory in production too as we don't need to store it on disk
+    // Note: This is stored in-memory in production as we don't need to store it on disk
     let titrationPersistence: TitrationInputPersistence =
         InMemoryTitrationInputPersistence()
 
