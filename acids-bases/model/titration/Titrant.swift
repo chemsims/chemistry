@@ -11,6 +11,8 @@ struct Titrant {
     /// Color of the titrant when it is at its maximum molarity
     let maximumMolarityColor: RGB
 
+    let primaryIonColor: RGB
+
     var accessibilityLabel: String {
         Labelling.stringToLabel(name)
     }
@@ -19,11 +21,13 @@ struct Titrant {
 extension Titrant {
     static let potassiumHydroxide = Titrant(
         name: "KOH",
-        maximumMolarityColor: .hydroxide
+        maximumMolarityColor: .potassiumHydroxide,
+        primaryIonColor: .hydroxide
     )
 
     static let hydrogenChloride = Titrant(
         name: "HCl",
-        maximumMolarityColor: .hydrogen
+        maximumMolarityColor: .hydrogenChloride,
+        primaryIonColor: .hydrogen
     )
 }

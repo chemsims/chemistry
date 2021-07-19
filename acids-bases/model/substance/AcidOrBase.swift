@@ -123,7 +123,7 @@ extension AcidOrBase {
     /// Returns a strong acid substance
     static func strongAcid(
         secondaryIon: SecondaryIon,
-        color: Color,
+        color: RGB,
         kA: CGFloat
     ) -> AcidOrBase {
         AcidOrBase(
@@ -131,7 +131,7 @@ extension AcidOrBase {
             primary: .hydrogen,
             secondary: secondaryIon,
             concentrationAtMaxSubstance: 0.1,
-            color: color,
+            color: color.color,
             kA: kA
         )
     }
@@ -139,7 +139,7 @@ extension AcidOrBase {
     /// Returns a strong base substance
     static func strongBase(
         secondaryIon: SecondaryIon,
-        color: Color,
+        color: RGB,
         kB: CGFloat
     ) -> AcidOrBase {
         AcidOrBase(
@@ -147,7 +147,7 @@ extension AcidOrBase {
             primary: .hydroxide,
             secondary: secondaryIon,
             concentrationAtMaxSubstance: 0.1,
-            color: color,
+            color: color.color,
             kB: kB
         )
     }
@@ -156,7 +156,7 @@ extension AcidOrBase {
     static func weakAcid(
         secondaryIon: SecondaryIon,
         substanceAddedPerIon: NonZeroPositiveInt,
-        color: Color,
+        color: RGB,
         kA: CGFloat
     ) -> AcidOrBase {
         AcidOrBase(
@@ -164,7 +164,7 @@ extension AcidOrBase {
             primary: .hydrogen,
             secondary: secondaryIon,
             concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value),
-            color: color,
+            color: color.color,
             kA: kA
         )
     }
@@ -173,7 +173,7 @@ extension AcidOrBase {
     static func weakBase(
         secondaryIon: SecondaryIon,
         substanceAddedPerIon: NonZeroPositiveInt,
-        color: Color,
+        color: RGB,
         kB: CGFloat
     ) -> AcidOrBase {
         AcidOrBase(
@@ -181,7 +181,7 @@ extension AcidOrBase {
             primary: .hydroxide,
             secondary: secondaryIon,
             concentrationAtMaxSubstance: 0.1 / CGFloat(substanceAddedPerIon.value),
-            color: color,
+            color: color.color,
             kB: kB
         )
     }
@@ -414,28 +414,28 @@ extension AcidOrBase {
     ]
 
     static let hydrogenChloride =
-        AcidOrBase.strongAcid(secondaryIon: .Cl, color: .blue, kA: 0)
+        AcidOrBase.strongAcid(secondaryIon: .Cl, color: .hydrogenChloride, kA: 0)
 
     static let hydrogenIodide =
-        AcidOrBase.strongAcid(secondaryIon: .I, color: .red, kA: 0)
+        AcidOrBase.strongAcid(secondaryIon: .I, color: .hydrogenIodide, kA: 0)
 
     static let hydrogenBromide =
-        AcidOrBase.strongAcid(secondaryIon: .Br, color: .purple, kA: 0)
+        AcidOrBase.strongAcid(secondaryIon: .Br, color: .hydrogenBromide, kA: 0)
 
     static let potassiumHydroxide =
-        AcidOrBase.strongBase(secondaryIon: .K, color: .green, kB: 0)
+        AcidOrBase.strongBase(secondaryIon: .K, color: .potassiumHydroxide, kB: 0)
 
     static let lithiumHydroxide =
-        AcidOrBase.strongBase(secondaryIon: .Li, color: .black, kB: 0)
+        AcidOrBase.strongBase(secondaryIon: .Li, color: .lithiumHydroxide, kB: 0)
 
     static let sodiumHydroxide =
-        AcidOrBase.strongBase(secondaryIon: .Na, color: .orange, kB: 0)
+        AcidOrBase.strongBase(secondaryIon: .Na, color: .sodiumHydroxide, kB: 0)
 
     static let weakAcidHA =
         AcidOrBase.weakAcid(
             secondaryIon: .A,
             substanceAddedPerIon: NonZeroPositiveInt(2)!,
-            color: .purple,
+            color: .weakAcidHA,
             kA: 7.3e-5
         )
 
@@ -443,7 +443,7 @@ extension AcidOrBase {
         AcidOrBase.weakAcid(
             secondaryIon: .F,
             substanceAddedPerIon: NonZeroPositiveInt(3)!,
-            color: .gray,
+            color: .weakAcidHF,
             kA: 4.5e-4
         )
 
@@ -451,7 +451,7 @@ extension AcidOrBase {
         AcidOrBase.weakAcid(
             secondaryIon: .CN,
             substanceAddedPerIon: NonZeroPositiveInt(4)!,
-            color: .black,
+            color: .hydrogenCyanide,
             kA: 9e-5
         )
 
@@ -459,7 +459,7 @@ extension AcidOrBase {
         AcidOrBase.weakBase(
             secondaryIon: .B,
             substanceAddedPerIon: NonZeroPositiveInt(3)!,
-            color: .orange,
+            color: .weakBaseB,
             kB: 4e-5
         )
 
@@ -467,7 +467,7 @@ extension AcidOrBase {
         AcidOrBase.weakBase(
             secondaryIon: .F,
             substanceAddedPerIon: NonZeroPositiveInt(4)!,
-            color: .yellow,
+            color: .weakBaseF,
             kB: 1.3e-5
         )
 
@@ -475,7 +475,7 @@ extension AcidOrBase {
         AcidOrBase.weakBase(
             secondaryIon: .HS,
             substanceAddedPerIon: NonZeroPositiveInt(2)!,
-            color: .orange,
+            color: .weakBaseHS,
             kB: 1e-3
         )
 }

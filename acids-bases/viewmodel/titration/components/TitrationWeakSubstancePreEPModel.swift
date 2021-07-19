@@ -236,7 +236,7 @@ extension TitrationWeakSubstancePreEPModel {
     }
 
     private var reactionProgressAddingMolecule: ExtendedSubstancePart {
-        substance.primary == .hydrogen ? .hydrogen : .hydroxide
+        substance.primary == .hydrogen ? .hydroxide : .hydrogen
     }
 }
 

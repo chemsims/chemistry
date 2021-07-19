@@ -189,22 +189,21 @@ struct AddMoleculesAccessibilityModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .modifyIf(inputIsNotNil) {
-                $0.modifier(
+            .modifyIf(inputIsNotNil, modifier: modifier)
+    }
 
-                    // Even though we check for nil, don't force unwrap optionals, as it can still fail.
-                    BeakerAccessibilityAddMultipleCountActions(
-                        actionName: { count in
-                            "Add \(count) molecules of \(label ?? "") to the beaker"
-                        },
-                        doAdd: { count in
-                            model.increment(type: currentInputType ?? .strongAcid, count: count)
-                        },
-                        firstCount: firstCount,
-                        secondCount: secondCount
-                    )
-                )
-            }
+    // Even though we check for nil, don't force unwrap optionals, as it can still fail.
+    private var modifier: some ViewModifier {
+        BeakerAccessibilityAddMultipleCountActions(
+            actionName: { count in
+                "Add \(count) molecules of \(label ?? "") to the beaker"
+            },
+            doAdd: { count in
+                model.increment(type: currentInputType ?? .strongAcid, count: count)
+            },
+            firstCount: firstCount,
+            secondCount: secondCount
+        )
     }
 
     private var inputIsNotNil: Bool {

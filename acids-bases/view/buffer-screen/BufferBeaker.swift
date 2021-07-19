@@ -73,6 +73,18 @@ private struct BufferBeakerWithMolecules: View {
     @ObservedObject var strongSubstanceReaction: ReactingBeakerViewModel<SubstancePart>
 
     var body: some View {
+        // We don't pass in a beaker accessibility action modifier when voice over
+        // is not running, as it causes the beaker to transition when the
+        // input state changes.
+        // (i.e. it is removed & added to the view hierarchy)
+        if UIAccessibility.isVoiceOverRunning {
+            beaker(BufferBeakerAccessibilityModifier(model: model))
+        } else {
+            beaker(IdentityViewModifier())
+        }
+    }
+
+    private func beaker<V: ViewModifier>(_ modifier: V) -> some View {
         AdjustableFluidBeaker(
             rows: $model.rows,
             molecules: molecules,
@@ -82,9 +94,7 @@ private struct BufferBeakerWithMolecules: View {
             canSetLevel: model.input == .setWaterLevel,
             beakerColorMultiply: model.highlights.colorMultiply(for: nil),
             sliderColorMultiply: model.highlights.colorMultiply(for: .waterSlider),
-            beakerModifier: BufferBeakerAccessibilityModifier(
-                model: model
-            )
+            beakerModifier: modifier
         )
     }
 
@@ -206,6 +216,12 @@ private struct BufferMoleculeContainers: View {
 
     private var containerAreaWidth: CGFloat {
         layout.common.beakerWidth
+    }
+}
+
+private struct IdentityViewModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
     }
 }
 

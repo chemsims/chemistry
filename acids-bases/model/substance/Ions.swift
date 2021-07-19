@@ -44,22 +44,20 @@ enum SecondaryIon: String {
 
     case Cl, A, Na, I, Br, K, Li, F, CN, HS, B
 
-
-    // TODO use color names which correspond with symbol names
     var rgb: RGB {
         switch self {
-        case .Cl: return RGB.moleculeB
-        case .I: return RGB.moleculeD
-        case .Li: return RGB.moleculeI
-        case .F: return RGB.indicator
-        case .CN: return RGB.hydrogenDarker
-        case .HS: return RGB.moleculeA
+        case .Cl: return .chlorine
+        case .I: return .iodine
+        case .Li: return .lithium
+        case .F: return .ionF
+        case .CN: return .cyanide
+        case .HS: return .ionHS
 
-        case .A: return RGB.moleculeA
-        case .Br: return RGB.moleculeC
-        case .K: return RGB.moleculeD
-        case .Na: return RGB.moleculeE
-        case .B: return RGB.moleculeG
+        case .A: return .ionA
+        case .Br: return .bromine
+        case .K: return .potassium
+        case .Na: return .sodium
+        case .B: return .ionB
         }
     }
 

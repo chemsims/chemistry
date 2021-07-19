@@ -191,6 +191,8 @@ private class TitrationScreenProvider: ScreenProvider {
             titrationPersistence: titrationPersistence,
             namePersistence: namePersistence
         )
+        self.model.navigation.nextScreen = nextScreen
+        self.model.navigation.prevScreen = prevScreen
     }
 
     private let model: TitrationViewModel
