@@ -128,7 +128,7 @@ private struct TitrationMacroscopicBeaker: View {
 
     var body: some View {
         FillableBeaker(
-            waterColor: color.getRgb(at: equationInput).color,
+            waterColor: color.getRgb(at: colorInputFraction).color,
             waterHeight: layout.waterHeight(forRows: model.rows),
             highlightBeaker: true,
             settings: .init(beakerWidth: layout.common.beakerWidth)
@@ -138,14 +138,36 @@ private struct TitrationMacroscopicBeaker: View {
         .accessibility(label: Text("Macroscopic view of liquid in beaker which changes color"))
         .accessibility(value: Text(accessibilityValue))
         .accessibility(addTraits: .updatesFrequently)
+        .transition(.identity)
     }
 
     private var color: RGBEquation {
         LinearRGBEquation(
             initialX: 0,
-            finalX: equationMaxInput,
+            finalX: 1,
             initialColor: model.macroBeakerState.startColor,
             finalColor: model.macroBeakerState.endColor
+        )
+    }
+
+    private var colorInputFraction: CGFloat {
+        colorInputFractionEquation.getY(at: equationInput)
+    }
+
+    private var colorInputFractionEquation: Equation {
+        if model.macroBeakerState == .indicator {
+            return LinearEquation(x1: 0, y1: 0, x2: equationMaxInput, y2: 1)
+        }
+
+        let settings = AcidAppSettings.MacroBeaker.self
+        let finalTitrantToAdd = settings.titrantToAddDuringSharpColorChange
+        return SwitchingEquation.linear(
+            initial: .zero,
+            mid: CGPoint(
+                x: equationMaxInput - CGFloat(finalTitrantToAdd),
+                y: settings.colorTurningPointProgress
+            ),
+            final: CGPoint(x: equationMaxInput, y: 1)
         )
     }
 
@@ -166,17 +188,16 @@ private struct TitrationMacroscopicBeaker: View {
     }
 
     private var accessibilityValue: String {
-        let inputFraction = equationInput / equationMaxInput
         let start = "\(model.macroBeakerState.startColorName)"
         let end = "\(model.macroBeakerState.endColorName)"
 
-        if inputFraction == 0 {
+        if colorInputFraction == 0 {
             return start
-        } else if inputFraction == 1 {
+        } else if colorInputFraction == 1 {
             return end
         }
 
-        let percentage = inputFraction.percentage
+        let percentage = colorInputFraction.percentage
         return "\(percentage) between \(start) and \(end)"
     }
 }

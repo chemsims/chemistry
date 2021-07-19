@@ -113,6 +113,9 @@ extension TitrationViewModel {
 // MARK: Adding molecules
 extension TitrationViewModel {
     func increment(substance: TitrationComponentState.Substance, count: Int) {
+        if highlights.elements == [.container] {
+            highlights.clear()
+        }
         guard substance == components.state.substance,
               inputState == .addSubstance else {
             return
@@ -199,6 +202,9 @@ extension TitrationViewModel {
     }
 
     private func incrementIndicator(count: Int) {
+        if highlights.elements == [.indicator] {
+            highlights.clear()
+        }
         let maxToAdd = min(remainingIndicatorAvailable, count)
         guard inputState == .addIndicator, maxToAdd > 0 else {
             return
@@ -227,6 +233,9 @@ extension TitrationViewModel {
 // MARK: Adding titrant
 extension TitrationViewModel {
     func incrementTitrant(count: Int) {
+        if highlights.elements == [.burette] {
+            highlights.clear()
+        }
         guard inputState == .addTitrant else {
             return
         }

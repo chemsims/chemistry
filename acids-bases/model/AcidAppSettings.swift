@@ -17,3 +17,15 @@ struct AcidAppSettings {
 
     static let weakTitrationInitialReactionDuration: TimeInterval = 2
 }
+
+extension AcidAppSettings {
+    struct MacroBeaker {
+
+        /// Number of titrant molecules to add when the color
+        /// is changing sharpl
+        static let titrantToAddDuringSharpColorChange = 5
+
+        /// How much the beaker color should change prior to the sharp point
+        static let colorTurningPointProgress: CGFloat = 0.2
+    }
+}

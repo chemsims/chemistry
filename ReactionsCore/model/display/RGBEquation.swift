@@ -8,6 +8,19 @@ public protocol RGBEquation {
     func getRgb(at x: CGFloat) -> RGB
 }
 
+public struct ConstantRGBEquation: RGBEquation {
+
+    public init(_ value: RGB) {
+        self.value = value
+    }
+
+    let value: RGB
+
+    public func getRgb(at x: CGFloat) -> RGB {
+        value
+    }
+}
+
 public struct LinearRGBEquation: RGBEquation {
 
     public init(initialX: CGFloat, finalX: CGFloat, initialColor: RGB, finalColor: RGB) {
@@ -29,6 +42,26 @@ public struct LinearRGBEquation: RGBEquation {
     }
 }
 
+public struct SwitchingRGBEquation: RGBEquation {
+    public init(threshold: CGFloat, left: RGBEquation, right: RGBEquation) {
+        self.threshold = threshold
+        self.left = left
+        self.right = right
+    }
+
+    let threshold: CGFloat
+    let left: RGBEquation
+    let right: RGBEquation
+
+    public func getRgb(at x: CGFloat) -> RGB {
+        if x < threshold {
+            return left.getRgb(at: x)
+        }
+        return right.getRgb(at: x)
+    }
+}
+
+/// Linearly interpolates between an array of colors
 public struct RGBGradientEquation: RGBEquation {
 
     public init(colors: [RGB], initialX: CGFloat, finalX: CGFloat) {
