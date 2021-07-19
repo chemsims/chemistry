@@ -221,6 +221,7 @@
 		575C90E72662DAA1001DCD17 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E62662DAA1001DCD17 /* BlurView.swift */; };
 		575FE7DF26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */; };
 		575FE7E326A5C72200E6B316 /* TitrationScreenPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7E226A5C72200E6B316 /* TitrationScreenPersistence.swift */; };
+		575FE7E526A5DD5400E6B316 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 575FE7E426A5DD5400E6B316 /* GoogleService-Info.plist */; };
 		5760536B25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */; };
 		5760537025AE519B0068B533 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
 		57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */; };
@@ -965,6 +966,7 @@
 		575C90E62662DAA1001DCD17 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrantMolarityInputLimitsTests.swift; sourceTree = "<group>"; };
 		575FE7E226A5C72200E6B316 /* TitrationScreenPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationScreenPersistence.swift; sourceTree = "<group>"; };
+		575FE7E426A5DD5400E6B316 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionNavigationTests.swift; sourceTree = "<group>"; };
 		5760536F25AE519B0068B533 /* NavigationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationExtensions.swift; sourceTree = "<group>"; };
 		57631763259B66CF00D7CE2C /* QuizTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTable.swift; sourceTree = "<group>"; };
@@ -1572,6 +1574,7 @@
 				570ABA04265A736C008EC8CC /* SceneDelegate.swift */,
 				570ABA08265A736C008EC8CC /* Assets.xcassets */,
 				570ABA0D265A736D008EC8CC /* LaunchScreen.storyboard */,
+				575FE7E426A5DD5400E6B316 /* GoogleService-Info.plist */,
 				570ABA10265A736D008EC8CC /* Info.plist */,
 				570ABA0A265A736C008EC8CC /* Preview Content */,
 			);
@@ -3926,6 +3929,7 @@
 				570ABA09265A736C008EC8CC /* Assets.xcassets in Resources */,
 				57D3264026A36B5F0093CD16 /* introduction-quiz.csv in Resources */,
 				57D3264226A380560093CD16 /* buffer-quiz.csv in Resources */,
+				575FE7E526A5DD5400E6B316 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

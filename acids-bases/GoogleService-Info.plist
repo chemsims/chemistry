@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>331193864135-ke3gku2m179g24pnskbfgc8gd84ljakb.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.331193864135-ke3gku2m179g24pnskbfgc8gd84ljakb</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDoJe6fbohWuTqRSsIeGxJFwwLa_22A8KU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>331193864135</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.reaction.acid-bases</string>
+	<key>PROJECT_ID</key>
+	<string>int-chem-app---acid-and-bases</string>
+	<key>STORAGE_BUCKET</key>
+	<string>int-chem-app---acid-and-bases.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:331193864135:ios:5b7c41cab03e59a96593e2</string>
+</dict>
+</plist>

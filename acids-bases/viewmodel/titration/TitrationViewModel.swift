@@ -29,8 +29,7 @@ class TitrationViewModel: ObservableObject {
             initialWeakSubstance: .weakAcids.first!,
             initialTitrant: .potassiumHydroxide,
             cols: cols,
-            rows: initialRows,
-            initialSubstance: .weakBase
+            rows: initialRows
         )
 
         self.shakeModel = MultiContainerShakeViewModel(
