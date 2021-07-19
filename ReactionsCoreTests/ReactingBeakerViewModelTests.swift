@@ -14,7 +14,8 @@ class ReactingBeakerViewModelTests: XCTestCase {
                 builder: { beakerMolecules($0, []) }
             ),
             cols: 10,
-            rows: 10
+            rows: 10,
+            accessibilityLabel: { _ in ""}
         )
 
         model.add(
@@ -55,7 +56,8 @@ class ReactingBeakerViewModelTests: XCTestCase {
         let model = ReactingBeakerViewModel(
             initial: initialCoords,
             cols: 10,
-            rows: 10
+            rows: 10,
+            accessibilityLabel: { _ in ""}
         )
 
         model.add(
@@ -86,7 +88,8 @@ class ReactingBeakerViewModelTests: XCTestCase {
         let model = ReactingBeakerViewModel(
             initial: initialCoords,
             cols: 10,
-            rows: 10
+            rows: 10,
+            accessibilityLabel: { _ in ""}
         )
 
         model.add(
@@ -118,7 +121,8 @@ class ReactingBeakerViewModelTests: XCTestCase {
         let model = ReactingBeakerViewModel(
             initial: initialCoords,
             cols: 10,
-            rows: 10
+            rows: 10,
+            accessibilityLabel: { _ in ""}
         )
 
         model.add(
@@ -165,7 +169,8 @@ class ReactingBeakerViewModelTests: XCTestCase {
         let model = ReactingBeakerViewModel(
             initial: initialCoords,
             cols: 10,
-            rows: 10
+            rows: 10,
+            accessibilityLabel: { _ in ""}
         )
 
         model.add(

@@ -30,7 +30,6 @@ public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: Observ
         self.allQuestions = displayQuestions
         self.persistence = persistence
         self.questionSet = questions.questionSet
-        self.currentQuestion = displayQuestions.first!
         self.analytics = analytics
         let previousQuiz = persistence.getAnswers(
             questionSet: questions.questionSet,
@@ -42,6 +41,8 @@ public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: Observ
             self.currentQuestion = availableQuestions.last!
             self.answers = previousQuiz.answers
             setProgress()
+        } else {
+            self.currentQuestion = availableQuestions.first!
         }
     }
 
@@ -49,11 +50,16 @@ public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: Observ
     public var prevScreen: (() -> Void)?
 
     // MARK: Published properties
-    @Published var currentQuestion: QuizQuestion
+    @Published var currentQuestion: QuizQuestion!
     @Published var answers = [String: QuizAnswerInput]()
     @Published var progress: CGFloat = 0
     @Published var quizState = QuizState.pending
-    @Published var quizDifficulty = QuizDifficulty.medium
+    @Published var quizDifficulty = QuizDifficulty.medium {
+        didSet {
+            guard quizState == .pending else { return }
+            currentQuestion = availableQuestions.first!
+        }
+    }
     @Published var showNotification = false
 
     /// Runs the debug mode quiz, where the explanation will always be shown

@@ -99,7 +99,7 @@ class QuizViewModelTests: XCTestCase {
 
     func testThatTheQuizIsSavedWhenItEnds() {
         let persistence = InMemoryQuizPersistence<Int>()
-        let questionList = QuizQuestionsList(questionSet: 0, [makeQuestion(i: 0)])
+        let questionList = QuizQuestionsList(questionSet: 0, [makeQuestion(id: 0)])
         let model = newModel(questionList, persistence: persistence)
 
         func getAnswers() -> [String: QuizAnswerInput]? {
@@ -201,30 +201,43 @@ class QuizViewModelTests: XCTestCase {
         notShown(QuizOption.allCases)
     }
 
-    private func makeQuestions(n: Int) -> QuizQuestionsList<Int> {
-        QuizQuestionsList(questionSet: 0, (0..<n).map(makeQuestion))
+    func testCurrentQuestionIsValidWhenFirstQuestionIsNotAnEasyOne() {
+        let medium = makeQuestions(n: 5, difficulty: .medium)
+        let easy = makeQuestions(n: 5, difficulty: .easy, idOffset: 5)
+
+        let questions = QuizQuestionsList(questionSet: 0, medium.questions + easy.questions)
+
+        let model = newModel(questions)
+
+        model.quizDifficulty = .easy
+        model.next()
+        XCTAssertEqual(model.currentQuestion.id, "5")
     }
 
-    private func makeQuestion(i: Int) -> QuizQuestionData {
+    private func makeQuestions(n: Int, difficulty: QuizDifficulty = .easy, idOffset: Int = 0) -> QuizQuestionsList<Int> {
+        QuizQuestionsList(questionSet: 0, (0..<n).map { makeQuestion(id: $0 + idOffset, difficulty: difficulty) } )
+    }
+
+    private func makeQuestion(id: Int, difficulty: QuizDifficulty = .easy) -> QuizQuestionData {
 
         func answer(_ suffix: String, _ position: QuizOption) -> QuizAnswerData {
             QuizAnswerData(
-                answer: "\(i) - \(suffix)",
-                explanation: "\(i)",
+                answer: "\(id) - \(suffix)",
+                explanation: "\(id)",
                 position: position
             )
         }
 
         return QuizQuestionData(
-            id: "\(i)",
-            question: "\(i)",
+            id: "\(id)",
+            question: "\(id)",
             correctAnswer: answer("A", .A),
             otherAnswers: [
                 answer("B", .B),
                 answer("C", .C),
                 answer("D", .D)
             ],
-            difficulty: .easy
+            difficulty: difficulty
         )
     }
 
