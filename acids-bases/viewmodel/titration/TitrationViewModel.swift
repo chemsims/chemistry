@@ -284,84 +284,117 @@ extension TitrationViewModel {
 
 // MARK: Updating statement mid adding molecules
 extension TitrationViewModel {
+
+    private func setUpdatedStatementPostIncrement(newStatement: [TextLine]) {
+        if statement != newStatement {
+            statement = newStatement
+            UIAccessibility.post(
+                notification: .announcement,
+                argument: statement.label
+            )
+        }
+    }
+
     private func updateStatementPostSubstanceIncrement() {
+        if let statement = getStatementPostSubstanceIncrement() {
+            setUpdatedStatementPostIncrement(newStatement: statement)
+        }
+    }
+
+    private func getStatementPostSubstanceIncrement() -> [TextLine]? {
         let shouldUpdateStatement = components.currentPreparationModel?.hasAddedEnoughSubstance ?? false
         guard shouldUpdateStatement else {
-            return
+            return nil
         }
 
         switch components.state.substance {
         case .strongAcid:
-            statement = TitrationStatements.midAddingStrongAcid
+            return TitrationStatements.midAddingStrongAcid
         case .strongBase:
-            statement = TitrationStatements.midAddingStrongBase
+            return TitrationStatements.midAddingStrongBase
         default:
-            return
+            return nil
         }
     }
 
     private func updateStatementPostTitrantIncrement() {
-        guard inputState == .addTitrant else {
-            return
-        }
-        if components.state.phase == .preEP {
-            updateStrongSubstancePreEPTitrantStatement()
-        } else if components.state.phase == .postEP {
-            updateStrongSubstancePostEPTitrantStatement()
+        if let statement = getStatementPostTitrantIncrement() {
+            setUpdatedStatementPostIncrement(newStatement: statement)
         }
     }
 
-    private func updateStrongSubstancePreEPTitrantStatement() {
+    private func getStatementPostTitrantIncrement() -> [TextLine]? {
+        guard inputState == .addTitrant else {
+            return nil
+        }
+        if components.state.phase == .preEP {
+            return getStrongSubstancePreEPTitrantStatement()
+        } else if components.state.phase == .postEP {
+            return getStrongSubstancePostEPTitrantStatement()
+        }
+        return nil
+    }
+
+    private func getStrongSubstancePreEPTitrantStatement() -> [TextLine]? {
         guard let model = components.currentPreEPTitrantModel else {
-            return
+            return nil
         }
         let percentAdded = Double(model.titrantAdded) / Double(model.maxTitrant)
         let shouldUpdate = percentAdded >= 0.4
         guard shouldUpdate else {
-            return
+            return nil
         }
         switch components.state.substance {
         case .strongAcid:
-            statement = TitrationStatements.midAddingStrongBaseTitrant
+            return TitrationStatements.midAddingStrongBaseTitrant
         case .strongBase:
-            statement = TitrationStatements.midAddingStrongAcidTitrant
-        default: return
+            return TitrationStatements.midAddingStrongAcidTitrant
+        default: return nil
         }
     }
 
-    private func updateStrongSubstancePostEPTitrantStatement() {
+    private func getStrongSubstancePostEPTitrantStatement() -> [TextLine]? {
         guard let model = components.currentPostEPTitrantModel else {
-            return
+            return nil
         }
         let percentAdded = Double(model.titrantAdded) / Double(model.maxTitrant)
         let shouldUpdate = percentAdded >= 0.1
         guard shouldUpdate else {
-            return
+            return nil
         }
         switch components.state.substance {
         case .strongAcid:
-            statement = TitrationSubstanceStatements(
+            return TitrationSubstanceStatements(
                 substance: substance,
                 namePersistence: namePersistence
             ).midAddingStrongBaseTitrantPostEP
         case .strongBase:
-            statement = TitrationSubstanceStatements(
+            return TitrationSubstanceStatements(
                 substance: substance,
                 namePersistence: namePersistence
             ).midAddingStrongAcidTitrantPostEP
-        default: return
+        default: return nil
         }
     }
 }
 
 // MARK: Going next automatically post increment
 extension TitrationViewModel {
+
+    private func applyNextAutomatically() {
+        next()
+        UIAccessibility.post(
+            notification: .announcement,
+            argument: statement.label
+        )
+    }
+
     private func goNextIfNeededPostSubstanceIncrement() {
         guard inputState == .addSubstance else {
             return
         }
         if let model = components.currentPreparationModel, !model.canAddSubstance {
-            next()
+            applyNextAutomatically()
         }
     }
 
@@ -370,7 +403,7 @@ extension TitrationViewModel {
             return
         }
         if inputState == .addIndicator && !canAddIndicator {
-            next()
+            applyNextAutomatically()
         }
     }
 
@@ -379,9 +412,9 @@ extension TitrationViewModel {
             return
         }
         if let model = components.currentPreEPTitrantModel, !model.canAddTitrant {
-            next()
+            applyNextAutomatically()
         } else if let model = components.currentPostEPTitrantModel, !model.canAddTitrant {
-            next()
+            applyNextAutomatically()
         }
     }
 
