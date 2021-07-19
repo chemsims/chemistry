@@ -69,7 +69,7 @@ struct IntroScreenLayout {
 // MARK: Left stack layout
 extension IntroScreenLayout {
     var containerRowYPos: CGFloat {
-        common.reactionDefinitionSize.height + (0.6 * common.phMeterSize.height)
+        common.reactionDefinitionTopPadding + common.reactionDefinitionSize.height + (0.6 * common.phMeterSize.height)
     }
 
     var activeContainerYPos: CGFloat {

@@ -35,6 +35,7 @@ struct IntroBeaker: View {
         )
         .frame(size: layout.common.reactionDefinitionSize)
         .padding(.leading, layout.common.reactionDefinitionLeadingPadding)
+        .padding(.top, layout.common.reactionDefinitionTopPadding)
         .animation(nil, value: components.substance.reactionDefinition)
         .minimumScaleFactor(0.5)
         .colorMultiply(model.highlights.colorMultiply(for: nil))

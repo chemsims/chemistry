@@ -25,6 +25,7 @@ struct DraggablePhMeter: View {
     /// Number of rows in the beaker
     let rows: CGFloat
 
+    /// Distance of the beaker from the bottom of the screen, not including the default beaker padding (beakerBottomPadding)
     let beakerDistanceFromBottomOfScreen: CGFloat
 
     @GestureState private var pHMeterOffset = CGSize.zero
@@ -121,7 +122,7 @@ struct DraggablePhMeter: View {
     }
 
     private var waterCenterY: CGFloat {
-        layout.height - (waterHeight / 2) - beakerDistanceFromBottomOfScreen
+        layout.height - (waterHeight / 2) - beakerDistanceFromBottomOfScreen - layout.beakerBottomPadding
     }
 
     private var waterCenterX: CGFloat {

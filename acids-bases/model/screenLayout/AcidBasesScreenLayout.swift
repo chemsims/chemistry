@@ -106,10 +106,9 @@ extension AcidBasesScreenLayout {
         sliderSettings.handleWidth + (beakerWidth / 2)
     }
 
-    // TODO - when bar chart is added, return x axis label height instead of 0
     var beakerBottomPadding: CGFloat {
         if verticalSizeClass.contains(.regular) {
-            return 0 // chartSettings.xAxisLabelHeight
+            return barChartSettings.totalAxisHeight
         }
         return 0
     }
@@ -330,6 +329,13 @@ extension AcidBasesScreenLayout {
 
     var reactionDefinitionLeadingPadding: CGFloat {
         menuScreenOverlapWithSpacing.width
+    }
+
+    var reactionDefinitionTopPadding: CGFloat {
+        if verticalSizeClass.contains(.regular) {
+            return menuSize + menuTopPadding
+        }
+        return 0
     }
 
     var reactionDefinitionFontSize: CGFloat {

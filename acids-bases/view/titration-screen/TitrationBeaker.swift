@@ -443,7 +443,10 @@ private extension TitrationScreenLayout {
     }
 
     private var toolsBottomY: CGFloat {
-        common.height - common.beakerHeight - 50
+        let beakerTotalHeight = common.beakerBottomPadding + common.beakerHeight + common.toggleHeight
+        let availableHeight = common.height - beakerTotalHeight
+
+        return 0.8 * availableHeight
     }
 
     private var availableWidthForDropperAndBurette: CGFloat {

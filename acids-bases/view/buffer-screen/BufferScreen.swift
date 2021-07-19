@@ -79,7 +79,7 @@ struct BufferScreenLayout {
     }
 
     var containerRowYPos: CGFloat {
-        common.reactionDefinitionSize.height + (0.6 * common.containerSize.height)
+        common.reactionDefinitionTopPadding + common.reactionDefinitionSize.height + (0.6 * common.containerSize.height)
     }
 
     var activeContainerYPos: CGFloat {

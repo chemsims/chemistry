@@ -35,6 +35,7 @@ struct TitrationMacroBeaker: View {
             }
             toggle
         }
+        .padding(.bottom, layout.common.beakerBottomPadding)
     }
 
     private var toggle: some View {

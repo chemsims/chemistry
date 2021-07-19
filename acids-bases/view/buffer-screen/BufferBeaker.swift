@@ -35,6 +35,7 @@ struct BufferBeaker: View {
         .frame(size: layout.common.reactionDefinitionSize)
         .background(Color.white)
         .padding(.leading, layout.common.reactionDefinitionLeadingPadding)
+        .padding(.top, layout.common.reactionDefinitionTopPadding)
         .animation(nil, value: model.substance)
         .minimumScaleFactor(0.5)
         .colorMultiply(model.highlights.colorMultiply(for: .reactionDefinition))
