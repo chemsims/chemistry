@@ -10,7 +10,8 @@ enum AcidAppScreen: String, CaseIterable {
          buffer,
          bufferQuiz,
          titration,
-         titrationQuiz
+         titrationQuiz,
+         finalAppScreen
 
     var isQuiz: Bool {
         switch self {

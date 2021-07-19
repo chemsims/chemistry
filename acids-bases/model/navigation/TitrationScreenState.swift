@@ -18,9 +18,9 @@ struct TitrationNavigationModel {
     }
 
     private static func states(namePersistence: NamePersistence) -> [TitrationScreenState] {
-        strongAcidTitration +
-            strongBaseTitration +
-            weakAcidTitration(namePersistence: namePersistence) +
+//        strongAcidTitration +
+//            strongBaseTitration +
+//            weakAcidTitration(namePersistence: namePersistence) +
             weakBaseTitration(namePersistence: namePersistence)
     }
 
@@ -191,7 +191,7 @@ struct TitrationNavigationModel {
                 }
             ),
             AddTitrantPostEP(statements.instructToAddTitrantToWeakBasePostEP, equation: .weakBasePostEPPreAddingTitrant),
-            StopInput(statements.endOfWeakBaseTitration, namePersistence: namePersistence)
+            SaveWeakModelTitrantInput(statements.endOfWeakBaseTitration, namePersistence: namePersistence)
         ]
     }
 }
@@ -694,5 +694,19 @@ private class EndOfWeakSubstanceInitialReaction: SetStatement {
     override func unapply(on model: TitrationViewModel) {
         super.unapply(on: model)
         model.showPhString = false
+    }
+}
+
+private class SaveWeakModelTitrantInput: StopInput {
+    override func apply(on model: TitrationViewModel) {
+        super.apply(on: model)
+        let weakModel = model.components.weakSubstancePreparationModel
+        let input = TitrationScreenInput(
+            weakBase: weakModel.substance,
+            weakBaseBeakerRows: GridCoordinateList.availableRows(for: model.rows),
+            weakBaseSubstanceAdded: weakModel.substanceAdded,
+            titrantMolarity: weakModel.titrantMolarity
+        )
+        model.titrationPersistence.input = input
     }
 }

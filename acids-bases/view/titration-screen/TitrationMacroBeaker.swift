@@ -349,6 +349,7 @@ struct TitrationMacroBeaker_Previews: PreviewProvider {
                     )
                 ),
                 model: .init(
+                    titrationPersistence: InMemoryTitrationInputPersistence(),
                     namePersistence: InMemoryNamePersistence()
                 )
             )

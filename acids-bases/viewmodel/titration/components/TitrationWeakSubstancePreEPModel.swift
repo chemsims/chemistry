@@ -41,7 +41,6 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
             substance: previous.substance,
             previous: previous,
             maxTitrant: maxTitrant,
-            titrantAdded: 0,
             titrant: previous.titrant.name
         )
         self.reactionProgress = previous.reactionProgressModel
@@ -112,7 +111,6 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
             substance: previous.substance,
             previous: previous,
             maxTitrant: maxTitrant,
-            titrantAdded: 0,
             titrant: previous.titrant.name
         )
         self.reactionProgress = previous.copyReactionProgress()
@@ -169,15 +167,6 @@ extension TitrationWeakSubstancePreEPModel {
             count: count
         )
 
-        // TODO - we don't actually need to recompute the calculations
-        // when adding titrant. It is not a function of titrant added.
-        self.calculations = .init(
-            substance: previous.substance,
-            previous: previous,
-            maxTitrant: maxTitrant,
-            titrantAdded: titrantAdded,
-            titrant: previous.titrant.name
-        )
         updateReactionProgress()
 
         // There is a strange issue where *occasionally*, the titration curve lags behind the
@@ -257,20 +246,17 @@ private class WeakSubstanceCalculations {
         substance: AcidOrBase,
         previous: TitrationWeakSubstancePreparationModel,
         maxTitrant: Int,
-        titrantAdded: Int,
         titrant: String
     ) {
         self.substance = substance
         self.previous = previous
         self.maxTitrant = maxTitrant
-        self.titrantAdded = titrantAdded
         self.titrant = titrant
     }
 
     let substance: AcidOrBase
     let previous: TitrationWeakSubstancePreparationModel
     let maxTitrant: Int
-    let titrantAdded: Int
     let titrant: String
 
     lazy var equationData: TitrationEquationData = TitrationEquationData(

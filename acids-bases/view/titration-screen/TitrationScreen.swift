@@ -98,6 +98,7 @@ struct TitrationScreen_Previews: PreviewProvider {
     static var previews: some View {
         TitrationScreen(
             model: TitrationViewModel(
+                titrationPersistence: InMemoryTitrationInputPersistence(),
                 namePersistence: InMemoryNamePersistence()
             )
         )

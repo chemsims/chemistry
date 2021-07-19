@@ -220,6 +220,7 @@
 		575C90E52662CE6A001DCD17 /* PHMeterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E42662CE6A001DCD17 /* PHMeterTests.swift */; };
 		575C90E72662DAA1001DCD17 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E62662DAA1001DCD17 /* BlurView.swift */; };
 		575FE7DF26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */; };
+		575FE7E326A5C72200E6B316 /* TitrationScreenPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7E226A5C72200E6B316 /* TitrationScreenPersistence.swift */; };
 		5760536B25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */; };
 		5760537025AE519B0068B533 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
 		57655D45256C0919006FB93C /* EnergyProfileRateEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57655D44256C0919006FB93C /* EnergyProfileRateEquation.swift */; };
@@ -963,6 +964,7 @@
 		575C90E42662CE6A001DCD17 /* PHMeterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHMeterTests.swift; sourceTree = "<group>"; };
 		575C90E62662DAA1001DCD17 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrantMolarityInputLimitsTests.swift; sourceTree = "<group>"; };
+		575FE7E226A5C72200E6B316 /* TitrationScreenPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationScreenPersistence.swift; sourceTree = "<group>"; };
 		5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionNavigationTests.swift; sourceTree = "<group>"; };
 		5760536F25AE519B0068B533 /* NavigationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationExtensions.swift; sourceTree = "<group>"; };
 		57631763259B66CF00D7CE2C /* QuizTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTable.swift; sourceTree = "<group>"; };
@@ -3184,6 +3186,7 @@
 			isa = PBXGroup;
 			children = (
 				57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */,
+				575FE7E226A5C72200E6B316 /* TitrationScreenPersistence.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -4112,6 +4115,7 @@
 				577C503B2680E190003DAD17 /* TitrationEquationData.swift in Sources */,
 				57783C5D2682112800ACABE6 /* PLogKValue.swift in Sources */,
 				577C50352680D773003DAD17 /* TitrationEquation.swift in Sources */,
+				575FE7E326A5C72200E6B316 /* TitrationScreenPersistence.swift in Sources */,
 				577C50392680E0F2003DAD17 /* MolesToMolarity.swift in Sources */,
 				570A766B266CFC45009329FB /* BufferScreenViewModel.swift in Sources */,
 				57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */,

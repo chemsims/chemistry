@@ -12,6 +12,13 @@ private let water = "H_2_O"
 struct TitrationStatements {
     private init() { }
 
+    static let endOfApp: [TextLine] = [
+        """
+        Now you can explore all parts of acids & bases! Just tap the button at the top left corner to \
+        reveal the navigation menu, then choose your favorite part to review it once more!
+        """
+    ]
+    
     static let intro: [TextLine] = [
         """
         One big use of acid-base reactions is a technique called titration. Let's learn more \

@@ -28,9 +28,12 @@ struct AcidBasesNavigationModel {
             onboardingPersistence: appInjector.onboardingPersistence,
             namePersistence: appInjector.namePersistence,
             allScreens: AcidAppScreen.allCases,
-            linearScreens: [.titration]
+            linearScreens: AcidAppScreen.allCases
         )
     }
+
+    private let linearScreens: [AcidAppScreen] =
+        AcidAppScreen.allCases.filter { $0 != .finalAppScreen }
 }
 
 private struct AcidAppNavigationBehaviour: NavigationBehaviour {
@@ -39,7 +42,8 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
     let injector: AcidAppInjector
 
     func deferCanSelect(of screen: AcidAppScreen) -> DeferCanSelect<AcidAppScreen>? {
-       nil
+        screen == .introduction ? nil : .canSelect(other: .introduction)
+//       nil
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: AcidAppScreen) -> Bool {
@@ -47,11 +51,11 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
     }
 
     func showReviewPromptOn(screen: AcidAppScreen) -> Bool {
-        false
+        screen == .finalAppScreen
     }
 
     func showMenuOn(screen: AcidAppScreen) -> Bool {
-        false
+        screen == .finalAppScreen
     }
 
     func highlightedNavIcon(for screen: AcidAppScreen) -> AcidAppScreen? {
@@ -107,6 +111,7 @@ fileprivate extension AcidAppScreen {
             return TitrationScreenProvider(
                 nextScreen: nextScreen,
                 prevScreen: prevScreen,
+                titrationPersistence: injector.titrationPersistence,
                 namePersistence: injector.namePersistence
             )
 
@@ -118,6 +123,13 @@ fileprivate extension AcidAppScreen {
 
         case .titrationQuiz:
             return quiz(.titration)
+
+        case .finalAppScreen:
+            return FinalScreenProvider(
+                titrationPersistence: injector.titrationPersistence,
+                namePersistence: injector.namePersistence,
+                prev: prevScreen
+            )
         }
     }
 }
@@ -172,9 +184,13 @@ private class TitrationScreenProvider: ScreenProvider {
     init(
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void,
+        titrationPersistence: TitrationInputPersistence,
         namePersistence: NamePersistence
     ) {
-        self.model = TitrationViewModel(namePersistence: namePersistence)
+        self.model = TitrationViewModel(
+            titrationPersistence: titrationPersistence,
+            namePersistence: namePersistence
+        )
     }
 
     private let model: TitrationViewModel
@@ -209,5 +225,92 @@ private class QuizScreenProvider: ScreenProvider {
     var screen: AnyView {
         AnyView(QuizScreen(model: model))
     }
+}
 
+private class FinalScreenProvider: ScreenProvider {
+    init(
+        titrationPersistence: TitrationInputPersistence,
+        namePersistence: NamePersistence,
+        prev: @escaping () -> Void
+    ) {
+        let model = TitrationViewModel(
+            titrationPersistence: titrationPersistence,
+            namePersistence: namePersistence
+        )
+        let navigation = NavigationModel<TitrationScreenState>.init(model: model, states: [FinalTitrationScreenState()])
+        navigation.prevScreen = prev
+        model.navigation = navigation
+
+        self.model = model
+    }
+
+    let model: TitrationViewModel
+
+    var screen: AnyView {
+        AnyView(TitrationScreen(model: model))
+    }
+
+}
+
+private class FinalTitrationScreenState: TitrationScreenState {
+
+    override func apply(on model: TitrationViewModel) {
+        model.statement = TitrationStatements.endOfApp
+        model.inputState = .none
+        model.highlights.clear()
+        model.equationState = .weakBasePostEPPostAddingTitrant
+        model.substanceSelectionIsToggled = false
+        model.macroBeakerState = .weakTitrant
+        model.showTitrantFill = true
+        model.showPhString = true
+
+        if let input = model.titrationPersistence.input {
+            model.substance = input.weakBase
+            model.rows = CGFloat(input.weakBaseBeakerRows)
+
+            setComponents(model)
+
+            let weakModel = model.components.weakSubstancePreparationModel
+            weakModel.incrementSubstance(count: input.weakBaseSubstanceAdded)
+            weakModel.titrantMolarity = input.titrantMolarity
+
+        } else {
+            model.substance = .weakBases.first!
+
+            setComponents(model)
+
+            let weakModel = model.components.weakSubstancePreparationModel
+            weakModel.incrementSubstance(count: weakModel.maxSubstance)
+        }
+
+        goToEndOfTitration(model)
+    }
+
+    private func setComponents(
+        _ model: TitrationViewModel
+    ) {
+        model.components = TitrationComponentState(
+            initialStrongSubstance: model.substance,
+            initialWeakSubstance: model.substance,
+            initialTitrant: .hydrogenChloride,
+            cols: model.cols,
+            rows: Int(model.rows),
+            initialSubstance: .weakBase
+        )
+    }
+
+    private func goToEndOfTitration(_ model: TitrationViewModel) {
+        model.components.assertGoTo(state: .init(substance: .weakBase, phase: .preEP))
+        model.components.weakSubstancePreEPModel.titrantLimit = .equivalencePoint
+        model.components.weakSubstancePreEPModel.incrementTitrant(count: model.components.weakSubstancePreEPModel.maxTitrant)
+
+        model.components.assertGoTo(state: .init(substance: .weakBase, phase: .postEP))
+
+        let postEPModel = model.components.weakSubstancePostEPModel
+        postEPModel.incrementTitrant(count: postEPModel.maxTitrant)
+
+        // We copy the reaction progress model so that the animation doesn't replay when
+        // toggling the reaction progress on final screen
+        postEPModel.reactionProgress = postEPModel.reactionProgress.copy()
+    }
 }

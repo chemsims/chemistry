@@ -6,6 +6,8 @@ import Foundation
 import ReactionsCore
 
 protocol AcidAppInjector {
+    var titrationPersistence: TitrationInputPersistence { get }
+
     var screenPersistence: AnyScreenPersistence<AcidAppScreen> { get }
 
     var analytics: AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet> { get }
@@ -22,6 +24,10 @@ protocol AcidAppInjector {
 }
 
 class InMemoryAcidAppInjector: AcidAppInjector {
+
+    let titrationPersistence: TitrationInputPersistence =
+        InMemoryTitrationInputPersistence()
+
     let screenPersistence: AnyScreenPersistence<AcidAppScreen> =
         AnyScreenPersistence(NoOpScreenPersistence())
 
@@ -45,6 +51,11 @@ class InMemoryAcidAppInjector: AcidAppInjector {
 }
 
 class ProductionAcidAppInjector: AcidAppInjector {
+
+    // Note: This is stored in-memory in production too as we don't need to store it on disk
+    let titrationPersistence: TitrationInputPersistence =
+        InMemoryTitrationInputPersistence()
+
     let screenPersistence: AnyScreenPersistence<AcidAppScreen> =
         AnyScreenPersistence(UserDefaultsScreenPersistence())
 

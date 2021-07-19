@@ -9,15 +9,17 @@ import ReactionsCore
 struct TitrationComponentState {
 
     init(
-        strongAcid: AcidOrBase,
-        weakAcid: AcidOrBase,
+        initialStrongSubstance: AcidOrBase,
+        initialWeakSubstance: AcidOrBase,
+        initialTitrant: Titrant,
         cols: Int,
         rows: Int,
+        initialSubstance: Substance = .strongAcid,
         settings: TitrationSettings = .standard
     ) {
         let strongPreparationModel = TitrationStrongSubstancePreparationModel(
-            substance: strongAcid,
-            titrant: .potassiumHydroxide,
+            substance: initialStrongSubstance,
+            titrant: initialTitrant,
             cols: cols,
             rows: rows,
             settings: settings
@@ -26,8 +28,8 @@ struct TitrationComponentState {
         let strongPostEPModel = TitrationStrongSubstancePostEPModel(previous: strongPreEPModel)
 
         let weakPreparationModel = TitrationWeakSubstancePreparationModel(
-            substance: weakAcid,
-            titrant: .potassiumHydroxide,
+            substance: initialWeakSubstance,
+            titrant: initialTitrant,
             cols: cols,
             rows: rows,
             settings: settings
@@ -35,7 +37,7 @@ struct TitrationComponentState {
         let weakPreEPModel = TitrationWeakSubstancePreEPModel(previous: weakPreparationModel)
         let weakPostEPModel = TitrationWeakSubstancePostEPModel(previous: weakPreEPModel)
 
-        self.state = State(substance: .strongAcid, phase: .preparation)
+        self.state = State(substance: initialSubstance, phase: .preparation)
         self.initialCols = cols
         self.initialRows = rows
         self.settings = settings

@@ -7,8 +7,16 @@ import ReactionsCore
 
 class TitrationViewModel: ObservableObject {
 
-    init(namePersistence: NamePersistence) {
+    init(
+        titrationPersistence: TitrationInputPersistence,
+        namePersistence: NamePersistence
+    ) {
+        let cols = MoleculeGridSettings.cols
         self.namePersistence = namePersistence
+        self.titrationPersistence = titrationPersistence
+
+        self.cols = cols
+
         let initialRows = AcidAppSettings.initialRows
         self.rows = CGFloat(initialRows)
         self.availableSubstances = AcidOrBase.strongAcids
@@ -17,10 +25,12 @@ class TitrationViewModel: ObservableObject {
         self.substance = initialSubstance
 
         self.components = TitrationComponentState(
-            strongAcid: initialSubstance,
-            weakAcid: .weakAcids.first!,
-            cols: MoleculeGridSettings.cols,
-            rows: initialRows
+            initialStrongSubstance: initialSubstance,
+            initialWeakSubstance: .weakAcids.first!,
+            initialTitrant: .potassiumHydroxide,
+            cols: cols,
+            rows: initialRows,
+            initialSubstance: .weakBase
         )
 
         self.shakeModel = MultiContainerShakeViewModel(
@@ -45,7 +55,9 @@ class TitrationViewModel: ObservableObject {
         self.navigation = TitrationNavigationModel.model(self, namePersistence: namePersistence)
     }
 
+    let cols: Int
     let namePersistence: NamePersistence
+    var titrationPersistence: TitrationInputPersistence
 
     @Published var statement = [TextLine]()
     @Published var rows: CGFloat {
@@ -89,7 +101,7 @@ class TitrationViewModel: ObservableObject {
 
     @Published var beakerState = BeakerState.microscopic
 
-    private(set) var navigation: NavigationModel<TitrationScreenState>!
+    var navigation: NavigationModel<TitrationScreenState>!
     var shakeModel: MultiContainerShakeViewModel<TitrationComponentState.Substance>!
     var dropperEmitModel: MoleculeEmittingViewModel!
     var buretteEmitModel: MoleculeEmittingViewModel!
