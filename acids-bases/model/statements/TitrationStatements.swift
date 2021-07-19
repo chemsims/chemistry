@@ -18,7 +18,7 @@ struct TitrationStatements {
         reveal the navigation menu, then choose your favorite part to review it once more!
         """
     ]
-    
+
     static let intro: [TextLine] = [
         """
         One big use of acid-base reactions is a technique called titration. Let's learn more \
@@ -131,7 +131,7 @@ struct TitrationStatements {
 
     static let instructToAddStrongBaseTitrantPostEP: [TextLine] = [
         """
-        At this point, the macroscopic view of the solution turns pink, as pH is no longer acid. \
+        At this point, the macroscopic view of the solution changes color, as pH is no longer acid. \
         Also, from this point on, all *\(hydroxide)* added will remain in the solution, making \
         it basic.
         """,
@@ -211,7 +211,7 @@ struct TitrationStatements {
 
     static let instructToAddStrongAcidTitrantPostEP: [TextLine] = [
         """
-        At this point, the macroscopic view of the solution turns blue, as the pH is no longer \
+        At this point, the macroscopic view of the solution changes color, as the pH is no longer \
         basic. Also, from this point on, all *\(hydrogen)* moles added will remain in the \
         solution, making it acidic.
         """,
@@ -257,7 +257,7 @@ struct TitrationStatements {
            """
            As little as it is, it's more than enough to make the solution slightly basic. From \
            this point on, all *\(hydroxide)* added will remain in the solution, making it basic. \
-           At this point, the macroscopic view of the solution turns pink, as the *pH is now \
+           At this point, the macroscopic view of the solution changes color, as the *pH is now \
            \(pHString).*
            """
        ]
@@ -312,7 +312,7 @@ struct TitrationStatements {
            """
            As little as it is, it's more than enough to make the solution slightly basic. From \
            this point on, all *\(hydrogen)* added will remain in the solution, making it basic. \
-           At this point, the macroscopic view of the solution turns blue, as the *pH is now \
+           At this point, the macroscopic view of the solution changes color, as the *pH is now \
            \(pHString).*
            """
        ]

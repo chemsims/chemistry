@@ -24,6 +24,16 @@ extension View {
         }
     }
 
+    @ViewBuilder
+    public func modifyIf<T: ViewModifier>(_ condition: Bool, modifier: T) -> some View {
+        if condition {
+            self
+                .modifier(modifier)
+        } else {
+            self
+        }
+    }
+
     public func frame(square size: CGFloat) -> some View {
         self.frame(width: size, height: size)
     }

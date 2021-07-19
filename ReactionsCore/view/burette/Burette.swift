@@ -86,7 +86,10 @@ private struct BuretteTube: View {
                     .foregroundColor(fill!)
             }
 
-            shading
+            // The mask used in the shading causes a crash on iOS 13
+            if isAtLeastIOS14 {
+                shading
+            }
 
             container
                 .stroke(lineWidth: geometry.lineWidth)
@@ -159,6 +162,14 @@ private struct BuretteTube: View {
 
     private var lightShadeWidth: CGFloat {
         tickMarkWidth - darkShadeWidth
+    }
+
+    private var isAtLeastIOS14: Bool {
+        if #available(iOS 14.0, *) {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
