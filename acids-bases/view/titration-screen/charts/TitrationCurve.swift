@@ -29,6 +29,7 @@ struct TitrationCurve: View {
                         width: layout.common.chartYAxisWidth,
                         height: layout.common.chartSize
                     )
+                    .accessibility(hidden: true)
 
                 plotArea
                     .frame(square: layout.common.chartSize)
@@ -38,14 +39,54 @@ struct TitrationCurve: View {
                     width: layout.common.chartSize,
                     height: layout.common.chartXAxisHeight
                 )
+                .accessibility(hidden: true)
         }
         .font(.system(size: layout.common.chartLabelFontSize))
         .lineLimit(1)
         .minimumScaleFactor(0.2)
+        .accessibilityElement(children: .contain)
+        .accessibility(label: Text("Chart showing titrant added vs pH"))
+    }
+
+    private var description: String {
+        guard showData else {
+            return ""
+        }
+        let initialPh = phEquation.getY(at: 0)
+        let finalPh = phEquation.getY(at: maxEquationInput)
+
+        let isIncreasing = initialPh < finalPh
+
+        let increases = isIncreasing ? "increases" : "decreases"
+        let increasing = isIncreasing ? "increasing" : "decreasing"
+        let jump = isIncreasing ? "jump" : "drop"
+
+        return """
+        Line description: pH \(increases) slowly until a very steep \(jump) through the equivalence \
+        point. After the \(jump), pH continues \(increasing) slowly.
+        """
+    }
+
+    private var currentPointAccessibilityValue: String {
+        guard showData else {
+            return "no data"
+        }
+        let perc = (equationInput / maxEquationInput).percentage
+        let pH = phEquation.getY(at: equationInput).str(decimals: 2)
+        return "\(perc) along x axis, pH \(pH)"
     }
 
     private var plotArea: some View {
         ZStack {
+
+            lineAccessibilityElement
+                .accessibility(sortPriority: 3)
+            if showData {
+                currentPointAccessibilityElement
+                    .accessibility(sortPriority: 2)
+            }
+
+
             TimeChartView(
                 data: data,
                 initialTime: 0,
@@ -56,7 +97,7 @@ struct TitrationCurve: View {
                     xAxis: xAxis,
                     yAxis: yAxis,
                     haloRadius: layout.common.haloRadius,
-                    lineWidth: 0.4 // TODO
+                    lineWidth: 0.4
                 ),
                 axisSettings: layout.common.chartAxis
             )
@@ -65,11 +106,26 @@ struct TitrationCurve: View {
         }
     }
 
-    private var titrantAddedDashes: [Int] {
+    private var lineAccessibilityElement: some View {
+        Rectangle()
+            .foregroundColor(.white)
+            .accessibility(label: Text(showData ? description : "no data"))
+    }
+
+    private var currentPointAccessibilityElement: some View {
+        Rectangle()
+            .foregroundColor(.white)
+            .accessibility(label: Text("Current position on chart"))
+            .accessibility(value: Text(currentPointAccessibilityValue))
+            .accessibility(addTraits: .updatesFrequently)
+    }
+
+    private var titrantAddedDashes: [(label: String, titrantAdded: Int)] {
         if showAnnotations && showData {
-            let mid = preEPReaction.maxTitrant
-            let max = preEPReaction.maxTitrant + postEPReaction.maxTitrant
-            return [equalityTitrant].compactMap(identity) + [mid, max]
+            let mid = (label: "equivalence point", titrantAdded: preEPReaction.maxTitrant)
+            let max = (label: "maximum titrant", titrantAdded: preEPReaction.maxTitrant + postEPReaction.maxTitrant)
+            let equality = equalityTitrant.map { (label: "max buffer capacity", titrantAdded: $0) }
+            return [equality].compactMap(identity) + [mid, max]
         }
         return []
     }
@@ -90,14 +146,21 @@ struct TitrationCurve: View {
 
     private var annotation: some View {
         ZStack {
-            ForEach(titrantAddedDashes.indices, id: \.self) { i in
-                dashedLine(at: titrantAddedDashes[i])
+            ForEach(titrantAddedDashes, id: \.titrantAdded) { dash in
+                dashedLine(at: dash.titrantAdded, label: dash.label)
             }
         }
     }
 
-    private func dashedLine(at titrantAdded: Int) -> some View {
+    private func dashedLine(
+        at titrantAdded: Int,
+        label: String
+    ) -> some View {
         let x = xAxis.getPosition(at: CGFloat(titrantAdded))
+
+        let percent = (CGFloat(titrantAdded) / maxEquationInput).percentage
+        let pH = phEquation.getY(at: CGFloat(titrantAdded)).str(decimals: 2)
+
         return Path { p in
             p.addLines(
                 [
@@ -108,6 +171,8 @@ struct TitrationCurve: View {
         }
         .stroke(style: layout.common.chartDashedLineStyle)
         .foregroundColor(.orangeAccent)
+        .accessibility(label: Text("Vertical dashed line for \(label)"))
+        .accessibility(value: Text("\(percent) along x axis, intersects line at pH \(pH)"))
     }
 
     private var data: [TimeChartDataLine] {
