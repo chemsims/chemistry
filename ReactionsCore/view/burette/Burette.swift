@@ -163,14 +163,6 @@ private struct BuretteTube: View {
     private var lightShadeWidth: CGFloat {
         tickMarkWidth - darkShadeWidth
     }
-
-    private var isAtLeastIOS14: Bool {
-        if #available(iOS 14.0, *) {
-            return true
-        } else {
-            return false
-        }
-    }
 }
 
 private struct BurettePanel: View {

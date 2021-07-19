@@ -176,8 +176,17 @@ private struct SliderOverlayWithGeometry: View {
         }
         .offset(
             x: sliderGeometry.xOffset(geometry: geometry),
-            y: sliderGeometry.yOffset(geometry: geometry)
+            y: sliderGeometry.yOffset(geometry: geometry) + extraYOffset
         )
+    }
+
+    // in iOS 13 the slider is aligned at the center of the view
+    // rather than the top edge
+    private var extraYOffset: CGFloat {
+        if isAtLeastIOS14 {
+            return 0
+        }
+        return -geometry.size.height / 2
     }
 
     private var length: CGFloat {
