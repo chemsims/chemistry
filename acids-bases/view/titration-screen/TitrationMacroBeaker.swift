@@ -135,6 +135,9 @@ private struct TitrationMacroscopicBeaker: View {
         ) {
             EmptyView()
         }
+        .accessibility(label: Text("Macroscopic view of liquid in beaker which changes color"))
+        .accessibility(value: Text(accessibilityValue))
+        .accessibility(addTraits: .updatesFrequently)
     }
 
     private var color: RGBEquation {
@@ -160,6 +163,21 @@ private struct TitrationMacroscopicBeaker: View {
         case .strongTitrant: return CGFloat(strongModel.titrantAdded)
         case .weakTitrant: return CGFloat(weakModel.titrantAdded)
         }
+    }
+
+    private var accessibilityValue: String {
+        let inputFraction = equationInput / equationMaxInput
+        let start = "\(model.macroBeakerState.startColorName)"
+        let end = "\(model.macroBeakerState.endColorName)"
+
+        if inputFraction == 0 {
+            return start
+        } else if inputFraction == 1 {
+            return end
+        }
+
+        let percentage = inputFraction.percentage
+        return "\(percentage) between \(start) and \(end)"
     }
 }
 

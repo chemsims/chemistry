@@ -550,12 +550,28 @@ extension TitrationViewModel {
             }
         }
 
+        var startColorName: String {
+            switch self {
+            case .indicator: return "water (blue)"
+            default: return Self.indicatorName
+            }
+        }
+
         var endColor: RGB {
             switch self {
             case .indicator: return .maxIndicator
             default: return .equivalencePointLiquid
             }
         }
+
+        var endColorName: String {
+            switch self {
+            case .indicator: return Self.indicatorName
+            default: return "color at equivalence point \(RGB.equivalencePointName)"
+            }
+        }
+
+        private static let indicatorName = "indicator \(RGB.maxIndicatorName)"
     }
 
     enum BeakerState {

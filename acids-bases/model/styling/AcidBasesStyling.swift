@@ -16,5 +16,8 @@ extension RGB {
     static let indicator = RGB(r: 125, g: 122, b: 188)
 
     static let maxIndicator = RGB(r: 125, g: 122, b: 188)
+    static let maxIndicatorName = "purple"
+
     static let equivalencePointLiquid = RGB(r: 244, g: 164, b: 167)
+    static let equivalencePointName = "pink"
 }
