@@ -18,7 +18,7 @@ extension Unit {
     private var bundleId: String {
         switch self {
         case .reactionRates: return "com.reactions.unit.ReactionRates"
-        default: return ""
+        default: return "com.reactions.unit.Equilibrium"
         }
     }
 }

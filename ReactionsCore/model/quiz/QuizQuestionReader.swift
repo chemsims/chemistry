@@ -21,7 +21,7 @@ public struct QuizQuestionReader {
         from fileName: String,
         questionSet: QuestionSet,
         headerCols: Int,
-        bundle: Bundle = Bundle.main
+        bundle: Bundle? = nil // TODO - remove default argument
     ) -> QuizQuestionsList<QuestionSet>? {
         os_signpost(.begin, log: pointsOfInterest, name: "Read quiz")
         defer {
@@ -32,7 +32,7 @@ public struct QuizQuestionReader {
             from: fileName,
             questionSet: questionSet,
             headerCols: headerCols,
-            bundle: bundle
+            bundle: bundle ?? Bundle.main
         )
         if let quiz = result.option {
             return quiz
