@@ -5,12 +5,18 @@
 import SwiftUI
 import ReactionsCore
 
-struct ReactionEquilibriumRootView: View {
-    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<EquilibriumAppScreen, EquilibriumQuestionSet>>
+public struct ReactionEquilibriumRootView: View {
+
+    public init(model: RootNavigationViewModel<EquilibriumNavInjector>) {
+        self.model = model
+    }
+
+    @ObservedObject var model: RootNavigationViewModel<EquilibriumNavInjector>
+
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geo in
             makeView(
                 settings: EquilibriumAppLayoutSettings(

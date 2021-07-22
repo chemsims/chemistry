@@ -4,10 +4,12 @@
 
 import SwiftUI
 import ReactionRates
+import Equilibrium
 
 struct ContentView: View {
     var body: some View {
-        ReactionsRateRootView(model: .inMemory)
+        ReactionEquilibriumRootView(model: .inMemory)
+//        ReactionsRateRootView(model: .inMemory)
     }
 }
 

@@ -80,7 +80,7 @@ private struct SizedMoleculeScaleBasket: View {
 
     private var image: some View {
         ZStack(alignment: .bottom) {
-            Image("single-scale-basket")
+            Image("single-scale-basket", bundle: .equilibrium)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: settings.width)

@@ -129,7 +129,7 @@ private struct SingleArrow: View {
         .offset(x: -width / 2)
     }
     private var image: some View {
-        Image("top-right-harpoon")
+        Image("top-right-harpoon", bundle: .equilibrium)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: width)

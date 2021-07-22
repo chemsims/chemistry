@@ -22,13 +22,6 @@
     {
       "target" : {
         "containerPath" : "container:reactions-app.xcodeproj",
-        "identifier" : "575A88C725E43CD700AEE448",
-        "name" : "reactions-equilibriumTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:reactions-app.xcodeproj",
         "identifier" : "570ABA14265A736D008EC8CC",
         "name" : "acids-basesTests"
       }
@@ -38,6 +31,13 @@
         "containerPath" : "container:reactions-app.xcodeproj",
         "identifier" : "5748651126A96A33007FA314",
         "name" : "ReactionRatesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:reactions-app.xcodeproj",
+        "identifier" : "5700C11726A99C8800677777",
+        "name" : "EquilibriumTests"
       }
     }
   ],

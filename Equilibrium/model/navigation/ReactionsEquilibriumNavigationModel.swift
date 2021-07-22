@@ -5,15 +5,27 @@
 import SwiftUI
 import ReactionsCore
 
+extension RootNavigationViewModel where Injector == EquilibriumNavInjector {
+
+    public static let production = model(ProductionEquilibriumInjector())
+    public static let inMemory = model(InMemoryEquilibriumInjector())
+
+    private static func model(
+        _ injector: EquilibriumInjector
+    ) -> RootNavigationViewModel<EquilibriumNavInjector> {
+        ReactionsEquilibriumNavigationModel.model(using: injector)
+    }
+}
+
+public typealias EquilibriumNavInjector = AnyNavigationInjector<EquilibriumAppScreen, EquilibriumQuestionSet>
+
 struct ReactionsEquilibriumNavigationModel {
 
-    typealias Injector = AnyNavigationInjector<EquilibriumAppScreen, EquilibriumQuestionSet>
-
-    static func model(using injector: EquilibriumInjector) -> RootNavigationViewModel<Injector> {
+    static func model(using injector: EquilibriumInjector) -> RootNavigationViewModel<EquilibriumNavInjector> {
         RootNavigationViewModel(injector: makeInjector(using: injector))
     }
 
-    private static func makeInjector(using injector: EquilibriumInjector) -> Injector {
+    private static func makeInjector(using injector: EquilibriumInjector) -> EquilibriumNavInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
                 EquilibriumNavigationBehaviour(injector: injector)

@@ -167,7 +167,7 @@ private struct AddMoleculeContainerView: View {
     }
 
     private var image: some View {
-        Image(imageName)
+        Image(imageName, bundle: .equilibrium)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .rotationEffect(rotation)

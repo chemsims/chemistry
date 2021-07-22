@@ -52,7 +52,7 @@ private struct PumpWithGeometry: View {
 
             handle
 
-            Image("pump-base")
+            Image("pump-base", bundle: .equilibrium)
                 .resizable()
                 .frame(height: baseImageHeight)
                 .allowsHitTesting(false)
@@ -61,7 +61,7 @@ private struct PumpWithGeometry: View {
     }
 
     private var handle: some View {
-        Image("pump-handle")
+        Image("pump-handle", bundle: .equilibrium)
             .resizable()
             .offset(y: -baseShapeHeight)
             .frame(width: handleWidth, height: handleHeight)

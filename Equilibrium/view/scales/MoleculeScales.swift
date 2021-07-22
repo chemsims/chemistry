@@ -71,7 +71,7 @@ private struct SizedMoleculeScales: View {
     }
 
     private var stand: some View {
-        Image("scales-stand")
+        Image("scales-stand", bundle: .equilibrium)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .accessibility(hidden: true)
