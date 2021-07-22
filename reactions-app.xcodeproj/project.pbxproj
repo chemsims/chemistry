@@ -34,8 +34,6 @@
 		5710E21C2627237E00CF6FBE /* SolubleScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E21B2627237E00CF6FBE /* SolubleScreenElement.swift */; };
 		5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E22126272A3800CF6FBE /* ShakeText.swift */; };
 		5711603526831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711603426831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift */; };
-		5711DFC525C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */; };
-		5711DFCB25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFCA25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift */; };
 		5712155E258103A600E92A99 /* Rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5712155D258103A600E92A99 /* Rates.swift */; };
 		571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */; };
 		571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */; };
@@ -93,11 +91,6 @@
 		5736DC3A25F50D1A003FD2B4 /* GridMoleculesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3925F50D1A003FD2B4 /* GridMoleculesTests.swift */; };
 		5736DC4A25F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC4925F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift */; };
 		573779E826831DA900BAB6A1 /* TitrationSettingsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573779E726831DA900BAB6A1 /* TitrationSettingsExtension.swift */; };
-		5738AD9925AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD9825AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift */; };
-		5738AD9F25AF1611002D4EB7 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD9E25AF1611002D4EB7 /* Helpers.swift */; };
-		5738ADA325AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADA225AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift */; };
-		5738ADA725AF2713002D4EB7 /* EnumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADA625AF2713002D4EB7 /* EnumExtensions.swift */; };
-		5738ADAF25AF2907002D4EB7 /* ReactionModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADAE25AF2907002D4EB7 /* ReactionModelExtensions.swift */; };
 		5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0AC2664B2CD0007B09A /* ShakeContainerExtension.swift */; };
 		5739D0AF2664B65A0007B09A /* IntroRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0AE2664B65A0007B09A /* IntroRightStack.swift */; };
 		5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */; };
@@ -129,6 +122,19 @@
 		57473AF626218F45009B608D /* SoluteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473AF526218F45009B608D /* SoluteType.swift */; };
 		57473B0226218FAB009B608D /* SolubilityInputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473B0126218FAB009B608D /* SolubilityInputState.swift */; };
 		57473B0826218FBB009B608D /* SolubilityEquationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57473B0726218FBB009B608D /* SolubilityEquationState.swift */; };
+		5748012926A97BC4005C0F06 /* ReactionInputPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */; };
+		5748012A26A97BC7005C0F06 /* EnergyProfilePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */; };
+		5748012B26A97BCD005C0F06 /* ReactionInputLimitsWithoutC2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DD22A025B771A8003E6842 /* ReactionInputLimitsWithoutC2Tests.swift */; };
+		5748012C26A97BCD005C0F06 /* ReactionInputLimitsWithoutT2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DD22A625B7721C003E6842 /* ReactionInputLimitsWithoutT2Tests.swift */; };
+		5748012D26A97BD1005C0F06 /* ProductionQuizQuestionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFCA25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift */; };
+		5748012E26A97BD6005C0F06 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD9E25AF1611002D4EB7 /* Helpers.swift */; };
+		5748012F26A97BD6005C0F06 /* ZeroOrderReactionNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */; };
+		5748013026A97BD6005C0F06 /* SecondOrderNavigationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADA225AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift */; };
+		5748013126A97BD6005C0F06 /* FirstOrderNavigationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738AD9825AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift */; };
+		5748013226A97BD6005C0F06 /* RootNavigationModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */; };
+		5748013326A97BD6005C0F06 /* EnergyProfileNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DD22AC25B780DC003E6842 /* EnergyProfileNavigationTests.swift */; };
+		5748013426A97BDC005C0F06 /* ReactionModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADAE25AF2907002D4EB7 /* ReactionModelExtensions.swift */; };
+		5748013526A97BDC005C0F06 /* EnumExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738ADA625AF2713002D4EB7 /* EnumExtensions.swift */; };
 		5748651326A96A33007FA314 /* ReactionRates.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5748650A26A96A33007FA314 /* ReactionRates.framework */; };
 		5748651A26A96A33007FA314 /* ReactionRates.h in Headers */ = {isa = PBXBuildFile; fileRef = 5748650C26A96A33007FA314 /* ReactionRates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5748652126A96A41007FA314 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
@@ -267,7 +273,6 @@
 		574978342683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978332683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift */; };
 		574978362683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978352683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift */; };
 		574978382683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978372683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift */; };
-		5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */; };
 		574E54E5266B653100D6E05E /* gaseous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E4266B653100D6E05E /* gaseous-quiz.csv */; };
 		574E54E9266B666F00D6E05E /* aqueous-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 574E54E8266B666F00D6E05E /* aqueous-quiz.csv */; };
 		57567B422605F156009711D4 /* GridElementSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B412605F156009711D4 /* GridElementSetter.swift */; };
@@ -307,7 +312,6 @@
 		575FE7DF26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */; };
 		575FE7E326A5C72200E6B316 /* TitrationScreenPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7E226A5C72200E6B316 /* TitrationScreenPersistence.swift */; };
 		575FE7E526A5DD5400E6B316 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 575FE7E426A5DD5400E6B316 /* GoogleService-Info.plist */; };
-		5760536B25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */; };
 		5766BC99269A315D0074A04B /* TitrationReactionDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766BC98269A315D0074A04B /* TitrationReactionDefinitionTests.swift */; };
 		5766BC9B269A3CB40074A04B /* AcidReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766BC9A269A3CB40074A04B /* AcidReactionDefinition.swift */; };
 		57686A8B2600CF65005BD328 /* GaseousReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686A8A2600CF65005BD328 /* GaseousReactionScreen.swift */; };
@@ -464,7 +468,6 @@
 		57A5F078263EA0C8002F23DE /* QuizQuestionReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A5F077263EA0C8002F23DE /* QuizQuestionReaderTests.swift */; };
 		57A666D125E5874200F51FDC /* EquilibriumReactionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A666D025E5874200F51FDC /* EquilibriumReactionEquation.swift */; };
 		57A7CE012636EB6100D83731 /* SolubilityScreenDemoToAddSoluteRaceConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A7CE002636EB6100D83731 /* SolubilityScreenDemoToAddSoluteRaceConditionTests.swift */; };
-		57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */; };
 		57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */; };
 		57ABDC3925EBF9300078A82B /* AqueousReactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */; };
 		57ABDC3F25EBFA230078A82B /* ReactionDropDownSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */; };
@@ -564,9 +567,6 @@
 		57DAE4E42577C53B006D945B /* EquationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4E32577C53B006D945B /* EquationSettings.swift */; };
 		57DAE4EE2577C942006D945B /* SubscriptViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4ED2577C942006D945B /* SubscriptViews.swift */; };
 		57DB304425F74D050070E96F /* AddMoleculeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DB304325F74D050070E96F /* AddMoleculeView.swift */; };
-		57DD22A125B771A8003E6842 /* ReactionInputLimitsWithoutC2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DD22A025B771A8003E6842 /* ReactionInputLimitsWithoutC2Tests.swift */; };
-		57DD22A725B7721C003E6842 /* ReactionInputLimitsWithoutT2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DD22A625B7721C003E6842 /* ReactionInputLimitsWithoutT2Tests.swift */; };
-		57DD22AD25B780DC003E6842 /* EnergyProfileNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DD22AC25B780DC003E6842 /* EnergyProfileNavigationTests.swift */; };
 		57DDAC1A25E4FD8100B535A7 /* AqueousReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC1925E4FD8100B535A7 /* AqueousReactionScreen.swift */; };
 		57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */; };
 		57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */; };
@@ -4252,19 +4252,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5760536B25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift in Sources */,
-				57DD22A725B7721C003E6842 /* ReactionInputLimitsWithoutT2Tests.swift in Sources */,
-				57DD22AD25B780DC003E6842 /* EnergyProfileNavigationTests.swift in Sources */,
-				5738AD9F25AF1611002D4EB7 /* Helpers.swift in Sources */,
-				5711DFC525C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift in Sources */,
-				57AA011E25A87310001131A0 /* ReactionInputPersistenceTests.swift in Sources */,
-				57DD22A125B771A8003E6842 /* ReactionInputLimitsWithoutC2Tests.swift in Sources */,
-				5738ADAF25AF2907002D4EB7 /* ReactionModelExtensions.swift in Sources */,
-				5738ADA325AF1AF2002D4EB7 /* SecondOrderNavigationModelTests.swift in Sources */,
-				5738ADA725AF2713002D4EB7 /* EnumExtensions.swift in Sources */,
-				5738AD9925AF159A002D4EB7 /* FirstOrderNavigationModelTests.swift in Sources */,
-				5711DFCB25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift in Sources */,
-				5749811B25A51FD500EEE42B /* RootNavigationModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4546,17 +4533,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5748013226A97BD6005C0F06 /* RootNavigationModelTest.swift in Sources */,
 				5748659126A96C7D007FA314 /* ReactionComparisonViewModelTests.swift in Sources */,
 				5748658D26A96C7D007FA314 /* EnergyProfileViewModelTests.swift in Sources */,
 				5748659326A96C7D007FA314 /* ReactionInputTests.swift in Sources */,
+				5748013526A97BDC005C0F06 /* EnumExtensions.swift in Sources */,
+				5748012926A97BC4005C0F06 /* ReactionInputPersistenceTests.swift in Sources */,
 				5748659526A96CDF007FA314 /* NavigationTestMethods.swift in Sources */,
+				5748012C26A97BCD005C0F06 /* ReactionInputLimitsWithoutT2Tests.swift in Sources */,
+				5748013426A97BDC005C0F06 /* ReactionModelExtensions.swift in Sources */,
 				5748659726A96CDF007FA314 /* UserDefaultsExtensions.swift in Sources */,
+				5748012D26A97BD1005C0F06 /* ProductionQuizQuestionsTests.swift in Sources */,
 				5748659026A96C7D007FA314 /* LimitConstraintsTests.swift in Sources */,
+				5748013026A97BD6005C0F06 /* SecondOrderNavigationModelTests.swift in Sources */,
 				5748659426A96CDF007FA314 /* NavigationExtensions.swift in Sources */,
+				5748013126A97BD6005C0F06 /* FirstOrderNavigationModelTests.swift in Sources */,
+				5748012E26A97BD6005C0F06 /* Helpers.swift in Sources */,
+				5748012A26A97BC7005C0F06 /* EnergyProfilePersistenceTests.swift in Sources */,
+				5748013326A97BD6005C0F06 /* EnergyProfileNavigationTests.swift in Sources */,
 				5748659226A96C7D007FA314 /* EnergyProfileChartInputTests.swift in Sources */,
 				5748659826A96CDF007FA314 /* CommonTestAssertions.swift in Sources */,
+				5748012B26A97BCD005C0F06 /* ReactionInputLimitsWithoutC2Tests.swift in Sources */,
 				5748658E26A96C7D007FA314 /* ReactionFilingViewModelTests.swift in Sources */,
 				5748659626A96CDF007FA314 /* QuizTestMethods.swift in Sources */,
+				5748012F26A97BD6005C0F06 /* ZeroOrderReactionNavigationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
