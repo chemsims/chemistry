@@ -5,7 +5,7 @@
 import Foundation
 
 import XCTest
-@testable import reactions_app
+@testable import ReactionRates
 
 class ReactionInputTests: XCTestCase {
 

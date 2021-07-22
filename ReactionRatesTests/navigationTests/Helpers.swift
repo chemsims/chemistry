@@ -4,7 +4,7 @@
 
 import XCTest
 import ReactionsCore
-@testable import reactions_app
+@testable import ReactionRates
 
 func doTestStatementsAreReappliedOnBack(
     model: ZeroOrderReactionViewModel,

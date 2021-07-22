@@ -4,30 +4,30 @@
 
 import XCTest
 import ReactionsCore
-@testable import reactions_app
+@testable import ReactionRates
 
-class FirstOrderNavigationModelTests: XCTestCase {
+class SecondOrderNavigationModelTests: XCTestCase {
 
     func testStatementsAreReappliedOnBack() {
-        let model = FirstOrderReactionViewModel()
+        let model = SecondOrderReactionViewModel()
         let nav = navModel(model)
         doTestStatementsAreReappliedOnBack(model: model, navigation: nav)
     }
 
     func testHighlightedElementsAreReappliedOnBack() {
-        let model = FirstOrderReactionViewModel()
+        let model = SecondOrderReactionViewModel()
         let nav = navModel(model)
         doTestHighlightedElementsAreReappliedOnBack(model: model, navigation: nav)
     }
 
     func testHalfLifeIsHighlightedWhenItIsBeingExplained() {
-        let model = FirstOrderReactionViewModel()
+        let model = SecondOrderReactionViewModel()
         let nav = navModel(model)
 
         XCTAssertEqual(model.highlightedElements, [])
 
         nav.nextUntil {
-            $0.firstLine.starts(with: "Half-life")
+            $0.statement.first!.content.first!.content.starts(with: "Half-life")
         }
 
         XCTAssertEqual(model.highlightedElements, [.halfLifeEquation])
@@ -37,23 +37,10 @@ class FirstOrderNavigationModelTests: XCTestCase {
         XCTAssertEqual(model.highlightedElements, [.halfLifeEquation])
     }
 
-    func testLinearChartIsHighlightedWhenItIsBeingExplained() {
-        let model = FirstOrderReactionViewModel()
-        let nav = navModel(model)
-
-        nav.nextUntil { $0.firstLine.starts(with: "For the previous zero order") }
-
-        XCTAssertEqual(
-            model.highlightedElements.sorted(),
-            [.concentrationChart, .secondaryChart].sorted(),
-            model.firstLine
-        )
-    }
-
     /// This test could be a little more fragile than the others, so it's worth keeping the
     /// other tests to test more specific highlighting states (e.g., that half-life is highlighted)
     func testFlowOfHighlightedElementsAndStatements() {
-        let model = FirstOrderReactionViewModel()
+        let model = SecondOrderReactionViewModel()
         let nav = navModel(model)
 
         func checkElements(_ expected: [OrderedReactionScreenElement]) {
@@ -68,40 +55,38 @@ class FirstOrderNavigationModelTests: XCTestCase {
             nav.nextUntil { $0.firstLine.starts(with: startOfLine) }
         }
 
-        nextUntil("The rate constant k")
+        nextUntil("For this reaction,")
         checkElements([.rateConstantEquation])
 
         nav.next()
-        checkElements([.rateConstantEquation])
-
-        nav.next()
-        checkStartOfLine("For a reaction with one reactant")
-        checkElements([.rateEquation, .concentrationChart])
+        checkStartOfLine("For a reaction with one reactant it's usually")
+        checkElements([.concentrationChart, .rateEquation])
 
         nav.next()
         checkStartOfLine("Half-life")
         checkElements([.halfLifeEquation])
 
-        nav.next()
-        checkElements([])
-
-        nextUntil("For the previous zero order")
+        nextUntil("For this second order reaction, rate")
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()
-        checkStartOfLine("For this first order reaction, rate")
-        checkElements([.concentrationChart, .secondaryChart])
-
-        nav.next()
-        checkStartOfLine("Notice how [A] drops")
+        checkStartOfLine("Notice how [A]")
         checkElements([.rateCurveLhs])
 
         nav.next()
-        checkStartOfLine("For simplification")
+        checkStartOfLine("Subsequently, towards the end")
+        checkElements([.rateCurveRhs])
+
+        nav.next()
+        checkStartOfLine("For example,")
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()
-        checkStartOfLine("For this first order reaction, the resultant")
+        checkStartOfLine("Since 0.1 is less")
+        checkElements([.concentrationChart, .secondaryChart])
+
+        nav.next()
+        checkStartOfLine("For this second order reaction")
         checkElements([.concentrationChart, .secondaryChart])
 
         nav.next()
@@ -110,9 +95,9 @@ class FirstOrderNavigationModelTests: XCTestCase {
     }
 
     private func navModel(
-        _ viewModel: FirstOrderReactionViewModel
+        _ viewModel: SecondOrderReactionViewModel
     ) -> NavigationModel<ReactionState> {
-        let nav = FirstOrderReactionNavigation.model(
+        let nav = SecondOrderReactionNavigation.model(
             reaction: viewModel,
             persistence: InMemoryReactionInputPersistence()
         )

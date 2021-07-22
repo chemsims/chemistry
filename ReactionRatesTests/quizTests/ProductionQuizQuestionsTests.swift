@@ -4,7 +4,7 @@
 
 import XCTest
 import ReactionsCore
-@testable import reactions_app
+@testable import ReactionRates
 
 // Runs tests on the production quiz questions to catch easy mistakes
 class ProductionQuizQuestionsTests: XCTestCase {

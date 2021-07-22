@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-@testable import reactions_app
+@testable import ReactionRates
 
 extension OrderedReactionScreenElement: Comparable {
 
