@@ -19,8 +19,8 @@ private enum TopLevelScreen: CaseIterable {
         NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: appScreen,
-                image: .framework(navImage, unit: .reactionRates),
-                selectedImage: .framework(navImageSelected, unit: .reactionRates),
+                image: .framework(navImage, bundle: .reactionRates),
+                selectedImage: .framework(navImageSelected, bundle: .reactionRates),
                 label: label
             ),
             firstSecondaryIcon: NavigationIcon(

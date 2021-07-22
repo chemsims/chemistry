@@ -7,11 +7,16 @@ import ReactionsCore
 
 public struct ReactionEquilibriumRootView: View {
 
-    public init(model: RootNavigationViewModel<EquilibriumNavInjector>) {
+    public init(
+        model: RootNavigationViewModel<EquilibriumNavInjector>,
+        unitSelectionIsShowing: Binding<Bool>
+    ) {
         self.model = model
+        self._unitSelectionIsShowing = unitSelectionIsShowing
     }
 
     @ObservedObject var model: RootNavigationViewModel<EquilibriumNavInjector>
+    @Binding var unitSelectionIsShowing: Bool
 
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -36,7 +41,9 @@ public struct ReactionEquilibriumRootView: View {
             shareSettings: .reactionEquilibrium,
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
-            menuHPadding: settings.menuHPadding
+            menuHPadding: settings.menuHPadding,
+            unitSelectionIsShowing: $unitSelectionIsShowing
+
         )
     }
 }

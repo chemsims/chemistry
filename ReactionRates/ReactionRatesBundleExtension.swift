@@ -6,5 +6,5 @@ import Foundation
 import ReactionsCore
 
 extension Bundle {
-    static let reactionRates = Unit.reactionRates.bundle
+    static let reactionRates = Bundle(identifier: "com.reactions.unit.ReactionRates")
 }

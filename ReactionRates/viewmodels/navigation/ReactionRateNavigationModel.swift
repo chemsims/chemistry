@@ -245,7 +245,7 @@ private class QuizScreenProvider: ScreenProvider {
             questions: questions,
             persistence: persistence,
             analytics: analytics,
-            unit: .reactionRates
+            bundle: .reactionRates
         )
         viewModel.nextScreen = next
         viewModel.prevScreen = prev

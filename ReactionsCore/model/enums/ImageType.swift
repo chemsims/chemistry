@@ -11,7 +11,7 @@ public enum ImageType {
     case application(_ name: String)
 
     /// Image provided by framework
-    case framework(_ name: String, unit: Unit)
+    case framework(_ name: String, bundle: Bundle?)
 
     /// Image provided by the core framework
     case core(_ name: CoreImage)

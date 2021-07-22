@@ -13,8 +13,8 @@ struct ReactionEquilibriumNavigationRows {
     static let integration = NavigationRow(
         primaryIcon: NavigationIcon<EquilibriumAppScreen>(
             screen: .integrationActivity,
-            image: .framework("integrationicon", unit: .equilibrium),
-            selectedImage: .framework("integrationicon-pressed", unit: .equilibrium),
+            image: .framework("integrationicon", bundle: .equilibrium),
+            selectedImage: .framework("integrationicon-pressed", bundle: .equilibrium),
             label: "Equilibrium & rates integration"
         ),
         firstSecondaryIcon: nil,
@@ -29,8 +29,8 @@ private enum TopLevelScreen: CaseIterable {
         NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: screen,
-                image: .framework(icon, unit: .equilibrium),
-                selectedImage: .framework("\(icon)-pressed", unit: .equilibrium),
+                image: .framework(icon, bundle: .equilibrium),
+                selectedImage: .framework("\(icon)-pressed", bundle: .equilibrium),
                 label: label
             ),
             firstSecondaryIcon: NavigationIcon(

@@ -183,7 +183,7 @@ private class QuizScreenProvider: ScreenProvider {
             questions: questions,
             persistence: persistence,
             analytics: analytics,
-            unit: .equilibrium
+            bundle: .equilibrium
         )
         self.model.nextScreen = next
         self.model.prevScreen = prev

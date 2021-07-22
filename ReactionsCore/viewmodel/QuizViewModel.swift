@@ -24,11 +24,11 @@ public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: Observ
         questions: QuizQuestionsList<QP.QuestionSet>,
         persistence: QP,
         analytics: Analytics,
-        unit: Unit,
+        bundle: Bundle?,
         restoreLastPersistedQuiz: Bool = true
     ) {
         let displayQuestions = questions.createQuestions()
-        self.unit = unit
+        self.bundle = bundle
         self.allQuestions = displayQuestions
         self.persistence = persistence
         self.questionSet = questions.questionSet
@@ -70,7 +70,7 @@ public class QuizViewModel<QP: QuizPersistence, Analytics: AppAnalytics>: Observ
     /// - Note: This flag will only take effect for debug builds
     @Published var runDebugMode = false
 
-    let unit: Unit
+    let bundle: Bundle?
 
     // MARK: Public computed properties
     var selectedAnswer: QuizAnswerInput? {
