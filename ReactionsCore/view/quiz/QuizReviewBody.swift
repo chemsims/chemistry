@@ -53,7 +53,8 @@ struct QuizReviewBody<QP: QuizPersistence, Analytics: AppAnalytics>: View where 
             answer: model.selectedAnswer(id: question.id)!,
             settings: settings,
             questionNumber: index + 1,
-            totalQuestions: model.answeredQuestions.count
+            totalQuestions: model.answeredQuestions.count,
+            unit: model.unit
         )
         .fixedSize(horizontal: false, vertical: true)
     }
@@ -68,6 +69,8 @@ private struct QuestionReviewCard: View {
     let questionNumber: Int
     let totalQuestions: Int
 
+    let unit: Unit
+
     @State private var explanationIsExpanded: Bool = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -80,7 +83,8 @@ private struct QuestionReviewCard: View {
                 QuizQuestionView(
                     question: question,
                     settings: settings,
-                    tableWidth: settings.tableWidthReviewCard
+                    tableWidth: settings.tableWidthReviewCard,
+                    unit: unit
                 )
                 .accessibility(label: Text(label))
 

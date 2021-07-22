@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum ReactionsRateQuestionSet: String, CaseIterable {
+public enum ReactionsRateQuestionSet: String, CaseIterable {
     case zeroOrder,
          firstOrder,
          secondOrder,

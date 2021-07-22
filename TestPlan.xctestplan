@@ -22,13 +22,6 @@
     {
       "target" : {
         "containerPath" : "container:reactions-app.xcodeproj",
-        "identifier" : "57035EE1255BFE5200DB3A19",
-        "name" : "reactions-appTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:reactions-app.xcodeproj",
         "identifier" : "575A88C725E43CD700AEE448",
         "name" : "reactions-equilibriumTests"
       }

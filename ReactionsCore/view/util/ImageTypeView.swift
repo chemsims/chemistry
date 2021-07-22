@@ -9,6 +9,7 @@ extension Image {
     init(_ image: ImageType) {
         switch image {
         case let .application(name): self.init(name)
+        case let .framework(name, unit): self.init(name, bundle: unit.bundle)
         case let .core(name): self.init(name.name, bundle: .reactionsCore)
         case let .system(name): self.init(systemName: name)
         }

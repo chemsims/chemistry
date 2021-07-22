@@ -5,14 +5,18 @@
 import SwiftUI
 import ReactionsCore
 
-struct ReactionsRateRootView: View {
+public struct ReactionsRateRootView: View {
+
+    public init(model: RootNavigationViewModel<ReactionRatesInjector>) {
+        self.model = model
+    }
 
     @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>>
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             makeView(
                 settings: OrderedReactionLayoutSettings(

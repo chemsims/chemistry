@@ -2,13 +2,12 @@
 // Reactions App
 //
 
-
 import SwiftUI
+import ReactionRates
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        ReactionsRateRootView(model: .inMemory)
     }
 }
 

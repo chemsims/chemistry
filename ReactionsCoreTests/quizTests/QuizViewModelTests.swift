@@ -248,7 +248,8 @@ class QuizViewModelTests: XCTestCase {
         QuizViewModel(
             questions: questions,
             persistence: persistence,
-            analytics: NoOpAppAnalytics<Int, Int>()
+            analytics: NoOpAppAnalytics<Int, Int>(),
+            unit: .reactionRates
         )
     }
 

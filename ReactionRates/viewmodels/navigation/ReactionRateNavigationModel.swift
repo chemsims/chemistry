@@ -3,18 +3,29 @@
 //
 
 import SwiftUI
-import StoreKit
 import ReactionsCore
 
-typealias ConcreteInjector = AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>
+public typealias ReactionRatesInjector = AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>
+
+extension RootNavigationViewModel where Injector == ReactionRatesInjector {
+
+    public static let production = model(using: ProductionInjector())
+    public static let inMemory = model(using: InMemoryInjector())
+
+    private static func model(
+        using injector: ReactionRates.Injector
+    ) -> RootNavigationViewModel<ReactionRatesInjector> {
+        ReactionRateNavigationModel.navigationModel(using: injector)
+    }
+}
 
 struct ReactionRateNavigationModel {
 
-    static func navigationModel(using injector: Injector) -> RootNavigationViewModel<ConcreteInjector> {
+    static func navigationModel(using injector: Injector) -> RootNavigationViewModel<ReactionRatesInjector> {
         RootNavigationViewModel(injector: navigationInjector(using: injector))
     }
 
-    private static func navigationInjector(using injector: Injector) -> ConcreteInjector {
+    private static func navigationInjector(using injector: Injector) -> ReactionRatesInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
                 ReactionsRateNavigationBehaviour(injector: injector)
@@ -230,7 +241,12 @@ private class QuizScreenProvider: ScreenProvider {
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) {
-        self.viewModel = QuizViewModel(questions: questions, persistence: persistence, analytics: analytics)
+        self.viewModel = QuizViewModel(
+            questions: questions,
+            persistence: persistence,
+            analytics: analytics,
+            unit: .reactionRates
+        )
         viewModel.nextScreen = next
         viewModel.prevScreen = prev
     }

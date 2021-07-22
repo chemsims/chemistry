@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum AppScreen: String, CaseIterable {
+public enum AppScreen: String, CaseIterable {
     case zeroOrderReaction,
          zeroOrderReactionQuiz,
          zeroOrderFiling,

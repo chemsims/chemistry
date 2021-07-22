@@ -17,7 +17,8 @@ struct QuizQuestionsBody<QP: QuizPersistence, Analytics: AppAnalytics>: View whe
                 QuizQuestionView(
                     question: model.currentQuestion,
                     settings: settings,
-                    tableWidth: settings.tableWidthQuestionCard
+                    tableWidth: settings.tableWidthQuestionCard,
+                    unit: model.unit
                 )
 
                 answers
