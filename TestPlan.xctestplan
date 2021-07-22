@@ -39,6 +39,13 @@
         "identifier" : "570ABA14265A736D008EC8CC",
         "name" : "acids-basesTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:reactions-app.xcodeproj",
+        "identifier" : "5748651126A96A33007FA314",
+        "name" : "ReactionRatesTests"
+      }
     }
   ],
   "version" : 1
