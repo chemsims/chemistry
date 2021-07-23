@@ -217,6 +217,18 @@
 		573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2C263AADBD00379A1D /* StringUtilTests.swift */; };
 		573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2E263AB81D00379A1D /* ViewExtensions.swift */; };
 		574103DF2642966300E6EDCB /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F82578CE7E00EF90A1 /* Tooltip.swift */; };
+		5742D1AD26AAAAC900049FCC /* UnitLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1AC26AAAAC900049FCC /* UnitLocker.swift */; };
+		5742D1B026AAB1A300049FCC /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 5742D1AF26AAB1A300049FCC /* SwiftKeychainWrapper */; };
+		5742D1B226AAB39F00049FCC /* SKProductExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1B126AAB39F00049FCC /* SKProductExtension.swift */; };
+		5742D1B426AABA0F00049FCC /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1B326AABA0F00049FCC /* PurchaseManager.swift */; };
+		5742D1B626AAEBAA00049FCC /* ConcreteStoreObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1B526AAEBAA00049FCC /* ConcreteStoreObserver.swift */; };
+		5742D1BA26AAF53600049FCC /* StoreObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1B926AAF53600049FCC /* StoreObserver.swift */; };
+		5742D1BC26AAF61100049FCC /* DebugStoreObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1BB26AAF61100049FCC /* DebugStoreObserver.swift */; };
+		5742D1BF26AAF68200049FCC /* ProductLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1BE26AAF68200049FCC /* ProductLoader.swift */; };
+		5742D1C126AAF6A800049FCC /* ConcreteProductLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C026AAF6A800049FCC /* ConcreteProductLoader.swift */; };
+		5742D1C426AAF73D00049FCC /* UnitPurchaseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C326AAF73D00049FCC /* UnitPurchaseState.swift */; };
+		5742D1C626AAF7F200049FCC /* APChemInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C526AAF7F200049FCC /* APChemInjector.swift */; };
+		5742D1C826AAF8DE00049FCC /* DebugProductLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C726AAF8DE00049FCC /* DebugProductLoader.swift */; };
 		5743660D266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660C266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift */; };
 		5743660F266E7CD8007F0410 /* BufferChartStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660E266E7CD8007F0410 /* BufferChartStack.swift */; };
 		57436611266E7EF4007F0410 /* ICETable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F31825EA601B00AEE0D8 /* ICETable.swift */; };
@@ -1018,6 +1030,17 @@
 		573F16972584B277001CE039 /* QuizOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizOption.swift; sourceTree = "<group>"; };
 		573F169C2584C035001CE039 /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
 		573F16A625852D5D001CE039 /* BeakerReactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerReactionState.swift; sourceTree = "<group>"; };
+		5742D1AC26AAAAC900049FCC /* UnitLocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitLocker.swift; sourceTree = "<group>"; };
+		5742D1B126AAB39F00049FCC /* SKProductExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKProductExtension.swift; sourceTree = "<group>"; };
+		5742D1B326AABA0F00049FCC /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		5742D1B526AAEBAA00049FCC /* ConcreteStoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteStoreObserver.swift; sourceTree = "<group>"; };
+		5742D1B926AAF53600049FCC /* StoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreObserver.swift; sourceTree = "<group>"; };
+		5742D1BB26AAF61100049FCC /* DebugStoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugStoreObserver.swift; sourceTree = "<group>"; };
+		5742D1BE26AAF68200049FCC /* ProductLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLoader.swift; sourceTree = "<group>"; };
+		5742D1C026AAF6A800049FCC /* ConcreteProductLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteProductLoader.swift; sourceTree = "<group>"; };
+		5742D1C326AAF73D00049FCC /* UnitPurchaseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitPurchaseState.swift; sourceTree = "<group>"; };
+		5742D1C526AAF7F200049FCC /* APChemInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APChemInjector.swift; sourceTree = "<group>"; };
+		5742D1C726AAF8DE00049FCC /* DebugProductLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugProductLoader.swift; sourceTree = "<group>"; };
 		5743660C266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferWeakSubstanceComponents.swift; sourceTree = "<group>"; };
 		5743660E266E7CD8007F0410 /* BufferChartStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferChartStack.swift; sourceTree = "<group>"; };
 		574386D926654C6700B11C34 /* IntroEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroEquationView.swift; sourceTree = "<group>"; };
@@ -1572,6 +1595,7 @@
 			files = (
 				574865BB26A976DD007FA314 /* ReactionsCore.framework in Frameworks */,
 				5700C1B126A9A41100677777 /* Equilibrium.framework in Frameworks */,
+				5742D1B026AAB1A300049FCC /* SwiftKeychainWrapper in Frameworks */,
 				574865B126A96E69007FA314 /* ReactionRates.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1662,7 +1686,10 @@
 		5700C1BB26A9B31700677777 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5742D1AB26AAAAB100049FCC /* purchasing */,
 				5700C1BC26A9B32200677777 /* Unit.swift */,
+				5742D1C326AAF73D00049FCC /* UnitPurchaseState.swift */,
+				5742D1C526AAF7F200049FCC /* APChemInjector.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2248,6 +2275,38 @@
 				57778B8425937B5900254262 /* questions */,
 			);
 			path = quiz;
+			sourceTree = "<group>";
+		};
+		5742D1AB26AAAAB100049FCC /* purchasing */ = {
+			isa = PBXGroup;
+			children = (
+				5742D1BD26AAF66000049FCC /* product-loader */,
+				5742D1B826AAF4D200049FCC /* store-observer */,
+				5742D1AC26AAAAC900049FCC /* UnitLocker.swift */,
+				5742D1B126AAB39F00049FCC /* SKProductExtension.swift */,
+				5742D1B326AABA0F00049FCC /* PurchaseManager.swift */,
+			);
+			path = purchasing;
+			sourceTree = "<group>";
+		};
+		5742D1B826AAF4D200049FCC /* store-observer */ = {
+			isa = PBXGroup;
+			children = (
+				5742D1B926AAF53600049FCC /* StoreObserver.swift */,
+				5742D1B526AAEBAA00049FCC /* ConcreteStoreObserver.swift */,
+				5742D1BB26AAF61100049FCC /* DebugStoreObserver.swift */,
+			);
+			path = "store-observer";
+			sourceTree = "<group>";
+		};
+		5742D1BD26AAF66000049FCC /* product-loader */ = {
+			isa = PBXGroup;
+			children = (
+				5742D1BE26AAF68200049FCC /* ProductLoader.swift */,
+				5742D1C026AAF6A800049FCC /* ConcreteProductLoader.swift */,
+				5742D1C726AAF8DE00049FCC /* DebugProductLoader.swift */,
+			);
+			path = "product-loader";
 			sourceTree = "<group>";
 		};
 		57436610266E7D61007F0410 /* table */ = {
@@ -4119,6 +4178,9 @@
 				5700C1B426A9A41100677777 /* PBXTargetDependency */,
 			);
 			name = APChemistry;
+			packageProductDependencies = (
+				5742D1AF26AAB1A300049FCC /* SwiftKeychainWrapper */,
+			);
 			productName = APChemistry;
 			productReference = 5748659D26A96E55007FA314 /* APChemistry.app */;
 			productType = "com.apple.product-type.application";
@@ -4267,6 +4329,7 @@
 			mainGroup = 571D6A33255A780700F4E635;
 			packageReferences = (
 				5711DFD825C46DD100B28E45 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				5742D1AE26AAB1A300049FCC /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 			);
 			productRefGroup = 571D6A3D255A780700F4E635 /* Products */;
 			projectDirPath = "";
@@ -4865,10 +4928,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5742D1B226AAB39F00049FCC /* SKProductExtension.swift in Sources */,
+				5742D1C426AAF73D00049FCC /* UnitPurchaseState.swift in Sources */,
+				5742D1C826AAF8DE00049FCC /* DebugProductLoader.swift in Sources */,
+				5742D1B626AAEBAA00049FCC /* ConcreteStoreObserver.swift in Sources */,
+				5742D1B426AABA0F00049FCC /* PurchaseManager.swift in Sources */,
+				5742D1C126AAF6A800049FCC /* ConcreteProductLoader.swift in Sources */,
 				5700C1B826A9AA5400677777 /* UnitSelection.swift in Sources */,
+				5742D1BA26AAF53600049FCC /* StoreObserver.swift in Sources */,
 				574865A026A96E55007FA314 /* AppDelegate.swift in Sources */,
 				574865A226A96E55007FA314 /* SceneDelegate.swift in Sources */,
+				5742D1AD26AAAAC900049FCC /* UnitLocker.swift in Sources */,
+				5742D1BF26AAF68200049FCC /* ProductLoader.swift in Sources */,
+				5742D1C626AAF7F200049FCC /* APChemInjector.swift in Sources */,
 				5700C1BD26A9B32200677777 /* Unit.swift in Sources */,
+				5742D1BC26AAF61100049FCC /* DebugStoreObserver.swift in Sources */,
 				5700C1BA26A9AAA100677777 /* UnitCard.swift in Sources */,
 				5700C1BF26A9C25100677777 /* APChemRootView.swift in Sources */,
 			);
@@ -6105,9 +6179,22 @@
 				minimumVersion = 7.5.0;
 			};
 		};
+		5742D1AE26AAB1A300049FCC /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5742D1AF26AAB1A300049FCC /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5742D1AE26AAB1A300049FCC /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
+		};
 		57BDFF5726416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5711DFD825C46DD100B28E45 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

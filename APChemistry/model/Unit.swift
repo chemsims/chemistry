@@ -14,6 +14,10 @@ enum Unit: String, Identifiable {
         self.rawValue
     }
 
+    var inAppPurchaseID: String {
+        self.rawValue
+    }
+
     var info: UnitInfo {
         switch self {
         case .reactionRates: return .reactionRates
