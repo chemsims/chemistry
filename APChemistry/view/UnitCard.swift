@@ -4,22 +4,30 @@
 
 import SwiftUI
 import ReactionsCore
+import StoreKit
 
 struct UnitCard: View {
 
-    let unit: UnitInfo
+    let unit: UnitWithState
+    let buyUnit: () -> Void
     let layout: APChemLayoutSettings
 
     var body: some View {
-        HStack(alignment: .top) {
-            image
+        VStack(spacing: 10) {
+            HStack(alignment: .top) {
+                image
 
-            VStack(alignment: .leading, spacing: layout.cardTextVerticalSpacing) {
-                Text(unit.title)
-                    .font(.title)
-                Text(unit.description)
+                VStack(alignment: .leading, spacing: layout.cardTextVerticalSpacing) {
+                    Text(unit.unit.info.title)
+                        .font(.title)
+                    Text(unit.unit.info.description)
+                }
+                Spacer(minLength: 0)
             }
-            Spacer(minLength: 0)
+
+            if unit.state != .purchased {
+                buyButton
+            }
         }
         .padding()
         .frame(width: layout.unitCardWidth)
@@ -31,7 +39,7 @@ struct UnitCard: View {
     }
 
     private var image: some View {
-        Image(unit.image)
+        Image(unit.unit.info.image)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .mask(RoundedRectangle(cornerRadius: layout.cardIconCornerRadius))
@@ -39,30 +47,130 @@ struct UnitCard: View {
     }
 }
 
+// MARK: - Buy button
+extension UnitCard {
+
+    private var buyButton: some View {
+        BuyButton(
+            cornerRadius: layout.cardCornerRadius,
+            sideColor: buyButtonBorderColor,
+            faceColor: buyButtonColor,
+            text: buyButtonString,
+            action: buyUnit
+        )
+        .foregroundColor(buyButtonFontColor)
+        .frame(height: 0.5 * layout.cardIconSize)
+        .compositingGroup()
+        .opacity(buyButtonLoading ? 0.5 : 1)
+        .disabled(!isActive)
+    }
+
+    private var isActive: Bool {
+        switch unit.state {
+        case .readyForPurchase, .failedToLoadProduct: return true
+        default: return false
+        }
+    }
+
+    private var buyButtonFontColor: Color {
+        if buyButtonError {
+            return .buyButtonErrorFont
+        }
+        return .buyButtonFont
+    }
+
+
+    private var buyButtonColor: Color {
+        if buyButtonError {
+            return .buyButtonErrorBackground
+        }
+        return .buyButtonBackground
+    }
+
+    private var buyButtonBorderColor: Color {
+        if buyButtonError {
+            return .buyButtonErrorBorder
+        }
+        return .buyButtonBorder
+    }
+
+    private var buyButtonLoading: Bool {
+        switch unit.state {
+        case .deferred, .loadingProduct, .purchasing:
+            return true
+        default: return false
+        }
+    }
+
+    private var buyButtonError: Bool {
+        unit.state == .failedToLoadProduct
+    }
+
+    private var buyButtonString: String {
+        switch unit.state {
+        case .deferred: return "Awaiting approval..."
+        case .purchasing: return "Unlocking..."
+        case .loadingProduct: return "Connecting to store..."
+        case .failedToLoadProduct: return "Cannot connect to store"
+        case let .readyForPurchase(product):
+            let price = product.regularPrice.map {
+                " for \($0)"
+            } ?? ""
+
+            return "Unlock now\(price)"
+        default: return ""
+        }
+    }
+
+
+}
 
 struct UnitCard_Previews: PreviewProvider {
+
     static var previews: some View {
         GeometryReader { geo in
-            VStack(spacing: 25) {
-                UnitCard(
-                    unit: Unit.reactionRates.info,
-                    layout: .init(
-                        geometry: geo,
-                        verticalSizeClass: nil,
-                        horizontalSizeClass: nil
-                    )
-                )
+            ScrollView {
+                VStack(spacing: 25) {
+                    card(geo, .reactionRates, .loadingProduct)
+                    card(geo, .equilibrium, .readyForPurchase(product: product))
+                    card(geo, .reactionRates, .deferred)
+                    card(geo, .reactionRates, .purchasing)
+                    card(geo, .reactionRates, .failedToLoadProduct)
+                    card(geo, .reactionRates, .purchased)
 
-                UnitCard(
-                    unit: Unit.equilibrium.info,
-                    layout: .init(
-                        geometry: geo,
-                        verticalSizeClass: nil,
-                        horizontalSizeClass: nil
-                    )
-                )
+                }
+                .frame(width: geo.size.width)
+                .padding()
             }
         }
-        .previewLayout(.iPhoneSELandscape)
+        .frame(width: 400)
+        .previewLayout(.sizeThatFits)
+    }
+
+    static let product: SKProduct = {
+        let p = SKProduct()
+        p.setValue(NSDecimalNumber(1.99), forKey: "price")
+        p.setValue("id", forKey: "productIdentifier")
+        p.setValue(Locale(identifier: "en_us"), forKey: "priceLocale")
+        return p
+    }()
+
+    static func card(
+        _ geo: GeometryProxy,
+        _ unit: Unit,
+        _ state: PurchaseState
+    ) -> some View {
+        UnitCard(
+            unit: UnitWithState(
+                unit: unit,
+                state: state
+            ),
+            buyUnit: { },
+            layout: .init(
+                geometry: geo,
+                verticalSizeClass: nil,
+                horizontalSizeClass: nil
+            )
+        )
     }
 }

@@ -229,6 +229,8 @@
 		5742D1C426AAF73D00049FCC /* UnitPurchaseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C326AAF73D00049FCC /* UnitPurchaseState.swift */; };
 		5742D1C626AAF7F200049FCC /* APChemInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C526AAF7F200049FCC /* APChemInjector.swift */; };
 		5742D1C826AAF8DE00049FCC /* DebugProductLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C726AAF8DE00049FCC /* DebugProductLoader.swift */; };
+		5742D1CA26AB06BA00049FCC /* APChemStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C926AB06BA00049FCC /* APChemStyling.swift */; };
+		5742D1CC26AB0B3F00049FCC /* BuyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1CB26AB0B3F00049FCC /* BuyButton.swift */; };
 		5743660D266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660C266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift */; };
 		5743660F266E7CD8007F0410 /* BufferChartStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660E266E7CD8007F0410 /* BufferChartStack.swift */; };
 		57436611266E7EF4007F0410 /* ICETable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F31825EA601B00AEE0D8 /* ICETable.swift */; };
@@ -1041,6 +1043,8 @@
 		5742D1C326AAF73D00049FCC /* UnitPurchaseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitPurchaseState.swift; sourceTree = "<group>"; };
 		5742D1C526AAF7F200049FCC /* APChemInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APChemInjector.swift; sourceTree = "<group>"; };
 		5742D1C726AAF8DE00049FCC /* DebugProductLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugProductLoader.swift; sourceTree = "<group>"; };
+		5742D1C926AB06BA00049FCC /* APChemStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APChemStyling.swift; sourceTree = "<group>"; };
+		5742D1CB26AB0B3F00049FCC /* BuyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyButton.swift; sourceTree = "<group>"; };
 		5743660C266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferWeakSubstanceComponents.swift; sourceTree = "<group>"; };
 		5743660E266E7CD8007F0410 /* BufferChartStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferChartStack.swift; sourceTree = "<group>"; };
 		574386D926654C6700B11C34 /* IntroEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroEquationView.swift; sourceTree = "<group>"; };
@@ -1679,6 +1683,7 @@
 				5700C1B726A9AA5400677777 /* UnitSelection.swift */,
 				5700C1B926A9AAA100677777 /* UnitCard.swift */,
 				5700C1BE26A9C25100677777 /* APChemRootView.swift */,
+				5742D1CB26AB0B3F00049FCC /* BuyButton.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1690,6 +1695,7 @@
 				5700C1BC26A9B32200677777 /* Unit.swift */,
 				5742D1C326AAF73D00049FCC /* UnitPurchaseState.swift */,
 				5742D1C526AAF7F200049FCC /* APChemInjector.swift */,
+				5742D1C926AB06BA00049FCC /* APChemStyling.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -4929,11 +4935,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5742D1B226AAB39F00049FCC /* SKProductExtension.swift in Sources */,
+				5742D1CC26AB0B3F00049FCC /* BuyButton.swift in Sources */,
 				5742D1C426AAF73D00049FCC /* UnitPurchaseState.swift in Sources */,
 				5742D1C826AAF8DE00049FCC /* DebugProductLoader.swift in Sources */,
 				5742D1B626AAEBAA00049FCC /* ConcreteStoreObserver.swift in Sources */,
 				5742D1B426AABA0F00049FCC /* PurchaseManager.swift in Sources */,
 				5742D1C126AAF6A800049FCC /* ConcreteProductLoader.swift in Sources */,
+				5742D1CA26AB06BA00049FCC /* APChemStyling.swift in Sources */,
 				5700C1B826A9AA5400677777 /* UnitSelection.swift in Sources */,
 				5742D1BA26AAF53600049FCC /* StoreObserver.swift in Sources */,
 				574865A026A96E55007FA314 /* AppDelegate.swift in Sources */,

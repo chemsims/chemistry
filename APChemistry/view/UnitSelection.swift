@@ -6,8 +6,8 @@ import SwiftUI
 
 struct UnitSelection: View {
 
-    let units: [Unit]
-    @ObservedObject var model: APChemRootNavigationModel
+    @ObservedObject var navigation: APChemRootNavigationModel
+    @ObservedObject var model: StoreManager
     let layout: APChemLayoutSettings
 
     var body: some View {
@@ -17,7 +17,7 @@ struct UnitSelection: View {
                 VStack(spacing: layout.cardVerticalSpacing) {
                     HStack {
                         Button(action: {
-                                model.showUnitSelection = false
+                                navigation.showUnitSelection = false
                         }) {
                             Text("Back")
                         }
@@ -26,13 +26,19 @@ struct UnitSelection: View {
                     Text("Choose a unit")
                         .font(.largeTitle)
 
-                    ForEach(units) { unit in
+                    ForEach(model.units) { unit in
                         UnitCard(
-                            unit: unit.info,
+                            unit: unit,
+                            buyUnit: {
+                                model.beginPurchase(of: unit)
+                            },
                             layout: layout
                         )
                         .onTapGesture {
-                            model.goTo(unit: unit)
+                            guard unit.state == .purchased else {
+                                return
+                            }
+                            navigation.goTo(unit: unit.unit)
                         }
                     }
                 }
@@ -99,8 +105,12 @@ struct UnitSelection_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
             UnitSelection(
-                units: Unit.all,
-                model: APChemRootNavigationModel(),
+                navigation: APChemRootNavigationModel(),
+                model: StoreManager(
+                    locker: InMemoryUnitLocker(),
+                    products: DebugProductLoader(),
+                    storeObserver: DebugStoreObserver()
+                ),
                 layout: .init(
                     geometry: geo,
                     verticalSizeClass: nil,

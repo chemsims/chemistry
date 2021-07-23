@@ -10,10 +10,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let contentView = APChemRootView(
-            model: APChemRootNavigationModel()
+            navigation: APChemRootNavigationModel(),
+            storeManager: APChemApp.injector.storeManager
         )
 
         // Use a UIHostingController as window root view controller.

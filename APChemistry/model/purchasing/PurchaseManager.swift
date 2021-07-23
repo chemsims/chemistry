@@ -73,9 +73,19 @@ extension StoreManager: ProductLoaderDelegate {
 // MARK: - Purchase product
 extension StoreManager {
     func beginPurchase(of unit: UnitWithState) {
-        if case let .readyForPurchase(product) = unit.state, let index = index(of: unit.unit) {
+        guard let index = index(of: unit.unit) else {
+            return
+        }
+        switch unit.state {
+        case let .readyForPurchase(product):
             units[index].state = .purchasing
             storeObserver.buy(product: product)
+
+        case .failedToLoadProduct:
+            units[index].state = .loadingProduct
+            products.loadProducts()
+            
+        default: break
         }
     }
 

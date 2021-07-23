@@ -9,12 +9,13 @@ import ReactionRates
 
 struct APChemRootView: View {
 
-    @ObservedObject var model: APChemRootNavigationModel
+    @ObservedObject var navigation: APChemRootNavigationModel
+    @ObservedObject var storeManager: StoreManager
 
     var body: some View {
         GeometryReader { geo in
-            model.view
-                .sheet(isPresented: $model.showUnitSelection) {
+            navigation.view
+                .sheet(isPresented: $navigation.showUnitSelection) {
                     unitSelection(geo)
                 }
         }
@@ -22,8 +23,8 @@ struct APChemRootView: View {
 
     private func unitSelection(_ geo: GeometryProxy) -> some View {
         UnitSelection(
-            units: Unit.all,
-            model: model,
+            navigation: navigation,
+            model: storeManager,
             layout: .init(
                 geometry: geo,
                 verticalSizeClass: nil,
@@ -128,11 +129,5 @@ private class EquilibriumScreenProvider: ScreenProvider {
                 unitSelectionIsShowing: showUnitSelection
             )
         )
-    }
-}
-
-struct APChemRootView_Previews: PreviewProvider {
-    static var previews: some View {
-        APChemRootView(model: APChemRootNavigationModel())
     }
 }
