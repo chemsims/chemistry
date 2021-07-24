@@ -42,6 +42,18 @@ struct UnitCard: View {
                 .foregroundColor(.white)
                 .shadow(radius: layout.cardShadowRadius)
         )
+        .overlay(
+            padlock,
+            alignment: .topTrailing
+        )
+    }
+
+    private var padlock: some View {
+        Padlock()
+            .compositingGroup()
+            .opacity(unit.state == .purchased ? 0 : 1)
+            .frame(square: layout.cardLockSize)
+            .offset(layout.cardOffset)
     }
 
     private var iapUnavailableWarning: some View {

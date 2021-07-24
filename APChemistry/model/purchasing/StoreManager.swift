@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-import Foundation
+import SwiftUI
 import StoreKit
 import ReactionsCore
 
@@ -145,7 +145,9 @@ extension StoreManager: StoreObserverDelegate {
 
     private func doUnlock(productId: String) {
         if let index = unitIndex(forProduct: productId) {
-            units[index].setState(.purchased)
+            withAnimation {
+                units[index].setState(.purchased)
+            }
             locker.unlock(units[index].unit)
         }
     }

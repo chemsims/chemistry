@@ -103,6 +103,17 @@ struct APChemLayoutSettings {
     var unitSelectionTopPadding: CGFloat {
         cardTextVerticalSpacing
     }
+
+    var cardLockSize: CGFloat {
+        0.3 * cardIconSize
+    }
+
+    var cardOffset: CGSize {
+        CGSize(
+            width: 0.4 * cardLockSize,
+            height: -0.2 * cardLockSize
+        )
+    }
 }
 
 struct UnitSelection_Previews: PreviewProvider {
