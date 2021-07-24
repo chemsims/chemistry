@@ -33,7 +33,8 @@ class StoreManager: ObservableObject {
     }
 
     func prepareStore() {
-        self.products.loadProducts()
+        let unitsToLoad = units.filter { $0.state != .purchased }
+        self.products.loadProducts(units: unitsToLoad.map(\.unit))
         self.storeObserver.initialise()
     }
 
@@ -87,7 +88,8 @@ extension StoreManager {
 
         case .failedToLoadProduct:
             units[index].setState(.loadingProduct)
-            products.loadProducts()
+            let unit = units[index].unit
+            products.loadProducts(units: [unit])
             
         default: break
         }

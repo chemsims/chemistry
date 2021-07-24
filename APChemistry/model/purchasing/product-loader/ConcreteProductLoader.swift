@@ -17,12 +17,12 @@ class ConcreteProductLoader: NSObject, ProductLoader {
         products[unit]
     }
 
-    func loadProducts() {
+    func loadProducts(units: [Unit]) {
         guard !isLoading else {
             return
         }
         isLoading = true
-        let ids = Set(Unit.all.map(\.inAppPurchaseID))
+        let ids = Set(units.map(\.inAppPurchaseID))
         let productRequest = SKProductsRequest(productIdentifiers: ids)
         productRequest.delegate = self
         productRequest.start()

@@ -7,7 +7,7 @@ import StoreKit
 
 protocol ProductLoader {
     func getProduct(forUnit unit: Unit) -> SKProduct?
-    func loadProducts()
+    func loadProducts(units: [Unit])
 
     var delegate: ProductLoaderDelegate? { get set }
     var isLoading: Bool { get }

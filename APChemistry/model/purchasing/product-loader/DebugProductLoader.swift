@@ -13,10 +13,10 @@ class DebugProductLoader: ProductLoader {
         products[unit]
     }
 
-    func loadProducts() {
+    func loadProducts(units: [Unit]) {
         var loadedProducts = [SKProduct]()
 
-        Unit.all.forEach { unit in
+        units.forEach { unit in
             let p = SKProduct()
             p.setValue(NSDecimalNumber(1.99), forKey: "price")
             p.setValue(unit.id, forKey: "productIdentifier")
