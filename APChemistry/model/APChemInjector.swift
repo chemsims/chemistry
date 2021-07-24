@@ -21,7 +21,7 @@ class ProductionAPChemInjector: APChemInjector {
 
 class DebugAPChemInjector: APChemInjector {
     let storeManager: StoreManager = StoreManager(
-        locker: InMemoryUnitLocker(),
+        locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
         products: DebugProductLoader(),
         storeObserver: DebugStoreObserver()
     )

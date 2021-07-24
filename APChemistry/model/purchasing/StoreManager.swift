@@ -58,9 +58,9 @@ extension StoreManager: ProductLoaderDelegate {
 
         units.indices.forEach { i in
             if let product = product(for: units[i]) {
-                units[i].state = .readyForPurchase(product: product)
+                units[i].setState(.readyForPurchase(product: product))
             } else {
-                units[i].state = .failedToLoadProduct
+                units[i].setState(.failedToLoadProduct)
             }
         }
     }
@@ -78,11 +78,11 @@ extension StoreManager {
         }
         switch unit.state {
         case let .readyForPurchase(product):
-            units[index].state = .purchasing
+            units[index].setState(.purchasing)
             storeObserver.buy(product: product)
 
         case .failedToLoadProduct:
-            units[index].state = .loadingProduct
+            units[index].setState(.loadingProduct)
             products.loadProducts()
             
         default: break
@@ -103,7 +103,7 @@ extension StoreManager: StoreObserverDelegate {
 
     func didDefer(productId: String) {
         if let index = unitIndex(forProduct: productId) {
-            units[index].state = .deferred
+            units[index].setState(.deferred)
         }
     }
 
@@ -120,9 +120,9 @@ extension StoreManager: StoreObserverDelegate {
         if let index = unitIndex(forProduct: productId) {
             let unit = units[index]
             if let product = products.getProduct(forUnit: unit.unit) {
-                units[index].state = .readyForPurchase(product: product)
+                units[index].setState(.readyForPurchase(product: product))
             } else {
-                units[index].state = .failedToLoadProduct
+                units[index].setState(.failedToLoadProduct)
             }
         }
         isRestoring = false
@@ -130,7 +130,7 @@ extension StoreManager: StoreObserverDelegate {
 
     private func doUnlock(productId: String) {
         if let index = unitIndex(forProduct: productId) {
-            units[index].state = .purchased
+            units[index].setState(.purchased)
             locker.unlock(units[index].unit)
         }
     }

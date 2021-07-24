@@ -33,6 +33,18 @@
             default = "YES">
          </TestPlanReference>
       </TestPlans>
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "57E6D8C526AC795300603796"
+               BuildableName = "APChemistryTests.xctest"
+               BlueprintName = "APChemistryTests"
+               ReferencedContainer = "container:reactions-app.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"

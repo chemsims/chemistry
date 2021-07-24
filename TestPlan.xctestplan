@@ -39,6 +39,13 @@
         "identifier" : "5700C11726A99C8800677777",
         "name" : "EquilibriumTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:reactions-app.xcodeproj",
+        "identifier" : "57E6D8C526AC795300603796",
+        "name" : "APChemistryTests"
+      }
     }
   ],
   "version" : 1

@@ -20,7 +20,19 @@ struct UnitWithState: Identifiable, Equatable {
     }
 
     let unit: Unit
-    var state: PurchaseState
+    private(set) var state: PurchaseState
+}
+
+extension UnitWithState {
+
+    mutating func setState(_ newState: PurchaseState) {
+        // There's never a case where we leave the purchased state, so don't
+        // allow setting state when state is purchased
+        guard self.state != .purchased else {
+            return
+        }
+        self.state = newState
+    }
 }
 
 enum PurchaseState: Equatable {
