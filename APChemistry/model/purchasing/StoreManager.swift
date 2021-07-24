@@ -44,6 +44,10 @@ class StoreManager: ObservableObject {
     @Published var units: [UnitWithState]
     @Published var isRestoring = false
 
+    var canMakePurchase: Bool {
+        storeObserver.canMakePurchase
+    }
+
     private var storeObserver: StoreObserver
     private var products: ProductLoader
     private let locker: UnitLocker

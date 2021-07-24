@@ -22,6 +22,8 @@ class DebugStoreObserver: StoreObserver {
     func cleanup() {
     }
 
+    let canMakePurchase: Bool = false
+
     private func runAfterDelay(_ action: @escaping () -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
             action()

@@ -13,12 +13,12 @@ class ConcreteStoreObserver: NSObject, StoreObserver {
 
     weak var delegate: StoreObserverDelegate?
 
-    var isAuthorizedForPayments: Bool {
+    var canMakePurchase: Bool {
         SKPaymentQueue.canMakePayments()
     }
 
     func buy(product: SKProduct) {
-        guard isAuthorizedForPayments else {
+        guard canMakePurchase else {
             return
         }
         let payment = SKMutablePayment(product: product)

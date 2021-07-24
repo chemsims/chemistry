@@ -32,6 +32,7 @@ struct UnitSelection: View {
                             buyUnit: {
                                 model.beginPurchase(of: unit)
                             },
+                            canMakePurchase: model.canMakePurchase,
                             layout: layout
                         )
                         .onTapGesture {

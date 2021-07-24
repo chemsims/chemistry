@@ -14,6 +14,8 @@ protocol StoreObserver {
 
     func cleanup()
 
+    var canMakePurchase: Bool { get }
+
     var delegate: StoreObserverDelegate? { get set }
 }
 

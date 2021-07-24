@@ -10,6 +10,7 @@ struct UnitCard: View {
 
     let unit: UnitWithState
     let buyUnit: () -> Void
+    let canMakePurchase: Bool
     let layout: APChemLayoutSettings
 
     var body: some View {
@@ -27,6 +28,9 @@ struct UnitCard: View {
 
             if unit.state != .purchased {
                 buyButton
+                if !canMakePurchase {
+                    iapUnavailableWarning
+                }
             }
         }
         .padding()
@@ -36,6 +40,15 @@ struct UnitCard: View {
                 .foregroundColor(.white)
                 .shadow(radius: layout.cardShadowRadius)
         )
+    }
+
+    private var iapUnavailableWarning: some View {
+        HStack {
+            Image(systemName: "exclamationmark.triangle")
+                .foregroundColor(.orange)
+            Text("In-app purchases are not currently available.")
+        }
+        .font(.system(.subheadline))
     }
 
     private var image: some View {
@@ -61,8 +74,8 @@ extension UnitCard {
         .foregroundColor(buyButtonFontColor)
         .frame(height: 0.5 * layout.cardIconSize)
         .compositingGroup()
-        .opacity(buyButtonLoading ? 0.5 : 1)
-        .disabled(!isActive)
+        .opacity(buyButtonLoading || !canMakePurchase ? 0.5 : 1)
+        .disabled(!isActive || !canMakePurchase)
     }
 
     private var isActive: Bool {
@@ -166,6 +179,7 @@ struct UnitCard_Previews: PreviewProvider {
                 state: state
             ),
             buyUnit: { },
+            canMakePurchase: false,
             layout: .init(
                 geometry: geo,
                 verticalSizeClass: nil,
