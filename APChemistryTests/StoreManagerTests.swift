@@ -14,7 +14,7 @@ class StoreManagerTests: XCTestCase {
             storeObserver: DebugStoreObserver()
         )
 
-        model.prepareStore()
+        model.initialiseStore()
 
         let firstUnit = model.units.first!
         XCTAssertEqual(firstUnit.unit, .reactionRates)

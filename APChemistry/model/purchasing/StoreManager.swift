@@ -32,14 +32,23 @@ class StoreManager: ObservableObject {
         self.storeObserver.delegate = self
     }
 
-    func prepareStore() {
-        let unitsToLoad = units.filter { $0.state != .purchased }
-        self.products.loadProducts(units: unitsToLoad.map(\.unit))
+    func initialiseStore() {
         self.storeObserver.initialise()
     }
 
-    func cleanup() {
+    func cleanupStore() {
         self.storeObserver.cleanup()
+    }
+
+    func loadProducts() {
+        let unitsToLoad = units.filter { $0.state != .purchased }
+        self.products.loadProducts(units: unitsToLoad.map(\.unit))
+
+        unitsToLoad.forEach { unit in
+            if let index = index(of: unit.unit) {
+                units[index].setState(.loadingProduct)
+            }
+        }
     }
 
     @Published var units: [UnitWithState]

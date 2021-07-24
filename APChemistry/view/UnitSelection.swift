@@ -46,6 +46,9 @@ struct UnitSelection: View {
                 Spacer()
             }
             .padding(.top, layout.unitSelectionTopPadding)
+            .onAppear {
+                model.loadProducts()
+            }
         }
     }
 }

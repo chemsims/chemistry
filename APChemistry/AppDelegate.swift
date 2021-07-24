@@ -14,13 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirebaseApp.configure()
         }
 
-        APChemApp.injector.storeManager.prepareStore()
+        APChemApp.injector.storeManager.initialiseStore()
 
         return true
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        APChemApp.injector.storeManager.cleanup()
+        APChemApp.injector.storeManager.cleanupStore()
     }
 }
 

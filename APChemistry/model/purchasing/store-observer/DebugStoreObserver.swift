@@ -22,7 +22,7 @@ class DebugStoreObserver: StoreObserver {
     func cleanup() {
     }
 
-    let canMakePurchase: Bool = false
+    let canMakePurchase: Bool = true
 
     private func runAfterDelay(_ action: @escaping () -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {

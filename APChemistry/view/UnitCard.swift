@@ -22,6 +22,8 @@ struct UnitCard: View {
                     Text(unit.unit.info.title)
                         .font(.title)
                     Text(unit.unit.info.description)
+                        .lineLimit(nil)
+                        .frame(maxHeight: .infinity)
                 }
                 Spacer(minLength: 0)
             }

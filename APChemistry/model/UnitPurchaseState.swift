@@ -26,12 +26,50 @@ struct UnitWithState: Identifiable, Equatable {
 extension UnitWithState {
 
     mutating func setState(_ newState: PurchaseState) {
-        // There's never a case where we leave the purchased state, so don't
-        // allow setting state when state is purchased
-        guard self.state != .purchased else {
+        guard state.canTransitionTo(newState) else {
             return
         }
         self.state = newState
+    }
+}
+
+extension PurchaseState {
+
+    fileprivate func canTransitionTo(_ newState: PurchaseState) -> Bool {
+        switch self {
+        case .purchased:
+            return false
+
+        case .deferred:
+            return newState.paymentEndedOrFailed
+
+        case .failedToLoadProduct:
+            return true
+
+        case .loadingProduct:
+            return true
+
+        case .purchasing:
+            return newState.paymentEndedOrFailed
+
+        case .readyForPurchase:
+            return true
+        }
+    }
+
+    private var paymentEndedOrFailed: Bool {
+        mayHaveProduct || self == .purchased
+    }
+
+    private var mayHaveProduct: Bool {
+        isReadyForPurchase || self == .failedToLoadProduct
+    }
+
+    private var isReadyForPurchase: Bool {
+        if case .readyForPurchase = self {
+            return true
+        }
+        return false
     }
 }
 
