@@ -631,6 +631,7 @@
 		57E6D8D526AD871600603796 /* NotificationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8D426AD871600603796 /* NotificationCard.swift */; };
 		57E6D8D826AD89DA00603796 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8D726AD89DA00603796 /* NotificationViewModel.swift */; };
 		57E6D8DA26ADA2E800603796 /* AnalyticsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8D926ADA2E800603796 /* AnalyticsScreen.swift */; };
+		57E6D8DE26ADA8BA00603796 /* APChemRootNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8DD26ADA8BA00603796 /* APChemRootNavigationModel.swift */; };
 		57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD292664AD1500661D74 /* AcidOrBase.swift */; };
 		57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD2B2664AD3200661D74 /* Ions.swift */; };
 		57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902B925ED561200758300 /* EquatableCounter.swift */; };
@@ -1484,6 +1485,7 @@
 		57E6D8D426AD871600603796 /* NotificationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCard.swift; sourceTree = "<group>"; };
 		57E6D8D726AD89DA00603796 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		57E6D8D926ADA2E800603796 /* AnalyticsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsScreen.swift; sourceTree = "<group>"; };
+		57E6D8DD26ADA8BA00603796 /* APChemRootNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APChemRootNavigationModel.swift; sourceTree = "<group>"; };
 		57E7CD292664AD1500661D74 /* AcidOrBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBase.swift; sourceTree = "<group>"; };
 		57E7CD2B2664AD3200661D74 /* Ions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ions.swift; sourceTree = "<group>"; };
 		57E7FF692582307A00A30582 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -1726,7 +1728,6 @@
 				5742D1C326AAF73D00049FCC /* UnitPurchaseState.swift */,
 				5742D1C526AAF7F200049FCC /* APChemInjector.swift */,
 				5742D1C926AB06BA00049FCC /* APChemStyling.swift */,
-				57E6D8D726AD89DA00603796 /* NotificationViewModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2323,7 +2324,6 @@
 				5742D1B826AAF4D200049FCC /* store-observer */,
 				5742D1AC26AAAAC900049FCC /* UnitLocker.swift */,
 				5742D1B126AAB39F00049FCC /* SKProductExtension.swift */,
-				5742D1B326AABA0F00049FCC /* StoreManager.swift */,
 			);
 			path = purchasing;
 			sourceTree = "<group>";
@@ -2480,6 +2480,7 @@
 		5748659E26A96E55007FA314 /* APChemistry */ = {
 			isa = PBXGroup;
 			children = (
+				57E6D8DF26ADA8BF00603796 /* viewmodel */,
 				5700C1BB26A9B31700677777 /* model */,
 				5700C1B626A9AA4A00677777 /* view */,
 				5711E00225C4840D00B28E45 /* GoogleService-Info.plist */,
@@ -3845,6 +3846,16 @@
 			path = notification;
 			sourceTree = "<group>";
 		};
+		57E6D8DF26ADA8BF00603796 /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				57E6D8DD26ADA8BA00603796 /* APChemRootNavigationModel.swift */,
+				57E6D8D726AD89DA00603796 /* NotificationViewModel.swift */,
+				5742D1B326AABA0F00049FCC /* StoreManager.swift */,
+			);
+			path = viewmodel;
+			sourceTree = "<group>";
+		};
 		57E7CD282664AD0A00661D74 /* substance */ = {
 			isa = PBXGroup;
 			children = (
@@ -5029,6 +5040,7 @@
 				5700C1B826A9AA5400677777 /* UnitSelection.swift in Sources */,
 				57E6D8D826AD89DA00603796 /* NotificationViewModel.swift in Sources */,
 				5742D1BA26AAF53600049FCC /* StoreObserver.swift in Sources */,
+				57E6D8DE26ADA8BA00603796 /* APChemRootNavigationModel.swift in Sources */,
 				574865A026A96E55007FA314 /* AppDelegate.swift in Sources */,
 				574865A226A96E55007FA314 /* SceneDelegate.swift in Sources */,
 				5742D1AD26AAAAC900049FCC /* UnitLocker.swift in Sources */,
