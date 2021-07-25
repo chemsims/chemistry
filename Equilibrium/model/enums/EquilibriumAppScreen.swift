@@ -25,6 +25,6 @@ public enum EquilibriumAppScreen: String, CaseIterable {
 
 extension EquilibriumAppScreen : HasAnalyticsLabel {
     public var analyticsLabel: String {
-        "equilibrium-\(self.rawValue)"
+        "equilibrium_\(self.rawValue)"
     }
 }

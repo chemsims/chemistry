@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ReactionsCore
 
 enum AcidAppScreen: String, CaseIterable {
     case introduction,
@@ -18,5 +19,11 @@ enum AcidAppScreen: String, CaseIterable {
         case .introductionQuiz, .bufferQuiz, .titrationQuiz: return true
         default: return false
         }
+    }
+}
+
+extension AcidAppScreen: HasAnalyticsLabel {
+    var analyticsLabel: String {
+        "acidsBases_\(rawValue)"
     }
 }

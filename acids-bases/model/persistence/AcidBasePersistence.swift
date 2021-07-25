@@ -66,8 +66,8 @@ class InMemoryAcidOrBasePersistence: AcidOrBasePersistence {
 class UserDefaultsAcidOrBasePersistence: AcidOrBasePersistence {
 
     private let userDefaults = UserDefaults.standard
-    private static let strongAcidKey = "acid_bases_strong_acid"
-    private static let strongBaseKey = "acid_bases_strong_base"
+    private static let strongAcidKey = "acidsBases.acid_bases_strong_acid"
+    private static let strongBaseKey = "acidsBases.acid_bases_strong_base"
 
     func saveStrongAcid(_ substance: AcidOrBase) {
         SharedAcidOrBasePersistence.saveSubstance(substance, ofType: .strongAcid) { id in

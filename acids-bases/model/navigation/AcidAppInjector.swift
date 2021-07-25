@@ -57,13 +57,19 @@ class ProductionAcidAppInjector: AcidAppInjector {
         InMemoryTitrationInputPersistence()
 
     let screenPersistence: AnyScreenPersistence<AcidAppScreen> =
-        AnyScreenPersistence(UserDefaultsScreenPersistence())
+        AnyScreenPersistence(
+            UserDefaultsScreenPersistence(prefix: userDefaultsPrefix)
+        )
 
     let analytics: AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet> =
-        AnyAppAnalytics(GoogleAnalytics())
+        AnyAppAnalytics(
+            GoogleAnalytics(unitName: "acidsBases")
+        )
 
     let quizPersistence: AnyQuizPersistence<AcidAppQuestionSet> =
-        AnyQuizPersistence(UserDefaultsQuizPersistence())
+        AnyQuizPersistence(
+            UserDefaultsQuizPersistence(prefix: userDefaultsPrefix)
+        )
 
     let substancePersistence: AcidOrBasePersistence =
         UserDefaultsAcidOrBasePersistence()
@@ -77,3 +83,5 @@ class ProductionAcidAppInjector: AcidAppInjector {
     let namePersistence: NamePersistence =
         UserDefaultsNamePersistence()
 }
+
+private let userDefaultsPrefix = "acidsBases"

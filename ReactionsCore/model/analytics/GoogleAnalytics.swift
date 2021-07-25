@@ -11,7 +11,7 @@ where
       Screen : HasAnalyticsLabel {
 
     public init(unitName: String, includeUnitInEventNames: Bool = true) {
-        self.unitName = unitName
+        self.unitName = unitName.sanitisedForAnalytics
         self.includeUnitInEventNames = includeUnitInEventNames
         userDefaults.register(defaults: [
             analyticsEnabledKey: true
@@ -43,7 +43,7 @@ extension GoogleAnalytics: AppAnalytics {
 
     public func opened(screen: Screen) {
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-            AnalyticsParameterScreenName: screen.analyticsLabel,
+            AnalyticsParameterScreenName: screen.analyticsLabel.sanitisedForAnalytics,
             Params.unit: unitName
         ])
     }
@@ -63,7 +63,7 @@ extension GoogleAnalytics: AppAnalytics {
         answerAttempt: Int,
         isCorrect: Bool
     ) {
-        let sanitisedId = questionId.replacingOccurrences(of: "-", with: "_")
+        let sanitisedId = questionId.sanitisedForAnalytics
         let unitStr = includeUnitInEventNames ? "\(unitName)_" : ""
         let eventName = "\(Events.answeredQuestion)_\(unitStr)\(sanitisedId)"
         Analytics.logEvent(eventName, parameters: [
@@ -121,5 +121,14 @@ private struct Params {
 private extension RawRepresentable where RawValue == String {
     var eventNameSuffix: String {
         self.rawValue.prefix(1).capitalized + self.rawValue.dropFirst()
+    }
+}
+
+private extension String {
+
+    /// Sanitises a string input for analytics.
+    /// Google Analytics does not accept hyphens, so these are replaced with underscore.
+    var sanitisedForAnalytics: String {
+        self.replacingOccurrences(of: "-", with: "_")
     }
 }
