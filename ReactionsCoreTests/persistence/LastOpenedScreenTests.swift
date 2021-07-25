@@ -12,7 +12,7 @@ class LastOpenedScreenTests: XCTestCase {
     }
 
     func testSettingAndGettingScreen() throws {
-        let model = UserDefaultsScreenPersistence<TestEnum>()
+        let model = UserDefaultsScreenPersistence<TestEnum>(prefix: "")
         XCTAssertNil(model.lastOpened())
 
         model.setLastOpened(.A)
