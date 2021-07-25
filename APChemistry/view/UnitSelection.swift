@@ -145,7 +145,7 @@ struct UnitSelection_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
             UnitSelection(
-                navigation: APChemRootNavigationModel(),
+                navigation: APChemRootNavigationModel(injector: DebugAPChemInjector()),
                 model: StoreManager(
                     locker: InMemoryUnitLocker(),
                     products: DebugProductLoader(),

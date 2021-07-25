@@ -19,14 +19,31 @@ class ProductionInjector: Injector {
 
     let reactionPersistence: ReactionInputPersistence = UserDefaultsReactionInputPersistence()
 
-    let quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet> = AnyQuizPersistence(UserDefaultsQuizPersistence<ReactionsRateQuestionSet>())
+    let quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet> = AnyQuizPersistence(
+        UserDefaultsQuizPersistence<ReactionsRateQuestionSet>(
+            prefix: userDefaultsPrefix
+        )
+    )
 
     let reviewPersistence: ReviewPromptPersistence = UserDefaultsReviewPromptPersistence()
 
     let energyPersistence: EnergyProfilePersistence = UserDefaultsEnergyProfilePersistence()
 
-    let screenPersistence = AnyScreenPersistence(UserDefaultsScreenPersistence<AppScreen>())
-    let appAnalytics = AnyAppAnalytics(GoogleAnalytics<AppScreen, ReactionsRateQuestionSet>())
+    let screenPersistence = AnyScreenPersistence(
+        UserDefaultsScreenPersistence<AppScreen>(
+            prefix: userDefaultsPrefix
+        )
+    )
+
+    let appAnalytics = AnyAppAnalytics(
+        GoogleAnalytics<AppScreen, ReactionsRateQuestionSet>(
+            unitName: "reactionRates",
+
+            // We decided to bundle all units into 1 app after reaction rates was released, so
+            // don't modify event names for reaction rates so we don't affect analytics history
+            includeUnitInEventNames: false
+        )
+    )
 }
 
 class InMemoryInjector: Injector {
@@ -43,3 +60,7 @@ class InMemoryInjector: Injector {
     let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<AppScreen>())
     let appAnalytics = AnyAppAnalytics(NoOpAppAnalytics<AppScreen, ReactionsRateQuestionSet>())
 }
+
+// We use a blank prefix, since we decided to bundle all units into one after releasing the reaction
+// rates app. Rather than perform a migration, we can simply read from the existing fields.
+private let userDefaultsPrefix = ""

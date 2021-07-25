@@ -28,15 +28,29 @@ class InMemoryEquilibriumInjector: EquilibriumInjector {
 
 class ProductionEquilibriumInjector: EquilibriumInjector {
 
-    let screenPersistence = AnyScreenPersistence(UserDefaultsScreenPersistence<EquilibriumAppScreen>())
+    let screenPersistence = AnyScreenPersistence(
+        UserDefaultsScreenPersistence<EquilibriumAppScreen>(
+            prefix: userDefaultsPrefix
+        )
+    )
 
     let analytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> =
-        AnyAppAnalytics(GoogleAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>())
+        AnyAppAnalytics(
+            GoogleAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>(
+                unitName: "equilibrium"
+            )
+        )
 
     let quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> =
-        AnyQuizPersistence(UserDefaultsQuizPersistence<EquilibriumQuestionSet>())
+        AnyQuizPersistence(
+            UserDefaultsQuizPersistence<EquilibriumQuestionSet>(
+                prefix: userDefaultsPrefix
+            )
+        )
 
     let solubilityPersistence: SolubilityPersistence = InMemorySolubilityPersistence()
 
     let reviewPersistence: ReviewPromptPersistence = UserDefaultsReviewPromptPersistence()
 }
+
+private let userDefaultsPrefix = "equilibrium"

@@ -12,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let contentView = APChemRootView(
-            navigation: APChemRootNavigationModel(),
+            navigation: APChemRootNavigationModel(injector: APChemApp.injector),
             storeManager: APChemApp.injector.storeManager
         )
 
@@ -28,11 +28,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 struct APChemApp {
     static let injector: APChemInjector = {
-        #if DEBUG
-        return DebugAPChemInjector()
-        #else
+        if isDebug {
+            return DebugAPChemInjector()
+        }
         return ProductionAPChemInjector()
-        #endif
     }()
 
     static var isDebug: Bool {

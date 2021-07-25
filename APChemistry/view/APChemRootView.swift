@@ -50,7 +50,8 @@ class APChemRootNavigationModel: ObservableObject {
     @Published var view: AnyView
     @Published var showUnitSelection = false
 
-    init() {
+    init(injector: APChemInjector) {
+        self.injector = injector
         self.view = AnyView(EmptyView())
         let firstScreen = Unit.reactionRates
         let firstProvider = getScreenProvider(forUnit: firstScreen)
@@ -58,6 +59,7 @@ class APChemRootNavigationModel: ObservableObject {
         self.view = firstProvider.screen
     }
 
+    private let injector: APChemInjector
     private var selectedUnit = Unit.reactionRates
     private var providers = [Unit : ScreenProvider]()
 
@@ -82,11 +84,13 @@ class APChemRootNavigationModel: ObservableObject {
         switch unit {
         case .reactionRates:
             return ReactionRatesScreenProvider(
+                injector: injector,
                 showUnitSelection: showUnitSelectionBinding
             )
 
         case .equilibrium:
             return EquilibriumScreenProvider(
+                injector: injector,
                 showUnitSelection: showUnitSelectionBinding
             )
         }
@@ -103,9 +107,10 @@ class APChemRootNavigationModel: ObservableObject {
 private class ReactionRatesScreenProvider: ScreenProvider {
 
     init(
+        injector: APChemInjector,
         showUnitSelection: Binding<Bool>
     ) {
-        self.model = .inMemory
+        self.model = injector.reactionRatesInjector
         self.showUnitSelection = showUnitSelection
     }
 
@@ -124,9 +129,10 @@ private class ReactionRatesScreenProvider: ScreenProvider {
 
 private class EquilibriumScreenProvider: ScreenProvider {
     init(
+        injector: APChemInjector,
         showUnitSelection: Binding<Bool>
     ) {
-        self.model = .inMemory
+        self.model = injector.equilibriumInjector
         self.showUnitSelection = showUnitSelection
     }
 

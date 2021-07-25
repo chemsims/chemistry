@@ -41,11 +41,16 @@ public class InMemoryQuizPersistence<QuestionSet: Hashable>: QuizPersistence {
 
 public class UserDefaultsQuizPersistence<QuestionSet: RawRepresentable>: QuizPersistence where QuestionSet.RawValue == String {
 
-    public init() { }
+    public init(
+        prefix: String
+    ) {
+        let prefixWithDot = prefix.isEmpty ? "" : "\(prefix)."
+        self.keyBase = "\(prefixWithDot)quiz-results"
+    }
 
     private let userDefaults = UserDefaults.standard
 
-    private let keyBase = "quiz-results"
+    private let keyBase: String
 
     public func saveAnswers(quiz: SavedQuiz<QuestionSet>, questions: [QuizQuestion]) {
         let serialized = serialiseAnswers(quiz, questions: questions)
