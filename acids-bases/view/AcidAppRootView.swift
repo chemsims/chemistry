@@ -43,7 +43,8 @@ struct AcidAppRootView: View {
             shareSettings: .acidBases,
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
-            menuHPadding: settings.menuHPadding
+            menuHPadding: settings.menuHPadding,
+            unitSelectionIsShowing: .constant(false)
         )
     }
 }

@@ -9,6 +9,7 @@ struct QuizQuestionView: View {
     let question: QuizQuestion
     let settings: QuizLayoutSettings
     let tableWidth: CGFloat
+    let bundle: Bundle?
 
     var body: some View {
         VStack(spacing: 10) {
@@ -20,7 +21,7 @@ struct QuizQuestionView: View {
             .accessibility(addTraits: .isHeader)
 
             if question.image != nil {
-                Image(question.image!.image)
+                Image(question.image!.image, bundle: bundle)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxHeight: settings.maxImageHeight)

@@ -205,7 +205,10 @@ struct EnergyProfileBeaker: View {
         let labelSuffix = isInProgress ? ". Rotated above beaker, preparing to drop catalyst particles" : ""
         let label = "Catalyst container \(catalyst.rawValue)\(labelSuffix)"
 
-        return Image(catalystState == .disabled ? "catdeact" : catalyst.imageName)
+        return Image(
+            catalystState == .disabled ? "catdeact" : catalyst.imageName,
+            bundle: .reactionRates
+        )
             .resizable()
             .aspectRatio(contentMode: .fit)
             .rotationEffect(rotation, anchor: .center)

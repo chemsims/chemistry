@@ -13,6 +13,7 @@ public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
     let menuIconSize: CGFloat
     let menuTopPadding: CGFloat
     let menuHPadding: CGFloat
+    @Binding var unitSelectionIsShowing: Bool
 
     public init(
         model: RootNavigationViewModel<Injector>,
@@ -21,7 +22,8 @@ public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
         shareSettings: ShareSettings,
         menuIconSize: CGFloat,
         menuTopPadding: CGFloat,
-        menuHPadding: CGFloat
+        menuHPadding: CGFloat,
+        unitSelectionIsShowing: Binding<Bool>
     ) {
         self.model = model
         self.navigationRows = navigationRows
@@ -30,6 +32,7 @@ public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
         self.menuIconSize = menuIconSize
         self.menuTopPadding = menuTopPadding
         self.menuHPadding = menuHPadding
+        self._unitSelectionIsShowing = unitSelectionIsShowing
     }
 
     public var body: some View {
@@ -56,7 +59,8 @@ public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
                 shareSettings: shareSettings,
                 size: menuIconSize,
                 topPadding: menuTopPadding,
-                menuHPadding: menuHPadding
+                menuHPadding: menuHPadding,
+                unitSelectionIsShowing: $unitSelectionIsShowing
             )
         }
     }

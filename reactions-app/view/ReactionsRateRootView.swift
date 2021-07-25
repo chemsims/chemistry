@@ -5,14 +5,24 @@
 import SwiftUI
 import ReactionsCore
 
-struct ReactionsRateRootView: View {
+public struct ReactionsRateRootView: View {
+
+    public init(
+        model: RootNavigationViewModel<ReactionRatesInjector>,
+        unitSelectionIsShowing: Binding<Bool>
+    ) {
+        self.model = model
+        self._unitSelectionIsShowing = unitSelectionIsShowing
+    }
 
     @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>>
+
+    @Binding var unitSelectionIsShowing: Bool
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             makeView(
                 settings: OrderedReactionLayoutSettings(
@@ -32,7 +42,8 @@ struct ReactionsRateRootView: View {
             shareSettings: .reactionsRate,
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
-            menuHPadding: settings.menuHPadding
+            menuHPadding: settings.menuHPadding,
+            unitSelectionIsShowing: $unitSelectionIsShowing
         )
     }
 }
@@ -43,21 +54,24 @@ struct RootNavigationView_Previews: PreviewProvider {
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector()
-            )
+            ),
+            unitSelectionIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 568, height: 320))
 
         // iPad mini
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector()
-            )
+            ),
+            unitSelectionIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro 11
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector()
-            )
+            ),
+            unitSelectionIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 1194, height: 834))
     }
 }

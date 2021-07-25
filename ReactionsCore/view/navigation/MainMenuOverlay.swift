@@ -14,6 +14,8 @@ struct MainMenuOverlay<Injector: NavigationInjector>: View {
     let topPadding: CGFloat
     let menuHPadding: CGFloat
 
+    @Binding var unitSelectionIsShowing: Bool
+
     @State private var showFailedMailAlert = false
     @State private var activeSheet: ActiveSheet?
 
@@ -25,6 +27,7 @@ struct MainMenuOverlay<Injector: NavigationInjector>: View {
                 feedbackSettings: feedbackSettings,
                 activeSheet: $activeSheet,
                 showFailedMailAlert: $showFailedMailAlert,
+                unitSelectionIsShowing: $unitSelectionIsShowing,
                 settings: MainMenuLayoutSettings(
                     geometry: geo,
                     menuSize: size,
@@ -66,7 +69,9 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
     let feedbackSettings: FeedbackSettings
     @Binding var activeSheet: ActiveSheet?
     @Binding var showFailedMailAlert: Bool
+    @Binding var unitSelectionIsShowing: Bool
     let settings: MainMenuLayoutSettings
+
 
     @State private var panelDragOffset: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -292,6 +297,7 @@ extension MainMenuOverlayWithSettings {
 extension MainMenuOverlayWithSettings {
     private var settingsButtons: some View {
         VStack(spacing: settings.navVStackSpacing) {
+            unitSelectionButton
             mailButton
             shareButton
              if Flags.showAnalyticsOptOutToggle {
@@ -326,17 +332,30 @@ extension MainMenuOverlayWithSettings {
         .accessibility(hint: Text("Opens share sheet to share app with others"))
     }
 
-        private var analyticsButton: some View {
-            Button(action: {
-                navigation.showAnalyticsConsent.toggle()
-            }) {
-                Image(systemName: "chart.bar.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(Styling.navIcon)
-            }
-            .accessibility(label: Text("Open analytics consent settings"))
+    private var unitSelectionButton: some View {
+        Button(action: {
+            unitSelectionIsShowing = true
+            navigation.showMenu = false
+        }) {
+            // note this symbol not available in iOS 13, so have to import manually
+            Image("circles.hexagongrid", bundle: .reactionsCore)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         }
+        .accessibility(label: Text("Open unit selection menu"))
+    }
+
+    private var analyticsButton: some View {
+        Button(action: {
+            navigation.showAnalyticsConsent.toggle()
+        }) {
+            Image(systemName: "chart.bar.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(Styling.navIcon)
+        }
+        .accessibility(label: Text("Open analytics consent settings"))
+    }
 
     private func openMailComposer() {
         if MailComposerView.canSendMail() {
@@ -472,7 +491,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             shareSettings: ShareSettings(appStoreUrl: "", appName: ""),
             size: 20,
             topPadding: 10,
-            menuHPadding: 10
+            menuHPadding: 10,
+            unitSelectionIsShowing: .constant(false)
         )
         .previewLayout(.iPhoneSELandscape)
     }

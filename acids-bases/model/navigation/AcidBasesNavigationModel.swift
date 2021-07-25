@@ -212,7 +212,8 @@ private class QuizScreenProvider: ScreenProvider {
         self.model = QuizViewModel(
             questions: questions,
             persistence: persistence,
-            analytics: analytics
+            analytics: analytics,
+            bundle: nil // TODO
         )
         self.model.nextScreen = next
         self.model.prevScreen = prev

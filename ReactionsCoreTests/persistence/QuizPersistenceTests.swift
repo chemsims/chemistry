@@ -84,7 +84,7 @@ class QuizPersistenceTests: XCTestCase {
     }
 
     private func newModel() -> UserDefaultsQuizPersistence<Int> {
-        UserDefaultsQuizPersistence<Int>()
+        UserDefaultsQuizPersistence<Int>(prefix: "")
     }
 
     private func questionWithOptions(

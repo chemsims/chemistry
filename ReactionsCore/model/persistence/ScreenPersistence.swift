@@ -46,11 +46,18 @@ public class AnyScreenPersistence<Screen>: ScreenPersistence {
 
 public class UserDefaultsScreenPersistence<Screen: RawRepresentable>: ScreenPersistence where Screen.RawValue == String {
 
-    public init() {
+    public init(prefix: String) {
+        let prefixWithDot = prefix.isEmpty ? "" : "\(prefix)."
+        self.prefixWithDot = prefixWithDot
+        self.lastOpenedKey = "\(prefixWithDot)lastOpenedScreen"
+
+        let x = UserDefaults.standard.dictionaryRepresentation()
+        print(x)
     }
 
     private let defaults = UserDefaults.standard
-    private let lastOpenedKey = "lastOpenedScreen"
+    private let prefixWithDot: String
+    private let lastOpenedKey: String
 
     public func setCompleted(screen: Screen) {
         defaults.set(true, forKey: screenKey(screen))
@@ -71,7 +78,7 @@ public class UserDefaultsScreenPersistence<Screen: RawRepresentable>: ScreenPers
     }
 
     private func screenKey(_ screen: Screen) -> String {
-        "completed-screen-\(screen.rawValue)"
+        "\(prefixWithDot)completed-screen-\(screen.rawValue)"
     }
 }
 

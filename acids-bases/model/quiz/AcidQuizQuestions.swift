@@ -29,7 +29,7 @@ struct AcidQuizQuestions {
     }
 
     fileprivate static func getQuestion(_ questionSet: AcidAppQuestionSet) -> QuizQuestionsList<AcidAppQuestionSet> {
-        if isLoaded {
+        if !isLoaded {
             load()
         }
         switch questionSet {
@@ -39,11 +39,11 @@ struct AcidQuizQuestions {
         }
     }
 
-    private(set) fileprivate static var introduction: QuizQuestionsList<AcidAppQuestionSet>!
+    private static var introduction: QuizQuestionsList<AcidAppQuestionSet>!
 
-    private(set) fileprivate static var buffer: QuizQuestionsList<AcidAppQuestionSet>!
+    private static var buffer: QuizQuestionsList<AcidAppQuestionSet>!
 
-    private(set) fileprivate static var titration: QuizQuestionsList<AcidAppQuestionSet>!
+    private static var titration: QuizQuestionsList<AcidAppQuestionSet>!
 
     private static func read(_ file: String, _ questionSet: AcidAppQuestionSet) -> QuizQuestionsList<AcidAppQuestionSet> {
         QuizQuestionReader.readOptional(

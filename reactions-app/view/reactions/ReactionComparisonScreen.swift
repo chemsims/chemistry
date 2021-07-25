@@ -117,7 +117,10 @@ private struct ReactionComparisonViewWithSettings: View {
     }
 
     private var handImage: some View {
-        Image(reaction.dragTutorialHandIsMoving ? "closedhand" : "openhand")
+        Image(
+            reaction.dragTutorialHandIsMoving ? "closedhand" : "openhand",
+            bundle: .reactionRates
+        )
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: settings.orderDragWidth * 0.3)
