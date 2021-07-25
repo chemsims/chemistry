@@ -11,14 +11,17 @@ struct APChemRootView: View {
 
     @ObservedObject var navigation: APChemRootNavigationModel
     @ObservedObject var storeManager: StoreManager
+    @ObservedObject var notificationModel = NotificationViewModel.shared
 
     var body: some View {
         GeometryReader { geo in
             navigation.view
                 .sheet(isPresented: $navigation.showUnitSelection) {
                     unitSelection(geo)
+                        .notification(notificationModel.notification)
                 }
         }
+        .notification(notificationModel.notification)
     }
 
     private func unitSelection(_ geo: GeometryProxy) -> some View {

@@ -7,13 +7,29 @@ import StoreKit
 
 class DebugStoreObserver: StoreObserver {
 
+    // number of times to fail before succeeding
+    private let failCount = 0
+    private var buyCounts = 0
+
+    private let actionDelay = 0
+
     func buy(product: SKProduct) {
+        buyCounts += 1
+        let shouldFail = buyCounts <= failCount
         runAfterDelay {
-            self.delegate?.didPurchase(productId: product.productIdentifier)
+            let productId = product.productIdentifier
+            if shouldFail {
+                self.delegate?.didFail(productId: productId)
+            } else {
+                self.delegate?.didPurchase(productId: productId)
+            }
         }
     }
 
     func restorePurchases() {
+        runAfterDelay {
+            self.delegate?.didRestore(productId: Unit.all.first!.inAppPurchaseID)
+        }
     }
 
     func initialise() {
@@ -25,7 +41,7 @@ class DebugStoreObserver: StoreObserver {
     let canMakePurchase: Bool = true
 
     private func runAfterDelay(_ action: @escaping () -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(actionDelay)) {
             action()
         }
     }

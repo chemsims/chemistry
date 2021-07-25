@@ -627,6 +627,9 @@
 		57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */; };
 		57E6D8C926AC795300603796 /* StoreManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8C826AC795300603796 /* StoreManagerTests.swift */; };
 		57E6D8D126AC8C0A00603796 /* Padlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8D026AC8C0A00603796 /* Padlock.swift */; };
+		57E6D8D326AD870900603796 /* NotificationOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8D226AD870900603796 /* NotificationOverlayView.swift */; };
+		57E6D8D526AD871600603796 /* NotificationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8D426AD871600603796 /* NotificationCard.swift */; };
+		57E6D8D826AD89DA00603796 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8D726AD89DA00603796 /* NotificationViewModel.swift */; };
 		57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD292664AD1500661D74 /* AcidOrBase.swift */; };
 		57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD2B2664AD3200661D74 /* Ions.swift */; };
 		57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902B925ED561200758300 /* EquatableCounter.swift */; };
@@ -1476,6 +1479,9 @@
 		57E6D8C826AC795300603796 /* StoreManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManagerTests.swift; sourceTree = "<group>"; };
 		57E6D8CA26AC795300603796 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57E6D8D026AC8C0A00603796 /* Padlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Padlock.swift; sourceTree = "<group>"; };
+		57E6D8D226AD870900603796 /* NotificationOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationOverlayView.swift; sourceTree = "<group>"; };
+		57E6D8D426AD871600603796 /* NotificationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCard.swift; sourceTree = "<group>"; };
+		57E6D8D726AD89DA00603796 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		57E7CD292664AD1500661D74 /* AcidOrBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBase.swift; sourceTree = "<group>"; };
 		57E7CD2B2664AD3200661D74 /* Ions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ions.swift; sourceTree = "<group>"; };
 		57E7FF692582307A00A30582 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -1700,6 +1706,7 @@
 		5700C1B626A9AA4A00677777 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57E6D8D626AD872700603796 /* notification */,
 				5700C1B726A9AA5400677777 /* UnitSelection.swift */,
 				5700C1B926A9AAA100677777 /* UnitCard.swift */,
 				5700C1BE26A9C25100677777 /* APChemRootView.swift */,
@@ -1717,6 +1724,7 @@
 				5742D1C326AAF73D00049FCC /* UnitPurchaseState.swift */,
 				5742D1C526AAF7F200049FCC /* APChemInjector.swift */,
 				5742D1C926AB06BA00049FCC /* APChemStyling.swift */,
+				57E6D8D726AD89DA00603796 /* NotificationViewModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3825,6 +3833,15 @@
 			path = APChemistryTests;
 			sourceTree = "<group>";
 		};
+		57E6D8D626AD872700603796 /* notification */ = {
+			isa = PBXGroup;
+			children = (
+				57E6D8D226AD870900603796 /* NotificationOverlayView.swift */,
+				57E6D8D426AD871600603796 /* NotificationCard.swift */,
+			);
+			path = notification;
+			sourceTree = "<group>";
+		};
 		57E7CD282664AD0A00661D74 /* substance */ = {
 			isa = PBXGroup;
 			children = (
@@ -5001,11 +5018,13 @@
 				5742D1C426AAF73D00049FCC /* UnitPurchaseState.swift in Sources */,
 				5742D1C826AAF8DE00049FCC /* DebugProductLoader.swift in Sources */,
 				5742D1B626AAEBAA00049FCC /* ConcreteStoreObserver.swift in Sources */,
+				57E6D8D326AD870900603796 /* NotificationOverlayView.swift in Sources */,
 				5742D1B426AABA0F00049FCC /* StoreManager.swift in Sources */,
 				57E6D8D126AC8C0A00603796 /* Padlock.swift in Sources */,
 				5742D1C126AAF6A800049FCC /* ConcreteProductLoader.swift in Sources */,
 				5742D1CA26AB06BA00049FCC /* APChemStyling.swift in Sources */,
 				5700C1B826A9AA5400677777 /* UnitSelection.swift in Sources */,
+				57E6D8D826AD89DA00603796 /* NotificationViewModel.swift in Sources */,
 				5742D1BA26AAF53600049FCC /* StoreObserver.swift in Sources */,
 				574865A026A96E55007FA314 /* AppDelegate.swift in Sources */,
 				574865A226A96E55007FA314 /* SceneDelegate.swift in Sources */,
@@ -5014,6 +5033,7 @@
 				5742D1C626AAF7F200049FCC /* APChemInjector.swift in Sources */,
 				5700C1BD26A9B32200677777 /* Unit.swift in Sources */,
 				5742D1BC26AAF61100049FCC /* DebugStoreObserver.swift in Sources */,
+				57E6D8D526AD871600603796 /* NotificationCard.swift in Sources */,
 				5700C1BA26A9AAA100677777 /* UnitCard.swift in Sources */,
 				5700C1BF26A9C25100677777 /* APChemRootView.swift in Sources */,
 			);
