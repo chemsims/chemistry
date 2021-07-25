@@ -11,7 +11,7 @@ class DebugStoreObserver: StoreObserver {
     private let failCount = 0
     private var buyCounts = 0
 
-    private let actionDelay = 0
+    private let actionDelay = 1
 
     func buy(product: SKProduct) {
         buyCounts += 1

@@ -9,12 +9,14 @@ class DebugProductLoader: ProductLoader {
 
     private var products = [Unit : SKProduct]()
 
+    private let loadDelay = 0
+
     func getProduct(forUnit unit: Unit) -> SKProduct? {
         products[unit]
     }
 
     func loadProducts(units: [Unit]) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(loadDelay)) {
             self.doLoadProducts(units: units)
         }
     }

@@ -15,33 +15,10 @@ struct UnitSelection: View {
             HStack {
                 Spacer()
                 VStack(spacing: layout.cardVerticalSpacing) {
-                    HStack {
-                        Button(action: {
-                                navigation.showUnitSelection = false
-                        }) {
-                            Text("Back")
-                        }
-                        Spacer(minLength: 0)
-                    }
-                    Text("Choose a unit")
-                        .font(.largeTitle)
-
-                    ForEach(model.units) { unit in
-                        UnitCard(
-                            unit: unit,
-                            buyUnit: {
-                                model.beginPurchase(of: unit)
-                            },
-                            canMakePurchase: model.canMakePurchase,
-                            layout: layout
-                        )
-                        .onTapGesture {
-                            guard unit.state == .purchased else {
-                                return
-                            }
-                            navigation.goTo(unit: unit.unit)
-                        }
-                    }
+                    backButton
+                    title
+                    units
+                    restoreButton
                 }
                 Spacer()
             }
@@ -50,6 +27,50 @@ struct UnitSelection: View {
                 model.loadProducts()
             }
         }
+    }
+
+    private var backButton: some View {
+        HStack {
+            Button(action: {
+                    navigation.showUnitSelection = false
+            }) {
+                Text("Back")
+            }
+            Spacer(minLength: 0)
+        }
+    }
+
+    private var title: some View {
+        Text("Choose a unit")
+            .font(.largeTitle)
+    }
+
+    private var units: some View {
+        ForEach(model.units) { unit in
+            UnitCard(
+                unit: unit,
+                buyUnit: {
+                    model.beginPurchase(of: unit)
+                },
+                canMakePurchase: model.canMakePurchase,
+                layout: layout
+            )
+            .onTapGesture {
+                guard unit.state == .purchased else {
+                    return
+                }
+                navigation.goTo(unit: unit.unit)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var restoreButton: some View {
+        let text = model.isRestoring ? "Restoring purchases..." : "Restore purchases"
+        return Button(action: model.restorePurchases) {
+            Text(text)
+        }
+        .disabled(model.isRestoring)
     }
 }
 
