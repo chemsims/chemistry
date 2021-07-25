@@ -1929,8 +1929,7 @@
 				57035ED6255BF03300DB3A19 /* slider */,
 				579628CE25659054007A7A6D /* ReactionsRateRootView.swift */,
 			);
-			name = view;
-			path = "../reactions-app/view";
+			path = view;
 			sourceTree = "<group>";
 		};
 		571D6A6C255AB23D00F4E635 /* model */ = {
