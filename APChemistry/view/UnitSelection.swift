@@ -14,15 +14,20 @@ struct UnitSelection: View {
         ScrollView {
             HStack {
                 Spacer()
-                VStack(spacing: layout.cardVerticalSpacing) {
+                VStack(spacing: 0.2 * layout.cardVerticalSpacing) {
                     backButton
                     title
-                    units
+
+                    VStack(spacing: layout.cardVerticalSpacing) {
+                        units
+                    }
+                    .padding(.vertical, layout.cardVerticalSpacing)
+
                     restoreButton
                 }
                 Spacer()
             }
-            .padding(.top, layout.unitSelectionTopPadding)
+            .padding(.vertical, layout.unitSelectionVerticalPadding)
             .onAppear {
                 model.loadProducts()
             }
@@ -64,7 +69,6 @@ struct UnitSelection: View {
         }
     }
 
-    @ViewBuilder
     private var restoreButton: some View {
         let text = model.isRestoring ? "Restoring purchases..." : "Restore purchases"
         return Button(action: model.restorePurchases) {
@@ -121,7 +125,7 @@ struct APChemLayoutSettings {
         0.1 * cardIconSize
     }
 
-    var unitSelectionTopPadding: CGFloat {
+    var unitSelectionVerticalPadding: CGFloat {
         cardTextVerticalSpacing
     }
 

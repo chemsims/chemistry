@@ -21,7 +21,15 @@ struct APChemRootView: View {
                         .notification(notificationModel.notification)
                 }
         }
-        .notification(notificationModel.notification)
+        // Only add this on iPhone, since the view is visible behind the sheet on iPad
+        // so notification shows up twice
+        .modifyIf(isIphone) {
+            $0.notification(notificationModel.notification)
+        }
+    }
+
+    private var isIphone: Bool {
+        UIDevice.current.userInterfaceIdiom == .phone
     }
 
     private func unitSelection(_ geo: GeometryProxy) -> some View {

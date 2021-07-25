@@ -337,7 +337,8 @@ extension MainMenuOverlayWithSettings {
             unitSelectionIsShowing = true
             navigation.showMenu = false
         }) {
-            Image(systemName: "circles.hexagongrid")
+            // note this symbol not available in iOS 13, so have to import manually
+            Image("circles.hexagongrid", bundle: .reactionsCore)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
