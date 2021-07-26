@@ -4,6 +4,7 @@
 
 import UIKit
 import Firebase
+import Equilibrium
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !APChemApp.isDebug {
             FirebaseApp.configure()
         }
+
+        EquilibriumQuizQuestions.load()
 
         APChemApp.injector.storeManager.initialiseStore()
 

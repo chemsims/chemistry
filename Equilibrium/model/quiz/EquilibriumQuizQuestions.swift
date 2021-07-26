@@ -11,13 +11,13 @@ extension QuizQuestionsList where QuestionSet == EquilibriumQuestionSet {
     static let solubility = EquilibriumQuizQuestions.getQuestion(.solubility)
 }
 
-struct EquilibriumQuizQuestions {
+public struct EquilibriumQuizQuestions {
     private init() { }
 
     private static var isLoaded = false
 
     /// Loads all quiz questions into memory
-    static func load() {
+    public static func load() {
         aqueous = read("aqueous-quiz", .aqueous)
         gaseous = read("gaseous-quiz", .gaseous)
         solubility = read("solubility-quiz", .solubility)
