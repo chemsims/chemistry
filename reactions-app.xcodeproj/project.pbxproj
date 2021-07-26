@@ -143,31 +143,15 @@
 		5700C1BA26A9AAA100677777 /* UnitCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700C1B926A9AAA100677777 /* UnitCard.swift */; };
 		5700C1BD26A9B32200677777 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700C1BC26A9B32200677777 /* Unit.swift */; };
 		5700C1BF26A9C25100677777 /* APChemRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700C1BE26A9C25100677777 /* APChemRootView.swift */; };
-		5705CB0A2678E94900F5A63C /* FractionedChartAxisHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5705CB092678E94900F5A63C /* FractionedChartAxisHelper.swift */; };
-		5705CB0C2678E98000F5A63C /* FractionedChartAxisHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5705CB0B2678E98000F5A63C /* FractionedChartAxisHelperTests.swift */; };
 		570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */; };
-		570A7664266CD900009329FB /* BufferSaltComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7663266CD900009329FB /* BufferSaltComponents.swift */; };
-		570A7666266CDA0A009329FB /* SubstancePart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7665266CDA0A009329FB /* SubstancePart.swift */; };
-		570A766B266CFC45009329FB /* BufferScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A766A266CFC45009329FB /* BufferScreenViewModel.swift */; };
-		570A766D266CFCF1009329FB /* BufferNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A766C266CFCF1009329FB /* BufferNavigationModel.swift */; };
-		570A766F266CFDD2009329FB /* BufferScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A766E266CFDD2009329FB /* BufferScreen.swift */; };
-		570A7671266CFF0D009329FB /* BufferBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7670266CFF0D009329FB /* BufferBeaker.swift */; };
 		570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA02265A736C008EC8CC /* AppDelegate.swift */; };
 		570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA04265A736C008EC8CC /* SceneDelegate.swift */; };
-		570ABA09265A736C008EC8CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA08265A736C008EC8CC /* Assets.xcassets */; };
 		570ABA0C265A736C008EC8CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA0B265A736C008EC8CC /* Preview Assets.xcassets */; };
 		570ABA0F265A736D008EC8CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA0D265A736D008EC8CC /* LaunchScreen.storyboard */; };
 		570ABA33265A761F008EC8CC /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
 		570ABA34265A761F008EC8CC /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA38265A765A008EC8CC /* IntroScreenComponents.swift */; };
-		570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA3A265A7ACB008EC8CC /* IntroScreenComponentsTests.swift */; };
-		570AD452266D4CF100B9732E /* BufferRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570AD451266D4CF100B9732E /* BufferRightStack.swift */; };
 		5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E22126272A3800CF6FBE /* ShakeText.swift */; };
-		5711603526831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711603426831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift */; };
-		571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */; };
-		571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */; };
 		5713D8CC267B7CC2009C65AC /* ArcGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713D8CB267B7CC2009C65AC /* ArcGeometryTests.swift */; };
-		57190A5D2698557400DD4B86 /* TitrationEquationDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57190A5C2698557400DD4B86 /* TitrationEquationDefinitionTests.swift */; };
 		572B1A712675D01000302B8E /* ReactionProgressChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A702675D01000302B8E /* ReactionProgressChart.swift */; };
 		572B1A732675D3EE00302B8E /* ReactionProgressChartViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A722675D3EE00302B8E /* ReactionProgressChartViewModelTests.swift */; };
 		572B1A762675DC5100302B8E /* ReactionProgressChartGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A752675DC5100302B8E /* ReactionProgressChartGeometryTests.swift */; };
@@ -202,12 +186,6 @@
 		57315EDA2640377500A7D0F9 /* quiz-parse-invalid-position.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57315ED52640377500A7D0F9 /* quiz-parse-invalid-position.csv */; };
 		57315EDB2640377500A7D0F9 /* quiz-parse-missing-fields.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57315ED62640377500A7D0F9 /* quiz-parse-missing-fields.csv */; };
 		57315EDC2640377500A7D0F9 /* quiz-parse-invalid-images.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57315ED72640377500A7D0F9 /* quiz-parse-invalid-images.csv */; };
-		5733D80326748CB8007D4459 /* BufferComponentsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D80226748CB8007D4459 /* BufferComponentsExtensions.swift */; };
-		573779E826831DA900BAB6A1 /* TitrationSettingsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573779E726831DA900BAB6A1 /* TitrationSettingsExtension.swift */; };
-		5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0AC2664B2CD0007B09A /* ShakeContainerExtension.swift */; };
-		5739D0AF2664B65A0007B09A /* IntroRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0AE2664B65A0007B09A /* IntroRightStack.swift */; };
-		5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */; };
-		5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0B52664B83C0007B09A /* IntroStatements.swift */; };
 		573E1B2B263AACE000379A1D /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2A263AACE000379A1D /* StringUtil.swift */; };
 		573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2C263AADBD00379A1D /* StringUtilTests.swift */; };
 		573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2E263AB81D00379A1D /* ViewExtensions.swift */; };
@@ -226,18 +204,13 @@
 		5742D1C826AAF8DE00049FCC /* DebugProductLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C726AAF8DE00049FCC /* DebugProductLoader.swift */; };
 		5742D1CA26AB06BA00049FCC /* APChemStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1C926AB06BA00049FCC /* APChemStyling.swift */; };
 		5742D1CC26AB0B3F00049FCC /* BuyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1CB26AB0B3F00049FCC /* BuyButton.swift */; };
-		5743660D266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660C266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift */; };
-		5743660F266E7CD8007F0410 /* BufferChartStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660E266E7CD8007F0410 /* BufferChartStack.swift */; };
 		57436611266E7EF4007F0410 /* ICETable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F31825EA601B00AEE0D8 /* ICETable.swift */; };
-		574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574386D926654C6700B11C34 /* IntroEquationView.swift */; };
-		574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574386DB2665518100B11C34 /* ConcentrationPlaceholder.swift */; };
 		57438A3D260A26DB005E3888 /* RootNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */; };
 		57438A42260A2DC7005E3888 /* ScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B23319258E8BD900128760 /* ScreenProvider.swift */; };
 		57438A48260A3004005E3888 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A47260A3004005E3888 /* Version.swift */; };
 		57438A56260A3242005E3888 /* ReviewPromptPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */; };
 		57438A5F260A3371005E3888 /* ReviewPrompter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B528E525B38A2300381550 /* ReviewPrompter.swift */; };
 		57438A65260A4177005E3888 /* ScreenPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57438A64260A4177005E3888 /* ScreenPersistence.swift */; };
-		57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57466616265D81FC003FC6E3 /* AcidConcentration.swift */; };
 		5748012926A97BC4005C0F06 /* ReactionInputPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA011D25A87310001131A0 /* ReactionInputPersistenceTests.swift */; };
 		5748012A26A97BC7005C0F06 /* EnergyProfilePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */; };
 		5748012B26A97BCD005C0F06 /* ReactionInputLimitsWithoutC2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DD22A025B771A8003E6842 /* ReactionInputLimitsWithoutC2Tests.swift */; };
@@ -375,23 +348,11 @@
 		574865BC26A976DD007FA314 /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		574865BF26A97770007FA314 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5711E00225C4840D00B28E45 /* GoogleService-Info.plist */; };
 		57491BF9263B363200962B92 /* AccessibilityLabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57491BF8263B363200962B92 /* AccessibilityLabelUtil.swift */; };
-		574978212683453600EFA71C /* TitrationComponentsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978202683453600EFA71C /* TitrationComponentsExtensions.swift */; };
-		574978232683471800EFA71C /* TitrationStrongAcidPreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978222683471800EFA71C /* TitrationStrongAcidPreEPModelTests.swift */; };
 		574978252683498800EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
-		5749782A26836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782926836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift */; };
-		5749782C2683748100EFA71C /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782B2683748100EFA71C /* TestView.swift */; };
-		5749782E2683831B00EFA71C /* TitrationWeakSubstancePreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782D2683831B00EFA71C /* TitrationWeakSubstancePreparationModel.swift */; };
-		574978302683833700EFA71C /* TitrationWeakAcidPreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782F2683833700EFA71C /* TitrationWeakAcidPreparationModelTests.swift */; };
-		574978322683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978312683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift */; };
-		574978342683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978332683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift */; };
-		574978362683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978352683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift */; };
-		574978382683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978372683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift */; };
 		57567B422605F156009711D4 /* GridElementSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B412605F156009711D4 /* GridElementSetter.swift */; };
 		57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B472605F1A0009711D4 /* GridElementToBalance.swift */; };
 		57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */; };
 		57567B6B26066450009711D4 /* SlidingSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B6A26066450009711D4 /* SlidingSwitch.swift */; };
-		57572DEC266FB8D700A27684 /* BufferPhChartOrTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57572DEB266FB8D700A27684 /* BufferPhChartOrTable.swift */; };
-		57572DEE266FB8FE00A27684 /* BufferBottomCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57572DED266FB8FE00A27684 /* BufferBottomCharts.swift */; };
 		575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A75255AC27400F4E635 /* TextLine.swift */; };
 		575A880125E430C200AEE448 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CBEAB25C0657A00CE6007 /* Labels.swift */; };
 		575A880F25E4310700AEE448 /* QuizOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16972584B277001CE039 /* QuizOption.swift */; };
@@ -414,11 +375,7 @@
 		575C90E326629775001DCD17 /* PHMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E226629775001DCD17 /* PHMeter.swift */; };
 		575C90E52662CE6A001DCD17 /* PHMeterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E42662CE6A001DCD17 /* PHMeterTests.swift */; };
 		575C90E72662DAA1001DCD17 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E62662DAA1001DCD17 /* BlurView.swift */; };
-		575FE7DF26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */; };
-		575FE7E326A5C72200E6B316 /* TitrationScreenPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7E226A5C72200E6B316 /* TitrationScreenPersistence.swift */; };
 		575FE7E526A5DD5400E6B316 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 575FE7E426A5DD5400E6B316 /* GoogleService-Info.plist */; };
-		5766BC99269A315D0074A04B /* TitrationReactionDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766BC98269A315D0074A04B /* TitrationReactionDefinitionTests.swift */; };
-		5766BC9B269A3CB40074A04B /* AcidReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766BC9A269A3CB40074A04B /* AcidReactionDefinition.swift */; };
 		57686AB92600E008005BD328 /* FlamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AB82600E008005BD328 /* FlamesView.swift */; };
 		57686AC72600E342005BD328 /* BurnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AC62600E342005BD328 /* BurnerView.swift */; };
 		57686AD12600E6B1005BD328 /* AdjustableBeakerBurner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AD02600E6B1005BD328 /* AdjustableBeakerBurner.swift */; };
@@ -426,62 +383,14 @@
 		57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AF32601F5CF005BD328 /* FilledAirBeaker.swift */; };
 		57686AFA2601FD17005BD328 /* AdjustableAirBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */; };
 		576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
-		576AF0E82684B4A200F300C7 /* TitrationStrongBasePreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0E72684B4A200F300C7 /* TitrationStrongBasePreparationModelTests.swift */; };
-		576AF0EC2684BF8A00F300C7 /* TitrationStrongBasePreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0EB2684BF8A00F300C7 /* TitrationStrongBasePreEPModelTests.swift */; };
-		576AF0EE2684C2AB00F300C7 /* TitrationStrongBasePostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0ED2684C2AB00F300C7 /* TitrationStrongBasePostEPModelTests.swift */; };
-		576AF0F02684CD7200F300C7 /* TitrationWeakBasePreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0EF2684CD7200F300C7 /* TitrationWeakBasePreparationModelTests.swift */; };
-		576AF0F22684D51700F300C7 /* TitrationWeakBasePreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0F12684D51700F300C7 /* TitrationWeakBasePreEPModelTests.swift */; };
-		576AF0F52684ED7700F300C7 /* TitrationComponentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0F42684ED7700F300C7 /* TitrationComponentState.swift */; };
-		576AF0F82684F08A00F300C7 /* TitrationComponentStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0F72684F08A00F300C7 /* TitrationComponentStateTests.swift */; };
-		5770953426860F3C005F2981 /* TitrationReactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770953326860F3C005F2981 /* TitrationReactionModel.swift */; };
-		5770953626861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770953526861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift */; };
 		5773BCD6267A2EA500E52C81 /* CircleChartLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */; };
 		5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD8267A5F4500E52C81 /* TextLineTests.swift */; };
-		5773BCDB267A7E6B00E52C81 /* AcidBasesNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCDA267A7E6B00E52C81 /* AcidBasesNavigationModel.swift */; };
-		5773BCDE267A7E9D00E52C81 /* AcidAppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCDD267A7E9D00E52C81 /* AcidAppScreen.swift */; };
-		5773BCE0267A7EBF00E52C81 /* AcidAppQuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCDF267A7EBF00E52C81 /* AcidAppQuestionSet.swift */; };
-		5773BCE2267A811C00E52C81 /* AcidAppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */; };
-		5773BCE4267A81BD00E52C81 /* AcidAppNavigationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */; };
-		57783C5D2682112800ACABE6 /* PLogKValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C5C2682112800ACABE6 /* PLogKValue.swift */; };
-		57783C602682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C5F2682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift */; };
-		57783C622682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C612682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift */; };
-		57783C6426824CE300ACABE6 /* TitrationStrongSubstancePostEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C6326824CE300ACABE6 /* TitrationStrongSubstancePostEPModel.swift */; };
 		577A2609262822FF0060EC54 /* ValueWithPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577A2608262822FF0060EC54 /* ValueWithPrevious.swift */; };
 		577A261D262862C00060EC54 /* ReactionEnergyTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577A261C262862C00060EC54 /* ReactionEnergyTransfer.swift */; };
-		577BC7752679D463005BE5C8 /* AcidOrBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577BC7742679D463005BE5C8 /* AcidOrBaseTests.swift */; };
-		577BC7772679DC79005BE5C8 /* ChargedSymbolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577BC7762679DC79005BE5C8 /* ChargedSymbolView.swift */; };
-		577C10E926711C6500C5DC9A /* BufferStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C10E826711C6500C5DC9A /* BufferStatements.swift */; };
-		577C5021267F1512003DAD17 /* CommonAcidEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5020267F1511003DAD17 /* CommonAcidEquations.swift */; };
-		577C5023267F1852003DAD17 /* AcidConcentrationEquationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */; };
-		577C5027267F37CF003DAD17 /* TitrationScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5026267F37CF003DAD17 /* TitrationScreenState.swift */; };
-		577C5029267F38EC003DAD17 /* TitrationStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5028267F38EC003DAD17 /* TitrationStatements.swift */; };
-		577C502B267F3945003DAD17 /* AcidStatementUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C502A267F3945003DAD17 /* AcidStatementUtil.swift */; };
-		577C50302680D004003DAD17 /* TitrationEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C502F2680D004003DAD17 /* TitrationEquationView.swift */; };
-		577C50332680D0DC003DAD17 /* TitrationEquationTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50322680D0DC003DAD17 /* TitrationEquationTerm.swift */; };
-		577C50352680D773003DAD17 /* TitrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50342680D773003DAD17 /* TitrationEquation.swift */; };
-		577C50372680E09E003DAD17 /* TitrationEquationLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50362680E09E003DAD17 /* TitrationEquationLayout.swift */; };
-		577C50392680E0F2003DAD17 /* MolesToMolarity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50382680E0F2003DAD17 /* MolesToMolarity.swift */; };
-		577C503B2680E190003DAD17 /* TitrationEquationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C503A2680E190003DAD17 /* TitrationEquationData.swift */; };
-		577C503D2680F98C003DAD17 /* TitrationEquationViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C503C2680F98C003DAD17 /* TitrationEquationViewUtil.swift */; };
-		577C505A26810063003DAD17 /* ConcentrationToMolesOverVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505926810063003DAD17 /* ConcentrationToMolesOverVolume.swift */; };
-		577C505C2681081D003DAD17 /* PLogConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505B2681081D003DAD17 /* PLogConcentration.swift */; };
-		577C505E26810B2B003DAD17 /* PhSum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505D26810B2B003DAD17 /* PhSum.swift */; };
-		577C506026811078003DAD17 /* KToConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505F26811078003DAD17 /* KToConcentration.swift */; };
-		577C506226811E52003DAD17 /* KaKbRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506126811E52003DAD17 /* KaKbRelation.swift */; };
-		577C506426811FCD003DAD17 /* MolesDifference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506326811FCD003DAD17 /* MolesDifference.swift */; };
-		577C5066268120FD003DAD17 /* PConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5065268120FD003DAD17 /* PConcentration.swift */; };
-		577C506826812409003DAD17 /* MolesToConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506726812409003DAD17 /* MolesToConcentration.swift */; };
-		577C506A26812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506926812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift */; };
-		577C506C26812712003DAD17 /* PLogComplementConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506B26812712003DAD17 /* PLogComplementConcentration.swift */; };
 		577EDE8126A026B60067F3C1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577EDE8026A026B60067F3C1 /* OnboardingView.swift */; };
 		57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8D25EABA950099D720 /* AnimatableRotation.swift */; };
 		5784F44B2663F5A100513B2A /* MultiContainerShakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */; };
-		5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44D2664062200513B2A /* AcidOrBaseType.swift */; };
 		5784F4502664075400513B2A /* EnumMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44F2664075400513B2A /* EnumMap.swift */; };
-		5786BD02267B224A001A165C /* TitrationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD01267B224A001A165C /* TitrationSettings.swift */; };
-		5786BD08267B37A7001A165C /* TitrationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD07267B37A7001A165C /* TitrationScreen.swift */; };
-		5786BD0A267B37C4001A165C /* TitrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD09267B37C4001A165C /* TitrationViewModel.swift */; };
-		5786BD0C267B38FD001A165C /* TitrationBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD0B267B38FD001A165C /* TitrationBeaker.swift */; };
 		5786BD0F267B45BA001A165C /* Dropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD0E267B45BA001A165C /* Dropper.swift */; };
 		5786BD14267B51CD001A165C /* TestTubeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD13267B51CD001A165C /* TestTubeContainer.swift */; };
 		5786BD17267B66CA001A165C /* Burette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD16267B66CA001A165C /* Burette.swift */; };
@@ -489,7 +398,6 @@
 		5786FAAB25E6908D00AAD8A6 /* DisabledSliderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAAA25E6908D00AAD8A6 /* DisabledSliderModifier.swift */; };
 		5786FAED25E6D66C00AAD8A6 /* ChartAxisShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035F0B255C26D000DB3A19 /* ChartAxisShape.swift */; };
 		5786FAF325E6D8D100AAD8A6 /* TimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786FAF225E6D8D100AAD8A6 /* TimeChartView.swift */; };
-		578A1EAF266FA90000D11E22 /* BufferPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578A1EAE266FA90000D11E22 /* BufferPhChart.swift */; };
 		578B1700261864CB00D8079F /* CoreMotionPositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B16FF261864CB00D8079F /* CoreMotionPositionViewModel.swift */; };
 		578B170F2618749800D8079F /* CoreMotionShakingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B170E2618749800D8079F /* CoreMotionShakingViewModel.swift */; };
 		578B1716261874D500D8079F /* CoreMotionShakingBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B1715261874D500D8079F /* CoreMotionShakingBehavior.swift */; };
@@ -517,15 +425,7 @@
 		5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
 		5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
 		5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
-		5797DE192673719F003F589F /* BufferStrongSubstanceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE182673719F003F589F /* BufferStrongSubstanceComponents.swift */; };
-		5797DE1C26738615003F589F /* BufferSharedComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE1B26738615003F589F /* BufferSharedComponents.swift */; };
-		5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE1E2673908E003F589F /* BufferWeakComponentsTests.swift */; };
-		5797DE22267390DC003F589F /* AcidOrBaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE21267390DC003F589F /* AcidOrBaseExtensions.swift */; };
-		5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE232673965B003F589F /* BufferSaltComponentTests.swift */; };
-		5797DE2626739D89003F589F /* BufferStrongComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE2526739D89003F589F /* BufferStrongComponentsTests.swift */; };
 		579CDA1D2661656D00143809 /* AdjustableFluidBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA1C2661656D00143809 /* AdjustableFluidBeaker.swift */; };
-		579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA1E26616E5C00143809 /* IntroBeaker.swift */; };
-		579CDA212661707600143809 /* AcidAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA202661707600143809 /* AcidAppSettings.swift */; };
 		579EA8F42646871C008461E8 /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F32646871C008461E8 /* BarChart.swift */; };
 		579EA8F5264687AE008461E8 /* BarChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6E862560486400A1C45E /* BarChartAxis.swift */; };
 		579EA8F7264689CD008461E8 /* BarShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA8F6264689CD008461E8 /* BarShape.swift */; };
@@ -557,6 +457,153 @@
 		57B8946D26A04FFA00D71998 /* OnboardingPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946C26A04FFA00D71998 /* OnboardingPersistence.swift */; };
 		57B8946F26A0500100D71998 /* NamePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8946E26A0500100D71998 /* NamePersistence.swift */; };
 		57B8947126A0542200D71998 /* NamePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B8947026A0542200D71998 /* NamePersistenceTests.swift */; };
+		57B8F9ED26AECD2C003CB0C7 /* AcidsBases.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57B8F9E426AECD2C003CB0C7 /* AcidsBases.framework */; };
+		57B8F9F426AECD2C003CB0C7 /* AcidsBases.h in Headers */ = {isa = PBXBuildFile; fileRef = 57B8F9E626AECD2C003CB0C7 /* AcidsBases.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		57B8F9FB26AECD74003CB0C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA08265A736C008EC8CC /* Assets.xcassets */; };
+		57B8F9FC26AECD81003CB0C7 /* titration-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57D3264326A384030093CD16 /* titration-quiz.csv */; };
+		57B8F9FD26AECD81003CB0C7 /* introduction-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57D3263F26A36B5F0093CD16 /* introduction-quiz.csv */; };
+		57B8F9FE26AECD81003CB0C7 /* buffer-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57D3264126A380560093CD16 /* buffer-quiz.csv */; };
+		57B8F9FF26AECD8B003CB0C7 /* TitrationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD01267B224A001A165C /* TitrationSettings.swift */; };
+		57B8FA0026AECD8B003CB0C7 /* TitrationStrongSubstancePreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C5F2682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift */; };
+		57B8FA0126AECD8B003CB0C7 /* TitrationWeakSubstancePreEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978312683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift */; };
+		57B8FA0226AECD8B003CB0C7 /* TitrationStrongSubstancePostEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C6326824CE300ACABE6 /* TitrationStrongSubstancePostEPModel.swift */; };
+		57B8FA0326AECD8B003CB0C7 /* TitrationWeakSubstancePostEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978352683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift */; };
+		57B8FA0426AECD8B003CB0C7 /* TitrationPreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F467382687009900E294BE /* TitrationPreparationModel.swift */; };
+		57B8FA0526AECD8B003CB0C7 /* TitrationStrongSubstancePreEPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C612682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift */; };
+		57B8FA0626AECD8B003CB0C7 /* TitrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD09267B37C4001A165C /* TitrationViewModel.swift */; };
+		57B8FA0726AECD8B003CB0C7 /* TitrationReactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770953326860F3C005F2981 /* TitrationReactionModel.swift */; };
+		57B8FA0826AECD8B003CB0C7 /* TitrationWeakSubstancePreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782D2683831B00EFA71C /* TitrationWeakSubstancePreparationModel.swift */; };
+		57B8FA0926AECD94003CB0C7 /* IntroScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3ABB266102EB0073A29B /* IntroScreenViewModel.swift */; };
+		57B8FA0A26AECD94003CB0C7 /* BufferSharedComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE1B26738615003F589F /* BufferSharedComponents.swift */; };
+		57B8FA0B26AECD94003CB0C7 /* BufferSaltComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7663266CD900009329FB /* BufferSaltComponents.swift */; };
+		57B8FA0C26AECD94003CB0C7 /* BufferScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A766A266CFC45009329FB /* BufferScreenViewModel.swift */; };
+		57B8FA0D26AECD94003CB0C7 /* BufferWeakSubstanceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660C266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift */; };
+		57B8FA0E26AECD94003CB0C7 /* BufferStrongSubstanceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE182673719F003F589F /* BufferStrongSubstanceComponents.swift */; };
+		57B8FA0F26AECD9E003CB0C7 /* ReactionDefinitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9B761268DFF2800DC989B /* ReactionDefinitionView.swift */; };
+		57B8FA1026AECDA2003CB0C7 /* DraggablePhMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885E267E59C000609671 /* DraggablePhMeter.swift */; };
+		57B8FA1126AECDA9003CB0C7 /* MolesDifference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506326811FCD003DAD17 /* MolesDifference.swift */; };
+		57B8FA1226AECDA9003CB0C7 /* ConcentrationToMolesOverVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505926810063003DAD17 /* ConcentrationToMolesOverVolume.swift */; };
+		57B8FA1326AECDA9003CB0C7 /* PConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5065268120FD003DAD17 /* PConcentration.swift */; };
+		57B8FA1426AECDA9003CB0C7 /* KaKbRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506126811E52003DAD17 /* KaKbRelation.swift */; };
+		57B8FA1526AECDA9003CB0C7 /* ConcentrationToMolesDifferenceOverVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506926812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift */; };
+		57B8FA1626AECDA9003CB0C7 /* TitrationEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C502F2680D004003DAD17 /* TitrationEquationView.swift */; };
+		57B8FA1726AECDA9003CB0C7 /* PLogConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505B2681081D003DAD17 /* PLogConcentration.swift */; };
+		57B8FA1826AECDA9003CB0C7 /* PhSum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505D26810B2B003DAD17 /* PhSum.swift */; };
+		57B8FA1926AECDA9003CB0C7 /* PLogKValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57783C5C2682112800ACABE6 /* PLogKValue.swift */; };
+		57B8FA1A26AECDA9003CB0C7 /* MolesToConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506726812409003DAD17 /* MolesToConcentration.swift */; };
+		57B8FA1B26AECDA9003CB0C7 /* PLogComplementConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C506B26812712003DAD17 /* PLogComplementConcentration.swift */; };
+		57B8FA1C26AECDA9003CB0C7 /* TitrationEquationViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C503C2680F98C003DAD17 /* TitrationEquationViewUtil.swift */; };
+		57B8FA1D26AECDA9003CB0C7 /* MolesToMolarity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50382680E0F2003DAD17 /* MolesToMolarity.swift */; };
+		57B8FA1E26AECDA9003CB0C7 /* KToConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C505F26811078003DAD17 /* KToConcentration.swift */; };
+		57B8FA1F26AECDAF003CB0C7 /* TitrationRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88859267E17A800609671 /* TitrationRightStack.swift */; };
+		57B8FA2026AECDAF003CB0C7 /* TitrationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD07267B37A7001A165C /* TitrationScreen.swift */; };
+		57B8FA2126AECDAF003CB0C7 /* TitrationChartStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88852267E16C900609671 /* TitrationChartStack.swift */; };
+		57B8FA2226AECDAF003CB0C7 /* TitrationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88855267E16DD00609671 /* TitrationCurve.swift */; };
+		57B8FA2326AECDAF003CB0C7 /* TitrationBarsOrReactionProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */; };
+		57B8FA2426AECDAF003CB0C7 /* TitrationMacroBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EEF91A2689976400398A2D /* TitrationMacroBeaker.swift */; };
+		57B8FA2526AECDAF003CB0C7 /* TitrationBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD0B267B38FD001A165C /* TitrationBeaker.swift */; };
+		57B8FA2626AECDB8003CB0C7 /* BufferFractionsChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325726723ACB00C94109 /* BufferFractionsChart.swift */; };
+		57B8FA2726AECDB8003CB0C7 /* BufferScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A766E266CFDD2009329FB /* BufferScreen.swift */; };
+		57B8FA2826AECDB8003CB0C7 /* BufferPhChartOrTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57572DEB266FB8D700A27684 /* BufferPhChartOrTable.swift */; };
+		57B8FA2926AECDB8003CB0C7 /* BufferBottomCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57572DED266FB8FE00A27684 /* BufferBottomCharts.swift */; };
+		57B8FA2A26AECDB8003CB0C7 /* BufferBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7670266CFF0D009329FB /* BufferBeaker.swift */; };
+		57B8FA2B26AECDB8003CB0C7 /* BufferRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570AD451266D4CF100B9732E /* BufferRightStack.swift */; };
+		57B8FA2C26AECDB8003CB0C7 /* BufferPhChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578A1EAE266FA90000D11E22 /* BufferPhChart.swift */; };
+		57B8FA2D26AECDB8003CB0C7 /* BufferChartStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743660E266E7CD8007F0410 /* BufferChartStack.swift */; };
+		57B8FA2E26AECDB8003CB0C7 /* BufferEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325926724DBD00C94109 /* BufferEquationView.swift */; };
+		57B8FA2F26AECDBD003CB0C7 /* IntroEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574386D926654C6700B11C34 /* IntroEquationView.swift */; };
+		57B8FA3026AECDBD003CB0C7 /* ConcentrationPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574386DB2665518100B11C34 /* ConcentrationPlaceholder.swift */; };
+		57B8FA3126AECDBD003CB0C7 /* ChargedSymbolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577BC7762679DC79005BE5C8 /* ChargedSymbolView.swift */; };
+		57B8FA3226AECDC1003CB0C7 /* ShakeContainerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0AC2664B2CD0007B09A /* ShakeContainerExtension.swift */; };
+		57B8FA3326AECDC6003CB0C7 /* IntroScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3ABE266104A60073A29B /* IntroScreen.swift */; };
+		57B8FA3426AECDC6003CB0C7 /* IntroBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA1E26616E5C00143809 /* IntroBeaker.swift */; };
+		57B8FA3526AECDC6003CB0C7 /* IntroRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0AE2664B65A0007B09A /* IntroRightStack.swift */; };
+		57B8FA3726AECDCC003CB0C7 /* AcidAppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */; };
+		57B8FA3826AECDCC003CB0C7 /* PHScaleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60154265ECA4600017E25 /* PHScaleBar.swift */; };
+		57B8FA3926AECDCC003CB0C7 /* PHScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB02660D4450073A29B /* PHScale.swift */; };
+		57B8FA3A26AECDCC003CB0C7 /* PHScaleGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */; };
+		57B8FA3B26AECDF1003CB0C7 /* AcidQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262A26A35DDB0093CD16 /* AcidQuizQuestions.swift */; };
+		57B8FA3C26AECDF7003CB0C7 /* AcidBasePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */; };
+		57B8FA3D26AECDF7003CB0C7 /* TitrationScreenPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7E226A5C72200E6B316 /* TitrationScreenPersistence.swift */; };
+		57B8FA3E26AECDFD003CB0C7 /* TitrationEquationSets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C2DEC12681B6590012DBC1 /* TitrationEquationSets.swift */; };
+		57B8FA3F26AECDFD003CB0C7 /* TitrationEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50342680D773003DAD17 /* TitrationEquation.swift */; };
+		57B8FA4026AECDFD003CB0C7 /* TitrationEquationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C503A2680E190003DAD17 /* TitrationEquationData.swift */; };
+		57B8FA4126AECDFD003CB0C7 /* Titrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4673A268708CB00E294BE /* Titrant.swift */; };
+		57B8FA4226AECDFD003CB0C7 /* TitrationEquationLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50362680E09E003DAD17 /* TitrationEquationLayout.swift */; };
+		57B8FA4326AECDFD003CB0C7 /* TitrationComponentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0F42684ED7700F300C7 /* TitrationComponentState.swift */; };
+		57B8FA4426AECDFD003CB0C7 /* TitrationEquationTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C50322680D0DC003DAD17 /* TitrationEquationTerm.swift */; };
+		57B8FA4526AECE06003CB0C7 /* CommonAcidEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5020267F1511003DAD17 /* CommonAcidEquations.swift */; };
+		57B8FA4626AECE0C003CB0C7 /* BufferScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261A26A2C2450093CD16 /* BufferScreenElement.swift */; };
+		57B8FA4726AECE0C003CB0C7 /* AcidAppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCDD267A7E9D00E52C81 /* AcidAppScreen.swift */; };
+		57B8FA4826AECE0C003CB0C7 /* TitrationScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262726A348AE0093CD16 /* TitrationScreenElement.swift */; };
+		57B8FA4926AECE0C003CB0C7 /* IntroScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261826A204F60093CD16 /* IntroScreenElement.swift */; };
+		57B8FA4A26AECE0C003CB0C7 /* AcidAppQuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCDF267A7EBF00E52C81 /* AcidAppQuestionSet.swift */; };
+		57B8FA4B26AECE10003CB0C7 /* FractionedChartAxisHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5705CB092678E94900F5A63C /* FractionedChartAxisHelper.swift */; };
+		57B8FA4C26AECE15003CB0C7 /* TitrationStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5028267F38EC003DAD17 /* TitrationStatements.swift */; };
+		57B8FA4D26AECE15003CB0C7 /* AcidStatementUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C502A267F3945003DAD17 /* AcidStatementUtil.swift */; };
+		57B8FA4E26AECE15003CB0C7 /* BufferStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C10E826711C6500C5DC9A /* BufferStatements.swift */; };
+		57B8FA4F26AECE15003CB0C7 /* IntroStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0B52664B83C0007B09A /* IntroStatements.swift */; };
+		57B8FA5026AECE1B003CB0C7 /* BufferNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A766C266CFCF1009329FB /* BufferNavigationModel.swift */; };
+		57B8FA5126AECE1B003CB0C7 /* IntroNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */; };
+		57B8FA5226AECE1B003CB0C7 /* AcidBasesNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCDA267A7E6B00E52C81 /* AcidBasesNavigationModel.swift */; };
+		57B8FA5326AECE1B003CB0C7 /* AcidAppNavigationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */; };
+		57B8FA5426AECE1B003CB0C7 /* AcidAppInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262F26A3614E0093CD16 /* AcidAppInjector.swift */; };
+		57B8FA5526AECE1B003CB0C7 /* TitrationScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5026267F37CF003DAD17 /* TitrationScreenState.swift */; };
+		57B8FA5626AECE21003CB0C7 /* AcidOrBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD292664AD1500661D74 /* AcidOrBase.swift */; };
+		57B8FA5726AECE21003CB0C7 /* AcidOrBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44D2664062200513B2A /* AcidOrBaseType.swift */; };
+		57B8FA5826AECE21003CB0C7 /* SubstancePart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7665266CDA0A009329FB /* SubstancePart.swift */; };
+		57B8FA5926AECE21003CB0C7 /* Ions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD2B2664AD3200661D74 /* Ions.swift */; };
+		57B8FA5A26AECE25003CB0C7 /* AcidBasesScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AC1266104D00073A29B /* AcidBasesScreenLayout.swift */; };
+		57B8FA5B26AECE28003CB0C7 /* AcidBasesStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */; };
+		57B8FA5C26AECE2F003CB0C7 /* AcidAppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579CDA202661707600143809 /* AcidAppSettings.swift */; };
+		57B8FA5D26AECE2F003CB0C7 /* AcidSubstanceBeakerCoords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */; };
+		57B8FA5E26AECE2F003CB0C7 /* PHScaleColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60157265ECA7B00017E25 /* PHScaleColors.swift */; };
+		57B8FA5F26AECE2F003CB0C7 /* IntroScreenComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA38265A765A008EC8CC /* IntroScreenComponents.swift */; };
+		57B8FA6026AECE2F003CB0C7 /* AcidConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57466616265D81FC003FC6E3 /* AcidConcentration.swift */; };
+		57B8FA6126AECE2F003CB0C7 /* AcidReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766BC9A269A3CB40074A04B /* AcidReactionDefinition.swift */; };
+		57B8FA6226AECE47003CB0C7 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; platformFilter = ios; };
+		57B8FA6326AECE47003CB0C7 /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57B8FA6726AECEC2003CB0C7 /* TitrationNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4673D268741EC00E294BE /* TitrationNavigationParametersAreReappliedTests.swift */; };
+		57B8FA6826AECEC2003CB0C7 /* IntroNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */; };
+		57B8FA6926AECEC2003CB0C7 /* BufferNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */; };
+		57B8FA6A26AECEC8003CB0C7 /* TitrationWeakSubstanceReactionProgressChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9B75E268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift */; };
+		57B8FA6B26AECEC8003CB0C7 /* TitrationStrongAcidPreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5711603426831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift */; };
+		57B8FA6C26AECEC8003CB0C7 /* TitrationWeakAcidPostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978372683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift */; };
+		57B8FA6D26AECEC8003CB0C7 /* TitrationStrongAcidPostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782926836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift */; };
+		57B8FA6E26AECEC8003CB0C7 /* TitrationWeakBasePostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5770953526861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift */; };
+		57B8FA6F26AECEC8003CB0C7 /* TitrationWeakAcidPreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5749782F2683833700EFA71C /* TitrationWeakAcidPreparationModelTests.swift */; };
+		57B8FA7026AECEC8003CB0C7 /* TitrationStrongBasePostEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0ED2684C2AB00F300C7 /* TitrationStrongBasePostEPModelTests.swift */; };
+		57B8FA7126AECEC8003CB0C7 /* TitrationWeakBasePreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0EF2684CD7200F300C7 /* TitrationWeakBasePreparationModelTests.swift */; };
+		57B8FA7226AECEC8003CB0C7 /* TitrationWeakAcidPreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978332683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift */; };
+		57B8FA7326AECEC8003CB0C7 /* TitrationStrongBasePreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0EB2684BF8A00F300C7 /* TitrationStrongBasePreEPModelTests.swift */; };
+		57B8FA7426AECEC8003CB0C7 /* TitrationStrongAcidPreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978222683471800EFA71C /* TitrationStrongAcidPreEPModelTests.swift */; };
+		57B8FA7526AECEC8003CB0C7 /* TitrationWeakBasePreEPModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0F12684D51700F300C7 /* TitrationWeakBasePreEPModelTests.swift */; };
+		57B8FA7626AECEC8003CB0C7 /* TitrationComponentStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0F72684F08A00F300C7 /* TitrationComponentStateTests.swift */; };
+		57B8FA7726AECEC8003CB0C7 /* TitrationStrongSubstanceReactionProgressChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9B75C268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift */; };
+		57B8FA7826AECEC8003CB0C7 /* TitrationStrongBasePreparationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576AF0E72684B4A200F300C7 /* TitrationStrongBasePreparationModelTests.swift */; };
+		57B8FA7926AECECE003CB0C7 /* AcidOrBaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE21267390DC003F589F /* AcidOrBaseExtensions.swift */; };
+		57B8FA7A26AECECE003CB0C7 /* TitrationComponentsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978202683453600EFA71C /* TitrationComponentsExtensions.swift */; };
+		57B8FA7B26AECECE003CB0C7 /* BufferComponentsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5733D80226748CB8007D4459 /* BufferComponentsExtensions.swift */; };
+		57B8FA7C26AECECE003CB0C7 /* TitrationSettingsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573779E726831DA900BAB6A1 /* TitrationSettingsExtension.swift */; };
+		57B8FA7D26AECED4003CB0C7 /* BufferSaltComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE232673965B003F589F /* BufferSaltComponentTests.swift */; };
+		57B8FA7E26AECED4003CB0C7 /* BufferWeakComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE1E2673908E003F589F /* BufferWeakComponentsTests.swift */; };
+		57B8FA7F26AECED4003CB0C7 /* BufferStrongComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797DE2526739D89003F589F /* BufferStrongComponentsTests.swift */; };
+		57B8FA8026AECEDA003CB0C7 /* FractionedChartAxisHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5705CB0B2678E98000F5A63C /* FractionedChartAxisHelperTests.swift */; };
+		57B8FA8126AECEDA003CB0C7 /* AcidConcentrationEquationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */; };
+		57B8FA8226AECEDA003CB0C7 /* ReactionDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */; };
+		57B8FA8326AECEDA003CB0C7 /* IntroScreenComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA3A265A7ACB008EC8CC /* IntroScreenComponentsTests.swift */; };
+		57B8FA8426AECEDA003CB0C7 /* AcidOrBasePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */; };
+		57B8FA8526AECEDA003CB0C7 /* TitrationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA5032695B24D001F24CA /* TitrationViewModelTests.swift */; };
+		57B8FA8626AECEDA003CB0C7 /* TitrantMolarityInputLimitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */; };
+		57B8FA8726AECEDA003CB0C7 /* AcidOrBaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577BC7742679D463005BE5C8 /* AcidOrBaseTests.swift */; };
+		57B8FA8826AECEDA003CB0C7 /* AcidSubstanceBeakerCoordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */; };
+		57B8FA8926AECEDA003CB0C7 /* TitrationEquationDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57190A5C2698557400DD4B86 /* TitrationEquationDefinitionTests.swift */; };
+		57B8FA8A26AECEDA003CB0C7 /* TitrationReactionDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766BC98269A315D0074A04B /* TitrationReactionDefinitionTests.swift */; };
+		57B8FA8B26AECEE2003CB0C7 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
+		57B8FA8C26AECEE2003CB0C7 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */; };
+		57B8FA8D26AECEE2003CB0C7 /* NavigationTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402126486F8300E352C1 /* NavigationTestMethods.swift */; };
+		57B8FA8E26AECEE2003CB0C7 /* QuizTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402D2648765700E352C1 /* QuizTestMethods.swift */; };
+		57B8FA8F26AECEE2003CB0C7 /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
 		57B92EBA2665258A00023E7C /* SelectionToggleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AAD2600D22C005BD328 /* SelectionToggleText.swift */; };
 		57B92EBD2665356600023E7C /* TextLineUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBC2665356600023E7C /* TextLineUtil.swift */; };
 		57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBE266537F900023E7C /* TextLineUtilTests.swift */; };
@@ -565,10 +612,7 @@
 		57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4F26415745001B97CC /* ImageTypeView.swift */; };
 		57BDFF5226415E00001B97CC /* dummy-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5126415E00001B97CC /* dummy-quiz.csv */; };
 		57BDFF5826416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF5726416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		57C2DEC22681B6590012DBC1 /* TitrationEquationSets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C2DEC12681B6590012DBC1 /* TitrationEquationSets.swift */; };
 		57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315C12631B58A0092C454 /* MoleculeArc.swift */; };
-		57CD325826723ACB00C94109 /* BufferFractionsChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325726723ACB00C94109 /* BufferFractionsChart.swift */; };
-		57CD325A26724DBD00C94109 /* BufferEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325926724DBD00C94109 /* BufferEquationView.swift */; };
 		57CD325C2672549800C94109 /* AnimatingNumberPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */; };
 		57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C4426241FCC00BE1303 /* Labelled.swift */; };
 		57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C5F2625B12700BE1303 /* ParticleContainer.swift */; };
@@ -577,25 +621,10 @@
 		57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D32577C2FD006D945B /* FixedText.swift */; };
 		57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */; };
 		57D2F31225EA389C00AEE0D8 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
-		57D3261626A1DFD80093CD16 /* ReactionDefinitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */; };
-		57D3261926A204F70093CD16 /* IntroScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261826A204F60093CD16 /* IntroScreenElement.swift */; };
-		57D3261B26A2C2460093CD16 /* BufferScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261A26A2C2450093CD16 /* BufferScreenElement.swift */; };
 		57D3261D26A2D22E0093CD16 /* EdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */; };
-		57D3261F26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */; };
-		57D3262126A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */; };
-		57D3262426A30CE80093CD16 /* AcidBasePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262326A30CE80093CD16 /* AcidBasePersistence.swift */; };
-		57D3262626A312C20093CD16 /* AcidOrBasePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */; };
-		57D3262826A348AE0093CD16 /* TitrationScreenElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262726A348AE0093CD16 /* TitrationScreenElement.swift */; };
-		57D3262B26A35DDB0093CD16 /* AcidQuizQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262A26A35DDB0093CD16 /* AcidQuizQuestions.swift */; };
-		57D3263026A3614E0093CD16 /* AcidAppInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262F26A3614E0093CD16 /* AcidAppInjector.swift */; };
-		57D3264026A36B5F0093CD16 /* introduction-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57D3263F26A36B5F0093CD16 /* introduction-quiz.csv */; };
-		57D3264226A380560093CD16 /* buffer-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57D3264126A380560093CD16 /* buffer-quiz.csv */; };
-		57D3264426A384030093CD16 /* titration-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57D3264326A384030093CD16 /* titration-quiz.csv */; };
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
-		57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60154265ECA4600017E25 /* PHScaleBar.swift */; };
-		57D60158265ECA7B00017E25 /* PHScaleColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60157265ECA7B00017E25 /* PHScaleColors.swift */; };
 		57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */; };
 		57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */; };
 		57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */; };
@@ -614,38 +643,18 @@
 		57E6D8D826AD89DA00603796 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8D726AD89DA00603796 /* NotificationViewModel.swift */; };
 		57E6D8DA26ADA2E800603796 /* AnalyticsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8D926ADA2E800603796 /* AnalyticsScreen.swift */; };
 		57E6D8DE26ADA8BA00603796 /* APChemRootNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8DD26ADA8BA00603796 /* APChemRootNavigationModel.swift */; };
-		57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD292664AD1500661D74 /* AcidOrBase.swift */; };
-		57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7CD2B2664AD3200661D74 /* Ions.swift */; };
 		57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902B925ED561200758300 /* EquatableCounter.swift */; };
 		57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902C325ED585800758300 /* EquatableCounterTests.swift */; };
-		57E9B75D268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9B75C268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift */; };
-		57E9B75F268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9B75E268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift */; };
-		57E9B762268DFF2800DC989B /* ReactionDefinitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E9B761268DFF2800DC989B /* ReactionDefinitionView.swift */; };
 		57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */; };
-		57EEF91B2689976400398A2D /* TitrationMacroBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EEF91A2689976400398A2D /* TitrationMacroBeaker.swift */; };
-		57F467392687009900E294BE /* TitrationPreparationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F467382687009900E294BE /* TitrationPreparationModel.swift */; };
-		57F4673B268708CB00E294BE /* Titrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4673A268708CB00E294BE /* Titrant.swift */; };
-		57F4673E268741ED00E294BE /* TitrationNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4673D268741EC00E294BE /* TitrationNavigationParametersAreReappliedTests.swift */; };
 		57F4673F2687421800E294BE /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
 		57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402126486F8300E352C1 /* NavigationTestMethods.swift */; };
 		57F467442687421D00E294BE /* QuizTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402D2648765700E352C1 /* QuizTestMethods.swift */; };
 		57F467452687421D00E294BE /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
 		57F467462687421D00E294BE /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */; };
-		57F88853267E16C900609671 /* TitrationChartStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88852267E16C900609671 /* TitrationChartStack.swift */; };
-		57F88856267E16DD00609671 /* TitrationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88855267E16DD00609671 /* TitrationCurve.swift */; };
-		57F88858267E170800609671 /* TitrationBarsOrReactionProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */; };
-		57F8885A267E17A800609671 /* TitrationRightStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88859267E17A800609671 /* TitrationRightStack.swift */; };
 		57F8885C267E188400609671 /* SliderOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885B267E188400609671 /* SliderOverlay.swift */; };
-		57F8885F267E59C000609671 /* DraggablePhMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885E267E59C000609671 /* DraggablePhMeter.swift */; };
 		57F88861267E675B00609671 /* MoleculeEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88860267E675B00609671 /* MoleculeEmitter.swift */; };
 		57F88864267E6DB900609671 /* MoleculeEmittingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88863267E6DB900609671 /* MoleculeEmittingViewModel.swift */; };
-		57FA3AB12660D4450073A29B /* PHScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB02660D4450073A29B /* PHScale.swift */; };
-		57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB22660D5580073A29B /* PHScaleGeometry.swift */; };
-		57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB62660EFBC0073A29B /* AcidBasesStyling.swift */; };
 		57FA3AB92660F27B0073A29B /* ColoredText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB82660F27B0073A29B /* ColoredText.swift */; };
-		57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3ABB266102EB0073A29B /* IntroScreenViewModel.swift */; };
-		57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3ABE266104A60073A29B /* IntroScreen.swift */; };
-		57FA3AC2266104D00073A29B /* AcidBasesScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AC1266104D00073A29B /* AcidBasesScreenLayout.swift */; };
 		57FB9ED22674A02B0003E977 /* ReactingBeakerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB9ED12674A02B0003E977 /* ReactingBeakerViewModelTests.swift */; };
 		57FD400726484DCF00E352C1 /* FeedbackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD400626484DCF00E352C1 /* FeedbackSettings.swift */; };
 		57FD400926484F2E00E352C1 /* FeedbackSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */; };
@@ -666,7 +675,6 @@
 		57FD401F264851D400E352C1 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
 		57FD402226486F8300E352C1 /* NavigationTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402126486F8300E352C1 /* NavigationTestMethods.swift */; };
 		57FD402E2648765700E352C1 /* QuizTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402D2648765700E352C1 /* QuizTestMethods.swift */; };
-		57FDA5042695B24D001F24CA /* TitrationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA5032695B24D001F24CA /* TitrationViewModelTests.swift */; };
 		57FF9EDE25FF6EA800C1C27F /* GridElementBalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FF9EDD25FF6EA800C1C27F /* GridElementBalancer.swift */; };
 		57FF9EE425FF6EC100C1C27F /* GridElementBalancerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FF9EE325FF6EC100C1C27F /* GridElementBalancerTests.swift */; };
 /* End PBXBuildFile section */
@@ -742,6 +750,20 @@
 			remoteGlobalIDString = 5797A44025E4069F00991BD9;
 			remoteInfo = ReactionsCore;
 		};
+		57B8F9EE26AECD2C003CB0C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 57B8F9E326AECD2C003CB0C7;
+			remoteInfo = AcidsBases;
+		};
+		57B8FA6426AECE47003CB0C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5797A44025E4069F00991BD9;
+			remoteInfo = ReactionsCore;
+		};
 		57E6D8CB26AC795300603796 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
@@ -794,6 +816,17 @@
 				574865BC26A976DD007FA314 /* ReactionsCore.framework in Embed Frameworks */,
 				5700C1B226A9A41100677777 /* Equilibrium.framework in Embed Frameworks */,
 				574865B226A96E69007FA314 /* ReactionRates.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57B8FA6626AECE48003CB0C7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57B8FA6326AECE47003CB0C7 /* ReactionsCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1011,7 +1044,6 @@
 		574978222683471800EFA71C /* TitrationStrongAcidPreEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongAcidPreEPModelTests.swift; sourceTree = "<group>"; };
 		574978242683498800EFA71C /* CommonTestAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTestAssertions.swift; sourceTree = "<group>"; };
 		5749782926836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongAcidPostEPModelTests.swift; sourceTree = "<group>"; };
-		5749782B2683748100EFA71C /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		5749782D2683831B00EFA71C /* TitrationWeakSubstancePreparationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakSubstancePreparationModel.swift; sourceTree = "<group>"; };
 		5749782F2683833700EFA71C /* TitrationWeakAcidPreparationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakAcidPreparationModelTests.swift; sourceTree = "<group>"; };
 		574978312683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakSubstancePreEPModel.swift; sourceTree = "<group>"; };
@@ -1266,6 +1298,11 @@
 		57B8946C26A04FFA00D71998 /* OnboardingPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPersistence.swift; sourceTree = "<group>"; };
 		57B8946E26A0500100D71998 /* NamePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamePersistence.swift; sourceTree = "<group>"; };
 		57B8947026A0542200D71998 /* NamePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamePersistenceTests.swift; sourceTree = "<group>"; };
+		57B8F9E426AECD2C003CB0C7 /* AcidsBases.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AcidsBases.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		57B8F9E626AECD2C003CB0C7 /* AcidsBases.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AcidsBases.h; sourceTree = "<group>"; };
+		57B8F9E726AECD2C003CB0C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57B8F9EC26AECD2C003CB0C7 /* AcidsBasesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AcidsBasesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		57B8F9F326AECD2C003CB0C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57B92EBC2665356600023E7C /* TextLineUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineUtil.swift; sourceTree = "<group>"; };
 		57B92EBE266537F900023E7C /* TextLineUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineUtilTests.swift; sourceTree = "<group>"; };
 		57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinition.swift; sourceTree = "<group>"; };
@@ -1529,6 +1566,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		57B8F9E126AECD2C003CB0C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57B8FA6226AECE47003CB0C7 /* ReactionsCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57B8F9E926AECD2C003CB0C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57B8F9ED26AECD2C003CB0C7 /* AcidsBases.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		57E6D8C326AC795300603796 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1714,13 +1767,8 @@
 		570ABA01265A736C008EC8CC /* acids-bases */ = {
 			isa = PBXGroup;
 			children = (
-				57D3262C26A35E950093CD16 /* quiz-questions */,
-				570ABA32265A760E008EC8CC /* viewmodel */,
-				570ABA31265A7608008EC8CC /* view */,
-				570ABA30265A7603008EC8CC /* model */,
 				570ABA02265A736C008EC8CC /* AppDelegate.swift */,
 				570ABA04265A736C008EC8CC /* SceneDelegate.swift */,
-				570ABA08265A736C008EC8CC /* Assets.xcassets */,
 				570ABA0D265A736D008EC8CC /* LaunchScreen.storyboard */,
 				575FE7E426A5DD5400E6B316 /* GoogleService-Info.plist */,
 				570ABA10265A736D008EC8CC /* Info.plist */,
@@ -1740,22 +1788,7 @@
 		570ABA18265A736D008EC8CC /* acids-basesTests */ = {
 			isa = PBXGroup;
 			children = (
-				57F4673C268741D500E294BE /* navigation */,
-				5786BD03267B2256001A165C /* titration-components */,
-				5797DE20267390D1003F589F /* util */,
-				5797DE1D26739075003F589F /* buffer-components */,
 				570ABA1B265A736D008EC8CC /* Info.plist */,
-				570ABA3A265A7ACB008EC8CC /* IntroScreenComponentsTests.swift */,
-				571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */,
-				5705CB0B2678E98000F5A63C /* FractionedChartAxisHelperTests.swift */,
-				577BC7742679D463005BE5C8 /* AcidOrBaseTests.swift */,
-				577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */,
-				57FDA5032695B24D001F24CA /* TitrationViewModelTests.swift */,
-				57190A5C2698557400DD4B86 /* TitrationEquationDefinitionTests.swift */,
-				5766BC98269A315D0074A04B /* TitrationReactionDefinitionTests.swift */,
-				57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */,
-				57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */,
-				575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */,
 			);
 			path = "acids-basesTests";
 			sourceTree = "<group>";
@@ -1796,7 +1829,6 @@
 				57FA3ABD2661049C0073A29B /* intro-screen */,
 				57D60153265ECA2800017E25 /* pHScale */,
 				5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */,
-				5749782B2683748100EFA71C /* TestView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1895,6 +1927,8 @@
 				5797A44D25E4069F00991BD9 /* ReactionsCoreTests */,
 				570ABA01265A736C008EC8CC /* acids-bases */,
 				570ABA18265A736D008EC8CC /* acids-basesTests */,
+				57B8F9E526AECD2C003CB0C7 /* AcidsBases */,
+				57B8F9F026AECD2C003CB0C7 /* AcidsBasesTests */,
 				571D6A3D255A780700F4E635 /* Products */,
 				57DDACC725E5448000B535A7 /* Frameworks */,
 			);
@@ -1913,6 +1947,8 @@
 				5700C11026A99C8800677777 /* Equilibrium.framework */,
 				5700C11826A99C8800677777 /* EquilibriumTests.xctest */,
 				57E6D8C626AC795300603796 /* APChemistryTests.xctest */,
+				57B8F9E426AECD2C003CB0C7 /* AcidsBases.framework */,
+				57B8F9EC26AECD2C003CB0C7 /* AcidsBasesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3229,6 +3265,43 @@
 			path = onboarding;
 			sourceTree = "<group>";
 		};
+		57B8F9E526AECD2C003CB0C7 /* AcidsBases */ = {
+			isa = PBXGroup;
+			children = (
+				570ABA08265A736C008EC8CC /* Assets.xcassets */,
+				57D3262C26A35E950093CD16 /* quiz-questions */,
+				570ABA32265A760E008EC8CC /* viewmodel */,
+				570ABA31265A7608008EC8CC /* view */,
+				570ABA30265A7603008EC8CC /* model */,
+				57B8F9E626AECD2C003CB0C7 /* AcidsBases.h */,
+				57B8F9E726AECD2C003CB0C7 /* Info.plist */,
+			);
+			path = AcidsBases;
+			sourceTree = "<group>";
+		};
+		57B8F9F026AECD2C003CB0C7 /* AcidsBasesTests */ = {
+			isa = PBXGroup;
+			children = (
+				57F4673C268741D500E294BE /* navigation */,
+				5786BD03267B2256001A165C /* titration-components */,
+				5797DE20267390D1003F589F /* util */,
+				5797DE1D26739075003F589F /* buffer-components */,
+				57B8F9F326AECD2C003CB0C7 /* Info.plist */,
+				570ABA3A265A7ACB008EC8CC /* IntroScreenComponentsTests.swift */,
+				571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */,
+				5705CB0B2678E98000F5A63C /* FractionedChartAxisHelperTests.swift */,
+				577BC7742679D463005BE5C8 /* AcidOrBaseTests.swift */,
+				577C5022267F1852003DAD17 /* AcidConcentrationEquationsTests.swift */,
+				57FDA5032695B24D001F24CA /* TitrationViewModelTests.swift */,
+				57190A5C2698557400DD4B86 /* TitrationEquationDefinitionTests.swift */,
+				5766BC98269A315D0074A04B /* TitrationReactionDefinitionTests.swift */,
+				57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */,
+				57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */,
+				575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */,
+			);
+			path = AcidsBasesTests;
+			sourceTree = "<group>";
+		};
 		57B92EC026654C0600023E7C /* equation */ = {
 			isa = PBXGroup;
 			children = (
@@ -3879,6 +3952,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		57B8F9DF26AECD2C003CB0C7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57B8F9F426AECD2C003CB0C7 /* AcidsBases.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -4058,6 +4139,44 @@
 			productReference = 5797A44925E4069F00991BD9 /* ReactionsCoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		57B8F9E326AECD2C003CB0C7 /* AcidsBases */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57B8F9F926AECD2C003CB0C7 /* Build configuration list for PBXNativeTarget "AcidsBases" */;
+			buildPhases = (
+				57B8F9DF26AECD2C003CB0C7 /* Headers */,
+				57B8F9E026AECD2C003CB0C7 /* Sources */,
+				57B8F9E126AECD2C003CB0C7 /* Frameworks */,
+				57B8F9E226AECD2C003CB0C7 /* Resources */,
+				57B8FA6626AECE48003CB0C7 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				57B8FA6526AECE47003CB0C7 /* PBXTargetDependency */,
+			);
+			name = AcidsBases;
+			productName = AcidsBases;
+			productReference = 57B8F9E426AECD2C003CB0C7 /* AcidsBases.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		57B8F9EB26AECD2C003CB0C7 /* AcidsBasesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57B8F9FA26AECD2C003CB0C7 /* Build configuration list for PBXNativeTarget "AcidsBasesTests" */;
+			buildPhases = (
+				57B8F9E826AECD2C003CB0C7 /* Sources */,
+				57B8F9E926AECD2C003CB0C7 /* Frameworks */,
+				57B8F9EA26AECD2C003CB0C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				57B8F9EF26AECD2C003CB0C7 /* PBXTargetDependency */,
+			);
+			name = AcidsBasesTests;
+			productName = AcidsBasesTests;
+			productReference = 57B8F9EC26AECD2C003CB0C7 /* AcidsBasesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		57E6D8C526AC795300603796 /* APChemistryTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 57E6D8CF26AC795300603796 /* Build configuration list for PBXNativeTarget "APChemistryTests" */;
@@ -4113,6 +4232,12 @@
 					5797A44825E4069F00991BD9 = {
 						CreatedOnToolsVersion = 12.4;
 					};
+					57B8F9E326AECD2C003CB0C7 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					57B8F9EB26AECD2C003CB0C7 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
 					57E6D8C526AC795300603796 = {
 						CreatedOnToolsVersion = 12.5.1;
 						TestTargetID = 5748659C26A96E55007FA314;
@@ -4146,6 +4271,8 @@
 				5700C10F26A99C8800677777 /* Equilibrium */,
 				5700C11726A99C8800677777 /* EquilibriumTests */,
 				57E6D8C526AC795300603796 /* APChemistryTests */,
+				57B8F9E326AECD2C003CB0C7 /* AcidsBases */,
+				57B8F9EB26AECD2C003CB0C7 /* AcidsBasesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -4173,12 +4300,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57D3264426A384030093CD16 /* titration-quiz.csv in Resources */,
 				570ABA0F265A736D008EC8CC /* LaunchScreen.storyboard in Resources */,
 				570ABA0C265A736C008EC8CC /* Preview Assets.xcassets in Resources */,
-				570ABA09265A736C008EC8CC /* Assets.xcassets in Resources */,
-				57D3264026A36B5F0093CD16 /* introduction-quiz.csv in Resources */,
-				57D3264226A380560093CD16 /* buffer-quiz.csv in Resources */,
 				575FE7E526A5DD5400E6B316 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4235,6 +4358,24 @@
 				57315ED92640377500A7D0F9 /* quiz-parse-invalid-tables.csv in Resources */,
 				57315EDB2640377500A7D0F9 /* quiz-parse-missing-fields.csv in Resources */,
 				57BDFF5226415E00001B97CC /* dummy-quiz.csv in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57B8F9E226AECD2C003CB0C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57B8F9FC26AECD81003CB0C7 /* titration-quiz.csv in Resources */,
+				57B8F9FE26AECD81003CB0C7 /* buffer-quiz.csv in Resources */,
+				57B8F9FB26AECD74003CB0C7 /* Assets.xcassets in Resources */,
+				57B8F9FD26AECD81003CB0C7 /* introduction-quiz.csv in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57B8F9EA26AECD2C003CB0C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4388,107 +4529,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57D3263026A3614E0093CD16 /* AcidAppInjector.swift in Sources */,
-				5786BD0C267B38FD001A165C /* TitrationBeaker.swift in Sources */,
-				57FA3AB32660D5580073A29B /* PHScaleGeometry.swift in Sources */,
-				577C505E26810B2B003DAD17 /* PhSum.swift in Sources */,
-				5786BD0A267B37C4001A165C /* TitrationViewModel.swift in Sources */,
-				577C5027267F37CF003DAD17 /* TitrationScreenState.swift in Sources */,
-				5773BCDB267A7E6B00E52C81 /* AcidBasesNavigationModel.swift in Sources */,
-				570AD452266D4CF100B9732E /* BufferRightStack.swift in Sources */,
-				57FA3ABC266102EB0073A29B /* IntroScreenViewModel.swift in Sources */,
-				570A766D266CFCF1009329FB /* BufferNavigationModel.swift in Sources */,
-				57572DEC266FB8D700A27684 /* BufferPhChartOrTable.swift in Sources */,
-				577C506A26812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift in Sources */,
-				5739D0B62664B83C0007B09A /* IntroStatements.swift in Sources */,
-				57D3261B26A2C2460093CD16 /* BufferScreenElement.swift in Sources */,
-				579CDA1F26616E5C00143809 /* IntroBeaker.swift in Sources */,
-				577C5066268120FD003DAD17 /* PConcentration.swift in Sources */,
-				570A766F266CFDD2009329FB /* BufferScreen.swift in Sources */,
-				574978362683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift in Sources */,
-				577C5021267F1512003DAD17 /* CommonAcidEquations.swift in Sources */,
-				577C50332680D0DC003DAD17 /* TitrationEquationTerm.swift in Sources */,
-				57F88856267E16DD00609671 /* TitrationCurve.swift in Sources */,
-				57CD325826723ACB00C94109 /* BufferFractionsChart.swift in Sources */,
-				574978322683A9CB00EFA71C /* TitrationWeakSubstancePreEPModel.swift in Sources */,
-				5739D0B32664B79B0007B09A /* IntroNavigationModel.swift in Sources */,
-				57FA3AB12660D4450073A29B /* PHScale.swift in Sources */,
-				5773BCDE267A7E9D00E52C81 /* AcidAppScreen.swift in Sources */,
-				57E7CD2C2664AD3200661D74 /* Ions.swift in Sources */,
-				578A1EAF266FA90000D11E22 /* BufferPhChart.swift in Sources */,
-				577C50302680D004003DAD17 /* TitrationEquationView.swift in Sources */,
-				57D60158265ECA7B00017E25 /* PHScaleColors.swift in Sources */,
-				570ABA39265A765A008EC8CC /* IntroScreenComponents.swift in Sources */,
 				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
-				57F8885F267E59C000609671 /* DraggablePhMeter.swift in Sources */,
-				577C506C26812712003DAD17 /* PLogComplementConcentration.swift in Sources */,
-				579CDA212661707600143809 /* AcidAppSettings.swift in Sources */,
-				5749782C2683748100EFA71C /* TestView.swift in Sources */,
-				5773BCE4267A81BD00E52C81 /* AcidAppNavigationRows.swift in Sources */,
-				574386DC2665518100B11C34 /* ConcentrationPlaceholder.swift in Sources */,
-				5773BCE2267A811C00E52C81 /* AcidAppRootView.swift in Sources */,
-				577C503D2680F98C003DAD17 /* TitrationEquationViewUtil.swift in Sources */,
-				5784F44E2664062200513B2A /* AcidOrBaseType.swift in Sources */,
-				577C10E926711C6500C5DC9A /* BufferStatements.swift in Sources */,
-				5749782E2683831B00EFA71C /* TitrationWeakSubstancePreparationModel.swift in Sources */,
-				5770953426860F3C005F2981 /* TitrationReactionModel.swift in Sources */,
-				577C50372680E09E003DAD17 /* TitrationEquationLayout.swift in Sources */,
-				5743660F266E7CD8007F0410 /* BufferChartStack.swift in Sources */,
-				5797DE192673719F003F589F /* BufferStrongSubstanceComponents.swift in Sources */,
-				570A7666266CDA0A009329FB /* SubstancePart.swift in Sources */,
-				57FA3AC2266104D00073A29B /* AcidBasesScreenLayout.swift in Sources */,
-				57466617265D81FC003FC6E3 /* AcidConcentration.swift in Sources */,
-				57CD325A26724DBD00C94109 /* BufferEquationView.swift in Sources */,
-				5739D0AF2664B65A0007B09A /* IntroRightStack.swift in Sources */,
-				577BC7772679DC79005BE5C8 /* ChargedSymbolView.swift in Sources */,
-				57783C6426824CE300ACABE6 /* TitrationStrongSubstancePostEPModel.swift in Sources */,
-				57F88858267E170800609671 /* TitrationBarsOrReactionProgress.swift in Sources */,
-				571293C9265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift in Sources */,
-				577C506226811E52003DAD17 /* KaKbRelation.swift in Sources */,
-				577C506426811FCD003DAD17 /* MolesDifference.swift in Sources */,
-				577C505C2681081D003DAD17 /* PLogConcentration.swift in Sources */,
-				57783C602682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift in Sources */,
-				5797DE1C26738615003F589F /* BufferSharedComponents.swift in Sources */,
-				570A7671266CFF0D009329FB /* BufferBeaker.swift in Sources */,
-				574386DA26654C6700B11C34 /* IntroEquationView.swift in Sources */,
-				57D3262B26A35DDB0093CD16 /* AcidQuizQuestions.swift in Sources */,
-				577C5029267F38EC003DAD17 /* TitrationStatements.swift in Sources */,
-				57D3262426A30CE80093CD16 /* AcidBasePersistence.swift in Sources */,
-				5786BD08267B37A7001A165C /* TitrationScreen.swift in Sources */,
-				57D60155265ECA4600017E25 /* PHScaleBar.swift in Sources */,
-				57783C622682410E00ACABE6 /* TitrationStrongSubstancePreEPModel.swift in Sources */,
-				57E7CD2A2664AD1500661D74 /* AcidOrBase.swift in Sources */,
-				5739D0AD2664B2CD0007B09A /* ShakeContainerExtension.swift in Sources */,
-				57D3262826A348AE0093CD16 /* TitrationScreenElement.swift in Sources */,
-				5773BCE0267A7EBF00E52C81 /* AcidAppQuestionSet.swift in Sources */,
-				5766BC9B269A3CB40074A04B /* AcidReactionDefinition.swift in Sources */,
-				57F88853267E16C900609671 /* TitrationChartStack.swift in Sources */,
-				57C2DEC22681B6590012DBC1 /* TitrationEquationSets.swift in Sources */,
-				57F8885A267E17A800609671 /* TitrationRightStack.swift in Sources */,
-				5705CB0A2678E94900F5A63C /* FractionedChartAxisHelper.swift in Sources */,
-				570A7664266CD900009329FB /* BufferSaltComponents.swift in Sources */,
 				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,
-				57572DEE266FB8FE00A27684 /* BufferBottomCharts.swift in Sources */,
-				577C505A26810063003DAD17 /* ConcentrationToMolesOverVolume.swift in Sources */,
-				576AF0F52684ED7700F300C7 /* TitrationComponentState.swift in Sources */,
-				577C503B2680E190003DAD17 /* TitrationEquationData.swift in Sources */,
-				57783C5D2682112800ACABE6 /* PLogKValue.swift in Sources */,
-				577C50352680D773003DAD17 /* TitrationEquation.swift in Sources */,
-				575FE7E326A5C72200E6B316 /* TitrationScreenPersistence.swift in Sources */,
-				577C50392680E0F2003DAD17 /* MolesToMolarity.swift in Sources */,
-				570A766B266CFC45009329FB /* BufferScreenViewModel.swift in Sources */,
-				57FA3ABF266104A60073A29B /* IntroScreen.swift in Sources */,
-				57EEF91B2689976400398A2D /* TitrationMacroBeaker.swift in Sources */,
-				577C502B267F3945003DAD17 /* AcidStatementUtil.swift in Sources */,
-				57F4673B268708CB00E294BE /* Titrant.swift in Sources */,
-				5743660D266E7BA7007F0410 /* BufferWeakSubstanceComponents.swift in Sources */,
-				5786BD02267B224A001A165C /* TitrationSettings.swift in Sources */,
-				57FA3AB72660EFBC0073A29B /* AcidBasesStyling.swift in Sources */,
-				577C506826812409003DAD17 /* MolesToConcentration.swift in Sources */,
-				57F467392687009900E294BE /* TitrationPreparationModel.swift in Sources */,
-				57E9B762268DFF2800DC989B /* ReactionDefinitionView.swift in Sources */,
-				57D3261926A204F70093CD16 /* IntroScreenElement.swift in Sources */,
-				577C506026811078003DAD17 /* KToConcentration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4496,45 +4538,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				576AF0F82684F08A00F300C7 /* TitrationComponentStateTests.swift in Sources */,
-				5705CB0C2678E98000F5A63C /* FractionedChartAxisHelperTests.swift in Sources */,
-				576AF0E82684B4A200F300C7 /* TitrationStrongBasePreparationModelTests.swift in Sources */,
-				57D3261F26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift in Sources */,
-				574978232683471800EFA71C /* TitrationStrongAcidPreEPModelTests.swift in Sources */,
-				57190A5D2698557400DD4B86 /* TitrationEquationDefinitionTests.swift in Sources */,
-				577BC7752679D463005BE5C8 /* AcidOrBaseTests.swift in Sources */,
-				57E9B75D268B1E0A00DC989B /* TitrationStrongSubstanceReactionProgressChartTests.swift in Sources */,
-				5711603526831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift in Sources */,
-				5766BC99269A315D0074A04B /* TitrationReactionDefinitionTests.swift in Sources */,
-				57FDA5042695B24D001F24CA /* TitrationViewModelTests.swift in Sources */,
 				57F4673F2687421800E294BE /* NavigationExtensions.swift in Sources */,
-				570ABA3B265A7ACB008EC8CC /* IntroScreenComponentsTests.swift in Sources */,
-				5797DE1F2673908E003F589F /* BufferWeakComponentsTests.swift in Sources */,
-				575FE7DF26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift in Sources */,
-				5797DE242673965B003F589F /* BufferSaltComponentTests.swift in Sources */,
 				57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */,
-				57D3262626A312C20093CD16 /* AcidOrBasePersistenceTests.swift in Sources */,
-				57D3262126A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift in Sources */,
-				57E9B75F268B4E6D00DC989B /* TitrationWeakSubstanceReactionProgressChartTests.swift in Sources */,
-				57F4673E268741ED00E294BE /* TitrationNavigationParametersAreReappliedTests.swift in Sources */,
-				576AF0F22684D51700F300C7 /* TitrationWeakBasePreEPModelTests.swift in Sources */,
-				5733D80326748CB8007D4459 /* BufferComponentsExtensions.swift in Sources */,
-				574978212683453600EFA71C /* TitrationComponentsExtensions.swift in Sources */,
-				577C5023267F1852003DAD17 /* AcidConcentrationEquationsTests.swift in Sources */,
-				576AF0EC2684BF8A00F300C7 /* TitrationStrongBasePreEPModelTests.swift in Sources */,
-				571293CB265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift in Sources */,
-				5749782A26836A2600EFA71C /* TitrationStrongAcidPostEPModelTests.swift in Sources */,
-				573779E826831DA900BAB6A1 /* TitrationSettingsExtension.swift in Sources */,
 				57F467452687421D00E294BE /* CommonTestAssertions.swift in Sources */,
-				576AF0F02684CD7200F300C7 /* TitrationWeakBasePreparationModelTests.swift in Sources */,
-				5770953626861A72005F2981 /* TitrationWeakBasePostEPModelTests.swift in Sources */,
-				576AF0EE2684C2AB00F300C7 /* TitrationStrongBasePostEPModelTests.swift in Sources */,
-				5797DE2626739D89003F589F /* BufferStrongComponentsTests.swift in Sources */,
-				574978382683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift in Sources */,
-				57D3261626A1DFD80093CD16 /* ReactionDefinitionTests.swift in Sources */,
-				574978342683A9DE00EFA71C /* TitrationWeakAcidPreEPModelTests.swift in Sources */,
-				5797DE22267390DC003F589F /* AcidOrBaseExtensions.swift in Sources */,
-				574978302683833700EFA71C /* TitrationWeakAcidPreparationModelTests.swift in Sources */,
 				57F467462687421D00E294BE /* UserDefaultsExtensions.swift in Sources */,
 				57F467442687421D00E294BE /* QuizTestMethods.swift in Sources */,
 			);
@@ -4928,6 +4934,159 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		57B8F9E026AECD2C003CB0C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57B8FA0426AECD8B003CB0C7 /* TitrationPreparationModel.swift in Sources */,
+				57B8FA1526AECDA9003CB0C7 /* ConcentrationToMolesDifferenceOverVolume.swift in Sources */,
+				57B8FA2C26AECDB8003CB0C7 /* BufferPhChart.swift in Sources */,
+				57B8FA5A26AECE25003CB0C7 /* AcidBasesScreenLayout.swift in Sources */,
+				57B8FA1726AECDA9003CB0C7 /* PLogConcentration.swift in Sources */,
+				57B8FA4D26AECE15003CB0C7 /* AcidStatementUtil.swift in Sources */,
+				57B8FA5C26AECE2F003CB0C7 /* AcidAppSettings.swift in Sources */,
+				57B8FA0126AECD8B003CB0C7 /* TitrationWeakSubstancePreEPModel.swift in Sources */,
+				57B8FA5F26AECE2F003CB0C7 /* IntroScreenComponents.swift in Sources */,
+				57B8FA5E26AECE2F003CB0C7 /* PHScaleColors.swift in Sources */,
+				57B8FA5126AECE1B003CB0C7 /* IntroNavigationModel.swift in Sources */,
+				57B8FA2026AECDAF003CB0C7 /* TitrationScreen.swift in Sources */,
+				57B8FA1426AECDA9003CB0C7 /* KaKbRelation.swift in Sources */,
+				57B8FA1126AECDA9003CB0C7 /* MolesDifference.swift in Sources */,
+				57B8FA0D26AECD94003CB0C7 /* BufferWeakSubstanceComponents.swift in Sources */,
+				57B8FA4526AECE06003CB0C7 /* CommonAcidEquations.swift in Sources */,
+				57B8FA2F26AECDBD003CB0C7 /* IntroEquationView.swift in Sources */,
+				57B8FA6026AECE2F003CB0C7 /* AcidConcentration.swift in Sources */,
+				57B8FA1026AECDA2003CB0C7 /* DraggablePhMeter.swift in Sources */,
+				57B8FA1226AECDA9003CB0C7 /* ConcentrationToMolesOverVolume.swift in Sources */,
+				57B8FA3C26AECDF7003CB0C7 /* AcidBasePersistence.swift in Sources */,
+				57B8FA1926AECDA9003CB0C7 /* PLogKValue.swift in Sources */,
+				57B8FA4A26AECE0C003CB0C7 /* AcidAppQuestionSet.swift in Sources */,
+				57B8FA0926AECD94003CB0C7 /* IntroScreenViewModel.swift in Sources */,
+				57B8FA1A26AECDA9003CB0C7 /* MolesToConcentration.swift in Sources */,
+				57B8FA0726AECD8B003CB0C7 /* TitrationReactionModel.swift in Sources */,
+				57B8FA4F26AECE15003CB0C7 /* IntroStatements.swift in Sources */,
+				57B8FA5026AECE1B003CB0C7 /* BufferNavigationModel.swift in Sources */,
+				57B8FA5626AECE21003CB0C7 /* AcidOrBase.swift in Sources */,
+				57B8FA2726AECDB8003CB0C7 /* BufferScreen.swift in Sources */,
+				57B8FA1F26AECDAF003CB0C7 /* TitrationRightStack.swift in Sources */,
+				57B8FA0E26AECD94003CB0C7 /* BufferStrongSubstanceComponents.swift in Sources */,
+				57B8FA4126AECDFD003CB0C7 /* Titrant.swift in Sources */,
+				57B8FA1B26AECDA9003CB0C7 /* PLogComplementConcentration.swift in Sources */,
+				57B8FA4B26AECE10003CB0C7 /* FractionedChartAxisHelper.swift in Sources */,
+				57B8FA2826AECDB8003CB0C7 /* BufferPhChartOrTable.swift in Sources */,
+				57B8FA6126AECE2F003CB0C7 /* AcidReactionDefinition.swift in Sources */,
+				57B8FA5426AECE1B003CB0C7 /* AcidAppInjector.swift in Sources */,
+				57B8FA4826AECE0C003CB0C7 /* TitrationScreenElement.swift in Sources */,
+				57B8FA5B26AECE28003CB0C7 /* AcidBasesStyling.swift in Sources */,
+				57B8FA5326AECE1B003CB0C7 /* AcidAppNavigationRows.swift in Sources */,
+				57B8FA1326AECDA9003CB0C7 /* PConcentration.swift in Sources */,
+				57B8FA4426AECDFD003CB0C7 /* TitrationEquationTerm.swift in Sources */,
+				57B8FA2626AECDB8003CB0C7 /* BufferFractionsChart.swift in Sources */,
+				57B8FA3D26AECDF7003CB0C7 /* TitrationScreenPersistence.swift in Sources */,
+				57B8FA0026AECD8B003CB0C7 /* TitrationStrongSubstancePreparationModel.swift in Sources */,
+				57B8FA3826AECDCC003CB0C7 /* PHScaleBar.swift in Sources */,
+				57B8FA2926AECDB8003CB0C7 /* BufferBottomCharts.swift in Sources */,
+				57B8FA0526AECD8B003CB0C7 /* TitrationStrongSubstancePreEPModel.swift in Sources */,
+				57B8FA3926AECDCC003CB0C7 /* PHScale.swift in Sources */,
+				57B8FA3426AECDC6003CB0C7 /* IntroBeaker.swift in Sources */,
+				57B8F9FF26AECD8B003CB0C7 /* TitrationSettings.swift in Sources */,
+				57B8FA4226AECDFD003CB0C7 /* TitrationEquationLayout.swift in Sources */,
+				57B8FA5926AECE21003CB0C7 /* Ions.swift in Sources */,
+				57B8FA2126AECDAF003CB0C7 /* TitrationChartStack.swift in Sources */,
+				57B8FA3226AECDC1003CB0C7 /* ShakeContainerExtension.swift in Sources */,
+				57B8FA0626AECD8B003CB0C7 /* TitrationViewModel.swift in Sources */,
+				57B8FA0B26AECD94003CB0C7 /* BufferSaltComponents.swift in Sources */,
+				57B8FA4C26AECE15003CB0C7 /* TitrationStatements.swift in Sources */,
+				57B8FA3126AECDBD003CB0C7 /* ChargedSymbolView.swift in Sources */,
+				57B8FA1C26AECDA9003CB0C7 /* TitrationEquationViewUtil.swift in Sources */,
+				57B8FA3026AECDBD003CB0C7 /* ConcentrationPlaceholder.swift in Sources */,
+				57B8FA2E26AECDB8003CB0C7 /* BufferEquationView.swift in Sources */,
+				57B8FA1E26AECDA9003CB0C7 /* KToConcentration.swift in Sources */,
+				57B8FA3A26AECDCC003CB0C7 /* PHScaleGeometry.swift in Sources */,
+				57B8FA2B26AECDB8003CB0C7 /* BufferRightStack.swift in Sources */,
+				57B8FA3326AECDC6003CB0C7 /* IntroScreen.swift in Sources */,
+				57B8FA4726AECE0C003CB0C7 /* AcidAppScreen.swift in Sources */,
+				57B8FA5226AECE1B003CB0C7 /* AcidBasesNavigationModel.swift in Sources */,
+				57B8FA4326AECDFD003CB0C7 /* TitrationComponentState.swift in Sources */,
+				57B8FA2526AECDAF003CB0C7 /* TitrationBeaker.swift in Sources */,
+				57B8FA0326AECD8B003CB0C7 /* TitrationWeakSubstancePostEPModel.swift in Sources */,
+				57B8FA1826AECDA9003CB0C7 /* PhSum.swift in Sources */,
+				57B8FA5526AECE1B003CB0C7 /* TitrationScreenState.swift in Sources */,
+				57B8FA2A26AECDB8003CB0C7 /* BufferBeaker.swift in Sources */,
+				57B8FA0C26AECD94003CB0C7 /* BufferScreenViewModel.swift in Sources */,
+				57B8FA2D26AECDB8003CB0C7 /* BufferChartStack.swift in Sources */,
+				57B8FA0226AECD8B003CB0C7 /* TitrationStrongSubstancePostEPModel.swift in Sources */,
+				57B8FA5726AECE21003CB0C7 /* AcidOrBaseType.swift in Sources */,
+				57B8FA5826AECE21003CB0C7 /* SubstancePart.swift in Sources */,
+				57B8FA2226AECDAF003CB0C7 /* TitrationCurve.swift in Sources */,
+				57B8FA4E26AECE15003CB0C7 /* BufferStatements.swift in Sources */,
+				57B8FA0A26AECD94003CB0C7 /* BufferSharedComponents.swift in Sources */,
+				57B8FA3E26AECDFD003CB0C7 /* TitrationEquationSets.swift in Sources */,
+				57B8FA3F26AECDFD003CB0C7 /* TitrationEquation.swift in Sources */,
+				57B8FA4626AECE0C003CB0C7 /* BufferScreenElement.swift in Sources */,
+				57B8FA1626AECDA9003CB0C7 /* TitrationEquationView.swift in Sources */,
+				57B8FA2426AECDAF003CB0C7 /* TitrationMacroBeaker.swift in Sources */,
+				57B8FA2326AECDAF003CB0C7 /* TitrationBarsOrReactionProgress.swift in Sources */,
+				57B8FA5D26AECE2F003CB0C7 /* AcidSubstanceBeakerCoords.swift in Sources */,
+				57B8FA4026AECDFD003CB0C7 /* TitrationEquationData.swift in Sources */,
+				57B8FA3726AECDCC003CB0C7 /* AcidAppRootView.swift in Sources */,
+				57B8FA0F26AECD9E003CB0C7 /* ReactionDefinitionView.swift in Sources */,
+				57B8FA4926AECE0C003CB0C7 /* IntroScreenElement.swift in Sources */,
+				57B8FA3526AECDC6003CB0C7 /* IntroRightStack.swift in Sources */,
+				57B8FA0826AECD8B003CB0C7 /* TitrationWeakSubstancePreparationModel.swift in Sources */,
+				57B8FA1D26AECDA9003CB0C7 /* MolesToMolarity.swift in Sources */,
+				57B8FA3B26AECDF1003CB0C7 /* AcidQuizQuestions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57B8F9E826AECD2C003CB0C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57B8FA7226AECEC8003CB0C7 /* TitrationWeakAcidPreEPModelTests.swift in Sources */,
+				57B8FA8926AECEDA003CB0C7 /* TitrationEquationDefinitionTests.swift in Sources */,
+				57B8FA7D26AECED4003CB0C7 /* BufferSaltComponentTests.swift in Sources */,
+				57B8FA8D26AECEE2003CB0C7 /* NavigationTestMethods.swift in Sources */,
+				57B8FA8326AECEDA003CB0C7 /* IntroScreenComponentsTests.swift in Sources */,
+				57B8FA6C26AECEC8003CB0C7 /* TitrationWeakAcidPostEPModelTests.swift in Sources */,
+				57B8FA7026AECEC8003CB0C7 /* TitrationStrongBasePostEPModelTests.swift in Sources */,
+				57B8FA6B26AECEC8003CB0C7 /* TitrationStrongAcidPreparationModelTests.swift in Sources */,
+				57B8FA8426AECEDA003CB0C7 /* AcidOrBasePersistenceTests.swift in Sources */,
+				57B8FA8A26AECEDA003CB0C7 /* TitrationReactionDefinitionTests.swift in Sources */,
+				57B8FA8226AECEDA003CB0C7 /* ReactionDefinitionTests.swift in Sources */,
+				57B8FA7826AECEC8003CB0C7 /* TitrationStrongBasePreparationModelTests.swift in Sources */,
+				57B8FA7526AECEC8003CB0C7 /* TitrationWeakBasePreEPModelTests.swift in Sources */,
+				57B8FA6F26AECEC8003CB0C7 /* TitrationWeakAcidPreparationModelTests.swift in Sources */,
+				57B8FA8026AECEDA003CB0C7 /* FractionedChartAxisHelperTests.swift in Sources */,
+				57B8FA8626AECEDA003CB0C7 /* TitrantMolarityInputLimitsTests.swift in Sources */,
+				57B8FA7326AECEC8003CB0C7 /* TitrationStrongBasePreEPModelTests.swift in Sources */,
+				57B8FA6E26AECEC8003CB0C7 /* TitrationWeakBasePostEPModelTests.swift in Sources */,
+				57B8FA8526AECEDA003CB0C7 /* TitrationViewModelTests.swift in Sources */,
+				57B8FA8726AECEDA003CB0C7 /* AcidOrBaseTests.swift in Sources */,
+				57B8FA7126AECEC8003CB0C7 /* TitrationWeakBasePreparationModelTests.swift in Sources */,
+				57B8FA7C26AECECE003CB0C7 /* TitrationSettingsExtension.swift in Sources */,
+				57B8FA7B26AECECE003CB0C7 /* BufferComponentsExtensions.swift in Sources */,
+				57B8FA8126AECEDA003CB0C7 /* AcidConcentrationEquationsTests.swift in Sources */,
+				57B8FA8F26AECEE2003CB0C7 /* CommonTestAssertions.swift in Sources */,
+				57B8FA7E26AECED4003CB0C7 /* BufferWeakComponentsTests.swift in Sources */,
+				57B8FA7726AECEC8003CB0C7 /* TitrationStrongSubstanceReactionProgressChartTests.swift in Sources */,
+				57B8FA8826AECEDA003CB0C7 /* AcidSubstanceBeakerCoordsTests.swift in Sources */,
+				57B8FA7926AECECE003CB0C7 /* AcidOrBaseExtensions.swift in Sources */,
+				57B8FA6926AECEC2003CB0C7 /* BufferNavigationParametersAreReappliedTests.swift in Sources */,
+				57B8FA8E26AECEE2003CB0C7 /* QuizTestMethods.swift in Sources */,
+				57B8FA7626AECEC8003CB0C7 /* TitrationComponentStateTests.swift in Sources */,
+				57B8FA7426AECEC8003CB0C7 /* TitrationStrongAcidPreEPModelTests.swift in Sources */,
+				57B8FA7F26AECED4003CB0C7 /* BufferStrongComponentsTests.swift in Sources */,
+				57B8FA6826AECEC2003CB0C7 /* IntroNavigationParametersAreReappliedTests.swift in Sources */,
+				57B8FA6A26AECEC8003CB0C7 /* TitrationWeakSubstanceReactionProgressChartTests.swift in Sources */,
+				57B8FA8B26AECEE2003CB0C7 /* NavigationExtensions.swift in Sources */,
+				57B8FA8C26AECEE2003CB0C7 /* UserDefaultsExtensions.swift in Sources */,
+				57B8FA6726AECEC2003CB0C7 /* TitrationNavigationParametersAreReappliedTests.swift in Sources */,
+				57B8FA7A26AECECE003CB0C7 /* TitrationComponentsExtensions.swift in Sources */,
+				57B8FA6D26AECEC8003CB0C7 /* TitrationStrongAcidPostEPModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		57E6D8C226AC795300603796 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4988,6 +5147,17 @@
 			isa = PBXTargetDependency;
 			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
 			targetProxy = 5797A44B25E4069F00991BD9 /* PBXContainerItemProxy */;
+		};
+		57B8F9EF26AECD2C003CB0C7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 57B8F9E326AECD2C003CB0C7 /* AcidsBases */;
+			targetProxy = 57B8F9EE26AECD2C003CB0C7 /* PBXContainerItemProxy */;
+		};
+		57B8FA6526AECE47003CB0C7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
+			targetProxy = 57B8FA6426AECE47003CB0C7 /* PBXContainerItemProxy */;
 		};
 		57E6D8CC26AC795300603796 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5560,6 +5730,102 @@
 			};
 			name = Release;
 		};
+		57B8F9F526AECD2C003CB0C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = AcidsBases/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.AcidsBases;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		57B8F9F626AECD2C003CB0C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = AcidsBases/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.AcidsBases;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		57B8F9F726AECD2C003CB0C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				INFOPLIST_FILE = AcidsBasesTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.AcidsBasesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		57B8F9F826AECD2C003CB0C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				INFOPLIST_FILE = AcidsBasesTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.AcidsBasesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		57E6D8CD26AC795300603796 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5691,6 +5957,24 @@
 			buildConfigurations = (
 				5797A45425E4069F00991BD9 /* Debug */,
 				5797A45525E4069F00991BD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		57B8F9F926AECD2C003CB0C7 /* Build configuration list for PBXNativeTarget "AcidsBases" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57B8F9F526AECD2C003CB0C7 /* Debug */,
+				57B8F9F626AECD2C003CB0C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		57B8F9FA26AECD2C003CB0C7 /* Build configuration list for PBXNativeTarget "AcidsBasesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57B8F9F726AECD2C003CB0C7 /* Debug */,
+				57B8F9F826AECD2C003CB0C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
