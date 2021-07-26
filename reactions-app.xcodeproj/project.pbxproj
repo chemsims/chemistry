@@ -144,12 +144,6 @@
 		5700C1BD26A9B32200677777 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700C1BC26A9B32200677777 /* Unit.swift */; };
 		5700C1BF26A9C25100677777 /* APChemRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700C1BE26A9C25100677777 /* APChemRootView.swift */; };
 		570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */; };
-		570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA02265A736C008EC8CC /* AppDelegate.swift */; };
-		570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570ABA04265A736C008EC8CC /* SceneDelegate.swift */; };
-		570ABA0C265A736C008EC8CC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA0B265A736C008EC8CC /* Preview Assets.xcassets */; };
-		570ABA0F265A736D008EC8CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 570ABA0D265A736D008EC8CC /* LaunchScreen.storyboard */; };
-		570ABA33265A761F008EC8CC /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
-		570ABA34265A761F008EC8CC /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E22126272A3800CF6FBE /* ShakeText.swift */; };
 		5713D8CC267B7CC2009C65AC /* ArcGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713D8CB267B7CC2009C65AC /* ArcGeometryTests.swift */; };
 		572B1A712675D01000302B8E /* ReactionProgressChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B1A702675D01000302B8E /* ReactionProgressChart.swift */; };
@@ -375,7 +369,6 @@
 		575C90E326629775001DCD17 /* PHMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E226629775001DCD17 /* PHMeter.swift */; };
 		575C90E52662CE6A001DCD17 /* PHMeterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E42662CE6A001DCD17 /* PHMeterTests.swift */; };
 		575C90E72662DAA1001DCD17 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575C90E62662DAA1001DCD17 /* BlurView.swift */; };
-		575FE7E526A5DD5400E6B316 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 575FE7E426A5DD5400E6B316 /* GoogleService-Info.plist */; };
 		57686AB92600E008005BD328 /* FlamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AB82600E008005BD328 /* FlamesView.swift */; };
 		57686AC72600E342005BD328 /* BurnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AC62600E342005BD328 /* BurnerView.swift */; };
 		57686AD12600E6B1005BD328 /* AdjustableBeakerBurner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AD02600E6B1005BD328 /* AdjustableBeakerBurner.swift */; };
@@ -646,11 +639,6 @@
 		57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902B925ED561200758300 /* EquatableCounter.swift */; };
 		57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902C325ED585800758300 /* EquatableCounterTests.swift */; };
 		57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */; };
-		57F4673F2687421800E294BE /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
-		57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402126486F8300E352C1 /* NavigationTestMethods.swift */; };
-		57F467442687421D00E294BE /* QuizTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402D2648765700E352C1 /* QuizTestMethods.swift */; };
-		57F467452687421D00E294BE /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
-		57F467462687421D00E294BE /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */; };
 		57F8885C267E188400609671 /* SliderOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885B267E188400609671 /* SliderOverlay.swift */; };
 		57F88861267E675B00609671 /* MoleculeEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88860267E675B00609671 /* MoleculeEmitter.swift */; };
 		57F88864267E6DB900609671 /* MoleculeEmittingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88863267E6DB900609671 /* MoleculeEmittingViewModel.swift */; };
@@ -700,20 +688,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5700C10F26A99C8800677777;
 			remoteInfo = Equilibrium;
-		};
-		570ABA16265A736D008EC8CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 570AB9FF265A736C008EC8CC;
-			remoteInfo = "acids-bases";
-		};
-		570ABA35265A761F008EC8CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5797A44025E4069F00991BD9;
-			remoteInfo = ReactionsCore;
 		};
 		5748651426A96A33007FA314 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -781,17 +755,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				5700C19026A99EA000677777 /* ReactionsCore.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		570ABA37265A761F008EC8CC /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				570ABA34265A761F008EC8CC /* ReactionsCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -873,15 +836,7 @@
 		570A766C266CFCF1009329FB /* BufferNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferNavigationModel.swift; sourceTree = "<group>"; };
 		570A766E266CFDD2009329FB /* BufferScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferScreen.swift; sourceTree = "<group>"; };
 		570A7670266CFF0D009329FB /* BufferBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferBeaker.swift; sourceTree = "<group>"; };
-		570ABA00265A736C008EC8CC /* acids-bases.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "acids-bases.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		570ABA02265A736C008EC8CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		570ABA04265A736C008EC8CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		570ABA08265A736C008EC8CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		570ABA0B265A736C008EC8CC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		570ABA0E265A736D008EC8CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		570ABA10265A736D008EC8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		570ABA15265A736D008EC8CC /* acids-basesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "acids-basesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		570ABA1B265A736D008EC8CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		570ABA38265A765A008EC8CC /* IntroScreenComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreenComponents.swift; sourceTree = "<group>"; };
 		570ABA3A265A7ACB008EC8CC /* IntroScreenComponentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreenComponentsTests.swift; sourceTree = "<group>"; };
 		570AD451266D4CF100B9732E /* BufferRightStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferRightStack.swift; sourceTree = "<group>"; };
@@ -1076,7 +1031,6 @@
 		575C90E62662DAA1001DCD17 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrantMolarityInputLimitsTests.swift; sourceTree = "<group>"; };
 		575FE7E226A5C72200E6B316 /* TitrationScreenPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationScreenPersistence.swift; sourceTree = "<group>"; };
-		575FE7E426A5DD5400E6B316 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5760536A25AE50F40068B533 /* ZeroOrderReactionNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderReactionNavigationTests.swift; sourceTree = "<group>"; };
 		5760536F25AE519B0068B533 /* NavigationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationExtensions.swift; sourceTree = "<group>"; };
 		57631763259B66CF00D7CE2C /* QuizTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTable.swift; sourceTree = "<group>"; };
@@ -1508,21 +1462,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		570AB9FD265A736C008EC8CC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				570ABA33265A761F008EC8CC /* ReactionsCore.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		570ABA12265A736D008EC8CC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5748650726A96A33007FA314 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1764,35 +1703,6 @@
 			path = "buffer-screen";
 			sourceTree = "<group>";
 		};
-		570ABA01265A736C008EC8CC /* acids-bases */ = {
-			isa = PBXGroup;
-			children = (
-				570ABA02265A736C008EC8CC /* AppDelegate.swift */,
-				570ABA04265A736C008EC8CC /* SceneDelegate.swift */,
-				570ABA0D265A736D008EC8CC /* LaunchScreen.storyboard */,
-				575FE7E426A5DD5400E6B316 /* GoogleService-Info.plist */,
-				570ABA10265A736D008EC8CC /* Info.plist */,
-				570ABA0A265A736C008EC8CC /* Preview Content */,
-			);
-			path = "acids-bases";
-			sourceTree = "<group>";
-		};
-		570ABA0A265A736C008EC8CC /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				570ABA0B265A736C008EC8CC /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		570ABA18265A736D008EC8CC /* acids-basesTests */ = {
-			isa = PBXGroup;
-			children = (
-				570ABA1B265A736D008EC8CC /* Info.plist */,
-			);
-			path = "acids-basesTests";
-			sourceTree = "<group>";
-		};
 		570ABA30265A7603008EC8CC /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1925,8 +1835,6 @@
 				5700C11C26A99C8800677777 /* EquilibriumTests */,
 				5797A44225E4069F00991BD9 /* ReactionsCore */,
 				5797A44D25E4069F00991BD9 /* ReactionsCoreTests */,
-				570ABA01265A736C008EC8CC /* acids-bases */,
-				570ABA18265A736D008EC8CC /* acids-basesTests */,
 				57B8F9E526AECD2C003CB0C7 /* AcidsBases */,
 				57B8F9F026AECD2C003CB0C7 /* AcidsBasesTests */,
 				571D6A3D255A780700F4E635 /* Products */,
@@ -1939,8 +1847,6 @@
 			children = (
 				5797A44125E4069F00991BD9 /* ReactionsCore.framework */,
 				5797A44925E4069F00991BD9 /* ReactionsCoreTests.xctest */,
-				570ABA00265A736C008EC8CC /* acids-bases.app */,
-				570ABA15265A736D008EC8CC /* acids-basesTests.xctest */,
 				5748650A26A96A33007FA314 /* ReactionRates.framework */,
 				5748651226A96A33007FA314 /* ReactionRatesTests.xctest */,
 				5748659D26A96E55007FA314 /* APChemistry.app */,
@@ -4001,43 +3907,6 @@
 			productReference = 5700C11826A99C8800677777 /* EquilibriumTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		570AB9FF265A736C008EC8CC /* acids-bases */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 570ABA2D265A736D008EC8CC /* Build configuration list for PBXNativeTarget "acids-bases" */;
-			buildPhases = (
-				570AB9FC265A736C008EC8CC /* Sources */,
-				570AB9FD265A736C008EC8CC /* Frameworks */,
-				570AB9FE265A736C008EC8CC /* Resources */,
-				570ABA37265A761F008EC8CC /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				570ABA36265A761F008EC8CC /* PBXTargetDependency */,
-			);
-			name = "acids-bases";
-			productName = "acids-bases";
-			productReference = 570ABA00265A736C008EC8CC /* acids-bases.app */;
-			productType = "com.apple.product-type.application";
-		};
-		570ABA14265A736D008EC8CC /* acids-basesTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 570ABA2E265A736D008EC8CC /* Build configuration list for PBXNativeTarget "acids-basesTests" */;
-			buildPhases = (
-				570ABA11265A736D008EC8CC /* Sources */,
-				570ABA12265A736D008EC8CC /* Frameworks */,
-				570ABA13265A736D008EC8CC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				570ABA17265A736D008EC8CC /* PBXTargetDependency */,
-			);
-			name = "acids-basesTests";
-			productName = "acids-basesTests";
-			productReference = 570ABA15265A736D008EC8CC /* acids-basesTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		5748650926A96A33007FA314 /* ReactionRates */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5748651F26A96A33007FA314 /* Build configuration list for PBXNativeTarget "ReactionRates" */;
@@ -4210,13 +4079,6 @@
 					5700C11726A99C8800677777 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
-					570AB9FF265A736C008EC8CC = {
-						CreatedOnToolsVersion = 12.5;
-					};
-					570ABA14265A736D008EC8CC = {
-						CreatedOnToolsVersion = 12.5;
-						TestTargetID = 570AB9FF265A736C008EC8CC;
-					};
 					5748650926A96A33007FA314 = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -4263,8 +4125,6 @@
 			targets = (
 				5797A44025E4069F00991BD9 /* ReactionsCore */,
 				5797A44825E4069F00991BD9 /* ReactionsCoreTests */,
-				570AB9FF265A736C008EC8CC /* acids-bases */,
-				570ABA14265A736D008EC8CC /* acids-basesTests */,
 				5748650926A96A33007FA314 /* ReactionRates */,
 				5748651126A96A33007FA314 /* ReactionRatesTests */,
 				5748659C26A96E55007FA314 /* APChemistry */,
@@ -4290,23 +4150,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5700C11626A99C8800677777 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		570AB9FE265A736C008EC8CC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				570ABA0F265A736D008EC8CC /* LaunchScreen.storyboard in Resources */,
-				570ABA0C265A736C008EC8CC /* Preview Assets.xcassets in Resources */,
-				575FE7E526A5DD5400E6B316 /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		570ABA13265A736D008EC8CC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4522,27 +4365,6 @@
 				5700C19E26A99EEF00677777 /* GridMoleculesTests.swift in Sources */,
 				5700C19A26A99EEF00677777 /* BalancedReactionEquationTests.swift in Sources */,
 				5700C19526A99EEF00677777 /* GaseousScalesRotationTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		570AB9FC265A736C008EC8CC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				570ABA03265A736C008EC8CC /* AppDelegate.swift in Sources */,
-				570ABA05265A736C008EC8CC /* SceneDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		570ABA11265A736D008EC8CC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				57F4673F2687421800E294BE /* NavigationExtensions.swift in Sources */,
-				57F467432687421D00E294BE /* NavigationTestMethods.swift in Sources */,
-				57F467452687421D00E294BE /* CommonTestAssertions.swift in Sources */,
-				57F467462687421D00E294BE /* UserDefaultsExtensions.swift in Sources */,
-				57F467442687421D00E294BE /* QuizTestMethods.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5113,16 +4935,6 @@
 			target = 5700C10F26A99C8800677777 /* Equilibrium */;
 			targetProxy = 5700C1B326A9A41100677777 /* PBXContainerItemProxy */;
 		};
-		570ABA17265A736D008EC8CC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 570AB9FF265A736C008EC8CC /* acids-bases */;
-			targetProxy = 570ABA16265A736D008EC8CC /* PBXContainerItemProxy */;
-		};
-		570ABA36265A761F008EC8CC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
-			targetProxy = 570ABA35265A761F008EC8CC /* PBXContainerItemProxy */;
-		};
 		5748651526A96A33007FA314 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5748650926A96A33007FA314 /* ReactionRates */;
@@ -5167,14 +4979,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		570ABA0D265A736D008EC8CC /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				570ABA0E265A736D008EC8CC /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		574865AA26A96E57007FA314 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -5281,96 +5085,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		570ABA27265A736D008EC8CC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7.0.1;
-				DEVELOPMENT_ASSET_PATHS = "\"acids-bases/Preview Content\"";
-				DEVELOPMENT_TEAM = 7H845U3D2J;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "acids-bases/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.reaction.acid-bases";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		570ABA28265A736D008EC8CC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7.0.1;
-				DEVELOPMENT_ASSET_PATHS = "\"acids-bases/Preview Content\"";
-				DEVELOPMENT_TEAM = 7H845U3D2J;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "acids-bases/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.reaction.acid-bases";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		570ABA29265A736D008EC8CC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7H845U3D2J;
-				INFOPLIST_FILE = "acids-basesTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.reaction.acids-basesTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/acids-bases.app/acids-bases";
-			};
-			name = Debug;
-		};
-		570ABA2A265A736D008EC8CC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7H845U3D2J;
-				INFOPLIST_FILE = "acids-basesTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.reaction.acids-basesTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/acids-bases.app/acids-bases";
 			};
 			name = Release;
 		};
@@ -5742,7 +5456,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AcidsBases/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5751,6 +5465,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.AcidsBases;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5770,7 +5485,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AcidsBases/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5779,6 +5494,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.AcidsBases;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5885,24 +5601,6 @@
 			buildConfigurations = (
 				5700C12326A99C8800677777 /* Debug */,
 				5700C12426A99C8800677777 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		570ABA2D265A736D008EC8CC /* Build configuration list for PBXNativeTarget "acids-bases" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				570ABA27265A736D008EC8CC /* Debug */,
-				570ABA28265A736D008EC8CC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		570ABA2E265A736D008EC8CC /* Build configuration list for PBXNativeTarget "acids-basesTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				570ABA29265A736D008EC8CC /* Debug */,
-				570ABA2A265A736D008EC8CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

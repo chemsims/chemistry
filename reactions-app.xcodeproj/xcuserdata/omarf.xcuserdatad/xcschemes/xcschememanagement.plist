@@ -71,39 +71,14 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>RunAllTests.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
-		</dict>
-		<key>acids-bases.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
-		</dict>
-		<key>reactions-app (Development).xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
-		<key>reactions-app.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
-		<key>reactions-equilibrium (Development).xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>reactions-equilibrium.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>5700C11726A99C8800677777</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>57035EE1255BFE5200DB3A19</key>
 		<dict>
 			<key>primary</key>
@@ -115,6 +90,11 @@
 			<true/>
 		</dict>
 		<key>571D6A3B255A780700F4E635</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5748651126A96A33007FA314</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -140,6 +120,11 @@
 			<true/>
 		</dict>
 		<key>5797A44825E4069F00991BD9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>57E6D8C526AC795300603796</key>
 		<dict>
 			<key>primary</key>
 			<true/>
