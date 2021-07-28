@@ -6,10 +6,6 @@ import Foundation
 
 public enum ImageType {
 
-    // TODO - remove this case
-    /// Image provided by the application
-    case application(_ name: String)
-
     /// Image provided by framework
     case framework(_ name: String, bundle: Bundle?)
 

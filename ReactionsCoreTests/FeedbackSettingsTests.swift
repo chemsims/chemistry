@@ -7,6 +7,6 @@ import XCTest
 
 class FeedbackSettingsTests: XCTestCase {
     func testMailToUrlIsValid() {
-        XCTAssertNotNil(FeedbackSettings(appName: "Test app").mailToUrl)
+        XCTAssertNotNil(FeedbackSettings().mailToUrl)
     }
 }

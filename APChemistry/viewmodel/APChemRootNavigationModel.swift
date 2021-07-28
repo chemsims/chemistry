@@ -5,6 +5,7 @@
 import SwiftUI
 import ReactionsCore
 import ReactionRates
+import AcidsBases
 import Equilibrium
 
 class APChemRootNavigationModel: ObservableObject {
@@ -52,6 +53,11 @@ class APChemRootNavigationModel: ObservableObject {
 
         case .equilibrium:
             return EquilibriumScreenProvider(
+                injector: injector,
+                showUnitSelection: showUnitSelectionBinding
+            )
+        case .acidsBases:
+            return AcidsBasesScreenProvider(
                 injector: injector,
                 showUnitSelection: showUnitSelectionBinding
             )
@@ -104,6 +110,28 @@ private class EquilibriumScreenProvider: ScreenProvider {
     var screen: AnyView {
         AnyView(
             ReactionEquilibriumRootView(
+                model: model,
+                unitSelectionIsShowing: showUnitSelection
+            )
+        )
+    }
+}
+
+private class AcidsBasesScreenProvider: ScreenProvider {
+    init(
+        injector: APChemInjector,
+        showUnitSelection: Binding<Bool>
+    ) {
+        self.model = injector.acidsBasesInjector
+        self.showUnitSelection = showUnitSelection
+    }
+
+    private let model: RootNavigationViewModel<AcidAppNavInjector>
+    private let showUnitSelection: Binding<Bool>
+
+    var screen: AnyView {
+        AnyView(
+            AcidAppRootView(
                 model: model,
                 unitSelectionIsShowing: showUnitSelection
             )

@@ -6,9 +6,10 @@ import Foundation
 
 enum Unit: String, Identifiable {
     case reactionRates,
-         equilibrium
+         equilibrium,
+        acidsBases
 
-    static var all: [Unit] = [.reactionRates, .equilibrium]
+    static var all: [Unit] = [.reactionRates, .equilibrium, .acidsBases]
 
     var id: String {
         self.rawValue
@@ -17,6 +18,7 @@ enum Unit: String, Identifiable {
     var inAppPurchaseID: String? {
         switch self {
         case .equilibrium: return "equilibrium_unit"
+        case .acidsBases: return "acid_bases_unit"
         default: return nil
         }
     }
@@ -25,6 +27,7 @@ enum Unit: String, Identifiable {
         switch self {
         case .reactionRates: return .reactionRates
         case .equilibrium: return .equilibrium
+        case .acidsBases: return .acidsBases
         }
     }
 }
@@ -42,7 +45,7 @@ extension UnitInfo {
     fileprivate static let reactionRates = UnitInfo(
         image: "reaction-rates-icon",
         title: "Reaction Rates",
-        description: "Reaction rates and rate laws"
+        description: "Reaction rates and rate laws."
     )
 
     fileprivate static let equilibrium = UnitInfo(
@@ -51,5 +54,11 @@ extension UnitInfo {
         description: """
         Reactions which move towards equilibrium.
         """
+    )
+
+    fileprivate static let acidsBases = UnitInfo(
+        image: "acidsbases-icon",
+        title: "Acids & Bases",
+        description: "Acid & base reactions."
     )
 }

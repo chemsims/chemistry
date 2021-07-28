@@ -5,13 +5,23 @@
 import SwiftUI
 import ReactionsCore
 
-struct AcidAppRootView: View {
+public struct AcidAppRootView: View {
 
-    @ObservedObject var model: RootNavigationViewModel<AcidBasesNavigationModel.Injector>
+    public init(
+        model: RootNavigationViewModel<AcidAppNavInjector>,
+        unitSelectionIsShowing: Binding<Bool>
+    ) {
+        self.model = model
+        self._unitSelectionIsShowing = unitSelectionIsShowing
+    }
+
+    @ObservedObject var model: RootNavigationViewModel<AcidAppNavInjector>
+    @Binding var unitSelectionIsShowing: Bool
+
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             mainBody
                 .modifier(BlurredSceneModifier(isBlurred: model.showOnboarding))
@@ -39,12 +49,10 @@ struct AcidAppRootView: View {
         GeneralRootNavigationView(
             model: model,
             navigationRows: AcidAppNavigationRows.rows,
-            feedbackSettings: .acidBases,
-            shareSettings: .acidBases,
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
             menuHPadding: settings.menuHPadding,
-            unitSelectionIsShowing: .constant(false)
+            unitSelectionIsShowing: $unitSelectionIsShowing
         )
     }
 }
@@ -66,14 +74,6 @@ private struct BlurredSceneModifier: ViewModifier {
     }
 }
 
-// TODO - move this & fix URL
-extension FeedbackSettings {
-    static let acidBases = FeedbackSettings(appName: "Acid & Bases")
-}
-extension ShareSettings {
-    static let acidBases = ShareSettings(appStoreUrl: "", appName: "Acid & Bases")
-}
-
 extension AcidBasesScreenLayout {
     var menuSize: CGFloat {
         0.03 * width
@@ -92,7 +92,8 @@ extension AcidBasesScreenLayout {
 struct AcidAppRootView_Previews: PreviewProvider {
     static var previews: some View {
         AcidAppRootView(
-            model: AcidBasesNavigationModel.model(injector: InMemoryAcidAppInjector())
+            model: AcidBasesNavigationModel.model(injector: InMemoryAcidAppInjector()),
+            unitSelectionIsShowing: .constant(false)
         )
         .previewLayout(.iPhoneSELandscape)
     }

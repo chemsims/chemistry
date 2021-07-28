@@ -17,8 +17,8 @@ private enum TopLevelScreen: CaseIterable {
         NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: screen,
-                image: .application(image),
-                selectedImage: .application("\(image)-pressed"),
+                image: .framework(image, bundle: .acidBases),
+                selectedImage: .framework("\(image)-pressed", bundle: .acidBases),
                 label: label
             ),
             firstSecondaryIcon: NavigationIcon(

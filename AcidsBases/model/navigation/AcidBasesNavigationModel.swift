@@ -5,18 +5,30 @@
 import SwiftUI
 import ReactionsCore
 
+public typealias AcidAppNavInjector = AnyNavigationInjector<AcidAppScreen, AcidAppQuestionSet>
+
+extension RootNavigationViewModel where Injector == AcidAppNavInjector {
+
+    public static let production = model(using: ProductionAcidAppInjector())
+    public static let inMemory = model(using: InMemoryAcidAppInjector())
+
+    private static func model(
+        using injector: AcidAppInjector
+    ) -> RootNavigationViewModel<AcidAppNavInjector> {
+        AcidBasesNavigationModel.model(injector: injector)
+    }
+}
+
 struct AcidBasesNavigationModel {
     private init() { }
 
-    typealias Injector = AnyNavigationInjector<AcidAppScreen, AcidAppQuestionSet>
-
-    static func model(injector: AcidAppInjector) -> RootNavigationViewModel<Injector> {
+    static func model(injector: AcidAppInjector) -> RootNavigationViewModel<AcidAppNavInjector> {
         RootNavigationViewModel(
             injector: makeInjector(using: injector)
         )
     }
 
-    private static func makeInjector(using appInjector: AcidAppInjector) -> Injector {
+    private static func makeInjector(using appInjector: AcidAppInjector) -> AcidAppNavInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
                 AcidAppNavigationBehaviour(injector: appInjector)

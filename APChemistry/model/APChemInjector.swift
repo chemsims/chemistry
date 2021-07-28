@@ -5,6 +5,7 @@
 import Foundation
 import ReactionRates
 import Equilibrium
+import AcidsBases
 import ReactionsCore
 
 protocol APChemInjector {
@@ -16,6 +17,8 @@ protocol APChemInjector {
     var reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> { get }
 
     var equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> { get }
+
+    var acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector> { get }
 }
 
 class ProductionAPChemInjector: APChemInjector {
@@ -28,6 +31,8 @@ class ProductionAPChemInjector: APChemInjector {
     let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .production
 
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> = .production
+
+    let acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector> = .production
 }
 
 class DebugAPChemInjector: APChemInjector {
@@ -48,4 +53,6 @@ class DebugAPChemInjector: APChemInjector {
     let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .inMemory
 
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> = .inMemory
+
+    let acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector> = .inMemory
 }
