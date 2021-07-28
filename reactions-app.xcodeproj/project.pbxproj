@@ -108,7 +108,6 @@
 		5700C18D26A99E5600677777 /* AqueousReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC1925E4FD8100B535A7 /* AqueousReactionScreen.swift */; };
 		5700C18E26A99E5600677777 /* ReactionDropDownSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */; };
 		5700C18F26A99EA000677777 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
-		5700C19026A99EA000677777 /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5700C19426A99EEF00677777 /* GaseousReactionViewModelPumpStatementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577A260E26283E6E0060EC54 /* GaseousReactionViewModelPumpStatementTests.swift */; };
 		5700C19526A99EEF00677777 /* GaseousScalesRotationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577A26302628ACC30060EC54 /* GaseousScalesRotationTests.swift */; };
 		5700C19626A99EEF00677777 /* BeakerMoleculeSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC4925F5493B003FD2B4 /* BeakerMoleculeSetterTests.swift */; };
@@ -221,7 +220,6 @@
 		5748651326A96A33007FA314 /* ReactionRates.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5748650A26A96A33007FA314 /* ReactionRates.framework */; };
 		5748651A26A96A33007FA314 /* ReactionRates.h in Headers */ = {isa = PBXBuildFile; fileRef = 5748650C26A96A33007FA314 /* ReactionRates.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5748652126A96A41007FA314 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
-		5748652226A96A41007FA314 /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5748652626A96B4C007FA314 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5F325B84EF600889A2E /* Version.swift */; };
 		5748652726A96B4C007FA314 /* FeedbackAndShareSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5EF25B84E4100889A2E /* FeedbackAndShareSettings.swift */; };
 		5748652826A96B58007FA314 /* EnergyProfileNavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B672258CCC69002CEF5E /* EnergyProfileNavigationViewModel.swift */; };
@@ -555,7 +553,6 @@
 		57B8FA6026AECE2F003CB0C7 /* AcidConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57466616265D81FC003FC6E3 /* AcidConcentration.swift */; };
 		57B8FA6126AECE2F003CB0C7 /* AcidReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766BC9A269A3CB40074A04B /* AcidReactionDefinition.swift */; };
 		57B8FA6226AECE47003CB0C7 /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; platformFilter = ios; };
-		57B8FA6326AECE47003CB0C7 /* ReactionsCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		57B8FA6726AECEC2003CB0C7 /* TitrationNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F4673D268741EC00E294BE /* TitrationNavigationParametersAreReappliedTests.swift */; };
 		57B8FA6826AECEC2003CB0C7 /* IntroNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3262026A304560093CD16 /* IntroNavigationParametersAreReappliedTests.swift */; };
 		57B8FA6926AECEC2003CB0C7 /* BufferNavigationParametersAreReappliedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261E26A303940093CD16 /* BufferNavigationParametersAreReappliedTests.swift */; };
@@ -748,28 +745,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5700C19326A99EA000677777 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				5700C19026A99EA000677777 /* ReactionsCore.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5748652526A96A41007FA314 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				5748652226A96A41007FA314 /* ReactionsCore.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		574865B526A96E69007FA314 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -779,17 +754,6 @@
 				574865BC26A976DD007FA314 /* ReactionsCore.framework in Embed Frameworks */,
 				5700C1B226A9A41100677777 /* Equilibrium.framework in Embed Frameworks */,
 				574865B226A96E69007FA314 /* ReactionRates.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		57B8FA6626AECE48003CB0C7 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				57B8FA6326AECE47003CB0C7 /* ReactionsCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3879,7 +3843,6 @@
 				5700C10C26A99C8800677777 /* Sources */,
 				5700C10D26A99C8800677777 /* Frameworks */,
 				5700C10E26A99C8800677777 /* Resources */,
-				5700C19326A99EA000677777 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3917,7 +3880,6 @@
 				5748650626A96A33007FA314 /* Sources */,
 				5748650726A96A33007FA314 /* Frameworks */,
 				5748650826A96A33007FA314 /* Resources */,
-				5748652526A96A41007FA314 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -4018,7 +3980,6 @@
 				57B8F9E026AECD2C003CB0C7 /* Sources */,
 				57B8F9E126AECD2C003CB0C7 /* Frameworks */,
 				57B8F9E226AECD2C003CB0C7 /* Resources */,
-				57B8FA6626AECE48003CB0C7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -5141,7 +5102,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5196,7 +5157,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -5319,6 +5280,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.reaction.rate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -5341,6 +5303,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.reaction.rate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
