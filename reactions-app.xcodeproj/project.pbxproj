@@ -1131,6 +1131,7 @@
 		577C506726812409003DAD17 /* MolesToConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MolesToConcentration.swift; sourceTree = "<group>"; };
 		577C506926812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationToMolesDifferenceOverVolume.swift; sourceTree = "<group>"; };
 		577C506B26812712003DAD17 /* PLogComplementConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLogComplementConcentration.swift; sourceTree = "<group>"; };
+		577DC1F226B1534F005C22D8 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		577EDE8026A026B60067F3C1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		5780320625B0888300A0F610 /* QuizPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPersistenceTests.swift; sourceTree = "<group>"; };
 		57812A8625EAB8450099D720 /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
@@ -1826,6 +1827,7 @@
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
+				577DC1F226B1534F005C22D8 /* Configuration.storekit */,
 				57FD4033264878C100E352C1 /* TestPlan.xctestplan */,
 				5748659E26A96E55007FA314 /* APChemistry */,
 				57E6D8C726AC795300603796 /* APChemistryTests */,
