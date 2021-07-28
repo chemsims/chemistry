@@ -10,7 +10,6 @@ protocol ProductLoader {
     func loadProducts(units: [Unit])
 
     var delegate: ProductLoaderDelegate? { get set }
-    var isLoading: Bool { get }
 }
 
 protocol ProductLoaderDelegate: AnyObject {

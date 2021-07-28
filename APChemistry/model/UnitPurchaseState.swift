@@ -24,62 +24,89 @@ struct UnitWithState: Identifiable, Equatable {
 }
 
 extension UnitWithState {
-
-    mutating func setState(_ newState: PurchaseState) {
-        guard state.canTransitionTo(newState) else {
-            return
+    mutating func startLoadingProduct() {
+        if shouldLoadProduct {
+            self.state = .loadingProduct
         }
-        self.state = newState
     }
-}
 
-extension PurchaseState {
-
-    fileprivate func canTransitionTo(_ newState: PurchaseState) -> Bool {
-        switch self {
-        case .purchased:
+    var shouldLoadProduct: Bool {
+        switch state {
+        case .waitingToLoadProduct, .failedToLoadProduct, .readyForPurchase:
+            return true
+        default:
             return false
+        }
+    }
 
-        case .deferred:
-            return newState.paymentEndedOrFailed
-
-        case .failedToLoadProduct:
-            return true
-
+    mutating func addLoadedProduct(_ product: SKProduct) {
+        switch state {
         case .loadingProduct:
-            return true
+            self.state = .readyForPurchase(product: product)
+        default:
+            break;
+        }
+    }
 
-        case .purchasing:
-            return newState.paymentEndedOrFailed
+    mutating func failedToLoadProduct() {
+        switch state {
+        case .loadingProduct:
+            self.state = .failedToLoadProduct
+        default:
+            break;
+        }
+    }
 
+    mutating func startPurchase() {
+        switch state {
         case .readyForPurchase:
-            return true
+            self.state = .purchasing
+        default:
+            break
         }
     }
 
-    private var paymentEndedOrFailed: Bool {
-        mayHaveProduct || self == .purchased
-    }
-
-    private var mayHaveProduct: Bool {
-        isReadyForPurchase || self == .failedToLoadProduct
-    }
-
-    private var isReadyForPurchase: Bool {
-        if case .readyForPurchase = self {
-            return true
+    mutating func deferPurchase() {
+        switch state {
+        case .purchasing:
+            self.state = .deferred
+        default:
+            break;
         }
-        return false
+    }
+
+    mutating func failedToPurchase(product: SKProduct?) {
+        switch state {
+        case .purchasing:
+            if let p = product {
+                self.state = .readyForPurchase(product: p)
+            } else {
+                self.state = .failedToLoadProduct
+            }
+        default:
+            break
+        }
+    }
+
+    mutating func purchased() {
+        switch state {
+        case .purchasing:
+            self.state = .purchased
+        default:
+            break
+        }
     }
 }
 
 enum PurchaseState: Equatable {
-    case loadingProduct,
-         failedToLoadProduct,
-         readyForPurchase(product: SKProduct),
-         purchasing,
-         deferred, // e.g. pending parent approval
-         purchased
+    case
+        waitingToLoadProduct, // State before loading the products
+        loadingProduct,
+        failedToLoadProduct,
+        readyForPurchase(product: SKProduct),
+        purchasing,
+        deferred, // e.g. pending parent approval
+        purchased
 
     var locked: Bool {
         self != .purchased

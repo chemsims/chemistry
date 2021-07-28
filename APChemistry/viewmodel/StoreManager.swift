@@ -41,14 +41,14 @@ class StoreManager: ObservableObject {
     }
 
     func loadProducts() {
-        let unitsToLoad = units.filter { $0.state != .purchased }
-        self.products.loadProducts(units: unitsToLoad.map(\.unit))
-
+        let unitsToLoad = units.filter(\.shouldLoadProduct)
         unitsToLoad.forEach { unit in
             if let index = index(of: unit.unit) {
-                units[index].setState(.loadingProduct)
+                units[index].startLoadingProduct()
             }
         }
+
+        self.products.loadProducts(units: unitsToLoad.map(\.unit))
     }
 
     @Published var units: [UnitWithState]
@@ -72,9 +72,9 @@ extension StoreManager: ProductLoaderDelegate {
 
         units.indices.forEach { i in
             if let product = product(for: units[i]) {
-                units[i].setState(.readyForPurchase(product: product))
+                units[i].addLoadedProduct(product)
             } else {
-                units[i].setState(.failedToLoadProduct)
+                units[i].failedToLoadProduct()
             }
         }
     }
@@ -86,17 +86,17 @@ extension StoreManager: ProductLoaderDelegate {
 
 // MARK: - Purchase product
 extension StoreManager {
-    func beginPurchase(of unit: UnitWithState) {
-        guard let index = index(of: unit.unit) else {
+    func beginPurchase(of unit: Unit) {
+        guard let index = index(of: unit) else {
             return
         }
-        switch unit.state {
+        switch units[index].state {
         case let .readyForPurchase(product):
-            units[index].setState(.purchasing)
+            units[index].startPurchase()
             storeObserver.buy(product: product)
 
         case .failedToLoadProduct:
-            units[index].setState(.loadingProduct)
+            units[index].startLoadingProduct()
             let unit = units[index].unit
             products.loadProducts(units: [unit])
             
@@ -118,7 +118,7 @@ extension StoreManager: StoreObserverDelegate {
 
     func didDefer(productId: String) {
         if let index = unitIndex(forProduct: productId) {
-            units[index].setState(.deferred)
+            units[index].deferPurchase()
         }
     }
 
@@ -136,11 +136,8 @@ extension StoreManager: StoreObserverDelegate {
     func didFail(productId: String) {
         if let index = unitIndex(forProduct: productId) {
             let unit = units[index]
-            if let product = products.getProduct(forUnit: unit.unit) {
-                units[index].setState(.readyForPurchase(product: product))
-            } else {
-                units[index].setState(.failedToLoadProduct)
-            }
+            let product = products.getProduct(forUnit: unit.unit)
+            units[index].failedToPurchase(product: product)
         }
         isRestoring = false
         NotificationViewModel.showFailedPurchaseNotification()
@@ -149,7 +146,7 @@ extension StoreManager: StoreObserverDelegate {
     private func doUnlock(productId: String) {
         if let index = unitIndex(forProduct: productId) {
             withAnimation {
-                units[index].setState(.purchased)
+                units[index].purchased()
             }
             locker.unlock(units[index].unit)
         }
@@ -172,11 +169,6 @@ extension StoreManager {
         if let product = products.getProduct(forUnit: unit) {
             return .readyForPurchase(product: product)
         }
-        if products.isLoading {
-            return .loadingProduct
-        }
-        return .failedToLoadProduct
+        return .waitingToLoadProduct
     }
 }
-
-

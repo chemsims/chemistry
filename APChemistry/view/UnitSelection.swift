@@ -55,7 +55,7 @@ struct UnitSelection: View {
             UnitCard(
                 unit: unit,
                 buyUnit: {
-                    model.beginPurchase(of: unit)
+                    model.beginPurchase(of: unit.unit)
                 },
                 canMakePurchase: model.canMakePurchase,
                 layout: layout

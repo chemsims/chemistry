@@ -123,7 +123,7 @@ extension UnitCard {
 
     private var buyButtonLoading: Bool {
         switch unit.state {
-        case .deferred, .loadingProduct, .purchasing:
+        case .waitingToLoadProduct, .deferred, .loadingProduct, .purchasing:
             return true
         default: return false
         }
@@ -137,7 +137,8 @@ extension UnitCard {
         switch unit.state {
         case .deferred: return "Awaiting approval..."
         case .purchasing: return "Unlocking..."
-        case .loadingProduct: return "Connecting to store..."
+        case .waitingToLoadProduct, .loadingProduct:
+            return "Connecting to store..."
         case .failedToLoadProduct: return "Cannot connect to store"
         case let .readyForPurchase(product):
             let price = product.regularPrice.map {
