@@ -9,7 +9,7 @@ public struct FeedbackSettings {
     let subject: String
     let body: String
 
-    public init(
+    private init(
         toAddress: String,
         subject: String,
         body: String
@@ -19,7 +19,7 @@ public struct FeedbackSettings {
         self.body = body
     }
 
-    public init(
+    private init(
         toAddress: String,
         subject: String
     ) {
@@ -30,10 +30,10 @@ public struct FeedbackSettings {
         )
     }
 
-    public init(appName: String) {
+    public init() {
         self.init(
             toAddress: Self.defaultAddress,
-            subject: "\(appName) Feedback",
+            subject: "AP Chemistry App Feedback",
             body: Self.defaultBody
         )
     }

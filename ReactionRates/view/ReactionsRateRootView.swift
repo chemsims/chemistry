@@ -38,8 +38,6 @@ public struct ReactionsRateRootView: View {
         GeneralRootNavigationView(
             model: model,
             navigationRows: ReactionRateNavigationRows.rows,
-            feedbackSettings: .reactionsRate,
-            shareSettings: .reactionsRate,
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
             menuHPadding: settings.menuHPadding,

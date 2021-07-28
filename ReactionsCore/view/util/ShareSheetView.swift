@@ -26,13 +26,12 @@ struct ShareSheetView: UIViewControllerRepresentable {
 
 public struct ShareSettings {
     let message: String
+    let appStoreUrl = ""
 
-    public init(
-        appStoreUrl: String,
-        appName: String
-    ) {
+    public init() {
+        let url = "https://apps.apple.com/us/app/ap-chemistry-reactions/id1531309001"
         self.message = """
-        Hey, check out the \(appName) app! Download it at \(appStoreUrl).
+        Hey, check out this great AP Chemistry app! Download it at \(url).
         """
     }
 }

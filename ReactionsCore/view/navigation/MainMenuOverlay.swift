@@ -341,6 +341,7 @@ extension MainMenuOverlayWithSettings {
             Image("circles.hexagongrid", bundle: .reactionsCore)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .foregroundColor(Styling.navIcon)
         }
         .accessibility(label: Text("Open unit selection menu"))
     }
@@ -487,8 +488,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         MainMenuOverlay(
             rows: NavigationRows(rows, secondary: secondary),
             navigation: model,
-            feedbackSettings: FeedbackSettings(toAddress: "", subject: ""),
-            shareSettings: ShareSettings(appStoreUrl: "", appName: ""),
+            feedbackSettings: FeedbackSettings(),
+            shareSettings: ShareSettings(),
             size: 20,
             topPadding: 10,
             menuHPadding: 10,

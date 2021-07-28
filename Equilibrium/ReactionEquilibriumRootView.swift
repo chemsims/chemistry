@@ -37,8 +37,6 @@ public struct ReactionEquilibriumRootView: View {
         GeneralRootNavigationView(
             model: model,
             navigationRows: ReactionEquilibriumNavigationRows.rows,
-            feedbackSettings: .reactionEquilibrium,
-            shareSettings: .reactionEquilibrium,
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
             menuHPadding: settings.menuHPadding,

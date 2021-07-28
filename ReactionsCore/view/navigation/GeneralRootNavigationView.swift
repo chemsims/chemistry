@@ -18,8 +18,6 @@ public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
     public init(
         model: RootNavigationViewModel<Injector>,
         navigationRows: NavigationRows<Injector.Screen>,
-        feedbackSettings: FeedbackSettings,
-        shareSettings: ShareSettings,
         menuIconSize: CGFloat,
         menuTopPadding: CGFloat,
         menuHPadding: CGFloat,
@@ -27,8 +25,8 @@ public struct GeneralRootNavigationView<Injector: NavigationInjector>: View {
     ) {
         self.model = model
         self.navigationRows = navigationRows
-        self.feedbackSettings = feedbackSettings
-        self.shareSettings = shareSettings
+        self.feedbackSettings = FeedbackSettings()
+        self.shareSettings = ShareSettings()
         self.menuIconSize = menuIconSize
         self.menuTopPadding = menuTopPadding
         self.menuHPadding = menuHPadding
