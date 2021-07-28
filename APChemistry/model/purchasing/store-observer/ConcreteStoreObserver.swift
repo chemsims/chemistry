@@ -59,6 +59,7 @@ extension ConcreteStoreObserver: SKPaymentTransactionObserver {
         }
     }
 
+
     private func handleDeferred(_ transaction: SKPaymentTransaction) {
         runOnMain {
             self.delegate?.didDefer(productId: transaction.payment.productIdentifier)
@@ -71,6 +72,14 @@ extension ConcreteStoreObserver: SKPaymentTransactionObserver {
             self.delegate?.didRestore(
                 productId: transaction.payment.productIdentifier
             )
+        }
+    }
+
+
+    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        runOnMain {
+            self.delegate?.restoreComplete()
+
         }
     }
 

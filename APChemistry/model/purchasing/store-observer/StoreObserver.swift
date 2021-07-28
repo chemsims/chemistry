@@ -25,6 +25,8 @@ protocol StoreObserverDelegate: AnyObject {
 
     func didRestore(productId: String)
 
+    func restoreComplete()
+
     func didPurchase(productId: String)
 
     func didFail(productId: String)

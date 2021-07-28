@@ -31,17 +31,19 @@ class ProductionAPChemInjector: APChemInjector {
 }
 
 class DebugAPChemInjector: APChemInjector {
-//    let storeManager: StoreManager = StoreManager(
-//        locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
-//        products: DebugProductLoader(loadDelay: 1),
-//        storeObserver: DebugStoreObserver(actionDelay: 1)
-//    )
-
     let storeManager: StoreManager = StoreManager(
         locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
-        products: ConcreteProductLoader(),
-        storeObserver: ConcreteStoreObserver.shared
+        products: DebugProductLoader(loadDelay: 1),
+        storeObserver: DebugStoreObserver(actionDelay: 1)
     )
+
+    // A store manager which uses the real store kit, but stores the
+    // unlock in memory
+//    let storeManager: StoreManager = StoreManager(
+//        locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
+//        products: ConcreteProductLoader(),
+//        storeObserver: ConcreteStoreObserver.shared
+//    )
 
     let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .inMemory
 

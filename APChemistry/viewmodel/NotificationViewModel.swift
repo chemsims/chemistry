@@ -50,7 +50,7 @@ extension NotificationViewModel {
 
     static func showRestoredNotification() {
         Self.shared.showNotification(
-            .init(message: "Restored purchases!", icon: .tick)
+            .init(message: "Finished restoring purchases.", icon: .tick)
         )
     }
 

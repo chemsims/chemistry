@@ -124,6 +124,9 @@ extension StoreManager: StoreObserverDelegate {
 
     func didRestore(productId: String) {
         doUnlock(productId: productId, isRestoring: true)
+    }
+
+    func restoreComplete() {
         isRestoring = false
         NotificationViewModel.showRestoredNotification()
     }
