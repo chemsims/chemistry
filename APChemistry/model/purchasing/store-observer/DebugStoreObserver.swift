@@ -28,7 +28,8 @@ class DebugStoreObserver: StoreObserver {
 
     func restorePurchases() {
         runAfterDelay {
-            self.delegate?.didRestore(productId: Unit.all.first!.inAppPurchaseID)
+            let id = Unit.all.compactMap(\.inAppPurchaseID).first ?? ""
+            self.delegate?.didRestore(productId: id)
         }
     }
 

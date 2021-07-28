@@ -14,8 +14,11 @@ enum Unit: String, Identifiable {
         self.rawValue
     }
 
-    var inAppPurchaseID: String {
-        self.rawValue
+    var inAppPurchaseID: String? {
+        switch self {
+        case .equilibrium: return "equilibrium_unit"
+        default: return nil
+        }
     }
 
     var info: UnitInfo {

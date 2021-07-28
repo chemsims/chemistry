@@ -22,7 +22,7 @@ class ConcreteProductLoader: NSObject, ProductLoader {
             return
         }
         isLoading = true
-        let ids = Set(units.map(\.inAppPurchaseID))
+        let ids = Set(units.compactMap(\.inAppPurchaseID))
         let productRequest = SKProductsRequest(productIdentifiers: ids)
         productRequest.delegate = self
         productRequest.start()
