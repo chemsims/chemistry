@@ -50,9 +50,6 @@ public class UserDefaultsScreenPersistence<Screen: RawRepresentable>: ScreenPers
         let prefixWithDot = prefix.isEmpty ? "" : "\(prefix)."
         self.prefixWithDot = prefixWithDot
         self.lastOpenedKey = "\(prefixWithDot)lastOpenedScreen"
-
-        let x = UserDefaults.standard.dictionaryRepresentation()
-        print(x)
     }
 
     private let defaults = UserDefaults.standard
