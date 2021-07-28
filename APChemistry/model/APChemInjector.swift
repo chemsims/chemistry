@@ -16,6 +16,8 @@ protocol APChemInjector {
     var reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> { get }
 
     var equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> { get }
+
+    var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> { get }
 }
 
 class ProductionAPChemInjector: APChemInjector {
@@ -28,6 +30,12 @@ class ProductionAPChemInjector: APChemInjector {
     let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .production
 
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> = .production
+
+    let lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
+        AnyScreenPersistence(
+            UserDefaultsScreenPersistence(prefix: "apchem")
+        )
+
 }
 
 class DebugAPChemInjector: APChemInjector {
@@ -48,4 +56,7 @@ class DebugAPChemInjector: APChemInjector {
     let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .inMemory
 
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> = .inMemory
+
+    var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
+        AnyScreenPersistence(InMemoryScreenPersistence())
 }

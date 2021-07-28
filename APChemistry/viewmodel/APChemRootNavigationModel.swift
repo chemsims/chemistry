@@ -15,7 +15,7 @@ class APChemRootNavigationModel: ObservableObject {
     init(injector: APChemInjector) {
         self.injector = injector
         self.view = AnyView(EmptyView())
-        let firstScreen = Unit.reactionRates
+        let firstScreen = injector.lastOpenedUnitPersistence.lastOpened() ?? Unit.reactionRates
         let firstProvider = getScreenProvider(forUnit: firstScreen)
         providers[firstScreen] = firstProvider
         self.view = firstProvider.screen
@@ -39,6 +39,7 @@ class APChemRootNavigationModel: ObservableObject {
             self.view = provider.screen
         }
 
+        injector.lastOpenedUnitPersistence.setLastOpened(unit)
         self.selectedUnit = unit
     }
 
