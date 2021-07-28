@@ -31,10 +31,16 @@ class ProductionAPChemInjector: APChemInjector {
 }
 
 class DebugAPChemInjector: APChemInjector {
+//    let storeManager: StoreManager = StoreManager(
+//        locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
+//        products: DebugProductLoader(loadDelay: 1),
+//        storeObserver: DebugStoreObserver(actionDelay: 1)
+//    )
+
     let storeManager: StoreManager = StoreManager(
         locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
-        products: DebugProductLoader(),
-        storeObserver: DebugStoreObserver()
+        products: ConcreteProductLoader(),
+        storeObserver: ConcreteStoreObserver.shared
     )
 
     let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .inMemory

@@ -123,13 +123,13 @@ extension StoreManager: StoreObserverDelegate {
     }
 
     func didRestore(productId: String) {
-        doUnlock(productId: productId)
+        doUnlock(productId: productId, isRestoring: true)
         isRestoring = false
         NotificationViewModel.showRestoredNotification()
     }
 
     func didPurchase(productId: String) {
-        doUnlock(productId: productId)
+        doUnlock(productId: productId, isRestoring: false)
         NotificationViewModel.showSuccessfulPurchaseNotification()
     }
 
@@ -143,10 +143,18 @@ extension StoreManager: StoreObserverDelegate {
         NotificationViewModel.showFailedPurchaseNotification()
     }
 
-    private func doUnlock(productId: String) {
+    private func doUnlock(
+        productId: String,
+        isRestoring: Bool
+    ) {
         if let index = unitIndex(forProduct: productId) {
             withAnimation {
-                units[index].purchased()
+                if isRestoring {
+                    units[index].restored()
+                } else {
+                    units[index].purchased()
+                }
+
             }
             locker.unlock(units[index].unit)
         }

@@ -96,6 +96,11 @@ extension UnitWithState {
             break
         }
     }
+
+    // Restoring can happen from any state, so we always set it
+    mutating func restored() {
+        self.state = .purchased
+    }
 }
 
 enum PurchaseState: Equatable {

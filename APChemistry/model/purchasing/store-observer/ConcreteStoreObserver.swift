@@ -66,9 +66,12 @@ extension ConcreteStoreObserver: SKPaymentTransactionObserver {
     }
 
     private func handleRestored(_ transaction: SKPaymentTransaction) {
+        print("finished restored")
         paymentQueue.finishTransaction(transaction)
         runOnMain {
-            self.delegate?.didRestore(productId: transaction.payment.productIdentifier)
+            self.delegate?.didRestore(
+                productId: transaction.payment.productIdentifier
+            )
         }
     }
 

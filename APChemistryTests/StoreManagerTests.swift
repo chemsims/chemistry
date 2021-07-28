@@ -32,11 +32,36 @@ class StoreManagerTests: XCTestCase {
         XCTAssertEqual(equilibriumUnit.state, .purchasing)
     }
 
+    func testRestoringPurchase() {
+        let model = StoreManager(
+            locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
+            products: DebugProductLoader(loadDelay: nil),
+            storeObserver: RestoreEquilibriumObserver(actionDelay: nil)
+        )
+        var equilibriumUnit: UnitWithState {
+            model.units.first { $0.unit == .equilibrium }!
+        }
+
+        model.loadProducts()
+        model.restorePurchases()
+        XCTAssertEqual(equilibriumUnit.state, .purchased)
+    }
+
     private func newModel(actionDelay: Int? = 0) -> StoreManager {
         StoreManager(
             locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
             products: DebugProductLoader(loadDelay: nil),
             storeObserver: DebugStoreObserver(actionDelay: actionDelay)
         )
+    }
+}
+
+private class RestoreEquilibriumObserver: DebugStoreObserver {
+    override init(actionDelay: Int?) {
+        super.init(actionDelay: actionDelay)
+    }
+
+    override func restorePurchases() {
+        delegate?.didRestore(productId: Unit.equilibrium.inAppPurchaseID!)
     }
 }
