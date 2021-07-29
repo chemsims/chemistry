@@ -37,8 +37,6 @@ struct AcidBasesNavigationModel {
             analytics: appInjector.analytics,
             quizPersistence: appInjector.quizPersistence,
             reviewPersistence: appInjector.reviewPersistence,
-            onboardingPersistence: appInjector.onboardingPersistence,
-            namePersistence: appInjector.namePersistence,
             allScreens: AcidAppScreen.allCases,
             linearScreens: AcidAppScreen.allCases
         )

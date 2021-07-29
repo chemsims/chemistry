@@ -18,8 +18,6 @@ protocol AcidAppInjector {
 
     var reviewPersistence: ReviewPromptPersistence { get }
 
-    var onboardingPersistence: OnboardingPersistence { get }
-
     var namePersistence: NamePersistence { get }
 }
 
@@ -43,11 +41,8 @@ class InMemoryAcidAppInjector: AcidAppInjector {
     let reviewPersistence: ReviewPromptPersistence =
         InMemoryReviewPromptPersistence()
 
-    let onboardingPersistence: OnboardingPersistence =
-        InMemoryOnboardingPersistence(hasCompletedOnboarding: true)
-
     let namePersistence: NamePersistence =
-        InMemoryNamePersistence()
+        InMemoryNamePersistence.shared
 }
 
 class ProductionAcidAppInjector: AcidAppInjector {
@@ -77,11 +72,7 @@ class ProductionAcidAppInjector: AcidAppInjector {
     let reviewPersistence: ReviewPromptPersistence =
         UserDefaultsReviewPromptPersistence()
 
-    let onboardingPersistence: OnboardingPersistence =
-        UserDefaultsOnboardingPersistence()
-
-    let namePersistence: NamePersistence =
-        UserDefaultsNamePersistence()
+    let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 }
 
 private let userDefaultsPrefix = "acidsBases"

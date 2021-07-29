@@ -7,11 +7,17 @@ import SwiftUI
 public class OnboardingViewModel: ObservableObject {
 
     public init(
-        namePersistence: NamePersistence
+        namePersistence: NamePersistence,
+        closeOnboarding: @escaping () -> Void
     ) {
         self.namePersistence = namePersistence
         self.name = namePersistence.name
         self.navigation = OnboardingNavigationModel.model(self)
+        self.navigation?.nextScreen = {
+            // text field onCommit may not be called, so always save name
+            self.saveName()
+            closeOnboarding()
+        }
     }
 
     private var namePersistence: NamePersistence
@@ -45,6 +51,8 @@ public class OnboardingViewModel: ObservableObject {
                 if isEmpty {
                     self.name = nil
                 } else {
+                    // We don't store the trimmed name here, otherwise
+                    // user would not be able to add any whitespace
                     self.name = String(newValue.prefix(Self.maxNameLength))
                 }
             }

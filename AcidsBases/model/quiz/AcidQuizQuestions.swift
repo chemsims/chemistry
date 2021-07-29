@@ -11,14 +11,14 @@ extension QuizQuestionsList where QuestionSet == AcidAppQuestionSet {
     static let titration = AcidQuizQuestions.getQuestion(.titration)
 }
 
-struct AcidQuizQuestions {
+public struct AcidQuizQuestions {
     private init() { }
 
 
     private static var isLoaded = false
 
     /// Loads all quiz questions into memory
-    static func load() {
+    public static func load() {
         guard !isLoaded else {
             return
         }
@@ -49,7 +49,8 @@ struct AcidQuizQuestions {
         QuizQuestionReader.readOptional(
             from: file,
             questionSet: questionSet,
-            headerCols: 1
+            headerCols: 1,
+            bundle: .acidBases
         )!
     }
 }

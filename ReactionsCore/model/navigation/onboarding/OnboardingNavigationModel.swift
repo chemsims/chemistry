@@ -20,7 +20,7 @@ public struct OnboardingNavigationModel {
 private struct OnboardingStatements {
     static let intro: [TextLine] = [
         """
-        Hey there! I'm beaky, and I'll be guiding you through this Acids & Bases unit.
+        Hey there! I'm beaky, and I'll be guiding you through these chemistry simulations.
         """,
         """
         I'll teach you what you need to know, and point out all the equations and charts.

@@ -18,6 +18,21 @@
       "productID" : "equilibrium_unit",
       "referenceName" : "equilibrium",
       "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "5CB95361",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "acid_bases_unit",
+      "referenceName" : "acid_bases",
+      "type" : "NonConsumable"
     }
   ],
   "settings" : {

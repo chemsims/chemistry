@@ -99,7 +99,7 @@ struct TitrationScreen_Previews: PreviewProvider {
         TitrationScreen(
             model: TitrationViewModel(
                 titrationPersistence: InMemoryTitrationInputPersistence(),
-                namePersistence: InMemoryNamePersistence()
+                namePersistence: InMemoryNamePersistence.shared
             )
         )
         .padding()

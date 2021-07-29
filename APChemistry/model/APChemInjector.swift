@@ -21,6 +21,10 @@ protocol APChemInjector {
     var acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector> { get }
 
     var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> { get }
+
+    var onboardingPersistence: OnboardingPersistence { get set }
+
+    var namePersistence: NamePersistence { get }
 }
 
 class ProductionAPChemInjector: APChemInjector {
@@ -40,6 +44,10 @@ class ProductionAPChemInjector: APChemInjector {
         AnyScreenPersistence(
             UserDefaultsScreenPersistence(prefix: "apchem")
         )
+
+    var onboardingPersistence: OnboardingPersistence = UserDefaultsOnboardingPersistence()
+
+    let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 }
 
 class DebugAPChemInjector: APChemInjector {
@@ -65,4 +73,8 @@ class DebugAPChemInjector: APChemInjector {
 
     let lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
         AnyScreenPersistence(InMemoryScreenPersistence())
+
+    var onboardingPersistence: OnboardingPersistence = InMemoryOnboardingPersistence()
+
+    let namePersistence: NamePersistence = InMemoryNamePersistence.shared
 }

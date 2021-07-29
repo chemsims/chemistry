@@ -557,8 +557,6 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         analytics: AnyAppAnalytics(NoOpAnalytics()),
         quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence<Int>()),
         reviewPersistence: InMemoryReviewPromptPersistence(),
-        onboardingPersistence: InMemoryOnboardingPersistence(),
-        namePersistence: InMemoryNamePersistence(),
         allScreens: [1, 2, 3, 4],
         linearScreens: [1, 2, 3, 4]
     )

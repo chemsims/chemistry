@@ -392,11 +392,11 @@ struct IntroRightStack_Previews: PreviewProvider {
                 IntroRightStack(
                     model: IntroScreenViewModel(
                         substancePersistence: InMemoryAcidOrBasePersistence(),
-                        namePersistence: InMemoryNamePersistence()
+                        namePersistence: InMemoryNamePersistence.shared
                     ),
                     components: IntroScreenViewModel(
                         substancePersistence: InMemoryAcidOrBasePersistence(),
-                        namePersistence: InMemoryNamePersistence()
+                        namePersistence: InMemoryNamePersistence.shared
                     ).components,
                     layout: IntroScreenLayout(
                         common: AcidBasesScreenLayout(

@@ -478,7 +478,7 @@ struct TitrationBeaker_Previews: PreviewProvider {
                 ),
                 model: TitrationViewModel(
                     titrationPersistence: InMemoryTitrationInputPersistence(),
-                    namePersistence: InMemoryNamePersistence()
+                    namePersistence: InMemoryNamePersistence.shared
                 )
             )
         }

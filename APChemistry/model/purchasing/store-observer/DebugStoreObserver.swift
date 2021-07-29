@@ -12,7 +12,7 @@ class DebugStoreObserver: StoreObserver {
     }
 
     // number of times to fail before succeeding
-    private let failCount = 1
+    private let failCount = 0
     
     private let actionDelay: Int?
 

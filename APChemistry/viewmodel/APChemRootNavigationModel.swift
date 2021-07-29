@@ -20,9 +20,16 @@ class APChemRootNavigationModel: ObservableObject {
         let firstProvider = getScreenProvider(forUnit: firstScreen)
         providers[firstScreen] = firstProvider
         self.view = firstProvider.screen
+        if !injector.onboardingPersistence.hasCompletedOnboarding {
+            doShowOnboarding()
+        }
     }
 
-    private let injector: APChemInjector
+    @Published var showOnboarding: Bool = false
+
+    private(set) var onboardingModel: OnboardingViewModel?
+
+    private var injector: APChemInjector
     private var selectedUnit = Unit.reactionRates
     private var providers = [Unit : ScreenProvider]()
 
@@ -70,6 +77,23 @@ class APChemRootNavigationModel: ObservableObject {
             get: { self.showUnitSelection },
             set: { self.showUnitSelection = $0 }
         )
+    }
+}
+
+extension APChemRootNavigationModel {
+    private func doShowOnboarding() {
+        showOnboarding = true
+        onboardingModel = OnboardingViewModel(
+            namePersistence: injector.namePersistence,
+            closeOnboarding: self.hideOnboarding
+        )
+    }
+
+    private func hideOnboarding() {
+        withAnimation {
+            self.showOnboarding = false
+            self.injector.onboardingPersistence.hasCompletedOnboarding = true
+        }
     }
 }
 

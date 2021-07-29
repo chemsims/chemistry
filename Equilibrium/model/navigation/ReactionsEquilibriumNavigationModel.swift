@@ -34,8 +34,6 @@ struct ReactionsEquilibriumNavigationModel {
             analytics: injector.analytics,
             quizPersistence: injector.quizPersistence,
             reviewPersistence: injector.reviewPersistence,
-            onboardingPersistence: InMemoryOnboardingPersistence(hasCompletedOnboarding: true),
-            namePersistence: InMemoryNamePersistence(),
             allScreens: EquilibriumAppScreen.allCases,
             linearScreens: linearScreens
         )

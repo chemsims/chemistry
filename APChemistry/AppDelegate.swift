@@ -5,6 +5,7 @@
 import UIKit
 import Firebase
 import Equilibrium
+import AcidsBases
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         EquilibriumQuizQuestions.load()
+        AcidQuizQuestions.load()
 
         APChemApp.injector.storeManager.initialiseStore()
 
