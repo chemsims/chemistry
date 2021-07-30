@@ -52,7 +52,7 @@ class ProductionAPChemInjector: APChemInjector {
 
 class DebugAPChemInjector: APChemInjector {
     let storeManager: StoreManager = StoreManager(
-        locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
+        locker: InMemoryUnitLocker(allUnitsAreUnlocked: true),
         products: DebugProductLoader(loadDelay: 1),
         storeObserver: DebugStoreObserver(actionDelay: 1)
     )
@@ -72,9 +72,9 @@ class DebugAPChemInjector: APChemInjector {
     let acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector> = .inMemory
 
     let lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
-        AnyScreenPersistence(InMemoryScreenPersistence())
+        AnyScreenPersistence(UserDefaultsScreenPersistence(prefix: "apchem"))
 
-    var onboardingPersistence: OnboardingPersistence = InMemoryOnboardingPersistence()
+    var onboardingPersistence: OnboardingPersistence = UserDefaultsOnboardingPersistence()
 
-    let namePersistence: NamePersistence = InMemoryNamePersistence.shared
+    let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 }

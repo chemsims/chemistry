@@ -27,7 +27,7 @@ class InMemoryAcidAppInjector: AcidAppInjector {
         InMemoryTitrationInputPersistence()
 
     let screenPersistence: AnyScreenPersistence<AcidAppScreen> =
-        AnyScreenPersistence(NoOpScreenPersistence())
+        AnyScreenPersistence(UserDefaultsScreenPersistence(prefix: userDefaultsPrefix))
 
     let analytics: AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet> =
         AnyAppAnalytics(NoOpAppAnalytics())

@@ -131,7 +131,7 @@ public struct Styling {
 
     public static let switchBackground = RGB.gray(base: 210).color
 
-    public static let inactiveContainerMultiply = RGB.gray(base: 210).color
+    public static let inactiveContainerMultiply = RGB.gray(base: 160).color
 }
 
 extension UIColor {
