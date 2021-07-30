@@ -8,6 +8,7 @@ import ReactionsCore
 struct AcidReactionDefinition: Equatable {
     let leftTerms: [Term]
     let rightTerms: [Term]
+    let reversible: Bool
 
     struct Term: Equatable {
         let name: TextLine
@@ -18,7 +19,12 @@ struct AcidReactionDefinition: Equatable {
     var label: String {
         let lhs = labelOfTerms(leftTerms)
         let rhs = labelOfTerms(rightTerms)
-        return "\(lhs), double sided arrow, \(rhs)"
+        let arrowLabel = reversible ? "double sided arrow" : "➝"
+        return "\(lhs), \(arrowLabel), \(rhs)"
+    }
+
+    var arrow: String {
+        reversible ? "⇌" : "➝"
     }
 
     private func labelOfTerms(_ terms: [Term]) -> String {

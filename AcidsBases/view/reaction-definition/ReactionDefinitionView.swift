@@ -49,7 +49,7 @@ struct ReactionDefinitionView: View {
     }
 
     private var arrow: some View {
-        FixedText("⇌")
+        FixedText(reaction.arrow)
             .font(.system(size: 1.2 * fontSize))
     }
 
@@ -87,7 +87,8 @@ struct ReactionDefinitionView_Previews: PreviewProvider {
                 rightTerms: [
                     .init(name: "OH", color: .orange),
                     .init(name: "K", color: .blue)
-                ]
+                ],
+                reversible: false
             ),
             fontSize: 20,
             circleSize: 20
