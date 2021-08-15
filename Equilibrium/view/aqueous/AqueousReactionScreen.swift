@@ -173,7 +173,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
     }
 
     private var scales: some View {
-        MoleculeScales(
+        EquilibriumMoleculeScales(
             reaction: components.equation,
             angleFraction: scalesAngleFraction,
             currentTime: currentTime

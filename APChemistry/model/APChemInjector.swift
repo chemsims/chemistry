@@ -53,8 +53,8 @@ class ProductionAPChemInjector: APChemInjector {
 class DebugAPChemInjector: APChemInjector {
     let storeManager: StoreManager = StoreManager(
         locker: InMemoryUnitLocker(allUnitsAreUnlocked: true),
-        products: DebugProductLoader(loadDelay: 1),
-        storeObserver: DebugStoreObserver(actionDelay: 1)
+        products: DebugProductLoader(loadDelay: 0),
+        storeObserver: DebugStoreObserver(actionDelay: 0)
     )
 
     // A store manager which uses the real store kit, but stores the

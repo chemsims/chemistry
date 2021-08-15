@@ -47,7 +47,6 @@
 		5700C14E26A99DD200677777 /* GaseousStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57062DC026072DDE00007BAA /* GaseousStatements.swift */; };
 		5700C14F26A99DD200677777 /* AqueousStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ABDC4525EC03E10078A82B /* AqueousStatements.swift */; };
 		5700C15026A99DD200677777 /* SolubilityStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0A619261C31D400777E32 /* SolubilityStatements.swift */; };
-		5700C15126A99DD700677777 /* MoleculeConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1B7A825EAB4CD00878B52 /* MoleculeConcentration.swift */; };
 		5700C15226A99DDC00677777 /* IntegrationNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9032646A69F008461E8 /* IntegrationNavigationModel.swift */; };
 		5700C15326A99DE100677777 /* SolubilityNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745D2922610F08C0040F3CF /* SolubilityNavigationModel.swift */; };
 		5700C15426A99DE800677777 /* AqueousNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A5125E68184006AB876 /* AqueousNavigationModel.swift */; };
@@ -91,9 +90,7 @@
 		5700C17D26A99E3600677777 /* DoubleSidedArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */; };
 		5700C17E26A99E3C00677777 /* AqueousBeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576A41DA25F773D900047618 /* AqueousBeakerView.swift */; };
 		5700C17F26A99E3C00677777 /* AddMoleculeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DB304325F74D050070E96F /* AddMoleculeView.swift */; };
-		5700C18026A99E4200677777 /* MoleculePile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1B7A125EAA7A800878B52 /* MoleculePile.swift */; };
-		5700C18126A99E4200677777 /* MoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8625EAB8450099D720 /* MoleculeScales.swift */; };
-		5700C18226A99E4200677777 /* MoleculeScaleBasket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A1B79725EAA65800878B52 /* MoleculeScaleBasket.swift */; };
+		5700C18126A99E4200677777 /* EquilibriumMoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8625EAB8450099D720 /* EquilibriumMoleculeScales.swift */; };
 		5700C18326A99E4700677777 /* EquilibriumGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */; };
 		5700C18426A99E4C00677777 /* SolubilityQuotientRecapEquations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786F797261C24CF00E918FC /* SolubilityQuotientRecapEquations.swift */; };
 		5700C18526A99E4C00677777 /* IntegrationEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579EA9072646D3C8008461E8 /* IntegrationEquationView.swift */; };
@@ -114,7 +111,6 @@
 		5700C19826A99EEF00677777 /* AqueousScalesRotationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577A26262628A62B0060EC54 /* AqueousScalesRotationTests.swift */; };
 		5700C19926A99EEF00677777 /* SoluteCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C2A2622DC9F00BE1303 /* SoluteCounterTests.swift */; };
 		5700C19A26A99EEF00677777 /* BalancedReactionEquationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */; };
-		5700C19B26A99EEF00677777 /* MoleculeScalesGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */; };
 		5700C19C26A99EEF00677777 /* PumpViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686B052602590C005BD328 /* PumpViewModelTests.swift */; };
 		5700C19D26A99EEF00677777 /* ReactionComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5725972225EE3E9400D87964 /* ReactionComponentTests.swift */; };
 		5700C19E26A99EEF00677777 /* GridMoleculesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736DC3925F50D1A003FD2B4 /* GridMoleculesTests.swift */; };
@@ -141,6 +137,12 @@
 		5700C1BA26A9AAA100677777 /* UnitCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700C1B926A9AAA100677777 /* UnitCard.swift */; };
 		5700C1BD26A9B32200677777 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700C1BC26A9B32200677777 /* Unit.swift */; };
 		5700C1BF26A9C25100677777 /* APChemRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700C1BE26A9C25100677777 /* APChemRootView.swift */; };
+		57072BDF26C93C8700DC6F0E /* AnimatingMoleculePile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BDE26C93C8700DC6F0E /* AnimatingMoleculePile.swift */; };
+		57072BE126C93F7F00DC6F0E /* MoleculeScaleBasket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BE026C93F7F00DC6F0E /* MoleculeScaleBasket.swift */; };
+		57072BE426C9406200DC6F0E /* MoleculeConcentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BE326C9406200DC6F0E /* MoleculeConcentration.swift */; };
+		57072BE626C954DA00DC6F0E /* MoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BE526C954DA00DC6F0E /* MoleculeScales.swift */; };
+		57072BE826C9551800DC6F0E /* MoleculeScalesGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BE726C9551800DC6F0E /* MoleculeScalesGeometry.swift */; };
+		57072BED26C96AE900DC6F0E /* MoleculeScalesGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */; };
 		570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */; };
 		5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E22126272A3800CF6FBE /* ShakeText.swift */; };
 		5713D8CC267B7CC2009C65AC /* ArcGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713D8CB267B7CC2009C65AC /* ArcGeometryTests.swift */; };
@@ -799,6 +801,11 @@
 		57062DC026072DDE00007BAA /* GaseousStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousStatements.swift; sourceTree = "<group>"; };
 		57062DC62607A84C00007BAA /* ReactionEquilibriumRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEquilibriumRootView.swift; sourceTree = "<group>"; };
 		57064BA125A77787008102CE /* ReactionInputModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputModel.swift; sourceTree = "<group>"; };
+		57072BDE26C93C8700DC6F0E /* AnimatingMoleculePile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingMoleculePile.swift; sourceTree = "<group>"; };
+		57072BE026C93F7F00DC6F0E /* MoleculeScaleBasket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScaleBasket.swift; sourceTree = "<group>"; };
+		57072BE326C9406200DC6F0E /* MoleculeConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeConcentration.swift; sourceTree = "<group>"; };
+		57072BE526C954DA00DC6F0E /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
+		57072BE726C9551800DC6F0E /* MoleculeScalesGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScalesGeometry.swift; sourceTree = "<group>"; };
 		57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreenElement.swift; sourceTree = "<group>"; };
 		570A765A266BC3D9009329FB /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
 		570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactingBeakerViewModel.swift; sourceTree = "<group>"; };
@@ -1104,7 +1111,7 @@
 		577DC1F226B1534F005C22D8 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		577EDE8026A026B60067F3C1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		5780320625B0888300A0F610 /* QuizPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPersistenceTests.swift; sourceTree = "<group>"; };
-		57812A8625EAB8450099D720 /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
+		57812A8625EAB8450099D720 /* EquilibriumMoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumMoleculeScales.swift; sourceTree = "<group>"; };
 		57812A8D25EABA950099D720 /* AnimatableRotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableRotation.swift; sourceTree = "<group>"; };
 		5783964A25A9B9C5009CC8FC /* EnergyProfileShapeSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileShapeSettings.swift; sourceTree = "<group>"; };
 		5783965425A9DB1D009CC8FC /* EnergyProfileChartInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileChartInput.swift; sourceTree = "<group>"; };
@@ -1174,9 +1181,6 @@
 		57A119AB25B86B5400A7810B /* EnergyProfileFilingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingViewModel.swift; sourceTree = "<group>"; };
 		57A119AF25B86B9800A7810B /* EnergyProfilePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistence.swift; sourceTree = "<group>"; };
 		57A119B325B8715300A7810B /* EnergyProfileFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileFilingStatements.swift; sourceTree = "<group>"; };
-		57A1B79725EAA65800878B52 /* MoleculeScaleBasket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScaleBasket.swift; sourceTree = "<group>"; };
-		57A1B7A125EAA7A800878B52 /* MoleculePile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculePile.swift; sourceTree = "<group>"; };
-		57A1B7A825EAB4CD00878B52 /* MoleculeConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeConcentration.swift; sourceTree = "<group>"; };
 		57A26854259A011600919E48 /* QuizDifficultyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDifficultyTests.swift; sourceTree = "<group>"; };
 		57A4DF452619FFBF006C8637 /* SolubleComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleComponents.swift; sourceTree = "<group>"; };
 		57A5F075263EA066002F23DE /* QuizQuestionReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionReader.swift; sourceTree = "<group>"; };
@@ -1526,7 +1530,6 @@
 				57D15C152622D7D600BE1303 /* solubility */,
 				5725972825EE3EC000D87964 /* test_util */,
 				57952A3225E66FBD006AB876 /* BalancedReactionEquationTests.swift */,
-				57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */,
 				5725972225EE3E9400D87964 /* ReactionComponentTests.swift */,
 				57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */,
 				5736DC3925F50D1A003FD2B4 /* GridMoleculesTests.swift */,
@@ -1637,6 +1640,25 @@
 				574F14C725B4E2C300EB316C /* ReactionInputLimits.swift */,
 			);
 			path = "reaction-input";
+			sourceTree = "<group>";
+		};
+		57072BDD26C93C7500DC6F0E /* scales */ = {
+			isa = PBXGroup;
+			children = (
+				57072BDE26C93C8700DC6F0E /* AnimatingMoleculePile.swift */,
+				57072BE026C93F7F00DC6F0E /* MoleculeScaleBasket.swift */,
+				57072BE526C954DA00DC6F0E /* MoleculeScales.swift */,
+				57072BE726C9551800DC6F0E /* MoleculeScalesGeometry.swift */,
+			);
+			path = scales;
+			sourceTree = "<group>";
+		};
+		57072BE226C9405500DC6F0E /* molecule */ = {
+			isa = PBXGroup;
+			children = (
+				57072BE326C9406200DC6F0E /* MoleculeConcentration.swift */,
+			);
+			path = molecule;
 			sourceTree = "<group>";
 		};
 		570A765F266CC2FE009329FB /* beaker */ = {
@@ -2788,6 +2810,7 @@
 				57A5F087263EBD12002F23DE /* quiz-parsing-test-cases */,
 				572FD6B12621B27C007E8E42 /* shared */,
 				572BCF2626036E7700CE3FE0 /* ArrayExtensionTests.swift */,
+				57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */,
 				5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */,
 				5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */,
 				57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */,
@@ -2814,6 +2837,7 @@
 		5797A45E25E406FC00991BD9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57072BE226C9405500DC6F0E /* molecule */,
 				572B1A7A2675DF8700302B8E /* reaction-progress */,
 				57D60150265EACF300017E25 /* validation */,
 				578B1714261874CC00D8079F /* motion */,
@@ -2871,6 +2895,7 @@
 		5797A47A25E4092600991BD9 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57072BDD26C93C7500DC6F0E /* scales */,
 				577EDE7F26A026A40067F3C1 /* onboarding */,
 				5786BD15267B66BA001A165C /* burette */,
 				5786BD10267B4CA3001A165C /* shapes */,
@@ -3022,17 +3047,7 @@
 		57A1B79625EAA64300878B52 /* scales */ = {
 			isa = PBXGroup;
 			children = (
-				57A1B79725EAA65800878B52 /* MoleculeScaleBasket.swift */,
-				57A1B7A125EAA7A800878B52 /* MoleculePile.swift */,
-				57812A8625EAB8450099D720 /* MoleculeScales.swift */,
-			);
-			path = scales;
-			sourceTree = "<group>";
-		};
-		57A1B7A725EAB4C200878B52 /* scales */ = {
-			isa = PBXGroup;
-			children = (
-				57A1B7A825EAB4CD00878B52 /* MoleculeConcentration.swift */,
+				57812A8625EAB8450099D720 /* EquilibriumMoleculeScales.swift */,
 			);
 			path = scales;
 			sourceTree = "<group>";
@@ -3419,7 +3434,6 @@
 				576A41FB25F77B6C00047618 /* layout */,
 				5736DC2E25F5006B003FD2B4 /* grid */,
 				57ABDC4425EC03BC0078A82B /* statements */,
-				57A1B7A725EAB4C200878B52 /* scales */,
 				57952A5025E68175006AB876 /* navigation */,
 				57DDAD0E25E567B100B535A7 /* reaction-equations */,
 				57DDACF225E5549F00B535A7 /* styling */,
@@ -4208,7 +4222,6 @@
 				5700C16126A99E0200677777 /* SolubleScreenElement.swift in Sources */,
 				5700C14026A99CEF00677777 /* AqueousReactionType.swift in Sources */,
 				5700C13226A99CD100677777 /* SolubilityChartEquation.swift in Sources */,
-				5700C15126A99DD700677777 /* MoleculeConcentration.swift in Sources */,
 				5700C15426A99DE800677777 /* AqueousNavigationModel.swift in Sources */,
 				5700C15F26A99E0200677777 /* EquilibriumScreen.swift in Sources */,
 				5700C12B26A99CBB00677777 /* PumpViewModel.swift in Sources */,
@@ -4253,7 +4266,6 @@
 				5700C17326A99E2400677777 /* SKSolubleBeakerScene.swift in Sources */,
 				5700C18926A99E5100677777 /* ChartStack.swift in Sources */,
 				5700C13826A99CDA00677777 /* SKSoluteBeakerAction.swift in Sources */,
-				5700C18026A99E4200677777 /* MoleculePile.swift in Sources */,
 				5700C15D26A99DF400677777 /* ScalesRotationEquation.swift in Sources */,
 				5700C13D26A99CE400677777 /* SoluteValues.swift in Sources */,
 				5700C13026A99CCA00677777 /* EquilibriumQuizQuestions.swift in Sources */,
@@ -4276,7 +4288,7 @@
 				5700C17F26A99E3C00677777 /* AddMoleculeView.swift in Sources */,
 				5700C14226A99CEF00677777 /* SolubleReactionType.swift in Sources */,
 				5700C14326A99CEF00677777 /* ReactionDefinition.swift in Sources */,
-				5700C18126A99E4200677777 /* MoleculeScales.swift in Sources */,
+				5700C18126A99E4200677777 /* EquilibriumMoleculeScales.swift in Sources */,
 				5700C12C26A99CBB00677777 /* GaseousReactionViewModel.swift in Sources */,
 				5700C13926A99CDA00677777 /* SolubilityEquationState.swift in Sources */,
 				5700C17626A99E2D00677777 /* GaseousReactionScreen.swift in Sources */,
@@ -4286,7 +4298,6 @@
 				5700C15726A99DEE00677777 /* EquilibriumInjector.swift in Sources */,
 				5700C17E26A99E3C00677777 /* AqueousBeakerView.swift in Sources */,
 				5700C13A26A99CE400677777 /* SolubleComponents.swift in Sources */,
-				5700C18226A99E4200677777 /* MoleculeScaleBasket.swift in Sources */,
 				5700C13B26A99CE400677777 /* SolubleReactionEquation.swift in Sources */,
 				5700C1B026A9A00800677777 /* EquilibriumBundleExtension.swift in Sources */,
 				5700C14626A99DBC00677777 /* ReactionComponents.swift in Sources */,
@@ -4327,7 +4338,6 @@
 				5700C1A426A99F0600677777 /* SolubilityScreenNavigationBeakerStatesTests.swift in Sources */,
 				5700C19426A99EEF00677777 /* GaseousReactionViewModelPumpStatementTests.swift in Sources */,
 				5700C1AC26A99F2300677777 /* UserDefaultsExtensions.swift in Sources */,
-				5700C19B26A99EEF00677777 /* MoleculeScalesGeometryTests.swift in Sources */,
 				5700C1AE26A99F2300677777 /* NavigationTestMethods.swift in Sources */,
 				5700C1AD26A99F2300677777 /* NavigationExtensions.swift in Sources */,
 				5700C19E26A99EEF00677777 /* GridMoleculesTests.swift in Sources */,
@@ -4507,6 +4517,7 @@
 				57438A56260A3242005E3888 /* ReviewPromptPersistence.swift in Sources */,
 				57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */,
 				57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */,
+				57072BDF26C93C8700DC6F0E /* AnimatingMoleculePile.swift in Sources */,
 				573E1B2B263AACE000379A1D /* StringUtil.swift in Sources */,
 				5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */,
 				57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */,
@@ -4587,6 +4598,7 @@
 				5797A53E25E41E0100991BD9 /* AxisPositionCalculations.swift in Sources */,
 				57315EBC264019F600A7D0F9 /* AnyQuizPersistence.swift in Sources */,
 				57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */,
+				57072BE126C93F7F00DC6F0E /* MoleculeScaleBasket.swift in Sources */,
 				57B3B935260B40C100EB9B47 /* GeneralRootNavigationView.swift in Sources */,
 				57438A3D260A26DB005E3888 /* RootNavigationViewModel.swift in Sources */,
 				57B3B91E260B2F9F00EB9B47 /* MenuButton.swift in Sources */,
@@ -4597,6 +4609,8 @@
 				578B17412618D1AB00D8079F /* MoleculeGridShape.swift in Sources */,
 				5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */,
 				575A887D25E4366900AEE448 /* CircleIconButton.swift in Sources */,
+				57072BE426C9406200DC6F0E /* MoleculeConcentration.swift in Sources */,
+				57072BE626C954DA00DC6F0E /* MoleculeScales.swift in Sources */,
 				57B3B923260B35CE00EB9B47 /* MainMenuPanel.swift in Sources */,
 				5797A49C25E40A4C00991BD9 /* BeakerBottomShape.swift in Sources */,
 				57438A65260A4177005E3888 /* ScreenPersistence.swift in Sources */,
@@ -4633,6 +4647,7 @@
 				57B3B8FB260B281000EB9B47 /* AppAnalytics.swift in Sources */,
 				57B3B929260B39A600EB9B47 /* ShareSheetView.swift in Sources */,
 				57B8946D26A04FFA00D71998 /* OnboardingPersistence.swift in Sources */,
+				57072BE826C9551800DC6F0E /* MoleculeScalesGeometry.swift in Sources */,
 				57F88864267E6DB900609671 /* MoleculeEmittingViewModel.swift in Sources */,
 				57315EC026401CF500A7D0F9 /* QuizLayoutSettings.swift in Sources */,
 				57ADAA8726A4424C0008E8C2 /* BeakerAccessibilityActions.swift in Sources */,
@@ -4699,6 +4714,7 @@
 				57FD400D26484F4B00E352C1 /* CGFloatRoundingTests.swift in Sources */,
 				57B8947126A0542200D71998 /* NamePersistenceTests.swift in Sources */,
 				57FD400926484F2E00E352C1 /* FeedbackSettingsTests.swift in Sources */,
+				57072BED26C96AE900DC6F0E /* MoleculeScalesGeometryTests.swift in Sources */,
 				57FF9EE425FF6EC100C1C27F /* GridElementBalancerTests.swift in Sources */,
 				57FD401026484F5800E352C1 /* LabellingTests.swift in Sources */,
 				57FD400C26484F4800E352C1 /* speechBubbleLineGeneratorTests.swift in Sources */,
