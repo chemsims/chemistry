@@ -49,6 +49,14 @@ public struct MoleculeScalesGeometry {
     var basketYOffset: CGFloat {
         basketHeight / 2
     }
+
+    var badgeSize: CGFloat {
+        0.5 * basketWidth
+    }
+
+    var badgeFontSize: CGFloat {
+        0.75 * badgeSize
+    }
 }
 
 extension MoleculeScalesGeometry {

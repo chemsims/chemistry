@@ -11,6 +11,7 @@ public struct MoleculeScales: View {
         rightMolecules: MoleculeScales.Molecules,
         rotationFraction: Equation,
         equationInput: CGFloat,
+        badge: Badge? = nil,
         cols: Int,
         rows: Int
     ) {
@@ -18,6 +19,7 @@ public struct MoleculeScales: View {
         self.rightMolecules = rightMolecules
         self.rotationFraction = rotationFraction
         self.equationInput = equationInput
+        self.badge = badge
         self.cols = cols
         self.rows = rows
     }
@@ -26,6 +28,7 @@ public struct MoleculeScales: View {
     let rightMolecules: Molecules
     let rotationFraction: Equation
     let equationInput: CGFloat
+    let badge: Badge?
     let cols: Int
     let rows: Int
 
@@ -36,6 +39,7 @@ public struct MoleculeScales: View {
                 rightMolecules: rightMolecules,
                 rotationFraction: rotationFraction,
                 equationInput: equationInput,
+                badge: badge,
                 cols: cols,
                 rows: rows,
                 settings: MoleculeScalesGeometry(
@@ -52,7 +56,6 @@ public struct MoleculeScales: View {
     }
 
     public struct MoleculeEquation {
-
         public init(fractionToDraw: Equation, color: Color, label: String) {
             self.fractionToDraw = fractionToDraw
             self.color = color
@@ -63,6 +66,21 @@ public struct MoleculeScales: View {
         let color: Color
         let label: String
     }
+
+    public struct Badge {
+        public init(
+            label: String,
+            fontColor: Color,
+            backgroundColor: Color
+        ) {
+            self.label = label
+            self.fontColor = fontColor
+            self.backgroundColor = backgroundColor
+        }
+        let label: String
+        let fontColor: Color
+        let backgroundColor: Color
+    }
 }
 
 private struct SizedMoleculeScales: View {
@@ -71,6 +89,7 @@ private struct SizedMoleculeScales: View {
     let rightMolecules: MoleculeScales.Molecules
     let rotationFraction: Equation
     let equationInput: CGFloat
+    let badge: MoleculeScales.Badge?
     let cols: Int
     let rows: Int
     let settings: MoleculeScalesGeometry
@@ -87,6 +106,10 @@ private struct SizedMoleculeScales: View {
 
             rightBasket
                 .accessibility(sortPriority: 1)
+
+            if let badge = badge {
+                badgeView(badge)
+            }
         }
         .frame(width: settings.width)
         .accessibilityElement(children: .contain)
@@ -101,6 +124,26 @@ private struct SizedMoleculeScales: View {
 
     private var rotationDegrees: Equation {
         settings.maxRotationAngle * rotationFraction
+    }
+}
+
+// MARK: Badge
+private extension SizedMoleculeScales {
+    private func badgeView(_ badge: MoleculeScales.Badge) -> some View {
+        ZStack {
+            Circle()
+                .foregroundColor(badge.backgroundColor)
+            Circle()
+                .stroke()
+                .foregroundColor(Styling.scalesBadgeOutline)
+            Text(badge.label)
+                .font(.system(size: settings.badgeFontSize))
+                .foregroundColor(badge.fontColor)
+                .lineLimit(1)
+                .minimumScaleFactor(0.2)
+        }
+        .frame(square: settings.badgeSize)
+        .position(settings.rotationCenter)
     }
 }
 
@@ -246,6 +289,11 @@ struct MoleculeScales_Previews: PreviewProvider {
                     ),
                     rotationFraction: LinearEquation(m: 2, x1: 0, y1: -1),
                     equationInput: hasEnded ? 0 : 1,
+                    badge: .init(
+                        label: "C",
+                        fontColor: .white,
+                        backgroundColor: .purple
+                    ),
                     cols: 4,
                     rows: 4
                 )
