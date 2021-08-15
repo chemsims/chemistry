@@ -136,15 +136,13 @@ private extension SizedMoleculeScales {
             height: settings.basketHeight
         )
         .offset(y: settings.basketYOffset)
-        .modifier(
-            AnimatablePositionModifier(
-                equation: TrackingEquation(
-                    rotationCenter: settings.rotationCenter,
-                    armWidth: isLeft ? settings.armWidth / 2 : -settings.armWidth / 2
-                ),
-                rotation: rotationDegrees,
-                currentTime: equationInput
-            )
+        .animatablePosition(
+            equation: BasketPositionEquation(
+                rotationDegrees: rotationDegrees,
+                rotationCenter: settings.rotationCenter,
+                armWidth: isLeft ? settings.armWidth / 2 : -settings.armWidth / 2
+            ),
+            input: equationInput
         )
         .accessibility(
             label: Text(
@@ -166,28 +164,14 @@ private extension SizedMoleculeScales {
     }
 }
 
-private struct AnimatablePositionModifier: AnimatableModifier {
-    let equation: TrackingEquation
-    let rotation: Equation
-    var currentTime: CGFloat
+private struct BasketPositionEquation: PositionEquation {
 
-    var animatableData: CGFloat {
-        get { currentTime }
-        set { currentTime = newValue }
-    }
-
-    func body(content: Content) -> some View {
-        content.position(equation.getPoint(for: rotation, at: currentTime))
-    }
-}
-
-private struct TrackingEquation {
-
+    let rotationDegrees: Equation
     let rotationCenter: CGPoint
     let armWidth: CGFloat
 
-    func getPoint(for degreesRotation: Equation, at time: CGFloat) -> CGPoint {
-        let rotation = degreesRotation.getY(at: time)
+    func getPosition(at input: CGFloat) -> CGPoint {
+        let rotation = rotationDegrees.getY(at: input)
         let rads = Angle(degrees: Double(rotation)).radians
 
         let dy = armWidth * CGFloat(sin(rads))

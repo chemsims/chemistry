@@ -143,6 +143,8 @@
 		57072BE626C954DA00DC6F0E /* MoleculeScales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BE526C954DA00DC6F0E /* MoleculeScales.swift */; };
 		57072BE826C9551800DC6F0E /* MoleculeScalesGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BE726C9551800DC6F0E /* MoleculeScalesGeometry.swift */; };
 		57072BED26C96AE900DC6F0E /* MoleculeScalesGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */; };
+		57072BEF26C96C9C00DC6F0E /* PositionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BEE26C96C9C00DC6F0E /* PositionEquation.swift */; };
+		57072BF126C96CC700DC6F0E /* AnimatablePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BF026C96CC700DC6F0E /* AnimatablePosition.swift */; };
 		570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */; };
 		5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E22126272A3800CF6FBE /* ShakeText.swift */; };
 		5713D8CC267B7CC2009C65AC /* ArcGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713D8CB267B7CC2009C65AC /* ArcGeometryTests.swift */; };
@@ -806,6 +808,8 @@
 		57072BE326C9406200DC6F0E /* MoleculeConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeConcentration.swift; sourceTree = "<group>"; };
 		57072BE526C954DA00DC6F0E /* MoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScales.swift; sourceTree = "<group>"; };
 		57072BE726C9551800DC6F0E /* MoleculeScalesGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeScalesGeometry.swift; sourceTree = "<group>"; };
+		57072BEE26C96C9C00DC6F0E /* PositionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionEquation.swift; sourceTree = "<group>"; };
+		57072BF026C96CC700DC6F0E /* AnimatablePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatablePosition.swift; sourceTree = "<group>"; };
 		57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreenElement.swift; sourceTree = "<group>"; };
 		570A765A266BC3D9009329FB /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
 		570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactingBeakerViewModel.swift; sourceTree = "<group>"; };
@@ -2626,6 +2630,7 @@
 			isa = PBXGroup;
 			children = (
 				57812A8D25EABA950099D720 /* AnimatableRotation.swift */,
+				57072BF026C96CC700DC6F0E /* AnimatablePosition.swift */,
 			);
 			path = "animatable-modifiers";
 			sourceTree = "<group>";
@@ -2877,6 +2882,7 @@
 				571215552580DCD000E92A99 /* Equation.swift */,
 				57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */,
 				57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */,
+				57072BEE26C96C9C00DC6F0E /* PositionEquation.swift */,
 			);
 			path = equation;
 			sourceTree = "<group>";
@@ -4612,6 +4618,7 @@
 				57072BE426C9406200DC6F0E /* MoleculeConcentration.swift in Sources */,
 				57072BE626C954DA00DC6F0E /* MoleculeScales.swift in Sources */,
 				57B3B923260B35CE00EB9B47 /* MainMenuPanel.swift in Sources */,
+				57072BF126C96CC700DC6F0E /* AnimatablePosition.swift in Sources */,
 				5797A49C25E40A4C00991BD9 /* BeakerBottomShape.swift in Sources */,
 				57438A65260A4177005E3888 /* ScreenPersistence.swift in Sources */,
 				57B5782226399C07008DFAB5 /* FractionedCoordinates.swift in Sources */,
@@ -4626,6 +4633,7 @@
 				57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */,
 				57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */,
 				575A886825E435FB00AEE448 /* BeakyBox.swift in Sources */,
+				57072BEF26C96C9C00DC6F0E /* PositionEquation.swift in Sources */,
 				57F88861267E675B00609671 /* MoleculeEmitter.swift in Sources */,
 				5797A49525E40A4500991BD9 /* BeakerTicks.swift in Sources */,
 				57438A5F260A3371005E3888 /* ReviewPrompter.swift in Sources */,
