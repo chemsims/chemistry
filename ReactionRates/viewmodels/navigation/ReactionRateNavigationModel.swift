@@ -5,27 +5,27 @@
 import SwiftUI
 import ReactionsCore
 
-public typealias ReactionRatesInjector = AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>
+public typealias ReactionRatesNavInjector = AnyNavigationInjector<ReactionRatesScreen, ReactionsRateQuestionSet>
 
-extension RootNavigationViewModel where Injector == ReactionRatesInjector {
+extension RootNavigationViewModel where Injector == ReactionRatesNavInjector {
 
-    public static let production = model(using: ProductionInjector())
-    public static let inMemory = model(using: InMemoryInjector())
+    public static let production = model(using: ProductionReactionRatesInjector())
+    public static let inMemory = model(using: InMemoryReactionRatesInjector())
 
     private static func model(
-        using injector: ReactionRates.Injector
-    ) -> RootNavigationViewModel<ReactionRatesInjector> {
+        using injector: ReactionRates.ReactionRatesInjector
+    ) -> RootNavigationViewModel<ReactionRatesNavInjector> {
         ReactionRateNavigationModel.navigationModel(using: injector)
     }
 }
 
 struct ReactionRateNavigationModel {
 
-    static func navigationModel(using injector: Injector) -> RootNavigationViewModel<ReactionRatesInjector> {
+    static func navigationModel(using injector: ReactionRatesInjector) -> RootNavigationViewModel<ReactionRatesNavInjector> {
         RootNavigationViewModel(injector: navigationInjector(using: injector))
     }
 
-    private static func navigationInjector(using injector: Injector) -> ReactionRatesInjector {
+    private static func navigationInjector(using injector: ReactionRatesInjector) -> ReactionRatesNavInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
                 ReactionsRateNavigationBehaviour(injector: injector)
@@ -34,12 +34,12 @@ struct ReactionRateNavigationModel {
             analytics: injector.appAnalytics,
             quizPersistence: injector.quizPersistence,
             reviewPersistence: injector.reviewPersistence,
-            allScreens: AppScreen.allCases,
+            allScreens: ReactionRatesScreen.allCases,
             linearScreens: linearScreens
         )
     }
 
-    private static let linearScreens: [AppScreen] = [
+    private static let linearScreens: [ReactionRatesScreen] = [
         .zeroOrderReaction,
         .zeroOrderReactionQuiz,
         .firstOrderReaction,
@@ -56,10 +56,10 @@ struct ReactionRateNavigationModel {
 
 private struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
 
-    typealias Screen = AppScreen
-    let injector: Injector
-    
-    func deferCanSelect(of screen: AppScreen) -> DeferCanSelect<AppScreen>? {
+    typealias Screen = ReactionRatesScreen
+    let injector: ReactionRatesInjector
+
+    func deferCanSelect(of screen: ReactionRatesScreen) -> DeferCanSelect<ReactionRatesScreen>? {
         switch screen {
         case .zeroOrderFiling: return .canSelect(other: .firstOrderReaction)
         case .firstOrderFiling: return .canSelect(other: .secondOrderReaction)
@@ -69,23 +69,23 @@ private struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
         }
     }
 
-    func shouldRestoreStateWhenJumpingTo(screen: AppScreen) -> Bool {
+    func shouldRestoreStateWhenJumpingTo(screen: ReactionRatesScreen) -> Bool {
         screen.isQuiz
     }
 
-    func showReviewPromptOn(screen: AppScreen) -> Bool {
+    func showReviewPromptOn(screen: ReactionRatesScreen) -> Bool {
         screen == .finalAppScreen
     }
 
-    func showMenuOn(screen: AppScreen) -> Bool {
+    func showMenuOn(screen: ReactionRatesScreen) -> Bool {
         screen == .finalAppScreen
     }
 
-    func highlightedNavIcon(for screen: AppScreen) -> AppScreen? {
+    func highlightedNavIcon(for screen: ReactionRatesScreen) -> ReactionRatesScreen? {
         screen == .finalAppScreen ? .zeroOrderFiling : nil
     }
 
-    func getProvider(for screen: AppScreen, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) -> ScreenProvider {
+    func getProvider(for screen: ReactionRatesScreen, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) -> ScreenProvider {
         screen.screenProvider(
             persistence: injector.reactionPersistence,
             quizPersistence: injector.quizPersistence,
@@ -97,12 +97,12 @@ private struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
     }
 }
 
-fileprivate extension AppScreen {
+fileprivate extension ReactionRatesScreen {
     func screenProvider(
         persistence: ReactionInputPersistence,
         quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet>,
         energyPersistence: EnergyProfilePersistence,
-        analytics: AnyAppAnalytics<AppScreen, ReactionsRateQuestionSet>,
+        analytics: AnyAppAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet>,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) -> ScreenProvider {
@@ -235,7 +235,7 @@ private class QuizScreenProvider: ScreenProvider {
     init(
         questions: QuizQuestionsList<ReactionsRateQuestionSet>,
         persistence: AnyQuizPersistence<ReactionsRateQuestionSet>,
-        analytics: AnyAppAnalytics<AppScreen, ReactionsRateQuestionSet>,
+        analytics: AnyAppAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet>,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) {
@@ -249,7 +249,7 @@ private class QuizScreenProvider: ScreenProvider {
         viewModel.prevScreen = prev
     }
 
-    let viewModel: QuizViewModel<AnyQuizPersistence<ReactionsRateQuestionSet>, AnyAppAnalytics<AppScreen, ReactionsRateQuestionSet>>
+    let viewModel: QuizViewModel<AnyQuizPersistence<ReactionsRateQuestionSet>, AnyAppAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet>>
 
     var screen: AnyView {
         AnyView(QuizScreen(model: viewModel))

@@ -5,7 +5,7 @@
 import Foundation
 import ReactionsCore
 
-public enum EquilibriumAppScreen: String, CaseIterable {
+public enum EquilibriumScreen: String, CaseIterable {
     case aqueousReaction,
          aqueousQuiz,
          integrationActivity,
@@ -23,7 +23,7 @@ public enum EquilibriumAppScreen: String, CaseIterable {
     }
 }
 
-extension EquilibriumAppScreen : HasAnalyticsLabel {
+extension EquilibriumScreen : HasAnalyticsLabel {
     public var analyticsLabel: String {
         "equilibrium_\(self.rawValue)"
     }

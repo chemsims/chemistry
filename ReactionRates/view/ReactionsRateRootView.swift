@@ -8,14 +8,14 @@ import ReactionsCore
 public struct ReactionsRateRootView: View {
 
     public init(
-        model: RootNavigationViewModel<ReactionRatesInjector>,
+        model: RootNavigationViewModel<ReactionRatesNavInjector>,
         unitSelectionIsShowing: Binding<Bool>
     ) {
         self.model = model
         self._unitSelectionIsShowing = unitSelectionIsShowing
     }
 
-    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>>
+    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<ReactionRatesScreen, ReactionsRateQuestionSet>>
 
     @Binding var unitSelectionIsShowing: Bool
 
@@ -51,7 +51,7 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPhone SE
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
-                using: InMemoryInjector()
+                using: InMemoryReactionRatesInjector()
             ),
             unitSelectionIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 568, height: 320))
@@ -59,7 +59,7 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPad mini
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
-                using: InMemoryInjector()
+                using: InMemoryReactionRatesInjector()
             ),
             unitSelectionIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 1024, height: 768))
@@ -67,7 +67,7 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPad Pro 11
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
-                using: InMemoryInjector()
+                using: InMemoryReactionRatesInjector()
             ),
             unitSelectionIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 1194, height: 834))

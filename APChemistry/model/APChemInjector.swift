@@ -14,7 +14,7 @@ protocol APChemInjector {
     /// This should be a single instance shared across the injector.
     var storeManager: StoreManager { get }
 
-    var reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> { get }
+    var reactionRatesInjector: RootNavigationViewModel<ReactionRatesNavInjector> { get }
 
     var equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> { get }
 
@@ -34,7 +34,7 @@ class ProductionAPChemInjector: APChemInjector {
         storeObserver: ConcreteStoreObserver.shared
     )
 
-    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .production
+    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesNavInjector> = .production
 
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> = .production
 
@@ -65,7 +65,7 @@ class DebugAPChemInjector: APChemInjector {
 //        storeObserver: ConcreteStoreObserver.shared
 //    )
 
-    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .inMemory
+    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesNavInjector> = .inMemory
 
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> = .inMemory
 

@@ -18,7 +18,7 @@ class ProductionQuizQuestionsTests: XCTestCase {
     }
 
     func testTheProductionInjectorIsNotPersistingInMemory() {
-        let model = ProductionInjector().quizPersistence
+        let model = ProductionReactionRatesInjector().quizPersistence
         let questions = QuizQuestionsList<ReactionsRateQuestionSet>.zeroOrderQuestions.createQuestions()
 
         var answers = [String:QuizAnswerInput]()
@@ -33,7 +33,7 @@ class ProductionQuizQuestionsTests: XCTestCase {
         )
         model.saveAnswers(quiz: savedQuiz, questions: questions)
 
-        let model2 = ProductionInjector().quizPersistence
+        let model2 = ProductionReactionRatesInjector().quizPersistence
         XCTAssert(model !== model2)
 
         let retrievedQuiz = model2.getAnswers(questionSet: ReactionsRateQuestionSet.zeroOrder, questions: questions)

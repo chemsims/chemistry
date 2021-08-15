@@ -6,8 +6,8 @@ import Foundation
 import ReactionsCore
 
 protocol EquilibriumInjector {
-    var screenPersistence: AnyScreenPersistence<EquilibriumAppScreen> { get }
-    var analytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> { get }
+    var screenPersistence: AnyScreenPersistence<EquilibriumScreen> { get }
+    var analytics: AnyAppAnalytics<EquilibriumScreen, EquilibriumQuestionSet> { get }
     var quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> { get }
     var solubilityPersistence: SolubilityPersistence { get }
     var reviewPersistence: ReviewPromptPersistence { get }
@@ -17,9 +17,9 @@ class InMemoryEquilibriumInjector: EquilibriumInjector {
 
     let solubilityPersistence: SolubilityPersistence = InMemorySolubilityPersistence()
 
-    let screenPersistence = AnyScreenPersistence(NoOpScreenPersistence<EquilibriumAppScreen>())
+    let screenPersistence = AnyScreenPersistence(NoOpScreenPersistence<EquilibriumScreen>())
 
-    let analytics = AnyAppAnalytics(NoOpAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>())
+    let analytics = AnyAppAnalytics(NoOpAppAnalytics<EquilibriumScreen, EquilibriumQuestionSet>())
 
     let quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> = AnyQuizPersistence(InMemoryQuizPersistence())
 
@@ -29,14 +29,14 @@ class InMemoryEquilibriumInjector: EquilibriumInjector {
 class ProductionEquilibriumInjector: EquilibriumInjector {
 
     let screenPersistence = AnyScreenPersistence(
-        UserDefaultsScreenPersistence<EquilibriumAppScreen>(
+        UserDefaultsScreenPersistence<EquilibriumScreen>(
             prefix: userDefaultsPrefix
         )
     )
 
-    let analytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet> =
+    let analytics: AnyAppAnalytics<EquilibriumScreen, EquilibriumQuestionSet> =
         AnyAppAnalytics(
-            GoogleAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>(
+            GoogleAnalytics<EquilibriumScreen, EquilibriumQuestionSet>(
                 unitName: "equilibrium"
             )
         )

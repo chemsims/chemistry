@@ -10,8 +10,8 @@ protocol ReactionInputPersistence {
     func save(input: ReactionInput, order: ReactionOrder, reaction: ReactionType)
     func get(order: ReactionOrder, reaction: ReactionType) -> ReactionInput?
 
-    func setCompleted(screen: AppScreen)
-    func hasCompleted(screen: AppScreen) -> Bool
+    func setCompleted(screen: ReactionRatesScreen)
+    func hasCompleted(screen: ReactionRatesScreen) -> Bool
 
     func hasIdentifiedReactionOrders() -> Bool
     func setHasIdentifiedReactionOrders()
@@ -42,11 +42,11 @@ class UserDefaultsReactionInputPersistence: ReactionInputPersistence {
         return nil
     }
 
-    func setCompleted(screen: AppScreen) {
+    func setCompleted(screen: ReactionRatesScreen) {
         defaults.set(true, forKey: screenKey(screen))
     }
 
-    func hasCompleted(screen: AppScreen) -> Bool {
+    func hasCompleted(screen: ReactionRatesScreen) -> Bool {
         defaults.bool(forKey: screenKey(screen))
     }
 
@@ -62,7 +62,7 @@ class UserDefaultsReactionInputPersistence: ReactionInputPersistence {
         "\(order.rawValue)-\(type.rawValue)"
     }
 
-    private func screenKey(_ screen: AppScreen) -> String {
+    private func screenKey(_ screen: ReactionRatesScreen) -> String {
         "completed-screen-\(screen.rawValue)"
     }
 
@@ -74,7 +74,7 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
 
     private var underlying = [ReactionInputKey: ReactionInput]()
 
-    private var underlyingScreenCompletions = Set<AppScreen>()
+    private var underlyingScreenCompletions = Set<ReactionRatesScreen>()
 
     private var _hasIdentifiedReactionOrders = false
 
@@ -88,11 +88,11 @@ class InMemoryReactionInputPersistence: ReactionInputPersistence {
         return underlying[key]
     }
 
-    func setCompleted(screen: AppScreen) {
+    func setCompleted(screen: ReactionRatesScreen) {
         underlyingScreenCompletions.insert(screen)
     }
 
-    func hasCompleted(screen: AppScreen) -> Bool {
+    func hasCompleted(screen: ReactionRatesScreen) -> Bool {
         underlyingScreenCompletions.contains(screen)
     }
 

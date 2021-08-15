@@ -5,7 +5,7 @@
 import Foundation
 import ReactionsCore
 
-extension QuizQuestionsList where QuestionSet == AcidAppQuestionSet {
+extension QuizQuestionsList where QuestionSet == AcidBasesQuestionSet {
     static let introduction = AcidQuizQuestions.getQuestion(.introduction)
     static let buffer  = AcidQuizQuestions.getQuestion(.buffer)
     static let titration = AcidQuizQuestions.getQuestion(.titration)
@@ -28,7 +28,7 @@ public struct AcidQuizQuestions {
         isLoaded = true
     }
 
-    fileprivate static func getQuestion(_ questionSet: AcidAppQuestionSet) -> QuizQuestionsList<AcidAppQuestionSet> {
+    fileprivate static func getQuestion(_ questionSet: AcidBasesQuestionSet) -> QuizQuestionsList<AcidBasesQuestionSet> {
         if !isLoaded {
             load()
         }
@@ -39,13 +39,13 @@ public struct AcidQuizQuestions {
         }
     }
 
-    private static var introduction: QuizQuestionsList<AcidAppQuestionSet>!
+    private static var introduction: QuizQuestionsList<AcidBasesQuestionSet>!
 
-    private static var buffer: QuizQuestionsList<AcidAppQuestionSet>!
+    private static var buffer: QuizQuestionsList<AcidBasesQuestionSet>!
 
-    private static var titration: QuizQuestionsList<AcidAppQuestionSet>!
+    private static var titration: QuizQuestionsList<AcidBasesQuestionSet>!
 
-    private static func read(_ file: String, _ questionSet: AcidAppQuestionSet) -> QuizQuestionsList<AcidAppQuestionSet> {
+    private static func read(_ file: String, _ questionSet: AcidBasesQuestionSet) -> QuizQuestionsList<AcidBasesQuestionSet> {
         QuizQuestionReader.readOptional(
             from: file,
             questionSet: questionSet,

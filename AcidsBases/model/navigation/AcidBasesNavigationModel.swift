@@ -5,15 +5,15 @@
 import SwiftUI
 import ReactionsCore
 
-public typealias AcidAppNavInjector = AnyNavigationInjector<AcidAppScreen, AcidAppQuestionSet>
+public typealias AcidAppNavInjector = AnyNavigationInjector<AcidBasesScreen, AcidBasesQuestionSet>
 
 extension RootNavigationViewModel where Injector == AcidAppNavInjector {
 
-    public static let production = model(using: ProductionAcidAppInjector())
-    public static let inMemory = model(using: InMemoryAcidAppInjector())
+    public static let production = model(using: ProductionAcidBasesInjector())
+    public static let inMemory = model(using: InMemoryAcidBasesInjector())
 
     private static func model(
-        using injector: AcidAppInjector
+        using injector: AcidBasesInjector
     ) -> RootNavigationViewModel<AcidAppNavInjector> {
         AcidBasesNavigationModel.model(injector: injector)
     }
@@ -22,13 +22,13 @@ extension RootNavigationViewModel where Injector == AcidAppNavInjector {
 struct AcidBasesNavigationModel {
     private init() { }
 
-    static func model(injector: AcidAppInjector) -> RootNavigationViewModel<AcidAppNavInjector> {
+    static func model(injector: AcidBasesInjector) -> RootNavigationViewModel<AcidAppNavInjector> {
         RootNavigationViewModel(
             injector: makeInjector(using: injector)
         )
     }
 
-    private static func makeInjector(using appInjector: AcidAppInjector) -> AcidAppNavInjector {
+    private static func makeInjector(using appInjector: AcidBasesInjector) -> AcidAppNavInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
                 AcidAppNavigationBehaviour(injector: appInjector)
@@ -37,42 +37,42 @@ struct AcidBasesNavigationModel {
             analytics: appInjector.analytics,
             quizPersistence: appInjector.quizPersistence,
             reviewPersistence: appInjector.reviewPersistence,
-            allScreens: AcidAppScreen.allCases,
-            linearScreens: AcidAppScreen.allCases
+            allScreens: AcidBasesScreen.allCases,
+            linearScreens: AcidBasesScreen.allCases
         )
     }
 
-    private let linearScreens: [AcidAppScreen] =
-        AcidAppScreen.allCases.filter { $0 != .finalAppScreen }
+    private let linearScreens: [AcidBasesScreen] =
+        AcidBasesScreen.allCases.filter { $0 != .finalAppScreen }
 }
 
 private struct AcidAppNavigationBehaviour: NavigationBehaviour {
-    typealias Screen = AcidAppScreen
+    typealias Screen = AcidBasesScreen
 
-    let injector: AcidAppInjector
+    let injector: AcidBasesInjector
 
-    func deferCanSelect(of screen: AcidAppScreen) -> DeferCanSelect<AcidAppScreen>? {
+    func deferCanSelect(of screen: AcidBasesScreen) -> DeferCanSelect<AcidBasesScreen>? {
        nil
     }
 
-    func shouldRestoreStateWhenJumpingTo(screen: AcidAppScreen) -> Bool {
+    func shouldRestoreStateWhenJumpingTo(screen: AcidBasesScreen) -> Bool {
         false
     }
 
-    func showReviewPromptOn(screen: AcidAppScreen) -> Bool {
+    func showReviewPromptOn(screen: AcidBasesScreen) -> Bool {
         screen == .finalAppScreen
     }
 
-    func showMenuOn(screen: AcidAppScreen) -> Bool {
+    func showMenuOn(screen: AcidBasesScreen) -> Bool {
         screen == .finalAppScreen
     }
 
-    func highlightedNavIcon(for screen: AcidAppScreen) -> AcidAppScreen? {
+    func highlightedNavIcon(for screen: AcidBasesScreen) -> AcidBasesScreen? {
         nil
     }
 
     func getProvider(
-        for screen: AcidAppScreen,
+        for screen: AcidBasesScreen,
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) -> ScreenProvider {
@@ -84,14 +84,14 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
     }
 }
 
-fileprivate extension AcidAppScreen {
+fileprivate extension AcidBasesScreen {
     func getProvider(
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void,
-        injector: AcidAppInjector
+        injector: AcidBasesInjector
     ) -> ScreenProvider {
 
-        func quiz(_ questions: QuizQuestionsList<AcidAppQuestionSet>) -> ScreenProvider {
+        func quiz(_ questions: QuizQuestionsList<AcidBasesQuestionSet>) -> ScreenProvider {
             QuizScreenProvider(
                 questions: questions,
                 persistence: injector.quizPersistence,
@@ -213,9 +213,9 @@ private class TitrationScreenProvider: ScreenProvider {
 
 private class QuizScreenProvider: ScreenProvider {
     init(
-        questions: QuizQuestionsList<AcidAppQuestionSet>,
-        persistence: AnyQuizPersistence<AcidAppQuestionSet>,
-        analytics: AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet>,
+        questions: QuizQuestionsList<AcidBasesQuestionSet>,
+        persistence: AnyQuizPersistence<AcidBasesQuestionSet>,
+        analytics: AnyAppAnalytics<AcidBasesScreen, AcidBasesQuestionSet>,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) {
@@ -230,8 +230,8 @@ private class QuizScreenProvider: ScreenProvider {
     }
 
     let model: QuizViewModel<
-        AnyQuizPersistence<AcidAppQuestionSet>,
-        AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet>
+        AnyQuizPersistence<AcidBasesQuestionSet>,
+        AnyAppAnalytics<AcidBasesScreen, AcidBasesQuestionSet>
     >
 
     var screen: AnyView {

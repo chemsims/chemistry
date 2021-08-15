@@ -107,7 +107,7 @@ private class ReactionRatesScreenProvider: ScreenProvider {
         self.showUnitSelection = showUnitSelection
     }
 
-    private let model: RootNavigationViewModel<ReactionRatesInjector>
+    private let model: RootNavigationViewModel<ReactionRatesNavInjector>
     private let showUnitSelection: Binding<Bool>
 
     var screen: AnyView {

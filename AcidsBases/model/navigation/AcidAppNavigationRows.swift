@@ -13,7 +13,7 @@ struct AcidAppNavigationRows {
 private enum TopLevelScreen: CaseIterable {
     case introduction, buffer, titration
 
-    var row: NavigationRow<AcidAppScreen> {
+    var row: NavigationRow<AcidBasesScreen> {
         NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: screen,
@@ -31,7 +31,7 @@ private enum TopLevelScreen: CaseIterable {
         )
     }
 
-    private var screen: AcidAppScreen {
+    private var screen: AcidBasesScreen {
         switch self {
         case .introduction: return .introduction
         case .buffer: return .buffer
@@ -39,7 +39,7 @@ private enum TopLevelScreen: CaseIterable {
         }
     }
 
-    private var quizScreen: AcidAppScreen {
+    private var quizScreen: AcidBasesScreen {
         switch self {
         case .introduction: return .introductionQuiz
         case .buffer: return .bufferQuiz

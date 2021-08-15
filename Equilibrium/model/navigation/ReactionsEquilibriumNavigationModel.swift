@@ -17,7 +17,7 @@ extension RootNavigationViewModel where Injector == EquilibriumNavInjector {
     }
 }
 
-public typealias EquilibriumNavInjector = AnyNavigationInjector<EquilibriumAppScreen, EquilibriumQuestionSet>
+public typealias EquilibriumNavInjector = AnyNavigationInjector<EquilibriumScreen, EquilibriumQuestionSet>
 
 struct ReactionsEquilibriumNavigationModel {
 
@@ -34,12 +34,12 @@ struct ReactionsEquilibriumNavigationModel {
             analytics: injector.analytics,
             quizPersistence: injector.quizPersistence,
             reviewPersistence: injector.reviewPersistence,
-            allScreens: EquilibriumAppScreen.allCases,
+            allScreens: EquilibriumScreen.allCases,
             linearScreens: linearScreens
         )
     }
 
-    private static let linearScreens: [EquilibriumAppScreen] = [
+    private static let linearScreens: [EquilibriumScreen] = [
         .aqueousReaction,
         .aqueousQuiz,
         .gaseousReaction,
@@ -51,31 +51,31 @@ struct ReactionsEquilibriumNavigationModel {
 }
 
 private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
-    typealias Screen = EquilibriumAppScreen
+    typealias Screen = EquilibriumScreen
 
     let injector: EquilibriumInjector
 
-    func deferCanSelect(of screen: EquilibriumAppScreen) -> DeferCanSelect<EquilibriumAppScreen>? {
+    func deferCanSelect(of screen: EquilibriumScreen) -> DeferCanSelect<EquilibriumScreen>? {
         screen == .integrationActivity ? .hasCompleted(other: .solubilityQuiz) : nil
     }
 
-    func shouldRestoreStateWhenJumpingTo(screen: EquilibriumAppScreen) -> Bool {
+    func shouldRestoreStateWhenJumpingTo(screen: EquilibriumScreen) -> Bool {
         screen.isQuiz
     }
 
-    func showReviewPromptOn(screen: EquilibriumAppScreen) -> Bool {
+    func showReviewPromptOn(screen: EquilibriumScreen) -> Bool {
         screen == .finalScreen
     }
 
-    func showMenuOn(screen: EquilibriumAppScreen) -> Bool {
+    func showMenuOn(screen: EquilibriumScreen) -> Bool {
         screen == .finalScreen
     }
 
-    func highlightedNavIcon(for screen: EquilibriumAppScreen) -> EquilibriumAppScreen? {
+    func highlightedNavIcon(for screen: EquilibriumScreen) -> EquilibriumScreen? {
         screen ==  .finalScreen ? .integrationActivity : nil
     }
 
-    func getProvider(for screen: EquilibriumAppScreen, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) -> ScreenProvider {
+    func getProvider(for screen: EquilibriumScreen, nextScreen: @escaping () -> Void, prevScreen: @escaping () -> Void) -> ScreenProvider {
         screen.getProvider(
             injector: injector,
             nextScreen: nextScreen,
@@ -84,7 +84,7 @@ private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
     }
 }
 
-fileprivate extension EquilibriumAppScreen {
+fileprivate extension EquilibriumScreen {
     func getProvider(
         injector: EquilibriumInjector,
         nextScreen: @escaping () -> Void,
@@ -173,7 +173,7 @@ private class QuizScreenProvider: ScreenProvider {
     init(
         questions: QuizQuestionsList<EquilibriumQuestionSet>,
         persistence: AnyQuizPersistence<EquilibriumQuestionSet>,
-        analytics: AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>,
+        analytics: AnyAppAnalytics<EquilibriumScreen, EquilibriumQuestionSet>,
         next: @escaping () -> Void,
         prev: @escaping () -> Void
     ) {
@@ -187,7 +187,7 @@ private class QuizScreenProvider: ScreenProvider {
         self.model.prevScreen = prev
     }
 
-    let model: QuizViewModel<AnyQuizPersistence<EquilibriumQuestionSet>, AnyAppAnalytics<EquilibriumAppScreen, EquilibriumQuestionSet>>
+    let model: QuizViewModel<AnyQuizPersistence<EquilibriumQuestionSet>, AnyAppAnalytics<EquilibriumScreen, EquilibriumQuestionSet>>
 
     var screen: AnyView {
         AnyView(QuizScreen(model: model))

@@ -63,7 +63,7 @@ extension AcidBasesScreenLayout {
 struct AcidAppRootView_Previews: PreviewProvider {
     static var previews: some View {
         AcidAppRootView(
-            model: AcidBasesNavigationModel.model(injector: InMemoryAcidAppInjector()),
+            model: AcidBasesNavigationModel.model(injector: InMemoryAcidBasesInjector()),
             unitSelectionIsShowing: .constant(false)
         )
         .previewLayout(.iPhoneSELandscape)
