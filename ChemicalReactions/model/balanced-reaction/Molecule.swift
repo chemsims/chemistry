@@ -5,7 +5,7 @@
 import Foundation
 
 extension BalancedReaction {
-    enum Molecule {
+    enum Molecule: CaseIterable {
         case dinitrogen,
              dihydrogen,
              ammonia,

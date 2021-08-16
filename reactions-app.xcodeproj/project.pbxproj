@@ -658,6 +658,8 @@
 		57E48A4626CACC3500A9A421 /* ChemicalReactionsStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4526CACC3500A9A421 /* ChemicalReactionsStyling.swift */; };
 		57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4726CACCB400A9A421 /* BalancedReaction.swift */; };
 		57E48A4A26CACCD400A9A421 /* Molecule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4926CACCD400A9A421 /* Molecule.swift */; };
+		57E48A4C26CAD1C500A9A421 /* ReactionBalancerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4B26CAD1C500A9A421 /* ReactionBalancerViewModelTests.swift */; };
+		57E48A4E26CAD20E00A9A421 /* ReactionBalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4D26CAD20E00A9A421 /* ReactionBalancer.swift */; };
 		57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5D25F92E260087F760 /* HighlightedElements.swift */; };
 		57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */; };
 		57E6D8C926AC795300603796 /* StoreManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8C826AC795300603796 /* StoreManagerTests.swift */; };
@@ -676,7 +678,6 @@
 		57FA3AB92660F27B0073A29B /* ColoredText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB82660F27B0073A29B /* ColoredText.swift */; };
 		57FB9ED22674A02B0003E977 /* ReactingBeakerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB9ED12674A02B0003E977 /* ReactingBeakerViewModelTests.swift */; };
 		57FCA1AA26CABDA7005EE93F /* ChemicalReactions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57FCA1A126CABDA7005EE93F /* ChemicalReactions.framework */; };
-		57FCA1AF26CABDA7005EE93F /* ChemicalReactionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FCA1AE26CABDA7005EE93F /* ChemicalReactionsTests.swift */; };
 		57FCA1B126CABDA7005EE93F /* ChemicalReactions.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FCA1A326CABDA7005EE93F /* ChemicalReactions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		57FCA1B826CABDCF005EE93F /* ChemicalReactions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57FCA1A126CABDA7005EE93F /* ChemicalReactions.framework */; };
 		57FCA1B926CABDCF005EE93F /* ChemicalReactions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57FCA1A126CABDA7005EE93F /* ChemicalReactions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1433,6 +1434,8 @@
 		57E48A4526CACC3500A9A421 /* ChemicalReactionsStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsStyling.swift; sourceTree = "<group>"; };
 		57E48A4726CACCB400A9A421 /* BalancedReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReaction.swift; sourceTree = "<group>"; };
 		57E48A4926CACCD400A9A421 /* Molecule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Molecule.swift; sourceTree = "<group>"; };
+		57E48A4B26CAD1C500A9A421 /* ReactionBalancerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionBalancerViewModelTests.swift; sourceTree = "<group>"; };
+		57E48A4D26CAD20E00A9A421 /* ReactionBalancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionBalancer.swift; sourceTree = "<group>"; };
 		57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSidedArrow.swift; sourceTree = "<group>"; };
 		57E59A4525F925F60087F760 /* ReactionDefinitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionView.swift; sourceTree = "<group>"; };
 		57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenElement.swift; sourceTree = "<group>"; };
@@ -1501,7 +1504,6 @@
 		57FCA1A326CABDA7005EE93F /* ChemicalReactions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChemicalReactions.h; sourceTree = "<group>"; };
 		57FCA1A426CABDA7005EE93F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57FCA1A926CABDA7005EE93F /* ChemicalReactionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChemicalReactionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		57FCA1AE26CABDA7005EE93F /* ChemicalReactionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsTests.swift; sourceTree = "<group>"; };
 		57FCA1B026CABDA7005EE93F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57FCA1C426CABEC3005EE93F /* ChemicalReactionsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsRootView.swift; sourceTree = "<group>"; };
 		57FD400626484DCF00E352C1 /* FeedbackSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSettings.swift; sourceTree = "<group>"; };
@@ -3783,6 +3785,7 @@
 				57E48A4726CACCB400A9A421 /* BalancedReaction.swift */,
 				57E48A4226CACB4800A9A421 /* Atom.swift */,
 				57E48A4926CACCD400A9A421 /* Molecule.swift */,
+				57E48A4D26CAD20E00A9A421 /* ReactionBalancer.swift */,
 			);
 			path = "balanced-reaction";
 			sourceTree = "<group>";
@@ -3987,8 +3990,8 @@
 		57FCA1AD26CABDA7005EE93F /* ChemicalReactionsTests */ = {
 			isa = PBXGroup;
 			children = (
-				57FCA1AE26CABDA7005EE93F /* ChemicalReactionsTests.swift */,
 				57FCA1B026CABDA7005EE93F /* Info.plist */,
+				57E48A4B26CAD1C500A9A421 /* ReactionBalancerViewModelTests.swift */,
 			);
 			path = ChemicalReactionsTests;
 			sourceTree = "<group>";
@@ -5261,6 +5264,7 @@
 				57E48A4626CACC3500A9A421 /* ChemicalReactionsStyling.swift in Sources */,
 				57E48A4A26CACCD400A9A421 /* Molecule.swift in Sources */,
 				57FCA1C526CABEC3005EE93F /* ChemicalReactionsRootView.swift in Sources */,
+				57E48A4E26CAD20E00A9A421 /* ReactionBalancer.swift in Sources */,
 				57E48A4326CACB4800A9A421 /* Atom.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5269,7 +5273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57FCA1AF26CABDA7005EE93F /* ChemicalReactionsTests.swift in Sources */,
+				57E48A4C26CAD1C500A9A421 /* ReactionBalancerViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
