@@ -654,6 +654,10 @@
 		57DDAD4325E57DEB00B535A7 /* TimeChartDataLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD4225E57DEB00B535A7 /* TimeChartDataLine.swift */; };
 		57DDAD4E25E57E2A00B535A7 /* TimeChartDataLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD4D25E57E2A00B535A7 /* TimeChartDataLineView.swift */; };
 		57DDAD5B25E57E9300B535A7 /* ChartLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ChartLine.swift */; };
+		57E48A4326CACB4800A9A421 /* Atom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4226CACB4800A9A421 /* Atom.swift */; };
+		57E48A4626CACC3500A9A421 /* ChemicalReactionsStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4526CACC3500A9A421 /* ChemicalReactionsStyling.swift */; };
+		57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4726CACCB400A9A421 /* BalancedReaction.swift */; };
+		57E48A4A26CACCD400A9A421 /* Molecule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4926CACCD400A9A421 /* Molecule.swift */; };
 		57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5D25F92E260087F760 /* HighlightedElements.swift */; };
 		57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */; };
 		57E6D8C926AC795300603796 /* StoreManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8C826AC795300603796 /* StoreManagerTests.swift */; };
@@ -1425,6 +1429,10 @@
 		57DE4DAC25A5033600644790 /* QuizQuestionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionCard.swift; sourceTree = "<group>"; };
 		57DE4DB025A5035700644790 /* QuizAnswerIconOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizAnswerIconOverlay.swift; sourceTree = "<group>"; };
 		57DE4DB625A5036E00644790 /* QuizLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLayoutSettings.swift; sourceTree = "<group>"; };
+		57E48A4226CACB4800A9A421 /* Atom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atom.swift; sourceTree = "<group>"; };
+		57E48A4526CACC3500A9A421 /* ChemicalReactionsStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsStyling.swift; sourceTree = "<group>"; };
+		57E48A4726CACCB400A9A421 /* BalancedReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReaction.swift; sourceTree = "<group>"; };
+		57E48A4926CACCD400A9A421 /* Molecule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Molecule.swift; sourceTree = "<group>"; };
 		57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSidedArrow.swift; sourceTree = "<group>"; };
 		57E59A4525F925F60087F760 /* ReactionDefinitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionView.swift; sourceTree = "<group>"; };
 		57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenElement.swift; sourceTree = "<group>"; };
@@ -3769,6 +3777,24 @@
 			path = timechart;
 			sourceTree = "<group>";
 		};
+		57E48A4126CACB3700A9A421 /* balanced-reaction */ = {
+			isa = PBXGroup;
+			children = (
+				57E48A4726CACCB400A9A421 /* BalancedReaction.swift */,
+				57E48A4226CACB4800A9A421 /* Atom.swift */,
+				57E48A4926CACCD400A9A421 /* Molecule.swift */,
+			);
+			path = "balanced-reaction";
+			sourceTree = "<group>";
+		};
+		57E48A4426CACC2A00A9A421 /* styling */ = {
+			isa = PBXGroup;
+			children = (
+				57E48A4526CACC3500A9A421 /* ChemicalReactionsStyling.swift */,
+			);
+			path = styling;
+			sourceTree = "<group>";
+		};
 		57E59A4425F925E20087F760 /* reaction-definition */ = {
 			isa = PBXGroup;
 			children = (
@@ -3970,6 +3996,8 @@
 		57FCA1C126CABE9B005EE93F /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57E48A4426CACC2A00A9A421 /* styling */,
+				57E48A4126CACB3700A9A421 /* balanced-reaction */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -5229,7 +5257,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
+				57E48A4626CACC3500A9A421 /* ChemicalReactionsStyling.swift in Sources */,
+				57E48A4A26CACCD400A9A421 /* Molecule.swift in Sources */,
 				57FCA1C526CABEC3005EE93F /* ChemicalReactionsRootView.swift in Sources */,
+				57E48A4326CACB4800A9A421 /* Atom.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
