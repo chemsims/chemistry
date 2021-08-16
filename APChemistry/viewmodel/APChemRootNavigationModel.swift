@@ -7,6 +7,7 @@ import ReactionsCore
 import ReactionRates
 import AcidsBases
 import Equilibrium
+import ChemicalReactions
 
 class APChemRootNavigationModel: ObservableObject {
 
@@ -89,6 +90,9 @@ class APChemRootNavigationModel: ObservableObject {
                 showUnitSelection: showUnitSelectionBinding,
                 showAboutPage: showAboutPageBinding
             )
+
+        case .chemicalReactions:
+            return ChemicalReactionsScreenProvider()
         }
     }
 
@@ -214,5 +218,11 @@ private class AcidsBasesScreenProvider: ScreenProvider {
                 aboutPageIsShowing: showAboutPage
             )
         )
+    }
+}
+
+private class ChemicalReactionsScreenProvider: ScreenProvider {
+    var screen: AnyView {
+        AnyView(ChemicalReactionsRootView())
     }
 }

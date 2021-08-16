@@ -671,6 +671,13 @@
 		57F88864267E6DB900609671 /* MoleculeEmittingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88863267E6DB900609671 /* MoleculeEmittingViewModel.swift */; };
 		57FA3AB92660F27B0073A29B /* ColoredText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FA3AB82660F27B0073A29B /* ColoredText.swift */; };
 		57FB9ED22674A02B0003E977 /* ReactingBeakerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FB9ED12674A02B0003E977 /* ReactingBeakerViewModelTests.swift */; };
+		57FCA1AA26CABDA7005EE93F /* ChemicalReactions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57FCA1A126CABDA7005EE93F /* ChemicalReactions.framework */; };
+		57FCA1AF26CABDA7005EE93F /* ChemicalReactionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FCA1AE26CABDA7005EE93F /* ChemicalReactionsTests.swift */; };
+		57FCA1B126CABDA7005EE93F /* ChemicalReactions.h in Headers */ = {isa = PBXBuildFile; fileRef = 57FCA1A326CABDA7005EE93F /* ChemicalReactions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		57FCA1B826CABDCF005EE93F /* ChemicalReactions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57FCA1A126CABDA7005EE93F /* ChemicalReactions.framework */; };
+		57FCA1B926CABDCF005EE93F /* ChemicalReactions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57FCA1A126CABDA7005EE93F /* ChemicalReactions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		57FCA1BC26CABDD7005EE93F /* ReactionsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5797A44125E4069F00991BD9 /* ReactionsCore.framework */; };
+		57FCA1C526CABEC3005EE93F /* ChemicalReactionsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FCA1C426CABEC3005EE93F /* ChemicalReactionsRootView.swift */; };
 		57FD400726484DCF00E352C1 /* FeedbackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD400626484DCF00E352C1 /* FeedbackSettings.swift */; };
 		57FD400926484F2E00E352C1 /* FeedbackSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */; };
 		57FD400B26484F4400E352C1 /* sliderCalculationsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */; };
@@ -779,6 +786,27 @@
 			remoteGlobalIDString = 5748659C26A96E55007FA314;
 			remoteInfo = APChemistry;
 		};
+		57FCA1AB26CABDA7005EE93F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 57FCA1A026CABDA7005EE93F;
+			remoteInfo = ChemicalReactions;
+		};
+		57FCA1BA26CABDCF005EE93F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 57FCA1A026CABDA7005EE93F;
+			remoteInfo = ChemicalReactions;
+		};
+		57FCA1BE26CABDD7005EE93F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 571D6A34255A780700F4E635 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5797A44025E4069F00991BD9;
+			remoteInfo = ReactionsCore;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -790,6 +818,7 @@
 			files = (
 				574865BC26A976DD007FA314 /* ReactionsCore.framework in Embed Frameworks */,
 				5700C1B226A9A41100677777 /* Equilibrium.framework in Embed Frameworks */,
+				57FCA1B926CABDCF005EE93F /* ChemicalReactions.framework in Embed Frameworks */,
 				577DC1F426B17F87005C22D8 /* AcidsBases.framework in Embed Frameworks */,
 				574865B226A96E69007FA314 /* ReactionRates.framework in Embed Frameworks */,
 			);
@@ -1460,6 +1489,13 @@
 		57FA3ABE266104A60073A29B /* IntroScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroScreen.swift; sourceTree = "<group>"; };
 		57FA3AC1266104D00073A29B /* AcidBasesScreenLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesScreenLayout.swift; sourceTree = "<group>"; };
 		57FB9ED12674A02B0003E977 /* ReactingBeakerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactingBeakerViewModelTests.swift; sourceTree = "<group>"; };
+		57FCA1A126CABDA7005EE93F /* ChemicalReactions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ChemicalReactions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		57FCA1A326CABDA7005EE93F /* ChemicalReactions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChemicalReactions.h; sourceTree = "<group>"; };
+		57FCA1A426CABDA7005EE93F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57FCA1A926CABDA7005EE93F /* ChemicalReactionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChemicalReactionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		57FCA1AE26CABDA7005EE93F /* ChemicalReactionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsTests.swift; sourceTree = "<group>"; };
+		57FCA1B026CABDA7005EE93F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57FCA1C426CABEC3005EE93F /* ChemicalReactionsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsRootView.swift; sourceTree = "<group>"; };
 		57FD400626484DCF00E352C1 /* FeedbackSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSettings.swift; sourceTree = "<group>"; };
 		57FD402126486F8300E352C1 /* NavigationTestMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTestMethods.swift; sourceTree = "<group>"; };
 		57FD40262648703500E352C1 /* AqueousViewModelParametersReappliedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousViewModelParametersReappliedTests.swift; sourceTree = "<group>"; };
@@ -1520,6 +1556,7 @@
 				5700C1B126A9A41100677777 /* Equilibrium.framework in Frameworks */,
 				5742D1B026AAB1A300049FCC /* SwiftKeychainWrapper in Frameworks */,
 				574865B126A96E69007FA314 /* ReactionRates.framework in Frameworks */,
+				57FCA1B826CABDCF005EE93F /* ChemicalReactions.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1559,6 +1596,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57FCA19E26CABDA7005EE93F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57FCA1BC26CABDD7005EE93F /* ReactionsCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57FCA1A626CABDA7005EE93F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57FCA1AA26CABDA7005EE93F /* ChemicalReactions.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1892,6 +1945,8 @@
 				5797A44D25E4069F00991BD9 /* ReactionsCoreTests */,
 				57B8F9E526AECD2C003CB0C7 /* AcidsBases */,
 				57B8F9F026AECD2C003CB0C7 /* AcidsBasesTests */,
+				57FCA1A226CABDA7005EE93F /* ChemicalReactions */,
+				57FCA1AD26CABDA7005EE93F /* ChemicalReactionsTests */,
 				571D6A3D255A780700F4E635 /* Products */,
 				57DDACC725E5448000B535A7 /* Frameworks */,
 			);
@@ -1910,6 +1965,8 @@
 				57E6D8C626AC795300603796 /* APChemistryTests.xctest */,
 				57B8F9E426AECD2C003CB0C7 /* AcidsBases.framework */,
 				57B8F9EC26AECD2C003CB0C7 /* AcidsBasesTests.xctest */,
+				57FCA1A126CABDA7005EE93F /* ChemicalReactions.framework */,
+				57FCA1A926CABDA7005EE93F /* ChemicalReactionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3889,6 +3946,49 @@
 			path = screenLayout;
 			sourceTree = "<group>";
 		};
+		57FCA1A226CABDA7005EE93F /* ChemicalReactions */ = {
+			isa = PBXGroup;
+			children = (
+				57FCA1C126CABE9B005EE93F /* model */,
+				57FCA1C226CABEA0005EE93F /* viewmodel */,
+				57FCA1C326CABEA7005EE93F /* view */,
+				57FCA1A326CABDA7005EE93F /* ChemicalReactions.h */,
+				57FCA1A426CABDA7005EE93F /* Info.plist */,
+			);
+			path = ChemicalReactions;
+			sourceTree = "<group>";
+		};
+		57FCA1AD26CABDA7005EE93F /* ChemicalReactionsTests */ = {
+			isa = PBXGroup;
+			children = (
+				57FCA1AE26CABDA7005EE93F /* ChemicalReactionsTests.swift */,
+				57FCA1B026CABDA7005EE93F /* Info.plist */,
+			);
+			path = ChemicalReactionsTests;
+			sourceTree = "<group>";
+		};
+		57FCA1C126CABE9B005EE93F /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		57FCA1C226CABEA0005EE93F /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = viewmodel;
+			sourceTree = "<group>";
+		};
+		57FCA1C326CABEA7005EE93F /* view */ = {
+			isa = PBXGroup;
+			children = (
+				57FCA1C426CABEC3005EE93F /* ChemicalReactionsRootView.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		57FD400826484EC700E352C1 /* quizTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -3976,6 +4076,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				57B8F9F426AECD2C003CB0C7 /* AcidsBases.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57FCA19C26CABDA7005EE93F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57FCA1B126CABDA7005EE93F /* ChemicalReactions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4072,6 +4180,7 @@
 				574865BE26A976DD007FA314 /* PBXTargetDependency */,
 				5700C1B426A9A41100677777 /* PBXTargetDependency */,
 				577DC1F626B17F87005C22D8 /* PBXTargetDependency */,
+				57FCA1BB26CABDCF005EE93F /* PBXTargetDependency */,
 			);
 			name = APChemistry;
 			packageProductDependencies = (
@@ -4175,6 +4284,43 @@
 			productReference = 57E6D8C626AC795300603796 /* APChemistryTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		57FCA1A026CABDA7005EE93F /* ChemicalReactions */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57FCA1B226CABDA7005EE93F /* Build configuration list for PBXNativeTarget "ChemicalReactions" */;
+			buildPhases = (
+				57FCA19C26CABDA7005EE93F /* Headers */,
+				57FCA19D26CABDA7005EE93F /* Sources */,
+				57FCA19E26CABDA7005EE93F /* Frameworks */,
+				57FCA19F26CABDA7005EE93F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				57FCA1BF26CABDD7005EE93F /* PBXTargetDependency */,
+			);
+			name = ChemicalReactions;
+			productName = ChemicalReactions;
+			productReference = 57FCA1A126CABDA7005EE93F /* ChemicalReactions.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		57FCA1A826CABDA7005EE93F /* ChemicalReactionsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57FCA1B526CABDA7005EE93F /* Build configuration list for PBXNativeTarget "ChemicalReactionsTests" */;
+			buildPhases = (
+				57FCA1A526CABDA7005EE93F /* Sources */,
+				57FCA1A626CABDA7005EE93F /* Frameworks */,
+				57FCA1A726CABDA7005EE93F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				57FCA1AC26CABDA7005EE93F /* PBXTargetDependency */,
+			);
+			name = ChemicalReactionsTests;
+			productName = ChemicalReactionsTests;
+			productReference = 57FCA1A926CABDA7005EE93F /* ChemicalReactionsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -4215,6 +4361,13 @@
 						CreatedOnToolsVersion = 12.5.1;
 						TestTargetID = 5748659C26A96E55007FA314;
 					};
+					57FCA1A026CABDA7005EE93F = {
+						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
+					};
+					57FCA1A826CABDA7005EE93F = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
 				};
 			};
 			buildConfigurationList = 571D6A37255A780700F4E635 /* Build configuration list for PBXProject "reactions-app" */;
@@ -4244,6 +4397,8 @@
 				57E6D8C526AC795300603796 /* APChemistryTests */,
 				57B8F9E326AECD2C003CB0C7 /* AcidsBases */,
 				57B8F9EB26AECD2C003CB0C7 /* AcidsBasesTests */,
+				57FCA1A026CABDA7005EE93F /* ChemicalReactions */,
+				57FCA1A826CABDA7005EE93F /* ChemicalReactionsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -4334,6 +4489,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		57E6D8C426AC795300603796 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57FCA19F26CABDA7005EE93F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57FCA1A726CABDA7005EE93F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -5056,6 +5225,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		57FCA19D26CABDA7005EE93F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57FCA1C526CABEC3005EE93F /* ChemicalReactionsRootView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		57FCA1A526CABDA7005EE93F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57FCA1AF26CABDA7005EE93F /* ChemicalReactionsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -5118,6 +5303,21 @@
 			isa = PBXTargetDependency;
 			target = 5748659C26A96E55007FA314 /* APChemistry */;
 			targetProxy = 57E6D8CB26AC795300603796 /* PBXContainerItemProxy */;
+		};
+		57FCA1AC26CABDA7005EE93F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 57FCA1A026CABDA7005EE93F /* ChemicalReactions */;
+			targetProxy = 57FCA1AB26CABDA7005EE93F /* PBXContainerItemProxy */;
+		};
+		57FCA1BB26CABDCF005EE93F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 57FCA1A026CABDA7005EE93F /* ChemicalReactions */;
+			targetProxy = 57FCA1BA26CABDCF005EE93F /* PBXContainerItemProxy */;
+		};
+		57FCA1BF26CABDD7005EE93F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5797A44025E4069F00991BD9 /* ReactionsCore */;
+			targetProxy = 57FCA1BE26CABDD7005EE93F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -5448,6 +5648,7 @@
 		574865AF26A96E58007FA314 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -5472,6 +5673,7 @@
 		574865B026A96E58007FA314 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -5731,6 +5933,107 @@
 			};
 			name = Release;
 		};
+		57FCA1B326CABDA7005EE93F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ChemicalReactions/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.ChemicalReactions;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		57FCA1B426CABDA7005EE93F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ChemicalReactions/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.ChemicalReactions;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		57FCA1B626CABDA7005EE93F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				INFOPLIST_FILE = ChemicalReactionsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.ChemicalReactionsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		57FCA1B726CABDA7005EE93F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7H845U3D2J;
+				INFOPLIST_FILE = ChemicalReactionsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.reactions.unit.ChemicalReactionsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -5829,6 +6132,24 @@
 			buildConfigurations = (
 				57E6D8CD26AC795300603796 /* Debug */,
 				57E6D8CE26AC795300603796 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		57FCA1B226CABDA7005EE93F /* Build configuration list for PBXNativeTarget "ChemicalReactions" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57FCA1B326CABDA7005EE93F /* Debug */,
+				57FCA1B426CABDA7005EE93F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		57FCA1B526CABDA7005EE93F /* Build configuration list for PBXNativeTarget "ChemicalReactionsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57FCA1B626CABDA7005EE93F /* Debug */,
+				57FCA1B726CABDA7005EE93F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

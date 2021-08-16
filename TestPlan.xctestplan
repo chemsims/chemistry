@@ -46,6 +46,13 @@
         "identifier" : "57B8F9EB26AECD2C003CB0C7",
         "name" : "AcidsBasesTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:reactions-app.xcodeproj",
+        "identifier" : "57FCA1A826CABDA7005EE93F",
+        "name" : "ChemicalReactionsTests"
+      }
     }
   ],
   "version" : 1

@@ -7,10 +7,12 @@ import Foundation
 enum Unit: String, Identifiable {
     case reactionRates,
          equilibrium,
-         acidsBases
+         acidsBases,
+         chenmicalReactions
 
     /// The available units the user can choose from
     static let available: [Unit] = [.reactionRates, .equilibrium, .acidsBases]
+
 
     var id: String {
         self.rawValue
@@ -21,6 +23,7 @@ enum Unit: String, Identifiable {
         case .reactionRates: return .reactionRates
         case .equilibrium: return .equilibrium
         case .acidsBases: return .acidsBases
+        case .chemicalReactions: return .chemicalReactions
         }
     }
 }
@@ -51,5 +54,11 @@ extension UnitInfo {
         image: "acidsbases-icon",
         title: "Acids & Bases",
         description: "Acid & base reactions."
+    )
+
+    fileprivate static let chemicalReactions = UnitInfo(
+        image: "reaction-rates-icon",
+        title: "Chemical Reactions",
+        description: "Chemical reactions."
     )
 }
