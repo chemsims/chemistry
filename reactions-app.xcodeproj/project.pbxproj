@@ -660,6 +660,12 @@
 		57E48A4A26CACCD400A9A421 /* Molecule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4926CACCD400A9A421 /* Molecule.swift */; };
 		57E48A4C26CAD1C500A9A421 /* ReactionBalancerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4B26CAD1C500A9A421 /* ReactionBalancerViewModelTests.swift */; };
 		57E48A4E26CAD20E00A9A421 /* ReactionBalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4D26CAD20E00A9A421 /* ReactionBalancer.swift */; };
+		57E48A5226CAD8B900A9A421 /* BalancedReactionMoleculesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A5126CAD8B900A9A421 /* BalancedReactionMoleculesView.swift */; };
+		57E48A5426CADA0E00A9A421 /* OneToFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A5326CADA0E00A9A421 /* OneToFour.swift */; };
+		57E48A5626CADB1600A9A421 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A5526CADB1600A9A421 /* Double.swift */; };
+		57E48A5826CADBDC00A9A421 /* OneToTwoHorizontal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A5726CADBDC00A9A421 /* OneToTwoHorizontal.swift */; };
+		57E48A5A26CADCFF00A9A421 /* OneToTwoPyramid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A5926CADCFF00A9A421 /* OneToTwoPyramid.swift */; };
+		57E48A5C26CADEBC00A9A421 /* OneToThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A5B26CADEBC00A9A421 /* OneToThree.swift */; };
 		57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E59A5D25F92E260087F760 /* HighlightedElements.swift */; };
 		57E6A52425FDF3FE00CC3B17 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6A52325FDF3FE00CC3B17 /* GlobalFunctions.swift */; };
 		57E6D8C926AC795300603796 /* StoreManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6D8C826AC795300603796 /* StoreManagerTests.swift */; };
@@ -1436,6 +1442,12 @@
 		57E48A4926CACCD400A9A421 /* Molecule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Molecule.swift; sourceTree = "<group>"; };
 		57E48A4B26CAD1C500A9A421 /* ReactionBalancerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionBalancerViewModelTests.swift; sourceTree = "<group>"; };
 		57E48A4D26CAD20E00A9A421 /* ReactionBalancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionBalancer.swift; sourceTree = "<group>"; };
+		57E48A5126CAD8B900A9A421 /* BalancedReactionMoleculesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionMoleculesView.swift; sourceTree = "<group>"; };
+		57E48A5326CADA0E00A9A421 /* OneToFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToFour.swift; sourceTree = "<group>"; };
+		57E48A5526CADB1600A9A421 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		57E48A5726CADBDC00A9A421 /* OneToTwoHorizontal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToTwoHorizontal.swift; sourceTree = "<group>"; };
+		57E48A5926CADCFF00A9A421 /* OneToTwoPyramid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToTwoPyramid.swift; sourceTree = "<group>"; };
+		57E48A5B26CADEBC00A9A421 /* OneToThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneToThree.swift; sourceTree = "<group>"; };
 		57E59A3E25F91D510087F760 /* DoubleSidedArrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleSidedArrow.swift; sourceTree = "<group>"; };
 		57E59A4525F925F60087F760 /* ReactionDefinitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionView.swift; sourceTree = "<group>"; };
 		57E59A5325F92BFE0087F760 /* AqueousScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousScreenElement.swift; sourceTree = "<group>"; };
@@ -3798,6 +3810,27 @@
 			path = styling;
 			sourceTree = "<group>";
 		};
+		57E48A4F26CAD8A800A9A421 /* balanced-reaction */ = {
+			isa = PBXGroup;
+			children = (
+				57E48A5026CAD8AD00A9A421 /* molecules */,
+			);
+			path = "balanced-reaction";
+			sourceTree = "<group>";
+		};
+		57E48A5026CAD8AD00A9A421 /* molecules */ = {
+			isa = PBXGroup;
+			children = (
+				57E48A5126CAD8B900A9A421 /* BalancedReactionMoleculesView.swift */,
+				57E48A5326CADA0E00A9A421 /* OneToFour.swift */,
+				57E48A5526CADB1600A9A421 /* Double.swift */,
+				57E48A5726CADBDC00A9A421 /* OneToTwoHorizontal.swift */,
+				57E48A5926CADCFF00A9A421 /* OneToTwoPyramid.swift */,
+				57E48A5B26CADEBC00A9A421 /* OneToThree.swift */,
+			);
+			path = molecules;
+			sourceTree = "<group>";
+		};
 		57E59A4425F925E20087F760 /* reaction-definition */ = {
 			isa = PBXGroup;
 			children = (
@@ -4015,6 +4048,7 @@
 		57FCA1C326CABEA7005EE93F /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57E48A4F26CAD8A800A9A421 /* balanced-reaction */,
 				57FCA1C426CABEC3005EE93F /* ChemicalReactionsRootView.swift */,
 			);
 			path = view;
@@ -5260,12 +5294,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57E48A5226CAD8B900A9A421 /* BalancedReactionMoleculesView.swift in Sources */,
 				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
 				57E48A4626CACC3500A9A421 /* ChemicalReactionsStyling.swift in Sources */,
+				57E48A5826CADBDC00A9A421 /* OneToTwoHorizontal.swift in Sources */,
+				57E48A5426CADA0E00A9A421 /* OneToFour.swift in Sources */,
 				57E48A4A26CACCD400A9A421 /* Molecule.swift in Sources */,
 				57FCA1C526CABEC3005EE93F /* ChemicalReactionsRootView.swift in Sources */,
 				57E48A4E26CAD20E00A9A421 /* ReactionBalancer.swift in Sources */,
+				57E48A5C26CADEBC00A9A421 /* OneToThree.swift in Sources */,
+				57E48A5626CADB1600A9A421 /* Double.swift in Sources */,
 				57E48A4326CACB4800A9A421 /* Atom.swift in Sources */,
+				57E48A5A26CADCFF00A9A421 /* OneToTwoPyramid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
