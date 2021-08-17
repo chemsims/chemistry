@@ -16,6 +16,14 @@ extension BalancedReaction {
              nitriteIon
     }
 
+    enum MoleculeStructure {
+        case double(atom: BalancedReaction.Atom),
+             oneToTwoHorizontal(singleAtom: BalancedReaction.Atom, doubleAtom: BalancedReaction.Atom),
+             oneToTwoPyramid(singleAtom: BalancedReaction.Atom, doubleAtom: BalancedReaction.Atom),
+             oneToThree(singleAtom: BalancedReaction.Atom, tripleAtom: BalancedReaction.Atom),
+             oneToFour(singleAtom: BalancedReaction.Atom, quadAtom: BalancedReaction.Atom)
+    }
+
     struct MoleculeCount {
         init(molecule: BalancedReaction.Molecule, coefficient: Int) {
             assert(coefficient >= 1)
@@ -26,6 +34,40 @@ extension BalancedReaction {
         let molecule: BalancedReaction.Molecule
         let coefficient: Int
     }
+}
+
+extension BalancedReaction.MoleculeStructure {
+
+    static let ammonia = BalancedReaction.MoleculeStructure.oneToThree(
+        singleAtom: .nitrogen,
+        tripleAtom: .hydrogen
+    )
+
+    static let carbonDioxide = BalancedReaction.MoleculeStructure.oneToTwoHorizontal(
+        singleAtom: .carbon,
+        doubleAtom: .oxygen
+    )
+
+    static let dinitrogen = BalancedReaction.MoleculeStructure.double(atom: .nitrogen)
+
+    static let dihydrogen = BalancedReaction.MoleculeStructure.double(atom: .hydrogen)
+
+    static let dioxygen = BalancedReaction.MoleculeStructure.double(atom: .oxygen)
+
+    static let methane = BalancedReaction.MoleculeStructure.oneToFour(
+        singleAtom: .carbon,
+        quadAtom: .hydrogen
+    )
+
+    static let nitriteIon = BalancedReaction.MoleculeStructure.oneToTwoHorizontal(
+        singleAtom:  .nitrogen,
+        doubleAtom: .oxygen
+    )
+
+    static let water = BalancedReaction.MoleculeStructure.oneToTwoPyramid(
+        singleAtom: .oxygen,
+        doubleAtom: .hydrogen
+    )
 }
 
 extension BalancedReaction.Molecule {
@@ -61,5 +103,9 @@ extension BalancedReaction.Molecule {
             .init(atom: .oxygen, count: 2)
         ]
         }
+    }
+
+    func atom(withCount count: Int) -> BalancedReaction.Atom? {
+        atoms.first { $0.count == count }?.atom
     }
 }
