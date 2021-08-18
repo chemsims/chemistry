@@ -37,75 +37,36 @@ extension BalancedReaction {
 }
 
 extension BalancedReaction.MoleculeStructure {
-
-    static let ammonia = BalancedReaction.MoleculeStructure.oneToThree(
-        singleAtom: .nitrogen,
-        tripleAtom: .hydrogen
-    )
-
-    static let carbonDioxide = BalancedReaction.MoleculeStructure.oneToTwoHorizontal(
-        singleAtom: .carbon,
-        doubleAtom: .oxygen
-    )
-
-    static let dinitrogen = BalancedReaction.MoleculeStructure.double(atom: .nitrogen)
-
-    static let dihydrogen = BalancedReaction.MoleculeStructure.double(atom: .hydrogen)
-
-    static let dioxygen = BalancedReaction.MoleculeStructure.double(atom: .oxygen)
-
-    static let methane = BalancedReaction.MoleculeStructure.oneToFour(
-        singleAtom: .carbon,
-        quadAtom: .hydrogen
-    )
-
-    static let nitriteIon = BalancedReaction.MoleculeStructure.oneToTwoHorizontal(
-        singleAtom:  .nitrogen,
-        doubleAtom: .oxygen
-    )
-
-    static let water = BalancedReaction.MoleculeStructure.oneToTwoPyramid(
-        singleAtom: .oxygen,
-        doubleAtom: .hydrogen
-    )
+    var atoms: Set<BalancedReaction.Atom> {
+        switch self {
+        case let .double(atom): return [atom]
+        case let .oneToFour(single, quad): return [single, quad]
+        case let .oneToThree(single, triple): return [single, triple]
+        case let .oneToTwoHorizontal(single, double): return [single, double]
+        case let .oneToTwoPyramid(single, double): return [single, double]
+        }
+    }
 }
 
 extension BalancedReaction.Molecule {
-    var atoms: [BalancedReaction.AtomCount] {
+    var structure: BalancedReaction.MoleculeStructure {
         switch self {
-        case .ammonia: return [
-            .init(atom: .nitrogen, count: 1),
-            .init(atom: .hydrogen, count: 3)
-        ]
-        case .carbonDioxide: return [
-            .init(atom: .carbon, count: 1),
-            .init(atom: .oxygen, count: 2)
-        ]
-        case .dihydrogen: return [
-            .init(atom: .hydrogen, count: 2)
-        ]
-        case .dinitrogen: return [
-            .init(atom: .nitrogen, count: 2)
-        ]
-        case .dioxygen: return [
-            .init(atom: .oxygen, count: 2)
-        ]
-        case .methane: return [
-            .init(atom: .carbon, count: 1),
-            .init(atom: .hydrogen, count: 4)
-        ]
-        case .nitriteIon: return [
-            .init(atom: .nitrogen, count: 1),
-            .init(atom: .oxygen, count: 2)
-        ]
-        case .water: return [
-            .init(atom: .hydrogen, count: 1),
-            .init(atom: .oxygen, count: 2)
-        ]
+        case .ammonia:
+            return .oneToThree(singleAtom: .nitrogen, tripleAtom: .hydrogen)
+        case .carbonDioxide:
+            return .oneToTwoHorizontal(singleAtom: .carbon, doubleAtom: .oxygen)
+        case .dihydrogen:
+            return .double(atom: .hydrogen)
+        case .dinitrogen:
+            return .double(atom: .nitrogen)
+        case .dioxygen:
+            return .double(atom: .oxygen)
+        case .methane:
+            return .oneToFour(singleAtom: .carbon, quadAtom: .hydrogen)
+        case .nitriteIon:
+            return .oneToTwoHorizontal(singleAtom: .nitrogen, doubleAtom: .oxygen)
+        case .water:
+            return .oneToTwoPyramid(singleAtom: .oxygen, doubleAtom: .hydrogen)
         }
-    }
-
-    func atom(withCount count: Int) -> BalancedReaction.Atom? {
-        atoms.first { $0.count == count }?.atom
     }
 }

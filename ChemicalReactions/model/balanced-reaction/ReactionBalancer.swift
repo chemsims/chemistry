@@ -20,7 +20,7 @@ struct ReactionBalancer {
     private var reactantBalancer: ReactionSideBalancer
     private var productBalancer: ReactionSideBalancer
 
-    /// The number of molecules added to the reactants & products equals the coefficients of the reaction
+    /// Reaction is balanced number of molecules added to the reactants & products equals the coefficients of the original reaction
     var isBalanced: Bool {
         reactantBalancer.isBalanced && productBalancer.isBalanced
     }

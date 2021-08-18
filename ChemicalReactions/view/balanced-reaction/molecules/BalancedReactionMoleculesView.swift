@@ -103,7 +103,7 @@ extension BalancedReactionMoleculeView {
 struct BalancedReactionMoleculesView_Previews: PreviewProvider {
     static var previews: some View {
         BalancedReactionMoleculeView(
-            structure: .water,
+            structure: BalancedReaction.Molecule.water.structure,
             atomSize: 100
         )
     }
