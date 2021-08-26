@@ -4,12 +4,20 @@
 
 import SwiftUI
 
-struct ShareSheetView: UIViewControllerRepresentable {
+public struct ShareSheetView: UIViewControllerRepresentable {
+
+    public init(
+        activityItems: [Any],
+        onCompletion: @escaping () -> Void
+    ) {
+        self.activityItems = activityItems
+        self.onCompletion = onCompletion
+    }
 
     let activityItems: [Any]
     let onCompletion: () -> Void
 
-    func makeUIViewController(context: Context) -> some UIViewController {
+    public func makeUIViewController(context: Context) -> some UIViewController {
         let controller = UIActivityViewController(
             activityItems: activityItems,
             applicationActivities: nil
@@ -20,7 +28,7 @@ struct ShareSheetView: UIViewControllerRepresentable {
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+    public func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
     }
 }
 

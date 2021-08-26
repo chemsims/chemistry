@@ -15,6 +15,7 @@ struct MainMenuOverlay<Injector: NavigationInjector>: View {
     let menuHPadding: CGFloat
 
     @Binding var unitSelectionIsShowing: Bool
+    @Binding var aboutPageIsShowing: Bool
 
     @State private var showFailedMailAlert = false
     @State private var activeSheet: ActiveSheet?
@@ -28,6 +29,7 @@ struct MainMenuOverlay<Injector: NavigationInjector>: View {
                 activeSheet: $activeSheet,
                 showFailedMailAlert: $showFailedMailAlert,
                 unitSelectionIsShowing: $unitSelectionIsShowing,
+                aboutPageIsShowing: $aboutPageIsShowing,
                 settings: MainMenuLayoutSettings(
                     geometry: geo,
                     menuSize: size,
@@ -70,6 +72,7 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
     @Binding var activeSheet: ActiveSheet?
     @Binding var showFailedMailAlert: Bool
     @Binding var unitSelectionIsShowing: Bool
+    @Binding var aboutPageIsShowing: Bool
     let settings: MainMenuLayoutSettings
 
 
@@ -300,6 +303,7 @@ extension MainMenuOverlayWithSettings {
             unitSelectionButton
             mailButton
             shareButton
+            aboutButton
              if Flags.showAnalyticsOptOutToggle {
                 analyticsButton
             }
@@ -344,6 +348,19 @@ extension MainMenuOverlayWithSettings {
                 .foregroundColor(Styling.navIcon)
         }
         .accessibility(label: Text("Open unit selection menu"))
+    }
+
+    private var aboutButton: some View {
+        Button(action: {
+            aboutPageIsShowing = true
+            navigation.showMenu = false
+        }) {
+            Image(systemName: "info.circle")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .foregroundColor(Styling.navIcon)
+        }
+        .accessibility(label: Text("Open about page"))
     }
 
     private var analyticsButton: some View {
@@ -493,7 +510,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
             size: 20,
             topPadding: 10,
             menuHPadding: 10,
-            unitSelectionIsShowing: .constant(false)
+            unitSelectionIsShowing: .constant(false),
+            aboutPageIsShowing: .constant(false)
         )
         .previewLayout(.iPhoneSELandscape)
     }

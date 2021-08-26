@@ -9,15 +9,18 @@ public struct ReactionsRateRootView: View {
 
     public init(
         model: RootNavigationViewModel<ReactionRatesInjector>,
-        unitSelectionIsShowing: Binding<Bool>
+        unitSelectionIsShowing: Binding<Bool>,
+        aboutPageIsShowing: Binding<Bool>
     ) {
         self.model = model
         self._unitSelectionIsShowing = unitSelectionIsShowing
+        self._aboutPageIsShowing = aboutPageIsShowing
     }
 
     @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>>
 
     @Binding var unitSelectionIsShowing: Bool
+    @Binding var aboutPageIsShowing: Bool
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -41,7 +44,8 @@ public struct ReactionsRateRootView: View {
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
             menuHPadding: settings.menuHPadding,
-            unitSelectionIsShowing: $unitSelectionIsShowing
+            unitSelectionIsShowing: $unitSelectionIsShowing,
+            aboutPageIsShowing: $aboutPageIsShowing
         )
     }
 }
@@ -53,7 +57,8 @@ struct RootNavigationView_Previews: PreviewProvider {
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector()
             ),
-            unitSelectionIsShowing: .constant(false)
+            unitSelectionIsShowing: .constant(false),
+            aboutPageIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 568, height: 320))
 
         // iPad mini
@@ -61,7 +66,8 @@ struct RootNavigationView_Previews: PreviewProvider {
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector()
             ),
-            unitSelectionIsShowing: .constant(false)
+            unitSelectionIsShowing: .constant(false),
+            aboutPageIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 1024, height: 768))
 
         // iPad Pro 11
@@ -69,7 +75,8 @@ struct RootNavigationView_Previews: PreviewProvider {
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector()
             ),
-            unitSelectionIsShowing: .constant(false)
+            unitSelectionIsShowing: .constant(false),
+            aboutPageIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 1194, height: 834))
     }
 }

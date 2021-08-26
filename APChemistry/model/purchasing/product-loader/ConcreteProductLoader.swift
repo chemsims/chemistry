@@ -9,14 +9,14 @@ class ConcreteProductLoader: NSObject, ProductLoader {
 
     weak var delegate: ProductLoaderDelegate?
 
-    private var products = [Unit : SKProduct]()
+    private var products = [InAppPurchase : SKProduct]()
 
-    func getProduct(forUnit unit: Unit) -> SKProduct? {
-        products[unit]
+    func getSKProduct(for type: InAppPurchase) -> SKProduct? {
+        products[type]
     }
 
-    func loadProducts(units: [Unit]) {
-        let ids = Set(units.compactMap(\.inAppPurchaseID))
+    func loadSKProducts(types: [InAppPurchase]) {
+        let ids = Set(types.map(\.inAppPurchaseId))
         let productRequest = SKProductsRequest(productIdentifiers: ids)
         productRequest.delegate = self
         productRequest.start()
@@ -27,8 +27,8 @@ extension ConcreteProductLoader: SKProductsRequestDelegate {
 
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         response.products.forEach { product in
-            if let unit = unit(withId: product.productIdentifier) {
-                products[unit] = product
+            if let type = productType(withId: product.productIdentifier) {
+                products[type] = product
             }
         }
 
@@ -37,7 +37,13 @@ extension ConcreteProductLoader: SKProductsRequestDelegate {
         }
     }
 
-    private func unit(withId id: String) -> Unit? {
-        Unit.all.first { $0.inAppPurchaseID == id }
+    func request(_ request: SKRequest, didFailWithError error: Error) {
+        DispatchQueue.main.async {
+            self.delegate?.didLoadProducts([])
+        }
+    }
+
+    private func productType(withId id: String) -> InAppPurchase? {
+        InAppPurchase.allCases.first { $0.inAppPurchaseId == id }
     }
 }

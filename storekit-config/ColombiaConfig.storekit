@@ -1,0 +1,142 @@
+{
+  "identifier" : "6F4E5605",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4900",
+      "familyShareable" : false,
+      "internalID" : "3E902306",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_with_badge_1",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "13900",
+      "familyShareable" : false,
+      "internalID" : "6E711707",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_with_badge_2",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "22900",
+      "familyShareable" : false,
+      "internalID" : "2D51D1BD",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_with_badge_3",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "29900",
+      "familyShareable" : false,
+      "internalID" : "4A7C6D66",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_with_badge_4",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "4900",
+      "familyShareable" : false,
+      "internalID" : "2F615507",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_1",
+      "referenceName" : null,
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "13900",
+      "familyShareable" : false,
+      "internalID" : "892B730E",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_2",
+      "referenceName" : null,
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "22900",
+      "familyShareable" : false,
+      "internalID" : "87C7CE88",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_3",
+      "referenceName" : null,
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "29900",
+      "familyShareable" : false,
+      "internalID" : "13F5BDE3",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_4",
+      "referenceName" : null,
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_locale" : "es_MX",
+    "_storefront" : "COL",
+    "_timeRate" : 6
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

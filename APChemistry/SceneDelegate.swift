@@ -16,9 +16,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mode = APChemApp.isDebug ? "debug" : "release"
         print("Running in \(mode) mode")
 
+        let injector = APChemApp.injector
+        let tipOverlayModel = TipOverlayViewModel(persistence: injector.tipOverlayPersistence)
         let contentView = APChemRootView(
-            navigation: APChemRootNavigationModel(injector: APChemApp.injector),
-            storeManager: APChemApp.injector.storeManager
+            navigation: APChemRootNavigationModel(
+                injector: injector,
+                tipOverlayModel: tipOverlayModel
+            ),
+            tipModel: .init(storeManager: injector.storeManager),
+            tipOverlayModel: tipOverlayModel
         )
 
         let deferScreenEdgesController = DeferScreenEdgesHostingController(

@@ -5,27 +5,34 @@
 import SwiftUI
 import UIKit
 
-struct PageViewController<Page: View>: UIViewControllerRepresentable {
+public struct PageViewController<Page: View>: UIViewControllerRepresentable {
+
+    public init(pages: [Page], currentPage: Binding<Int>) {
+        self.pages = pages
+        self._currentPage = currentPage
+    }
+
     var pages: [Page]
     @Binding var currentPage: Int
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
 
-    func makeUIViewController(context: Context) -> UIPageViewController {
+    public func makeUIViewController(context: Context) -> UIPageViewController {
         let controller = UIPageViewController(
             transitionStyle: .scroll,
             navigationOrientation: .horizontal
         )
         controller.dataSource = context.coordinator
         controller.delegate = context.coordinator
+        controller.view.backgroundColor = .clear
         return controller
     }
 
-    func updateUIViewController(_ pageViewController: UIPageViewController, context: Context) {
+    public func updateUIViewController(_ pageViewController: UIPageViewController, context: Context) {
         let visibleViewController = pageViewController.viewControllers?.first
         let visibleIndex = visibleViewController.flatMap { context.coordinator.controllers.firstIndex(of: $0) }
         let direction: UIPageViewController.NavigationDirection = (visibleIndex ?? currentPage) < currentPage ? .forward : .reverse
@@ -36,7 +43,7 @@ struct PageViewController<Page: View>: UIViewControllerRepresentable {
         )
     }
 
-    class Coordinator: NSObject, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    public class Coordinator: NSObject, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
         var parent: PageViewController
         var controllers = [UIViewController]()
@@ -44,9 +51,12 @@ struct PageViewController<Page: View>: UIViewControllerRepresentable {
         init(_ pageViewController: PageViewController) {
             parent = pageViewController
             controllers = parent.pages.map { UIHostingController(rootView: $0) }
+            controllers.forEach { c in
+                c.view.backgroundColor = .clear
+            }
         }
 
-        func pageViewController(
+        public func pageViewController(
             _ pageViewController: UIPageViewController,
             viewControllerBefore viewController: UIViewController
         ) -> UIViewController? {
@@ -56,14 +66,14 @@ struct PageViewController<Page: View>: UIViewControllerRepresentable {
             return controllers[index - 1]
         }
 
-        func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        public func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
             guard let index = controllers.firstIndex(of: viewController), index + 1 < controllers.count else {
                 return nil
             }
             return controllers[index + 1]
         }
 
-        func pageViewController(
+        public func pageViewController(
             _ pageViewController: UIPageViewController,
             didFinishAnimating finished: Bool,
             previousViewControllers: [UIViewController],
@@ -73,6 +83,15 @@ struct PageViewController<Page: View>: UIViewControllerRepresentable {
                let index = controllers.firstIndex(of: visibleViewController) {
                 parent.currentPage = index
             }
+        }
+    }
+}
+
+private extension UIView {
+    func removeAllBackgroundColors() {
+        self.backgroundColor = .clear
+        self.subviews.forEach { v in
+            v.removeAllBackgroundColors()
         }
     }
 }

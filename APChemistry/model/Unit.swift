@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum Unit: String, Identifiable {
+enum Unit: String, CaseIterable, Identifiable {
     case reactionRates,
          equilibrium
 
@@ -14,13 +14,7 @@ enum Unit: String, Identifiable {
         self.rawValue
     }
 
-    var inAppPurchaseID: String? {
-        switch self {
-        case .equilibrium: return "equilibrium_unit"
-        default: return nil
-        }
-    }
-
+  
     var info: UnitInfo {
         switch self {
         case .reactionRates: return .reactionRates
@@ -42,7 +36,7 @@ extension UnitInfo {
     fileprivate static let reactionRates = UnitInfo(
         image: "reaction-rates-icon",
         title: "Reaction Rates",
-        description: "Reaction rates and rate laws"
+        description: "Reaction rates and rate laws."
     )
 
     fileprivate static let equilibrium = UnitInfo(

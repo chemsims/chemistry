@@ -7,61 +7,53 @@ import XCTest
 
 class StoreManagerTests: XCTestCase {
 
-    func testReactionsRateIsUnlockedAfterInitialisingModel() {
-        let model = newModel()
-
-        let firstUnit = model.units.first!
-        XCTAssertEqual(firstUnit.unit, .reactionRates)
-        XCTAssertEqual(firstUnit.state, .purchased)
-    }
-
     func testInProgressPurchaseRemainsInProgressWhenModelReloadsProducts() {
         let model = newModel(actionDelay: 1)
 
-        var equilibriumUnit: UnitWithState {
-            model.units.first { $0.unit == .equilibrium }!
+        var tip1: InAppPurchaseWithState {
+            model.products.first { $0.type == .tipWithBadge1 }!
         }
 
         model.loadProducts()
-        model.beginPurchase(of: .equilibrium)
+        model.beginPurchase(of: .tipWithBadge1)
 
-        XCTAssertEqual(equilibriumUnit.state, .purchasing)
+        XCTAssertEqual(tip1.state, .purchasing)
 
         model.loadProducts()
 
-        XCTAssertEqual(equilibriumUnit.state, .purchasing)
+        XCTAssertEqual(tip1.state, .purchasing)
     }
 
     func testRestoringPurchase() {
         let model = StoreManager(
-            locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
-            products: DebugProductLoader(loadDelay: nil),
-            storeObserver: RestoreEquilibriumObserver(actionDelay: nil)
+            locker: InMemoryProductLocker(allProductsAreUnlocked: false),
+            productLoader: DebugProductLoader(loadDelay: nil),
+            storeObserver: RestoreTip1Observer(actionDelay: nil)
         )
-        var equilibriumUnit: UnitWithState {
-            model.units.first { $0.unit == .equilibrium }!
+        var tip1: InAppPurchaseWithState {
+            model.products.first { $0.type == .tipWithBadge1 }!
         }
 
         model.loadProducts()
         model.restorePurchases()
-        XCTAssertEqual(equilibriumUnit.state, .purchased)
+        XCTAssertEqual(tip1.state, .purchased)
     }
 
     private func newModel(actionDelay: Int? = 0) -> StoreManager {
         StoreManager(
-            locker: InMemoryUnitLocker(allUnitsAreUnlocked: false),
-            products: DebugProductLoader(loadDelay: nil),
+            locker: InMemoryProductLocker(allProductsAreUnlocked: false),
+            productLoader: DebugProductLoader(loadDelay: nil),
             storeObserver: DebugStoreObserver(actionDelay: actionDelay)
         )
     }
 }
 
-private class RestoreEquilibriumObserver: DebugStoreObserver {
+private class RestoreTip1Observer: DebugStoreObserver {
     override init(actionDelay: Int?) {
         super.init(actionDelay: actionDelay)
     }
 
     override func restorePurchases() {
-        delegate?.didRestore(productId: Unit.equilibrium.inAppPurchaseID!)
+        delegate?.didRestore(productId: InAppPurchase.tipWithBadge1.inAppPurchaseId)
     }
 }

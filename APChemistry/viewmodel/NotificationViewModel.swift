@@ -48,6 +48,12 @@ extension NotificationViewModel {
         )
     }
 
+    static func showExtraTipNotification() {
+        Self.shared.showNotification(
+            .init(message: "Thanks for your support!", icon: .tick)
+        )
+    }
+
     static func showRestoredNotification() {
         Self.shared.showNotification(
             .init(message: "Finished restoring purchases.", icon: .tick)

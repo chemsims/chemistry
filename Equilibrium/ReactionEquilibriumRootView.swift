@@ -9,14 +9,17 @@ public struct ReactionEquilibriumRootView: View {
 
     public init(
         model: RootNavigationViewModel<EquilibriumNavInjector>,
-        unitSelectionIsShowing: Binding<Bool>
+        unitSelectionIsShowing: Binding<Bool>,
+        aboutPageIsShowing: Binding<Bool>
     ) {
         self.model = model
         self._unitSelectionIsShowing = unitSelectionIsShowing
+        self._aboutPageIsShowing = aboutPageIsShowing
     }
 
     @ObservedObject var model: RootNavigationViewModel<EquilibriumNavInjector>
     @Binding var unitSelectionIsShowing: Bool
+    @Binding var aboutPageIsShowing: Bool
 
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -40,8 +43,8 @@ public struct ReactionEquilibriumRootView: View {
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
             menuHPadding: settings.menuHPadding,
-            unitSelectionIsShowing: $unitSelectionIsShowing
-
+            unitSelectionIsShowing: $unitSelectionIsShowing,
+            aboutPageIsShowing: $aboutPageIsShowing
         )
     }
 }

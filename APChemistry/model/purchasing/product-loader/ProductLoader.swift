@@ -6,12 +6,12 @@ import Foundation
 import StoreKit
 
 protocol ProductLoader {
-    func getProduct(forUnit unit: Unit) -> SKProduct?
-    func loadProducts(units: [Unit])
+    func getSKProduct(for type: InAppPurchase) -> SKProduct?
+    func loadSKProducts(types: [InAppPurchase])
 
     var delegate: ProductLoaderDelegate? { get set }
 }
 
 protocol ProductLoaderDelegate: AnyObject {
-    func didLoadProducts(_ products: [SKProduct])
+    func didLoadProducts(_ skProducts: [SKProduct])
 }

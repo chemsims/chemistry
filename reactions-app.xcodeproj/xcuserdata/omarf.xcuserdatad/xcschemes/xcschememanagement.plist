@@ -12,12 +12,12 @@
 		<key>AcidsBases.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>24</integer>
+			<integer>3</integer>
 		</dict>
 		<key>Equilibrium.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>25</integer>
+			<integer>2</integer>
 		</dict>
 		<key>Promises (Playground) 1.xcscheme</key>
 		<dict>
@@ -64,7 +64,7 @@
 		<key>ReactionRates.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>26</integer>
+			<integer>4</integer>
 		</dict>
 		<key>ReactionsCore.xcscheme_^#shared#^_</key>
 		<dict>

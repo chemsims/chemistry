@@ -7,7 +7,6 @@ import SwiftUI
 struct UnitSelection: View {
 
     @ObservedObject var navigation: APChemRootNavigationModel
-    @ObservedObject var model: StoreManager
     let layout: APChemLayoutSettings
 
     var body: some View {
@@ -22,22 +21,17 @@ struct UnitSelection: View {
                         units
                     }
                     .padding(.vertical, layout.cardVerticalSpacing)
-
-                    restoreButton
                 }
                 Spacer()
             }
             .padding(.vertical, layout.unitSelectionVerticalPadding)
-            .onAppear {
-                model.loadProducts()
-            }
         }
     }
 
     private var backButton: some View {
         HStack {
             Button(action: {
-                    navigation.showUnitSelection = false
+                    navigation.activeSheet = nil
             }) {
                 Text("Back")
             }
@@ -51,30 +45,15 @@ struct UnitSelection: View {
     }
 
     private var units: some View {
-        ForEach(model.units) { unit in
+        ForEach(Unit.allCases) { unit in
             UnitCard(
                 unit: unit,
-                buyUnit: {
-                    model.beginPurchase(of: unit.unit)
-                },
-                canMakePurchase: model.canMakePurchase,
                 layout: layout
             )
             .onTapGesture {
-                guard unit.state == .purchased else {
-                    return
-                }
-                navigation.goTo(unit: unit.unit)
+                navigation.goTo(unit: unit)
             }
         }
-    }
-
-    private var restoreButton: some View {
-        let text = model.isRestoring ? "Restoring purchases..." : "Restore purchases"
-        return Button(action: model.restorePurchases) {
-            Text(text)
-        }
-        .disabled(model.isRestoring)
     }
 }
 
@@ -145,11 +124,9 @@ struct UnitSelection_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
             UnitSelection(
-                navigation: APChemRootNavigationModel(injector: DebugAPChemInjector()),
-                model: StoreManager(
-                    locker: InMemoryUnitLocker(),
-                    products: DebugProductLoader(),
-                    storeObserver: DebugStoreObserver()
+                navigation: APChemRootNavigationModel(
+                    injector: DebugAPChemInjector(),
+                    tipOverlayModel: .init(persistence: UserDefaultsTipOverlayPersistence())
                 ),
                 layout: .init(
                     geometry: geo,

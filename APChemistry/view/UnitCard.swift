@@ -8,9 +8,7 @@ import StoreKit
 
 struct UnitCard: View {
 
-    let unit: UnitWithState
-    let buyUnit: () -> Void
-    let canMakePurchase: Bool
+    let unit: Unit
     let layout: APChemLayoutSettings
 
     var body: some View {
@@ -19,20 +17,13 @@ struct UnitCard: View {
                 image
 
                 VStack(alignment: .leading, spacing: layout.cardTextVerticalSpacing) {
-                    Text(unit.unit.info.title)
+                    Text(unit.info.title)
                         .font(.title)
-                    Text(unit.unit.info.description)
+                    Text(unit.info.description)
                         .lineLimit(nil)
                         .frame(maxHeight: .infinity)
                 }
                 Spacer(minLength: 0)
-            }
-
-            if unit.state != .purchased {
-                buyButton
-                if !canMakePurchase {
-                    iapUnavailableWarning
-                }
             }
         }
         .padding()
@@ -42,115 +33,15 @@ struct UnitCard: View {
                 .foregroundColor(.white)
                 .shadow(radius: layout.cardShadowRadius)
         )
-        .overlay(
-            padlock,
-            alignment: .topTrailing
-        )
-    }
-
-    private var padlock: some View {
-        Padlock()
-            .compositingGroup()
-            .opacity(unit.state == .purchased ? 0 : 1)
-            .frame(square: layout.cardLockSize)
-            .offset(layout.cardOffset)
-    }
-
-    private var iapUnavailableWarning: some View {
-        HStack {
-            Image(systemName: "exclamationmark.triangle")
-                .foregroundColor(.orange)
-            Text("In-app purchases are not currently available.")
-        }
-        .font(.system(.subheadline))
     }
 
     private var image: some View {
-        Image(unit.unit.info.image)
+        Image(unit.info.image)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .mask(RoundedRectangle(cornerRadius: layout.cardIconCornerRadius))
             .frame(square: layout.cardIconSize)
     }
-}
-
-// MARK: - Buy button
-extension UnitCard {
-
-    private var buyButton: some View {
-        BuyButton(
-            cornerRadius: layout.cardCornerRadius,
-            sideColor: buyButtonBorderColor,
-            faceColor: buyButtonColor,
-            text: buyButtonString,
-            action: buyUnit
-        )
-        .foregroundColor(buyButtonFontColor)
-        .frame(height: 0.5 * layout.cardIconSize)
-        .compositingGroup()
-        .opacity(buyButtonLoading || !canMakePurchase ? 0.5 : 1)
-        .disabled(!isActive || !canMakePurchase)
-    }
-
-    private var isActive: Bool {
-        switch unit.state {
-        case .readyForPurchase, .failedToLoadProduct: return true
-        default: return false
-        }
-    }
-
-    private var buyButtonFontColor: Color {
-        if buyButtonError {
-            return .buyButtonErrorFont
-        }
-        return .buyButtonFont
-    }
-
-
-    private var buyButtonColor: Color {
-        if buyButtonError {
-            return .buyButtonErrorBackground
-        }
-        return .buyButtonBackground
-    }
-
-    private var buyButtonBorderColor: Color {
-        if buyButtonError {
-            return .buyButtonErrorBorder
-        }
-        return .buyButtonBorder
-    }
-
-    private var buyButtonLoading: Bool {
-        switch unit.state {
-        case .waitingToLoadProduct, .deferred, .loadingProduct, .purchasing:
-            return true
-        default: return false
-        }
-    }
-
-    private var buyButtonError: Bool {
-        unit.state == .failedToLoadProduct
-    }
-
-    private var buyButtonString: String {
-        switch unit.state {
-        case .deferred: return "Awaiting approval..."
-        case .purchasing: return "Unlocking..."
-        case .waitingToLoadProduct, .loadingProduct:
-            return "Connecting to store..."
-        case .failedToLoadProduct: return "Cannot connect to store"
-        case let .readyForPurchase(product):
-            let price = product.regularPrice.map {
-                " for \($0)"
-            } ?? ""
-
-            return "Unlock now\(price)"
-        default: return ""
-        }
-    }
-
-
 }
 
 struct UnitCard_Previews: PreviewProvider {
@@ -189,12 +80,7 @@ struct UnitCard_Previews: PreviewProvider {
         _ state: PurchaseState
     ) -> some View {
         UnitCard(
-            unit: UnitWithState(
-                unit: unit,
-                state: state
-            ),
-            buyUnit: { },
-            canMakePurchase: false,
+            unit: unit,
             layout: .init(
                 geometry: geo,
                 verticalSizeClass: nil,
