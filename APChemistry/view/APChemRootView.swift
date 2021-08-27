@@ -21,29 +21,44 @@ struct APChemRootView: View {
         GeometryReader { geo in
             navigation.view
                 .sheet(item: $navigation.activeSheet) {
-                    switch $0 {
-                    case .unitSelection:
-                        unitSelection(geo)
-                            .notification(notificationModel.notification)
-                    case .about:
-                        AboutScreen(model: tipModel, navigation: navigation)
-                            .notification(notificationModel.notification)
-
-                    case .share:
-                        ShareSheetView(
-                            activityItems: [shareSettings.message],
-                            onCompletion: { navigation.activeSheet = nil }
-                        )
-                        .edgesIgnoringSafeArea(.all)
-                    }
+                    sheet($0, geo: geo)
                 }
                 .blur(radius: blurContent ? 1 : 0)
                 .overlay(tippingOverlay(layout: .init(geometry: geo)))
         }
-        // Only add this on iPhone, since the view is visible behind the sheet on iPad
-        // so notification shows up twice
-        .modifyIf(isIphone) {
-            $0.notification(notificationModel.notification)
+        .notification(showNotificationOnMainContent ? notificationModel.notification : nil)
+    }
+
+    // on iPad, we must not show the notification on both the main content and sheet at the same
+    // time since the notification overlay on the main content will be visible behind the sheet.
+    // So we only show it on main content when one of the app sheets is not visible. The share
+    // sheet is a system sheet, so it seems better to leave the notification behind it.
+    private var showNotificationOnMainContent: Bool {
+        if isIphone {
+            return true
+        }
+        return navigation.activeSheet != .about && navigation.activeSheet != .unitSelection
+    }
+
+    @ViewBuilder
+    private func sheet(
+        _ activeSheet: APChemRootNavigationModel.ActiveSheet,
+        geo: GeometryProxy
+    ) -> some View {
+        switch activeSheet {
+        case .unitSelection:
+            unitSelection(geo)
+                .notification(notificationModel.notification)
+        case .about:
+            AboutScreen(model: tipModel, navigation: navigation)
+                .notification(notificationModel.notification)
+
+        case .share:
+            ShareSheetView(
+                activityItems: [shareSettings.message],
+                onCompletion: { navigation.activeSheet = nil }
+            )
+            .edgesIgnoringSafeArea(.all)
         }
     }
 
