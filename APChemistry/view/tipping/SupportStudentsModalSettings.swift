@@ -23,7 +23,7 @@ struct SupportStudentsModalSettings {
     }
 
     var modalHeight: CGFloat {
-        let maxHeight: CGFloat = 550
+        let maxHeight: CGFloat = 450
         return min(maxHeight, 0.95 * height)
     }
 

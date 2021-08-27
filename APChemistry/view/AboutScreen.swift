@@ -68,7 +68,7 @@ private struct AboutScreenWithSettings: View {
                     .frame(width: settings.mainContentWidth)
                 }
             }
-            .padding(.top, 8)
+            .padding(8)
         }
     }
 
