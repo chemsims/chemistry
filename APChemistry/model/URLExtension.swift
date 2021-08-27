@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ReactionsCore
 
 extension URL {
 
@@ -11,5 +12,11 @@ extension URL {
     )
 
     static let virk2013Paper = virk2013PaperOptionalUrl!
+
+    static let appStoreReviewOptionalUrl: URL? = URL(
+        string: "https://apps.apple.com/app/id1531309001?action=write-review"
+    )
+
+    static let appStoreReview = appStoreReviewOptionalUrl!
 
 }

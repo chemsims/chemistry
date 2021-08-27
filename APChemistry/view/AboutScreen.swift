@@ -66,9 +66,23 @@ private struct AboutScreenWithSettings: View {
                         showShareSheet: $showShareSheet
                     )
                     .frame(width: settings.mainContentWidth)
+
+                    leaveAReview
+                        .frame(width: settings.mainContentWidth)
                 }
             }
             .padding(8)
+        }
+    }
+
+    private var leaveAReview: some View {
+        VStack(spacing: settings.vSpacing) {
+            Text(Strings.leaveAReview)
+            LegacyLink(
+                destination: .appStoreReview
+            ) {
+                Text("Leave a review on the App Store.")
+            }
         }
     }
 

@@ -26,4 +26,9 @@ struct Strings {
     If you've found this app useful, please consider sharing it to anyone who could benefit, \
     and help us reach more people!
     """
+
+    static let leaveAReview = """
+    If you're finding this app useful, please consider leaving a review to help us grow and \
+    reach more students!
+    """
 }
