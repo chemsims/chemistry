@@ -51,6 +51,8 @@ class ProductionEquilibriumInjector: EquilibriumInjector {
             )
         )
 
+    // NB we don't currently need to maintain this between app launches
+    // so we use in-memory in production
     let solubilityPersistence: SolubilityPersistence = InMemorySolubilityPersistence()
 
     let reviewPersistence: ReviewPromptPersistence = UserDefaultsReviewPromptPersistence()
