@@ -17,7 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print("Running in \(mode) mode")
 
         let injector = APChemApp.injector
-        let tipOverlayModel = TipOverlayViewModel(persistence: injector.tipOverlayPersistence)
+        let tipOverlayModel = TipOverlayViewModel(
+            persistence: injector.tipOverlayPersistence,
+            locker: injector.storeManager.locker
+        )
         let contentView = APChemRootView(
             navigation: APChemRootNavigationModel(
                 injector: injector,

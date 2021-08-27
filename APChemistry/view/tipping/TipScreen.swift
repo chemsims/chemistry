@@ -69,7 +69,8 @@ extension SupportStudentsModal {
                         if let price = storeManager.price(forProduct: level.product) {
                             return price
                         } else if model.hasPurchased {
-                            // this case should not happen outside of testing, but lets handle anyway
+                            // this case is unlikely, but worth handling otherwise the price
+                            // will appear to be loading
                             return ""
                         }
                         return nil
@@ -196,7 +197,8 @@ struct TipScreen_Previews: PreviewProvider {
             SupportStudentsModal.TipScreen(
                 model: .init(storeManager: .preview),
                 tipOverlayModel: .init(
-                    persistence: UserDefaultsTipOverlayPersistence()
+                    persistence: UserDefaultsTipOverlayPersistence(),
+                    locker: InMemoryProductLocker()
                 ),
                 settings: .init(geometry: geo)
             )

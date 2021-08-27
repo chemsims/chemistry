@@ -126,7 +126,10 @@ struct UnitSelection_Previews: PreviewProvider {
             UnitSelection(
                 navigation: APChemRootNavigationModel(
                     injector: DebugAPChemInjector(),
-                    tipOverlayModel: .init(persistence: UserDefaultsTipOverlayPersistence())
+                    tipOverlayModel: .init(
+                        persistence: UserDefaultsTipOverlayPersistence(),
+                        locker: InMemoryProductLocker()
+                    )
                 ),
                 layout: .init(
                     geometry: geo,

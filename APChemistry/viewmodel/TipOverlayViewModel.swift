@@ -2,22 +2,31 @@
 // Reactions App
 //
 
+import ReactionsCore
 import SwiftUI
 
 class TipOverlayViewModel: ObservableObject {
 
-    init(persistence: TipOverlayPersistence) {
+    init(
+        persistence: TipOverlayPersistence,
+        locker: ProductLocker
+    ) {
         self.persistence = persistence
+        self.locker = locker
     }
 
     @Published private(set) var showModal = false
     private var persistence: TipOverlayPersistence
+    private let locker: ProductLocker
+    private let dateProvider: DateProvider = CurrentDateProvider()
 
     func show() {
         withAnimation(.easeOut(duration: 0.25)) {
             showModal = true
         }
-        persistence.hasSeenTipScreen = true
+        let lastPrompt = persistence.lastPrompt
+        let thisPrompt = lastPrompt?.increment(dateProvider: dateProvider) ?? .firstPrompt(dateProvider: dateProvider)
+        persistence.lastPrompt = thisPrompt
     }
 
     func dismiss() {
@@ -27,24 +36,65 @@ class TipOverlayViewModel: ObservableObject {
     }
 
     func shouldShowTipOverlay() -> Bool {
-        !persistence.hasSeenTipScreen
+        let hasTipped = UnlockBadgeTipLevel.allCases.contains { level in
+            locker.isUnlocked(level.product)
+        }
+        guard !hasTipped else {
+            return false
+        }
+        if let lastPrompt = persistence.lastPrompt {
+            return shouldShowTipOverlay(lastPrompt)
+        }
+        return true
+    }
+
+    private func shouldShowTipOverlay(_ lastPrompt: PromptInfo) -> Bool {
+        guard let minDayGap = lastPrompt.minDayGapSincePreviousPrompt else {
+            return false
+        }
+        return dateProvider.daysPassed(since: lastPrompt.date, days: minDayGap)
     }
 }
 
+private extension PromptInfo {
+    var minDayGapSincePreviousPrompt: Int? {
+        switch self.count {
+        case 1: return TipSettings.minDaysBetweenFirstAndSecondTipPrompt
+        case 2: return TipSettings.minDaysBetweenSecondAndThirdTipPrompt
+        default: return nil
+        }
+    }
+}
+
+private struct TipSettings {
+    static let minDaysBetweenFirstAndSecondTipPrompt = 7
+    static let minDaysBetweenSecondAndThirdTipPrompt = 14
+}
+
 protocol TipOverlayPersistence {
-    var hasSeenTipScreen: Bool { get set }
+
+    var lastPrompt: PromptInfo? { get set }
 }
 
 class UserDefaultsTipOverlayPersistence: TipOverlayPersistence {
-    private static let key = "seenSupportStudentsModal"
+    private static let key = "supportModal"
 
-    var hasSeenTipScreen: Bool {
-        get { userDefaults.bool(forKey: Self.key) }
+    private let underlying = UserDefaultsPromptPersistence(key: UserDefaultsTipOverlayPersistence.key)
+
+    var lastPrompt: PromptInfo? {
+        get {
+            underlying.getLastPromptInfo()
+        }
         set {
-            userDefaults.setValue(newValue, forKey: Self.key)
+            if let info = newValue {
+                underlying.setPromptInfo(info)
+            }
         }
     }
 
     private let userDefaults = UserDefaults.standard
+}
 
+class InMemoryTipOverlayPersistence: TipOverlayPersistence {
+    var lastPrompt: PromptInfo? = nil
 }

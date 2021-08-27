@@ -153,7 +153,10 @@ struct SupportStudentsModal_Previews: PreviewProvider {
     static var previews: some View {
         SupportStudentsModal(
             model: .init(storeManager: .preview),
-            tipOverlayModel: .init(persistence: UserDefaultsTipOverlayPersistence())
+            tipOverlayModel: .init(
+                persistence: UserDefaultsTipOverlayPersistence(),
+                locker: InMemoryProductLocker()
+            )
         )
         .padding()
     }

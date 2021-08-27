@@ -12,16 +12,16 @@ public struct PromptInfo: Codable {
         self.date = lastPrompt
     }
     
-    let count: Int
-    let date: Date
+    public let count: Int
+    public let date: Date
 
     /// Returns a new instance with a count of 1 set to the current date.
-    static func firstPrompt(dateProvider: DateProvider = CurrentDateProvider()) -> PromptInfo {
+    public static func firstPrompt(dateProvider: DateProvider = CurrentDateProvider()) -> PromptInfo {
         PromptInfo(count: 1, lastPrompt: dateProvider.now())
     }
 
     /// Returns an instance with an incremented count set to the current date.
-    func increment(dateProvider: DateProvider = CurrentDateProvider()) -> PromptInfo {
+    public func increment(dateProvider: DateProvider = CurrentDateProvider()) -> PromptInfo {
         PromptInfo(count: count + 1, lastPrompt: dateProvider.now())
     }
 }

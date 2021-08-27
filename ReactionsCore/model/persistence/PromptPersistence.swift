@@ -4,9 +4,9 @@
 
 import Foundation
 
-class UserDefaultsPromptPersistence {
+public class UserDefaultsPromptPersistence {
 
-    init(key: String) {
+    public init(key: String) {
         self.key = key
     }
 
@@ -14,7 +14,7 @@ class UserDefaultsPromptPersistence {
 
     private let userDefaults = UserDefaults.standard
 
-    func getLastPromptInfo() -> PromptInfo? {
+    public func getLastPromptInfo() -> PromptInfo? {
         if let data = userDefaults.data(forKey: key),
            let decoded = try? JSONDecoder().decode(PromptInfo.self, from: data) {
             return decoded
@@ -22,7 +22,7 @@ class UserDefaultsPromptPersistence {
         return nil
     }
 
-    func setPromptInfo(_ info: PromptInfo) {
+    public func setPromptInfo(_ info: PromptInfo) {
         if let data = try? JSONEncoder().encode(info) {
             userDefaults.setValue(data, forKey: key)
         }

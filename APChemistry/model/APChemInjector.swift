@@ -111,7 +111,7 @@ class DebugAPChemInjector: APChemInjector {
     var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
         AnyScreenPersistence(InMemoryScreenPersistence())
 
-    let tipOverlayPersistence: TipOverlayPersistence = UserDefaultsTipOverlayPersistence()
+    let tipOverlayPersistence: TipOverlayPersistence = InMemoryTipOverlayPersistence()
 
     let sharePrompter: SharePrompter
 

@@ -7,14 +7,14 @@ import Foundation
 /// Provides the current date.
 ///
 /// Used to inject different dates for testing
-protocol DateProvider {
+public protocol DateProvider {
     func now() -> Date
 }
 
 extension DateProvider {
 
     /// Returns true if at least `days` have passed since `date`.
-    func daysPassed(since date: Date, days: Int) -> Bool {
+    public func daysPassed(since date: Date, days: Int) -> Bool {
         date.distance(to: now()) >= days.seconds
     }
 }
@@ -26,16 +26,18 @@ private extension Int {
     }
 }
 
-class CurrentDateProvider: DateProvider {
-    func now() -> Date {
+public class CurrentDateProvider: DateProvider {
+    public init() { }
+
+    public func now() -> Date {
         Date()
     }
 }
 
-/// Returns time at a faster rate, since moment of the first initialisation
-class FastDateProvider: DateProvider {
+/// Returns the date at a faster rate, since the moment of the first initialisation
+public class FastDateProvider: DateProvider {
 
-    static let shared = FastDateProvider(initialDate: Date())
+    public static let shared = FastDateProvider(initialDate: Date())
 
     private init(initialDate: Date) {
         self.initialDate = initialDate
@@ -43,10 +45,10 @@ class FastDateProvider: DateProvider {
     }
 
     // How many real seconds elapse per day which elapses in the returned date
-    private let secondsPerDay: TimeInterval = 1
+    private let secondsPerDay: TimeInterval = 2
     private let initialDate: Date
 
-    func now() -> Date {
+    public func now() -> Date {
         let currentDate = Date()
         let realtimeSecondsElapsed = initialDate.distance(to: currentDate)
         let desiredDaysElapsed = realtimeSecondsElapsed / secondsPerDay
@@ -58,7 +60,7 @@ class FastDateProvider: DateProvider {
         let secondsElapsed = Date().distance(to: now())
         let daysElapsed = secondsElapsed / 86400
         print("Days: \(Int(daysElapsed))")
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
             self.printDaysForever()
         }
     }

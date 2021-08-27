@@ -66,8 +66,8 @@
     }
   ],
   "settings" : {
-    "_locale" : "es_MX",
-    "_storefront" : "MEX"
+    "_locale" : "en_US",
+    "_storefront" : "USA"
   },
   "subscriptionGroups" : [
 
