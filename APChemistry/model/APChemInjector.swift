@@ -24,6 +24,10 @@ protocol APChemInjector {
     var sharePrompter: SharePrompter { get }
 
     var appLaunchPersistence: AppLaunchPersistence { get }
+
+    var onboardingPersistence: OnboardingPersistence { get set }
+
+    var namePersistence: NamePersistence { get }
 }
 
 class ProductionAPChemInjector: APChemInjector {
@@ -67,6 +71,10 @@ class ProductionAPChemInjector: APChemInjector {
     let sharePrompter: SharePrompter
 
     let appLaunchPersistence: AppLaunchPersistence
+
+    var onboardingPersistence: OnboardingPersistence = UserDefaultsOnboardingPersistence()
+
+    let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 }
 
 class DebugAPChemInjector: APChemInjector {
@@ -116,4 +124,8 @@ class DebugAPChemInjector: APChemInjector {
     let sharePrompter: SharePrompter
 
     let appLaunchPersistence: AppLaunchPersistence
+
+    var onboardingPersistence: OnboardingPersistence = InMemoryOnboardingPersistence()
+
+    let namePersistence: NamePersistence = InMemoryNamePersistence()
 }

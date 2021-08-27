@@ -19,14 +19,25 @@ struct APChemRootView: View {
 
     var body: some View {
         GeometryReader { geo in
-            navigation.view
+            mainContent
                 .sheet(item: $navigation.activeSheet) {
                     sheet($0, geo: geo)
                 }
-                .blur(radius: blurContent ? 1 : 0)
+//                .blur(radius: blurContent ? 1 : 0)
                 .overlay(tippingOverlay(layout: .init(geometry: geo)))
         }
         .notification(showNotificationOnMainContent ? notificationModel.notification : nil)
+    }
+
+    private var mainContent: some View {
+        ZStack {
+            navigation.view
+                .modifier(BlurredSceneModifier(isBlurred: blurContent))
+
+            if let onboardingModel = navigation.onboardingModel, navigation.showOnboarding {
+                OnboardingView(model: onboardingModel)
+            }
+        }
     }
 
     // on iPad, we must not show the notification on both the main content and sheet at the same
@@ -63,19 +74,21 @@ struct APChemRootView: View {
     }
 
     private var blurContent: Bool {
-        tipOverlayModel.showModal || sharePromptModel.showingPrompt
+        tipOverlayModel.showModal || sharePromptModel.showingPrompt || navigation.showOnboarding
     }
 
     @ViewBuilder
     private func tippingOverlay(layout: SupportStudentsModalSettings) -> some View {
         if blurContent {
             ZStack {
-                Color.black
-                    .opacity(0.1)
-                    .edgesIgnoringSafeArea(.all)
-                    .onTapGesture {
-                        sharePromptModel.dismiss()
-                    }
+                if sharePromptModel.showingPrompt {
+                    Color.black
+                        .opacity(0.1)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            sharePromptModel.dismiss()
+                        }
+                }
 
                 if tipOverlayModel.showModal {
                     SupportStudentsModal(
@@ -113,3 +126,22 @@ struct APChemRootView: View {
     }
 }
 
+private struct BlurredSceneModifier: ViewModifier {
+    let isBlurred: Bool
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if isBlurred {
+            ZStack {
+                content
+                    .blur(radius: 2)
+                    .disabled(true)
+                Rectangle()
+                    .edgesIgnoringSafeArea(.all)
+                    .foregroundColor(.black.opacity(0.3))
+            }
+        } else {
+            content
+        }
+    }
+}

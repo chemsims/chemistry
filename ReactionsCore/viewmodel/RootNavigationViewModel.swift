@@ -7,7 +7,6 @@ import SwiftUI
 public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableObject {
 
     @Published public var view: AnyView
-    @Published public var showOnboarding = false
     @Published public var showMenu = false {
         didSet {
             if showMenu {
@@ -46,10 +45,6 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
         self.analyticsConsent = AnalyticsConsentViewModel(service: injector.analytics)
 
         goTo(screen: firstScreen, with: getProvider(for: firstScreen))
-
-        if !injector.onboardingPersistence.hasCompletedOnboarding {
-            doShowOnboarding()
-        }
     }
 
     public private(set) var onboardingModel: OnboardingViewModel?
@@ -104,19 +99,6 @@ extension RootNavigationViewModel {
                 showMenu = false
             }
             goToExisting(screen: prevScreen)
-        }
-    }
-}
-
-extension RootNavigationViewModel {
-    private func doShowOnboarding() {
-        showOnboarding = true
-        onboardingModel = OnboardingViewModel(namePersistence: injector.namePersistence)
-        onboardingModel?.navigation?.nextScreen = { [weak self] in
-            withAnimation() {
-                self?.showOnboarding = false
-                self?.injector.onboardingPersistence.hasCompletedOnboarding = true
-            }
         }
     }
 }

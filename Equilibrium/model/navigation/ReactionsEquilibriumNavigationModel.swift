@@ -73,8 +73,7 @@ struct ReactionsEquilibriumNavigationModel {
             analytics: injector.analytics,
             quizPersistence: injector.quizPersistence,
             reviewPersistence: injector.reviewPersistence,
-            onboardingPersistence: InMemoryOnboardingPersistence(hasCompletedOnboarding: true), // TODO
-            namePersistence: InMemoryNamePersistence(),
+            namePersistence: injector.namePersistence,
             sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunchPersistence,
             allScreens: EquilibriumAppScreen.allCases,

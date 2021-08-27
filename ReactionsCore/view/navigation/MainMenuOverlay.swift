@@ -575,7 +575,6 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         analytics: AnyAppAnalytics(NoOpAnalytics()),
         quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence<Int>()),
         reviewPersistence: InMemoryReviewPromptPersistence(),
-        onboardingPersistence: InMemoryOnboardingPersistence(),
         namePersistence: InMemoryNamePersistence(),
         sharePrompter: SharePrompter(
             persistence: InMemorySharePromptPersistence(),

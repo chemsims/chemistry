@@ -11,6 +11,7 @@ class APChemRootNavigationModel: ObservableObject {
 
     @Published var view: AnyView
     @Published var activeSheet: ActiveSheet? = nil
+    @Published var showOnboarding = false
 
     init(injector: APChemInjector, tipOverlayModel: TipOverlayViewModel) {
         self.injector = injector
@@ -20,12 +21,18 @@ class APChemRootNavigationModel: ObservableObject {
         let firstProvider = getScreenProvider(forUnit: firstScreen)
         providers[firstScreen] = firstProvider
         self.view = firstProvider.screen
+
+        if !injector.onboardingPersistence.hasCompletedOnboarding {
+            doShowOnboarding()
+        }
     }
 
-    private let injector: APChemInjector
+    private var injector: APChemInjector
     private let tipOverlayModel: TipOverlayViewModel
     private var selectedUnit = Unit.reactionRates
     private var providers = [Unit : ScreenProvider]()
+
+    private(set) var onboardingModel: OnboardingViewModel?
 
     func goTo(unit: Unit) {
         defer { activeSheet = nil }
@@ -82,6 +89,20 @@ class APChemRootNavigationModel: ObservableObject {
                 self.activeSheet = $0 ? sheet : nil
             }
         )
+    }
+}
+
+extension APChemRootNavigationModel {
+    private func doShowOnboarding() {
+        showOnboarding = true
+        onboardingModel = OnboardingViewModel(namePersistence: injector.namePersistence)
+        
+        onboardingModel?.navigation?.nextScreen = { [weak self] in
+            withAnimation() {
+                self?.showOnboarding = false
+                self?.injector.onboardingPersistence.hasCompletedOnboarding = true
+            }
+        }
     }
 }
 

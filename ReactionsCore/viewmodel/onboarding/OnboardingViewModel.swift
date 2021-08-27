@@ -20,7 +20,7 @@ public class OnboardingViewModel: ObservableObject {
     @Published var isProvidingName = false
     @Published var name: String?
 
-    private(set) var navigation: NavigationModel<OnboardingScreenState>?
+    public private(set) var navigation: NavigationModel<OnboardingScreenState>?
 
     // We need to use a small limit to prevent long names breaking the UI
     private static let maxNameLength = 30

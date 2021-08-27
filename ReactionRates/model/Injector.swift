@@ -13,6 +13,7 @@ protocol Injector {
     var quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet> { get }
     var screenPersistence: AnyScreenPersistence<AppScreen> { get }
     var appAnalytics: AnyAppAnalytics<AppScreen, ReactionsRateQuestionSet> { get }
+    var namePersistence: NamePersistence { get }
 }
 
 class ProductionInjector: Injector {
@@ -44,6 +45,8 @@ class ProductionInjector: Injector {
             includeUnitInEventNames: false
         )
     )
+
+    let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 }
 
 class InMemoryInjector: Injector {
@@ -58,8 +61,10 @@ class InMemoryInjector: Injector {
     let energyPersistence: EnergyProfilePersistence = InMemoryEnergyProfilePersistence()
 
     let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<AppScreen>(completedAllScreens: true))
-    
+
     let appAnalytics = AnyAppAnalytics(NoOpAppAnalytics<AppScreen, ReactionsRateQuestionSet>())
+
+    let namePersistence: NamePersistence = InMemoryNamePersistence()
 }
 
 // We use a blank prefix, since we decided to bundle all units into one after releasing the reaction
