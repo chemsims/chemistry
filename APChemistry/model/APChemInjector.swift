@@ -21,26 +21,28 @@ protocol APChemInjector {
 
     var tipOverlayPersistence: TipOverlayPersistence { get }
 
-    var sharePromptPersistence: SharePromptPersistence { get }
+    var sharePrompter: SharePrompter { get }
 
     var appLaunchPersistence: AppLaunchPersistence { get }
 }
 
 class ProductionAPChemInjector: APChemInjector {
 
-
     init() {
-        let sharePrompt = UserDefaultsSharePromptPersistence()
         let appLaunch = UserDefaultsAppLaunchPersistence()
+        let sharePrompter = SharePrompter(
+            persistence: UserDefaultsSharePromptPersistence(),
+            appLaunches: appLaunch
+        )
 
-        self.sharePromptPersistence = sharePrompt
+        self.sharePrompter = sharePrompter
         self.appLaunchPersistence = appLaunch
         self.reactionRatesInjector = .production(
-            sharePromptPersistence: sharePrompt,
+            sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunch
         )
         self.equilibriumInjector = .production(
-            sharePromptPersistence: sharePrompt,
+            sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunch
         )
     }
@@ -62,7 +64,7 @@ class ProductionAPChemInjector: APChemInjector {
 
     let tipOverlayPersistence: TipOverlayPersistence = UserDefaultsTipOverlayPersistence()
 
-    let sharePromptPersistence: SharePromptPersistence
+    let sharePrompter: SharePrompter
 
     let appLaunchPersistence: AppLaunchPersistence
 }
@@ -70,17 +72,20 @@ class ProductionAPChemInjector: APChemInjector {
 class DebugAPChemInjector: APChemInjector {
 
     init() {
-        let sharePrompt = UserDefaultsSharePromptPersistence()
-        let appLaunch = UserDefaultsAppLaunchPersistence()
+        let appLaunch = InMemoryAppLaunchPersistence()
+        let sharePrompter = SharePrompter(
+            persistence: InMemorySharePromptPersistence(),
+            appLaunches: appLaunch
+        )
 
-        self.sharePromptPersistence = sharePrompt
+        self.sharePrompter = sharePrompter
         self.appLaunchPersistence = appLaunch
         self.reactionRatesInjector = .inMemory(
-            sharePromptPersistence: sharePrompt,
+            sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunch
         )
         self.equilibriumInjector = .inMemory(
-            sharePromptPersistence: sharePrompt,
+            sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunch
         )
     }
@@ -108,7 +113,7 @@ class DebugAPChemInjector: APChemInjector {
 
     let tipOverlayPersistence: TipOverlayPersistence = UserDefaultsTipOverlayPersistence()
 
-    let sharePromptPersistence: SharePromptPersistence
+    let sharePrompter: SharePrompter
 
     let appLaunchPersistence: AppLaunchPersistence
 }

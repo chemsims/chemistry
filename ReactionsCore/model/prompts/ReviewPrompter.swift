@@ -25,7 +25,7 @@ struct ReviewPrompter {
 
     public func requestReview() {
         let lastPrompt = persistence.getLastPromptInfo()
-        let thisPrompt = lastPrompt?.increment() ?? .firstPrompt()
+        let thisPrompt = lastPrompt?.increment(dateProvider: dateProvider) ?? .firstPrompt(dateProvider: dateProvider)
         SKStoreReviewController.requestReview()
         persistence.setPromptInfo(thisPrompt)
     }
@@ -48,12 +48,11 @@ struct ReviewPrompter {
         guard let minDayGap = lastPrompt.minDayGapSincePreviousPrompt else {
             return false
         }
-        return daysHavePassed(since: lastPrompt.lastPrompt, days: minDayGap)
+        return dateProvider.daysPassed(since: lastPrompt.date, days: minDayGap)
     }
 
     private func daysHavePassed(since date: Date, days: Int) -> Bool {
-        let d = date.distance(to: dateProvider.now())
-        return d >= days.seconds
+        date.distance(to: dateProvider.now()) >= days.seconds
     }
 }
 

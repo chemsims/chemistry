@@ -618,7 +618,6 @@
 		57CAD88826D9464A00D75D9B /* PromptPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88726D9464A00D75D9B /* PromptPersistence.swift */; };
 		57CAD88A26D9469700D75D9B /* SharePromptPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88926D9469700D75D9B /* SharePromptPersistence.swift */; };
 		57CAD88B26D946B200D75D9B /* PromptInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88526D93F9200D75D9B /* PromptInfo.swift */; };
-		57CAD88C26D9473500D75D9B /* SharePromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */; };
 		57CAD88E26D94AD300D75D9B /* ReviewPrompterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88D26D94AD300D75D9B /* ReviewPrompterTests.swift */; };
 		57CAD89026D94DF900D75D9B /* AppLaunchPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88F26D94DF900D75D9B /* AppLaunchPersistence.swift */; };
 		57CAD89226D94F2600D75D9B /* AppLaunchPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD89126D94F2600D75D9B /* AppLaunchPersistenceTests.swift */; };
@@ -637,6 +636,7 @@
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
 		57D9693C26D7B67900A629AB /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9693B26D7B67900A629AB /* InAppPurchase.swift */; };
 		57D9C3E726D964870023ED91 /* FixedDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9C3E626D964870023ED91 /* FixedDateProvider.swift */; };
+		57D9C3EA26D969FB0023ED91 /* SharePrompter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9C3E926D969FB0023ED91 /* SharePrompter.swift */; };
 		57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */; };
 		57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */; };
 		57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */; };
@@ -1276,7 +1276,6 @@
 		57C315C12631B58A0092C454 /* MoleculeArc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeArc.swift; sourceTree = "<group>"; };
 		57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionScreen.swift; sourceTree = "<group>"; };
 		57CAD88126D938D200D75D9B /* SharePromptModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptModal.swift; sourceTree = "<group>"; };
-		57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptViewModel.swift; sourceTree = "<group>"; };
 		57CAD88526D93F9200D75D9B /* PromptInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInfo.swift; sourceTree = "<group>"; };
 		57CAD88726D9464A00D75D9B /* PromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptPersistence.swift; sourceTree = "<group>"; };
 		57CAD88926D9469700D75D9B /* SharePromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptPersistence.swift; sourceTree = "<group>"; };
@@ -1341,6 +1340,7 @@
 		57D8BA2B257BF17E006B3C8B /* ReactionComparisonScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreenElement.swift; sourceTree = "<group>"; };
 		57D9693B26D7B67900A629AB /* InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
 		57D9C3E626D964870023ED91 /* FixedDateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedDateProvider.swift; sourceTree = "<group>"; };
+		57D9C3E926D969FB0023ED91 /* SharePrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePrompter.swift; sourceTree = "<group>"; };
 		57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatRoundingTests.swift; sourceTree = "<group>"; };
 		57DAE4D32577C2FD006D945B /* FixedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedText.swift; sourceTree = "<group>"; };
 		57DAE4D72577C4F1006D945B /* HalfLife.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfLife.swift; sourceTree = "<group>"; };
@@ -2170,7 +2170,6 @@
 		57438A37260A26BE005E3888 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
-				57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */,
 				57B8946626A037BB00D71998 /* onboarding */,
 				57F88862267E6D8000609671 /* molecule-emitting */,
 				572B1A772675DF3900302B8E /* reaction-progress */,
@@ -3306,6 +3305,7 @@
 				57B528E525B38A2300381550 /* ReviewPrompter.swift */,
 				57CAD88526D93F9200D75D9B /* PromptInfo.swift */,
 				57CAD89426D959D100D75D9B /* DateProvider.swift */,
+				57D9C3E926D969FB0023ED91 /* SharePrompter.swift */,
 			);
 			path = prompts;
 			sourceTree = "<group>";
@@ -4647,7 +4647,6 @@
 				57315EC226401CF500A7D0F9 /* QuizIntroBody.swift in Sources */,
 				57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */,
 				57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */,
-				57CAD88C26D9473500D75D9B /* SharePromptViewModel.swift in Sources */,
 				57B701AC26D3FE6D0053ED79 /* Link.swift in Sources */,
 				575A880F25E4310700AEE448 /* QuizOption.swift in Sources */,
 				572B1A7C2675DF9100302B8E /* ReactionProgressChartGeometry.swift in Sources */,
@@ -4702,6 +4701,7 @@
 				57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */,
 				57315EC426401CF500A7D0F9 /* ProgressBar.swift in Sources */,
 				57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */,
+				57D9C3EA26D969FB0023ED91 /* SharePrompter.swift in Sources */,
 				5797A53E25E41E0100991BD9 /* AxisPositionCalculations.swift in Sources */,
 				57315EBC264019F600A7D0F9 /* AnyQuizPersistence.swift in Sources */,
 				57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */,

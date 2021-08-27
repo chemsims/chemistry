@@ -56,7 +56,7 @@ struct RootNavigationView_Previews: PreviewProvider {
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector(),
-                sharePromptPersistence: InMemorySharePromptPersistence(),
+                sharePrompter: previewSharePrompter,
                 appLaunchPersistence: UserDefaultsAppLaunchPersistence()
             ),
             unitSelectionIsShowing: .constant(false),
@@ -67,7 +67,7 @@ struct RootNavigationView_Previews: PreviewProvider {
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector(),
-                sharePromptPersistence: InMemorySharePromptPersistence(),
+                sharePrompter: previewSharePrompter,
                 appLaunchPersistence: UserDefaultsAppLaunchPersistence()
             ),
             unitSelectionIsShowing: .constant(false),
@@ -78,11 +78,18 @@ struct RootNavigationView_Previews: PreviewProvider {
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
                 using: InMemoryInjector(),
-                sharePromptPersistence: InMemorySharePromptPersistence(),
+                sharePrompter: previewSharePrompter,
                 appLaunchPersistence: UserDefaultsAppLaunchPersistence()
             ),
             unitSelectionIsShowing: .constant(false),
             aboutPageIsShowing: .constant(false)
         ).previewLayout(.fixed(width: 1194, height: 834))
     }
+
+    private static let previewSharePrompter = SharePrompter(
+        persistence: InMemorySharePromptPersistence(),
+        appLaunches: InMemoryAppLaunchPersistence()
+    )
+
 }
+

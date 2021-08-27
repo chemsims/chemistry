@@ -57,7 +57,8 @@ class InMemoryInjector: Injector {
 
     let energyPersistence: EnergyProfilePersistence = InMemoryEnergyProfilePersistence()
 
-    let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<AppScreen>())
+    let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<AppScreen>(completedAllScreens: true))
+    
     let appAnalytics = AnyAppAnalytics(NoOpAppAnalytics<AppScreen, ReactionsRateQuestionSet>())
 }
 

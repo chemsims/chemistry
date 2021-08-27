@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ),
             tipModel: .init(storeManager: injector.storeManager),
             tipOverlayModel: tipOverlayModel,
-            sharePromptModel: .init(persistence: injector.sharePromptPersistence)
+            sharePromptModel: injector.sharePrompter
         )
 
         let deferScreenEdgesController = DeferScreenEdgesHostingController(

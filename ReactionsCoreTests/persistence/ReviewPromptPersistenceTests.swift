@@ -18,7 +18,7 @@ class ReviewPromptPersistenceTests: XCTestCase {
         let info = PromptInfo.firstPrompt()
         model.setPromptInfo(info)
         XCTAssertEqual(model.getLastPromptInfo()?.count, info.count)
-        XCTAssertEqual(model.getLastPromptInfo()?.lastPrompt, info.lastPrompt)
+        XCTAssertEqual(model.getLastPromptInfo()?.date, info.date)
     }
 
     private func newModel() -> ReviewPromptPersistence {

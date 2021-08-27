@@ -163,8 +163,12 @@ extension RootNavigationViewModel {
             let doShowReview = reviewPrompter.shouldRequestReview(
                 navBehaviourRequestsReview: behaviour.showReviewPromptOn(screen: screen)
             )
+
+            // show either review prompt or share prompt, never both
             if doShowReview {
                 reviewPrompter.requestReview()
+            } else if injector.sharePrompter.shouldShowPrompt() {
+                injector.sharePrompter.showPrompt()
             }
 
             if behaviour.showMenuOn(screen: screen) {

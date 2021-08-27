@@ -12,7 +12,7 @@ struct APChemRootView: View {
     @ObservedObject var navigation: APChemRootNavigationModel
     @ObservedObject var tipModel: TippingViewModel
     @ObservedObject var tipOverlayModel: TipOverlayViewModel
-    @ObservedObject var sharePromptModel: SharePromptViewModel
+    @ObservedObject var sharePromptModel: SharePrompter
     @ObservedObject var notificationModel = NotificationViewModel.shared
 
     private let shareSettings = ShareSettings()
@@ -48,7 +48,7 @@ struct APChemRootView: View {
     }
 
     private var blurContent: Bool {
-        tipOverlayModel.showModal || sharePromptModel.showPrompt
+        tipOverlayModel.showModal || sharePromptModel.showingPrompt
     }
 
     @ViewBuilder
@@ -67,12 +67,13 @@ struct APChemRootView: View {
                         model: tipModel,
                         tipOverlayModel: tipOverlayModel
                     )
-                } else if sharePromptModel.showPrompt {
+                } else if sharePromptModel.showingPrompt {
                     SharePromptModal(
                         layout: layout,
                         showShareSheet: {
                             navigation.activeSheet = .share
                             sharePromptModel.dismiss()
+                            sharePromptModel.clickedShare()
                         },
                         dismissPrompt: sharePromptModel.dismiss
                     )

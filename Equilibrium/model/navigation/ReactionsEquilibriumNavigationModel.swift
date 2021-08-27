@@ -8,35 +8,35 @@ import ReactionsCore
 extension RootNavigationViewModel where Injector == EquilibriumNavInjector {
 
     public static func production(
-        sharePromptPersistence: SharePromptPersistence,
+        sharePrompter: SharePrompter,
         appLaunchPersistence: AppLaunchPersistence
     ) -> RootNavigationViewModel<EquilibriumNavInjector> {
         model(
             ProductionEquilibriumInjector(),
-            sharePromptPersistence: sharePromptPersistence,
+            sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunchPersistence
         )
     }
 
     public static func inMemory(
-        sharePromptPersistence: SharePromptPersistence,
+        sharePrompter: SharePrompter,
         appLaunchPersistence: AppLaunchPersistence
     ) -> RootNavigationViewModel<EquilibriumNavInjector> {
         model(
             InMemoryEquilibriumInjector(),
-            sharePromptPersistence: sharePromptPersistence,
+            sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunchPersistence
         )
     }
 
     private static func model(
         _ injector: EquilibriumInjector,
-        sharePromptPersistence: SharePromptPersistence,
+        sharePrompter: SharePrompter,
         appLaunchPersistence: AppLaunchPersistence
     ) -> RootNavigationViewModel<EquilibriumNavInjector> {
         ReactionsEquilibriumNavigationModel.model(
             using: injector,
-            sharePromptPersistence: sharePromptPersistence,
+            sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunchPersistence
         )
     }
@@ -48,13 +48,13 @@ struct ReactionsEquilibriumNavigationModel {
 
     static func model(
         using injector: EquilibriumInjector,
-        sharePromptPersistence: SharePromptPersistence,
+        sharePrompter: SharePrompter,
         appLaunchPersistence: AppLaunchPersistence
     ) -> RootNavigationViewModel<EquilibriumNavInjector> {
         RootNavigationViewModel(
             injector: makeInjector(
                 using: injector,
-                sharePromptPersistence: sharePromptPersistence,
+                sharePrompter: sharePrompter,
                 appLaunchPersistence: appLaunchPersistence
             )
         )
@@ -62,7 +62,7 @@ struct ReactionsEquilibriumNavigationModel {
 
     private static func makeInjector(
         using injector: EquilibriumInjector,
-        sharePromptPersistence: SharePromptPersistence,
+        sharePrompter: SharePrompter,
         appLaunchPersistence: AppLaunchPersistence
     ) -> EquilibriumNavInjector {
         AnyNavigationInjector(
@@ -75,7 +75,7 @@ struct ReactionsEquilibriumNavigationModel {
             reviewPersistence: injector.reviewPersistence,
             onboardingPersistence: InMemoryOnboardingPersistence(hasCompletedOnboarding: true), // TODO
             namePersistence: InMemoryNamePersistence(),
-            sharePromptPersistence: sharePromptPersistence,
+            sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunchPersistence,
             allScreens: EquilibriumAppScreen.allCases,
             linearScreens: linearScreens
