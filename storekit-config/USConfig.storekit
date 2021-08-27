@@ -141,8 +141,8 @@
     }
   ],
   "settings" : {
-    "_askToBuyEnabled" : true,
-    "_billingIssuesEnabled" : true,
+    "_askToBuyEnabled" : false,
+    "_billingIssuesEnabled" : false,
     "_locale" : "en_US",
     "_storefront" : "USA"
   },
