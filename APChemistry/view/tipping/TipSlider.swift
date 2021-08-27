@@ -68,19 +68,8 @@ private struct TipSliderWithGeometry: View {
 
     private var labels: some View {
         ForEach(UnlockBadgeTipLevel.allCases) { tipLevel in
-            label(forLevel: tipLevel)
+            heart(forLevel: tipLevel)
         }
-    }
-
-    private func label(forLevel level: UnlockBadgeTipLevel) -> some View {
-        let dollars = String(repeating: "$", count: level.rawValue + 1)
-        let selected = selectedTipLevel == level
-        return Text(dollars)
-            .frame(size: geometry.labelSize)
-            .font(.body.weight(selected ? .bold : .regular))
-            .scaleEffect(selected ? 1.3 : 1, anchor: .bottom)
-            .position(geometry.labelPosition(atIndex: index(of: level)))
-            .foregroundColor(selected ? fill : .black)
     }
 
     private var slider: some View {
@@ -125,6 +114,38 @@ private struct TipSliderWithGeometry: View {
     }
 
     private let fill: Color = RGB.primaryDarkBlue.color
+}
+
+extension TipSliderWithGeometry {
+
+    func heart(forLevel level: UnlockBadgeTipLevel) -> some View {
+        let selected = selectedTipLevel == level
+
+        var singleHeart: some View {
+            Image(systemName: selected ? "heart.fill" : "heart")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: geometry.labelSize.width / 6)
+        }
+
+        return HStack(spacing: 0.01 * geometry.labelSize.width) {
+            singleHeart
+            if level > .level1 {
+                singleHeart
+            }
+            if level > .level2 {
+                singleHeart
+            }
+            if level > .level3 {
+                singleHeart
+            }
+        }
+        .frame(size: geometry.labelSize)
+        .font(.body.weight(selected ? .bold : .regular))
+        .scaleEffect(selected ? 1.3 : 1, anchor: .bottom)
+        .position(geometry.labelPosition(atIndex: index(of: level)))
+        .foregroundColor(selected ? fill : .black)
+    }
 }
 
 private struct TipSliderGeometry {
